@@ -23,7 +23,7 @@ define(["underscore", "Magento_PageBuilder/js/utils/object"], function (_undersc
       var result = (0, _underscore.unescape)(value); // Have to do a manual &nbsp; replace since underscore un-escape does not un-escape &nbsp;
 
       return result.replace(/&nbsp;/g, String.fromCharCode(160));
-    };
+    }
     /**
      * Convert value to knockout format
      *
@@ -31,7 +31,7 @@ define(["underscore", "Magento_PageBuilder/js/utils/object"], function (_undersc
      * @param {Object} data
      * @returns {string}
      */
-
+    ;
 
     _proto.toDom = function toDom(name, data) {
       return (0, _underscore.escape)((0, _object.get)(data, name));

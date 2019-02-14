@@ -92,7 +92,7 @@ class Video implements RendererInterface
     {
         $attributes = [
             'data-element' => 'main',
-            'data-role' => 'video',
+            'data-content-type' => 'video',
             'data-appearance' => 'default',
             'class' => $eavData['css_classes'] ?? ''
         ];

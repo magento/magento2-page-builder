@@ -6,7 +6,7 @@
 import {DataObject} from "../../../data-store";
 import {get} from "../../../utils/object";
 import ConverterInterface from "../../converter-interface";
-import ImageArrayObject from "../../image-array-object";
+import ImageArrayObject from "../../image-array-object.types";
 
 /**
  * @api

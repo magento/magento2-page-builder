@@ -11,7 +11,7 @@
           component="Magento_PageBuilder/js/content-type"
           preview_component="Magento_PageBuilder/js/content-type/block/preview"
           form="pagebuilder_block_form"
-          group="add_content"
+          menu_section="add_content"
           icon="icon-pagebuilder-block"
           sortOrder="1"
           translate="label">
@@ -20,7 +20,7 @@
             <appearance default="true"
                         name="default"
                         preview_template="Magento_PageBuilder/content-type/block/default/preview"
-                        render_template="Magento_PageBuilder/content-type/block/default/master"
+                        master_template="Magento_PageBuilder/content-type/block/default/master"
                         reader="Magento_PageBuilder/js/master-format/read/configurable">
                 <elements>
                     <element name="main">
@@ -32,7 +32,7 @@
                         <style name="display" source="display" converter="Magento_PageBuilder/js/converter/style/display" preview_converter="Magento_PageBuilder/js/converter/style/preview/display"/>
                         <style name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
                         <style name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
-                        <attribute name="name" source="data-role"/>
+                        <attribute name="name" source="data-content-type"/>
                         <attribute name="appearance" source="data-appearance"/>
                         <html name="html"/>
                         <css name="css_classes"/>

@@ -1,4 +1,5 @@
 /*eslint-disable */
+
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
@@ -18,14 +19,14 @@ define(["Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/c
     _inheritsLoose(ContentTypeCollection, _contentType2);
 
     /**
-     * @param {ContentTypeInterface} parent
+     * @param {ContentTypeInterface} parentContentType
      * @param {ContentTypeConfigInterface} config
      * @param {string} stageId
      */
-    function ContentTypeCollection(parent, config, stageId) {
+    function ContentTypeCollection(parentContentType, config, stageId) {
       var _this;
 
-      _this = _contentType2.call(this, parent, config, stageId) || this;
+      _this = _contentType2.call(this, parentContentType, config, stageId) || this;
       _this.collection = new _collection();
 
       _this.collection.getChildren().subscribe(function () {
@@ -47,18 +48,18 @@ define(["Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/c
 
     _proto.getChildren = function getChildren() {
       return this.collection.getChildren();
-    };
+    }
     /**
      * Add a child into the observable array
      *
      * @param {ContentTypeInterface | ContentTypeCollectionInterface} child
      * @param {number} index
      */
-
+    ;
 
     _proto.addChild = function addChild(child, index) {
-      child.parent = this;
-      this.collection.addChild(child, index); // Trigger a mount event when a child is added into a parent, meaning it'll be re-rendered
+      child.parentContentType = this;
+      this.collection.addChild(child, index); // Trigger a mount event when a child is added into a container content type, meaning it'll be re-rendered
 
       _underscore.defer(function () {
         _events.trigger("contentType:mountAfter", {
@@ -71,23 +72,23 @@ define(["Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/c
           contentType: child
         });
       });
-    };
+    }
     /**
      * Remove a child from the observable array
      *
-     * @param child
+     * @param {ContentTypeInterface} child
      */
-
+    ;
 
     _proto.removeChild = function removeChild(child) {
       this.collection.removeChild(child);
-    };
+    }
     /**
      * Set the children observable array into the class
      *
-     * @param children
+     * @param {KnockoutObservableArray<ContentTypeInterface>} children
      */
-
+    ;
 
     _proto.setChildren = function setChildren(children) {
       this.collection.setChildren(children);

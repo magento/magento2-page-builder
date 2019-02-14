@@ -1,4 +1,5 @@
 /*eslint-disable */
+
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
@@ -46,22 +47,22 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
      */
     _proto.onOptionClick = function onOptionClick(option, value) {
       var defaultValue = this.preview.config.fields[option.key].default;
-      var currentValue = this.preview.parent.dataStore.get(option.key);
+      var currentValue = this.preview.contentType.dataStore.get(option.key);
       this.preview.updateData(option.key, currentValue === value.value ? defaultValue : value.value);
-    };
+    }
     /**
      * Set state based on toolbar focusin event for the preview
      *
-     * @param {Preview} context
+     * @param {ContentTypeToolbarPreviewInterface} context
      * @param {Event} event
      */
-
+    ;
 
     _proto.onFocusIn = function onFocusIn(context, event) {
       var currentContentTypeTarget = context.toolbar.getCurrentContentTypeTarget();
       var toolbarOptions = currentContentTypeTarget.find(".pagebuilder-toolbar-options"); // Change toolbar orientation if overflow on full screen mode
 
-      if ((0, _checkStageFullScreen)(context.parent.stageId) && currentContentTypeTarget[0].getBoundingClientRect().top < toolbarOptions.outerHeight()) {
+      if ((0, _checkStageFullScreen)(context.contentType.stageId) && currentContentTypeTarget[0].getBoundingClientRect().top < toolbarOptions.outerHeight()) {
         context.toolbar.observer = new MutationObserver(function () {
           toolbarOptions.css("transform", "translateY(" + currentContentTypeTarget.outerHeight() + "px)");
         });
@@ -78,14 +79,14 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
       (0, _jquery)(currentContentTypeTarget).addClass("pagebuilder-toolbar-active");
 
       _events.trigger("stage:interactionStart");
-    };
+    }
     /**
      * Set state based on toolbar focusout event for the preview
      *
-     * @param {Preview} context
+     * @param {ContentTypeToolbarPreviewInterface} context
      * @param {Event} event
      */
-
+    ;
 
     _proto.onFocusOut = function onFocusOut(context, event) {
       var currentContentTypeTarget = context.toolbar.getCurrentContentTypeTarget();
@@ -97,16 +98,16 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
       }
 
       _events.trigger("stage:interactionStop");
-    };
+    }
     /**
      * Get fixed toolbar container element referenced as selector in wysiwyg adapter settings
      *
      * @returns {jQuery}
      */
-
+    ;
 
     _proto.getCurrentContentTypeTarget = function getCurrentContentTypeTarget() {
-      return (0, _jquery)("#" + this.preview.parent.id).find(".pagebuilder-content-type");
+      return (0, _jquery)("#" + this.preview.contentType.id).find(".pagebuilder-content-type");
     };
 
     _createClass(Toolbar, [{
@@ -118,6 +119,10 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
 
     return Toolbar;
   }();
+  /**
+   * Preview interface for preview instances implementation the toolbar functionality
+   */
+
 
   return Toolbar;
 });

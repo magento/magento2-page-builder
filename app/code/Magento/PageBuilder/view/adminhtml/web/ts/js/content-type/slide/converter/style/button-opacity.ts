@@ -4,6 +4,7 @@
  */
 
 import ConverterInterface from "../../../../converter/converter-interface";
+import {DataObject} from "../../../../data-store";
 
 export default class ButtonOpacity implements ConverterInterface {
     /**
@@ -19,11 +20,11 @@ export default class ButtonOpacity implements ConverterInterface {
     /**
      * Convert value to knockout format
      *
-     * @param name string
-     * @param data Object
+     * @param {string} name
+     * @param {DataObject} data
      * @returns {string | object}
      */
-    public toDom(name: string, data: object): string | object {
+    public toDom(name: string, data: DataObject): string | object {
         return data.show_button === "always" ? "1" : "0";
     }
 }

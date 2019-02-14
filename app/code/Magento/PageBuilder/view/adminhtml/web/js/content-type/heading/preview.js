@@ -1,4 +1,5 @@
 /*eslint-disable */
+
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
@@ -20,14 +21,14 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
     _inheritsLoose(Preview, _preview2);
 
     /**
-     * @param {ContentTypeInterface} parent
+     * @param {ContentTypeInterface} contentType
      * @param {ContentTypeConfigInterface} config
      * @param {ObservableUpdater} observableUpdater
      */
-    function Preview(parent, config, observableUpdater) {
+    function Preview(contentType, config, observableUpdater) {
       var _this;
 
-      _this = _preview2.call(this, parent, config, observableUpdater) || this;
+      _this = _preview2.call(this, contentType, config, observableUpdater) || this;
       _this.toolbar = new _contentTypeToolbar(_assertThisInitialized(_assertThisInitialized(_this)), _this.getToolbarOptions());
       return _this;
     }
@@ -52,13 +53,13 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
         sort: 40
       });
       return options;
-    };
+    }
     /**
      * On render init the tabs widget
      *
      * @param {Element} element
      */
-
+    ;
 
     _proto.afterRender = function afterRender(element) {
       this.element = element;
@@ -71,20 +72,20 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
 
 
       _events.on("heading:dropAfter", function (args) {
-        if (args.id === _this2.parent.id) {
+        if (args.id === _this2.contentType.id) {
           _underscore.delay(function () {
             (0, _jquery)(_this2.element).focus();
           }, 100); // 100 ms delay to allow for heading to render
 
         }
       });
-    };
+    }
     /**
      * Build and return the tool bar options for heading
      *
      * @returns {OptionInterface[]}
      */
-
+    ;
 
     _proto.getToolbarOptions = function getToolbarOptions() {
       return [{

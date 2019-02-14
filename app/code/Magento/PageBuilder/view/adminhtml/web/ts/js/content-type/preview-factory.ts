@@ -3,10 +3,10 @@
  * See COPYING.txt for license details.
  */
 
-import loadModule from "Magento_PageBuilder/js/utils/loader";
-import ContentTypeCollectionInterface from "../content-type-collection.d";
-import ContentTypeConfigInterface from "../content-type-config.d";
-import ContentTypeInterface from "../content-type.d";
+import ContentTypeCollectionInterface from "../content-type-collection.types";
+import ContentTypeConfigInterface from "../content-type-config.types";
+import ContentTypeInterface from "../content-type.types";
+import loadModule from "../utils/loader";
 import observableUpdaterFactory from "./observable-updater-factory";
 import Preview from "./preview";
 import PreviewCollection from "./preview-collection";
@@ -39,7 +39,7 @@ export default function create(
                     reject(`Error within preview component (${config.preview_component}) for ${config.name}.`);
                     console.error(error);
                 }
-            }, (error: string) => {
+            }, (error: Error) => {
                 reject(`Unable to load preview component (${config.preview_component}) for ${config.name}. Please ` +
                     `check preview component exists and content type configuration is correct.`);
                 console.error(error);

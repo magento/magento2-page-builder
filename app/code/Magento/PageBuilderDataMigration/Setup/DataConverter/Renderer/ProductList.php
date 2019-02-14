@@ -105,7 +105,7 @@ class ProductList implements RendererInterface
 
         $rootElementAttributes = [
             'data-element' => 'main',
-            'data-role' => 'products',
+            'data-content-type' => 'products',
             'data-appearance' => 'grid',
             'class' => $itemData['formData']['css_classes'] ?? '',
         ];

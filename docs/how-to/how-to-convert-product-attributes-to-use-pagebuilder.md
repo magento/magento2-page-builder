@@ -2,8 +2,8 @@
 
 ## Product attribute fields
 
-The PageBuilder module is compatible with all product attributes fields that use an input of type `text`.
-If your module creates a custom product attribute as a feature, you can change the input of that attribute to PageBuilder.
+The Page Builder module is compatible with all product attribute fields that use an input of type `text`.
+If your module creates a custom product attribute as a feature, you can change the input of that attribute to Page Builder.
 
 For example, the following code creates a new product attribute called "Sample Field" with a default input type of `textarea`.
 
@@ -45,7 +45,7 @@ $categorySetup->addAttribute(
 );
 ```
 
-The following steps changes a custom product attribute's input type to PageBuilder using the Admin:
+The following steps change a custom product attribute's input type to PageBuilder using the Admin:
 
 1. On the Admin sidebar, click **Stores**.
 2. Under **Attributes**, click on **Product**.
@@ -59,11 +59,11 @@ The following steps changes a custom product attribute's input type to PageBuild
 
 All form fields that use the [WYSIWYG UI Component] are compatible with the PageBuilder module.
 
-The following configuration settings in your module's [UI Component configuration file] affect how a form field interacts with the PageBuilder module:
+The following configuration settings in your module's [UI Component configuration file] affect how a form field interacts with the Page Builder module:
 
 ### `pagebuilder_button`
 
-The `pagebuilder_button` configuration determines the appearance of the PageBuilder editor.
+The `pagebuilder_button` configuration determines the appearance of the Page Builder editor.
 
 When this configuration is set to `true`, a button replaces the input field on the form.
 This button launches the PageBuilder editor in Full Screen Mode when clicked.
@@ -94,9 +94,9 @@ When this configuration is not specified or set to `false`, the PageBuilder edit
 
 ### `is_pagebuilder_enabled`
 
-When the PageBuilder module is enabled, all form fields that use the [WYSIWYG UI Component] automatically switch to PageBuilder.
+When the PageBuilder module is enabled, all form fields that use the [WYSIWYG UI Component] automatically switch to Page Builder.
 
-To prevent your form field from switching or using PageBuilder, set the `is_pagebuilder_enabled` configuration to `false`.
+To prevent your form field from switching or using Page Builder, set the `is_pagebuilder_enabled` configuration to `false`.
 
 **Example:**
 

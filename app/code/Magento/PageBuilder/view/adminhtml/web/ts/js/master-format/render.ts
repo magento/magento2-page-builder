@@ -6,20 +6,18 @@
 import $ from "jquery";
 import ko from "knockout";
 import engine from "Magento_Ui/js/lib/knockout/template/engine";
-import ContentTypeInterface from "../content-type.d";
+import ContentTypeCollectionInterface from "../content-type-collection.types";
 import decodeAllDataUrlsInString from "../utils/directives";
 import filterHtml from "./filter-html";
 
 export default class MasterFormatRenderer {
-    private rootTemplate: string = "Magento_PageBuilder/content-type/master";
-
     /**
-     * Render a tree of content types instances stored in knockout
+     * Render the root container into a string
      *
-     * @param {KnockoutObservableArray<ContentTypeInterface>} tree
+     * @param {ContentTypeCollection} rootContainer
      * @returns {Promise<string>}
      */
-    public applyBindings(tree: KnockoutObservableArray<ContentTypeInterface>): Promise<string> {
+    public applyBindings(rootContainer: ContentTypeCollectionInterface): Promise<string> {
         const element = $("<div>");
         return new Promise((resolve) => {
             engine.waitForFinishRender().then(() => {
@@ -33,8 +31,8 @@ export default class MasterFormatRenderer {
                 element[0],
                 {
                     template: {
-                        data: {getChildren: () => tree},
-                        name: this.rootTemplate,
+                        data: rootContainer.content,
+                        name: rootContainer.content.template,
                     },
                 },
             );

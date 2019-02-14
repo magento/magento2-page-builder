@@ -12,7 +12,7 @@
           preview_component="Magento_PageBuilder/js/content-type/column-group/preview"
           master_component="Magento_PageBuilder/js/content-type/master-collection"
           form=""
-          group="layout"
+          menu_section="layout"
           icon="icon-pagebuilder-column"
           sortOrder="10"
           translate="label">
@@ -23,16 +23,16 @@
         <children default_policy="deny">
             <child name="column" policy="allow"/>
         </children>
-        <is_visible>false</is_visible>
+        <is_system>false</is_system>
         <appearances>
             <appearance default="true"
                         name="default"
                         preview_template="Magento_PageBuilder/content-type/column-group/default/preview"
-                        render_template="Magento_PageBuilder/content-type/column-group/default/master"
+                        master_template="Magento_PageBuilder/content-type/column-group/default/master"
                         reader="Magento_PageBuilder/js/master-format/read/configurable">
                 <elements>
                     <element name="main">
-                        <attribute name="name" source="data-role"/>
+                        <attribute name="name" source="data-content-type"/>
                         <attribute name="appearance" source="data-appearance"/>
                         <attribute name="grid_size" source="data-grid-size"/>
                     </element>

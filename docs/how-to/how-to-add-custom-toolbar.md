@@ -56,7 +56,7 @@ Option property descriptions:
 
 | Element             | Description                                                                        |
 | ------------------- | ---------------------------------------------------------------------------------- |
-| `key`               | Describes the group name in the menu (comparable to a CSS property, `text_align`). |
+| `key`               | Describes the menu section name in the menu (comparable to a CSS property, `text_align`). |
 | `type`              | Describes the element type (comparable to the HTML `input` type).                  |
 | `values`            | Array of values for each option.                                                   |
 | `value`             | Value referenced in the dataStore (comparable to a CSS property value).            |

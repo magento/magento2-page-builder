@@ -39,7 +39,7 @@
         <waitForElementVisible selector="{{PageBuilderStage.stageWrapper}}" stepKey="waitForStage2"/>
         <waitForElementNotVisible selector="{{PageBuilderStage.stageWrapperFullScreen}}" stepKey="verifyStageNotFullScreen2"/>
     </test>
-    <test name="ShowPanelGroups">
+    <test name="ShowPanelMenuSections">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Panel"/>
@@ -60,7 +60,7 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <seeElement selector='{{PageBuilderPanel.firstSection}}' parameterArray="['class' => 'active']" stepKey="firstSectionOfPanelIsOpen"/>
-        <actionGroup ref="validateGroupsAndContentTypes" stepKey="validateGroupsAndContentTypes"/>
+        <actionGroup ref="validateMenuSectionsAndContentTypes" stepKey="validateMenuSectionsAndContentTypes"/>
     </test>
     <test name="SearchOneCharInPanel">
         <annotations>
@@ -187,8 +187,8 @@
         <comment userInput="Use Clear Search button to show all content types on Pagebuilder panel" stepKey="commentClearSearch"/>
         <click selector="{{PageBuilderPanel.clearSearch}}" stepKey="clickClearSearch"/>
         <dontSee userInput="i" selector="{{PageBuilderPanel.searchPanel}}" stepKey="validateInputClearedAfterClickClear"/>
-        <actionGroup ref="validateGroupsAndContentTypes" stepKey="validateGroupsAndContentTypesAfterClickClear"/>
-        <actionGroup ref="closePageBuilderPanelGroups" stepKey="closePageBuilderPanelGroups"/>
+        <actionGroup ref="validateMenuSectionsAndContentTypes" stepKey="validateMenuSectionsAndContentTypesAfterClickClear"/>
+        <actionGroup ref="closePageBuilderPanelMenuSections" stepKey="closePageBuilderPanelMenuSections"/>
         <fillField selector="{{PageBuilderPanel.searchPanel}}" userInput="r" stepKey="fillSearchFieldr"/>
         <see userInput="Row" selector="{{PageBuilderPanel.searchResults}}" stepKey="validateRowAppears"/>
         <dontSee userInput="Column" selector="{{PageBuilderPanel.searchResults}}" stepKey="validateColumnDoesNotAppear"/>
@@ -196,7 +196,7 @@
         <pressKey selector="{{PageBuilderPanel.searchPanel}}" parameterArray="[\WebDriverKeys::BACKSPACE]" stepKey="enterSearchInput"/>
         <dontSee userInput="r" selector="{{PageBuilderPanel.searchPanel}}" stepKey="validateInputClearedAfterRemoveCharacters"/>
         <scrollTo selector="{{CmsNewPagePageActionsSection.contentSectionName}}" stepKey="scrollToTopOfStage"/>
-        <actionGroup ref="validateGroupsAndContentTypes" stepKey="validateGroupsAndContentTypesAfterClearField"/>
+        <actionGroup ref="validateMenuSectionsAndContentTypes" stepKey="validateMenuSectionsAndContentTypesAfterClearField"/>
     </test>
     <test name="SearchContentTypeAndAddToStage">
         <annotations>
@@ -231,56 +231,12 @@
         </actionGroup>
         <dontSeeJsError stepKey="dontSeeJsError"/>
     </test>
-    <test name="PanelExpandAndCollapseAndAddToStage">
-        <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Panel"/>
-            <title value="Collapse and Expand search panel and still able to search and add to stage"/>
-            <description value="After expand and collapse search panel I can search and drop content blocks onto the stage"/>
-            <severity value="CRITICAL"/>
-            <useCaseId value="MAGETWO-92004"/>
-            <testCaseId value="MC-2752"/>
-            <group value="pagebuilder"/>
-            <group value="pagebuilder-panel"/>
-        </annotations>
-        <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        </before>
-        <after>
-            <actionGroup ref="logout" stepKey="logout"/>
-        </after>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnToStage">
-            <argument name="contentType" value="PageBuilderColumnContentType"/>
-        </actionGroup>
-        <comment userInput="Collapse and Expand panel then drag Tabs to Column" stepKey="commentDragTabs"/>
-        <waitForElementVisible selector="{{PageBuilderStage.stageWrapper}}" stepKey="waitForStage"/>
-        <waitForElementVisible selector="{{PageBuilderPanel.collapsePanel}}" stepKey="waitForCollapseButton"/>
-        <click selector="{{PageBuilderPanel.collapsePanel}}" stepKey="clickCollapseButton"/>
-        <waitForElementVisible selector="{{PageBuilderPanel.expandPanel}}" stepKey="waitForExpandButton"/>
-        <waitForElementVisible selector="{{PageBuilderPanel.panelCollapsed}}" stepKey="waitForPanelCollapsed"/>
-        <waitForElementNotVisible selector="{{PageBuilderPanel.collapsePanel}}" stepKey="waitForCollapsePanelButtonNotVisible"/>
-        <waitForElementNotVisible selector="{{PageBuilderPanel.searchPanel}}" stepKey="waitForSearchFieldNotVisible"/>
-        <click selector="{{PageBuilderPanel.expandPanel}}" stepKey="clickExpandButton"/>
-        <waitForElementNotVisible selector="{{PageBuilderPanel.panelCollapsed}}" stepKey="waitForPanelCollapsedNotVisible"/>
-        <waitForElementNotVisible selector="{{PageBuilderPanel.expandPanel}}" stepKey="waitForExpandButtonNotVisible"/>
-        <waitForElementVisible selector="{{PageBuilderPanel.collapsePanel}}" stepKey="waitForCollapseButtonVisible"/>
-        <waitForElementVisible selector="{{PageBuilderPanel.searchPanel}}" stepKey="waitForSearchField"/>
-        <fillField selector="{{PageBuilderPanel.searchPanel}}" userInput="ta" stepKey="fillSearchFieldTa"/>
-        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTabsIntoFirstColumn">
-            <argument name="contentType" value="PageBuilderTabsContentType"/>
-            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
-            <argument name="containerTargetIndex" value="1"/>
-        </actionGroup>
-        <dontSeeJsError stepKey="dontSeeJsError"/>
-    </test>
     <test name="ValidatePanelContentTypesGroupedCorrectly">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Panel"/>
             <title value="Content types are grouped as specified"/>
-            <description value="The panel should contain the proper groups with content types"/>
+            <description value="The panel should contain the proper menu sections with content types"/>
             <severity value="MINOR"/>
             <useCaseId value="MC-943"/>
             <testCaseId value="MC-2897"/>
@@ -295,43 +251,43 @@
         <after>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <!-- Validate Layout group-->
-        <comment userInput="Validate layout group" stepKey="commentValidatePanel1"/>
-        <seeElement selector="{{PageBuilderPanel.contentTypeInGroup('1', 'Layout', '1', 'Row')}}" stepKey="validateContentTypeRow"/>
-        <seeElement selector="{{PageBuilderPanel.contentTypeInGroup('1', 'Layout', '2', 'Column')}}" stepKey="validateContentTypeColumn"/>
-        <seeElement selector="{{PageBuilderPanel.contentTypeInGroup('1', 'Layout', '3', 'Tabs')}}" stepKey="validateContentTypeTabs"/>
-        <click selector="{{PageBuilderPanel.panelGroup('Layout')}}" stepKey="closeLayoutGroup"/>
-        <!-- Validate Elements group -->
-        <comment userInput="Validate elements group" stepKey="commentValidatePanel2"/>
-        <click selector="{{PageBuilderPanel.panelGroup('Elements')}}" stepKey="openElementGroup"/>
-        <seeElement selector="{{PageBuilderPanel.contentTypeInGroup('2', 'Elements', '1', 'Text')}}" stepKey="validateContentTypeText"/>
-        <seeElement selector="{{PageBuilderPanel.contentTypeInGroup('2', 'Elements', '2', 'Heading')}}" stepKey="validateContentTypeHeading"/>
-        <seeElement selector="{{PageBuilderPanel.contentTypeInGroup('2', 'Elements', '3', 'Buttons')}}" stepKey="validateContentTypeButtons"/>
-        <seeElement selector="{{PageBuilderPanel.contentTypeInGroup('2', 'Elements', '4', 'Divider')}}" stepKey="validateContentTypeDivider"/>
-        <seeElement selector="{{PageBuilderPanel.contentTypeInGroup('2', 'Elements', '5', 'HTML Code')}}" stepKey="validateContentTypeHTML"/>
-        <click selector="{{PageBuilderPanel.panelGroup('Elements')}}" stepKey="closeElementGroup"/>
-        <!-- Validate Media Group -->
-        <comment userInput="Validate media group" stepKey="commentValidatePanel3"/>
-        <click selector="{{PageBuilderPanel.panelGroup('Media')}}" stepKey="openMediaGroup"/>
-        <seeElement selector="{{PageBuilderPanel.contentTypeInGroup('3', 'Media', '1', 'Image')}}" stepKey="validateContentTypeImage"/>
-        <seeElement selector="{{PageBuilderPanel.contentTypeInGroup('3', 'Media', '2', 'Video')}}" stepKey="validateContentTypeVideo"/>
-        <seeElement selector="{{PageBuilderPanel.contentTypeInGroup('3', 'Media', '3', 'Banner')}}" stepKey="validateContentTypeBanner"/>
-        <seeElement selector="{{PageBuilderPanel.contentTypeInGroup('3', 'Media', '4', 'Slider')}}" stepKey="validateContentTypeSlider"/>
-        <seeElement selector="{{PageBuilderPanel.contentTypeInGroup('3', 'Media', '5', 'Map')}}" stepKey="validateContentTypeMap"/>
-        <click selector="{{PageBuilderPanel.panelGroup('Media')}}" stepKey="closeMediaGroup"/>
-        <!-- Validate Add Content Group -->
-        <comment userInput="Validate add content group" stepKey="commentValidatePanel4"/>
-        <click selector="{{PageBuilderPanel.panelGroup('Add Content')}}" stepKey="openAddContentGroup"/>
-        <seeElement selector="{{PageBuilderPanel.contentTypeInGroup('4', 'Add Content', '1', 'Block')}}" stepKey="validateContentTypeBlock"/>
-        <seeElement selector="{{PageBuilderPanel.contentTypeInGroup('4', 'Add Content', '2', 'Products')}}" stepKey="validateContentTypeProducts"/>
-        <click selector="{{PageBuilderPanel.panelGroup('Add Content')}}" stepKey="closeAddContentGroup"/>
+        <!-- Validate Layout menu section -->
+        <comment userInput="Validate layout menu section" stepKey="commentValidatePanel1"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInMenuSection('1', 'Layout', '1', 'Row')}}" stepKey="validateContentTypeRow"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInMenuSection('1', 'Layout', '2', 'Column')}}" stepKey="validateContentTypeColumn"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInMenuSection('1', 'Layout', '3', 'Tabs')}}" stepKey="validateContentTypeTabs"/>
+        <click selector="{{PageBuilderPanel.panelMenuSection('Layout')}}" stepKey="closeLayoutMenuSection"/>
+        <!-- Validate Elements menu section -->
+        <comment userInput="Validate elements menu section" stepKey="commentValidatePanel2"/>
+        <click selector="{{PageBuilderPanel.panelMenuSection('Elements')}}" stepKey="openElementMenuSection"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInMenuSection('2', 'Elements', '1', 'Text')}}" stepKey="validateContentTypeText"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInMenuSection('2', 'Elements', '2', 'Heading')}}" stepKey="validateContentTypeHeading"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInMenuSection('2', 'Elements', '3', 'Buttons')}}" stepKey="validateContentTypeButtons"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInMenuSection('2', 'Elements', '4', 'Divider')}}" stepKey="validateContentTypeDivider"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInMenuSection('2', 'Elements', '5', 'HTML Code')}}" stepKey="validateContentTypeHTML"/>
+        <click selector="{{PageBuilderPanel.panelMenuSection('Elements')}}" stepKey="closeElementMenuSection"/>
+        <!-- Validate Media menu section -->
+        <comment userInput="Validate media menu section" stepKey="commentValidatePanel3"/>
+        <click selector="{{PageBuilderPanel.panelMenuSection('Media')}}" stepKey="openMediaMenuSection"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInMenuSection('3', 'Media', '1', 'Image')}}" stepKey="validateContentTypeImage"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInMenuSection('3', 'Media', '2', 'Video')}}" stepKey="validateContentTypeVideo"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInMenuSection('3', 'Media', '3', 'Banner')}}" stepKey="validateContentTypeBanner"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInMenuSection('3', 'Media', '4', 'Slider')}}" stepKey="validateContentTypeSlider"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInMenuSection('3', 'Media', '5', 'Map')}}" stepKey="validateContentTypeMap"/>
+        <click selector="{{PageBuilderPanel.panelMenuSection('Media')}}" stepKey="closeMediaMenuSection"/>
+        <!-- Validate Add Content menu section -->
+        <comment userInput="Validate add content menu section" stepKey="commentValidatePanel4"/>
+        <click selector="{{PageBuilderPanel.panelMenuSection('Add Content')}}" stepKey="openAddContentMenuSection"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInMenuSection('4', 'Add Content', '1', 'Block')}}" stepKey="validateContentTypeBlock"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInMenuSection('4', 'Add Content', '2', 'Products')}}" stepKey="validateContentTypeProducts"/>
+        <click selector="{{PageBuilderPanel.panelMenuSection('Add Content')}}" stepKey="closeAddContentMenuSection"/>
     </test>
     <test name="ValidatePanelDefaultState">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Panel"/>
             <title value="Panel default state as specified"/>
-            <description value="The panel should only have the layout group expanded"/>
+            <description value="The panel should only have the layout menu section expanded"/>
             <severity value="MINOR"/>
             <useCaseId value="MC-943"/>
             <testCaseId value="MC-4025"/>
@@ -346,10 +302,10 @@
         <after>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <seeElement selector="{{PageBuilderPanel.panelGroupActive('Layout')}}" stepKey="checkLayoutActive"/>
-        <dontSeeElement selector="{{PageBuilderPanel.panelGroupActive('Elements')}}" stepKey="checkInactiveGroup1"/>
-        <dontSeeElement selector="{{PageBuilderPanel.panelGroupActive('Media')}}" stepKey="checkInactiveGroup2"/>
-        <dontSeeElement selector="{{PageBuilderPanel.panelGroupActive('Add Content')}}" stepKey="checkInactiveGroup3"/>
+        <seeElement selector="{{PageBuilderPanel.panelMenuSectionActive('Layout')}}" stepKey="checkLayoutActive"/>
+        <dontSeeElement selector="{{PageBuilderPanel.panelMenuSectionActive('Elements')}}" stepKey="checkInactiveMenuSection1"/>
+        <dontSeeElement selector="{{PageBuilderPanel.panelMenuSectionActive('Media')}}" stepKey="checkInactiveMenuSection2"/>
+        <dontSeeElement selector="{{PageBuilderPanel.panelMenuSectionActive('Add Content')}}" stepKey="checkInactiveMenuSection3"/>
     </test>
     <test name="ValidatePanelContentTypeIcons">
         <annotations>
@@ -376,28 +332,28 @@
         <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('row','Row')}}" stepKey="validateRowIcon"/>
         <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('column','Column')}}" stepKey="validateColumnIcon"/>
         <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('tabs','Tabs')}}" stepKey="validateTabsIcon"/>
-        <click selector="{{PageBuilderPanel.panelGroup('Layout')}}" stepKey="closeLayoutGroup"/>
+        <click selector="{{PageBuilderPanel.panelMenuSection('Layout')}}" stepKey="closeLayoutMenuSection"/>
         <!-- Validate Elements Icons -->
         <comment userInput="Validate elements icons" stepKey="commentValidatePanel2"/>
-        <click selector="{{PageBuilderPanel.panelGroup('Elements')}}" stepKey="openElementsGroup"/>
+        <click selector="{{PageBuilderPanel.panelMenuSection('Elements')}}" stepKey="openElementsMenuSection"/>
         <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('text','Text')}}" stepKey="validateTextIcon"/>
         <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('heading','Heading')}}" stepKey="validateHeadingIcon"/>
         <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('button','Buttons')}}" stepKey="validateButtonsIcon"/>
         <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('divider','Divider')}}" stepKey="validateDividerIcon"/>
         <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('code','HTML Code')}}" stepKey="validateHTMLIcon"/>
-        <click selector="{{PageBuilderPanel.panelGroup('Elements')}}" stepKey="closeElementsGroup"/>
+        <click selector="{{PageBuilderPanel.panelMenuSection('Elements')}}" stepKey="closeElementsMenuSection"/>
         <!-- Validate Media Icons -->
         <comment userInput="Validate media icons" stepKey="commentValidatePanel3"/>
-        <click selector="{{PageBuilderPanel.panelGroup('Media')}}" stepKey="openMediaGroup"/>
+        <click selector="{{PageBuilderPanel.panelMenuSection('Media')}}" stepKey="openMediaMenuSection"/>
         <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('image','Image')}}" stepKey="validateImageIcon"/>
         <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('video','Video')}}" stepKey="validateVideoIcon"/>
         <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('banner','Banner')}}" stepKey="validateBannerIcon"/>
         <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('slider','Slider')}}" stepKey="validateSliderIcon"/>
         <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('map','Map')}}" stepKey="validateMapIcon"/>
-        <click selector="{{PageBuilderPanel.panelGroup('Media')}}" stepKey="closeMediaGroup"/>
+        <click selector="{{PageBuilderPanel.panelMenuSection('Media')}}" stepKey="closeMediaMenuSection"/>
         <!-- Validate Add Content Icons -->
         <comment userInput="Validate add content icons" stepKey="commentValidatePanel4"/>
-        <click selector="{{PageBuilderPanel.panelGroup('Add Content')}}" stepKey="openAddContentGroup"/>
+        <click selector="{{PageBuilderPanel.panelMenuSection('Add Content')}}" stepKey="openAddContentMenuSection"/>
         <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('block','Block')}}" stepKey="validateBlockIcon"/>
         <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('products','Products')}}" stepKey="validateProductsIcon"/>
     </test>
@@ -477,10 +433,10 @@
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <scrollTo selector="{{RowOnStage.base('6')}}" stepKey="scrollToBottom1"/>
-        <seeElement selector="{{PageBuilderPanel.panelGroup('Layout')}}" stepKey="verifyPanel1"/>
+        <seeElement selector="{{PageBuilderPanel.panelMenuSection('Layout')}}" stepKey="verifyPanel1"/>
         <scrollToTopOfPage stepKey="scrollToTopOfPage"/>
         <click selector="{{PageBuilderStage.openFullScreen}}" stepKey="enterFullScreen"/>
         <scrollTo selector="{{RowOnStage.base('6')}}" stepKey="scrollToBottom2"/>
-        <seeElement selector="{{PageBuilderPanel.panelGroup('Layout')}}" stepKey="verifyPanel2"/>
+        <seeElement selector="{{PageBuilderPanel.panelMenuSection('Layout')}}" stepKey="verifyPanel2"/>
     </test>
 </tests>

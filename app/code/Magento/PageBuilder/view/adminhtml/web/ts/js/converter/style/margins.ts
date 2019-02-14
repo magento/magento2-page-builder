@@ -5,6 +5,7 @@
 
 import _ from "underscore";
 import {DataObject} from "../../data-store";
+import {DataObjectMargins} from "../../property/margins";
 import {get} from "../../utils/object";
 import ConverterInterface from "../converter-interface";
 
@@ -18,17 +19,18 @@ export default class Margins implements ConverterInterface {
      * @param value string
      * @returns {string | object}
      */
-    public fromDom(value: string): string | object {
-        const result = {};
+    public fromDom(value: DataObjectMargins): DataObjectMargins {
         if (undefined !== value.margin) {
-            result.margin = {
-                top: value.margin.top.replace("px", ""),
-                left: value.margin.left.replace("px", ""),
-                right: value.margin.right.replace("px", ""),
-                bottom: value.margin.bottom.replace("px", ""),
+            return {
+                margin: {
+                    top: value.margin.top.replace("px", ""),
+                    left: value.margin.left.replace("px", ""),
+                    right: value.margin.right.replace("px", ""),
+                    bottom: value.margin.bottom.replace("px", ""),
+                },
             };
         }
-        return result;
+        return {};
     }
 
     /**
@@ -42,7 +44,7 @@ export default class Margins implements ConverterInterface {
         const result: {
             [key: string]: string;
         } = {};
-        let value = get(data, name);
+        let value = get<DataObjectMargins>(data, name);
         if (value && _.isString(value)) {
             value = JSON.parse(value);
         }

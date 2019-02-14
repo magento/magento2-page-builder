@@ -14,14 +14,14 @@ return [
             'icon' => 'pagebuilder-type3-icon',
             'component' => 'Path/to/custom/component',
             'form' => 'pagebuilder_type3_form',
-            'group' => 'group1',
+            'menu_section' => 'menu_section1',
             'allowed_parents' => [
                 0 => 'stage'
             ],
             'appearances' => [
                 'default' => [
                     'preview_template' => 'Path/to/preview/template',
-                    'render_template' => 'Path/to/render/template',
+                    'master_template' => 'Path/to/render/template',
                     'elements' => [
                         'main' => [
                             'style' => [
@@ -45,7 +45,7 @@ return [
                             'attributes' => [
                                 0 => [
                                     'var' => 'name',
-                                    'name' => 'data-role',
+                                    'name' => 'data-content-type',
                                     'converter' => null,
                                     'persistence_mode' => 'readwrite',
                                     'preview_converter' => null,

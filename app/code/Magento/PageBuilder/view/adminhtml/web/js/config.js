@@ -18,14 +18,14 @@ define(["underscore"], function (_underscore) {
      */
     Config.setConfig = function setConfig(config) {
       Config.config = _underscore.extend(Config.config, config);
-    };
+    }
     /**
      * Retrieve the init config
      *
      * @param {string} key
      * @returns {T}
      */
-
+    ;
 
     Config.getConfig = function getConfig(key) {
       if (key) {
@@ -37,14 +37,14 @@ define(["underscore"], function (_underscore) {
       }
 
       return Config.config;
-    };
+    }
     /**
      * Retrieve a content type from the configuration
      *
      * @param {string} contentType
      * @returns {any}
      */
-
+    ;
 
     Config.getContentTypeConfig = function getContentTypeConfig(contentType) {
       if (typeof Config.getConfig("content_types")[contentType] !== "undefined") {
@@ -58,7 +58,7 @@ define(["underscore"], function (_underscore) {
   }();
 
   Config.config = {
-    dataRoleAttributeName: "data-role"
+    dataContentTypeAttributeName: "data-content-type"
   };
   return Config;
 });

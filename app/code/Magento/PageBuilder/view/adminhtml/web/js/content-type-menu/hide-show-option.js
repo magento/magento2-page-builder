@@ -1,4 +1,5 @@
 /*eslint-disable */
+
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
@@ -23,7 +24,7 @@ define(["mage/translate", "Magento_PageBuilder/js/content-type-menu/option"], fu
 
       _this = _option2.call(this, options) || this; // Modify the icon when changes are made to display in the data store
 
-      _this.preview.parent.dataStore.subscribe(_this.onDisplayChange.bind(_assertThisInitialized(_assertThisInitialized(_this))), "display");
+      _this.preview.contentType.dataStore.subscribe(_this.onDisplayChange.bind(_assertThisInitialized(_assertThisInitialized(_this))), "display");
 
       return _this;
     }

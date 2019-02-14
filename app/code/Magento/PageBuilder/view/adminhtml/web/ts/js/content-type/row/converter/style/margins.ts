@@ -5,8 +5,8 @@
 
 import _ from "underscore";
 import ConverterInterface from "../../../../converter/converter-interface";
-import MarginObject from "../../../../converter/margin-object";
 import {DataObject} from "../../../../data-store";
+import {DataObjectMargins} from "../../../../property/margins";
 import {get} from "../../../../utils/object";
 
 export default class Margins implements ConverterInterface {
@@ -21,27 +21,25 @@ export default class Margins implements ConverterInterface {
     /**
      * Convert value to knockout format
      *
-     * @param name string
-     * @param data Object
+     * @param {string} name
+     * @param {DataObject} data
      * @returns {string | object}
      */
     public toDom(name: string, data: DataObject): string | object {
         const result: {
             [key: string]: string;
         } = {};
-        let value = get<MarginObject>(data, name);
+        let value = get<DataObjectMargins>(data, name);
 
         if (value && _.isString(value)) {
             value = JSON.parse(value);
         }
-
-        if (undefined !== value && undefined !== value.margin) {
+        if (value && undefined !== value.margin) {
             result.marginLeft = value.margin.left ? value.margin.left + "px" : "";
             result.marginTop = value.margin.top ? value.margin.top + "px" : "";
             result.marginRight = value.margin.right ? value.margin.right + "px" : "";
             result.marginBottom = (parseInt(value.margin.bottom, 10) > 0 ? value.margin.bottom : 1) + "px";
         }
-
         return result;
     }
 }

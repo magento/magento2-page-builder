@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "Magento_PageBuilder/js/events", "mageUtils", "Magento_PageBuilder/js/data-store"], function (_knockout, _events, _mageUtils, _dataStore) {
+define(["Magento_PageBuilder/js/events", "mageUtils", "Magento_PageBuilder/js/data-store"], function (_events, _mageUtils, _dataStore) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -10,19 +10,15 @@ define(["knockout", "Magento_PageBuilder/js/events", "mageUtils", "Magento_PageB
     "use strict";
 
     /**
-     * @param {ContentTypeInterface} parent
+     * @param {ContentTypeInterface} parentContentType
      * @param {ContentTypeConfigInterface} config
      * @param {string} stageId
      */
-    function ContentType(parent, config, stageId) {
+    function ContentType(parentContentType, config, stageId) {
       this.id = _mageUtils.uniqueid();
-      this.data = {};
-      this.wrapperStyle = _knockout.observable({
-        width: "100%"
-      });
       this.dataStore = new _dataStore();
       this.dropped = false;
-      this.parent = parent;
+      this.parentContentType = parentContentType;
       this.config = config;
       this.stageId = stageId;
       this.bindEvents();

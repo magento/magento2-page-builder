@@ -4,7 +4,7 @@
  */
 
 import _ from "underscore";
-import ImageArrayObject from "../converter/image-array-object";
+import ImageArrayObject from "../converter/image-array-object.types";
 import {decodeUrl, urlToDirective} from "../utils/image";
 import {get, set} from "../utils/object";
 import ConverterInterface, {ConverterConfigInterface, ConverterDataInterface} from "./converter-interface";

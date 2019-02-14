@@ -9,15 +9,18 @@ import events from "Magento_PageBuilder/js/events";
 import utils from "mageUtils";
 import _ from "underscore";
 import Config from "./config";
-import PageBuilderInterface from "./page-builder.d";
+import ContentTypeCollectionInterface from "./content-type-collection";
+import createContentType from "./content-type-factory";
+import PageBuilderInterface from "./page-builder.types";
 import Panel from "./panel";
 import Stage from "./stage";
-import StageToggleFullScreenParamsInterface from "./stage-toggle-full-screen-params";
+import {StageToggleFullScreenParamsInterface} from "./stage-events.types";
 
 export default class PageBuilder implements PageBuilderInterface {
     public template: string = "Magento_PageBuilder/page-builder";
     public panel: Panel;
     public stage: Stage;
+    public isStageReady: KnockoutObservable<boolean> = ko.observable(false);
     public config: object;
     public initialValue: string;
     public id: string = utils.uniqueid();
@@ -33,7 +36,17 @@ export default class PageBuilder implements PageBuilderInterface {
         this.initialValue = initialValue;
         this.isFullScreen(config.isFullScreen);
         this.config = config;
-        this.stage = new Stage(this);
+
+        // Create the required root container for the stage
+        createContentType(
+            Config.getContentTypeConfig(Stage.rootContainerName),
+            null,
+            this.id,
+        ).then((rootContainer: ContentTypeCollectionInterface) => {
+            this.stage = new Stage(this, rootContainer);
+            this.isStageReady(true);
+        });
+
         this.panel = new Panel(this);
         this.initListeners();
     }
