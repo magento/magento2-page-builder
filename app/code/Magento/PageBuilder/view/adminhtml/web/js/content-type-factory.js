@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/utils/loader", "underscore", "Magento_PageBuilder/js/content-type/master-factory", "Magento_PageBuilder/js/content-type/preview-factory"], function (_events, _loader, _underscore, _masterFactory, _previewFactory) {
+define(["Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/content-type/master-factory", "Magento_PageBuilder/js/content-type/preview-factory", "Magento_PageBuilder/js/utils/loader"], function (_events, _underscore, _masterFactory, _previewFactory, _loader) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -9,14 +9,14 @@ define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/utils/loader", 
    * Create new content type
    *
    * @param {ContentTypeConfigInterface} config
-   * @param {ContentTypeInterface} parent
+   * @param {ContentTypeInterface} parentContentType
    * @param {string} stageId
    * @param {object} data
    * @param {number} childrenLength
    * @returns {Promise<ContentTypeInterface>}
    * @api
    */
-  function createContentType(config, parent, stageId, data, childrenLength) {
+  function createContentType(config, parentContentType, stageId, data, childrenLength) {
     if (data === void 0) {
       data = {};
     }
@@ -28,7 +28,7 @@ define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/utils/loader", 
     return new Promise(function (resolve, reject) {
       (0, _loader)([config.component], function (contentTypeComponent) {
         try {
-          var contentType = new contentTypeComponent(parent, config, stageId);
+          var contentType = new contentTypeComponent(parentContentType, config, stageId);
           Promise.all([(0, _previewFactory)(contentType, config), (0, _masterFactory)(contentType, config)]).then(function (_ref) {
             var previewComponent = _ref[0],
                 masterComponent = _ref[1];
@@ -102,7 +102,7 @@ define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/utils/loader", 
   /**
    * A content type is ready once all of its children have mounted
    *
-   * @param {ContentType | ContentTypeCollection} contentType
+   * @param {ContentTypeInterface | ContentTypeCollectionInterface} contentType
    * @param {number} childrenLength
    */
 
@@ -126,7 +126,7 @@ define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/utils/loader", 
       var mountCounter = 0;
 
       _events.on("contentType:mountAfter", function (args) {
-        if (args.contentType.parent.id === contentType.id) {
+        if (args.contentType.parentContentType.id === contentType.id) {
           mountCounter++;
 
           if (mountCounter === childrenLength) {
@@ -139,6 +139,10 @@ define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/utils/loader", 
       }, "contentType:" + contentType.id + ":mountAfter");
     }
   }
+  /**
+   * @api
+   */
+
 
   return createContentType;
 });

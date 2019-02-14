@@ -97,7 +97,7 @@
         <actionGroup ref="dragContentTypeToDropZone" stepKey="dragRowToStage">
             <argument name="contentType" value="PageBuilderRowContentType"/>
             <argument name="contentTypeIndex" value="2"/>
-            <argument name="containerTargetType" value="PageBuilderStage"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
             <argument name="dropZoneIndex" value="2"/>
         </actionGroup>
         <!-- Edit 2nd Row -->
@@ -130,8 +130,8 @@
         <actionGroup ref="saveEditPanelSettingsFullScreen" stepKey="saveEditFormForColumn"/>
         <!-- Add Slider to 2nd Column -->
         <comment userInput="Add Slider to 2nd Column" stepKey="commentAddSlider"/>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderSliderContentType"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragSliderToColumn2">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
@@ -250,8 +250,8 @@
         </actionGroup>
         <!-- Add Heading to Column 2 -->
         <comment userInput="Add Heading to Column 2" stepKey="commentAddHeadingToColumn2"/>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderHeadingContentType"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingToColumn2">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
@@ -266,8 +266,8 @@
         </actionGroup>
         <!-- Add Divider to Column 2 -->
         <comment userInput="Add Divider to Column 2" stepKey="commentAddDividerToColumn2"/>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupElements">
-            <argument name="group" value="PageBuilderDividerContentType"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionElements">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragDividerToColumn2">
             <argument name="contentType" value="PageBuilderDividerContentType"/>
@@ -537,8 +537,8 @@
         </after>
         <!-- Add Divider to Row -->
         <comment userInput="Add Divider to Row" stepKey="commentAddDividerToRow"/>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupElements">
-            <argument name="group" value="PageBuilderDividerContentType"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionElements">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragDividerToRow">
             <argument name="contentType" value="PageBuilderDividerContentType"/>
@@ -610,8 +610,8 @@
         </after>
         <!-- Add Buttons -->
         <comment userInput="Add Buttons" stepKey="commentAddButtons"/>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderButtonsContentType"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragButtonsToRow">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
@@ -676,8 +676,8 @@
         </after>
         <!-- Add Slider -->
         <comment userInput="Add Slider" stepKey="commentAddSlider"/>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderSliderContentType"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragSliderToRow">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
@@ -755,8 +755,8 @@
         </after>
         <!-- Add Buttons -->
         <comment userInput="Add Buttons" stepKey="commentAddButtons"/>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderButtonsContentType"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragButtonsToRow">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
@@ -845,8 +845,8 @@
         </after>
         <!-- Add Buttons -->
         <comment userInput="Add Buttons" stepKey="commentAddButtons"/>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderButtonsContentType"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragButtonsToRow">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
@@ -1151,8 +1151,8 @@
             <argument name="attributeCode" value="$$createProductAttribute.attribute_code$$"/>
             <argument name="pageBuilderArea" value="{{PageBuilderProductAttribute.PageBuilderArea($$createProductAttribute.attribute_code$$)}}"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPanelGroupHeading">
-            <argument name="group" value="PageBuilderHeadingContentType"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPanelMenuSectionHeading">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
             <argument name="pageBuilderArea" value="{{PageBuilderProductAttribute.PageBuilderArea($$createProductAttribute.attribute_code$$)}}"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingIntoRow">
@@ -1185,8 +1185,8 @@
         </actionGroup>
         <!-- Add Buttons -->
         <comment userInput="Add Buttons" stepKey="commentAddButtons"/>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPanelGroupButtons">
-            <argument name="group" value="PageBuilderButtonsContentType"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPanelMenuSectionButtons">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
             <argument name="pageBuilderArea" value="{{PageBuilderProductAttribute.PageBuilderArea('description')}}"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragButtonsToRow">
@@ -1227,8 +1227,8 @@
             <argument name="attributeCode" value="short_description"/>
             <argument name="pageBuilderArea" value="{{PageBuilderProductAttribute.PageBuilderArea('short_description')}}"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPanelGroupDivider">
-            <argument name="group" value="PageBuilderDividerContentType"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPanelMenuSectionDivider">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
             <argument name="pageBuilderArea" value="{{PageBuilderProductAttribute.PageBuilderArea('short_description')}}"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragDividerIntoRow">

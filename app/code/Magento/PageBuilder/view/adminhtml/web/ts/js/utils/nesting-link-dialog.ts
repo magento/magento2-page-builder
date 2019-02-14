@@ -6,8 +6,8 @@
 import $ from "jquery";
 import $t from "mage/translate";
 import confirmationDialog from "Magento_PageBuilder/js/modal/dismissible-confirm";
+import {FieldDefaultsInterface} from "../content-type-factory";
 import DataStore, {DataObject} from "../data-store";
-import FieldDefaultsInterface from "../field-defaults";
 import WysiwygInterface from "../wysiwyg/wysiwyg-interface";
 
 /**

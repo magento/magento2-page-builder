@@ -52,7 +52,7 @@ class Html implements RendererInterface
 
         $rootElementAttributes = [
             'data-element' => 'main',
-            'data-role' => 'html',
+            'data-content-type' => 'html',
             'data-appearance' => 'default',
             'class' => $eavData['css_classes'] ?? ''
         ];

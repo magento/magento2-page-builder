@@ -10,6 +10,9 @@ namespace Magento\PageBuilder\Model;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
 
+/**
+ * Represents PageBuilder loaded and cached configuration data
+ */
 class Config extends \Magento\Framework\Config\Data implements \Magento\PageBuilder\Model\ConfigInterface
 {
     const IS_PAGEBUILDER_ENABLED = 'cms/pagebuilder/enabled';
@@ -36,11 +39,13 @@ class Config extends \Magento\Framework\Config\Data implements \Magento\PageBuil
     }
 
     /**
+     * Return all menu sections
+     *
      * @return array
      */
-    public function getGroups() : array
+    public function getMenuSections() : array
     {
-        return $this->get('groups');
+        return $this->get('menu_sections');
     }
 
     /**

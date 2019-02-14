@@ -13,9 +13,9 @@ export default class WidgetDirectiveAbstract implements ConverterInterface {
      *
      * @param {ConverterDataInterface} data
      * @param {ConverterConfigInterface} config
-     * @returns {object}
+     * @returns {WidgetDirectiveAttributes}
      */
-    public fromDom(data: ConverterDataInterface, config: ConverterConfigInterface): object {
+    public fromDom(data: ConverterDataInterface, config: ConverterConfigInterface): WidgetDirectiveAttributes {
         let attributes: object = {};
 
         get<string>(data, config.html_variable)
@@ -44,7 +44,7 @@ export default class WidgetDirectiveAbstract implements ConverterInterface {
      * @param {object} attributes
      * @returns {string}
      */
-    protected buildDirective(attributes: object): string {
+    protected buildDirective(attributes: {[key: string]: string | number}): string {
         return "{{widget " + this.createAttributesString(attributes) + "}}";
     }
 
@@ -61,6 +61,7 @@ export default class WidgetDirectiveAbstract implements ConverterInterface {
             /(\w+)(?:\s*=\s*(?:(?:"((?:\\.|[^"])*)")|(?:'((?:\\.|[^'])*)')|([^>\s]+)))?/g,
             (match: string, key: string, value: string) => {
                 result[key] = value.replace(/&quote;/g, "\"");
+                return "";
             },
         );
 
@@ -71,7 +72,7 @@ export default class WidgetDirectiveAbstract implements ConverterInterface {
      * @param {Object} attributes
      * @return {string}
      */
-    protected createAttributesString(attributes: object): string {
+    protected createAttributesString(attributes: {[key: string]: string | number}): string {
         let result = "";
 
         _.each(attributes, (value, name) => {
@@ -80,4 +81,8 @@ export default class WidgetDirectiveAbstract implements ConverterInterface {
 
         return result.substr(0, result.length - 1);
     }
+}
+
+export interface WidgetDirectiveAttributes {
+    [key: string]: any;
 }

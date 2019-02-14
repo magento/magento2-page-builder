@@ -8,6 +8,8 @@ As part of the Page Builder application, we provide new Knockout bindings you ca
 | -------------- | -------------------------------------------------------------- | -------------------------------------  |
 | sortable       | Enables sorting the children of a bound element.               | \<div data-bind="sortable: {}"></div>  |
 | draggable      | Enables draggable functionality on DOM elements.               | \<div data-bind="draggable: {}"></div> |
+| live-edit      | Enables editing text directly from the Admin stage.            | \<div data-bind="liveEdit: {}"></div>  |
+| focus          | Enables default focus on DOM elements.                         | \<div data-bind="hasFocusNoScroll: $parent.focusedSlide() === $index()"></div>     |
 
 ### Sortable binding
 

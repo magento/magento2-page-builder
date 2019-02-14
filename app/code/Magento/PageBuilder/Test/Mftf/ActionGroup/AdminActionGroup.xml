@@ -76,17 +76,17 @@
         <see userInput="You saved the page." selector="{{CmsPagesPageActionsSection.savePageSuccessMessage}}" stepKey="assertSavePageSuccessMessage"/>
     </actionGroup>
     <actionGroup name="verifyPageBuilderVisibleOnPage">
-        <waitForElementVisible selector="{{PageBuilderPanel.layoutGroup}}" stepKey="seePageBuilderVisible"/>
+        <waitForElementVisible selector="{{PageBuilderPanel.layoutMenuSection}}" stepKey="seePageBuilderVisible"/>
         <dontSee userInput="Enable Advanced CMS" stepKey="dontSeeEnableAdvancedCMSBtn"/>
     </actionGroup>
     <actionGroup name="verifyPageBuilderVisibleOnStaging">
-        <scrollTo selector="{{PageBuilderPanel.layoutGroup}}" stepKey="scrollToIdentifyPageBuilder"/>
-        <waitForElementVisible selector="{{PageBuilderPanel.layoutGroup}}" stepKey="seePageBuilderVisible"/>
+        <scrollTo selector="{{PageBuilderPanel.layoutMenuSection}}" stepKey="scrollToIdentifyPageBuilder"/>
+        <waitForElementVisible selector="{{PageBuilderPanel.layoutMenuSection}}" stepKey="seePageBuilderVisible"/>
         <dontSee userInput="Enable Advanced CMS" stepKey="dontSeeEnableAdvancedCMSBtn"/>
     </actionGroup>
     <actionGroup name="verifyPageBuilderNotVisibleOnPage">
         <dontSee userInput="Enable Advanced CMS" stepKey="dontSeeEnableAdvancedCMSBtn"/>
-        <dontSee selector="{{PageBuilderPanel.layoutGroup}}" stepKey="seePageBuilderVisible"/>
+        <dontSee selector="{{PageBuilderPanel.layoutMenuSection}}" stepKey="seePageBuilderVisible"/>
     </actionGroup>
     <actionGroup name="setLayout">
         <!-- This goes in CE repo -->
@@ -104,7 +104,7 @@
         <arguments>
             <argument name="index" defaultValue="0" type="string"/>
         </arguments>
-        <executeJS function="return document.querySelectorAll('[data-role=row]')[{{index}}].clientWidth" stepKey="rowWidth"/>
+        <executeJS function="return document.querySelectorAll('[data-content-type=row]')[{{index}}].clientWidth" stepKey="rowWidth"/>
         <executeJS function="return document.querySelector('[class=page-wrapper]').clientWidth" stepKey="pageWidth"/>
         <assertEquals stepKey="assertRowWidth100Percent">
             <expectedResult type="variable">pageWidth</expectedResult>

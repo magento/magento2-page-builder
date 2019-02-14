@@ -9,26 +9,25 @@ import $t from "mage/translate";
 import events from "Magento_PageBuilder/js/events";
 import "tabs";
 import _ from "underscore";
-import {ActiveOptionsInterface} from "../../binding/active-options.d";
-import {PreviewSortableSortUpdateEventParams} from "../../binding/sortable-children";
-import {SortableOptionsInterface} from "../../binding/sortable-options.d";
+import {ActiveOptionsInterface} from "../../binding/active-options.types";
+import {PreviewSortableSortUpdateEventParams, SortableOptionsInterface} from "../../binding/sortable-children.types";
 import Config from "../../config";
-import ContentTypeCollectionInterface from "../../content-type-collection.d";
-import ContentTypeConfigInterface from "../../content-type-config.d";
+import ContentTypeCollectionInterface from "../../content-type-collection.types";
+import ContentTypeConfigInterface from "../../content-type-config.types";
 import createContentType from "../../content-type-factory";
 import HideShowOption from "../../content-type-menu/hide-show-option";
 import Option from "../../content-type-menu/option";
-import {OptionsInterface} from "../../content-type-menu/option.d";
-import ContentTypeRemovedParamsInterface from "../../content-type-removed-params.d";
-import ContentTypeInterface from "../../content-type.d";
-import {DataObject} from "../../data-store";
+import {OptionsInterface} from "../../content-type-menu/option.types";
+import ContentTypeInterface from "../../content-type.types";
 import delayUntil from "../../utils/delay-until";
-import deferred from "../../utils/promise-deferred";
-import DeferredInterface from "../../utils/promise-deferred.d";
-import ContentTypeDroppedCreateEventParamsInterface from "../content-type-dropped-create-event-params";
-import ContentTypeDuplicateEventParamsInterface from "../content-type-duplicate-event-params";
-import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params.d";
-import ContentTypeRemovedEventParamsInterface from "../content-type-removed-event-params.d";
+import deferred, {DeferredInterface} from "../../utils/promise-deferred";
+import {
+    ContentTypeDroppedCreateEventParamsInterface,
+    ContentTypeDuplicateEventParamsInterface,
+    ContentTypeMountEventParamsInterface,
+    ContentTypeRemovedEventParamsInterface,
+    ContentTypeRemovedParamsInterface,
+} from "../content-type-events.types";
 import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
 
@@ -45,16 +44,16 @@ export default class Preview extends PreviewCollection {
     private mountAfterDeferred: DeferredInterface = deferred();
 
     /**
-     * @param {ContentTypeCollectionInterface} parent
+     * @param {ContentTypeCollectionInterface} contentType
      * @param {ContentTypeConfigInterface} config
      * @param {ObservableUpdater} observableUpdater
      */
     constructor(
-        parent: ContentTypeCollectionInterface,
+        contentType: ContentTypeCollectionInterface,
         config: ContentTypeConfigInterface,
         observableUpdater: ObservableUpdater,
     ) {
-        super(parent, config, observableUpdater);
+        super(contentType, config, observableUpdater);
 
         // Wait for the tabs instance to mount and the container to be ready
         Promise.all([
@@ -75,18 +74,18 @@ export default class Preview extends PreviewCollection {
 
         // Resolve our deferred when the tabs item mounts with expect children
         events.on("tabs:mountAfter", (args: ContentTypeMountEventParamsInterface) => {
-            if (args.contentType.id === this.parent.id && args.expectChildren !== undefined) {
+            if (args.contentType.id === this.contentType.id && args.expectChildren !== undefined) {
                 this.mountAfterDeferred.resolve(args.expectChildren);
             }
         });
 
         events.on("tab-item:mountAfter", (args: ContentTypeMountEventParamsInterface) => {
-            if (this.element && args.contentType.parent.id === this.parent.id) {
+            if (this.element && args.contentType.parentContentType.id === this.contentType.id) {
                 this.refreshTabs();
             }
         });
         events.on("tab-item:renderAfter", (args: ContentTypeMountEventParamsInterface) => {
-            if (this.element && args.contentType.parent.id === this.parent.id) {
+            if (this.element && args.contentType.parentContentType.id === this.contentType.id) {
                 _.defer(() => {
                     this.refreshTabs();
                 });
@@ -94,7 +93,7 @@ export default class Preview extends PreviewCollection {
         });
         // Set the active tab to the new position of the sorted tab
         events.on("tab-item:removeAfter", (args: ContentTypeRemovedEventParamsInterface) => {
-            if (args.parent.id === this.parent.id) {
+            if (args.parentContentType.id === this.contentType.id) {
                 this.refreshTabs();
 
                 // We need to wait for the tabs to refresh before executing the focus
@@ -106,7 +105,7 @@ export default class Preview extends PreviewCollection {
         });
         // Refresh tab contents and set the focus to the new position of the sorted tab
         events.on("childContentType:sortUpdate", (args: PreviewSortableSortUpdateEventParams) => {
-            if (args.instance.id === this.parent.id) {
+            if (args.instance.id === this.contentType.id) {
                 this.refreshTabs(args.newPosition, true);
                 /**
                  * Update the default active tab if its position was affected by the sorting
@@ -122,7 +121,7 @@ export default class Preview extends PreviewCollection {
                     // a tab was moved from the right of the default active tab the left of it, changing its index
                     newDefaultActiveTab++;
                 }
-                this.updateData("default_active", newDefaultActiveTab);
+                this.updateData("default_active", newDefaultActiveTab.toString());
             }
         });
 
@@ -160,7 +159,7 @@ export default class Preview extends PreviewCollection {
             // update sortability of tabs
             const sortableElement = $(this.element).find(".tabs-navigation");
             if (sortableElement.hasClass("ui-sortable")) {
-                if (this.parent.children().length <= 1) {
+                if (this.contentType.children().length <= 1) {
                     sortableElement.sortable("disable");
                 } else {
                     sortableElement.sortable("enable");
@@ -179,13 +178,13 @@ export default class Preview extends PreviewCollection {
     public setActiveTab(index: number) {
         if (index !== null) {
             // Added to prevent mismatched fragment error caused by not yet rendered tab-item
-            index = parseInt(index, 10);
+            index = parseInt(index.toString(), 10);
             delayUntil(
                 () => {
                     $(this.element).tabs("option", "active", index);
                     this.activeTab(index);
                     events.trigger("contentType:redrawAfter", {
-                        id: this.parent.id,
+                        id: this.contentType.id,
                         contentType: this,
                     });
                 },
@@ -243,20 +242,20 @@ export default class Preview extends PreviewCollection {
     public addTab() {
         createContentType(
             Config.getContentTypeConfig("tab-item"),
-            this.parent,
-            this.parent.stageId,
+            this.contentType,
+            this.contentType.stageId,
         ).then((tab) => {
             events.on("tab-item:mountAfter", (args: ContentTypeMountEventParamsInterface) => {
                 if (args.id === tab.id) {
-                    this.setFocusedTab(this.parent.children().length - 1);
+                    this.setFocusedTab(this.contentType.children().length - 1);
                     events.off(`tab-item:${tab.id}:mountAfter`);
                 }
             }, `tab-item:${tab.id}:mountAfter`);
-            this.parent.addChild(tab, this.parent.children().length);
+            this.contentType.addChild(tab, this.contentType.children().length);
 
             // Update the default tab title when adding a new tab
             tab.dataStore.update(
-                $t("Tab") + " " + (this.parent.children.indexOf(tab) + 1),
+                $t("Tab") + " " + (this.contentType.children.indexOf(tab) + 1),
                 "tab_name",
             );
         });
@@ -380,13 +379,13 @@ export default class Preview extends PreviewCollection {
         // ContentType being mounted onto container
 
         events.on("tabs:dropAfter", (args: ContentTypeDroppedCreateEventParamsInterface) => {
-            if (args.id === this.parent.id && this.parent.children().length === 0) {
+            if (args.id === this.contentType.id && this.contentType.children().length === 0) {
                 this.addTab();
             }
         });
         // ContentType being removed from container
         events.on("tab-item:removeAfter", (args: ContentTypeRemovedParamsInterface) => {
-            if (args.parent.id === this.parent.id) {
+            if (args.parentContentType.id === this.contentType.id) {
                 // Mark the previous tab as active
                 const newIndex = (args.index - 1 >= 0 ? args.index - 1 : 0);
                 this.refreshTabs(newIndex, true);
@@ -396,7 +395,7 @@ export default class Preview extends PreviewCollection {
         let duplicatedTab: ContentTypeInterface;
         let duplicatedTabIndex: number;
         events.on("tab-item:duplicateAfter", (args: ContentTypeDuplicateEventParamsInterface) => {
-            if (this.parent.id === args.duplicateContentType.parent.id && args.direct) {
+            if (this.contentType.id === args.duplicateContentType.parentContentType.id && args.direct) {
                 const tabData = args.duplicateContentType.dataStore.getState();
                 args.duplicateContentType.dataStore.update(
                     tabData.tab_name.toString() + " copy",
@@ -411,7 +410,7 @@ export default class Preview extends PreviewCollection {
                 this.refreshTabs(duplicatedTabIndex, true);
                 duplicatedTab = duplicatedTabIndex = null;
             }
-            if (this.parent.id === args.contentType.parent.id) {
+            if (this.contentType.id === args.contentType.parentContentType.id) {
                 this.updateTabNamesInDataStore();
                 args.contentType.dataStore.subscribe(() => {
                     this.updateTabNamesInDataStore();
@@ -425,7 +424,7 @@ export default class Preview extends PreviewCollection {
      */
     private updateTabNamesInDataStore() {
         const activeOptions: ActiveOptionsInterface[] = [];
-        this.parent.children().forEach((tab: ContentTypeInterface, index: number) => {
+        this.contentType.children().forEach((tab: ContentTypeInterface, index: number) => {
             const tabData = tab.dataStore.getState();
             activeOptions.push({
                 label: tabData.tab_name.toString(),
@@ -434,7 +433,7 @@ export default class Preview extends PreviewCollection {
             });
         });
 
-        this.parent.dataStore.update(
+        this.contentType.dataStore.update(
             activeOptions,
             "_default_active_options",
         );

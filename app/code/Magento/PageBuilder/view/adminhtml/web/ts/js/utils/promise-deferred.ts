@@ -3,8 +3,6 @@
  * See COPYING.txt for license details.
  */
 
-import DeferredInterface from "./promise-deferred.d";
-
 /**
  * Returns a deferred promise
  *
@@ -19,4 +17,10 @@ export default function deferred(): DeferredInterface {
         reject = promiseReject;
     });
     return { resolve, reject, promise };
+}
+
+export interface DeferredInterface {
+    resolve: (...args: any[]) => void;
+    reject: (...args: any[]) => void;
+    promise: Promise<{}>;
 }

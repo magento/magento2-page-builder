@@ -10,8 +10,8 @@ import events from "Magento_PageBuilder/js/events";
 import _ from "underscore";
 import Config from "../../config";
 import ColumnGroup from "../../content-type-collection";
-import ContentTypeCollectionInterface from "../../content-type-collection.d";
-import ContentTypeConfigInterface from "../../content-type-config.d";
+import ContentTypeCollectionInterface from "../../content-type-collection.types";
+import ContentTypeConfigInterface from "../../content-type-config.types";
 import {DataObject} from "../../data-store";
 import {moveContentType} from "../../drag-drop/move-content-type";
 import {getDraggedContentTypeConfig} from "../../drag-drop/registry";
@@ -19,14 +19,13 @@ import {hiddenClass} from "../../drag-drop/sortable";
 import checkStageFullScreen from "../../utils/check-stage-full-screen";
 import {createStyleSheet} from "../../utils/create-stylesheet";
 import {default as ColumnGroupPreview} from "../column-group/preview";
-import BindResizeHandleEventParamsInterface from "../column/bind-resize-handle-event-params";
-import InitElementEventParamsInterface from "../column/init-element-event-params";
+import {BindResizeHandleEventParamsInterface, InitElementEventParamsInterface} from "../column/column-events.types";
 import ColumnPreview from "../column/preview";
 import Resize, {
     comparator, determineMaxGhostWidth, getAdjacentColumn, getColumnIndexInGroup,
     getRoundedColumnWidth, updateColumnWidth,
 } from "../column/resize";
-import ContentTypeRemovedEventParamsInterface from "../content-type-removed-event-params";
+import {ContentTypeRemovedEventParamsInterface} from "../content-type-events.types";
 import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
 import {calculateDropPositions, DropPosition} from "./drag-and-drop";
@@ -38,11 +37,11 @@ import {getDragColumn, removeDragColumn, setDragColumn} from "./registry";
  * @api
  */
 export default class Preview extends PreviewCollection {
-    public parent: ContentTypeCollectionInterface<ColumnGroupPreview>;
+    public contentType: ContentTypeCollectionInterface<ColumnGroupPreview>;
     public resizing: KnockoutObservable<boolean> = ko.observable(false);
     public hasEmptyChild: KnockoutComputed<boolean> = ko.computed(() => {
         let empty: boolean = false;
-        this.parent.getChildren()()
+        this.contentType.getChildren()()
             .forEach((column: ColumnGroup) => {
                 if (column.getChildren()().length === 0) {
                     empty = true;
@@ -82,23 +81,24 @@ export default class Preview extends PreviewCollection {
     private resizeUtils: Resize;
     private gridSizeHistory: Map<number, number[]> = new Map();
     private interactionLevel: number = 0;
+    private startDragEvent: JQueryEventObject;
 
     /**
      *
-     * @param {ContentTypeCollection} parent
+     * @param {ContentTypeCollection} contentType
      * @param {ContentTypeConfigInterface} config
      * @param {ObservableUpdater} observableUpdater
      */
     constructor(
-        parent: ColumnGroup,
+        contentType: ColumnGroup,
         config: ContentTypeConfigInterface,
         observableUpdater: ObservableUpdater,
     ) {
-        super(parent, config, observableUpdater);
-        this.resizeUtils = new Resize(this.parent);
+        super(contentType, config, observableUpdater);
+        this.resizeUtils = new Resize(this.contentType);
 
         // Keep track of the grid size in an observable
-        this.parent.dataStore.subscribe((state: DataObject) => {
+        this.contentType.dataStore.subscribe((state: DataObject) => {
             const gridSize = parseInt(state.grid_size.toString(), 10);
             this.gridSize(gridSize);
             this.gridSizeInput(gridSize);
@@ -108,7 +108,7 @@ export default class Preview extends PreviewCollection {
         }, "grid_size");
 
         events.on("contentType:removeAfter", (args: ContentTypeRemovedEventParamsInterface) => {
-            if (args.parent.id === this.parent.id) {
+            if (args.parentContentType.id === this.contentType.id) {
                 _.defer(() => {
                     this.spreadWidth(args.index);
                 });
@@ -117,19 +117,19 @@ export default class Preview extends PreviewCollection {
 
         // Listen for resizing events from child columns
         events.on("column:resizeHandleBindAfter", (args: BindResizeHandleEventParamsInterface) => {
-            // Does the events parent match the previews parent? (e.g. column group)
-            if (args.parent.id === this.parent.id) {
-                (this as ColumnGroupPreview).registerResizeHandle(args.column, args.handle);
+            // Does the events content type match the previews column group?
+            if (args.columnGroup.id === this.contentType.id) {
+                this.registerResizeHandle(args.column, args.handle);
             }
         });
         events.on("column:initializeAfter", (args: InitElementEventParamsInterface) => {
-            // Does the events parent match the previews parent? (e.g. column group)
-            if (args.parent.id === this.parent.id) {
-                (this as ColumnGroupPreview).bindDraggable(args.column);
+            // Does the events parent match the previews column group?
+            if (args.columnGroup.id === this.contentType.id) {
+                this.bindDraggable(args.column);
             }
         });
 
-        this.parent.children.subscribe(
+        this.contentType.children.subscribe(
             _.debounce(
                 this.removeIfEmpty.bind(this),
                 50,
@@ -154,7 +154,7 @@ export default class Preview extends PreviewCollection {
     public onNewColumnDrop(dropPosition: DropPosition) {
         // Create our new column
         createColumn(
-            this.parent,
+            this.contentType,
             this.resizeUtils.getSmallestColumnWidth(),
             dropPosition.insertIndex,
         ).then(() => {
@@ -175,7 +175,7 @@ export default class Preview extends PreviewCollection {
      */
     public onExistingColumnDrop(movePosition: DropPosition) {
         const column = getDragColumn();
-        const sourceGroupPreview = column.parent.preview as ColumnGroupPreview;
+        const sourceGroupPreview = column.parentContentType.preview as ColumnGroupPreview;
         let modifyOldNeighbour;
 
         // Determine which old neighbour we should modify
@@ -192,7 +192,7 @@ export default class Preview extends PreviewCollection {
         updateColumnWidth(column, this.resizeUtils.getSmallestColumnWidth());
 
         // Move the content type
-        moveContentType(column, movePosition.insertIndex, this.parent);
+        moveContentType(column, movePosition.insertIndex, this.contentType);
 
         // Modify the old neighbour
         if (modifyOldNeighbour) {
@@ -320,7 +320,7 @@ export default class Preview extends PreviewCollection {
             this.resizeMouseDown = true;
 
             ++this.interactionLevel;
-            events.trigger("stage:interactionStart", {stageId: this.parent.stageId});
+            events.trigger("stage:interactionStart", {stageId: this.contentType.stageId});
         });
     }
 
@@ -347,24 +347,25 @@ export default class Preview extends PreviewCollection {
                 });
                 return helper;
             },
-            start: (event: Event) => {
-                const columnInstance: ContentTypeCollectionInterface = ko.dataFor($(event.target)[0]);
+            start: (event: JQueryEventObject) => {
+                const columnInstance: ColumnPreview = ko.dataFor($(event.target)[0]);
                 // Use the global state as columns can be dragged between groups
-                setDragColumn((columnInstance.parent as ContentTypeCollectionInterface<ColumnPreview>));
-                this.dropPositions = calculateDropPositions(this.parent);
+                setDragColumn((columnInstance.contentType as ContentTypeCollectionInterface<ColumnPreview>));
+                this.dropPositions = calculateDropPositions(this.contentType);
+                this.startDragEvent = event;
 
                 events.trigger("column:dragStart", {
                     column: columnInstance,
-                    stageId: this.parent.stageId,
+                    stageId: this.contentType.stageId,
                 });
-                events.trigger("stage:interactionStart", {stageId: this.parent.stageId});
+                events.trigger("stage:interactionStart", {stageId: this.contentType.stageId});
             },
             stop: () => {
                 const draggedColumn = getDragColumn();
                 if (this.movePosition && draggedColumn) {
                     // Check if we're moving within the same group, even though this function will
                     // only ever run on the group that bound the draggable event
-                    if (draggedColumn.parent === this.parent) {
+                    if (draggedColumn.parentContentType === this.contentType) {
                         this.onColumnSort(draggedColumn, this.movePosition.insertIndex);
                         this.movePosition = null;
                     }
@@ -374,12 +375,13 @@ export default class Preview extends PreviewCollection {
 
                 this.dropPlaceholder.removeClass("left right");
                 this.movePlaceholder.removeClass("active");
+                this.startDragEvent = null;
 
                 events.trigger("column:dragStop", {
                     column: draggedColumn,
-                    stageId: this.parent.stageId,
+                    stageId: this.contentType.stageId,
                 });
-                events.trigger("stage:interactionStop", {stageId: this.parent.stageId});
+                events.trigger("stage:interactionStop", {stageId: this.contentType.stageId});
             },
         });
     }
@@ -397,7 +399,7 @@ export default class Preview extends PreviewCollection {
             if (newGridSize !== this.resizeUtils.getGridSize()) {
                 try {
                     resizeGrid(
-                        this.parent,
+                        this.contentType,
                         newGridSize,
                         this.gridSizeHistory,
                     );
@@ -464,7 +466,7 @@ export default class Preview extends PreviewCollection {
             this.gridSizeHistory = new Map();
             this.recordGridResize(this.gridSize());
             // inline tooltip out of bounds
-            if (checkStageFullScreen(this.parent.stageId)
+            if (checkStageFullScreen(this.contentType.stageId)
                 && 0 > tooltip[0].getBoundingClientRect().top
             ) {
                 this.gridToolTipOverFlow(true);
@@ -508,7 +510,7 @@ export default class Preview extends PreviewCollection {
      * Unset resizing flag on all child columns
      */
     private unsetResizingColumns(): void {
-        this.parent.children().forEach((column: ContentTypeCollectionInterface<ColumnPreview>) => {
+        this.contentType.children().forEach((column: ContentTypeCollectionInterface<ColumnPreview>) => {
             column.preview.resizing(false);
             if (column.preview.element) {
                 column.preview.element.css({transition: ""});
@@ -522,7 +524,7 @@ export default class Preview extends PreviewCollection {
     private endAllInteractions(): void {
         if (this.resizing() === true) {
             for (; this.interactionLevel > 0; this.interactionLevel--) {
-                events.trigger("stage:interactionStop", {stageId: this.parent.stageId});
+                events.trigger("stage:interactionStop", {stageId: this.contentType.stageId});
             }
         }
 
@@ -603,11 +605,18 @@ export default class Preview extends PreviewCollection {
         if (this.dropOverElement && this.dropPosition) {
             this.onNewColumnDrop(this.dropPosition);
             this.dropOverElement = null;
+
+            // Re-enable the parent disabled sortable instance
+            _.defer(() => {
+                $(".element-children.ui-sortable-disabled").each(function() {
+                    $(this).sortable("option", "disabled", false);
+                });
+            });
         }
 
         const column = getDragColumn();
 
-        if (this.movePosition && column && column.parent !== this.parent) {
+        if (this.movePosition && column && column.parentContentType !== this.contentType) {
             this.onExistingColumnDrop(this.movePosition);
         }
     }
@@ -786,36 +795,36 @@ export default class Preview extends PreviewCollection {
         if (dragColumn) {
             // If the drop positions haven't been calculated for this group do so now
             if (this.dropPositions.length === 0) {
-                this.dropPositions = calculateDropPositions(this.parent);
+                this.dropPositions = calculateDropPositions(this.contentType);
             }
             const columnInstance = dragColumn;
             const currentX = event.pageX - groupPosition.left;
 
             // Are we within the same column group or have we ended up over another?
-            if (columnInstance.parent === this.parent) {
-                const currentColumn = dragColumn.preview.element;
-                const currentColumnRight = currentColumn.position().left + currentColumn.width();
-                const lastColInGroup = (this.parent.children()[this.parent.children().length - 1]
-                    .preview as ColumnPreview).element;
-                const insertLastPos = lastColInGroup.position().left + (lastColInGroup.width() / 2);
+            if (columnInstance.parentContentType === this.contentType && this.startDragEvent) {
+                const dragDirection = (event.pageX <= this.startDragEvent.pageX ? "left" : "right");
+                const adjacentLeftColumn = getAdjacentColumn(dragColumn, "-1");
 
+                // Determine the current move position based on the cursors position and direction of drag
                 this.movePosition = this.dropPositions.find((position) => {
-                    // Only ever look for the left placement, except the last item where we look on the right
-                    const placement = (currentX >= insertLastPos ? "right" : "left");
-                    // There is 200px area over each column borders
-                    return comparator(currentX, position[placement], 100) &&
-                        !comparator(currentX, currentColumnRight, 100) &&
-                        position.affectedColumn !== columnInstance && // Check affected column isn't the current column
-                        position.placement === placement; // Verify the position, we only check left on sorting
+                    return currentX > position.left && currentX < position.right &&
+                        position.placement === dragDirection && position.affectedColumn !== dragColumn;
                 });
+
+                // Differences in the element & event positions cause a right movement to activate on the left column
+                if (this.movePosition && dragDirection === "right" &&
+                    this.movePosition.affectedColumn === adjacentLeftColumn
+                ) {
+                    this.movePosition = null;
+                }
 
                 if (this.movePosition) {
                     this.dropPlaceholder.removeClass("left right");
                     this.movePlaceholder.css({
                         left: (this.movePosition.placement === "left" ? this.movePosition.left : ""),
-                        right: (this.movePosition.placement === "right" ?
-                                groupPosition.outerWidth - this.movePosition.right - 5 : ""
-                        ),
+                        right: (this.movePosition.placement === "right"
+                            ? groupPosition.width - this.movePosition.right : ""),
+                        width: dragColumn.preview.element.outerWidth() + "px",
                     }).addClass("active");
                 } else {
                     this.movePlaceholder.removeClass("active");
@@ -858,7 +867,7 @@ export default class Preview extends PreviewCollection {
             event.pageY > groupPosition.top + 20 &&
             event.pageY < (groupPosition.top + groupPosition.outerHeight) - 20
         ) {
-            // Disable the parent sortable instance
+            // Disable the column group sortable instance
             if (elementChildrenParent.data("sortable")) {
                 elementChildrenParent.sortable("option", "disabled", true);
             }
@@ -877,7 +886,7 @@ export default class Preview extends PreviewCollection {
                 }).addClass(this.dropPosition.placement);
             }
         } else if (this.dropOverElement) {
-            // Re-enable the parent sortable instance
+            // Re-enable the column group sortable instance
             if (elementChildrenParent.data("sortable")) {
                 elementChildrenParent.sortable("option", "disabled", false);
             }
@@ -901,7 +910,7 @@ export default class Preview extends PreviewCollection {
                 self.dropPlaceholder.removeClass("left right");
 
                 _.defer(() => {
-                    // Re-enable the parent sortable instance & all children sortable instances
+                    // Re-enable the column group sortable instance & all children sortable instances
                     group.parents(".element-children").each(function() {
                         if ($(this).data("sortable")) {
                             $(this).sortable("option", "disabled", false);
@@ -947,7 +956,7 @@ export default class Preview extends PreviewCollection {
                 if (getDraggedContentTypeConfig() === Config.getContentTypeConfig("column")) {
                     // Always calculate drop positions when an element is dragged over
                     self.dropPositions = calculateDropPositions(
-                        self.parent as ContentTypeCollectionInterface<ColumnGroupPreview>,
+                        self.contentType as ContentTypeCollectionInterface<ColumnGroupPreview>,
                     );
 
                     self.dropOverElement = true;
@@ -964,13 +973,13 @@ export default class Preview extends PreviewCollection {
      * @param {number} removedIndex
      */
     private spreadWidth(removedIndex: number): void {
-        if (this.parent.children().length === 0) {
+        if (this.contentType.children().length === 0) {
             return;
         }
 
         const availableWidth = 100 - this.resizeUtils.getColumnsWidth();
         const formattedAvailableWidth = getRoundedColumnWidth(availableWidth);
-        const totalChildColumns = this.parent.children().length;
+        const totalChildColumns = this.contentType.children().length;
         const allowedColumnWidths = [];
         let spreadAcross = 1;
         let spreadAmount;
@@ -1001,15 +1010,17 @@ export default class Preview extends PreviewCollection {
             let columnToModify: ContentTypeCollectionInterface<ColumnPreview>;
 
             // As the original column has been removed from the array, check the new index for a column
-            if (removedIndex <= this.parent.children().length
-                && typeof this.parent.children()[removedIndex] !== "undefined") {
-                columnToModify = this.parent.children()[removedIndex] as ContentTypeCollectionInterface<ColumnPreview>;
+            if (removedIndex <= this.contentType.children().length
+                && typeof this.contentType.children()[removedIndex] !== "undefined") {
+                columnToModify = this
+                    .contentType
+                    .children()[removedIndex] as ContentTypeCollectionInterface<ColumnPreview>;
             }
             if (!columnToModify && (removedIndex - i) >= 0 &&
-                typeof this.parent.children()[removedIndex - i] !== "undefined"
+                typeof this.contentType.children()[removedIndex - i] !== "undefined"
             ) {
                 columnToModify =
-                    this.parent.children()[removedIndex - i] as ContentTypeCollectionInterface<ColumnPreview>;
+                    this.contentType.children()[removedIndex - i] as ContentTypeCollectionInterface<ColumnPreview>;
             }
             if (columnToModify) {
                 updateColumnWidth(
@@ -1024,8 +1035,8 @@ export default class Preview extends PreviewCollection {
      * Remove self if we contain no children
      */
     private removeIfEmpty(): void {
-        if (this.parent.children().length === 0) {
-            this.parent.parent.removeChild(this.parent);
+        if (this.contentType.children().length === 0) {
+            this.contentType.parentContentType.removeChild(this.contentType);
             return;
         }
     }
@@ -1038,7 +1049,7 @@ export default class Preview extends PreviewCollection {
     private recordGridResize(newGridSize: number): void {
         if (!this.gridSizeHistory.has(newGridSize)) {
             const columnWidths: number[] = [];
-            this.parent.getChildren()().forEach(
+            this.contentType.getChildren()().forEach(
                 (column: ContentTypeCollectionInterface<ColumnPreview>) => {
                     columnWidths.push(this.resizeUtils.getColumnWidth(column));
                 });

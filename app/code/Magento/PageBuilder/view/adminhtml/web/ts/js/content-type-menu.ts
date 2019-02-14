@@ -5,24 +5,24 @@
 
 import ko from "knockout";
 import _ from "underscore";
-import OptionInterface, {OptionsInterface} from "./content-type-menu/option.d";
+import OptionInterface, {OptionsInterface} from "./content-type-menu/option.types";
 import Preview from "./content-type/preview";
 
 /**
  * @api
  */
 export default class ContentTypeMenu {
-    private parent: Preview;
+    private preview: Preview;
     private options: KnockoutObservableArray<OptionInterface> = ko.observableArray([]);
 
     /**
      * Options constructor
      *
-     * @param parent
+     * @param preview
      * @param options
      */
-    constructor(parent: Preview, options: OptionsInterface) {
-        this.parent = parent;
+    constructor(preview: Preview, options: OptionsInterface) {
+        this.preview = preview;
         const codes = _.keys(options);
         _.values(options).forEach((option, index) => {
             option.code = codes[index];

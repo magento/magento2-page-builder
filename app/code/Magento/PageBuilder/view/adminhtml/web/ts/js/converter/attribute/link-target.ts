@@ -6,7 +6,7 @@
 import {DataObject} from "../../data-store";
 import {get} from "../../utils/object";
 import ConverterInterface from "../converter-interface";
-import LinkObject from "../link-object";
+import LinkObject from "../link-object.types";
 
 /**
  * @api

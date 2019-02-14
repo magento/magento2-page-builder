@@ -19,15 +19,15 @@ define(["underscore", "Magento_PageBuilder/js/utils/object"], function (_undersc
      */
     _proto.fromDom = function fromDom(value) {
       return value;
-    };
+    }
     /**
      * Convert value to knockout format
      *
-     * @param name string
-     * @param data Object
+     * @param {string} name
+     * @param {DataObject} data
      * @returns {string | object}
      */
-
+    ;
 
     _proto.toDom = function toDom(name, data) {
       var result = {};
@@ -37,7 +37,7 @@ define(["underscore", "Magento_PageBuilder/js/utils/object"], function (_undersc
         value = JSON.parse(value);
       }
 
-      if (undefined !== value && undefined !== value.margin) {
+      if (value && undefined !== value.margin) {
         result.marginLeft = value.margin.left ? value.margin.left + "px" : "";
         result.marginTop = value.margin.top ? value.margin.top + "px" : "";
         result.marginRight = value.margin.right ? value.margin.right + "px" : "";

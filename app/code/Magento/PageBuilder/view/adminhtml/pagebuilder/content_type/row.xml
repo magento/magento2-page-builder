@@ -12,12 +12,12 @@
           preview_component="Magento_PageBuilder/js/content-type/row/preview"
           master_component="Magento_PageBuilder/js/content-type/master-collection"
           form="pagebuilder_row_form"
-          group="layout"
+          menu_section="layout"
           icon="icon-pagebuilder-row"
           sortOrder="1"
           translate="label">
         <parents default_policy="deny">
-            <parent name="stage" policy="allow"/>
+            <parent name="root-container" policy="allow"/>
         </parents>
         <children default_policy="allow">
             <child name="row" policy="deny"/>
@@ -26,12 +26,12 @@
             <appearance default="true"
                         name="contained"
                         preview_template="Magento_PageBuilder/content-type/row/contained/preview"
-                        render_template="Magento_PageBuilder/content-type/row/contained/master"
+                        master_template="Magento_PageBuilder/content-type/row/contained/master"
                         reader="Magento_PageBuilder/js/master-format/read/configurable">
                     <elements>
                         <element name="main">
                             <style name="display" source="display" converter="Magento_PageBuilder/js/converter/style/display" preview_converter="Magento_PageBuilder/js/converter/style/preview/display"/>
-                            <attribute name="name" source="data-role"/>
+                            <attribute name="name" source="data-content-type"/>
                             <attribute name="appearance" source="data-appearance"/>
                         </element>
                         <element name="inner">
@@ -73,7 +73,7 @@
             </appearance>
             <appearance name="full-width"
                         preview_template="Magento_PageBuilder/content-type/row/full-width/preview"
-                        render_template="Magento_PageBuilder/content-type/row/full-width/master"
+                        master_template="Magento_PageBuilder/content-type/row/full-width/master"
                         reader="Magento_PageBuilder/js/master-format/read/configurable">
                 <elements>
                     <element name="main">
@@ -93,7 +93,7 @@
                         <style name="display" source="display" converter="Magento_PageBuilder/js/converter/style/display" preview_converter="Magento_PageBuilder/js/converter/style/preview/display"/>
                         <style name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/margins"/>
                         <style name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/paddings"/>
-                        <attribute name="name" source="data-role"/>
+                        <attribute name="name" source="data-content-type"/>
                         <attribute name="appearance" source="data-appearance"/>
                         <attribute name="enable_parallax" source="data-enable-parallax"/>
                         <attribute name="parallax_speed" source="data-parallax-speed"/>
@@ -119,7 +119,7 @@
             </appearance>
             <appearance name="full-bleed"
                         preview_template="Magento_PageBuilder/content-type/row/full-bleed/preview"
-                        render_template="Magento_PageBuilder/content-type/row/full-bleed/master"
+                        master_template="Magento_PageBuilder/content-type/row/full-bleed/master"
                         reader="Magento_PageBuilder/js/master-format/read/configurable">
                 <elements>
                     <element name="main">
@@ -139,7 +139,7 @@
                         <style name="display" source="display" converter="Magento_PageBuilder/js/converter/style/display" preview_converter="Magento_PageBuilder/js/converter/style/preview/display"/>
                         <style name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/margins"/>
                         <style name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/paddings"/>
-                        <attribute name="name" source="data-role"/>
+                        <attribute name="name" source="data-content-type"/>
                         <attribute name="appearance" source="data-appearance"/>
                         <attribute name="enable_parallax" source="data-enable-parallax"/>
                         <attribute name="parallax_speed" source="data-parallax-speed"/>

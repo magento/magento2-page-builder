@@ -44,7 +44,7 @@ class Row implements RendererInterface
             return $this->renderElementWithAttributes(
                 [
                     'data-element' => 'main',
-                    'data-role' => 'row',
+                    'data-content-type' => 'row',
                     'data-appearance' => 'full-width',
                     'class' => $itemData['formData']['css_classes'] ?? '',
                     'style' => $style ?? null
@@ -63,7 +63,7 @@ class Row implements RendererInterface
         return $this->renderElementWithAttributes(
             [
                 'data-element' => 'main',
-                'data-role' => 'row',
+                'data-content-type' => 'row',
                 'data-appearance' => 'contained',
             ],
             $this->renderElementWithAttributes(
