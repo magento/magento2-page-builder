@@ -568,4 +568,30 @@
         </after>
         <comment userInput="---merging to remove step---" stepKey="openPageBuilderFullScreen"/>
     </test>
+    <test name="PageBuilderCategoryFullScreenLeftPanelHeightAndFunctionality" extends="PageBuilderFullScreenLeftPanelHeightAndFunctionality">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Catalog Products"/>
+            <title value="Left Panel Is Full-Height and Works In Full-Screen Mode"/>
+            <description value="This test is to ensure that the PageBuilder left panel works and grows to span the full height of the viewport in full-screen mode when opened for Category Description."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-3330"/>
+            <testCaseId value="MC-14910"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-fullScreen"/>
+            <group value="pagebuilder-catalog-category"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultCategory" before="loginAsAdmin" stepKey="createPreReqCategory"/>
+            <actionGroup ref="navigateToCreatedCategory" stepKey="navigateToAPageWithPageBuilder">
+                <argument name="Category" value="$$createPreReqCategory$$"/>
+            </actionGroup>
+            <conditionalClick selector="{{AdminCategoryContentSection.sectionHeader}}" dependentSelector="{{AdminCategoryContentSection.uploadButton}}" visible="false" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="openPageBuilderForAttribute" after="switchToPageBuilderStage" stepKey="openPageBuilderForDescription"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createPreReqCategory" before="logout" stepKey="deleteCreatedCategory"/>
+        </after>
+        <comment userInput="---merging to remove step---" stepKey="openPageBuilderFullScreen"/>
+    </test>
 </tests>
