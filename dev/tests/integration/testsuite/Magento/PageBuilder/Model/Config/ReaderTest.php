@@ -23,7 +23,7 @@ class ReaderTest extends \PHPUnit\Framework\TestCase
     /**
      * @var \Magento\PageBuilder\Model\Config\FileResolver|\PHPUnit_Framework_MockObject_MockObject
      */
-    private $groupsFileResolverMock;
+    private $menuSectionsFileResolverMock;
 
     /**
      * @var \Magento\PageBuilder\Model\Config\FileResolver|\PHPUnit_Framework_MockObject_MockObject
@@ -34,16 +34,16 @@ class ReaderTest extends \PHPUnit\Framework\TestCase
     {
         $this->objectManager = Bootstrap::getObjectManager();
 
-        $this->groupsFileResolverMock = $this->createMock(
+        $this->menuSectionsFileResolverMock = $this->createMock(
             \Magento\PageBuilder\Model\Config\FileResolver::class
         );
         $this->contentTypesFileResolverMock = $this->createMock(
             \Magento\PageBuilder\Model\Config\FileResolver::class
         );
 
-        $groupsReader = $this->objectManager->create(
-            \Magento\PageBuilder\Model\Config\Group\Reader::class,
-            ['fileResolver' => $this->groupsFileResolverMock]
+        $menuSectionsReader = $this->objectManager->create(
+            \Magento\PageBuilder\Model\Config\MenuSection\Reader::class,
+            ['fileResolver' => $this->menuSectionsFileResolverMock]
         );
         $contentTypesReader = $this->objectManager->create(
             \Magento\PageBuilder\Model\Config\ContentType\Reader::class,
@@ -52,16 +52,16 @@ class ReaderTest extends \PHPUnit\Framework\TestCase
 
         $this->model = $this->objectManager->create(
             \Magento\PageBuilder\Model\Config\CompositeReader::class,
-            ['readers' => [$groupsReader, $contentTypesReader]]
+            ['readers' => [$menuSectionsReader, $contentTypesReader]]
         );
     }
 
     public function testMerge()
     {
-        $groupsFileList = [
-            file_get_contents(__DIR__ . '/../../_files/content_type/group1.xml'),
-            file_get_contents(__DIR__ . '/../../_files/content_type/group2.xml'),
-            file_get_contents(__DIR__ . '/../../_files/content_type/group3.xml')
+        $menuSectionsFileList = [
+            file_get_contents(__DIR__ . '/../../_files/content_type/menu_section1.xml'),
+            file_get_contents(__DIR__ . '/../../_files/content_type/menu_section2.xml'),
+            file_get_contents(__DIR__ . '/../../_files/content_type/menu_section3.xml')
         ];
         $contentTypesFiles = [
             file_get_contents(__DIR__ . '/../../_files/content_type/type1_content_type1.xml'),
@@ -72,10 +72,10 @@ class ReaderTest extends \PHPUnit\Framework\TestCase
             file_get_contents(__DIR__ . '/../../_files/content_type/type3_content_type2.xml')
         ];
 
-        $this->groupsFileResolverMock->expects($this->any())
+        $this->menuSectionsFileResolverMock->expects($this->any())
             ->method('get')
-            ->with('group.xml', 'global')
-            ->willReturn($groupsFileList);
+            ->with('menu_section.xml', 'global')
+            ->willReturn($menuSectionsFileList);
         $this->contentTypesFileResolverMock->expects($this->any())
             ->method('get')
             ->with('content_type/*.xml', 'global')

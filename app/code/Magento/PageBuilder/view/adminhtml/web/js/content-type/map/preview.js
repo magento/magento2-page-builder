@@ -1,4 +1,5 @@
 /*eslint-disable */
+
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
 define(["knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/utils/map", "module", "Magento_PageBuilder/js/content-type-menu/hide-show-option", "Magento_PageBuilder/js/content-type/preview"], function (_knockout, _events, _map, _module, _hideShowOption, _preview) {
@@ -49,11 +50,11 @@ define(["knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/uti
         sort: 40
       });
       return options;
-    };
+    }
     /**
      * Open edit menu on map content type drop with a delay of 300ms
      */
-
+    ;
 
     _proto.bindEvents = function bindEvents() {
       var _this2 = this;
@@ -64,14 +65,14 @@ define(["knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/uti
       _events.on("googleMaps:authFailure", function () {
         _this2.apiKeyValid(false);
       });
-    };
+    }
     /**
      * Renders the map and subscribe to position for updates
      *
      * @param {Element} element
      * @returns {void}
      */
-
+    ;
 
     _proto.renderMap = function renderMap(element) {
       var _this3 = this;
@@ -88,14 +89,14 @@ define(["knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/uti
           _this3.updateMap();
         });
       }
-    };
+    }
     /**
      * Generate maps
      *
      * @param {Element} element
      * @returns {void}
      */
-
+    ;
 
     _proto.generateMap = function generateMap(element) {
       var currentLocations = this.data.main.attributes()["data-locations"] || "[]";
@@ -113,24 +114,24 @@ define(["knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/uti
       }
 
       this.mapElement = new _map(element, locations, options);
-    };
+    }
     /**
      * Updates map
      *
      * @returns {void}
      */
-
+    ;
 
     _proto.updateMap = function updateMap() {
       var mapData = this.getMapData();
       this.mapElement.onUpdate(mapData.locations, mapData.options);
-    };
+    }
     /**
      * Get locations, center coordinates, and zoom from data.position
      *
      * @returns {Object}
      */
-
+    ;
 
     _proto.getMapData = function getMapData() {
       var attributes = this.data.main.attributes();

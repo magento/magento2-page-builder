@@ -12,24 +12,24 @@
           preview_component="Magento_PageBuilder/js/content-type/button-item/preview"
           master_component="Magento_PageBuilder/js/content-type/master"
           form="pagebuilder_button_item_form"
-          group="elements"
+          menu_section="elements"
           icon="icon-pagebuilder-button"
           translate="label">
         <parents default_policy="deny">
             <parent name="buttons" policy="allow"/>
         </parents>
         <children default_policy="deny"/>
-        <is_visible>false</is_visible>
+        <is_system>false</is_system>
         <appearances>
             <appearance default="true"
                         name="default"
                         preview_template="Magento_PageBuilder/content-type/button-item/default/preview"
-                        render_template="Magento_PageBuilder/content-type/button-item/default/master"
+                        master_template="Magento_PageBuilder/content-type/button-item/default/master"
                         reader="Magento_PageBuilder/js/master-format/read/configurable">
                 <elements>
                     <element name="main">
                         <style name="display" source="display" converter="Magento_PageBuilder/js/content-type/button-item/converter/style/display" preview_converter="Magento_PageBuilder/js/converter/style/preview/display"/>
-                        <attribute name="name" source="data-role"/>
+                        <attribute name="name" source="data-content-type"/>
                         <attribute name="appearance" source="data-appearance"/>
                         <css name="css_classes"/>
                     </element>

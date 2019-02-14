@@ -8,9 +8,9 @@
 <sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
     <section name="TabsOnStage">
-        <element name="base" type="button" selector="(//div[@data-role='tabs'])[{{arg1}}]" parameterized="true"/>
-        <element name="hidden" type="button" selector="(//div[@data-role='tabs'])[{{arg1}}]/ancestor::*[contains(@class, 'pagebuilder-content-type-wrapper') and contains(@class, 'pagebuilder-content-type-hidden')]" parameterized="true"/>
-        <element name="notHidden" type="button" selector="(//div[@data-role='tabs'])[{{arg1}}]/parent::*[contains(@class, 'pagebuilder-content-type-wrapper') and not(contains(@class, 'pagebuilder-content-type-hidden'))][1]" parameterized="true"/>
+        <element name="base" type="button" selector="(//div[@data-content-type='tabs'])[{{arg1}}]" parameterized="true"/>
+        <element name="hidden" type="button" selector="(//div[@data-content-type='tabs'])[{{arg1}}]/ancestor::*[contains(@class, 'pagebuilder-content-type-wrapper') and contains(@class, 'pagebuilder-content-type-hidden')]" parameterized="true"/>
+        <element name="notHidden" type="button" selector="(//div[@data-content-type='tabs'])[{{arg1}}]/parent::*[contains(@class, 'pagebuilder-content-type-wrapper') and not(contains(@class, 'pagebuilder-content-type-hidden'))][1]" parameterized="true"/>
         <element name="tabsContainer" type="button" selector="//div[contains(@class,'pagebuilder-tabs')]"/>
         <element name="tabsNavigation" type="button" selector="(//div[contains(@class,'pagebuilder-tabs')]//descendant::*[contains(@class,'tabs-navigation')])"/>
         <element name="tabsNavAligned" type="button" selector="(//div[contains(@class,'pagebuilder-tabs')]//descendant::*[contains(@class,'tabs-navigation')][contains(@style, 'text-align: {{arg1}};')])" parameterized="true"/>
@@ -26,21 +26,21 @@
         <element name="tabsAlignment" type="text" selector="//ul[@role='tablist' and contains(@style,'text-align: {{arg1}}')]" parameterized="true"/>
     </section>
     <section name="TabsOnFrontend">
-        <element name="base" type="button" selector="(//div[@data-role='tabs'])[{{arg1}}]" parameterized="true"/>
-        <element name="hidden" type="button" selector="(//div[@data-role='tabs'])[{{arg1}}][contains(@style, 'display: none')]" parameterized="true"/>
-        <element name="notHidden" type="button" selector="(//div[@data-role='tabs'])[{{arg1}}][not(contains(@style, 'display: none'))]" parameterized="true"/>
-        <element name="tabsMinHeight" type="button" selector="//div[@data-role='tabs']//div[@class='tabs-content'][contains(@style, 'min-height: {{arg1}}px')]" parameterized="true"/>
-        <element name="tabsNavAligned" type="button" selector="(//div[@data-role='tabs']//descendant::*[@role='tablist'][contains(@style, 'text-align: {{arg1}};')])" parameterized="true"/>
+        <element name="base" type="button" selector="(//div[@data-content-type='tabs'])[{{arg1}}]" parameterized="true"/>
+        <element name="hidden" type="button" selector="(//div[@data-content-type='tabs'])[{{arg1}}][contains(@style, 'display: none')]" parameterized="true"/>
+        <element name="notHidden" type="button" selector="(//div[@data-content-type='tabs'])[{{arg1}}][not(contains(@style, 'display: none'))]" parameterized="true"/>
+        <element name="tabsMinHeight" type="button" selector="//div[@data-content-type='tabs']//div[@class='tabs-content'][contains(@style, 'min-height: {{arg1}}px')]" parameterized="true"/>
+        <element name="tabsNavAligned" type="button" selector="(//div[@data-content-type='tabs']//descendant::*[@role='tablist'][contains(@style, 'text-align: {{arg1}};')])" parameterized="true"/>
         <element name="tabsContentAdvancedStyles" type="button" selector="//div[@class='tabs-content'][contains(@style, 'border-style: solid;')][contains(@style, 'border-color: rgb(0, 0, 0);')][contains(@style, 'border-width: 10px;')][contains(@style, 'border-radius: 12px;')][contains(@style, 'min-height: 300px;')]"/>
-        <element name="tabsContentCSS" type="text" selector="[data-role=tabs] .tabs-content[data-element=content]"/>
+        <element name="tabsContentCSS" type="text" selector="[data-content-type=tabs] .tabs-content[data-element=content]"/>
         <element name="tabsAlignment" type="text" selector="//div[@class='tabs-content'and contains(@style,'text-align: {{arg1}}')]" parameterized="true"/>
         <element name="tabsContentHeightJS" type="button" selector="document.querySelectorAll('[class=tabs-content]')[{{arg1}}].clientHeight" parameterized="true"/>
     </section>
     <section name="TabOnStage">
-        <element name="base" type="button" selector="(//div[@data-role='tab-item'])[{{arg1}}]" parameterized="true"/>
-        <element name="baseJS" type="text" selector="document.querySelectorAll('[data-role=tab-item]')[{{arg1}} - 1]" parameterized="true"/>
+        <element name="base" type="button" selector="(//div[@data-content-type='tab-item'])[{{arg1}}]" parameterized="true"/>
+        <element name="baseJS" type="text" selector="document.querySelectorAll('[data-content-type=tab-item]')[{{arg1}} - 1]" parameterized="true"/>
         <element name="all" type="button" selector=".pagebuilder-tab-item"/>
-        <element name="moveHandle" type="button" selector="(//div[@data-role='tabs'])[{{arg1}}]//li[@role='tab'][{{arg2}}]//span[@class='tab-drag-handle']" parameterized="true"/>
+        <element name="moveHandle" type="button" selector="(//div[@data-content-type='tabs'])[{{arg1}}]//li[@role='tab'][{{arg2}}]//span[@class='tab-drag-handle']" parameterized="true"/>
         <element name="tabHeader" type="button" selector="(//ul[contains(@class, 'tabs-navigation')]//a[contains(@class, 'tab-title')])[{{arg1}}]" parameterized="true"/>
         <element name="tabHeaderEditableTitle" type="button" selector="(//ul[contains(@class, 'tabs-navigation')]//a[contains(@class, 'tab-title')])[{{arg1}}]//span[contains(@contenteditable, 'true')]" parameterized="true"/>
         <element name="tabHeaderItemDefault" type="button" selector="//ul[contains(@class, 'tabs-navigation')]/li[contains(@style, 'border-radius: {{arg1}}px;') and contains(@style, 'border-width: 1px;')]" parameterized="true"/>
@@ -57,7 +57,7 @@
         <element name="tabTitle" type="button" selector="//*[@name='tabs[{{arg1}}][title]']" parameterized="true"/>
         <element name="tabPanel" type="button" selector="//*[@role='tabpanel'][{{arg1}}]" parameterized="true"/>
         <element name="tabContent" type="button" selector="//*[@role='tabpanel'][{{arg1}}]//div[contains(@class, 'pagebuilder-tab-item')]" parameterized="true"/>
-        <element name="tabContentCSS" type="text" selector="[data-role=tabs] [data-role=tab-item]"/>
+        <element name="tabContentCSS" type="text" selector="[data-content-type=tabs] [data-content-type=tab-item]"/>
         <element name="tabContentBackgroundColor" type="button" selector="//*[@role='tabpanel'][{{arg1}}]//div[contains(@class, 'pagebuilder-tab-item')][contains(@style, 'background-color: {{arg2}}')]" parameterized="true"/>
         <element name="tabContentBackgroundImage" type="button" selector="//*[@role='tabpanel'][{{arg1}}]//div[contains(@class, 'pagebuilder-tab-item')][contains(@style, 'background-image: url') and contains(@style, '{{arg2}}') and contains(@style, '{{arg3}}')]" parameterized="true"/>
         <element name="tabContentBackgroundAttachment" type="button" selector="//*[@role='tabpanel'][{{arg1}}]//div[contains(@class, 'pagebuilder-tab-item')][contains(@style, 'background-attachment: {{arg2}}')]" parameterized="true"/>
@@ -66,7 +66,7 @@
         <element name="tabContentBackgroundRepeat" type="button" selector="//*[@role='tabpanel'][{{arg1}}]//div[contains(@class, 'pagebuilder-tab-item')][contains(@style, 'background-repeat: {{arg2}}')]" parameterized="true"/>
         <element name="tabContentBorderWidth" type="button" selector="//*[@role='tabpanel'][{{arg1}}]//div[contains(@class, 'pagebuilder-tab-item')][contains(@style, 'border-width: {{arg2}}')]" parameterized="true"/>
         <element name="tabContentBorderRadius" type="button" selector="//*[@role='tabpanel'][{{arg1}}]//div[contains(@class, 'pagebuilder-tab-item')][contains(@style, 'border-radius: {{arg2}}')]" parameterized="true"/>
-        <element name="tabContentHeightJS" type="button" selector="document.querySelectorAll('[data-role=tab-item]')[{{arg1}}].clientHeight" parameterized="true"/>
+        <element name="tabContentHeightJS" type="button" selector="document.querySelectorAll('[data-content-type=tab-item]')[{{arg1}}].clientHeight" parameterized="true"/>
         <element name="tabContentMargin" type="button" selector="//*[@role='tabpanel'][{{arg1}}]//div[contains(@class, 'pagebuilder-tab-item')][contains(@style, 'margin: {{arg2}}')]" parameterized="true"/>
         <element name="tabContentPadding" type="button" selector="//*[@role='tabpanel'][{{arg1}}]//div[contains(@class, 'pagebuilder-tab-item')][contains(@style, 'padding: {{arg2}}')]" parameterized="true"/>
         <element name="container" type="button" selector="(//*[@role='tabpanel'])[{{arg1}}]//div[contains(@class, 'pagebuilder-tab-item')]//div[contains(@class, 'tab-item-container')]" parameterized="true"/>
@@ -87,31 +87,31 @@
         <element name="noBackgroundImage" type="button" selector="(//div[contains(@class,'pagebuilder-tab-item')])[{{arg1}}][not(contains(@style,'background-image:'))]" parameterized="true"/>
     </section>
     <section name="TabOnStorefront">
-        <element name="all" type="button" selector="[data-role=\'tab-item\']"/>
-        <element name="base" type="button" selector="(//div[@data-role='tab-item'])[{{arg1}}]" parameterized="true"/>
-        <element name="baseJS" type="text" selector="document.querySelectorAll('[data-role=tab-item]')[{{arg1}} - 1]" parameterized="true"/>
+        <element name="all" type="button" selector="[data-content-type=\'tab-item\']"/>
+        <element name="base" type="button" selector="(//div[@data-content-type='tab-item'])[{{arg1}}]" parameterized="true"/>
+        <element name="baseJS" type="text" selector="document.querySelectorAll('[data-content-type=tab-item]')[{{arg1}} - 1]" parameterized="true"/>
         <element name="tabHeader" type="button" selector="(//li[contains(@role, 'tab')])[{{arg1}}]" parameterized="true"/>
-        <element name="tabHeaderItemActive" type="button" selector="(//div[@data-role='tabs']//descendant::*[@role='tablist'])/li[{{arg1}}][contains(@class, 'ui-state-active')]" parameterized="true"/>
+        <element name="tabHeaderItemActive" type="button" selector="(//div[@data-content-type='tabs']//descendant::*[@role='tablist'])/li[{{arg1}}][contains(@class, 'ui-state-active')]" parameterized="true"/>
         <element name="tabPanel" type="button" selector="(//div[@class='tabs-content']//div[@role='tabpanel'])[{{arg1}}]" parameterized="true"/>
-        <element name="tabContent" type="button" selector="div.tabs-content div[data-role=tab-item]:nth-child({{arg1}})" parameterized="true"/>
-        <element name="tabContentCSS" type="text" selector="[data-role=tabs] .tabs-content[data-element=content] [data-role=tab-item]"/>
-        <element name="container" type="button" selector="(//div[@class='tabs-content']//div[@data-role='tab-item'])[{{arg1}}]" parameterized="true"/>
-        <element name="containerStyle" type="button" selector="(//div[@class='tabs-content']//div[@data-role='tab-item'])[{{arg1}}][contains(@style,'{{arg2}}')]" parameterized="true"/>
-        <element name="noMinHeight" type="button" selector="(//div[@class='tabs-content']//div[@data-role='tab-item'])[{{arg1}}][not(contains(@style,'min-height:'))]" parameterized="true"/>
-        <element name="minHeight" type="button" selector="(//div[@class='tabs-content']//div[@data-role='tab-item'])[{{arg1}}][contains(@style,'min-height: {{arg2}}px;')]" parameterized="true"/>
-        <element name="verticalAlignContainer" type="button" selector="(//div[@class='tabs-content']//div[@data-role='tab-item'])[{{arg1}}][contains(@style,'justify-content: {{arg2}};')]" parameterized="true"/>
-        <element name="tabContentType" type="button" selector="(//div[@class='tabs-content']//div[@data-role='tab-item'])[{{arg1}}]/div[1]/hr" parameterized="true"/>
-        <element name="tabContentText" type="button" selector="(//div[@class='tabs-content']//div[@data-role='tab-item'])[{{arg1}}]//div[contains(@data-role, 'text')][1]" parameterized="true"/>
-        <element name="tabContentAdvancedStylesBorder" type="button" selector="(//div[@class='tabs-content']//div[@data-role='tab-item'])[{{arg1}}][contains(@style, 'border-style: {{arg2}}') and contains(@style, 'border-color: {{arg3}}') and contains(@style, 'border-width: {{arg4}}px') and contains(@style, 'border-radius: {{arg5}}px')]" parameterized="true"/>
-        <element name="tabContentAdvancedStyles" type="button" selector="(//div[@class='tabs-content']//div[@data-role='tab-item'])[{{arg1}}][contains(@style, 'text-align: {{arg2}}') and contains(@style, 'margin: {{arg3}}px') and contains(@style, 'padding: {{arg4}}px')]" parameterized="true"/>
-        <element name="tabContentAdvancedClass" type="button" selector="(//div[@class='tabs-content']//div[@data-role='tab-item'])[{{arg1}}][contains(@class, '{{arg2}}')]" parameterized="true"/>
+        <element name="tabContent" type="button" selector="div.tabs-content div[data-content-type=tab-item]:nth-child({{arg1}})" parameterized="true"/>
+        <element name="tabContentCSS" type="text" selector="[data-content-type=tabs] .tabs-content[data-element=content] [data-content-type=tab-item]"/>
+        <element name="container" type="button" selector="(//div[@class='tabs-content']//div[@data-content-type='tab-item'])[{{arg1}}]" parameterized="true"/>
+        <element name="containerStyle" type="button" selector="(//div[@class='tabs-content']//div[@data-content-type='tab-item'])[{{arg1}}][contains(@style,'{{arg2}}')]" parameterized="true"/>
+        <element name="noMinHeight" type="button" selector="(//div[@class='tabs-content']//div[@data-content-type='tab-item'])[{{arg1}}][not(contains(@style,'min-height:'))]" parameterized="true"/>
+        <element name="minHeight" type="button" selector="(//div[@class='tabs-content']//div[@data-content-type='tab-item'])[{{arg1}}][contains(@style,'min-height: {{arg2}}px;')]" parameterized="true"/>
+        <element name="verticalAlignContainer" type="button" selector="(//div[@class='tabs-content']//div[@data-content-type='tab-item'])[{{arg1}}][contains(@style,'justify-content: {{arg2}};')]" parameterized="true"/>
+        <element name="tabContentType" type="button" selector="(//div[@class='tabs-content']//div[@data-content-type='tab-item'])[{{arg1}}]/div[1]/hr" parameterized="true"/>
+        <element name="tabContentText" type="button" selector="(//div[@class='tabs-content']//div[@data-content-type='tab-item'])[{{arg1}}]//div[contains(@data-content-type, 'text')][1]" parameterized="true"/>
+        <element name="tabContentAdvancedStylesBorder" type="button" selector="(//div[@class='tabs-content']//div[@data-content-type='tab-item'])[{{arg1}}][contains(@style, 'border-style: {{arg2}}') and contains(@style, 'border-color: {{arg3}}') and contains(@style, 'border-width: {{arg4}}px') and contains(@style, 'border-radius: {{arg5}}px')]" parameterized="true"/>
+        <element name="tabContentAdvancedStyles" type="button" selector="(//div[@class='tabs-content']//div[@data-content-type='tab-item'])[{{arg1}}][contains(@style, 'text-align: {{arg2}}') and contains(@style, 'margin: {{arg3}}px') and contains(@style, 'padding: {{arg4}}px')]" parameterized="true"/>
+        <element name="tabContentAdvancedClass" type="button" selector="(//div[@class='tabs-content']//div[@data-content-type='tab-item'])[{{arg1}}][contains(@class, '{{arg2}}')]" parameterized="true"/>
         <!-- Background Configuration -->
-        <element name="backgroundPosition" type="button" selector="(//div[@data-role='tab-item'])[{{arg1}}][contains(@style,'background-position: {{arg2}};')]" parameterized="true"/>
-        <element name="backgroundSize" type="button" selector="(//div[@data-role='tab-item'])[{{arg1}}][contains(@style,'background-size: {{arg2}};')]" parameterized="true"/>
-        <element name="backgroundRepeat" type="button" selector="(//div[@data-role='tab-item'])[{{arg1}}][contains(@style,'background-repeat: {{arg2}};')]" parameterized="true"/>
-        <element name="backgroundAttachment" type="button" selector="(//div[@data-role='tab-item'])[{{arg1}}][contains(@style,'background-attachment: {{arg2}};')]" parameterized="true"/>
-        <element name="backgroundColor" type="button" selector="(//div[@data-role='tab-item'])[{{arg1}}][contains(@style,'background-color: {{arg2}};')]" parameterized="true"/>
-        <element name="noBackgroundColor" type="button" selector="(//div[@data-role='tab-item'])[{{arg1}}][not(contains(@style,'background-color:'))]" parameterized="true"/>
-        <element name="noBackgroundImage" type="button" selector="(//div[@data-role='tab-item'])[{{arg1}}][not(contains(@style,'background-image:'))]" parameterized="true"/>
+        <element name="backgroundPosition" type="button" selector="(//div[@data-content-type='tab-item'])[{{arg1}}][contains(@style,'background-position: {{arg2}};')]" parameterized="true"/>
+        <element name="backgroundSize" type="button" selector="(//div[@data-content-type='tab-item'])[{{arg1}}][contains(@style,'background-size: {{arg2}};')]" parameterized="true"/>
+        <element name="backgroundRepeat" type="button" selector="(//div[@data-content-type='tab-item'])[{{arg1}}][contains(@style,'background-repeat: {{arg2}};')]" parameterized="true"/>
+        <element name="backgroundAttachment" type="button" selector="(//div[@data-content-type='tab-item'])[{{arg1}}][contains(@style,'background-attachment: {{arg2}};')]" parameterized="true"/>
+        <element name="backgroundColor" type="button" selector="(//div[@data-content-type='tab-item'])[{{arg1}}][contains(@style,'background-color: {{arg2}};')]" parameterized="true"/>
+        <element name="noBackgroundColor" type="button" selector="(//div[@data-content-type='tab-item'])[{{arg1}}][not(contains(@style,'background-color:'))]" parameterized="true"/>
+        <element name="noBackgroundImage" type="button" selector="(//div[@data-content-type='tab-item'])[{{arg1}}][not(contains(@style,'background-image:'))]" parameterized="true"/>
     </section>
 </sections>

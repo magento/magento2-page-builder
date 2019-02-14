@@ -32,11 +32,11 @@ define(["jquery", "mage/adminhtml/wysiwyg/events"], function (_jquery, _events) 
       var tinymce = wysiwyg.getAdapter();
       tinymce.eventBus.attachEventHandler(_events.afterFocus, this.onFocus.bind(this));
       tinymce.eventBus.attachEventHandler(_events.afterBlur, this.onBlur.bind(this));
-    };
+    }
     /**
      * Called when tinymce is focused
      */
-
+    ;
 
     _proto.onFocus = function onFocus() {
       var _this = this;
@@ -51,11 +51,11 @@ define(["jquery", "mage/adminhtml/wysiwyg/events"], function (_jquery, _events) 
       _jquery.each(this.config.adapter_config.parentSelectorsToUnderlay, function (i, selector) {
         _this.$element.closest(selector).css("z-index", 100);
       });
-    };
+    }
     /**
      * Called when tinymce is blurred
      */
-
+    ;
 
     _proto.onBlur = function onBlur() {
       var _this2 = this;

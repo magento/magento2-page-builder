@@ -1,4 +1,5 @@
 /*eslint-disable */
+
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
 define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu/hide-show-option", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/utils/delay-until", "Magento_PageBuilder/js/content-type/preview-collection"], function (_jquery, _knockout, _translate, _events, _underscore, _config, _contentTypeFactory, _hideShowOption, _option, _delayUntil, _previewCollection) {
@@ -18,24 +19,24 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _inheritsLoose(Preview, _previewCollection2);
 
     /**
-     * @param {ContentTypeCollectionInterface} parent
+     * @param {ContentTypeCollectionInterface} contentType
      * @param {ContentTypeConfigInterface} config
      * @param {ObservableUpdater} observableUpdater
      */
-    function Preview(parent, config, observableUpdater) {
+    function Preview(contentType, config, observableUpdater) {
       var _this;
 
-      _this = _previewCollection2.call(this, parent, config, observableUpdater) || this; // Keeps track of number of button item to disable sortable if there is only 1.
+      _this = _previewCollection2.call(this, contentType, config, observableUpdater) || this; // Keeps track of number of button item to disable sortable if there is only 1.
 
       _this.focusedButton = _knockout.observable();
       _this.debouncedResizeHandler = _underscore.debounce(function () {
         _this.resizeChildButtons();
       }, 350);
 
-      _this.parent.children.subscribe(function () {
+      _this.contentType.children.subscribe(function () {
         var sortableElement = (0, _jquery)(_this.wrapperElement).find(".buttons-container");
 
-        if (_this.parent.children().length <= 1) {
+        if (_this.contentType.children().length <= 1) {
           sortableElement.sortable("disable");
         } else {
           sortableElement.sortable("enable");
@@ -47,7 +48,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         if (index !== null) {
           _events.trigger("stage:interactionStart");
 
-          var focusedButton = _this.parent.children()[index];
+          var focusedButton = _this.contentType.children()[index];
 
           (0, _delayUntil)(function () {
             return (0, _jquery)(focusedButton.preview.wrapperElement).find("[contenteditable]").focus();
@@ -77,19 +78,19 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       _previewCollection2.prototype.bindEvents.call(this);
 
       _events.on("buttons:dropAfter", function (args) {
-        if (args.id === _this2.parent.id && _this2.parent.children().length === 0) {
+        if (args.id === _this2.contentType.id && _this2.contentType.children().length === 0) {
           _this2.addButton();
         }
       });
 
       _events.on("buttons:renderAfter", function (args) {
-        if (args.contentType.id === _this2.parent.id) {
+        if (args.contentType.id === _this2.contentType.id) {
           _this2.debouncedResizeHandler();
         }
       });
 
       _events.on("button-item:renderAfter", function (args) {
-        if (args.contentType.parent.id === _this2.parent.id) {
+        if (args.contentType.parentContentType.id === _this2.contentType.id) {
           _this2.debouncedResizeHandler();
         }
       });
@@ -107,7 +108,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       var duplicatedButtonIndex;
 
       _events.on("button-item:duplicateAfter", function (args) {
-        if (_this2.parent.id === args.duplicateContentType.parent.id && args.direct) {
+        if (_this2.contentType.id === args.duplicateContentType.parentContentType.id && args.direct) {
           duplicatedButton = args.duplicateContentType;
           duplicatedButtonIndex = args.index;
         }
@@ -118,13 +119,13 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           _this2.focusedButton(duplicatedButtonIndex);
         }
       });
-    };
+    }
     /**
      * Return an array of options
      *
      * @returns {OptionsInterface}
      */
-
+    ;
 
     _proto.retrieveOptions = function retrieveOptions() {
       var options = _previewCollection2.prototype.retrieveOptions.call(this);
@@ -146,20 +147,20 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         sort: 40
       });
       return options;
-    };
+    }
     /**
      * Add button-item to buttons children array
      */
-
+    ;
 
     _proto.addButton = function addButton() {
       var _this3 = this;
 
-      var createButtonItemPromise = (0, _contentTypeFactory)(_config.getContentTypeConfig("button-item"), this.parent, this.parent.stageId, {});
+      var createButtonItemPromise = (0, _contentTypeFactory)(_config.getContentTypeConfig("button-item"), this.contentType, this.contentType.stageId, {});
       createButtonItemPromise.then(function (button) {
-        _this3.parent.addChild(button);
+        _this3.contentType.addChild(button);
 
-        var buttonIndex = _this3.parent.children().indexOf(button);
+        var buttonIndex = _this3.contentType.children().indexOf(button);
 
         _this3.focusedButton(buttonIndex > -1 ? buttonIndex : null);
 
@@ -167,7 +168,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       }).catch(function (error) {
         console.error(error);
       });
-    };
+    }
     /**
      * Get the sortable options for the buttons sorting
      *
@@ -175,7 +176,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
      * @param {string} tolerance
      * @returns {JQueryUI.Sortable}
      */
-
+    ;
 
     _proto.getSortableOptions = function getSortableOptions(orientation, tolerance) {
       if (orientation === void 0) {
@@ -193,7 +194,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         containment: "parent",
         tolerance: tolerance,
         revert: 200,
-        disabled: this.parent.children().length <= 1,
+        disabled: this.contentType.children().length <= 1,
 
         /**
          * Provide custom helper element
@@ -244,18 +245,18 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           _events.trigger("stage:interactionStop");
         }
       };
-    };
+    }
     /**
      * Resize width of all child buttons. Dependently make them the same width if configured.
      */
-
+    ;
 
     _proto.resizeChildButtons = function resizeChildButtons() {
       if (this.wrapperElement) {
         var buttonItems = (0, _jquery)(this.wrapperElement).find(".pagebuilder-button-item > a");
         var buttonResizeValue = 0;
 
-        if (this.parent.dataStore.get("is_same_width") === "true") {
+        if (this.contentType.dataStore.get("is_same_width") === "true") {
           if (buttonItems.length > 0) {
             var currentLargestButtonWidth = this.findLargestButtonWidth(buttonItems);
             var parentWrapperWidth = (0, _jquery)(this.wrapperElement).width();
@@ -270,14 +271,14 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
         buttonItems.css("min-width", buttonResizeValue);
       }
-    };
+    }
     /**
      * Find the largest button width for calculating same size value.
      *
      * @param {JQuery} buttonItems
      * @returns {number}
      */
-
+    ;
 
     _proto.findLargestButtonWidth = function findLargestButtonWidth(buttonItems) {
       var _this4 = this;
@@ -285,14 +286,14 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       return _underscore.max(_underscore.map(buttonItems, function (buttonItem) {
         return _this4.calculateButtonWidth((0, _jquery)(buttonItem));
       }));
-    };
+    }
     /**
      * Manually calculate button width using content plus box widths (padding, border)
      *
      * @param {JQuery} buttonItem
      * @returns {number}
      */
-
+    ;
 
     _proto.calculateButtonWidth = function calculateButtonWidth(buttonItem) {
       if (buttonItem.is(":visible") === false) {

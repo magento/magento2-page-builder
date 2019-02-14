@@ -12,7 +12,7 @@ interface ConverterInterface {
     /**
      * Convert value to internal format
      *
-     * @param value
+     * @param {any} value
      * @returns {any}
      */
     fromDom(value: any): any;

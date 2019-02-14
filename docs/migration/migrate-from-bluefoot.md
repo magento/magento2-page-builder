@@ -111,7 +111,7 @@ class Heading implements RendererInterface
 
         // We create an array of root level element attributes to be applied later
         $rootElementAttributes = [
-            'data-role' => 'heading',
+            'data-content-type' => 'heading',
             'class' => $eavData['css_classes'] ?? ''
         ];
 

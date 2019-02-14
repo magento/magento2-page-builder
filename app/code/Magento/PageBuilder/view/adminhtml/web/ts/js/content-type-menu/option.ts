@@ -5,8 +5,7 @@
 
 import ko from "knockout";
 import Preview from "../content-type/preview";
-import OptionConfigInterface from "./option-config";
-import OptionInterface from "./option.d";
+import OptionInterface, {OptionConfigInterface} from "./option.types";
 
 export default class Option implements OptionInterface {
     public config: OptionConfigInterface;

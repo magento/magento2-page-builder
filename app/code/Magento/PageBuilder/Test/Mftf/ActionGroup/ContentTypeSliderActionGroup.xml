@@ -20,11 +20,6 @@
         <waitForPageLoad stepKey="waitForAnimation"/>
         <waitForElementVisible selector="{{slideSection.base(slideIndex)}}" stepKey="waitForSlide"/>
     </actionGroup>
-    <actionGroup name="unfocusSlideOptions">
-        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="clickOutsideLiveEdit"/>
-        <waitForPageLoad stepKey="waitForAnimation" time="30"/>
-        <waitForElementNotVisible selector="{{SlideOnBackend.optionTitle}}" stepKey="dontSeeSlideOptionsEdit"/>
-    </actionGroup>
     <actionGroup name="inlineEditWYSIWYGFromStageForSlideCollageAppearancesInSmallColumns" extends="inlineEditWYSIWYGFromStage">
         <click selector="{{SlideOnBackend.base(index)}}" stepKey="focusOnEditorArea"/>
     </actionGroup>

@@ -5,8 +5,8 @@
 
 import _ from "underscore";
 import ConverterInterface from "../../../../converter/converter-interface";
-import MarginObject from "../../../../converter/margin-object";
 import {DataObject} from "../../../../data-store";
+import {DataObjectMargins} from "../../../../property/margins";
 import {get} from "../../../../utils/object";
 
 export default class Margins implements ConverterInterface {
@@ -16,18 +16,18 @@ export default class Margins implements ConverterInterface {
      * @param value string
      * @returns {string | object}
      */
-    public fromDom(value: MarginObject): string | object {
-        const result: any = {};
+    public fromDom(value: DataObjectMargins): DataObjectMargins {
         if (undefined !== value.margin) {
-            result.margin = {
-                bottom: value.margin.bottom.replace("px", ""),
-                left: value.margin.left.replace("px", ""),
-                right: value.margin.right.replace("px", ""),
-                top: value.margin.top.replace("px", ""),
+            return {
+                margin: {
+                    top: value.margin.top.replace("px", ""),
+                    left: value.margin.left.replace("px", ""),
+                    right: value.margin.right.replace("px", ""),
+                    bottom: value.margin.bottom.replace("px", ""),
+                },
             };
         }
-
-        return result;
+        return {};
     }
 
     /**
@@ -41,7 +41,7 @@ export default class Margins implements ConverterInterface {
         const result: {
             [key: string]: string;
         } = {};
-        let value = get<MarginObject>(data, name);
+        let value = get<DataObjectMargins>(data, name);
         if (value && _.isString(value)) {
             value = JSON.parse(value);
         }

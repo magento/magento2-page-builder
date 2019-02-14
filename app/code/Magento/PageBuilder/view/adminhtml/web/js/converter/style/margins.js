@@ -24,19 +24,19 @@ define(["underscore", "Magento_PageBuilder/js/utils/object"], function (_undersc
      * @returns {string | object}
      */
     _proto.fromDom = function fromDom(value) {
-      var result = {};
-
       if (undefined !== value.margin) {
-        result.margin = {
-          top: value.margin.top.replace("px", ""),
-          left: value.margin.left.replace("px", ""),
-          right: value.margin.right.replace("px", ""),
-          bottom: value.margin.bottom.replace("px", "")
+        return {
+          margin: {
+            top: value.margin.top.replace("px", ""),
+            left: value.margin.left.replace("px", ""),
+            right: value.margin.right.replace("px", ""),
+            bottom: value.margin.bottom.replace("px", "")
+          }
         };
       }
 
-      return result;
-    };
+      return {};
+    }
     /**
      * Convert value to knockout format
      *
@@ -44,7 +44,7 @@ define(["underscore", "Magento_PageBuilder/js/utils/object"], function (_undersc
      * @param {DataObject} data
      * @returns {string | object}
      */
-
+    ;
 
     _proto.toDom = function toDom(name, data) {
       var result = {};

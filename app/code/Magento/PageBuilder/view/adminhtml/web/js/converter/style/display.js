@@ -25,7 +25,7 @@ define(["underscore", "Magento_PageBuilder/js/utils/object"], function (_undersc
      */
     _proto.fromDom = function fromDom(value) {
       return !(value === "none");
-    };
+    }
     /**
      * Convert value to knockout format, we only provide a none property if we intend for the content type to be hidden,
      * otherwise we let the original display property handle the display of the content type.
@@ -34,7 +34,7 @@ define(["underscore", "Magento_PageBuilder/js/utils/object"], function (_undersc
      * @param {DataObject} data
      * @returns {string}
      */
-
+    ;
 
     _proto.toDom = function toDom(name, data) {
       var value = (0, _object.get)(data, name);

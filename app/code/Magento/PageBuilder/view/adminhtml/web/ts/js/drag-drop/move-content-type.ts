@@ -4,8 +4,8 @@
  */
 import ko from "knockout";
 import events from "Magento_PageBuilder/js/events";
-import ContentTypeCollectionInterface from "../content-type-collection.d";
-import ContentTypeInterface from "../content-type.d";
+import ContentTypeCollectionInterface from "../content-type-collection.types";
+import ContentTypeInterface from "../content-type.types";
 
 /**
  * Move a content type to a new index, with the option to move to a new container
@@ -19,8 +19,9 @@ export function moveContentType(
     targetIndex: number,
     targetParent: ContentTypeCollectionInterface = null,
 ) {
-    const sourceParent: ContentTypeCollectionInterface = (contentType.parent as ContentTypeCollectionInterface);
-    const sourceIndex = (contentType.parent as ContentTypeCollectionInterface)
+    const sourceParent: ContentTypeCollectionInterface =
+        (contentType.parentContentType as ContentTypeCollectionInterface);
+    const sourceIndex = (contentType.parentContentType as ContentTypeCollectionInterface)
         .children()
         .indexOf(contentType);
     const sourceParentChildren = sourceParent.getChildren();
@@ -42,7 +43,7 @@ export function moveContentType(
     });
 
     if (targetParent && sourceParent !== targetParent) {
-        contentType.parent = targetParent;
+        contentType.parentContentType = targetParent;
         // Handle dragging between sortable elements
         sourceParentChildren.splice(sourceIndex, 1);
         targetParent.getChildren().splice(targetIndex, 0, contentType);

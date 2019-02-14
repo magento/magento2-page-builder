@@ -29,7 +29,7 @@ define(["Magento_PageBuilder/js/utils/object"], function (_object) {
       }
 
       return data;
-    };
+    }
     /**
      * Process data before it's converted by element converters
      *
@@ -37,7 +37,7 @@ define(["Magento_PageBuilder/js/utils/object"], function (_object) {
      * @param {object} config
      * @returns {object}
      */
-
+    ;
 
     _proto.toDom = function toDom(data, config) {
       var mobileImage = (0, _object.get)(data, config.mobile_image_variable);

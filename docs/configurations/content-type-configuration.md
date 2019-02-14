@@ -5,16 +5,16 @@
 
 <!-- {% raw %} -->
 
-Use the content type and group configuration to add new content types, extend existing content types, add groups in the left menu, or rearrange content types in the groups.
+Use the content type and menu section configuration to add new content types, extend existing content types, add menu_sections in the left menu, or rearrange content types in the menu sections.
 
 | Element             | Description                                                                                                                                 |
 | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
-| `group`             | Describes the group name, translated field, and sort order in the menu.      |
-| `type`              | Describes the content type name, translated field, and sort order in the menu group. Each type should have its own configuration file.      |
+| `menu_section`             | Describes the menu section name, translated field, and sort order in the menu.      |
+| `type`              | Describes the content type name, translated field, and sort order in the menu section. Each type should have its own configuration file.      |
 | `parents`           | List of parent content types that can accept this type as a child.                                                                          |
 | `children`          | List of children content types that can accept this type as a parent.                                                                       |
 | `appearances`       | Appearance configuration.                                                                                                                   |
-| `is_visible`        | Determines menu visibility for the component. System components should not be visible in the menu. Default value is true.                   |
+| `is_system`        | Determines menu visibility for the component. System components should not be visible in the menu. Default value is true.                   |
 | `additional_data`   | Allows to specify additional data for component, see [additional configurations](additional-configurations.md) for more information. |
 {:style="table-layout:auto"}
 
@@ -26,18 +26,18 @@ Use the content type and group configuration to add new content types, extend ex
 | `preview_component` | Helper component that contains preview specific logic. Helper component is optional.                                                        |
 | `master_component`  | Contains master format rendering logic that is generic for all appearances. Content component is optional.                                  |
 | `form`              | UI component form used for editing the content type.                                                                                         |
-| `group`             | Existing menu group that contains this content type.                                                                                        |
+| `menu_section`             | Existing menu menu section that contains this content type.                                                                                        |
 {:style="table-layout:auto"}
 
 ### Examples
 
-#### `group`
+#### `menu_section`
 
-The following is an example of a group configuration in `view/adminhtml/pagebuilder/group.xml`:
+The following is an example of a menu section configuration in `view/adminhtml/pagebuilder/menu_section.xml`:
 
 ``` xml
-<!-- Definition of main menu, used for grouping content types  -->
-    <group name="media" translate="label" sortOrder="10" label="Media"/>
+<!-- Definition of main menu, used for menu sectioning content types  -->
+    <menu_section name="media" translate="label" sortOrder="10" label="Media"/>
 ```
 
 #### Content type
@@ -51,7 +51,7 @@ The following is an example of a content type configuration in `view/adminhtml/p
       component="Magento_PageBuilder/js/content-type"
       preview_component="Magento_PageBuilder/js/content-type/banner/preview"
       form="pagebuilder_banner_form"
-      group="media"
+      menu_section="media"
       icon="icon-pagebuilder-image"
       sortOrder="1"
       translate="label">
@@ -60,7 +60,7 @@ The following is an example of a content type configuration in `view/adminhtml/p
         <appearance default="true"
                     name="poster"
                     preview_template="Magento_PageBuilder/content-type/banner/poster/preview"
-                    render_template="Magento_PageBuilder/content-type/banner/poster/master"
+                    master_template="Magento_PageBuilder/content-type/banner/poster/master"
                     reader="Magento_PageBuilder/js/master-format/read/configurable">
             <elements>
                 <element name="main">
@@ -69,7 +69,7 @@ The following is an example of a content type configuration in `view/adminhtml/p
                     <style name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/border-width"/>
                     <style name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                     <style name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
-                    <attribute name="name" source="data-role"/>
+                    <attribute name="name" source="data-content-type"/>
                     <attribute name="appearance" source="data-appearance"/>
                     <attribute name="show_button" source="data-show-button"/>
                     <attribute name="show_overlay" source="data-show-overlay"/>
@@ -125,19 +125,19 @@ The following is an example of a content type configuration in `view/adminhtml/p
         </appearance>
         <appearance name="collage-left"
                     preview_template="Magento_PageBuilder/content-type/banner/collage-left/preview"
-                    render_template="Magento_PageBuilder/content-type/banner/collage-left/master"
+                    master_template="Magento_PageBuilder/content-type/banner/collage-left/master"
                     reader="Magento_PageBuilder/js/master-format/read/configurable">
             <!-- Collage left appearance configuration -->
         </appearance>
         <appearance name="collage-centered"
                     preview_template="Magento_PageBuilder/content-type/banner/collage-centered/preview"
-                    render_template="Magento_PageBuilder/content-type/banner/collage-centered/master"
+                    master_template="Magento_PageBuilder/content-type/banner/collage-centered/master"
                     reader="Magento_PageBuilder/js/master-format/read/configurable">
             <!-- Collage centered appearance configuration -->
         </appearance>
         <appearance name="collage-right"
                     preview_template="Magento_PageBuilder/content-type/banner/collage-right/preview"
-                    render_template="Magento_PageBuilder/content-type/banner/collage-right/master"
+                    master_template="Magento_PageBuilder/content-type/banner/collage-right/master"
                     reader="Magento_PageBuilder/js/master-format/read/configurable">
             <!-- Collage right appearance configuration -->
         </appearance>
@@ -155,7 +155,7 @@ The following is an example of a content type configuration in `view/adminhtml/p
 | `preview_component` | Helper component that contains preview specific logic. Helper component is optional.                                                        |
 | `master_component`  | Contains master format rendering logic that is generic for all appearances. Content component is optional.                                  |
 | `form`              | UI component form used for editing the content type                                                                                         |
-| `group`             | Existing menu group that contains this content type.                                                                                        |
+| `menu_section`      | Existing menu section that contains this content type.                                                                                      |
 {:style="table-layout:auto"}
 
 ### `form`
@@ -228,7 +228,7 @@ It controls the templates, how data is read from the master format, and how to a
 | Attribute           | Description                                                                            |
 | ------------------- | -------------------------------------------------------------------------------------- |
 | `preview_template`  | Template used to display the element in the preview                                    |
-| `render_template`   | Template used to render the content type to the master format                          |
+| `master_template`   | Template used to render the content type to the master format                          |
 | `reader`            | Reads data for the content type from the master format                                 |
 {:style="table-layout:auto"}
 
@@ -240,7 +240,7 @@ It reads data based on the configuration specified in `data_mapping`.
 <appearance default="true"
             name="poster"
             preview_template="Magento_PageBuilder/content-type/banner/poster/preview"
-            render_template="Magento_PageBuilder/content-type/banner/poster/master"
+            master_template="Magento_PageBuilder/content-type/banner/poster/master"
             reader="Magento_PageBuilder/js/master-format/read/configurable">
 </appearance>
 ```
@@ -269,7 +269,7 @@ Set the `default` attribute to "true" in an `appearance` node to set the default
         <style name="border" source="border_style"/>
         <style name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
         <style name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
-        <attribute name="name" source="data-role"/>
+        <attribute name="name" source="data-content-type"/>
         <css name="css_classes"/>
     </element>
     <element name="link">

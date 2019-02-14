@@ -8,47 +8,47 @@
 
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
-    <actionGroup name="expandPageBuilderPanelGroup">
+    <actionGroup name="expandPageBuilderPanelMenuSection">
         <arguments>
-            <argument name="group"/>
+            <argument name="contentType"/>
             <argument name="pageBuilderArea" defaultValue="" type="string"/>
         </arguments>
-        <waitForElementVisible selector="{{pageBuilderArea}}{{PageBuilderPanel.panelGroup(group.section)}}" stepKey="waitForGroupVisible"/>
-        <conditionalClick selector="{{pageBuilderArea}}{{PageBuilderPanel.panelGroup(group.section)}}" dependentSelector="{{pageBuilderArea}}{{PageBuilderPanel.panelGroupActive(group.section)}}" visible="false" stepKey="expandGroup"/>
-        <waitForElementVisible selector="{{pageBuilderArea}}{{PageBuilderPanel.panelGroupActive(group.section)}}" stepKey="waitForGroupExpanded"/>
+        <waitForElementVisible selector="{{pageBuilderArea}}{{PageBuilderPanel.panelMenuSection(contentType.section)}}" stepKey="waitForcontentTypeVisible"/>
+        <conditionalClick selector="{{pageBuilderArea}}{{PageBuilderPanel.panelMenuSection(contentType.section)}}" dependentSelector="{{pageBuilderArea}}{{PageBuilderPanel.panelMenuSectionActive(contentType.section)}}" visible="false" stepKey="expandContentTypeMenuSection"/>
+        <waitForElementVisible selector="{{pageBuilderArea}}{{PageBuilderPanel.panelMenuSectionActive(contentType.section)}}" stepKey="waitForMenuSectionExpanded"/>
     </actionGroup>
-    <actionGroup name="closePageBuilderPanelGroups">
-        <click selector="{{PageBuilderPanel.elementsGroup}}" stepKey="clickElementsGroup"/>
-        <click selector="{{PageBuilderPanel.mediaGroup}}" stepKey="clickMediaGroup"/>
-        <click selector="{{PageBuilderPanel.addContentGroup}}" stepKey="clickAddContentGroup"/>
+    <actionGroup name="closePageBuilderPanelMenuSections">
+        <click selector="{{PageBuilderPanel.elementsMenuSection}}" stepKey="clickElementsMenuSection"/>
+        <click selector="{{PageBuilderPanel.mediaMenuSection}}" stepKey="clickMediaMenuSection"/>
+        <click selector="{{PageBuilderPanel.addContentMenuSection}}" stepKey="clickAddContentMenuSection"/>
     </actionGroup>
-    <actionGroup name="validateGroupsAndContentTypes">
-        <seeNumberOfElements selector="{{PageBuilderPanel.allPanelGroups}}" userInput="4" stepKey="seeNumberOfGroups"/>
-        <seeNumberOfElements selector="{{PageBuilderPanel.allGroupContentTypes('layout')}}" userInput="3" stepKey="seeNumberOfLayoutGroupContentTypes"/>
-        <see userInput="Layout" selector="{{PageBuilderPanel.layoutGroup}}" stepKey="seeLayoutGroup"/>
-        <see userInput="Row" selector="{{PageBuilderPanel.layoutGroupContentType}}" stepKey="seeLayoutGroupRow"/>
-        <see userInput="Column" selector="{{PageBuilderPanel.layoutGroupContentType}}" stepKey="seeLayoutGroupColumn"/>
-        <see userInput="Tabs" selector="{{PageBuilderPanel.layoutGroupContentType}}" stepKey="seeLayoutGroupTabs"/>
-        <click selector="{{PageBuilderPanel.elementsGroup}}" stepKey="clickElementsGroup"/>
-        <seeNumberOfElements selector="{{PageBuilderPanel.allGroupContentTypes('elements')}}" userInput="5" stepKey="seeNumberOfElementsGroupContentTypes"/>
-        <see userInput="Elements" selector="{{PageBuilderPanel.elementsGroup}}" stepKey="seeElementsGroup"/>
-        <see userInput="Text" selector="{{PageBuilderPanel.elementsGroupContentType}}" stepKey="seeElementsGroupText"/>
-        <see userInput="Heading" selector="{{PageBuilderPanel.elementsGroupContentType}}" stepKey="seeElementsGroupHeading"/>
-        <see userInput="Buttons" selector="{{PageBuilderPanel.elementsGroupContentType}}" stepKey="seeElementsGroupButtons"/>
-        <see userInput="Divider" selector="{{PageBuilderPanel.elementsGroupContentType}}" stepKey="seeElementsGroupDivider"/>
-        <see userInput="HTML Code" selector="{{PageBuilderPanel.elementsGroupContentType}}" stepKey="seeElementsGroupHtml"/>
-        <click selector="{{PageBuilderPanel.mediaGroup}}" stepKey="clickMediaGroup"/>
-        <seeNumberOfElements selector="{{PageBuilderPanel.allGroupContentTypes('media')}}" userInput="5" stepKey="seeNumberOfMediaGroupContentTypes"/>
-        <see userInput="Media" selector="{{PageBuilderPanel.mediaGroup}}" stepKey="seeMediaGroup"/>
-        <see userInput="Image" selector="{{PageBuilderPanel.mediaGroupContentType}}" stepKey="seeMediaGroupImage"/>
-        <see userInput="Video" selector="{{PageBuilderPanel.mediaGroupContentType}}" stepKey="seeMediaGroupVideo"/>
-        <see userInput="Banner" selector="{{PageBuilderPanel.mediaGroupContentType}}" stepKey="seeMediaGroupBanner"/>
-        <see userInput="Slider" selector="{{PageBuilderPanel.mediaGroupContentType}}" stepKey="seeMediaGroupSlider"/>
-        <see userInput="Map" selector="{{PageBuilderPanel.mediaGroupContentType}}" stepKey="seeMediaGroupMap"/>
-        <click selector="{{PageBuilderPanel.addContentGroup}}" stepKey="clickAddContentGroup"/>
-        <seeNumberOfElements selector="{{PageBuilderPanel.allGroupContentTypes('add_content')}}" userInput="2" stepKey="seeNumberOfAddContentGroupContentTypes"/>
-        <see userInput="Add Content" selector="{{PageBuilderPanel.addContentGroup}}" stepKey="seeAddContentGroup"/>
-        <see userInput="Block" selector="{{PageBuilderPanel.addContentGroupContentType}}" stepKey="seeAddContentGroupBlock"/>
-        <see userInput="Products" selector="{{PageBuilderPanel.addContentGroupContentType}}" stepKey="seeAddContentGroupProducts"/>
+    <actionGroup name="validateMenuSectionsAndContentTypes">
+        <seeNumberOfElements selector="{{PageBuilderPanel.allPanelMenuSections}}" userInput="4" stepKey="seeNumberOfMenuSections"/>
+        <seeNumberOfElements selector="{{PageBuilderPanel.allMenuSectionContentTypes('layout')}}" userInput="3" stepKey="seeNumberOfLayoutMenuSectionContentTypes"/>
+        <see userInput="Layout" selector="{{PageBuilderPanel.layoutMenuSection}}" stepKey="seeLayoutMenuSection"/>
+        <see userInput="Row" selector="{{PageBuilderPanel.layoutMenuSectionContentType}}" stepKey="seeLayoutMenuSectionRow"/>
+        <see userInput="Column" selector="{{PageBuilderPanel.layoutMenuSectionContentType}}" stepKey="seeLayoutMenuSectionColumn"/>
+        <see userInput="Tabs" selector="{{PageBuilderPanel.layoutMenuSectionContentType}}" stepKey="seeLayoutMenuSectionTabs"/>
+        <click selector="{{PageBuilderPanel.elementsMenuSection}}" stepKey="clickElementsMenuSection"/>
+        <seeNumberOfElements selector="{{PageBuilderPanel.allMenuSectionContentTypes('elements')}}" userInput="5" stepKey="seeNumberOfElementsMenuSectionContentTypes"/>
+        <see userInput="Elements" selector="{{PageBuilderPanel.elementsMenuSection}}" stepKey="seeElementsMenuSection"/>
+        <see userInput="Text" selector="{{PageBuilderPanel.elementsMenuSectionContentType}}" stepKey="seeElementsMenuSectionText"/>
+        <see userInput="Heading" selector="{{PageBuilderPanel.elementsMenuSectionContentType}}" stepKey="seeElementsMenuSectionHeading"/>
+        <see userInput="Buttons" selector="{{PageBuilderPanel.elementsMenuSectionContentType}}" stepKey="seeElementsMenuSectionButtons"/>
+        <see userInput="Divider" selector="{{PageBuilderPanel.elementsMenuSectionContentType}}" stepKey="seeElementsMenuSectionDivider"/>
+        <see userInput="HTML Code" selector="{{PageBuilderPanel.elementsMenuSectionContentType}}" stepKey="seeElementsMenuSectionHtml"/>
+        <click selector="{{PageBuilderPanel.mediaMenuSection}}" stepKey="clickMediaMenuSection"/>
+        <seeNumberOfElements selector="{{PageBuilderPanel.allMenuSectionContentTypes('media')}}" userInput="5" stepKey="seeNumberOfMediaMenuSectionContentTypes"/>
+        <see userInput="Media" selector="{{PageBuilderPanel.mediaMenuSection}}" stepKey="seeMediaMenuSection"/>
+        <see userInput="Image" selector="{{PageBuilderPanel.mediaMenuSectionContentType}}" stepKey="seeMediaMenuSectionImage"/>
+        <see userInput="Video" selector="{{PageBuilderPanel.mediaMenuSectionContentType}}" stepKey="seeMediaMenuSectionVideo"/>
+        <see userInput="Banner" selector="{{PageBuilderPanel.mediaMenuSectionContentType}}" stepKey="seeMediaMenuSectionBanner"/>
+        <see userInput="Slider" selector="{{PageBuilderPanel.mediaMenuSectionContentType}}" stepKey="seeMediaMenuSectionSlider"/>
+        <see userInput="Map" selector="{{PageBuilderPanel.mediaMenuSectionContentType}}" stepKey="seeMediaMenuSectionMap"/>
+        <click selector="{{PageBuilderPanel.addContentMenuSection}}" stepKey="clickAddContentMenuSection"/>
+        <seeNumberOfElements selector="{{PageBuilderPanel.allMenuSectionContentTypes('add_content')}}" userInput="2" stepKey="seeNumberOfAddContentMenuSectionContentTypes"/>
+        <see userInput="Add Content" selector="{{PageBuilderPanel.addContentMenuSection}}" stepKey="seeAddContentMenuSection"/>
+        <see userInput="Block" selector="{{PageBuilderPanel.addContentMenuSectionContentType}}" stepKey="seeAddContentMenuSectionBlock"/>
+        <see userInput="Products" selector="{{PageBuilderPanel.addContentMenuSectionContentType}}" stepKey="seeAddContentMenuSectionProducts"/>
     </actionGroup>
 </actionGroups>

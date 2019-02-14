@@ -5,6 +5,7 @@
 
 import ko from "knockout";
 import _ from "underscore";
+import {ConverterInterface} from "../content-type-config.types";
 import ConverterPool from "../converter/converter-pool";
 import {DataObject} from "../data-store";
 import MassConverterPool from "../mass-converter/converter-pool";
@@ -42,7 +43,7 @@ export default class ObservableUpdater {
      */
     public update(viewModel: Preview | Master, data: DataObject) {
         const appearance = data && data.appearance !== undefined ? data.appearance as string : undefined;
-        const appearanceConfiguration = appearanceConfig(viewModel.parent.config.name, appearance);
+        const appearanceConfiguration = appearanceConfig(viewModel.contentType.config.name, appearance);
         if (undefined === appearanceConfiguration
             || undefined === appearanceConfiguration.elements
         ) {
@@ -100,7 +101,7 @@ export default class ObservableUpdater {
 
             if (config[elementName].css !== undefined && config[elementName].css.var in data) {
                 const css = get<string>(data, config[elementName].css.var);
-                const newClasses = {};
+                const newClasses: {[key: string]: boolean} = {};
 
                 if (css && css.length > 0) {
                     css.toString().split(" ").map(
@@ -127,12 +128,11 @@ export default class ObservableUpdater {
     /**
      * Process data for elements before its converted to knockout format
      *
-     * @param {Object} data
-     * @param {Object} convertersConfig
-     * @returns {Object}
-     * @deprecated
+     * @param {object} data
+     * @param {ConverterInterface[]} convertersConfig
+     * @returns {object}
      */
-    public convertData(data: object, convertersConfig: object) {
+    public convertData(data: object, convertersConfig: ConverterInterface[]) {
         for (const converterConfig of convertersConfig) {
             data = this.massConverterPool.get(converterConfig.component).toDom(data, converterConfig.config);
         }

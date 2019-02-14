@@ -1,4 +1,5 @@
 /*eslint-disable */
+
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
 define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-menu/hide-show-option", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _knockout, _translate, _config, _hideShowOption, _preview) {
@@ -20,10 +21,10 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/config",
     /**
      * @inheritdoc
      */
-    function Preview(parent, config, observableUpdater) {
+    function Preview(contentType, config, observableUpdater) {
       var _this;
 
-      _this = _preview2.call(this, parent, config, observableUpdater) || this;
+      _this = _preview2.call(this, contentType, config, observableUpdater) || this;
       _this.displayPreview = _knockout.observable(false);
       _this.messages = {
         EMPTY: (0, _translate)("Empty Products"),
@@ -55,11 +56,11 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/config",
         sort: 40
       });
       return options;
-    };
+    }
     /**
      * @inheritdoc
      */
-
+    ;
 
     _proto.afterObservablesUpdated = function afterObservablesUpdated() {
       var _this2 = this;
@@ -67,7 +68,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/config",
       _preview2.prototype.afterObservablesUpdated.call(this);
 
       this.displayPreview(false);
-      var data = this.parent.dataStore.getState();
+      var data = this.contentType.dataStore.getState();
 
       if (typeof data.conditions_encoded !== "string" || data.conditions_encoded.length === 0) {
         this.placeholderText(this.messages.EMPTY);

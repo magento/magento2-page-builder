@@ -25,7 +25,7 @@ define(["underscore", "Magento_PageBuilder/js/utils/object"], function (_undersc
       }
 
       return [];
-    };
+    }
     /**
      * Convert value to knockout format
      *
@@ -33,7 +33,7 @@ define(["underscore", "Magento_PageBuilder/js/utils/object"], function (_undersc
      * @param data Object
      * @returns {string | object}
      */
-
+    ;
 
     _proto.toDom = function toDom(name, data) {
       var content = (0, _object.get)(data, name);

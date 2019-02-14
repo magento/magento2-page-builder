@@ -27,14 +27,14 @@ define(["knockout", "Magento_PageBuilder/js/utils/array"], function (_knockout, 
 
     _proto.getChildren = function getChildren() {
       return this.children;
-    };
+    }
     /**
      * Add a child into the observable array
      *
      * @param child
      * @param index
      */
-
+    ;
 
     _proto.addChild = function addChild(child, index) {
       if (typeof index === "number") {
@@ -43,23 +43,23 @@ define(["knockout", "Magento_PageBuilder/js/utils/array"], function (_knockout, 
       } else {
         this.children.push(child);
       }
-    };
+    }
     /**
      * Remove a child from the observable array
      *
      * @param child
      */
-
+    ;
 
     _proto.removeChild = function removeChild(child) {
       (0, _array.removeArrayItem)(this.children, child);
-    };
+    }
     /**
      * Set the children observable array into the class
      *
      * @param children
      */
-
+    ;
 
     _proto.setChildren = function setChildren(children) {
       this.children = children;

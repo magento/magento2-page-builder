@@ -9,13 +9,12 @@ import ko from "knockout";
 import events from "Magento_PageBuilder/js/events";
 import ResizeObserver from "Magento_PageBuilder/js/resource/resize-observer/ResizeObserver";
 import _ from "underscore";
-import ContentTypeConfigInterface from "../../content-type-config.d";
+import ContentTypeConfigInterface from "../../content-type-config.types";
 import ConditionalRemoveOption from "../../content-type-menu/conditional-remove-option";
 import HideShowOption from "../../content-type-menu/hide-show-option";
-import {OptionsInterface} from "../../content-type-menu/option.d";
-import ContentTypeInterface from "../../content-type.d";
-import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params.d";
-import ContentTypeReadyEventParamsInterface from "../content-type-ready-event-params.d";
+import {OptionsInterface} from "../../content-type-menu/option.types";
+import ContentTypeInterface from "../../content-type.types";
+import {ContentTypeMountEventParamsInterface, ContentTypeReadyEventParamsInterface} from "../content-type-events.types";
 import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
 
@@ -45,20 +44,23 @@ export default class Preview extends PreviewCollection {
         }
         if (this.element &&
             $(this.element).hasClass("jarallax") &&
-            (this.parent.dataStore.get("background_image") as any[]).length
+            (this.contentType.dataStore.get("background_image") as any[]).length
         ) {
             _.defer(() => {
                 // Build Parallax on elements with the correct class
-                const parallaxSpeed = Number.parseFloat(this.parent.dataStore.get("parallax_speed") as string);
+                const parallaxSpeed = Number.parseFloat(this.contentType.dataStore.get("parallax_speed") as string);
                 jarallax(
                     this.element,
                     {
-                        imgSrc: (this.parent.dataStore.get("background_image") as any[])[0].url as string,
-                        imgPosition: this.parent.dataStore.get("background_position") as string || "50% 50%",
+                        imgSrc: (this.contentType.dataStore.get("background_image") as any[])[0].url as string,
+                        imgPosition: this.contentType.dataStore.get("background_position") as string || "50% 50%",
                         imgRepeat: (
-                            (this.parent.dataStore.get("background_repeat") as "repeat" | "no-repeat") || "no-repeat"
+                            (this
+                                .contentType
+                                .dataStore
+                                .get("background_repeat") as "repeat" | "no-repeat") || "no-repeat"
                         ),
-                        imgSize: this.parent.dataStore.get("background_size") as string || "cover",
+                        imgSize: this.contentType.dataStore.get("background_size") as string || "cover",
                         speed: !isNaN(parallaxSpeed) ? parallaxSpeed : 0.5,
                     },
                 );
@@ -69,32 +71,32 @@ export default class Preview extends PreviewCollection {
     }, 50);
 
     /**
-     * @param {ContentTypeInterface} parent
+     * @param {ContentTypeInterface} contentType
      * @param {ContentTypeConfigInterface} config
      * @param {ObservableUpdater} observableUpdater
      */
     constructor(
-        parent: ContentTypeInterface,
+        contentType: ContentTypeInterface,
         config: ContentTypeConfigInterface,
         observableUpdater: ObservableUpdater,
     ) {
-        super(parent, config, observableUpdater);
+        super(contentType, config, observableUpdater);
 
-        this.parent.dataStore.subscribe(this.buildJarallax);
+        this.contentType.dataStore.subscribe(this.buildJarallax);
         events.on("row:mountAfter", (args: ContentTypeReadyEventParamsInterface) => {
-            if (args.id === this.parent.id) {
+            if (args.id === this.contentType.id) {
                 this.buildJarallax();
             }
         });
         events.on("contentType:mountAfter", (args: ContentTypeMountEventParamsInterface) => {
-            if (args.contentType.parent.id === this.parent.id) {
+            if (args.contentType.parentContentType && args.contentType.parentContentType.id === this.contentType.id) {
                 this.buildJarallax();
             }
         });
     }
 
     /**
-     * Use the conditional remove to disable the option when the parent has a single child
+     * Use the conditional remove to disable the option when the content type has a single child
      *
      * @returns {OptionsInterface}
      */
@@ -132,7 +134,7 @@ export default class Preview extends PreviewCollection {
         new ResizeObserver(() => {
             // Observe for resizes of the element and force jarallax to display correctly
             if ($(this.element).hasClass("jarallax") &&
-                (this.parent.dataStore.get("background_image") as any[]).length
+                (this.contentType.dataStore.get("background_image") as any[]).length
             ) {
                 jarallax(this.element, "onResize");
                 jarallax(this.element, "onScroll");

@@ -1,4 +1,5 @@
 /*eslint-disable */
+
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
 define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/widget-initializer", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-menu/hide-show-option", "Magento_PageBuilder/js/utils/object", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _knockout, _translate, _widgetInitializer, _config, _hideShowOption, _object, _preview) {
@@ -20,10 +21,10 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/widget-i
     /**
      * @inheritdoc
      */
-    function Preview(parent, config, observableUpdater) {
+    function Preview(contentType, config, observableUpdater) {
       var _this;
 
-      _this = _preview2.call(this, parent, config, observableUpdater) || this;
+      _this = _preview2.call(this, contentType, config, observableUpdater) || this;
       _this.displayingBlockPreview = _knockout.observable(false);
       _this.loading = _knockout.observable(false);
       _this.messages = {
@@ -54,11 +55,11 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/widget-i
         sort: 40
       });
       return options;
-    };
+    }
     /**
      * Runs the widget initializer for each configured widget
      */
-
+    ;
 
     _proto.initializeWidgets = function initializeWidgets(element) {
       if (element) {
@@ -67,12 +68,12 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/widget-i
           config: _config.getConfig("widgets")
         }, element);
       }
-    };
+    }
     /**
      * Updates the view state using the data provided
      * @param {DataObject} data
      */
-
+    ;
 
     _proto.processBlockData = function processBlockData(data) {
       // Only load if something changed
@@ -81,26 +82,26 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/widget-i
       if (data.block_id && data.template.length !== 0) {
         this.processRequest(data, "block_id", "title");
       }
-    };
+    }
     /**
      * @inheritdoc
      */
-
+    ;
 
     _proto.afterObservablesUpdated = function afterObservablesUpdated() {
       _preview2.prototype.afterObservablesUpdated.call(this);
 
-      var data = this.parent.dataStore.getState(); // Only load if something changed
+      var data = this.contentType.dataStore.getState(); // Only load if something changed
 
       this.processBlockData(data);
-    };
+    }
     /**
      * Display preview placeholder
      *
      * @param {DataObject} data
      * @param {string} identifierName
      */
-
+    ;
 
     _proto.displayPreviewPlaceholder = function displayPreviewPlaceholder(data, identifierName) {
       var blockId = (0, _object.get)(data, identifierName); // Only load if something changed
@@ -122,14 +123,14 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/widget-i
         this.placeholderText(this.messages.NOT_SELECTED);
         return;
       }
-    };
+    }
     /**
      *
      * @param {DataObject} data
      * @param {string} identifierName
      * @param {string} labelKey
      */
-
+    ;
 
     _proto.processRequest = function processRequest(data, identifierName, labelKey) {
       var _this2 = this;
@@ -184,12 +185,12 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/widget-i
       }).always(function () {
         _this2.loading(false);
       });
-    };
+    }
     /**
      * Toggle display of block preview.  If showing block preview, add hidden mode to PB preview.
      * @param {boolean} isShow
      */
-
+    ;
 
     _proto.showBlockPreview = function showBlockPreview(isShow) {
       this.displayingBlockPreview(isShow);

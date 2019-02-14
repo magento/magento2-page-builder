@@ -10,25 +10,26 @@ import events from "Magento_PageBuilder/js/events";
 import "slick";
 import _ from "underscore";
 import "../../binding/focus";
-import {PreviewSortableSortUpdateEventParams} from "../../binding/sortable-children";
+import {PreviewSortableSortUpdateEventParams} from "../../binding/sortable-children.types";
 import Config from "../../config";
-import ContentTypeCollectionInterface from "../../content-type-collection.d";
-import ContentTypeConfigInterface from "../../content-type-config.d";
+import ContentTypeCollectionInterface from "../../content-type-collection.types";
+import ContentTypeConfigInterface from "../../content-type-config.types";
 import createContentType from "../../content-type-factory";
 import HideShowOption from "../../content-type-menu/hide-show-option";
 import Option from "../../content-type-menu/option";
-import {OptionsInterface} from "../../content-type-menu/option.d";
-import ContentTypeInterface from "../../content-type.d";
+import {OptionsInterface} from "../../content-type-menu/option.types";
+import ContentTypeInterface from "../../content-type.types";
 import {DataObject} from "../../data-store";
 import delayUntil from "../../utils/delay-until";
-import deferred from "../../utils/promise-deferred";
-import DeferredInterface from "../../utils/promise-deferred.d";
-import ContentTypeAfterRenderEventParamsInterface from "../content-type-after-render-event-params";
-import ContentTypeCreateEventParamsInterface from "../content-type-create-event-params.d";
-import ContentTypeDroppedCreateEventParamsInterface from "../content-type-dropped-create-event-params";
-import ContentTypeDuplicateEventParamsInterface from "../content-type-duplicate-event-params";
-import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params.d";
-import ContentTypeRemovedEventParamsInterface from "../content-type-removed-event-params.d";
+import deferred, {DeferredInterface} from "../../utils/promise-deferred";
+import {
+    ContentTypeAfterRenderEventParamsInterface,
+    ContentTypeCreateEventParamsInterface,
+    ContentTypeDroppedCreateEventParamsInterface,
+    ContentTypeDuplicateEventParamsInterface,
+    ContentTypeMountEventParamsInterface,
+    ContentTypeRemovedEventParamsInterface,
+} from "../content-type-events.types";
 import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
 
@@ -69,16 +70,16 @@ export default class Preview extends PreviewCollection {
     private previousData: DataObject;
 
     /**
-     * @param {ContentTypeCollectionInterface} parent
+     * @param {ContentTypeCollectionInterface} contentType
      * @param {ContentTypeConfigInterface} config
      * @param {ObservableUpdater} observableUpdater
      */
     constructor(
-        parent: ContentTypeCollectionInterface,
+        contentType: ContentTypeCollectionInterface,
         config: ContentTypeConfigInterface,
         observableUpdater: ObservableUpdater,
     ) {
-        super(parent, config, observableUpdater);
+        super(contentType, config, observableUpdater);
 
         // Wait for the tabs instance to mount and the container to be ready
         Promise.all([
@@ -92,9 +93,9 @@ export default class Preview extends PreviewCollection {
                 () => {
                     this.element = element as HTMLElement;
 
-                    this.childSubscribe = this.parent.children.subscribe(this.buildSlickDebounce);
-                    this.previousData = this.parent.dataStore.getState();
-                    this.parent.dataStore.subscribe((data) => {
+                    this.childSubscribe = this.contentType.children.subscribe(this.buildSlickDebounce);
+                    this.previousData = this.contentType.dataStore.getState();
+                    this.contentType.dataStore.subscribe((data) => {
                         if (this.hasDataChanged(this.previousData, data)) {
                             this.buildSlickDebounce();
                         }
@@ -291,15 +292,15 @@ export default class Preview extends PreviewCollection {
     public addSlide() {
         createContentType(
             Config.getConfig("content_types").slide,
-            this.parent,
-            this.parent.stageId,
+            this.contentType,
+            this.contentType.stageId,
         ).then((slide) => {
             events.on("slide:mountAfter", (args: ContentTypeMountEventParamsInterface) => {
                 if (args.id === slide.id) {
                     _.defer(() => {
                         // Wait until slick is initialized before trying to navigate
                         delayUntil(
-                            () => this.navigateToSlide(this.parent.children().length - 1),
+                            () => this.navigateToSlide(this.contentType.children().length - 1),
                             () => $(this.element).hasClass("slick-initialized"),
                             10,
                         );
@@ -307,7 +308,7 @@ export default class Preview extends PreviewCollection {
                     events.off(`slide:${slide.id}:mountAfter`);
                 }
             }, `slide:${slide.id}:mountAfter`);
-            this.parent.addChild(slide, this.parent.children().length);
+            this.contentType.addChild(slide, this.contentType.children().length);
         });
     }
 
@@ -339,7 +340,7 @@ export default class Preview extends PreviewCollection {
     protected bindEvents() {
         super.bindEvents();
         events.on("slider:mountAfter", (args: ContentTypeMountEventParamsInterface) => {
-            if (args.id === this.parent.id) {
+            if (args.id === this.contentType.id) {
                 if (args.expectChildren !== undefined) {
                     this.mountAfterDeferred.resolve(args.expectChildren);
                 }
@@ -348,7 +349,7 @@ export default class Preview extends PreviewCollection {
 
         // Set the active slide to the new position of the sorted slide
         events.on("childContentType:sortUpdate", (args: PreviewSortableSortUpdateEventParams) => {
-            if (args.instance.id === this.parent.id) {
+            if (args.instance.id === this.contentType.id) {
                 $(args.ui.item).remove(); // Remove the item as the container's children is controlled by knockout
                 this.setActiveSlide(args.newPosition);
                 _.defer(this.focusElement.bind(this, args.event, args.newPosition));
@@ -359,14 +360,14 @@ export default class Preview extends PreviewCollection {
         // we need to force update the content of the slider due to KO rendering issues
         let newItemIndex: number;
         events.on("slide:removeAfter", (args: ContentTypeRemovedEventParamsInterface) => {
-            if (args.contentType.parent.id === this.parent.id) {
+            if (args.contentType.parentContentType.id === this.contentType.id) {
                 // Mark the previous slide as active
                 newItemIndex = (args.index - 1 >= 0 ? args.index - 1 : 0);
 
                 this.forceContainerHeight();
-                const data = this.parent.children().slice(0);
-                this.parent.children([]);
-                this.parent.children(data);
+                const data = this.contentType.children().slice(0);
+                this.contentType.children([]);
+                this.contentType.children(data);
 
                 _.defer(() => {
                     this.buildSlick();
@@ -375,8 +376,8 @@ export default class Preview extends PreviewCollection {
         });
 
         events.on("slide:renderAfter", (args: ContentTypeAfterRenderEventParamsInterface) => {
-            const itemIndex = args.contentType.parent.getChildren()().indexOf(args.contentType);
-            if ((args.contentType.parent.id === this.parent.id) &&
+            const itemIndex = args.contentType.parentContentType.getChildren()().indexOf(args.contentType);
+            if ((args.contentType.parentContentType.id === this.contentType.id) &&
                 (newItemIndex !== null && newItemIndex === itemIndex)
             ) {
                 _.defer(() => {
@@ -394,14 +395,14 @@ export default class Preview extends PreviewCollection {
 
         // On a slide content types creation we need to lock the height of the slider to ensure a smooth transition
         events.on("slide:createAfter", (args: ContentTypeCreateEventParamsInterface) => {
-            if (this.element && this.ready && args.contentType.parent.id === this.parent.id) {
+            if (this.element && this.ready && args.contentType.parentContentType.id === this.contentType.id) {
                 this.forceContainerHeight();
             }
         });
 
         // ContentType being mounted onto container
         events.on("slider:dropAfter", (args: ContentTypeDroppedCreateEventParamsInterface) => {
-            if (args.id === this.parent.id && this.parent.children().length === 0) {
+            if (args.id === this.contentType.id && this.contentType.children().length === 0) {
                 this.addSlide();
             }
         });
@@ -410,7 +411,7 @@ export default class Preview extends PreviewCollection {
         let duplicatedSlide: ContentTypeInterface;
         let duplicatedSlideIndex: number;
         events.on("slide:duplicateAfter", (args: ContentTypeDuplicateEventParamsInterface) => {
-            if (args.duplicateContentType.parent.id === this.parent.id && args.direct) {
+            if (args.duplicateContentType.parentContentType.id === this.contentType.id && args.direct) {
                 duplicatedSlide = args.duplicateContentType;
                 duplicatedSlideIndex = args.index;
             }
@@ -456,13 +457,13 @@ export default class Preview extends PreviewCollection {
             }
 
             // Force an update on all children, ko tries to intelligently re-render but fails
-            const data = this.parent.children().slice(0);
-            this.parent.children([]);
+            const data = this.contentType.children().slice(0);
+            this.contentType.children([]);
             $(this.element).empty();
-            this.parent.children(data);
+            this.contentType.children(data);
 
             // Re-subscribe original event
-            this.childSubscribe = this.parent.children.subscribe(this.buildSlickDebounce);
+            this.childSubscribe = this.contentType.children.subscribe(this.buildSlickDebounce);
 
             // Bind our init event for slick
             $(this.element).on("init", () => {
@@ -528,7 +529,7 @@ export default class Preview extends PreviewCollection {
      * fade: boolean; infinite: boolean; arrows: boolean; dots: boolean}}
      */
     private buildSlickConfig() {
-        const data = this.parent.dataStore.getState();
+        const data = this.contentType.dataStore.getState();
         return {
             arrows: data.show_arrows === "true",
             autoplay: data.autoplay === "true",
