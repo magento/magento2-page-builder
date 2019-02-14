@@ -1,580 +1,566 @@
-# Events {#events}
+# Page Builder events
 
-This document contains reference information for events dispatched in Page Builder.
+## Event consumption
+The pattern for consuming Page Builder events in JavaScript, such as within the `preview.js` component, is to import `Magento_PageBuilder/js/events` and use the `events.on()` method to bind to the event you want to handle, as shown here:
 
-**Note:**
-*We are revising naming conventions for events, naming may change.*
+```js
+define([
+    'Magento_PageBuilder/js/events',
+], function (events) {
+    'use strict';
 
-## Events list {#eventslist}
+    events.on("event:name", function (args) {
+        // do logic
+    });
+});
 
-- [`contentType:*` events](#contenttype-events)
-    - [`contentType:createAfter`](#contenttypecreateafter)
-    - [`contentType:mountAfter`](#contenttypemountafter)
-    - [`contentType:dropAfter`](#contenttypedropafter)
-    - [`contentType:mountAfter`](#contenttypemountafter)
-    - [`contentType:renderAfter`](#contenttyperenderafter)
-    - [`contentType:removeAfter`](#contenttyperemoveafter)
-    - [`contentType:duplicateAfter`](#contenttypeduplicateafter)
-    - [`contentType:moveBefore`](#contenttypemovebefore)
-    - [`contentType:moveAfter`](#contenttypemoveafter)
-    - [`contentType:redrawAfter`](#contenttyperedrawafter)
-        - [Backend](#backend)
-        - [Frontend](#frontend)
-- [`column:dragStart`](#columndragstart)
-- [`column:dragStop`](#columndragstop)
-- [`column:initializeAfter`](#columninitializeafter)
-- [`image:{{id}}:assignAfter`](#imageidassignafter)
-- [`image:mountAfter`](#imagemountafter)
-- [`image:uploadAfter`](#imageuploadafter)
-- [`stage:{{id}}:readyAfter`](#stageidreadyafter)
-- [`stage:interactionStart`](#stageinteractionstart)
-- [`stage:interactionStop`](#stageinteractionstop)
-- [`stage:{{id}}:toggleFullscreen`](#stageidtogglefullscreen)
-- [`previewData:updateAfter`](#previewdataupdateafter)
-- [`previewSortable:sortstart`](#previewsortablesortstart)
-- [`previewSortable:sortupdate`](#previewsortablesortupdate)
-- [`stage:error`](#stageerror)
-- [`stage:{{id}}:readyAfter`](#stageidreadyafter)
-- [`stage:{{id}}:masterFormatRenderAfter`](#stageidmasterformatrenderafter)
-- [`stage:updateAfter`](#stageupdateafter)
-- [`stage:childFocusStart`](#stagechildfocusstart)
-- [`stage:childFocusStop`](#stagechildfocusstop)
-- [`state`](#state)
-- [`{{config.name}}:{{id}}:updateAfter`](#confignameidupdateafter)
-- [`googleMaps:authFailure`](#googlemapsauthfailure)
+```
+
+## Events list
+
+The following table lists the Page Builder events you can bind to and handle within your content type.
+
+<!-- {% raw %} -->
+
+| Content Type Events                                 | Stage Events                                             |
+| --------------------------------------------------- | -------------------------------------------------------- |
+| [contentType:createAfter](#contenttypecreateafter)  | [stage:childFocusStart](#stagechildfocusstart)                                    |
+| [contentType:dropAfter](#contenttypedropafter)      | [stage:childFocusStop](#stagechildfocusstop)                                     |
+| [contentType:duplicateAfter](#contenttypeduplicateafter) | [stage:interactionStart](#stageinteractionstart)                                   |
+| [contentType:mountAfter](#contenttypemountafter)    | [stage:interactionStop](#stageinteractionstop)                                    |
+| [contentType:moveAfter](#contenttypemoveafter)      | [stage:error](#stageerror)                                              |
+| [contentType:moveBefore](#contenttypemovebefore)    | [stage:{{preview.parent.stageId}}:masterFormatRenderAfter](#stageidmasterformatrenderafter) |
+| [contentType:redrawAfter](#contenttyperedrawafter)  | [stage:{{preview.parent.stageId}}:readyAfter](#stageidreadyafter)              |
+| [contentType:removeAfter](#contenttyperemoveafter)  | [stage:{{preview.parent.stageId}}:renderAfter](#stagepreviewparentstageidrenderafter)             |
+| [contentType:renderAfter](#contenttyperenderafter)  | [stage:{{preview.parent.stageId}}:toggleFullscreen](#stageidtogglefullscreen)        |
+|                                                     | [stage:updateAfter](#stageupdateafter)                                        |
+|                                                     |                                                          |
+| **Column Events**                                   | **Preview Events**                                       |
+| [column:dragStart](#columndragstart)                | [previewSortable:sortstart](#previewsortablesortstart)                                |
+| [column:dragStop](#columndragstop)                  | [previewSortable:sortupdate](#previewsortablesortupdate)                               |
+| [column:initializeAfter](#columninitializeafter)    | [previewData:updateAfter](#previewdataupdateafter)                                  |
+|                                                     |                                                          |
+| **Image Events**                                    | **Other Events**                                         |
+| [image:{{preview.parent.id}}:assignAfter](#imageidassignafter) | [googleMaps:authFailure](#googlemapsauthfailure)                                   |
+| [image:mountAfter](#imagemountafter)                | [state](#state)                                                    |
+| [image:uploadAfter](#imageuploadafter)              | [{{config.name}}:{{preview.parent.id}}:updateAfter](#confignameidupdateafter)        |
+|                                                     |                                                          |
+
+## Event details
 
 ## `contentType:*` events
-All events starting with `contentType:` can also be called for specific content types by prefixing the content types name (`{{name}}:{{event}}`) like the following:
+Events starting with `contentType:` are triggered for every content type on the stage. These events can also be called for specific content types by prefixing the content type's name before the event (`name:event`). For example:
 * `text:createAfter`
 * `row:mountAfter`
 * `tab-item:mountAfter`
 
+
+
 ### `contentType:createAfter`
 
-**Triggers**
-
-* `createContentType`
-
-
-**Params**
-
-``` js
-{
-    id: string;
-    contentType: ContentTypeInterface & ContentTypeCollectionInterface;
-}
+```js
+events.on("contentType:createAfter", function (params) {});
 ```
+
+| Params        | Type                                                        |
+| ------------- | ----------------------------------------------------------- |
+| `id`          | `string`                                                    |
+| `contentType` | `ContentTypeInterface` and `ContentTypeCollectionInterface` |
 
 [Back to top]
 
-### `contentType:mountAfter`
-
-**Triggers**
-
-* `createContentType`
 
 
-**Params**
+### `contentType:mountAfter` (ContentType)
 
-``` js
-{
-    id: string;
-    contentType: ContentTypeInterface & ContentTypeCollectionInterface;
-    expectedChildren: number;
-}
+```js
+events.on("contentType:mountAfter", function (params) {});
 ```
 
+| Params        | Type          |
+| ------------- | ------------- |
+| `id`          | `string`      |
+| `contentType` | `ContentType` |
+
 [Back to top]
+
+
+
+### `contentType:mountAfter` (ContentTypeCollection)
+
+```js
+events.on("contentType:mountAfter", function (params) {});
+```
+
+| Params           | Type                    |
+| ---------------- | ----------------------- |
+| `id`             | `string`                |
+| `contentType`    | `ContentTypeCollection` |
+| `expectChildren` | `number`                |
+
+[Back to top]
+
+
 
 ### `contentType:dropAfter`
 
-**Triggers**
-
-* `onSortReceive`
-
-
-**Params**
-
-``` js
-{
-    id: string;
-    contentType: ContentTypeInterface & ContentTypeCollectionInterface;
-}
+```js
+events.on("contentType:dropAfter", function (params) {});
 ```
+
+| Params        | Type                                                        |
+| ------------- | ----------------------------------------------------------- |
+| `id`          | `string`                                                    |
+| `contentType` | `ContentTypeInterface` and `ContentTypeCollectionInterface` |
 
 [Back to top]
 
-### `contentType:mountAfter`
 
-**Triggers**
-
-* `ContentTypeCollection::addChild`
-* `Column.Preview::fireMountEvent`
-
-**Params**
-
-``` js
-{
-    id: string;
-    contentType: ContentTypeInterface & ContentTypeCollectionInterface;
-}
-```
-
-[Back to top]
 
 ### `contentType:renderAfter`
 
-**Triggers**
-
-* `Preview::dispatchAfterRenderEvent`
-
-**Params**
-
-``` js
-{
-    id: string;
-    element: Element;
-    contentType: ContentTypeInterface & ContentTypeCollectionInterface;
-}
+```js
+events.on("contentType:renderAfter", function (params) {});
 ```
 
+| Params        | Type                                                        |
+| ------------- | ----------------------------------------------------------- |
+| `id`          | `string`                                                    |
+| `element`     | `Element`                                                   |
+| `contentType` | `ContentTypeInterface` and `ContentTypeCollectionInterface` |
+
 [Back to top]
+
+
 
 ### `contentType:removeAfter`
 
-**Triggers**
-
-* `Preview::onOptionRemove`
-
-**Params**
-
-``` js
-{
-    contentType: ContentTypeInterface & ContentTypeCollectionInterface;
-    index: number;
-    parent: ContentTypeCollectionInterface;
-    stageId: string;
-}
+```js
+events.on("contentType:removeAfter", function (params) {});
 ```
 
+| Params        | Type                                           |
+| ------------- | ---------------------------------------------- |
+| `contentType` | `ContentType`: `ContentTypeInterface`          |
+| `index`       | `number`                                       |
+| `parent`      | `ContentType`:`ContentTypeCollectionInterface` |
+| `stageId`     | `string`                                       |
+
 [Back to top]
+
+
 
 ### `contentType:duplicateAfter`
 
-**Triggers**
-
-* `Preview::dispatchContentTypeCloneEvents`
-
-**Params**
-
-``` js
-{
-    originalContentType: ContentTypeInterface & ContentTypeCollectionInterface;
-    duplicateContentType: ContentTypeInterface & ContentTypeCollectionInterface;
-    index: number;
-    direct: boolean;
-}
+```js
+events.on("contentType:duplicateAfter", function (params) {});
 ```
 
+| Params                 | Type                                                        |
+| ---------------------- | ----------------------------------------------------------- |
+| `originalContentType`  | `ContentTypeInterface` and `ContentTypeCollectionInterface` |
+| `duplicateContentType` | `ContentTypeInterface` and `ContentTypeCollectionInterface` |
+| `index`                | `number`                                                    |
+| `direct`               | `boolean`                                                   |
+
 [Back to top]
+
+
 
 ### `contentType:moveBefore`
 
-**Triggers**
-
-* `moveContentType`
-
-**Params**
-
-``` js
-{
-    contentType: ContentTypeInterface & ContentTypeCollectionInterface;
-    sourceParent: ContentTypeCollectionInterface;
-    targetParent: ContentTypeCollectionInterface;
-    targetIndex: number;
-    stageId: string;
-}
+```js
+events.on("contentType:moveBefore", function (params) {});
 ```
 
+| Params         | Type                                                        |
+| -------------- | ----------------------------------------------------------- |
+| `contentType`  | `ContentTypeInterface` and `ContentTypeCollectionInterface` |
+| `sourceParent` | `ContentTypeCollectionInterface`                            |
+| `targetParent` | `ContentTypeCollectionInterface`                            |
+| `targetIndex`  | `number`                                                    |
+| `stageId`      | `string`                                                    |
+
 [Back to top]
+
+
 
 ### `contentType:moveAfter`
 
-**Triggers**
-
-* `moveContentType`
-
-**Params**
-
-``` js
-{
-    contentType: ContentTypeInterface & ContentTypeCollectionInterface;
-    sourceParent: ContentTypeCollectionInterface;
-    targetParent: ContentTypeCollectionInterface;
-    targetIndex: number;
-    stageId: string;
-}
+```js
+events.on("contentType:moveAfter", function (params) {});
 ```
 
+| Params         | Type                                                        |
+| -------------- | ----------------------------------------------------------- |
+| `contentType`  | `ContentTypeInterface` and `ContentTypeCollectionInterface` |
+| `sourceParent` | `ContentTypeCollectionInterface`                            |
+| `targetParent` | `ContentTypeCollectionInterface`                            |
+| `targetIndex`  | `number`                                                    |
+| `stageId`      | `string`                                                    |
+
 [Back to top]
+
+
 
 ### `contentType:redrawAfter`
 
+```js
+events.on("contentType:redrawAfter", function (params) {});
+```
+
 #### Backend
 
-**Triggers**
-
-* `Tabs.Preview::onTabClick`
-
-**Params**
-
-``` js
-{
-    id: string,
-    contentType: ContentTypeInterface & ContentTypeCollectionInterface
-}
-```
+| Params        | Type                                                        |
+| ------------- | ----------------------------------------------------------- |
+| `id`          | `string`                                                    |
+| `contentType` | `ContentTypeInterface` and `ContentTypeCollectionInterface` |
 
 #### Frontend
 
-**Triggers**
-
-* `Tabs.widget.ui.tabs::activate`
-
-**Params**
-
-``` js
-{
-    element: HTMLElement
-}
-```
+| Params    | Type          |
+| --------- | ------------- |
+| `element` | `HTMLElement` |
 
 [Back to top]
+
+
 
 ### `column:dragStart`
 
-**Triggers**
-
-* `ColumnGroup.Preview::start`
-
-**Params**
-
-``` js
-{
-    column: ContentTypeInterface;
-    stageId: string;
-}
+```js
+events.on("column:dragStart", function (params) {});
 ```
 
+| Params    | Type                   |
+| --------- | ---------------------- |
+| `column`  | `ContentTypeInterface` |
+| `stageId` | `string`               |
+
 [Back to top]
+
+
 
 ### `column:dragStop`
 
-**Triggers**
-
-* `ColumnGroup.Preview::stop`
-
-**Params**
-
-``` js
-{
-    column: Column,
-    stageId: string
-}
+```js
+events.on("column:dragStop", function (params) {});
 ```
 
+| Params    | Type                   |
+| --------- | ---------------------- |
+| `column`  | `ContentTypeInterface` |
+| `stageId` | `string`               |
+
 [Back to top]
+
+
 
 ### `column:initializeAfter`
 
-**Triggers**
-
-* `Column.Preview::initColumn`
-
-**Params**
-
-``` js
-{
-    column: Column,
-    element,
-    parent: ColumnGroup
-}
+```js
+events.on("column:initializeAfter", function (params) {});
 ```
+
+| Params    | Type          |
+| --------- | ------------- |
+| `column`  | `Column`      |
+| `element` | `Element`     |
+| `parent`  | `ColumnGroup` |
 
 [Back to top]
 
-### `image:{{id}}:assignAfter` {#imageidassignafter}
 
-**Triggers**
 
-* `Image.Preview::bindEvents`
+### `image:{{preview.parent.id}}:assignAfter` {#imageidassignafter}
 
-**Params**
+```js
+events.on(`image:${this.parent.id}:assignAfter`, function (params) {});
+```
 
-object
+
+| Params        | Type   |
+| ------------- | ------ |
+| `imageObject` | `File` |
+
+[Back to top]
+
+
 
 ### `image:mountAfter`
 
-**Triggers**
+```js
+events.on("image:mountAfter", function (params) {});
+```
 
-* `ContentTypeFactory::fireBlockReadyEvent`
-
-**Params**
-
-Function
+| Params           | Type     |
+| ---------------- | -------- |
+| `id`             | `string` |
+| `expectChildren` | `number` |
 
 [Back to top]
+
+
 
 ### `image:uploadAfter`
 
-**Triggers**
-
-* `ImageUploader::addFile`
-
-**Params**
-
-Function
-
-[Back to top]
-
-### `stage:{{id}}:readyAfter`
-
-**Triggers**
-
-* `Stage::ready`
-
-**Params**
-
-``` js
-{
-    stage: Stage
-}
+```js
+events.on("image:uploadAfter", function (params) {});
 ```
 
+| Params | Type   |
+| ------ | ------ |
+| `file` | `File` |
+
 [Back to top]
 
-### `stage:{{id}}:renderAfter`
 
-**Triggers**
 
-* `Stage::constructor`
+### `stage:{{preview.parent.stageId}}:readyAfter`
 
-**Params**
-
-``` js
-{
-    stageId: number
-}
+```js
+events.on(`stage:${this.parent.stageId}:readyAfter`, function (params) {});
 ```
 
+| Params  | Type    |
+| ------- | ------- |
+| `stage` | `Stage` |
+
 [Back to top]
+
+
+
+### `stage:{{preview.parent.stageId}}:renderAfter`
+
+```js
+events.on(`stage:${this.parent.stageId}:renderAfter`, function (params) {});
+```
+
+| Params  | Type    |
+| ------- | ------- |
+| `stage` | `Stage` |
+
+[Back to top]
+
+
 
 ### `stage:interactionStart`
 
-**Triggers**
-
-* `Tabs.Preview::constructor`
-* `Slider.Preview::constructor`
-* `ColumnGroup.Preview::registerResizeHandle`
-* `ColumnGroup.Preview::start`
-* `drag-drop::onSortStart`
-
-**Params**
-
-``` js
+```js
+events.on("stage:interactionStart", function () {});
 ```
 
+| Params | Type |
+| ------ | ---- |
+| `None` |      |
+
 [Back to top]
+
+
 
 ### `stage:interactionStop`
 
-**Triggers**
-
-* `Tabs.Preview::constructor`
-* `Tabs.Preview::setFocusedTab`
-* `Slider.Preview::constructor`
-* `ColumnGroup.Preview::endAllInteractions`
-* `ColumnGroup.Preview::stop`
-* `drag-drop::onSortStop`
-
-**Params**
-
-``` js
+```js
+events.on("stage:interactionStop", function () {});
 ```
+
+| Params | Type |
+| ------ | ---- |
+| `None` |      |
 
 [Back to top]
 
-### `stage:{{id}}:toggleFullscreen` {#stageidtogglefullscreen}
 
-**Triggers**
 
-* `Panel::fullScreen`
-* `Wysiwyg::toggleFullScreen`
+### `stage:{{preview.parent.stageId}}:toggleFullscreen` {#stageidtogglefullscreen}
 
-**Params**
-
-``` js
+```js
+events.on(`stage:${this.parent.stageId}:toggleFullscreen`, function (params) {});
 ```
 
+| Params   | Type     |
+| -------- | -------- |
+| `object` | `Object` |
+
 [Back to top]
+
+
 
 ### `previewData:updateAfter`
 
-**Triggers**
-
-* `Preview::updateObservables`
-
-**Params**
-
-``` js
-{
-    preview
-}
+```js
+events.on("previewData:updateAfter", function (params) {});
 ```
+
+| Params    | Type      |
+| --------- | --------- |
+| `preview` | `Preview` |
 
 [Back to top]
 
-### `previewSortable:sortstart`
 
-**Triggers**
 
-* `PreviewSortable::init`
+### `childContentType:sortStart`
 
-**Params**
-
-``` js
-{
-    instance,
-    originalPosition,
-    ui
-}
+```js
+events.on("childContentType:sortStart", function (params) {});
 ```
+
+| Params             | Type                        |
+| ------------------ | --------------------------- |
+| `instance`         | `Preview`                   |
+| `originalPosition` | `number`                    |
+| `ui`               | `JQueryUI.SortableUIParams` |
 
 [Back to top]
 
-### `previewSortable:sortupdate`
 
-**Triggers**
 
-* `PreviewSortable::init`
-* `PreviewSortableSortUpdateEventParams`
+### `childContentType:sortUpdate`
 
-**Params**
-
-``` js
-{
-    instance: ContentTypeInterface;
-    newPosition: number;
-    originalPosition: number;
-    ui: JQueryUI.SortableUIParams;
-}
+```js
+events.on("childContentType:sortUpdate", function (params) {});
 ```
 
+| Params             | Type                        |
+| ------------------ | --------------------------- |
+| `instance`         | `ContentTypeInterface`      |
+| `newPosition`      | `number`                    |
+| `originalPosition` | `number`                    |
+| `ui`               | `JQueryUI.SortableUIParams` |
+| `event`            | `Event`                     |
+
 [Back to top]
+
+
 
 ### `stage:error`
 
-**Triggers**
-
-* `Stage::build`
-
-**Params**
-
-Error
-
-[Back to top]
-
-### `stage:{{id}}:readyAfter` {#stageidreadyafter}
-
-**Triggers**
-
-* `Stage::ready`
-* `stage instance`
-
-### `stage:{{id}}:masterFormatRenderAfter` {#stageidmasterformatrenderafter}
-
-**Triggers**
-
-* `Stage`
-
-**Params**
-
-``` js
-{
-    value: string
-}
+```js
+events.on("stage:error", function (params) {});
 ```
 
+| Params  | Type    |
+| ------- | ------- |
+| `error` | `Error` |
+
 [Back to top]
+
+
+
+### `stage:{{preview.parent.stageId}}:readyAfter` {#stageidreadyafter}
+
+```js
+events.on(`stage:${this.parent.stageId}:readyAfter`, function (params) {});
+```
+
+| Params  | Type    |
+| ------- | ------- |
+| `stage` | `Stage` |
+
+[Back to top]
+
+### `stage:{{preview.parent.stageId}}:readyAfter` {#stageidreadyafter}
+
+
+### `stage:{{preview.parent.stageId}}:masterFormatRenderAfter` {#stageidmasterformatrenderafter}
+
+```js
+events.on(`stage:${this.parent.stageId}:masterFormatRenderAfter`, function (params) {});
+```
+
+| Params           | Type     |
+| ---------------- | -------- |
+| `renderedOutput` | `string` |
+
+[Back to top]
+
+
 
 ### `stage:updateAfter`
 
-**Triggers**
-
-* `Stage::initListeners`
-* `ContentTypeCollection::constructor`
-
-**Params**
-
-``` js
-{
-    stageId: number
-}
+```js
+events.on("stage:updateAfter", function (params) {});
 ```
 
+| Params    | Type     |
+| --------- | -------- |
+| `stageId` | `string` |
+
 [Back to top]
+
+
 
 ### `stage:childFocusStart`
 
+```js
+events.on("stage:childFocusStart", function () {});
+```
+
+| Params | Type |
+| ------ | ---- |
+| `None` |      |
+
 [Back to top]
+
+
 
 ### `stage:childFocusStop`
 
+```js
+events.on("stage:childFocusStop", function () {});
+```
+
+| Params | Type |
+| ------ | ---- |
+| `None` |      |
+
 [Back to top]
+
+
 
 ### `state`
 
-**Triggers**
-
-* `DataStore::emitState`
-
-**Params**
-
-``` js
-{
-    state: DataObject
-}
+```js
+events.on("state", function (params) {});
 ```
 
-[Back to top]
+| Params  | Type        |
+| ------- | ----------- |
+| `state` | `DataStore` |
 
-### `{{config.name}}:{{id}}:updateAfter` {#confignameidupdateafter}
+### `{{config.name}}:{{preview.parent.id}}:updateAfter` {#confignameidupdateafter}
 
-**Triggers**
 
-* `ContentType::bindEvents`
 
-**Params**
+### `{{config.name}}:{{preview.parent.id}}:updateAfter` {#confignameidupdateafter}
 
-``` js
-{
-    eventName: string,
-    paramObj: [key: string]: Stage
-}
+```js
+events.on(`${this.config.name}:${this.parent.id}:updateAfter`, function (params) {});
 ```
 
-[Back to top]
-
-## `googleMaps:authFailure`
-
-**Triggers**
-
-* `window.gm_authFailure`
-
-**Params**
-
-_none_
+| Params        | Type          |
+| ------------- | ------------- |
+| `contentType` | `ContentType` |
 
 [Back to top]
 
-[Back to top]: #eventslist
+
+
+### `googleMaps:authFailure`
+
+```js
+events.on("googleMaps:authFailure", function () {});
+```
+
+| Params | Type |
+| ------ | ---- |
+| `None` |      |
+
+[Back to top]
+
+
+
+[Back to top]: #events-list
+
+<!-- {% endraw %} -->
