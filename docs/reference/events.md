@@ -36,8 +36,8 @@ The following table lists the Page Builder events you can bind to and handle wit
 |                                                     | [stage:updateAfter](#stageupdateafter)                                        |
 |                                                     |                                                          |
 | **Column Events**                                   | **Preview Events**                                       |
-| [column:dragStart](#columndragstart)                | [previewSortable:sortstart](#previewsortablesortstart)                                |
-| [column:dragStop](#columndragstop)                  | [previewSortable:sortupdate](#previewsortablesortupdate)                               |
+| [column:dragStart](#columndragstart)                | [childContentType:sortstart](#childcontenttypesortstart)                                |
+| [column:dragStop](#columndragstop)                  | [childContentType:sortupdate](#childcontenttypesortupdate)                               |
 | [column:initializeAfter](#columninitializeafter)    | [previewData:updateAfter](#previewdataupdateafter)                                  |
 |                                                     |                                                          |
 | **Image Events**                                    | **Other Events**                                         |
@@ -71,7 +71,9 @@ events.on("contentType:createAfter", function (params) {});
 
 
 
-### `contentType:mountAfter` (ContentType)
+### `contentType:mountAfter`
+
+#### ContentType
 
 ```js
 events.on("contentType:mountAfter", function (params) {});
@@ -82,11 +84,8 @@ events.on("contentType:mountAfter", function (params) {});
 | `id`          | `string`      |
 | `contentType` | `ContentType` |
 
-[Back to top]
 
-
-
-### `contentType:mountAfter` (ContentTypeCollection)
+#### ContentTypeCollection
 
 ```js
 events.on("contentType:mountAfter", function (params) {});
