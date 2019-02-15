@@ -6,16 +6,15 @@
 
 declare(strict_types=1);
 
-namespace Magento\PageBuilderDataMigration\Setup\Patch\Data;
+namespace Magento\PageBuilder\Setup\Patch\Data;
 
 use Magento\Framework\Setup\Patch\DataPatchInterface;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
 
 /**
- * Patch is mechanism, that allows to do atomic upgrade data changes
+ * Update description product attribute to by default enable Page Builder
  */
-class UpdateProductAttribute implements
-    DataPatchInterface
+class UpdateProductAttribute implements DataPatchInterface
 {
     /**
      * @var ModuleDataSetupInterface $moduleDataSetup
@@ -40,7 +39,7 @@ class UpdateProductAttribute implements
     }
 
     /**
-     * Do Upgrade
+     * Modify EAV tables to update description attribute page builder enabled value
      *
      * @return void
      */
@@ -72,6 +71,6 @@ class UpdateProductAttribute implements
      */
     public static function getDependencies()
     {
-        return [MigrateToPageBuilder::class];
+        return [];
     }
 }
