@@ -87,7 +87,7 @@ class Accordion implements RendererInterface
         }
         $accordionHtml .= '>' . (isset($additionalData['children']) ? $additionalData['children'] : '') . '</div>';
 
-        $rootElementHtml = '<div data-element="main" data-role="html" data-appearance="default">';
+        $rootElementHtml = '<div data-element="main" data-content-type="html" data-appearance="default">';
         $rootElementHtml .= $accordionHtml . '</div>';
 
         return $rootElementHtml;

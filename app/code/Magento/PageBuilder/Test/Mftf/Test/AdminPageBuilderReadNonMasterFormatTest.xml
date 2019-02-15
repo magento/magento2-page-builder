@@ -45,7 +45,7 @@
             <argument name="CMSPage" value="$$createPreReqCMSPage$$"/>
         </actionGroup>
         <waitForElementVisible selector="{{CmsNewPagePageActionsSection.pageTitle}}" stepKey="WaitForPageLoaded"/>
-        <waitForElementVisible selector="{{PageBuilderPanel.layoutGroup}}" stepKey="waitForPageBuilderDisplay1" />
+        <waitForElementVisible selector="{{PageBuilderPanel.layoutMenuSection}}" stepKey="waitForPageBuilderDisplay1" />
         <waitForElementVisible time="1" selector="{{PageBuilderStage.contentTypeInStage('html')}}" stepKey="waitForContentTypeInStage" />
         <seeElement selector="{{PageBuilderStage.contentTypeInStage('html')}}" stepKey="seeContentTypeInStage"/>
         <see userInput="{{simpleCmsPage.content}}" selector="{{HtmlOnStage.base('1')}}" stepKey="assertHtmlContent"/>
@@ -97,8 +97,8 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="WYSIWYG Conversion"/>
-            <title value="HTML with element that has nonexistent data-role converted to HTML content type"/>
-            <description value="HTML with element that has nonexistent data-role converted to HTML content type"/>
+            <title value="HTML with element that has nonexistent data-content-type converted to HTML content type"/>
+            <description value="HTML with element that has nonexistent data-content-type converted to HTML content type"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-66620"/>
             <testCaseId value="MC-2824"/>
@@ -124,7 +124,7 @@
         <waitForPageLoad stepKey="waitForEditor"/>
         <click selector="{{CmsNewPagePageActionsSection.showHideEditor}}" stepKey="clickShowHideEditor"/>
         <waitForElementVisible time="1" selector="{{CmsNewPagePageActionsSection.content}}" stepKey="waitForContentField" />
-        <fillField selector="{{CmsNewPagePageActionsSection.content}}" userInput="{{cmsPageNonexistentDataRole.content}}" stepKey="enterContent"/>
+        <fillField selector="{{CmsNewPagePageActionsSection.content}}" userInput="{{cmsPageNonexistentDataContentType.content}}" stepKey="enterContent"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilder"/>
         <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToContentCreatedCMSPage2">

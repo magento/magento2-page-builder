@@ -1,4 +1,5 @@
 /*eslint-disable */
+
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
@@ -42,10 +43,10 @@ define(["Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/c
         direct = false;
       }
 
-      var index = contentType.parent.getChildren().indexOf(contentType) + 1 || null;
+      var index = contentType.parentContentType.getChildren().indexOf(contentType) + 1 || null;
       var childrenLength = contentType.children ? contentType.children().length : null;
       return new Promise(function (resolve, reject) {
-        (0, _contentTypeFactory)(contentType.config, contentType.parent, contentType.stageId, contentType.dataStore.getState(), childrenLength).then(function (duplicate) {
+        (0, _contentTypeFactory)(contentType.config, contentType.parentContentType, contentType.stageId, contentType.dataStore.getState(), childrenLength).then(function (duplicate) {
           if (contentType.children && contentType.children().length > 0) {
             // Duplicate the instances children into the new duplicate
             contentType.children().forEach(function (subChild) {
@@ -53,7 +54,7 @@ define(["Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/c
 
               if (subChildClone) {
                 subChildClone.then(function (duplicateSubChild) {
-                  duplicateSubChild.parent = duplicate;
+                  duplicateSubChild.parentContentType = duplicate;
                   duplicate.addChild(duplicateSubChild);
                 });
               } else {
@@ -63,7 +64,7 @@ define(["Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/c
           }
 
           if (autoAppend) {
-            contentType.parent.addChild(duplicate, index);
+            contentType.parentContentType.addChild(duplicate, index);
           }
 
           _this.dispatchContentTypeCloneEvents(contentType, duplicate, index, direct);
@@ -71,13 +72,13 @@ define(["Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/c
           resolve(duplicate);
         });
       });
-    };
+    }
     /**
      * Tries to call specified method of a current content type,
      * and delegates attempt to its' children.
      * @param args
      */
-
+    ;
 
     _proto.delegate = function delegate() {
       var _preview2$prototype$d;
@@ -88,19 +89,19 @@ define(["Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/c
 
       (_preview2$prototype$d = _preview2.prototype.delegate).call.apply(_preview2$prototype$d, [this].concat(args));
 
-      this.parent.getChildren().each(function (elem) {
+      this.contentType.getChildren()().forEach(function (elem) {
         elem.preview.delegate.apply(elem.preview, args);
       });
-    };
+    }
     /**
      * Does the current instance have any children or values different from the default for it's type?
      *
      * @returns {boolean}
      */
-
+    ;
 
     _proto.isConfigured = function isConfigured() {
-      if (this.parent.children().length > 0) {
+      if (this.contentType.children().length > 0) {
         return true;
       }
 
@@ -108,7 +109,7 @@ define(["Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/c
     };
 
     _createClass(PreviewCollection, [{
-      key: "previewChildTemplate",
+      key: "childTemplate",
 
       /**
        * Retrieve the preview child template

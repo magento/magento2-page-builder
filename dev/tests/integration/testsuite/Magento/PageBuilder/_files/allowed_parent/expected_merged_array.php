@@ -14,7 +14,7 @@ return [
             'icon' => 'pagebuilder-type-icon',
             'component' => 'Path/to/component',
             'form' => 'pagebuilder_type_form',
-            'group' => 'group',
+            'menu_section' => 'menu_section',
             'sortOrder' => '1',
             'translate' => 'label',
             'allowed_parents' => [
@@ -37,7 +37,7 @@ return [
             'icon' => 'pagebuilder-type-icon',
             'component' => 'Path/to/component',
             'form' => 'pagebuilder_type_form',
-            'group' => 'group',
+            'menu_section' => 'menu_section',
             'sortOrder' => '2',
             'translate' => 'label',
             'allowed_parents' => []
@@ -48,7 +48,7 @@ return [
             'icon' => 'pagebuilder-type-icon',
             'component' => 'Path/to/component',
             'form' => 'pagebuilder_type_form',
-            'group' => 'group',
+            'menu_section' => 'menu_section',
             'sortOrder' => '3',
             'translate' => 'label',
             'allowed_parents' => [
@@ -71,7 +71,7 @@ return [
             'icon' => 'pagebuilder-type-icon',
             'component' => 'Path/to/component',
             'form' => 'pagebuilder_type_form',
-            'group' => 'group',
+            'menu_section' => 'menu_section',
             'sortOrder' => '4',
             'translate' => 'label',
             'allowed_parents' => [],
@@ -82,7 +82,7 @@ return [
             'icon' => 'pagebuilder-type-icon',
             'component' => 'Path/to/component',
             'form' => 'pagebuilder_type_form',
-            'group' => 'group',
+            'menu_section' => 'menu_section',
             'sortOrder' => '5',
             'translate' => 'label',
             'allowed_parents' => [
@@ -97,7 +97,7 @@ return [
             'icon' => 'pagebuilder-type-icon',
             'component' => 'Path/to/component',
             'form' => 'pagebuilder_type_form',
-            'group' => 'group',
+            'menu_section' => 'menu_section',
             'sortOrder' => '6',
             'translate' => 'label',
             'allowed_parents' => [
@@ -112,7 +112,7 @@ return [
             'icon' => 'pagebuilder-type-icon',
             'component' => 'Path/to/component',
             'form' => 'pagebuilder_type_form',
-            'group' => 'group',
+            'menu_section' => 'menu_section',
             'sortOrder' => '7',
             'translate' => 'label',
             'allowed_parents' => [
@@ -127,7 +127,7 @@ return [
             'icon' => 'pagebuilder-type-icon',
             'component' => 'Path/to/component',
             'form' => 'pagebuilder_type_form',
-            'group' => 'group',
+            'menu_section' => 'menu_section',
             'sortOrder' => '8',
             'translate' => 'label',
             'allowed_parents' => [
@@ -150,7 +150,7 @@ return [
             'icon' => 'pagebuilder-type-icon',
             'component' => 'Path/to/component',
             'form' => 'pagebuilder_type_form',
-            'group' => 'group',
+            'menu_section' => 'menu_section',
             'sortOrder' => '9',
             'translate' => 'label',
             'allowed_parents' => [
@@ -163,7 +163,7 @@ return [
             'icon' => 'pagebuilder-type-icon',
             'component' => 'Path/to/component',
             'form' => 'pagebuilder_type_form',
-            'group' => 'group',
+            'menu_section' => 'menu_section',
             'sortOrder' => '10',
             'translate' => 'label',
             'allowed_parents' => [
@@ -178,7 +178,7 @@ return [
             'icon' => 'pagebuilder-type-icon',
             'component' => 'Path/to/component',
             'form' => 'pagebuilder_type_form',
-            'group' => 'group',
+            'menu_section' => 'menu_section',
             'sortOrder' => '11',
             'translate' => 'label',
             'allowed_parents' => [

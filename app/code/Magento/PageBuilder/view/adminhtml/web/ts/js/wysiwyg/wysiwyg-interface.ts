@@ -3,31 +3,20 @@
  * See COPYING.txt for license details.
  */
 
-import {AdditionalDataConfigInterface} from "../content-type-config";
+import {AdditionalDataConfigInterface} from "../content-type-config.types";
 import DataStore from "../data-store";
 
 /**
  * Provides an interface for the constructor of a WysiwygInterface object
  */
-export interface WysiwygConstructorInterface {
-    /**
-     * @param {String} contentTypeId The ID in the registry of the content type.
-     * @param {String} elementId The ID of the editor element in the DOM.
-     * @param {AdditionalDataConfigInterface} config The configuration for the wysiwyg.
-     * @param {DataStore} dataStore The datastore to store the content in.
-     * @param {String} fieldName The key in the provided datastore to set the data.
-     * @param {string} stageId The ID in the registry of the stage containing the content type.
-     * @return {WysiwygInterface}
-     */
-    new (
+export type WysiwygConstructorInterface = new (
         contentTypeId: string,
         elementId: string,
         config: AdditionalDataConfigInterface,
         dataStore: DataStore,
         fieldName: string,
         stageId: string,
-    ): WysiwygInterface;
-}
+    ) => WysiwygInterface;
 
 /**
  * Describes an instance of a WYSIWYG component not specific to a specific editor

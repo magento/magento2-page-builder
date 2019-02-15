@@ -170,7 +170,7 @@ To apply vertical alignment to a content type using the Visual Select component,
         <style name="min_height" source="min_height" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
         <style name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/margins"/>
         <style name="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/paddings"/>
-        <attribute name="name" source="data-role"/>
+        <attribute name="name" source="data-content-type"/>
         <attribute name="appearance" source="data-appearance"/>
         <attribute name="enable_parallax" source="data-enable-parallax"/>
         <attribute name="parallax_speed" source="data-parallax-speed"/>
@@ -193,7 +193,7 @@ Example master template:
 <div attr="data.main.attributes"
      ko-style="Object.assign(data.container.style(), data.main.style())"
      css="data.main.css">
-    <render args="renderChildTemplate"/>
+    <render args="masterTemplate"/>
 </div>
 ```
 
@@ -206,7 +206,7 @@ Example preview template:
         <if args="$parent.isContainer()">
             <div class="pagebuilder-drop-indicator"></div>
         </if>
-        <div class="pagebuilder-content-type-wrapper" template="{ name: preview.previewTemplate, data: preview, afterRender: function () { preview.dispatchAfterRenderEvent.apply(preview, arguments); } }" attr="{ id: id }"></div>
+        <div class="pagebuilder-content-type-wrapper" template="{ name: preview.template, data: preview, afterRender: function () { preview.dispatchAfterRenderEvent.apply(preview, arguments); } }" attr="{ id: id }"></div>
         <if args="$parent.isContainer() && $index() === $parent.parent.getChildren()().length - 1">
             <div class="pagebuilder-drop-indicator"></div>
         </if>

@@ -37,7 +37,7 @@ See [Install Page Builder](install-pagebuilder.md)
 * [Additional configurations](../configurations/additional-configurations.md)
 * [Panel configurations](../configurations/panel-configurations.md)
 * [Option menu configurations](../configurations/option-menu-configurations.md)
-* [Iconography](../configurations/iconography.md)
+* [Icons and images](../configurations/icons-and-images.md)
 * [Block chooser configuration](../configurations/block-chooser-configuration.md)
 * [Full-width page layout configuration](../configurations/full-width-page-layout-configuration.md)
 * [Responsive layout configuration](../configurations/responsive-layout-configuration.md)
@@ -86,6 +86,5 @@ We will push new beta releases once a week, including work from the backlog. We 
 ## Contact us
 
 To participate in technical discussions and ask questions, join us in [Slack], where a number of Page Builder team members are present.
-
 
 [Slack]: https://magentocommeng.slack.com/messages/GANS1R4C9

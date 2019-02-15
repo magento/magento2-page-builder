@@ -11,7 +11,7 @@
           component="Magento_PageBuilder/js/content-type"
           preview_component="Magento_PageBuilder/js/content-type/slide/preview"
           form="pagebuilder_slide_form"
-          group="media"
+          menu_section="media"
           icon="icon-pagebuilder-slider"
           translate="label">
         <parents default_policy="deny">
@@ -21,13 +21,13 @@
         <appearances>
             <appearance name="collage-left"
                         preview_template="Magento_PageBuilder/content-type/slide/collage-left/preview"
-                        render_template="Magento_PageBuilder/content-type/slide/collage-left/master"
+                        master_template="Magento_PageBuilder/content-type/slide/collage-left/master"
                         reader="Magento_PageBuilder/js/master-format/read/configurable">
                 <elements>
                     <element name="main">
                         <style name="min_height" source="min_height" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                         <style name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/content-type/slide/converter/style/margins"/>
-                        <attribute name="name" source="data-role"/>
+                        <attribute name="name" source="data-content-type"/>
                         <attribute name="slide_name" source="data-slide-name"/>
                         <attribute name="appearance" source="data-appearance"/>
                         <attribute name="show_button" source="data-show-button"/>
@@ -86,12 +86,12 @@
             </appearance>
             <appearance name="collage-centered"
                         preview_template="Magento_PageBuilder/content-type/slide/collage-centered/preview"
-                        render_template="Magento_PageBuilder/content-type/slide/collage-centered/master"
+                        master_template="Magento_PageBuilder/content-type/slide/collage-centered/master"
                         reader="Magento_PageBuilder/js/master-format/read/configurable">
                 <elements>
                     <element name="main">
                         <style name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/content-type/slide/converter/style/margins"/>
-                        <attribute name="name" source="data-role"/>
+                        <attribute name="name" source="data-content-type"/>
                         <attribute name="slide_name" source="data-slide-name"/>
                         <attribute name="appearance" source="data-appearance"/>
                         <attribute name="show_button" source="data-show-button"/>
@@ -150,12 +150,12 @@
             </appearance>
             <appearance name="collage-right"
                         preview_template="Magento_PageBuilder/content-type/slide/collage-right/preview"
-                        render_template="Magento_PageBuilder/content-type/slide/collage-right/master"
+                        master_template="Magento_PageBuilder/content-type/slide/collage-right/master"
                         reader="Magento_PageBuilder/js/master-format/read/configurable">
                 <elements>
                     <element name="main">
                         <style name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/content-type/slide/converter/style/margins"/>
-                        <attribute name="name" source="data-role"/>
+                        <attribute name="name" source="data-content-type"/>
                         <attribute name="slide_name" source="data-slide-name"/>
                         <attribute name="appearance" source="data-appearance"/>
                         <attribute name="show_button" source="data-show-button"/>
@@ -215,12 +215,12 @@
             <appearance default="true"
                         name="poster"
                         preview_template="Magento_PageBuilder/content-type/slide/poster/preview"
-                        render_template="Magento_PageBuilder/content-type/slide/poster/master"
+                        master_template="Magento_PageBuilder/content-type/slide/poster/master"
                         reader="Magento_PageBuilder/js/master-format/read/configurable">
                 <elements>
                     <element name="main">
                         <style name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/content-type/slide/converter/style/margins"/>
-                        <attribute name="name" source="data-role"/>
+                        <attribute name="name" source="data-content-type"/>
                         <attribute name="slide_name" source="data-slide-name"/>
                         <attribute name="appearance" source="data-appearance"/>
                         <attribute name="show_button" source="data-show-button"/>
@@ -279,7 +279,7 @@
                 </converters>
             </appearance>
         </appearances>
-        <is_visible>false</is_visible>
+        <is_system>false</is_system>
         <additional_data>
             <item name="uploaderConfig" xsi:type="array">
                 <item name="isShowImageUploadInstructions" xsi:type="boolean">false</item>

@@ -4,7 +4,7 @@
  */
 
 import _ from "underscore";
-import ContentTypeConfigInterface from "./content-type-config";
+import ContentTypeConfigInterface from "./content-type-config.types";
 
 export default class Config {
 
@@ -48,6 +48,6 @@ export default class Config {
     }
 
     private static config: any = {
-        dataRoleAttributeName: "data-role",
+        dataContentTypeAttributeName: "data-content-type",
     };
 }

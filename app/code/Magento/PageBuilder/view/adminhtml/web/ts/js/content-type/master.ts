@@ -4,30 +4,30 @@
  */
 
 import _ from "underscore";
-import ContentTypeInterface from "../content-type.d";
+import ContentTypeInterface from "../content-type.types";
 import {DataObject} from "../data-store";
 import {get} from "../utils/object";
 import appearanceConfig from "./appearance-config";
-import ObservableObject from "./observable-object.d";
 import ObservableUpdater from "./observable-updater";
+import ObservableObject from "./observable-updater.types";
 
 /**
  * @api
  */
 export default class Master {
     public data: ObservableObject = {};
-    public parent: ContentTypeInterface;
+    public contentType: ContentTypeInterface;
     private observableUpdater: ObservableUpdater;
 
     /**
-     * @param {ContentTypeInterface} parent
+     * @param {ContentTypeInterface} contentType
      * @param {ObservableUpdater} observableUpdater
      */
     constructor(
-        parent: ContentTypeInterface,
+        contentType: ContentTypeInterface,
         observableUpdater: ObservableUpdater,
     ) {
-        this.parent = parent;
+        this.contentType = contentType;
         this.observableUpdater = observableUpdater;
         this.bindEvents();
     }
@@ -37,8 +37,9 @@ export default class Master {
      *
      * @returns {string}
      */
-    get renderTemplate(): string {
-        return appearanceConfig(this.parent.config.name, this.getData().appearance).render_template;
+    get template(): string {
+        return appearanceConfig(this.contentType.config.name, this.getData().appearance as string)
+            .master_template;
     }
 
     /**
@@ -48,19 +49,19 @@ export default class Master {
      * @returns {DataObject}
      * @deprecated
      */
-    public getData(element: string) {
-        let data = _.extend({}, this.parent.dataStore.getState());
+    public getData(element?: string): DataObject {
+        let data = _.extend({}, this.contentType.dataStore.getState());
 
         if (undefined === element) {
             return data;
         }
 
-        const appearanceConfiguration = appearanceConfig(this.parent.config.name, data.appearance);
+        const appearanceConfiguration = appearanceConfig(this.contentType.config.name, data.appearance);
         const config = appearanceConfiguration.elements;
 
         data = this.observableUpdater.convertData(data, appearanceConfiguration.converters);
 
-        const result = {};
+        const result: {[key: string]: string} = {};
         if (undefined !== config[element].tag.var) {
             result[config[element].tag.var] = get(data, config[element].tag.var);
         }
@@ -71,8 +72,8 @@ export default class Master {
      * Attach event to updating data in data store to update observables
      */
     protected bindEvents(): void {
-        this.parent.dataStore.subscribe(
-            (data) => {
+        this.contentType.dataStore.subscribe(
+            () => {
                 this.updateObservables();
             },
         );
@@ -91,7 +92,7 @@ export default class Master {
     private updateObservables(): void {
         this.observableUpdater.update(
             this,
-            _.extend({name: this.parent.config.name}, this.parent.dataStore.getState()),
+            _.extend({name: this.contentType.config.name}, this.contentType.dataStore.getState()),
         );
         this.afterObservablesUpdated();
     }

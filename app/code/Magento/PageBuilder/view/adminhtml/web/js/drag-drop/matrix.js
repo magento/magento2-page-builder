@@ -44,6 +44,10 @@ define(["underscore", "Magento_PageBuilder/js/config"], function (_underscore, _
       return "#" + stageId + " .content-type-container." + value + "-container";
     }).join(", ");
   }
+  /**
+   * @api
+   */
+
 
   return {
     generateAllowedParents: generateAllowedParents,

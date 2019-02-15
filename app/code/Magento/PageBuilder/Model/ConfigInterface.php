@@ -15,16 +15,22 @@ namespace Magento\PageBuilder\Model;
 interface ConfigInterface
 {
     /**
+     * Gets all the menu sections
+     *
      * @return array
      */
-    public function getGroups() : array;
+    public function getMenuSections() : array;
 
     /**
+     * Gets all the content types
+     *
      * @return array
      */
     public function getContentTypes() : array;
 
     /**
+     * Get if PageBuilder is enabled
+     *
      * @return bool
      */
     public function isEnabled() : bool;

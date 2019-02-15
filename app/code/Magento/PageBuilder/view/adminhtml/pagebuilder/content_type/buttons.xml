@@ -12,7 +12,7 @@
           preview_component="Magento_PageBuilder/js/content-type/buttons/preview"
           master_component="Magento_PageBuilder/js/content-type/master-collection"
           form="pagebuilder_buttons_form"
-          group="elements"
+          menu_section="elements"
           icon="icon-pagebuilder-button"
           sortOrder="30"
           translate="label">
@@ -23,7 +23,7 @@
             <appearance default="true"
                         name="inline"
                         preview_template="Magento_PageBuilder/content-type/buttons/inline/preview"
-                        render_template="Magento_PageBuilder/content-type/buttons/inline/master"
+                        master_template="Magento_PageBuilder/content-type/buttons/inline/master"
                         reader="Magento_PageBuilder/js/master-format/read/configurable">
                 <elements>
                     <element name="main">
@@ -35,7 +35,7 @@
                         <style name="display" source="display" converter="Magento_PageBuilder/js/content-type/buttons/converter/style/display/inline-block" preview_converter="Magento_PageBuilder/js/converter/style/preview/display"/>
                         <style name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
                         <style name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
-                        <attribute name="name" source="data-role"/>
+                        <attribute name="name" source="data-content-type"/>
                         <attribute name="appearance" source="data-appearance"/>
                         <attribute name="is_same_width" source="data-same-width"/>
                         <css name="css_classes"/>
@@ -44,7 +44,7 @@
             </appearance>
             <appearance name="stacked"
                         preview_template="Magento_PageBuilder/content-type/buttons/stacked/preview"
-                        render_template="Magento_PageBuilder/content-type/buttons/stacked/master"
+                        master_template="Magento_PageBuilder/content-type/buttons/stacked/master"
                         reader="Magento_PageBuilder/js/master-format/read/configurable">
                 <elements>
                     <element name="main">
@@ -57,7 +57,7 @@
                         <static_style source="flex_direction" value="column"/>
                         <style name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
                         <style name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
-                        <attribute name="name" source="data-role"/>
+                        <attribute name="name" source="data-content-type"/>
                         <attribute name="appearance" source="data-appearance"/>
                         <attribute name="is_same_width" source="data-same-width"/>
                         <css name="css_classes"/>

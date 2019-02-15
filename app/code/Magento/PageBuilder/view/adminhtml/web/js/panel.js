@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["consoleLogger", "jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/binding/draggable", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/drag-drop/drop-indicators", "Magento_PageBuilder/js/drag-drop/registry", "Magento_PageBuilder/js/panel/group", "Magento_PageBuilder/js/panel/group/content-type", "Magento_PageBuilder/js/utils/position-sticky"], function (_consoleLogger, _jquery, _knockout, _translate, _events, _underscore, _draggable, _config, _dropIndicators, _registry, _group, _contentType, _positionSticky) {
+define(["consoleLogger", "jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/binding/draggable", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/drag-drop/drop-indicators", "Magento_PageBuilder/js/drag-drop/registry", "Magento_PageBuilder/js/panel/menu", "Magento_PageBuilder/js/panel/menu/content-type", "Magento_PageBuilder/js/utils/position-sticky"], function (_consoleLogger, _jquery, _knockout, _translate, _events, _underscore, _draggable, _config, _dropIndicators, _registry, _menu, _contentType, _positionSticky) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -13,10 +13,9 @@ define(["consoleLogger", "jquery", "knockout", "mage/translate", "Magento_PageBu
   function () {
     "use strict";
 
-    function Panel(parent) {
-      this.groups = _knockout.observableArray([]);
+    function Panel(pageBuilder) {
+      this.menuSections = _knockout.observableArray([]);
       this.searchResults = _knockout.observableArray([]);
-      this.isCollapsed = _knockout.observable(false);
       this.isVisible = _knockout.observable(false);
       this.isStickyBottom = _knockout.observable(false);
       this.isStickyTop = _knockout.observable(false);
@@ -26,8 +25,8 @@ define(["consoleLogger", "jquery", "knockout", "mage/translate", "Magento_PageBu
       this.searchNoResult = (0, _translate)("Nothing found");
       this.searchTitle = (0, _translate)("Clear Search");
       this.template = "Magento_PageBuilder/panel";
-      this.parent = parent;
-      this.id = this.parent.id;
+      this.pageBuilder = pageBuilder;
+      this.id = this.pageBuilder.id;
       this.initListeners();
     }
     /**
@@ -41,11 +40,11 @@ define(["consoleLogger", "jquery", "knockout", "mage/translate", "Magento_PageBu
 
     _proto.afterRender = function afterRender(element) {
       this.element = element;
-    };
+    }
     /**
      * Init listeners
      */
-
+    ;
 
     _proto.initListeners = function initListeners() {
       var _this = this;
@@ -59,17 +58,17 @@ define(["consoleLogger", "jquery", "knockout", "mage/translate", "Magento_PageBu
 
         _this.isVisible(true);
       });
-    };
+    }
     /**
      * Return the template string
      *
      * @returns {string}
      */
-
+    ;
 
     _proto.getTemplate = function getTemplate() {
       return this.template;
-    };
+    }
     /**
      * Conduct a search on the available content types,
      * and find matches for beginning of words.
@@ -77,7 +76,7 @@ define(["consoleLogger", "jquery", "knockout", "mage/translate", "Magento_PageBu
      * @param self
      * @param event
      */
-
+    ;
 
     _proto.search = function search(self, event) {
       var _this2 = this;
@@ -91,30 +90,22 @@ define(["consoleLogger", "jquery", "knockout", "mage/translate", "Magento_PageBu
         this.searchResults(_underscore.map(_underscore.filter(_config.getConfig("content_types"), function (contentType) {
           var regEx = new RegExp("\\b" + self.searchValue(), "gi");
           var matches = !!contentType.label.toLowerCase().match(regEx);
-          return matches && contentType.is_visible === true;
+          return matches && contentType.is_system === true;
         }), function (contentType, identifier) {
           // Create a new instance of GroupContentType for each result
-          return new _contentType.ContentType(identifier, contentType, _this2.parent.stage.id);
+          return new _contentType.ContentType(identifier, contentType, _this2.pageBuilder.stage.id);
         }));
       }
-    };
-    /**
-     * Collapse the panel into the side of the UI
-     */
-
-
-    _proto.collapse = function collapse() {
-      this.isCollapsed(!this.isCollapsed());
-    };
+    }
     /**
      * Clear Search Results
      */
-
+    ;
 
     _proto.clearSearch = function clearSearch() {
       this.searchValue("");
       this.searching(false);
-    };
+    }
     /**
      * Toggle stickiness of panel based on browser scroll position and height of panel
      * Enable panel stickiness if panel and stage are available
@@ -122,7 +113,7 @@ define(["consoleLogger", "jquery", "knockout", "mage/translate", "Magento_PageBu
      * Stick panel to top when scroll reaches top position of stage
      * Stick panel to bottom when scroll reaches bottom position of stage
      */
-
+    ;
 
     _proto.onScroll = function onScroll() {
       var self = this;
@@ -163,13 +154,13 @@ define(["consoleLogger", "jquery", "knockout", "mage/translate", "Magento_PageBu
           }
         }
       });
-    };
+    }
     /**
      * Retrieve the draggable options for the panel items
      *
      * @returns {JQueryUI.DraggableOptions}
      */
-
+    ;
 
     _proto.getDraggableOptions = function getDraggableOptions(element) {
       // If we're within a modal make the containment be the current modal
@@ -198,20 +189,26 @@ define(["consoleLogger", "jquery", "knockout", "mage/translate", "Magento_PageBu
           var block = _knockout.dataFor(this);
 
           if (block && block.config) {
+            // Blur any focused element
+            if (document.querySelector(":focus")) {
+              document.querySelector(":focus").blur();
+            }
             /**
              * Swap all sortable instances to use intersect, as the item from the left panel is a predictable
              * size this yields better results when dragging
              */
+
+
             (0, _jquery)(".content-type-container.ui-sortable").each(function () {
               if ((0, _jquery)(this).data("sortable")) {
                 (0, _jquery)(this).sortable("option", "tolerance", "intersect");
               }
             });
-            (0, _dropIndicators.showDropIndicators)(block.config.name, self.parent.stage.id);
+            (0, _dropIndicators.showDropIndicators)(block.config.name, self.pageBuilder.stage.id);
             (0, _registry.setDraggedContentTypeConfig)(block.config);
 
             _events.trigger("stage:interactionStart", {
-              stage: self.parent.stage
+              stage: self.pageBuilder.stage
             });
           }
         },
@@ -225,45 +222,45 @@ define(["consoleLogger", "jquery", "knockout", "mage/translate", "Magento_PageBu
           (0, _registry.setDraggedContentTypeConfig)(null);
 
           _events.trigger("stage:interactionStop", {
-            stage: self.parent.stage
+            stage: self.pageBuilder.stage
           });
         }
       };
-    };
+    }
     /**
      * Populate the panel with the content types
      */
-
+    ;
 
     _proto.populateContentTypes = function populateContentTypes() {
       var _this3 = this;
 
-      var groups = _config.getConfig("groups");
+      var menuSections = _config.getConfig("menu_sections");
 
       var contentTypes = _config.getConfig("content_types"); // Verify the configuration contains the required information
 
 
-      if (groups && contentTypes) {
-        // Iterate through the groups creating new instances with their associated content types
-        _underscore.each(groups, function (group, id) {
-          // Push the group instance into the observable array to update the UI
-          _this3.groups.push(new _group.Group(id, group, _underscore.map(_underscore.where(contentTypes, {
-            group: id,
-            is_visible: true
+      if (menuSections && contentTypes) {
+        // Iterate through the menu sections creating new instances with their associated content types
+        _underscore.each(menuSections, function (menuSection, id) {
+          // Push the menu section instance into the observable array to update the UI
+          _this3.menuSections.push(new _menu.Menu(id, menuSection, _underscore.map(_underscore.where(contentTypes, {
+            menu_section: id,
+            is_system: true
           }),
-          /* Retrieve content types with group id */
+          /* Retrieve content types with menu section id */
           function (contentType, identifier) {
-            return new _contentType.ContentType(identifier, contentType, _this3.parent.stage.id);
-          }), _this3.parent.stage.id));
+            return new _contentType.ContentType(identifier, contentType, _this3.pageBuilder.stage.id);
+          }), _this3.pageBuilder.stage.id));
         }); // Display the panel
 
 
-        this.isVisible(true); // Open first group
+        this.isVisible(true); // Open first menu section
 
-        var hasGroups = 0 in this.groups();
+        var hasGroups = 0 in this.menuSections();
 
         if (hasGroups) {
-          this.groups()[0].active(true);
+          this.menuSections()[0].active(true);
         }
       } else {
         _consoleLogger.error("Unable to retrieve content types from server, please inspect network requests " + "response.");

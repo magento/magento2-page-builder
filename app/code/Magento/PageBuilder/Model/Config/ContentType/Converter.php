@@ -10,6 +10,9 @@ namespace Magento\PageBuilder\Model\Config\ContentType;
 
 use Magento\Framework\ObjectManager\Config\Mapper\ArgumentParser;
 
+/**
+ * Convert content type configuration data
+ */
 class Converter implements \Magento\Framework\Config\ConverterInterface
 {
     const DEFAULT_ATTRIBUTE_READER = 'Magento_PageBuilder/js/property/attribute-reader';
@@ -133,7 +136,7 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
         }
         $appearanceData['converters'] = $this->convertConvertersData($appearanceNode);
         $appearanceData['preview_template'] = $this->getAttributeValue($appearanceNode, 'preview_template');
-        $appearanceData['render_template'] = $this->getAttributeValue($appearanceNode, 'render_template');
+        $appearanceData['master_template'] = $this->getAttributeValue($appearanceNode, 'master_template');
         $appearanceData['reader'] = $this->getAttributeValue($appearanceNode, 'reader');
         $appearanceData['default'] = $this->getAttributeValue($appearanceNode, 'default');
         $formNode = $appearanceNode->getElementsByTagName('form')->item(0);
@@ -357,7 +360,9 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
     }
 
     /**
-     * @param \DOMElement $childNode
+     * Converts converter data
+     *
+     * @param \DOMElement $appearanceNode
      * @return array
      */
     private function convertConvertersData(\DOMElement $appearanceNode): array
@@ -519,11 +524,11 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
     /**
      * Get attribute value
      *
-     * @param $attributeNode
-     * @param $attributeName
+     * @param \DOMElement $attributeNode
+     * @param string $attributeName
      * @return string|null
      */
-    private function getAttributeValue(\DOMElement $attributeNode, $attributeName)
+    private function getAttributeValue(\DOMElement $attributeNode, string $attributeName)
     {
         return $attributeNode->hasAttribute($attributeName)
             ? $attributeNode->attributes->getNamedItem($attributeName)->nodeValue
@@ -545,8 +550,8 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
     /**
      * Remove data from array
      *
-     * @param $searchValue
-     * @param $data
+     * @param string $searchValue
+     * @param array $data
      * @return array
      */
     private function removeDataInArray(string $searchValue, array $data): array

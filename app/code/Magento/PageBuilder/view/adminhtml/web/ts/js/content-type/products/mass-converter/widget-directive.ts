@@ -19,7 +19,10 @@ export default class WidgetDirective extends BaseWidgetDirective {
      * @returns {object}
      */
     public fromDom(data: ConverterDataInterface, config: ConverterConfigInterface): object {
-        const attributes = super.fromDom(data, config);
+        const attributes = super.fromDom(data, config) as {
+            conditions_encoded: string;
+            products_count: number;
+        };
 
         data.conditions_encoded = this.decodeWysiwygCharacters(attributes.conditions_encoded || "");
         data.products_count = attributes.products_count;

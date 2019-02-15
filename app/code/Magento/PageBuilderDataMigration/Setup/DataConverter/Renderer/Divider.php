@@ -52,7 +52,7 @@ class Divider implements RendererInterface
 
         $rootElementAttributes = [
             'data-element' => 'main',
-            'data-role' => 'divider',
+            'data-content-type' => 'divider',
             'data-appearance' => 'default',
             'class' => $eavData['css_classes'] ?? '',
         ];

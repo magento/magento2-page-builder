@@ -41,14 +41,14 @@ define(["Magento_PageBuilder/js/events", "underscore"], function (_events, _unde
         namespace: this.getFormNamespace(contentTypeData),
         title: this.instance.config.label
       });
-    };
+    }
     /**
      * Determine the form namespace based on the currently set appearance
      *
      * @param {DataObject} contentTypeData
      * @returns {string}
      */
-
+    ;
 
     _proto.getFormNamespace = function getFormNamespace(contentTypeData) {
       var appearance = this.dataStore.get("appearance");

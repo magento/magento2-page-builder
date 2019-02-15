@@ -1,4 +1,5 @@
 /*eslint-disable */
+
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
 define(["Magento_PageBuilder/js/content-type-menu/option"], function (_option) {
@@ -20,7 +21,7 @@ define(["Magento_PageBuilder/js/content-type-menu/option"], function (_option) {
       var _this;
 
       _this = _option2.call(this, config) || this;
-      var parentContentType = _this.preview.parent.parent;
+      var parentContentType = _this.preview.contentType.parentContentType;
 
       if (parentContentType.children().length < 2) {
         _this.isDisabled(true);

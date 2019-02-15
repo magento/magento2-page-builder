@@ -54,7 +54,7 @@ class ButtonItem implements RendererInterface
 
         $rootElementAttributes = [
             'data-element' => 'main',
-            'data-role' => 'button-item',
+            'data-content-type' => 'button-item',
             'data-appearance' => 'default',
             'style' => 'display: inline-block;',
             'class' => $cssClasses

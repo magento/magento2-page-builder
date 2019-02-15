@@ -25,7 +25,7 @@ define(["underscore", "Magento_PageBuilder/js/utils/object"], function (_undersc
      */
     _proto.fromDom = function fromDom(value) {
       return !(value === "none");
-    };
+    }
     /**
      * Convert value to knockout format, if buttons are displayed they should be inline block
      *
@@ -33,7 +33,7 @@ define(["underscore", "Magento_PageBuilder/js/utils/object"], function (_undersc
      * @param {DataObject} data
      * @returns {string}
      */
-
+    ;
 
     _proto.toDom = function toDom(name, data) {
       var value = (0, _object.get)(data, name);
