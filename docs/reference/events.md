@@ -29,10 +29,10 @@ The following table lists the Page Builder events you can bind to and handle wit
 | [contentType:duplicateAfter](#contenttypeduplicateafter) | [stage:interactionStart](#stageinteractionstart)                                   |
 | [contentType:mountAfter](#contenttypemountafter)    | [stage:interactionStop](#stageinteractionstop)                                    |
 | [contentType:moveAfter](#contenttypemoveafter)      | [stage:error](#stageerror)                                              |
-| [contentType:moveBefore](#contenttypemovebefore)    | [stage:{{preview.parent.stageId}}:masterFormatRenderAfter](#stageidmasterformatrenderafter) |
-| [contentType:redrawAfter](#contenttyperedrawafter)  | [stage:{{preview.parent.stageId}}:readyAfter](#stageidreadyafter)              |
-| [contentType:removeAfter](#contenttyperemoveafter)  | [stage:{{preview.parent.stageId}}:renderAfter](#stagepreviewparentstageidrenderafter)             |
-| [contentType:renderAfter](#contenttyperenderafter)  | [stage:{{preview.parent.stageId}}:toggleFullscreen](#stageidtogglefullscreen)        |
+| [contentType:moveBefore](#contenttypemovebefore)    | [stage:{{preview.contentType.stageId}}:masterFormatRenderAfter](#stageidmasterformatrenderafter) |
+| [contentType:redrawAfter](#contenttyperedrawafter)  | [stage:{{preview.contentType.stageId}}:readyAfter](#stageidreadyafter)              |
+| [contentType:removeAfter](#contenttyperemoveafter)  | [stage:{{preview.contentType.stageId}}:renderAfter](#stagepreviewcontenttypestageidrenderafter)             |
+| [contentType:renderAfter](#contenttyperenderafter)  | [stage:{{preview.contentType.stageId}}:toggleFullscreen](#stageidtogglefullscreen)        |
 |                                                     | [stage:updateAfter](#stageupdateafter)                                        |
 |                                                     |                                                          |
 | **Column Events**                                   | **Preview Events**                                       |
@@ -41,9 +41,9 @@ The following table lists the Page Builder events you can bind to and handle wit
 | [column:initializeAfter](#columninitializeafter)    | [previewData:updateAfter](#previewdataupdateafter)                                  |
 |                                                     |                                                          |
 | **Image Events**                                    | **Other Events**                                         |
-| [image:{{preview.parent.id}}:assignAfter](#imageidassignafter) | [googleMaps:authFailure](#googlemapsauthfailure)                                   |
+| [image:{{preview.contentType.id}}:assignAfter](#imageidassignafter) | [googleMaps:authFailure](#googlemapsauthfailure)                                   |
 | [image:mountAfter](#imagemountafter)                | [state](#state)                                                    |
-| [image:uploadAfter](#imageuploadafter)              | [{{config.name}}:{{preview.parent.id}}:updateAfter](#confignameidupdateafter)        |
+| [image:uploadAfter](#imageuploadafter)              | [{{config.name}}:{{preview.contentType.id}}:updateAfter](#confignameidupdateafter)        |
 |                                                     |                                                          |
 
 ## Event details
@@ -71,7 +71,9 @@ events.on("contentType:createAfter", function (params) {});
 
 
 
-### `contentType:mountAfter` (ContentType)
+### `contentType:mountAfter`
+
+#### ContentType
 
 ```js
 events.on("contentType:mountAfter", function (params) {});
@@ -86,7 +88,9 @@ events.on("contentType:mountAfter", function (params) {});
 
 
 
-### `contentType:mountAfter` (ContentTypeCollection)
+### `contentType:mountAfter`
+
+#### ContentTypeCollection
 
 ```js
 events.on("contentType:mountAfter", function (params) {});
@@ -143,7 +147,7 @@ events.on("contentType:removeAfter", function (params) {});
 | ------------- | ---------------------------------------------- |
 | `contentType` | `ContentType`: `ContentTypeInterface`          |
 | `index`       | `number`                                       |
-| `parent`      | `ContentType`:`ContentTypeCollectionInterface` |
+| `contentType`      | `ContentType`:`ContentTypeCollectionInterface` |
 | `stageId`     | `string`                                       |
 
 [Back to top]
@@ -176,8 +180,8 @@ events.on("contentType:moveBefore", function (params) {});
 | Params         | Type                                                        |
 | -------------- | ----------------------------------------------------------- |
 | `contentType`  | `ContentTypeInterface` and `ContentTypeCollectionInterface` |
-| `sourceParent` | `ContentTypeCollectionInterface`                            |
-| `targetParent` | `ContentTypeCollectionInterface`                            |
+| `sourceContentType` | `ContentTypeCollectionInterface`                            |
+| `targetContentType` | `ContentTypeCollectionInterface`                            |
 | `targetIndex`  | `number`                                                    |
 | `stageId`      | `string`                                                    |
 
@@ -194,8 +198,8 @@ events.on("contentType:moveAfter", function (params) {});
 | Params         | Type                                                        |
 | -------------- | ----------------------------------------------------------- |
 | `contentType`  | `ContentTypeInterface` and `ContentTypeCollectionInterface` |
-| `sourceParent` | `ContentTypeCollectionInterface`                            |
-| `targetParent` | `ContentTypeCollectionInterface`                            |
+| `sourceContentType` | `ContentTypeCollectionInterface`                            |
+| `targetContentType` | `ContentTypeCollectionInterface`                            |
 | `targetIndex`  | `number`                                                    |
 | `stageId`      | `string`                                                    |
 
@@ -266,16 +270,16 @@ events.on("column:initializeAfter", function (params) {});
 | --------- | ------------- |
 | `column`  | `Column`      |
 | `element` | `Element`     |
-| `parent`  | `ColumnGroup` |
+| `contentType`  | `ColumnGroup` |
 
 [Back to top]
 
 
 
-### `image:{{preview.parent.id}}:assignAfter` {#imageidassignafter}
+### `image:{{preview.contentType.id}}:assignAfter` {#imageidassignafter}
 
 ```js
-events.on(`image:${this.parent.id}:assignAfter`, function (params) {});
+events.on(`image:${this.contentType.id}:assignAfter`, function (params) {});
 ```
 
 
@@ -316,10 +320,10 @@ events.on("image:uploadAfter", function (params) {});
 
 
 
-### `stage:{{preview.parent.stageId}}:readyAfter`
+### `stage:{{preview.contentType.stageId}}:readyAfter`
 
 ```js
-events.on(`stage:${this.parent.stageId}:readyAfter`, function (params) {});
+events.on(`stage:${this.contentType.stageId}:readyAfter`, function (params) {});
 ```
 
 | Params  | Type    |
@@ -330,10 +334,10 @@ events.on(`stage:${this.parent.stageId}:readyAfter`, function (params) {});
 
 
 
-### `stage:{{preview.parent.stageId}}:renderAfter`
+### `stage:{{preview.contentType.stageId}}:renderAfter`
 
 ```js
-events.on(`stage:${this.parent.stageId}:renderAfter`, function (params) {});
+events.on(`stage:${this.contentType.stageId}:renderAfter`, function (params) {});
 ```
 
 | Params  | Type    |
@@ -372,10 +376,10 @@ events.on("stage:interactionStop", function () {});
 
 
 
-### `stage:{{preview.parent.stageId}}:toggleFullscreen` {#stageidtogglefullscreen}
+### `stage:{{preview.contentType.stageId}}:toggleFullscreen` {#stageidtogglefullscreen}
 
 ```js
-events.on(`stage:${this.parent.stageId}:toggleFullscreen`, function (params) {});
+events.on(`stage:${this.contentType.stageId}:toggleFullscreen`, function (params) {});
 ```
 
 | Params   | Type     |
@@ -448,10 +452,10 @@ events.on("stage:error", function (params) {});
 
 
 
-### `stage:{{preview.parent.stageId}}:readyAfter` {#stageidreadyafter}
+### `stage:{{preview.contentType.stageId}}:readyAfter` {#stageidreadyafter}
 
 ```js
-events.on(`stage:${this.parent.stageId}:readyAfter`, function (params) {});
+events.on(`stage:${this.contentType.stageId}:readyAfter`, function (params) {});
 ```
 
 | Params  | Type    |
@@ -460,13 +464,13 @@ events.on(`stage:${this.parent.stageId}:readyAfter`, function (params) {});
 
 [Back to top]
 
-### `stage:{{preview.parent.stageId}}:readyAfter` {#stageidreadyafter}
+### `stage:{{preview.contentType.stageId}}:readyAfter` {#stageidreadyafter}
 
 
-### `stage:{{preview.parent.stageId}}:masterFormatRenderAfter` {#stageidmasterformatrenderafter}
+### `stage:{{preview.contentType.stageId}}:masterFormatRenderAfter` {#stageidmasterformatrenderafter}
 
 ```js
-events.on(`stage:${this.parent.stageId}:masterFormatRenderAfter`, function (params) {});
+events.on(`stage:${this.contentType.stageId}:masterFormatRenderAfter`, function (params) {});
 ```
 
 | Params           | Type     |
@@ -529,14 +533,14 @@ events.on("state", function (params) {});
 | ------- | ----------- |
 | `state` | `DataStore` |
 
-### `{{config.name}}:{{preview.parent.id}}:updateAfter` {#confignameidupdateafter}
+### `{{config.name}}:{{preview.contentType.id}}:updateAfter` {#confignameidupdateafter}
 
 
 
-### `{{config.name}}:{{preview.parent.id}}:updateAfter` {#confignameidupdateafter}
+### `{{config.name}}:{{preview.contentType.id}}:updateAfter` {#confignameidupdateafter}
 
 ```js
-events.on(`${this.config.name}:${this.parent.id}:updateAfter`, function (params) {});
+events.on(`${this.config.name}:${this.contentType.id}:updateAfter`, function (params) {});
 ```
 
 | Params        | Type          |
