@@ -61,7 +61,7 @@ class TemplatePlugin
         }
 
         // Process any HTML content types, they need to be decoded on the front-end
-        if (strpos($result, 'data-role="html"') !== false) {
+        if (strpos($result, 'data-content-type="html"') !== false) {
             $document = $this->getDomDocument($result);
             $this->decodeHtmlContentTypes($document);
         }
@@ -136,7 +136,7 @@ class TemplatePlugin
     private function decodeHtmlContentTypes(\DOMDocument $document): void
     {
         $xpath = new \DOMXPath($document);
-        $nodes = $xpath->query('//*[@data-role="html" and not(@data-decoded="true")]');
+        $nodes = $xpath->query('//*[@data-content-type="html" and not(@data-decoded="true")]');
         foreach ($nodes as $node) {
             if (strlen(trim($node->nodeValue)) > 0) {
                 /* @var \DOMElement $node */

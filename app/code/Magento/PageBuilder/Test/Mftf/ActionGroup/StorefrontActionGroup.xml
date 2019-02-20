@@ -15,13 +15,13 @@
         <amOnPage url="{{contentType.pageNamePrefix}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnStoreFrontPage"/>
         <waitForPageLoad time="30" stepKey="waitForPageLoad"/>
     </actionGroup>
-    <actionGroup name="navigateToStorefrontForCreatedPage">
-        <!-- This goes in CE repo -->
+    <actionGroup name="navigateToStoreFrontWithStoreView">
         <arguments>
-            <argument name="page" type="string"/>
+            <argument name="contentType"/>
+            <argument name="storeView"/>
         </arguments>
-        <amOnPage url="{{page}}" stepKey="goToStorefront"/>
-        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <amOnPage url="{{storeView.code}}/{{contentType.pageNamePrefix}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnStoreFrontPage"/>
+        <waitForPageLoad time="30" stepKey="waitForPageLoad"/>
     </actionGroup>
     <actionGroup name="validateContentTypeInsideContainerStorefront">
         <arguments>

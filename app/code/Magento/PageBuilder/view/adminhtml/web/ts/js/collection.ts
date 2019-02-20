@@ -4,8 +4,8 @@
  */
 
 import ko from "knockout";
-import ContentTypeCollectionInterface from "./content-type-collection.d";
-import ContentTypeInterface from "./content-type.d";
+import ContentTypeCollectionInterface from "./content-type-collection.types";
+import ContentTypeInterface from "./content-type.types";
 import { moveArrayItemIntoArray, removeArrayItem } from "./utils/array";
 
 /**

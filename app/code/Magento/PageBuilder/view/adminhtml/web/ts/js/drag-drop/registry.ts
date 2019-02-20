@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-import ContentTypeConfigInterface from "../content-type-config";
+import ContentTypeConfigInterface from "../content-type-config.types";
 
 let draggedContentTypeConfig: ContentTypeConfigInterface;
 

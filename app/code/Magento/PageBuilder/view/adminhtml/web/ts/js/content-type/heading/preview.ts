@@ -6,34 +6,34 @@
 import $ from "jquery";
 import events from "Magento_PageBuilder/js/events";
 import _ from "underscore";
-import ContentTypeConfigInterface from "../../content-type-config.d";
+import ContentTypeConfigInterface from "../../content-type-config.types";
 import HideShowOption from "../../content-type-menu/hide-show-option";
-import {OptionsInterface} from "../../content-type-menu/option.d";
-import Toolbar from "../../content-type-toolbar";
-import {OptionInterface} from "../../content-type-toolbar/option.d";
-import ContentTypeInterface from "../../content-type.d";
-import ContentTypeDroppedCreateEventParamsInterface from "../content-type-dropped-create-event-params";
+import {OptionsInterface} from "../../content-type-menu/option.types";
+import Toolbar, {ContentTypeToolbarPreviewInterface} from "../../content-type-toolbar";
+import {OptionInterface} from "../../content-type-toolbar.types";
+import ContentTypeInterface from "../../content-type.types";
+import {ContentTypeDroppedCreateEventParamsInterface} from "../content-type-events.types";
 import ObservableUpdater from "../observable-updater";
 import BasePreview from "../preview";
 
 /**
  * @api
  */
-export default class Preview extends BasePreview {
+export default class Preview extends BasePreview implements ContentTypeToolbarPreviewInterface {
     public toolbar: Toolbar;
     private element: Element;
 
     /**
-     * @param {ContentTypeInterface} parent
+     * @param {ContentTypeInterface} contentType
      * @param {ContentTypeConfigInterface} config
      * @param {ObservableUpdater} observableUpdater
      */
     constructor(
-        parent: ContentTypeInterface,
+        contentType: ContentTypeInterface,
         config: ContentTypeConfigInterface,
         observableUpdater: ObservableUpdater,
     ) {
-        super(parent, config, observableUpdater);
+        super(contentType, config, observableUpdater);
         this.toolbar = new Toolbar(
             this,
             this.getToolbarOptions(),
@@ -74,7 +74,7 @@ export default class Preview extends BasePreview {
 
         // When a heading is dropped for the first time show heading toolbar
         events.on("heading:dropAfter", (args: ContentTypeDroppedCreateEventParamsInterface) => {
-            if (args.id === this.parent.id) {
+            if (args.id === this.contentType.id) {
                 _.delay(() => {
                     $(this.element).focus();
                 }, 100); // 100 ms delay to allow for heading to render

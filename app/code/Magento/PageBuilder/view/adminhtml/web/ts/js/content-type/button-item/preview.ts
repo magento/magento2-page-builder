@@ -7,7 +7,7 @@ import $ from "jquery";
 import ko from "knockout";
 import $t from "mage/translate";
 import ConditionalRemoveOption from "../../content-type-menu/conditional-remove-option";
-import {OptionsInterface} from "../../content-type-menu/option.d";
+import {OptionsInterface} from "../../content-type-menu/option.types";
 import ButtonsPreview from "../buttons/preview";
 import BasePreview from "../preview";
 
@@ -15,7 +15,7 @@ import BasePreview from "../preview";
  * @api
  */
 export default class Preview extends BasePreview {
-    private buttonPlaceholder: string = $t("Edit Button Text");
+    public buttonPlaceholder: string = $t("Edit Button Text");
 
     /**
      * Use the conditional remove to disable the option when the parent has a single child
@@ -53,8 +53,8 @@ export default class Preview extends BasePreview {
      * @param {Event} event
      */
     public onFocusOut(index: number, event: JQueryEventObject): void {
-        if (this.parent && this.parent.parent) {
-            const parentPreview = this.parent.parent.preview as ButtonsPreview;
+        if (this.contentType && this.contentType.parentContentType) {
+            const parentPreview = this.contentType.parentContentType.preview as ButtonsPreview;
             const unfocus = () => {
                 window.getSelection().removeAllRanges();
                 parentPreview.focusedButton(null);
@@ -66,10 +66,13 @@ export default class Preview extends BasePreview {
                 } else {
                     // Have we moved the focus onto another button in the current group?
                     const buttonItem = ko.dataFor(event.relatedTarget) as Preview;
-                    if (buttonItem && buttonItem.parent && buttonItem.parent.parent
-                        && buttonItem.parent.parent.id === this.parent.parent.id
+                    if (buttonItem && buttonItem.contentType && buttonItem.contentType.parentContentType
+                        && buttonItem.contentType.parentContentType.id === this.contentType.parentContentType.id
                     ) {
-                        const newIndex = buttonItem.parent.parent.children().indexOf(buttonItem.parent);
+                        const newIndex = buttonItem
+                            .contentType
+                            .parentContentType.children()
+                            .indexOf(buttonItem.contentType);
                         parentPreview.focusedButton(newIndex);
                     } else {
                         unfocus();
@@ -88,7 +91,7 @@ export default class Preview extends BasePreview {
      * @param {Event} event
      */
     public onFocusIn(index: number, event: Event): void {
-        const parentPreview = this.parent.parent.preview as ButtonsPreview;
+        const parentPreview = this.contentType.parentContentType.preview as ButtonsPreview;
         if (parentPreview.focusedButton() !== index) {
             parentPreview.focusedButton(index);
         }

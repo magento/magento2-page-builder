@@ -38,7 +38,7 @@
         <arguments>
             <argument name="readers" xsi:type="array">
                 <item name="contentTypeReader" xsi:type="object" sortOrder="10">Magento\PageBuilder\Model\Config\ContentType\Reader</item>
-                <item name="groupReader" xsi:type="object" sortOrder="20">Magento\PageBuilder\Model\Config\Group\Reader</item>
+                <item name="menuSectionReader" xsi:type="object" sortOrder="20">Magento\PageBuilder\Model\Config\MenuSection\Reader</item>
             </argument>
         </arguments>
     </type>
@@ -122,4 +122,14 @@
             <argument name="targetName" xsi:type="string">ns = pagebuilder_map_form, index = map_location_modal</argument>
         </arguments>
     </virtualType>
+    <virtualType name="pageBuilderProductCollectionFactory" type="Magento\Catalog\Model\ResourceModel\Product\CollectionFactory">
+        <arguments>
+            <argument name="instanceName" xsi:type="string">Magento\PageBuilder\Ui\DataProvider\Product\ProductCollection</argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\CatalogWidget\Block\Product\ProductsList">
+        <arguments>
+            <argument name="productCollectionFactory" xsi:type="object">pageBuilderProductCollectionFactory</argument>
+        </arguments>
+    </type>
 </config>

@@ -35,8 +35,8 @@
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupMedia">
-            <argument name="group" value="PageBuilderMapContentType"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionMedia">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragTextIntoStage">
             <argument name="contentType" value="PageBuilderMapContentType"/>
@@ -160,8 +160,8 @@
         <after>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupMedia">
-            <argument name="group" value="PageBuilderMapContentType"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionMedia">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragTextIntoStage">
             <argument name="contentType" value="PageBuilderMapContentType"/>
@@ -231,8 +231,8 @@
             <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setEmptyGoogleMapsAPIKey"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupMedia">
-            <argument name="group" value="PageBuilderMapContentType"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionMedia">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragTextIntoStage">
             <argument name="contentType" value="PageBuilderMapContentType"/>
@@ -419,8 +419,8 @@
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupMedia">
-            <argument name="group" value="PageBuilderMapContentType"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionMedia">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragTextIntoStage">
             <argument name="contentType" value="PageBuilderMapContentType"/>
@@ -886,8 +886,8 @@
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupMedia">
-            <argument name="group" value="PageBuilderMapContentType"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionMedia">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragTextIntoStage">
             <argument name="contentType" value="PageBuilderMapContentType"/>
@@ -997,5 +997,127 @@
         <seeElement selector="{{MapOnStorefront.comment('1', PageBuilderMapComment_CommonCharacters.value)}}" stepKey="seePhoneNumber1Storefront"/>
         <seeElement selector="{{MapOnStorefront.comment('1', PageBuilderMapComment_SpecialCharacters.value)}}" stepKey="seePhoneNumber2Storefront"/>
         <dontSeeElement selector="{{MapOnStorefront.comment('1', PageBuilderMapComment_Empty.value)}}" stepKey="dontSeePhoneNumber3Storefront"/>
+    </test>
+    <test name="MapLocationAttributesDoNotRenderHtml">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Map"/>
+            <title value="Location Attributes - Do not render HTML"/>
+            <description value="Make sure the map does not render any HTML input into map location attributes"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-13922"/>
+            <testCaseId value="MC-13934"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="pagebuilder-mapLocation"/>
+            <group value="pagebuilder-mapLocationAttributes"/>
+            <group value="pagebuilder-requiresValidMapAPIKey"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setEmptyGoogleMapsAPIKey"/>
+            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <!-- Add Map to Stage -->
+        <comment userInput="Add Map to Stage" stepKey="commentAddMapToStage"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelGroup">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMapHeight">
+            <argument name="property" value="PageBuilderMapHeightProperty500px"/>
+        </actionGroup>
+        <!-- Add location with HTML characters -->
+        <comment userInput="Add location with HTML characters" stepKey="commentAddLocation"/>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName">
+            <argument name="property" value="PageBuilderMapLocationName_HtmlCode"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLatitude">
+            <argument name="property" value="PageBuilderMapLatitude_Negative1"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLongitude">
+            <argument name="property" value="PageBuilderMapLongitude_Negative1"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterPhoneNumber">
+            <argument name="property" value="PageBuilderMapPhoneNumber_HtmlCode"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterStreetAddress">
+            <argument name="property" value="PageBuilderMapStreetAddress_HtmlCode"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterCity">
+            <argument name="property" value="PageBuilderMapCity_HtmlCode"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterState">
+            <argument name="property" value="PageBuilderMapState_HtmlCode"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterZipCode">
+            <argument name="property" value="PageBuilderMapZipCode_HtmlCode"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelMultiSelectField" stepKey="enterCountry">
+            <argument name="property" value="PageBuilderMapCountry_USA"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterComment2">
+            <argument name="property" value="PageBuilderMapComment_HtmlCode"/>
+        </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGrid">
+            <argument name="locationName" value="PageBuilderMapLocationName_HtmlCode"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_HtmlCode"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_HtmlCode"/>
+            <argument name="city" value="PageBuilderMapCity_HtmlCode"/>
+            <argument name="state" value="PageBuilderMapState_HtmlCode"/>
+            <argument name="zip" value="PageBuilderMapZipCode_HtmlCode"/>
+            <argument name="country" value="PageBuilderMapCountry_USA"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Save Page and Set Valid API Key -->
+        <comment userInput="Save Page and Set Valid API Key" stepKey="commentSavePageAndSetKey"/>
+        <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key {{googleMapsAPIKey.valid}}" stepKey="setValidGoogleMapsAPIKey"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage1"/>
+        <!-- Validate contents of tooltip on stage -->
+        <comment userInput="Validate contents of tooltip on stage" stepKey="commentValidateContentsOfTooltip" />
+        <actionGroup ref="validateMapPinLocationData" stepKey="validateMapTooltipStage">
+            <argument name="page" value="MapOnStage" />
+            <argument name="locationName" value="PageBuilderMapLocationName_HtmlCode"/>
+            <argument name="comment" value="PageBuilderMapComment_HtmlCode"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_HtmlCode"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_HtmlCode"/>
+            <argument name="city" value="PageBuilderMapCity_HtmlCode"/>
+            <argument name="state" value="PageBuilderMapState_HtmlCode"/>
+            <argument name="zip" value="PageBuilderMapZipCode_HtmlCode"/>
+            <argument name="country" value="PageBuilderMapCountry_USA"/>
+        </actionGroup>
+        <!-- Validate store front -->
+        <comment userInput="Validate storefront" stepKey="commentValidateStorefront" />
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCmsPage">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <actionGroup ref="validateMapPinLocationData" stepKey="validateMapTooltipStorefront">
+            <argument name="page" value="MapOnStorefront" />
+            <argument name="locationName" value="PageBuilderMapLocationName_HtmlCode"/>
+            <argument name="comment" value="PageBuilderMapComment_HtmlCode"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_HtmlCode"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_HtmlCode"/>
+            <argument name="city" value="PageBuilderMapCity_HtmlCode"/>
+            <argument name="state" value="PageBuilderMapState_HtmlCode"/>
+            <argument name="zip" value="PageBuilderMapZipCode_HtmlCode"/>
+            <argument name="country" value="PageBuilderMapCountry_USA"/>
+        </actionGroup>
     </test>
 </tests>

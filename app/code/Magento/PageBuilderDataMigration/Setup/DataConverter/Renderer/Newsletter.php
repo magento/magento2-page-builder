@@ -50,7 +50,7 @@ class Newsletter implements RendererInterface
         }
         $eavData = $this->eavAttributeLoader->load($itemData['entityId']);
 
-        $rootElementHtml = '<div data-element="main" data-role="html" data-appearance="default">';
+        $rootElementHtml = '<div data-element="main" data-content-type="html" data-appearance="default">';
         $rootElementHtml .= $this->getNewsletterHtml($itemData, $eavData) . '</div>';
 
         return $rootElementHtml;

@@ -1,4 +1,5 @@
 /*eslint-disable */
+
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
 define(["Magento_PageBuilder/js/mass-converter/widget-directive-abstract", "Magento_PageBuilder/js/utils/object"], function (_widgetDirectiveAbstract, _object) {
@@ -38,7 +39,7 @@ define(["Magento_PageBuilder/js/mass-converter/widget-directive-abstract", "Mage
       data.template = attributes.template;
       data.block_id = attributes.block_id;
       return data;
-    };
+    }
     /**
      * Convert value to knockout format
      *
@@ -46,7 +47,7 @@ define(["Magento_PageBuilder/js/mass-converter/widget-directive-abstract", "Mage
      * @param {object} config
      * @returns {object}
      */
-
+    ;
 
     _proto.toDom = function toDom(data, config) {
       var attributes = {

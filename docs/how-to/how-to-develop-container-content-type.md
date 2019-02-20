@@ -34,7 +34,7 @@ Write the following content into this configuration file:
           preview_component="VendorName_CustomContainer/js/content-type/custom-container-group/preview"
           master_component="Magento_PageBuilder/js/content-type/master-collection"
           form="pagebuilder_custom_container_group_form"
-          group="general"
+          menu_section="general"
           icon="icon-pagebuilder-row"
           sortOrder="1"
           translate="label">
@@ -48,7 +48,7 @@ Write the following content into this configuration file:
             <appearance default="true"
                         name="left"
                         preview_template="VendorName_CustomContainer/content-type/custom-container-group/left/preview"
-                        render_template="VendorName_CustomContainer/content-type/custom-container-group/left/master"
+                        master_template="VendorName_CustomContainer/content-type/custom-container-group/left/master"
                         reader="Magento_PageBuilder/js/master-format/read/configurable">
                 <elements>
                     <element name="main">
@@ -59,7 +59,7 @@ Write the following content into this configuration file:
                         <style name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                         <style name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/margins"/>
                         <style name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/paddings"/>
-                        <attribute name="name" source="data-role"/>
+                        <attribute name="name" source="data-content-type"/>
                         <attribute name="appearance" source="data-appearance"/>
                         <css name="css_classes"/>
                     </element>
@@ -67,7 +67,7 @@ Write the following content into this configuration file:
             </appearance>
             <appearance name="right"
                         preview_template="VendorName_CustomContainer/content-type/custom-container-group/right/preview"
-                        render_template="VendorName_CustomContainer/content-type/custom-container-group/right/master"
+                        master_template="VendorName_CustomContainer/content-type/custom-container-group/right/master"
                         reader="Magento_PageBuilder/js/master-format/read/configurable">
                 <elements>
                     <element name="main">
@@ -78,7 +78,7 @@ Write the following content into this configuration file:
                         <style name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                         <style name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/margins"/>
                         <style name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/paddings"/>
-                        <attribute name="name" source="data-role"/>
+                        <attribute name="name" source="data-content-type"/>
                         <attribute name="appearance" source="data-appearance"/>
                         <css name="css_classes"/>
                     </element>
@@ -141,7 +141,7 @@ Write the following content into this configuration file:
           preview_component="VendorName_CustomContainer/js/content-type/custom-container/preview"
           master_component="Magento_PageBuilder/js/content-type/master-collection"
           form="pagebuilder_custom_container_form"
-          group="general"
+          menu_section="general"
           icon="icon-pagebuilder-row"
           sortOrder="1"
           translate="label">
@@ -156,12 +156,12 @@ Write the following content into this configuration file:
             <child name="tabs" policy="deny"/>
             <child name="tab-item" policy="deny"/>
         </children>
-        <is_visible>false</is_visible>
+        <is_system>false</is_system>
         <appearances>
             <appearance default="true"
                         name="default"
                         preview_template="VendorName_CustomContainer/content-type/custom-container/default/preview"
-                        render_template="VendorName_CustomContainer/content-type/custom-container/default/master"
+                        master_template="VendorName_CustomContainer/content-type/custom-container/default/master"
                         reader="Magento_PageBuilder/js/master-format/read/configurable">
                 <elements>
                     <element name="main">
@@ -178,7 +178,7 @@ Write the following content into this configuration file:
                         <style name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                         <style name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/margins"/>
                         <style name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/paddings"/>
-                        <attribute name="name" source="data-role"/>
+                        <attribute name="name" source="data-content-type"/>
                         <attribute name="appearance" source="data-appearance"/>
                         <attribute name="background_color_format" source="data-background-color-format" persistence_mode="write"/>
                         <css name="css_classes"/>
@@ -496,7 +496,7 @@ Content:
      css="data.main.css"
      event="{ mouseover: onMouseOver, mouseout: onMouseOut }">
     <render args="getOptions().template" />
-    <render args="previewChildTemplate" />
+    <render args="childTemplate" />
 </div>
 ```
 
@@ -508,7 +508,7 @@ Content:
 
 ``` xml
 <div attr="data.main.attributes" ko-style="data.main.style" css="data.main.css">
-    <render args="renderChildTemplate"/>
+    <render args="masterTemplate"/>
 </div>
 ```
 
@@ -525,7 +525,7 @@ Content:
      css="data.main.css"
      event="{ mouseover: onMouseOver, mouseout: onMouseOut }">
     <render args="getOptions().template" />
-    <render args="previewChildTemplate" />
+    <render args="childTemplate" />
 </div>
 ```
 
@@ -537,7 +537,7 @@ Content:
 
 ``` xml
 <div attr="data.main.attributes" ko-style="data.main.style" css="data.main.css">
-    <render args="renderChildTemplate"/>
+    <render args="masterTemplate"/>
 </div>
 ```
 
@@ -558,7 +558,7 @@ Content:
      css="Object.assign(data.main.css(), {'empty-container': parent.children().length == 0})"
      event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
     <render args="getOptions().template" />
-    <render args="previewChildTemplate" />
+    <render args="childTemplate" />
 
     <div class="pagebuilder-display-label" html="function () { return displayLabel().toUpperCase(); }()"></div>
     <div class="pagebuilder-empty-container" css="{visible: parent.children().length == 0}" translate="'Empty Container'">
@@ -575,7 +575,7 @@ Content:
 
 ``` html
 <div attr="data.main.attributes" ko-style="data.main.style" css="data.main.css">
-    <render args="renderChildTemplate"/>
+    <render args="masterTemplate"/>
 </div>
 ```
 
@@ -863,14 +863,14 @@ File name and location: `view/frontend/web/css/source/content-type/custom-contai
 Content:
 
 ``` less
-div[data-role='custom-container-group'] {
+div[data-content-type='custom-container-group'] {
     display: grid;
     grid-gap: 10px;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 200px 200px;
 
     &[data-appearance='left'] {
-        div[data-role='custom-container'] {
+        div[data-content-type='custom-container'] {
             &:nth-child(1) {
                 grid-column: 1;
                 grid-row: 1;
@@ -888,7 +888,7 @@ div[data-role='custom-container-group'] {
 }
 
 @media all and (max-width: @screen__m) {
-    div[data-role='custom-container-group'] {
+    div[data-content-type='custom-container-group'] {
         grid-template-columns: 1fr;
 
 
@@ -897,7 +897,7 @@ div[data-role='custom-container-group'] {
         }
 
         &[data-appearance='left'] {
-            div[data-role='custom-container'] {
+            div[data-content-type='custom-container'] {
                 &:nth-child(1) {
                     grid-column: 1;
                     grid-row: 1;
@@ -924,14 +924,14 @@ File name and location: `view/frontend/web/css/source/content-type/custom-contai
 Content:
 
 ``` less
-div[data-role='custom-container-group'] {
+div[data-content-type='custom-container-group'] {
     display: grid;
     grid-gap: 10px;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 200px 200px;
 
     &[data-appearance='right'] {
-        div[data-role='custom-container'] {
+        div[data-content-type='custom-container'] {
             &:nth-child(1) {
                 grid-column: 1;
                 grid-row: ~"1 / 3";
@@ -949,7 +949,7 @@ div[data-role='custom-container-group'] {
 }
 
 @media all and (max-width: @screen__m) {
-    div[data-role='custom-container-group'] {
+    div[data-content-type='custom-container-group'] {
         grid-template-columns: 1fr;
 
         &[data-appearance='right'] {
@@ -957,7 +957,7 @@ div[data-role='custom-container-group'] {
         }
 
         &[data-appearance='right'] {
-            div[data-role='custom-container'] {
+            div[data-content-type='custom-container'] {
                 &:nth-child(1) {
                     grid-column: 1;
                     grid-row: 1;

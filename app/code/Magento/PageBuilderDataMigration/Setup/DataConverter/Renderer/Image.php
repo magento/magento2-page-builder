@@ -56,7 +56,7 @@ class Image implements RendererInterface
         $rootElementAttributes = [
             'data-element' => 'main',
             'data-appearance' => 'full-width',
-            'data-role' => 'image',
+            'data-content-type' => 'image',
             'class' => $eavData['css_classes'] ?? ''
         ];
 

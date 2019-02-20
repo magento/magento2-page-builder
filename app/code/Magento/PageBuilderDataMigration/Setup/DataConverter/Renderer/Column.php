@@ -51,7 +51,7 @@ class Column implements RendererInterface
 
         $rootElementAttributes = [
             'data-element' => 'main',
-            'data-role' => 'column',
+            'data-content-type' => 'column',
             'data-appearance' => 'full-height',
             'class' => $itemData['formData']['css_classes'] ?? '',
             'style' => '',

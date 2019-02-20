@@ -167,4 +167,16 @@
             <expectedResult type="variable">button2Width</expectedResult>
         </assertNotEquals>
     </actionGroup>
+    <actionGroup name="validateButtonItemsDefaultMargin">
+        <arguments>
+            <argument name="buttonItemPage"/>
+            <argument name="buttonIndex" defaultValue="1" type="string"/>
+        </arguments>
+        <comment userInput="Validate default margin" stepKey="comment"/>
+        <executeJS function="return window.getComputedStyle({{buttonItemPage.jsButtonSelector(buttonIndex)}}).margin" stepKey="getDefaultMarginValueStage"/>
+        <assertEquals stepKey="checkDefaultMarginValueStage">
+            <expectedResult type="string">{{PageBuilderMarginsPropertyButtonItemDefault.value}}</expectedResult>
+            <actualResult type="variable">getDefaultMarginValueStage</actualResult>
+        </assertEquals>
+    </actionGroup>
 </actionGroups>

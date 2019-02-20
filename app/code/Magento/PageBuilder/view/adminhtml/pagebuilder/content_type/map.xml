@@ -11,7 +11,7 @@
           component="Magento_PageBuilder/js/content-type"
           preview_component="Magento_PageBuilder/js/content-type/map/preview"
           form="pagebuilder_map_form"
-          group="media"
+          menu_section="media"
           icon="icon-pagebuilder-map"
           sortOrder="50"
           translate="label">
@@ -20,7 +20,7 @@
             <appearance default="true"
                         name="default"
                         preview_template="Magento_PageBuilder/content-type/map/default/preview"
-                        render_template="Magento_PageBuilder/content-type/map/default/master"
+                        master_template="Magento_PageBuilder/content-type/map/default/master"
                         reader="Magento_PageBuilder/js/master-format/read/configurable">
                 <elements>
                     <element name="main">
@@ -33,7 +33,7 @@
                         <style name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
                         <style name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
                         <style name="height" source="height" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-                        <attribute name="name" source="data-role"/>
+                        <attribute name="name" source="data-content-type"/>
                         <attribute name="appearance" source="data-appearance"/>
                         <attribute name="show_controls" source="data-show-controls"/>
                         <attribute name="locations" source="data-locations" converter="Magento_PageBuilder/js/content-type/map/converter/attribute/locations"/>

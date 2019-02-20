@@ -4,7 +4,7 @@
  */
 
 import Config from "../config";
-import {ContentTypeConfigAppearanceInterface} from "../content-type-config";
+import {ContentTypeConfigAppearanceInterface} from "../content-type-config.types";
 
 /**
  * Get config for appearance

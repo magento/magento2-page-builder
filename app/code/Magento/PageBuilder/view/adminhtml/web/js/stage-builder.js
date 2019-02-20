@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/utils/loader", "Magento_Ui/js/modal/alert", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type/appearance-config", "Magento_PageBuilder/js/master-format/validator", "Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/utils/object"], function (_translate, _events, _loader, _alert, _, _config, _contentTypeFactory, _appearanceConfig, _validator, _directives, _object) {
+define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_Ui/js/modal/alert", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-collection", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type/appearance-config", "Magento_PageBuilder/js/master-format/validator", "Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/utils/loader", "Magento_PageBuilder/js/utils/object"], function (_translate, _events, _alert, _, _config, _contentTypeCollection, _contentTypeFactory, _appearanceConfig, _validator, _directives, _loader, _object) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -14,28 +14,28 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/
    */
   function buildFromContent(stage, value) {
     var stageDocument = new DOMParser().parseFromString(value, "text/html");
-    stageDocument.body.setAttribute(_config.getConfig("dataRoleAttributeName"), "stage");
-    return buildElementIntoStage(stageDocument.body, stage, stage);
+    stageDocument.body.setAttribute(_config.getConfig("dataContentTypeAttributeName"), "stage");
+    return buildElementIntoStage(stageDocument.body, stage.rootContainer, stage);
   }
   /**
    * Build an element and it's children into the stage
    *
    * @param {Element} element
-   * @param {ContentTypeCollectionInterface} parent
+   * @param {ContentTypeCollectionInterface} contentType
    * @param {stage} stage
    * @returns {Promise<void>}
    */
 
 
-  function buildElementIntoStage(element, parent, stage) {
-    if (element instanceof HTMLElement && element.getAttribute(_config.getConfig("dataRoleAttributeName"))) {
+  function buildElementIntoStage(element, contentType, stage) {
+    if (element instanceof HTMLElement && element.getAttribute(_config.getConfig("dataContentTypeAttributeName"))) {
       var childPromises = [];
       var childElements = [];
       var children = getElementChildren(element);
 
       if (children.length > 0) {
         _.forEach(children, function (childElement) {
-          childPromises.push(createElementContentType(childElement, stage, parent));
+          childPromises.push(createElementContentType(childElement, stage, contentType));
           childElements.push(childElement);
         });
       } // Wait for all the promises to finish and add the instances to the stage
@@ -43,8 +43,11 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/
 
       return Promise.all(childPromises).then(function (childrenPromises) {
         return Promise.all(childrenPromises.map(function (child, index) {
-          parent.addChild(child);
-          return buildElementIntoStage(childElements[index], child, stage);
+          contentType.addChild(child); // Only render children if the content type implements the collection
+
+          if (child instanceof _contentTypeCollection) {
+            return buildElementIntoStage(childElements[index], child, stage);
+          }
         }));
       });
     }
@@ -53,18 +56,18 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/
    * Parse an element in the structure and build the required element
    *
    * @param {Element} element
-   * @param {ContentTypeInterface} parent
+   * @param {ContentTypeCollectionInterface} contentType
    * @param {stage} stage
    * @returns {Promise<ContentTypeInterface>}
    */
 
 
-  function createElementContentType(element, stage, parent) {
-    parent = parent || stage;
-    var role = element.getAttribute(_config.getConfig("dataRoleAttributeName"));
+  function createElementContentType(element, stage, contentType) {
+    contentType = contentType || stage.rootContainer;
+    var role = element.getAttribute(_config.getConfig("dataContentTypeAttributeName"));
 
     if (!role) {
-      return Promise.reject("Invalid master format: Content type element does not contain\n            " + _config.getConfig("dataRoleAttributeName") + " attribute.");
+      return Promise.reject("Invalid master format: Content type element does not contain\n            " + _config.getConfig("dataContentTypeAttributeName") + " attribute.");
     }
 
     var config = _config.getContentTypeConfig(role);
@@ -74,7 +77,7 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/
     }
 
     return getElementData(element, config).then(function (data) {
-      return (0, _contentTypeFactory)(config, parent, stage.id, data, getElementChildren(element).length);
+      return (0, _contentTypeFactory)(config, contentType, stage.id, data, getElementChildren(element).length);
     });
   }
   /**
@@ -82,7 +85,7 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/
    *
    * @param {HTMLElement} element
    * @param {ContentTypeConfigInterface} config
-   * @returns {Promise<any>}
+   * @returns {Promise<{[p: string]: any}>}
    */
 
 
@@ -90,7 +93,7 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/
     // Create an object with all fields for the content type with an empty value
     var result = createInitialElementData(config.fields);
     return new Promise(function (resolve) {
-      var role = element.getAttribute(_config.getConfig("dataRoleAttributeName"));
+      var role = element.getAttribute(_config.getConfig("dataContentTypeAttributeName"));
 
       if (!_config.getConfig("content_types").hasOwnProperty(role)) {
         resolve(result);
@@ -149,7 +152,7 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/
 
       _.forEach(element.childNodes, function (child) {
         if (child.nodeType === Node.ELEMENT_NODE) {
-          if (child.hasAttribute(_config.getConfig("dataRoleAttributeName"))) {
+          if (child.hasAttribute(_config.getConfig("dataContentTypeAttributeName"))) {
             children.push(child);
           } else {
             children = getElementChildren(child);
@@ -174,20 +177,22 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/
   function buildEmpty(stage, initialValue) {
     var stageConfig = _config.getConfig("stage_config");
 
+    var rootContainer = stage.rootContainer;
+
     var rootContentTypeConfig = _config.getContentTypeConfig(stageConfig.root_content_type);
 
     var htmlDisplayContentTypeConfig = _config.getContentTypeConfig(stageConfig.html_display_content_type);
 
     if (rootContentTypeConfig) {
-      return (0, _contentTypeFactory)(rootContentTypeConfig, stage, stage.id, {}).then(function (rootContentType) {
+      return (0, _contentTypeFactory)(rootContentTypeConfig, rootContainer, stage.id, {}).then(function (rootContentType) {
         if (!rootContentType) {
           return Promise.reject("Unable to create initial " + stageConfig.root_content_type + " content type " + " within stage.");
         }
 
-        stage.addChild(rootContentType);
+        rootContainer.addChild(rootContentType);
 
         if (htmlDisplayContentTypeConfig && initialValue) {
-          return (0, _contentTypeFactory)(htmlDisplayContentTypeConfig, stage, stage.id, {
+          return (0, _contentTypeFactory)(htmlDisplayContentTypeConfig, rootContainer, stage.id, {
             html: initialValue
           }).then(function (text) {
             rootContentType.addChild(text);
@@ -199,7 +204,7 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/
     return Promise.resolve();
   }
   /**
-   * Build a stage with the provided parent, content observable and initial value
+   * Build a stage with the provided content type, content observable and initial value
    *
    * @param {Stage} stage
    * @param {string} content
@@ -214,7 +219,7 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/
     if ((0, _validator)(content)) {
       currentBuild = buildFromContent(stage, content).catch(function (error) {
         console.error(error);
-        stage.children([]);
+        stage.rootContainer.children([]);
         currentBuild = buildEmpty(stage, content);
       });
     } else {

@@ -138,7 +138,7 @@ class Product implements RendererInterface
 
         $rootElementAttributes = [
             'data-element' => 'main',
-            'data-role' => 'products',
+            'data-content-type' => 'products',
             'data-appearance' => 'grid',
             'class' => $eavData['css_classes'] ?? '',
         ];

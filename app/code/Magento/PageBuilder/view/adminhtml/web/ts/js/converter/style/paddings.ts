@@ -5,6 +5,7 @@
 
 import _ from "underscore";
 import {DataObject} from "../../data-store";
+import {DataObjectPaddings} from "../../property/paddings";
 import {get} from "../../utils/object";
 import ConverterInterface from "../converter-interface";
 
@@ -18,17 +19,18 @@ export default class Paddings implements ConverterInterface {
      * @param value string
      * @returns {string | object}
      */
-    public fromDom(value: string): string | object {
-        const result = {};
+    public fromDom(value: DataObjectPaddings): DataObjectPaddings {
         if (undefined !== value.padding) {
-            result.padding = {
-                top: value.padding.top.replace("px", ""),
-                left: value.padding.left.replace("px", ""),
-                right: value.padding.right.replace("px", ""),
-                bottom: value.padding.bottom.replace("px", ""),
+            return {
+                padding: {
+                    top: value.padding.top.replace("px", ""),
+                    left: value.padding.left.replace("px", ""),
+                    right: value.padding.right.replace("px", ""),
+                    bottom: value.padding.bottom.replace("px", ""),
+                },
             };
         }
-        return result;
+        return {};
     }
 
     /**
@@ -42,7 +44,7 @@ export default class Paddings implements ConverterInterface {
         const result: {
             [key: string]: string;
         } = {};
-        let value = get(data, name);
+        let value = get<DataObjectPaddings>(data, name);
         if (value && _.isString(value)) {
             value = JSON.parse(value);
         }

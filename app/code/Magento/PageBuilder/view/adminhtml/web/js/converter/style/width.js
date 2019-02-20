@@ -32,7 +32,7 @@ define([], function () {
       }
 
       return value;
-    };
+    }
     /**
      * Convert value to knockout format
      *
@@ -40,7 +40,7 @@ define([], function () {
      * @param data Object
      * @returns {string | object}
      */
-
+    ;
 
     _proto.toDom = function toDom(name, data) {
       if (data[name] !== "" && data.margins_and_padding) {

@@ -80,11 +80,11 @@
         <waitForElementVisible selector="{{WidgetSection.WidgetType}}" stepKey="waitForWidgetType"/>
         <selectOption selector="{{WidgetSection.WidgetType}}" userInput="{{TinyMCEWidgetCMSPageLink.widgetType}}" stepKey="selectCMSPageLinkWidget"/>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear2"/>
-        <waitForElementVisible selector="{{moveToCE.SelectPageButton}}" stepKey="waitForSelectPage"/>
-        <click selector="{{moveToCE.SelectPageButton}}" stepKey="clickSelectPage"/>
+        <waitForElementVisible selector="{{WidgetSection.SelectPageButton}}" stepKey="waitForSelectPage"/>
+        <click selector="{{WidgetSection.SelectPageButton}}" stepKey="clickSelectPage"/>
         <waitForLoadingMaskToDisappear stepKey="waitForSelectPageModal"/>
-        <waitForElementVisible selector="{{moveToCE.generalFilter('chooser_title')}}" stepKey="waitForGrid"/>
-        <fillField selector="{{moveToCE.generalFilter('chooser_identifier')}}" userInput="{{page}}" stepKey="enterPageName"/>
+        <waitForElementVisible selector="{{WidgetSection.SelectPageFilterInput('chooser_title')}}" stepKey="waitForGrid"/>
+        <fillField selector="{{WidgetSection.SelectPageFilterInput('chooser_identifier')}}" userInput="{{page}}" stepKey="enterPageName"/>
         <click selector="{{AdminProductGridFilterSection.applyFilters}}" stepKey="clickSearch"/>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear3"/>
         <waitForElementVisible selector="//td[contains(@class,'col-url')][contains(text(),'{{page}}')]" stepKey="waitForSearchResult"/>

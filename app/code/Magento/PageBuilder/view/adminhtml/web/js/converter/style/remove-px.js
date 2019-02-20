@@ -25,7 +25,7 @@ define(["Magento_PageBuilder/js/utils/object"], function (_object) {
      */
     _proto.fromDom = function fromDom(value) {
       return value.replace("px", "");
-    };
+    }
     /**
      * Convert value to knockout format
      *
@@ -33,7 +33,7 @@ define(["Magento_PageBuilder/js/utils/object"], function (_object) {
      * @param data Object
      * @returns {string | object}
      */
-
+    ;
 
     _proto.toDom = function toDom(name, data) {
       var value = (0, _object.get)(data, name);

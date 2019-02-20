@@ -313,7 +313,7 @@ The following elements are from our `example_quote.xml` configuration. These ele
         <style name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
         <style name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
         <style name="display" source="display" converter="Magento_PageBuilder/js/converter/style/display" preview_converter="Magento_PageBuilder/js/converter/style/preview/display"/>
-        <attribute name="name" source="data-role"/>
+        <attribute name="name" source="data-content-type"/>
         <attribute name="appearance" source="data-appearance"/>
         <css name="css_classes"/>
     </element>
