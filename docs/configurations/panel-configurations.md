@@ -67,7 +67,7 @@ The result looks like this:
 
 ![Reorder panel menu sections](../images/panel-reorder-menu-sections.png)
 
-## Add new panel menu section
+## Add new panel menu sections
 
 To add a new panel menu section, add a new `<menu_section>` element  in your module's `menu_section.xml` file with a unique `name` as shown here:
 
