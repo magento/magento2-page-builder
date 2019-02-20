@@ -518,6 +518,7 @@ events.on("state", function (params) {});
 | Params  | Type        |
 | ------- | ----------- |
 | `state` | `DataStore` |
+
 [Back to top]
 
 
