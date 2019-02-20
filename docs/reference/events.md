@@ -454,8 +454,6 @@ events.on(`stage:${this.contentType.stageId}:readyAfter`, function (params) {});
 
 [Back to top]
 
-### `stage:{{preview.contentType.stageId}}:readyAfter` {#stageidreadyafter}
-
 
 ### `stage:{{preview.contentType.stageId}}:masterFormatRenderAfter` {#stageidmasterformatrenderafter}
 
@@ -521,9 +519,6 @@ events.on("state", function (params) {});
 | ------- | ----------- |
 | `state` | `DataStore` |
 [Back to top]
-
-### `{{config.name}}:{{preview.contentType.id}}:updateAfter` {#confignameidupdateafter}
-
 
 
 ### `{{config.name}}:{{preview.contentType.id}}:updateAfter` {#confignameidupdateafter}
