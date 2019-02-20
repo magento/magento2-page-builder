@@ -36,8 +36,8 @@ The following table lists the Page Builder events you can bind to and handle wit
 |                                                     | [stage:updateAfter](#stageupdateafter)                                        |
 |                                                     |                                                          |
 | **Column Events**                                   | **Preview Events**                                       |
-| [column:dragStart](#columndragstart)                | [previewSortable:sortstart](#previewsortablesortstart)                                |
-| [column:dragStop](#columndragstop)                  | [previewSortable:sortupdate](#previewsortablesortupdate)                               |
+| [column:dragStart](#columndragstart)                | [childContentType:sortstart](#childcontenttypesortstart)                                |
+| [column:dragStop](#columndragstop)                  | [childContentType:sortupdate](#childcontenttypesortupdate)                               |
 | [column:initializeAfter](#columninitializeafter)    | [previewData:updateAfter](#previewdataupdateafter)                                  |
 |                                                     |                                                          |
 | **Image Events**                                    | **Other Events**                                         |
@@ -84,7 +84,6 @@ events.on("contentType:mountAfter", function (params) {});
 | `id`          | `string`      |
 | `contentType` | `ContentType` |
 
-[Back to top]
 
 
 
@@ -105,7 +104,6 @@ events.on("contentType:mountAfter", function (params) {});
 [Back to top]
 
 
-
 ### `contentType:dropAfter`
 
 ```js
@@ -118,7 +116,6 @@ events.on("contentType:dropAfter", function (params) {});
 | `contentType` | `ContentTypeInterface` and `ContentTypeCollectionInterface` |
 
 [Back to top]
-
 
 
 ### `contentType:renderAfter`
@@ -170,7 +167,6 @@ events.on("contentType:duplicateAfter", function (params) {});
 [Back to top]
 
 
-
 ### `contentType:moveBefore`
 
 ```js
@@ -188,7 +184,6 @@ events.on("contentType:moveBefore", function (params) {});
 [Back to top]
 
 
-
 ### `contentType:moveAfter`
 
 ```js
@@ -204,7 +199,6 @@ events.on("contentType:moveAfter", function (params) {});
 | `stageId`      | `string`                                                    |
 
 [Back to top]
-
 
 
 ### `contentType:redrawAfter`
@@ -259,7 +253,6 @@ events.on("column:dragStop", function (params) {});
 [Back to top]
 
 
-
 ### `column:initializeAfter`
 
 ```js
@@ -303,7 +296,6 @@ events.on("image:mountAfter", function (params) {});
 | `expectChildren` | `number` |
 
 [Back to top]
-
 
 
 ### `image:uploadAfter`
@@ -359,7 +351,6 @@ events.on("stage:interactionStart", function () {});
 | `None` |      |
 
 [Back to top]
-
 
 
 ### `stage:interactionStop`
@@ -437,7 +428,6 @@ events.on("childContentType:sortUpdate", function (params) {});
 [Back to top]
 
 
-
 ### `stage:error`
 
 ```js
@@ -478,7 +468,6 @@ events.on(`stage:${this.contentType.stageId}:masterFormatRenderAfter`, function 
 | `renderedOutput` | `string` |
 
 [Back to top]
-
 
 
 ### `stage:updateAfter`
@@ -522,7 +511,6 @@ events.on("stage:childFocusStop", function () {});
 [Back to top]
 
 
-
 ### `state`
 
 ```js
@@ -532,6 +520,7 @@ events.on("state", function (params) {});
 | Params  | Type        |
 | ------- | ----------- |
 | `state` | `DataStore` |
+[Back to top]
 
 ### `{{config.name}}:{{preview.contentType.id}}:updateAfter` {#confignameidupdateafter}
 
@@ -548,7 +537,6 @@ events.on(`${this.config.name}:${this.contentType.id}:updateAfter`, function (pa
 | `contentType` | `ContentType` |
 
 [Back to top]
-
 
 
 ### `googleMaps:authFailure`
