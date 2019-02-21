@@ -50,11 +50,10 @@ The following table lists the Page Builder events you can bind to and handle wit
 
 ## `contentType:*` events
 Events starting with `contentType:` are triggered for every content type on the stage. These events can also be called for specific content types by prefixing the content type's name before the event (`name:event`). For example:
+
 * `text:createAfter`
 * `row:mountAfter`
 * `tab-item:mountAfter`
-
-
 
 ### `contentType:createAfter`
 
@@ -65,7 +64,7 @@ events.on("contentType:createAfter", function (params) {});
 | Params        | Type                                                        |
 | ------------- | ----------------------------------------------------------- |
 | `id`          | `string`                                                    |
-| `contentType` | `ContentTypeInterface` and `ContentTypeCollectionInterface` |
+| `contentType` | `ContentType` or `ContentTypeCollection` |
 
 [Back to top]
 
@@ -84,10 +83,6 @@ events.on("contentType:mountAfter", function (params) {});
 | `id`          | `string`      |
 | `contentType` | `ContentType` |
 
-
-
-
-### `contentType:mountAfter`
 
 #### ContentTypeCollection
 
@@ -113,7 +108,7 @@ events.on("contentType:dropAfter", function (params) {});
 | Params        | Type                                                        |
 | ------------- | ----------------------------------------------------------- |
 | `id`          | `string`                                                    |
-| `contentType` | `ContentTypeInterface` and `ContentTypeCollectionInterface` |
+| `contentType` | `ContentType` or `ContentTypeCollection`                    |
 
 [Back to top]
 
@@ -127,11 +122,10 @@ events.on("contentType:renderAfter", function (params) {});
 | Params        | Type                                                        |
 | ------------- | ----------------------------------------------------------- |
 | `id`          | `string`                                                    |
-| `element`     | `Element`                                                   |
-| `contentType` | `ContentTypeInterface` and `ContentTypeCollectionInterface` |
+| `element`     | `HTMLElement`                                                   |
+| `contentType` | `ContentType` or `ContentTypeCollection` |
 
 [Back to top]
-
 
 
 ### `contentType:removeAfter`
@@ -142,9 +136,9 @@ events.on("contentType:removeAfter", function (params) {});
 
 | Params        | Type                                           |
 | ------------- | ---------------------------------------------- |
-| `contentType` | `ContentType`: `ContentTypeInterface`          |
+| `contentType` | `ContentType` or `ContentTypeCollection`          |
 | `index`       | `number`                                       |
-| `contentType`      | `ContentType`:`ContentTypeCollectionInterface` |
+| `parentContentType`      | `ContentType` or `ContentTypeCollection` |
 | `stageId`     | `string`                                       |
 
 [Back to top]
@@ -159,8 +153,8 @@ events.on("contentType:duplicateAfter", function (params) {});
 
 | Params                 | Type                                                        |
 | ---------------------- | ----------------------------------------------------------- |
-| `originalContentType`  | `ContentTypeInterface` and `ContentTypeCollectionInterface` |
-| `duplicateContentType` | `ContentTypeInterface` and `ContentTypeCollectionInterface` |
+| `originalContentType`  | `ContentType` or `ContentTypeCollection` |
+| `duplicateContentType` | `ContentType` or `ContentTypeCollection` |
 | `index`                | `number`                                                    |
 | `direct`               | `boolean`                                                   |
 
@@ -175,9 +169,9 @@ events.on("contentType:moveBefore", function (params) {});
 
 | Params         | Type                                                        |
 | -------------- | ----------------------------------------------------------- |
-| `contentType`  | `ContentTypeInterface` and `ContentTypeCollectionInterface` |
-| `sourceContentType` | `ContentTypeCollectionInterface`                            |
-| `targetContentType` | `ContentTypeCollectionInterface`                            |
+| `contentType`  | `ContentType` |
+| `sourceParent` | `ContentTypeCollection`                            |
+| `targetParent` | `ContentTypeCollection`                            |
 | `targetIndex`  | `number`                                                    |
 | `stageId`      | `string`                                                    |
 
@@ -192,11 +186,13 @@ events.on("contentType:moveAfter", function (params) {});
 
 | Params         | Type                                                        |
 | -------------- | ----------------------------------------------------------- |
-| `contentType`  | `ContentTypeInterface` and `ContentTypeCollectionInterface` |
-| `sourceContentType` | `ContentTypeCollectionInterface`                            |
-| `targetContentType` | `ContentTypeCollectionInterface`                            |
+| `contentType`  | `ContentType` |
+| `sourceParent` | `ContentTypeCollection`                            |
+| `targetParent` | `ContentTypeCollection`                            |
 | `targetIndex`  | `number`                                                    |
 | `stageId`      | `string`                                                    |
+
+
 
 [Back to top]
 
@@ -212,7 +208,7 @@ events.on("contentType:redrawAfter", function (params) {});
 | Params        | Type                                                        |
 | ------------- | ----------------------------------------------------------- |
 | `id`          | `string`                                                    |
-| `contentType` | `ContentTypeInterface` and `ContentTypeCollectionInterface` |
+| `contentType` | `ContentType` or `ContentTypeCollection` |
 
 #### Frontend
 
@@ -232,7 +228,7 @@ events.on("column:dragStart", function (params) {});
 
 | Params    | Type                   |
 | --------- | ---------------------- |
-| `column`  | `ContentTypeInterface` |
+| `column`  | `ContentTypeCollection` |
 | `stageId` | `string`               |
 
 [Back to top]
@@ -247,7 +243,7 @@ events.on("column:dragStop", function (params) {});
 
 | Params    | Type                   |
 | --------- | ---------------------- |
-| `column`  | `ContentTypeInterface` |
+| `column`  | `ContentTypeCollection` |
 | `stageId` | `string`               |
 
 [Back to top]
@@ -262,8 +258,8 @@ events.on("column:initializeAfter", function (params) {});
 | Params    | Type          |
 | --------- | ------------- |
 | `column`  | `Column`      |
-| `element` | `Element`     |
-| `contentType`  | `ColumnGroup` |
+| `element`  | `Element` |
+| `columnGroup` | `ColumnGroup`     |
 
 [Back to top]
 
@@ -293,6 +289,7 @@ events.on("image:mountAfter", function (params) {});
 | Params           | Type     |
 | ---------------- | -------- |
 | `id`             | `string` |
+| `contentType`    | `ContentType` |
 | `expectChildren` | `number` |
 
 [Back to top]
@@ -343,12 +340,12 @@ events.on(`stage:${this.contentType.stageId}:renderAfter`, function (params) {})
 ### `stage:interactionStart`
 
 ```js
-events.on("stage:interactionStart", function () {});
+events.on("stage:interactionStart", function (params) {});
 ```
 
-| Params | Type |
-| ------ | ---- |
-| `None` |      |
+| Params    | Type     |
+| --------- | -------- |
+| `stageId` | `string` |
 
 [Back to top]
 
@@ -356,12 +353,12 @@ events.on("stage:interactionStart", function () {});
 ### `stage:interactionStop`
 
 ```js
-events.on("stage:interactionStop", function () {});
+events.on("stage:interactionStop", function (params) {});
 ```
 
-| Params | Type |
-| ------ | ---- |
-| `None` |      |
+| Params    | Type     |
+| --------- | -------- |
+| `stageId` | `string` |
 
 [Back to top]
 
@@ -403,7 +400,7 @@ events.on("childContentType:sortStart", function (params) {});
 
 | Params             | Type                        |
 | ------------------ | --------------------------- |
-| `instance`         | `Preview`                   |
+| `instance`         | `ContentTypeCollection`     |
 | `originalPosition` | `number`                    |
 | `ui`               | `JQueryUI.SortableUIParams` |
 
@@ -419,11 +416,11 @@ events.on("childContentType:sortUpdate", function (params) {});
 
 | Params             | Type                        |
 | ------------------ | --------------------------- |
-| `instance`         | `ContentTypeInterface`      |
+| `instance`         | `ContentTypeCollection`      |
 | `newPosition`      | `number`                    |
 | `originalPosition` | `number`                    |
 | `ui`               | `JQueryUI.SortableUIParams` |
-| `event`            | `Event`                     |
+| `event`            | `jQuery.Event`                     |
 
 [Back to top]
 
