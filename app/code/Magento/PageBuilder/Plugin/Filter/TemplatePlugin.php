@@ -129,30 +129,53 @@ class TemplatePlugin
     }
 
     /**
-     * Decode the contents of any HTML content types for the store front
+     * Decode the contents of any HTML content types for the storefront
      *
      * @param \DOMDocument $document
      */
     private function decodeHtmlContentTypes(\DOMDocument $document): void
     {
         $xpath = new \DOMXPath($document);
-        $nodes = $xpath->query('//*[@data-content-type="html" and not(@data-decoded="true")]');
-        foreach ($nodes as $node) {
-            if (strlen(trim($node->nodeValue)) > 0) {
-                /* @var \DOMElement $node */
-                $fragment = $document->createDocumentFragment();
-                $fragment->appendXML($node->nodeValue);
-                // Store a decoded attribute on the element so we don't double decode
-                $node->setAttribute("data-decoded", "true");
-                $node->nodeValue = "";
 
-                // If the HTML code in the content type is invalid it may throw
-                try {
-                    $node->appendChild($fragment);
-                } catch (\Exception $e) {
-                    $this->logger->critical($e);
+        /** @var $htmlContentTypeNodes \DOMNode[] */
+        $htmlContentTypeNodes = $xpath->query('//*[@data-content-type="html" and not(@data-decoded="true")]');
+        foreach ($htmlContentTypeNodes as $htmlContentTypeNode) {
+            // Store a decoded attribute on the element so we don't double decode
+            $htmlContentTypeNode->setAttribute('data-decoded', 'true');
+
+            if (!strlen(trim($htmlContentTypeNode->nodeValue))) {
+                continue;
+            }
+
+            $clonedHtmlContentTypeNode = clone $htmlContentTypeNode;
+            $clonedHtmlContentTypeNode->nodeValue = '';
+
+            foreach ($htmlContentTypeNode->childNodes as $childNode) {
+                if ($childNode->nodeType !== XML_TEXT_NODE) {
+                    $clonedHtmlContentTypeNode->appendChild($childNode);
+                    continue;
+                }
+
+                $fragDoc = new \DOMDocument();
+                $result = $fragDoc->loadHTML('<fragment>' . $childNode->nodeValue . '</fragment>');
+
+                if (!$result) {
+                    continue;
+                }
+
+                $import = $fragDoc->getElementsByTagName('fragment')->item(0);
+                foreach ($import->childNodes as $importedChildNode) {
+                    $importedNode = $document->importNode($importedChildNode, true);
+
+                    try {
+                        $clonedHtmlContentTypeNode->appendChild($importedNode);
+                    } catch (\Exception $e) {
+                        $this->logger->critical($e);
+                    }
                 }
             }
+
+            $htmlContentTypeNode->parentNode->replaceChild($clonedHtmlContentTypeNode, $htmlContentTypeNode);
         }
     }
 
