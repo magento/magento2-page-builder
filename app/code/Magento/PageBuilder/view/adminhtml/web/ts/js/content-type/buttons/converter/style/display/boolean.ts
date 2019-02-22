@@ -30,7 +30,7 @@ export default class Boolean implements ConverterInterface {
      * @returns {string}
      */
     public toDom(name: string, data: DataObject): string {
-        const value: string | boolean = get(data, name);
+        const value = get(data, name);
         if (!_.isUndefined(value) && value === false) {
             return "none";
         }
