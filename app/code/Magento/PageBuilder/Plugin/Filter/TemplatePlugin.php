@@ -150,8 +150,6 @@ class TemplatePlugin
     ): void {
         $xpath = new \DOMXPath($document);
 
-        $uniqueNodeNameToDecodedOuterHtmlMap = [];
-
         /** @var $htmlContentTypeNodes \DOMNode[] */
         $htmlContentTypeNodes = $xpath->query('//*[@data-content-type="html" and not(@data-decoded="true")]');
 
@@ -170,6 +168,9 @@ class TemplatePlugin
             $preDecodedOuterHtml = $document->saveHTML($htmlContentTypeNode);
             $decodedOuterHtml = html_entity_decode($preDecodedOuterHtml);
 
+            // generate unique node name element to replace with decoded html contents at end of processing;
+            // goal is to create a document as few times as possible to prevent inadvertent parsing of contents as html
+            // by the dom library
             $uniqueNodeName = 'a' . md5(uniqid('', true));
 
             $uniqueNode = new \DOMElement($uniqueNodeName);
