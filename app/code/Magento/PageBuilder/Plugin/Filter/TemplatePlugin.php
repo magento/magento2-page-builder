@@ -63,7 +63,7 @@ class TemplatePlugin
         // Process any HTML content types, they need to be decoded on the front-end
         if (strpos($result, 'data-content-type="html"') !== false) {
             $document = $this->getDomDocument($result);
-            $this->decodeHtmlContentTypes($document);
+            $this->convertEncodedHtmlContentTypesToPlaceholders($document, $uniqueNodeNameToDecodedOuterHtmlMap);
         }
 
         // If a document was retrieved we've modified the output so need to retrieve it from within the document
@@ -75,7 +75,17 @@ class TemplatePlugin
                 $matches
             );
 
-            return !empty($matches) ? $matches[1] : $result;
+            if (!empty($matches)) {
+                $docHtml = $matches[1];
+
+                if (isset($uniqueNodeNameToDecodedOuterHtmlMap)) {
+                    foreach ($uniqueNodeNameToDecodedOuterHtmlMap as $uniqueNodeName => $decodedOuterHtml) {
+                        $docHtml = str_replace("<$uniqueNodeName></$uniqueNodeName>", $decodedOuterHtml, $docHtml);
+                    }
+                }
+
+                $result = $docHtml;
+            }
         }
 
         return $result;
@@ -129,55 +139,43 @@ class TemplatePlugin
     }
 
     /**
-     * Decode the contents of any HTML content types for the storefront
+     * Convert encoded HTML content types to placeholders and generate decoded outer html map for future replacement
      *
      * @param \DOMDocument $document
+     * @param array $uniqueNodeNameToDecodedOuterHtmlMap
      */
-    private function decodeHtmlContentTypes(\DOMDocument $document): void
-    {
+    private function convertEncodedHtmlContentTypesToPlaceholders(
+        \DOMDocument $document,
+        &$uniqueNodeNameToDecodedOuterHtmlMap = []
+    ): void {
         $xpath = new \DOMXPath($document);
+
+        $uniqueNodeNameToDecodedOuterHtmlMap = [];
 
         /** @var $htmlContentTypeNodes \DOMNode[] */
         $htmlContentTypeNodes = $xpath->query('//*[@data-content-type="html" and not(@data-decoded="true")]');
-        foreach ($htmlContentTypeNodes as $htmlContentTypeNode) {
-            // Store a decoded attribute on the element so we don't double decode
-            $htmlContentTypeNode->setAttribute('data-decoded', 'true');
 
+        // Preliminarily set decoded attribute on all encoded html content types so we don't double decode;
+        // this needs to be done in a separate loop as contents will change throughout the subsequent loop
+        foreach ($htmlContentTypeNodes as $htmlContentTypeNode) {
+            $htmlContentTypeNode->setAttribute('data-decoded', 'true');
+        }
+
+        foreach ($htmlContentTypeNodes as $htmlContentTypeNode) {
             // if nothing exists inside the node, continue
             if (!strlen(trim($htmlContentTypeNode->nodeValue))) {
                 continue;
             }
 
-            // clone node and empty node value to prevent side-effects of modifying iterables in loop
-            $clonedHtmlContentTypeNode = clone $htmlContentTypeNode;
-            $clonedHtmlContentTypeNode->nodeValue = '';
+            $preDecodedOuterHtml = $document->saveHTML($htmlContentTypeNode);
+            $decodedOuterHtml = html_entity_decode($preDecodedOuterHtml);
 
-            foreach ($htmlContentTypeNode->childNodes as $childNode) {
-                // if child node is not text node type, it does not need to be decoded; just append to cloned html node
-                if ($childNode->nodeType !== XML_TEXT_NODE) {
-                    $clonedHtmlContentTypeNode->appendChild($childNode);
-                    continue;
-                }
+            $uniqueNodeName = 'a' . md5(uniqid('', true));
 
-                // Load node value into dom document in an attempt to decode any encoded html within
-                $fragDoc = $this->createDomDocument($childNode->nodeValue);
+            $uniqueNode = new \DOMElement($uniqueNodeName);
+            $htmlContentTypeNode->parentNode->replaceChild($uniqueNode, $htmlContentTypeNode);
 
-                $import = $fragDoc->getElementsByTagName('body')->item(0);
-
-                // Loop through decoded child nodes and import into the original document
-                foreach ($import->childNodes as $importedChildNode) {
-                    $importedNode = $document->importNode($importedChildNode, true);
-
-                    try {
-                        $clonedHtmlContentTypeNode->appendChild($importedNode);
-                    } catch (\Exception $e) {
-                        $this->logger->critical($e);
-                    }
-                }
-            }
-
-            // replace original html content type node with cloned node we've been performing decoding operating on
-            $htmlContentTypeNode->parentNode->replaceChild($clonedHtmlContentTypeNode, $htmlContentTypeNode);
+            $uniqueNodeNameToDecodedOuterHtmlMap[$uniqueNodeName] = $decodedOuterHtml;
         }
     }
 
