@@ -50,6 +50,7 @@
         <element name="parallaxState" type="button" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-row')])[{{arg1}}][@data-enable-parallax='{{arg2}}']" parameterized="true"/>
         <element name="parallaxSpeed" type="button" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-row')])[{{arg1}}][@data-parallax-speed='{{arg2}}']" parameterized="true"/>
         <element name="parallaxBackgroundImage" type="button" selector='(//div[contains(@class,"pagebuilder-content-type") and contains(@class,"pagebuilder-row")])[{{arg1}}]/descendant::div[contains(@id,"jarallax-container")]/div[contains(@style,"background-image: url(") and contains(@style,"{{arg2}}") and contains(@style,"{{arg3}}")]' parameterized="true"/>
+        <element name="parallaxJS" type="text" selector="document.querySelectorAll('[data-content-type=row] [id*=jarallax-container] > div')[{{arg1}} - 1]" parameterized="true"/>
         <!-- Layout Configuration -->
         <element name="minHeight" type="button" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-row')])[{{arg1}}][contains(@style,'min-height: {{arg2}}px;')]" parameterized="true"/>
         <element name="verticalAlignContainer" type="button" selector="(//div[contains(@class, 'pagebuilder-row')])[{{arg1}}]//div[contains(@class, 'element-children') and contains(@class, 'row-container')][contains(@style,'justify-content: {{arg2}};')]" parameterized="true"/>
@@ -101,6 +102,7 @@
         <element name="parallaxState" type="button" selector="(//div[@data-content-type='row'])[{{arg1}}]/div[@data-enable-parallax='{{arg2}}']" parameterized="true"/>
         <element name="parallaxSpeed" type="button" selector="(//div[@data-content-type='row'])[{{arg1}}]/div[@data-parallax-speed='{{arg2}}']" parameterized="true"/>
         <element name="parallaxBackgroundImage" type="button" selector='(//div[@data-content-type="row"])[{{arg1}}]/descendant::div[contains(@id,"jarallax-container")]/div[contains(@style,"background-image: url(") and contains(@style,"{{arg2}}") and contains(@style,"{{arg3}}")]' parameterized="true"/>
+        <element name="parallaxJS" type="text" selector="document.querySelectorAll('[data-content-type=row] [id*=jarallax-container] > div')[{{arg1}} - 1]" parameterized="true"/>
         <!-- Layout Configuration -->
         <element name="minHeight" type="button" selector="(//div[@data-content-type='row'])[{{arg1}}]/div[contains(@style, 'min-height: {{arg2}}px;')]" parameterized="true"/>
         <element name="verticalAlignContainer" type="button" selector="(//div[@data-content-type='row'])[{{arg1}}]/div[contains(@style, 'justify-content: {{arg2}};')]" parameterized="true"/>
@@ -153,9 +155,5 @@
         <element name="noCssClasses" type="text" selector="(//div[@data-content-type='row'])[{{arg1}}][not(@class)]" parameterized="true"/>
         <element name="margins" type="text" selector="(//div[@data-content-type='row'])[{{arg1}}][contains(@style,'margin: {{arg2}}px;')]" parameterized="true"/>
         <element name="padding" type="text" selector="(//div[@data-content-type='row'])[{{arg1}}][contains(@style,'padding: {{arg2}}px;')]" parameterized="true"/>
-    </section>
-    <section name="ParallaxForm">
-        <element name="sectionName" type="button" selector="//div[@data-index='parallax_background']"/>
-        <element name="sectionExpanded" type="button" selector="//div[@data-index='parallax_background' and contains(@class,'_show')]"/>
     </section>
 </sections>

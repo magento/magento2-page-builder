@@ -8,11 +8,24 @@
 
 <entities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:mftf:DataGenerator/etc/dataProfileSchema.xsd">
+    <!-- Product Entity -->
+    <entity name="PageBuilderProductsSubCategory" type="category">
+        <data key="name" unique="suffix">PageBuilderProductsSubCategory</data>
+        <data key="is_active">true</data>
+        <data key="include_in_menu">true</data>
+    </entity>
+    <!-- Number of Products to Display -->
     <entity name="PageBuilderProductsCountPropertyOne" type="pagebuilder_content_type">
         <data key="name">Number of Products to Display</data>
         <data key="section">general</data>
         <data key="fieldName">products_count</data>
         <data key="value">1</data>
+    </entity>
+    <entity name="PageBuilderProductsCountPropertyTwo" type="pagebuilder_content_type">
+        <data key="name">Number of Products to Display</data>
+        <data key="section">general</data>
+        <data key="fieldName">products_count</data>
+        <data key="value">2</data>
     </entity>
     <entity name="PageBuilderProductsCountPropertyFour" type="pagebuilder_content_type">
         <data key="name">Number of Products to Display</data>
@@ -26,7 +39,6 @@
         <data key="fieldName">products_count</data>
         <data key="value">999</data>
     </entity>
-
     <entity name="PageBuilderProductsInvalidMinCountProperty" type="pagebuilder_content_type">
         <data key="name">Number of Products to Display</data>
         <data key="section">general</data>
@@ -54,10 +66,5 @@
         <data key="fieldName">products_count</data>
         <data key="value"/>
         <data key="errorMessage">This is a required field.</data>
-    </entity>
-    <entity name="PageBuilderProductsSubCategory" type="category">
-        <data key="name" unique="suffix">PageBuilderProductsSubCategory</data>
-        <data key="is_active">true</data>
-        <data key="include_in_menu">true</data>
     </entity>
 </entities>

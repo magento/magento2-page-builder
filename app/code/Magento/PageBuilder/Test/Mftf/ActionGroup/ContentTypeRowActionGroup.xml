@@ -8,26 +8,7 @@
 
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
-    <!-- Validate Row All Background Attributes -->
-    <actionGroup name="validateRowBackgroundAttributesWithAllUpdated">
-        <arguments>
-            <argument name="page" defaultValue=""/>
-            <argument name="index" defaultValue="1" type="string"/>
-            <argument name="backgroundColor" defaultValue=""/>
-            <argument name="backgroundImage" defaultValue=""/>
-            <argument name="backgroundPosition" defaultValue="PageBuilderRowBackgroundPosition_Default"/>
-            <argument name="backgroundSize" defaultValue="PageBuilderRowBackgroundSize_Default"/>
-            <argument name="backgroundRepeat" defaultValue="PageBuilderRowBackgroundRepeat_Default"/>
-            <argument name="backgroundAttachment" defaultValue="PageBuilderRowBackgroundAttachment_Default"/>
-        </arguments>
-        <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForRow"/>
-        <waitForElementVisible selector="{{page.backgroundColor(index, backgroundColor.rgb)}}" stepKey="waitForBackgroundColor"/>
-        <waitForElementVisible selector="{{page.backgroundImage(index, backgroundImage.fileName, backgroundImage.extension)}}" stepKey="waitForBackgroundImage"/>
-        <waitForElementVisible selector="{{page.backgroundPosition(index, backgroundPosition.styleValue)}}" stepKey="waitForBackgroundPosition"/>
-        <waitForElementVisible selector="{{page.backgroundSize(index, backgroundSize.value)}}" stepKey="waitForBackgroundSize"/>
-        <waitForElementVisible selector="{{page.backgroundRepeat(index, backgroundRepeat.styleValue)}}" stepKey="waitForBackgroundRepeat"/>
-        <waitForElementVisible selector="{{page.backgroundAttachment(index, backgroundAttachment.value)}}" stepKey="waitForBackgroundAttachment"/>
-    </actionGroup>
+    <!-- Validate Row Parallax Background -->
     <actionGroup name="validateRowBackgroundAttributesWithAllUpdatedAndParallaxEnabled">
         <arguments>
             <argument name="page" defaultValue=""/>
@@ -47,7 +28,6 @@
         <waitForElementVisible selector="{{page.backgroundRepeat(index, backgroundRepeat.styleValue)}}" stepKey="waitForBackgroundRepeat"/>
         <waitForElementVisible selector="{{page.backgroundAttachment(index, backgroundAttachment.value)}}" stepKey="waitForBackgroundAttachment"/>
     </actionGroup>
-    <!-- Validate Row Parallax Background -->
     <actionGroup name="validateRowParallaxBackgroundAttributes">
         <arguments>
             <argument name="page" defaultValue=""/>
@@ -58,6 +38,10 @@
         <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForRow"/>
         <waitForElementVisible selector="{{page.parallaxState(index, parallaxStateValue.value)}}" stepKey="waitForParallaxBackgroundState"/>
         <waitForElementVisible selector="{{page.parallaxSpeed(index, parallaxSpeedValue.value)}}" stepKey="waitForParallaxBackgroundSpeed"/>
+    </actionGroup>
+    <actionGroup name="validateBackgroundImageContainerForParallaxRow" extends="validateBackgroundImageContainer">
+        <comment userInput="validateBackgroundImageContainerForParallaxRow" stepKey="comment"/>
+        <executeJS function="return window.getComputedStyle({{section.parallaxJS(index)}}).backgroundImage" stepKey="backgroundImageValue"/>
     </actionGroup>
     <!-- Validate Contained Row Appearance on stage -->
     <actionGroup name="validateContainedRowAppearanceOnStage">

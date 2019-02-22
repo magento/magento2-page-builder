@@ -273,7 +273,7 @@
     <test name="AddBlockWithEmptyImageToCmsPage">
         <annotations>
             <features value="PageBuilder"/>
-            <stories value="Block"/>
+            <stories value="Block Content"/>
             <title value="Add Block with Empty Image to CMS Page"/>
             <description value="Verify that admin are able to add a block instance type with empty image to Block Content Block and see it on frontend and on the stage"/>
             <severity value="CRITICAL"/>
@@ -281,6 +281,8 @@
             <useCaseId value="MC-1405"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-block"/>
+            <group value="pagebuilder-block-content"/>
+            <group value="pagebuilder-image"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -349,7 +351,7 @@
     <test name="BlockImageIsRightAligned">
         <annotations>
             <features value="PageBuilder"/>
-            <stories value="Block"/>
+            <stories value="Block Content"/>
             <title value="Image Can Be Right Aligned In Block"/>
             <description value="A user can right align an image in a Block"/>
             <severity value="MAJOR"/>
@@ -357,6 +359,7 @@
             <testCaseId value="MC-5174"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-block"/>
+            <group value="pagebuilder-block-content"/>
             <group value="pagebuilder-image"/>
         </annotations>
         <before>
@@ -452,7 +455,7 @@
     <test name="BlockRowContentIsVerticallyAligned">
         <annotations>
             <features value="PageBuilder"/>
-            <stories value="Block"/>
+            <stories value="Block Content"/>
             <title value="Row Content Can Be Vertically Aligned In Block"/>
             <description value="A user can vertically align row contents in a Block"/>
             <severity value="CRITICAL"/>
@@ -460,6 +463,7 @@
             <testCaseId value="MC-5061"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-block"/>
+            <group value="pagebuilder-block-content"/>
             <group value="pagebuilder-row"/>
         </annotations>
         <before>
@@ -546,7 +550,7 @@
     <test name="BlockRowContainedAppearanceHasEqualWidthToContents">
         <annotations>
             <features value="PageBuilder"/>
-            <stories value="Block"/>
+            <stories value="Block Content"/>
             <title value="Row contained appearance has equal width to contents in Block"/>
             <description value="A user can see a row contained appearance has equal width to contents in a Block"/>
             <severity value="MAJOR"/>
@@ -554,6 +558,7 @@
             <testCaseId value="MC-5958"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-block"/>
+            <group value="pagebuilder-block-content"/>
             <group value="pagebuilder-row"/>
             <group value="pagebuilder-rowAppearances"/>
             <group value="pagebuilder-banner"/>
@@ -656,7 +661,7 @@
     <test name="BlockRowFullWidthAppearanceHasEqualWidthToContents" extends="BlockRowContainedAppearanceHasEqualWidthToContents">
         <annotations>
             <features value="PageBuilder"/>
-            <stories value="Block"/>
+            <stories value="Block Content"/>
             <title value="Row full width appearance has equal width to contents in Block"/>
             <description value="A user can see a row full width appearance has equal width to contents in a Block"/>
             <severity value="MAJOR"/>
@@ -664,6 +669,7 @@
             <testCaseId value="MC-6012"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-block"/>
+            <group value="pagebuilder-block-content"/>
             <group value="pagebuilder-row"/>
             <group value="pagebuilder-rowAppearances"/>
             <group value="pagebuilder-banner"/>
@@ -691,7 +697,7 @@
     <test name="BlockRowFullBleedAppearanceHasEqualWidthToContents" extends="BlockRowContainedAppearanceHasEqualWidthToContents">
         <annotations>
             <features value="PageBuilder"/>
-            <stories value="Block"/>
+            <stories value="Block Content"/>
             <title value="Row full bleed appearance has equal width to contents in Block"/>
             <description value="A user can see a row full bleed appearance has equal width to contents in a Block"/>
             <severity value="MAJOR"/>
@@ -699,6 +705,7 @@
             <testCaseId value="MC-6011"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-block"/>
+            <group value="pagebuilder-block-content"/>
             <group value="pagebuilder-row"/>
             <group value="pagebuilder-rowAppearances"/>
             <group value="pagebuilder-banner"/>
@@ -1505,7 +1512,7 @@
             <argument name="contentType" value="PageBuilderImageContentType"/>
         </actionGroup>
         <!-- Edit Image -->
-        <comment userInput="Edit Image" stepKey="commentEditBlock"/>
+        <comment userInput="Edit Image" stepKey="commentEditImage"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuImage">
             <argument name="contentType" value="PageBuilderImageContentType"/>
         </actionGroup>
@@ -1630,8 +1637,19 @@
             </actionGroup>
         </before>
         <after>
+            <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
             <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock"/>
             <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="navigateToDesktopImageFolder">
+                <argument name="FolderName" value="{{PageBuilderBackgroundImage_JPG.path}}"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="deleteBackgroundImage">
+                <argument name="Image" value="PageBuilderBackgroundImage_JPG"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="deleteMobileBackgroundImage">
+                <argument name="Image" value="PageBuilderBackgroundMobileImage_GIF"/>
+            </actionGroup>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <!-- Edit Row -->
@@ -1645,7 +1663,7 @@
             <argument name="property" value="PageBuilderRowAppearance_Contained"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBackgroundColor">
-            <argument name="property" value="PageBuilderBackgroundColor_Hex_White"/>
+            <argument name="property" value="PageBuilderBackgroundColor_Plaintext_Green"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachFileSlideOutProperty1">
             <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
@@ -1654,16 +1672,16 @@
             <argument name="property" value="PageBuilderBackgroundMobileImage_GIF"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="setBackgroundPosition">
-            <argument name="property" value="PageBuilderBackgroundPosition_TopLeft"/>
-        </actionGroup>
-        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="setBackgroundRepeat">
-            <argument name="property" value="PageBuilderBackgroundRepeat_Enabled"/>
+            <argument name="property" value="PageBuilderBackgroundPosition_Center"/>
         </actionGroup>
         <actionGroup ref="chooseVisualSelectOption" stepKey="setBackgroundSize">
             <argument name="property" value="PageBuilderBackgroundSize_Auto"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="setBackgroundAttachment">
-            <argument name="property" value="PageBuilderBackgroundAttachment_Scroll"/>
+            <argument name="property" value="PageBuilderBackgroundAttachment_Fixed"/>
+        </actionGroup>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="setBackgroundRepeat">
+            <argument name="property" value="PageBuilderBackgroundRepeat_Enabled"/>
         </actionGroup>
         <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="enableParallaxBackground">
             <argument name="property" value="PageBuilderRowParallax_Enabled"/>
@@ -1681,27 +1699,36 @@
         <actionGroup ref="saveCMSBlock" stepKey="saveCMSBlock"/>
         <!-- Validate CMS Block Stage -->
         <comment userInput="Validate CMS Block Stage" stepKey="commentValidateCMSBlockStage"/>
-        <actionGroup ref="validateRowBackgroundAttributesWithAllUpdatedAndParallaxEnabled" stepKey="validateDuplicateBackgroundBlockStage">
+        <actionGroup ref="validateRowBackgroundAttributesWithAllUpdatedAndParallaxEnabled" stepKey="validateBackgroundBlockStage">
             <argument name="page" value="RowOnStage"/>
             <argument name="index" value="1"/>
-            <argument name="backgroundColor" value="PageBuilderBackgroundColor_Hex_White"/>
+            <argument name="backgroundColor" value="PageBuilderBackgroundColor_Plaintext_Green"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
-            <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_TopLeft"/>
+            <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_Center"/>
             <argument name="backgroundSize" value="PageBuilderBackgroundSize_Auto"/>
             <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
-            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Scroll"/>
+            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Fixed"/>
         </actionGroup>
-        <actionGroup ref="validateRowParallaxBackgroundAttributes" stepKey="validateDuplicateParallaxBackgroundBlockStage">
+        <actionGroup ref="validateRowParallaxBackgroundAttributes" stepKey="validateParallaxBackgroundBlockStage">
             <argument name="page" value="RowOnStage"/>
             <argument name="index" value="1"/>
             <argument name="parallaxStateValue" value="PageBuilderRowParallax_Enabled"/>
             <argument name="parallaxSpeedValue" value="PageBuilderRowParallaxSpeed_2"/>
         </actionGroup>
-        <actionGroup ref="validateLayoutStylesWithAllUpdated" stepKey="validateAllLayoutBlockStage">
+        <actionGroup ref="validateBackgroundImageContainerForParallaxRow" stepKey="validateBackgroundImageBlockStage">
+            <argument name="section" value="RowOnStage"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
+        </actionGroup>
+        <actionGroup ref="validateLayoutStylesWithAllUpdated" stepKey="validateRowLayoutBlockStage">
             <argument name="page" value="RowOnStage"/>
             <argument name="index" value="1"/>
             <argument name="minHeight" value="PageBuilderMinHeightProperty_500"/>
             <argument name="verticalAlignContainer" value="PageBuilderVerticalAlignmentPropertyCenter"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateRowHeightBlockStage">
+            <argument name="content" value="{{RowOnStage.baseCSS}}"/>
+            <argument name="padding" value="PageBuilderPaddingProperty10"/>
+            <argument name="height" value="PageBuilderMinHeightProperty_500"/>
         </actionGroup>
         <!-- Add Block to CMS Page -->
         <comment userInput="Add Block to CMS Page" stepKey="commentAddBlockToCMSPage"/>
@@ -1723,27 +1750,36 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsBlock"/>
         <!-- Validate CMS Page Stage -->
         <comment userInput="Validate CMS Page Stage" stepKey="commentValidateCMSPageStage"/>
-        <actionGroup ref="validateRowBackgroundAttributesWithAllUpdatedAndParallaxEnabled" stepKey="validateRowBackgroundOnStage">
+        <actionGroup ref="validateRowBackgroundAttributesWithAllUpdatedAndParallaxEnabled" stepKey="validateRowBackgroundCMSPageStage">
             <argument name="page" value="RowOnStorefront"/>
             <argument name="index" value="2"/>
-            <argument name="backgroundColor" value="PageBuilderBackgroundColor_Hex_White"/>
+            <argument name="backgroundColor" value="PageBuilderBackgroundColor_Plaintext_Green"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
-            <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_TopLeft"/>
+            <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_Center"/>
             <argument name="backgroundSize" value="PageBuilderBackgroundSize_Auto"/>
             <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
-            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Scroll"/>
+            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Fixed"/>
         </actionGroup>
-        <actionGroup ref="validateRowParallaxBackgroundAttributes" stepKey="validateRowParallaxBackgroundOnStage">
+        <actionGroup ref="validateRowParallaxBackgroundAttributes" stepKey="validateRowParallaxBackgroundCMSPageStage">
             <argument name="page" value="RowOnStorefront"/>
             <argument name="index" value="2"/>
             <argument name="parallaxStateValue" value="PageBuilderRowParallax_Enabled"/>
             <argument name="parallaxSpeedValue" value="PageBuilderRowParallaxSpeed_2"/>
         </actionGroup>
-        <actionGroup ref="validateLayoutStylesWithAllUpdated" stepKey="validateAllLayoutStage">
+        <actionGroup ref="validateBackgroundImageContainerForParallaxRow" stepKey="validateBackgroundImageCMSPageStage">
+            <argument name="section" value="RowOnStorefront"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
+        </actionGroup>
+        <actionGroup ref="validateLayoutStylesWithAllUpdated" stepKey="validateRowLayoutCMSPageStage">
             <argument name="page" value="RowOnStorefront"/>
             <argument name="index" value="2"/>
             <argument name="minHeight" value="PageBuilderMinHeightProperty_500"/>
             <argument name="verticalAlignContainer" value="PageBuilderVerticalAlignmentPropertyCenter"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateRowHeightCMSPageStage">
+            <argument name="content" value="{{RowOnStorefront.baseCSS}}"/>
+            <argument name="height" value="PageBuilderMinHeightProperty_500"/>
+            <argument name="index" value="2"/>
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate CMS Page Storefront -->
@@ -1751,27 +1787,50 @@
         <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToStoreFront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
-        <actionGroup ref="validateRowBackgroundAttributesWithAllUpdatedAndParallaxEnabled" stepKey="validateRowBackgroundStorefront">
+        <actionGroup ref="validateRowBackgroundAttributesWithAllUpdatedAndParallaxEnabled" stepKey="validateRowBackgroundCMSPageStorefront">
             <argument name="page" value="RowOnStorefront"/>
             <argument name="index" value="2"/>
-            <argument name="backgroundColor" value="PageBuilderBackgroundColor_Hex_White"/>
+            <argument name="backgroundColor" value="PageBuilderBackgroundColor_Plaintext_Green"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
-            <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_TopLeft"/>
+            <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_Center"/>
             <argument name="backgroundSize" value="PageBuilderBackgroundSize_Auto"/>
             <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
-            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Scroll"/>
+            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Fixed"/>
         </actionGroup>
-        <actionGroup ref="validateRowParallaxBackgroundAttributes" stepKey="validateRowParallaxBackgroundStorefront">
+        <actionGroup ref="validateRowParallaxBackgroundAttributes" stepKey="validateRowParallaxBackgroundCMSPageStorefront">
             <argument name="page" value="RowOnStorefront"/>
             <argument name="index" value="2"/>
             <argument name="parallaxStateValue" value="PageBuilderRowParallax_Enabled"/>
             <argument name="parallaxSpeedValue" value="PageBuilderRowParallaxSpeed_2"/>
         </actionGroup>
-        <actionGroup ref="validateLayoutStylesWithAllUpdated" stepKey="validateAllLayoutStorefront">
+        <actionGroup ref="validateBackgroundImageContainerForParallaxRow" stepKey="validateBackgroundImageCMSPageStorefront">
+            <argument name="section" value="RowOnStorefront"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
+        </actionGroup>
+        <actionGroup ref="validateLayoutStylesWithAllUpdated" stepKey="validateRowLayoutCMSPageStorefront">
             <argument name="page" value="RowOnStorefront"/>
             <argument name="index" value="2"/>
             <argument name="minHeight" value="PageBuilderMinHeightProperty_500"/>
             <argument name="verticalAlignContainer" value="PageBuilderVerticalAlignmentPropertyCenter"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateRowHeightCMSPageStorefront">
+            <argument name="content" value="{{RowOnStorefront.baseCSS}}"/>
+            <argument name="height" value="PageBuilderMinHeightProperty_500"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <!-- Validate CMS Page Storefront Mobile -->
+        <comment userInput="Validate CMS Page Storefront Mobile" stepKey="commentValidateCMSPageStorefrontMobile"/>
+        <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
+        <reloadPage stepKey="reloadPage"/>
+        <waitForPageLoad stepKey="waitForReload"/>
+        <actionGroup ref="validateBackgroundImageContainerForParallaxRow" stepKey="validateBackgroundImageCMSPageStorefrontMobile">
+            <argument name="section" value="RowOnStorefront"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundMobileImage_GIF"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateRowHeightCMSPageStorefrontMobile">
+            <argument name="content" value="{{RowOnStorefront.baseCSS}}"/>
+            <argument name="height" value="PageBuilderMinHeightProperty_500"/>
+            <argument name="index" value="2"/>
         </actionGroup>
     </test>
     <test name="BlockRenderRowFullWidthThroughBlockContentType" extends="BlockRenderRowContainedAppearanceThroughBlockContentType">
@@ -1791,45 +1850,47 @@
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearance">
             <argument name="property" value="PageBuilderRowAppearance_FullWidth"/>
         </actionGroup>
-        <actionGroup ref="validateRowBackgroundAttributesWithAllUpdatedAndParallaxEnabled" stepKey="validateRowBackgroundOnStage">
+        <!-- Validate CMS Page Stage -->
+        <actionGroup ref="validateRowBackgroundAttributesWithAllUpdatedAndParallaxEnabled" stepKey="validateRowBackgroundCMSPageStage">
             <argument name="page" value="RowOnStorefront_FullWidth_FullBleed"/>
             <argument name="index" value="2"/>
-            <argument name="backgroundColor" value="PageBuilderBackgroundColor_Hex_White"/>
+            <argument name="backgroundColor" value="PageBuilderBackgroundColor_Plaintext_Green"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
-            <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_TopLeft"/>
+            <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_Center"/>
             <argument name="backgroundSize" value="PageBuilderBackgroundSize_Auto"/>
             <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
-            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Scroll"/>
+            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Fixed"/>
         </actionGroup>
-        <actionGroup ref="validateRowParallaxBackgroundAttributes" stepKey="validateRowParallaxBackgroundOnStage">
+        <actionGroup ref="validateRowParallaxBackgroundAttributes" stepKey="validateRowParallaxBackgroundCMSPageStage">
             <argument name="page" value="RowOnStorefront_FullWidth_FullBleed"/>
             <argument name="index" value="2"/>
             <argument name="parallaxStateValue" value="PageBuilderRowParallax_Enabled"/>
             <argument name="parallaxSpeedValue" value="PageBuilderRowParallaxSpeed_2"/>
         </actionGroup>
-        <actionGroup ref="validateLayoutStylesWithAllUpdated" stepKey="validateAllLayoutStage">
+        <actionGroup ref="validateLayoutStylesWithAllUpdated" stepKey="validateRowLayoutCMSPageStage">
             <argument name="page" value="RowOnStorefront_FullWidth_FullBleed"/>
             <argument name="index" value="2"/>
             <argument name="minHeight" value="PageBuilderMinHeightProperty_500"/>
             <argument name="verticalAlignContainer" value="PageBuilderVerticalAlignmentPropertyCenter"/>
         </actionGroup>
-        <actionGroup ref="validateRowBackgroundAttributesWithAllUpdatedAndParallaxEnabled" stepKey="validateRowBackgroundStorefront">
+        <!-- Validate CMS Page Storefront -->
+        <actionGroup ref="validateRowBackgroundAttributesWithAllUpdatedAndParallaxEnabled" stepKey="validateRowBackgroundCMSPageStorefront">
             <argument name="page" value="RowOnStorefront_FullWidth_FullBleed"/>
             <argument name="index" value="2"/>
-            <argument name="backgroundColor" value="PageBuilderBackgroundColor_Hex_White"/>
+            <argument name="backgroundColor" value="PageBuilderBackgroundColor_Plaintext_Green"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
-            <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_TopLeft"/>
+            <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_Center"/>
             <argument name="backgroundSize" value="PageBuilderBackgroundSize_Auto"/>
             <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
-            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Scroll"/>
+            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Fixed"/>
         </actionGroup>
-        <actionGroup ref="validateRowParallaxBackgroundAttributes" stepKey="validateRowParallaxBackgroundStorefront">
+        <actionGroup ref="validateRowParallaxBackgroundAttributes" stepKey="validateRowParallaxBackgroundCMSPageStorefront">
             <argument name="page" value="RowOnStorefront_FullWidth_FullBleed"/>
             <argument name="index" value="2"/>
             <argument name="parallaxStateValue" value="PageBuilderRowParallax_Enabled"/>
             <argument name="parallaxSpeedValue" value="PageBuilderRowParallaxSpeed_2"/>
         </actionGroup>
-        <actionGroup ref="validateLayoutStylesWithAllUpdated" stepKey="validateAllLayoutStorefront">
+        <actionGroup ref="validateLayoutStylesWithAllUpdated" stepKey="validateRowLayoutCMSPageStorefront">
             <argument name="page" value="RowOnStorefront_FullWidth_FullBleed"/>
             <argument name="index" value="2"/>
             <argument name="minHeight" value="PageBuilderMinHeightProperty_500"/>
@@ -1853,49 +1914,167 @@
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearance">
             <argument name="property" value="PageBuilderRowAppearance_FullBleed"/>
         </actionGroup>
-        <actionGroup ref="validateRowBackgroundAttributesWithAllUpdatedAndParallaxEnabled" stepKey="validateRowBackgroundOnStage">
+        <!-- Validate CMS Page Stage -->
+        <actionGroup ref="validateRowBackgroundAttributesWithAllUpdatedAndParallaxEnabled" stepKey="validateRowBackgroundCMSPageStage">
             <argument name="page" value="RowOnStorefront_FullWidth_FullBleed"/>
             <argument name="index" value="2"/>
-            <argument name="backgroundColor" value="PageBuilderBackgroundColor_Hex_White"/>
+            <argument name="backgroundColor" value="PageBuilderBackgroundColor_Plaintext_Green"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
-            <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_TopLeft"/>
+            <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_Center"/>
             <argument name="backgroundSize" value="PageBuilderBackgroundSize_Auto"/>
             <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
-            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Scroll"/>
+            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Fixed"/>
         </actionGroup>
-        <actionGroup ref="validateRowParallaxBackgroundAttributes" stepKey="validateRowParallaxBackgroundOnStage">
+        <actionGroup ref="validateRowParallaxBackgroundAttributes" stepKey="validateRowParallaxBackgroundCMSPageStage">
             <argument name="page" value="RowOnStorefront_FullWidth_FullBleed"/>
             <argument name="index" value="2"/>
             <argument name="parallaxStateValue" value="PageBuilderRowParallax_Enabled"/>
             <argument name="parallaxSpeedValue" value="PageBuilderRowParallaxSpeed_2"/>
         </actionGroup>
-        <actionGroup ref="validateLayoutStylesWithAllUpdated" stepKey="validateAllLayoutStage">
+        <actionGroup ref="validateLayoutStylesWithAllUpdated" stepKey="validateRowLayoutCMSPageStage">
             <argument name="page" value="RowOnStorefront_FullWidth_FullBleed"/>
             <argument name="index" value="2"/>
             <argument name="minHeight" value="PageBuilderMinHeightProperty_500"/>
             <argument name="verticalAlignContainer" value="PageBuilderVerticalAlignmentPropertyCenter"/>
         </actionGroup>
-        <actionGroup ref="validateRowBackgroundAttributesWithAllUpdatedAndParallaxEnabled" stepKey="validateRowBackgroundStorefront">
+        <!-- Validate CMS Page Storefront -->
+        <actionGroup ref="validateRowBackgroundAttributesWithAllUpdatedAndParallaxEnabled" stepKey="validateRowBackgroundCMSPageStorefront">
             <argument name="page" value="RowOnStorefront_FullWidth_FullBleed"/>
             <argument name="index" value="2"/>
-            <argument name="backgroundColor" value="PageBuilderBackgroundColor_Hex_White"/>
+            <argument name="backgroundColor" value="PageBuilderBackgroundColor_Plaintext_Green"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
-            <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_TopLeft"/>
+            <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_Center"/>
             <argument name="backgroundSize" value="PageBuilderBackgroundSize_Auto"/>
             <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
-            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Scroll"/>
+            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Fixed"/>
         </actionGroup>
-        <actionGroup ref="validateRowParallaxBackgroundAttributes" stepKey="validateRowParallaxBackgroundStorefront">
+        <actionGroup ref="validateRowParallaxBackgroundAttributes" stepKey="validateRowParallaxBackgroundCMSPageStorefront">
             <argument name="page" value="RowOnStorefront_FullWidth_FullBleed"/>
             <argument name="index" value="2"/>
             <argument name="parallaxStateValue" value="PageBuilderRowParallax_Enabled"/>
             <argument name="parallaxSpeedValue" value="PageBuilderRowParallaxSpeed_2"/>
         </actionGroup>
-        <actionGroup ref="validateLayoutStylesWithAllUpdated" stepKey="validateAllLayoutStorefront">
+        <actionGroup ref="validateLayoutStylesWithAllUpdated" stepKey="validateRowLayoutCMSPageStorefront">
             <argument name="page" value="RowOnStorefront_FullWidth_FullBleed"/>
             <argument name="index" value="2"/>
             <argument name="minHeight" value="PageBuilderMinHeightProperty_500"/>
             <argument name="verticalAlignContainer" value="PageBuilderVerticalAlignmentPropertyCenter"/>
         </actionGroup>
+    </test>
+    <test name="BlockRenderProductsThroughBlockContentType">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Block Content"/>
+            <title value="Render Products Through Block Content Type"/>
+            <description value="Verify that users are able to successfully render and use the products content type through the Block content type."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MC-14878"/>
+            <useCaseId value="MC-13769"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+            <group value="pagebuilder-block-content"/>
+            <group value="pagebuilder-products"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <createData entity="_defaultCategory" stepKey="createPreReqCategory"/>
+            <createData entity="_defaultProduct" stepKey="createProduct1">
+                <requiredEntity createDataKey="createPreReqCategory"/>
+            </createData>
+            <createData entity="_defaultProduct" stepKey="createProduct2">
+                <requiredEntity createDataKey="createPreReqCategory"/>
+            </createData>
+            <createData entity="_defaultProduct" stepKey="createProduct3">
+                <requiredEntity createDataKey="createPreReqCategory"/>
+            </createData>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <createData entity="_emptyCmsBlock" stepKey="createCMSBlock"/>
+            <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage1">
+                <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
+            </actionGroup>
+        </before>
+        <after>
+            <deleteData createDataKey="createProduct1" stepKey="deleteCreatedProduct1"/>
+            <deleteData createDataKey="createProduct2" stepKey="deleteCreatedProduct2"/>
+            <deleteData createDataKey="createProduct3" stepKey="deleteCreatedProduct3"/>
+            <deleteData createDataKey="createPreReqCategory" stepKey="deleteCreatedCategory"/>
+            <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock"/>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Add Products -->
+        <comment userInput="Add Products" stepKey="commentAddProducts"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragProductsIntoStage">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <!-- Edit Products -->
+        <comment userInput="Edit Products" stepKey="commentEditProducts"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuProducts">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="addCategoryConditionToProductsBlock" stepKey="addCategory">
+            <argument name="page" value="ProductsContentTypeForm"/>
+            <argument name="category" value="$$createPreReqCategory.id$$"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterNumberOfProductsToDisplay">
+            <argument name="property" value="PageBuilderProductsCountPropertyTwo"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsProducts"/>
+        <actionGroup ref="saveCMSBlock" stepKey="saveCMSBlock"/>
+        <!-- Validate CMS Block Stage -->
+        <comment userInput="Validate CMS Block Stage" stepKey="commentValidateCMSBlockStage"/>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountCMSBlockStage">
+            <argument name="page" value="ProductsOnStage"/>
+            <argument name="count" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProductsStage" stepKey="validateProductsCMSBlockStage">
+            <argument name="page" value="ProductsOnStage"/>
+        </actionGroup>
+        <!-- Add Block to CMS Page -->
+        <comment userInput="Add Block to CMS Page" stepKey="commentAddBlockToCMSPage"/>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPanelAddContentMenuSection">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDropBlock">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
+            <argument name="block" value="$$createCMSBlock$$"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsBlock"/>
+        <!-- Validate CMS Page Stage -->
+        <comment userInput="Validate CMS Page Stage" stepKey="commentValidateCMSPageStage"/>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountCMSPageStage">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="count" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProductsStorefront" stepKey="validateProductsCMSPageStage">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="isClickable" value="none"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate CMS Page Storefront -->
+        <comment userInput="Validate CMS Page Storefront" stepKey="commentValidateCMSPageStorefront"/>
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToStoreFront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountCMSPageStorefront">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="count" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProductsStorefront" stepKey="validateProductsCMSPageStorefront">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="isClickable" value="auto"/>
+        </actionGroup>
+        <!--todo: click & verify each button-->
     </test>
 </tests>
