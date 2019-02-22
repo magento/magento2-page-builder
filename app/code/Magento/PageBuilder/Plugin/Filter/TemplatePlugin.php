@@ -143,27 +143,28 @@ class TemplatePlugin
             // Store a decoded attribute on the element so we don't double decode
             $htmlContentTypeNode->setAttribute('data-decoded', 'true');
 
+            // if nothing exists inside the node, continue
             if (!strlen(trim($htmlContentTypeNode->nodeValue))) {
                 continue;
             }
 
+            // clone node and empty node value to prevent side-effects of modifying iterables in loop
             $clonedHtmlContentTypeNode = clone $htmlContentTypeNode;
             $clonedHtmlContentTypeNode->nodeValue = '';
 
             foreach ($htmlContentTypeNode->childNodes as $childNode) {
+                // if child node is not text node type, it does not need to be decoded; just append to cloned html node
                 if ($childNode->nodeType !== XML_TEXT_NODE) {
                     $clonedHtmlContentTypeNode->appendChild($childNode);
                     continue;
                 }
 
-                $fragDoc = new \DOMDocument();
-                $result = $fragDoc->loadHTML('<fragment>' . $childNode->nodeValue . '</fragment>');
+                // Load node value into dom document in an attempt to decode any encoded html within
+                $fragDoc = $this->createDomDocument($childNode->nodeValue);
 
-                if (!$result) {
-                    continue;
-                }
+                $import = $fragDoc->getElementsByTagName('body')->item(0);
 
-                $import = $fragDoc->getElementsByTagName('fragment')->item(0);
+                // Loop through decoded child nodes and import into the original document
                 foreach ($import->childNodes as $importedChildNode) {
                     $importedNode = $document->importNode($importedChildNode, true);
 
@@ -175,6 +176,7 @@ class TemplatePlugin
                 }
             }
 
+            // replace original html content type node with cloned node we've been performing decoding operating on
             $htmlContentTypeNode->parentNode->replaceChild($clonedHtmlContentTypeNode, $htmlContentTypeNode);
         }
     }
