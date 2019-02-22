@@ -45,7 +45,7 @@ You can revert to using the default WYSIWYG again by adding the following entry 
 
 ## Big picture
 
-![Page Builder big picture](../../../images/big-picture.png)
+![Page Builder big picture](../images/big-picture.png)
 
 | Entity            | Name in configuration | Description                                                  |
 | ----------------- | --------------------- | ------------------------------------------------------------ |
@@ -61,7 +61,7 @@ You can revert to using the default WYSIWYG again by adding the following entry 
 
 ## Data flow
 
-![Page Builder data flow](../../../images/data-flow.png)
+![Page Builder data flow](../images/data-flow.png)
 The following is a simple overview of the data flow:
 
 1. Page Builder's reader (`Magento_PageBuilder/js/master-format/read/configurable`) reads the data.
