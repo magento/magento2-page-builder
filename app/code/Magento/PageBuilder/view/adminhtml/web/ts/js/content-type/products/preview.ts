@@ -8,10 +8,9 @@ import ko from "knockout";
 import $t from "mage/translate";
 import Config from "../../config";
 import ContentTypeInterface from "../../content-type";
-import ContentTypeConfigInterface from "../../content-type-config";
+import ContentTypeConfigInterface from "../../content-type-config.types";
 import HideShowOption from "../../content-type-menu/hide-show-option";
-import {OptionsInterface} from "../../content-type-menu/option.d";
-import {DataObject} from "../../data-store";
+import {OptionsInterface} from "../../content-type-menu/option.types";
 import ObservableUpdater from "../observable-updater";
 import BasePreview from "../preview";
 
@@ -32,11 +31,11 @@ export default class Preview extends BasePreview {
      * @inheritdoc
      */
     constructor(
-        parent: ContentTypeInterface,
+        contentType: ContentTypeInterface,
         config: ContentTypeConfigInterface,
         observableUpdater: ObservableUpdater,
     ) {
-        super(parent, config, observableUpdater);
+        super(contentType, config, observableUpdater);
         this.placeholderText = ko.observable(this.messages.EMPTY);
     }
 
@@ -67,7 +66,7 @@ export default class Preview extends BasePreview {
         super.afterObservablesUpdated();
         this.displayPreview(false);
 
-        const data = this.parent.dataStore.getState();
+        const data = this.contentType.dataStore.getState();
 
         if ((typeof data.conditions_encoded !== "string") || data.conditions_encoded.length === 0) {
             this.placeholderText(this.messages.EMPTY);

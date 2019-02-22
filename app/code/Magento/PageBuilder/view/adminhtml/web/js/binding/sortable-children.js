@@ -29,7 +29,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
      * @param context
      */
     init: function init(element, valueAccessor, allBindingsAccessor, data, context) {
-      var instance = context.$data.parent;
+      var instance = context.$data.contentType;
 
       var options = _knockout.default.unwrap(valueAccessor());
 
@@ -53,12 +53,12 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
         if (this === ui.item.parent()[0]) {
           var index = ui.item.index();
 
-          var targetParent = _knockout.default.dataFor(ui.item.parent()[0]).parent;
+          var targetParent = _knockout.default.dataFor(ui.item.parent()[0]).contentType;
 
-          if (targetParent && (originalPosition !== index || draggedContentType.parent !== targetParent)) {
+          if (targetParent && (originalPosition !== index || draggedContentType.parentContentType !== targetParent)) {
             ui.item.remove();
 
-            if (draggedContentType.parent === targetParent) {
+            if (draggedContentType.parentContentType === targetParent) {
               (0, _array.moveArrayItem)(instance.children, originalPosition, index);
             } else {
               (0, _moveContentType.moveContentType)(draggedContentType, index, targetParent);

@@ -17,8 +17,8 @@ define(["knockout", "Magento_PageBuilder/js/events"], function (_knockout, _even
       targetParent = null;
     }
 
-    var sourceParent = contentType.parent;
-    var sourceIndex = contentType.parent.children().indexOf(contentType);
+    var sourceParent = contentType.parentContentType;
+    var sourceIndex = contentType.parentContentType.children().indexOf(contentType);
     var sourceParentChildren = sourceParent.getChildren(); // Trigger our block move event
 
     _events.trigger("contentType:moveBefore", {
@@ -38,7 +38,7 @@ define(["knockout", "Magento_PageBuilder/js/events"], function (_knockout, _even
     });
 
     if (targetParent && sourceParent !== targetParent) {
-      contentType.parent = targetParent; // Handle dragging between sortable elements
+      contentType.parentContentType = targetParent; // Handle dragging between sortable elements
 
       sourceParentChildren.splice(sourceIndex, 1);
       targetParent.getChildren().splice(targetIndex, 0, contentType);

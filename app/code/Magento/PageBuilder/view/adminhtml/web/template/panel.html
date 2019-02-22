@@ -6,7 +6,7 @@
 -->
 
 <div id="pagebuilder-panel-wrapper" class="pagebuilder-panel-wrapper"
-    css="visible: isVisible, collapsed: isCollapsed, 'sticky-top': isStickyTop, 'sticky-bottom': isStickyBottom"
+    css="visible: isVisible, 'sticky-top': isStickyTop, 'sticky-bottom': isStickyBottom"
     afterRender="afterRender">
     <div id="pagebuilder-panel" class="pagebuilder-panel">
         <div class="search-content-types">
@@ -27,14 +27,14 @@
         <div class="search-results-empty" visible="searching() && !searchResults().length">
             <div translate="searchNoResult"></div>
         </div>
-        <ul id="pagebuilder-panel-groups" class="pagebuilder-panel-groups" visible="!searching()" each="groups">
-            <li attr="id: 'group-' + id()" css="active: active">
-                <div class="group-title" event="click: toggle">
+        <ul id="pagebuilder-panel-menu-sections" class="pagebuilder-panel-menu-sections" visible="!searching()" each="menuSections">
+            <li attr="id: 'menu-section-' + id()" css="active: active">
+                <div class="menu-section-title" event="click: toggle">
                     <h4 translate="label"></h4>
                 </div>
-                <div class="pagebuilder-panel-groups-child" css="hidden: hidden">
+                <div class="pagebuilder-panel-menu-sections-child" css="hidden: hidden">
                     <div>
-                        <ul class="pagebuilder-panel-groups-content-types" each="contentTypes">
+                        <ul class="pagebuilder-panel-menu-sections-content-types" each="contentTypes">
                             <li class="pagebuilder-draggable-content-type"
                                 data-bind="draggable: Object.assign($parents[1].getDraggableOptions($element), getDraggableOptions($element))"
                                 attr="id: 'content-type-' + identifier()">
@@ -50,11 +50,5 @@
                 </div>
             </li>
         </ul>
-        <div class="panel-controls">
-            <a class="collapse" click="collapse" data-bind="i18n: 'Collapse'"></a>
-        </div>
-    </div>
-    <div class="expand" visible="isCollapsed">
-        <a click="collapse"></a>
     </div>
 </div>

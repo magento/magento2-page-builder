@@ -4,23 +4,23 @@
  * See COPYING.txt for license details.
  */
 return [
-    'groups' => [
-        'group1' => [
-            'label' => 'Group 1',
+    'menu_sections' => [
+        'menu_section1' => [
+            'label' => 'Menu Section 1',
             'sortOrder' => '1',
-            'name' => 'group1',
+            'name' => 'menu_section1',
             'translate' => 'label'
         ],
-        'group2' => [
-            'label' => 'Group 2 Label',
+        'menu_section2' => [
+            'label' => 'Menu Section 2 Label',
             'sortOrder' => '3',
-            'name' => 'group2',
+            'name' => 'menu_section2',
             'translate' => 'label'
         ],
-        'group3' => [
-            'label' => 'Group 3 Label',
+        'menu_section3' => [
+            'label' => 'Menu Section 3 Label',
             'sortOrder' => '2',
-            'name' => 'group3',
+            'name' => 'menu_section3',
             'translate' => 'label'
         ]
     ],
@@ -30,7 +30,7 @@ return [
             'label' => 'Type 1 Label',
             'icon' => 'pagebuilder-type1-custom-icon',
             'form' => 'pagebuilder_type1_custom_form',
-            'group' => 'group2',
+            'menu_section' => 'menu_section2',
             'component' => 'Path/to/component',
             'preview_component' => 'Path/to/preview/component',
             'master_component' => 'Path/to/master/component',
@@ -40,7 +40,7 @@ return [
             'appearances' => [
                 'default' => [
                     'preview_template' => 'Path/to/preview/template',
-                    'render_template' => 'Path/to/render/template',
+                    'master_template' => 'Path/to/render/template',
                     'elements' => [
                         'main' => [
                             'style' => [
@@ -64,7 +64,7 @@ return [
                             'attributes' => [
                                 0 => [
                                     'var' => 'name',
-                                    'name' => 'data-role',
+                                    'name' => 'data-content-type',
                                     'converter' => null,
                                     'persistence_mode' => 'readwrite',
                                     'preview_converter' => null,
@@ -218,9 +218,9 @@ return [
             'icon' => 'pagebuilder-type2-custom-icon',
             'component' => 'Path/to/custom/component',
             'preview_component' => 'Path/to/preview/custom/component',
-            'is_visible' => 'false',
+            'is_system' => 'false',
             'form' => 'pagebuilder_type2_custom_form',
-            'group' => 'group2',
+            'menu_section' => 'menu_section2',
             'allowed_parents' => [
                 0 => 'type1'
             ],
@@ -230,7 +230,7 @@ return [
                     'data2' => 'value2',
                     'data3' => 'value3',
                     'preview_template' => 'Path/to/preview/custom/template',
-                    'render_template' => 'Path/to/render/custom/template',
+                    'master_template' => 'Path/to/render/custom/template',
                     'elements' => [
                         'first_element' => [
                             'style' => [
@@ -317,7 +317,7 @@ return [
                             'attributes' => [
                                 0 => [
                                     'var' => 'name',
-                                    'name' => 'data-role',
+                                    'name' => 'data-content-type',
                                     'converter' => null,
                                     'persistence_mode' => 'readwrite',
                                     'preview_converter' => null,
@@ -426,7 +426,7 @@ return [
                             'attributes' => [
                                 0 => [
                                     'var' => 'name',
-                                    'name' => 'data-role',
+                                    'name' => 'data-content-type',
                                     'converter' => null,
                                     'persistence_mode' => 'readwrite',
                                     'preview_converter' => null,
@@ -454,7 +454,7 @@ return [
                             'attributes' => [
                                 0 => [
                                     'var' => 'name',
-                                    'name' => 'data-role',
+                                    'name' => 'data-content-type',
                                     'converter' => null,
                                     'persistence_mode' => 'readwrite',
                                     'preview_converter' => null,
@@ -500,7 +500,7 @@ return [
                 ],
                 'appearance1' => [
                     'preview_template' => 'Path/to/preview/template',
-                    'render_template' => 'Path/to/render/template',
+                    'master_template' => 'Path/to/render/template',
                     'elements' => [
                         'main' => [
                             'style' => [
@@ -524,7 +524,7 @@ return [
                             'attributes' => [
                                 0 => [
                                     'var' => 'name',
-                                    'name' => 'data-role',
+                                    'name' => 'data-content-type',
                                     'converter' => null,
                                     'persistence_mode' => 'readwrite',
                                     'preview_converter' => null,
@@ -546,21 +546,21 @@ return [
                 ],
                 'appearance2' => [
                     'preview_template' => 'Path/to/preview/template',
-                    'render_template' => 'Path/to/render/template',
+                    'master_template' => 'Path/to/render/template',
                     'default' => 'false',
                     'converters' => [],
                     'reader' => 'Path/to/reader'
                 ],
                 'appearance3' => [
                     'preview_template' => 'Path/to/preview/template',
-                    'render_template' => 'Path/to/render/template',
+                    'master_template' => 'Path/to/render/template',
                     'converters' => [],
                     'default' => 'false',
                     'reader' => null
                 ],
                 'appearance4' => [
                     'preview_template' => 'Path/to/preview/template',
-                    'render_template' => 'Path/to/render/template',
+                    'master_template' => 'Path/to/render/template',
                     'elements' => [
                         'main' => [
                             'style' => [
@@ -584,7 +584,7 @@ return [
                             'attributes' => [
                                 0 => [
                                     'var' => 'name',
-                                    'name' => 'data-role',
+                                    'name' => 'data-content-type',
                                     'converter' => null,
                                     'persistence_mode' => 'readwrite',
                                     'preview_converter' => null,
@@ -614,14 +614,14 @@ return [
             'icon' => 'pagebuilder-type3-icon',
             'component' => 'Path/to/custom/component',
             'form' => 'pagebuilder_type3_form',
-            'group' => 'group1',
+            'menu_section' => 'menu_section1',
             'allowed_parents' => [
                 0 => 'stage'
             ],
             'appearances' => [
                 'default' => [
                     'preview_template' => 'Path/to/preview/template',
-                    'render_template' => 'Path/to/render/template',
+                    'master_template' => 'Path/to/render/template',
                     'elements' => [
                         'main' => [
                             'style' => [
@@ -645,7 +645,7 @@ return [
                             'attributes' => [
                                 0 => [
                                     'var' => 'name',
-                                    'name' => 'data-role',
+                                    'name' => 'data-content-type',
                                     'converter' => null,
                                     'persistence_mode' => 'readwrite',
                                     'preview_converter' => null,

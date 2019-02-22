@@ -4,12 +4,11 @@
  */
 
 import Config from "../../config";
-import {DataObject} from "../../data-store";
 import {decodeUrl} from "../../utils/image";
 import {get} from "../../utils/object";
 import {convertUrlToPathIfOtherUrlIsOnlyAPath} from "../../utils/url";
 import ConverterInterface from "../converter-interface";
-import ImageArrayObject from "../image-array-object";
+import ImageArrayObject from "../image-array-object.types";
 
 /**
  * @api
@@ -31,11 +30,11 @@ export default class Src implements ConverterInterface {
     /**
      * Convert value to knockout format
      *
-     * @param name string
-     * @param data Object
+     * @param {string} name
+     * @param {DataObject} data
      * @returns {string}
      */
-    public toDom(name: string, data: DataObject): string {
+    public toDom(name: string, data: {[key: string]: {[key: number]: {url: string}}}): string {
         const value = get<ImageArrayObject>(data, name);
         if (value[0] === undefined || value[0].url === undefined) {
             return "";

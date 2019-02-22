@@ -25,7 +25,7 @@ define(["Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/utils
      */
     _proto.fromDom = function fromDom(value) {
       return value;
-    };
+    }
     /**
      * Convert value to knockout format
      *
@@ -33,7 +33,7 @@ define(["Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/utils
      * @param {Object} data
      * @returns {string}
      */
-
+    ;
 
     _proto.toDom = function toDom(name, data) {
       return (0, _directives.convertMediaDirectivesToUrls)((0, _directives.removeQuotesInMediaDirectives)((0, _object.get)(data, name)));

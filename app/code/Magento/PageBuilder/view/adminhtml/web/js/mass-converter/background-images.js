@@ -38,7 +38,7 @@ define(["underscore", "Magento_PageBuilder/js/utils/image", "Magento_PageBuilder
       }
 
       return data;
-    };
+    }
     /**
      * Process data before it's converted by element converters
      *
@@ -46,7 +46,7 @@ define(["underscore", "Magento_PageBuilder/js/utils/image", "Magento_PageBuilder
      * @param {ConverterConfigInterface} config
      * @returns {object}
      */
-
+    ;
 
     _proto.toDom = function toDom(data, config) {
       var desktopImage = (0, _object.get)(data, config.desktop_image_variable);

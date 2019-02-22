@@ -71,11 +71,11 @@
         <waitForPageLoad stepKey="waitForPageLoad4"/>
         <seeElement selector="{{PageBuilderProductAttribute.PageBuilderBtn($$myProductAttributeCreation.attribute_code$$)}}" stepKey="seePagebuilderBtn"/>
         <click selector="{{PageBuilderProductAttribute.PageBuilderBtn($$myProductAttributeCreation.attribute_code$$)}}" stepKey="enablePageBuilder"/>
-        <waitForElementVisible selector="{{PageBuilderPanel.layoutGroup}}" stepKey="waiForPageBuilderVisible" />
-        <seeElement selector="{{PageBuilderPanel.layoutGroup}}" stepKey="seePageBuilderVisible" />
+        <waitForElementVisible selector="{{PageBuilderPanel.layoutMenuSection}}" stepKey="waiForPageBuilderVisible" />
+        <seeElement selector="{{PageBuilderPanel.layoutMenuSection}}" stepKey="seePageBuilderVisible" />
         <seeElement selector=".stage-full-screen" stepKey="seePageBuilderFullSizeScreen" />
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderTextContentType"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragTextOntoStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
@@ -302,17 +302,17 @@
         <click selector="{{AdminProductFormSection.frontendInput}}" stepKey="openInputTypeDropdown"/>
         <see userInput="Page Builder" stepKey="seePageBuilderInputType" />
         <selectOption selector="{{AdminProductFormSection.frontendInput}}" userInput="Page Builder" stepKey="selectOption1"/>
-        <click selector="{{AdminProductFormSection.save}}" stepKey="saveAttribute"/>
-        <waitForElementNotVisible selector="{{AdminProductFormSection.save}}" stepKey="waitForSlideOutCloses" />
+        <click selector="{{AdminProductFormSection.saveNewAttribute}}" stepKey="saveAttribute"/>
+        <waitForElementNotVisible selector="{{AdminProductFormSection.saveNewAttribute}}" stepKey="waitForSlideOutCloses" />
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
         <click selector="{{AdminProductFormSection.attributeTab}}" stepKey="expandAttributeTab"/>
         <waitForElementVisible selector="{{PageBuilderProductAttribute.PageBuilderBtn(ProductAttributeFrontendLabel.label)}}" stepKey="waitForAttributeVisbile" />
         <click selector="{{PageBuilderProductAttribute.PageBuilderBtn(ProductAttributeFrontendLabel.label)}}" stepKey="enablePageBuilder"/>
-        <waitForElementVisible selector="{{PageBuilderPanel.layoutGroup}}" stepKey="waiForPageBuilderVisible" />
-        <seeElement selector="{{PageBuilderPanel.layoutGroup}}" stepKey="seePageBuilderVisible" />
+        <waitForElementVisible selector="{{PageBuilderPanel.layoutMenuSection}}" stepKey="waiForPageBuilderVisible" />
+        <seeElement selector="{{PageBuilderPanel.layoutMenuSection}}" stepKey="seePageBuilderVisible" />
         <seeElement selector=".stage-full-screen" stepKey="seePageBuilderFullSizeScreen" />
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderTextContentType"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragTextOntoStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>

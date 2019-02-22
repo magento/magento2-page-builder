@@ -46,7 +46,7 @@ These files can be blank initially; they just need to exist in their proper loca
     <appearance name="default"
               default="true"
               preview_template="Example_PageBuilderQuote/content-type/example-quote/default/preview"
-              render_template="Example_PageBuilderQuote/content-type/example-quote/default/master"
+              master_template="Example_PageBuilderQuote/content-type/example-quote/default/master"
               reader="Magento_PageBuilder/js/master-format/read/configurable">
     <elements...>
     </appearance>
@@ -60,7 +60,7 @@ The following table describes each `appearance` attribute in our example.
 | `name`             | As noted by convention, the name of the appearance and the name of the directory for the appearance templates *must* match. |
 | `default`          | Every content type must have a default appearance. If you only define one appearance for your content type, you must set the default to `true`. |
 | `preview_template` | References the `preview.html` (the Admin preview template) for rendering the preview appearance of your content type on the stage within the Admin UI. |
-| `render_template`  | References the `master.html` (the master format storefront template) for rendering the appearance of your content type on the storefront for customers to see. |
+| `master_template`  | References the `master.html` (the master format storefront template) for rendering the appearance of your content type on the storefront for customers to see. |
 | `reader`           | Reads content type data from the master format.      |
 
 ## Quote `preview_template`
@@ -166,9 +166,9 @@ The `liveEdit` binding enables end users to enter HTML content directly on the A
 
 The `event` attribute enables the options menu to be shown and hidden when users interact with the content type using the mouse. If you have a special circumstance with the way you wish to handle your option menus, you can modify this logic to suit your needs.
 
-## Quote `render_template`
+## Quote `master_template`
 
-The Quote `render_template` (`master.html`) is shown here in full. The same attributes and descriptions from the `preview.html` template apply to the `master.html` template as well. However, the  `master.html` template introduces one addition attribute, `html`, which is described after the code.
+The Quote `master_template` (`master.html`) is shown here in full. The same attributes and descriptions from the `preview.html` template apply to the `master.html` template as well. However, the  `master.html` template introduces one addition attribute, `html`, which is described after the code.
 
 ```html
 <!--master.html-->

@@ -46,7 +46,7 @@ define(["underscore", "Magento_PageBuilder/js/utils/object"], function (_undersc
      */
     _proto.fromDom = function fromDom(value) {
       return value;
-    };
+    }
     /**
      * Convert value to knockout format
      *
@@ -54,7 +54,7 @@ define(["underscore", "Magento_PageBuilder/js/utils/object"], function (_undersc
      * @param data Object
      * @returns {string}
      */
-
+    ;
 
     _proto.toDom = function toDom(name, data) {
       var link = (0, _object.get)(data, name);
@@ -74,13 +74,13 @@ define(["underscore", "Magento_PageBuilder/js/utils/object"], function (_undersc
       }
 
       return href;
-    };
+    }
     /**
      * @param {string} href
      * @param {string} linkType
      * @returns {string}
      */
-
+    ;
 
     _proto.convertToWidget = function convertToWidget(href, linkType) {
       if (!href || !this.widgetParamsByLinkType[linkType]) {

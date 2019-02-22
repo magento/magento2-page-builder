@@ -184,7 +184,7 @@ ko.bindingHandlers.liveEdit = {
         };
 
         element.setAttribute("data-placeholder", placeholder);
-        element.textContent = viewModel.parent.dataStore.get(field);
+        element.textContent = viewModel.contentType.dataStore.get(field);
         element.contentEditable = "true";
         element.addEventListener("focus", onFocus);
         element.addEventListener("blur", onBlur);
@@ -200,8 +200,8 @@ ko.bindingHandlers.liveEdit = {
         handlePlaceholderClass(element);
 
         // Create a subscription onto the original data to update the internal value
-        viewModel.parent.dataStore.subscribe(() => {
-            element.textContent = viewModel.parent.dataStore.get(field);
+        viewModel.contentType.dataStore.subscribe(() => {
+            element.textContent = viewModel.contentType.dataStore.get(field);
             handlePlaceholderClass(element);
         }, field);
 
@@ -223,7 +223,7 @@ ko.bindingHandlers.liveEdit = {
     update(element, valueAccessor, allBindings, viewModel, bindingContext) {
         const {field} = valueAccessor();
 
-        element.textContent = viewModel.parent.dataStore.get(field);
+        element.textContent = viewModel.contentType.dataStore.get(field);
         handlePlaceholderClass(element);
     },
 };

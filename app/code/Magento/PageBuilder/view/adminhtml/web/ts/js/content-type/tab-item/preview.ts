@@ -6,7 +6,7 @@
 import $ from "jquery";
 import ko from "knockout";
 import ConditionalRemoveOption from "../../content-type-menu/conditional-remove-option";
-import {OptionsInterface} from "../../content-type-menu/option.d";
+import {OptionsInterface} from "../../content-type-menu/option.types";
 import PreviewCollection from "../preview-collection";
 import TabsPreview from "../tabs/preview";
 
@@ -40,7 +40,7 @@ export default class Preview extends PreviewCollection {
      * @param {Event} event
      */
     public onFocusIn(index: number, event: Event): void {
-        const parentPreview = this.parent.parent.preview as TabsPreview;
+        const parentPreview = this.contentType.parentContentType.preview as TabsPreview;
         if (parentPreview.focusedTab() !== index) {
             parentPreview.setFocusedTab(index, true);
         }
@@ -53,8 +53,8 @@ export default class Preview extends PreviewCollection {
      * @param {JQueryEventObject} event
      */
     public onFocusOut(index: number, event: JQueryEventObject): void {
-        if (this.parent && this.parent.parent) {
-            const parentPreview = this.parent.parent.preview as TabsPreview;
+        if (this.contentType && this.contentType.parentContentType) {
+            const parentPreview = this.contentType.parentContentType.preview as TabsPreview;
             const unfocus = () => {
                 window.getSelection().removeAllRanges();
                 parentPreview.focusedTab(null);
@@ -66,10 +66,16 @@ export default class Preview extends PreviewCollection {
                 } else {
                     // Have we moved the focus onto another button in the current group?
                     const tabItem = ko.dataFor(event.relatedTarget) as Preview;
-                    if (tabItem && tabItem.parent && tabItem.parent.parent
-                        && tabItem.parent.parent.id === this.parent.parent.id
+                    if (tabItem &&
+                        tabItem.contentType &&
+                        tabItem.contentType.parentContentType &&
+                        tabItem.contentType.parentContentType.id ===
+                        tabItem.contentType.parentContentType.parentContentType.id
                     ) {
-                        const newIndex = tabItem.parent.parent.children().indexOf(tabItem.parent);
+                        const newIndex = tabItem
+                            .contentType
+                            .parentContentType.children()
+                            .indexOf(tabItem.contentType);
                         parentPreview.setFocusedTab(newIndex, true);
                     } else {
                         unfocus();

@@ -32,60 +32,24 @@
         <waitForElementNotVisible selector="{{PageBuilderStage.stageLoading}}" stepKey="waitForStageLoadingGraphicNotVisible"/>
         <waitForElementVisible time="30" selector="{{RowOnStage.base(rowIndex)}}" stepKey="waitForPageBuilderRow"/>
     </actionGroup>
-    <actionGroup name="saveCMSBlock">
-        <!-- This goes in CE repo -->
-        <waitForElementVisible selector="{{CmsNewBlockBlockActionsSection.savePage}}" stepKey="waitForSaveButton"/>
-        <click selector="{{CmsNewBlockBlockActionsSection.savePage}}" stepKey="clickSaveButton"/>
-        <waitForPageLoad stepKey="waitForPageLoad"/>
-        <see userInput="You saved the block." stepKey="seeSuccessfulSaveMessage"/>
-    </actionGroup>
-    <actionGroup name="saveAndContinueEditCmsPage">
-        <!-- This goes in CE repo -->
-        <waitForElementVisible time="10" selector="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" stepKey="waitForSaveAndContinueVisibility"/>
-        <click selector="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" stepKey="clickSaveAndContinueEditCmsPage"/>
-        <waitForPageLoad stepKey="waitForCmsPageLoad"/>
-        <waitForElementVisible time="1" selector="{{CmsNewPagePageActionsSection.cmsPageTitle}}" stepKey="waitForCmsPageSaveButton"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask"/>
-    </actionGroup>
-    <actionGroup name="saveCmsPage">
-        <!-- This goes in CE repo -->
-        <waitForElementVisible selector="{{CmsNewPagePageActionsSection.expandSplitButton}}" stepKey="waitForSplitButton"/>
-        <click selector="{{CmsNewPagePageActionsSection.expandSplitButton}}" stepKey="expandSplitButton"/>
-        <waitForElementVisible selector="{{CmsNewPagePageActionsSection.savePage}}" stepKey="waitForSaveCmsPage"/>
-        <click selector="{{CmsNewPagePageActionsSection.savePage}}" stepKey="clickSaveCmsPage"/>
-        <waitForElementVisible time="1" selector="{{CmsPagesPageActionsSection.addNewPageButton}}" stepKey="waitForCmsPageSaveButton"/>
-        <see userInput="You saved the page." selector="{{CmsPagesPageActionsSection.savePageSuccessMessage}}" stepKey="assertSavePageSuccessMessage"/>
-    </actionGroup>
     <actionGroup name="verifyPageBuilderVisibleOnPage">
-        <waitForElementVisible selector="{{PageBuilderPanel.layoutGroup}}" stepKey="seePageBuilderVisible"/>
+        <waitForElementVisible selector="{{PageBuilderPanel.layoutMenuSection}}" stepKey="seePageBuilderVisible"/>
         <dontSee userInput="Enable Advanced CMS" stepKey="dontSeeEnableAdvancedCMSBtn"/>
     </actionGroup>
     <actionGroup name="verifyPageBuilderVisibleOnStaging">
-        <scrollTo selector="{{PageBuilderPanel.layoutGroup}}" stepKey="scrollToIdentifyPageBuilder"/>
-        <waitForElementVisible selector="{{PageBuilderPanel.layoutGroup}}" stepKey="seePageBuilderVisible"/>
+        <scrollTo selector="{{PageBuilderPanel.layoutMenuSection}}" stepKey="scrollToIdentifyPageBuilder"/>
+        <waitForElementVisible selector="{{PageBuilderPanel.layoutMenuSection}}" stepKey="seePageBuilderVisible"/>
         <dontSee userInput="Enable Advanced CMS" stepKey="dontSeeEnableAdvancedCMSBtn"/>
     </actionGroup>
     <actionGroup name="verifyPageBuilderNotVisibleOnPage">
         <dontSee userInput="Enable Advanced CMS" stepKey="dontSeeEnableAdvancedCMSBtn"/>
-        <dontSee selector="{{PageBuilderPanel.layoutGroup}}" stepKey="seePageBuilderVisible"/>
-    </actionGroup>
-    <actionGroup name="setLayout">
-        <!-- This goes in CE repo -->
-        <arguments>
-            <argument name="designSection"/>
-            <argument name="layoutOption"/>
-        </arguments>
-        <waitForElementVisible selector="{{designSection.DesignTab}}" stepKey="waitForDesignTabVisible"/>
-        <conditionalClick selector="{{designSection.DesignTab}}" dependentSelector="{{designSection.LayoutDropdown}}" visible="false" stepKey="clickOnDesignTab"/>
-        <waitForPageLoad stepKey="waitForPageLoadDesignTab"/>
-        <waitForElementVisible selector="{{designSection.LayoutDropdown}}" stepKey="waitForLayoutDropDown" />
-        <selectOption selector="{{designSection.LayoutDropdown}}" userInput="{{layoutOption}}" stepKey="selectLayout"/>
+        <dontSee selector="{{PageBuilderPanel.layoutMenuSection}}" stepKey="seePageBuilderVisible"/>
     </actionGroup>
     <actionGroup name="verifyFullWidthLayout">
         <arguments>
             <argument name="index" defaultValue="0" type="string"/>
         </arguments>
-        <executeJS function="return document.querySelectorAll('[data-role=row]')[{{index}}].clientWidth" stepKey="rowWidth"/>
+        <executeJS function="return document.querySelectorAll('[data-content-type=row]')[{{index}}].clientWidth" stepKey="rowWidth"/>
         <executeJS function="return document.querySelector('[class=page-wrapper]').clientWidth" stepKey="pageWidth"/>
         <assertEquals stepKey="assertRowWidth100Percent">
             <expectedResult type="variable">pageWidth</expectedResult>

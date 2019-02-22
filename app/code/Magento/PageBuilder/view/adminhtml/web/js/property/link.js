@@ -40,7 +40,7 @@ define([], function () {
       }
 
       return _ref = {}, _ref[attributeLinkType] = href, _ref.setting = element.getAttribute("target") === "_blank", _ref.type = attributeLinkType, _ref;
-    };
+    }
     /**
      * Returns link value from widget string
      *
@@ -48,7 +48,7 @@ define([], function () {
      * @param {RegExp} regexp
      * @return {string}
      */
-
+    ;
 
     _proto.getIdFromWidgetSyntax = function getIdFromWidgetSyntax(href, regexp) {
       var attributeIdMatches = href.match(regexp);

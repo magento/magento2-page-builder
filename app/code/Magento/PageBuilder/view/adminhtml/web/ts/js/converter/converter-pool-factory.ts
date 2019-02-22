@@ -3,9 +3,9 @@
  * See COPYING.txt for license details.
  */
 
-import loadModule from "Magento_PageBuilder/js/utils/loader";
 import Config from "../config";
-import ContentTypeConfigInterface from "../content-type-config";
+import ContentTypeConfigInterface from "../content-type-config.types";
+import loadModule from "../utils/loader";
 import ConverterPool from "./converter-pool";
 
 /**

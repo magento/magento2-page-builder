@@ -85,7 +85,7 @@ class Block implements RendererInterface
 
         $rootElementAttributes = [
             'data-element' => 'main',
-            'data-role' => 'block',
+            'data-content-type' => 'block',
             'data-appearance' => 'default',
             'class' => $itemData['formData']['css_classes'] ?? ''
         ];

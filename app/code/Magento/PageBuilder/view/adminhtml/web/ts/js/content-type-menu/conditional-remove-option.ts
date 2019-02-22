@@ -4,8 +4,7 @@
  */
 
 import Option from "./option";
-import OptionConfigInterface from "./option-config";
-import OptionInterface from "./option.d";
+import OptionInterface, {OptionConfigInterface} from "./option.types";
 
 export default class ConditionalRemoveOption extends Option implements OptionInterface {
     /**
@@ -16,7 +15,7 @@ export default class ConditionalRemoveOption extends Option implements OptionInt
     ) {
         super(config);
 
-        const parentContentType = this.preview.parent.parent;
+        const parentContentType = this.preview.contentType.parentContentType;
         if (parentContentType.children().length < 2) {
             this.isDisabled(true);
         }

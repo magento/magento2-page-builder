@@ -4,8 +4,7 @@
  */
 import _ from "underscore";
 import Config from "../config";
-import ContentTypeConfigInterface from "../content-type-config";
-import {AllowedParentsInterface} from "./allowed-parents.d";
+import ContentTypeConfigInterface from "../content-type-config.types";
 
 const allowedParents: AllowedParentsInterface = {};
 
@@ -43,4 +42,11 @@ export function getContainersFor(contentType: string): string[] {
 export function getAllowedContainersClasses(contentType: string, stageId: string) {
     return getContainersFor(contentType)
         .map((value) => `#${stageId} .content-type-container.${value}-container`).join(", ");
+}
+
+/**
+ * @api
+ */
+export interface AllowedParentsInterface {
+    [key: string]: string[];
 }

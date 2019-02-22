@@ -29,15 +29,15 @@ define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/utils/image", "
       }
 
       return (0, _image.decodeUrl)(value);
-    };
+    }
     /**
      * Convert value to knockout format
      *
-     * @param name string
-     * @param data Object
+     * @param {string} name
+     * @param {DataObject} data
      * @returns {string}
      */
-
+    ;
 
     _proto.toDom = function toDom(name, data) {
       var value = (0, _object.get)(data, name);

@@ -15,7 +15,7 @@ export default class Margins implements PropertyReaderInterface {
      * @param {HTMLElement} element
      * @returns {string | object}
      */
-    public read(element: HTMLElement): string | object {
+    public read(element: HTMLElement): DataObjectMargins {
         return {
             margin: {
                 left: element.style.marginLeft,
@@ -25,4 +25,13 @@ export default class Margins implements PropertyReaderInterface {
             },
         };
     }
+}
+
+export interface DataObjectMargins {
+    margin?: {
+        left: string;
+        top: string;
+        right: string;
+        bottom: string;
+    };
 }

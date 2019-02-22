@@ -36,7 +36,7 @@ define(["Magento_PageBuilder/js/utils/object"], function (_object) {
       }
 
       return value;
-    };
+    }
     /**
      * Convert value to knockout format
      *
@@ -44,18 +44,18 @@ define(["Magento_PageBuilder/js/utils/object"], function (_object) {
      * @param data Object
      * @returns {string | object}
      */
-
+    ;
 
     _proto.toDom = function toDom(name, data) {
       return (0, _object.get)(data, name, "");
-    };
+    }
     /**
      * Convert from int to hex
      *
      * @param {number} value
      * @returns {string}
      */
-
+    ;
 
     _proto.fromIntToHex = function fromIntToHex(value) {
       var hex = value.toString(16);

@@ -4,10 +4,9 @@
  */
 
 import $ from "jquery";
-import loadModule from "Magento_PageBuilder/js/utils/loader";
-import {AdditionalDataConfigInterface} from "../content-type-config";
+import {AdditionalDataConfigInterface} from "../content-type-config.types";
 import DataStore from "../data-store";
-import Wysiwyg from "./tinymce4";
+import loadModule from "../utils/loader";
 import WysiwygInterface, {WysiwygConstructorInterface} from "./wysiwyg-interface";
 
 /**

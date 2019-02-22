@@ -5,8 +5,7 @@
 
 import events from "Magento_PageBuilder/js/events";
 import HideShowOption from "../../content-type-menu/hide-show-option";
-import {OptionsInterface} from "../../content-type-menu/option.d";
-import {DataObject} from "../../data-store";
+import {OptionsInterface} from "../../content-type-menu/option.types";
 import Uploader from "../../uploader";
 import BasePreview from "../preview";
 
@@ -41,14 +40,14 @@ export default class Preview extends BasePreview {
      * @returns {Uploader}
      */
     public getUploader() {
-        const initialImageValue = this.parent.dataStore
+        const initialImageValue = this.contentType.dataStore
             .get<object[]>(this.config.additional_data.uploaderConfig.dataScope, "");
 
         return new Uploader(
-            "imageuploader_" + this.parent.id,
+            "imageuploader_" + this.contentType.id,
             this.config.additional_data.uploaderConfig,
-            this.parent.id,
-            this.parent.dataStore,
+            this.contentType.id,
+            this.contentType.dataStore,
             initialImageValue,
         );
     }
@@ -59,10 +58,13 @@ export default class Preview extends BasePreview {
     protected bindEvents() {
         super.bindEvents();
 
-        events.on(`${this.config.name}:${this.parent.id}:updateAfter`, () => {
-            const files = this.parent.dataStore.get<object[]>(this.config.additional_data.uploaderConfig.dataScope);
+        events.on(`${this.config.name}:${this.contentType.id}:updateAfter`, () => {
+            const files = this
+                .contentType
+                .dataStore
+                .get<object[]>(this.config.additional_data.uploaderConfig.dataScope);
             const imageObject: object = files ? (files[0] as object) : {};
-            events.trigger(`image:${this.parent.id}:assignAfter`, imageObject);
+            events.trigger(`image:${this.contentType.id}:assignAfter`, imageObject);
         });
     }
 }

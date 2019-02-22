@@ -26,24 +26,24 @@ define(["jquery", "Magento_PageBuilder/js/utils/object"], function (_jquery, _ob
      */
     _proto.get = function get(key, defaultValue) {
       return (0, _object.get)(this.state, key, defaultValue);
-    };
+    }
     /**
      * Retrieve the entire state of the data object
      *
      * @returns {DataObject}
      */
-
+    ;
 
     _proto.getState = function getState() {
       return this.state;
-    };
+    }
     /**
      * Update the state for the content type
      *
      * @param {DataObject | string | number | boolean | any[] | null | undefined} data
      * @param {string | number} key
      */
-
+    ;
 
     _proto.update = function update(data, key) {
       this.previousState = Object.assign({}, this.state);
@@ -55,26 +55,26 @@ define(["jquery", "Magento_PageBuilder/js/utils/object"], function (_jquery, _ob
       }
 
       this.emitState();
-    };
+    }
     /**
      * Remove item from DataStore
      *
      * @param {string | number} key
      */
-
+    ;
 
     _proto.unset = function unset(key) {
       var storeState = this.state;
       delete storeState[key];
       this.update(storeState);
-    };
+    }
     /**
      * Subscribe to data changes within the data store of a content type
      *
      * @param {(state: DataObject, event: Event) => void} handler
      * @param {string | number} key
      */
-
+    ;
 
     _proto.subscribe = function subscribe(handler, key) {
       var _this = this;
@@ -90,11 +90,11 @@ define(["jquery", "Magento_PageBuilder/js/utils/object"], function (_jquery, _ob
           }
         }
       });
-    };
+    }
     /**
      * Emit state updates through events
      */
-
+    ;
 
     _proto.emitState = function emitState() {
       this.events.trigger("state", {

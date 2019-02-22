@@ -11,7 +11,7 @@ export default class MasterCollection extends BaseMaster {
      *
      * @returns {string}
      */
-    get renderChildTemplate(): string {
+    get masterTemplate(): string {
         return "Magento_PageBuilder/content-type/master-collection";
     }
 }

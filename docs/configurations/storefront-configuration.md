@@ -49,7 +49,7 @@ The XML configuration loads the widget on the frontend, and on the stage, so tha
 Add the following configuration to the `etc/di.xml` file in your custom module directory:
 
 ``` xml
-<type name="Magento\PageBuilder\Model\Config\ContentType\WidgetInitializer">
+<type name="Magento\PageBuilder\Model\WidgetInitializerConfig">
     <arguments>
         <argument name="config" xsi:type="array">
             <item name="%content-type-name%" xsi:type="array">

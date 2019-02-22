@@ -58,7 +58,7 @@ class AdvancedSlider implements RendererInterface
 
         $rootElementAttributes = [
             'data-element' => 'main',
-            'data-role' => 'slider',
+            'data-content-type' => 'slider',
             'data-appearance' => 'default',
             'data-autoplay' => isset($eavData['autoplay']) ? $eavData['autoplay'] : '',
             'data-autoplay-speed' => isset($eavData['autoplay_speed']) ? $eavData['autoplay_speed'] : '',
