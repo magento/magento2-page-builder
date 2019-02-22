@@ -39,26 +39,21 @@
         <before>
             <createData entity="_defaultCategory" stepKey="createPreReqCategory"/>
             <comment userInput="---merging to remove step---" stepKey="createProduct"/>
-            <!-- TODO - rename stepKey -->
             <actionGroup ref="navigateToCreatedCategory" stepKey="navigateToCreatedProductEditPage">
                 <argument name="Category" value="$$createPreReqCategory$$"/>
             </actionGroup>
-            <!-- TODO - rename stepKey -->
             <conditionalClick selector="{{AdminCategoryContentSection.sectionHeader}}" dependentSelector="{{AdminCategoryContentSection.uploadButton}}" visible="false" stepKey="expandAdminProductSection"/>
         </before>
         <after>
-            <!-- TODO - rename stepKey -->
             <comment userInput="---merging to remove step---" stepKey="deleteCreatedProduct"/>
             <comment userInput="---merging to remove step---" stepKey="NavigateToAndResetProductGridToDefaultView"/>
         </after>
         <!-- Scroll to the opened section so PageBuilder button will be in viewport if it's there -->
         <scrollTo selector="{{AdminCategoryContentSection.sectionHeader}}" before="seePageBuilderButton" stepKey="scrollToSection" />
         <seeElement selector="{{PageBuilderCategoryAttribute.PageBuilderBtn('description')}}" stepKey="seePageBuilderButton"/>
-        <!-- TODO - rename stepKey -->
         <actionGroup ref="navigateToCreatedCategory" stepKey="navigateToCreatedProductEditPage">
             <argument name="Category" value="$$createPreReqCategory$$"/>
         </actionGroup>
-        <!-- TODO - rename stepKey -->
         <conditionalClick selector="{{AdminCategoryContentSection.sectionHeader}}" dependentSelector="{{AdminCategoryContentSection.uploadButton}}" visible="false" stepKey="expandAdminProductSection"/>
         <dontSeeElementInDOM selector="{{PageBuilderCategoryAttribute.PageBuilderBtn('description')}}" stepKey="dontSeePageBuilderButton"/>
     </test>
