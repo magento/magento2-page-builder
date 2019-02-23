@@ -2450,6 +2450,24 @@
             <argument name="page" value="ProductsOnStorefront"/>
             <argument name="isClickable" value="auto"/>
         </actionGroup>
-        <!--todo: click & verify each button-->
+        <actionGroup ref="clickProductImageInProductsOnStorefront" stepKey="clickProductImageInProductsOnStorefront">
+            <argument name="product" value="$$createProduct3.name$$"/>
+        </actionGroup>
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToStoreFront2">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <actionGroup ref="clickProductNameInProductsOnStorefront" stepKey="clickProductNameInProductsOnStorefront">
+            <argument name="product" value="$$createProduct3.name$$"/>
+        </actionGroup>
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToStoreFront3">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <actionGroup ref="clickProductAddToCartInProductsOnStorefront" stepKey="clickProductAddToCartInProductsOnStorefront">
+            <argument name="product" value="$$createProduct3.name$$"/>
+        </actionGroup>
+        <actionGroup ref="clickProductAddToCompareInProductsOnStorefront" stepKey="clickProductAddToCompareInProductsOnStorefront">
+            <argument name="product" value="$$createProduct3.name$$"/>
+        </actionGroup>
+        <actionGroup ref="clickProductAddToWishListInProductsOnStorefront" stepKey="clickProductAddToWishListInProductsOnStorefront"/>
     </test>
 </tests>
