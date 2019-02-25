@@ -30,15 +30,23 @@ class TemplatePlugin
     private $domDocument;
 
     /**
+     * @var \Magento\Framework\Math\Random
+     */
+    private $mathRandom;
+
+    /**
      * @param \Psr\Log\LoggerInterface $logger
      * @param \Magento\Framework\View\ConfigInterface $viewConfig
+     * @param \Magento\Framework\Math\Random $mathRandom
      */
     public function __construct(
         \Psr\Log\LoggerInterface $logger,
-        \Magento\Framework\View\ConfigInterface $viewConfig
+        \Magento\Framework\View\ConfigInterface $viewConfig,
+        \Magento\Framework\Math\Random $mathRandom
     ) {
         $this->logger = $logger;
         $this->viewConfig = $viewConfig;
+        $this->mathRandom = $mathRandom;
     }
 
     /**
@@ -150,16 +158,17 @@ class TemplatePlugin
     ): void {
         $xpath = new \DOMXPath($document);
 
+        // construct xpath query to fetch top-level ancestor html content type nodes
         /** @var $htmlContentTypeNodes \DOMNode[] */
-        $htmlContentTypeNodes = $xpath->query('//*[@data-content-type="html" and not(@data-decoded="true")]');
+        $htmlContentTypeNodes = $xpath->query(
+            '//*[@data-content-type="html" and not(@data-decoded="true")]' .
+            '[not(ancestor::*[@data-content-type="html"])]'
+        );
 
-        // Preliminarily set decoded attribute on all encoded html content types so we don't double decode;
-        // this needs to be done in a separate loop as contents will change throughout the subsequent loop
         foreach ($htmlContentTypeNodes as $htmlContentTypeNode) {
+            // Set decoded attribute on all encoded html content types so we don't double decode;
             $htmlContentTypeNode->setAttribute('data-decoded', 'true');
-        }
 
-        foreach ($htmlContentTypeNodes as $htmlContentTypeNode) {
             // if nothing exists inside the node, continue
             if (!strlen(trim($htmlContentTypeNode->nodeValue))) {
                 continue;
@@ -171,7 +180,7 @@ class TemplatePlugin
             // generate unique node name element to replace with decoded html contents at end of processing;
             // goal is to create a document as few times as possible to prevent inadvertent parsing of contents as html
             // by the dom library
-            $uniqueNodeName = 'a' . md5(uniqid('', true));
+            $uniqueNodeName = $this->mathRandom->getRandomString(32, $this->mathRandom::CHARS_LOWERS);
 
             $uniqueNode = new \DOMElement($uniqueNodeName);
             $htmlContentTypeNode->parentNode->replaceChild($uniqueNode, $htmlContentTypeNode);
