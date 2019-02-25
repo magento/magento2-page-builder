@@ -10,7 +10,7 @@ Toolbars provide end-users with a quick way to change common properties of your 
 
 The diagram below shows the basic steps for adding a toolbar to your content type. It also shows how the various parts connect and work together.
 
-![](../images/how-toolbars-work.png)
+![](../images/how-toolbars-work.png){:width="851px" height="auto"}
 
 
 
@@ -18,7 +18,7 @@ The diagram below shows the basic steps for adding a toolbar to your content typ
 
 Toolbar options are the clickable items in a toolbar that represent the property values of a form field. For example, the Heading content type adds toolbar options for the `text_align` field from `pagebuilder_base_form.xml`. The Heading adds the values of the `text_align` field (`left`, `center`, and `right`) as items on the toolbar, represented with the images provided by the icon CSS classes as shown here:
 
-```typescript
+```js
 {
     key: "text_align",
     type: "select",
