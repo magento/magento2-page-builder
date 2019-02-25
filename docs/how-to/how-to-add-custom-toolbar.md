@@ -10,7 +10,7 @@ Toolbars provide end-users with a quick way to change common properties of your 
 
 The diagram below shows the basic steps for adding a toolbar to your content type. It also shows how the various parts connect and work together.
 
-![](../images/how-toolbars-work.png){:width="851px" height="auto"}
+![Toolbar how it works](../images/how-toolbars-work.png){:width="851px" height="auto"}
 
 
 
