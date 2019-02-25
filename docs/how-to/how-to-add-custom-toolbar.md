@@ -113,7 +113,7 @@ You can find this HTML template here: `app/code/Magento/PageBuilder/view/adminht
 
 ## Example code
 
-Heading content type example code: 
+The following links show how the Heading implements its toolbar within its `preview.html` template and `preview.js` component: 
 
 - `app/code/Magento/PageBuilder/view/adminhtml/web/template/content-type/heading/default/preview.html`
 - `app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/heading/preview.ts`
