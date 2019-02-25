@@ -1997,20 +1997,21 @@
             <group value="pagebuilder-buttons"/>
             <group value="pagebuilder-buttonGroup"/>
             <group value="pagebuilder-block"/>
+            <group value="pagebuilder-row"/>
         </annotations>
         <before>
             <createData entity="_emptyCmsBlock" stepKey="createPreReqBlock"/>
             <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlock">
+                <argument name="CMSBlockPage" value="$$createPreReqBlock$$"/>
+            </actionGroup>
         </before>
         <after>
             <deleteData createDataKey="createPreReqBlock" stepKey="deletePreReqBlock"/>
             <deleteData createDataKey="createCMSPage" stepKey="deleteCreatedCategory"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlock">
-            <argument name="CMSBlockPage" value="$$createPreReqBlock$$"/>
-        </actionGroup>
         <!-- Change row appearance to full-width -->
         <comment userInput="Change row appearance to full-width" stepKey="commentChangeRowAppearanceBlock"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openRowEditMenuOnStageBlock">
@@ -2045,7 +2046,7 @@
             <expectedResult type="variable">yCoordinate1Block</expectedResult>
             <actualResult type="variable">yCoordinate2Block</actualResult>
         </assertNotEquals>
-        <actionGroup ref="saveAndCloseCMSBlockWithSplitButton" stepKey="saveAndCloseCMSBlockWithSplitButton"/>
+        <actionGroup ref="saveAndCloseCMSBlockWithSplitButton" stepKey="saveCMSBlock"/>
         <!-- Go to CMS Page and choose Block -->
         <comment userInput="Go to CMS Page and choose Block" stepKey="commentGoToCMSPage"/>
         <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">

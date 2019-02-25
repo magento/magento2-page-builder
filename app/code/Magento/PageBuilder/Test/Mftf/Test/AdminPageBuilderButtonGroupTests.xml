@@ -1144,54 +1144,55 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-buttons"/>
             <group value="pagebuilder-buttonGroup"/>
+            <group value="pagebuilder-row"/>
         </annotations>
         <before>
             <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
+                <argument name="CMSPage" value="$$createCMSPage$$"/>
+            </actionGroup>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStagePage"/>
         </before>
         <after>
             <deleteData createDataKey="createCMSPage" stepKey="deleteCreatedCategory"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
-            <argument name="CMSPage" value="$$createCMSPage$$"/>
-        </actionGroup>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStagePage"/>
         <!-- Change row appearance to full-width -->
-        <comment userInput="Change row appearance to full-width" stepKey="commentChangeRowAppearanceBlock"/>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openRowEditMenuOnStageBlock">
+        <comment userInput="Change row appearance to full-width" stepKey="commentChangeRowAppearance"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openRowEditMenuOnStage">
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceRowBlock">
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceRow">
             <argument name="property" value="PageBuilderRowAppearance_FullWidth"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsRowBlock"/>
-        <!-- Add button groups to block -->
-        <comment userInput="Add button groups to block" stepKey="commentAddButtonGroupsToBlock"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSectionBlock">
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsRow"/>
+        <!-- Add button groups to row -->
+        <comment userInput="Add button groups to row" stepKey="commentAddButtonGroupsToRow"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSectionButtons">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStageBlock">
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsContentTypeToStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusOptionMenuBlock">
+        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusOptionMenuButtons">
             <argument name="contentType" value="PageBuilderButtonItemContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage2Block">
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage2Buttons">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusOptionMenu2Block">
+        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusOptionMenu2Buttons">
             <argument name="contentType" value="PageBuilderButtonItemContentType"/>
         </actionGroup>
-        <!-- Validate Page -->
-        <comment userInput="Validate Page" stepKey="commentValidatePage"/>
-        <executeJS function="return {{ButtonItemOnStage.jsButtonSelector('1')}}.getBoundingClientRect().y" stepKey="yCoordinate1Block"/>
-        <executeJS function="return {{ButtonItemOnStage.jsButtonSelector('2')}}.getBoundingClientRect().y" stepKey="yCoordinate2Block"/>
-        <assertNotEquals stepKey="checkYCoordinatesBlock">
-            <expectedResult type="variable">yCoordinate1Block</expectedResult>
-            <actualResult type="variable">yCoordinate2Block</actualResult>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <executeJS function="return {{ButtonItemOnStage.jsButtonSelector('1')}}.getBoundingClientRect().y" stepKey="yCoordinate1Stage"/>
+        <executeJS function="return {{ButtonItemOnStage.jsButtonSelector('2')}}.getBoundingClientRect().y" stepKey="yCoordinate2Stage"/>
+        <assertNotEquals stepKey="checkYCoordinatesStage">
+            <expectedResult type="variable">yCoordinate1Stage</expectedResult>
+            <actualResult type="variable">yCoordinate2Stage</actualResult>
         </assertNotEquals>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsStage"/>
         <!-- Validate CMS Page Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToProductStorefront">
