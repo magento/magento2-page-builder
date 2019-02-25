@@ -28,7 +28,7 @@ After registering your module (`bin/magento setup:upgrade`) you will be ready to
 
 The steps for creating the Quote content type are illustrated and described below. The reality is not quite this linear, but these steps do represent the basic phases and flow for building new Page Builder content types.
 
-![Creating Custom Content Types](../images/content-type-overview.svg)
+![Creating Custom Content Types](../images/content-type-overview.png)
 
 1. **Add configuration**: Create an XML file to define your content type and reference the other files that control the appearance and behavior of your content type.  
 2. **Add templates**: Create HTML templates that define the appearance of your content types on the Admin stage (`preview.html`) and the storefront (`master.html`).

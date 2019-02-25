@@ -32,7 +32,7 @@ The following table lists the Page Builder events you can bind to and handle wit
 | [contentType:moveBefore](#contenttypemovebefore)    | [stage:{{preview.contentType.stageId}}:masterFormatRenderAfter](#stageidmasterformatrenderafter) |
 | [contentType:redrawAfter](#contenttyperedrawafter)  | [stage:{{preview.contentType.stageId}}:readyAfter](#stageidreadyafter)              |
 | [contentType:removeAfter](#contenttyperemoveafter)  | [stage:{{preview.contentType.stageId}}:renderAfter](#stagepreviewcontenttypestageidrenderafter)             |
-| [contentType:renderAfter](#contenttyperenderafter)  | [stage:{{preview.contentType.stageId}}:toggleFullscreen](#stageidtogglefullscreen)        |
+| [contentType:renderAfter](#contenttyperenderafter)  | [stage:{{preview.contentType.stageId}}:fullScreenModeChangeAfter](#stageidtogglefullscreen)        |
 |                                                     | [stage:updateAfter](#stageupdateafter)                                        |
 |                                                     |                                                          |
 | **Column Events**                                   | **Preview Events**                                       |
@@ -364,15 +364,15 @@ events.on("stage:interactionStop", function (params) {});
 
 
 
-### `stage:{{preview.contentType.stageId}}:toggleFullscreen` {#stageidtogglefullscreen}
+### `stage:{{preview.contentType.stageId}}:fullScreenModeChangeAfter` {#stageidtogglefullscreen}
 
 ```js
-events.on(`stage:${this.contentType.stageId}:toggleFullscreen`, function (params) {});
+events.on(`stage:${this.contentType.stageId}:fullScreenModeChangeAfter`, function (params) {});
 ```
 
-| Params   | Type     |
-| -------- | -------- |
-| `object` | `Object` |
+| Params       | Type      |
+| ------------ | --------- |
+| `fullScreen` | `boolean` |
 
 [Back to top]
 
