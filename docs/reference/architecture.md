@@ -30,7 +30,7 @@ Use the following steps to display Page Builder content on a Magento storefront 
 
 When you activate Page Builder, it replaces all WYSIWYG instances by intercepting the WYSIWYG UI Component field and replacing the traditional WYSIWYG editor with the Page Builder editor.
 
-This means that you don't have to modify your custom extensions if you're using UI components to implement their forms. However, if you don't want your module to use Page Builder for a specific field, you can revert to using the default WYSIWYG again by adding the following entry to the field in your XML configuration file:
+This means you don't have to change your custom extensions if you're using UI components to implement their forms. However, if you don't want your module to use Page Builder for a specific field, you can revert to using the default WYSIWYG again by adding the following entry to the field in your XML configuration file:
 
 ```
 <item name="wysiwygConfigData" xsi:type="array">
@@ -59,25 +59,23 @@ This means that you don't have to modify your custom extensions if you're using 
 ![Page Builder data flow](../images/data-flow.png)
 The following is a simple overview of the data flow:
 
-1. Page Builder's reader() reads the data from associated elements from the persisted rendered output of the master format. It does this by traversing through the content types DOM tree and searching for the associated elements as declared in the content types definition XML. Then it utilises the various attributes, styles and other configuration to read the data from the specific area of the DOM element.
+1. Page Builder's reader() reads the data from associated elements in the persisted rendered output of the master format. It does this by traversing through the content type's DOM tree and searching for the associated elements declared in the content types definition XML. Then it uses the various attributes, styles, and other configurations to read the data from the specific area of the DOM element.
 2. Page Builder's element converters convert the data for each data mapping entry () to an internal supported format if required, this ensures the data collected from the DOM nodes is compatible with Page Builder's internal data store and UI component fields.
-3. Page Builder's mass converters convert the data. For more details see [converter interface](../configurations/content-type-configuration.md). **[SUMMARIZE mass converters here]**
+3. Page Builder's mass converters can change data for all content type elements, not just one. For more details see [converter interface](../configurations/content-type-configuration.md).
 4. Page Builder creates its content types and populates the `Magento_PageBuilder/js/data-store` with data.
-5. End-users modify the data in the data store within the form editor or when using the various live-editing options on the stage.
+5. End-users change the data in the data store within the form editor or when using the various live-editing options on the stage.
 6. Page Builder converts the data using mass converters.
 7. Page Builder converts the data using element data converters.
 8. Page Builder updates the preview and master component observables.
-9. The stage is updated with the associated data from the preview update. 
-10. A render cycle of the master format is completed updating the underlying textarea with the changed content.
-11. When the end-user initiates a save on the current edited parent entity to the Page Builder instance (for instance CMS page, catalog product) the rendered master format is saved in the same fashion any form of content is for this field.
+9. Page Builder updates the stage with the associated data from the preview update. 
+10. Page Builder completes a render cycle of the master format, which updates the underlying textarea with the changed content.
+11. When the end-user saves the edited parent entity to the Page Builder instance (such as the CMS page or catalog product), Page Builder saves the rendered master format in the same way as any other content for the field.
 
 ### Mass converter
 
-A Mass converter changes data for all content type elements. Mass converters are defined per appearance.
-For example, the content type for two elements, main and image, has data stored in the fields `border`, `border_color`, `border_width`, `background_image`.
-A mass converter allows you to change all these fields.
-
-Any content type using background images will have a mass converter, in this example we use them to generate a JSON string to be placed into an attribute on an element for the storefront to render as a <style /> block.
+A mass converter changes data for all content type elements, not just one. You must define mass converters per appearance.
+For example, the content type for two elements, main and image, has data stored in the fields `border`, `border_color`, `border_width`, `background_image`. A mass converter allows you to change all these fields, not just one of them.
+Any content type using background images will have a mass converter. In the following example, we use a mass converter to generate a JSON string for an attribute on an element for the storefront to render as a <style /> block.
 
 ```xml
 <converters>
@@ -91,7 +89,7 @@ Any content type using background images will have a mass converter, in this exa
 </converters>
 ```
 
-The interface for these converters is as follows:
+Here's the interface for these converters:
 
 ```typescript
 /**
@@ -141,9 +139,7 @@ Page Builder stores data for content types in a simple object called the DataSto
 The parameter `name` from [content type configuration](../configurations/content-type-configuration.md) is the name of a parameter in the DataStore.
 You can use the `subscribe` method to listen for changes in the DataStore and perform custom actions on the data.
 
-The significance here is this is how the system marries up the data from the DataStore to your elements attribute or style. So when you include a new attribute or style you must specify where it should retrieve it's data from the content type. These `name` values normally marry up directly to the field names stored within the UI component form, as that's the key we use to save the data. 
-
-I'd recommend we include information saying these typical align with the UI component form field name.
+This is how the system binds the data from the DataStore to your elements attribute or style. When you include a new attribute or style, you must specify where it should retrieve its data from the content type. These `name` values normally bind to the field names within UI component forms. The field names are the keys we use to save the data.
 
 ## Content type configuration
 
@@ -151,13 +147,12 @@ Please see [content type configuration](../configurations/content-type-configura
 
 ## Appearances
 
-Appearances allow you to customize existing content types as follows:
+Appearances provide several ways to customize your content types. For example, you can:
 
 1. Add new style properties to existing content types.
 2. Add new attributes to existing content types. This is similar to adding new style properties.
 3. Change templates.
-4. Move data between elements, by data-mapping within the content type's configuration file.
-   For example, a developer can move the `margin` style property from one element to another.
+4. Move data between elements, by data-mapping within the content type's configuration file. For example, a developer can move the `margin` style property from one element to another.
 5. Change the form for a [content type].
 
 ## Module structure
@@ -169,6 +164,6 @@ Appearances allow you to customize existing content types as follows:
 | Styles                  | `Vendor/ModuleName/view/adminhtml/web/css/source/content-type/content-type-name` |
 
 **Note:**
-We also considered introducing appearance component and/or moving the initialization of the libraries to bindings. This would allow you to add custom logic per appearance changes and libraries per appearance for content types like the `slider` and the `tabs`.
+We have also considered introducing an appearance component and/or moving the initialization of the libraries to bindings. This would allow you to add custom logic per appearance changes and libraries per appearance for content types like the `slider` and the `tabs`.
 
 [TypeScript]: https://www.typescriptlang.org/
