@@ -154,7 +154,6 @@ class TemplatePlugin
      * Convert encoded HTML content types to placeholders and generate decoded outer html map for future replacement
      *
      * @param \DOMDocument $document
-     * @param array $uniqueNodeNameToDecodedOuterHtmlMap
      * @return array - map of unique node name to decoded html
      */
     private function generateDecodedHtmlPlaceholderMappingInDocument(\DOMDocument $document): array
