@@ -71,7 +71,7 @@ class TemplatePlugin
         // Process any HTML content types, they need to be decoded on the front-end
         if (strpos($result, 'data-content-type="html"') !== false) {
             $document = $this->getDomDocument($result);
-            $this->convertEncodedHtmlContentTypesToPlaceholders($document, $uniqueNodeNameToDecodedOuterHtmlMap);
+            $uniqueNodeNameToDecodedOuterHtmlMap = $this->generateDecodedHtmlPlaceholderMappingInDocument($document);
         }
 
         // If a document was retrieved we've modified the output so need to retrieve it from within the document
@@ -155,11 +155,10 @@ class TemplatePlugin
      *
      * @param \DOMDocument $document
      * @param array $uniqueNodeNameToDecodedOuterHtmlMap
+     * @return array - map of unique node name to decoded html
      */
-    private function convertEncodedHtmlContentTypesToPlaceholders(
-        \DOMDocument $document,
-        &$uniqueNodeNameToDecodedOuterHtmlMap = []
-    ): void {
+    private function generateDecodedHtmlPlaceholderMappingInDocument(\DOMDocument $document): array
+    {
         $xpath = new \DOMXPath($document);
 
         // construct xpath query to fetch top-level ancestor html content type nodes
@@ -168,6 +167,8 @@ class TemplatePlugin
             '//*[@data-content-type="html" and not(@data-decoded="true")]' .
             '[not(ancestor::*[@data-content-type="html"])]'
         );
+
+        $uniqueNodeNameToDecodedOuterHtmlMap = [];
 
         foreach ($htmlContentTypeNodes as $htmlContentTypeNode) {
             // Set decoded attribute on all encoded html content types so we don't double decode;
@@ -191,6 +192,8 @@ class TemplatePlugin
 
             $uniqueNodeNameToDecodedOuterHtmlMap[$uniqueNodeName] = $decodedOuterHtml;
         }
+
+        return $uniqueNodeNameToDecodedOuterHtmlMap;
     }
 
     /**
