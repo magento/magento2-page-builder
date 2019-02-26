@@ -88,7 +88,11 @@ class TemplatePlugin
 
                 if (isset($uniqueNodeNameToDecodedOuterHtmlMap)) {
                     foreach ($uniqueNodeNameToDecodedOuterHtmlMap as $uniqueNodeName => $decodedOuterHtml) {
-                        $docHtml = str_replace("<$uniqueNodeName></$uniqueNodeName>", $decodedOuterHtml, $docHtml);
+                        $docHtml = str_replace(
+                            '<' . $uniqueNodeName . '>' . '</' . $uniqueNodeName . '>',
+                            $decodedOuterHtml,
+                            $docHtml
+                        );
                     }
                 }
 
