@@ -46,7 +46,7 @@ define(["jquery", "Magento_PageBuilder/js/utils/object"], function (_jquery, _ob
     ;
 
     _proto.set = function set(key, value) {
-      this.state[key] = value;
+      (0, _object.set)(this.state, key, value);
       this.emitState();
     }
     /**

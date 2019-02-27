@@ -4,7 +4,7 @@
  */
 
 import $ from "jquery";
-import {get} from "./utils/object";
+import {get, set} from "./utils/object";
 
 interface DataStoreEvent {
     state: DataObject;
@@ -46,7 +46,7 @@ export default class DataStore {
      * @param value
      */
     public set(key: string, value: any) {
-        this.state[key] = value;
+        set(this.state, key, value);
         this.emitState();
     }
 
