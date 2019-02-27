@@ -2500,7 +2500,7 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <!-- Add Map -->
-        <comment userInput="Add Divider" stepKey="commentAddMap"/>
+        <comment userInput="Add Map" stepKey="commentAddMap"/>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSectionMedia">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
@@ -2607,5 +2607,418 @@
             <expectedResult type="int">2</expectedResult>
             <actualResult type="variable">actualStorefrontMap1HeightDifference</actualResult>
         </assertLessThanOrEqual>
+    </test>
+    <test name="BlockRenderTextThroughBlockContentType">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Block Content"/>
+            <title value="Render Text Through Block Content Type"/>
+            <description value="Verify that users are able to successfully render and use the Text content type through the Block content type."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MC-15159"/>
+            <useCaseId value="MC-13769"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+            <group value="pagebuilder-block-content"/>
+            <group value="pagebuilder-text"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <createData entity="_emptyCmsBlock" stepKey="createCMSBlock"/>
+            <createData entity="_defaultCmsPage" stepKey="createCMSPageB"/>
+            <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage1">
+                <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
+            </actionGroup>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock"/>
+            <deleteData createDataKey="createCMSPageB" stepKey="deleteCMSPageB"/>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Add Text -->
+        <comment userInput="Add Text" stepKey="commentAddText"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTextIntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <!--Input text into stage-->
+        <comment userInput="Input text into stage" stepKey="commentInputTextIntoStage"/>
+        <click selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnEditorArea"/>
+        <fillField selector="{{TextOnStage.tinymce('1')}}" userInput="{{PageBuilderTextProperty.value}}" stepKey="fillTextToTinyMCE4"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="lostFocusFromWYSIWYG1"/>
+        <!--Verify inputed text on slideout-->
+        <comment userInput="Verify inputed text on slideout" stepKey="commentVerifyTextOnSlideout"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage1">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <switchToIFrame selector="{{TextOnConfiguration.tinyMCEIFrame}}" stepKey="switchToIFrame1"/>
+        <waitForElementVisible selector="{{TextOnConfiguration.textInIFrame(PageBuilderTextProperty.value)}}" stepKey="waitForText"/>
+        <switchToIFrame stepKey="exitIFrame1"/>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings1"/>
+        <!--Input variable into stage-->
+        <comment userInput="Input variable into stage" stepKey="commentInputVariableIntoStage"/>
+        <click selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnEditorArea1"/>
+        <actionGroup ref="addVariableToTinyMCEInline" stepKey="addVariableToTinyMCE">
+            <argument name="variable" value="TinyMCEVariableBaseURL"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{TextOnStage.text('1', TinyMCEVariableBaseURL.editPanelValue)}}" stepKey="waitForVariableBaseURLStage"/>
+        <!--Verify inputed variable on slideout-->
+        <comment userInput="Verify inputed variable on slideout" stepKey="commentVerifyVariableOnSlideout"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="lostFocusFromWYSIWYG2"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <switchToIFrame selector="{{TextOnConfiguration.tinyMCEIFrame}}" stepKey="switchToIFrame2"/>
+        <waitForElementVisible selector="{{TextOnConfiguration.tinyMCEVariable(TinyMCEVariableBaseURL.editPanelValue, '1')}}" stepKey="waitForVariable2"/>
+        <switchToIFrame stepKey="exitIFrame2"/>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings2"/>
+        <!--Input widget into stage-->
+        <comment userInput="Input widget into stage" stepKey="commentInputWidgetIntoStage"/>
+        <click selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnEditorArea2"/>
+        <actionGroup ref="addPageLinkWidgetToTinyMCEInline" stepKey="addPageLinkWidgetToTinyMCE">
+            <argument name="widget" value="TinyMCEWidgetCMSPageLink"/>
+            <argument name="page" value="$$createCMSPageB.identifier$$"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{TextOnStage.text('1', TinyMCEWidgetCMSPageLink.editPanelValue)}}" stepKey="waitForWidgetStage"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="lostFocusFromWYSIWYG3"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <switchToIFrame selector="{{TextOnConfiguration.tinyMCEIFrame}}" stepKey="switchToIFrame3"/>
+        <waitForElementVisible selector="{{TextOnConfiguration.tinyMCEWidget(TinyMCEWidgetCMSPageLink.editPanelValue, '1')}}" stepKey="waitForWidget"/>
+        <switchToIFrame stepKey="exitIFrame3"/>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <!--Input image into stage-->
+        <comment userInput="Input image into stage" stepKey="commentInputImageIntoStage"/>
+        <click selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnTextEditorArea"/>
+        <waitForElementVisible selector="{{TinyMCESection.InsertImageIcon}}" stepKey="waitForInsertImageIcon"/>
+        <click selector="{{TinyMCESection.InsertImageIcon}}" stepKey="clickInsertImageIcon"/>
+        <waitForPageLoad stepKey="waitForPageLoad" />
+        <actionGroup ref="clickBrowseBtnOnUploadPopup" stepKey="clickBrowserBtn"/>
+        <actionGroup ref="VerifyMediaGalleryStorageActions" stepKey="VerifyMediaGalleryStorageBtn"/>
+        <click selector="{{MediaGallerySection.StorageRootArrow}}" stepKey="clickStorageRoot"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <actionGroup ref="CreateImageFolder" stepKey="CreateImageFolder">
+            <argument name="ImageFolder" value="ImageFolder"/>
+        </actionGroup>
+        <actionGroup ref="attachImage" stepKey="attachImage1">
+            <argument name="Image" value="ImageUpload3"/>
+        </actionGroup>
+        <actionGroup ref="saveImage" stepKey="insertImage"/>
+        <actionGroup ref="fillOutUploadImagePopup" stepKey="fillOutUploadImagePopup" />
+        <seeElement selector="{{CmsWYSIWYGSection.ImageAlt(ImageUpload3.content)}}" stepKey="assertMediaSourceOnStage"/>
+        <actionGroup ref="saveCMSBlock" stepKey="saveCMSBlock"/>
+        <!-- Validate CMS Block Stage -->
+        <comment userInput="Validate CMS Block Stage" stepKey="commentValidateCMSBlockStage"/>
+        <seeElementInDOM selector="{{TextOnStage.text('1', PageBuilderTextProperty.value)}}" stepKey="seeTextContentTypeBlockStage"/>
+        <seeElement selector="{{TextOnStage.text('1', TinyMCEVariableBaseURL.editPanelValue)}}" stepKey="seeVariableBlockStage"/>
+        <seeElement selector="{{TextOnStage.text('1', TinyMCEWidgetCMSPageLink.editPanelValue)}}" stepKey="seeWidgetBlockStage"/>
+        <seeElement selector="{{CmsWYSIWYGSection.ImageAlt(ImageUpload3.content)}}" stepKey="assertMediaSourceBlockStage"/>
+        <!-- Add Block to CMS Page -->
+        <comment userInput="Add Block to CMS Page" stepKey="commentAddBlockToCMSPage"/>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPanelAddContentMenuSection">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDropBlock">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
+            <argument name="block" value="$$createCMSBlock$$"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsBlock"/>
+        <!-- Validate CMS Page Stage -->
+        <comment userInput="Validate CMS Page Stage" stepKey="commentValidateCMSPageStage"/>
+        <seeElementInDOM selector="{{TextOnStorefront.text('1', PageBuilderTextProperty.value)}}" stepKey="seeTextContentTypePageStage"/>
+        <seeElement selector="{{StorefrontCMSPageSection.imageSource(ImageUpload3.fileName)}}" stepKey="assertMediaSourcePageStage"/>
+        <seeElement selector="{{TextOnStorefront.text('1', _ENV.MAGENTO_BASE_URL)}}" stepKey="waitForVariablePageStage"/>
+        <seeElement selector="{{TextOnStorefront.textWidget('1', _ENV.MAGENTO_BASE_URL, $$createCMSPageB.identifier$$)}}" stepKey="waitForWidgetPageStage"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate CMS Page Storefront -->
+        <comment userInput="Validate CMS Page Storefront" stepKey="commentValidateCMSPageStorefront"/>
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToStoreFront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <seeElementInDOM selector="{{TextOnStorefront.text('1', PageBuilderTextProperty.value)}}" stepKey="seeTextContentTypeStorefront"/>
+        <seeElement selector="{{StorefrontCMSPageSection.imageSource(ImageUpload3.fileName)}}" stepKey="assertMediaSourceStorefront"/>
+        <seeElement selector="{{TextOnStorefront.text('1', _ENV.MAGENTO_BASE_URL)}}" stepKey="waitForVariableStorefront"/>
+        <seeElement selector="{{TextOnStorefront.textWidget('1', _ENV.MAGENTO_BASE_URL, $$createCMSPageB.identifier$$)}}" stepKey="waitForWidgetStorefront"/>
+    </test>
+    <test name="BlockRenderInlineEditedTextThroughBlockContentTypeTinyMCE4WysiwygEnabledByDefault">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Block Content"/>
+            <title value="Render Inline Edited Text Through Block Content Type With TinyMCE4 Wysiwyg Enabled By Default"/>
+            <description value="Verify that users are able to successfully render and use the inline edited Text content type through the Block content type with TinyMCE4 and Wysiwyg enabled by default."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MC-15174"/>
+            <useCaseId value="MC-13769"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+            <group value="pagebuilder-block-content"/>
+            <group value="pagebuilder-text"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="configWYSIWYG"/>
+            <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="configTinyMCE"/>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <createData entity="_emptyCmsBlock" stepKey="createCMSBlock"/>
+            <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage1">
+                <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
+            </actionGroup>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock"/>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG1"/>
+            <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="enableTinyMCE4_1"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Add Text -->
+        <comment userInput="Add Text" stepKey="commentAddText"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTextIntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <!--Input text into stage-->
+        <comment userInput="Input text into stage" stepKey="commentInputTextIntoStage"/>
+        <click selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnEditorArea"/>
+        <fillField selector="{{TextOnStage.tinymce('1')}}" userInput="{{PageBuilderTextProperty.value}}" stepKey="fillText"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="lostFocusFromWYSIWYG1"/>
+        <!-- Validate CMS Block Stage -->
+        <comment userInput="Validate CMS Block Stage" stepKey="commentValidateCMSBlockStage"/>
+        <seeElementInDOM selector="{{TextOnStage.text('1', PageBuilderTextProperty.value)}}" stepKey="seeTextContentTypeBlockStage"/>
+        <actionGroup ref="saveCMSBlock" stepKey="saveCMSBlock"/>
+        <!-- Add Block to CMS Page -->
+        <comment userInput="Add Block to CMS Page" stepKey="commentAddBlockToCMSPage"/>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPanelAddContentMenuSection">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDropBlock">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
+            <argument name="block" value="$$createCMSBlock$$"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsBlock"/>
+        <!-- Validate CMS Page Stage -->
+        <comment userInput="Validate CMS Page Stage" stepKey="commentValidateCMSPageStage"/>
+        <seeElementInDOM selector="{{TextOnStorefront.text('1', PageBuilderTextProperty.value)}}" stepKey="seeTextContentTypePageStage"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate CMS Page Storefront -->
+        <comment userInput="Validate CMS Page Storefront" stepKey="commentValidateCMSPageStorefront"/>
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToStoreFront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <seeElementInDOM selector="{{TextOnStorefront.text('1', PageBuilderTextProperty.value)}}" stepKey="seeTextContentTypeStorefront"/>
+    </test>
+    <test name="BlockRenderInlineEditedTextThroughBlockContentTypeTinyMCE4WysiwygDisabledByDefault" extends="BlockRenderInlineEditedTextThroughBlockContentTypeTinyMCE4WysiwygEnabledByDefault">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Block Content"/>
+            <title value="Render Inline Edited Text Through Block Content Type With TinyMCE4 Wysiwyg disabled By Default"/>
+            <description value="Verify that users are able to successfully render and use the inline edited Text content type through the Block content type with TinyMCE4 and Wysiwyg disabled by default."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MC-15175"/>
+            <useCaseId value="MC-13769"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+            <group value="pagebuilder-block-content"/>
+            <group value="pagebuilder-text"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set cms/wysiwyg/enabled disabled" stepKey="configWYSIWYG"/>
+        </before>
+        <click selector="{{TextOnStage.textArea('1')}}" stepKey="focusOnEditorArea"/>
+        <fillField selector="{{TextOnStage.textArea('1')}}" userInput="{{PageBuilderTextProperty.value}}" stepKey="fillText"/>
+        <executeJS function="return document.evaluate(&quot;{{TextOnStage.textArea('1')}}&quot;, document.body).iterateNext().value" stepKey="seeTextContentTypeBlockStage"/>
+        <assertContains stepKey="assertTextValue" after="seeTextContentTypeBlockStage">
+            <expectedResult type="string">{{PageBuilderTextProperty.value}}</expectedResult>
+            <actualResult type="variable">seeTextContentTypeBlockStage</actualResult>
+        </assertContains>
+        <seeElementInDOM selector="{{TextOnStorefront.textAreaText('1', PageBuilderTextProperty.value)}}" stepKey="seeTextContentTypePageStage"/>
+        <seeElementInDOM selector="{{TextOnStorefront.textAreaText('1', PageBuilderTextProperty.value)}}" stepKey="seeTextContentTypeStorefront"/>
+    </test>
+    <test name="BlockRenderFormEditedTextThroughBlockContentTypeTinyMCE4WysiwygEnabledByDefault" extends="BlockRenderInlineEditedTextThroughBlockContentTypeTinyMCE4WysiwygEnabledByDefault">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Block Content"/>
+            <title value="Render Form Edited Text Through Block Content Type With TinyMCE4 Wysiwyg Enabled By Default"/>
+            <description value="Verify that users are able to successfully render and use the form edited Text content type through the Block content type with TinyMCE4 and Wysiwyg enabled by default."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MC-15176"/>
+            <useCaseId value="MC-13769"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+            <group value="pagebuilder-block-content"/>
+            <group value="pagebuilder-text"/>
+        </annotations>
+        <actionGroup ref="clickOutsideTextInlineEditing" stepKey="closeLiveEdit" after="focusOnEditorArea"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage" after="closeLiveEdit">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="addTextToTinyMCE" stepKey="fillText">
+            <argument name="property" value="PageBuilderTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings" after="fillText"/>
+    </test>
+    <test name="BlockRenderFormEditedTextThroughBlockContentTypeTinyMCE4WysiwygDisabledByDefault" extends="BlockRenderInlineEditedTextThroughBlockContentTypeTinyMCE4WysiwygEnabledByDefault">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Block Content"/>
+            <title value="Render Form Edited Text Through Block Content Type With TinyMCE4 Wysiwyg Disabled By Default"/>
+            <description value="Verify that users are able to successfully render and use the form edited Text content type through the Block content type with TinyMCE4 and Wysiwyg disabled by default."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MC-15177"/>
+            <useCaseId value="MC-13769"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+            <group value="pagebuilder-block-content"/>
+            <group value="pagebuilder-text"/>
+        </annotations>
+        <actionGroup ref="clickOutsideTextInlineEditing" stepKey="closeLiveEdit" after="focusOnEditorArea"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage" after="closeLiveEdit">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="addTextToTinyMCE" stepKey="fillText">
+            <argument name="property" value="PageBuilderTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings" after="fillText"/>
+    </test>
+    <test name="BlockRenderInlineEditedTextThroughBlockContentTypeTinyMCE3WysiwygEnabledByDefault" extends="BlockRenderInlineEditedTextThroughBlockContentTypeTinyMCE4WysiwygEnabledByDefault">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Block Content"/>
+            <title value="Render Inline Edited Text Through Block Content Type With TinyMCE3 Wysiwyg Enabled By Default"/>
+            <description value="Verify that users are able to successfully render and use the inline edited Text content type through the Block content type with TinyMCE3 and Wysiwyg enabled by default."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MC-15178"/>
+            <useCaseId value="MC-13769"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+            <group value="pagebuilder-block-content"/>
+            <group value="pagebuilder-text"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set cms/wysiwyg/editor Magento_Tinymce3/tinymce3Adapter" stepKey="configTinyMCE"/>
+        </before>
+        <click selector="{{TextOnStage.textArea('1')}}" stepKey="focusOnEditorArea"/>
+        <fillField selector="{{TextOnStage.textArea('1')}}" userInput="{{PageBuilderTextProperty.value}}" stepKey="fillText"/>
+        <executeJS function="return document.evaluate(&quot;{{TextOnStage.textArea('1')}}&quot;, document.body).iterateNext().value" stepKey="seeTextContentTypeBlockStage"/>
+        <assertContains stepKey="assertTextValue" after="seeTextContentTypeBlockStage">
+            <expectedResult type="string">{{PageBuilderTextProperty.value}}</expectedResult>
+            <actualResult type="variable">seeTextContentTypeBlockStage</actualResult>
+        </assertContains>
+        <seeElementInDOM selector="{{TextOnStorefront.textAreaText('1', PageBuilderTextProperty.value)}}" stepKey="seeTextContentTypePageStage"/>
+        <seeElementInDOM selector="{{TextOnStorefront.textAreaText('1', PageBuilderTextProperty.value)}}" stepKey="seeTextContentTypeStorefront"/>
+    </test>
+    <test name="BlockRenderInlineEditedTextThroughBlockContentTypeTinyMCE3WysiwygDisabledByDefault" extends="BlockRenderInlineEditedTextThroughBlockContentTypeTinyMCE4WysiwygEnabledByDefault">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Block Content"/>
+            <title value="Render Inline Edited Text Through Block Content Type With TinyMCE3 Wysiwyg Disabled By Default"/>
+            <description value="Verify that users are able to successfully render and use the inline edited Text content type through the Block content type with TinyMCE3 and Wysiwyg disabled by default."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MC-15179"/>
+            <useCaseId value="MC-13769"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+            <group value="pagebuilder-block-content"/>
+            <group value="pagebuilder-text"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set cms/wysiwyg/enabled disabled" stepKey="configWYSIWYG"/>
+            <magentoCLI command="config:set cms/wysiwyg/editor Magento_Tinymce3/tinymce3Adapter" stepKey="configTinyMCE"/>
+        </before>
+        <click selector="{{TextOnStage.textArea('1')}}" stepKey="focusOnEditorArea"/>
+        <fillField selector="{{TextOnStage.textArea('1')}}" userInput="{{PageBuilderTextProperty.value}}" stepKey="fillText"/>
+        <executeJS function="return document.evaluate(&quot;{{TextOnStage.textArea('1')}}&quot;, document.body).iterateNext().value" stepKey="seeTextContentTypeBlockStage"/>
+        <assertContains stepKey="assertTextValue" after="seeTextContentTypeBlockStage">
+            <expectedResult type="string">{{PageBuilderTextProperty.value}}</expectedResult>
+            <actualResult type="variable">seeTextContentTypeBlockStage</actualResult>
+        </assertContains>
+        <seeElementInDOM selector="{{TextOnStorefront.textAreaText('1', PageBuilderTextProperty.value)}}" stepKey="seeTextContentTypePageStage"/>
+        <seeElementInDOM selector="{{TextOnStorefront.textAreaText('1', PageBuilderTextProperty.value)}}" stepKey="seeTextContentTypeStorefront"/>
+    </test>
+    <test name="BlockRenderFormEditedTextThroughBlockContentTypeTinyMCE3WysiwygEnabledByDefault" extends="BlockRenderInlineEditedTextThroughBlockContentTypeTinyMCE4WysiwygEnabledByDefault">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Block Content"/>
+            <title value="Render Form Edited Text Through Block Content Type With TinyMCE3 Wysiwyg Enabled By Default"/>
+            <description value="Verify that users are able to successfully render and use the form edited Text content type through the Block content type with TinyMCE3 and Wysiwyg enabled by default."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MC-15180"/>
+            <useCaseId value="MC-13769"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+            <group value="pagebuilder-block-content"/>
+            <group value="pagebuilder-text"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set cms/wysiwyg/editor Magento_Tinymce3/tinymce3Adapter" stepKey="configTinyMCE"/>
+        </before>
+        <actionGroup ref="clickOutsideTextInlineEditing" stepKey="focusOnEditorArea"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage" after="focusOnEditorArea">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="addTextToTinyMCE" stepKey="fillText">
+            <argument name="property" value="PageBuilderTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings" after="fillText"/>
+        <executeJS function="return document.evaluate(&quot;{{TextOnStage.textArea('1')}}&quot;, document.body).iterateNext().value" stepKey="seeTextContentTypeBlockStage"/>
+        <assertContains stepKey="assertTextValue" after="seeTextContentTypeBlockStage">
+            <expectedResult type="string">{{PageBuilderTextProperty.value}}</expectedResult>
+            <actualResult type="variable">seeTextContentTypeBlockStage</actualResult>
+        </assertContains>
+    </test>
+    <test name="BlockRenderFormEditedTextThroughBlockContentTypeTinyMCE3WysiwygDisabledByDefault" extends="BlockRenderInlineEditedTextThroughBlockContentTypeTinyMCE4WysiwygEnabledByDefault">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Block Content"/>
+            <title value="Render Form Edited Text Through Block Content Type With TinyMCE3 Wysiwyg Disabled By Default"/>
+            <description value="Verify that users are able to successfully render and use the form edited Text content type through the Block content type with TinyMCE3 and Wysiwyg disabled by default."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MC-15181"/>
+            <useCaseId value="MC-13769"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+            <group value="pagebuilder-block-content"/>
+            <group value="pagebuilder-text"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set cms/wysiwyg/enabled disabled" stepKey="configWYSIWYG"/>
+            <magentoCLI command="config:set cms/wysiwyg/editor Magento_Tinymce3/tinymce3Adapter" stepKey="configTinyMCE"/>
+        </before>
+        <actionGroup ref="clickOutsideTextInlineEditing" stepKey="focusOnEditorArea"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage" after="focusOnEditorArea">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <fillField selector="{{TextOnConfiguration.textArea}}" userInput="{{PageBuilderTextProperty.value}}" stepKey="fillText"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings" after="fillText"/>
+        <executeJS function="return document.evaluate(&quot;{{TextOnStage.textArea('1')}}&quot;, document.body).iterateNext().value" stepKey="seeTextContentTypeBlockStage"/>
+        <assertContains stepKey="assertTextValue" after="seeTextContentTypeBlockStage">
+            <expectedResult type="string">{{PageBuilderTextProperty.value}}</expectedResult>
+            <actualResult type="variable">seeTextContentTypeBlockStage</actualResult>
+        </assertContains>
+        <seeElementInDOM selector="{{TextOnStorefront.textAreaText('1', PageBuilderTextProperty.value)}}" stepKey="seeTextContentTypePageStage"/>
+        <seeElementInDOM selector="{{TextOnStorefront.textAreaText('1', PageBuilderTextProperty.value)}}" stepKey="seeTextContentTypeStorefront"/>
     </test>
 </tests>
