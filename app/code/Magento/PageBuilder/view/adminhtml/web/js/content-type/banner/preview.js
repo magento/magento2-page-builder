@@ -183,7 +183,7 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
 
     _proto.onTextareaKeyUp = function onTextareaKeyUp() {
       this.adjustTextareaHeightBasedOnScrollHeight();
-      this.contentType.dataStore.update(this.textarea.value, "message");
+      this.contentType.dataStore.set("message", this.textarea.value);
     }
     /**
      * Start stage interaction on textarea blur
@@ -221,7 +221,7 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
         var imageObject = dataStore[_this4.config.additional_data.uploaderConfig.dataScope][0] || {}; // Resolves issue when tinyMCE injects a non-breaking space on reinitialization and removes placeholder.
 
         if (dataStore.message === "<div data-bind=\"html: data.content.html\">&nbsp;</div>") {
-          _this4.contentType.dataStore.update("", "message");
+          _this4.contentType.dataStore.set("message", "");
         }
 
         _events.trigger("image:" + _this4.contentType.id + ":assignAfter", imageObject);

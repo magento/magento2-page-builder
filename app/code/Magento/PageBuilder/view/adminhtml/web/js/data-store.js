@@ -38,22 +38,26 @@ define(["jquery", "Magento_PageBuilder/js/utils/object"], function (_jquery, _ob
       return this.state;
     }
     /**
-     * Update the state for the content type
+     * Set a specific keys value in the data store
      *
-     * @param {DataObject | string | number | boolean | any[] | null | undefined} data
-     * @param {string | number} key
+     * @param {string} key
+     * @param value
      */
     ;
 
-    _proto.update = function update(data, key) {
-      this.previousState = Object.assign({}, this.state);
+    _proto.set = function set(key, value) {
+      this.state[key] = value;
+      this.emitState();
+    }
+    /**
+     * Update the entire state for the content type
+     *
+     * @param {DataObject} state
+     */
+    ;
 
-      if (key) {
-        this.state[key] = data;
-      } else {
-        this.state = data;
-      }
-
+    _proto.setState = function setState(state) {
+      this.state = state;
       this.emitState();
     }
     /**
@@ -66,7 +70,7 @@ define(["jquery", "Magento_PageBuilder/js/utils/object"], function (_jquery, _ob
     _proto.unset = function unset(key) {
       var storeState = this.state;
       delete storeState[key];
-      this.update(storeState);
+      this.setState(storeState);
     }
     /**
      * Subscribe to data changes within the data store of a content type

@@ -63,7 +63,7 @@ define(["Magento_PageBuilder/js/events", "uiLayout", "uiRegistry"], function (_e
     var _proto = Uploader.prototype;
 
     _proto.onImageChanged = function onImageChanged(data) {
-      this.dataStore.update(data, this.config.dataScope);
+      this.dataStore.set(this.config.dataScope.toString(), data);
     }
     /**
      * Default callback for image deleted event
@@ -71,7 +71,7 @@ define(["Magento_PageBuilder/js/events", "uiLayout", "uiRegistry"], function (_e
     ;
 
     _proto.onImageDeleted = function onImageDeleted() {
-      this.dataStore.update("", this.config.dataScope);
+      this.dataStore.set(this.config.dataScope.toString(), "");
     }
     /**
      * Get registry callback reference to uploader UI component
