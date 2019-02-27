@@ -2470,4 +2470,142 @@
         </actionGroup>
         <actionGroup ref="clickProductAddToWishListInProductsOnStorefront" stepKey="clickProductAddToWishListInProductsOnStorefront"/>
     </test>
+    <test name="BlockRenderMapThroughBlockContentType">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Block Content"/>
+            <title value="Render Map Through Block Content Type"/>
+            <description value="Verify that users are able to successfully render and use the Map content type through the Block content type."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MC-15153"/>
+            <useCaseId value="MC-13769"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+            <group value="pagebuilder-block-content"/>
+            <group value="pagebuilder-map"/>
+            <group value="pagebuilder-mapMapSettings"/>
+            <group value="pagebuilder-requiresValidMapAPIKey"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <createData entity="_emptyCmsBlock" stepKey="createCMSBlock"/>
+            <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage1">
+                <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
+            </actionGroup>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock"/>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Add Map -->
+        <comment userInput="Add Divider" stepKey="commentAddMap"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSectionMedia">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragMapIntoStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <!-- Edit Map -->
+        <comment userInput="Edit Map" stepKey="commentEditMap"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuMap">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <!-- Enter Height: 500 -->
+        <comment userInput="Enter Height: 500" stepKey="commentEnterHeight"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHeight">
+            <argument name="property" value="PageBuilderMapHeightProperty500px"/>
+        </actionGroup>
+        <!-- Add 1st Location -->
+        <comment userInput="Add 1st Location" stepKey="commentAddLocation1"/>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName">
+            <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLatitude">
+            <argument name="property" value="PageBuilderMapLatitude_0"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLongitude">
+            <argument name="property" value="PageBuilderMapLongitude_0"/>
+        </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
+        <!-- Add 2nd Location -->
+        <comment userInput="Add 2nd Location" stepKey="commentAddLocation2"/>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton2"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName2">
+            <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLatitude2">
+            <argument name="property" value="PageBuilderMapLatitude_0"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLongitude2">
+            <argument name="property" value="PageBuilderMapLongitude_NegativeMax"/>
+        </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm2"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsMap"/>
+        <!-- Save Block and Set Valid API Key -->
+        <comment userInput="Save Block and Set Valid API Key" stepKey="commentSaveBlockAndSetKey"/>
+        <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key {{googleMapsAPIKey.valid}}" stepKey="setValidGoogleMapsAPIKey"/>
+        <actionGroup ref="saveCMSBlock" stepKey="saveCMSBlock"/>
+        <!-- Validate CMS Block Stage -->
+        <comment userInput="Validate CMS Block Stage" stepKey="commentValidateCMSBlockStage"/>
+        <seeElement selector="{{MapOnStage.height('1', PageBuilderMapHeightProperty500px.value)}}" stepKey="seeHeightMap1Stage"/>
+        <executeJS function="return document.querySelectorAll('{{MapOnStage.baseCSS}}')[0].getBoundingClientRect().height" stepKey="actualStageMap1Height"/>
+        <executeJS function="return Math.abs({$actualStageMap1Height}-{{PageBuilderMapHeightProperty500px.value}})" stepKey="actualStageMap1HeightDifference"/>
+        <assertLessThanOrEqual stepKey="assertStageMap1Height">
+            <expectedResult type="int">2</expectedResult>
+            <actualResult type="variable">actualStageMap1HeightDifference</actualResult>
+        </assertLessThanOrEqual>
+        <!-- Validate 2 Pins on map -->
+        <comment userInput="Validate 2 Pins on map" stepKey="commentValidate2PinsOnMap"/>
+        <actionGroup ref="verifyNumberOfPinsOnMap" stepKey="verifyNumberOfPinsOnMapStage">
+            <argument name="page" value="MapOnStage"/>
+            <argument name="count" value="2"/>
+        </actionGroup>
+        <!-- Add Block to CMS Page -->
+        <comment userInput="Add Block to CMS Page" stepKey="commentAddBlockToCMSPage"/>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPanelAddContentMenuSection">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDropBlock">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
+            <argument name="block" value="$$createCMSBlock$$"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsBlock"/>
+        <!-- Validate CMS Page Stage -->
+        <comment userInput="Validate CMS Page Stage" stepKey="commentValidateCMSPageStage"/>
+        <seeElement selector="{{MapOnStorefront.height('1', PageBuilderMapHeightProperty500px.value)}}" stepKey="seeHeightMap1pageStage"/>
+        <executeJS function="return document.querySelectorAll('{{MapOnStage.baseCSS}}')[0].getBoundingClientRect().height" stepKey="pageStageMap1Height"/>
+        <executeJS function="return Math.abs({$pageStageMap1Height}-{{PageBuilderMapHeightProperty500px.value}})" stepKey="pageStageMap1HeightDifference"/>
+        <assertLessThanOrEqual stepKey="assertPageStageMap1Height">
+            <expectedResult type="int">2</expectedResult>
+            <actualResult type="variable">pageStageMap1HeightDifference</actualResult>
+        </assertLessThanOrEqual>
+        <actionGroup ref="verifyNumberOfPinsOnMapNoClick" stepKey="verifyNumberOfPinsOnMapPageStage">
+            <argument name="page" value="MapOnStorefront"/>
+            <argument name="count" value="2"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate CMS Page Storefront -->
+        <comment userInput="Validate CMS Page Storefront" stepKey="commentValidateCMSPageStorefront"/>
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToStoreFront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <seeElement selector="{{MapOnStorefront.height('1', PageBuilderMapHeightProperty500px.value)}}" stepKey="seeHeightMap1Storefront"/>
+        <executeJS function="return document.querySelectorAll('{{MapOnStage.baseCSS}}')[0].getBoundingClientRect().height" stepKey="actualStorefrontMap1Height"/>
+        <executeJS function="return Math.abs({$actualStorefrontMap1Height}-{{PageBuilderMapHeightProperty500px.value}})" stepKey="actualStorefrontMap1HeightDifference"/>
+        <assertLessThanOrEqual stepKey="assertStorefrontMap1Height">
+            <expectedResult type="int">2</expectedResult>
+            <actualResult type="variable">actualStorefrontMap1HeightDifference</actualResult>
+        </assertLessThanOrEqual>
+    </test>
 </tests>
