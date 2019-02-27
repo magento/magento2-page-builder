@@ -69,7 +69,7 @@ See [Install Page Builder](getting-started/install-pagebuilder.md)
 
 ### Other
 
-* [Release notes](release-notes.md)
+* [Release notes](CHANGELOG.md.md)
 * [Component status](comp-status2.md)
 * [Contribution guide](https://github.com/magento/magento2-page-builder/blob/develop/CONTRIBUTING.md)
 
