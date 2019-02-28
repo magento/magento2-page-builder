@@ -76,11 +76,13 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <seeElement selector="{{PageBuilderProductAttribute.PageBuilderBtn('description')}}" stepKey="seePageBuilderButton"/>
+        <dontSeeElementInDOM selector="{{AdminProductContentSection.descriptionTextArea}}" stepKey="dontSeeDescriptionAreaInDOM"/>
         <magentoCLI command="config:set cms/pagebuilder/enabled 0" stepKey="disablePageBuilder"/>
         <actionGroup ref="navigateToCreatedProductEditPage" stepKey="navigateToCreatedProductEditPage">
             <argument name="product" value="$$createProduct$$"/>
         </actionGroup>
         <actionGroup ref="expandAdminProductSection" stepKey="expandAdminProductSection"/>
+        <seeElementInDOM selector="{{AdminProductContentSection.descriptionTextArea}}" stepKey="seeDescriptionAreaInDOM"/>
         <dontSeeElementInDOM selector="{{PageBuilderProductAttribute.PageBuilderBtn('description')}}" stepKey="dontSeePageBuilderButton"/>
     </test>
 </tests>
