@@ -1,13 +1,13 @@
-## PageBuilder pre-release access
+## Page Builder pre-release access
 
-Pre-release access to PageBuilder is opened to all Magento Partners with *no support* from Magento team.
+Pre-release access to Page Builder is opened to all Magento Partners with *no support* from Magento team.
 Use this access to:
 
 - Explore extension points to build custom modules and integrations for 3rd party services, such as Facebook and Instagram.
 - Try out customization options and extend its functionality beyond its default features.
-- Preview to prepare a migration plan from BlueFoot 1.0 to PageBuilder.
+- Preview to prepare a migration plan from BlueFoot 1.0 to Page Builder.
 
-Should you find an issue in PageBuilder functionality, please report it on github.
+Should you find an issue in Page Builder functionality, please report it on GitHub.
 
 ## Developer documentation
 
