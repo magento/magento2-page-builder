@@ -2,6 +2,8 @@
 
 {% include page-builder/release-notes/intro.md %}}
 
+{% include page-builder/release-notes/beta-8.md %}
+
 {% include page-builder/release-notes/beta-7.md %}
 
 {% include page-builder/release-notes/beta-6.md %}
