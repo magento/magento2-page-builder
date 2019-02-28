@@ -25,7 +25,7 @@ define(["jquery"], function (_jquery) {
      */
     _proto.fromDom = function fromDom(value) {
       return value;
-    };
+    }
     /**
      * Convert value to knockout format
      *
@@ -33,7 +33,7 @@ define(["jquery"], function (_jquery) {
      * @param data Object
      * @returns {string}
      */
-
+    ;
 
     _proto.toDom = function toDom(name, data) {
       if (typeof data[name] !== "string") {

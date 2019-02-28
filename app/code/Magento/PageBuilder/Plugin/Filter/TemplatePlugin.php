@@ -12,7 +12,9 @@ namespace Magento\PageBuilder\Plugin\Filter;
  */
 class TemplatePlugin
 {
-    const DATA_BACKGROUND_IMAGE = 'data-background-images';
+    const BACKGROUND_IMAGE_PATTERN = '/data-background-images/si';
+
+    const HTML_CONTENT_TYPE_PATTERN = '/data-content-type="html"/si';
 
     /**
      * @var \Magento\Framework\View\ConfigInterface
@@ -55,13 +57,13 @@ class TemplatePlugin
         $this->domDocument = false;
 
         // Validate if the filtered result requires background image processing
-        if (strpos($result, self::DATA_BACKGROUND_IMAGE) !== false) {
+        if (preg_match(self::BACKGROUND_IMAGE_PATTERN, $result)) {
             $document = $this->getDomDocument($result);
             $this->generateBackgroundImageStyles($document);
         }
 
         // Process any HTML content types, they need to be decoded on the front-end
-        if (strpos($result, 'data-content-type="html"') !== false) {
+        if (preg_match(self::HTML_CONTENT_TYPE_PATTERN, $result)) {
             $document = $this->getDomDocument($result);
             $this->decodeHtmlContentTypes($document);
         }
@@ -164,10 +166,10 @@ class TemplatePlugin
     private function generateBackgroundImageStyles(\DOMDocument $document) : void
     {
         $xpath = new \DOMXPath($document);
-        $nodes = $xpath->query('//*[@' . self:: DATA_BACKGROUND_IMAGE . ']');
+        $nodes = $xpath->query('//*[@data-background-images]');
         foreach ($nodes as $node) {
             /* @var \DOMElement $node */
-            $backgroundImages = $node->attributes->getNamedItem(self:: DATA_BACKGROUND_IMAGE);
+            $backgroundImages = $node->attributes->getNamedItem('data-background-images');
             if ($backgroundImages->nodeValue !== '') {
                 $elementClass = uniqid('background-image-');
                 $images = json_decode(stripslashes($backgroundImages->nodeValue), true);
