@@ -14,9 +14,9 @@ Should you find an issue in Page Builder functionality, please report it on GitH
 We will update the developer documentation frequently during beta. Please use this link to access the latest updates: 
 [Page Builder developer documentation](https://devdocs.magedevteam.com/ds_pagebuilder/page-builder/getting-started/install-pagebuilder.html)
 
-## Contribute to PageBuilder
+## Contribute to Page Builder
 
-We appreciate any and all contributions to PageBuilder. If you are interested in contributing to this repository, please see our [Contribution Guide].
+We appreciate any and all contributions to Page Builder. If you are interested in contributing to this repository, please see our [Contribution Guide].
 
 ## TypeScript
 This module utilises TypeScript within our adminhtml web directory. This requires an additional build step or watch command to be running during development on this module.

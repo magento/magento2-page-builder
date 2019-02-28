@@ -80,5 +80,5 @@ See [Install Page Builder](install-pagebuilder.md)
 
 ## Contribute to Page Builder
 
-We appreciate any and all contributions to PageBuilder. If you are interested in contributing to this repository, please see our [Contribution guide](https://github.com/magento/magento2-page-builder/CONTRIBUTING.md).
+We appreciate any and all contributions to Page Builder. If you are interested in contributing to this repository, please see our [Contribution guide](https://github.com/magento/magento2-page-builder/CONTRIBUTING.md).
 
