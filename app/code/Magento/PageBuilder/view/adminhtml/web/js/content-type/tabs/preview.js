@@ -260,7 +260,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         _this3.contentType.addChild(tab, _this3.contentType.children().length); // Update the default tab title when adding a new tab
 
 
-        tab.dataStore.update((0, _translate)("Tab") + " " + (_this3.contentType.children.indexOf(tab) + 1), "tab_name");
+        tab.dataStore.set("tab_name", (0, _translate)("Tab") + " " + (_this3.contentType.children.indexOf(tab) + 1));
       });
     }
     /**
@@ -411,7 +411,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       _events.on("tab-item:duplicateAfter", function (args) {
         if (_this4.contentType.id === args.duplicateContentType.parentContentType.id && args.direct) {
           var tabData = args.duplicateContentType.dataStore.getState();
-          args.duplicateContentType.dataStore.update(tabData.tab_name.toString() + " copy", "tab_name");
+          args.duplicateContentType.dataStore.set("tab_name", tabData.tab_name.toString() + " copy");
           duplicatedTab = args.duplicateContentType;
           duplicatedTabIndex = args.index;
         }
@@ -448,7 +448,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           value: index
         });
       });
-      this.contentType.dataStore.update(activeOptions, "_default_active_options");
+      this.contentType.dataStore.set("_default_active_options", activeOptions);
     }
     /**
      * Assign a debounce and delay to the init of tabs to ensure the DOM has updated

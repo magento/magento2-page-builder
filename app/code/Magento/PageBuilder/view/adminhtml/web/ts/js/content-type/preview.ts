@@ -150,7 +150,7 @@ export default class Preview implements PreviewInterface {
         const data = this.contentType.dataStore.getState();
 
         set(data, key, value);
-        this.contentType.dataStore.update(data);
+        this.contentType.dataStore.setState(data);
     }
 
     /**
@@ -312,7 +312,7 @@ export default class Preview implements PreviewInterface {
      */
     public onOptionVisibilityToggle(): void {
         const display = this.contentType.dataStore.get<boolean>("display");
-        this.contentType.dataStore.update(!display, "display");
+        this.contentType.dataStore.set("display", !display);
     }
 
     /**

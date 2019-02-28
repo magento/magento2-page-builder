@@ -34,7 +34,7 @@ define(["Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/c
                 masterComponent = _ref[1];
             contentType.preview = previewComponent;
             contentType.content = masterComponent;
-            contentType.dataStore.update(prepareData(config, data));
+            contentType.dataStore.setState(prepareData(config, data));
             resolve(contentType);
           }).catch(function (error) {
             reject(error);

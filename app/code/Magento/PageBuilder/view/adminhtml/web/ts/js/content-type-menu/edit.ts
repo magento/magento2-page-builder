@@ -20,7 +20,7 @@ export default class Edit {
         this.instance = instance;
         this.dataStore = dataStore;
         events.on("form:" + this.instance.id + ":saveAfter", (data: any) => {
-            this.dataStore.update(data);
+            this.dataStore.setState(data);
         });
     }
 

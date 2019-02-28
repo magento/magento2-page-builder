@@ -51,7 +51,7 @@ export default function createContentType(
                 ).then(([previewComponent, masterComponent]) => {
                     contentType.preview = previewComponent;
                     contentType.content = masterComponent;
-                    contentType.dataStore.update(
+                    contentType.dataStore.setState(
                         prepareData(config, data),
                     );
                     resolve(contentType);
