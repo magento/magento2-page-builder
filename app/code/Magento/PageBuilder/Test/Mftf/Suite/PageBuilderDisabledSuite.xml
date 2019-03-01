@@ -6,12 +6,15 @@
   */
 -->
 <suites xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Suite/etc/suiteSchema.xsd">
-    <suite name="WYSIWYGDisabledSuite">
+    <suite name="PageBuilderDisabledSuite">
         <before>
             <magentoCLI command="config:set cms/pagebuilder/enabled 0" stepKey="disablePageBuilder"/>
         </before>
         <after>
             <magentoCLI command="config:set cms/pagebuilder/enabled 1" stepKey="enablePageBuilder"/>
         </after>
+        <include>
+            <group name="WYSIWYGDisabledSuite"/>
+        </include>
     </suite>
 </suites>
