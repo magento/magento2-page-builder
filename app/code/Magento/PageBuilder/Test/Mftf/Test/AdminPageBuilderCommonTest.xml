@@ -1204,18 +1204,18 @@
         <comment userInput="Validate Favorite Colors" stepKey="commentFavoriteColors"/>
         <waitForElementVisible selector="{{ColorPicker.activeFavoriteColorBox(PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="waitForActiveFavoriteColor"/>
     </test>
-    <test name="AdminPageBuilderURLInputTest">
+    <test name="AdminPageBuilderURLInputLinkTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Common Tests"/>
-            <title value="URL Input - Admin are able to add External URL link into PageBuilder content"/>
+            <title value="Link - Admin are able to add External URL link into PageBuilder content"/>
             <description value="Admin are able to add External URL link into PageBuilder content"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-71571"/>
             <testCaseId value="MC-1342"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-common"/>
-            <group value="pagebuilder-urlInput"/>
+            <group value="pagebuilder-link"/>
         </annotations>
         <before>
             <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
@@ -1239,9 +1239,9 @@
             <argument name="section" value="ButtonItemOnStage"/>
             <argument name="targetIndex" value="1"/>
         </actionGroup>
-        <waitForElementVisible selector="{{PageBuilderSection.LinkSelect('button_link')}}" stepKey="waitForButtonLinkSelect"/>
-        <seeElement selector="{{PageBuilderSection.LinkSelect('button_link')}}" stepKey="seeButtonLinkSelect"/>
-        <seeOptionIsSelected selector="{{PageBuilderSection.LinkSelect('button_link')}}" userInput="URL" stepKey="seeButtonLinkSelectedByDefault" />
+        <waitForElementVisible selector="{{PageBuilderLinkAttributeAdmin.LinkSelect('button_link')}}" stepKey="waitForButtonLinkSelect"/>
+        <seeElement selector="{{PageBuilderLinkAttributeAdmin.LinkSelect('button_link')}}" stepKey="seeButtonLinkSelect"/>
+        <seeOptionIsSelected selector="{{PageBuilderLinkAttributeAdmin.LinkSelect('button_link')}}" userInput="URL" stepKey="seeButtonLinkSelectedByDefault" />
         <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="fillButton1LinkField">
             <argument name="property" value="PageBuilderButtonItemLink_NotSecure"/>
             <argument name="selection" value="{{ExternalLink.url}}"/>
@@ -1253,7 +1253,7 @@
         <!--Go to storefront to verify External Link-->
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
         <waitForPageLoad  stepKey="waitForPageLoad1"/>
-        <seeElement selector="{{PageBuilderURLOnStoreFrontSection.ExternalURLInCurrentTab(PageBuilderButtonItemLink_NotSecure.value)}}" stepKey="seeExternalLinkOnStoreFront" />
+        <seeElement selector="{{PageBuilderLinkAttributeStoreFront.ExternalURLInCurrentTab(PageBuilderButtonItemLink_NotSecure.value)}}" stepKey="seeExternalLinkOnStoreFront" />
         <click selector=".pagebuilder-button-primary" stepKey="clickButton"/>
         <grabFromCurrentUrl stepKey="grabFromCurrentUrl1"/>
         <assertEquals stepKey="assertEquals1" message="pass">
@@ -1279,7 +1279,7 @@
         <!--Go to storefront to verify Secure External Link-->
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage2"/>
         <waitForPageLoad  stepKey="waitForPageLoad3"/>
-        <seeElement selector="{{PageBuilderURLOnStoreFrontSection.ExternalURLInNewTab(PageBuilderButtonItemLink_Secure.value)}}" stepKey="seeExternalSecureLinkOnStoreFront" />
+        <seeElement selector="{{PageBuilderLinkAttributeStoreFront.ExternalURLInNewTab(PageBuilderButtonItemLink_Secure.value)}}" stepKey="seeExternalSecureLinkOnStoreFront" />
         <click selector=".pagebuilder-button-primary" stepKey="clickButton2"/>
         <switchToNextTab stepKey="switchToNextTab"/>
         <grabFromCurrentUrl stepKey="grabFromCurrentUrl2"/>
@@ -1292,14 +1292,14 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Common Tests"/>
-            <title value="URL Input - Admin are able to add Category link into PageBuilder content"/>
+            <title value="Link - Admin are able to add Category link into PageBuilder content"/>
             <description value="Admin are able to add Category link link into PageBuilder content"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-88961"/>
             <testCaseId value="MC-1319"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-common"/>
-            <group value="pagebuilder-urlInput"/>
+            <group value="pagebuilder-link"/>
         </annotations>
         <before>
             <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
@@ -1332,45 +1332,45 @@
             <argument name="section" value="ButtonItemOnStage"/>
             <argument name="targetIndex" value="1"/>
         </actionGroup>
-        <waitForElementVisible selector="{{PageBuilderSection.LinkSelect('button_link')}}" stepKey="waitForButtonLinkSelect"/>
-        <seeElement selector="{{PageBuilderSection.LinkSelect('button_link')}}" stepKey="seeButtonLinkSelect"/>
+        <waitForElementVisible selector="{{PageBuilderLinkAttributeAdmin.LinkSelect('button_link')}}" stepKey="waitForButtonLinkSelect"/>
+        <seeElement selector="{{PageBuilderLinkAttributeAdmin.LinkSelect('button_link')}}" stepKey="seeButtonLinkSelect"/>
         <selectOption selector="{{EditPanelForm.panelFieldControl(PageBuilderButtonItemLink_NotSecure.section, PageBuilderButtonItemLink_NotSecure.fieldName)}}" userInput="Category" stepKey="selectOption" />
 
         <!--See dropdown beside Button Link Select-->
-        <waitForElementVisible selector="{{PageBuilderSection.LinkDropdown}}" stepKey="waitButtonLinkDropdownInput" />
-        <seeElement selector="{{PageBuilderSection.LinkDropdown}}" stepKey="seeButtonLinkDropdownInput" />
-        <click selector="{{PageBuilderSection.LinkDropdown}}" stepKey="expandButtonLinkDropdownInput1" />
+        <waitForElementVisible selector="{{PageBuilderLinkAttributeAdmin.LinkDropdown}}" stepKey="waitButtonLinkDropdownInput" />
+        <seeElement selector="{{PageBuilderLinkAttributeAdmin.LinkDropdown}}" stepKey="seeButtonLinkDropdownInput" />
+        <click selector="{{PageBuilderLinkAttributeAdmin.LinkDropdown}}" stepKey="expandButtonLinkDropdownInput1" />
         <see userInput="Default Category" stepKey="seeLevel1Category"/>
         <see userInput="$createCategoryA.name$" stepKey="seeLevel2Category"/>
         <dontSee userInput="$createSubCategoryX.name$" stepKey="dontSeeLevel3Category"/>
 
         <!--Type 2 first letters into Search box-->
-        <pressKey selector="{{PageBuilderSection.LinkSearch}}" parameterArray="['su',\Facebook\WebDriver\WebDriverKeys::ENTER]" stepKey="pressKeyEnter"/>
-        <waitForElementVisible selector="{{PageBuilderSection.SearchResult($createSubCategoryX.name$)}}" stepKey="waitForSearchResult" />
+        <pressKey selector="{{PageBuilderLinkAttributeAdmin.LinkSearch}}" parameterArray="['su',\Facebook\WebDriver\WebDriverKeys::ENTER]" stepKey="pressKeyEnter"/>
+        <waitForElementVisible selector="{{PageBuilderLinkAttributeAdmin.SearchResult($createSubCategoryX.name$)}}" stepKey="waitForSearchResult" />
         <see userInput="$createSubCategoryX.name$" stepKey="seeSubCategoryOnSearchResult"/>
-        <click selector="{{PageBuilderSection.SearchResult($createSubCategoryX.name$)}}" stepKey="clickSubCategoryXOnSearchResult"/>
-        <dontSee selector="{{PageBuilderSection.SearchResultBox}}" stepKey="dropdownCollapses" />
-        <grabTextFrom selector="{{PageBuilderSection.DropdownInput}}" stepKey="textFromDropDown1"/>
+        <click selector="{{PageBuilderLinkAttributeAdmin.SearchResult($createSubCategoryX.name$)}}" stepKey="clickSubCategoryXOnSearchResult"/>
+        <dontSee selector="{{PageBuilderLinkAttributeAdmin.SearchResultBox}}" stepKey="dropdownCollapses" />
+        <grabTextFrom selector="{{PageBuilderLinkAttributeAdmin.DropdownInput}}" stepKey="textFromDropDown1"/>
         <assertEquals stepKey="assertEquals1" message="pass">
             <expectedResult type="string">$createSubCategoryX.name$</expectedResult>
             <actualResult type="variable">textFromDropDown1</actualResult>
         </assertEquals>
-        <seeElement selector="{{PageBuilderSection.RemoveBtn}}" stepKey="seeXButtonInField1" />
+        <seeElement selector="{{PageBuilderLinkAttributeAdmin.RemoveBtn}}" stepKey="seeXButtonInField1" />
 
         <!--Expand dropdown again to verify highlighted not cleared yet-->
-        <click selector="{{PageBuilderSection.LinkDropdown}}" stepKey="expandButtonLinkDropdownInput3" />
-        <seeInField  selector="{{PageBuilderSection.LinkSearch}}" userInput="su" stepKey="seeSearchNotCleared"/>
+        <click selector="{{PageBuilderLinkAttributeAdmin.LinkDropdown}}" stepKey="expandButtonLinkDropdownInput3" />
+        <seeInField  selector="{{PageBuilderLinkAttributeAdmin.LinkSearch}}" userInput="su" stepKey="seeSearchNotCleared"/>
         <wait time="3" stepKey="wait"/>
-        <seeElement selector="{{PageBuilderSection.LinkItemSelected($createSubCategoryX.name$)}}" stepKey="seeSearchResultHighlighted" />
+        <seeElement selector="{{PageBuilderLinkAttributeAdmin.LinkItemSelected($createSubCategoryX.name$)}}" stepKey="seeSearchResultHighlighted" />
 
         <!--Select another category from dropdown-->
-        <click selector="{{PageBuilderSection.SearchResult($createSubCategoryY.name$)}}" stepKey="clickSubCategoryYOnSearchResult"/>
-        <grabTextFrom selector="{{PageBuilderSection.DropdownInput}}" stepKey="textFromDropDown2"/>
+        <click selector="{{PageBuilderLinkAttributeAdmin.SearchResult($createSubCategoryY.name$)}}" stepKey="clickSubCategoryYOnSearchResult"/>
+        <grabTextFrom selector="{{PageBuilderLinkAttributeAdmin.DropdownInput}}" stepKey="textFromDropDown2"/>
         <assertEquals stepKey="assertEquals2" message="pass">
             <expectedResult type="string">$createSubCategoryY.name$</expectedResult>
             <actualResult type="variable">textFromDropDown2</actualResult>
         </assertEquals>
-        <seeElement selector="{{PageBuilderSection.RemoveBtn}}" stepKey="seeXButtonInField2" />
+        <seeElement selector="{{PageBuilderLinkAttributeAdmin.RemoveBtn}}" stepKey="seeXButtonInField2" />
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage1"/>
 
@@ -1389,8 +1389,8 @@
         <click selector=".placeholder-text" stepKey="clickOnEditButton"/>
         <waitForElementVisible selector="//div[contains(@class, 'buttons-container')]//a[@title='Edit']" stepKey="waitForSettingBtn" />
         <click selector="//div[contains(@class, 'buttons-container')]//a[@title='Edit']" stepKey="clickSelectButtonOnFirstItem"/>
-        <waitForElementVisible selector="{{PageBuilderSection.LinkSelect('button_link')}}" stepKey="waitForButtonLinkSelect2"/>
-        <grabTextFrom selector="{{PageBuilderSection.DropdownInput}}" stepKey="textFromDropDown3"/>
+        <waitForElementVisible selector="{{PageBuilderLinkAttributeAdmin.LinkSelect('button_link')}}" stepKey="waitForButtonLinkSelect2"/>
+        <grabTextFrom selector="{{PageBuilderLinkAttributeAdmin.DropdownInput}}" stepKey="textFromDropDown3"/>
         <assertRegExp stepKey="assertEquals3" message="pass">
             <expectedResult type="string">/Category with ID: [0-9]+ doesn't exist$/</expectedResult>
             <actualResult type="variable">textFromDropDown3</actualResult>
@@ -1401,14 +1401,14 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Common Tests"/>
-            <title value="URL Input - Admin are able to add Product link into PageBuilder content"/>
+            <title value="Link - Admin are able to add Product link into PageBuilder content"/>
             <description value="Admin are able to add Product link link into PageBuilder content"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-88962"/>
             <testCaseId value="MC-2814"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-common"/>
-            <group value="pagebuilder-urlInput"/>
+            <group value="pagebuilder-link"/>
         </annotations>
         <before>
             <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
@@ -1440,43 +1440,43 @@
             <argument name="section" value="ButtonItemOnStage"/>
             <argument name="targetIndex" value="1"/>
         </actionGroup>
-        <waitForElementVisible selector="{{PageBuilderSection.LinkSelect('button_link')}}" stepKey="waitForButtonLinkSelect"/>
-        <seeElement selector="{{PageBuilderSection.LinkSelect('button_link')}}" stepKey="seeButtonLinkSelect"/>
+        <waitForElementVisible selector="{{PageBuilderLinkAttributeAdmin.LinkSelect('button_link')}}" stepKey="waitForButtonLinkSelect"/>
+        <seeElement selector="{{PageBuilderLinkAttributeAdmin.LinkSelect('button_link')}}" stepKey="seeButtonLinkSelect"/>
         <selectOption selector="{{EditPanelForm.panelFieldControl(PageBuilderButtonItemLink_NotSecure.section, PageBuilderButtonItemLink_NotSecure.fieldName)}}" userInput="Product" stepKey="selectOption" />
 
         <!--See dropdown beside Button Link Select-->
-        <waitForElementVisible selector="{{PageBuilderSection.LinkDropdown}}" stepKey="waitButtonLinkDropdownInput" />
-        <seeElement selector="{{PageBuilderSection.LinkDropdown}}" stepKey="seeButtonLinkDropdownInput" />
-        <click selector="{{PageBuilderSection.LinkDropdown}}" stepKey="expandButtonLinkDropdownInput1" />
+        <waitForElementVisible selector="{{PageBuilderLinkAttributeAdmin.LinkDropdown}}" stepKey="waitButtonLinkDropdownInput" />
+        <seeElement selector="{{PageBuilderLinkAttributeAdmin.LinkDropdown}}" stepKey="seeButtonLinkDropdownInput" />
+        <click selector="{{PageBuilderLinkAttributeAdmin.LinkDropdown}}" stepKey="expandButtonLinkDropdownInput1" />
         <dontSee userInput="$createPreReqProduct1.name$" stepKey="dontSeeProduct1"/>
         <dontSee userInput="$createPreReqProduct2.name$" stepKey="dontSeeProduct2"/>
 
         <!--Type 2 first letters into Search box-->
-        <pressKey selector="{{PageBuilderSection.LinkSearch}}" parameterArray="['te',\Facebook\WebDriver\WebDriverKeys::ENTER]" stepKey="pressKeyEnter"/>
-        <waitForElementVisible selector="{{PageBuilderSection.SearchResult($createPreReqProduct1.name$)}}" stepKey="waitForSearchResult" />
+        <pressKey selector="{{PageBuilderLinkAttributeAdmin.LinkSearch}}" parameterArray="['te',\Facebook\WebDriver\WebDriverKeys::ENTER]" stepKey="pressKeyEnter"/>
+        <waitForElementVisible selector="{{PageBuilderLinkAttributeAdmin.SearchResult($createPreReqProduct1.name$)}}" stepKey="waitForSearchResult" />
         <see userInput="$createPreReqProduct1.name$" stepKey="seeProduct1OnSearchResult"/>
-        <click selector="{{PageBuilderSection.SearchResult($createPreReqProduct1.name$)}}" stepKey="clickProduct1XOnSearchResult"/>
-        <dontSee selector="{{PageBuilderSection.SearchResultBox}}" stepKey="dropdownCollapses" />
-        <grabTextFrom selector="{{PageBuilderSection.DropdownInput}}" stepKey="textFromDropDown1"/>
+        <click selector="{{PageBuilderLinkAttributeAdmin.SearchResult($createPreReqProduct1.name$)}}" stepKey="clickProduct1XOnSearchResult"/>
+        <dontSee selector="{{PageBuilderLinkAttributeAdmin.SearchResultBox}}" stepKey="dropdownCollapses" />
+        <grabTextFrom selector="{{PageBuilderLinkAttributeAdmin.DropdownInput}}" stepKey="textFromDropDown1"/>
         <assertEquals stepKey="assertEquals1" message="pass">
             <expectedResult type="string">$createPreReqProduct1.name$</expectedResult>
             <actualResult type="variable">textFromDropDown1</actualResult>
         </assertEquals>
-        <seeElement selector="{{PageBuilderSection.RemoveBtn}}" stepKey="seeXButtonInField1" />
+        <seeElement selector="{{PageBuilderLinkAttributeAdmin.RemoveBtn}}" stepKey="seeXButtonInField1" />
 
         <!--Expand dropdown again to verify highlighted not cleared yet-->
-        <click selector="{{PageBuilderSection.LinkDropdown}}" stepKey="expandButtonLinkDropdownInput2" />
-        <seeInField  selector="{{PageBuilderSection.LinkSearch}}" userInput="te" stepKey="seeSearchNotCleared"/>
-        <seeElement selector="{{PageBuilderSection.LinkItemSelected($createPreReqProduct1.name$)}}" stepKey="seeSearchResultHighlighted" />
+        <click selector="{{PageBuilderLinkAttributeAdmin.LinkDropdown}}" stepKey="expandButtonLinkDropdownInput2" />
+        <seeInField  selector="{{PageBuilderLinkAttributeAdmin.LinkSearch}}" userInput="te" stepKey="seeSearchNotCleared"/>
+        <seeElement selector="{{PageBuilderLinkAttributeAdmin.LinkItemSelected($createPreReqProduct1.name$)}}" stepKey="seeSearchResultHighlighted" />
 
         <!--Select another product from dropdown-->
-        <click selector="{{PageBuilderSection.SearchResult($createPreReqProduct2.name$)}}" stepKey="clickProduct2OnSearchResult"/>
-        <grabTextFrom selector="{{PageBuilderSection.DropdownInput}}" stepKey="textFromDropDown2"/>
+        <click selector="{{PageBuilderLinkAttributeAdmin.SearchResult($createPreReqProduct2.name$)}}" stepKey="clickProduct2OnSearchResult"/>
+        <grabTextFrom selector="{{PageBuilderLinkAttributeAdmin.DropdownInput}}" stepKey="textFromDropDown2"/>
         <assertEquals stepKey="assertEquals2" message="pass">
             <expectedResult type="string">$createPreReqProduct2.name$</expectedResult>
             <actualResult type="variable">textFromDropDown2</actualResult>
         </assertEquals>
-        <seeElement selector="{{PageBuilderSection.RemoveBtn}}" stepKey="seeXButtonInField2" />
+        <seeElement selector="{{PageBuilderLinkAttributeAdmin.RemoveBtn}}" stepKey="seeXButtonInField2" />
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage1"/>
 
@@ -1495,9 +1495,9 @@
         <click selector=".placeholder-text" stepKey="clickOnEditButton"/>
         <waitForElementVisible selector="//div[contains(@class, 'buttons-container')]//a[@title='Edit']" stepKey="waitForSettingBtn" />
         <click selector="//div[contains(@class, 'buttons-container')]//a[@title='Edit']" stepKey="clickSelectButtonOnFirstItem"/>
-        <waitForElementVisible selector="{{PageBuilderSection.LinkSelect('button_link')}}" stepKey="waitForButtonLinkSelect2"/>
+        <waitForElementVisible selector="{{PageBuilderLinkAttributeAdmin.LinkSelect('button_link')}}" stepKey="waitForButtonLinkSelect2"/>
         <waitForLoadingMaskToDisappear stepKey="waitForLoading1" />
-        <grabTextFrom selector="{{PageBuilderSection.DropdownInput}}" stepKey="textFromDropDown3"/>
+        <grabTextFrom selector="{{PageBuilderLinkAttributeAdmin.DropdownInput}}" stepKey="textFromDropDown3"/>
         <assertRegExp stepKey="assertEquals3" message="pass">
             <expectedResult type="string">/^Product with ID: [0-9]+ doesn't exist$/</expectedResult>
             <actualResult type="variable">textFromDropDown3</actualResult>
@@ -1509,14 +1509,14 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Common Tests"/>
-            <title value="URL Input - Admin are able to add CMS Page link into PageBuilder content"/>
+            <title value="Link - Admin are able to add CMS Page link into PageBuilder content"/>
             <description value="Admin are able to add CMS Page link into PageBuilder content"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-88960"/>
             <testCaseId value="MC-2912"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-common"/>
-            <group value="pagebuilder-urlInput"/>
+            <group value="pagebuilder-link"/>
         </annotations>
         <before>
             <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
@@ -1543,43 +1543,43 @@
             <argument name="section" value="ButtonItemOnStage"/>
             <argument name="targetIndex" value="1"/>
         </actionGroup>
-        <waitForElementVisible selector="{{PageBuilderSection.LinkSelect('button_link')}}" stepKey="waitForButtonLinkSelect"/>
-        <seeElement selector="{{PageBuilderSection.LinkSelect('button_link')}}" stepKey="seeButtonLinkSelect"/>
+        <waitForElementVisible selector="{{PageBuilderLinkAttributeAdmin.LinkSelect('button_link')}}" stepKey="waitForButtonLinkSelect"/>
+        <seeElement selector="{{PageBuilderLinkAttributeAdmin.LinkSelect('button_link')}}" stepKey="seeButtonLinkSelect"/>
         <selectOption selector="{{EditPanelForm.panelFieldControl(PageBuilderButtonItemLink_NotSecure.section, PageBuilderButtonItemLink_NotSecure.fieldName)}}" userInput="Page" stepKey="selectOption" />
 
         <!--See dropdown beside Button Link Select-->
-        <waitForElementVisible selector="{{PageBuilderSection.LinkDropdown}}" stepKey="waitButtonLinkDropdownInput" />
-        <seeElement selector="{{PageBuilderSection.LinkDropdown}}" stepKey="seeButtonLinkDropdownInput" />
-        <click selector="{{PageBuilderSection.LinkDropdown}}" stepKey="expandButtonLinkDropdownInput1" />
+        <waitForElementVisible selector="{{PageBuilderLinkAttributeAdmin.LinkDropdown}}" stepKey="waitButtonLinkDropdownInput" />
+        <seeElement selector="{{PageBuilderLinkAttributeAdmin.LinkDropdown}}" stepKey="seeButtonLinkDropdownInput" />
+        <click selector="{{PageBuilderLinkAttributeAdmin.LinkDropdown}}" stepKey="expandButtonLinkDropdownInput1" />
         <see userInput="$createCMSPageA.title$" stepKey="seeCMSPageA"/>
 
         <!--Type 2 first letters into Search box-->
-        <click selector="{{PageBuilderSection.LinkSearch}}" stepKey="focusOnField"/>
-        <fillField selector="{{PageBuilderSection.LinkSearch}}" userInput="cm" stepKey="fill2FirstLetters"/>
-        <waitForElementVisible selector="{{PageBuilderSection.SearchResult($createCMSPageA.title$)}}" stepKey="waitForSearchResult" />
-        <seeElement selector="{{PageBuilderSection.SearchResult($createCMSPageA.title$)}}" stepKey="seeCMSPageAOnSearchResult"/>
-        <click selector="{{PageBuilderSection.SearchResult($createCMSPageA.title$)}}" stepKey="clickCMSPageAXOnSearchResult"/>
-        <dontSee selector="{{PageBuilderSection.SearchResultBox}}" stepKey="dropdownCollapses" />
-        <grabTextFrom selector="{{PageBuilderSection.DropdownInput}}" stepKey="textFromDropDown1"/>
+        <click selector="{{PageBuilderLinkAttributeAdmin.LinkSearch}}" stepKey="focusOnField"/>
+        <fillField selector="{{PageBuilderLinkAttributeAdmin.LinkSearch}}" userInput="cm" stepKey="fill2FirstLetters"/>
+        <waitForElementVisible selector="{{PageBuilderLinkAttributeAdmin.SearchResult($createCMSPageA.title$)}}" stepKey="waitForSearchResult" />
+        <seeElement selector="{{PageBuilderLinkAttributeAdmin.SearchResult($createCMSPageA.title$)}}" stepKey="seeCMSPageAOnSearchResult"/>
+        <click selector="{{PageBuilderLinkAttributeAdmin.SearchResult($createCMSPageA.title$)}}" stepKey="clickCMSPageAXOnSearchResult"/>
+        <dontSee selector="{{PageBuilderLinkAttributeAdmin.SearchResultBox}}" stepKey="dropdownCollapses" />
+        <grabTextFrom selector="{{PageBuilderLinkAttributeAdmin.DropdownInput}}" stepKey="textFromDropDown1"/>
         <assertEquals stepKey="assertEquals1" message="pass">
             <expectedResult type="string">$createCMSPageA.title$</expectedResult>
             <actualResult type="variable">textFromDropDown1</actualResult>
         </assertEquals>
-        <seeElement selector="{{PageBuilderSection.RemoveBtn}}" stepKey="seeXButtonInField1" />
+        <seeElement selector="{{PageBuilderLinkAttributeAdmin.RemoveBtn}}" stepKey="seeXButtonInField1" />
 
         <!--Expand dropdown again to verify highlighted not cleared yet-->
-        <click selector="{{PageBuilderSection.LinkDropdown}}" stepKey="expandButtonLinkDropdownInput2" />
-        <seeInField  selector="{{PageBuilderSection.LinkSearch}}" userInput="cm" stepKey="seeSearchNotCleared"/>
-        <seeElement selector="{{PageBuilderSection.LinkItemSelected($createCMSPageA.title$)}}" stepKey="seeSearchResultHighlighted" />
+        <click selector="{{PageBuilderLinkAttributeAdmin.LinkDropdown}}" stepKey="expandButtonLinkDropdownInput2" />
+        <seeInField  selector="{{PageBuilderLinkAttributeAdmin.LinkSearch}}" userInput="cm" stepKey="seeSearchNotCleared"/>
+        <seeElement selector="{{PageBuilderLinkAttributeAdmin.LinkItemSelected($createCMSPageA.title$)}}" stepKey="seeSearchResultHighlighted" />
 
         <!--Select another page from dropdown-->
-        <click selector="{{PageBuilderSection.SearchResult($createCMSPageB.title$)}}" stepKey="clickCMSPageBOnSearchResult"/>
-        <grabTextFrom selector="{{PageBuilderSection.DropdownInput}}" stepKey="textFromDropDown2"/>
+        <click selector="{{PageBuilderLinkAttributeAdmin.SearchResult($createCMSPageB.title$)}}" stepKey="clickCMSPageBOnSearchResult"/>
+        <grabTextFrom selector="{{PageBuilderLinkAttributeAdmin.DropdownInput}}" stepKey="textFromDropDown2"/>
         <assertEquals stepKey="assertEquals2" message="pass">
             <expectedResult type="string">$createCMSPageB.title$</expectedResult>
             <actualResult type="variable">textFromDropDown2</actualResult>
         </assertEquals>
-        <seeElement selector="{{PageBuilderSection.RemoveBtn}}" stepKey="seeXButtonInField2" />
+        <seeElement selector="{{PageBuilderLinkAttributeAdmin.RemoveBtn}}" stepKey="seeXButtonInField2" />
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage1"/>
 
@@ -1599,254 +1599,13 @@
         <click selector=".placeholder-text" stepKey="clickOnEditButton"/>
         <waitForElementVisible selector="//div[contains(@class, 'buttons-container')]//a[@title='Edit']" stepKey="waitForSettingBtn" />
         <click selector="//div[contains(@class, 'buttons-container')]//a[@title='Edit']" stepKey="clickSelectButtonOnFirstItem"/>
-        <waitForElementVisible selector="{{PageBuilderSection.LinkSelect('button_link')}}" stepKey="waitForButtonLinkSelect2"/>
-        <grabTextFrom selector="{{PageBuilderSection.DropdownInput}}" stepKey="textFromDropDown3"/>
+        <waitForElementVisible selector="{{PageBuilderLinkAttributeAdmin.LinkSelect('button_link')}}" stepKey="waitForButtonLinkSelect2"/>
+        <grabTextFrom selector="{{PageBuilderLinkAttributeAdmin.DropdownInput}}" stepKey="textFromDropDown3"/>
         <assertRegExp stepKey="assertEquals3" message="pass">
             <expectedResult type="string">/^Page with ID: [0-9]+ doesn't exist$/</expectedResult>
             <actualResult type="variable">textFromDropDown3</actualResult>
         </assertRegExp>
         <deleteData createDataKey="createCMSPageA" stepKey="deletePreReqCMSPageA" />
-    </test>
-    <test name="AdminPageBuilderProductDirectivesTest">
-        <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Common Tests"/>
-            <title value="Magento Directives - Always render Magento Directives on Magento Storefront for Product"/>
-            <description value="Admin are able to add CMS Page link, image, variable, widget into PageBuilder content and see it Product Page"/>
-            <severity value="CRITICAL"/>
-            <useCaseId value="MC-1364"/>
-            <testCaseId value="MC-3174 "/>
-            <group value="pagebuilder"/>
-            <group value="pagebuilder-common"/>
-            <group value="pagebuilder-urlInput"/>
-        </annotations>
-        <before>
-            <magentoCLI command="config:set general/store_information/country_id US" stepKey="setValueForCountryVariable"/>
-            <createData entity="_defaultCategory" stepKey="createPreReqCategory"/>
-            <createData entity="_newDefaultProduct" stepKey="createPreReqProduct">
-                <requiredEntity createDataKey="createPreReqCategory"/>
-            </createData>
-            <createData entity="simpleCmsPage" stepKey="createCMSPageA" />
-            <createData entity="simpleCmsPage" stepKey="createCMSPageB" />
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-        </before>
-        <after>
-            <magentoCLI command="config:set general/store_information/country_id none" stepKey="setBackToDefaultValue"/>
-            <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCategory" />
-            <deleteData createDataKey="createPreReqProduct" stepKey="deletePreReqProduct" />
-            <deleteData createDataKey="createCMSPageA" stepKey="deletePreReqCmsPageA" />
-            <deleteData createDataKey="createCMSPageB" stepKey="deletePreReqCmsPageB" />
-            <actionGroup ref="logout" stepKey="logout"/>
-        </after>
-        <!--Go to Product Page-->
-        <comment userInput="Go to Product Page" stepKey="goToProductPage"/>
-        <amOnPage url="{{AdminProductEditPage.url($$createPreReqProduct.id$$)}}" stepKey="goToEditPage"/>
-        <waitForPageLoad stepKey="waitForProductPageBeLoaded"/>
-        <click selector="{{AdminProductFormSection.contentTab}}" stepKey="clickContentTab"/>
-        <waitForElementVisible selector="{{PageBuilderCatalog.openPageBuilder}}" stepKey="waitForPageBuilderBtn" />
-        <see userInput="Edit with Page Builder" stepKey="seePageBuilderBtn"/>
-        <!--Click enable PageBuilder button-->
-        <comment userInput="Click enable PageBuilder button" stepKey="clickEnablePageBuilderBtn"/>
-        <actionGroup ref="openPageBuilderForAttribute" stepKey="enablePageBuilderOnCatalog"/>
-        <!--Add button into PageBuilder-->
-        <comment userInput="Add button into PageBuilder" stepKey="addButtonIntoPageBuilder"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSectionElements">
-            <argument name="contentType" value="PageBuilderButtonsContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonIntoStage">
-            <argument name="contentType" value="PageBuilderButtonsContentType"/>
-        </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage1">
-            <argument name="section" value="ButtonItemOnStage"/>
-            <argument name="targetIndex" value="1"/>
-        </actionGroup>
-        <!--Choose cms page link type-->
-        <comment userInput="Choose cms page link type" stepKey="commentChooseCmsPageLinkType"/>
-        <actionGroup ref="fillOutUrlInput" stepKey="choosePageLink">
-            <argument name="fieldName" value="button_link"/>
-            <argument name="linkName" value="ExternalLink.page"/>
-            <argument name="searchString" value="ExternalLinkSearch.page"/>
-            <argument name="searchResult" value="$$createCMSPageA.title$$"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
-        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusOptionMenu">
-            <argument name="contentType" value="PageBuilderButtonItemContentType"/>
-        </actionGroup>
-        <!--Add image into PageBuilder-->
-        <comment userInput="Add image into PageBuilder" stepKey="addImageIntoPageBuilder"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
-            <argument name="contentType" value="PageBuilderImageContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragImageIntoStage">
-            <argument name="contentType" value="PageBuilderImageContentType"/>
-        </actionGroup>
-        <actionGroup ref="addImageToStage" stepKey="addImageToStage">
-            <argument name="property" value="PageBuilderImageProperty_StageJPG"/>
-        </actionGroup>
-        <waitForElementVisible selector="{{ImageOnStageWithoutImageUploaded.imageSourceByIndex('1', PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="seeImage1SourceOnStage"/>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsOntoStage">
-            <argument name="contentType" value="PageBuilderTextContentType"/>
-        </actionGroup>
-        <actionGroup ref="clickOutsideTextInlineEditing" stepKey="closeLiveEdit"/>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentType" value="PageBuilderTextContentType"/>
-        </actionGroup>
-        <!--Add variable into Text content-->
-        <comment userInput="Add variable into Text content" stepKey="addVariableIntoTextContent"/>
-        <actionGroup ref="addVariableToTinyMCE" stepKey="addVariableToTinyMCE">
-            <argument name="variable" value="TinyMCEVariableCountry"/>
-        </actionGroup>
-        <!--Switch to iFrame 1-->
-        <comment userInput="Switch to iFrame" stepKey="commentSwitchToIFrame1"/>
-        <switchToIFrame selector="{{TextOnConfiguration.tinyMCEIFrame}}" stepKey="switchToIFrame1"/>
-        <waitForElementVisible selector="{{TextOnConfiguration.tinyMCEVariable(TinyMCEVariableCountry.editPanelValue, '1')}}" stepKey="waitForVariable2"/>
-        <switchToIFrame stepKey="exitIFrame1"/>
-        <!--Add variable into Text content-->
-        <comment userInput="Add widget into Text content" stepKey="addWidgetIntoTextContent"/>
-        <actionGroup ref="addPageLinkWidgetToTinyMCE" stepKey="addPageLinkWidgetToTinyMCE">
-            <argument name="widget" value="TinyMCEWidgetCMSPageLink"/>
-            <argument name="page" value="$$createCMSPageB.identifier$$"/>
-        </actionGroup>
-        <!--Switch to iFrame-->
-        <comment userInput="Switch to iFrame" stepKey="commentSwitchToIFrame"/>
-        <switchToIFrame selector="{{TextOnConfiguration.tinyMCEIFrame}}" stepKey="switchToIFrame"/>
-        <waitForElementVisible selector="{{TextOnConfiguration.tinyMCEWidget(TinyMCEWidgetCMSPageLink.editPanelValue, '1')}}" stepKey="waitForWidget"/>
-        <switchToIFrame stepKey="exitIFrame"/>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <waitForElementVisible time="5" selector="{{PageBuilderStage.exitFullScreen}}" stepKey="waitForExitFullScreen" />
-        <click selector="{{PageBuilderStage.exitFullScreen}}" stepKey="exitPageBuilderFullScreen" />
-        <actionGroup ref="saveProductForm" stepKey="saveProduct"/>
-        <!--Go to storefront to verify Product Link-->
-        <comment userInput="Verify directives on store front" stepKey="commentVerifyDirectivesOnSlideout"/>
-        <amOnPage url="$$createPreReqProduct.name$$.html" stepKey="navigateToProductPage"/>
-        <comment userInput="Verify directive link on Storefront" stepKey="verifyDirectiveLinkOnStorefront"/>
-        <waitForPageLoad stepKey="waitForPageLoad5"/>
-        <scrollTo selector="{{StorefrontProductInfoDetailsSection.detailsTab}}" stepKey="scrollToDetailsTab"/>
-        <see userInput="US" stepKey="verifyCountryVariableName" />
-        <see userInput="$$createCMSPageB.title$$" stepKey="verifyWidget" />
-        <waitForElementVisible selector="{{ImageOnStorefront.imageSourceByIndex('1', PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="seeImage2SourceOnStorefront"/>
-        <actionGroup ref="verifyCmsPageLinkOnFrontend" stepKey="checkButtonOnStoreFront">
-            <argument name="CMSPage" value="$$createCMSPageA$$"/>
-            <argument name="index" value="1"/>
-            <argument name="section" value="ButtonItemOnStorefront"/>
-        </actionGroup>
-    </test>
-    <test name="AdminPageBuilderCategoryDirectivesTest">
-        <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Common Tests"/>
-            <title value="Magento Directives - Always render Magento Directives on Magento Storefront for Category"/>
-            <description value="Admin are able to add CMS Page link, image, variable, widget into PageBuilder content and see it Category Page"/>
-            <severity value="CRITICAL"/>
-            <testCaseId value="MC-3173"/>
-            <useCaseId value="MC-1364"/>
-            <group value="pagebuilder"/>
-            <group value="pagebuilder-common"/>
-            <group value="pagebuilder-urlInput"/>
-        </annotations>
-        <before>
-            <magentoCLI command="config:set general/store_information/country_id US" stepKey="setValueForCountryVariable"/>
-            <createData entity="_defaultCategory" stepKey="createPreReqCategory"/>
-            <createData entity="simpleCmsPage" stepKey="createCMSPageA" />
-            <createData entity="simpleCmsPage" stepKey="createCMSPageB" />
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-        </before>
-        <after>
-            <magentoCLI command="config:set general/store_information/country_id none" stepKey="setBackToDefaultValue"/>
-            <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCategory" />
-            <deleteData createDataKey="createCMSPageA" stepKey="deletePreReqCmsPageA" />
-            <deleteData createDataKey="createCMSPageB" stepKey="deletePreReqCmsPageB" />
-            <actionGroup ref="logout" stepKey="logout"/>
-        </after>
-        <!--Go to Category Page-->
-        <comment userInput="Go to Category Page" stepKey="goToCategoryPage"/>
-        <amOnPage url="{{AdminCategoryEditPage.url($$createPreReqCategory.id$$)}}" stepKey="goToCategoryEditPage"/>
-        <waitForPageLoad stepKey="waitForProductPageBeLoaded"/>
-        <click selector="{{AdminCategoryContentSection.sectionHeader}}" stepKey="clickContentTab"/>
-        <waitForElementVisible selector="{{PageBuilderCatalog.openPageBuilder}}" stepKey="waitForPageBuilderBtn" />
-        <see userInput="Edit with Page Builder" stepKey="seePageBuilderBtn"/>
-        <!--Click enable PageBuilder button-->
-        <comment userInput="Click enable PageBuilder button" stepKey="clickEnablePageBuilderBtn"/>
-        <actionGroup ref="openPageBuilderForAttribute" stepKey="enablePageBuilderOnCatalog"/>
-        <!--Add button to PageBuilder-->
-        <comment userInput="Add button to PageBuilder" stepKey="addButtonToPageBuilder"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSectionElements">
-            <argument name="contentType" value="PageBuilderButtonsContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonIntoStage">
-            <argument name="contentType" value="PageBuilderButtonsContentType"/>
-        </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage1">
-            <argument name="section" value="ButtonItemOnStage"/>
-            <argument name="targetIndex" value="1"/>
-        </actionGroup>
-        <!--Choose cms page link type-->
-        <comment stepKey="commentChooseCmsPageLinkType" userInput="Choose cms page link type"/>
-        <actionGroup ref="fillOutUrlInput" stepKey="choosePageLink">
-            <argument name="fieldName" value="button_link"/>
-            <argument name="linkName" value="ExternalLink.page"/>
-            <argument name="searchString" value="ExternalLinkSearch.page"/>
-            <argument name="searchResult" value="$$createCMSPageA.title$$"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsFullScreen" stepKey="saveEditPanelSettings1"/>
-        <!--Add image to PageBuilder-->
-        <comment userInput="Add image to PageBuilder" stepKey="addImageToPageBuilder"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
-            <argument name="contentType" value="PageBuilderImageContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragImageIntoStage">
-            <argument name="contentType" value="PageBuilderImageContentType"/>
-        </actionGroup>
-        <actionGroup ref="addImageToStage" stepKey="addImageToStage">
-            <argument name="property" value="PageBuilderImageProperty_StageJPG"/>
-        </actionGroup>
-        <waitForElementVisible selector="{{ImageOnStageWithoutImageUploaded.imageSourceByIndex('1', PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="seeImage1SourceOnStage"/>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragTextOntoStage">
-            <argument name="contentType" value="PageBuilderTextContentType"/>
-        </actionGroup>
-        <actionGroup ref="clickOutsideTextInlineEditing" stepKey="closeLiveEdit"/>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentType" value="PageBuilderTextContentType"/>
-        </actionGroup>
-        <!--Add variable to PageBuilder-->
-        <comment userInput="Add variable to PageBuilder" stepKey="addVariableToPageBuilder"/>
-        <actionGroup ref="addVariableToTinyMCE" stepKey="addVariableToTinyMCE">
-            <argument name="variable" value="TinyMCEVariableCountry"/>
-        </actionGroup>
-        <!--Switch to iFrame 1-->
-        <comment userInput="Switch to iFrame" stepKey="commentSwitchToIFrame1"/>
-        <switchToIFrame selector="{{TextOnConfiguration.tinyMCEIFrame}}" stepKey="switchToIFrame1"/>
-        <waitForElementVisible selector="{{TextOnConfiguration.tinyMCEVariable(TinyMCEVariableCountry.editPanelValue, '1')}}" stepKey="waitForVariable2"/>
-        <switchToIFrame stepKey="exitIFrame1"/>
-        <!--Add widget to PageBuilder-->
-        <comment userInput="Add widget to PageBuilder" stepKey="addWidgetToPageBuilder"/>
-        <actionGroup ref="addPageLinkWidgetToTinyMCE" stepKey="addPageLinkWidgetToTinyMCE">
-            <argument name="widget" value="TinyMCEWidgetCMSPageLink"/>
-            <argument name="page" value="$$createCMSPageB.identifier$$"/>
-        </actionGroup>
-        <!--Switch to iFrame-->
-        <comment userInput="Switch to iFrame" stepKey="commentSwitchToIFrame"/>
-        <switchToIFrame selector="{{TextOnConfiguration.tinyMCEIFrame}}" stepKey="switchToIFrame"/>
-        <waitForElementVisible selector="{{TextOnConfiguration.tinyMCEWidget(TinyMCEWidgetCMSPageLink.editPanelValue, '1')}}" stepKey="waitForWidget"/>
-        <switchToIFrame stepKey="exitIFrame"/>
-        <click selector="{{EditPanelForm.editFormSave}}" stepKey="clickSaveColumn"/>
-        <waitForElementNotVisible time="5" selector="{{EditPanelForm.editForm}}" stepKey="waitForEditFormNotVisible" />
-        <waitForElementVisible time="5" selector="{{PageBuilderStage.exitFullScreen}}" stepKey="waitForExitFullScreen" />
-        <click selector="{{PageBuilderStage.exitFullScreen}}" stepKey="exitPageBuilderFullScreen" />
-        <click selector="{{AdminCategoryMainActionsSection.SaveButton}}" stepKey="saveCategory"/>
-        <waitForPageLoad stepKey="waitForPageLoad2" />
-        <!--Go to storefront to verify Category Link-->
-        <comment userInput="Verify directives on category store front" stepKey="commentVerifyDirectivesOnStorefront"/>
-        <amOnPage url="$$createPreReqCategory.name$$.html" stepKey="navigateToProductPage"/>
-        <waitForPageLoad stepKey="waitForPageLoad3" />
-        <see userInput="US" stepKey="verifyCountryVariableName" />
-        <see userInput="$$createCMSPageB.title$$" stepKey="verifyWidget" />
-        <waitForElementVisible selector="{{ImageOnStorefront.imageSourceByIndex('1', PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="seeImage2SourceOnStorefront"/>
-        <actionGroup ref="verifyCmsPageLinkOnFrontend" stepKey="checkButtonOnStoreFront">
-            <argument name="CMSPage" value="$$createCMSPageA$$"/>
-            <argument name="index" value="1"/>
-            <argument name="section" value="ButtonItemOnStorefront"/>
-        </actionGroup>
     </test>
     <test name="EditFormModalNoResetButton">
         <annotations>

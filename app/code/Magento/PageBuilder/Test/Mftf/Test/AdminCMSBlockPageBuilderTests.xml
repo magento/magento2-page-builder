@@ -8,7 +8,52 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
-    <test name="PageBuilderCmsBlockAddAndEditRowColumnSlide" extends="PageBuilderProductAddAndEditRowColumnSlide">
+    <test name="PageBuilderCmsBlockVerifyPageBuilderEnableOnBlockPageWhenPageBuilderEnabledAndWYSIWYGDisabled">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="CMS Block"/>
+            <title value="Admin should be able to see PageBuilder on CMS Block Page after enable PageBuilder and disable WYSIWYG from Configuration"/>
+            <description value="Admin should be able to see PageBuilder on CMS Block Page after enable PageBuilder and disable WYSIWYG from Configuration"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-86314"/>
+            <testCaseId value="MC-2406"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-cms-block"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set cms/wysiwyg/enabled disabled" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <createData entity="_defaultBlock" stepKey="createPreReqBlock" />
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG"/>
+            <deleteData createDataKey="createPreReqBlock" stepKey="deletePreReqBlock" />
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!--Create CMS Block using PageBuilder-->
+        <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage1">
+            <argument name="CMSBlockPage" value="$$createPreReqBlock$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTextOntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <waitForLoadingMaskToDisappear stepKey="waitForEditPanelSpinner"/>
+        <fillField selector="{{TextOnConfiguration.textArea}}" userInput="Hello CMS Block from PageBuilder" stepKey="addTextToEditor"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <click selector="{{BlockNewPagePageActionsSection.saveBlock}}" stepKey="clickSaveBlock"/>
+        <see userInput="You saved the block." stepKey="seeSuccessMessage"/>
+        <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToContentCreatedCMSBlockPage2">
+            <argument name="CMSBlockPage" value="$$createPreReqBlock$$"/>
+        </actionGroup>
+        <actionGroup ref="verifyPageBuilderVisibleOnPage" stepKey="seePageBuilderOnPage"/>
+    </test>
+    <test name="PageBuilderCmsBlockAddAndEditRowColumnSlide" extends="PageBuilderCatalogProductAddAndEditRowColumnSlide">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="CMS Block"/>
@@ -79,7 +124,7 @@
         <seeNumberOfElements selector="{{RowOnStorefront.allRows}}" userInput="3" stepKey="see2RowsStorefront"/>
         <seeElement selector="{{RowOnStorefront.backgroundColor('3', PageBuilderBackgroundColor_Hex_Grey.rgb)}}" stepKey="seeBackgroundColorRowStorefront"/>
     </test>
-    <test name="PageBuilderCmsBlockVerifyCanMoveContentTypesFromOnHoverOptionMenus" extends="PageBuilderProductVerifyCanMoveContentTypesFromOnHoverOptionMenus">
+    <test name="PageBuilderCmsBlockVerifyCanMoveContentTypesFromOnHoverOptionMenus" extends="PageBuilderCatalogProductVerifyCanMoveContentTypesFromOnHoverOptionMenus">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="CMS Block"/>
@@ -142,7 +187,7 @@
         </actionGroup>
         <comment userInput="---merging to remove step---" stepKey="scrollToProductDescription"/>
     </test>
-    <test name="PageBuilderCmsBlockVerifyCanEditContentTypesFromOnHoverOptionMenus" extends="PageBuilderProductVerifyCanEditContentTypesFromOnHoverOptionMenus">
+    <test name="PageBuilderCmsBlockVerifyCanEditContentTypesFromOnHoverOptionMenus" extends="PageBuilderCatalogProductVerifyCanEditContentTypesFromOnHoverOptionMenus">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="CMS Block"/>
@@ -204,7 +249,7 @@
         <comment userInput="---merging to remove step---" stepKey="scrollToProductDescription"/>
         <seeElement selector="{{RowOnStorefront.backgroundColor('2', PageBuilderBackgroundColor_Hex_Grey.rgb)}}" stepKey="seeBackgroundColorRowStorefront"/>
     </test>
-    <test name="PageBuilderCmsBlockVerifyCanDuplicateContentTypesFromOnHoverOptionMenus" extends="PageBuilderProductVerifyCanDuplicateContentTypesFromOnHoverOptionMenus">
+    <test name="PageBuilderCmsBlockVerifyCanDuplicateContentTypesFromOnHoverOptionMenus" extends="PageBuilderCatalogProductVerifyCanDuplicateContentTypesFromOnHoverOptionMenus">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="CMS Block"/>
@@ -267,7 +312,7 @@
         <seeElement selector="{{RowOnStorefront.backgroundColor('2', PageBuilderBackgroundColor_Hex_Grey.rgb)}}" stepKey="seeBackgroundColorRow1Storefront"/>
         <seeElement selector="{{RowOnStorefront.backgroundColor('3', PageBuilderBackgroundColor_Hex_Grey.rgb)}}" stepKey="seeBackgroundColorRow2Storefront"/>
     </test>
-    <test name="PageBuilderCmsBlockVerifyCanDeleteContentTypesFromOnHoverOptionMenus" extends="PageBuilderProductVerifyCanDeleteContentTypesFromOnHoverOptionMenus">
+    <test name="PageBuilderCmsBlockVerifyCanDeleteContentTypesFromOnHoverOptionMenus" extends="PageBuilderCatalogProductVerifyCanDeleteContentTypesFromOnHoverOptionMenus">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="CMS Block"/>
@@ -331,7 +376,7 @@
         </actionGroup>
         <comment userInput="---merging to remove step---" stepKey="scrollToProductDescription"/>
     </test>
-    <test name="PageBuilderCmsBlockVerifyCanAddChildContentTypesFromOnHoverOptionMenus" extends="PageBuilderProductVerifyCanAddChildContentTypesFromOnHoverOptionMenus">
+    <test name="PageBuilderCmsBlockVerifyCanAddChildContentTypesFromOnHoverOptionMenus" extends="PageBuilderCatalogProductVerifyCanAddChildContentTypesFromOnHoverOptionMenus">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="CMS Block"/>
@@ -391,7 +436,7 @@
         </actionGroup>
         <comment userInput="---merging to remove step---" stepKey="scrollToProductDescription"/>
     </test>
-    <test name="PageBuilderCmsBlockVerifyCanEditContentTypesFromOnClickOptionMenus" extends="PageBuilderProductVerifyCanEditContentTypesFromOnClickOptionMenus">
+    <test name="PageBuilderCmsBlockVerifyCanEditContentTypesFromOnClickOptionMenus" extends="PageBuilderCatalogProductVerifyCanEditContentTypesFromOnClickOptionMenus">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="CMS Block"/>
@@ -451,7 +496,7 @@
         </actionGroup>
         <comment userInput="---merging to remove step---" stepKey="scrollToProductDescription"/>
     </test>
-    <test name="PageBuilderCmsBlockVerifyCanDuplicateContentTypesFromOnClickOptionMenus" extends="PageBuilderProductVerifyCanDuplicateContentTypesFromOnClickOptionMenus">
+    <test name="PageBuilderCmsBlockVerifyCanDuplicateContentTypesFromOnClickOptionMenus" extends="PageBuilderCatalogProductVerifyCanDuplicateContentTypesFromOnClickOptionMenus">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="CMS Block"/>
@@ -511,7 +556,7 @@
         </actionGroup>
         <comment userInput="---merging to remove step---" stepKey="scrollToProductDescription"/>
     </test>
-    <test name="PageBuilderCmsBlockVerifyCanDeleteContentTypesFromOnClickOptionMenus" extends="PageBuilderProductVerifyCanDeleteContentTypesFromOnClickOptionMenus">
+    <test name="PageBuilderCmsBlockVerifyCanDeleteContentTypesFromOnClickOptionMenus" extends="PageBuilderCatalogProductVerifyCanDeleteContentTypesFromOnClickOptionMenus">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="CMS Block"/>
