@@ -4163,4 +4163,453 @@
         <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_CollageRight.value)}}" stepKey="seeAppearancePageStage"/>
         <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_CollageRight.value)}}" stepKey="seeAppearanceStorefront"/>        <waitForPageLoad stepKey="waitForPageLoad1"/>
     </test>
+    <test name="BlockRenderColumnFullHeightAppearanceThroughBlockContentType">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Block Content"/>
+            <title value="Render Column Full Height Appearance Through Block Content Type"/>
+            <description value="Verify that users are able to successfully render and use the column content type with full height appearance through the Block content type."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MC-15221"/>
+            <useCaseId value="MC-13769"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+            <group value="pagebuilder-block-content"/>
+            <group value="pagebuilder-column"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <createData entity="_emptyCmsBlock" stepKey="createCMSBlock"/>
+            <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage1">
+                <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
+            </actionGroup>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock"/>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Add Column -->
+        <comment userInput="Add Column" stepKey="commentAddColumn"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnOntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForFirstColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <!-- Fill Out Column Edit Panel -->
+        <comment userInput="Fill Out Column Edit Panel" stepKey="commentFillEditPanel"/>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterBackgroundAppearanceProperty">
+            <argument name="property" value="PageBuilderColumnAppearanceProperty_FullHeight"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBackgroundColor">
+            <argument name="property" value="PageBuilderBackgroundColor_Hex_White"/>
+        </actionGroup>
+        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachFileSlideOutProperty1">
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
+        </actionGroup>
+        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachFileSlideOutProperty2">
+            <argument name="property" value="PageBuilderBackgroundMobileImage_GIF"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="setBackgroundPosition">
+            <argument name="property" value="PageBuilderBackgroundPosition_TopLeft"/>
+        </actionGroup>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="setBackgroundRepeat">
+            <argument name="property" value="PageBuilderBackgroundRepeat_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setBackgroundSize">
+            <argument name="property" value="PageBuilderBackgroundSize_Auto"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="setBackgroundAttachment">
+            <argument name="property" value="PageBuilderBackgroundAttachment_Scroll"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty">
+            <argument name="property" value="PageBuilderMinHeightProperty_500"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterVerticalAlignmentCenterProperty">
+            <argument name="property" value="PageBuilderVerticalAlignmentPropertyCenter"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveSlide2EditPanelSettings"/>
+        <actionGroup ref="saveCMSBlock" stepKey="saveCMSBlock"/>
+        <!-- Validate CMS Block Stage -->
+        <comment userInput="Validate CMS Block Stage" stepKey="commentValidateCMSBlockStage"/>
+        <seeElement selector="{{ColumnOnBackend.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.alignmentFull)}}" stepKey="seeColumn1AlignmentAppliedStage"/>
+        <actionGroup ref="validateBackgroundAttributes" stepKey="validateStage">
+            <argument name="section" value="ColumnOnBackend"/>
+            <argument name="backgroundColor" value="PageBuilderBackgroundColor_Hex_White"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
+            <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_TopLeft"/>
+            <argument name="backgroundSize" value="PageBuilderBackgroundSize_Auto"/>
+            <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
+            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Scroll"/>
+        </actionGroup>
+        <actionGroup ref="validateBackgroundImage" stepKey="validateImageOnStage1">
+            <argument name="section" value="ColumnOnBackend"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
+        </actionGroup>
+        <seeElement selector="{{ColumnOnBackend.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.minHeight)}}" stepKey="seeColumn1HeightAppliedStage"/>
+        <seeElement selector="{{ColumnOnBackend.columnChildrenStyle('1', '1', PageBuilderVerticalAlignmentPropertyCenter.style)}}" stepKey="seeFirstColumnVerticalAlignmentCenterStage"/>
+        <!-- Add Block to CMS Page -->
+        <comment userInput="Add Block to CMS Page" stepKey="commentAddBlockToCMSPage"/>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPanelAddContentMenuSection">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDropBlock">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
+            <argument name="block" value="$$createCMSBlock$$"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsBlock"/>
+        <!-- Validate CMS Page Stage -->
+        <comment userInput="Validate CMS Page Stage" stepKey="commentValidateCMSPageStage"/>
+        <seeElement selector="{{ColumnOnFrontend.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.alignmentFull)}}" stepKey="seeColumn1AlignmentAppliedPageStage"/>
+        <actionGroup ref="validateBackgroundAttributesWithNoImage" stepKey="validatePageStage">
+            <argument name="section" value="ColumnOnFrontend"/>
+            <argument name="backgroundColor" value="PageBuilderBackgroundColor_Hex_White"/>
+            <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_TopLeft"/>
+            <argument name="backgroundSize" value="PageBuilderBackgroundSize_Auto"/>
+            <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
+            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Scroll"/>
+        </actionGroup>
+        <actionGroup ref="validateBackgroundImageContainer" stepKey="validateImageOnPageStage">
+            <argument name="section" value="ColumnOnFrontend"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
+        </actionGroup>
+        <seeElement selector="{{ColumnOnFrontend.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.minHeight)}}" stepKey="seeColumn1HeightAppliedPageStage"/>
+        <seeElement selector="{{ColumnOnFrontend.columnStyle('1', PageBuilderVerticalAlignmentPropertyCenter.style)}}" stepKey="seeColumn1VerticalAlignmentCenterAppliedPageStage"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate CMS Page Storefront -->
+        <comment userInput="Validate CMS Page Storefront" stepKey="commentValidateCMSPageStorefront"/>
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToStoreFront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <seeElement selector="{{ColumnOnFrontend.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.alignmentFull)}}" stepKey="seeColumn1AlignmentAppliedStorefront"/>
+        <actionGroup ref="validateBackgroundAttributesWithNoImage" stepKey="validateStorefront">
+            <argument name="section" value="ColumnOnFrontend"/>
+            <argument name="backgroundColor" value="PageBuilderBackgroundColor_Hex_White"/>
+            <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_TopLeft"/>
+            <argument name="backgroundSize" value="PageBuilderBackgroundSize_Auto"/>
+            <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
+            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Scroll"/>
+        </actionGroup>
+        <actionGroup ref="validateBackgroundImageContainer" stepKey="validateImageOnStorefront">
+            <argument name="section" value="ColumnOnFrontend"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
+        </actionGroup>
+        <seeElement selector="{{ColumnOnFrontend.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.minHeight)}}" stepKey="seeColumn1HeightAppliedStorefront"/>
+        <seeElement selector="{{ColumnOnFrontend.columnStyle('1', PageBuilderVerticalAlignmentPropertyCenter.style)}}" stepKey="seeColumn1VerticalAlignmentCenterAppliedStorefront"/>
+    </test>
+    <test name="BlockRenderColumnTopAlignmentAppearanceThroughBlockContentType" extends="BlockRenderColumnFullHeightAppearanceThroughBlockContentType">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Block Content"/>
+            <title value="Render Column Top Alignment Appearance Through Block Content Type"/>
+            <description value="Verify that users are able to successfully render and use the column content type with top alignment appearance through the Block content type."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MC-15222"/>
+            <useCaseId value="MC-13769"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+            <group value="pagebuilder-block-content"/>
+            <group value="pagebuilder-column"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterBackgroundAppearanceProperty">
+            <argument name="property" value="PageBuilderColumnAppearanceProperty_Top"/>
+        </actionGroup>
+        <seeElement selector="{{ColumnOnBackend.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.alignmentTop)}}" stepKey="seeColumn1AlignmentAppliedStage"/>
+        <seeElement selector="{{ColumnOnFrontend.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.alignmentTop)}}" stepKey="seeColumn1AlignmentAppliedPageStage"/>
+        <seeElement selector="{{ColumnOnFrontend.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.alignmentTop)}}" stepKey="seeColumn1AlignmentAppliedStorefront"/>
+    </test>
+    <test name="BlockRenderColumnCenterAlignmentAppearanceThroughBlockContentType" extends="BlockRenderColumnFullHeightAppearanceThroughBlockContentType">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Block Content"/>
+            <title value="Render Column Center Alignment Appearance Through Block Content Type"/>
+            <description value="Verify that users are able to successfully render and use the column content type with center alignment appearance through the Block content type."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MC-15223"/>
+            <useCaseId value="MC-13769"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+            <group value="pagebuilder-block-content"/>
+            <group value="pagebuilder-column"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterBackgroundAppearanceProperty">
+            <argument name="property" value="PageBuilderColumnAppearanceProperty_Center"/>
+        </actionGroup>
+        <seeElement selector="{{ColumnOnBackend.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.alignmentCenter)}}" stepKey="seeColumn1AlignmentAppliedStage"/>
+        <seeElement selector="{{ColumnOnFrontend.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.alignmentCenter)}}" stepKey="seeColumn1AlignmentAppliedPageStage"/>
+        <seeElement selector="{{ColumnOnFrontend.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.alignmentCenter)}}" stepKey="seeColumn1AlignmentAppliedStorefront"/>
+    </test>
+    <test name="BlockRenderColumnBottomAlignmentAppearanceThroughBlockContentType" extends="BlockRenderColumnFullHeightAppearanceThroughBlockContentType">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Block Content"/>
+            <title value="Render Column Bottom Alignment Appearance Through Block Content Type"/>
+            <description value="Verify that users are able to successfully render and use the column content type with bottom alignment appearance through the Block content type."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MC-15224"/>
+            <useCaseId value="MC-13769"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+            <group value="pagebuilder-block-content"/>
+            <group value="pagebuilder-column"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterBackgroundAppearanceProperty">
+            <argument name="property" value="PageBuilderColumnAppearanceProperty_Bottom"/>
+        </actionGroup>
+        <seeElement selector="{{ColumnOnBackend.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.alignmentBottom)}}" stepKey="seeColumn1AlignmentAppliedStage"/>
+        <seeElement selector="{{ColumnOnFrontend.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.alignmentBottom)}}" stepKey="seeColumn1AlignmentAppliedPageStage"/>
+        <seeElement selector="{{ColumnOnFrontend.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.alignmentBottom)}}" stepKey="seeColumn1AlignmentAppliedStorefront"/>
+    </test>
+    <test name="BlockRenderColumnDragAndDropMultipleColumnsResizingThroughBlockContentType">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Block Content"/>
+            <title value="Render Column Drag And Drop Multiple Columns Resizing Through Block Content Type"/>
+            <description value="Verify that users are able to successfully render and use the column content type with drag and drop multiple columns to resize through the Block content type."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MC-15225"/>
+            <useCaseId value="MC-13769"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+            <group value="pagebuilder-block-content"/>
+            <group value="pagebuilder-column"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <createData entity="_emptyCmsBlock" stepKey="createCMSBlock"/>
+            <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage1">
+                <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
+            </actionGroup>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock"/>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Add Column -->
+        <comment userInput="Add Column" stepKey="commentAddColumn"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnOntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragNewColumnToFirstColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="1" />
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragNewColumnToFirstColumn2">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="2" />
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="saveCMSBlock" stepKey="saveCMSBlock"/>
+        <!-- Validate CMS Block Stage -->
+        <comment userInput="Validate CMS Block Stage" stepKey="commentValidateCMSBlockStage"/>
+        <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="4" stepKey="seeNumberOfColumnsStage"/>
+        <seeElement selector="{{ColumnOnBackend.displayLabel('1','1/12')}}" stepKey="findAfterLabelColumn1Stage"/>
+        <seeElement selector="{{ColumnOnBackend.displayLabel('2','1/12')}}" stepKey="findAfterLabelColumn2Stage"/>
+        <seeElement selector="{{ColumnOnBackend.displayLabel('3','4/12')}}" stepKey="findAfterLabelColumn3Stage"/>
+        <seeElement selector="{{ColumnOnBackend.displayLabel('4','6/12')}}" stepKey="findAfterLabelColumn4Stage"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth" stepKey="columnOneWidthStage"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('2')}}').clientWidth" stepKey="columnTwoWidthStage"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('3')}}').clientWidth" stepKey="columnThreeWidthStage"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('4')}}').clientWidth" stepKey="columnFourWidthStage"/>
+        <executeJS function="return Math.round({$columnTwoWidthStage}/{$columnOneWidthStage})" stepKey="columnRatioStage"/>
+        <assertEquals stepKey="assertRatioIsCorrectStage">
+            <expectedResult type="int">1</expectedResult>
+            <actualResult type="variable">columnRatioStage</actualResult>
+        </assertEquals>
+        <executeJS function="return Math.round({$columnThreeWidthStage}/{$columnOneWidthStage})" stepKey="columnRatio2Stage"/>
+        <assertEquals stepKey="assertRatioIsCorrect2Stage">
+            <expectedResult type="int">4</expectedResult>
+            <actualResult type="variable">columnRatio2Stage</actualResult>
+        </assertEquals>
+        <executeJS function="return Math.round({$columnFourWidthStage}/{$columnOneWidthStage})" stepKey="columnRatio3Stage"/>
+        <assertEquals stepKey="assertRatioIsCorrect3Stage">
+            <expectedResult type="int">6</expectedResult>
+            <actualResult type="variable">columnRatio3Stage</actualResult>
+        </assertEquals>
+        <!-- Add Block to CMS Page -->
+        <comment userInput="Add Block to CMS Page" stepKey="commentAddBlockToCMSPage"/>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPanelAddContentMenuSection">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDropBlock">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
+            <argument name="block" value="$$createCMSBlock$$"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsBlock"/>
+        <!-- Validate CMS Page Stage -->
+        <comment userInput="Validate CMS Page Stage" stepKey="commentValidateCMSPageStage"/>
+        <seeNumberOfElements selector="{{ColumnOnFrontend.allColumns}}" userInput="4" stepKey="seeNumberOfColumnsPageStage"/>
+        <executeJS function="return document.querySelector('{{ColumnOnFrontend.columnX('1')}}').clientWidth" stepKey="columnOneWidthPageStage"/>
+        <executeJS function="return document.querySelector('{{ColumnOnFrontend.columnX('2')}}').clientWidth" stepKey="columnTwoWidthPageStage"/>
+        <executeJS function="return document.querySelector('{{ColumnOnFrontend.columnX('3')}}').clientWidth" stepKey="columnThreeWidthPageStage"/>
+        <executeJS function="return document.querySelector('{{ColumnOnFrontend.columnX('4')}}').clientWidth" stepKey="columnFourWidthPageStage"/>
+        <executeJS function="return Math.round({$columnTwoWidthPageStage}/{$columnOneWidthPageStage})" stepKey="columnRatioPageStage"/>
+        <assertEquals stepKey="assertRatioIsCorrectPageStage">
+            <expectedResult type="int">1</expectedResult>
+            <actualResult type="variable">columnRatioPageStage</actualResult>
+        </assertEquals>
+        <executeJS function="return Math.round({$columnThreeWidthPageStage}/{$columnOneWidthPageStage})" stepKey="columnRatio2PageStage"/>
+        <assertEquals stepKey="assertRatioIsCorrect2PageStage">
+            <expectedResult type="int">4</expectedResult>
+            <actualResult type="variable">columnRatio2PageStage</actualResult>
+        </assertEquals>
+        <executeJS function="return Math.round({$columnFourWidthPageStage}/{$columnOneWidthPageStage})" stepKey="columnRatio3PageStage"/>
+        <assertEquals stepKey="assertRatioIsCorrect3PageStage">
+            <expectedResult type="int">6</expectedResult>
+            <actualResult type="variable">columnRatio3PageStage</actualResult>
+        </assertEquals>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate CMS Page Storefront -->
+        <comment userInput="Validate CMS Page Storefront" stepKey="commentValidateCMSPageStorefront"/>
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToStoreFront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <seeNumberOfElements selector="{{ColumnOnFrontend.allColumns}}" userInput="4" stepKey="seeNumberOfColumnsStorefront"/>
+        <executeJS function="return document.querySelector('{{ColumnOnFrontend.columnX('1')}}').clientWidth" stepKey="columnOneWidthStorefront"/>
+        <executeJS function="return document.querySelector('{{ColumnOnFrontend.columnX('2')}}').clientWidth" stepKey="columnTwoWidthStorefront"/>
+        <executeJS function="return document.querySelector('{{ColumnOnFrontend.columnX('3')}}').clientWidth" stepKey="columnThreeWidthStorefront"/>
+        <executeJS function="return document.querySelector('{{ColumnOnFrontend.columnX('4')}}').clientWidth" stepKey="columnFourWidthStorefront"/>
+        <executeJS function="return Math.round({$columnTwoWidthStorefront}/{$columnOneWidthStorefront})" stepKey="columnRatioStorefront"/>
+        <assertEquals stepKey="assertRatioIsCorrectStorefront">
+            <expectedResult type="int">1</expectedResult>
+            <actualResult type="variable">columnRatioStorefront</actualResult>
+        </assertEquals>
+        <executeJS function="return Math.round({$columnThreeWidthStorefront}/{$columnOneWidthStorefront})" stepKey="columnRatio2Storefront"/>
+        <assertEquals stepKey="assertRatioIsCorrect2Storefront">
+            <expectedResult type="int">4</expectedResult>
+            <actualResult type="variable">columnRatio2Storefront</actualResult>
+        </assertEquals>
+        <executeJS function="return Math.round({$columnFourWidthStorefront}/{$columnOneWidthStorefront})" stepKey="columnRatio3Storefront"/>
+        <assertEquals stepKey="assertRatioIsCorrect3Storefront">
+            <expectedResult type="int">6</expectedResult>
+            <actualResult type="variable">columnRatio3Storefront</actualResult>
+        </assertEquals>
+    </test>
+    <test name="BlockRenderColumnDuplicationThroughBlockContentType">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Block Content"/>
+            <title value="Render Column Duplication Through Block Content Type"/>
+            <description value="Verify that users are able to successfully render and use the column content type with duplication through the Block content type."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MC-15226"/>
+            <useCaseId value="MC-13769"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+            <group value="pagebuilder-block-content"/>
+            <group value="pagebuilder-column"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <createData entity="_emptyCmsBlock" stepKey="createCMSBlock"/>
+            <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage1">
+                <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
+            </actionGroup>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock"/>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Add Column -->
+        <comment userInput="Add Column" stepKey="commentAddColumn"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnOntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <!-- Add Heading to Column -->
+        <comment userInput="Add Heading to Column" stepKey="commentAddHeadingToColumn"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSectionHeading">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingTypeToStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage">
+            <argument name="index" value="1"/>
+            <argument name="headingText" value="PageBuilderHeadingTextProperty"/>
+            <argument name="headingType" value="PageBuilderHeadingTypeProperty_H2"/>
+            <argument name="headingAlignment" value="PageBuilderHeadingAlignmentProperty_left"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Duplicate -->
+        <comment userInput="Duplicate" stepKey="commentDuplicate"/>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateContentType">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="saveCMSBlock" stepKey="saveCMSBlock"/>
+        <!-- Validate CMS Block Stage -->
+        <comment userInput="Validate CMS Block Stage" stepKey="commentValidateCMSBlockStage"/>
+        <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="3" stepKey="seeNumberOfColumnsStage"/>
+        <seeElement selector="{{HeadingOnStage.base('1')}}" stepKey="waitForContentTypeStage1"/>
+        <seeElement selector="{{HeadingOnStage.base('2')}}" stepKey="waitForContentTypeStage2"/>
+        <!-- Add Block to CMS Page -->
+        <comment userInput="Add Block to CMS Page" stepKey="commentAddBlockToCMSPage"/>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPanelAddContentMenuSection">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDropBlock">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
+            <argument name="block" value="$$createCMSBlock$$"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsBlock"/>
+        <!-- Validate CMS Page Stage -->
+        <comment userInput="Validate CMS Page Stage" stepKey="commentValidateCMSPageStage"/>
+        <seeNumberOfElements selector="{{ColumnOnFrontend.allColumns}}" userInput="3" stepKey="seeNumberOfColumnsPageStage"/>
+        <seeElement selector="{{HeadingOnStorefront.base('1')}}" stepKey="waitForContentTypePageStage1"/>
+        <seeElement selector="{{HeadingOnStorefront.base('2')}}" stepKey="waitForContentTypePageStage2"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate CMS Page Storefront -->
+        <comment userInput="Validate CMS Page Storefront" stepKey="commentValidateCMSPageStorefront"/>
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToStoreFront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <seeNumberOfElements selector="{{ColumnOnFrontend.allColumns}}" userInput="3" stepKey="seeNumberOfColumnsStorefront"/>
+        <seeElement selector="{{HeadingOnStorefront.base('1')}}" stepKey="waitForContentTypeStorefront1"/>
+        <seeElement selector="{{HeadingOnStorefront.base('2')}}" stepKey="waitForContentTypeStorefront2"/>
+    </test>
 </tests>
