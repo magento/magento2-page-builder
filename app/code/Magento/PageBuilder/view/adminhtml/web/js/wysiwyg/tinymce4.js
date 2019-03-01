@@ -141,7 +141,7 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
     ;
 
     _proto.saveContentFromWysiwygToDataStore = function saveContentFromWysiwygToDataStore() {
-      this.dataStore.update(this.getAdapter().getContent(), this.fieldName);
+      this.dataStore.set(this.fieldName, this.getAdapter().getContent());
     }
     /**
      * Update content in our stage wysiwyg after our data store gets updated

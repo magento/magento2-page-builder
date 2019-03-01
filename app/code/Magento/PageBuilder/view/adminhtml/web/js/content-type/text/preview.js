@@ -105,7 +105,7 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
 
     _proto.onTextareaKeyUp = function onTextareaKeyUp() {
       this.adjustTextareaHeightBasedOnScrollHeight();
-      this.contentType.dataStore.update(this.textarea.value, "content");
+      this.contentType.dataStore.set("content", this.textarea.value);
     }
     /**
      * Start stage interaction on textarea blur

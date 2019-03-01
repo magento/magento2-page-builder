@@ -109,7 +109,7 @@ export default class Preview extends BasePreview {
     public onTextareaKeyUp()
     {
         this.adjustTextareaHeightBasedOnScrollHeight();
-        this.contentType.dataStore.update(this.textarea.value, "content");
+        this.contentType.dataStore.set("content", this.textarea.value);
     }
 
     /**

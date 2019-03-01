@@ -229,7 +229,7 @@ export default class Preview extends BasePreview {
     public onTextareaKeyUp()
     {
         this.adjustTextareaHeightBasedOnScrollHeight();
-        this.contentType.dataStore.update(this.textarea.value, "content");
+        this.contentType.dataStore.set("content", this.textarea.value);
     }
 
     /**
@@ -332,9 +332,9 @@ export default class Preview extends BasePreview {
      * @param {Array} data - list of each files' data
      */
     private onImageUploaded(data: object[]) {
-        this.contentType.dataStore.update(
-            data,
+        this.contentType.dataStore.set(
             this.config.additional_data.uploaderConfig.dataScope,
+            data,
         );
     }
 

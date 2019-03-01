@@ -75,9 +75,9 @@ export default class Uploader {
      * @param {object[]} data
      */
     public onImageChanged(data: object[]) {
-        this.dataStore.update(
+        this.dataStore.set(
+            this.config.dataScope.toString(),
             data,
-            this.config.dataScope,
         );
     }
 
@@ -85,9 +85,9 @@ export default class Uploader {
      * Default callback for image deleted event
      */
     public onImageDeleted() {
-        this.dataStore.update(
+        this.dataStore.set(
+            this.config.dataScope.toString(),
             "",
-            this.config.dataScope,
         );
     }
 

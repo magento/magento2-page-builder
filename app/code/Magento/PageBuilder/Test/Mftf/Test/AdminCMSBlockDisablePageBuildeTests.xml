@@ -89,10 +89,12 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <seeElement selector="{{PageBuilderStage.stageWrapper}}" stepKey="seeElementPageBuilderStage"/>
+        <dontSeeElementInDOM selector="{{CmsNewBlockBlockBasicFieldsSection.content_textarea}}" stepKey="dontSeeContentAreaInDOM"/>
         <magentoCLI command="config:set cms/pagebuilder/enabled 0" stepKey="disablePageBuilder"/>
         <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage">
             <argument name="CMSBlockPage" value="$$createPreReqBlock$$"/>
         </actionGroup>
+        <seeElementInDOM selector="{{CmsNewBlockBlockBasicFieldsSection.content_textarea}}" stepKey="seeContentAreaInDOM"/>
         <dontSeeElementInDOM selector="{{PageBuilderStage.stageWrapper}}" stepKey="dontSeePageBuilderStage"/>
     </test>
 </tests>
