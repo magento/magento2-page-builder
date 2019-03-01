@@ -125,7 +125,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _proto.updateData = function updateData(key, value) {
       var data = this.contentType.dataStore.getState();
       (0, _object.set)(data, key, value);
-      this.contentType.dataStore.update(data);
+      this.contentType.dataStore.setState(data);
     }
     /**
      * Update the data value of a part of our internal Knockout data store
@@ -291,7 +291,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
     _proto.onOptionVisibilityToggle = function onOptionVisibilityToggle() {
       var display = this.contentType.dataStore.get("display");
-      this.contentType.dataStore.update(!display, "display");
+      this.contentType.dataStore.set("display", !display);
     }
     /**
      * Handle duplicate of items

@@ -210,7 +210,7 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore
 
     _proto.onTextareaKeyUp = function onTextareaKeyUp() {
       this.adjustTextareaHeightBasedOnScrollHeight();
-      this.contentType.dataStore.update(this.textarea.value, "content");
+      this.contentType.dataStore.set("content", this.textarea.value);
     }
     /**
      * Start stage interaction on textarea blur
@@ -323,7 +323,7 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore
     ;
 
     _proto.onImageUploaded = function onImageUploaded(data) {
-      this.contentType.dataStore.update(data, this.config.additional_data.uploaderConfig.dataScope);
+      this.contentType.dataStore.set(this.config.additional_data.uploaderConfig.dataScope, data);
     }
     /**
      * Adjust textarea's height based on scrollHeight

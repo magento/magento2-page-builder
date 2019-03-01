@@ -300,6 +300,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       column.preview.element.draggable({
         appendTo: "body",
         containment: "body",
+        cursor: "-webkit-grabbing",
         handle: ".move-column",
         revertDuration: 250,
         helper: function helper() {
@@ -310,7 +311,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
             opacity: 0.5,
             pointerEvents: "none",
             width: (0, _jquery)(this).outerWidth() + "px",
-            zIndex: 100
+            zIndex: 5000
           });
           return helper;
         },

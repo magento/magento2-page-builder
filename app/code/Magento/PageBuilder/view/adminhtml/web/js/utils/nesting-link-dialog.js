@@ -28,7 +28,7 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/modal/dismissible-co
           always: function always() {
             var anchorLessDataStoreMessage = inlineMessage.replace(aLinkRegex, "");
             var anchorLessInlineMessage = inlineEditor.html().replace(aLinkRegex, "");
-            dataStore.update(anchorLessDataStoreMessage, inlineMessageField);
+            dataStore.set(inlineMessageField, anchorLessDataStoreMessage);
             inlineEditor.html(anchorLessInlineMessage);
           }
         },

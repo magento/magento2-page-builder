@@ -429,7 +429,7 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
 
 
   function updateColumnWidth(column, width) {
-    column.dataStore.update(parseFloat(width.toString()) + "%", "width");
+    column.dataStore.set("width", parseFloat(width.toString()) + "%");
   }
 
   return Object.assign(Resize, {
