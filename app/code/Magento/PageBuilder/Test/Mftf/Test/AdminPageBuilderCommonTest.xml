@@ -1377,7 +1377,8 @@
         <!--Go to storefront to verify Category Link-->
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
         <waitForPageLoad  stepKey="waitForPageLoad1"/>
-        <seeElement selector="{{PageBuilderCatalogOnStoreFrontSection.CategoryLink($createSubCategoryY.name_lwr$)}}" stepKey="seeExternalLinkOnStoreFront" />
+        <seeElement selector="{{ButtonItemOnStorefront.buttonItemType('1', PageBuilderButtonItemType_Primary.value)}}" stepKey="seeButtonItemOnStoreFront"/>
+        <seeElement selector="{{ButtonItemOnStorefront.buttonItemContainsUrl('1', $createSubCategoryY.name_lwr$)}}" stepKey="seeExternalLinkOnStoreFront" />
         <click selector=".pagebuilder-button-primary" stepKey="clickButton"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <see userInput="$createSubCategoryY.name$" stepKey="seeCategoryName" />
@@ -1483,7 +1484,8 @@
         <!--Go to storefront to verify Product Link-->
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
         <waitForPageLoad  stepKey="waitForPageLoad1"/>
-        <seeElement selector="{{PageBuilderCatalogOnStoreFrontSection.ProductLink($createPreReqProduct2.name$)}}" stepKey="seeExternalLinkOnStoreFront" />
+        <seeElement selector="{{ButtonItemOnStorefront.buttonItemType('1', PageBuilderButtonItemType_Primary.value)}}" stepKey="seeButtonItemOnStoreFront"/>
+        <seeElement selector="{{ButtonItemOnStorefront.buttonItemContainsUrl('1', $createPreReqProduct2.name$)}}" stepKey="seeExternalLinkOnStoreFront" />
         <click selector=".pagebuilder-button-primary" stepKey="clickButton"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <see userInput="$createPreReqProduct2.name$" stepKey="seeProductName" />
@@ -1586,7 +1588,8 @@
         <!--Go to storefront to verify CMS Page Link-->
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
         <waitForPageLoad  stepKey="waitForPageLoad1"/>
-        <seeElement selector="{{PageBuilderPageOnStoreFrontSection.CMSPageLink($createCMSPageB.identifier$)}}" stepKey="seePageLinkOnStoreFront" />
+        <seeElement selector="{{ButtonItemOnStorefront.buttonItemType('1', PageBuilderButtonItemType_Primary.value)}}" stepKey="seeButtonItemOnStoreFront"/>
+        <seeElement selector="{{ButtonItemOnStorefront.buttonItemContainsUrl('1', $createCMSPageB.identifier$)}}" stepKey="seePageLinkOnStoreFront" />
         <click selector=".pagebuilder-button-primary" stepKey="clickButton"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <see userInput="$createCMSPageB.title$" stepKey="seePageName" />
