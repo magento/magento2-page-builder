@@ -20,7 +20,7 @@ define(["Magento_PageBuilder/js/events", "underscore"], function (_events, _unde
       this.dataStore = dataStore;
 
       _events.on("form:" + this.instance.id + ":saveAfter", function (data) {
-        _this.dataStore.update(data);
+        _this.dataStore.setState(data);
       });
     }
     /**

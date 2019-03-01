@@ -135,7 +135,7 @@ function redistributeColumnWidths(
             (column: ContentTypeCollectionInterface<ColumnPreview>, index: number) => {
                 updateColumnWidth(column, columnWidths[index]);
             });
-        columnGroup.dataStore.update(newGridSize, "grid_size");
+        columnGroup.dataStore.set("grid_size", newGridSize);
         return;
     }
 
@@ -213,7 +213,7 @@ function redistributeColumnWidths(
     );
 
     // persist new grid size so upcoming calls to get column widths are calculated correctly
-    columnGroup.dataStore.update(newGridSize, "grid_size");
+    columnGroup.dataStore.set("grid_size", newGridSize);
 
     // apply leftover columns if the new grid size did not distribute evenly into existing columns
     if (Math.round(resizeUtils.getColumnsWidth()) < 100) {

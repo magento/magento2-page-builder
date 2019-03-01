@@ -4,7 +4,7 @@
  */
 
 import $ from "jquery";
-import {get} from "./utils/object";
+import {get, set} from "./utils/object";
 
 interface DataStoreEvent {
     state: DataObject;
@@ -40,21 +40,23 @@ export default class DataStore {
     }
 
     /**
-     * Update the state for the content type
+     * Set a specific keys value in the data store
      *
-     * @param {DataObject | string | number | boolean | any[] | null | undefined} data
-     * @param {string | number} key
+     * @param {string} key
+     * @param value
      */
-    public update(
-        data: DataObject | undefined | null | string | number | boolean | any[],
-        key?: string | number,
-    ): void {
-        this.previousState = Object.assign({}, this.state);
-        if (key) {
-            this.state[key] = (data as undefined | null | string | number | boolean | any[]);
-        } else {
-            this.state = (data as DataObject);
-        }
+    public set(key: string, value: any) {
+        set(this.state, key, value);
+        this.emitState();
+    }
+
+    /**
+     * Update the entire state for the content type
+     *
+     * @param {DataObject} state
+     */
+    public setState(state: DataObject) {
+        this.state = state;
         this.emitState();
     }
 
@@ -66,7 +68,7 @@ export default class DataStore {
     public unset(key: string | number): void {
         const storeState = this.state;
         delete storeState[key];
-        this.update(storeState);
+        this.setState(storeState);
     }
 
     /**

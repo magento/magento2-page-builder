@@ -12,7 +12,9 @@ namespace Magento\PageBuilder\Plugin\Filter;
  */
 class TemplatePlugin
 {
-    const DATA_BACKGROUND_IMAGE = 'data-background-images';
+    const BACKGROUND_IMAGE_PATTERN = '/data-background-images/si';
+
+    const HTML_CONTENT_TYPE_PATTERN = '/data-content-type="html"/si';
 
     /**
      * @var \Magento\Framework\View\ConfigInterface
@@ -30,15 +32,23 @@ class TemplatePlugin
     private $domDocument;
 
     /**
+     * @var \Magento\Framework\Math\Random
+     */
+    private $mathRandom;
+
+    /**
      * @param \Psr\Log\LoggerInterface $logger
      * @param \Magento\Framework\View\ConfigInterface $viewConfig
+     * @param \Magento\Framework\Math\Random $mathRandom
      */
     public function __construct(
         \Psr\Log\LoggerInterface $logger,
-        \Magento\Framework\View\ConfigInterface $viewConfig
+        \Magento\Framework\View\ConfigInterface $viewConfig,
+        \Magento\Framework\Math\Random $mathRandom
     ) {
         $this->logger = $logger;
         $this->viewConfig = $viewConfig;
+        $this->mathRandom = $mathRandom;
     }
 
     /**
@@ -55,15 +65,15 @@ class TemplatePlugin
         $this->domDocument = false;
 
         // Validate if the filtered result requires background image processing
-        if (strpos($result, self::DATA_BACKGROUND_IMAGE) !== false) {
+        if (preg_match(self::BACKGROUND_IMAGE_PATTERN, $result)) {
             $document = $this->getDomDocument($result);
             $this->generateBackgroundImageStyles($document);
         }
 
         // Process any HTML content types, they need to be decoded on the front-end
-        if (strpos($result, 'data-content-type="html"') !== false) {
+        if (preg_match(self::HTML_CONTENT_TYPE_PATTERN, $result)) {
             $document = $this->getDomDocument($result);
-            $this->decodeHtmlContentTypes($document);
+            $uniqueNodeNameToDecodedOuterHtmlMap = $this->generateDecodedHtmlPlaceholderMappingInDocument($document);
         }
 
         // If a document was retrieved we've modified the output so need to retrieve it from within the document
@@ -75,7 +85,21 @@ class TemplatePlugin
                 $matches
             );
 
-            return !empty($matches) ? $matches[1] : $result;
+            if (!empty($matches)) {
+                $docHtml = $matches[1];
+
+                if (isset($uniqueNodeNameToDecodedOuterHtmlMap)) {
+                    foreach ($uniqueNodeNameToDecodedOuterHtmlMap as $uniqueNodeName => $decodedOuterHtml) {
+                        $docHtml = str_replace(
+                            '<' . $uniqueNodeName . '>' . '</' . $uniqueNodeName . '>',
+                            $decodedOuterHtml,
+                            $docHtml
+                        );
+                    }
+                }
+
+                $result = $docHtml;
+            }
         }
 
         return $result;
@@ -129,31 +153,48 @@ class TemplatePlugin
     }
 
     /**
-     * Decode the contents of any HTML content types for the store front
+     * Convert encoded HTML content types to placeholders and generate decoded outer html map for future replacement
      *
      * @param \DOMDocument $document
+     * @return array - map of unique node name to decoded html
      */
-    private function decodeHtmlContentTypes(\DOMDocument $document): void
+    private function generateDecodedHtmlPlaceholderMappingInDocument(\DOMDocument $document): array
     {
         $xpath = new \DOMXPath($document);
-        $nodes = $xpath->query('//*[@data-content-type="html" and not(@data-decoded="true")]');
-        foreach ($nodes as $node) {
-            if (strlen(trim($node->nodeValue)) > 0) {
-                /* @var \DOMElement $node */
-                $fragment = $document->createDocumentFragment();
-                $fragment->appendXML($node->nodeValue);
-                // Store a decoded attribute on the element so we don't double decode
-                $node->setAttribute("data-decoded", "true");
-                $node->nodeValue = "";
 
-                // If the HTML code in the content type is invalid it may throw
-                try {
-                    $node->appendChild($fragment);
-                } catch (\Exception $e) {
-                    $this->logger->critical($e);
-                }
+        // construct xpath query to fetch top-level ancestor html content type nodes
+        /** @var $htmlContentTypeNodes \DOMNode[] */
+        $htmlContentTypeNodes = $xpath->query(
+            '//*[@data-content-type="html" and not(@data-decoded="true")]' .
+            '[not(ancestor::*[@data-content-type="html"])]'
+        );
+
+        $uniqueNodeNameToDecodedOuterHtmlMap = [];
+
+        foreach ($htmlContentTypeNodes as $htmlContentTypeNode) {
+            // Set decoded attribute on all encoded html content types so we don't double decode;
+            $htmlContentTypeNode->setAttribute('data-decoded', 'true');
+
+            // if nothing exists inside the node, continue
+            if (!strlen(trim($htmlContentTypeNode->nodeValue))) {
+                continue;
             }
+
+            $preDecodedOuterHtml = $document->saveHTML($htmlContentTypeNode);
+            $decodedOuterHtml = html_entity_decode($preDecodedOuterHtml);
+
+            // generate unique node name element to replace with decoded html contents at end of processing;
+            // goal is to create a document as few times as possible to prevent inadvertent parsing of contents as html
+            // by the dom library
+            $uniqueNodeName = $this->mathRandom->getRandomString(32, $this->mathRandom::CHARS_LOWERS);
+
+            $uniqueNode = new \DOMElement($uniqueNodeName);
+            $htmlContentTypeNode->parentNode->replaceChild($uniqueNode, $htmlContentTypeNode);
+
+            $uniqueNodeNameToDecodedOuterHtmlMap[$uniqueNodeName] = $decodedOuterHtml;
         }
+
+        return $uniqueNodeNameToDecodedOuterHtmlMap;
     }
 
     /**
@@ -164,10 +205,10 @@ class TemplatePlugin
     private function generateBackgroundImageStyles(\DOMDocument $document) : void
     {
         $xpath = new \DOMXPath($document);
-        $nodes = $xpath->query('//*[@' . self:: DATA_BACKGROUND_IMAGE . ']');
+        $nodes = $xpath->query('//*[@data-background-images]');
         foreach ($nodes as $node) {
             /* @var \DOMElement $node */
-            $backgroundImages = $node->attributes->getNamedItem(self:: DATA_BACKGROUND_IMAGE);
+            $backgroundImages = $node->attributes->getNamedItem('data-background-images');
             if ($backgroundImages->nodeValue !== '') {
                 $elementClass = uniqid('background-image-');
                 $images = json_decode(stripslashes($backgroundImages->nodeValue), true);
