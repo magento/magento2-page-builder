@@ -254,9 +254,9 @@ export default class Preview extends PreviewCollection {
             this.contentType.addChild(tab, this.contentType.children().length);
 
             // Update the default tab title when adding a new tab
-            tab.dataStore.update(
-                $t("Tab") + " " + (this.contentType.children.indexOf(tab) + 1),
+            tab.dataStore.set(
                 "tab_name",
+                $t("Tab") + " " + (this.contentType.children.indexOf(tab) + 1),
             );
         });
     }
@@ -397,9 +397,9 @@ export default class Preview extends PreviewCollection {
         events.on("tab-item:duplicateAfter", (args: ContentTypeDuplicateEventParamsInterface) => {
             if (this.contentType.id === args.duplicateContentType.parentContentType.id && args.direct) {
                 const tabData = args.duplicateContentType.dataStore.getState();
-                args.duplicateContentType.dataStore.update(
-                    tabData.tab_name.toString() + " copy",
+                args.duplicateContentType.dataStore.set(
                     "tab_name",
+                    tabData.tab_name.toString() + " copy",
                 );
                 duplicatedTab = args.duplicateContentType;
                 duplicatedTabIndex = args.index;
@@ -433,9 +433,9 @@ export default class Preview extends PreviewCollection {
             });
         });
 
-        this.contentType.dataStore.update(
-            activeOptions,
+        this.contentType.dataStore.set(
             "_default_active_options",
+            activeOptions,
         );
     }
 

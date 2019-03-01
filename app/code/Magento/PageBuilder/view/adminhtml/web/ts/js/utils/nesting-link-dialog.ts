@@ -43,7 +43,7 @@ export default function nestingLinkDialog(
                 always: () => {
                     const anchorLessDataStoreMessage = inlineMessage.replace(aLinkRegex, "");
                     const anchorLessInlineMessage = inlineEditor.html().replace(aLinkRegex, "");
-                    dataStore.update(anchorLessDataStoreMessage, inlineMessageField);
+                    dataStore.set(inlineMessageField, anchorLessDataStoreMessage);
                     inlineEditor.html(anchorLessInlineMessage);
                 },
             },

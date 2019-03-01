@@ -449,8 +449,8 @@ export function comparator(num1: number, num2: number, threshold: number): boole
  * @param {number} width
  */
 export function updateColumnWidth(column: ContentTypeCollectionInterface<ColumnPreview>, width: number): void {
-    column.dataStore.update(
-        parseFloat(width.toString()) + "%",
+    column.dataStore.set(
         "width",
+        parseFloat(width.toString()) + "%",
     );
 }

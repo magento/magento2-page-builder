@@ -4,7 +4,7 @@ This topic describes how to change the default mobile breakpoint in Page Builder
 
 ## Default mobile breakpoint
 
-By default, when you configure Page Builder to render a background image for a container, it uses a mobile image when the container's width is equal to and less than 768px. Page Builder defines this mobile breakpoint in the `Magento_PageBuilder/etc/view.xml` file, as shown here:
+By default, when you configure Page Builder to render a background image for a container, it uses a mobile image when the container's width is equal to or less than 768px. Page Builder defines this mobile breakpoint in the `Magento_PageBuilder/etc/view.xml` file, as shown here:
 
 ```xml
 <?xml version="1.0"?>
@@ -49,4 +49,4 @@ In either case, if your theme uses a mobile breakpoint `max-width` of `600px`, y
 </view>
 ```
 
-This directs Page Builder to use this mobile breakpoint instead of its default breakpoint of 768px. Other responsive breakpoints from your custom theme can be added in the same way.
+This directs Page Builder to use this mobile breakpoint instead of its default breakpoint of 768px. You can add other responsive breakpoints from your custom theme in the same way.

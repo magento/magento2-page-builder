@@ -11,7 +11,7 @@ import {get} from "../../../../../utils/object";
 /**
  * @api
  */
-export default class InlineBlock implements ConverterInterface {
+export default class Boolean implements ConverterInterface {
     /**
      * Convert value to internal format
      *
@@ -23,7 +23,7 @@ export default class InlineBlock implements ConverterInterface {
     }
 
     /**
-     * Convert value to knockout format, if buttons are displayed they should be inline block
+     * Convert value to knockout format, if buttons are displayed they should be reset to default
      *
      * @param {string} name
      * @param {DataObject} data
@@ -34,6 +34,6 @@ export default class InlineBlock implements ConverterInterface {
         if (!_.isUndefined(value) && value === false) {
             return "none";
         }
-        return "inline-block";
+        return "";
     }
 }

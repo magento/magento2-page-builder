@@ -214,7 +214,7 @@ export default class Preview extends BasePreview {
     public onTextareaKeyUp()
     {
         this.adjustTextareaHeightBasedOnScrollHeight();
-        this.contentType.dataStore.update(this.textarea.value, "message");
+        this.contentType.dataStore.set("message", this.textarea.value);
     }
 
     /**
@@ -246,7 +246,7 @@ export default class Preview extends BasePreview {
             const imageObject = (dataStore[this.config.additional_data.uploaderConfig.dataScope] as object[])[0] || {};
             // Resolves issue when tinyMCE injects a non-breaking space on reinitialization and removes placeholder.
             if (dataStore.message === "<div data-bind=\"html: data.content.html\">&nbsp;</div>") {
-                this.contentType.dataStore.update("", "message");
+                this.contentType.dataStore.set("message", "");
             }
             events.trigger(`image:${this.contentType.id}:assignAfter`, imageObject);
             nestingLinkDialog(this.contentType.dataStore, this.wysiwyg, "message", "link_url");
