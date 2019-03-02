@@ -48,8 +48,8 @@
             <argument name="section"/>
         </arguments>
         <scrollTo selector="{{section.base('index')}}" stepKey="waitForButtonElementStorefront"/>
-        <seeElement selector="{{PageBuilderLinkAttributeStoreFront.ExternalURLLink(CMSPage.identifier)}}" stepKey="seePageLinkOnStoreFront"/>
-        <click selector="{{PageBuilderLinkAttributeStoreFront.ExternalURLLink(CMSPage.identifier)}}" stepKey="clickLink"/>
+        <seeElement selector="{{PageBuilderLinkAttributeStoreFront.ExternalURLContainsLink(CMSPage.identifier)}}" stepKey="seePageLinkOnStoreFront"/>
+        <click selector="{{PageBuilderLinkAttributeStoreFront.ExternalURLContainsLink(CMSPage.identifier)}}" stepKey="clickLink"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <see userInput="{{CMSPage.title}}" stepKey="seePageName"/>
     </actionGroup>

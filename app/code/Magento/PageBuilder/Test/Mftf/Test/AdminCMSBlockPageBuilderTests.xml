@@ -23,11 +23,11 @@
         <before>
             <magentoCLI command="config:set cms/wysiwyg/enabled disabled" stepKey="disableWYSIWYG"/>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <createData entity="_defaultBlock" stepKey="createPreReqBlock" />
+            <createData entity="_defaultBlock" stepKey="createPreReqBlock"/>
         </before>
         <after>
             <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG"/>
-            <deleteData createDataKey="createPreReqBlock" stepKey="deletePreReqBlock" />
+            <deleteData createDataKey="createPreReqBlock" stepKey="deletePreReqBlock"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <!--Create CMS Block using PageBuilder-->
@@ -43,11 +43,9 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <waitForLoadingMaskToDisappear stepKey="waitForEditPanelSpinner"/>
         <fillField selector="{{TextOnConfiguration.textArea}}" userInput="Hello CMS Block from PageBuilder" stepKey="addTextToEditor"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <click selector="{{BlockNewPagePageActionsSection.saveBlock}}" stepKey="clickSaveBlock"/>
-        <see userInput="You saved the block." stepKey="seeSuccessMessage"/>
+        <actionGroup ref="saveCMSBlock" stepKey="saveCMSBlock"/>
         <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToContentCreatedCMSBlockPage2">
             <argument name="CMSBlockPage" value="$$createPreReqBlock$$"/>
         </actionGroup>
@@ -801,7 +799,7 @@
             <createData entity="_emptyCmsBlock" stepKey="createPreReqBlock" after="loginAsAdmin"/>
             <createData entity="_emptyCmsPage" stepKey="createCMSPage" after="createPreReqBlock"/>
             <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToAPageWithPageBuilder">
-                <argument name="CMSBlockPage" value="$$createPreReqBlock$$" />
+                <argument name="CMSBlockPage" value="$$createPreReqBlock$$"/>
             </actionGroup>
             <comment userInput="---merging to remove step---" stepKey="switchToPageBuilderStage"/>
         </before>
@@ -827,7 +825,7 @@
             <createData entity="_emptyCmsBlock" stepKey="createPreReqBlock" after="loginAsAdmin"/>
             <createData entity="_emptyCmsPage" stepKey="createCMSPage" after="createPreReqBlock"/>
             <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToAPageWithPageBuilder">
-                <argument name="CMSBlockPage" value="$$createPreReqBlock$$" />
+                <argument name="CMSBlockPage" value="$$createPreReqBlock$$"/>
             </actionGroup>
             <comment userInput="---merging to remove step---" stepKey="switchToPageBuilderStage"/>
         </before>

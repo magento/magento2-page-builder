@@ -8,6 +8,20 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="AdminConfigDefaultCategoryLayoutFromConfigurationSettingTest">
+        <annotations>
+            <description value="Admin should be able to configure the default layout for Category Page from System Configuration, verify the default is updated to the Page Builder's default layout"/>
+            <useCaseId value="MC-936"/>
+            <testCaseId value="MC-3105"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-layout"/>
+            <group value="pagebuilder-fullwidth"/>
+            <group value="pagebuilder-catalog-category"/>
+        </annotations>
+        <!-- PageBuilder is enabled so check default is full width -->
+        <comment userInput="PageBuilder is enabled so check default is full width" stepKey="commentSeeCategoryFullWidth" before="seeNoLayoutUpdatesSelected"/>
+        <seeOptionIsSelected selector="{{DefaultLayoutsSection.categoryLayout}}" userInput="{{PageBuilderFullWidthLayout.category}}" stepKey="seeNoLayoutUpdatesSelected"/>
+    </test>
     <test name="PageBuilderCatalogCategoryVerifyPageBuilderVisible">
         <annotations>
             <features value="PageBuilder"/>
@@ -19,29 +33,23 @@
             <testCaseId value="MC-2408"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-catalog-category"/>
+            <group value="pagebuilder-text"/>
         </annotations>
         <before>
             <magentoCLI command="config:set cms/wysiwyg/enabled disabled" stepKey="disableWYSIWYG"/>
+            <createData entity="_defaultCategory" stepKey="createPreReqCategory"/>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToCreatedCategory" stepKey="navigateToCreatedProductEditPage">
+                <argument name="Category" value="$$createPreReqCategory$$"/>
+            </actionGroup>
+            <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminCategorySection"/>
         </before>
         <after>
             <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG"/>
+            <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCategory"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <!--Verify PageBuilder visible on creation form of Catalog Page-->
-        <amOnPage url="{{AdminCategoryPage.url}}" stepKey="navigateToNewCatalog"/>
-        <waitForPageLoad stepKey="waitForPageLoad1"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForLoading" />
-        <click selector="{{AdminCategorySidebarActionSection.AddSubcategoryButton}}" stepKey="clickOnAddSubCategory"/>
-        <fillField selector="{{AdminCategoryBasicFieldSection.CategoryNameInput}}" userInput="{{SimpleSubCategory.name}}" stepKey="enterCategoryName"/>
-        <click selector="{{AdminProductFormSection.contentTab}}" stepKey="clickContentTab"/>
-
-        <waitForElementVisible selector="{{PageBuilderCategoryAttribute.PageBuilderArea('description')}}" stepKey="waitForPageBuilderBtn" />
-        <see userInput="{{EditWithPageBuilderButton.value}}" stepKey="seePageBuilderBtn"/>
-        <click selector="{{PageBuilderCategoryAttribute.PageBuilderArea('description')}}" stepKey="clickOnPageBuilderBtn" />
-        <!--See PageBuilder fullsize-->
-        <waitForElementVisible selector="{{PageBuilderPanel.layoutMenuSection}}" stepKey="waiForPageBuilderVisible" />
-        <seeElement selector="{{PageBuilderStage.stageWrapperFullScreen}}" stepKey="seePageBuilderFullSizeScreen" />
+        <actionGroup ref="openPageBuilderForAttribute" stepKey="enablePageBuilderOnCatalog"/>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
@@ -52,17 +60,15 @@
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <fillField selector="{{TextOnConfiguration.textArea}}" userInput="Hello Category from PageBuilder" stepKey="addTextToEditor"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask"/>
-        <waitForElementVisible time="5" selector="{{EditPanelForm.editFormSave}}" stepKey="waitForColumnSaveButton" />
-        <click selector="{{EditPanelForm.editFormSave}}" stepKey="clickSaveColumn"/>
-        <waitForElementNotVisible time="5" selector="{{EditPanelForm.editForm}}" stepKey="waitForEditFormNotVisible" />
-        <waitForElementVisible time="5" selector="{{PageBuilderStage.exitFullScreen}}" stepKey="waitForExitFullScreen" />
-        <click selector="{{PageBuilderStage.exitFullScreen}}" stepKey="exitPageBuilderFullScreen" />
-        <click selector="{{AdminCategoryMainActionsSection.SaveButton}}" stepKey="saveCategory"/>
-        <waitForPageLoad stepKey="waitForPageLoad2" />
-        <amOnPage url="/{{SimpleSubCategory.name_lwr}}.html" stepKey="goToCategoryFrontPage"/>
-        <waitForPageLoad stepKey="waitForPageLoad3" />
-        <see userInput="Hello Category from PageBuilder" stepKey="seePageBuilderContent" />
+        <actionGroup ref="saveEditPanelSettingsFullScreen" stepKey="saveEditPanel"/>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
+        <actionGroup ref="saveCatalogCategory" stepKey="saveCatalogCategory"/>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToStorefront">
+            <argument name="page" value="$$createPreReqCategory.name$$.html"/>
+        </actionGroup>
+        <see userInput="Hello Category from PageBuilder" stepKey="seePageBuilderContent"/>
     </test>
     <test name="PageBuilderCatalogCategoryDirectivesTest">
         <annotations>
@@ -80,26 +86,21 @@
         <before>
             <magentoCLI command="config:set general/store_information/country_id US" stepKey="setValueForCountryVariable"/>
             <createData entity="_defaultCategory" stepKey="createPreReqCategory"/>
-            <createData entity="simpleCmsPage" stepKey="createCMSPageA" />
-            <createData entity="simpleCmsPage" stepKey="createCMSPageB" />
+            <createData entity="simpleCmsPage" stepKey="createCMSPageA"/>
+            <createData entity="simpleCmsPage" stepKey="createCMSPageB"/>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToCreatedCategory" stepKey="navigateToCreatedProductEditPage">
+                <argument name="Category" value="$$createPreReqCategory$$"/>
+            </actionGroup>
+            <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminCategorySection"/>
         </before>
         <after>
             <magentoCLI command="config:set general/store_information/country_id none" stepKey="setBackToDefaultValue"/>
-            <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCategory" />
-            <deleteData createDataKey="createCMSPageA" stepKey="deletePreReqCmsPageA" />
-            <deleteData createDataKey="createCMSPageB" stepKey="deletePreReqCmsPageB" />
+            <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCategory"/>
+            <deleteData createDataKey="createCMSPageA" stepKey="deletePreReqCmsPageA"/>
+            <deleteData createDataKey="createCMSPageB" stepKey="deletePreReqCmsPageB"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <!--Go to Category Page-->
-        <comment userInput="Go to Category Page" stepKey="goToCategoryPage"/>
-        <amOnPage url="{{AdminCategoryEditPage.url($$createPreReqCategory.id$$)}}" stepKey="goToCategoryEditPage"/>
-        <waitForPageLoad stepKey="waitForProductPageBeLoaded"/>
-        <click selector="{{AdminCategoryContentSection.sectionHeader}}" stepKey="clickContentTab"/>
-        <waitForElementVisible selector="{{PageBuilderCategoryAttribute.PageBuilderArea('description')}}" stepKey="waitForPageBuilderBtn" />
-        <see userInput="Edit with Page Builder" stepKey="seePageBuilderBtn"/>
-        <!--Click enable PageBuilder button-->
-        <comment userInput="Click enable PageBuilder button" stepKey="clickEnablePageBuilderBtn"/>
         <actionGroup ref="openPageBuilderForAttribute" stepKey="enablePageBuilderOnCatalog"/>
         <!--Add button to PageBuilder-->
         <comment userInput="Add button to PageBuilder" stepKey="addButtonToPageBuilder"/>
@@ -114,7 +115,7 @@
             <argument name="targetIndex" value="1"/>
         </actionGroup>
         <!--Choose cms page link type-->
-        <comment stepKey="commentChooseCmsPageLinkType" userInput="Choose cms page link type"/>
+        <comment userInput="Choose cms page link type" stepKey="commentChooseCmsPageLinkType"/>
         <actionGroup ref="fillOutUrlInput" stepKey="choosePageLink">
             <argument name="fieldName" value="button_link"/>
             <argument name="linkName" value="ExternalLink.page"/>
@@ -133,7 +134,6 @@
         <actionGroup ref="addImageToStage" stepKey="addImageToStage">
             <argument name="property" value="PageBuilderImageProperty_StageJPG"/>
         </actionGroup>
-        <waitForElementVisible selector="{{ImageOnStageWithoutImageUploaded.imageSourceByIndex('1', PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="seeImage1SourceOnStage"/>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragTextOntoStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
@@ -162,18 +162,16 @@
         <switchToIFrame selector="{{TextOnConfiguration.tinyMCEIFrame}}" stepKey="switchToIFrame"/>
         <waitForElementVisible selector="{{TextOnConfiguration.tinyMCEWidget(TinyMCEWidgetCMSPageLink.editPanelValue, '1')}}" stepKey="waitForWidget"/>
         <switchToIFrame stepKey="exitIFrame"/>
-        <click selector="{{EditPanelForm.editFormSave}}" stepKey="clickSaveColumn"/>
-        <waitForElementNotVisible time="5" selector="{{EditPanelForm.editForm}}" stepKey="waitForEditFormNotVisible" />
-        <waitForElementVisible time="5" selector="{{PageBuilderStage.exitFullScreen}}" stepKey="waitForExitFullScreen" />
-        <click selector="{{PageBuilderStage.exitFullScreen}}" stepKey="exitPageBuilderFullScreen" />
-        <click selector="{{AdminCategoryMainActionsSection.SaveButton}}" stepKey="saveCategory"/>
-        <waitForPageLoad stepKey="waitForPageLoad2" />
+        <actionGroup ref="saveEditPanelSettingsFullScreen" stepKey="saveEditPanel"/>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
+        <actionGroup ref="saveCatalogCategory" stepKey="saveCatalogCategory"/>
         <!--Go to storefront to verify Category Link-->
         <comment userInput="Verify directives on category store front" stepKey="commentVerifyDirectivesOnStorefront"/>
-        <amOnPage url="$$createPreReqCategory.name$$.html" stepKey="navigateToProductPage"/>
-        <waitForPageLoad stepKey="waitForPageLoad3" />
-        <see userInput="US" stepKey="verifyCountryVariableName" />
-        <see userInput="$$createCMSPageB.title$$" stepKey="verifyWidget" />
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToStorefront">
+            <argument name="page" value="$$createPreReqCategory.name$$.html"/>
+        </actionGroup>
+        <see userInput="US" stepKey="verifyCountryVariableName"/>
+        <see userInput="$$createCMSPageB.title$$" stepKey="verifyWidget"/>
         <waitForElementVisible selector="{{ImageOnStorefront.imageSourceByIndex('1', PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="seeImage2SourceOnStorefront"/>
         <actionGroup ref="verifyCmsPageLinkOnFrontend" stepKey="checkButtonOnStoreFront">
             <argument name="CMSPage" value="$$createCMSPageA$$"/>
@@ -195,47 +193,42 @@
             <group value="pagebuilder-catalog-category"/>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <createData entity="_defaultCategory" stepKey="createPreReqCategory"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToCreatedCategory" stepKey="navigateToCreatedCategory">
+                <argument name="Category" value="$$createPreReqCategory$$"/>
+            </actionGroup>
         </before>
         <after>
-            <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCatalog" />
+            <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCatalog"/>
             <actionGroup ref="logout" stepKey="logout"/>
-            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
         </after>
-        <actionGroup ref="navigateToCreatedCategory" stepKey="navigateToCreatedCategory">
-            <argument name="Category" value="$$createPreReqCategory$$"/>
-        </actionGroup>
         <click selector="{{AdminProductFormSection.contentTab}}" stepKey="clickContentTab"/>
-        <waitForText userInput="Category Image" stepKey="waitForText" />
-        <seeElement selector="{{CategoryContentSection.SelectFromGalleryBtn}}" stepKey="seeSelectFromGallery" />
+        <waitForText userInput="Category Image" stepKey="waitForText"/>
+        <seeElement selector="{{CategoryContentSection.SelectFromGalleryBtn}}" stepKey="seeSelectFromGallery"/>
         <see userInput="Maximum file size" stepKey="seeMediaGalleryValidationMsg"/>
         <see userInput="Browse to find or drag image here" stepKey="seeBrowseImageonPlaceHolder1"/>
         <seeElement selector="{{CategoryContentSection.ImagePlaceHolder}}" stepKey="seeImagePlaceHolder"/>
-
         <!--Upload image from local machine using image placeholder button-->
         <attachFile selector="{{CategoryContentSection.Upload}}" userInput="{{ImageUpload.value}}" stepKey="uploadImage1"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForLoading6" />
-        <waitForElementVisible  selector="{{ImageOnConfigurationPanel.imageName(ImageUpload.fileName)}}" stepKey="waitForUploadImage1" />
+        <waitForLoadingMaskToDisappear stepKey="waitForLoading6"/>
+        <waitForElementVisible  selector="{{ImageOnConfigurationPanel.imageName(ImageUpload.fileName)}}" stepKey="waitForUploadImage1"/>
         <seeElement selector="{{ImageOnConfigurationPanel.imageName(ImageUpload.fileName)}}" stepKey="seeImageNameOnPreview1"/>
         <seeElement selector="{{ImageOnConfigurationPanel.imageSource(ImageUpload.fileName)}}" stepKey="seeMainImageSource1"/>
         <seeElement selector="{{ImageOnConfigurationPanel.imagePreview}}" stepKey="seeImageDisplayed1"/>
-
         <!--Remove uploaded image-->
         <click selector="{{ImageOnConfigurationPanel.trashBinIcon}}" stepKey="removeUploadedImage"/>
         <see userInput="Browse to find or drag image here" stepKey="seeBrowseImageonPlaceHolder2"/>
-
         <!--Upload another image from local machine using image placeholder button-->
         <attachFile selector="{{CategoryContentSection.Upload}}" userInput="{{ImageUpload_1.file}}" stepKey="uploadImage2"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForLoading7" />
-        <waitForElementVisible  selector="{{ImageOnConfigurationPanel.imageName(ImageUpload_1.file)}}" stepKey="waitForUploadImage2" />
+        <waitForLoadingMaskToDisappear stepKey="waitForLoading7"/>
+        <waitForElementVisible  selector="{{ImageOnConfigurationPanel.imageName(ImageUpload_1.file)}}" stepKey="waitForUploadImage2"/>
         <seeElement selector="{{ImageOnConfigurationPanel.imageName(ImageUpload_1.file)}}" stepKey="seeImageNameOnPreview12"/>
         <seeElement selector="{{ImageOnConfigurationPanel.imageSource(ImageUpload_1.file)}}" stepKey="seeMainImageSource2"/>
         <seeElement selector="{{ImageOnConfigurationPanel.imagePreview}}" stepKey="seeImageDisplayed2"/>
-
         <!--Overwrite uploaded image by selecting image from Media Gallery Storage-->
         <click selector="{{CategoryContentSection.SelectFromGalleryBtn}}" stepKey="clickSelectFromGalleryBtn"/>
-        <waitForPageLoad stepKey="waitForPageLoad1" />
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
         <click selector="{{MediaGallerySection.StorageRootArrow}}" stepKey="clickStorageRoot"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <actionGroup ref="CreateImageFolder" stepKey="createImageFolder">
@@ -249,23 +242,10 @@
         <seeElement selector="{{ImageOnConfigurationPanel.imageSource(ImageUpload1.value)}}" stepKey="seeMainImageSource3"/>
         <seeElement selector="{{ImageOnConfigurationPanel.trashBinIcon}}" stepKey="seeTrashBinBtn"/>
         <click selector="{{AdminCategoryMainActionsSection.SaveButton}}" stepKey="saveCategory"/>
-        <amOnPage url="$$createPreReqCategory.name$$.html" stepKey="amOnCategoryPageStorefront"/>
-        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToStorefront">
+            <argument name="page" value="$$createPreReqCategory.name$$.html"/>
+        </actionGroup>
         <seeElement selector="{{ImageOnConfigurationPanel.imageSource(ImageUpload1.value)}}" stepKey="seeMainImageSource4"/>
-    </test>
-    <test name="AdminConfigDefaultCategoryLayoutFromConfigurationSettingTest">
-        <annotations>
-            <description value="Admin should be able to configure the default layout for Category Page from System Configuration, verify the default is updated to the Page Builder's default layout"/>
-            <useCaseId value="MC-936"/>
-            <testCaseId value="MC-3105"/>
-            <group value="pagebuilder"/>
-            <group value="pagebuilder-layout"/>
-            <group value="pagebuilder-fullwidth"/>
-            <group value="pagebuilder-catalog-category"/>
-        </annotations>
-        <!-- PageBuilder is enabled so check default is full width -->
-        <comment userInput="PageBuilder is enabled so check default is full width" stepKey="commentSeeCategoryFullWidth" before="seeNoLayoutUpdatesSelected" />
-        <seeOptionIsSelected selector="{{DefaultLayoutsSection.categoryLayout}}" userInput="{{PageBuilderFullWidthLayout.category}}" stepKey="seeNoLayoutUpdatesSelected" />
     </test>
     <test name="PageBuilderCatalogCategoryCreateCategoryWithPageBuilderDescription">
         <annotations>
@@ -282,24 +262,18 @@
             <group value="pagebuilder-catalog-category"/>
         </annotations>
         <before>
+            <createData entity="_defaultCategory" stepKey="createPreReqCategory"/>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <amOnPage url="{{AdminCategoryPage.url}}" stepKey="navigateToCategoryPage"/>
-            <waitForPageLoad stepKey="waitForPageLoadCategoryPage"/>
-            <actionGroup ref="CreateCategory" stepKey="createCategory"/>
+            <actionGroup ref="navigateToCreatedCategory" stepKey="navigateToCreatedProductEditPage">
+                <argument name="Category" value="$$createPreReqCategory$$"/>
+            </actionGroup>
+            <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminCategorySection"/>
         </before>
         <after>
+            <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCategory"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <!-- Add PageBuilder description -->
-        <comment userInput="Add PageBuilder description" stepKey="commentAddDescription"/>
-        <conditionalClick selector="{{AdminCategoryContentSection.sectionHeader}}" dependentSelector="{{PageBuilderCategoryAttribute.PageBuilderArea('description')}}" visible="false" stepKey="openContentSection"/>
-        <waitForPageLoad stepKey="waitForPageLoadContentSection"/>
-        <waitForElementVisible selector="{{PageBuilderCategoryAttribute.PageBuilderArea('description')}}" stepKey="waitForPageBuilderBtn" />
-        <see userInput="{{EditWithPageBuilderButton.value}}" stepKey="seePageBuilderBtn"/>
-        <click selector="{{PageBuilderCategoryAttribute.PageBuilderArea('description')}}" stepKey="clickOnPageBuilderBtn" />
-        <waitForPageLoad stepKey="waitForPageLoadPageBuilder"/>
-        <waitForElementVisible selector="{{PageBuilderPanel.layoutMenuSection}}" stepKey="waiForPageBuilderVisible" />
-        <waitForElementVisible selector="{{PageBuilderStage.stageWrapperFullScreen}}" stepKey="seePageBuilderFullSizeScreen" />
+        <actionGroup ref="openPageBuilderForAttribute" stepKey="enablePageBuilderOnCatalog"/>
         <!-- Set background color of row -->
         <comment userInput="Set background color of row" stepKey="commentSetRowBackgroundColor"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
@@ -320,20 +294,19 @@
         <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage">
             <argument name="headingText" value="PageBuilderHeadingTextProperty"/>
         </actionGroup>
-        <click selector="{{PageBuilderStage.exitFullScreen}}" stepKey="exitPageBuilderFullScreen" />
-        <waitForPageLoad stepKey="waitForPageLoadExitFullScreen"/>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
         <!-- Use Full Width layout -->
         <comment userInput="Set Layout to Category - Full Width" stepKey="commentSetLayout"/>
         <actionGroup ref="setLayout" stepKey="setFullWidthLayout">
             <argument name="designSection" value="CategoryDesignSection"/>
             <argument name="layoutOption" value="PageBuilderFullWidthLayout.category"/>
         </actionGroup>
-        <click selector="{{AdminCategoryMainActionsSection.SaveButton}}" stepKey="saveCategory"/>
-        <waitForPageLoad stepKey="waitForPageLoadSaveCategory"/>
-        <waitForElementVisible selector="{{AdminCategoryMessagesSection.SuccessMessage}}" stepKey="assertSuccess"/>
+        <actionGroup ref="saveCatalogCategory" stepKey="saveCatalogCategory"/>
         <!-- Check that description is full width on storefront-->
         <comment userInput="Check that description is full width on storefront" stepKey="commentSeeDescriptionFullWidth"/>
-        <actionGroup ref="CheckCategoryOnStorefront" stepKey="checkCategoryOnStorefront"/>
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToStorefront">
+            <argument name="page" value="$$createPreReqCategory.name$$.html"/>
+        </actionGroup>
         <actionGroup ref="verifyFullWidthLayout" stepKey="verifyFullWidthLayout"/>
     </test>
     <test name="PageBuilderCatalogCategoryCreateCategoryWithPageBuilderDescriptionAndInvalidPageLayout">
@@ -351,25 +324,19 @@
             <group value="pagebuilder-catalog-category"/>
         </annotations>
         <before>
+            <createData entity="_defaultCategory" stepKey="createPreReqCategory"/>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <amOnPage url="{{AdminCategoryPage.url}}" stepKey="navigateToCategoryPage"/>
-            <waitForPageLoad stepKey="waitForPageLoadCategoryPage"/>
-            <actionGroup ref="CreateCategory" stepKey="createCategory"/>
+            <actionGroup ref="navigateToCreatedCategory" stepKey="navigateToCreatedProductEditPage">
+                <argument name="Category" value="$$createPreReqCategory$$"/>
+            </actionGroup>
+            <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminCategorySection"/>
         </before>
         <after>
+            <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCategory"/>
             <closeTab stepKey="closeTab"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <!-- Add PageBuilder description -->
-        <comment userInput="Add PageBuilder description" stepKey="commentAddDescription"/>
-        <conditionalClick selector="{{AdminCategoryContentSection.sectionHeader}}" dependentSelector="{{PageBuilderCategoryAttribute.PageBuilderArea('description')}}" visible="false" stepKey="openContentSection"/>
-        <waitForPageLoad stepKey="waitForPageLoadContentSection"/>
-        <waitForElementVisible selector="{{PageBuilderCategoryAttribute.PageBuilderArea('description')}}" stepKey="waitForPageBuilderBtn" />
-        <see userInput="{{EditWithPageBuilderButton.value}}" stepKey="seePageBuilderBtn"/>
-        <click selector="{{PageBuilderCategoryAttribute.PageBuilderArea('description')}}" stepKey="clickOnPageBuilderBtn" />
-        <waitForPageLoad stepKey="waitForPageLoadPageBuilder"/>
-        <waitForElementVisible selector="{{PageBuilderPanel.layoutMenuSection}}" stepKey="waiForPageBuilderVisible" />
-        <waitForElementVisible selector="{{PageBuilderStage.stageWrapperFullScreen}}" stepKey="seePageBuilderFullSizeScreen" />
+        <actionGroup ref="openPageBuilderForAttribute" stepKey="enablePageBuilderOnCatalog"/>
         <!-- Set background color of row -->
         <comment userInput="Set background color of row" stepKey="commentSetRowBackgroundColor"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
@@ -390,21 +357,20 @@
         <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage">
             <argument name="headingText" value="PageBuilderHeadingTextProperty"/>
         </actionGroup>
-        <click selector="{{PageBuilderStage.exitFullScreen}}" stepKey="exitPageBuilderFullScreen" />
-        <waitForPageLoad stepKey="waitForPageLoadExitFullScreen"/>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
         <!-- Set Layout to Page - Full Width -->
         <comment userInput="Set Layout to Page - Full Width" stepKey="commentSetLayout"/>
         <actionGroup ref="setLayout" stepKey="setFullWidthLayout">
             <argument name="designSection" value="CategoryDesignSection"/>
             <argument name="layoutOption" value="PageBuilderFullWidthLayout.cms"/>
         </actionGroup>
-        <click selector="{{AdminCategoryMainActionsSection.SaveButton}}" stepKey="saveCategory"/>
-        <waitForPageLoad stepKey="waitForPageLoadSaveCategory"/>
-        <waitForElementVisible selector="{{AdminCategoryMessagesSection.SuccessMessage}}" stepKey="assertSuccess"/>
+        <actionGroup ref="saveCatalogCategory" stepKey="saveCatalogCategory"/>
         <!-- Check the category's heading is still displayed using the Page full width layout-->
         <comment userInput="Check the category's heading is still displayed using the Page full width layout" stepKey="commentSeeDescriptionFullWidth"/>
         <openNewTab stepKey="openNewTab"/>
-        <actionGroup ref="CheckCategoryOnStorefront" stepKey="checkCategoryOnStorefront"/>
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToStorefront">
+            <argument name="page" value="$$createPreReqCategory.name$$.html"/>
+        </actionGroup>
         <waitForElementVisible selector="{{HeadingOnStorefront.headingText(PageBuilderHeadingTypeProperty_H2.value, PageBuilderHeadingTextProperty.value, '1')}}" stepKey="waitForStorefrontHeadingText"/>
         <!-- Set Layout to Product - Full Width -->
         <comment userInput="Set Layout to Product - Full Width" stepKey="commentSetLayout2"/>
@@ -413,9 +379,7 @@
             <argument name="designSection" value="CategoryDesignSection"/>
             <argument name="layoutOption" value="PageBuilderFullWidthLayout.product"/>
         </actionGroup>
-        <click selector="{{AdminCategoryMainActionsSection.SaveButton}}" stepKey="saveCategory2"/>
-        <waitForPageLoad stepKey="waitForPageLoadSaveCategory2"/>
-        <waitForElementVisible selector="{{AdminCategoryMessagesSection.SuccessMessage}}" stepKey="assertSuccess2"/>
+        <actionGroup ref="saveCatalogCategory" stepKey="saveCatalogCategory2"/>
         <!-- Check the category heading is still displayed on store front with product full width layout -->
         <comment userInput="Check the category heading is still displayed on store front with product full width layout" stepKey="commentSeeDescriptionFullWidth2"/>
         <switchToNextTab stepKey="switchToNextTab2"/>
@@ -821,6 +785,7 @@
         <comment userInput="---merging to remove step---" stepKey="enterPageTitle"/>
         <actionGroup ref="saveEditPanelSettingsFullScreen" stepKey="saveEditPanel1Settings"/>
         <actionGroup ref="saveEditPanelSettingsFullScreen" stepKey="saveEditPanel1Settings2"/>
+        <actionGroup ref="saveEditPanelSettingsFullScreen" stepKey="saveEditPanel1Settings3"/>
         <!-- Save Category -->
         <comment userInput="Save Category" stepKey="commentSaveCategory" before="exitPageBuilderFullScreen"/>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen" before="saveAndContinueEditCmsPage"/>
