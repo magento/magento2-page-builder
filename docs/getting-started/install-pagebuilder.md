@@ -13,12 +13,12 @@ How you install the pre-release version of Page Builder depends on whether or no
 
 ## Prerequisite for both installations
 
-Magento 2.3+ Commerce -- Installation instructions can be found from the [DevDocs installation guide](https://devdocs.magento.com/guides/v2.3/install-gde/bk-install-guide.html). 
+Magento 2.3+ Commerce -- Use the installation instructions from the [DevDocs installation guide](https://devdocs.magento.com/guides/v2.3/install-gde/bk-install-guide.html). 
 
 ## **All Partners**: GitHub Installation {#githubInstructions}
 
 Partners who are not members of the Early Adopters Program (EAP) must install the pre-release version of Page Builder by cloning the Page Builder GitHub repository (https://github.com/magento/magento2-page-builder) into a development instance of Magento. 
-Before installing Page Builder, make sure you have the following:
+Before installing Page Builder, make sure you have:
 
 * A local development installation of Magento 2.3.0 alpha
 * Access to the Page Builder repository
@@ -61,13 +61,13 @@ To check for TypeScript errors, you can run `npx tslint --fix -p tsconfig.json`.
 
 ## **EAP Participants Only**: Composer Installation {#composerInstallation}
 
-To use the Composer installation described below, you must be an active member in the Page Builder EAP program and have submitted your MAGEID to be provided access to the Page Builder Composer packages through `repo.magento.com`. 
+To use the Composer installation described below, you must be an active member in the Page Builder EAP program and have submitted your MAGEID to get access to the Page Builder Composer packages through `repo.magento.com`. 
 If you are experiencing problems _as an EAP member_, please contact us at `pagebuilderEAP@adobe.com`.
 
 {: .bs-callout .bs-callout-info }
-If you have had a previous version of Magento 2.3.0 or Page Builder installed you may need to clear your composer cache (`composer clearcache`) to ensure the latest packages of both versions are installed.
+If you have had a previous version of Magento 2.3.0 or Page Builder installed, clear your composer cache (`composer clearcache`) before you install the latest packages.
 
-1. Ensure your composer has `minimum-stability` set to `beta` as follows:
+1. Ensure your composer has `minimum-stability` set to `beta`:
     ```
     composer config minimum-stability beta
     ```
@@ -86,7 +86,7 @@ If you have had a previous version of Magento 2.3.0 or Page Builder installed yo
 
 ### Updating Composer installation
 
-This can be installed by completing a `composer update` within your project.
+You can install updates by completing a `composer update` within your project.
 
 ### Composer installation issues
 
