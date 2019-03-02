@@ -1,13 +1,7 @@
 # Install Page Builder
 
-<style type="text/css" style="display: none">
-strong {
-    color: #990000;    
-}
-</style>
-
-
 How you install the pre-release version of Page Builder depends on whether or not you are a member of the Early Adopters Program (EAP):
+
 - **All Partners** (not EAP members) must use the [GitHub installation](#githubInstructions).
 - **EAP Members** can install using the [Composer installation](#composerInstallation).
 
