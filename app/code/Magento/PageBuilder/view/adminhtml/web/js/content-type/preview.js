@@ -123,9 +123,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     ;
 
     _proto.updateData = function updateData(key, value) {
-      var data = this.contentType.dataStore.getState();
-      (0, _object.set)(data, key, value);
-      this.contentType.dataStore.setState(data);
+      this.contentType.dataStore.set(key, value);
     }
     /**
      * Update the data value of a part of our internal Knockout data store
