@@ -1256,8 +1256,8 @@
         <actionGroup ref="saveCMSBlock" stepKey="saveCMSBlock"/>
         <!-- Validate CMS Block Stage -->
         <comment userInput="Validate CMS Block Stage" stepKey="commentValidateCMSBlockStage"/>
-        <seeElement selector="{{HtmlOnStage.base('1')}}" stepKey="seeHtmlBaseBlockStage"/>
-        <seeElement selector="{{HtmlOnStage.html('1', PageBuilderHtmlPropertyButton.selector)}}" stepKey="seeHtmlBlockStage"/>
+        <seeElement selector="{{HtmlOnStage.base('1')}}" stepKey="seeHtmlBaseCMSBlockStage"/>
+        <seeElement selector="{{HtmlOnStage.html('1', PageBuilderHtmlPropertyButton.selector)}}" stepKey="seeHtmlCMSBlockStage"/>
         <!-- Add Block to CMS Page -->
         <comment userInput="Add Block to CMS Page" stepKey="commentAddBlockToCMSPage"/>
         <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
@@ -1278,8 +1278,8 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsBlock"/>
         <!-- Validate CMS Page Stage -->
         <comment userInput="Validate CMS Page Stage" stepKey="commentValidateCMSPageStage"/>
-        <seeElement selector="{{HtmlOnStorefront.base('1')}}" stepKey="seeHtmlBasePageStage"/>
-        <seeElement selector="{{HtmlOnStorefront.html('1', PageBuilderHtmlPropertyButton.selector)}}" stepKey="seeHtmlPageStage"/>
+        <seeElement selector="{{HtmlOnStorefront.base('1')}}" stepKey="seeHtmlBaseCMSPageStage"/>
+        <seeElement selector="{{HtmlOnStorefront.html('1', PageBuilderHtmlPropertyButton.selector)}}" stepKey="seeHtmlCMSPageStage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate CMS Page Storefront -->
         <comment userInput="Validate CMS Page Storefront" stepKey="commentValidateCMSPageStorefront"/>
@@ -1342,7 +1342,7 @@
         <actionGroup ref="saveCMSBlock" stepKey="saveCMSBlock"/>
         <!-- Validate CMS Block Stage -->
         <comment userInput="Validate CMS Block Stage" stepKey="commentValidateCMSBlockStage"/>
-        <actionGroup ref="validateVideo" stepKey="validateBlockStage">
+        <actionGroup ref="validateVideo" stepKey="validateCMSBlockStage">
             <argument name="page" value="VideoOnStage"/>
             <argument name="url" value="PageBuilderVideoUrl_YouTube"/>
             <argument name="width" value="PageBuilderVideoWidth_500"/>
@@ -1367,7 +1367,7 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsBlock"/>
         <!-- Validate CMS Page Stage -->
         <comment userInput="Validate CMS Page Stage" stepKey="commentValidateCMSPageStage"/>
-        <actionGroup ref="validateVideo" stepKey="validatePageStage">
+        <actionGroup ref="validateVideo" stepKey="validateCMSPageStage">
             <argument name="page" value="VideoOnStorefront"/>
             <argument name="url" value="PageBuilderVideoUrl_YouTube"/>
             <argument name="width" value="PageBuilderVideoWidth_500"/>
@@ -1432,7 +1432,7 @@
         <actionGroup ref="saveCMSBlock" stepKey="saveCMSBlock"/>
         <!-- Validate CMS Block Stage -->
         <comment userInput="Validate CMS Block Stage" stepKey="commentValidateCMSBlockStage"/>
-        <actionGroup ref="verifyBlockOnStage" stepKey="verifyBlockOnBlockStage">
+        <actionGroup ref="verifyBlockOnStage" stepKey="verifyBlockCMSBlockStage">
             <argument name="block" value="$$createPreReqBlock$$"/>
             <argument name="index" value="1"/>
         </actionGroup>
@@ -1713,7 +1713,7 @@
         <!-- Validate CMS Block Stage -->
         <comment userInput="Validate CMS Block Stage" stepKey="commentValidateCMSBlockStage"/>
         <actionGroup ref="validateContainedRowAppearance" stepKey="validateRowAppearanceCMSBlockStage"/>
-        <actionGroup ref="validateRowBackgroundAttributesWithAllUpdatedAndParallaxEnabled" stepKey="validateBackgroundBlockStage">
+        <actionGroup ref="validateRowBackgroundAttributesWithAllUpdatedAndParallaxEnabled" stepKey="validateBackgroundCMSBlockStage">
             <argument name="page" value="RowOnStage"/>
             <argument name="index" value="1"/>
             <argument name="backgroundColor" value="PageBuilderBackgroundColor_Plaintext_Green"/>
@@ -1723,23 +1723,23 @@
             <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
             <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Fixed"/>
         </actionGroup>
-        <actionGroup ref="validateRowParallaxBackgroundAttributes" stepKey="validateParallaxBackgroundBlockStage">
+        <actionGroup ref="validateRowParallaxBackgroundAttributes" stepKey="validateParallaxBackgroundCMSBlockStage">
             <argument name="page" value="RowOnStage"/>
             <argument name="index" value="1"/>
             <argument name="parallaxStateValue" value="PageBuilderRowParallax_Enabled"/>
             <argument name="parallaxSpeedValue" value="PageBuilderRowParallaxSpeed_2"/>
         </actionGroup>
-        <actionGroup ref="validateBackgroundImageContainerForParallaxRow" stepKey="validateBackgroundImageBlockStage">
+        <actionGroup ref="validateBackgroundImageContainerForParallaxRow" stepKey="validateBackgroundImageCMSBlockStage">
             <argument name="section" value="RowOnStage"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
-        <actionGroup ref="validateLayoutStylesWithAllUpdated" stepKey="validateRowLayoutBlockStage">
+        <actionGroup ref="validateLayoutStylesWithAllUpdated" stepKey="validateRowLayoutCMSBlockStage">
             <argument name="page" value="RowOnStage"/>
             <argument name="index" value="1"/>
             <argument name="minHeight" value="PageBuilderMinHeightProperty_500"/>
             <argument name="verticalAlignContainer" value="PageBuilderVerticalAlignmentPropertyCenter"/>
         </actionGroup>
-        <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateRowHeightBlockStage">
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateRowHeightCMSBlockStage">
             <argument name="content" value="{{RowOnStage.baseCSS}}"/>
             <argument name="padding" value="PageBuilderPaddingProperty10"/>
             <argument name="height" value="PageBuilderMinHeightProperty_500"/>
@@ -2086,7 +2086,7 @@
         </actionGroup>
         <comment userInput="---merging to remove step---" stepKey="enterParallaxBackgroundSpeed"/>
         <!-- Validate CMS Block Stage -->
-        <actionGroup ref="validateBackgroundAttributes" stepKey="validateBackgroundBlockStage">
+        <actionGroup ref="validateBackgroundAttributes" stepKey="validateBackgroundCMSBlockStage">
             <argument name="section" value="RowOnStage"/>
             <argument name="index" value="1"/>
             <argument name="backgroundColor" value="PageBuilderBackgroundColor_Plaintext_Green"/>
@@ -2096,8 +2096,8 @@
             <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
             <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Fixed"/>
         </actionGroup>
-        <comment userInput="---merging to remove step---" stepKey="validateParallaxBackgroundBlockStage"/>
-        <actionGroup ref="validateBackgroundImageContainer" stepKey="validateBackgroundImageBlockStage">
+        <comment userInput="---merging to remove step---" stepKey="validateParallaxBackgroundCMSBlockStage"/>
+        <actionGroup ref="validateBackgroundImageContainer" stepKey="validateBackgroundImageCMSBlockStage">
             <argument name="section" value="RowOnStage_Contained"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
@@ -2165,7 +2165,7 @@
         <comment userInput="---merging to remove step---" stepKey="enterParallaxBackgroundSpeed"/>
         <!-- Validate CMS Block Stage -->
         <actionGroup ref="validateFullWidthRowAppearance" stepKey="validateRowAppearanceCMSBlockStage"/>
-        <actionGroup ref="validateBackgroundAttributes" stepKey="validateBackgroundBlockStage">
+        <actionGroup ref="validateBackgroundAttributes" stepKey="validateBackgroundCMSBlockStage">
             <argument name="section" value="RowOnStage"/>
             <argument name="index" value="1"/>
             <argument name="backgroundColor" value="PageBuilderBackgroundColor_Plaintext_Green"/>
@@ -2175,8 +2175,8 @@
             <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
             <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Fixed"/>
         </actionGroup>
-        <comment userInput="---merging to remove step---" stepKey="validateParallaxBackgroundBlockStage"/>
-        <actionGroup ref="validateBackgroundImageContainer" stepKey="validateBackgroundImageBlockStage">
+        <comment userInput="---merging to remove step---" stepKey="validateParallaxBackgroundCMSBlockStage"/>
+        <actionGroup ref="validateBackgroundImageContainer" stepKey="validateBackgroundImageCMSBlockStage">
             <argument name="section" value="RowOnStage"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
@@ -2265,7 +2265,7 @@
         <comment userInput="---merging to remove step---" stepKey="enterParallaxBackgroundSpeed"/>
         <!-- Validate CMS Block Stage -->
         <actionGroup ref="validateFullBleedRowAppearance" stepKey="validateRowAppearanceCMSBlockStage"/>
-        <actionGroup ref="validateBackgroundAttributes" stepKey="validateBackgroundBlockStage">
+        <actionGroup ref="validateBackgroundAttributes" stepKey="validateBackgroundCMSBlockStage">
             <argument name="section" value="RowOnStage"/>
             <argument name="index" value="1"/>
             <argument name="backgroundColor" value="PageBuilderBackgroundColor_Plaintext_Green"/>
@@ -2275,8 +2275,8 @@
             <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
             <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Fixed"/>
         </actionGroup>
-        <comment userInput="---merging to remove step---" stepKey="validateParallaxBackgroundBlockStage"/>
-        <actionGroup ref="validateBackgroundImageContainer" stepKey="validateBackgroundImageBlockStage">
+        <comment userInput="---merging to remove step---" stepKey="validateParallaxBackgroundCMSBlockStage"/>
+        <actionGroup ref="validateBackgroundImageContainer" stepKey="validateBackgroundImageCMSBlockStage">
             <argument name="section" value="RowOnStage"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
