@@ -23,9 +23,9 @@
             <group value="pagebuilder-tabs"/>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
             <createData entity="_emptyCmsBlock" stepKey="createCMSBlock"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage1">
                 <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
             </actionGroup>
@@ -363,9 +363,9 @@
             <group value="pagebuilder-image"/>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <createData entity="_defaultBlock" stepKey="createCMSBlock"/>
             <createData entity="_defaultCmsPage" stepKey="createCMSPage"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage">
                 <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
             </actionGroup>
@@ -467,8 +467,8 @@
             <group value="pagebuilder-row"/>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <createData entity="_defaultBlock" stepKey="createCMSBlock"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage">
                 <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
             </actionGroup>
@@ -565,8 +565,8 @@
             <group value="pagebuilder-bannerPoster"/>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <createData entity="_defaultBlock" stepKey="createCMSBlock"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage">
                 <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
             </actionGroup>
@@ -745,9 +745,9 @@
             <group value="pagebuilder-heading"/>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
             <createData entity="_emptyCmsBlock" stepKey="createCMSBlock"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage1">
                 <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
             </actionGroup>
@@ -810,11 +810,11 @@
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate CMS Page Storefront -->
         <comment userInput="Validate CMS Page Storefront" stepKey="commentValidateCMSPageStorefront"/>
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToStoreFront">
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
-        <seeElement selector="{{HeadingOnStorefront.headingType(PageBuilderHeadingTypeProperty_H1.value, '1')}}" stepKey="seeHeadingStyleStorefront"/>
-        <seeElement selector="{{HeadingOnStorefront.headingText(PageBuilderHeadingTypeProperty_H1.value, PageBuilderHeadingTextProperty.value, '1')}}" stepKey="seeHeadingTextStorefront"/>
+        <seeElement selector="{{HeadingOnStorefront.headingType(PageBuilderHeadingTypeProperty_H1.value, '1')}}" stepKey="seeHeadingStyleCMSPageStorefront"/>
+        <seeElement selector="{{HeadingOnStorefront.headingText(PageBuilderHeadingTypeProperty_H1.value, PageBuilderHeadingTextProperty.value, '1')}}" stepKey="seeHeadingTextCMSPageStorefront"/>
     </test>
     <test name="BlockRenderDividerThroughBlockContentType">
         <annotations>
@@ -831,9 +831,9 @@
             <group value="pagebuilder-divider"/>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
             <createData entity="_emptyCmsBlock" stepKey="createCMSBlock"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage1">
                 <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
             </actionGroup>
@@ -907,7 +907,7 @@
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate CMS Page Storefront -->
         <comment userInput="Validate CMS Page Storefront" stepKey="commentValidateCMSPageStorefront"/>
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToStoreFront">
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <seeElement selector="{{DividerOnStorefront.color('1', PageBuilderDividerLineColor_Yellow.rgb)}}" stepKey="seeDividerColorCMSPageStorefront"/>
@@ -933,9 +933,9 @@
             <group value="pagebuilder-buttons"/>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
             <createData entity="_emptyCmsBlock" stepKey="createCMSBlock"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage1">
                 <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
             </actionGroup>
@@ -1072,7 +1072,7 @@
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate CMS Page Storefront -->
         <comment userInput="Validate CMS Page Storefront" stepKey="commentValidateCMSPageStorefront"/>
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToStoreFront">
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <seeNumberOfElements selector="{{ButtonItemOnStorefront.all}}" userInput="2" stepKey="see2ButtonsCMSPageStorefront"/>
@@ -1100,9 +1100,9 @@
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
         </actionGroup>
-        <click selector="{{ButtonItemOnStorefront.buttonItemUrl('1', PageBuilderButtonItemLink_NotSecure.value)}}" stepKey="clickButtonStorefront"/>
-        <wait time="3" stepKey="waitArbitraryTimeForPotentialNavigationToOccurStorefront"/>
-        <seeCurrentUrlEquals url="{{PageBuilderButtonItemLink_NotSecure.value}}" stepKey="seeThatUrlIsChangedToButtonUrlStorefront"/>
+        <click selector="{{ButtonItemOnStorefront.buttonItemUrl('1', PageBuilderButtonItemLink_NotSecure.value)}}" stepKey="clickButtonCMSPageStorefront"/>
+        <wait time="3" stepKey="waitArbitraryTimeForPotentialNavigationToOccurCMSPageStorefront"/>
+        <seeCurrentUrlEquals url="{{PageBuilderButtonItemLink_NotSecure.value}}" stepKey="seeThatUrlIsChangedToButtonUrl"/>
     </test>
         <test name="BlockRenderButtonsThroughBlockContentTypeInlineSameSize" extends="BlockRenderButtonsThroughBlockContentTypeInlineNotSameSize">
         <annotations>
@@ -1224,9 +1224,9 @@
             <group value="pagebuilder-html"/>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
             <createData entity="_emptyCmsBlock" stepKey="createCMSBlock"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage1">
                 <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
             </actionGroup>
@@ -1283,11 +1283,14 @@
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate CMS Page Storefront -->
         <comment userInput="Validate CMS Page Storefront" stepKey="commentValidateCMSPageStorefront"/>
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToStoreFront">
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
-        <seeElement selector="{{HtmlOnStorefront.base('1')}}" stepKey="seeHtmlBaseStorefront"/>
-        <seeElement selector="{{HtmlOnStorefront.html('1', PageBuilderHtmlPropertyButton.selectorOnFrontend)}}" stepKey="seeHtmlStorefront"/>
+        <seeElement selector="{{HtmlOnStorefront.base('1')}}" stepKey="seeHtmlBaseCMSPageStorefront"/>
+        <seeElement selector="{{HtmlOnStorefront.html('1', PageBuilderHtmlPropertyButton.selectorOnFrontend)}}" stepKey="seeRenderedHtmlCMSPageStorefront"/>
+        <click selector="{{HtmlOnStorefront.html('1', PageBuilderHtmlPropertyButton.selectorOnFrontend)}}" stepKey="clickRenderedHtmlButtonCMSPageStorefront"/>
+        <wait time="3" stepKey="waitArbitraryTimeForPotentialNavigationToOccurCMSPageStorefront"/>
+        <seeCurrentUrlEquals url="{{PageBuilderHtmlPropertyButton.url}}" stepKey="seeThatUrlIsChangedToHtmlLinkUrl"/>
     </test>
     <test name="BlockRenderVideoThroughBlockContentType">
         <annotations>
@@ -1304,9 +1307,9 @@
             <group value="pagebuilder-video"/>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
             <createData entity="_emptyCmsBlock" stepKey="createCMSBlock"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage1">
                 <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
             </actionGroup>
@@ -1372,10 +1375,10 @@
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate CMS Page Storefront -->
         <comment userInput="Validate CMS Page Storefront" stepKey="commentValidateCMSPageStorefront"/>
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToStoreFront">
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
-        <actionGroup ref="validateVideo" stepKey="validateStorefront">
+        <actionGroup ref="validateVideo" stepKey="validateCMSPageStorefront">
             <argument name="page" value="VideoOnStorefront"/>
             <argument name="url" value="PageBuilderVideoUrl_YouTube"/>
             <argument name="width" value="PageBuilderVideoWidth_500"/>
@@ -1395,10 +1398,10 @@
             <group value="pagebuilder-block-content"/>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
             <createData entity="_emptyCmsBlock" stepKey="createCMSBlock"/>
             <createData entity="_defaultBlock" stepKey="createPreReqBlock"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage1">
                 <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
             </actionGroup>
@@ -1453,14 +1456,17 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="savePageEditPanelSettingsBlock"/>
         <!-- Validate CMS Page Stage -->
         <comment userInput="Validate CMS Page Stage" stepKey="commentValidateCMSPageStage"/>
-        <see selector="{{BlockOnStage.content('1')}}" userInput="$$createPreReqBlock.content$$" stepKey="seeBlockContentOnPageStage"/>
+        <seeElement selector="{{BlockOnStage.base('1')}}" stepKey="seeBlockOnCMSPageStage"/>
+        <see selector="{{BlockOnStage.content('1')}}" userInput="$$createPreReqBlock.content$$" stepKey="seeBlockContentOnCMSPageStage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate CMS Page Storefront -->
         <comment userInput="Validate CMS Page Storefront" stepKey="commentValidateCMSPageStorefront"/>
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToStoreFront">
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
-        <see selector="{{BlockOnStorefront.base('2')}}{{BlockOnStorefront.ancestor}}" userInput="$$createPreReqBlock.content$$" stepKey="seeBlockContentOnStoreFront"/>
+        <seeElement selector="{{BlockOnStorefront.base('1')}}" stepKey="seeBlockCMSPageStorefront"/>
+        <seeElement selector="{{BlockOnStorefront.base('2')}}" stepKey="seeNestedBlockCMSPageStorefront"/>
+        <see selector="{{BlockOnStorefront.base('2')}}{{BlockOnStorefront.ancestor}}" userInput="$$createPreReqBlock.content$$" stepKey="seeBlockContentCMSPageStorefront"/>
     </test>
     <test name="BlockRenderImageThroughBlockContentType">
         <annotations>
@@ -1582,7 +1588,7 @@
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate CMS Page Storefront -->
         <comment userInput="Validate CMS Page Storefront" stepKey="commentValidateCMSPageStorefront"/>
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToStoreFront">
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <waitForElementVisible selector="{{ImageOnStorefront.base('1')}}" stepKey="waitForImageCMSPageStorefront"/>
@@ -1598,7 +1604,7 @@
         </actionGroup>
         <!-- Validate CMS Page Storefront Mobile -->
         <comment userInput="Validate CMS Page Storefront Mobile" stepKey="commentValidateCMSPageStorefrontMobile"/>
-        <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
+        <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobileCMSPageStorefront"/>
         <waitForElementVisible selector="{{ImageOnStorefront.base('1')}}" stepKey="waitForImageCMSPageStorefrontMobile"/>
         <seeElement selector="{{ImageOnStorefront.imageMobile('1')}}" stepKey="seeMobileImageCMSPageStorefrontMobile"/>
         <see selector="{{ImageOnStorefront.imageCaption('1')}}" userInput="{{PageBuilderImageCaptionProperty.value}}" stepKey="seeImageCaptionCMSPageStorefrontMobile"/>
@@ -1610,9 +1616,9 @@
             <argument name="section" value="ImageOnStorefront"/>
             <argument name="image" value="PageBuilderMobileImagePropertyGif"/>
         </actionGroup>
-        <click selector="{{ImageOnStorefront.imageLink('1', PageBuilderImageLinkProperty.value)}}" stepKey="clickImageStorefront"/>
-        <wait time="3" stepKey="waitArbitraryTimeForPotentialNavigationToOccurStorefront"/>
-        <seeCurrentUrlEquals url="{{PageBuilderImageLinkProperty.value}}" stepKey="seeThatUrlIsChangedToImageLinkUrlStorefront"/>
+        <click selector="{{ImageOnStorefront.imageLink('1', PageBuilderImageLinkProperty.value)}}" stepKey="clickImageCMSPageStorefront"/>
+        <wait time="3" stepKey="waitArbitraryTimeForPotentialNavigationToOccurCMSPageStorefront"/>
+        <seeCurrentUrlEquals url="{{PageBuilderImageLinkProperty.value}}" stepKey="seeThatUrlIsChangedToImageLinkUrl"/>
     </test>
     <test name="BlockRenderRowContainedAppearanceWithParallaxThroughBlockContentType">
         <annotations>
@@ -1815,7 +1821,7 @@
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate CMS Page Storefront -->
         <comment userInput="Validate CMS Page Storefront" stepKey="commentValidateCMSPageStorefront"/>
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToStoreFront">
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <actionGroup ref="validateContainedRowAppearance" stepKey="validateRowAppearanceCMSPageStorefront">
@@ -1863,7 +1869,7 @@
         </actionGroup>
         <!-- Validate CMS Page Storefront Mobile -->
         <comment userInput="Validate CMS Page Storefront Mobile" stepKey="commentValidateCMSPageStorefrontMobile"/>
-        <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
+        <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobileCMSPageStorefront"/>
         <reloadPage stepKey="reloadPage"/>
         <waitForPageLoad stepKey="waitForReload"/>
         <actionGroup ref="validateBackgroundImageContainerForParallaxRow" stepKey="validateBackgroundImageCMSPageStorefrontMobile">
@@ -2439,7 +2445,7 @@
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate CMS Page Storefront -->
         <comment userInput="Validate CMS Page Storefront" stepKey="commentValidateCMSPageStorefront"/>
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToStoreFront">
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountCMSPageStorefront">
@@ -2450,25 +2456,25 @@
             <argument name="page" value="ProductsOnStorefront"/>
             <argument name="isClickable" value="auto"/>
         </actionGroup>
-        <actionGroup ref="clickProductImageInProductsOnStorefront" stepKey="clickProductImageInProductsOnStorefront">
+        <actionGroup ref="clickProductImageInProductsOnStorefront" stepKey="clickProductImageInProductsCMSPageStorefront">
             <argument name="product" value="$$createProduct3.name$$"/>
         </actionGroup>
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToStoreFront2">
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront2">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
-        <actionGroup ref="clickProductNameInProductsOnStorefront" stepKey="clickProductNameInProductsOnStorefront">
+        <actionGroup ref="clickProductNameInProductsOnStorefront" stepKey="clickProductNameInProductsCMSPageStorefront">
             <argument name="product" value="$$createProduct3.name$$"/>
         </actionGroup>
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToStoreFront3">
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront3">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
-        <actionGroup ref="clickProductAddToCartInProductsOnStorefront" stepKey="clickProductAddToCartInProductsOnStorefront">
+        <actionGroup ref="clickProductAddToCartInProductsOnStorefront" stepKey="clickProductAddToCartInProductsCMSPageStorefront">
             <argument name="product" value="$$createProduct3.name$$"/>
         </actionGroup>
-        <actionGroup ref="clickProductAddToCompareInProductsOnStorefront" stepKey="clickProductAddToCompareInProductsOnStorefront">
+        <actionGroup ref="clickProductAddToCompareInProductsOnStorefront" stepKey="clickProductAddToCompareInProductsCMSPageStorefront">
             <argument name="product" value="$$createProduct3.name$$"/>
         </actionGroup>
-        <actionGroup ref="clickProductAddToWishListInProductsOnStorefront" stepKey="clickProductAddToWishListInProductsOnStorefront"/>
+        <actionGroup ref="clickProductAddToWishListInProductsOnStorefront" stepKey="clickProductAddToWishListInProductsCMSPageStorefront"/>
     </test>
     <test name="BlockRenderMapThroughBlockContentType">
         <annotations>
@@ -2487,14 +2493,15 @@
             <group value="pagebuilder-requiresValidMapAPIKey"/>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
             <createData entity="_emptyCmsBlock" stepKey="createCMSBlock"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage1">
                 <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
             </actionGroup>
         </before>
         <after>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setEmptyGoogleMapsAPIKey"/>
             <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock"/>
             <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
             <actionGroup ref="logout" stepKey="logout"/>
@@ -2550,16 +2557,10 @@
         <actionGroup ref="saveCMSBlock" stepKey="saveCMSBlock"/>
         <!-- Validate CMS Block Stage -->
         <comment userInput="Validate CMS Block Stage" stepKey="commentValidateCMSBlockStage"/>
-        <seeElement selector="{{MapOnStage.height('1', PageBuilderMapHeightProperty500px.value)}}" stepKey="seeHeightMap1Stage"/>
-        <executeJS function="return document.querySelectorAll('{{MapOnStage.baseCSS}}')[0].getBoundingClientRect().height" stepKey="actualStageMap1Height"/>
-        <executeJS function="return Math.abs({$actualStageMap1Height}-{{PageBuilderMapHeightProperty500px.value}})" stepKey="actualStageMap1HeightDifference"/>
-        <assertLessThanOrEqual stepKey="assertStageMap1Height">
-            <expectedResult type="int">2</expectedResult>
-            <actualResult type="variable">actualStageMap1HeightDifference</actualResult>
-        </assertLessThanOrEqual>
-        <!-- Validate 2 Pins on map -->
-        <comment userInput="Validate 2 Pins on map" stepKey="commentValidate2PinsOnMap"/>
-        <actionGroup ref="verifyNumberOfPinsOnMap" stepKey="verifyNumberOfPinsOnMapStage">
+        <actionGroup ref="validateMapHeight" stepKey="validateMapHeightCMSBlockStage">
+            <argument name="height" value="PageBuilderMapHeightProperty500px"/>
+        </actionGroup>
+        <actionGroup ref="verifyNumberOfPinsOnMap" stepKey="verifyNumberOfPinsOnMapCMSBlockStage">
             <argument name="page" value="MapOnStage"/>
             <argument name="count" value="2"/>
         </actionGroup>
@@ -2583,30 +2584,28 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsBlock"/>
         <!-- Validate CMS Page Stage -->
         <comment userInput="Validate CMS Page Stage" stepKey="commentValidateCMSPageStage"/>
-        <seeElement selector="{{MapOnStorefront.height('1', PageBuilderMapHeightProperty500px.value)}}" stepKey="seeHeightMap1pageStage"/>
-        <executeJS function="return document.querySelectorAll('{{MapOnStage.baseCSS}}')[0].getBoundingClientRect().height" stepKey="pageStageMap1Height"/>
-        <executeJS function="return Math.abs({$pageStageMap1Height}-{{PageBuilderMapHeightProperty500px.value}})" stepKey="pageStageMap1HeightDifference"/>
-        <assertLessThanOrEqual stepKey="assertPageStageMap1Height">
-            <expectedResult type="int">2</expectedResult>
-            <actualResult type="variable">pageStageMap1HeightDifference</actualResult>
-        </assertLessThanOrEqual>
-        <actionGroup ref="verifyNumberOfPinsOnMapNoClick" stepKey="verifyNumberOfPinsOnMapPageStage">
+        <actionGroup ref="validateMapHeight" stepKey="validateMapHeightCMSPageStage">
+            <argument name="section" value="MapOnStorefront"/>
+            <argument name="height" value="PageBuilderMapHeightProperty500px"/>
+        </actionGroup>
+        <actionGroup ref="verifyNumberOfPinsOnMapNoClick" stepKey="verifyNumberOfPinsOnMapCMSPageStage">
             <argument name="page" value="MapOnStorefront"/>
             <argument name="count" value="2"/>
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate CMS Page Storefront -->
         <comment userInput="Validate CMS Page Storefront" stepKey="commentValidateCMSPageStorefront"/>
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToStoreFront">
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
-        <seeElement selector="{{MapOnStorefront.height('1', PageBuilderMapHeightProperty500px.value)}}" stepKey="seeHeightMap1Storefront"/>
-        <executeJS function="return document.querySelectorAll('{{MapOnStage.baseCSS}}')[0].getBoundingClientRect().height" stepKey="actualStorefrontMap1Height"/>
-        <executeJS function="return Math.abs({$actualStorefrontMap1Height}-{{PageBuilderMapHeightProperty500px.value}})" stepKey="actualStorefrontMap1HeightDifference"/>
-        <assertLessThanOrEqual stepKey="assertStorefrontMap1Height">
-            <expectedResult type="int">2</expectedResult>
-            <actualResult type="variable">actualStorefrontMap1HeightDifference</actualResult>
-        </assertLessThanOrEqual>
+        <actionGroup ref="validateMapHeight" stepKey="validateMapHeightCMSPageStorefront">
+            <argument name="section" value="MapOnStorefront"/>
+            <argument name="height" value="PageBuilderMapHeightProperty500px"/>
+        </actionGroup>
+        <actionGroup ref="verifyNumberOfPinsOnMap" stepKey="verifyNumberOfPinsOnMapCMSPageStorefront">
+            <argument name="page" value="MapOnStorefront"/>
+            <argument name="count" value="2"/>
+        </actionGroup>
     </test>
     <test name="BlockRenderTextThroughBlockContentType">
         <annotations>

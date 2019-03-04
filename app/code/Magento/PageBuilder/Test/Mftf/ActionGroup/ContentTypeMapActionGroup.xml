@@ -424,4 +424,19 @@
     <actionGroup name="validateAdvancedStyleWithNoAlignmentMapWithErrorOverlay" extends="validateAdvancedStyleWithNoAlignmentNotVisible">
         <waitForElementVisible selector="{{page.warningMessageLink(index)}}" stepKey="dontSeeElement"/>
     </actionGroup>
+    <actionGroup name="validateMapHeight">
+        <arguments>
+            <argument name="section" defaultValue="MapOnStage"/>
+            <argument name="height" defaultValue="PageBuilderMapHeightDefaultProperty"/>
+            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="acceptableOffset" defaultValue="2" type="string"/>
+        </arguments>
+        <seeElement selector="{{section.height(index, height.value)}}" stepKey="seeMapHeight"/>
+        <executeJS function="return document.querySelectorAll('{{section.baseCSS}}')[{{index}}-1].getBoundingClientRect().height" stepKey="actualMapHeight"/>
+        <executeJS function="return Math.abs({$actualMapHeight}-{{height.value}})" stepKey="mapHeightDifference"/>
+        <assertLessThanOrEqual stepKey="assertMapHeightAcceptable">
+            <expectedResult type="int">{{acceptableOffset}}</expectedResult>
+            <actualResult type="variable">mapHeightDifference</actualResult>
+        </assertLessThanOrEqual>
+    </actionGroup>
 </actionGroups>
