@@ -14,4 +14,23 @@
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="clickOutsideLiveEdit"/>
         <waitForPageLoad stepKey="waitForAnimation"/>
     </actionGroup>
+    <actionGroup name="focusOnTextInlineTinyMCEEditor">
+        <arguments>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <comment userInput="focusOnTextInlineTinyMCEEditor" stepKey="comment"/>
+        <waitForElementVisible selector="{{TextOnStage.tinymce(index)}}" stepKey="waitForEditor"/>
+        <click selector="{{TextOnStage.tinymce(index)}}" stepKey="clickEditor"/>
+        <waitForPageLoad stepKey="waitForEditorToBeFocused"/>
+        <waitForElementVisible selector="{{TextOnStage.tinymceInFocus(index)}}" stepKey="waitForEditorFocused"/>
+    </actionGroup>
+    <actionGroup name="focusOnTextInlineTextArea">
+        <arguments>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <comment userInput="focusOnTextInlineTextArea" stepKey="comment"/>
+        <waitForElementVisible selector="{{TextOnStage.textArea(index)}}" stepKey="waitForEditor"/>
+        <click selector="{{TextOnStage.textArea(index)}}" stepKey="clickEditor"/>
+        <waitForPageLoad stepKey="waitForEditorToBeFocused"/>
+    </actionGroup>
 </actionGroups>

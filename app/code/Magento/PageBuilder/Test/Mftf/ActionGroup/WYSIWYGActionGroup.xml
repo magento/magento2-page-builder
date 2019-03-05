@@ -22,6 +22,28 @@
         <waitForElementVisible selector="{{section.textInIFrame(property.value)}}" stepKey="waitForTextVisible"/>
         <switchToIFrame stepKey="exitIFrame"/>
     </actionGroup>
+    <actionGroup name="addTextToTinyMCEInline">
+        <arguments>
+            <argument name="section"/>
+            <argument name="text" defaultValue="{{PageBuilderTextProperty.value}}" type="string"/>
+            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="pageBuilderArea" defaultValue="" type="string"/>
+        </arguments>
+        <comment userInput="addTextToTinyMCEInline" stepKey="comment"/>
+        <waitForElementVisible selector="{{section.tinymceInFocus(index)}}" stepKey="waitForEditorFocused"/>
+        <pressKey selector="{{section.tinymce(index)}}" userInput="{{text}}" stepKey="enterText"/>
+        <waitForPageLoad stepKey="waitForTextEdit"/>
+        <click selector="{{pageBuilderArea}}{{PageBuilderPanel.searchPanel}}" stepKey="loseFocusFromEditor"/>
+        <waitForPageLoad stepKey="waitForUnFocus"/>
+    </actionGroup>
+    <actionGroup name="addTextToTinyMCEInlineWYSIWYGDisabled" extends="addTextToTinyMCEInline">
+        <comment userInput="addTextToTinyMCEInlineWYSIWYGDisabled" stepKey="comment"/>
+        <waitForElementVisible selector="{{section.textArea(index)}}" stepKey="waitForEditorFocused"/>
+        <pressKey selector="{{section.textArea(index)}}" userInput="{{text}}" stepKey="enterText"/>
+        <waitForPageLoad stepKey="waitForTextEdit"/>
+        <click selector="{{pageBuilderArea}}{{PageBuilderPanel.searchPanel}}" stepKey="loseFocusFromEditor"/>
+        <waitForPageLoad stepKey="waitForUnFocus"/>
+    </actionGroup>
     <actionGroup name="replaceTextToTinyMCE" extends="addTextToTinyMCE">
         <executeJS function="tinymce.activeEditor.setContent('{{property.value}}')" stepKey="addTextToWYSIWYG"/>
     </actionGroup>
@@ -159,10 +181,24 @@
             <argument name="selector" type="string"/>
             <argument name="value" type="string"/>
         </arguments>
-        <executeJS function="return Boolean(document.evaluate(&quot;{{selector}}&quot;, document.body).iterateNext().value.match(&apos;{{value}}&apos;))" stepKey="textareaValue"/>
-        <assertEquals stepKey="assertTextareaContainsValue">
-            <expectedResult type="bool">true</expectedResult>
+        <executeJS function="return document.evaluate(&quot;{{selector}}&quot;, document.body).iterateNext().value" stepKey="textareaValue"/>
+        <assertContains stepKey="assertTextareaContainsValue">
+            <expectedResult type="string">{{value}}</expectedResult>
             <actualResult type="variable">textareaValue</actualResult>
-        </assertEquals>
+        </assertContains>
+    </actionGroup>
+    <actionGroup name="clickInsertImageInTinyMCE">
+        <!-- This goes in CE repo -->
+        <comment userInput="clickInsertImageInTinyMCE" stepKey="comment"/>
+        <waitForElementVisible selector="{{TinyMCESection.InsertImageIcon}}" stepKey="waitForInsertImageIcon"/>
+        <click selector="{{TinyMCESection.InsertImageIcon}}" stepKey="clickInsertImageIcon"/>
+        <waitForPageLoad stepKey="waitForPageLoad" />
+        <waitForElementVisible selector="{{MediaGallerySection.Browse}}" stepKey="waitForBrowseImagesButton"/>
+    </actionGroup>
+    <actionGroup name="clickMediaGalleryStorageRootArrow">
+        <!-- This goes in CE repo -->
+        <click selector="{{MediaGallerySection.StorageRootArrow}}" stepKey="clickStorageRootArrow"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <waitForElement selector="{{MediaGallerySection.StorageRootArrowClicked}}" stepKey="waitForStorageRootArrowClicked"/>
     </actionGroup>
 </actionGroups>
