@@ -33,7 +33,21 @@ class PageBuilderHandler implements StateHandlerInterface
      */
     public function execute(AbstractState $state)
     {
-        $this->configuration->setConfig('cms/pagebuilder/enabled', '0');
+        $config = include BP . '/app/etc/config.php';
+        $moduleStatuses = $config['modules'];
+        $moduleNames = array_keys($moduleStatuses);
+
+        $enabledPageBuilderModuleNames = array_filter($moduleNames, function ($moduleName) use ($moduleStatuses) {
+            $isEnabled = (bool) $moduleStatuses[$moduleName];
+            $isPageBuilderRelatedModule = stripos($moduleName, 'PageBuilder') !== false;
+
+            return $isEnabled && $isPageBuilderRelatedModule;
+        });
+
+        // disable modules in reverse order of installation
+        foreach (array_reverse($enabledPageBuilderModuleNames) as $enabledPageBuilderModuleName) {
+            $this->configuration->execute('module:disable', [$enabledPageBuilderModuleName]);
+        }
 
         return true;
     }
