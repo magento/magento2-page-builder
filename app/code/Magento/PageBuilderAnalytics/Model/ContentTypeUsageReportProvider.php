@@ -8,20 +8,26 @@ declare(strict_types=1);
 
 namespace Magento\PageBuilderAnalytics\Model;
 
+use Magento\Analytics\ReportXml\QueryFactory;
 use Magento\Analytics\ReportXml\ConnectionFactory;
 use Magento\PageBuilder\Model\Config;
 use Magento\Analytics\ReportXml\Query;
 use Magento\Framework\DB\Adapter\AdapterInterface;
 
 /**
- * Provides content type data report
+ * Provides content type usage data report
  */
-class ContentTypeBatchReportBuilder
+class ContentTypeUsageReportProvider
 {
     /**
      * @var Config
      */
     private $config;
+
+    /**
+     * @var QueryFactory
+     */
+    private $queryFactory;
 
     /**
      * @var ConnectionFactory
@@ -34,16 +40,21 @@ class ContentTypeBatchReportBuilder
     private $batchSize;
 
     /**
+     * ContentTypeProvider constructor.
+     *
      * @param Config $config
+     * @param QueryFactory $queryFactory
      * @param ConnectionFactory $connectionFactory
      * @param int $batchSize
      */
     public function __construct(
         Config $config,
+        QueryFactory $queryFactory,
         ConnectionFactory $connectionFactory,
         $batchSize = 1000
     ) {
         $this->config = $config;
+        $this->queryFactory = $queryFactory;
         $this->connectionFactory = $connectionFactory;
         $this->batchSize = $batchSize;
     }
@@ -51,13 +62,15 @@ class ContentTypeBatchReportBuilder
     /**
      * Create the report based on the supplied query
      *
-     * @param Query $query
+     * @param string $name
      *
      * @return \IteratorIterator
      * @throws \Zend_Db_Statement_Exception
      */
-    public function create(Query $query) : \IteratorIterator
+    public function getReport($name) : \IteratorIterator
     {
+        $query = $this->queryFactory->create($name);
+
         // Prepare our type count data
         $typeCounts = [];
         $contentTypes = $this->config->getContentTypes();
@@ -88,9 +101,11 @@ class ContentTypeBatchReportBuilder
             }
         }
 
+        $total = 0;
         $reportData[] = ['Content Type', 'Count'];
         foreach ($contentTypes as $type) {
             $reportData[] = [$type['name'], $typeCounts[$type['name']]];
+            $total = $total + $typeCounts[$type['name']];
         }
 
         return new \IteratorIterator(
