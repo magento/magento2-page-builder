@@ -36,7 +36,7 @@
     </report>
     <report name="pagebuilder_category" connection="default">
         <source name="catalog_category_entity_text">
-            <attribute name="value"/>
+            <attribute name="value" alias="content"/>
             <link-source name="eav_attribute" link-type="inner">
                 <using glue="and">
                     <condition attribute="attribute_id" operator="eq" type="identifier">attribute_id</condition>
@@ -56,7 +56,7 @@
     </report>
     <report name="pagebuilder_product_attributes" connection="default">
         <source name="catalog_product_entity_text">
-            <attribute name="value" group="true"/>
+            <attribute name="value" alias="content" group="true"/>
             <link-source name="eav_attribute" link-type="inner">
                 <attribute name="attribute_code"/>
                 <using glue="and">
