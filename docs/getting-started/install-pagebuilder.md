@@ -25,7 +25,7 @@ Before installing Page Builder, make sure you have:
     git clone https://github.com/magento/magento2-page-builder-ee
     ```
 
-2. Use the `dev/tools/build-ee.php` script to symlink the `magento2-page-builder` and `magento2-page-builder-ee` repos into your Magento Commerce installation:
+2. From the root directory of your Magento Commerce installation, use the `dev/tools/build-ee.php` script to symlink `magento2-page-builder` and `magento2-page-builder-ee` repos into your Magento Commerce installation:
 
     ```bash
     php dev/tools/build-ee.php --command=link --ee-source="magento2-page-builder" --ce-source="."
