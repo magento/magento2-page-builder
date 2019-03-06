@@ -127,8 +127,6 @@ class ContentTypeUsageReportProvider
         $countSelect->reset(\Magento\Framework\DB\Select::COLUMNS)
             ->columns(['row_count' => new \Zend_Db_Expr('COUNT(*)')]);
 
-        return $connection->fetchOne(
-            $countSelect
-        );
+        return $connection->fetchOne($countSelect);
     }
 }
