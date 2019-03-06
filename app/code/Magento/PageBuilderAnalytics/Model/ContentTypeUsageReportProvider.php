@@ -51,7 +51,7 @@ class ContentTypeUsageReportProvider
         Config $config,
         QueryFactory $queryFactory,
         ConnectionFactory $connectionFactory,
-        $batchSize = 1000
+        $batchSize = 5000
     ) {
         $this->config = $config;
         $this->queryFactory = $queryFactory;
@@ -101,11 +101,9 @@ class ContentTypeUsageReportProvider
             }
         }
 
-        $total = 0;
         $reportData[] = ['Content Type', 'Count'];
         foreach ($contentTypes as $type) {
             $reportData[] = [$type['name'], $typeCounts[$type['name']]];
-            $total = $total + $typeCounts[$type['name']];
         }
 
         return new \IteratorIterator(
