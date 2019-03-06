@@ -259,7 +259,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         if (this.contentType.dataStore.get("is_same_width") === "true") {
           if (buttonItems.length > 0) {
             var currentLargestButtonWidth = this.findLargestButtonWidth(buttonItems);
-            var parentWrapperWidth = (0, _jquery)(this.wrapperElement).width();
+            var parentWrapperWidth = (0, _jquery)(this.wrapperElement).find(".buttons-container").width();
 
             if (currentLargestButtonWidth === 0) {
               return;

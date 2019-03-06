@@ -259,14 +259,13 @@ export default class Preview extends PreviewCollection {
             if (this.contentType.dataStore.get("is_same_width") === "true") {
                 if (buttonItems.length > 0) {
                     const currentLargestButtonWidth = this.findLargestButtonWidth(buttonItems);
-                    const parentWrapperWidth = $(this.wrapperElement).width();
+                    const parentWrapperWidth = $(this.wrapperElement).find(".buttons-container").width();
                     if (currentLargestButtonWidth === 0) {
                         return;
                     }
                     buttonResizeValue = Math.min(currentLargestButtonWidth, parentWrapperWidth);
                 }
             }
-
             buttonItems.css("min-width", buttonResizeValue);
         }
     }
