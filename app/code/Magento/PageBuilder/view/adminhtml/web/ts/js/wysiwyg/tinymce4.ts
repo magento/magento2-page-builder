@@ -171,9 +171,9 @@ export default class Wysiwyg implements WysiwygInterface {
      * Update content in our data store after our stage preview wysiwyg gets updated
      */
     private saveContentFromWysiwygToDataStore() {
-        this.dataStore.update(
-            this.getAdapter().getContent(),
+        this.dataStore.set(
             this.fieldName,
+            this.getAdapter().getContent(),
         );
     }
 

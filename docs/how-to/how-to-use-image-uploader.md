@@ -74,7 +74,7 @@ To update the `<YourModule>/view/adminhtml/web/js/content-type/<content_type_nam
     The following is an example extracted from the image content type:
 
     ```js
-    var dataStore = this.parent.dataStore.get();
+    var dataStore = this.parent.dataStore.getState();
     var initialImageValue = dataStore[this.config.additional_data.uploaderConfig.dataScope] || "";
 
     this.uploader = new Uploader(

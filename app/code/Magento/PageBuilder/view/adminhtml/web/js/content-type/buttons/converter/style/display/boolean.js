@@ -8,14 +8,14 @@ define(["underscore", "Magento_PageBuilder/js/utils/object"], function (_undersc
   /**
    * @api
    */
-  var InlineBlock =
+  var Boolean =
   /*#__PURE__*/
   function () {
     "use strict";
 
-    function InlineBlock() {}
+    function Boolean() {}
 
-    var _proto = InlineBlock.prototype;
+    var _proto = Boolean.prototype;
 
     /**
      * Convert value to internal format
@@ -27,7 +27,7 @@ define(["underscore", "Magento_PageBuilder/js/utils/object"], function (_undersc
       return !(value === "none");
     }
     /**
-     * Convert value to knockout format, if buttons are displayed they should be inline block
+     * Convert value to knockout format, if buttons are displayed they should be reset to default
      *
      * @param {string} name
      * @param {DataObject} data
@@ -42,12 +42,12 @@ define(["underscore", "Magento_PageBuilder/js/utils/object"], function (_undersc
         return "none";
       }
 
-      return "inline-block";
+      return "";
     };
 
-    return InlineBlock;
+    return Boolean;
   }();
 
-  return InlineBlock;
+  return Boolean;
 });
-//# sourceMappingURL=inline-block.js.map
+//# sourceMappingURL=boolean.js.map

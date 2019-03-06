@@ -333,6 +333,7 @@ export default class Preview extends PreviewCollection {
         column.preview.element.draggable({
             appendTo: "body",
             containment: "body",
+            cursor: "-webkit-grabbing",
             handle: ".move-column",
             revertDuration: 250,
             helper() {
@@ -343,7 +344,7 @@ export default class Preview extends PreviewCollection {
                     opacity: 0.5,
                     pointerEvents: "none",
                     width: $(this).outerWidth() + "px",
-                    zIndex: 100,
+                    zIndex: 5000,
                 });
                 return helper;
             },
