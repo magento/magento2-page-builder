@@ -2178,17 +2178,17 @@
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <click selector="{{BannerOnBackend.tinymce('1')}}" stepKey="focusOnEditorArea1"/>
-        <seeElement selector="{{BannerOnBackend.messageContentText('1', TinyMCEVariableBaseURL.editPanelValue)}}" stepKey="seeVariableBaseURLStage"/>
-        <seeElement selector="{{BannerOnBackend.messageContentText('1', TinyMCEWidgetCMSPageLink.editPanelValue)}}" stepKey="seeWidgetStage"/>
+        <seeElement selector="{{BannerOnBackend.messageContent('1', TinyMCEVariableBaseURL.editPanelValue)}}" stepKey="seeVariableBaseURLStage"/>
+        <seeElement selector="{{BannerOnBackend.messageContent('1', TinyMCEWidgetCMSPageLink.editPanelValue)}}" stepKey="seeWidgetStage"/>
         <executeJS function="return window.getComputedStyle(document.evaluate(&quot;{{BannerOnBackend.variablePlaceholder('1')}}&quot;, document.body).iterateNext()).getPropertyValue('background-color')" stepKey="getVariableStyle"/>
         <executeJS function="return window.getComputedStyle(document.evaluate(&quot;{{BannerOnBackend.widgetPlaceholder('1')}}&quot;, document.body).iterateNext()).getPropertyValue('background-color')" stepKey="getWidgetStyle"/>
         <waitForElement selector="{{BannerOnBackend.variablePlaceholder('1')}}" stepKey="waitForVariableElement"/>
         <waitForElement selector="{{BannerOnBackend.widgetPlaceholder('1')}}" stepKey="waitForWidgetElement"/>
         <executeJS function="return window.getComputedStyle(document.evaluate(&quot;{{BannerOnBackend.variablePlaceholder('1')}}&quot;, document.body).iterateNext()).getPropertyValue('background-color')" stepKey="getVariableStyleAfterSave"/>
         <executeJS function="return window.getComputedStyle(document.evaluate(&quot;{{BannerOnBackend.widgetPlaceholder('1')}}&quot;, document.body).iterateNext()).getPropertyValue('background-color')" stepKey="getWidgetStyleAfterSave"/>
-        <seeElement selector="{{BannerOnFrontend.messageContentText('1', _ENV.MAGENTO_BASE_URL)}}" stepKey="seeVariableStorefront"/>
-        <seeElement selector="{{BannerOnFrontend.messageContentTextAreaTextWidget('1', _ENV.MAGENTO_BASE_URL, $$createCMSPageB.identifier$$)}}" stepKey="seeWidgetStorefront"/>
-        <click selector="{{BannerOnFrontend.messageContentTextAreaTextWidget('1', _ENV.MAGENTO_BASE_URL, $$createCMSPageB.identifier$$)}}" stepKey="clickWidgetStorefront"/>
+        <seeElement selector="{{BannerOnFrontend.messageContent('1', _ENV.MAGENTO_BASE_URL)}}" stepKey="seeVariableStorefront"/>
+        <seeElement selector="{{BannerOnFrontend.messageContentWidget('1', _ENV.MAGENTO_BASE_URL, $$createCMSPageB.identifier$$)}}" stepKey="seeWidgetStorefront"/>
+        <click selector="{{BannerOnFrontend.messageContentWidget('1', _ENV.MAGENTO_BASE_URL, $$createCMSPageB.identifier$$)}}" stepKey="clickWidgetStorefront"/>
     </test>
     <test name="BannerInlineWysiwygUploadImage" extends="SlideItemInlineWysiwygUploadImage">
         <annotations>
@@ -2344,6 +2344,6 @@
         </after>
         <dontSeeElement selector="{{HtmlOnStage.base('1')}}" stepKey="dontSeeHtmlCode" />
         <waitForElementVisible selector="{{BannerOnBackend.base('1')}}" stepKey="waitForBannerVisible" />
-        <seeElement selector="{{BannerOnBackend.messageContentText('1', PageBuilderBannerMessageProperty.value)}}" stepKey="seeTestStringInBanner"/>
+        <seeElement selector="{{BannerOnBackend.messageContent('1', PageBuilderBannerMessageProperty.value)}}" stepKey="seeTestStringInBanner"/>
     </test>
 </tests>
