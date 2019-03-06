@@ -2632,7 +2632,7 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Block Content"/>
-            <title value="Render Inline Edited Text Through Block Content Type With TinyMCE4 and Wysiwyg Enabled By Default"/>
+            <title value="Render Text Through Block Content Type With TinyMCE4 and Wysiwyg Enabled By Default"/>
             <description value="Verify that users are able to successfully render and use the Text content type through the Block content type with TinyMCE4 and Wysiwyg Enabled By Default."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MC-15159"/>
@@ -2643,6 +2643,8 @@
             <group value="pagebuilder-text"/>
         </annotations>
         <before>
+            <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="configWYSIWYG"/>
+            <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="configTinyMCE"/>
             <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
             <createData entity="_emptyCmsBlock" stepKey="createCMSBlock"/>
             <createData entity="_defaultCmsPage" stepKey="createPreReqCMSPage"/>
@@ -2667,27 +2669,27 @@
         </actionGroup>
         <!-- Inline Edit: Add Text -->
         <comment userInput="Inline Edit: Add Text" stepKey="commentInlineEditAddText"/>
-        <actionGroup ref="focusOnTextInlineTinyMCEEditor" stepKey="focusOnTextInlineTinyMCEEditor"/>
+        <actionGroup ref="focusOnInlineTinyMCEEditor" stepKey="focusOnInlineTinyMCEEditor"/>
         <actionGroup ref="addTextToTinyMCEInline" stepKey="addTextToTinyMCEInline">
             <argument name="section" value="TextOnStage"/>
-            <argument name="text" value="PageBuilderTextProperty"/>
+            <argument name="text" value="{{PageBuilderTextProperty.value}}"/>
         </actionGroup>
         <!-- Inline Edit: Add Variable -->
         <comment userInput="Inline Edit: Add Variable" stepKey="commentInlineEditAddVariable"/>
-        <actionGroup ref="focusOnTextInlineTinyMCEEditor" stepKey="focusOnTextInlineTinyMCEEditor2"/>
+        <actionGroup ref="focusOnInlineTinyMCEEditor" stepKey="focusOnInlineTinyMCEEditor2"/>
         <actionGroup ref="addVariableToTinyMCEInline" stepKey="addVariableToTinyMCE">
             <argument name="variable" value="TinyMCEVariableBaseURL"/>
         </actionGroup>
         <!-- Inline Edit: Add Widget -->
         <comment userInput="Inline Edit: Add Widget" stepKey="commentInlineEditAddWidget"/>
-        <actionGroup ref="focusOnTextInlineTinyMCEEditor" stepKey="focusOnTextInlineTinyMCEEditor3"/>
+        <actionGroup ref="focusOnInlineTinyMCEEditor" stepKey="focusOnInlineTinyMCEEditor3"/>
         <actionGroup ref="addPageLinkWidgetToTinyMCEInline" stepKey="addPageLinkWidgetToTinyMCE">
             <argument name="widget" value="TinyMCEWidgetCMSPageLink"/>
             <argument name="page" value="$$createPreReqCMSPage.identifier$$"/>
         </actionGroup>
         <!-- Inline Edit: Add Image -->
         <comment userInput="Inline Edit: Add Image" stepKey="commentInlineEditAddImage"/>
-        <actionGroup ref="focusOnTextInlineTinyMCEEditor" stepKey="focusOnTextInlineTinyMCEEditor4"/>
+        <actionGroup ref="focusOnInlineTinyMCEEditor" stepKey="focusOnInlineTinyMCEEditor4"/>
         <actionGroup ref="clickInsertImageInTinyMCE" stepKey="clickInsertImageInTinyMCE"/>
         <actionGroup ref="clickBrowseBtnOnUploadPopup" stepKey="clickBrowserBtn"/>
         <actionGroup ref="VerifyMediaGalleryStorageActions" stepKey="VerifyMediaGalleryStorageBtn"/>
@@ -2703,7 +2705,7 @@
         <actionGroup ref="saveCMSBlock" stepKey="saveCMSBlock"/>
         <!-- Validate CMS Block Stage -->
         <comment userInput="Validate CMS Block Stage" stepKey="commentValidateCMSBlockStage"/>
-        <seeElement selector="{{TextOnStage.text('1', PageBuilderTextProperty.value)}}" stepKey="seeTextContentTypeCMSBlockStage"/>
+        <seeElement selector="{{TextOnStage.text('1', PageBuilderTextProperty.value)}}" stepKey="seeTextCMSBlockStage"/>
         <seeElement selector="{{TextOnStage.text('1', TinyMCEVariableBaseURL.editPanelValue)}}" stepKey="seeVariableCMSBlockStage"/>
         <seeElement selector="{{TextOnStage.text('1', TinyMCEWidgetCMSPageLink.editPanelValue)}}" stepKey="seeWidgetCMSBlockStage"/>
         <seeElement selector="{{TextOnStage.base('1')}}{{CmsWYSIWYGSection.imageSource(ImageUpload3.fileName)}}" stepKey="seeImageFileNameCMSBlockStage"/>
@@ -2729,7 +2731,7 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsBlock"/>
         <!-- Validate CMS Page Stage -->
         <comment userInput="Validate CMS Page Stage" stepKey="commentValidateCMSPageStage"/>
-        <seeElement selector="{{TextOnStorefront.text('1', PageBuilderTextProperty.value)}}" stepKey="seeTextContentTypeCMSPageStage"/>
+        <seeElement selector="{{TextOnStorefront.text('1', PageBuilderTextProperty.value)}}" stepKey="seeTextCMSPageStage"/>
         <seeElement selector="{{TextOnStorefront.text('1', _ENV.MAGENTO_BASE_URL)}}" stepKey="seeVariableCMSPageStage"/>
         <seeElement selector="{{TextOnStorefront.textWidget('1', _ENV.MAGENTO_BASE_URL, $$createPreReqCMSPage.identifier$$)}}" stepKey="seeWidgetCMSPageStage"/>
         <seeElement selector="{{TextOnStorefront.base('1')}}{{CmsWYSIWYGSection.imageSource(ImageUpload3.fileName)}}" stepKey="seeImageFileNameCMSPageStage"/>
@@ -2741,7 +2743,7 @@
         <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
-        <seeElement selector="{{TextOnStorefront.text('1', PageBuilderTextProperty.value)}}" stepKey="seeTextContentTypeCMSPageStorefront"/>
+        <seeElement selector="{{TextOnStorefront.text('1', PageBuilderTextProperty.value)}}" stepKey="seeTextCMSPageStorefront"/>
         <seeElement selector="{{TextOnStorefront.text('1', _ENV.MAGENTO_BASE_URL)}}" stepKey="seeVariableCMSPageStorefront"/>
         <seeElement selector="{{TextOnStorefront.textWidget('1', _ENV.MAGENTO_BASE_URL, $$createPreReqCMSPage.identifier$$)}}" stepKey="seeWidgetCMSPageStorefront"/>
         <seeElement selector="{{TextOnStorefront.base('1')}}{{CmsWYSIWYGSection.imageSource(ImageUpload3.fileName)}}" stepKey="seeImageFileNameCMSPageStorefront"/>
@@ -2757,7 +2759,7 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Block Content"/>
-            <title value="Render Inline Edited Text Through Block Content Type With TinyMCE4 and Wysiwyg Disabled By Default"/>
+            <title value="Render Text Through Block Content Type With TinyMCE4 and Wysiwyg Disabled By Default"/>
             <description value="Verify that users are able to successfully render and use the Text content type through the Block content type with TinyMCE4 and Wysiwyg Disabled By Default."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MC-15175"/>
@@ -2768,7 +2770,7 @@
             <group value="pagebuilder-text"/>
         </annotations>
         <before>
-            <magentoCLI command="config:set cms/wysiwyg/enabled hidden" stepKey="disableWYSIWYGByDefault" before="createCMSPage"/>
+            <magentoCLI command="config:set cms/wysiwyg/enabled hidden" stepKey="configWYSIWYG"/>
         </before>
         <after>
             <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG" before="deleteCMSBlock"/>
@@ -2778,7 +2780,7 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Block Content"/>
-            <title value="Render Inline Edited Text Through Block Content Type With TinyMCE4 and Wysiwyg Disabled Completely"/>
+            <title value="Render Text Through Block Content Type With TinyMCE4 and Wysiwyg Disabled Completely"/>
             <description value="Verify that users are able to successfully render and use the Text content type through the Block content type with TinyMCE4 and Disabled Completely."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MC-15176"/>
@@ -2789,7 +2791,8 @@
             <group value="pagebuilder-text"/>
         </annotations>
         <before>
-            <magentoCLI command="config:set cms/wysiwyg/enabled disabled" stepKey="disableWYSIWYGCompletely"/>
+            <magentoCLI command="config:set cms/wysiwyg/enabled disabled" stepKey="configWYSIWYG"/>
+            <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="configTinyMCE"/>
             <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
             <createData entity="_emptyCmsBlock" stepKey="createCMSBlock"/>
             <createData entity="_defaultCmsPage" stepKey="createPreReqCMSPage"/>
@@ -2815,20 +2818,20 @@
         </actionGroup>
         <!-- Inline Edit: Add Text -->
         <comment userInput="Inline Edit: Add Text" stepKey="commentInlineEditAddText"/>
-        <actionGroup ref="focusOnTextInlineTextArea" stepKey="focusOnTextInlineTinyMCEEditor"/>
+        <actionGroup ref="focusOnInlineTextAreaEditor" stepKey="focusOnInlineTextAreaEditor"/>
         <actionGroup ref="addTextToTinyMCEInlineWYSIWYGDisabled" stepKey="addTextToTinyMCEInline">
             <argument name="section" value="TextOnStage"/>
             <argument name="text" value="{{PageBuilderTextProperty.value}}"/>
         </actionGroup>
         <!-- Inline Edit: Add Variable -->
-        <actionGroup ref="focusOnTextInlineTextArea" stepKey="focusOnTextInlineTinyMCEEditor2"/>
+        <actionGroup ref="focusOnInlineTextAreaEditor" stepKey="focusOnInlineTextAreaEditor2"/>
         <actionGroup ref="addTextToTinyMCEInlineWYSIWYGDisabled" stepKey="addVariableToTinyMCE">
             <argument name="section" value="TextOnStage"/>
             <argument name="text" value="{{PageBuilderTextArea_VariableBaseURL.editPanelValue}}"/>
         </actionGroup>
         <!-- Inline Edit: Add Widget -->
         <comment userInput="Inline Edit: Add Widget" stepKey="commentInlineEditAddWidget"/>
-        <actionGroup ref="focusOnTextInlineTextArea" stepKey="focusOnTextInlineTinyMCEEditor3"/>
+        <actionGroup ref="focusOnInlineTextAreaEditor" stepKey="focusOnInlineTextAreaEditor3"/>
         <actionGroup ref="addTextToTinyMCEInlineWYSIWYGDisabled" stepKey="addPageLinkWidgetToTinyMCE">
             <argument name="section" value="TextOnStage"/>
             <argument name="text" value="{{PageBuilderTextArea_WidgetCMSHomepageLink.editPanelValue}}"/>
@@ -2860,7 +2863,7 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsBlock"/>
         <!-- Validate CMS Page Stage -->
         <comment userInput="Validate CMS Page Stage" stepKey="commentValidateCMSPageStage"/>
-        <seeElement selector="{{TextOnStorefront.textAreaText('1', PageBuilderTextProperty.value)}}" stepKey="seeTextContentTypeCMSPageStage"/>
+        <seeElement selector="{{TextOnStorefront.textAreaText('1', PageBuilderTextProperty.value)}}" stepKey="seeTextCMSPageStage"/>
         <seeElement selector="{{TextOnStorefront.textAreaText('1', _ENV.MAGENTO_BASE_URL)}}" stepKey="seeVariableCMSPageStage"/>
         <seeElement selector="{{TextOnStorefront.textWidget('1', _ENV.MAGENTO_BASE_URL, PageBuilderTextArea_WidgetCMSHomepageLink.identifier)}}" stepKey="seeWidgetCMSPageStage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
@@ -2869,7 +2872,7 @@
         <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
-        <seeElement selector="{{TextOnStorefront.textAreaText('1', PageBuilderTextProperty.value)}}" stepKey="seeTextContentTypeCMSPageStorefront"/>
+        <seeElement selector="{{TextOnStorefront.textAreaText('1', PageBuilderTextProperty.value)}}" stepKey="seeTextCMSPageStorefront"/>
         <seeElement selector="{{TextOnStorefront.textAreaText('1', _ENV.MAGENTO_BASE_URL)}}" stepKey="seeVariableCMSPageStorefront"/>
         <seeElement selector="{{TextOnStorefront.textWidget('1', _ENV.MAGENTO_BASE_URL, PageBuilderTextArea_WidgetCMSHomepageLink.identifier)}}" stepKey="seeWidgetCMSPageStorefront"/>
         <!-- Click Page Link Widget -->
@@ -3294,12 +3297,12 @@
             <argument name="expectedOverlayWidth" value="{$widthOfWrapperMinusPaddingCMSPageStorefrontMobile}"/>
         </actionGroup>
     </test>
-    <test name="BlockRenderInlineEditedBannerThroughBlockContentTypeTinyMCE4WysiwygEnabledByDefault">
+    <test name="BlockRenderBannerThroughBlockContentTypeTinyMCE4WysiwygEnabledByDefault">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Block Content"/>
-            <title value="Render Inline Edited Banner Through Block Content Type With TinyMCE4 Wysiwyg Enabled By Default"/>
-            <description value="Verify that users are able to successfully render and use the inline edited Banner content type through the Block content type with TinyMCE4 and Wysiwyg enabled by default."/>
+            <title value="Render Banner Through Block Content Type With TinyMCE4 and Wysiwyg Enabled By Default"/>
+            <description value="Verify that users are able to successfully render and use the Banner content type through the Block content type with TinyMCE4 and Wysiwyg Enabled By default."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MC-15192"/>
             <useCaseId value="MC-13769"/>
@@ -3310,11 +3313,12 @@
             <group value="pagebuilder-bannerPoster"/>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="configWYSIWYG"/>
             <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="configTinyMCE"/>
             <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
             <createData entity="_emptyCmsBlock" stepKey="createCMSBlock"/>
+            <createData entity="_defaultCmsPage" stepKey="createPreReqCMSPage"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage1">
                 <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
             </actionGroup>
@@ -3322,8 +3326,6 @@
         <after>
             <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock"/>
             <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
-            <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG1"/>
-            <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="enableTinyMCE4_1"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <!-- Add Banner -->
@@ -3334,15 +3336,58 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragBannerIntoStage">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <!--Input text into banner-->
-        <comment userInput="Input text into banner" stepKey="commentInputIntoBanner"/>
-        <click selector="{{BannerOnBackend.tinymce('1')}}" stepKey="focusOnEditorArea"/>
-        <fillField selector="{{BannerOnBackend.tinymce('1')}}" userInput="{{PageBuilderBannerMessageProperty.value}}" stepKey="fillBanner"/>
-        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="lostFocusFromWYSIWYG1"/>
+        <!-- Inline Edit: Add Text -->
+        <comment userInput="Inline Edit: Add Text" stepKey="commentInlineEditAddText"/>
+        <actionGroup ref="focusOnInlineTinyMCEEditor" stepKey="focusOnInlineTinyMCEEditor">
+            <argument name="section" value="BannerOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="addTextToTinyMCEInline" stepKey="addTextToTinyMCEInline">
+            <argument name="section" value="BannerOnBackend"/>
+            <argument name="text" value="{{PageBuilderBannerMessageProperty.value}}"/>
+        </actionGroup>
+        <!-- Inline Edit: Add Variable -->
+        <comment userInput="Inline Edit: Add Variable" stepKey="commentInlineEditAddVariable"/>
+        <actionGroup ref="focusOnInlineTinyMCEEditor" stepKey="focusOnInlineTinyMCEEditor2">
+            <argument name="section" value="BannerOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="addVariableToTinyMCEInline" stepKey="addVariableToTinyMCE">
+            <argument name="variable" value="TinyMCEVariableBaseURL"/>
+        </actionGroup>
+        <!-- Inline Edit: Add Widget -->
+        <comment userInput="Inline Edit: Add Widget" stepKey="commentInlineEditAddWidget"/>
+        <actionGroup ref="focusOnInlineTinyMCEEditor" stepKey="focusOnInlineTinyMCEEditor3">
+            <argument name="section" value="BannerOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="addPageLinkWidgetToTinyMCEInline" stepKey="addPageLinkWidgetToTinyMCE">
+            <argument name="widget" value="TinyMCEWidgetCMSPageLink"/>
+            <argument name="page" value="$$createPreReqCMSPage.identifier$$"/>
+        </actionGroup>
+        <!-- Inline Edit: Add Image -->
+        <comment userInput="Inline Edit: Add Image" stepKey="commentInlineEditAddImage"/>
+        <actionGroup ref="focusOnInlineTinyMCEEditor" stepKey="focusOnInlineTinyMCEEditor4">
+            <argument name="section" value="BannerOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="clickInsertImageInTinyMCE" stepKey="clickInsertImageInTinyMCE"/>
+        <actionGroup ref="clickBrowseBtnOnUploadPopup" stepKey="clickBrowserBtn"/>
+        <actionGroup ref="VerifyMediaGalleryStorageActions" stepKey="VerifyMediaGalleryStorageBtn"/>
+        <actionGroup ref="clickMediaGalleryStorageRootArrow" stepKey="clickMediaGalleryStorageRootArrow"/>
+        <actionGroup ref="CreateImageFolder" stepKey="CreateImageFolder">
+            <argument name="ImageFolder" value="ImageFolder"/>
+        </actionGroup>
+        <actionGroup ref="attachImage" stepKey="attachImage">
+            <argument name="Image" value="ImageUpload3"/>
+        </actionGroup>
+        <actionGroup ref="saveImage" stepKey="insertImage"/>
+        <actionGroup ref="fillOutUploadImagePopup" stepKey="fillOutUploadImagePopup"/>
+        <actionGroup ref="saveCMSBlock" stepKey="saveCMSBlock"/>
         <!-- Validate CMS Block Stage -->
         <comment userInput="Validate CMS Block Stage" stepKey="commentValidateCMSBlockStage"/>
-        <seeElementInDOM selector="{{BannerOnBackend.messageContentText('1', PageBuilderBannerMessageProperty.value)}}" stepKey="seeBannerContentTypeBlockStage"/>
-        <actionGroup ref="saveCMSBlock" stepKey="saveCMSBlock"/>
+        <seeElement selector="{{BannerOnBackend.messageContentText('1', PageBuilderBannerMessageProperty.value)}}" stepKey="seeTextCMSBlockStage"/>
+        <seeElement selector="{{BannerOnBackend.messageContentText('1', TinyMCEVariableBaseURL.editPanelValue)}}" stepKey="seeVariableCMSBlockStage"/>
+        <seeElement selector="{{BannerOnBackend.messageContentText('1', TinyMCEWidgetCMSPageLink.editPanelValue)}}" stepKey="seeWidgetCMSBlockStage"/>
+        <seeElement selector="{{BannerOnBackend.base('1')}}{{CmsWYSIWYGSection.imageSource(ImageUpload3.fileName)}}" stepKey="seeImageFileNameCMSBlockStage"/>
+        <seeElement selector="{{BannerOnBackend.base('1')}}{{CmsWYSIWYGSection.imageSource(ImageUpload3.extension)}}" stepKey="seeImageExtensionCMSBlockStage"/>
+        <seeElement selector="{{BannerOnBackend.base('1')}}{{CmsWYSIWYGSection.ImageAlt(ImageUpload3.content)}}" stepKey="seeImageAltCMSBlockStage"/>
         <!-- Add Block to CMS Page -->
         <comment userInput="Add Block to CMS Page" stepKey="commentAddBlockToCMSPage"/>
         <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
@@ -3363,21 +3408,36 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsBlock"/>
         <!-- Validate CMS Page Stage -->
         <comment userInput="Validate CMS Page Stage" stepKey="commentValidateCMSPageStage"/>
-        <seeElementInDOM selector="{{BannerOnFrontend.messageContentText('1', PageBuilderBannerMessageProperty.value)}}" stepKey="seeBannerContentTypePageStage"/>
+        <seeElement selector="{{BannerOnFrontend.messageContentText('1', PageBuilderBannerMessageProperty.value)}}" stepKey="seeTextCMSPageStage"/>
+        <seeElement selector="{{BannerOnFrontend.messageContentText('1', _ENV.MAGENTO_BASE_URL)}}" stepKey="seeVariableCMSPageStage"/>
+        <seeElement selector="{{BannerOnFrontend.messageContentWidget('1', _ENV.MAGENTO_BASE_URL, $$createPreReqCMSPage.identifier$$)}}" stepKey="seeWidgetCMSPageStage"/>
+        <seeElement selector="{{BannerOnFrontend.base('1')}}{{CmsWYSIWYGSection.imageSource(ImageUpload3.fileName)}}" stepKey="seeImageFileNameCMSPageStage"/>
+        <seeElement selector="{{BannerOnFrontend.base('1')}}{{CmsWYSIWYGSection.imageSource(ImageUpload3.extension)}}" stepKey="seeImageExtensionCMSPageStage"/>
+        <seeElement selector="{{BannerOnFrontend.base('1')}}{{CmsWYSIWYGSection.ImageAlt(ImageUpload3.content)}}" stepKey="seeImageAltCMSPageStage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate CMS Page Storefront -->
         <comment userInput="Validate CMS Page Storefront" stepKey="commentValidateCMSPageStorefront"/>
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToStoreFront">
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
-        <seeElementInDOM selector="{{BannerOnFrontend.messageContentText('1', PageBuilderBannerMessageProperty.value)}}" stepKey="seeBannerContentTypeStorefront"/>
+        <seeElement selector="{{BannerOnFrontend.messageContentText('1', PageBuilderBannerMessageProperty.value)}}" stepKey="seeTextCMSPageStorefront"/>
+        <seeElement selector="{{BannerOnFrontend.messageContentText('1', _ENV.MAGENTO_BASE_URL)}}" stepKey="seeVariableCMSPageStorefront"/>
+        <seeElement selector="{{BannerOnFrontend.messageContentWidget('1', _ENV.MAGENTO_BASE_URL, $$createPreReqCMSPage.identifier$$)}}" stepKey="seeWidgetCMSPageStorefront"/>
+        <seeElement selector="{{BannerOnFrontend.base('1')}}{{CmsWYSIWYGSection.imageSource(ImageUpload3.fileName)}}" stepKey="seeImageFileNameCMSPageStorefront"/>
+        <seeElement selector="{{BannerOnFrontend.base('1')}}{{CmsWYSIWYGSection.imageSource(ImageUpload3.extension)}}" stepKey="seeImageExtensionCMSPageStorefront"/>
+        <seeElement selector="{{BannerOnFrontend.base('1')}}{{CmsWYSIWYGSection.ImageAlt(ImageUpload3.content)}}" stepKey="seeImageAltCMSPageStorefront"/>
+        <!-- Click Page Link Widget -->
+        <comment userInput="Click Page Link Widget" stepKey="clickClickPageLinkWidget"/>
+        <click selector="{{BannerOnFrontend.messageContentWidget('1', _ENV.MAGENTO_BASE_URL, $$createPreReqCMSPage.identifier$$)}}" stepKey="clickWidgetCMSPageStorefront"/>
+        <wait time="3" stepKey="waitArbitraryTimeForPotentialNavigationToOccurStorefront"/>
+        <seeCurrentUrlEquals url="{{_ENV.MAGENTO_BASE_URL}}$$createPreReqCMSPage.identifier$$" stepKey="seeThatUrlIsChangedToPageLinkWidgetUrlStorefront"/>
     </test>
-    <test name="BlockRenderInlineEditedBannerThroughBlockContentTypeTinyMCE4WysiwygDisabledByDefault" extends="BlockRenderInlineEditedBannerThroughBlockContentTypeTinyMCE4WysiwygEnabledByDefault">
+    <test name="BlockRenderBannerThroughBlockContentTypeTinyMCE4WysiwygDisabledByDefault" extends="BlockRenderBannerThroughBlockContentTypeTinyMCE4WysiwygEnabledByDefault">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Block Content"/>
-            <title value="Render Inline Edited Banner Through Block Content Type With TinyMCE4 Wysiwyg disabled By Default"/>
-            <description value="Verify that users are able to successfully render and use the inline edited Banner content type through the Block content type with TinyMCE4 and Wysiwyg disabled by default."/>
+            <title value="Render Banner Through Block Content Type With TinyMCE4 and Wysiwyg Disabled By Default"/>
+            <description value="Verify that users are able to successfully render and use the Banner content type through the Block content type with TinyMCE4 and Wysiwyg Disabled By Default."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MC-15193"/>
             <useCaseId value="MC-13769"/>
@@ -3388,24 +3448,18 @@
             <group value="pagebuilder-bannerPoster"/>
         </annotations>
         <before>
-            <magentoCLI command="config:set cms/wysiwyg/enabled disabled" stepKey="configWYSIWYG"/>
+            <magentoCLI command="config:set cms/wysiwyg/enabled hidden" stepKey="configWYSIWYG"/>
         </before>
-        <click selector="{{BannerOnBackend.textArea('1')}}" stepKey="focusOnEditorArea"/>
-        <fillField selector="{{BannerOnBackend.textArea('1')}}" userInput="{{PageBuilderBannerMessageProperty.value}}" stepKey="fillBanner"/>
-        <executeJS function="return document.evaluate(&quot;{{BannerOnBackend.textArea('1')}}&quot;, document.body).iterateNext().value" stepKey="seeBannerContentTypeBlockStage"/>
-        <assertContains stepKey="assertBannerValue" after="seeBannerContentTypeBlockStage">
-            <expectedResult type="string">{{PageBuilderBannerMessageProperty.value}}</expectedResult>
-            <actualResult type="variable">seeBannerContentTypeBlockStage</actualResult>
-        </assertContains>
-        <seeElementInDOM selector="{{BannerOnFrontend.messageContentTextArea('1', PageBuilderBannerMessageProperty.value)}}" stepKey="seeBannerContentTypePageStage"/>
-        <seeElementInDOM selector="{{BannerOnFrontend.messageContentTextArea('1', PageBuilderBannerMessageProperty.value)}}" stepKey="seeBannerContentTypeStorefront"/>
+        <after>
+            <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG" before="deleteCMSBlock"/>
+        </after>
     </test>
-    <test name="BlockRenderFormEditedBannerThroughBlockContentTypeTinyMCE4WysiwygEnabledByDefault" extends="BlockRenderInlineEditedBannerThroughBlockContentTypeTinyMCE4WysiwygEnabledByDefault">
+    <test name="BlockRenderBannerThroughBlockContentTypeTinyMCE4WysiwygDisabledCompletely">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Block Content"/>
-            <title value="Render Form Edited Banner Through Block Content Type With TinyMCE4 Wysiwyg Enabled By Default"/>
-            <description value="Verify that users are able to successfully render and use the form edited Banner content type through the Block content type with TinyMCE4 and Wysiwyg enabled by default."/>
+            <title value="Render Banner Through Block Content Type With TinyMCE4 and Wysiwyg Disabled Completely"/>
+            <description value="Verify that users are able to successfully render and use the Banner content type through the Block content type with TinyMCE4 and Wysiwyg Disabled Completely."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MC-15194"/>
             <useCaseId value="MC-13769"/>
@@ -3415,163 +3469,102 @@
             <group value="pagebuilder-banner"/>
             <group value="pagebuilder-bannerPoster"/>
         </annotations>
-        <actionGroup ref="clickOutsideTextInlineEditing" stepKey="closeLiveEdit" after="focusOnEditorArea"/>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage" after="closeLiveEdit">
-            <argument name="contentType" value="PageBuilderBannerContentType"/>
-        </actionGroup>
-        <actionGroup ref="addTextToTinyMCE" stepKey="fillBanner">
-            <argument name="property" value="PageBuilderBannerMessageProperty"/>
-            <argument name="section" value="BannerOnConfigurationPanel"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings" after="fillBanner"/>
-    </test>
-    <test name="BlockRenderFormEditedBannerThroughBlockContentTypeTinyMCE4WysiwygDisabledByDefault" extends="BlockRenderInlineEditedBannerThroughBlockContentTypeTinyMCE4WysiwygEnabledByDefault">
-        <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Block Content"/>
-            <title value="Render Form Edited Banner Through Block Content Type With TinyMCE4 Wysiwyg Disabled By Default"/>
-            <description value="Verify that users are able to successfully render and use the form edited Banner content type through the Block content type with TinyMCE4 and Wysiwyg disabled by default."/>
-            <severity value="CRITICAL"/>
-            <testCaseId value="MC-15195"/>
-            <useCaseId value="MC-13769"/>
-            <group value="pagebuilder"/>
-            <group value="pagebuilder-block"/>
-            <group value="pagebuilder-block-content"/>
-            <group value="pagebuilder-banner"/>
-            <group value="pagebuilder-bannerPoster"/>
-        </annotations>
-        <actionGroup ref="clickOutsideTextInlineEditing" stepKey="closeLiveEdit" after="focusOnEditorArea"/>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage" after="closeLiveEdit">
-            <argument name="contentType" value="PageBuilderBannerContentType"/>
-        </actionGroup>
-        <actionGroup ref="addTextToTinyMCE" stepKey="fillBanner">
-            <argument name="property" value="PageBuilderBannerMessageProperty"/>
-            <argument name="section" value="BannerOnConfigurationPanel"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings" after="fillBanner"/>
-    </test>
-    <test name="BlockRenderInlineEditedBannerThroughBlockContentTypeTinyMCE3WysiwygEnabledByDefault" extends="BlockRenderInlineEditedBannerThroughBlockContentTypeTinyMCE4WysiwygEnabledByDefault">
-        <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Block Content"/>
-            <title value="Render Inline Edited Banner Through Block Content Type With TinyMCE3 Wysiwyg Enabled By Default"/>
-            <description value="Verify that users are able to successfully render and use the inline edited Banner content type through the Block content type with TinyMCE3 and Wysiwyg enabled by default."/>
-            <severity value="CRITICAL"/>
-            <testCaseId value="MC-15196"/>
-            <useCaseId value="MC-13769"/>
-            <group value="pagebuilder"/>
-            <group value="pagebuilder-block"/>
-            <group value="pagebuilder-block-content"/>
-            <group value="pagebuilder-banner"/>
-            <group value="pagebuilder-bannerPoster"/>
-        </annotations>
-        <before>
-            <magentoCLI command="config:set cms/wysiwyg/editor Magento_Tinymce3/tinymce3Adapter" stepKey="configTinyMCE"/>
-        </before>
-        <click selector="{{BannerOnBackend.textArea('1')}}" stepKey="focusOnEditorArea"/>
-        <fillField selector="{{BannerOnBackend.textArea('1')}}" userInput="{{PageBuilderBannerMessageProperty.value}}" stepKey="fillBanner"/>
-        <executeJS function="return document.evaluate(&quot;{{BannerOnBackend.textArea('1')}}&quot;, document.body).iterateNext().value" stepKey="seeBannerContentTypeBlockStage"/>
-        <assertContains stepKey="assertBannerValue" after="seeBannerContentTypeBlockStage">
-            <expectedResult type="string">{{PageBuilderBannerMessageProperty.value}}</expectedResult>
-            <actualResult type="variable">seeBannerContentTypeBlockStage</actualResult>
-        </assertContains>
-        <seeElementInDOM selector="{{BannerOnFrontend.messageContentTextArea('1', PageBuilderBannerMessageProperty.value)}}" stepKey="seeBannerContentTypePageStage"/>
-        <seeElementInDOM selector="{{BannerOnFrontend.messageContentTextArea('1', PageBuilderBannerMessageProperty.value)}}" stepKey="seeBannerContentTypeStorefront"/>
-    </test>
-    <test name="BlockRenderInlineEditedBannerThroughBlockContentTypeTinyMCE3WysiwygDisabledByDefault" extends="BlockRenderInlineEditedBannerThroughBlockContentTypeTinyMCE4WysiwygEnabledByDefault">
-        <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Block Content"/>
-            <title value="Render Inline Edited Banner Through Block Content Type With TinyMCE3 Wysiwyg Disabled By Default"/>
-            <description value="Verify that users are able to successfully render and use the inline edited Banner content type through the Block content type with TinyMCE3 and Wysiwyg disabled by default."/>
-            <severity value="CRITICAL"/>
-            <testCaseId value="MC-15197"/>
-            <useCaseId value="MC-13769"/>
-            <group value="pagebuilder"/>
-            <group value="pagebuilder-block"/>
-            <group value="pagebuilder-block-content"/>
-            <group value="pagebuilder-banner"/>
-            <group value="pagebuilder-bannerPoster"/>
-        </annotations>
         <before>
             <magentoCLI command="config:set cms/wysiwyg/enabled disabled" stepKey="configWYSIWYG"/>
-            <magentoCLI command="config:set cms/wysiwyg/editor Magento_Tinymce3/tinymce3Adapter" stepKey="configTinyMCE"/>
+            <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="configTinyMCE"/>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <createData entity="_emptyCmsBlock" stepKey="createCMSBlock"/>
+            <createData entity="_defaultCmsPage" stepKey="createPreReqCMSPage"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage1">
+                <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
+            </actionGroup>
         </before>
-        <click selector="{{BannerOnBackend.textArea('1')}}" stepKey="focusOnEditorArea"/>
-        <fillField selector="{{BannerOnBackend.textArea('1')}}" userInput="{{PageBuilderBannerMessageProperty.value}}" stepKey="fillBanner"/>
-        <executeJS function="return document.evaluate(&quot;{{BannerOnBackend.textArea('1')}}&quot;, document.body).iterateNext().value" stepKey="seeBannerContentTypeBlockStage"/>
-        <assertContains stepKey="assertBannerValue" after="seeBannerContentTypeBlockStage">
-            <expectedResult type="string">{{PageBuilderBannerMessageProperty.value}}</expectedResult>
-            <actualResult type="variable">seeBannerContentTypeBlockStage</actualResult>
-        </assertContains>
-        <seeElementInDOM selector="{{BannerOnFrontend.messageContentTextArea('1', PageBuilderBannerMessageProperty.value)}}" stepKey="seeBannerContentTypePageStage"/>
-        <seeElementInDOM selector="{{BannerOnFrontend.messageContentTextArea('1', PageBuilderBannerMessageProperty.value)}}" stepKey="seeBannerContentTypeStorefront"/>
-    </test>
-    <test name="BlockRenderFormEditedBannerThroughBlockContentTypeTinyMCE3WysiwygEnabledByDefault" extends="BlockRenderInlineEditedBannerThroughBlockContentTypeTinyMCE4WysiwygEnabledByDefault">
-        <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Block Content"/>
-            <title value="Render Form Edited Banner Through Block Content Type With TinyMCE3 Wysiwyg Enabled By Default"/>
-            <description value="Verify that users are able to successfully render and use the form edited Banner content type through the Block content type with TinyMCE3 and Wysiwyg enabled by default."/>
-            <severity value="CRITICAL"/>
-            <testCaseId value="MC-15198"/>
-            <useCaseId value="MC-13769"/>
-            <group value="pagebuilder"/>
-            <group value="pagebuilder-block"/>
-            <group value="pagebuilder-block-content"/>
-            <group value="pagebuilder-banner"/>
-            <group value="pagebuilder-bannerPoster"/>
-        </annotations>
-        <before>
-            <magentoCLI command="config:set cms/wysiwyg/editor Magento_Tinymce3/tinymce3Adapter" stepKey="configTinyMCE"/>
-        </before>
-        <actionGroup ref="clickOutsideTextInlineEditing" stepKey="focusOnEditorArea"/>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage" after="focusOnEditorArea">
+        <after>
+            <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG"/>
+            <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock"/>
+            <deleteData createDataKey="createPreReqCMSPage" stepKey="deleteCMSPageB"/>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Add Banner -->
+        <comment userInput="Add Banner" stepKey="commentAddBanner"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="addTextToTinyMCE" stepKey="fillBanner">
-            <argument name="property" value="PageBuilderBannerMessageProperty"/>
-            <argument name="section" value="BannerOnConfigurationPanel"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings" after="fillBanner"/>
-        <executeJS function="return document.evaluate(&quot;{{BannerOnBackend.textArea('1')}}&quot;, document.body).iterateNext().value" stepKey="seeBannerContentTypeBlockStage"/>
-        <assertContains stepKey="assertBannerValue" after="seeBannerContentTypeBlockStage">
-            <expectedResult type="string">{{PageBuilderBannerMessageProperty.value}}</expectedResult>
-            <actualResult type="variable">seeBannerContentTypeBlockStage</actualResult>
-        </assertContains>
-    </test>
-    <test name="BlockRenderFormEditedBannerThroughBlockContentTypeTinyMCE3WysiwygDisabledByDefault" extends="BlockRenderInlineEditedBannerThroughBlockContentTypeTinyMCE4WysiwygEnabledByDefault">
-        <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Block Content"/>
-            <title value="Render Form Edited Banner Through Block Content Type With TinyMCE3 Wysiwyg Disabled By Default"/>
-            <description value="Verify that users are able to successfully render and use the form edited Banner content type through the Block content type with TinyMCE3 and Wysiwyg disabled by default."/>
-            <severity value="CRITICAL"/>
-            <testCaseId value="MC-15199"/>
-            <useCaseId value="MC-13769"/>
-            <group value="pagebuilder"/>
-            <group value="pagebuilder-block"/>
-            <group value="pagebuilder-block-content"/>
-            <group value="pagebuilder-banner"/>
-            <group value="pagebuilder-bannerPoster"/>
-        </annotations>
-        <before>
-            <magentoCLI command="config:set cms/wysiwyg/enabled disabled" stepKey="configWYSIWYG"/>
-            <magentoCLI command="config:set cms/wysiwyg/editor Magento_Tinymce3/tinymce3Adapter" stepKey="configTinyMCE"/>
-        </before>
-        <actionGroup ref="clickOutsideTextInlineEditing" stepKey="focusOnEditorArea"/>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage" after="focusOnEditorArea">
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBannerIntoStage">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <fillField selector="{{BannerOnConfigurationPanel.textArea}}" userInput="{{PageBuilderBannerMessageProperty.value}}" stepKey="fillBanner"/>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings" after="fillBanner"/>
-        <executeJS function="return document.evaluate(&quot;{{BannerOnBackend.textArea('1')}}&quot;, document.body).iterateNext().value" stepKey="seeBannerContentTypeBlockStage"/>
-        <assertContains stepKey="assertBannerValue" after="seeBannerContentTypeBlockStage">
-            <expectedResult type="string">{{PageBuilderBannerMessageProperty.value}}</expectedResult>
-            <actualResult type="variable">seeBannerContentTypeBlockStage</actualResult>
-        </assertContains>
-        <seeElementInDOM selector="{{BannerOnFrontend.messageContentTextArea('1', PageBuilderBannerMessageProperty.value)}}" stepKey="seeBannerContentTypePageStage"/>
-        <seeElementInDOM selector="{{BannerOnFrontend.messageContentTextArea('1', PageBuilderBannerMessageProperty.value)}}" stepKey="seeBannerContentTypeStorefront"/>
+        <!-- Inline Edit: Add Text -->
+        <comment userInput="Inline Edit: Add Text" stepKey="commentInlineEditAddText"/>
+        <actionGroup ref="focusOnInlineTextAreaEditor" stepKey="focusOnInlineTextAreaEditor">
+            <argument name="section" value="BannerOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="addTextToTinyMCEInlineWYSIWYGDisabled" stepKey="addTextToTinyMCEInline">
+            <argument name="section" value="BannerOnBackend"/>
+            <argument name="text" value="{{PageBuilderBannerMessageProperty.value}}"/>
+        </actionGroup>
+        <!-- Inline Edit: Add Variable -->
+        <actionGroup ref="focusOnInlineTextAreaEditor" stepKey="focusOnInlineTextAreaEditor2">
+            <argument name="section" value="BannerOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="addTextToTinyMCEInlineWYSIWYGDisabled" stepKey="addVariableToTinyMCE">
+            <argument name="section" value="BannerOnBackend"/>
+            <argument name="text" value="{{PageBuilderTextArea_VariableBaseURL.editPanelValue}}"/>
+        </actionGroup>
+        <!-- Inline Edit: Add Widget -->
+        <comment userInput="Inline Edit: Add Widget" stepKey="commentInlineEditAddWidget"/>
+        <actionGroup ref="focusOnInlineTextAreaEditor" stepKey="focusOnInlineTextAreaEditor3">
+            <argument name="section" value="BannerOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="addTextToTinyMCEInlineWYSIWYGDisabled" stepKey="addPageLinkWidgetToTinyMCE">
+            <argument name="section" value="BannerOnBackend"/>
+            <argument name="text" value="{{PageBuilderTextArea_WidgetCMSHomepageLink.editPanelValue}}"/>
+        </actionGroup>
+        <actionGroup ref="saveCMSBlock" stepKey="saveCMSBlock"/>
+        <!-- Validate CMS Block Stage -->
+        <comment userInput="Validate CMS Block Stage" stepKey="commentValidateCMSBlockStage"/>
+        <actionGroup ref="assertTextareaContainsValue" stepKey="assertTextareaContainsValueCMSBlockStage">
+            <argument name="selector" value="{{BannerOnBackend.textArea('1')}}"/>
+            <argument name="value" value="{{PageBuilderBannerMessageProperty.value}}{{PageBuilderTextArea_VariableBaseURL.editPanelValue}}{{PageBuilderTextArea_WidgetCMSHomepageLink.editPanelValue}}"/>
+        </actionGroup>
+        <!-- Add Block to CMS Page -->
+        <comment userInput="Add Block to CMS Page" stepKey="commentAddBlockToCMSPage"/>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPanelAddContentMenuSection">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDropBlock">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
+            <argument name="block" value="$$createCMSBlock$$"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsBlock"/>
+        <!-- Validate CMS Page Stage -->
+        <comment userInput="Validate CMS Page Stage" stepKey="commentValidateCMSPageStage"/>
+        <seeElement selector="{{BannerOnFrontend.messageContentTextArea('1', PageBuilderBannerMessageProperty.value)}}" stepKey="seeTextCMSPageStage"/>
+        <seeElement selector="{{BannerOnFrontend.messageContentTextArea('1', _ENV.MAGENTO_BASE_URL)}}" stepKey="seeVariableCMSPageStage"/>
+        <seeElement selector="{{BannerOnFrontend.messageContentWidget('1', _ENV.MAGENTO_BASE_URL, PageBuilderTextArea_WidgetCMSHomepageLink.identifier)}}" stepKey="seeWidgetCMSPageStage"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate CMS Page Storefront -->
+        <comment userInput="Validate CMS Page Storefront" stepKey="commentValidateCMSPageStorefront"/>
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <seeElement selector="{{BannerOnFrontend.messageContentTextArea('1', PageBuilderBannerMessageProperty.value)}}" stepKey="seeTextCMSPageStorefront"/>
+        <seeElement selector="{{BannerOnFrontend.messageContentTextArea('1', _ENV.MAGENTO_BASE_URL)}}" stepKey="seeVariableCMSPageStorefront"/>
+        <seeElement selector="{{BannerOnFrontend.messageContentWidget('1', _ENV.MAGENTO_BASE_URL, PageBuilderTextArea_WidgetCMSHomepageLink.identifier)}}" stepKey="seeWidgetCMSPageStorefront"/>
+        <!-- Click Page Link Widget -->
+        <comment userInput="Click Page Link Widget" stepKey="clickClickPageLinkWidget"/>
+        <click selector="{{BannerOnFrontend.messageContentWidget('1', _ENV.MAGENTO_BASE_URL, PageBuilderTextArea_WidgetCMSHomepageLink.identifier)}}" stepKey="clickWidgetCMSPageStorefront"/>
+        <wait time="3" stepKey="waitArbitraryTimeForPotentialNavigationToOccurStorefront"/>
+        <seeCurrentUrlEquals url="{{_ENV.MAGENTO_BASE_URL}}{{PageBuilderTextArea_WidgetCMSHomepageLink.identifier}}" stepKey="seeThatUrlIsChangedToPageLinkWidgetUrlStorefront"/>
     </test>
     <test name="BlockRenderSliderThroughBlockContentType">
         <annotations>

@@ -113,30 +113,6 @@
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
         <waitForElementVisible selector="{{section.imageSourceByIndex(index, property.fileName)}}" stepKey="waitForMainImageSource1"/>
     </actionGroup>
-    <actionGroup name="inlineEditWYSIWYGFromStage">
-        <arguments>
-            <argument name="contentType"/>
-            <argument name="content" type="string"/>
-            <argument name="index" defaultValue="1" type="string"/>
-        </arguments>
-        <click selector="{{PageBuilderStage.inlineWYSIWYGEditor(contentType.role, index)}}" stepKey="focusOnEditorArea"/>
-        <waitForElementVisible selector="{{PageBuilderStage.inlineWYSIWYGEditorPanel(contentType.role, index)}}" stepKey="waitForEditorPanel"/>
-        <pressKey selector="{{PageBuilderStage.inlineWYSIWYGEditor(contentType.role, index)}}" userInput="{{content}}" stepKey="enterContentIntoEditor"/>
-        <waitForPageLoad stepKey="waitForPageLoad"/>
-        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="loseFocusFromEditor"/>
-    </actionGroup>
-    <actionGroup name="inlineEditTextAreaFromStage">
-        <arguments>
-            <argument name="contentType"/>
-            <argument name="content" type="string"/>
-            <argument name="index" defaultValue="1" type="string"/>
-        </arguments>
-        <click selector="{{PageBuilderStage.inlineTextAreaEditor(contentType.role, index)}}" stepKey="focusOnEditorArea"/>
-        <waitForPageLoad stepKey="waitForPageLoad"/>
-        <fillField selector="{{PageBuilderStage.inlineTextAreaEditor(contentType.role, index)}}" userInput="{{content}}" stepKey="enterContentIntoEditor"/>
-        <waitForPageLoad stepKey="waitForPageLoad1"/>
-        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="loseFocusFromEditor"/>
-    </actionGroup>
     <actionGroup name="verifyUploadImageButtons">
         <arguments>
             <argument name="contentType"/>
@@ -150,5 +126,26 @@
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <seeElement selector="{{section.onHoverUploadImageButton(contentType.role, index)}}" stepKey="seeUploadImageButton" />
         <seeElement selector="{{section.onHoverSelectFromGalleryButton(contentType.role, index)}}" stepKey="seeSelectFromGalleryButton"/>
+    </actionGroup>
+    <actionGroup name="focusOnInlineTinyMCEEditor">
+        <arguments>
+            <argument name="section" defaultValue="TextOnStage"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <comment userInput="focusOnInlineTinyMCEEditor" stepKey="comment"/>
+        <waitForElementVisible selector="{{section.tinymce(index)}}" stepKey="waitForEditor"/>
+        <click selector="{{section.tinymce(index)}}" stepKey="clickEditor"/>
+        <waitForPageLoad stepKey="waitForEditorToBeFocused"/>
+        <waitForElementVisible selector="{{section.tinymceInFocus(index)}}" stepKey="waitForEditorFocused"/>
+    </actionGroup>
+    <actionGroup name="focusOnInlineTextAreaEditor">
+        <arguments>
+            <argument name="section" defaultValue="TextOnStage"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <comment userInput="focusOnInlineTextAreaEditor" stepKey="comment"/>
+        <waitForElementVisible selector="{{section.textArea(index)}}" stepKey="waitForEditor"/>
+        <click selector="{{section.textArea(index)}}" stepKey="clickEditor"/>
+        <waitForPageLoad stepKey="waitForEditorToBeFocused"/>
     </actionGroup>
 </actionGroups>
