@@ -1,6 +1,6 @@
 # Install Page Builder
 
-How you install the pre-release version of Page Builder depends on whether or not you are a member of the Early Adopters Program (EAP):
+How you install the pre-release version of Page Builder depends on whether you are a member of the Early Adopters Program (EAP):
 
 - **All Partners** (not EAP members) must use the [GitHub installation](#githubInstructions).
 - **EAP Members** can install using the [Composer installation](#composerInstallation).
@@ -14,44 +14,49 @@ Magento 2.3+ Commerce -- Use the installation instructions from the [DevDocs ins
 Partners who are not members of the Early Adopters Program (EAP) must install the pre-release version of Page Builder by cloning the Page Builder GitHub repository (https://github.com/magento/magento2-page-builder) into a development instance of Magento. 
 Before installing Page Builder, make sure you have:
 
-* A local development installation of Magento 2.3.0 alpha
+* A local development installation of Magento Commerce 2.3.0
 * Access to the Page Builder repository
-* [Yarn package manager](https://yarnpkg.com/en/)
+* [npm package manager](https://www.npmjs.com/get-npm)
 
-1. Navigate to the root directory of your Magento application.
+1. Clone the Page Builder repos into the root directory of your Magento Commerce installation:
 
-2. Clone the Page Builder repository as a subdirectory using the following command:
-    ``` bash
-    git clone git@github.com:magento/magento2-page-builder.git pagebuilder
+    ```bash
+    git clone https://github.com/magento/magento2-page-builder
+    git clone https://github.com/magento/magento2-page-builder-ee
+    ```
+
+2. Use the `dev/tools/build-ee.php` script to symlink the `magento2-page-builder` and `magento2-page-builder-ee` repos into your Magento Commerce installation:
+
+    ```bash
+    php dev/tools/build-ee.php --command=link --ee-source="magento2-page-builder" --ce-source="."
+    php dev/tools/build-ee.php --command=link --ee-source="magento2-page-builder-ee" --ce-source="."
     ```
     
-3. Return to the root directory of your Magento application and navigate to `app/code/Magento`
-
-4. In the Magento modules directory, link the Page Builder module code to the application code using the following command:
-    ``` bash
-    ln -s ../../../pagebuilder/app/code/Magento/PageBuilder
-    ```
+    The results should look like this:
     
-5. Return to the root directory of your Magento application and install the Page Builder module using the following command:
-    ``` bash
+    ![Symlinks to Page Builder](../images/symlinked-pagebuilder.png)
+
+3. Enable the Page Builder module using the following command:
+
+    ```bash
     bin/magento setup:upgrade
     ```
 
 ### Updating GitHub installation
 
-When a new version of Page Builder is available, delete your previous Page Builder clone/subdirectory and clone the latest again.
+When a new version of Page Builder is available, simply pull down the latest versions from `magento/magento2-page-builder` and `magento/magento2-page-builder-ee`.
 
 ### Installing Node.js dependencies
 
 If you plan to contribute to Page Builder, you need to install Node.js dependencies to compile TypeScript.
 
 Navigate to the `pagebuilder` directory and install Page Builder dependencies using the following command:
-``` sh
-cd pagebuilder && yarn install
+
+```bash
+cd pagebuilder && npm install
 ```
 
-Then you can run `npx gulp` to watch changes to TypeScript files and compile.
-To check for TypeScript errors, you can run `npx tslint --fix -p tsconfig.json`.
+After installing the npm packages, you can run `npm run start`. This command watches for changes to your TypeScript files, compiles, and checks for errors.
 
 ## **EAP Participants Only**: Composer Installation {#composerInstallation}
 
@@ -59,20 +64,23 @@ To use the Composer installation described below, you must be an active member i
 If you are experiencing problems _as an EAP member_, please contact us at `pagebuilderEAP@adobe.com`.
 
 {: .bs-callout .bs-callout-info }
-If you have had a previous version of Magento 2.3.0 or Page Builder installed, clear your composer cache (`composer clearcache`) before you install the latest packages.
+If you already have Magento 2.3.0 or Page Builder installed, clear your composer cache (`composer clearcache`) before you install the latest packages.
 
 1. Ensure your composer has `minimum-stability` set to `beta`:
-    ```
+
+    ```bash
     composer config minimum-stability beta
     ```
 
 2. Navigate to the root of the project and require the `magento/module-page-builder-commerce` package:
-    ```
+
+    ```bash
     composer require magento/page-builder-commerce:^1.0.0
     ```
     
 3. Enable the module within Magento:
-    ``` sh
+
+    ``` bash
     bin/magento setup:upgrade
     ```
     

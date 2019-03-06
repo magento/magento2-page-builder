@@ -1,6 +1,6 @@
 # Page Builder pre-release access
 
-Pre-release access to Page Builder is opened to all Magento Partners with *no support* from Magento team.
+Pre-release access to Page Builder is opened to all Magento Partners with *no support* from Magento.
 Use this access to:
 
 - Explore extension points to build custom modules and integrations for 3rd party services, such as Facebook and Instagram.
