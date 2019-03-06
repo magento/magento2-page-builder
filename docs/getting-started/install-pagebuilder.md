@@ -7,18 +7,18 @@ How you install the pre-release version of Page Builder depends on whether you a
 
 ## Prerequisite for both installations
 
-Magento 2.3+ Commerce -- Use the installation instructions from the [DevDocs installation guide](https://devdocs.magento.com/guides/v2.3/install-gde/bk-install-guide.html). 
+Magento Commerce 2.3+ -- Use the installation instructions from the [DevDocs installation guide](https://devdocs.magento.com/guides/v2.3/install-gde/bk-install-guide.html). 
 
 ## **All Partners**: GitHub Installation {#githubInstructions}
 
 Partners who are not members of the Early Adopters Program (EAP) must install the pre-release version of Page Builder by cloning the Page Builder GitHub repository (https://github.com/magento/magento2-page-builder) into a development instance of Magento. 
 Before installing Page Builder, make sure you have:
 
-* A local development installation of Magento Commerce 2.3.0
+* A local development installation of Magento Commerce 2.3+
 * Access to the Page Builder repository
 * [npm package manager](https://www.npmjs.com/get-npm)
 
-1. Clone the Page Builder repos into the root directory of your Magento Commerce installation:
+1. Clone the Page Builder repos into the root directory of your Magento Commerce 2.3+ installation:
 
     ```bash
     git clone https://github.com/magento/magento2-page-builder
