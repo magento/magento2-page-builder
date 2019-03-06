@@ -1,7 +1,5 @@
 # Changelog
 
-Here are the Page Builder beta release notes and the higher priority known issues. We are actively working on many of these items and will update this document with each beta release.
-
 ## Beta 8 - February 19, 2019
 
 - Resolved: Analytics module sequence issue.
