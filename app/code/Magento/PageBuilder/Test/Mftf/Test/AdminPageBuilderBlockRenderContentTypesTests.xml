@@ -2628,12 +2628,12 @@
             <argument name="count" value="2"/>
         </actionGroup>
     </test>
-    <test name="BlockRenderTextThroughBlockContentType">
+    <test name="BlockRenderTextThroughBlockContentTypeTinyMCE4WysiwygEnabledByDefault">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Block Content"/>
-            <title value="Render Text Through Block Content Type"/>
-            <description value="Verify that users are able to successfully render and use the Text content type through the Block content type."/>
+            <title value="Render Inline Edited Text Through Block Content Type With TinyMCE4 and Wysiwyg Enabled By Default"/>
+            <description value="Verify that users are able to successfully render and use the Text content type through the Block content type with TinyMCE4 and Wysiwyg Enabled By Default."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MC-15159"/>
             <useCaseId value="MC-13769"/>
@@ -2753,7 +2753,7 @@
         <wait time="3" stepKey="waitArbitraryTimeForPotentialNavigationToOccurStorefront"/>
         <seeCurrentUrlEquals url="{{_ENV.MAGENTO_BASE_URL}}$$createPreReqCMSPage.identifier$$" stepKey="seeThatUrlIsChangedToPageLinkWidgetUrlStorefront"/>
     </test>
-    <test name="BlockRenderTextThroughBlockContentTypeTinyMCE4WysiwygDisabledByDefault" extends="BlockRenderTextThroughBlockContentType">
+    <test name="BlockRenderTextThroughBlockContentTypeTinyMCE4WysiwygDisabledByDefault" extends="BlockRenderTextThroughBlockContentTypeTinyMCE4WysiwygEnabledByDefault">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Block Content"/>
@@ -2894,16 +2894,27 @@
             <group value="pagebuilder-bannerPoster"/>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
             <createData entity="_emptyCmsBlock" stepKey="createCMSBlock"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage1">
                 <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
             </actionGroup>
         </before>
         <after>
+            <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
             <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock"/>
             <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="navigateToDesktopImageFolder">
+                <argument name="FolderName" value="{{PageBuilderBackgroundImage_JPG.path}}"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="deleteBackgroundImage">
+                <argument name="Image" value="PageBuilderBackgroundImage_JPG"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="deleteMobileBackgroundImage">
+                <argument name="Image" value="PageBuilderBackgroundMobileImage_GIF"/>
+            </actionGroup>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <!-- Add Banner -->
@@ -2914,82 +2925,107 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragBannerIntoStage">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
+        <!-- Edit Banner -->
+        <comment userInput="Edit Banner" stepKey="commentEditBanner"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <!-- Fill Out Edit Panel -->
-        <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setAppearance">
             <argument name="property" value="PageBuilderBannerAppearance_Poster"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerMinHeight">
-            <argument name="property" value="PageBuilderBannerMinimumHeightProperty"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="setMinHeight">
+            <argument name="property" value="PageBuilderBannerMinimumHeightDefaultProperty"/>
         </actionGroup>
-        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachImage">
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="setBackgroundColor">
+            <argument name="property" value="PageBuilderBackgroundColor_Plaintext_Green"/>
+        </actionGroup>
+        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachBackgroundImage">
             <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
-        <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachMobileImage">
+        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachBackgroundMobileImage">
             <argument name="property" value="PageBuilderBackgroundMobileImage_GIF"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="selectBackgroundSize">
-            <argument name="property" value="PageBuilderBackgroundSize_Contain"/>
-        </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundPosition">
+        <actionGroup ref="selectSlideOutPanelField" stepKey="setBackgroundPosition">
             <argument name="property" value="PageBuilderBackgroundPosition_Center"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundAttachment">
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setBackgroundSize">
+            <argument name="property" value="PageBuilderBackgroundSize_Auto"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="setBackgroundAttachment">
             <argument name="property" value="PageBuilderBackgroundAttachment_Fixed"/>
         </actionGroup>
-        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="selectBackgroundRepeat">
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="setBackgroundRepeat">
             <argument name="property" value="PageBuilderBackgroundRepeat_Enabled"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="addTextToTinyMCE">
             <argument name="property" value="PageBuilderBannerMessageProperty"/>
             <argument name="section" value="BannerOnConfigurationPanel"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelField" stepKey="enterBackgroundColor">
-            <argument name="property" value="PageBuilderBackgroundColor_Plaintext_Green"/>
-        </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="selectBannerButtonShowOnHover">
-            <argument name="property" value="PageBuilderBannerShowButtonOnHoverProperty"/>
-        </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBannerOverlayShowOnHover">
-            <argument name="property" value="PageBuilderBannerShowContentOverlayOnHoverProperty"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerOverlayColor">
-            <argument name="property" value="PageBuilderBannerOverlayColor_Blue_Opaque"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterBannerLinkUrl">
+        <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="setLink">
             <argument name="property" value="PageBuilderBannerLinkUrlPropertyValidate"/>
             <argument name="selection" value="{{ExternalLink.url}}"/>
             <argument name="newTab" value="PageBuilderBannerNewTabDefaultProperty"/>
         </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="setShowButton">
+            <argument name="property" value="PageBuilderBannerShowButtonOnHoverProperty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="setButtonText">
+            <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="setButtonType">
+            <argument name="property" value="PageBuilderBannerButtonTypeSecondaryProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="setShowOverlay">
+            <argument name="property" value="PageBuilderBannerShowContentOverlayOnHoverProperty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="setOverlayColor">
+            <argument name="property" value="PageBuilderBannerOverlayColor_Blue_Opaque"/>
+        </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor"/>
         <actionGroup ref="saveCMSBlock" stepKey="saveCMSBlock"/>
         <!-- Validate CMS Block Stage -->
         <comment userInput="Validate CMS Block Stage" stepKey="commentValidateCMSBlockStage"/>
-        <seeElement selector="{{BannerOnBackend.posterMinimumHeight('1', PageBuilderBannerMinimumHeightProperty.value)}}" stepKey="seeMinimumHeightStage"/>
-        <actionGroup ref="validateBackgroundAttributesWithNoImage" stepKey="validateBackgroundAttributesStage">
+        <seeElement selector="{{BannerOnBackend.appearance('1', PageBuilderBannerAppearance_Poster.value)}}" stepKey="seeAppearanceCMSBlockStage"/>
+        <actionGroup ref="validateOverlayPositionPoster" stepKey="validateOverlayPositionCMSBlockStage">
+            <argument name="page" value="BannerOnBackend"/>
+        </actionGroup>
+        <seeElement selector="{{BannerOnBackend.posterMinimumHeight('1', PageBuilderBannerMinimumHeightDefaultProperty.value)}}" stepKey="seeMinimumHeightCMSBlockStage"/>
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateHeightCMSBlockStage">
+            <argument name="content" value="{{BannerOnBackend.wrapperCSS}}"/>
+        </actionGroup>
+        <actionGroup ref="validateBackgroundAttributesWithNoImage" stepKey="validateBackgroundAttributesCMSBlockStage">
             <argument name="section" value="BannerOnBackend"/>
             <argument name="backgroundColor" value="PageBuilderBackgroundColor_Plaintext_Green"/>
             <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_Center"/>
-            <argument name="backgroundSize" value="PageBuilderBackgroundSize_Contain"/>
+            <argument name="backgroundSize" value="PageBuilderBackgroundSize_Auto"/>
             <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
             <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Fixed"/>
         </actionGroup>
-        <actionGroup ref="validateBackgroundImage" stepKey="validateImageStage">
+        <actionGroup ref="validateBackgroundImage" stepKey="validateBackgroundImageCMSBlockStage">
             <argument name="section" value="BannerOnBackend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
-        <seeElement selector="{{BannerOnBackend.messageContent('1', PageBuilderBannerMessageProperty.value)}}" stepKey="seeMessageContentStage"/>
-        <seeElement selector="{{BannerOnBackend.appearance('1', PageBuilderBannerAppearance_Poster.value)}}" stepKey="seeAppearanceStage"/>
-        <seeElementInDOM selector="{{BannerOnBackend.button('1')}}" stepKey="seeButtonInDOMStage"/>
-        <dontSeeElement selector="{{BannerOnBackend.button('1')}}" stepKey="dontSeeButtonStage"/>
-        <seeElement selector="{{BannerOnBackend.transparentOverlay('1')}}" stepKey="seeTransparentOverlayStage"/>
-        <moveMouseOver selector="{{BannerOnBackend.appearance('1', PageBuilderBannerAppearance_Poster.value)}}" stepKey="moveMouseOverBannerStage"/>
-        <seeElement selector="{{BannerOnBackend.button('1')}}" stepKey="seeButtonOnHoverStage"/>
-        <seeElement selector="{{BannerOnBackend.overlayBackgroundColor('1', PageBuilderBannerOverlayColor_Blue_Opaque.value)}}" stepKey="seeOverlayOnHoverStage"/>
+        <seeElement selector="{{BannerOnBackend.messageContent('1', PageBuilderBannerMessageProperty.value)}}" stepKey="seeMessageContentCMSBlockStage"/>
+        <seeElementInDOM selector="{{BannerOnBackend.button('1')}}" stepKey="seeButtonInDOMCMSBlockStage"/>
+        <dontSeeElement selector="{{BannerOnBackend.button('1')}}" stepKey="dontSeeButtonCMSBlockStage"/>
+        <seeElement selector="{{BannerOnBackend.transparentOverlay('1')}}" stepKey="seeTransparentOverlayCMSBlockStage"/>
+        <moveMouseOver selector="{{BannerOnBackend.appearance('1', PageBuilderBannerAppearance_Poster.value)}}" stepKey="moveMouseOverBannerCMSBlockStage"/>
+        <seeElement selector="{{BannerOnBackend.button('1')}}" stepKey="seeButtonOnHoverCMSBlockStage"/>
+        <seeElement selector="{{BannerOnBackend.buttonText('1', PageBuilderBannerButtonTextProperty.value)}}" stepKey="seeButtonTextOnHoverCMSBlockStage"/>
+        <seeElement selector="{{BannerOnBackend.buttonType('1', PageBuilderBannerButtonTypeSecondaryProperty.value)}}" stepKey="seeButtonTypeOnHoverCMSBlockStage"/>
+        <seeElement selector="{{BannerOnBackend.overlayBackgroundColor('1', PageBuilderBannerOverlayColor_Blue_Opaque.value)}}" stepKey="seeOverlayOnHoverCMSBlockStage"/>
+        <executeJS function="return {{BannerOnBackend.overlayJS('1')}}.getBoundingClientRect().left" stepKey="overlayLeftPositionCMSBlockStage"/>
+        <executeJS function="return document.evaluate(&quot;{{BannerOnBackend.button('1')}}&quot;, document.body).iterateNext().getBoundingClientRect().left" stepKey="buttonLeftPositionCMSBlockStage"/>
+        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSBlockStage}-{$overlayLeftPositionCMSBlockStage}-{{PageBuilderPaddingProperty40.paddingLeft}}))" stepKey="buttonMinusOverlayMinusPaddingCMSBlockStage"/>
+        <assertLessThanOrEqual stepKey="assertButtonLeftAlignedCMSBlockStage">
+            <expectedResult type="int">5</expectedResult>
+            <actualResult type="variable">buttonMinusOverlayMinusPaddingCMSBlockStage</actualResult>
+        </assertLessThanOrEqual>
+        <executeJS function="return window.getComputedStyle({{BannerOnBackend.wrapperJS('1')}}).textAlign" stepKey="grabDefaultComputedTextAlignCMSBlockStage"/>
+        <assertEquals stepKey="assertDefaultComputedTextAlignCMSBlockStage">
+            <expectedResult type="string">{{PageBuilderAdvancedAlignmentPropertyStart.value}}</expectedResult>
+            <actualResult type="variable">grabDefaultComputedTextAlignCMSBlockStage</actualResult>
+        </assertEquals>
         <!-- Add Block to CMS Page -->
         <comment userInput="Add Block to CMS Page" stepKey="commentAddBlockToCMSPage"/>
         <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
@@ -3010,83 +3046,121 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsBlock"/>
         <!-- Validate CMS Page Stage -->
         <comment userInput="Validate CMS Page Stage" stepKey="commentValidateCMSPageStage"/>
-        <seeElement selector="{{BannerOnFrontend.posterMinimumHeight('1', PageBuilderBannerMinimumHeightProperty.value)}}" stepKey="seeMinimumHeightPageStage"/>
-        <actionGroup ref="validateBackgroundAttributesWithNoImage" stepKey="validateBackgroundAttributesPageStage">
+        <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderBannerAppearance_Poster.value)}}" stepKey="seeAppearanceCMSPageStage"/>
+        <actionGroup ref="validateOverlayPositionPoster" stepKey="validateOverlayPositionCMSPageStage">
+            <argument name="page" value="BannerOnFrontend"/>
+        </actionGroup>
+        <seeElement selector="{{BannerOnFrontend.posterMinimumHeight('1', PageBuilderBannerMinimumHeightDefaultProperty.value)}}" stepKey="seeMinimumHeightCMSPageStage"/>
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateHeightCMSPageStage">
+            <argument name="content" value="{{BannerOnFrontend.wrapperCSS}}"/>
+        </actionGroup>
+        <actionGroup ref="validateBackgroundAttributesWithNoImage" stepKey="validateBackgroundAttributesCMSPageStage">
             <argument name="section" value="BannerOnFrontend"/>
             <argument name="backgroundColor" value="PageBuilderBackgroundColor_Plaintext_Green"/>
             <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_Center"/>
-            <argument name="backgroundSize" value="PageBuilderBackgroundSize_Contain"/>
+            <argument name="backgroundSize" value="PageBuilderBackgroundSize_Auto"/>
             <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
             <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Fixed"/>
         </actionGroup>
-        <actionGroup ref="validateBackgroundImageContainer" stepKey="validateImageOnPageStage">
+        <actionGroup ref="validateBackgroundImageContainer" stepKey="validateBackgroundImageCMSPageStage">
             <argument name="section" value="BannerOnFrontend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
-        <seeElement selector="{{BannerOnFrontend.messageContent('1', PageBuilderBannerMessageProperty.value)}}" stepKey="seeMessageContentPageStage"/>
-        <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderBannerAppearance_Poster.value)}}" stepKey="seeAppearancePageStage"/>
-        <seeElementInDOM selector="{{BannerOnFrontend.button('1')}}" stepKey="seeButtonInDOMPageStage"/>
-        <dontSeeElement selector="{{BannerOnFrontend.button('1')}}" stepKey="dontSeeButtonPageStage"/>
-        <seeElement selector="{{BannerOnFrontend.transparentOverlay('1')}}" stepKey="seeTransparentOverlayPageStage"/>
+        <seeElement selector="{{BannerOnFrontend.messageContent('1', PageBuilderBannerMessageProperty.value)}}" stepKey="seeMessageContentCMSPageStage"/>
+        <seeElementInDOM selector="{{BannerOnFrontend.button('1')}}" stepKey="seeButtonInDOMCMSPageStage"/>
+        <dontSeeElement selector="{{BannerOnFrontend.button('1')}}" stepKey="dontSeeButtonCMSPageStage"/>
+        <seeElement selector="{{BannerOnFrontend.transparentOverlay('1')}}" stepKey="seeTransparentOverlayCMSPageStage"/>
+        <executeJS function="return {{BannerOnFrontend.overlayJS('1')}}.getBoundingClientRect().left" stepKey="overlayLeftPositionCMSPageStage"/>
+        <executeJS function="return document.evaluate(&quot;{{BannerOnFrontend.button('1')}}&quot;, document.body).iterateNext().getBoundingClientRect().left" stepKey="buttonLeftPositionCMSPageStage"/>
+        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSPageStage}-{$overlayLeftPositionCMSPageStage}-{{PageBuilderPaddingProperty40.paddingLeft}}))" stepKey="buttonMinusOverlayMinusPaddingCMSPageStage"/>
+        <assertLessThanOrEqual stepKey="assertButtonLeftAlignedCMSPageStage">
+            <expectedResult type="int">5</expectedResult>
+            <actualResult type="variable">buttonMinusOverlayMinusPaddingCMSPageStage</actualResult>
+        </assertLessThanOrEqual>
+        <executeJS function="return window.getComputedStyle({{BannerOnFrontend.wrapperJS('1')}}).textAlign" stepKey="grabDefaultComputedTextAlignCMSPageStage"/>
+        <assertEquals stepKey="assertDefaultComputedTextAlignCMSPageStage">
+            <expectedResult type="string">{{PageBuilderAdvancedAlignmentPropertyStart.value}}</expectedResult>
+            <actualResult type="variable">grabDefaultComputedTextAlignCMSPageStage</actualResult>
+        </assertEquals>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate CMS Page Storefront -->
         <comment userInput="Validate CMS Page Storefront" stepKey="commentValidateCMSPageStorefront"/>
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToStoreFront">
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStoreFront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
-        <seeElement selector="{{BannerOnFrontend.posterMinimumHeight('1', PageBuilderBannerMinimumHeightProperty.value)}}" stepKey="seeMinimumHeightStorefront"/>
-        <actionGroup ref="validateBackgroundAttributesWithNoImage" stepKey="validateBackgroundAttributesStorefront">
+        <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderBannerAppearance_Poster.value)}}" stepKey="seeAppearanceCMSPageStorefront"/>
+        <actionGroup ref="validateOverlayPositionPoster" stepKey="validateOverlayPositionCMSPageStorefront">
+            <argument name="page" value="BannerOnFrontend"/>
+        </actionGroup>
+        <seeElement selector="{{BannerOnFrontend.posterMinimumHeight('1', PageBuilderBannerMinimumHeightDefaultProperty.value)}}" stepKey="seeMinimumHeightCMSPageStorefront"/>
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateHeightCMSPageStorefront">
+            <argument name="content" value="{{BannerOnFrontend.wrapperCSS}}"/>
+        </actionGroup>
+        <actionGroup ref="validateBackgroundAttributesWithNoImage" stepKey="validateBackgroundAttributesCMSPageStorefront">
             <argument name="section" value="BannerOnFrontend"/>
             <argument name="backgroundColor" value="PageBuilderBackgroundColor_Plaintext_Green"/>
             <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_Center"/>
-            <argument name="backgroundSize" value="PageBuilderBackgroundSize_Contain"/>
+            <argument name="backgroundSize" value="PageBuilderBackgroundSize_Auto"/>
             <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
             <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Fixed"/>
         </actionGroup>
-        <actionGroup ref="validateBackgroundImageContainer" stepKey="validateImageOnStorefront">
+        <actionGroup ref="validateBackgroundImageContainer" stepKey="validateBackgroundImageCMSPageStorefront">
             <argument name="section" value="BannerOnFrontend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
-        <seeElement selector="{{BannerOnFrontend.messageContent('1', PageBuilderBannerMessageProperty.value)}}" stepKey="seeMessageContentStorefront"/>
-        <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderBannerAppearance_Poster.value)}}" stepKey="seeAppearanceStorefront"/>
-        <seeElementInDOM selector="{{BannerOnFrontend.button('1')}}" stepKey="seeButtonInDOMStorefront"/>
-        <dontSeeElement selector="{{BannerOnFrontend.button('1')}}" stepKey="dontSeeButtonStorefront"/>
-        <seeElement selector="{{BannerOnFrontend.transparentOverlay('1')}}" stepKey="seeTransparentOverlayStorefront"/>
-        <moveMouseOver selector="{{BannerOnFrontend.base('1')}}" stepKey="moveMouseOverBannerStorefront"/>
-        <seeElement selector="{{BannerOnFrontend.button('1')}}" stepKey="seeButtonOnHoverStorefront"/>
-        <seeElement selector="{{BannerOnFrontend.overlayBackgroundColor('1', PageBuilderBannerOverlayColor_Blue_Opaque.value)}}" stepKey="seeOverlayOnHoverStorefront"/>
-        <moveMouseOver selector="{{BannerOnFrontend.base('1')}}" x="-1" y="0" stepKey="moveMouseAwayFromBanner"/>
-        <!-- Click banner anchor -->
-        <comment userInput="Click banner anchor" stepKey="clickBannerAnchorStorefront" />
-        <click selector="{{BannerOnFrontend.linkUrl('1', PageBuilderBannerLinkUrlPropertyValidate.value)}}" stepKey="clickLinkUrlStorefront"/>
-        <wait time="3" stepKey="waitArbitraryTimeForPotentialNavigationToOccurStorefront" />
-        <seeCurrentUrlEquals url="{{PageBuilderBannerLinkUrlPropertyValidate.value}}" stepKey="seeThatUrlIsChangedToButtonUrlStorefront" />
-    </test>
-    <test name="BlockRenderBannerCollageCenteredAppearanceThroughBlockContentType" extends="BlockRenderBannerPosterAppearanceThroughBlockContentType">
-        <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Block Content"/>
-            <title value="Render Banner Collage Centered Appearance Through Block Content Type"/>
-            <description value="Verify that users are able to successfully render and use the banner content type collage centered appearance through the Block content type."/>
-            <severity value="CRITICAL"/>
-            <testCaseId value="MC-15189"/>
-            <useCaseId value="MC-13769"/>
-            <group value="pagebuilder"/>
-            <group value="pagebuilder-block"/>
-            <group value="pagebuilder-block-content"/>
-            <group value="pagebuilder-banner"/>
-            <group value="pagebuilder-bannerCollageCentered"/>
-        </annotations>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
-            <argument name="property" value="PageBuilderBannerCollageCenteredProperty"/>
+        <seeElement selector="{{BannerOnFrontend.messageContent('1', PageBuilderBannerMessageProperty.value)}}" stepKey="seeMessageContentCMSPageStorefront"/>
+        <seeElementInDOM selector="{{BannerOnFrontend.button('1')}}" stepKey="seeButtonInDOMCMSPageStorefront"/>
+        <dontSeeElement selector="{{BannerOnFrontend.button('1')}}" stepKey="dontSeeButtonCMSPageStorefront"/>
+        <seeElement selector="{{BannerOnFrontend.transparentOverlay('1')}}" stepKey="seeTransparentOverlayCMSPageStorefront"/>
+        <moveMouseOver selector="{{BannerOnFrontend.appearance('1', PageBuilderBannerAppearance_Poster.value)}}" stepKey="moveMouseOverBannerCMSPageStorefront"/>
+        <seeElement selector="{{BannerOnFrontend.button('1')}}" stepKey="seeButtonOnHoverCMSPageStorefront"/>
+        <seeElement selector="{{BannerOnFrontend.buttonText('1', PageBuilderBannerButtonTextProperty.value)}}" stepKey="seeButtonTextOnHoverCMSPageStorefront"/>
+        <seeElement selector="{{BannerOnFrontend.buttonType('1', PageBuilderBannerButtonTypeSecondaryProperty.value)}}" stepKey="seeButtonTypeOnHoverCMSPageStorefront"/>
+        <seeElement selector="{{BannerOnFrontend.overlayBackgroundColor('1', PageBuilderBannerOverlayColor_Blue_Opaque.value)}}" stepKey="seeOverlayOnHoverCMSPageStorefront"/>
+        <executeJS function="return {{BannerOnFrontend.overlayJS('1')}}.getBoundingClientRect().left" stepKey="overlayLeftPositionCMSPageStorefront"/>
+        <executeJS function="return document.evaluate(&quot;{{BannerOnFrontend.button('1')}}&quot;, document.body).iterateNext().getBoundingClientRect().left" stepKey="buttonLeftPositionCMSPageStorefront"/>
+        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSPageStorefront}-{$overlayLeftPositionCMSPageStorefront}-{{PageBuilderPaddingProperty40.paddingLeft}}))" stepKey="buttonMinusOverlayMinusPaddingCMSPageStorefront"/>
+        <assertLessThanOrEqual stepKey="assertButtonLeftAlignedCMSPageStorefront">
+            <expectedResult type="int">5</expectedResult>
+            <actualResult type="variable">buttonMinusOverlayMinusPaddingCMSPageStorefront</actualResult>
+        </assertLessThanOrEqual>
+        <executeJS function="return window.getComputedStyle({{BannerOnFrontend.wrapperJS('1')}}).textAlign" stepKey="grabDefaultComputedTextAlignCMSPageStorefront"/>
+        <assertEquals stepKey="assertDefaultComputedTextAlignCMSPageStorefront">
+            <expectedResult type="string">{{PageBuilderAdvancedAlignmentPropertyStart.value}}</expectedResult>
+            <actualResult type="variable">grabDefaultComputedTextAlignCMSPageStorefront</actualResult>
+        </assertEquals>
+        <!-- Validate Banner Link -->
+        <comment userInput="Validate Banner Link" stepKey="commentValidateBannerLinkCMSPageStorefront"/>
+        <click selector="{{BannerOnFrontend.linkUrl('1', PageBuilderBannerLinkUrlPropertyValidate.value)}}" stepKey="clickLinkUrlCMSPageStorefront"/>
+        <wait time="3" stepKey="waitArbitraryTimeForPotentialNavigationToOccurCMSPageStorefront"/>
+        <seeCurrentUrlEquals url="{{PageBuilderBannerLinkUrlPropertyValidate.value}}" stepKey="seeThatUrlIsChangedToButtonUrlCMSPageStorefront"/>
+        <!-- Validate CMS Page Storefront Mobile -->
+        <comment userInput="Validate CMS Page Storefront Mobile" stepKey="commentValidateCMSPageStorefrontMobile"/>
+        <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStoreFrontMobile">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
-        <seeElement selector="{{BannerOnBackend.collageMinimumHeight('1', PageBuilderBannerMinimumHeightProperty.value)}}" stepKey="seeMinimumHeightStage"/>
-        <seeElement selector="{{BannerOnFrontend.collageMinimumHeight('1', PageBuilderBannerMinimumHeightProperty.value)}}" stepKey="seeMinimumHeightPageStage"/>
-        <seeElement selector="{{BannerOnFrontend.collageMinimumHeight('1', PageBuilderBannerMinimumHeightProperty.value)}}" stepKey="seeMinimumHeightStorefront"/>
-        <seeElement selector="{{BannerOnBackend.appearance('1', PageBuilderBannerCollageCenteredProperty.value)}}" stepKey="seeAppearanceStage"/>
-        <moveMouseOver selector="{{BannerOnBackend.appearance('1', PageBuilderBannerCollageCenteredProperty.value)}}" stepKey="moveMouseOverBannerStage"/>
-        <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderBannerCollageCenteredProperty.value)}}" stepKey="seeAppearancePageStage"/>
-        <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderBannerCollageCenteredProperty.value)}}" stepKey="seeAppearanceStorefront"/>
+        <actionGroup ref="validateOverlayPositionPoster" stepKey="validateOverlayPositionCMSPageStorefrontMobile">
+            <argument name="page" value="BannerOnFrontend"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateHeightCMSPageStorefrontMobile">
+            <argument name="content" value="{{BannerOnFrontend.wrapperCSS}}"/>
+        </actionGroup>
+        <actionGroup ref="validateBackgroundImageContainer" stepKey="validateBackgroundImageCMSPageStorefrontMobile">
+            <argument name="section" value="BannerOnFrontend"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundMobileImage_GIF"/>
+        </actionGroup>
+        <seeElementInDOM selector="{{BannerOnFrontend.button('1')}}" stepKey="seeButtonInDOMCMSPageStorefrontMobile"/>
+        <dontSeeElement selector="{{BannerOnFrontend.button('1')}}" stepKey="dontSeeButtonCMSPageStorefrontMobile"/>
+        <seeElement selector="{{BannerOnFrontend.transparentOverlay('1')}}" stepKey="seeTransparentOverlayCMSPageStorefrontMobile"/>
+        <moveMouseOver selector="{{BannerOnFrontend.base('1')}}" stepKey="moveMouseOverBannerCMSPageStorefrontMobile"/>
+        <seeElement selector="{{BannerOnFrontend.button('1')}}" stepKey="seeButtonOnHoverCMSPageStorefrontMobile"/>
+        <seeElement selector="{{BannerOnFrontend.overlayBackgroundColor('1', PageBuilderBannerOverlayColor_Blue_Opaque.value)}}" stepKey="seeOverlayOnHoverCMSPageStorefrontMobile"/>
+        <!-- Validate Banner Link Mobile -->
+        <comment userInput="Validate Banner Link" stepKey="commentValidateBannerLinkCMSPageStorefrontMobile"/>
+        <click selector="{{BannerOnFrontend.linkUrl('1', PageBuilderBannerLinkUrlPropertyValidate.value)}}" stepKey="clickLinkUrlCMSPageStorefrontMobile"/>
+        <wait time="3" stepKey="waitArbitraryTimeForPotentialNavigationToOccurCMSPageStorefrontMobile"/>
+        <seeCurrentUrlEquals url="{{PageBuilderBannerLinkUrlPropertyValidate.value}}" stepKey="seeThatUrlIsChangedToButtonUrlCMSPageStorefrontMobile"/>
     </test>
     <test name="BlockRenderBannerCollageLeftAppearanceThroughBlockContentType" extends="BlockRenderBannerPosterAppearanceThroughBlockContentType">
         <annotations>
@@ -3103,16 +3177,78 @@
             <group value="pagebuilder-banner"/>
             <group value="pagebuilder-bannerCollageLeft"/>
         </annotations>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setAppearance">
             <argument name="property" value="PageBuilderBannerCollageLeftProperty"/>
         </actionGroup>
-        <seeElement selector="{{BannerOnBackend.collageMinimumHeight('1', PageBuilderBannerMinimumHeightProperty.value)}}" stepKey="seeMinimumHeightStage"/>
-        <seeElement selector="{{BannerOnFrontend.collageMinimumHeight('1', PageBuilderBannerMinimumHeightProperty.value)}}" stepKey="seeMinimumHeightPageStage"/>
-        <seeElement selector="{{BannerOnFrontend.collageMinimumHeight('1', PageBuilderBannerMinimumHeightProperty.value)}}" stepKey="seeMinimumHeightStorefront"/>
-        <seeElement selector="{{BannerOnBackend.appearance('1', PageBuilderBannerCollageLeftProperty.value)}}" stepKey="seeAppearanceStage"/>
-        <moveMouseOver selector="{{BannerOnBackend.appearance('1', PageBuilderBannerCollageLeftProperty.value)}}" stepKey="moveMouseOverBannerStage"/>
-        <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderBannerCollageLeftProperty.value)}}" stepKey="seeAppearancePageStage"/>
-        <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderBannerCollageLeftProperty.value)}}" stepKey="seeAppearanceStorefront"/>
+        <seeElement selector="{{BannerOnBackend.appearance('1', PageBuilderBannerCollageLeftProperty.value)}}" stepKey="seeAppearanceCMSBlockStage"/>
+        <actionGroup ref="validateOverlayPositionCollageLeft" stepKey="validateOverlayPositionCMSBlockStage">
+            <argument name="page" value="BannerOnBackend"/>
+        </actionGroup>
+        <seeElement selector="{{BannerOnBackend.collageMinimumHeight('1', PageBuilderBannerMinimumHeightDefaultProperty.value)}}" stepKey="seeMinimumHeightCMSBlockStage"/>
+        <moveMouseOver selector="{{BannerOnBackend.appearance('1', PageBuilderBannerCollageLeftProperty.value)}}" stepKey="moveMouseOverBannerCMSBlockStage"/>
+        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSBlockStage}-{$overlayLeftPositionCMSBlockStage}-30))" stepKey="buttonMinusOverlayMinusPaddingCMSBlockStage"/>
+        <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderBannerCollageLeftProperty.value)}}" stepKey="seeAppearanceCMSPageStage"/>
+        <actionGroup ref="validateOverlayPositionCollageLeft" stepKey="validateOverlayPositionCMSPageStage">
+            <argument name="page" value="BannerOnFrontend"/>
+        </actionGroup>
+        <seeElement selector="{{BannerOnFrontend.collageMinimumHeight('1', PageBuilderBannerMinimumHeightDefaultProperty.value)}}" stepKey="seeMinimumHeightCMSPageStage"/>
+        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSPageStage}-{$overlayLeftPositionCMSPageStage}-30))" stepKey="buttonMinusOverlayMinusPaddingCMSPageStage"/>
+        <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderBannerCollageLeftProperty.value)}}" stepKey="seeAppearanceCMSPageStorefront"/>
+        <actionGroup ref="validateOverlayPositionCollageLeft" stepKey="validateOverlayPositionCMSPageStorefront">
+            <argument name="page" value="BannerOnFrontend"/>
+        </actionGroup>
+        <seeElement selector="{{BannerOnFrontend.collageMinimumHeight('1', PageBuilderBannerMinimumHeightDefaultProperty.value)}}" stepKey="seeMinimumHeightCMSPageStorefront"/>
+        <moveMouseOver selector="{{BannerOnFrontend.appearance('1', PageBuilderBannerCollageLeftProperty.value)}}" stepKey="moveMouseOverBannerCMSPageStorefront"/>
+        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSPageStorefront}-{$overlayLeftPositionCMSPageStorefront}-30))" stepKey="buttonMinusOverlayMinusPaddingCMSPageStorefront"/>
+        <executeJS function="return Math.abs({{BannerOnFrontend.wrapperJS('1')}}.getBoundingClientRect().width - {{PageBuilderPaddingProperty40.paddingLeft}} - {{PageBuilderPaddingProperty40.paddingRight}})" stepKey="widthOfWrapperMinusPaddingCMSPageStorefrontMobile" before="validateOverlayPositionCMSPageStorefrontMobile"/>
+        <actionGroup ref="validateOverlayPositionCollageLeft" stepKey="validateOverlayPositionCMSPageStorefrontMobile">
+            <argument name="page" value="BannerOnFrontend"/>
+            <argument name="expectedOverlayWidth" value="{$widthOfWrapperMinusPaddingCMSPageStorefrontMobile}"/>
+        </actionGroup>
+    </test>
+    <test name="BlockRenderBannerCollageCenteredAppearanceThroughBlockContentType" extends="BlockRenderBannerPosterAppearanceThroughBlockContentType">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Block Content"/>
+            <title value="Render Banner Collage Centered Appearance Through Block Content Type"/>
+            <description value="Verify that users are able to successfully render and use the banner content type collage centered appearance through the Block content type."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MC-15189"/>
+            <useCaseId value="MC-13769"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+            <group value="pagebuilder-block-content"/>
+            <group value="pagebuilder-banner"/>
+            <group value="pagebuilder-bannerCollageCentered"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setAppearance">
+            <argument name="property" value="PageBuilderBannerCollageCenteredProperty"/>
+        </actionGroup>
+        <seeElement selector="{{BannerOnBackend.appearance('1', PageBuilderBannerCollageCenteredProperty.value)}}" stepKey="seeAppearanceCMSBlockStage"/>
+        <actionGroup ref="validateOverlayPositionCollageCenter" stepKey="validateOverlayPositionCMSBlockStage">
+            <argument name="page" value="BannerOnBackend"/>
+        </actionGroup>
+        <seeElement selector="{{BannerOnBackend.collageMinimumHeight('1', PageBuilderBannerMinimumHeightDefaultProperty.value)}}" stepKey="seeMinimumHeightCMSBlockStage"/>
+        <moveMouseOver selector="{{BannerOnBackend.appearance('1', PageBuilderBannerCollageCenteredProperty.value)}}" stepKey="moveMouseOverBannerCMSBlockStage"/>
+        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSBlockStage}-{$overlayLeftPositionCMSBlockStage}-30))" stepKey="buttonMinusOverlayMinusPaddingCMSBlockStage"/>
+        <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderBannerCollageCenteredProperty.value)}}" stepKey="seeAppearanceCMSPageStage"/>
+        <actionGroup ref="validateOverlayPositionCollageCenter" stepKey="validateOverlayPositionCMSPageStage">
+            <argument name="page" value="BannerOnFrontend"/>
+        </actionGroup>
+        <seeElement selector="{{BannerOnFrontend.collageMinimumHeight('1', PageBuilderBannerMinimumHeightDefaultProperty.value)}}" stepKey="seeMinimumHeightCMSPageStage"/>
+        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSPageStage}-{$overlayLeftPositionCMSPageStage}-30))" stepKey="buttonMinusOverlayMinusPaddingCMSPageStage"/>
+        <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderBannerCollageCenteredProperty.value)}}" stepKey="seeAppearanceCMSPageStorefront"/>
+        <actionGroup ref="validateOverlayPositionCollageCenter" stepKey="validateOverlayPositionCMSPageStorefront">
+            <argument name="page" value="BannerOnFrontend"/>
+        </actionGroup>
+        <seeElement selector="{{BannerOnFrontend.collageMinimumHeight('1', PageBuilderBannerMinimumHeightDefaultProperty.value)}}" stepKey="seeMinimumHeightCMSPageStorefront"/>
+        <moveMouseOver selector="{{BannerOnFrontend.appearance('1', PageBuilderBannerCollageCenteredProperty.value)}}" stepKey="moveMouseOverBannerCMSPageStorefront"/>
+        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSPageStorefront}-{$overlayLeftPositionCMSPageStorefront}-30))" stepKey="buttonMinusOverlayMinusPaddingCMSPageStorefront"/>
+        <executeJS function="return Math.abs({{BannerOnFrontend.wrapperJS('1')}}.getBoundingClientRect().width - {{PageBuilderPaddingProperty40.paddingLeft}} - {{PageBuilderPaddingProperty40.paddingRight}})" stepKey="widthOfWrapperMinusPaddingCMSPageStorefrontMobile" before="validateOverlayPositionCMSPageStorefrontMobile"/>
+        <actionGroup ref="validateOverlayPositionCollageCenter" stepKey="validateOverlayPositionCMSPageStorefrontMobile">
+            <argument name="page" value="BannerOnFrontend"/>
+            <argument name="expectedOverlayWidth" value="{$widthOfWrapperMinusPaddingCMSPageStorefrontMobile}"/>
+        </actionGroup>
     </test>
     <test name="BlockRenderBannerCollageRightAppearanceThroughBlockContentType" extends="BlockRenderBannerPosterAppearanceThroughBlockContentType">
         <annotations>
@@ -3129,16 +3265,34 @@
             <group value="pagebuilder-banner"/>
             <group value="pagebuilder-bannerCollageRight"/>
         </annotations>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setAppearance">
             <argument name="property" value="PageBuilderBannerCollageRightProperty"/>
         </actionGroup>
-        <seeElement selector="{{BannerOnBackend.collageMinimumHeight('1', PageBuilderBannerMinimumHeightProperty.value)}}" stepKey="seeMinimumHeightStage"/>
-        <seeElement selector="{{BannerOnFrontend.collageMinimumHeight('1', PageBuilderBannerMinimumHeightProperty.value)}}" stepKey="seeMinimumHeightPageStage"/>
-        <seeElement selector="{{BannerOnFrontend.collageMinimumHeight('1', PageBuilderBannerMinimumHeightProperty.value)}}" stepKey="seeMinimumHeightStorefront"/>
-        <seeElement selector="{{BannerOnBackend.appearance('1', PageBuilderBannerCollageRightProperty.value)}}" stepKey="seeAppearanceStage"/>
-        <moveMouseOver selector="{{BannerOnBackend.appearance('1', PageBuilderBannerCollageRightProperty.value)}}" stepKey="moveMouseOverBannerStage"/>
-        <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderBannerCollageRightProperty.value)}}" stepKey="seeAppearancePageStage"/>
-        <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderBannerCollageRightProperty.value)}}" stepKey="seeAppearanceStorefront"/>
+        <seeElement selector="{{BannerOnBackend.appearance('1', PageBuilderBannerCollageRightProperty.value)}}" stepKey="seeAppearanceCMSBlockStage"/>
+        <actionGroup ref="validateOverlayPositionCollageRight" stepKey="validateOverlayPositionCMSBlockStage">
+            <argument name="page" value="BannerOnBackend"/>
+        </actionGroup>
+        <seeElement selector="{{BannerOnBackend.collageMinimumHeight('1', PageBuilderBannerMinimumHeightDefaultProperty.value)}}" stepKey="seeMinimumHeightCMSBlockStage"/>
+        <moveMouseOver selector="{{BannerOnBackend.appearance('1', PageBuilderBannerCollageRightProperty.value)}}" stepKey="moveMouseOverBannerCMSBlockStage"/>
+        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSBlockStage}-{$overlayLeftPositionCMSBlockStage}-30))" stepKey="buttonMinusOverlayMinusPaddingCMSBlockStage"/>
+        <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderBannerCollageRightProperty.value)}}" stepKey="seeAppearanceCMSPageStage"/>
+        <actionGroup ref="validateOverlayPositionCollageRight" stepKey="validateOverlayPositionCMSPageStage">
+            <argument name="page" value="BannerOnFrontend"/>
+        </actionGroup>
+        <seeElement selector="{{BannerOnFrontend.collageMinimumHeight('1', PageBuilderBannerMinimumHeightDefaultProperty.value)}}" stepKey="seeMinimumHeightCMSPageStage"/>
+        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSPageStage}-{$overlayLeftPositionCMSPageStage}-30))" stepKey="buttonMinusOverlayMinusPaddingCMSPageStage"/>
+        <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderBannerCollageRightProperty.value)}}" stepKey="seeAppearanceCMSPageStorefront"/>
+        <actionGroup ref="validateOverlayPositionCollageRight" stepKey="validateOverlayPositionCMSPageStorefront">
+            <argument name="page" value="BannerOnFrontend"/>
+        </actionGroup>
+        <seeElement selector="{{BannerOnFrontend.collageMinimumHeight('1', PageBuilderBannerMinimumHeightDefaultProperty.value)}}" stepKey="seeMinimumHeightCMSPageStorefront"/>
+        <moveMouseOver selector="{{BannerOnFrontend.appearance('1', PageBuilderBannerCollageRightProperty.value)}}" stepKey="moveMouseOverBannerCMSPageStorefront"/>
+        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSPageStorefront}-{$overlayLeftPositionCMSPageStorefront}-30))" stepKey="buttonMinusOverlayMinusPaddingCMSPageStorefront"/>
+        <executeJS function="return Math.abs({{BannerOnFrontend.wrapperJS('1')}}.getBoundingClientRect().width - {{PageBuilderPaddingProperty40.paddingLeft}} - {{PageBuilderPaddingProperty40.paddingRight}})" stepKey="widthOfWrapperMinusPaddingCMSPageStorefrontMobile" before="validateOverlayPositionCMSPageStorefrontMobile"/>
+        <actionGroup ref="validateOverlayPositionCollageRight" stepKey="validateOverlayPositionCMSPageStorefrontMobile">
+            <argument name="page" value="BannerOnFrontend"/>
+            <argument name="expectedOverlayWidth" value="{$widthOfWrapperMinusPaddingCMSPageStorefrontMobile}"/>
+        </actionGroup>
     </test>
     <test name="BlockRenderInlineEditedBannerThroughBlockContentTypeTinyMCE4WysiwygEnabledByDefault">
         <annotations>
