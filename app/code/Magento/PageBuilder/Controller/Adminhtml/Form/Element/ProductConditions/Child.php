@@ -8,12 +8,13 @@ declare(strict_types=1);
 
 namespace Magento\PageBuilder\Controller\Adminhtml\Form\Element\ProductConditions;
 
+use Magento\Framework\App\Action\HttpPostActionInterface;
 use Magento\Rule\Model\Condition\AbstractCondition;
 
 /**
  * Responsible for rendering the child elements of the conditions rule tree using the provided params
  */
-class Child extends \Magento\CatalogWidget\Controller\Adminhtml\Product\Widget
+class Child extends \Magento\CatalogWidget\Controller\Adminhtml\Product\Widget implements HttpPostActionInterface
 {
     /**
      * @var \Magento\CatalogWidget\Model\Rule
@@ -33,6 +34,8 @@ class Child extends \Magento\CatalogWidget\Controller\Adminhtml\Product\Widget
     }
 
     /**
+     * Render child template
+     *
      * @return void
      */
     public function execute()
