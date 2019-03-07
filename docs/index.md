@@ -1,10 +1,13 @@
-# PageBuilder Early Adopters Program
+# Page Builder pre-release access
 
-The Page Builder Early Adopters Program (EAP) gives partners the following perks:
- 
-* Explore extension points to build custom modules and integrations for 3rd party services, such as Facebook and Instagram.
-* Try out customization options and extend its functionality beyond its default features.
-* Preview to prepare a migration plan from BlueFoot 1.0 to PageBuilder.
+Pre-release access to Page Builder is opened to all Magento Partners with *no support* from Magento.
+Use this access to:
+
+- Explore extension points to build custom modules and integrations for 3rd party services, such as Facebook and Instagram.
+- Try out customization options and extend its functionality beyond its default features.
+- Preview to prepare a migration plan from BlueFoot 1.0 to Page Builder.
+
+Should you find an issue in Page Builder functionality, please report it on GitHub.
 
 ## Installation
 
@@ -69,7 +72,7 @@ See [Install Page Builder](getting-started/install-pagebuilder.md)
 
 ### Other
 
-* [Release notes](release-notes.md)
+* [Release notes](CHANGELOG.md)
 * [Component status](comp-status2.md)
 * [Contribution guide](https://github.com/magento/magento2-page-builder/blob/develop/CONTRIBUTING.md)
 
@@ -78,13 +81,3 @@ See [Install Page Builder](getting-started/install-pagebuilder.md)
 ## Contribute to Page Builder
 
 We appreciate any and all contributions to PageBuilder. If you are interested in contributing to this repository, please see our [Contribution guide](https://github.com/magento/magento2-page-builder/blob/develop/CONTRIBUTING.md).
-
-## Page Builder updates from the Magento core team
-
-We will push new beta releases once a week, including work from the backlog. We don't expect any large breaking changes, but we will communicate them to you if the need arises.
-
-## Contact us
-
-To participate in technical discussions and ask questions, join us in [Slack], where a number of Page Builder team members are present.
-
-[Slack]: https://magentocommeng.slack.com/messages/GANS1R4C9

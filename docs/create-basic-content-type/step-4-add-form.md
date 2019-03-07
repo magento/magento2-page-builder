@@ -252,13 +252,13 @@ Defines the data source for the field. The source` node's value corresponds to a
 ```xml
 <field name="quote_text" sortOrder="10" formElement="textarea">
     <argument name="data" xsi:type="array">
-    <item name="config" xsi:type="array">
-        <item name="source" xsi:type="string">page</item>
-    </item>
-  </argument>
+        <item name="config" xsi:type="array">
+            <item name="source" xsi:type="string">page</item>
+        </item>
+    </argument>
 ```
 
-For example, the `quote_text` field above specifies that the `source` of its data should come from tthe data stored under the key `page` returned by the page's DataProvider.
+For example, the `quote_text` field above specifies that the `source` of its data should come from the data stored under the key `page` returned by the page's DataProvider.
 
 ### settings
 
