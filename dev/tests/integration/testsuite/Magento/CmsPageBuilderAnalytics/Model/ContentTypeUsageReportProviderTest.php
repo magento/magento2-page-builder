@@ -79,10 +79,6 @@ class ContentTypeUsageReportProviderTest extends \PHPUnit\Framework\TestCase
                         7
                     ],
                     [
-                        'dynamic_block',
-                        0
-                    ],
-                    [
                         'column-group',
                         5
                     ],
