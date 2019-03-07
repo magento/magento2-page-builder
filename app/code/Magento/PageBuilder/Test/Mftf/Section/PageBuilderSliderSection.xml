@@ -14,6 +14,8 @@
         <element name="hidden" type="button" selector="(//div[@data-content-type='slider'])[{{arg1}}][contains(@style,'display: none')]" parameterized="true"/>
         <element name="notHidden" type="button" selector="(//div[@data-content-type='slider'])[{{arg1}}][not(contains(@style,'display: none'))]" parameterized="true"/>
         <element name="slideNavigationDot" type="button" selector="((//div[@data-content-type='slider'])[{{arg1}}]//ul[@class='slick-dots']//button)[{{arg2}}]" parameterized="true"/>
+        <element name="previousSlideArrow" type="button" selector="(//div[@data-content-type='slider'])[{{arg1}}]//button[contains(@class,'slick-arrow') and contains(@class,'slick-prev')]" parameterized="true"/>
+        <element name="nextSlideArrow" type="button" selector="(//div[@data-content-type='slider'])[{{arg1}}]//button[contains(@class,'slick-arrow') and contains(@class,'slick-next')]" parameterized="true"/>
         <!-- Settings Configuration -->
         <element name="autoPlay" type="button" selector="(//div[@data-content-type='slider'])[{{arg1}}][@data-autoplay='{{arg2}}']" parameterized="true"/>
         <element name="autoPlaySpeed" type="button" selector="(//div[@data-content-type='slider'])[{{arg1}}][@data-autoplay-speed='{{arg2}}']" parameterized="true"/>
@@ -41,6 +43,8 @@
         <element name="hidden" type="button" selector="(//div[@data-content-type='slider'])[{{arg1}}]/ancestor::*[contains(@class, 'pagebuilder-content-type-wrapper') and contains(@class, 'pagebuilder-content-type-hidden')]" parameterized="true"/>
         <element name="notHidden" type="button" selector="(//div[@data-content-type='slider'])[{{arg1}}]/parent::*[contains(@class, 'pagebuilder-content-type-wrapper') and not(contains(@class, 'pagebuilder-content-type-hidden'))][1]" parameterized="true"/>
         <element name="slideNavigationDot" type="button" selector="(//div[@data-content-type='slider'])[{{arg1}}]//div[contains(@class,'navigation-dot')][{{arg2}}]" parameterized="true"/>
+        <element name="previousSlideArrow" type="button" selector="(//div[@data-content-type='slider'])[{{arg1}}]//button[contains(@class,'slick-arrow') and contains(@class,'slick-prev')]" parameterized="true"/>
+        <element name="nextSlideArrow" type="button" selector="(//div[@data-content-type='slider'])[{{arg1}}]//button[contains(@class,'slick-arrow') and contains(@class,'slick-next')]" parameterized="true"/>
         <element name="activeSlideNavigationDot" type="button" selector="div.navigation-dot.active"/>
         <element name="slideNavigationDotNameTooltip" type="button" selector="(//div[@data-content-type='slider'])[{{arg1}}]//span[@role='tooltip']" parameterized="true"/>
         <element name="slideNavigationDragHandle" type="button" selector="a.navigation-dot-anchor"/>
