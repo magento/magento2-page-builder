@@ -301,9 +301,12 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       }
 
       var widthProperties = ["paddingLeft", "paddingRight", "borderLeftWidth", "borderRightWidth"];
+      var buttonText = buttonItem.find("[data-element='link_text']");
+      var textWidth = buttonText.css("display", "inline-block").width();
+      buttonText.css("display", "");
       return widthProperties.reduce(function (accumulatedWidth, widthProperty) {
         return accumulatedWidth + (parseInt(buttonItem.css(widthProperty), 10) || 0);
-      }, buttonItem.find("[data-element='link_text']").width());
+      }, textWidth);
     };
 
     return Preview;

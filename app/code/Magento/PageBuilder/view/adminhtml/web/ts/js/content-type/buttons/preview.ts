@@ -291,8 +291,11 @@ export default class Preview extends PreviewCollection {
             return 0;
         }
         const widthProperties = ["paddingLeft", "paddingRight", "borderLeftWidth", "borderRightWidth"];
+        const buttonText = buttonItem.find("[data-element='link_text']");
+        const textWidth = buttonText.css("display", "inline-block").width();
+        buttonText.css("display", "");
         return widthProperties.reduce((accumulatedWidth, widthProperty): number => {
             return accumulatedWidth + (parseInt(buttonItem.css(widthProperty), 10) || 0);
-        }, buttonItem.find("[data-element='link_text']").width());
+        }, textWidth);
     }
 }
