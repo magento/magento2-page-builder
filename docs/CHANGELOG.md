@@ -1,7 +1,5 @@
 # Changelog
 
-Here are the Page Builder beta release notes and the higher priority known issues. We are actively working on many of these items and will update this document with each beta release.
-
 ## Beta 8 - February 19, 2019
 
 - Resolved: Analytics module sequence issue.
@@ -84,3 +82,4 @@ Beta 7 has breaking changes due to renaming of several critical variables and pa
 * Using Page Builder within a slide out form has a degraded experience.
     * Left-side panel will not scroll with the user.
     * Dragging and dropping can become broken due to another instance of Page Builder being loaded.
+

@@ -99,10 +99,10 @@ The Quote `preview_template`  (`preview.html`) is shown here in full, followed b
 
 The `attr` attribute allows binding of data from the content type form (UI component) to the html elements in the template. 
 
-The value for `attr` is derived from the `element` name in the configuration file followed by `attributes`. For example, the `attr` value used to bind data for the  `blockquote` on line 8 of the Quote `preview.html` is `attr="data.quote.attributes"`. This corresponds to the  `element` named `quote` in the `quote.xml` configuration file, as shown here:
+The value for `attr` is derived from the `element` name in the configuration file followed by `attributes`. For example, the `attr` value used to bind data for the  `blockquote` on line 8 of the Quote `preview.html` is `attr="data.quote.attributes"`. This corresponds to the  `element` named `quote` in the `example_quote.xml` configuration file, as shown here:
 
 ```xml
-<!-- quote.xml -->
+<!-- example_quote.xml -->
 <element name="quote">
     <html name="quote_text" converter="Magento_PageBuilder/js/converter/html/tag-escaper"/>
     <css name="quote_css"/>
@@ -116,7 +116,7 @@ The nodes declared within an `element` define the bindings that can be applied t
 The `ko-style` attribute applies the `<style>` attributes from the form to a template element. For example, the `main` element for the Quote configuration defines several style bindings as shown here:
 
 ```xml
-<!-- quote.xml -->
+<!-- example_quote.xml -->
 <element name="main">
     <style name="text_align" source="text_align"/>
     <style name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
