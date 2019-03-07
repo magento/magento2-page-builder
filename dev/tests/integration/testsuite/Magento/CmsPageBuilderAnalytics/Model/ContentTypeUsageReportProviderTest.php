@@ -6,7 +6,7 @@
 
 declare(strict_types=1);
 
-namespace Magento\PageBuilderAnalytics\Model;
+namespace Magento\CmsPageBuilderAnalytics\Model;
 
 use Magento\TestFramework\Helper\Bootstrap;
 use Magento\Framework\App\ResourceConnection;
@@ -18,7 +18,7 @@ class ContentTypeUsageReportProviderTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @magentoAppIsolation enabled
-     * @magentoDataFixture Magento/PageBuilderAnalytics/_files/pages.php
+     * @magentoDataFixture Magento/CmsPageBuilderAnalytics/_files/pages.php
      * @dataProvider reportDataProvider
      */
     public function testGetReport($expectedReportData)
