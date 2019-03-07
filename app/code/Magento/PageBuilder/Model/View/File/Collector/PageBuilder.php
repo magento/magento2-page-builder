@@ -22,7 +22,7 @@ class PageBuilder implements CollectorInterface
     /**
      * @var DirSearch
      */
-    protected $componentDirSearch;
+    private $componentDirSearch;
 
     /**
      * @var string
