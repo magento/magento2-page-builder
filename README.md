@@ -9,7 +9,9 @@ Use this access to:
 
 Should you find an issue in Page Builder functionality, please report it on GitHub.
 
-## GitHub installation
+## GitHub installation only
+
+**The pre-release version of Page Builder MUST be installed by cloning the GitHub repos as described here.**
 
 Before installing Page Builder, make sure you have:
 
