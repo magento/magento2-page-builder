@@ -8,6 +8,6 @@ declare(strict_types=1);
 use Magento\Framework\Component\ComponentRegistrar;
 
 $registrar = new ComponentRegistrar();
-if ($registrar->getPath(ComponentRegistrar::MODULE, 'Magento_TestModulePageBuilderAnalytics') === null) {
-    ComponentRegistrar::register(ComponentRegistrar::MODULE, 'Magento_TestModulePageBuilderAnalytics', __DIR__);
+if ($registrar->getPath(ComponentRegistrar::MODULE, 'Magento_TestModuleCmsPageBuilderAnalytics') === null) {
+    ComponentRegistrar::register(ComponentRegistrar::MODULE, 'Magento_TestModuleCmsPageBuilderAnalytics', __DIR__);
 }

@@ -56,6 +56,7 @@ class PageBuilder implements CollectorInterface
      *
      * @param \Magento\Framework\View\Design\ThemeInterface $theme
      * @param string $filePath
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      * @return \Magento\Framework\View\File[]
      */
     public function getFiles(ThemeInterface $theme, $filePath)
