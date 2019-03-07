@@ -87,4 +87,18 @@
         <click selector="{{page.conditionsListConditionPlaceholder}}" stepKey="revealCategoryInput"/>
         <fillField selector="{{page.conditionsListConditionInput}}" userInput="{{category}}" stepKey="fillCategoryField"/>
     </actionGroup>
+    <actionGroup name="addCategoryConditionViaConditionsCombinationToProducts">
+        <arguments>
+            <argument name="page" defaultValue="ProductsContentTypeForm"/>
+            <argument name="category" defaultValue="" type="string"/>
+            <argument name="aggregatorType" defaultValue="ALL" type="string"/>
+            <argument name="booleanValueForAggregator" defaultValue="TRUE" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{page.conditionsList}}" stepKey="waitForConditionsToLoad"/>
+        <click selector="{{page.conditionsListAddButton}}" stepKey="addCondition"/>
+        <selectOption selector="{{page.conditionsListAddTypeSelect}}" userInput="Magento\CatalogWidget\Model\Rule\Condition\Combine" stepKey="selectCombineOption"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForConditionsCombinationTemplateToLoad"/>
+        <click selector="{{page.conditionsListConditionPlaceholder}}" stepKey="revealCategoryInput"/>
+        <fillField selector="{{page.conditionsListConditionInput}}" userInput="{{category}}" stepKey="fillCategoryField"/>
+    </actionGroup>
 </actionGroups>
