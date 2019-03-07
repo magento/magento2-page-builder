@@ -35,7 +35,7 @@ Before installing Page Builder, make sure you have:
     
     The results should look like this:
     
-    ![Symlinks to Page Builder](../images/symlinked-pagebuilder.png)
+    ![Symlinks to Page Builder](docs/images/symlinked-pagebuilder.png)
 
 3. Enable the Page Builder module using the following command:
 
