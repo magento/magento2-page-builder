@@ -9,10 +9,42 @@ Use this access to:
 
 Should you find an issue in Page Builder functionality, please report it on GitHub.
 
+## GitHub installation
+
+Before installing Page Builder, make sure you have:
+
+* A local development installation of Magento Commerce 2.3+
+* Access to the Page Builder repository
+* [npm package manager](https://www.npmjs.com/get-npm)
+
+1. Clone the Page Builder repos into the root directory of your Magento Commerce 2.3+ installation:
+
+    ```bash
+    git clone https://github.com/magento/magento2-page-builder
+    git clone https://github.com/magento/magento2-page-builder-ee
+    ```
+
+2. From the root directory of your Magento Commerce installation, use the `dev/tools/build-ee.php` script to symlink `magento2-page-builder` and `magento2-page-builder-ee` repos into your Magento Commerce installation:
+
+    ```bash
+    php dev/tools/build-ee.php --command=link --ee-source="magento2-page-builder" --ce-source="."
+    php dev/tools/build-ee.php --command=link --ee-source="magento2-page-builder-ee" --ce-source="."
+    ```
+    
+    The results should look like this:
+    
+    ![Symlinks to Page Builder](../images/symlinked-pagebuilder.png)
+
+3. Enable the Page Builder module using the following command:
+
+    ```bash
+    bin/magento setup:upgrade
+    ```
+
 ## Developer documentation
 
 We will update the developer documentation frequently during beta. Please use this link to access the latest updates: 
-[Page Builder developer documentation](https://devdocs.magedevteam.com/ds_pagebuilder/page-builder/getting-started/install-pagebuilder.html)
+[Page Builder developer documentation](https://devdocs.magedevteam.com/page-builder/)
 
 ## Contribute to Page Builder
 
