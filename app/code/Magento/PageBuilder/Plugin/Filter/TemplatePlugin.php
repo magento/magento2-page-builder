@@ -180,8 +180,27 @@ class TemplatePlugin
                 continue;
             }
 
+            // clone html code content type to save reference to its attributes/outerHTML, which we are not going to
+            // decode
+            $clonedHtmlContentTypeNode = clone $htmlContentTypeNode;
+
+            // clear inner contents of cloned node for replacement later with $decodedInnerHtml using sprintf;
+            // we want to retain html content type node and avoid doing any manipulation on it
+            $clonedHtmlContentTypeNode->nodeValue = '%s';
+
+            // remove potentially harmful attributes on html content type node itself
+            while ($htmlContentTypeNode->attributes->length) {
+                $htmlContentTypeNode->removeAttribute($htmlContentTypeNode->attributes->item(0)->name);
+            }
+
+            // decode outerHTML safely
             $preDecodedOuterHtml = $document->saveHTML($htmlContentTypeNode);
-            $decodedOuterHtml = html_entity_decode($preDecodedOuterHtml);
+
+            // clear empty <div> wrapper around outerHTML to replace with $clonedHtmlContentTypeNode
+            $decodedInnerHtml = preg_replace('#^<[^>]*>|</[^>]*>$#', '', html_entity_decode($preDecodedOuterHtml));
+
+            // Use $clonedHtmlContentTypeNode's placeholder to inject decoded inner html
+            $decodedOuterHtml = sprintf($document->saveHTML($clonedHtmlContentTypeNode), $decodedInnerHtml);
 
             // generate unique node name element to replace with decoded html contents at end of processing;
             // goal is to create a document as few times as possible to prevent inadvertent parsing of contents as html
