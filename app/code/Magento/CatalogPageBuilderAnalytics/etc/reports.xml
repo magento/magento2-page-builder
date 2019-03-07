@@ -17,7 +17,7 @@
             </link-source>
             <link-source name="catalog_category_entity" link-type="inner">
                 <using glue="and">
-                    <condition attribute="row_id" operator="eq" type="identifier">row_id</condition>
+                    <condition attribute="entity_id" operator="eq" type="identifier">entity_id</condition>
                 </using>
             </link-source>
             <filter glue="and">
@@ -42,12 +42,12 @@
             </link-source>
             <link-source name="catalog_product_entity" link-type="inner">
                 <using glue="and">
-                    <condition attribute="row_id" operator="eq" type="identifier">row_id</condition>
+                    <condition attribute="entity_id" operator="eq" type="identifier">entity_id</condition>
                 </using>
             </link-source>
             <link-source name="catalog_product_super_link" link-type="left">
                 <using glue="and">
-                    <condition attribute="product_id" operator="eq" type="identifier">row_id</condition>
+                    <condition attribute="product_id" operator="eq" type="identifier">entity_id</condition>
                 </using>
                 <filter glue="and">
                     <condition attribute="link_id" operator="null" />
