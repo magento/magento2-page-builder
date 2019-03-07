@@ -43,12 +43,13 @@ class Child extends \Magento\CatalogWidget\Controller\Adminhtml\Product\Widget
 
         $typeData = explode('|', str_replace('-', '/', $this->getRequest()->getParam('type')));
         $className = $typeData[0];
+        $prefix = $this->getRequest()->getParam('prefix', 'conditions');
 
         $model = $this->_objectManager->create($className)
             ->setId($id)
             ->setType($className)
             ->setRule($this->rule)
-            ->setPrefix($this->getRequest()->getParam('prefix', 'conditions'));
+            ->setPrefix($prefix);
 
         if (!empty($typeData[1])) {
             $model->setAttribute($typeData[1]);
@@ -56,6 +57,11 @@ class Child extends \Magento\CatalogWidget\Controller\Adminhtml\Product\Widget
 
         $result = '';
         if ($model instanceof AbstractCondition) {
+            // set value of $prefix in model's data registry to value of 'conditions',
+            // as is required for correct use of \Magento\Rule\Model\Condition\Combine::getConditions
+            if ($model->getData($prefix) === null) {
+                $model->setData($prefix, $model->getData('conditions'));
+            }
             $model->setJsFormObject($jsObjectName);
             $model->setFormName($formName);
             $result = $model->asHtmlRecursive();
