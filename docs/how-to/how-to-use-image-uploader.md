@@ -1,12 +1,12 @@
-# How to add the Image Uploader
+# How to add an image uploader
 
-This topic describes how to add the image Uploader component to your content type. Find the source code for the Uploader here: `app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/uploader.ts`).
+This topic describes how to add the image uploader component to your content type so that end-users can add images to a page.
 
 ![How to add an image uploader](../images/how-to-add-image-uploader.svg)
 
-## Step 1: Add configuration data for the Uploader
+## Step 1: Add configuration data for the uploader
 
-Use the `additional_data` element in your content type's config file to add a custom configuration for the  image Uploader:
+The first step is to customize the image uploader to suit your needs. To do this, you must add the `additional_data` element to your content type's config file, then use the `item` elements to create the data types and values to initialize the image uploader to meet your specific needs.
 
 ``` xml
 <?xml version="1.0"?>
@@ -43,9 +43,17 @@ Use the `additional_data` element in your content type's config file to add a cu
 </config>
 ```
 
-## Step 2: Create an instance of the Uploader
+The Page Builder image uploader provides a wrapper around the Magento [ImageUploader component](https://devdocs.magento.com/guides/v2.3/ui_comp_guide/components/image-uploader/), which extends the Magento [FileUploader component](https://devdocs.magento.com/guides/v2.3/ui_comp_guide/components/ui-fileuploader.html). The documentation at those links describes most of the configuration properties. You can find the other properties (shown in the  `additional_data` entries above) within these source files:
+- `magento2-page-builder/app/code/Magento/PageBuilder/view/adminhtml/web/js/form/element/image-uploader.js`
+- `magento2-page-builder/app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/uploader.ts`
 
-To create an instance of the image uploader in your preview component (`preview.js`), import the `Magento_PageBuilder/js/content-type/uploader` component as a dependency and call the Uploader constructor, passing in your content type's configuration options (added in step 1) and the other required arguments, as shown here :
+
+**[Are these all the settings? Which of these settings is required?]**
+
+
+## Step 2: Create an instance of the uploader
+
+To create an instance of the image uploader in your preview component (`preview.js`), import the `Magento_PageBuilder/js/content-type/uploader` component as a dependency and call the uploader constructor, passing in your content type's configuration options (added in step 1) and the other required arguments, as shown here :
 
 ``` js
 define(['Magento_PageBuilder/js/content-type/uploader'], function (Uploader) {
@@ -64,22 +72,22 @@ define(['Magento_PageBuilder/js/content-type/uploader'], function (Uploader) {
         };
 ```
 
-### Uploader constructor arguments
+**Uploader constructor arguments**
 
 
 | Argument           | Type      | Description                                                                         | Required | Default                                                                                                 |
 | ------------------ | --------- | ----------------------------------------------------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------- |
 | `name`             | String    | Used to locate the component in the UI registry.                  | yes     | None                                                                                                    |
 | `uploaderConfig`   | Object    | Initializes the image uploader UI component with the configuration settings from the `additional_data` element. | yes     | None                                                                                                    |
-| `contentTypeId`    | String    | The ID of the content type you are adding the Uploader to.   | yes     | None                                                                                                    |
+| `contentTypeId`    | String    | The ID of the content type you are adding the uploader to.  | yes     | None                                                                                                    |
 | `dataStore`        | DataStore | The DataStore to store the selected image in.                          | yes     | None                                                                                                    |
-| `initialValue`     | Object[]  | The image value to set for the initial state of the Uploader component. | yes     | None                                                                                                    |
+| `initialValue`     | Object[]  | The image value to set for the initial state of the uploader component. | yes     | None                                                                                                    |
 | `onChangeCallback` | Function  | The callback to execute when the end-user selects an image.                           | no    | Magento saves the image to the provided `dataStore` using `uploaderConfig.dataScope` as the key.        |
 | `onDeleteCallback` | Function  | The callback to execute when the end-user deletes the current image from storage. | no    | Magento removes the image from to the provided `dataStore` using `uploaderConfig.dataScope` as the key. |
 
-## Step 3: Add markup for the Uploader
+## Step 3: Add markup for the uploader
 
-To add the image Uploader to your preview template (`preview.html`), use Knockout's `scope` binding element to render an instance of your configured Uploader component from the Magento registry, as shown here:
+To add the image uploader to your preview template (`preview.html`), use Knockout's `scope` binding element to render an instance of your configured uploader component from the Magento registry, as shown here:
 
 ``` html
 <div ...>
@@ -91,6 +99,5 @@ To add the image Uploader to your preview template (`preview.html`), use Knockou
 </div>
 ```
 
-
 {: .bs-callout .bs-callout-info }
-When an end-user deletes a file from the media browser, Magento triggers the `fileDeleted` event on the window with the `mediabrowser` namespace. The passed argument is an object containing the `ids` property, which is an array of ID strings for each of the deleted files. Magento adds the IDs of the selected files in the objects dispatched by the `addFile` and `processFile` methods inside the image Uploader component.
+When an end-user deletes a file from the media browser, Magento triggers the `fileDeleted` event on the window with the `mediabrowser` namespace. The passed argument is an object containing the `ids` property, which is an array of ID strings for each of the deleted files. Magento adds the IDs of the selected files in the objects dispatched by the `addFile` and `processFile` methods inside the image uploader component.
