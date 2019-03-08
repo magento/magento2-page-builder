@@ -1,4 +1,4 @@
-# Changelog
+# Release Notes
 
 ## Beta 8 - February 19, 2019
 
