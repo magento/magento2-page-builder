@@ -66,6 +66,7 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes", "underscore"], func
       var focusedValue = element.innerHTML;
       var previouslyFocused = false;
       var blurTimeout;
+      var lastUpdateValue;
       /**
        * Record the value on focus, only conduct an update when data changes
        */
@@ -73,6 +74,7 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes", "underscore"], func
       var onFocus = function onFocus() {
         clearTimeout(blurTimeout);
         focusedValue = stripHtml(element.innerHTML);
+        lastUpdateValue = focusedValue;
 
         if (selectAll && element.innerHTML !== "" && !previouslyFocused) {
           _underscore.default.defer(function () {
@@ -140,8 +142,11 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes", "underscore"], func
 
 
       var onKeyUp = function onKeyUp() {
-        if (focusedValue !== stripHtml(element.innerHTML)) {
-          viewModel.updateData(field, stripHtml(element.innerHTML));
+        var strippedValue = stripHtml(element.innerHTML);
+
+        if (focusedValue !== strippedValue) {
+          lastUpdateValue = strippedValue;
+          viewModel.updateData(field, strippedValue);
         }
       };
       /**
@@ -186,6 +191,7 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes", "underscore"], func
 
         _underscore.default.defer(function () {
           var strippedValue = stripHtml(element.innerHTML);
+          lastUpdateValue = strippedValue;
           element.innerHTML = strippedValue;
           /**
            * Calculate the position the caret should end up at, the difference in string length + the original
@@ -221,9 +227,13 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes", "underscore"], func
       (0, _jquery.default)(element).parent().css("cursor", "text");
       handlePlaceholderClass(element); // Create a subscription onto the original data to update the internal value
 
-      viewModel.contentType.dataStore.subscribe(function () {
-        element.textContent = viewModel.contentType.dataStore.get(field);
-        handlePlaceholderClass(element);
+      viewModel.contentType.dataStore.subscribe(function (data) {
+        // Only update the value if it differs from the last value added within live edit
+        if (lastUpdateValue !== data[field]) {
+          lastUpdateValue = data[field];
+          element.textContent = data[field];
+          handlePlaceholderClass(element);
+        }
       }, field); // Resolve issues of content editable being within an anchor
 
       if ((0, _jquery.default)(element).parent().is("a")) {
