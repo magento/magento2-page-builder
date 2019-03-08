@@ -7,6 +7,14 @@
 -->
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="CheckStaticBlocksTest">
+        <before>
+            <magentoCLI command="config:set cms/pagebuilder/enabled 0" stepKey="disablePageBuilder"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/pagebuilder/enabled 1" stepKey="enablePageBuilder"/>
+        </after>
+    </test>
     <test name="AdminCreateDuplicatedCmsBlockTest">
         <before>
             <magentoCLI command="config:set cms/pagebuilder/enabled 0" stepKey="disablePageBuilder" after="loginGetFromGeneralFile"/>

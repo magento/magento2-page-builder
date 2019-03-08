@@ -1,0 +1,895 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="AdminConfigDefaultCategoryLayoutFromConfigurationSettingTest">
+        <annotations>
+            <description value="Admin should be able to configure the default layout for Category Page from System Configuration, verify the default is updated to the Page Builder's default layout"/>
+            <useCaseId value="MC-936"/>
+            <testCaseId value="MC-3105"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-layout"/>
+            <group value="pagebuilder-fullwidth"/>
+            <group value="pagebuilder-catalog-category"/>
+        </annotations>
+        <!-- PageBuilder is enabled so check default is full width -->
+        <comment userInput="PageBuilder is enabled so check default is full width" stepKey="commentSeeCategoryFullWidth" before="seeNoLayoutUpdatesSelected"/>
+        <seeOptionIsSelected selector="{{DefaultLayoutsSection.categoryLayout}}" userInput="{{PageBuilderFullWidthLayout.category}}" stepKey="seeNoLayoutUpdatesSelected"/>
+    </test>
+    <test name="PageBuilderCatalogCategoryVerifyPageBuilderVisible">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Catalog Category"/>
+            <title value="Admin are able to see PageBuilder on Catalog Category page after enable PageBuilder from Configuration"/>
+            <description value="Admin are able to see PageBuilder on Catalog Category page after enable PageBuilder from Configuration"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-1432"/>
+            <testCaseId value="MC-2408"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-catalog-category"/>
+            <group value="pagebuilder-text"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set cms/wysiwyg/enabled disabled" stepKey="disableWYSIWYG"/>
+            <createData entity="_defaultCategory" stepKey="createPreReqCategory"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToCreatedCategory" stepKey="navigateToCreatedProductEditPage">
+                <argument name="Category" value="$$createPreReqCategory$$"/>
+            </actionGroup>
+            <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminCategorySection"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG"/>
+            <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCategory"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="openPageBuilderForAttribute" stepKey="enablePageBuilderOnCatalog"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTextOntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <fillField selector="{{TextOnConfiguration.textArea}}" userInput="Hello Category from PageBuilder" stepKey="addTextToEditor"/>
+        <actionGroup ref="saveEditPanelSettingsFullScreen" stepKey="saveEditPanel"/>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
+        <actionGroup ref="saveCatalogCategory" stepKey="saveCatalogCategory"/>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToStorefront">
+            <argument name="page" value="$$createPreReqCategory.name$$.html"/>
+        </actionGroup>
+        <see userInput="Hello Category from PageBuilder" stepKey="seePageBuilderContent"/>
+    </test>
+    <test name="PageBuilderCatalogCategoryDirectivesTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Catalog Category"/>
+            <title value="Magento Directives - Always render Magento Directives on Magento Storefront for Category"/>
+            <description value="Admin are able to add CMS Page link, image, variable, widget into PageBuilder content and see it Category Page"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MC-3173"/>
+            <useCaseId value="MC-1364"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-magentoDirectives"/>
+            <group value="pagebuilder-catalog-category"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set general/store_information/country_id US" stepKey="setValueForCountryVariable"/>
+            <createData entity="_defaultCategory" stepKey="createPreReqCategory"/>
+            <createData entity="simpleCmsPage" stepKey="createCMSPageA"/>
+            <createData entity="simpleCmsPage" stepKey="createCMSPageB"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToCreatedCategory" stepKey="navigateToCreatedProductEditPage">
+                <argument name="Category" value="$$createPreReqCategory$$"/>
+            </actionGroup>
+            <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminCategorySection"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set general/store_information/country_id none" stepKey="setBackToDefaultValue"/>
+            <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCategory"/>
+            <deleteData createDataKey="createCMSPageA" stepKey="deletePreReqCmsPageA"/>
+            <deleteData createDataKey="createCMSPageB" stepKey="deletePreReqCmsPageB"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="openPageBuilderForAttribute" stepKey="enablePageBuilderOnCatalog"/>
+        <!--Add button to PageBuilder-->
+        <comment userInput="Add button to PageBuilder" stepKey="addButtonToPageBuilder"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSectionElements">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonIntoStage">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage1">
+            <argument name="section" value="ButtonItemOnStage"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <!--Choose cms page link type-->
+        <comment userInput="Choose cms page link type" stepKey="commentChooseCmsPageLinkType"/>
+        <actionGroup ref="fillOutUrlInput" stepKey="choosePageLink">
+            <argument name="fieldName" value="button_link"/>
+            <argument name="linkName" value="ExternalLink.page"/>
+            <argument name="searchString" value="ExternalLinkSearch.page"/>
+            <argument name="searchResult" value="$$createCMSPageA.title$$"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettingsFullScreen" stepKey="saveEditPanelSettings1"/>
+        <!--Add image to PageBuilder-->
+        <comment userInput="Add image to PageBuilder" stepKey="addImageToPageBuilder"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragImageIntoStage">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="addImageToStage" stepKey="addImageToStage">
+            <argument name="property" value="PageBuilderImageProperty_StageJPG"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTextOntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideTextInlineEditing" stepKey="closeLiveEdit"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <!--Add variable to PageBuilder-->
+        <comment userInput="Add variable to PageBuilder" stepKey="addVariableToPageBuilder"/>
+        <actionGroup ref="addVariableToTinyMCE" stepKey="addVariableToTinyMCE">
+            <argument name="variable" value="TinyMCEVariableCountry"/>
+        </actionGroup>
+        <!--Switch to iFrame 1-->
+        <comment userInput="Switch to iFrame" stepKey="commentSwitchToIFrame1"/>
+        <switchToIFrame selector="{{TextOnConfiguration.tinyMCEIFrame}}" stepKey="switchToIFrame1"/>
+        <waitForElementVisible selector="{{TextOnConfiguration.tinyMCEVariable(TinyMCEVariableCountry.editPanelValue, '1')}}" stepKey="waitForVariable2"/>
+        <switchToIFrame stepKey="exitIFrame1"/>
+        <!--Add widget to PageBuilder-->
+        <comment userInput="Add widget to PageBuilder" stepKey="addWidgetToPageBuilder"/>
+        <actionGroup ref="addPageLinkWidgetToTinyMCE" stepKey="addPageLinkWidgetToTinyMCE">
+            <argument name="widget" value="TinyMCEWidgetCMSPageLink"/>
+            <argument name="page" value="$$createCMSPageB.identifier$$"/>
+        </actionGroup>
+        <!--Switch to iFrame-->
+        <comment userInput="Switch to iFrame" stepKey="commentSwitchToIFrame"/>
+        <switchToIFrame selector="{{TextOnConfiguration.tinyMCEIFrame}}" stepKey="switchToIFrame"/>
+        <waitForElementVisible selector="{{TextOnConfiguration.tinyMCEWidget(TinyMCEWidgetCMSPageLink.editPanelValue, '1')}}" stepKey="waitForWidget"/>
+        <switchToIFrame stepKey="exitIFrame"/>
+        <actionGroup ref="saveEditPanelSettingsFullScreen" stepKey="saveEditPanel"/>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
+        <actionGroup ref="saveCatalogCategory" stepKey="saveCatalogCategory"/>
+        <!--Go to storefront to verify Category Link-->
+        <comment userInput="Verify directives on category store front" stepKey="commentVerifyDirectivesOnStorefront"/>
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToStorefront">
+            <argument name="page" value="$$createPreReqCategory.name$$.html"/>
+        </actionGroup>
+        <see userInput="US" stepKey="verifyCountryVariableName"/>
+        <see userInput="$$createCMSPageB.title$$" stepKey="verifyWidget"/>
+        <waitForElementVisible selector="{{ImageOnStorefront.imageSourceByIndex('1', PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="seeImage2SourceOnStorefront"/>
+        <actionGroup ref="verifyCmsPageLinkOnFrontend" stepKey="checkButtonOnStoreFront">
+            <argument name="CMSPage" value="$$createCMSPageA$$"/>
+            <argument name="index" value="1"/>
+            <argument name="section" value="ButtonItemOnStorefront"/>
+        </actionGroup>
+    </test>
+    <test name="PageBuilderCatalogCategoryUploadImageToCategory">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Catalog Category"/>
+            <title value="User Can upload image to category"/>
+            <description value="User upload image to category"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-86533"/>
+            <testCaseId value="MC-2399"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-mediaGallery"/>
+            <group value="pagebuilder-catalog-category"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultCategory" stepKey="createPreReqCategory"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToCreatedCategory" stepKey="navigateToCreatedCategory">
+                <argument name="Category" value="$$createPreReqCategory$$"/>
+            </actionGroup>
+        </before>
+        <after>
+            <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCatalog"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <click selector="{{AdminProductFormSection.contentTab}}" stepKey="clickContentTab"/>
+        <waitForText userInput="Category Image" stepKey="waitForText"/>
+        <seeElement selector="{{CategoryContentSection.SelectFromGalleryBtn}}" stepKey="seeSelectFromGallery"/>
+        <see userInput="Maximum file size" stepKey="seeMediaGalleryValidationMsg"/>
+        <see userInput="Browse to find or drag image here" stepKey="seeBrowseImageonPlaceHolder1"/>
+        <seeElement selector="{{CategoryContentSection.ImagePlaceHolder}}" stepKey="seeImagePlaceHolder"/>
+        <!--Upload image from local machine using image placeholder button-->
+        <attachFile selector="{{CategoryContentSection.Upload}}" userInput="{{ImageUpload.value}}" stepKey="uploadImage1"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoading6"/>
+        <waitForElementVisible  selector="{{ImageOnConfigurationPanel.imageName(ImageUpload.fileName)}}" stepKey="waitForUploadImage1"/>
+        <seeElement selector="{{ImageOnConfigurationPanel.imageName(ImageUpload.fileName)}}" stepKey="seeImageNameOnPreview1"/>
+        <seeElement selector="{{ImageOnConfigurationPanel.imageSource(ImageUpload.fileName)}}" stepKey="seeMainImageSource1"/>
+        <seeElement selector="{{ImageOnConfigurationPanel.imagePreview}}" stepKey="seeImageDisplayed1"/>
+        <!--Remove uploaded image-->
+        <click selector="{{ImageOnConfigurationPanel.trashBinIcon}}" stepKey="removeUploadedImage"/>
+        <see userInput="Browse to find or drag image here" stepKey="seeBrowseImageonPlaceHolder2"/>
+        <!--Upload another image from local machine using image placeholder button-->
+        <attachFile selector="{{CategoryContentSection.Upload}}" userInput="{{ImageUpload_1.file}}" stepKey="uploadImage2"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoading7"/>
+        <waitForElementVisible  selector="{{ImageOnConfigurationPanel.imageName(ImageUpload_1.file)}}" stepKey="waitForUploadImage2"/>
+        <seeElement selector="{{ImageOnConfigurationPanel.imageName(ImageUpload_1.file)}}" stepKey="seeImageNameOnPreview12"/>
+        <seeElement selector="{{ImageOnConfigurationPanel.imageSource(ImageUpload_1.file)}}" stepKey="seeMainImageSource2"/>
+        <seeElement selector="{{ImageOnConfigurationPanel.imagePreview}}" stepKey="seeImageDisplayed2"/>
+        <!--Overwrite uploaded image by selecting image from Media Gallery Storage-->
+        <click selector="{{CategoryContentSection.SelectFromGalleryBtn}}" stepKey="clickSelectFromGalleryBtn"/>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <click selector="{{MediaGallerySection.StorageRootArrow}}" stepKey="clickStorageRoot"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <actionGroup ref="CreateImageFolder" stepKey="createImageFolder">
+            <argument name="ImageFolder" value="ImageFolder"/>
+        </actionGroup>
+        <actionGroup ref="attachImage" stepKey="SelectImageFromMediaStorage">
+            <argument name="Image" value="ImageUpload1"/>
+        </actionGroup>
+        <actionGroup ref="saveImage" stepKey="saveImage"/>
+        <seeElement selector="{{ImageOnConfigurationPanel.imageName(ImageUpload1.value)}}" stepKey="seeImageNameOnPreview3"/>
+        <seeElement selector="{{ImageOnConfigurationPanel.imageSource(ImageUpload1.value)}}" stepKey="seeMainImageSource3"/>
+        <seeElement selector="{{ImageOnConfigurationPanel.trashBinIcon}}" stepKey="seeTrashBinBtn"/>
+        <click selector="{{AdminCategoryMainActionsSection.SaveButton}}" stepKey="saveCategory"/>
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToStorefront">
+            <argument name="page" value="$$createPreReqCategory.name$$.html"/>
+        </actionGroup>
+        <seeElement selector="{{ImageOnConfigurationPanel.imageSource(ImageUpload1.value)}}" stepKey="seeMainImageSource4"/>
+    </test>
+    <test name="PageBuilderCatalogCategoryCreateCategoryWithPageBuilderDescription">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Catalog Category"/>
+            <title value="Page Layout - Category description should display in full width"/>
+            <description value="Category description should display in full width"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-936"/>
+            <testCaseId value="MC-3075"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-layout"/>
+            <group value="pagebuilder-fullwidth"/>
+            <group value="pagebuilder-catalog-category"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultCategory" stepKey="createPreReqCategory"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToCreatedCategory" stepKey="navigateToCreatedProductEditPage">
+                <argument name="Category" value="$$createPreReqCategory$$"/>
+            </actionGroup>
+            <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminCategorySection"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCategory"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="openPageBuilderForAttribute" stepKey="enablePageBuilderOnCatalog"/>
+        <!-- Set background color of row -->
+        <comment userInput="Set background color of row" stepKey="commentSetRowBackgroundColor"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBackgroundColor">
+            <argument name="property" value="PageBuilderBackgroundColor_HSV_Orange"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettingsFullScreen" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragHeadingOntoStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <!-- Add heading to stage -->
+        <comment userInput="Add heading to stage" stepKey="commentAddHeadingToStage"/>
+        <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage">
+            <argument name="headingText" value="PageBuilderHeadingTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
+        <!-- Use Full Width layout -->
+        <comment userInput="Set Layout to Category - Full Width" stepKey="commentSetLayout"/>
+        <actionGroup ref="setLayout" stepKey="setFullWidthLayout">
+            <argument name="designSection" value="CategoryDesignSection"/>
+            <argument name="layoutOption" value="PageBuilderFullWidthLayout.category"/>
+        </actionGroup>
+        <actionGroup ref="saveCatalogCategory" stepKey="saveCatalogCategory"/>
+        <!-- Check that description is full width on storefront-->
+        <comment userInput="Check that description is full width on storefront" stepKey="commentSeeDescriptionFullWidth"/>
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToStorefront">
+            <argument name="page" value="$$createPreReqCategory.name$$.html"/>
+        </actionGroup>
+        <actionGroup ref="verifyFullWidthLayout" stepKey="verifyFullWidthLayout"/>
+    </test>
+    <test name="PageBuilderCatalogCategoryCreateCategoryWithPageBuilderDescriptionAndInvalidPageLayout">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Catalog Category"/>
+            <title value="Create category with unsupported Page Builder full width layout"/>
+            <description value="Create category with unsupported Page Builder full width layout"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-936"/>
+            <testCaseId value="MC-3107"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-layout"/>
+            <group value="pagebuilder-fullwidth"/>
+            <group value="pagebuilder-catalog-category"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultCategory" stepKey="createPreReqCategory"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToCreatedCategory" stepKey="navigateToCreatedProductEditPage">
+                <argument name="Category" value="$$createPreReqCategory$$"/>
+            </actionGroup>
+            <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminCategorySection"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCategory"/>
+            <closeTab stepKey="closeTab"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="openPageBuilderForAttribute" stepKey="enablePageBuilderOnCatalog"/>
+        <!-- Set background color of row -->
+        <comment userInput="Set background color of row" stepKey="commentSetRowBackgroundColor"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBackgroundColor">
+            <argument name="property" value="PageBuilderBackgroundColor_HSV_Orange"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettingsFullScreen" stepKey="saveEditPanelSettings"/>
+        <!-- Add heading to stage -->
+        <comment userInput="Add heading to stage" stepKey="commentAddHeadingToStage"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragHeadingOntoStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage">
+            <argument name="headingText" value="PageBuilderHeadingTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
+        <!-- Set Layout to Page - Full Width -->
+        <comment userInput="Set Layout to Page - Full Width" stepKey="commentSetLayout"/>
+        <actionGroup ref="setLayout" stepKey="setFullWidthLayout">
+            <argument name="designSection" value="CategoryDesignSection"/>
+            <argument name="layoutOption" value="PageBuilderFullWidthLayout.cms"/>
+        </actionGroup>
+        <actionGroup ref="saveCatalogCategory" stepKey="saveCatalogCategory"/>
+        <!-- Check the category's heading is still displayed using the Page full width layout-->
+        <comment userInput="Check the category's heading is still displayed using the Page full width layout" stepKey="commentSeeDescriptionFullWidth"/>
+        <openNewTab stepKey="openNewTab"/>
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToStorefront">
+            <argument name="page" value="$$createPreReqCategory.name$$.html"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{HeadingOnStorefront.headingText(PageBuilderHeadingTypeProperty_H2.value, PageBuilderHeadingTextProperty.value, '1')}}" stepKey="waitForStorefrontHeadingText"/>
+        <!-- Set Layout to Product - Full Width -->
+        <comment userInput="Set Layout to Product - Full Width" stepKey="commentSetLayout2"/>
+        <switchToNextTab stepKey="switchToNextTab"/>
+        <actionGroup ref="setLayout" stepKey="setFullWidthLayout2">
+            <argument name="designSection" value="CategoryDesignSection"/>
+            <argument name="layoutOption" value="PageBuilderFullWidthLayout.product"/>
+        </actionGroup>
+        <actionGroup ref="saveCatalogCategory" stepKey="saveCatalogCategory2"/>
+        <!-- Check the category heading is still displayed on store front with product full width layout -->
+        <comment userInput="Check the category heading is still displayed on store front with product full width layout" stepKey="commentSeeDescriptionFullWidth2"/>
+        <switchToNextTab stepKey="switchToNextTab2"/>
+        <reloadPage stepKey="reloadPage"/>
+        <waitForPageLoad stepKey="waitForPageReload"/>
+        <waitForElementVisible selector="{{HeadingOnStorefront.headingText(PageBuilderHeadingTypeProperty_H2.value, PageBuilderHeadingTextProperty.value, '1')}}" stepKey="waitForStorefrontHeadingText2"/>
+    </test>
+    <test name="PageBuilderCatalogCategoryAddAndEditRowColumnSlide" extends="PageBuilderCatalogProductAddAndEditRowColumnSlide">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Catalog Category"/>
+            <title value="Add and Edit Row, Column, and Slider to PageBuilder in Catalog Category Description"/>
+            <description value="This test is intended to ensure that basic adding and editing of multiple content types work correctly in the Catalog Category area of PageBuilder."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-3330"/>
+            <testCaseId value="MC-13959"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-row"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-catalog-category"/>
+        </annotations>
+        <before>
+            <comment userInput="---merging to remove step---" stepKey="createProduct"/>
+            <actionGroup ref="navigateToCreatedCategory" stepKey="navigateToCreatedProductEditPage">
+                <argument name="Category" value="$$createPreReqCategory$$"/>
+            </actionGroup>
+            <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminProductSection"/>
+        </before>
+        <after>
+            <comment userInput="---merging to remove step---" stepKey="deleteCreatedProduct"/>
+            <comment userInput="---merging to remove step---" stepKey="NavigateToAndResetProductGridToDefaultView"/>
+        </after>
+        <!-- Save Category -->
+        <comment userInput="Save Category" stepKey="commentSaveProduct"/>
+        <actionGroup ref="saveCatalogCategory" stepKey="saveProduct"/>
+        <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminProductSection"/>
+        <!-- Validate Storefront -->
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToProductStorefront">
+            <argument name="page" value="$$createPreReqCategory.name$$.html"/>
+        </actionGroup>
+        <scrollTo selector="{{StorefrontCategoryMainSection.CatalogDescription}}" stepKey="scrollToProductDescription"/>
+    </test>
+    <test name="PageBuilderCatalogCategoryVerifyCanMoveContentTypesFromOnHoverOptionMenus" extends="PageBuilderCatalogProductVerifyCanMoveContentTypesFromOnHoverOptionMenus">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Catalog Category"/>
+            <title value="Verify That User Can Move Content Types From On-Hover Option Menus"/>
+            <description value="This test is intended to ensure that users can move content types from the on-hover option menus within the PageBuilder stage for Category Description."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-3330"/>
+            <testCaseId value="MC-13965"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-heading"/>
+            <group value="pagebuilder-divider"/>
+            <group value="pagebuilder-move"/>
+            <group value="pagebuilder-catalog-category"/>
+        </annotations>
+        <before>
+            <comment userInput="---merging to remove step---" stepKey="createProduct"/>
+            <actionGroup ref="navigateToCreatedCategory" stepKey="navigateToCreatedProductEditPage">
+                <argument name="Category" value="$$createPreReqCategory$$"/>
+            </actionGroup>
+            <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminProductSection"/>
+        </before>
+        <after>
+            <comment userInput="---merging to remove step---" stepKey="deleteCreatedProduct"/>
+            <comment userInput="---merging to remove step---" stepKey="NavigateToAndResetProductGridToDefaultView"/>
+        </after>
+        <!-- Save Category -->
+        <comment userInput="Save Category" stepKey="commentSaveProduct"/>
+        <actionGroup ref="saveCatalogCategory" stepKey="saveProduct"/>
+        <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminProductSection"/>
+        <!-- Validate Storefront -->
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToProductStorefront">
+            <argument name="page" value="$$createPreReqCategory.name$$.html"/>
+        </actionGroup>
+        <scrollTo selector="{{StorefrontCategoryMainSection.CatalogDescription}}" stepKey="scrollToProductDescription"/>
+    </test>
+    <test name="PageBuilderCatalogCategoryVerifyCanEditContentTypesFromOnHoverOptionMenus" extends="PageBuilderCatalogProductVerifyCanEditContentTypesFromOnHoverOptionMenus">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Catalog Category"/>
+            <title value="Verify That User Can Edit Content Types From On-Hover Option Menus"/>
+            <description value="This test is intended to ensure that users can edit content types from the on-hover option menus within the PageBuilder stage for Category Description."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-3330"/>
+            <testCaseId value="MC-14811"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-row"/>
+            <group value="pagebuilder-edit"/>
+            <group value="pagebuilder-catalog-category"/>
+        </annotations>
+        <before>
+            <comment userInput="---merging to remove step---" stepKey="createProduct"/>
+            <actionGroup ref="navigateToCreatedCategory" stepKey="navigateToCreatedProductEditPage">
+                <argument name="Category" value="$$createPreReqCategory$$"/>
+            </actionGroup>
+            <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminProductSection"/>
+        </before>
+        <after>
+            <comment userInput="---merging to remove step---" stepKey="deleteCreatedProduct"/>
+            <comment userInput="---merging to remove step---" stepKey="NavigateToAndResetProductGridToDefaultView"/>
+        </after>
+        <!-- Save Category -->
+        <comment userInput="Save Category" stepKey="commentSaveProduct"/>
+        <actionGroup ref="saveCatalogCategory" stepKey="saveProduct"/>
+        <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminProductSection"/>
+        <!-- Validate Storefront -->
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToProductStorefront">
+            <argument name="page" value="$$createPreReqCategory.name$$.html"/>
+        </actionGroup>
+        <scrollTo selector="{{StorefrontCategoryMainSection.CatalogDescription}}" stepKey="scrollToProductDescription"/>
+    </test>
+    <test name="PageBuilderCatalogCategoryVerifyCanDuplicateContentTypesFromOnHoverOptionMenus" extends="PageBuilderCatalogProductVerifyCanDuplicateContentTypesFromOnHoverOptionMenus">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Catalog Category"/>
+            <title value="Verify That User Can Duplicate Content Types From On-Hover Option Menus"/>
+            <description value="This test is intended to ensure that users can duplicate content types from the on-hover option menus within the PageBuilder stage for Category Description."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-3330"/>
+            <testCaseId value="MC-14812"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-row"/>
+            <group value="pagebuilder-duplicate"/>
+            <group value="pagebuilder-catalog-category"/>
+        </annotations>
+        <before>
+            <comment userInput="---merging to remove step---" stepKey="createProduct"/>
+            <actionGroup ref="navigateToCreatedCategory" stepKey="navigateToCreatedProductEditPage">
+                <argument name="Category" value="$$createPreReqCategory$$"/>
+            </actionGroup>
+            <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminProductSection"/>
+        </before>
+        <after>
+            <comment userInput="---merging to remove step---" stepKey="deleteCreatedProduct"/>
+            <comment userInput="---merging to remove step---" stepKey="NavigateToAndResetProductGridToDefaultView"/>
+        </after>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanel">
+            <argument name="baseContent" value="{{AdminCategoryMainActionsSection.SaveButton}}"/>
+        </actionGroup>
+        <!-- Save Category -->
+        <comment userInput="Save Category" stepKey="commentSaveProduct"/>
+        <actionGroup ref="saveCatalogCategory" stepKey="saveProduct"/>
+        <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminProductSection"/>
+        <!-- Validate Storefront -->
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToProductStorefront">
+            <argument name="page" value="$$createPreReqCategory.name$$.html"/>
+        </actionGroup>
+        <scrollTo selector="{{StorefrontCategoryMainSection.CatalogDescription}}" stepKey="scrollToProductDescription"/>
+    </test>
+    <test name="PageBuilderCatalogCategoryVerifyCanDeleteContentTypesFromOnHoverOptionMenus" extends="PageBuilderCatalogProductVerifyCanDeleteContentTypesFromOnHoverOptionMenus">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Catalog Category"/>
+            <title value="Verify That User Can Delete Content Types From On-Hover Option Menus"/>
+            <description value="This test is intended to ensure that users can delete content types from the on-hover option menus within the PageBuilder stage for Category Description."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-3330"/>
+            <testCaseId value="MC-14814"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-divider"/>
+            <group value="pagebuilder-delete"/>
+            <group value="pagebuilder-catalog-category"/>
+        </annotations>
+        <before>
+            <comment userInput="---merging to remove step---" stepKey="createProduct"/>
+            <actionGroup ref="navigateToCreatedCategory" stepKey="navigateToCreatedProductEditPage">
+                <argument name="Category" value="$$createPreReqCategory$$"/>
+            </actionGroup>
+            <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminProductSection"/>
+        </before>
+        <after>
+            <comment userInput="---merging to remove step---" stepKey="deleteCreatedProduct"/>
+            <comment userInput="---merging to remove step---" stepKey="NavigateToAndResetProductGridToDefaultView"/>
+        </after>
+        <!-- Save Category -->
+        <comment userInput="Save Category" stepKey="commentSaveProduct"/>
+        <actionGroup ref="saveCatalogCategory" stepKey="saveProduct"/>
+        <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminProductSection"/>
+        <!-- Save Category After Delete -->
+        <comment userInput="Save Category After Delete" stepKey="commentSaveProductAfterDelete"/>
+        <actionGroup ref="saveCatalogCategory" stepKey="saveProductAfterDelete"/>
+        <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminProductSectionAfterDelete"/>
+        <!-- Validate Storefront -->
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToProductStorefront">
+            <argument name="page" value="$$createPreReqCategory.name$$.html"/>
+        </actionGroup>
+        <scrollTo selector="{{StorefrontCategoryMainSection.CatalogDescription}}" stepKey="scrollToProductDescription"/>
+    </test>
+    <test name="PageBuilderCatalogCategoryVerifyCanAddChildContentTypesFromOnHoverOptionMenus" extends="PageBuilderCatalogProductVerifyCanAddChildContentTypesFromOnHoverOptionMenus">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Catalog Category"/>
+            <title value="Verify That User Can Add Child Content Types From On-Hover Option Menus"/>
+            <description value="This test is intended to ensure that users can add child content types from the on-hover option menus within the PageBuilder stage for Category Description."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-3330"/>
+            <testCaseId value="MC-14827"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-buttons"/>
+            <group value="pagebuilder-add"/>
+            <group value="pagebuilder-catalog-category"/>
+        </annotations>
+        <before>
+            <comment userInput="---merging to remove step---" stepKey="createProduct"/>
+            <actionGroup ref="navigateToCreatedCategory" stepKey="navigateToCreatedProductEditPage">
+                <argument name="Category" value="$$createPreReqCategory$$"/>
+            </actionGroup>
+            <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminProductSection"/>
+        </before>
+        <after>
+            <comment userInput="---merging to remove step---" stepKey="deleteCreatedProduct"/>
+            <comment userInput="---merging to remove step---" stepKey="NavigateToAndResetProductGridToDefaultView"/>
+        </after>
+        <!-- Save Category -->
+        <comment userInput="Save Category" stepKey="commentSaveProduct"/>
+        <actionGroup ref="saveCatalogCategory" stepKey="saveProduct"/>
+        <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminProductSection"/>
+        <!-- Validate Storefront -->
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToProductStorefront">
+            <argument name="page" value="$$createPreReqCategory.name$$.html"/>
+        </actionGroup>
+        <scrollTo selector="{{StorefrontCategoryMainSection.CatalogDescription}}" stepKey="scrollToProductDescription"/>
+    </test>
+    <test name="PageBuilderCatalogCategoryVerifyCanEditContentTypesFromOnClickOptionMenus" extends="PageBuilderCatalogProductVerifyCanEditContentTypesFromOnClickOptionMenus">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Catalog Category"/>
+            <title value="Verify That User Can Edit Content Types From On-Click Option Menus"/>
+            <description value="This test is intended to ensure that users can edit content types from the on-click option menus within the PageBuilder stage for Category Description."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-3330"/>
+            <testCaseId value="MC-14828"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-edit"/>
+            <group value="pagebuilder-catalog-category"/>
+        </annotations>
+        <before>
+            <comment userInput="---merging to remove step---" stepKey="createProduct"/>
+            <actionGroup ref="navigateToCreatedCategory" stepKey="navigateToCreatedProductEditPage">
+                <argument name="Category" value="$$createPreReqCategory$$"/>
+            </actionGroup>
+            <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminProductSection"/>
+        </before>
+        <after>
+            <comment userInput="---merging to remove step---" stepKey="deleteCreatedProduct"/>
+            <comment userInput="---merging to remove step---" stepKey="NavigateToAndResetProductGridToDefaultView"/>
+        </after>
+        <!-- Save Category -->
+        <comment userInput="Save Category" stepKey="commentSaveProduct"/>
+        <actionGroup ref="saveCatalogCategory" stepKey="saveProduct"/>
+        <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminProductSection"/>
+        <!-- Validate Storefront -->
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToProductStorefront">
+            <argument name="page" value="$$createPreReqCategory.name$$.html"/>
+        </actionGroup>
+        <scrollTo selector="{{StorefrontCategoryMainSection.CatalogDescription}}" stepKey="scrollToProductDescription"/>
+    </test>
+    <test name="PageBuilderCatalogCategoryVerifyCanDuplicateContentTypesFromOnClickOptionMenus" extends="PageBuilderCatalogProductVerifyCanDuplicateContentTypesFromOnClickOptionMenus">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Catalog Category"/>
+            <title value="Verify That User Can Duplicate Content Types From On-Click Option Menus"/>
+            <description value="This test is intended to ensure that users can duplicate content types from the on-click option menus within the PageBuilder stage for Category Description."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-3330"/>
+            <testCaseId value="MC-14829"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-buttons"/>
+            <group value="pagebuilder-duplicate"/>
+            <group value="pagebuilder-catalog-category"/>
+        </annotations>
+        <before>
+            <comment userInput="---merging to remove step---" stepKey="createProduct"/>
+            <actionGroup ref="navigateToCreatedCategory" stepKey="navigateToCreatedProductEditPage">
+                <argument name="Category" value="$$createPreReqCategory$$"/>
+            </actionGroup>
+            <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminProductSection"/>
+        </before>
+        <after>
+            <comment userInput="---merging to remove step---" stepKey="deleteCreatedProduct"/>
+            <comment userInput="---merging to remove step---" stepKey="NavigateToAndResetProductGridToDefaultView"/>
+        </after>
+        <!-- Save Category -->
+        <comment userInput="Save Category" stepKey="commentSaveProduct"/>
+        <actionGroup ref="saveCatalogCategory" stepKey="saveProduct"/>
+        <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminProductSection"/>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanel">
+            <argument name="baseContent" value="{{AdminCategoryMainActionsSection.SaveButton}}"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToProductStorefront">
+            <argument name="page" value="$$createPreReqCategory.name$$.html"/>
+        </actionGroup>
+        <scrollTo selector="{{StorefrontCategoryMainSection.CatalogDescription}}" stepKey="scrollToProductDescription"/>
+    </test>
+    <test name="PageBuilderCatalogCategoryVerifyCanDeleteContentTypesFromOnClickOptionMenus" extends="PageBuilderCatalogProductVerifyCanDeleteContentTypesFromOnClickOptionMenus">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Catalog Category"/>
+            <title value="Verify That User Can Delete Content Types From On-Click Option Menus"/>
+            <description value="This test is intended to ensure that users can delete content types from the on-click option menus within the PageBuilder stage for Category Description."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-3330"/>
+            <testCaseId value="MC-14830"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-buttons"/>
+            <group value="pagebuilder-delete"/>
+            <group value="pagebuilder-catalog-category"/>
+        </annotations>
+        <before>
+            <comment userInput="---merging to remove step---" stepKey="createProduct"/>
+            <actionGroup ref="navigateToCreatedCategory" stepKey="navigateToCreatedProductEditPage">
+                <argument name="Category" value="$$createPreReqCategory$$"/>
+            </actionGroup>
+            <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminProductSection"/>
+        </before>
+        <after>
+            <comment userInput="---merging to remove step---" stepKey="deleteCreatedProduct"/>
+            <comment userInput="---merging to remove step---" stepKey="NavigateToAndResetProductGridToDefaultView"/>
+        </after>
+        <!-- Save Category -->
+        <comment userInput="Save Category" stepKey="commentSaveProduct"/>
+        <actionGroup ref="saveCatalogCategory" stepKey="saveProduct"/>
+        <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminProductSection"/>
+        <!-- Save Category After Delete -->
+        <comment userInput="Save Category After Delete" stepKey="commentSaveProductAfterDelete"/>
+        <actionGroup ref="saveCatalogCategory" stepKey="saveProductAfterDelete"/>
+        <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminProductSectionAfterDelete"/>
+        <!-- Validate Storefront -->
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToProductStorefront">
+            <argument name="page" value="$$createPreReqCategory.name$$.html"/>
+        </actionGroup>
+        <scrollTo selector="{{StorefrontCategoryMainSection.CatalogDescription}}" stepKey="scrollToProductDescription"/>
+    </test>
+    <test name="PageBuilderCatalogCategoryVerifyCanMoveButtonItems" extends="ButtonItemMoveButtonStackedAppearance">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Catalog Category"/>
+            <title value="Verify That User Can Move Button Items"/>
+            <description value="This test is intended to ensure that users can move button items within the PageBuilder stage for Category Description."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-3330"/>
+            <testCaseId value="MC-14831"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-buttons"/>
+            <group value="pagebuilder-move"/>
+            <group value="pagebuilder-catalog-category"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultCategory" before="loginAsAdmin" stepKey="createPreReqCategory"/>
+            <actionGroup ref="navigateToCreatedCategory" stepKey="navigateToAPageWithPageBuilder">
+                <argument name="Category" value="$$createPreReqCategory$$"/>
+            </actionGroup>
+            <actionGroup ref="expandAdminCategorySection" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="openPageBuilderForAttribute" after="switchToPageBuilderStage" stepKey="openPageBuilderForDescription"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createPreReqCategory" before="logout" stepKey="deleteCreatedCategory"/>
+        </after>
+        <comment userInput="---merging to remove step---" stepKey="enterPageTitle"/>
+        <actionGroup ref="saveEditPanelSettingsFullScreen" stepKey="saveEditPanelSettings1"/>
+        <!-- Save Category -->
+        <comment userInput="Save Category" stepKey="commentSaveCategory" before="exitPageBuilderFullScreen"/>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen" before="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="saveCatalogCategory" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminCategorySection" before="switchToPageBuilderStage"/>
+        <actionGroup ref="openPageBuilderForAttribute" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToStoreFront">
+            <argument name="page" value="$$createPreReqCategory.name$$.html"/>
+        </actionGroup>
+        <scrollTo selector="{{StorefrontCategoryMainSection.CatalogDescription}}" stepKey="scrollToCategoryDescription" after="navigateToStoreFront"/>
+    </test>
+    <test name="PageBuilderCatalogCategoryVerifyCanMoveSlideItems" extends="SlideItemMoveSlideItemsToRearrange">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Catalog Category"/>
+            <title value="Verify That User Can Move Slide Items"/>
+            <description value="This test is intended to ensure that users can move slide items within the PageBuilder stage for Category Description."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-3330"/>
+            <testCaseId value="MC-14865"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-move"/>
+            <group value="pagebuilder-catalog-category"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultCategory" after="loginAsAdmin" stepKey="createPreReqCategory"/>
+            <actionGroup ref="navigateToCreatedCategory" stepKey="navigateToAPageWithPageBuilder">
+                <argument name="Category" value="$$createPreReqCategory$$"/>
+            </actionGroup>
+            <actionGroup ref="expandAdminCategorySection" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="openPageBuilderForAttribute" after="switchToPageBuilderStage" stepKey="openPageBuilderForDescription"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createPreReqCategory" before="logout" stepKey="deleteCreatedCategory"/>
+        </after>
+        <comment userInput="---merging to remove step---" stepKey="enterPageTitle"/>
+        <actionGroup ref="saveEditPanelSettingsFullScreen" stepKey="saveEditPanel1Settings"/>
+        <actionGroup ref="saveEditPanelSettingsFullScreen" stepKey="saveEditPanel1Settings2"/>
+        <actionGroup ref="saveEditPanelSettingsFullScreen" stepKey="saveEditPanel1Settings3"/>
+        <!-- Save Category -->
+        <comment userInput="Save Category" stepKey="commentSaveCategory" before="exitPageBuilderFullScreen"/>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen" before="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="saveCatalogCategory" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminCategorySection" before="switchToPageBuilderStage1"/>
+        <actionGroup ref="openPageBuilderForAttribute" stepKey="switchToPageBuilderStage1"/>
+        <!-- Save Category After Sorting -->
+        <comment userInput="Save Category After Sorting" stepKey="commentSaveCategory2" before="exitPageBuilderFullScreen2"/>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen2" before="saveAndContinueEditCmsPage1"/>
+        <actionGroup ref="saveCatalogCategory" stepKey="saveAndContinueEditCmsPage1"/>
+        <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminCategorySection2" before="switchToPageBuilderStage2"/>
+        <actionGroup ref="openPageBuilderForAttribute" stepKey="switchToPageBuilderStage2"/>
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToStoreFront">
+            <argument name="page" value="$$createPreReqCategory.name$$.html"/>
+        </actionGroup>
+        <scrollTo selector="{{StorefrontCategoryMainSection.CatalogDescription}}" stepKey="scrollToCategoryDescription" after="navigateToStoreFront"/>
+    </test>
+    <test name="PageBuilderCatalogCategoryVerifyCanMoveTabItems" extends="TabsRearrangeTabItems">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Catalog Category"/>
+            <title value="Verify That User Can Move Tab Items"/>
+            <description value="This test is intended to ensure that users can move tab items within the PageBuilder stage for Category Description."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-3330"/>
+            <testCaseId value="MC-14879"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-tab"/>
+            <group value="pagebuilder-move"/>
+            <group value="pagebuilder-catalog-category"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultCategory" after="loginAsAdmin" stepKey="createPreReqCategory"/>
+            <actionGroup ref="navigateToCreatedCategory" stepKey="navigateToAPageWithPageBuilder">
+                <argument name="Category" value="$$createPreReqCategory$$"/>
+            </actionGroup>
+            <actionGroup ref="expandAdminCategorySection" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="openPageBuilderForAttribute" after="switchToPageBuilderStage" stepKey="openPageBuilderForDescription"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createPreReqCategory" before="logout" stepKey="deleteCreatedCategory"/>
+        </after>
+        <comment userInput="---merging to remove step---" stepKey="enterPageTitle"/>
+        <!-- Save Category -->
+        <comment userInput="Save Category" stepKey="commentSavePage"/>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen" before="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="saveCatalogCategory" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminCategorySection" before="switchToPageBuilderStage"/>
+        <actionGroup ref="openPageBuilderForAttribute" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToStoreFront">
+            <argument name="page" value="$$createPreReqCategory.name$$.html"/>
+        </actionGroup>
+        <scrollTo selector="{{StorefrontCategoryMainSection.CatalogDescription}}" stepKey="scrollToCategoryDescription" after="navigateToStoreFront"/>
+    </test>
+    <test name="PageBuilderCatalogCategoryFullScreenCoversEntireScreen" extends="PageBuilderFullScreenCoversEntireScreen">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Catalog Category"/>
+            <title value="Verify That Full-Screen Mode Covers Entire Screen"/>
+            <description value="This test is to ensure that the PageBuilder full-screen mode covers the entire screen when opened for Category Description."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-3330"/>
+            <testCaseId value="MC-14909"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-fullScreen"/>
+            <group value="pagebuilder-catalog-category"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultCategory" before="loginAsAdmin" stepKey="createPreReqCategory"/>
+            <actionGroup ref="navigateToCreatedCategory" stepKey="navigateToAPageWithPageBuilder">
+                <argument name="Category" value="$$createPreReqCategory$$"/>
+            </actionGroup>
+            <actionGroup ref="expandAdminCategorySection" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="openPageBuilderForAttribute" after="switchToPageBuilderStage" stepKey="openPageBuilderForDescription"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createPreReqCategory" before="logout" stepKey="deleteCreatedCategory"/>
+        </after>
+        <comment userInput="---merging to remove step---" stepKey="openPageBuilderFullScreen"/>
+    </test>
+    <test name="PageBuilderCatalogCategoryFullScreenLeftPanelHeightAndFunctionality" extends="PageBuilderFullScreenLeftPanelHeightAndFunctionality">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Catalog Category"/>
+            <title value="Left Panel Is Full-Height and Works In Full-Screen Mode"/>
+            <description value="This test is to ensure that the PageBuilder left panel works and grows to span the full height of the viewport in full-screen mode when opened for Category Description."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-3330"/>
+            <testCaseId value="MC-14910"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-fullScreen"/>
+            <group value="pagebuilder-catalog-category"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultCategory" before="loginAsAdmin" stepKey="createPreReqCategory"/>
+            <actionGroup ref="navigateToCreatedCategory" stepKey="navigateToAPageWithPageBuilder">
+                <argument name="Category" value="$$createPreReqCategory$$"/>
+            </actionGroup>
+            <actionGroup ref="expandAdminCategorySection" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="openPageBuilderForAttribute" after="switchToPageBuilderStage" stepKey="openPageBuilderForDescription"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createPreReqCategory" before="logout" stepKey="deleteCreatedCategory"/>
+        </after>
+        <comment userInput="---merging to remove step---" stepKey="openPageBuilderFullScreen"/>
+    </test>
+</tests>
