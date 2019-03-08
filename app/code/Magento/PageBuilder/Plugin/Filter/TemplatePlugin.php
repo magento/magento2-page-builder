@@ -106,6 +106,32 @@ class TemplatePlugin
     }
 
     /**
+     * Determine if custom variable directive's return value needs to be escaped and do so if true
+     *
+     * @param \Magento\Framework\Filter\Template $subject
+     * @param \Closure $proceed
+     * @param $construction
+     * @return string
+     */
+    public function aroundCustomvarDirective(
+        \Magento\Framework\Filter\Template $subject,
+        \Closure $proceed,
+        $construction
+    ) {
+        // Determine the need to escape the return value of observed method.
+        // Admin context requires store ID of 0; in that context return value should be escaped
+        $shouldEscape = $subject->getStoreId() !== null && (int) $subject->getStoreId() === 0;
+
+        if (!$shouldEscape) {
+            return $proceed();
+        }
+
+        $result = $proceed($construction);
+
+        return htmlspecialchars($result);
+    }
+
+    /**
      * Create a DOM document from a given string
      *
      * @param string $html
