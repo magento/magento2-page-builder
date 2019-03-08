@@ -8,6 +8,7 @@ declare(strict_types=1);
 
 namespace Magento\PageBuilder\Plugin\Filter;
 
+use Magento\Store\Model\Store;
 use Magento\Widget\Model\Template\Filter as TemplateFilter;
 use Magento\TestFramework\Helper\Bootstrap;
 
@@ -30,6 +31,9 @@ class TemplatePluginTest extends \PHPUnit\Framework\TestCase
     {
         $this->objectManager = Bootstrap::getObjectManager();
         $this->templateFilter = $this->objectManager->get(TemplateFilter::class);
+
+        // set store id to 0 to recognize that escaping is required in custom variable
+        $this->templateFilter->setStoreId(Store::DEFAULT_STORE_ID);
     }
 
     /**
@@ -37,6 +41,8 @@ class TemplatePluginTest extends \PHPUnit\Framework\TestCase
      * @param string $postFiltered
      * @param string $preFilteredBasename
      * @dataProvider filterDataProvider
+     * @magentoDataFixture Magento/PageBuilder/_files/custom_variable_xss.php
+     * @magentoDbIsolation enabled
      */
     public function testFiltering(string $preFiltered, string $postFiltered, string $preFilteredBasename)
     {
