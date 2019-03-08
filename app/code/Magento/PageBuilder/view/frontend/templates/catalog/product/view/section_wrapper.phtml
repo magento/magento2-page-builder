@@ -9,7 +9,7 @@
  *
  * @var \Magento\Framework\View\Element\Template $block
  */
-$childHtml = $block->getChildHtml();
+$childHtml = $block->getProduct() ? $block->getChildHtml() : '';
 ?>
 <?php if (trim($childHtml) !== "") : ?>
     <div class="product-full-width-section">
