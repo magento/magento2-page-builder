@@ -30,9 +30,6 @@ class ContentTypeUsageReportProviderTest extends \PHPUnit\Framework\TestCase
         $connectionFactoryMock->expects($this->once())
             ->method('getConnection')
             ->willReturn($resourceConnection);
-//        $iteratorFactoryMock = $this->createMock(\Magento\Analytics\ReportXml\IteratorFactory::class);
-//        $iteratorFactoryMock->expects($this->once())
-//            ->method('create');
         /* @var $contentTypeUsageReportProvider \Magento\PageBuilderAnalytics\Model\ContentTypeUsageReportProvider */
         $contentTypeUsageReportProvider = Bootstrap::getObjectManager()->create(
             \Magento\PageBuilderAnalytics\Model\ContentTypeUsageReportProvider::class,
