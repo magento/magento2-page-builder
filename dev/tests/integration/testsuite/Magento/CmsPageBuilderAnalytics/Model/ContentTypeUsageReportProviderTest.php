@@ -52,7 +52,7 @@ class ContentTypeUsageReportProviderTest extends \PHPUnit\Framework\TestCase
             }
 
             // Verify we have expected report data for the content type
-            if (!isset($expectedReportData[$reportItem[0]])) {
+            if (!isset($expectedReportData[$reportItem['type']])) {
                 $this->fail('There is no report data for ' . $reportItem['type'] . '.');
             }
 
