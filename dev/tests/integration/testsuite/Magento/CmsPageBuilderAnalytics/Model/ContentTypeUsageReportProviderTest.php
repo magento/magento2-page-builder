@@ -39,7 +39,7 @@ class ContentTypeUsageReportProviderTest extends \PHPUnit\Framework\TestCase
         );
         $reportData = $contentTypeUsageReportProvider->getReport('pagebuilder_page_test');
 
-        $this->assertEquals($expectedReportData, iterator_to_array($reportData->getInnerIterator()));
+        $this->assertEquals(sort($expectedReportData[0][0]), sort(iterator_to_array($reportData->getInnerIterator()[0][0])));
     }
 
     /**
