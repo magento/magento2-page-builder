@@ -87,17 +87,42 @@
         <click selector="{{page.conditionsListConditionPlaceholder}}" stepKey="revealCategoryInput"/>
         <fillField selector="{{page.conditionsListConditionInput}}" userInput="{{category}}" stepKey="fillCategoryField"/>
     </actionGroup>
+    <actionGroup name="addSKUConditionToProductsBlock">
+        <arguments>
+            <argument name="page" defaultValue=""/>
+            <argument name="SKU" defaultValue="" type="string"/>
+            <argument name="conditionIndex" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{page.conditionsList}}" stepKey="waitForConditionsToLoad"/>
+        <click selector="{{page.conditionsListAddButton}}" stepKey="addCondition"/>
+        <selectOption selector="{{page.conditionsListAddTypeSelect}}" userInput="Magento\CatalogWidget\Model\Rule\Condition\Product|sku" stepKey="selectSKUOption"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForCategoriesToLoad"/>
+        <click selector="{{page.conditionsListConditionPlaceholder}}" stepKey="revealSKUInput"/>
+        <fillField selector="{{page.conditionsListConditionInput}}" userInput="{{SKU}}" stepKey="fillSKUField"/>
+    </actionGroup>
     <actionGroup name="addCategoryConditionViaConditionsCombinationToProducts">
         <arguments>
             <argument name="page" defaultValue="ProductsContentTypeForm"/>
             <argument name="category" defaultValue="" type="string"/>
-            <argument name="aggregatorType" defaultValue="ALL" type="string"/>
-            <argument name="booleanValueForAggregator" defaultValue="TRUE" type="string"/>
+            <argument name="aggregatorType" defaultValue="all" type="string"/>
+            <argument name="booleanValueForAggregator" defaultValue="1" type="string"/>
+            <argument name="depth" defaultValue="2" type="string"/>
         </arguments>
         <waitForElementVisible selector="{{page.conditionsList}}" stepKey="waitForConditionsToLoad"/>
         <click selector="{{page.conditionsListAddButton}}" stepKey="addCondition"/>
         <selectOption selector="{{page.conditionsListAddTypeSelect}}" userInput="Magento\CatalogWidget\Model\Rule\Condition\Combine" stepKey="selectCombineOption"/>
         <waitForLoadingMaskToDisappear stepKey="waitForConditionsCombinationTemplateToLoad"/>
+        <click selector="{{page.conditionsCombinationAggregateSelector(depth)}}" stepKey="addAggregateType"/>
+        <selectOption selector="{{page.conditionsCombinationAggregateSelectorSelect(depth)}}" userInput="{{aggregatorType}}" stepKey="selectAggregateType"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForAggregateTypeToLoad"/>
+        <click selector="{{page.conditionsListText}}" stepKey="clearOptions"/>
+        <click selector="{{page.conditionsCombinationAggregateBooleanSelector(depth)}}" stepKey="addBooleanAggregateType"/>
+        <selectOption selector="{{page.conditionsCombinationAggregateBooleanSelectorSelect(depth)}}" userInput="{{booleanValueForAggregator}}" stepKey="selectBooleanAggregateType"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForBooleanAggregateTypeToLoad"/>
+        <click selector="{{page.conditionsListText}}" stepKey="clearOptions2"/>
+        <click selector="{{page.conditionsListAddButton}}" stepKey="addCategoryCondition"/>
+        <selectOption selector="{{page.conditionsListAddTypeSelect}}" userInput="Magento\CatalogWidget\Model\Rule\Condition\Product|category_ids" stepKey="selectCategoryOption"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForCategoriesToLoad"/>
         <click selector="{{page.conditionsListConditionPlaceholder}}" stepKey="revealCategoryInput"/>
         <fillField selector="{{page.conditionsListConditionInput}}" userInput="{{category}}" stepKey="fillCategoryField"/>
     </actionGroup>

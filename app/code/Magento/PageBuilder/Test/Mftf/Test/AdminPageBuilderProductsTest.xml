@@ -1541,6 +1541,7 @@
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <createData entity="SimpleSubCategory" stepKey="createCategory"/>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
         </before>
         <after>
             <actionGroup ref="DeleteCategory" stepKey="deleteCategory">
@@ -1549,8 +1550,10 @@
             <actionGroup ref="deleteProductBySku" stepKey="deleteProduct">
                 <argument name="sku" value="{{SimpleProduct.sku}}"/>
             </actionGroup>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage" />
             <actionGroup ref="logout" stepKey="logoutOfAdmin"/>
         </after>
+        <!-- Create Simple Product -->
         <actionGroup ref="FillAdminSimpleProductForm" stepKey="createProduct">
             <argument name="category" value="SimpleSubCategory"/>
             <argument name="simpleProduct" value="SimpleProduct"/>
@@ -1560,9 +1563,8 @@
         <see userInput="You saved the product." stepKey="seeSuccessfulProductSaveMessage"/>
         <!-- Create CMS Page with product content types -->
         <comment userInput="Create CMS Page with product content types" stepKey="createCMSPageWithProduct"/>
-        <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelGroup">
@@ -1574,23 +1576,48 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-
+        <!-- Add SKU of product to ensure the correct item shows up -->
+        <comment userInput="Add SKU of product and limit 1 to ensure the correct item shows up" stepKey="commentLimitProductToCorrectItem"/>
+        <actionGroup ref="addSKUConditionToProductsBlock" stepKey="addSKU">
+            <argument name="page" value="ProductsContentTypeForm"/>
+            <argument name="SKU" value="{{SimpleProduct.sku}}"/>
+        </actionGroup>
+        <!-- Add Conditions Combination -->
+        <comment userInput="Add Conditions Combination" stepKey="commentAddConditionsCombination"/>
         <actionGroup ref="addCategoryConditionViaConditionsCombinationToProducts" stepKey="addCategoryWrappedInConditionalCombineWithTrueValue">
             <argument name="page" value="ProductsContentTypeForm"/>
             <argument name="category" value="$$createCategory.id$$"/>
         </actionGroup>
-
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage1">
             <argument name="page" value="ProductsOnStage"/>
             <argument name="count" value="1"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProductsStage1">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="product" value="SimpleProduct"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToStorefront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductCountStorefront">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="count" value="1"/>
+        </actionGroup>
+        <!-- Changing Category Condition to False -->
+        <comment userInput="Changing Category Condition to False" stepKey="commentChangingCategoryConditionToFalse"/>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage2">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
-
+        <actionGroup ref="removeContentTypeFromStage" stepKey="removeProducts">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelGroup2">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
@@ -1600,20 +1627,29 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop2">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-
+        <!-- Add SKU of product to ensure the correct item shows up -->
+        <comment userInput="Add SKU of product to ensure the correct item shows up" stepKey="commentLimitProductToCorrectItem2"/>
+        <actionGroup ref="addSKUConditionToProductsBlock" stepKey="addSKU2">
+            <argument name="page" value="ProductsContentTypeForm"/>
+            <argument name="SKU" value="{{SimpleProduct.sku}}"/>
+        </actionGroup>
+        <!-- Add Conditions Combination -->
+        <comment userInput="Add Conditions Combination" stepKey="commentAddConditionsCombination2"/>
         <actionGroup ref="addCategoryConditionViaConditionsCombinationToProducts" stepKey="addCategoryWrappedInConditionalCombineWithFalseValue">
             <argument name="page" value="ProductsContentTypeForm"/>
             <argument name="category" value="$$createCategory.id$$"/>
-            <argument name="aggregatorType" value="ALL"/>
-            <argument name="booleanValueForAggregator" value="FALSE"/>
+            <argument name="booleanValueForAggregator" value="0"/>
         </actionGroup>
-
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
-        <!-- Validate Stage -->
-        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage1">
-            <argument name="page" value="ProductsOnStage"/>
-            <argument name="count" value="1"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsAfterChangingToFalse"/>
+        <!-- Validate Stage After Changing to False -->
+        <comment userInput="Validate Stage Changing to False" stepKey="commentValidateStageAfterChangingToFalse"/>
+        <seeElement selector="{{ProductsOnStage.emptyProductsPlaceholder('1')}}" stepKey="validateProductCountStageAfterChangingToFalse"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToStorefrontAfterChangingToFalse">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefrontAfterChangingToFalse"/>
+        <dontSeeElementInDOM selector="{{ProductsOnStorefront.product('1')}}" stepKey="validateProductCountStorefrontAfterChangingToFalse"/>
     </test>
 </tests>
