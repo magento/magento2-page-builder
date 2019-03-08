@@ -7,6 +7,8 @@ declare(strict_types=1);
 
 namespace Magento\PageBuilder\Plugin\Filter;
 
+use Magento\Store\Model\Store;
+
 /**
  * Plugin to the template filter to process any background images added by Page Builder
  */
@@ -120,7 +122,7 @@ class TemplatePlugin
     ) {
         // Determine the need to escape the return value of observed method.
         // Admin context requires store ID of 0; in that context return value should be escaped
-        $shouldEscape = $subject->getStoreId() !== null && (int) $subject->getStoreId() === 0;
+        $shouldEscape = $subject->getStoreId() !== null && (int) $subject->getStoreId() === Store::DEFAULT_STORE_ID;
 
         if (!$shouldEscape) {
             return $proceed($construction);
