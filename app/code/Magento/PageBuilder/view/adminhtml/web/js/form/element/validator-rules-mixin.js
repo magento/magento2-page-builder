@@ -58,7 +58,7 @@ define([
      * @return {Boolean}
      */
     function validateCssClass(str) {
-        return (/^[a-zA-Z_\-\d]+$/i).test(str);
+        return (/^[a-zA-Z _\-\d]+$/i).test(str);
     }
 
     /**
