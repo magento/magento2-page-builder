@@ -112,7 +112,7 @@ class TemplatePlugin
      *
      * @param \Magento\Framework\Filter\Template $subject
      * @param \Closure $proceed
-     * @param $construction
+     * @param string[] $construction
      * @return string
      */
     public function aroundCustomvarDirective(
