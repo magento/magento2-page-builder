@@ -123,7 +123,7 @@ class TemplatePlugin
         $shouldEscape = $subject->getStoreId() !== null && (int) $subject->getStoreId() === 0;
 
         if (!$shouldEscape) {
-            return $proceed();
+            return $proceed($construction);
         }
 
         $result = $proceed($construction);
