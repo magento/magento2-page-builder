@@ -7,11 +7,28 @@ declare(strict_types=1);
 
 namespace Magento\PageBuilder\Block\Catalog\Block\Product\View;
 
+use Magento\Framework\DataObject;
+
 class Attributes extends \Magento\Catalog\Block\Product\View\Attributes
 {
     const DISPLAY_ATTRIBUTES_NON_PAGEBUILDER = 'non_pagebuilder';
 
     const DISPLAY_ATTRIBUTES_PAGEBUILDER_ONLY = 'pagebuilder_only';
+
+    /**
+     * @inheritdoc
+     */
+    public function getProduct()
+    {
+        $product = parent::getProduct();
+
+        if (!$product) {
+            $product = new DataObject();
+            $product->setAttributes([]);
+        }
+
+        return $product;
+    }
 
     /**
      * Determine if we should display the attribute on the front-end, add support for exclude page builder & page
