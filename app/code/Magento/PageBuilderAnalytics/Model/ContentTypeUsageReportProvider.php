@@ -50,6 +50,7 @@ class ContentTypeUsageReportProvider
      *
      * @param Config $config
      * @param QueryFactory $queryFactory
+     * @param IteratorFactory $iteratorFactory
      * @param ConnectionFactory $connectionFactory
      * @param int $batchSize
      */
@@ -109,12 +110,16 @@ class ContentTypeUsageReportProvider
             }
         }
 
-        $reportData[] = ['Content Type', 'Count'];
         foreach ($contentTypes as $type) {
-            $reportData[] = [$type['name'], $typeCounts[$type['name']]];
+            $reportData[] = [
+                'type' => $type['name'],
+                'count' => $typeCounts[$type['name']]
+            ];
         }
 
-        return $this->iteratorFactory->create($reportData);
+        return $this->iteratorFactory->create(
+            new \ArrayIterator($reportData)
+        );
     }
 
     /**

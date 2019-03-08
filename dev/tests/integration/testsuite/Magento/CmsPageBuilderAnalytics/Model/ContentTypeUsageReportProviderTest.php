@@ -30,6 +30,9 @@ class ContentTypeUsageReportProviderTest extends \PHPUnit\Framework\TestCase
         $connectionFactoryMock->expects($this->once())
             ->method('getConnection')
             ->willReturn($resourceConnection);
+//        $iteratorFactoryMock = $this->createMock(\Magento\Analytics\ReportXml\IteratorFactory::class);
+//        $iteratorFactoryMock->expects($this->once())
+//            ->method('create');
         /* @var $contentTypeUsageReportProvider \Magento\PageBuilderAnalytics\Model\ContentTypeUsageReportProvider */
         $contentTypeUsageReportProvider = Bootstrap::getObjectManager()->create(
             \Magento\PageBuilderAnalytics\Model\ContentTypeUsageReportProvider::class,
@@ -46,23 +49,18 @@ class ContentTypeUsageReportProviderTest extends \PHPUnit\Framework\TestCase
         }
 
         foreach ($reportData->getInnerIterator() as $reportItem) {
-            // Ignore the header within the report
-            if ($reportItem[0] === 'Content Type') {
-                continue;
-            }
-
             // Skip over any ignored content types
-            if (in_array($reportItem[0], $ignoredContentTypes)) {
+            if (in_array($reportItem['type'], $ignoredContentTypes)) {
                 continue;
             }
 
             // Verify we have expected report data for the content type
             if (!isset($expectedReportData[$reportItem[0]])) {
-                $this->fail('There is no report data for ' . $reportItem[0] . '.');
+                $this->fail('There is no report data for ' . $reportItem['type'] . '.');
             }
 
             // Verify the count values match the expected report data
-            $this->assertEquals($expectedReportData[$reportItem[0]], $reportItem[1]);
+            $this->assertEquals($expectedReportData[$reportItem['type']], $reportItem['count']);
         }
     }
 
@@ -74,25 +72,25 @@ class ContentTypeUsageReportProviderTest extends \PHPUnit\Framework\TestCase
         return [
             [
                 [
-                    'button-item' => 6,
-                    'slide' => 12,
-                    'text' => 1,
-                    'image' => 2,
-                    'block' => 1,
-                    'row' => 7,
-                    'column-group' => 5,
-                    'column' => 12,
-                    'video' => 2,
-                    'heading' => 3,
-                    'tabs' => 1,
-                    'products' => 0,
-                    'tab-item' => 2,
-                    'banner' => 4,
-                    'buttons' => 2,
-                    'slider' => 3,
-                    'divider' => 5,
-                    'map' => 2,
-                    'html' => 2
+                    ['type' => 'button-item', 'count' => 6],
+                    ['type' => 'slide', 'count' => 12],
+                    ['type' => 'text', 'count' => 1],
+                    ['type' => 'image', 'count' => 2],
+                    ['type' => 'block', 'count' => 1],
+                    ['type' => 'row', 'count' => 7],
+                    ['type' => 'column-group', 'count' => 5],
+                    ['type' => 'column', 'count' => 12],
+                    ['type' => 'video', 'count' => 2],
+                    ['type' => 'heading', 'count' => 3],
+                    ['type' => 'tabs', 'count' => 1],
+                    ['type' => 'products', 'count' => 0],
+                    ['type' => 'tab-item', 'count' => 2],
+                    ['type' => 'banner', 'count' => 4],
+                    ['type' => 'buttons', 'count' => 2],
+                    ['type' => 'slider', 'count' => 3],
+                    ['type' => 'divider', 'count' => 5],
+                    ['type' => 'map', 'count' => 2],
+                    ['type' => 'html', 'count' => 2]
                 ],
                 // Ignored content types
                 [
