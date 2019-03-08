@@ -8,11 +8,12 @@ declare(strict_types=1);
 
 namespace Magento\PageBuilderAnalytics\Model;
 
-use Magento\Analytics\ReportXml\QueryFactory;
 use Magento\Analytics\ReportXml\ConnectionFactory;
-use Magento\PageBuilder\Model\Config;
+use Magento\Analytics\ReportXml\IteratorFactory;
 use Magento\Analytics\ReportXml\Query;
+use Magento\Analytics\ReportXml\QueryFactory;
 use Magento\Framework\DB\Adapter\AdapterInterface;
+use Magento\PageBuilder\Model\Config;
 
 /**
  * Provides content type usage data report
@@ -28,6 +29,11 @@ class ContentTypeUsageReportProvider
      * @var QueryFactory
      */
     private $queryFactory;
+
+    /**
+     * @var IteratorFactory
+     */
+    private $iteratorFactory;
 
     /**
      * @var ConnectionFactory
@@ -50,11 +56,13 @@ class ContentTypeUsageReportProvider
     public function __construct(
         Config $config,
         QueryFactory $queryFactory,
+        IteratorFactory $iteratorFactory,
         ConnectionFactory $connectionFactory,
         $batchSize = 5000
     ) {
         $this->config = $config;
         $this->queryFactory = $queryFactory;
+        $this->iteratorFactory = $iteratorFactory;
         $this->connectionFactory = $connectionFactory;
         $this->batchSize = $batchSize;
     }
@@ -106,9 +114,7 @@ class ContentTypeUsageReportProvider
             $reportData[] = [$type['name'], $typeCounts[$type['name']]];
         }
 
-        return new \IteratorIterator(
-            new \ArrayIterator($reportData)
-        );
+        return $this->iteratorFactory->create($reportData);
     }
 
     /**
