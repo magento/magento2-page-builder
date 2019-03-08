@@ -37,7 +37,13 @@ class ContentTypeUsageReportProviderTest extends \PHPUnit\Framework\TestCase
                 'connectionFactory' => $connectionFactoryMock
             ]
         );
-        $reportData = $contentTypeUsageReportProvider->getReport('pagebuilder_page_test');
+        $moduleManager = Bootstrap::getObjectManager()->get(\Magento\Framework\Module\Manager::class);
+        // If CMS Staging is enabled we need to use an alternative query
+        if ($moduleManager->isEnabled('Magento_CmsStaging')) {
+            $reportData = $contentTypeUsageReportProvider->getReport('pagebuilder_page_cms_staging_test');
+        } else {
+            $reportData = $contentTypeUsageReportProvider->getReport('pagebuilder_page_cms_test');
+        }
 
         foreach ($reportData->getInnerIterator() as $reportItem) {
             // Ignore the header within the report

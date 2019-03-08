@@ -6,12 +6,26 @@
  */
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Analytics:etc/reports.xsd">
-    <report name="pagebuilder_page_test" connection="default">
+    <report name="pagebuilder_page_cms_test" connection="default">
         <source name="cms_page">
             <attribute name="content"/>
             <link-source name="cms_page_store" link-type="inner">
                 <using glue="and">
                     <condition attribute="page_id" operator="eq" type="identifier">page_id</condition>
+                    <condition attribute="store_id" operator="in">0,1</condition>
+                </using>
+            </link-source>
+            <filter glue="and">
+                <condition attribute="identifier" operator="eq">page-builder-analytics-test-page</condition>
+            </filter>
+        </source>
+    </report>
+    <report name="pagebuilder_page_cms_staging_test" connection="default">
+        <source name="cms_page">
+            <attribute name="content"/>
+            <link-source name="cms_page_store" link-type="inner">
+                <using glue="and">
+                    <condition attribute="row_id" operator="eq" type="identifier">row_id</condition>
                     <condition attribute="store_id" operator="in">0,1</condition>
                 </using>
             </link-source>
