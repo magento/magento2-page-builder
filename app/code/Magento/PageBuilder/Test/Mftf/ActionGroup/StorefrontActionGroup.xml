@@ -41,4 +41,16 @@
         </arguments>
         <waitForElement time="30" selector="{{PageBuilderStoreFront.contentTypeInsideContainerStorefront(containerTargetType.role, containerTargetIndex, contentType.role, contentTypeIndex)}}" stepKey="waitForContentTypeStorefront"/>
     </actionGroup>
+    <actionGroup name="verifyCmsPageLinkOnFrontend">
+        <arguments>
+            <argument name="CMSPage"/>
+            <argument name="index"/>
+            <argument name="section"/>
+        </arguments>
+        <scrollTo selector="{{section.base('index')}}" stepKey="waitForButtonElementStorefront"/>
+        <seeElement selector="{{PageBuilderLinkAttributeStoreFront.ExternalURLContainsLink(CMSPage.identifier)}}" stepKey="seePageLinkOnStoreFront"/>
+        <click selector="{{PageBuilderLinkAttributeStoreFront.ExternalURLContainsLink(CMSPage.identifier)}}" stepKey="clickLink"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <see userInput="{{CMSPage.title}}" stepKey="seePageName"/>
+    </actionGroup>
 </actionGroups>

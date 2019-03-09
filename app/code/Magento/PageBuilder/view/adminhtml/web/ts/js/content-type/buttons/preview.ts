@@ -259,14 +259,13 @@ export default class Preview extends PreviewCollection {
             if (this.contentType.dataStore.get("is_same_width") === "true") {
                 if (buttonItems.length > 0) {
                     const currentLargestButtonWidth = this.findLargestButtonWidth(buttonItems);
-                    const parentWrapperWidth = $(this.wrapperElement).width();
+                    const parentWrapperWidth = $(this.wrapperElement).find(".buttons-container").width();
                     if (currentLargestButtonWidth === 0) {
                         return;
                     }
                     buttonResizeValue = Math.min(currentLargestButtonWidth, parentWrapperWidth);
                 }
             }
-
             buttonItems.css("min-width", buttonResizeValue);
         }
     }
@@ -292,8 +291,11 @@ export default class Preview extends PreviewCollection {
             return 0;
         }
         const widthProperties = ["paddingLeft", "paddingRight", "borderLeftWidth", "borderRightWidth"];
+        const buttonText = buttonItem.find("[data-element='link_text']");
+        const textWidth = buttonText.css("display", "inline-block").width();
+        buttonText.css("display", "");
         return widthProperties.reduce((accumulatedWidth, widthProperty): number => {
             return accumulatedWidth + (parseInt(buttonItem.css(widthProperty), 10) || 0);
-        }, buttonItem.find("[data-element='link_text']").width());
+        }, textWidth);
     }
 }

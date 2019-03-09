@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="VerifyPageBuilderSwitcherAndDisclaimerMessage">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Store Configuration - Enable PageBuilder"/>
+            <title value="Verify Disclaimer Message and Warning Message when disable PageBuilder"/>
+            <description value="Verify Disclaimer Message and Warning Message when disable PageBuilder"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-1432"/>
+            <testCaseId value="MC-2386"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-store-configuration"/>
+            <group value="pagebuilder-enable"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/pagebuilder/enabled 1" stepKey="enablePageBuilder"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <amOnPage url="{{AdminContentManagementPage.url}}" stepKey="navigateToConfigurationPage" />
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <see userInput="Advanced Content Tools" stepKey="seeAdvancedContentToolTab"/>
+        <conditionalClick stepKey="expandPageBuilderTab" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true" />
+        <waitForElementVisible selector="{{ContentManagementSection.EnablePageBuilder}}" stepKey="waitForEnablePageBuilderVisible" />
+        <seeOptionIsSelected selector="{{ContentManagementSection.EnablePageBuilder}}" userInput="Yes" stepKey="seeYESOptionIsSelected"/>
+        <grabTextFrom selector="//tr[@id='row_cms_pagebuilder_enabled']/td[@class='value']//span" stepKey="grabTextFromDisclaimerMsg"/>
+        <assertEquals stepKey="assertEquals2" expected="Includes advanced tools to design page layouts, add Magento content (Product and Category data, CMS content and Blocks), and format text.\n\nFor Product Attributes — Page Builder can be selected as the “input type” to design layouts and create content." expectedType="string" actual="grabTextFromDisclaimerMsg" actualType="variable" message="pass"/>
+        <!--Disable PageBuilder-->
+        <comment userInput="Disable PageBuilder" stepKey="commentDisablePageBuilder"/>
+        <selectOption selector="{{ContentManagementSection.EnablePageBuilder}}" userInput="No" stepKey="selectNO1"/>
+        <waitForElementVisible selector="{{ContentManagementSection.DisclaimerMessage}}"  stepKey="waitForPopUpMsg1" />
+        <seeElement selector="{{ContentManagementSection.DisclaimerMessage}}" stepKey="seePopUp1" />
+        <click selector="{{ContentManagementSection.CancelBtn}}" stepKey="selectCancel" />
+        <dontSee selector="{{ContentManagementSection.DisclaimerMessage}}" stepKey="popupClose1"/>
+        <seeOptionIsSelected selector="{{ContentManagementSection.EnablePageBuilder}}" userInput="Yes" stepKey="seeYesIsSelected" />
+        <selectOption selector="{{ContentManagementSection.EnablePageBuilder}}" userInput="No" stepKey="selectNO2"/>
+        <waitForElementVisible selector="{{ContentManagementSection.DisclaimerMessage}}" stepKey="waitForPopUpMsg2"/>
+        <click selector="{{ContentManagementSection.TurnOffBtn}}" stepKey="selectTurnOff" />
+        <dontSee selector="{{ContentManagementSection.DisclaimerMessage}}" stepKey="popupClose2"/>
+        <seeOptionIsSelected selector="{{ContentManagementSection.EnablePageBuilder}}" userInput="No" stepKey="seeNoIsSelected" />
+        <click selector="{{ContentManagementSection.Save}}" stepKey="saveConfig" />
+        <!-- I switch between NO -> YES - > NO without saving the Config, Then: Warning message will not appear on page-->
+        <comment userInput="Switch between NO -> YES - > NO" stepKey="commentTestSwitchingAfterSave"/>
+        <selectOption selector="{{ContentManagementSection.EnablePageBuilder}}" userInput="No" stepKey="selectNO3"/>
+        <selectOption selector="{{ContentManagementSection.EnablePageBuilder}}" userInput="Yes" stepKey="selectYes"/>
+        <selectOption selector="{{ContentManagementSection.EnablePageBuilder}}" userInput="No" stepKey="selectNO4"/>
+        <dontSee selector="{{ContentManagementSection.DisclaimerMessage}}" stepKey="dontSeePopUp"/>
+    </test>
+</tests>

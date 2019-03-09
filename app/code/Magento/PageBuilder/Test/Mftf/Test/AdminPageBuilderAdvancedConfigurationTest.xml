@@ -1629,8 +1629,6 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage2">
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <!-- Add CSS Classes: Empty -->
-        <comment userInput="Add CSS Classes: Empty" stepKey="commentAddCSSClassesEmpty"/>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
@@ -1648,6 +1646,24 @@
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText1">
             <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
+        <!-- Add CSS Classes: Invalid Greater Than -->
+        <comment userInput="Add CSS Classes: Invalid Greater Than" stepKey="commentAddCSSClassesInvalidGreaterThan"/>
+        <actionGroup ref="fillSlideOutPanelFieldAndExpectToSeeErrorInFieldset" stepKey="enterGreaterThanSymbol">
+            <argument name="property" value="PageBuilderAdvancedCssClassesProperty_Invalid_GreaterThan"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelAndValidateFieldError" stepKey="validateErrorGreaterThan">
+            <argument name="property" value="PageBuilderAdvancedCssClassesProperty_Invalid_GreaterThan"/>
+        </actionGroup>
+        <!-- Add CSS Classes: Invalid Less Than -->
+        <comment userInput="Add CSS Classes: Invalid Less Than" stepKey="commentAddCSSClassesInvalidLessThan"/>
+        <actionGroup ref="fillSlideOutPanelFieldAndExpectToSeeErrorInFieldset" stepKey="enterLessThanSymbol">
+            <argument name="property" value="PageBuilderAdvancedCssClassesProperty_Invalid_LessThan"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelAndValidateFieldError" stepKey="validateErrorLessThan">
+            <argument name="property" value="PageBuilderAdvancedCssClassesProperty_Invalid_LessThan"/>
+        </actionGroup>
+        <!-- Add CSS Classes: Empty -->
+        <comment userInput="Add CSS Classes: Empty" stepKey="commentAddCSSClassesEmpty"/>
         <actionGroup ref="clearSlideOutPanelFieldGeneral" stepKey="clearCSSClasses">
             <argument name="property" value="PageBuilderAdvancedCssClassesDefaultProperty"/>
         </actionGroup>
