@@ -72,7 +72,7 @@ See [Install Page Builder](install-pagebuilder.md)
 
 ### Other
 
-* [Release notes](../CHANGELOG.md)
+* [Release notes](../release-notes.md)
 * [Component status](../comp-status2.md)
 * [Contribution guide](../../CONTRIBUTING.md)
 
