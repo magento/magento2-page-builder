@@ -45,6 +45,8 @@ class ContentTypeUsageReportProviderTest extends \PHPUnit\Framework\TestCase
             $reportData = $contentTypeUsageReportProvider->getReport('pagebuilder_page_cms_test');
         }
 
+        $expectedReportDataByType = array_combine(array_column($expectedReportData, 'type'), $expectedReportData);
+
         foreach ($reportData->getInnerIterator() as $reportItem) {
             // Skip over any ignored content types
             if (in_array($reportItem['type'], $ignoredContentTypes)) {
@@ -52,12 +54,12 @@ class ContentTypeUsageReportProviderTest extends \PHPUnit\Framework\TestCase
             }
 
             // Verify we have expected report data for the content type
-            if (!isset($expectedReportData[$reportItem['type']])) {
+            if (!isset($expectedReportDataByType[$reportItem['type']])) {
                 $this->fail('There is no report data for ' . $reportItem['type'] . '.');
             }
 
             // Verify the count values match the expected report data
-            $this->assertEquals($expectedReportData[$reportItem['type']], $reportItem['count']);
+            $this->assertEquals($expectedReportDataByType[$reportItem['type']]['count'], $reportItem['count']);
         }
     }
 
