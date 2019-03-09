@@ -3,11 +3,17 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
+declare(strict_types=1);
+
 namespace Magento\PageBuilder\Mtf\App\State;
 
 use Magento\Mtf\App\State\AbstractState;
 use Magento\Mtf\App\State\StateHandlerInterface;
 
+/**
+ * MTF test observer for managing PageBuilder's state
+ */
 class PageBuilderHandler implements StateHandlerInterface
 {
     /**
@@ -33,7 +39,21 @@ class PageBuilderHandler implements StateHandlerInterface
      */
     public function execute(AbstractState $state)
     {
-        $this->configuration->setConfig('cms/pagebuilder/enabled', '0');
+        $config = include BP . '/app/etc/config.php';
+        $moduleStatuses = $config['modules'];
+        $moduleNames = array_keys($moduleStatuses);
+
+        $enabledPageBuilderModuleNames = array_filter($moduleNames, function ($moduleName) use ($moduleStatuses) {
+            $isEnabled = (bool) $moduleStatuses[$moduleName];
+            $isPageBuilderRelatedModule = stripos($moduleName, 'PageBuilder') !== false;
+
+            return $isEnabled && $isPageBuilderRelatedModule;
+        });
+
+        // disable modules in reverse order of installation
+        foreach (array_reverse($enabledPageBuilderModuleNames) as $enabledPageBuilderModuleName) {
+            $this->configuration->execute('module:disable', [$enabledPageBuilderModuleName]);
+        }
 
         return true;
     }

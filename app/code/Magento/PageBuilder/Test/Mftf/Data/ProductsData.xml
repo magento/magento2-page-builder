@@ -8,6 +8,23 @@
 
 <entities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:mftf:DataGenerator/etc/dataProfileSchema.xsd">
+    <!-- Conditions -->
+    <entity name="PageBuilderProductsConditionCombination" type="pagebuilder_products_condition_types">
+        <data key="name">Conditions Combination</data>
+        <data key="value">Magento\CatalogWidget\Model\Rule\Condition\Combine</data>
+    </entity>
+    <entity name="PageBuilderProductsConditionCategory" type="pagebuilder_products_condition_types">
+        <data key="name">Category</data>
+        <data key="value">Magento\CatalogWidget\Model\Rule\Condition\Product|category_ids</data>
+    </entity>
+    <entity name="PageBuilderProductsConditionPrice" type="pagebuilder_products_condition_types">
+        <data key="name">Price</data>
+        <data key="value">Magento\CatalogWidget\Model\Rule\Condition\Product|price</data>
+    </entity>
+    <entity name="PageBuilderProductsConditionSKU" type="pagebuilder_products_condition_types">
+        <data key="name">SKU</data>
+        <data key="value">Magento\CatalogWidget\Model\Rule\Condition\Product|sku</data>
+    </entity>
     <entity name="PageBuilderProductsCountPropertyOne" type="pagebuilder_content_type">
         <data key="name">Number of Products to Display</data>
         <data key="section">general</data>
@@ -26,7 +43,6 @@
         <data key="fieldName">products_count</data>
         <data key="value">999</data>
     </entity>
-
     <entity name="PageBuilderProductsInvalidMinCountProperty" type="pagebuilder_content_type">
         <data key="name">Number of Products to Display</data>
         <data key="section">general</data>
