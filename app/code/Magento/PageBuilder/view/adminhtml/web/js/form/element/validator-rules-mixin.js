@@ -53,6 +53,15 @@ define([
     }
 
     /**
+     * Validate that string is a proper css-class
+     * @param {String} str
+     * @return {Boolean}
+     */
+    function validateCssClass(str) {
+        return (/^[a-zA-Z _\-\d]+$/i).test(str);
+    }
+
+    /**
      * Validate message field and url field anchor tag is used exclusively by one field
      * @param {String} message
      * @param {Object} url
@@ -145,6 +154,18 @@ define([
                 return validateIsUrl(href) && (href.match(/youtube\.com|youtu\.be/) || href.match(/vimeo\.com/));
             },
             $.mage.__('Please enter a valid video URL.')
+        );
+
+        validator.addRule(
+            'validate-css-class',
+            function (value) {
+                if (utils.isEmptyNoTrim(value)) {
+                    return true;
+                }
+
+                return validateCssClass(value);
+            },
+            $.mage.__('Please enter a valid CSS class.')
         );
 
         validator.addRule(

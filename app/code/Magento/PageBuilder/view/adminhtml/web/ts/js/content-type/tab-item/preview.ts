@@ -70,7 +70,7 @@ export default class Preview extends PreviewCollection {
                         tabItem.contentType &&
                         tabItem.contentType.parentContentType &&
                         tabItem.contentType.parentContentType.id ===
-                        tabItem.contentType.parentContentType.parentContentType.id
+                        this.contentType.parentContentType.id
                     ) {
                         const newIndex = tabItem
                             .contentType

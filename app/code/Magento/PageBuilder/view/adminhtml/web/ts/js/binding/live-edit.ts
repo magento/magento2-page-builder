@@ -9,6 +9,7 @@ import $ from "jquery";
 import ko from "knockout";
 import keyCodes from "Magento_Ui/js/lib/key-codes";
 import _ from "underscore";
+import {DataObject} from "../data-store";
 
 /**
  * Strip HTML and return text
@@ -54,6 +55,7 @@ ko.bindingHandlers.liveEdit = {
         let focusedValue = element.innerHTML;
         let previouslyFocused: boolean = false;
         let blurTimeout: number;
+        let lastUpdateValue: string;
 
         /**
          * Record the value on focus, only conduct an update when data changes
@@ -61,6 +63,7 @@ ko.bindingHandlers.liveEdit = {
         const onFocus = () => {
             clearTimeout(blurTimeout);
             focusedValue = stripHtml(element.innerHTML);
+            lastUpdateValue = focusedValue;
 
             if (selectAll && element.innerHTML !== "" && !previouslyFocused) {
                 _.defer(() => {
@@ -123,8 +126,10 @@ ko.bindingHandlers.liveEdit = {
          * On key up update the view model to ensure all changes are saved
          */
         const onKeyUp = () => {
-            if (focusedValue !== stripHtml(element.innerHTML)) {
-                viewModel.updateData(field, stripHtml(element.innerHTML));
+            const strippedValue = stripHtml(element.innerHTML);
+            if (focusedValue !== strippedValue) {
+                lastUpdateValue = strippedValue;
+                viewModel.updateData(field, strippedValue);
             }
         };
 
@@ -165,6 +170,7 @@ ko.bindingHandlers.liveEdit = {
             // Allow the paste action to update the content
             _.defer(() => {
                 const strippedValue = stripHtml(element.innerHTML);
+                lastUpdateValue = strippedValue;
                 element.innerHTML = strippedValue;
                 /**
                  * Calculate the position the caret should end up at, the difference in string length + the original
@@ -200,9 +206,13 @@ ko.bindingHandlers.liveEdit = {
         handlePlaceholderClass(element);
 
         // Create a subscription onto the original data to update the internal value
-        viewModel.contentType.dataStore.subscribe(() => {
-            element.textContent = viewModel.contentType.dataStore.get(field);
-            handlePlaceholderClass(element);
+        viewModel.contentType.dataStore.subscribe((data: DataObject) => {
+            // Only update the value if it differs from the last value added within live edit
+            if (lastUpdateValue !== data[field]) {
+                lastUpdateValue = data[field];
+                element.textContent = data[field];
+                handlePlaceholderClass(element);
+            }
         }, field);
 
         // Resolve issues of content editable being within an anchor
