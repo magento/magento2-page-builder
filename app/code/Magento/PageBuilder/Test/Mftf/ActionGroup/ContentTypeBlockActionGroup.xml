@@ -12,18 +12,21 @@
         <arguments>
             <argument name="block" defaultValue=""/>
         </arguments>
+        <waitForElementVisible selector="{{BlockOnForm.selectBlockBtn}}" stepKey="waitForSelectBlockBtn"/>
         <click selector="{{BlockOnForm.selectBlockBtn}}" stepKey="clickSelectBlockBtn"/>
+        <waitForPageLoad stepKey="waitForGridSlideOut"/>
         <waitForElementVisible selector="{{BlockOnGrid.searchBox}}" stepKey="waitForBlockGrid" />
         <fillField selector="{{BlockOnGrid.searchBox}}" userInput="{{block.identifier}}" stepKey="enterBlockTitle"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
         <click selector="{{BlockOnGrid.searchBtn}}" stepKey="clickSearchBtn"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear2"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
         <waitForElementVisible selector="{{BlockOnGrid.selectBtn(block.identifier)}}" stepKey="waitForSearchResult"/>
         <click selector="{{BlockOnGrid.selectBtn(block.identifier)}}" stepKey="clickSelectBtn"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear3"/>
+        <waitForPageLoad stepKey="waitForPageLoad3"/>
         <waitForElementVisible selector="{{BlockOnGrid.addSelectedBtn}}" stepKey="waitForAddSelected"/>
         <click selector="{{BlockOnGrid.addSelectedBtn}}" stepKey="clickAddSelected"/>
-        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForPageLoad stepKey="waitForPageLoad4"/>
+        <waitForElementVisible selector="{{BlockOnForm.title(block.name)}}" stepKey="waitToSeeBlockTitle"/>
     </actionGroup>
     <actionGroup name="verifyBlockOnStage">
         <arguments>
