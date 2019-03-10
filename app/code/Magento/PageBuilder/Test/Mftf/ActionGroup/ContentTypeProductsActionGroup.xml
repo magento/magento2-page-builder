@@ -61,18 +61,41 @@
         <grabMultiple selector="{{page.product(index)}}" stepKey="grabProducts"/>
         <assertCount stepKey="assertCount" expected="{{count}}" expectedType="int" actualType="variable" actual="grabProducts"/>
     </actionGroup>
-    <actionGroup name="addCategoryConditionToProductsBlock">
+    <actionGroup name="addConditionToProductConditions">
         <arguments>
-            <argument name="page" defaultValue=""/>
-            <argument name="category" defaultValue="" type="string"/>
-            <argument name="conditionIndex" defaultValue="1" type="string"/>
+            <argument name="conditionType" defaultValue="PageBuilderProductsConditionCategory"/>
+            <argument name="conditionInput" defaultValue="1" type="string"/>
+            <argument name="index" defaultValue="1" type="string"/>
         </arguments>
-        <waitForElementVisible selector="{{page.conditionsList}}" stepKey="waitForConditionsToLoad"/>
-        <click selector="{{page.conditionsListAddButton}}" stepKey="addCondition"/>
-        <selectOption selector="{{page.conditionsListAddTypeSelect}}" userInput="Magento\CatalogWidget\Model\Rule\Condition\Product|category_ids" stepKey="selectCategoryOption"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForCategoriesToLoad"/>
-        <click selector="{{page.conditionsListConditionPlaceholder}}" stepKey="revealCategoryInput"/>
-        <fillField selector="{{page.conditionsListConditionInput}}" userInput="{{category}}" stepKey="fillCategoryField"/>
+        <comment userInput="addConditionToProductConditions" stepKey="comment"/>
+        <waitForElementVisible selector="{{ProductsContentTypeForm.conditionsList}}" stepKey="waitForConditionsToLoad"/>
+        <waitForElementVisible selector="{{ProductsContentTypeForm.conditionsListAddButton(index)}}" stepKey="waitForAddConditionButton"/>
+        <click selector="{{ProductsContentTypeForm.conditionsListAddButton(index)}}" stepKey="clickAddConditionButton"/>
+        <selectOption selector="{{ProductsContentTypeForm.conditionsListAddTypeSelect(index)}}" userInput="{{conditionType.value}}" stepKey="selectConditionType"/>
+        <waitForPageLoad stepKey="waitForConditionFieldsToLoad"/>
+        <click selector="{{ProductsContentTypeForm.conditionsListConditionPlaceholder}}" stepKey="revealCategoryInput"/>
+        <fillField selector="{{ProductsContentTypeForm.conditionsListConditionInput}}" userInput="{{conditionInput}}" stepKey="fillCategoryField"/>
+    </actionGroup>
+    <actionGroup name="addConditionsCombinationToProductsAndSetAggregateParameters">
+        <arguments>
+            <argument name="aggregatorType" defaultValue="all" type="string"/>
+            <argument name="booleanValueForAggregator" defaultValue="1" type="string"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <comment userInput="addConditionsCombinationToProductsAndSetAggregateParameters" stepKey="comment"/>
+        <waitForElementVisible selector="{{ProductsContentTypeForm.conditionsList}}" stepKey="waitForConditionsToLoad"/>
+        <waitForElementVisible selector="{{ProductsContentTypeForm.conditionsListAddButton(index)}}" stepKey="waitForAddConditionButton"/>
+        <click selector="{{ProductsContentTypeForm.conditionsListAddButton(index)}}" stepKey="clickAddConditionButton"/>
+        <selectOption selector="{{ProductsContentTypeForm.conditionsListAddTypeSelect(index)}}" userInput="{{PageBuilderProductsConditionCombination.value}}" stepKey="selectCombinationOption"/>
+        <waitForPageLoad stepKey="waitForConditionsCombinationTemplateToLoad"/>
+        <click selector="{{ProductsContentTypeForm.conditionsCombinationAggregateSelector(index)}}" stepKey="clickAggregateType"/>
+        <selectOption selector="{{ProductsContentTypeForm.conditionsCombinationAggregateSelectorSelect(index)}}" userInput="{{aggregatorType}}" stepKey="selectAggregateType"/>
+        <waitForPageLoad stepKey="waitForAggregateTypeToLoad"/>
+        <click selector="{{ProductsContentTypeForm.conditionsListText}}" stepKey="clearOptions"/>
+        <click selector="{{ProductsContentTypeForm.conditionsCombinationAggregateBooleanSelector(index)}}" stepKey="clickAggregateTypeBoolean"/>
+        <selectOption selector="{{ProductsContentTypeForm.conditionsCombinationAggregateBooleanSelectorSelect(index)}}" userInput="{{booleanValueForAggregator}}" stepKey="selectAggregateTypeBoolean"/>
+        <waitForPageLoad stepKey="waitForAggregateTypeBooleanToLoad"/>
+        <click selector="{{ProductsContentTypeForm.conditionsListText}}" stepKey="clearOptions2"/>
     </actionGroup>
     <actionGroup name="clickProductImageInProductsOnStorefront">
         <arguments>

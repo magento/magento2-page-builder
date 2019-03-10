@@ -20,7 +20,8 @@ class ChildTest extends \Magento\TestFramework\TestCase\AbstractBackendControlle
             ->setPostValue([
                 'type' => 'Magento\CatalogWidget\Model\Rule\Condition\Product|category_ids',
                 'id' => '1--3',
-            ]);
+            ])
+            ->setMethod($this->getRequest()::METHOD_POST);
 
         $this->dispatch('backend/pagebuilder/form/element_productconditions_child');
         $responseBody = $this->getResponse()->getBody();
@@ -45,7 +46,8 @@ class ChildTest extends \Magento\TestFramework\TestCase\AbstractBackendControlle
             ->setPostValue([
                 'type' => 'Magento\CatalogWidget\Model\Rule\Condition\Product|category_ids',
                 'id' => '1--3',
-            ]);
+            ])
+            ->setMethod($this->getRequest()::METHOD_POST);
 
         $this->dispatch('backend/pagebuilder/form/element_productconditions_child');
         $responseBody = $this->getResponse()->getBody();

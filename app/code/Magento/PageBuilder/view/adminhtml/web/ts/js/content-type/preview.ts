@@ -25,7 +25,7 @@ import ContentTypeInterface from "../content-type.types";
 import {DataObject} from "../data-store";
 import {getDraggedContentTypeConfig} from "../drag-drop/registry";
 import {getSortableOptions} from "../drag-drop/sortable";
-import {get, set} from "../utils/object";
+import {get} from "../utils/object";
 import appearanceConfig from "./appearance-config";
 import ObservableUpdater from "./observable-updater";
 import ObservableObject from "./observable-updater.types";
@@ -147,10 +147,7 @@ export default class Preview implements PreviewInterface {
      * @param {string} value
      */
     public updateData(key: string, value: string) {
-        const data = this.contentType.dataStore.getState();
-
-        set(data, key, value);
-        this.contentType.dataStore.setState(data);
+        this.contentType.dataStore.set(key, value);
     }
 
     /**

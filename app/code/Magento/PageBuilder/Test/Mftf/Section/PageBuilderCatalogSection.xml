@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
+    <section name="PageBuilderProductAttribute">
+        <element name="PageBuilderArea" type="text" selector="//div[@data-index='{{var1}}']" parameterized="true"/>
+        <element name="PageBuilderBtn" type="text" selector="[data-index='{{var1}}'] button.action-default" parameterized="true"/>
+        <element name="WarningMsg" type="text" selector=".pagebuilder-modal-content-body"/>
+        <element name="AcceptBtn" type="button" selector=".action-primary.action-accept"/>
+        <element name="attributeTextInput" type="text" selector="[data-index='{{var1}}'] input.admin__control-text" parameterized="true"/>
+    </section>
+    <section name="PageBuilderProductStorefront">
+        <element name="attributeSectionHeading" type="text" selector="(//div[contains(@class, 'pagebuilder-attributes-wrapper')]/div[contains(@class, 'product-full-width-section')])[{{var1}}]/descendant::h2[contains(@class, 'product-section-title') and text()='{{var2}}']" parameterized="true"/>
+        <element name="attributeTableValue" type="text" selector="//td[@data-th='{{var1}}' and text()='{{var2}}']" parameterized="true"/>
+    </section>
+    <section name="StorefrontProductFullWidth">
+        <element name="description" type="button" selector=".page-main-description"/>
+        <element name="attributes" type="button" selector=".page-main-pagebuilder-attributes"/>
+        <element name="moreInformation" type="button" selector=".additional-attributes-wrapper"/>
+        <element name="infoMain" type="button" selector=".product-info-main"/>
+        <element name="media" type="button" selector=".product.media"/>
+        <element name="reviews" type="button" selector=".block.review-add"/>
+        <element name="related" type="button" selector=".block.related"/>
+        <element name="upsell" type="button" selector=".block.upsell"/>
+    </section>
+    <section name="PageBuilderCategoryAttribute">
+        <element name="PageBuilderArea" type="text" selector="[data-index='{{var1}}'] button.action-default" parameterized="true"/>
+    </section>
+    <section name="StorefrontCategoryMainSection">
+        <!-- This goes in CE repo -->
+        <element name="CatalogDescription" type="text" selector="//div[@class='category-description']"/>
+    </section>
+    <section name="CategoryContentSection">
+        <!-- This goes in CE repo -->
+        <element name="descriptionTextArea" type="text" selector="#category_form_description"/>
+    </section>
+</sections>

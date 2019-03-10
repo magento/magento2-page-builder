@@ -15,4 +15,10 @@
         <element name="computedHeight" type="text" selector="return parseInt(window.getComputedStyle(document.querySelectorAll('div[data-content-type=\'{{arg1}}\']')[{{arg2}}]).height)" parameterized="true"/>
         <element name="computedWidth" type="text" selector="return parseInt(window.getComputedStyle(document.querySelectorAll('div[data-content-type=\'{{arg1}}\']')[{{arg2}}]).width)" parameterized="true"/>
     </section>
+    <section name="PageBuilderLinkAttributeStoreFront">
+        <element name="ExternalURLLink" type="text" selector="//a[@href='{{var1}}']" parameterized="true"/>
+        <element name="ExternalURLContainsLink" type="text" selector="//a[contains(@href,'{{var1}}')]" parameterized="true"/>
+        <element name="ExternalURLInCurrentTab" type="text" selector="//a[@href='{{var1}}' and @target='']" parameterized="true"/>
+        <element name="ExternalURLInNewTab" type="text" selector="//a[@href='{{var1}}' and @target='_blank']" parameterized="true"/>
+    </section>
 </sections>
