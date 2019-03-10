@@ -44,7 +44,6 @@ See [Install Page Builder](install-pagebuilder.md)
 * [Block chooser configuration](../configurations/block-chooser-configuration.md)
 * [Full-width page layout configuration](../configurations/full-width-page-layout-configuration.md)
 * [Responsive layout configuration](../configurations/responsive-layout-configuration.md)
-* [Storefront configuration](../configurations/storefront-configuration.md)
 * [Selector configuration](../configurations/selector-configuration.md)
 * [Product conditions configuration](../configurations/product-conditions-configuration.md)
 * [Server-side rendered previews](../configurations/server-side-rendered-previews.md)
@@ -53,11 +52,10 @@ See [Install Page Builder](install-pagebuilder.md)
 
 * [How to develop a container content type](../how-to/how-to-develop-container-content-type.md)
 * [How to use the Image Uploader](../how-to/how-to-use-image-uploader.md)
-* [How to use the Image Uploader](../how-to/how-to-use-image-uploader.md)
 * [How to add inline text editing](../how-to/how-to-add-inline-text-editing.md)
 * [How to add a custom toolbar](../how-to/how-to-add-custom-toolbar.md)
+* [How to add a storefront widget](../how-to/how-to-add-storefront-widget.md)
 * [How to convert product attribute fields to use Page Builder](../how-to/how-to-convert-product-attributes-to-use-pagebuilder.md)
-* [How to store a component master format as a widget-directive](../how-to/how-to-store-master-format-as-widget-directive.md)
 
 ### Reference
 
