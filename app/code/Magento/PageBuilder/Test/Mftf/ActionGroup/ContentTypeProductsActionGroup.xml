@@ -8,7 +8,7 @@
 
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
-    <actionGroup name="validateProductInProductsStage">
+    <actionGroup name="validateProductInProducts">
         <arguments>
             <argument name="page" defaultValue="ProductsOnStage"/>
             <argument name="productsIndex" defaultValue="1" type="string"/>
@@ -20,6 +20,7 @@
         <seeElement selector="{{page.productImage(productIndex)}}" stepKey="seeProductImage"/>
         <seeElement selector="{{page.productName(productIndex, product.name)}}" stepKey="seeProductName"/>
         <seeElement selector="{{page.productPrice(productIndex, product.price)}}" stepKey="seeProductPrice"/>
+        <moveMouseOver selector="{{page.productImage(productIndex)}}" stepKey="moveMouseOverProduct"/>
         <seeElement selector="{{page.productAddToCart(productIndex)}}" stepKey="seeProductAddToCart"/>
         <seeElement selector="{{page.productAddToWishList(productIndex)}}" stepKey="seeProductAddToWishList"/>
         <seeElement selector="{{page.productAddToCompare(productIndex)}}" stepKey="seeProductAddToCompare"/>
@@ -43,13 +44,6 @@
             <expectedResult type="string">{{isClickable}}</expectedResult>
             <actualResult type="variable">getAddToComparePointerEvents</actualResult>
         </assertEquals>
-    </actionGroup>
-    <actionGroup name="validateProductInProductsStorefront" extends="validateProductInProductsStage">
-        <arguments>
-            <argument name="page" defaultValue="ProductsOnStorefront"/>
-            <argument name="isClickable" defaultValue="auto" type="string"/>
-        </arguments>
-        <moveMouseOver selector="{{page.productImage(productIndex)}}" stepKey="moveMouseOverProduct" after="seeProductPrice"/>
     </actionGroup>
     <actionGroup name="validateProductCountInProducts">
         <arguments>
