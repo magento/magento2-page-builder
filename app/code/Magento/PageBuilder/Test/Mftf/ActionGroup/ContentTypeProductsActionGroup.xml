@@ -94,49 +94,45 @@
     <actionGroup name="clickProductImageInProductsOnStorefront">
         <arguments>
             <argument name="product" type="string"/>
-            <argument name="index" defaultValue="1" type="string"/>
         </arguments>
-        <waitForElementVisible selector="{{ProductsOnStorefront.productImage(index)}}" stepKey="waitForProductImage"/>
-        <click selector="{{ProductsOnStorefront.productImage(index)}}" stepKey="clickProductImage"/>
+        <waitForElementVisible selector="{{ProductsOnStorefront.productImageByProductName(product)}}" stepKey="waitForProductImage"/>
+        <click selector="{{ProductsOnStorefront.productImageByProductName(product)}}" stepKey="clickProductImage"/>
         <waitForPageLoad stepKey="waitForProductPageToLoad"/>
         <see selector="{{StorefrontProductInfoMainSection.productName}}" userInput="{{product}}" stepKey="seeProductName"/>
     </actionGroup>
     <actionGroup name="clickProductNameInProductsOnStorefront">
         <arguments>
             <argument name="product" type="string"/>
-            <argument name="index" defaultValue="1" type="string"/>
         </arguments>
-        <waitForElementVisible selector="{{ProductsOnStorefront.productName(index, product)}}" stepKey="waitForProductName"/>
-        <click selector="{{ProductsOnStorefront.productName(index, product)}}" stepKey="clickProductName"/>
+        <waitForElementVisible selector="{{ProductsOnStorefront.productNameByProductName(product)}}" stepKey="waitForProductName"/>
+        <click selector="{{ProductsOnStorefront.productNameByProductName(product)}}" stepKey="clickProductName"/>
         <waitForPageLoad stepKey="waitForProductPageToLoad"/>
         <see selector="{{StorefrontProductInfoMainSection.productName}}" userInput="{{product}}" stepKey="seeProductName"/>
     </actionGroup>
     <actionGroup name="clickProductAddToCartInProductsOnStorefront">
         <arguments>
             <argument name="product" type="string"/>
-            <argument name="index" defaultValue="1" type="string"/>
         </arguments>
-        <moveMouseOver selector="{{ProductsOnStorefront.productImage(index)}}" stepKey="moveMouseOverProduct"/>
-        <click selector="{{ProductsOnStorefront.productAddToCart(index)}}" stepKey="clickProductAddToCart"/>
+        <moveMouseOver selector="{{ProductsOnStorefront.productImageByProductName(product)}}" stepKey="moveMouseOverProduct"/>
+        <click selector="{{ProductsOnStorefront.productAddToCartByProductName(product)}}" stepKey="clickProductAddToCart"/>
         <waitForPageLoad stepKey="waitForProductPageToLoad"/>
         <see userInput="You added {{product}} to your shopping cart." stepKey="seeAddToCartSuccessMessage"/>
     </actionGroup>
     <actionGroup name="clickProductAddToCompareInProductsOnStorefront">
         <arguments>
             <argument name="product" type="string"/>
-            <argument name="index" defaultValue="1" type="string"/>
         </arguments>
-        <moveMouseOver selector="{{ProductsOnStorefront.productImage(index)}}" stepKey="moveMouseOverProduct"/>
-        <click selector="{{ProductsOnStorefront.productAddToCompare(index)}}" stepKey="clickProductAddToCompare"/>
+        <moveMouseOver selector="{{ProductsOnStorefront.productImageByProductName(product)}}" stepKey="moveMouseOverProduct"/>
+        <click selector="{{ProductsOnStorefront.productAddToCompareByProductName(product)}}" stepKey="clickProductAddToCompare"/>
         <waitForPageLoad stepKey="waitForProductPageToLoad"/>
         <see userInput="You added product {{product}} to the comparison list." stepKey="seeComparisonListSuccessMessage"/>
     </actionGroup>
     <actionGroup name="clickProductAddToWishListInProductsOnStorefront">
         <arguments>
-            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="product" type="string"/>
         </arguments>
-        <moveMouseOver selector="{{ProductsOnStorefront.productImage(index)}}" stepKey="moveMouseOverProduct"/>
-        <click selector="{{ProductsOnStorefront.productAddToWishList(index)}}" stepKey="clickProductAddToWishList"/>
+        <moveMouseOver selector="{{ProductsOnStorefront.productImageByProductName(product)}}" stepKey="moveMouseOverProduct"/>
+        <click selector="{{ProductsOnStorefront.productAddToWishListByProductName(product)}}" stepKey="clickProductAddToWishList"/>
         <waitForPageLoad stepKey="waitForProductPageToLoad"/>
         <see userInput="You must login or register to add items to your wishlist." stepKey="seeWishListSuccessMessage"/>
     </actionGroup>

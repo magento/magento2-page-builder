@@ -149,16 +149,13 @@
         <actionGroup ref="addConditionToProductConditions" stepKey="addCategory">
             <argument name="conditionInput" value="$$createPreReqCategory.id$$"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterNumberOfProductsToDisplay">
-            <argument name="property" value="PageBuilderProductsCountPropertyTwo"/>
-        </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsProducts"/>
         <actionGroup ref="saveCMSBlock" stepKey="saveCMSBlock"/>
         <!-- Validate CMS Block Stage -->
         <comment userInput="Validate CMS Block Stage" stepKey="commentValidateCMSBlockStage"/>
         <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountCMSBlockStage">
             <argument name="page" value="ProductsOnStage"/>
-            <argument name="count" value="2"/>
+            <argument name="count" value="3"/>
         </actionGroup>
         <actionGroup ref="validateProductInProducts" stepKey="validateProductsCMSBlockStage">
             <argument name="page" value="ProductsOnStage"/>
@@ -185,7 +182,7 @@
         <comment userInput="Validate CMS Page Stage" stepKey="commentValidateCMSPageStage"/>
         <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountCMSPageStage">
             <argument name="page" value="ProductsOnStorefront"/>
-            <argument name="count" value="2"/>
+            <argument name="count" value="3"/>
         </actionGroup>
         <actionGroup ref="validateProductInProducts" stepKey="validateProductsCMSPageStage">
             <argument name="page" value="ProductsOnStorefront"/>
@@ -198,31 +195,69 @@
         </actionGroup>
         <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountCMSPageStorefront">
             <argument name="page" value="ProductsOnStorefront"/>
-            <argument name="count" value="2"/>
+            <argument name="count" value="3"/>
         </actionGroup>
         <actionGroup ref="validateProductInProducts" stepKey="validateProductsCMSPageStorefront">
             <argument name="page" value="ProductsOnStorefront"/>
             <argument name="isClickable" value="auto"/>
         </actionGroup>
         <actionGroup ref="clickProductImageInProductsOnStorefront" stepKey="clickProductImageInProductsCMSPageStorefront">
-            <argument name="product" value="$$createProduct3.name$$"/>
+            <argument name="product" value="$$createProduct2.name$$"/>
         </actionGroup>
         <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront2">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <actionGroup ref="clickProductNameInProductsOnStorefront" stepKey="clickProductNameInProductsCMSPageStorefront">
-            <argument name="product" value="$$createProduct3.name$$"/>
+            <argument name="product" value="$$createProduct2.name$$"/>
         </actionGroup>
         <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront3">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <actionGroup ref="clickProductAddToCartInProductsOnStorefront" stepKey="clickProductAddToCartInProductsCMSPageStorefront">
-            <argument name="product" value="$$createProduct3.name$$"/>
+            <argument name="product" value="$$createProduct2.name$$"/>
         </actionGroup>
         <actionGroup ref="clickProductAddToCompareInProductsOnStorefront" stepKey="clickProductAddToCompareInProductsCMSPageStorefront">
-            <argument name="product" value="$$createProduct3.name$$"/>
+            <argument name="product" value="$$createProduct2.name$$"/>
         </actionGroup>
-        <actionGroup ref="clickProductAddToWishListInProductsOnStorefront" stepKey="clickProductAddToWishListInProductsCMSPageStorefront"/>
+        <actionGroup ref="clickProductAddToWishListInProductsOnStorefront" stepKey="clickProductAddToWishListInProductsCMSPageStorefront">
+            <argument name="product" value="$$createProduct2.name$$"/>
+        </actionGroup>
+        <!-- Edit Number Of Products To Display -->
+        <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage2">
+            <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuProducts2">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterNumberOfProductsToDisplay2">
+            <argument name="property" value="PageBuilderProductsCountPropertyTwo"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsProducts2"/>
+        <actionGroup ref="saveCMSBlock" stepKey="saveCMSBlock2"/>
+        <!-- Validate CMS Block Stage Again -->
+        <comment userInput="Validate CMS Block Stage Again" stepKey="commentValidateCMSBlockStage2"/>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountCMSBlockStage2">
+            <argument name="page" value="ProductsOnStage"/>
+            <argument name="count" value="2"/>
+        </actionGroup>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage2">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <!-- Validate CMS Page Stage Again -->
+        <comment userInput="Validate CMS Page Stage Again" stepKey="commentValidateCMSPageStage2"/>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountCMSPageStage2">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="count" value="2"/>
+        </actionGroup>
+        <!-- Validate CMS Page Storefront Again -->
+        <comment userInput="Validate CMS Page Storefront Again" stepKey="commentValidateCMSPageStorefront2"/>
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront4">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountCMSPageStorefront2">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="count" value="2"/>
+        </actionGroup>
     </test>
     <test name="ProductFromDifferentWebsiteInsideBlockShowsOnStage">
         <annotations>
