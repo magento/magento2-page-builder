@@ -8,6 +8,93 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="TextHeightConsistencyBetweenContentTypeAndBlockOnStorefront">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Text"/>
+            <title value="Height consistency of text in PageBuilder storefront"/>
+            <description value="Verify text height consistent whether in text content type or text content type inside block"/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MC-4254"/>
+            <testCaseId value="MC-13792"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-text"/>
+            <group value="pagebuilder-block"/>
+            <group value="pagebuilder-block-content"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultBlock" stepKey="createPreReqBlock" />
+            <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createPreReqBlock" stepKey="deletePreReqBlock" />
+            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCmsBlock">
+            <argument name="CMSBlockPage" value="$$createPreReqBlock$$"/>
+        </actionGroup>
+        <!-- Update block with text -->
+        <comment userInput="Update block with text" stepKey="commentUpdateBlockWithText"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionForText1">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTextOntoBlockStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="inlineEditWYSIWYGFromStage" stepKey="inlineEditBlockText">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="content" value="{{PageBuilderTextProperty.value}}"/>
+        </actionGroup>
+        <click selector="{{CmsNewBlockBlockActionsSection.savePage}}" stepKey="saveBlock"/>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCmsPage">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <!-- Add text to page -->
+        <comment userInput="Add text to page" stepKey="addTextToPage"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionForText2">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTextOntoPageStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="inlineEditWYSIWYGFromStage" stepKey="inlineEdit">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="content" value="{{PageBuilderTextProperty.value}}"/>
+        </actionGroup>
+        <!-- Add block to page -->
+        <comment userInput="Add block to page" stepKey="addBlockToPage"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionForBlock">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockOntoStage">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
+            <argument name="block" value="$$createPreReqBlock$$"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{BlockOnForm.title('$$createPreReqBlock.title$$')}}" stepKey="waitToSeeBlockTitle"/>
+        <seeElement selector="{{BlockOnForm.title('$$createPreReqBlock.title$$')}}" stepKey="seeBlockTitleOnForm"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!--Get storefront information-->
+        <comment userInput="Get storefront information" stepKey="commentGetStorefrontInformation"/>
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToStoreFront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <waitForPageLoad stepKey="waitForStorefront"/>
+        <waitForElement selector="{{TextOnStorefront.base('1')}}" stepKey="waitForTextOnStorefront"/>
+        <executeJS function="return document.evaluate(&quot;{{TextOnStorefront.base('1'))}}&quot;, document.body).iterateNext().offsetHeight;" stepKey="getTextOnStorefrontHeight"/>
+        <executeJS function="return document.evaluate(&quot;{{BlockOnStorefront.text('1', '1'))}}&quot;, document.body).iterateNext().offsetHeight;" stepKey="getBlockTextOnStorefrontHeight"/>
+        <assertEquals stepKey="assertStageAndStorefrontHeightAreClose">
+            <expectedResult type="variable">getTextOnStorefrontHeight</expectedResult>
+            <actualResult type="variable">getBlockTextOnStorefrontHeight</actualResult>
+        </assertEquals>
+    </test>
     <test name="BlockRenderTextThroughBlockContentTypeTinyMCE4WysiwygEnabledByDefault">
         <annotations>
             <features value="PageBuilder"/>
