@@ -1,12 +1,12 @@
 # How to add an image uploader
 
-This topic describes how to add the image uploader component to your content type so that end-users can add images to a page.
+This topic describes how to add the image uploader component to your content type so that end-users can add images from the Admin stage as needed.
 
 ![How to add an image uploader](../images/how-to-add-image-uploader.svg)
 
 ## Step 1: Add configuration data for the uploader
 
-The first step is to customize the image uploader to suit your needs. To do this, you must add the `additional_data` element to your content type's config file, then use the `item` elements to create the data types and values to initialize the image uploader to meet your specific needs.
+The first step is to customize the image uploader to suit your needs. To do this, you must add the `additional_data` element to your content type's config file to create the data types and values needed to initialize the image uploader for your specific needs.
 
 ``` xml
 <?xml version="1.0"?>
@@ -42,14 +42,6 @@ The first step is to customize the image uploader to suit your needs. To do this
     </type>
 </config>
 ```
-
-The Page Builder image uploader provides a wrapper around the Magento [ImageUploader component](https://devdocs.magento.com/guides/v2.3/ui_comp_guide/components/image-uploader/), which extends the Magento [FileUploader component](https://devdocs.magento.com/guides/v2.3/ui_comp_guide/components/ui-fileuploader.html). The documentation at those links describes most of the configuration properties. You can find the other properties (shown in the  `additional_data` entries above) within these source files:
-- `magento2-page-builder/app/code/Magento/PageBuilder/view/adminhtml/web/js/form/element/image-uploader.js`
-- `magento2-page-builder/app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/uploader.ts`
-
-
-**[Are these all the settings? Which of these settings is required?]**
-
 
 ## Step 2: Create an instance of the uploader
 
