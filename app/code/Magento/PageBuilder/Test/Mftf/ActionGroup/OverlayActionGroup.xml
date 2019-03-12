@@ -13,44 +13,45 @@
         <arguments>
             <argument name="page"/>
             <argument name="index" defaultValue="1" type="string"/>
-            <argument name="padding" defaultValue="PageBuilderPaddingProperty40"/>
+            <argument name="padding" defaultValue="PageBuilderPaddingPropertyDefault"/>
+            <argument name="acceptableOffset" defaultValue="2" type="string"/>
         </arguments>
         <!-- Validate top edge of overlay -->
         <comment userInput="Validate top edge of overlay" stepKey="commentValidateTopEdgeOfOverlayWithPadding"/>
         <executeJS function="return {{page.wrapperJS(index)}}.getBoundingClientRect().top" stepKey="wrapperTopPosition"/>
-        <executeJS function="return {{page.overlayJS(index)}}.getBoundingClientRect().top" stepKey="overlayTopPosition"/>
-        <executeJS function="return Math.round(({$overlayTopPosition}/{$wrapperTopPosition})*100)/100" stepKey="overlayTopRatio"/>
-        <assertEquals stepKey="assertOverlayTopRatio">
-            <expectedResult type="int">1</expectedResult>
-            <actualResult type="variable">overlayTopRatio</actualResult>
-        </assertEquals>
+        <executeJS function="return Math.round({{page.overlayJS(index)}}.getBoundingClientRect().top - {{padding.paddingTop}})" stepKey="overlayTopPosition"/>
+        <executeJS function="return Math.abs({$overlayTopPosition} - {$wrapperTopPosition})" stepKey="overlayTopDifference"/>
+        <assertLessThanOrEqual stepKey="assertOverlayTopAcceptable">
+            <expectedResult type="int">{{acceptableOffset}}</expectedResult>
+            <actualResult type="variable">overlayTopDifference</actualResult>
+        </assertLessThanOrEqual>
         <!-- Validate right edge of overlay -->
         <comment userInput="Validate right edge of overlay" stepKey="commentValidateRightEdgeOfOverlay"/>
-        <executeJS function="return {{page.wrapperJS(index)}}.getBoundingClientRect().right" stepKey="wrapperRightPosition"/>
+        <executeJS function="return Math.round({{page.wrapperJS(index)}}.getBoundingClientRect().right - {{padding.paddingRight}})" stepKey="wrapperRightPosition"/>
         <executeJS function="return {{page.overlayJS(index)}}.getBoundingClientRect().right" stepKey="overlayRightPosition"/>
-        <executeJS function="return Math.round(({$wrapperRightPosition}/{$overlayRightPosition})*100)/100" stepKey="overlayRightRatio"/>
-        <assertEquals stepKey="assertOverlayRightRatio">
-            <expectedResult type="int">1</expectedResult>
-            <actualResult type="variable">overlayRightRatio</actualResult>
-        </assertEquals>
+        <executeJS function="return Math.abs({$wrapperRightPosition} - {$overlayRightPosition})" stepKey="overlayRightDifference"/>
+        <assertLessThanOrEqual stepKey="assertOverlayRightAcceptable">
+            <expectedResult type="int">{{acceptableOffset}}</expectedResult>
+            <actualResult type="variable">overlayRightDifference</actualResult>
+        </assertLessThanOrEqual>
         <!-- Validate bottom edge of overlay -->
         <comment userInput="Validate bottom edge of overlay" stepKey="commentValidateBottomEdgeOfOverlay"/>
-        <executeJS function="return {{page.wrapperJS(index)}}.getBoundingClientRect().bottom" stepKey="wrapperBottomPosition"/>
+        <executeJS function="return Math.round({{page.wrapperJS(index)}}.getBoundingClientRect().bottom - {{padding.paddingBottom}})" stepKey="wrapperBottomPosition"/>
         <executeJS function="return {{page.overlayJS(index)}}.getBoundingClientRect().bottom" stepKey="overlayBottomPosition"/>
-        <executeJS function="return Math.round(({$wrapperBottomPosition}/{$overlayBottomPosition})*100)/100" stepKey="overlayBottomRatio"/>
-        <assertEquals stepKey="assertOverlayBottomRatio">
-            <expectedResult type="int">1</expectedResult>
-            <actualResult type="variable">overlayBottomRatio</actualResult>
-        </assertEquals>
+        <executeJS function="return Math.abs({$wrapperBottomPosition} - {$overlayBottomPosition})" stepKey="overlayBottomDifference"/>
+        <assertLessThanOrEqual stepKey="assertOverlayBottomAcceptable">
+            <expectedResult type="int">{{acceptableOffset}}</expectedResult>
+            <actualResult type="variable">overlayBottomDifference</actualResult>
+        </assertLessThanOrEqual>
         <!-- Validate left edge of overlay -->
         <comment userInput="Validate left edge of overlay" stepKey="commentValidateLeftEdgeOfOverlay"/>
         <executeJS function="return {{page.wrapperJS(index)}}.getBoundingClientRect().left" stepKey="wrapperLeftPosition"/>
-        <executeJS function="return {{page.overlayJS(index)}}.getBoundingClientRect().left" stepKey="overlayLeftPosition"/>
-        <executeJS function="return Math.round(({$wrapperLeftPosition}/{$overlayLeftPosition})*100)/100" stepKey="overlayLeftRatio"/>
-        <assertEquals stepKey="assertOverlayLeftRatio">
-            <expectedResult type="int">1</expectedResult>
-            <actualResult type="variable">overlayLeftRatio</actualResult>
-        </assertEquals>
+        <executeJS function="return Math.round({{page.overlayJS(index)}}.getBoundingClientRect().left - {{padding.paddingLeft}})" stepKey="overlayLeftPosition"/>
+        <executeJS function="return Math.abs({$overlayLeftPosition} - {$wrapperLeftPosition})" stepKey="overlayLeftDifference"/>
+        <assertLessThanOrEqual stepKey="assertOverlayLeftAcceptable">
+            <expectedResult type="int">{{acceptableOffset}}</expectedResult>
+            <actualResult type="variable">overlayLeftDifference</actualResult>
+        </assertLessThanOrEqual>
     </actionGroup>
     <!-- Collage Appearances -->
     <!-- Checks the position of the overlay with small padding value. This action group may not work with large padding values -->
@@ -60,23 +61,25 @@
             <argument name="index" defaultValue="1" type="string"/>
             <argument name="padding" defaultValue="PageBuilderPaddingProperty40"/>
             <argument name="expectedOverlayWidth" defaultValue="540" type="string"/>
+            <argument name="acceptableOffset" defaultValue="2" type="string"/>
         </arguments>
         <!-- Validate width of overlay -->
         <comment userInput="Validate width of overlay" stepKey="commentValidateWidthOfOverlay"/>
         <executeJS function="return {{page.overlayJS(index)}}.getBoundingClientRect().width" stepKey="overlayWidth"/>
-        <assertEquals stepKey="assertOverlayWidth">
-            <expectedResult type="string">{{expectedOverlayWidth}}</expectedResult>
-            <actualResult type="variable">overlayWidth</actualResult>
-        </assertEquals>
+        <executeJS function="return Math.abs({$overlayWidth} - {{expectedOverlayWidth}})" stepKey="widthDifference"/>
+        <assertLessThanOrEqual stepKey="assertOverlayWidthIsAcceptable">
+            <expectedResult type="int">{{acceptableOffset}}</expectedResult>
+            <actualResult type="variable">widthDifference</actualResult>
+        </assertLessThanOrEqual>
         <!-- Validate left edge of overlay -->
         <comment userInput="Validate left edge of overlay" stepKey="commentValidateLeftEdgeOfOverlay"/>
         <executeJS function="return {{page.wrapperJS(index)}}.getBoundingClientRect().left" stepKey="wrapperLeftPosition"/>
-        <executeJS function="return {{page.overlayJS(index)}}.getBoundingClientRect().left" stepKey="overlayLeftPosition"/>
-        <executeJS function="return Math.round(({$overlayLeftPosition}-{$wrapperLeftPosition})*100)/100" stepKey="overlayPadding"/>
-        <assertEquals stepKey="assertOverlayIsEqualToPadding">
-            <expectedResult type="int">{{padding.paddingLeft}}</expectedResult>
-            <actualResult type="variable">overlayPadding</actualResult>
-        </assertEquals>
+        <executeJS function="return Math.round({{page.overlayJS(index)}}.getBoundingClientRect().left - {{padding.paddingLeft}})" stepKey="overlayLeftPosition"/>
+        <executeJS function="return Math.abs({$overlayLeftPosition} - {$wrapperLeftPosition})" stepKey="overlayMinusWrapper"/>
+        <assertLessThanOrEqual stepKey="assertOverlayLeftIsAcceptable">
+            <expectedResult type="int">{{acceptableOffset}}</expectedResult>
+            <actualResult type="variable">overlayMinusWrapper</actualResult>
+        </assertLessThanOrEqual>
     </actionGroup>
     <!-- Checks the position of the overlay with small padding value. This action group may not work with large padding values -->
     <actionGroup name="validateOverlayPositionCollageRight">
@@ -85,50 +88,53 @@
             <argument name="index" defaultValue="1" type="string"/>
             <argument name="padding" defaultValue="PageBuilderPaddingProperty40"/>
             <argument name="expectedOverlayWidth" defaultValue="540" type="string"/>
+            <argument name="acceptableOffset" defaultValue="2" type="string"/>
         </arguments>
-        <!-- Validate right edge of overlay -->
-        <comment userInput="Validate right edge of overlay" stepKey="commentValidateRightEdgeOfOverlay"/>
-        <executeJS function="return {{page.wrapperJS(index)}}.getBoundingClientRect().right" stepKey="wrapperRightPosition"/>
-        <executeJS function="return {{page.overlayJS(index)}}.getBoundingClientRect().right" stepKey="overlayRightPosition"/>
-        <executeJS function="return Math.round(({$wrapperRightPosition}-{$overlayRightPosition})*100)/100" stepKey="overlayPadding"/>
-        <assertEquals stepKey="assertOverlayIsEqualToPadding">
-            <expectedResult type="int">{{padding.paddingRight}}</expectedResult>
-            <actualResult type="variable">overlayPadding</actualResult>
-        </assertEquals>
         <!-- Validate width of overlay -->
         <comment userInput="Validate width of overlay" stepKey="commentValidateWidthOfOverlay"/>
         <executeJS function="return {{page.overlayJS(index)}}.getBoundingClientRect().width" stepKey="overlayWidth"/>
-        <assertEquals stepKey="assertOverlayWidth">
-            <expectedResult type="string">{{expectedOverlayWidth}}</expectedResult>
-            <actualResult type="variable">overlayWidth</actualResult>
-        </assertEquals>
+        <executeJS function="return Math.abs({$overlayWidth} - {{expectedOverlayWidth}})" stepKey="widthDifference"/>
+        <assertLessThanOrEqual stepKey="assertOverlayWidthIsAcceptable">
+            <expectedResult type="int">{{acceptableOffset}}</expectedResult>
+            <actualResult type="variable">widthDifference</actualResult>
+        </assertLessThanOrEqual>
+        <!-- Validate right edge of overlay -->
+        <comment userInput="Validate right edge of overlay" stepKey="commentValidateRightEdgeOfOverlay"/>
+        <executeJS function="return Math.round({{page.wrapperJS(index)}}.getBoundingClientRect().right - {{padding.paddingRight}})" stepKey="wrapperRightPosition"/>
+        <executeJS function="return {{page.overlayJS(index)}}.getBoundingClientRect().right" stepKey="overlayRightPosition"/>
+        <executeJS function="return Math.abs({$wrapperRightPosition} - {$overlayRightPosition})" stepKey="overlayMinusWrapper"/>
+        <assertLessThanOrEqual stepKey="assertOverlayRightIsAcceptable">
+            <expectedResult type="int">{{acceptableOffset}}</expectedResult>
+            <actualResult type="variable">overlayMinusWrapper</actualResult>
+        </assertLessThanOrEqual>
     </actionGroup>
     <!-- Checks the position of the overlay with small padding value. This action group may not work with large padding values -->
     <actionGroup name="validateOverlayPositionCollageCenter">
         <arguments>
             <argument name="page"/>
             <argument name="index" defaultValue="1" type="string"/>
-            <argument name="padding" defaultValue="PageBuilderPaddingProperty40"/>
             <argument name="expectedOverlayWidth" defaultValue="540" type="string"/>
+            <argument name="acceptableOffset" defaultValue="2" type="string"/>
         </arguments>
         <!-- Validate width of overlay -->
         <comment userInput="Validate width of overlay" stepKey="commentValidateWidthOfOverlay"/>
         <executeJS function="return {{page.overlayJS(index)}}.getBoundingClientRect().width" stepKey="overlayWidth"/>
-        <assertEquals stepKey="assertOverlayWidth">
-            <expectedResult type="string">{{expectedOverlayWidth}}</expectedResult>
-            <actualResult type="variable">overlayWidth</actualResult>
-        </assertEquals>
+        <executeJS function="return Math.abs({$overlayWidth} - {{expectedOverlayWidth}})" stepKey="widthDifference"/>
+        <assertLessThanOrEqual stepKey="assertOverlayWidthIsAcceptable">
+            <expectedResult type="int">{{acceptableOffset}}</expectedResult>
+            <actualResult type="variable">widthDifference</actualResult>
+        </assertLessThanOrEqual>
         <!-- Validate center position of overlay -->
         <executeJS function="return {{page.wrapperJS(index)}}.getBoundingClientRect().right" stepKey="wrapperRightPosition"/>
         <executeJS function="return {{page.wrapperJS(index)}}.getBoundingClientRect().width" stepKey="wrapperWidth"/>
-        <executeJS function="return Math.round(({$wrapperRightPosition}-({$wrapperWidth}/2))*100)/100" stepKey="wrapperCenterPosition"/>
+        <executeJS function="return Math.round({$wrapperRightPosition} - ({$wrapperWidth} / 2))" stepKey="wrapperCenterPosition"/>
         <executeJS function="return {{page.overlayJS(index)}}.getBoundingClientRect().right" stepKey="overlayRightPosition"/>
-        <executeJS function="return Math.round(({$overlayRightPosition}-({$overlayWidth}/2))*100)/100" stepKey="overlayCenterPosition"/>
-        <executeJS function="return Math.round(({$wrapperCenterPosition}/{$overlayCenterPosition})*100)/100" stepKey="overlayCenterRatio"/>
-        <assertGreaterThanOrEqual stepKey="assertOverlayCenterRatio">
-            <expectedResult type="int">1</expectedResult>
-            <actualResult type="variable">overlayCenterRatio</actualResult>
-        </assertGreaterThanOrEqual>
+        <executeJS function="return Math.round({$overlayRightPosition} - ({$overlayWidth} / 2))" stepKey="overlayCenterPosition"/>
+        <executeJS function="return Math.abs({$wrapperCenterPosition} - {$overlayCenterPosition})" stepKey="overlayCenterDifference"/>
+        <assertLessThanOrEqual stepKey="assertOverlayCenterAcceptable">
+            <expectedResult type="int">{{acceptableOffset}}</expectedResult>
+            <actualResult type="variable">overlayCenterDifference</actualResult>
+        </assertLessThanOrEqual>
     </actionGroup>
     <!-- Overlay Position -->
     <actionGroup name="validateOverlayPositionTop">

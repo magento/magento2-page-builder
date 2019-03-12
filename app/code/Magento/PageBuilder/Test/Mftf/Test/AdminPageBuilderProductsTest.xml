@@ -47,10 +47,8 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragProductsIntoStage">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
@@ -113,7 +111,7 @@
             <argument name="page" value="ProductsOnStage"/>
             <argument name="count" value="2"/>
         </actionGroup>
-        <actionGroup ref="validateProductInProductsOnStage" stepKey="validateProductsStage">
+        <actionGroup ref="validateProductInProducts" stepKey="validateProductsStage">
             <argument name="page" value="ProductsOnStage"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
@@ -127,6 +125,7 @@
         </actionGroup>
         <actionGroup ref="validateProductInProducts" stepKey="validateProductsStorefront">
             <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="isClickable" value="auto"/>
         </actionGroup>
     </test>
     <test name="AdminPageBuilderProductsWithCount">
@@ -231,7 +230,7 @@
             <argument name="page" value="ProductsOnStage"/>
             <argument name="count" value="1"/>
         </actionGroup>
-        <actionGroup ref="validateProductInProductsOnStage" stepKey="validateProductsStage">
+        <actionGroup ref="validateProductInProducts" stepKey="validateProductsStage">
             <argument name="page" value="ProductsOnStage"/>
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
@@ -242,7 +241,7 @@
             <argument name="page" value="ProductsOnStage"/>
             <argument name="count" value="1"/>
         </actionGroup>
-        <actionGroup ref="validateProductInProductsOnStage" stepKey="validateProductsStageAfterSave">
+        <actionGroup ref="validateProductInProducts" stepKey="validateProductsStageAfterSave">
             <argument name="page" value="ProductsOnStage"/>
         </actionGroup>
         <!-- Validate Storefront -->
@@ -257,6 +256,7 @@
         </actionGroup>
         <actionGroup ref="validateProductInProducts" stepKey="validateProductsStorefront">
             <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="isClickable" value="auto"/>
         </actionGroup>
         <!-- Switch Back To Backend -->
         <comment userInput="Switch Back To Backend" stepKey="commentSwitchToBackend"/>
@@ -279,7 +279,7 @@
             <argument name="page" value="ProductsOnStage"/>
             <argument name="count" value="4"/>
         </actionGroup>
-        <actionGroup ref="validateProductInProductsOnStage" stepKey="validateProductsStage2">
+        <actionGroup ref="validateProductInProducts" stepKey="validateProductsStage2">
             <argument name="page" value="ProductsOnStage"/>
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
@@ -290,7 +290,7 @@
             <argument name="page" value="ProductsOnStage"/>
             <argument name="count" value="4"/>
         </actionGroup>
-        <actionGroup ref="validateProductInProductsOnStage" stepKey="validateProductsStage2AfterSave">
+        <actionGroup ref="validateProductInProducts" stepKey="validateProductsStage2AfterSave">
             <argument name="page" value="ProductsOnStage"/>
         </actionGroup>
         <!-- Switch Back To Frontend -->
@@ -306,6 +306,7 @@
         </actionGroup>
         <actionGroup ref="validateProductInProducts" stepKey="validateProductsStorefront2">
             <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="isClickable" value="auto"/>
         </actionGroup>
     </test>
     <test name="AdminPageBuilderProductsConfigurationIsPersistent">
@@ -1426,7 +1427,7 @@
             <argument name="page" value="ProductsOnStage"/>
             <argument name="count" value="1"/>
         </actionGroup>
-        <actionGroup ref="validateProductInProductsOnStage" stepKey="validateProductsStage">
+        <actionGroup ref="validateProductInProducts" stepKey="validateProductsStage">
             <argument name="page" value="ProductsOnStage"/>
             <argument name="product" value="SimpleProduct"/>
         </actionGroup>
@@ -1438,7 +1439,7 @@
             <argument name="page" value="ProductsOnStage"/>
             <argument name="count" value="1"/>
         </actionGroup>
-        <actionGroup ref="validateProductInProductsOnStage" stepKey="validateProductsStage2">
+        <actionGroup ref="validateProductInProducts" stepKey="validateProductsStage2">
             <argument name="page" value="ProductsOnStage"/>
             <argument name="product" value="SimpleProduct"/>
         </actionGroup>
@@ -1594,6 +1595,7 @@
         </actionGroup>
         <actionGroup ref="validateProductInProducts" stepKey="validateProductsStorefront">
             <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="isClickable" value="auto"/>
         </actionGroup>
         <!-- Changing Combination Condition to False -->
         <comment userInput="Changing Combination Condition to False" stepKey="commentChangeCombinationConditionToFalse"/>

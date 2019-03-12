@@ -22,11 +22,11 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
+            <createData entity="_defaultCmsPage" stepKey="createCMSPage"/>
         </before>
         <after>
             <actionGroup ref="logout" stepKey="logout"/>
-            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
+            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage"/>
         </after>
         <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
@@ -43,7 +43,7 @@
         <seeElement selector="{{BlockOnStage.status('1', 'Empty Block')}}" stepKey="seeEmptyBlockPlaceHolder2"/>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToStorefront">
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <dontSeeElement selector="{{BlockOnStorefront.empty('1')}}" stepKey="dontSeeBlockOnStorefront"/>
@@ -63,12 +63,12 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
-            <createData entity="_defaultBlock" stepKey="createPreReqBlock" />
+            <createData entity="_defaultCmsPage" stepKey="createCMSPage"/>
+            <createData entity="_defaultBlock" stepKey="createPreReqBlock"/>
         </before>
         <after>
-            <deleteData createDataKey="createPreReqBlock" stepKey="deletePreReqBlock" />
-            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
+            <deleteData createDataKey="createPreReqBlock" stepKey="deletePreReqBlock"/>
+            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
@@ -97,7 +97,7 @@
             <argument name="block" value="$$createPreReqBlock$$"/>
             <argument name="index" value="1"/>
         </actionGroup>
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToStorefront">
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <see userInput="$$createPreReqBlock.content$$" stepKey="seeBlockContentOnCmsStage"/>
@@ -117,12 +117,12 @@
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
-            <createData entity="_defaultBlock" stepKey="createPreReqBlock" />
+            <createData entity="_defaultCmsPage" stepKey="createCMSPage"/>
+            <createData entity="_defaultBlock" stepKey="createPreReqBlock"/>
         </before>
         <after>
-            <deleteData createDataKey="createPreReqBlock" stepKey="deletePreReqBlock" />
-            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
+            <deleteData createDataKey="createPreReqBlock" stepKey="deletePreReqBlock"/>
+            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage"/>
             <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
@@ -143,15 +143,15 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
         <!-- Validate Stage -->
-        <comment userInput="Validate stage" stepKey="validateStage1" />
+        <comment userInput="Validate stage" stepKey="validateStage1"/>
         <actionGroup ref="verifyBlockOnStage" stepKey="verifyBlockOnStage">
             <argument name="block" value="$$createPreReqBlock$$"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate Storefront -->
-        <comment userInput="Validate Storefront" stepKey="validateStorefront1" />
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToStorefront">
+        <comment userInput="Validate storefront" stepKey="validateStorefront1"/>
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <see userInput="$$createPreReqBlock.content$$" stepKey="seeBlockContentOnCmsStage"/>
@@ -170,14 +170,14 @@
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
         <!-- Validate Stage -->
-        <comment userInput="Validate stage after updating block" stepKey="validateStage2" />
+        <comment userInput="Validate stage after updating block" stepKey="validateStage2"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <waitForElementVisible selector="{{HtmlOnStage.base('1')}}" stepKey="waitForHtmlBaseStage1"/>
         <see selector="{{BlockOnStage.html('1', '1')}}" userInput="{{PageBuilderHtmlPropertyButton.value}}" stepKey="waitForHtmlStage1"/>
         <actionGroup ref="ClearCacheActionGroup" stepKey="clearMagentoCache"/>
         <!-- Validate Storefront -->
-        <comment userInput="Validate storefront after updating block" stepKey="validateStorefront2" />
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToStorefront2">
+        <comment userInput="Validate storefront after updating block" stepKey="validateStorefront2"/>
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront2">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <waitForElementVisible selector="{{HtmlOnStorefront.base('1')}}" stepKey="waitForHtmlBaseStorefront"/>
@@ -257,13 +257,13 @@
             <group value="pagebuilder-block"/>
         </annotations>
         <before>
-            <createData entity="_defaultBlock" stepKey="createPreReqBlock" />
+            <createData entity="_defaultBlock" stepKey="createPreReqBlock"/>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <deleteData createDataKey="createPreReqBlock" stepKey="deletePreReqBlock" />
+            <deleteData createDataKey="createPreReqBlock" stepKey="deletePreReqBlock"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -338,13 +338,13 @@
             <group value="pagebuilder-block"/>
         </annotations>
         <before>
-            <createData entity="_defaultBlock" stepKey="createPreReqBlock" />
+            <createData entity="_defaultBlock" stepKey="createPreReqBlock"/>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <deleteData createDataKey="createPreReqBlock" stepKey="deletePreReqBlock" />
+            <deleteData createDataKey="createPreReqBlock" stepKey="deletePreReqBlock"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -613,7 +613,7 @@
             </actionGroup>
         </before>
         <after>
-            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
+            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionAddContent">
@@ -630,7 +630,7 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <deleteData createDataKey="createPreReqBlock" stepKey="deletePreReqBlock" />
+        <deleteData createDataKey="createPreReqBlock" stepKey="deletePreReqBlock"/>
         <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage2">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
@@ -653,12 +653,12 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <createData entity="_defaultBlock" stepKey="createPreReqBlock" />
+            <createData entity="_defaultBlock" stepKey="createPreReqBlock"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <deleteData createDataKey="createPreReqBlock" stepKey="deletePreReqCMSPage" />
+            <deleteData createDataKey="createPreReqBlock" stepKey="deletePreReqCMSPage"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -781,12 +781,12 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <createData entity="_defaultBlock" stepKey="createPreReqBlock" />
+            <createData entity="_defaultBlock" stepKey="createPreReqBlock"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <deleteData createDataKey="createPreReqBlock" stepKey="deletePreReqCMSPage" />
+            <deleteData createDataKey="createPreReqBlock" stepKey="deletePreReqCMSPage"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -1004,7 +1004,7 @@
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragBlockOntoColumn">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
-            <argument name="containerTargetIndex" value="2" />
+            <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
         <!-- Validate Stage -->
         <comment userInput="User sees Block displayed in column on Stage" stepKey="confirmBlockOnStage"/>
@@ -1036,284 +1036,6 @@
             <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
     </test>
-    <test name="AddBlockWithTabToCmsPage">
-        <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Block"/>
-            <title value="Add Block with Tab to CMS Page"/>
-            <description value="Verify that admin are able to add a block instance type with tab content to Block Content Block and see it on frontend"/>
-            <severity value="CRITICAL"/>
-            <testCaseId value="MC-3742"/>
-            <useCaseId value="MC-1405"/>
-            <group value="pagebuilder"/>
-            <group value="pagebuilder-block"/>
-        </annotations>
-        <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
-            <createData entity="_defaultBlock" stepKey="createPreReqBlock" />
-        </before>
-        <after>
-            <deleteData createDataKey="createPreReqBlock" stepKey="deletePreReqBlock" />
-            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
-            <actionGroup ref="logout" stepKey="logout"/>
-        </after>
-        <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage1">
-            <argument name="CMSBlockPage" value="$$createPreReqBlock$$"/>
-        </actionGroup>
-        <!-- Add Tabs to Stage -->
-        <comment userInput="Add Tabs to Stage" stepKey="addTabsToStage"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
-            <argument name="contentType" value="PageBuilderTabsContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
-            <argument name="contentType" value="PageBuilderTabsContentType"/>
-        </actionGroup>
-        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType">
-            <argument name="contentType" value="PageBuilderTabsContentType"/>
-        </actionGroup>
-        <!-- User sees tabs displayed with 1st default tab item created by default -->
-        <comment userInput="User sees tabs displayed with 1st default tab item created by default" stepKey="AC1"/>
-        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel1">
-            <argument name="section" value="TabOnStage"/>
-        </actionGroup>
-        <comment userInput="User configures custom tab name, min height, color for first tab" stepKey="AC2"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterFirstTabName">
-            <argument name="property" value="PageBuilderTabNameRandom1"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterFirstTabMinHeight">
-            <argument name="property" value="PageBuilderTabMinimumHeight200Property"/>
-        </actionGroup>
-        <comment userInput="I fill out color using Color Picker" stepKey="fillOutColorOnTab"/>
-        <actionGroup ref="fillOutColorPicker" stepKey="fillOutColor">
-            <argument name="colorCode" value="PageBuilderTabBackgroundColorPink"/>
-        </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeHEXInField7">
-            <argument name="property" value="PageBuilderTabBackgroundColorPink"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <seeElement selector="{{TabOnStage.tabHeaderItemActive('1')}}" stepKey="seeFirstTabActiveAdminPreview"/>
-        <comment userInput="User updates tab settings and saves configuration" stepKey="saveBlock"/>
-        <actionGroup ref="saveCMSBlock" stepKey="saveCMSBlock"/>
-        <!--Verify stage after save-->
-        <comment userInput="Verify stage after save" stepKey="commentVerifyStageAfterSave"/>
-        <seeElement selector="{{TabOnStage.tabHeaderItemActive('1')}}" stepKey="seeFirstTabActiveAdminPreviewAfterSave"/>
-        <!--User goes to created CMS page-->
-        <comment userInput="User goes to created CMS page" stepKey="NavigateToCMSPage"/>
-        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
-            <argument name="CMSPage" value="$$createCMSPage$$"/>
-        </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionAddContent">
-            <argument name="contentType" value="PageBuilderBlockContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage">
-            <argument name="contentType" value="PageBuilderBlockContentType"/>
-        </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
-            <argument name="contentType" value="PageBuilderBlockContentType"/>
-        </actionGroup>
-        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
-            <argument name="block" value="$$createPreReqBlock$$"/>
-        </actionGroup>
-        <waitForElementVisible selector="{{BlockOnForm.title('$$createPreReqBlock.title$$')}}" stepKey="waitToSeeBlockTitle"/>
-        <seeElement selector="{{BlockOnForm.title('$$createPreReqBlock.title$$')}}" stepKey="seeBlockTitleOnForm"/>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
-        <!--Check that tab was rendered on the stage-->
-        <comment userInput="Check that tab was rendered on the stage" stepKey="commentCheckingThatTabAreRenderedOnTHeStage"/>
-        <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleStorefront2"/>
-        <seeElement selector="{{TabOnStorefront.tabHeaderItemActive('1')}}" stepKey="seeFirstTabActiveStorefront2"/>
-        <seeElement selector="{{TabOnStorefront.backgroundColor('1', PageBuilderTabBackgroundColorPink.rgb)}}" stepKey="seeTab1BackgroundColor2"/>
-        <actionGroup ref="openOptionsMenu" stepKey="openEditMenuOnStage3">
-            <argument name="contentType" value="PageBuilderBlockContentType"/>
-            <argument name="contentTypeIndex" value="1"/>
-        </actionGroup>
-        <seeElement selector="{{BlockOnStage.overlay('1')}}" stepKey="seeOverlayOnBlock"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <!--Verify block on the frontend-->
-        <comment userInput="Verify Block On Store front" stepKey="commentCheckingThatImageIsNotRenderedOnTheStoreFront"/>
-        <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
-        <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleStorefront"/>
-        <seeElement selector="{{TabOnStorefront.tabHeaderItemActive('1')}}" stepKey="seeFirstTabActiveStorefront"/>
-        <seeElement selector="{{TabOnStorefront.backgroundColor('1', PageBuilderTabBackgroundColorPink.rgb)}}" stepKey="seeTab1BackgroundColor"/>
-        <see userInput="$$createPreReqBlock.content$$" stepKey="seeBlockContentOnCmsStage1"/>
-    </test>
-    <test name="AddBlockWithEmptyImageToCmsPage">
-        <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Block"/>
-            <title value="Add Block with Empty Image to CMS Page"/>
-            <description value="Verify that admin are able to add a block instance type with empty image to Block Content Block and see it on frontend and on the stage"/>
-            <severity value="CRITICAL"/>
-            <testCaseId value="MC-3740"/>
-            <useCaseId value="MC-1405"/>
-            <group value="pagebuilder"/>
-            <group value="pagebuilder-block"/>
-        </annotations>
-        <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <createData entity="_defaultCmsPage" stepKey="createCMSPage"/>
-            <createData entity="_defaultBlock" stepKey="createPreReqBlock"/>
-        </before>
-        <after>
-            <deleteData createDataKey="createPreReqBlock" stepKey="deletePreReqBlock"/>
-            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage"/>
-            <actionGroup ref="logout" stepKey="logout"/>
-        </after>
-        <!--Add Image to block-->
-        <comment userInput="Adding image to block" stepKey="commentAddingImageToBlock"/>
-        <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage1">
-            <argument name="CMSBlockPage" value="$$createPreReqBlock$$"/>
-        </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
-            <argument name="contentType" value="PageBuilderImageContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragImageIntoStage">
-            <argument name="contentType" value="PageBuilderImageContentType"/>
-        </actionGroup>
-        <actionGroup ref="saveCMSBlock" stepKey="saveCMSBlock"/>
-        <!--User goes to created CMS page-->
-        <comment userInput="User goes to created CMS page" stepKey="NavigateToCMSPage"/>
-        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
-            <argument name="CMSPage" value="$$createCMSPage$$"/>
-        </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionAddContent">
-            <argument name="contentType" value="PageBuilderBlockContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage">
-            <argument name="contentType" value="PageBuilderBlockContentType"/>
-        </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
-            <argument name="contentType" value="PageBuilderBlockContentType"/>
-        </actionGroup>
-        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
-            <argument name="block" value="$$createPreReqBlock$$"/>
-        </actionGroup>
-        <waitForElementVisible selector="{{BlockOnForm.title('$$createPreReqBlock.title$$')}}" stepKey="waitToSeeBlockTitle"/>
-        <seeElement selector="{{BlockOnForm.title('$$createPreReqBlock.title$$')}}" stepKey="seeBlockTitleOnForm"/>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
-        <!--Check that image was not rendered on the stage-->
-        <comment userInput="Check that image was not rendered on the stage" stepKey="commentCheckingThatImageIsNotRenderedOnTheStage"/>
-        <executeJS function="return jQuery('.pagebuilder-block').css('height');" stepKey="height"/>
-        <assertGreaterThanOrEqual stepKey="assertElementHight">
-            <actualResult type="variable">height</actualResult>
-            <expectedResult type="string">10px</expectedResult>
-        </assertGreaterThanOrEqual>
-        <seeElementInDOM selector="{{ImageOnStorefront.imageDisplay}}" stepKey="seeThatEmptyImageExistsInDomOnStage"/>
-        <dontSeeElement selector="{{ImageOnStorefront.imageDisplay}}" stepKey="notSeeImageOnStage"/>
-        <actionGroup ref="openOptionsMenu" stepKey="openEditMenuOnStage3">
-            <argument name="contentType" value="PageBuilderBlockContentType"/>
-            <argument name="contentTypeIndex" value="1"/>
-        </actionGroup>
-        <seeElement selector="{{BlockOnStage.overlay('1')}}" stepKey="seeOverlayOnBlock"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
-        <!--Verify block on the frontend-->
-        <comment userInput="Verify Block On Store front" stepKey="commentCheckingThatImageIsNotRenderedOnTheStoreFront"/>
-        <seeElementInDOM selector="{{ImageOnStorefront.imageDisplay}}" stepKey="seeThatEmptyImageExistsInDomOnStorefront"/>
-        <dontSeeElement selector="{{ImageOnStorefront.imageDisplay}}" stepKey="notSeeImageOnFrontend"/>
-    </test>
-    <test name="BlockImageIsRightAligned">
-        <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Block"/>
-            <title value="Image Can Be Right Aligned In Block"/>
-            <description value="A user can right align an image in a Block"/>
-            <severity value="MAJOR"/>
-            <useCaseId value="MC-4293"/>
-            <testCaseId value="MC-5174"/>
-            <group value="pagebuilder"/>
-            <group value="pagebuilder-block"/>
-            <group value="pagebuilder-image"/>
-        </annotations>
-        <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <createData entity="_defaultBlock" stepKey="createPreReqBlock"/>
-            <createData entity="_defaultCmsPage" stepKey="createCMSPage"/>
-            <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage">
-                <argument name="CMSBlockPage" value="$$createPreReqBlock$$"/>
-            </actionGroup>
-        </before>
-        <after>
-            <deleteData createDataKey="createPreReqBlock" stepKey="deletePreReqBlock"/>
-            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage"/>
-            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
-            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
-                <argument name="FolderName" value="{{PageBuilderImageProperty_PNG.path}}"/>
-            </actionGroup>
-            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage">
-                <argument name="Image" value="PageBuilderImageProperty_PNG"/>
-            </actionGroup>
-            <actionGroup ref="logout" stepKey="logout"/>
-        </after>
-        <!-- Go to edit page of Block and configure Image -->
-        <comment userInput="Go to edit page of Block and configure image" stepKey="commentGoToBlockEditPage"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
-            <argument name="contentType" value="PageBuilderImageContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragImageIntoStage">
-            <argument name="contentType" value="PageBuilderImageContentType"/>
-        </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentType" value="PageBuilderImageContentType"/>
-        </actionGroup>
-        <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachImageFile">
-            <argument name="property" value="PageBuilderImageProperty_PNG"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterImageCaptionProperty">
-            <argument name="property" value="PageBuilderImageCaptionProperty"/>
-        </actionGroup>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAlignment">
-            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyRight"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsInBlock"/>
-        <actionGroup ref="saveCMSBlock" stepKey="saveCMSBlock"/>
-        <!-- Go to CMS Page and choose Block -->
-        <comment userInput="Go to CMS Page and choose Block" stepKey="commentGoToCMSPage"/>
-        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
-            <argument name="CMSPage" value="$$createCMSPage$$"/>
-        </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionAddContent">
-            <argument name="contentType" value="PageBuilderBlockContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage">
-            <argument name="contentType" value="PageBuilderBlockContentType"/>
-        </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStageAfterDrop">
-            <argument name="contentType" value="PageBuilderBlockContentType"/>
-        </actionGroup>
-        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
-            <argument name="block" value="$$createPreReqBlock$$"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <!-- Verify Right Alignment On Stage - Before Save -->
-        <comment userInput="Verify right alignment on stage before save" stepKey="commentVerifyRightAlignmentOnStageBeforeSave"/>
-        <seeElement selector="({{ImageOnStorefront.alignment('1', PageBuilderAdvancedAlignmentPropertyRight.value)}}{{BlockOnStorefront.ancestor}})[1]" stepKey="seeImageAlignmentRightBeforeSave"/>
-        <actionGroup ref="verifyAlignmentRightInBlock" stepKey="verifyAlignmentRightInBlockBeforeSave">
-            <argument name="container" value="{{RowOnStorefront.innerCSS}}"/>
-            <argument name="content" value="{{ImageOnStorefront.imageElementCSS}}"/>
-            <argument name="containerPadding" value="PageBuilderPaddingProperty10"/>
-        </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStageAfterSave"/>
-        <!-- Verify Right Alignment On Stage - After Save -->
-        <comment userInput="Verify right alignment on stage after save" stepKey="commentVerifyRightAlignmentOnStageAfterSave"/>
-        <seeElement selector="({{ImageOnStorefront.alignment('1', PageBuilderAdvancedAlignmentPropertyRight.value)}}{{BlockOnStorefront.ancestor}})[1]" stepKey="seeImageAlignmentRightAfterSave"/>
-        <actionGroup ref="verifyAlignmentRightInBlock" stepKey="verifyAlignmentRightInBlockAfterSave">
-            <argument name="container" value="{{RowOnStorefront.innerCSS}}"/>
-            <argument name="content" value="{{ImageOnStorefront.imageElementCSS}}"/>
-            <argument name="containerPadding" value="PageBuilderPaddingProperty10"/>
-        </actionGroup>
-        <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnStorefrontCMSPage" />
-        <waitForPageLoad stepKey="waitForCmsPageLoad"/>
-        <!-- Verify Right Alignment In Storefront -->
-        <comment userInput="Verify right alignment in storefront" stepKey="commentVerifyRightAlignmentInStorefront"/>
-        <seeElement selector="({{ImageOnStorefront.alignment('1', PageBuilderAdvancedAlignmentPropertyRight.value)}}{{BlockOnStorefront.ancestor}})[1]" stepKey="seeImageAlignmentRightStorefront"/>
-        <actionGroup ref="verifyAlignmentRightInBlock" stepKey="verifyAlignmentRightInBlockStorefront">
-            <argument name="container" value="{{RowOnStorefront.innerCSS}}"/>
-            <argument name="content" value="{{ImageOnStorefront.imageElementCSS}}"/>
-            <argument name="containerPadding" value="PageBuilderPaddingProperty10"/>
-        </actionGroup>
-    </test>
     <test name="ValidateShowHideOnBlockDefaultState">
         <annotations>
             <features value="PageBuilder"/>
@@ -1328,13 +1050,13 @@
             <group value="pagebuilder-hideShow"/>
         </annotations>
         <before>
-            <createData entity="_defaultBlock" stepKey="createPreReqBlock" />
+            <createData entity="_defaultBlock" stepKey="createPreReqBlock"/>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <deleteData createDataKey="createPreReqBlock" stepKey="deletePreReqBlock" />
+            <deleteData createDataKey="createPreReqBlock" stepKey="deletePreReqBlock"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -1384,14 +1106,14 @@
             <group value="pagebuilder-hideShow"/>
         </annotations>
         <before>
-            <createData entity="_defaultBlock" stepKey="createPreReqBlock" />
+            <createData entity="_defaultBlock" stepKey="createPreReqBlock"/>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <deleteData createDataKey="createPreReqBlock" stepKey="deletePreReqBlock" />
-            <closeTab stepKey="closeOpenedTab" />
+            <deleteData createDataKey="createPreReqBlock" stepKey="deletePreReqBlock"/>
+            <closeTab stepKey="closeOpenedTab"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -1418,21 +1140,21 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage1"/>
         <!-- Validate content type remains disabled after save -->
         <comment userInput="Validate content type remains disabled after save" stepKey="commentValidateHiddenStage"/>
-        <seeElement selector="{{BlockOnStage.hidden('1')}}" stepKey="waitForContentTypeHidden" />
+        <seeElement selector="{{BlockOnStage.hidden('1')}}" stepKey="waitForContentTypeHidden"/>
         <!-- Validate store front -->
         <comment userInput="Validate content type is disabled on storefront" stepKey="commentValidateHiddenStorefront"/>
-        <openNewTab stepKey="openNewTab" />
+        <openNewTab stepKey="openNewTab"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <waitForElement selector="{{BlockOnStorefront.base('1')}}" stepKey="waitForContentTypeNotVisible" />
-        <dontSeeElement selector="{{BlockOnStorefront.base('1')}}" stepKey="dontSeeContentType" />
-        <seeElementInDOM selector="{{BlockOnStorefront.hidden('1')}}" stepKey="waitForHiddenElement" />
+        <waitForElement selector="{{BlockOnStorefront.base('1')}}" stepKey="waitForContentTypeNotVisible"/>
+        <dontSeeElement selector="{{BlockOnStorefront.base('1')}}" stepKey="dontSeeContentType"/>
+        <seeElementInDOM selector="{{BlockOnStorefront.hidden('1')}}" stepKey="waitForHiddenElement"/>
         <!-- Set content to visible in admin -->
         <comment userInput="Set content to visible in admin" stepKey="commentSetContentToVisibleAdmin"/>
-        <switchToNextTab stepKey="switchBackToAdmin" />
-        <reloadPage stepKey="reloadPage" />
-        <waitForPageLoad stepKey="waitForAdminReload" />
+        <switchToNextTab stepKey="switchBackToAdmin"/>
+        <reloadPage stepKey="reloadPage"/>
+        <waitForPageLoad stepKey="waitForAdminReload"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <actionGroup ref="showContentType" stepKey="showContentType">
             <argument name="section" value="BlockOnStage"/>
@@ -1441,283 +1163,11 @@
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage1"/>
         <!-- Validate Content Is Shown Storefront -->
         <comment userInput="Validate Content Is Shown Storefront" stepKey="commentValidateContentIsShownStorefront"/>
-        <switchToNextTab stepKey="switchBackToStorefront" />
-        <reloadPage stepKey="reloadStorefront" />
-        <waitForPageLoad stepKey="waitForStorefrontReload" />
+        <switchToNextTab stepKey="switchBackToStorefront"/>
+        <reloadPage stepKey="reloadStorefront"/>
+        <waitForPageLoad stepKey="waitForStorefrontReload"/>
         <dontSeeElementInDOM selector="{{BlockOnStorefront.hidden('1')}}" stepKey="dontSeeHiddenElement"/>
-        <seeElement selector="{{BlockOnStorefront.base('1')}}" stepKey="waitForContentTypeVisible" />
-    </test>
-    <test name="BlockRowContentIsVerticallyAligned">
-        <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Block"/>
-            <title value="Row Content Can Be Vertically Aligned In Block"/>
-            <description value="A user can vertically align row contents in a Block"/>
-            <severity value="CRITICAL"/>
-            <useCaseId value="MC-4280"/>
-            <testCaseId value="MC-5061"/>
-            <group value="pagebuilder"/>
-            <group value="pagebuilder-block"/>
-            <group value="pagebuilder-row"/>
-        </annotations>
-        <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin" />
-            <createData entity="_defaultBlock" stepKey="createPreReqBlock" />
-            <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage">
-                <argument name="CMSBlockPage" value="$$createPreReqBlock$$" />
-            </actionGroup>
-        </before>
-        <after>
-            <deleteData createDataKey="createPreReqBlock" stepKey="deletePreReqBlock" />
-            <actionGroup ref="logout" stepKey="logout"/>
-        </after>
-        <!-- Edit Block and configure Row - Vertical Align Bottom -->
-        <comment userInput="Edit Block and configure row vertical align bottom" stepKey="commentConfigureRowVerticalAlignBottom"/>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentType" value="PageBuilderRowContentType"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelField" stepKey="enterMinHeightProperty">
-            <argument name="property" value="PageBuilderMinHeightProperty_500"/>
-        </actionGroup>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="enterVerticalAlignmentBottomProperty">
-            <argument name="property" value="PageBuilderVerticalAlignmentPropertyBottom"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsInBlock"/>
-        <actionGroup ref="saveCMSBlock" stepKey="saveCMSBlock"/>
-        <!-- Go to CMS Page and choose Block -->
-        <comment userInput="Go to CMS Page and choose Block" stepKey="commentGoToCMSPage"/>
-        <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
-            <argument name="contentType" value="PageBuilderBlockContentType"/>
-        </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionAddContent">
-            <argument name="contentType" value="PageBuilderBlockContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage">
-            <argument name="contentType" value="PageBuilderBlockContentType"/>
-        </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
-            <argument name="contentType" value="PageBuilderBlockContentType"/>
-        </actionGroup>
-        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
-            <argument name="block" value="$$createPreReqBlock$$"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <!-- Verify Vertical Alignment On Stage - Before Save -->
-        <comment userInput="Verify min height and vertical alignment on stage before save" stepKey="commentVerifyMinHeightAndVerticalAlignmentOnStageBeforeSave"/>
-        <seeElement selector="({{RowOnStorefront.rowStyle('1', PageBuilderMinHeightProperty_500.style)}}{{BlockOnStorefront.ancestor}})[1]" stepKey="seeRowMinHeightBeforeSave"/>
-        <seeElement selector="({{RowOnStorefront.rowStyle('1', PageBuilderVerticalAlignmentPropertyBottom.style)}}{{BlockOnStorefront.ancestor}})[1]" stepKey="seeRowVerticalAlignmentBottomBeforeSave"/>
-        <actionGroup ref="verifyVerticalAlignmentBottomInBlock" stepKey="verifyBottomAlignmentBeforeSave">
-            <argument name="container" value="RowOnStorefront"/>
-            <argument name="content" value="HtmlOnStorefront"/>
-            <argument name="padding" value="PageBuilderPaddingProperty10"/>
-            <argument name="minHeight" value="PageBuilderMinHeightProperty_500.value"/>
-        </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStageAfterSave"/>
-        <!-- Verify Vertical Alignment On Stage - After Save -->
-        <comment userInput="Verify min height and vertical alignment on stage after save" stepKey="commentVerifyMinHeightAndVerticalAlignmentOnStageAfterSave"/>
-        <seeElement selector="({{RowOnStorefront.rowStyle('1', PageBuilderMinHeightProperty_500.style)}}{{BlockOnStorefront.ancestor}})[1]" stepKey="seeRowMinHeightAfterSave"/>
-        <seeElement selector="({{RowOnStorefront.rowStyle('1', PageBuilderVerticalAlignmentPropertyBottom.style)}}{{BlockOnStorefront.ancestor}})[1]" stepKey="seeRowVerticalAlignmentBottomAfterSave"/>
-        <actionGroup ref="verifyVerticalAlignmentBottomInBlock" stepKey="verifyBottomAlignmentAfterSave">
-            <argument name="container" value="RowOnStorefront"/>
-            <argument name="content" value="HtmlOnStorefront"/>
-            <argument name="padding" value="PageBuilderPaddingProperty10"/>
-            <argument name="minHeight" value="PageBuilderMinHeightProperty_500.value"/>
-        </actionGroup>
-        <!-- Verify Min Height and Vertical Alignment In Storefront -->
-        <comment userInput="Verify min height and vertical alignment in storefront" stepKey="commentVerifyMinHeightAndVerticalAlignmentInStorefront"/>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentType" value="PageBuilderBlockContentType"/>
-        </actionGroup>
-        <seeElement selector="({{RowOnStorefront.rowStyle('1', PageBuilderMinHeightProperty_500.style)}}{{BlockOnStorefront.ancestor}})[1]" stepKey="seeRowMinHeightStorefront"/>
-        <seeElement selector="({{RowOnStorefront.rowStyle('1', PageBuilderVerticalAlignmentPropertyBottom.style)}}{{BlockOnStorefront.ancestor}})[1]" stepKey="seeRowVerticalAlignmentBottomStorefront"/>
-        <actionGroup ref="verifyVerticalAlignmentBottomInBlock" stepKey="verifyBottomAlignmentStorefront">
-            <argument name="container" value="RowOnStorefront"/>
-            <argument name="content" value="HtmlOnStorefront"/>
-            <argument name="padding" value="PageBuilderPaddingProperty10"/>
-            <argument name="minHeight" value="PageBuilderMinHeightProperty_500.value"/>
-        </actionGroup>
-    </test>
-    <test name="BlockRowContainedAppearanceHasEqualWidthToContents">
-        <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Block"/>
-            <title value="Row contained appearance has equal width to contents in Block"/>
-            <description value="A user can see a row contained appearance has equal width to contents in a Block"/>
-            <severity value="MAJOR"/>
-            <useCaseId value="MC-5432"/>
-            <testCaseId value="MC-5958"/>
-            <group value="pagebuilder"/>
-            <group value="pagebuilder-block"/>
-            <group value="pagebuilder-row"/>
-            <group value="pagebuilder-rowAppearances"/>
-            <group value="pagebuilder-banner"/>
-            <group value="pagebuilder-bannerPoster"/>
-        </annotations>
-        <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin" />
-            <createData entity="_defaultBlock" stepKey="createPreReqBlock" />
-            <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage">
-                <argument name="CMSBlockPage" value="$$createPreReqBlock$$" />
-            </actionGroup>
-        </before>
-        <after>
-            <deleteData createDataKey="createPreReqBlock" stepKey="deletePreReqBlock" />
-            <actionGroup ref="logout" stepKey="logout"/>
-        </after>
-        <!-- Edit Block and configure Row -->
-        <comment userInput="Edit Block and configure Row" stepKey="commentConfigureRowInBlock"/>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentType" value="PageBuilderRowContentType"/>
-        </actionGroup>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="enterRowAppearance">
-            <argument name="property" value="PageBuilderRowAppearance_Contained"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsInBlock"/>
-        <!-- Edit Block and configure Banner -->
-        <comment userInput="Edit Block and configure Banner" stepKey="commentConfigureBannerInBlock"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionElements">
-            <argument name="contentType" value="PageBuilderBannerContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage">
-            <argument name="contentType" value="PageBuilderBannerContentType"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
-        </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
-            <argument name="contentType" value="PageBuilderBannerContentType"/>
-        </actionGroup>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
-            <argument name="property" value="PageBuilderAppearance_Poster"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerMinHeight">
-            <argument name="property" value="PageBuilderBannerMinimumHeightProperty"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelField" stepKey="enterBackgroundColor">
-            <argument name="property" value="PageBuilderBackgroundColor_Plaintext_Green"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsInBlock2"/>
-        <actionGroup ref="saveCMSBlock" stepKey="saveCMSBlock"/>
-        <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        <!-- Go to CMS page and choose Block -->
-        <comment userInput="Go to CMS page and choose Block" stepKey="commentGoToCMSPage"/>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
-            <argument name="contentType" value="PageBuilderBlockContentType"/>
-        </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionAddContent">
-            <argument name="contentType" value="PageBuilderBlockContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage">
-            <argument name="contentType" value="PageBuilderBlockContentType"/>
-        </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
-            <argument name="contentType" value="PageBuilderBlockContentType"/>
-        </actionGroup>
-        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
-            <argument name="block" value="$$createPreReqBlock$$"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <!-- Validate width before save -->
-        <comment userInput="Validate width before save" stepKey="commentValidateBeforeSave"/>
-        <actionGroup ref="validateContentWidthEqualToContainerWidth" stepKey="validateContentWidthEqualToContainerWidthBeforeSave">
-            <argument name="content" value="{{BannerOnFrontend.appearancePosterCSS}}"/>
-            <argument name="container" value="{{RowOnStorefront.appearanceContainedCSS}}"/>
-            <argument name="containerIndex" value="2"/>
-            <argument name="containerPadding" value="PageBuilderPaddingPropertyRowDefault"/>
-        </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
-         <!-- Validate width after save -->
-        <comment userInput="Validate width after save" stepKey="commentValidateAfterSave"/>
-        <actionGroup ref="validateContentWidthEqualToContainerWidth" stepKey="validateContentWidthEqualToContainerWidthAfterSave">
-            <argument name="content" value="{{BannerOnFrontend.appearancePosterCSS}}"/>
-            <argument name="container" value="{{RowOnStorefront.appearanceContainedCSS}}"/>
-            <argument name="containerIndex" value="2"/>
-            <argument name="containerPadding" value="PageBuilderPaddingPropertyRowDefault"/>
-        </actionGroup>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentType" value="PageBuilderBlockContentType"/>
-        </actionGroup>
-        <!-- Validate width storefront -->
-        <comment userInput="Validate width storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="validateContentWidthEqualToContainerWidth" stepKey="validateContentWidthEqualToContainerWidthStorefront">
-            <argument name="content" value="{{BannerOnFrontend.appearancePosterCSS}}"/>
-            <argument name="container" value="{{RowOnStorefront.appearanceContainedCSS}}"/>
-            <argument name="containerIndex" value="2"/>
-            <argument name="containerPadding" value="PageBuilderPaddingPropertyRowDefault"/>
-        </actionGroup>
-    </test>
-    <test name="BlockRowFullWidthAppearanceHasEqualWidthToContents" extends="BlockRowContainedAppearanceHasEqualWidthToContents">
-        <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Block"/>
-            <title value="Row full width appearance has equal width to contents in Block"/>
-            <description value="A user can see a row full width appearance has equal width to contents in a Block"/>
-            <severity value="MAJOR"/>
-            <useCaseId value="MC-5432"/>
-            <testCaseId value="MC-6012"/>
-            <group value="pagebuilder"/>
-            <group value="pagebuilder-block"/>
-            <group value="pagebuilder-row"/>
-            <group value="pagebuilder-rowAppearances"/>
-            <group value="pagebuilder-banner"/>
-            <group value="pagebuilder-bannerPoster"/>
-        </annotations>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="enterRowAppearance">
-            <argument name="property" value="PageBuilderRowAppearance_FullWidth"/>
-        </actionGroup>
-        <actionGroup ref="validateContentWidthEqualToContainerWidth" stepKey="validateContentWidthEqualToContainerWidthBeforeSave">
-            <argument name="content" value="{{BannerOnFrontend.appearancePosterCSS}}"/>
-            <argument name="container" value="{{RowOnStorefront.appearanceFullWidthCSS}}"/>
-            <argument name="containerPadding" value="PageBuilderPaddingPropertyRowDefault"/>
-        </actionGroup>
-        <actionGroup ref="validateContentWidthEqualToContainerWidth" stepKey="validateContentWidthEqualToContainerWidthAfterSave">
-            <argument name="content" value="{{BannerOnFrontend.appearancePosterCSS}}"/>
-            <argument name="container" value="{{RowOnStorefront.appearanceFullWidthCSS}}"/>
-            <argument name="containerPadding" value="PageBuilderPaddingPropertyRowDefault"/>
-        </actionGroup>
-        <actionGroup ref="validateContentWidthEqualToContainerWidth" stepKey="validateContentWidthEqualToContainerWidthStorefront">
-            <argument name="content" value="{{BannerOnFrontend.appearancePosterCSS}}"/>
-            <argument name="container" value="{{RowOnStorefront.appearanceFullWidthCSS}}"/>
-            <argument name="containerPadding" value="PageBuilderPaddingPropertyRowDefault"/>
-        </actionGroup>
-    </test>
-    <test name="BlockRowFullBleedAppearanceHasEqualWidthToContents" extends="BlockRowContainedAppearanceHasEqualWidthToContents">
-        <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Block"/>
-            <title value="Row full bleed appearance has equal width to contents in Block"/>
-            <description value="A user can see a row full bleed appearance has equal width to contents in a Block"/>
-            <severity value="MAJOR"/>
-            <useCaseId value="MC-5432"/>
-            <testCaseId value="MC-6011"/>
-            <group value="pagebuilder"/>
-            <group value="pagebuilder-block"/>
-            <group value="pagebuilder-row"/>
-            <group value="pagebuilder-rowAppearances"/>
-            <group value="pagebuilder-banner"/>
-            <group value="pagebuilder-bannerPoster"/>
-        </annotations>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="enterRowAppearance">
-            <argument name="property" value="PageBuilderRowAppearance_FullBleed"/>
-        </actionGroup>
-        <actionGroup ref="validateContentWidthEqualToContainerWidth" stepKey="validateContentWidthEqualToContainerWidthBeforeSave">
-            <argument name="content" value="{{BannerOnFrontend.appearancePosterCSS}}"/>
-            <argument name="container" value="{{RowOnStorefront.appearanceFullBleedCSS}}"/>
-            <argument name="containerPadding" value="PageBuilderPaddingPropertyRowDefault"/>
-        </actionGroup>
-        <actionGroup ref="validateContentWidthEqualToContainerWidth" stepKey="validateContentWidthEqualToContainerWidthAfterSave">
-            <argument name="content" value="{{BannerOnFrontend.appearancePosterCSS}}"/>
-            <argument name="container" value="{{RowOnStorefront.appearanceFullBleedCSS}}"/>
-            <argument name="containerPadding" value="PageBuilderPaddingPropertyRowDefault"/>
-        </actionGroup>
-        <actionGroup ref="validateContentWidthEqualToContainerWidth" stepKey="validateContentWidthEqualToContainerWidthStorefront">
-            <argument name="content" value="{{BannerOnFrontend.appearancePosterCSS}}"/>
-            <argument name="container" value="{{RowOnStorefront.appearanceFullBleedCSS}}"/>
-            <argument name="containerPadding" value="PageBuilderPaddingPropertyRowDefault"/>
-        </actionGroup>
+        <seeElement selector="{{BlockOnStorefront.base('1')}}" stepKey="waitForContentTypeVisible"/>
     </test>
     <test name="BlockMove">
         <annotations>
@@ -1736,10 +1186,10 @@
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-            <createData entity="_defaultBlock" stepKey="createPreReqBlock" />
+            <createData entity="_defaultBlock" stepKey="createPreReqBlock"/>
         </before>
         <after>
-            <deleteData createDataKey="createPreReqBlock" stepKey="deletePreReqBlock" />
+            <deleteData createDataKey="createPreReqBlock" stepKey="deletePreReqBlock"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -1756,7 +1206,7 @@
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingToColumn">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
-            <argument name="containerTargetIndex" value="2" />
+            <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage">
             <argument name="headingText" value="PageBuilderHeadingTextProperty"/>
@@ -1772,7 +1222,7 @@
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragBlockToColumn">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
-            <argument name="containerTargetIndex" value="2" />
+            <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
@@ -1837,244 +1287,5 @@
             <argument name="contentTypeIndex" value="1"/>
             <argument name="containerTargetIndex" value="1"/>
         </actionGroup>
-    </test>
-    <test name="ProductFromDifferentWebsiteInsideBlockShowsOnStage">
-        <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Block"/>
-            <title value="Product from Different Website Inside Block Shows on Stage"/>
-            <description value="As a product manager I want to be able to see products from all store views rendered inside blocks on stage in admin so that I don't get worried that conditions are being applied incorrectly"/>
-            <severity value="CRITICAL"/>
-            <useCaseId value="MC-5373"/>
-            <testCaseId value="MC-11890"/>
-            <group value="pagebuilder"/>
-            <group value="pagebuilder-products"/>
-            <group value="pagebuilder-block"/>
-            <group value="pagebuilder-storeView"/>
-        </annotations>
-        <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <magentoCLI command="config:set web/url/use_store 1" stepKey="turnOnStoreUrlUsage"/>
-            <createData entity="customWebsite" stepKey="createCustomWebsite"/>
-            <createData entity="_defaultBlock" stepKey="createPreReqBlock" />
-            <createData entity="SimpleSubCategory" stepKey="createCategory"/>
-            <actionGroup ref="AdminStoreGroupCreateActionGroup" stepKey="createNewStore">
-                <argument name="Website" value="customWebsite"/>
-                <argument name="storeGroup" value="customStoreGroup"/>
-            </actionGroup>
-            <actionGroup ref="AdminCreateStoreViewActionGroup" stepKey="createCustomStoreView">
-                <argument name="StoreGroup" value="customStoreGroup"/>
-                <argument name="customStore" value="customStore"/>
-            </actionGroup>
-            <createData entity="SimpleProduct" stepKey="createProduct">
-                <requiredEntity createDataKey="createCategory"/>
-            </createData>
-        </before>
-        <after>
-            <magentoCLI command="config:set web/url/use_store 0" stepKey="turnOffStoreUrlUsage"/>
-            <actionGroup ref="DeleteCustomWebsiteActionGroup" stepKey="deleteWebsite">
-                <argument name="websiteName" value="$createCustomWebsite.website[name]$"/>
-            </actionGroup>
-            <deleteData createDataKey="createPreReqBlock" stepKey="deletePreReqBlock" />
-            <deleteData createDataKey="createCategory" stepKey="deleteCategory"/>
-            <deleteData createDataKey="createProduct" stepKey="deleteProduct"/>
-            <actionGroup ref="logout" stepKey="logoutOfAdmin"/>
-        </after>
-        <!-- Create product and assign to created store view -->
-        <comment userInput="Assign product to created store view" stepKey="commentAssignProductToCreatedStoreView"/>
-        <actionGroup ref="navigateToCreatedProductEditPage" stepKey="navigateToCreatedProductEditPage">
-            <argument name="product" value="$$createProduct$$"/>
-        </actionGroup>
-        <actionGroup ref="SelectProductInWebsitesActionGroup" stepKey="setWebsite2">
-            <argument name="website" value="$createCustomWebsite.website[name]$"/>
-        </actionGroup>
-        <uncheckOption selector="{{ProductInWebsitesSection.website('Main Website')}}" stepKey="uncheckMainWebsite"/>
-        <actionGroup ref="saveProductForm" stepKey="saveProductForm2" />
-        <!-- Create block with product inside -->
-        <comment userInput="Create block with product inside" stepKey="commentCreateBlockWithProductInside"/>
-        <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage">
-            <argument name="CMSBlockPage" value="$$createPreReqBlock$$"/>
-        </actionGroup>
-        <selectOption selector="{{BlockNewPageBasicFieldsSection.storeView}}" userInput="All Store Views" stepKey="assignAllStoreViewsToBlock" />
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelGroup">
-            <argument name="contentType" value="PageBuilderProductsContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
-            <argument name="contentType" value="PageBuilderProductsContentType"/>
-        </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
-            <argument name="contentType" value="PageBuilderProductsContentType"/>
-        </actionGroup>
-        <actionGroup ref="addConditionToProductConditions" stepKey="addCategory">
-            <argument name="conditionInput" value="$$createCategory.id$$"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage">
-            <argument name="page" value="ProductsOnStage"/>
-            <argument name="count" value="1"/>
-        </actionGroup>
-        <actionGroup ref="validateProductInProductsOnStage" stepKey="validateProductsStage">
-            <argument name="page" value="ProductsOnStage"/>
-            <argument name="product" value="SimpleProduct"/>
-        </actionGroup>
-        <actionGroup ref="saveAndCloseCMSBlockWithSplitButton" stepKey="saveAndCloseCMSBlockWithSplitButton" />
-        <!-- Add block with product inside to CMS Page -->
-        <comment userInput="Add block with product inside to CMS Page" stepKey="commentAddBlockWithProductInsideToCmsPage"/>
-        <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentType" value="PageBuilderProductsContentType"/>
-        </actionGroup>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage" />
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelGroup2">
-            <argument name="contentType" value="PageBuilderBlockContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockContentTypeToStage">
-            <argument name="contentType" value="PageBuilderBlockContentType"/>
-        </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop2">
-            <argument name="contentType" value="PageBuilderBlockContentType"/>
-        </actionGroup>
-        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
-            <argument name="block" value="$$createPreReqBlock$$"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
-        <!-- Validate Stage -->
-        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage2">
-            <argument name="page" value="ProductsOnStorefront"/>
-            <argument name="count" value="1"/>
-        </actionGroup>
-        <actionGroup ref="validateProductInProductsOnStage" stepKey="validateProductsStage2">
-            <argument name="page" value="ProductsOnStorefront"/>
-            <argument name="product" value="SimpleProduct"/>
-        </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
-        <!-- Validate Stage After Save -->
-        <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
-        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage3">
-            <argument name="page" value="ProductsOnStorefront"/>
-            <argument name="count" value="1"/>
-        </actionGroup>
-        <actionGroup ref="validateProductInProductsOnStage" stepKey="validateProductsStage3">
-            <argument name="page" value="ProductsOnStorefront"/>
-            <argument name="product" value="SimpleProduct"/>
-        </actionGroup>
-        <!-- Validate Storefront with incorrect store view -->
-        <comment userInput="Validate Storefront with incorrect Store View does not show product" stepKey="commentValidateStorefrontWithIncorrectStoreView"/>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentType" value="PageBuilderProductsContentType"/>
-        </actionGroup>
-        <seeNumberOfElements selector="{{ProductsOnStorefront.product('1')}}" userInput="0" stepKey="seeZeroProducts" />
-        <!-- Validate Storefront with correct store view -->
-        <comment userInput="Validate Storefront with correct Store View shows product" stepKey="commentValidateStorefrontWithCorrectStoreView"/>
-        <actionGroup ref="navigateToStoreFrontWithStoreView" stepKey="navigateToStoreFrontWithStoreView">
-            <argument name="contentType" value="PageBuilderProductsContentType"/>
-            <argument name="storeView" value="customStore"/>
-        </actionGroup>
-        <seeNumberOfElements selector="{{ProductsOnStorefront.product('1')}}" userInput="1" stepKey="seeOneProduct" />
-    </test>
-    <test name="ButtonGroupInBlockOnDifferentLineWhenInFullWidthRow">
-        <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Block"/>
-            <title value="Buttons In Block From Different Button Groups On Different Line When in Full-Width Row"/>
-            <description value="Button groups in block should be on different lines when in full-width row"/>
-            <severity value="CRITICAL"/>
-            <useCaseId value="MC-15093"/>
-            <testCaseId value="MC-15105"/>
-            <group value="pagebuilder"/>
-            <group value="pagebuilder-buttons"/>
-            <group value="pagebuilder-buttonGroup"/>
-            <group value="pagebuilder-block"/>
-            <group value="pagebuilder-row"/>
-        </annotations>
-        <before>
-            <createData entity="_emptyCmsBlock" stepKey="createPreReqBlock"/>
-            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlock">
-                <argument name="CMSBlockPage" value="$$createPreReqBlock$$"/>
-            </actionGroup>
-        </before>
-        <after>
-            <deleteData createDataKey="createPreReqBlock" stepKey="deletePreReqBlock"/>
-            <deleteData createDataKey="createCMSPage" stepKey="deleteCreatedCategory"/>
-            <actionGroup ref="logout" stepKey="logout"/>
-        </after>
-        <!-- Change row appearance to full-width -->
-        <comment userInput="Change row appearance to full-width" stepKey="commentChangeRowAppearanceBlock"/>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openRowEditMenuOnStageBlock">
-            <argument name="contentType" value="PageBuilderRowContentType"/>
-        </actionGroup>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceRowBlock">
-            <argument name="property" value="PageBuilderRowAppearance_FullWidth"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsRowBlock"/>
-        <!-- Add button groups to block -->
-        <comment userInput="Add button groups to block" stepKey="commentAddButtonGroupsToBlock"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSectionBlock">
-            <argument name="contentType" value="PageBuilderButtonsContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStageBlock">
-            <argument name="contentType" value="PageBuilderButtonsContentType"/>
-        </actionGroup>
-        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusOptionMenuBlock">
-            <argument name="contentType" value="PageBuilderButtonItemContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage2Block">
-            <argument name="contentType" value="PageBuilderButtonsContentType"/>
-        </actionGroup>
-        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusOptionMenu2Block">
-            <argument name="contentType" value="PageBuilderButtonItemContentType"/>
-        </actionGroup>
-        <!-- Validate Block -->
-        <comment userInput="Validate Block" stepKey="commentValidateBlock"/>
-        <executeJS function="return {{ButtonItemOnStage.jsButtonSelector('1')}}.getBoundingClientRect().y" stepKey="yCoordinate1Block"/>
-        <executeJS function="return {{ButtonItemOnStage.jsButtonSelector('2')}}.getBoundingClientRect().y" stepKey="yCoordinate2Block"/>
-        <assertNotEquals stepKey="checkYCoordinatesBlock">
-            <expectedResult type="variable">yCoordinate1Block</expectedResult>
-            <actualResult type="variable">yCoordinate2Block</actualResult>
-        </assertNotEquals>
-        <actionGroup ref="saveAndCloseCMSBlockWithSplitButton" stepKey="saveCMSBlock"/>
-        <!-- Go to CMS Page and choose Block -->
-        <comment userInput="Go to CMS Page and choose Block" stepKey="commentGoToCMSPage"/>
-        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
-            <argument name="CMSPage" value="$$createCMSPage$$"/>
-        </actionGroup>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStagePage"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionAddContentPage">
-            <argument name="contentType" value="PageBuilderBlockContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStagePage">
-            <argument name="contentType" value="PageBuilderBlockContentType"/>
-        </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDropPage">
-            <argument name="contentType" value="PageBuilderBlockContentType"/>
-        </actionGroup>
-        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGridPage">
-            <argument name="block" value="$$createPreReqBlock$$"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsPage"/>
-        <!-- Validate Page -->
-        <comment userInput="Validate Page" stepKey="commentValidatePage"/>
-        <executeJS function="return {{ButtonItemOnStorefrontEmptyLink.jsButtonSelector('1')}}.getBoundingClientRect().y" stepKey="yCoordinate1Page"/>
-        <executeJS function="return {{ButtonItemOnStorefrontEmptyLink.jsButtonSelector('2')}}.getBoundingClientRect().y" stepKey="yCoordinate2Page"/>
-        <assertNotEquals stepKey="checkYCoordinatesPage">
-            <expectedResult type="variable">yCoordinate1Page</expectedResult>
-            <actualResult type="variable">yCoordinate2Page</actualResult>
-        </assertNotEquals>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <!-- Validate CMS Page Storefront -->
-        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToProductStorefront">
-            <argument name="page" value="$$createCMSPage.identifier$$"/>
-        </actionGroup>
-        <executeJS function="return {{ButtonItemOnStorefrontEmptyLink.jsButtonSelector('1')}}.getBoundingClientRect().y" stepKey="yCoordinate1Storefront"/>
-        <executeJS function="return {{ButtonItemOnStorefrontEmptyLink.jsButtonSelector('2')}}.getBoundingClientRect().y" stepKey="yCoordinate2Storefront"/>
-        <assertNotEquals stepKey="checkYCoordinatesStorefront">
-            <expectedResult type="variable">yCoordinate1Storefront</expectedResult>
-            <actualResult type="variable">yCoordinate2Storefront</actualResult>
-        </assertNotEquals>
     </test>
 </tests>
