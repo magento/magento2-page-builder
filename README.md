@@ -46,7 +46,7 @@ Before installing Page Builder, make sure you have:
 ## Developer documentation
 
 We will update the developer documentation frequently during beta. Please use this link to access the latest updates: 
-[Page Builder developer documentation](https://devdocs.magedevteam.com/72/page-builder/docs/getting-started/introduction.html)
+[Page Builder developer documentation](https://devdocs.magento.com/page-builder/docs/index.html)
 
 ## Contribute to Page Builder
 
