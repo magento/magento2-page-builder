@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Analytics:etc/reports.xsd">
+    <report name="pagebuilder_category" connection="default">
+        <source name="catalog_category_entity_text">
+            <attribute name="value" alias="content"/>
+            <link-source name="eav_attribute" link-type="inner">
+                <using glue="and">
+                    <condition attribute="attribute_id" operator="eq" type="identifier">attribute_id</condition>
+                    <condition attribute="attribute_code" operator="eq">description</condition>
+                </using>
+            </link-source>
+            <link-source name="catalog_category_entity" link-type="inner">
+                <using glue="and">
+                    <condition attribute="entity_id" operator="eq" type="identifier">entity_id</condition>
+                </using>
+            </link-source>
+            <filter glue="and">
+                <condition attribute="store_id" operator="in">0,1</condition>
+            </filter>
+        </source>
+    </report>
+    <report name="pagebuilder_product_attributes" connection="default">
+        <source name="catalog_product_entity_text">
+            <attribute name="value" alias="content"/>
+            <link-source name="eav_attribute" link-type="inner">
+                <attribute name="attribute_code"/>
+                <using glue="and">
+                    <condition attribute="attribute_id" operator="eq" type="identifier">attribute_id</condition>
+                </using>
+            </link-source>
+            <link-source name="catalog_eav_attribute" link-type="inner">
+                <using glue="and">
+                    <condition attribute="attribute_id" operator="eq" type="identifier">attribute_id</condition>
+                    <condition attribute="is_pagebuilder_enabled" operator="eq">1</condition>
+                </using>
+            </link-source>
+            <link-source name="catalog_product_entity" link-type="inner">
+                <using glue="and">
+                    <condition attribute="entity_id" operator="eq" type="identifier">entity_id</condition>
+                </using>
+            </link-source>
+            <link-source name="catalog_product_super_link" link-type="left">
+                <using glue="and">
+                    <condition attribute="product_id" operator="eq" type="identifier">entity_id</condition>
+                </using>
+                <filter glue="and">
+                    <condition attribute="link_id" operator="null" />
+                </filter>
+            </link-source>
+            <filter glue="and">
+                <condition attribute="store_id" operator="in">0,1</condition>
+            </filter>
+        </source>
+    </report>
+</config>

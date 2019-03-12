@@ -7,6 +7,11 @@ declare(strict_types=1);
 
 namespace Magento\PageBuilder\Block\Catalog\Block\Product\View;
 
+use Magento\Framework\DataObject;
+
+/**
+ * Create a new instance of attributes which excludes Page Builder attributes
+ */
 class Attributes extends \Magento\Catalog\Block\Product\View\Attributes
 {
     const DISPLAY_ATTRIBUTES_NON_PAGEBUILDER = 'non_pagebuilder';
@@ -14,11 +19,24 @@ class Attributes extends \Magento\Catalog\Block\Product\View\Attributes
     const DISPLAY_ATTRIBUTES_PAGEBUILDER_ONLY = 'pagebuilder_only';
 
     /**
+     * @inheritdoc
+     */
+    public function getProduct()
+    {
+        $product = parent::getProduct();
+
+        if (!$product) {
+            $product = new DataObject();
+            $product->setAttributes([]);
+        }
+
+        return $product;
+    }
+
+    /**
      * Determine if we should display the attribute on the front-end, add support for exclude page builder & page
-     * builder only options on class.
-     *
-     * display_attributes can be set to determine whether to include just Page Builder attributes or to exclude
-     * them.
+     * builder only options on class. display_attributes can be set to determine whether to include just Page Builder
+     * attributes or to exclude them.
      *
      * @param \Magento\Eav\Model\Entity\Attribute\AbstractAttribute $attribute
      * @param array $excludeAttr
