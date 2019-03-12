@@ -60,6 +60,7 @@ See [Install Page Builder](install-pagebuilder.md)
 ### Reference
 
 * [Architecture](../reference/architecture.md)
+* [Datastore](../reference/data-store.md)
 * [Events](../reference/events.md)
 * [Knockout bindings](../reference/knockout-bindings.md)
 
