@@ -1,4 +1,4 @@
-# Server-side rendered previews
+# How to use server-side previews
 
 ## What's in this topic
 
@@ -41,7 +41,7 @@ Add the renderer you just created as an argument to the `Magento\PageBuilder\Mod
 
 ## Step 3: Submit an HTTP request to the preview controller
 
-To invoke the renderer from the stage, submit an HTTP request to the PageBuilder preview controller:
+To invoke the renderer from the stage, submit an HTTP request to the Page Builder preview controller:
 
 1. Obtain the URL for the HTTP request from within your preview component by calling `getConfig("preview_url")` on the `Magento_PageBuilder/js/config` component.
 2. Make a request to the aforementioned obtained URL specifying your custom content type name and any additional parameters you want to use to render the element:

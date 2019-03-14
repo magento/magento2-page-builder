@@ -1,4 +1,4 @@
-# Visual selects
+# How to customize selectors
 
 <!-- {% raw %} -->
 

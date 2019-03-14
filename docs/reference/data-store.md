@@ -1,4 +1,4 @@
-# Data Store
+# Page Builder data store
 
 ## Summary
 The data store's purpose is to store all configured data associated with a content type's instance. You can modify this data in several ways, including through live edit on the Admin stage or from the content type's UI component form editor.

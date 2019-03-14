@@ -1,8 +1,8 @@
-# How to add inline text editing
+# How to add a text editor
 
 ## What's in this topic
 
-This topic describes how to add a reusable inline text editing component to the PageBuilder stage for a content type.
+This topic describes how to add a reusable inline text editing component to the Page Builder stage for a content type.
 
 ## Add configuration for the inline text editor
 

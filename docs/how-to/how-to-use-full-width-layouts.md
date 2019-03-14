@@ -1,4 +1,4 @@
-# Full width page layouts
+# How to use full-width layouts
 
 <!-- {% raw %} -->
 

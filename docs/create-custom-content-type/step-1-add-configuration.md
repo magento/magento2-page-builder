@@ -19,7 +19,7 @@ The reason we suggest prefixing your content type with your vendor name is to pr
 
 ## The `example_quote` configuration
 
-Only a subset of configuration elements are described in our Quote example (enough to understand the basic role of the configuration file). For more details, refer to [Content type configurations](../configurations/content-type-configuration.md) and [Additional configurations](../configurations/additional-configurations.md).
+Only a subset of configuration elements are described in our Quote example (enough to understand the basic role of the configuration file). For more details, refer to [Content type configurations](../reference/configurations.md) and [Additional configurations](../how-to/how-to-add-additional-configurations.md).
 
 
 The following configuration is from the Quote content type. An overview of these elements and attributes are described in the tables that follow.
@@ -62,7 +62,7 @@ The `type` element defines the key properties of your content type. The attribut
 | ------------------- | ------------------------------------------------------------ |
 | `name`              | Name of the content type that Magento uses for XML merging. The convention for using multi-word names is to separate the words with hyphens. |
 | `label`             | Label displayed in the Page Builder panel, option menu, and on the Admin stage. |
-| `menu_section`      | Menu section or category in the panel menu where your content type is displayed. The default menu sections are Layout, Elements, Media, and Add Content. See [Panel configurations](../configurations/panel-configurations.md) for more details. |
+| `menu_section`      | Menu section or category in the panel menu where your content type is displayed. The default menu sections are Layout, Elements, Media, and Add Content. See [Panel configurations](../how-to/how-to-customize-panel.md) for more details. |
 | `component`         | There are two component types to choose from: `content-type` and `content-type-collection`. Use `Magento_PageBuilder/js/content-type` for static content types that do not have children. Use `Magento_PageBuilder/js/content-type-collection` for content types that can contain children, otherwise known as container content types. |
 | `preview_component` | Optional. JavaScript file (`preview.js`) that provides rendering logic within the Admin UI. The preview component does not need to specify the `.js` extension. If you don't provide the `preview_component`, Page Builder uses the base `Preview` component shown in the code: `Magento_PageBuilder/js/content-type/preview`. |
 | `master_component`  | Optional. JavaScript file (`master.js`) that provides rendering logic generic for all appearances of your content type when rendered on the storefront. The master component does not need to specify the `.js` extension. If you don't provide the `master_component`, Page Builder uses the base `Master` component shown in the code: `Magento_PageBuilder/js/content-type/master`. |
