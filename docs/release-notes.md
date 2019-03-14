@@ -82,3 +82,4 @@ Beta 7 has breaking changes due to renaming of several critical variables and pa
 * Using Page Builder within a slide out form has a degraded experience.
     * Left-side panel will not scroll with the user.
     * Dragging and dropping can become broken due to another instance of Page Builder being loaded.
+
