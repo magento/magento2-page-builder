@@ -1315,7 +1315,6 @@
         <actionGroup ref="validateBackgroundImageContainer" stepKey="validateBackgroundImageStorefront">
             <argument name="section" value="SlideOnFrontend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
-            <argument name="pageNamePrefix" value=""/>
         </actionGroup>
     </test>
     <test name="SlideItemVerifyStageUploadImageButtonsForEachAppearance">
@@ -1897,7 +1896,7 @@
         </after>
         <dontSeeElement selector="{{HtmlOnStage.base('1')}}" stepKey="dontSeeHtmlCode" />
         <waitForElementVisible selector="{{SlideOnBackend.base('1')}}" stepKey="waitForSlideItemVisible" />
-        <seeElement selector="{{SlideOnBackend.messageContentText('1', PageBuilderSlideItemButtonText_Common.value)}}" stepKey="seeTestStringInSlideItem"/>
+        <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemButtonText_Common.value)}}" stepKey="seeTestStringInSlideItem"/>
     </test>
     <test name="SlideItemCannotHaveInlineWysiwygLinkAndLinkUrl">
         <annotations>

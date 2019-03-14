@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="BlockRenderBlockThroughBlockContentType">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Block Content"/>
+            <title value="Render Block Through Block Content Type"/>
+            <description value="Verify that users are able to successfully render and use the block content type through the Block content type."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MC-14834"/>
+            <useCaseId value="MC-13769"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+            <group value="pagebuilder-block-content"/>
+        </annotations>
+        <before>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <createData entity="_emptyCmsBlock" stepKey="createCMSBlock"/>
+            <createData entity="_defaultBlock" stepKey="createPreReqBlock"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage1">
+                <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
+            </actionGroup>
+        </before>
+        <after>
+            <deleteData createDataKey="createPreReqBlock" stepKey="deletePreReqBlock"/>
+            <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock"/>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Add Block -->
+        <comment userInput="Add Block" stepKey="commentAddBlock"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <!-- Edit Block -->
+        <comment userInput="Edit Block" stepKey="commentEditBlock"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuBlock">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
+            <argument name="block" value="$$createPreReqBlock$$"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsBlock"/>
+        <actionGroup ref="saveCMSBlock" stepKey="saveCMSBlock"/>
+        <!-- Validate CMS Block Stage -->
+        <comment userInput="Validate CMS Block Stage" stepKey="commentValidateCMSBlockStage"/>
+        <actionGroup ref="verifyBlockOnStage" stepKey="verifyBlockCMSBlockStage">
+            <argument name="block" value="$$createPreReqBlock$$"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Add Block to CMS Page -->
+        <comment userInput="Add Block to CMS Page" stepKey="commentAddBlockToCMSPage"/>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPanelAddContentMenuSection">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoPageStage">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDropBlock">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInPageGrid">
+            <argument name="block" value="$$createCMSBlock$$"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="savePageEditPanelSettingsBlock"/>
+        <!-- Validate CMS Page Stage -->
+        <comment userInput="Validate CMS Page Stage" stepKey="commentValidateCMSPageStage"/>
+        <seeElement selector="{{BlockOnStage.base('1')}}" stepKey="seeBlockOnCMSPageStage"/>
+        <see selector="{{BlockOnStage.content('1')}}" userInput="$$createPreReqBlock.content$$" stepKey="seeBlockContentOnCMSPageStage"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate CMS Page Storefront -->
+        <comment userInput="Validate CMS Page Storefront" stepKey="commentValidateCMSPageStorefront"/>
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <seeElement selector="{{BlockOnStorefront.base('1')}}" stepKey="seeBlockCMSPageStorefront"/>
+        <seeElement selector="{{BlockOnStorefront.base('2')}}" stepKey="seeNestedBlockCMSPageStorefront"/>
+        <see selector="{{BlockOnStorefront.base('2')}}{{BlockOnStorefront.ancestor}}" userInput="$$createPreReqBlock.content$$" stepKey="seeBlockContentCMSPageStorefront"/>
+    </test>
+    <test name="BlockRenderProductsThroughBlockContentType">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Block Content"/>
+            <title value="Render Products Through Block Content Type"/>
+            <description value="Verify that users are able to successfully render and use the products content type through the Block content type."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MC-14878"/>
+            <useCaseId value="MC-13769"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+            <group value="pagebuilder-block-content"/>
+            <group value="pagebuilder-products"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <createData entity="_defaultCategory" stepKey="createPreReqCategory"/>
+            <createData entity="_defaultProduct" stepKey="createProduct1">
+                <requiredEntity createDataKey="createPreReqCategory"/>
+            </createData>
+            <createData entity="_defaultProduct" stepKey="createProduct2">
+                <requiredEntity createDataKey="createPreReqCategory"/>
+            </createData>
+            <createData entity="_defaultProduct" stepKey="createProduct3">
+                <requiredEntity createDataKey="createPreReqCategory"/>
+            </createData>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <createData entity="_emptyCmsBlock" stepKey="createCMSBlock"/>
+            <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage1">
+                <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
+            </actionGroup>
+        </before>
+        <after>
+            <deleteData createDataKey="createProduct1" stepKey="deleteCreatedProduct1"/>
+            <deleteData createDataKey="createProduct2" stepKey="deleteCreatedProduct2"/>
+            <deleteData createDataKey="createProduct3" stepKey="deleteCreatedProduct3"/>
+            <deleteData createDataKey="createPreReqCategory" stepKey="deleteCreatedCategory"/>
+            <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock"/>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Add Products -->
+        <comment userInput="Add Products" stepKey="commentAddProducts"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragProductsIntoStage">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <!-- Edit Products -->
+        <comment userInput="Edit Products" stepKey="commentEditProducts"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuProducts">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="addConditionToProductConditions" stepKey="addCategory">
+            <argument name="conditionInput" value="$$createPreReqCategory.id$$"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsProducts"/>
+        <actionGroup ref="saveCMSBlock" stepKey="saveCMSBlock"/>
+        <!-- Validate CMS Block Stage -->
+        <comment userInput="Validate CMS Block Stage" stepKey="commentValidateCMSBlockStage"/>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountCMSBlockStage">
+            <argument name="page" value="ProductsOnStage"/>
+            <argument name="count" value="3"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProductsCMSBlockStage">
+            <argument name="page" value="ProductsOnStage"/>
+        </actionGroup>
+        <!-- Add Block to CMS Page -->
+        <comment userInput="Add Block to CMS Page" stepKey="commentAddBlockToCMSPage"/>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPanelAddContentMenuSection">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDropBlock">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
+            <argument name="block" value="$$createCMSBlock$$"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsBlock"/>
+        <!-- Validate CMS Page Stage -->
+        <comment userInput="Validate CMS Page Stage" stepKey="commentValidateCMSPageStage"/>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountCMSPageStage">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="count" value="3"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProductsCMSPageStage">
+            <argument name="page" value="ProductsOnStorefront"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate CMS Page Storefront -->
+        <comment userInput="Validate CMS Page Storefront" stepKey="commentValidateCMSPageStorefront"/>
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountCMSPageStorefront">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="count" value="3"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProductsCMSPageStorefront">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="isClickable" value="auto"/>
+        </actionGroup>
+        <actionGroup ref="clickProductImageInProductsOnStorefront" stepKey="clickProductImageInProductsCMSPageStorefront">
+            <argument name="product" value="$$createProduct2.name$$"/>
+        </actionGroup>
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront2">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <actionGroup ref="clickProductNameInProductsOnStorefront" stepKey="clickProductNameInProductsCMSPageStorefront">
+            <argument name="product" value="$$createProduct2.name$$"/>
+        </actionGroup>
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront3">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <actionGroup ref="clickProductAddToCartInProductsOnStorefront" stepKey="clickProductAddToCartInProductsCMSPageStorefront">
+            <argument name="product" value="$$createProduct2.name$$"/>
+        </actionGroup>
+        <actionGroup ref="clickProductAddToCompareInProductsOnStorefront" stepKey="clickProductAddToCompareInProductsCMSPageStorefront">
+            <argument name="product" value="$$createProduct2.name$$"/>
+        </actionGroup>
+        <actionGroup ref="clickProductAddToWishListInProductsOnStorefront" stepKey="clickProductAddToWishListInProductsCMSPageStorefront">
+            <argument name="product" value="$$createProduct2.name$$"/>
+        </actionGroup>
+        <!-- Edit Number Of Products To Display -->
+        <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage2">
+            <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuProducts2">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterNumberOfProductsToDisplay2">
+            <argument name="property" value="PageBuilderProductsCountPropertyTwo"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsProducts2"/>
+        <actionGroup ref="saveCMSBlock" stepKey="saveCMSBlock2"/>
+        <!-- Validate CMS Block Stage Again -->
+        <comment userInput="Validate CMS Block Stage Again" stepKey="commentValidateCMSBlockStage2"/>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountCMSBlockStage2">
+            <argument name="page" value="ProductsOnStage"/>
+            <argument name="count" value="2"/>
+        </actionGroup>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage2">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <!-- Validate CMS Page Stage Again -->
+        <comment userInput="Validate CMS Page Stage Again" stepKey="commentValidateCMSPageStage2"/>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountCMSPageStage2">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="count" value="2"/>
+        </actionGroup>
+        <!-- Validate CMS Page Storefront Again -->
+        <comment userInput="Validate CMS Page Storefront Again" stepKey="commentValidateCMSPageStorefront2"/>
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront4">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountCMSPageStorefront2">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="count" value="2"/>
+        </actionGroup>
+    </test>
+    <test name="ProductFromDifferentWebsiteInsideBlockShowsOnStage">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Block"/>
+            <title value="Product from Different Website Inside Block Shows on Stage"/>
+            <description value="As a product manager I want to be able to see products from all store views rendered inside blocks on stage in admin so that I don't get worried that conditions are being applied incorrectly"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-5373"/>
+            <testCaseId value="MC-11890"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-products"/>
+            <group value="pagebuilder-block"/>
+            <group value="pagebuilder-storeView"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <magentoCLI command="config:set web/url/use_store 1" stepKey="turnOnStoreUrlUsage"/>
+            <createData entity="customWebsite" stepKey="createCustomWebsite"/>
+            <createData entity="_defaultBlock" stepKey="createPreReqBlock"/>
+            <createData entity="SimpleSubCategory" stepKey="createCategory"/>
+            <actionGroup ref="AdminStoreGroupCreateActionGroup" stepKey="createNewStore">
+                <argument name="Website" value="customWebsite"/>
+                <argument name="storeGroup" value="customStoreGroup"/>
+            </actionGroup>
+            <actionGroup ref="AdminCreateStoreViewActionGroup" stepKey="createCustomStoreView">
+                <argument name="StoreGroup" value="customStoreGroup"/>
+                <argument name="customStore" value="customStore"/>
+            </actionGroup>
+            <createData entity="SimpleProduct" stepKey="createProduct">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+        </before>
+        <after>
+            <magentoCLI command="config:set web/url/use_store 0" stepKey="turnOffStoreUrlUsage"/>
+            <actionGroup ref="DeleteCustomWebsiteActionGroup" stepKey="deleteWebsite">
+                <argument name="websiteName" value="$createCustomWebsite.website[name]$"/>
+            </actionGroup>
+            <deleteData createDataKey="createPreReqBlock" stepKey="deletePreReqBlock"/>
+            <deleteData createDataKey="createCategory" stepKey="deleteCategory"/>
+            <deleteData createDataKey="createProduct" stepKey="deleteProduct"/>
+            <actionGroup ref="logout" stepKey="logoutOfAdmin"/>
+        </after>
+        <!-- Create product and assign to created store view -->
+        <comment userInput="Assign product to created store view" stepKey="commentAssignProductToCreatedStoreView"/>
+        <actionGroup ref="navigateToCreatedProductEditPage" stepKey="navigateToCreatedProductEditPage">
+            <argument name="product" value="$$createProduct$$"/>
+        </actionGroup>
+        <actionGroup ref="SelectProductInWebsitesActionGroup" stepKey="setWebsite2">
+            <argument name="website" value="$createCustomWebsite.website[name]$"/>
+        </actionGroup>
+        <uncheckOption selector="{{ProductInWebsitesSection.website('Main Website')}}" stepKey="uncheckMainWebsite"/>
+        <actionGroup ref="saveProductForm" stepKey="saveProductForm2"/>
+        <!-- Create block with product inside -->
+        <comment userInput="Create block with product inside" stepKey="commentCreateBlockWithProductInside"/>
+        <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage">
+            <argument name="CMSBlockPage" value="$$createPreReqBlock$$"/>
+        </actionGroup>
+        <selectOption selector="{{BlockNewPageBasicFieldsSection.storeView}}" userInput="All Store Views" stepKey="assignAllStoreViewsToBlock"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelGroup">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="addConditionToProductConditions" stepKey="addCategory">
+            <argument name="conditionInput" value="$$createCategory.id$$"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage">
+            <argument name="page" value="ProductsOnStage"/>
+            <argument name="count" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProductsStage">
+            <argument name="page" value="ProductsOnStage"/>
+            <argument name="product" value="SimpleProduct"/>
+        </actionGroup>
+        <actionGroup ref="saveAndCloseCMSBlockWithSplitButton" stepKey="saveAndCloseCMSBlockWithSplitButton"/>
+        <!-- Add block with product inside to CMS Page -->
+        <comment userInput="Add block with product inside to CMS Page" stepKey="commentAddBlockWithProductInsideToCmsPage"/>
+        <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelGroup2">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockContentTypeToStage">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop2">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
+            <argument name="block" value="$$createPreReqBlock$$"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage2">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="count" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProductsStage2">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="product" value="SimpleProduct"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage3">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="count" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProductsStage3">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="product" value="SimpleProduct"/>
+        </actionGroup>
+        <!-- Validate Storefront with incorrect store view -->
+        <comment userInput="Validate Storefront with incorrect Store View does not show product" stepKey="commentValidateStorefrontWithIncorrectStoreView"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <seeNumberOfElements selector="{{ProductsOnStorefront.product('1')}}" userInput="0" stepKey="seeZeroProducts"/>
+        <!-- Validate Storefront with correct store view -->
+        <comment userInput="Validate Storefront with correct Store View shows product" stepKey="commentValidateStorefrontWithCorrectStoreView"/>
+        <actionGroup ref="navigateToStoreFrontWithStoreView" stepKey="navigateToStoreFrontWithStoreView">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+            <argument name="storeView" value="customStore"/>
+        </actionGroup>
+        <seeNumberOfElements selector="{{ProductsOnStorefront.product('1')}}" userInput="1" stepKey="seeOneProduct"/>
+    </test>
+</tests>

@@ -37,6 +37,10 @@
     </section>
     <section name="ImageOnStage">
         <element name="base" type="text" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-image')])[{{arg1}}]" parameterized="true"/>
+        <element name="imageSourceByIndex" type="text" selector="(//figure[@data-content-type='image'])[{{arg1}}]//img[contains(@src,'{{arg2}}')]" parameterized="true"/>
+        <element name="imageCaption" type="text" selector="(//figure[@data-content-type='image'])[{{arg1}}]//figcaption[@data-element='caption']" parameterized="true"/>
+        <element name="imageAltText" type="text" selector="(//figure[@data-content-type='image'])[{{arg1}}]//img[@alt='{{arg2}}']" parameterized="true"/>
+        <element name="imageTitleAttribute" type="text" selector="(//figure[@data-content-type='image'])[{{arg1}}]//img[@title='{{arg2}}']" parameterized="true"/>
         <element name="caption" type="text" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-image')])[{{arg1}}]//figcaption" parameterized="true"/>
         <!-- Advanced Configuration -->
         <element name="noAlignment" type="text" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-image')])[{{arg1}}]//figure[not(contains(@style,'text-align:'))]" parameterized="true"/>
@@ -59,11 +63,13 @@
         <element name="imageDisplay" type="button" selector="figure[data-content-type='image']"/>
         <element name="imageElement" type="button" selector="figure[data-content-type='image'] img:nth-child({{arg1}})" parameterized="true"/>
         <element name="imageElementCSS" type="text" selector="figure[data-content-type=image] img"/>
-        <element name="imageHasAltText" type="button" selector="img.pagebuilder-mobile-hidden[alt='{{arg1}}']" parameterized="true"/>
-        <element name="imageHasCaption" type="button" selector="figure[data-content-type='image'] figcaption"/>
-        <element name="imageHasTitleTag" type="button" selector="img.pagebuilder-mobile-hidden[title='{{arg1}}']" parameterized="true"/>
-        <element name="imageLink" type="button" selector="figure[data-content-type='image'] a[href='{{arg1}}']" parameterized="true"/>
-        <element name="imageLinkTarget" type="button" selector="figure[data-content-type='image'] a[target='{{arg1}}']" parameterized="true"/>
+        <element name="imageDesktop" type="text" selector="(//figure[@data-content-type='image'])[{{arg1}}]//img[@data-element='desktop_image']" parameterized="true"/>
+        <element name="imageMobile" type="text" selector="(//figure[@data-content-type='image'])[{{arg1}}]//img[@data-element='mobile_image']" parameterized="true"/>
+        <element name="imageAltText" type="button" selector="(//figure[@data-content-type='image'])[{{arg1}}]//img[@alt='{{arg2}}']" parameterized="true"/>
+        <element name="imageCaption" type="button" selector="(//figure[@data-content-type='image'])[{{arg1}}]//figcaption[@data-element='caption']" parameterized="true"/>
+        <element name="imageTitleAttribute" type="button" selector="(//figure[@data-content-type='image'])[{{arg1}}]//img[@title='{{arg2}}']" parameterized="true"/>
+        <element name="imageLink" type="button" selector="(//figure[@data-content-type='image'])[{{arg1}}]//a[@href='{{arg2}}']" parameterized="true"/>
+        <element name="imageLinkTarget" type="button" selector="(//figure[@data-content-type='image'])[{{arg1}}]//a[@target='{{arg2}}']" parameterized="true"/>
         <element name="imageSource" type="button" selector="//img[contains(@src,'{{var1}}')]" parameterized="true"/>
         <element name="imageSourceByIndex" type="button" selector="(//figure[@data-content-type='image'])[{{arg1}}]//img[contains(@src,'{{arg2}}')]" parameterized="true"/>
         <element name="mobileImageSource" type="button" selector="img.pagebuilder-mobile-only[src*='{{arg1}}'][src$='.{{arg2}}']" parameterized="true"/>

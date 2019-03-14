@@ -85,7 +85,7 @@
         </actionGroup>
         <seeNumberOfElements selector="{{ColumnOnFrontend.allColumns}}" userInput="1" stepKey="seeNumberOfColumns3"/>
         <seeNumberOfElements selector="{{DividerOnStorefront.allDividers}}" userInput="1" stepKey="seeNumberOfDividers3"/>
-        <executeJS function="return document.querySelector('{{ColumnOnFrontend.columnGroup}}').clientWidth" stepKey="columnGroupWidthFrontend"/>
+        <executeJS function="return document.querySelector('{{ColumnOnFrontend.allColumnGroups}}').clientWidth" stepKey="columnGroupWidthFrontend"/>
         <executeJS function="return document.querySelector('{{ColumnOnFrontend.columnX('1')}}').clientWidth" stepKey="columnOneWidthFrontend"/>
         <executeJS function="return Math.round({$columnGroupWidthFrontend}/{$columnOneWidthFrontend})" stepKey="columnRatioFrontend"/>
         <assertEquals stepKey="assertFrontendRatioIsCorrect">

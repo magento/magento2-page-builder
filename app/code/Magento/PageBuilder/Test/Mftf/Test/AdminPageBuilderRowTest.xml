@@ -1167,6 +1167,7 @@
             </actionGroup>
         </before>
         <after>
+            <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
@@ -1264,9 +1265,15 @@
         <waitForElementVisible selector="{{RowOnStage.appearanceContained(('1', PageBuilderRowAppearance_Contained.value)}}" stepKey="waitForAppearanceVisible1"/>
         <waitForElementVisible selector="{{RowOnStage.appearanceFullWidthFullBleed(('2', PageBuilderRowAppearance_FullWidth.value)}}" stepKey="waitForAppearanceVisible2"/>
         <waitForElementVisible selector="{{RowOnStage.appearanceFullWidthFullBleed(('3', PageBuilderRowAppearance_FullBleed.value)}}" stepKey="waitForAppearanceVisible3"/>
-        <actionGroup ref="validateContainedRowAppearanceOnStage" stepKey="validateContainedRowAppearanceOnStage"/>
-        <actionGroup ref="validateFullWidthRowAppearanceOnStage" stepKey="validateFullWidthRowAppearanceOnStage"/>
-        <actionGroup ref="validateFullBleedRowAppearanceOnStage" stepKey="validateFullBleedRowAppearanceOnStage"/>
+        <actionGroup ref="validateContainedRowAppearance" stepKey="validateContainedRowAppearanceOnStage"/>
+        <actionGroup ref="validateFullWidthRowAppearance" stepKey="validateFullWidthRowAppearanceOnStage">
+            <argument name="childContentType" value="PageBuilderHeadingContentType"/>
+            <argument name="rowIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateFullBleedRowAppearance" stepKey="validateFullBleedRowAppearanceOnStage">
+            <argument name="childContentType" value="PageBuilderHeadingContentType"/>
+            <argument name="rowIndex" value="3"/>
+        </actionGroup>
         <!-- Validate Stage after save -->
         <comment userInput="Validate Stage after save" stepKey="commentValidateStageAfterSave"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
@@ -1274,9 +1281,15 @@
         <waitForElementVisible selector="{{RowOnStage.appearanceContained(('1', PageBuilderRowAppearance_Contained.value)}}" stepKey="waitForAppearanceVisible1AfterSave"/>
         <waitForElementVisible selector="{{RowOnStage.appearanceFullWidthFullBleed(('2', PageBuilderRowAppearance_FullWidth.value)}}" stepKey="waitForAppearanceVisible2AfterSave"/>
         <waitForElementVisible selector="{{RowOnStage.appearanceFullWidthFullBleed(('3', PageBuilderRowAppearance_FullBleed.value)}}" stepKey="waitForAppearanceVisible3AfterSave"/>
-        <actionGroup ref="validateContainedRowAppearanceOnStage" stepKey="validateContainedRowAppearanceOnStage2"/>
-        <actionGroup ref="validateFullWidthRowAppearanceOnStage" stepKey="validateFullWidthRowAppearanceOnStage2"/>
-        <actionGroup ref="validateFullBleedRowAppearanceOnStage" stepKey="validateFullBleedRowAppearanceOnStage2"/>
+        <actionGroup ref="validateContainedRowAppearance" stepKey="validateContainedRowAppearanceOnStage2"/>
+        <actionGroup ref="validateFullWidthRowAppearance" stepKey="validateFullWidthRowAppearanceOnStage2">
+            <argument name="childContentType" value="PageBuilderHeadingContentType"/>
+            <argument name="rowIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateFullBleedRowAppearance" stepKey="validateFullBleedRowAppearanceOnStage2">
+            <argument name="childContentType" value="PageBuilderHeadingContentType"/>
+            <argument name="rowIndex" value="3"/>
+        </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
@@ -1285,9 +1298,22 @@
         <waitForElementVisible selector="{{RowOnStorefront.appearance(('1', PageBuilderRowAppearance_Contained.value)}}" stepKey="waitForAppearanceVisibleStorefront1"/>
         <waitForElementVisible selector="{{RowOnStorefront.appearance(('2', PageBuilderRowAppearance_FullWidth.value)}}" stepKey="waitForAppearanceVisibleStorefront2"/>
         <waitForElementVisible selector="{{RowOnStorefront.appearance(('3', PageBuilderRowAppearance_FullBleed.value)}}" stepKey="waitForAppearanceVisibleStorefront3"/>
-        <actionGroup ref="validateContainedRowAppearanceOnStorefront" stepKey="validateContainedRowAppearanceOnStorefront"/>
-        <actionGroup ref="validateFullWidthRowAppearanceOnStorefront" stepKey="validateFullWidthRowAppearanceOnStorefront"/>
-        <actionGroup ref="validateFullBleedRowAppearanceOnStorefront" stepKey="validateFullBleedRowAppearanceOnStorefront"/>
+        <actionGroup ref="validateContainedRowAppearance" stepKey="validateContainedRowAppearanceOnStorefront">
+            <argument name="pageOrStageWidthJS" value="{{PageBuilderStoreFront.pageWidthJS}}"/>
+            <argument name="section" value="RowOnStorefront"/>
+        </actionGroup>
+        <actionGroup ref="validateFullWidthRowAppearance" stepKey="validateFullWidthRowAppearanceOnStorefront">
+            <argument name="pageOrStageWidthJS" value="{{PageBuilderStoreFront.pageWidthJS}}"/>
+            <argument name="section" value="RowOnStorefront"/>
+            <argument name="childContentType" value="PageBuilderHeadingContentType"/>
+            <argument name="rowIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateFullBleedRowAppearance" stepKey="validateFullBleedRowAppearanceOnStorefront">
+            <argument name="pageOrStageWidthJS" value="{{PageBuilderStoreFront.pageWidthJS}}"/>
+            <argument name="section" value="RowOnStorefront"/>
+            <argument name="childContentType" value="PageBuilderHeadingContentType"/>
+            <argument name="rowIndex" value="3"/>
+        </actionGroup>
     </test>
     <test name="RowAppearancesFullWidthTextAlignment">
         <annotations>
@@ -1427,7 +1453,7 @@
         <comment userInput="Increase window size" stepKey="commentResizeWindow"/>
         <resizeWindow width="1920" height="1024" stepKey="resizeWindow"/>
         <executeJS function="return {{PageBuilderStoreFront.pageWidthJS}}" stepKey="pageWidth"/>
-        <executeJS function="return {{RowOnStorefront.rowWidthJS('full-width', '0')}}" stepKey="rowWidth"/>
+        <executeJS function="return {{RowOnStorefront.rowWidthJS('1')}}" stepKey="rowWidth"/>
         <assertGreaterThan stepKey="assertRowWidthGreaterThanZero">
             <expectedResult type="int">0</expectedResult>
             <actualResult type="variable">rowWidth</actualResult>
@@ -1501,7 +1527,7 @@
         <comment userInput="Increase window size" stepKey="commentResizeWindow"/>
         <resizeWindow width="1920" height="1024" stepKey="resizeWindow"/>
         <executeJS function="return {{PageBuilderStoreFront.pageWidthJS}}" stepKey="pageWidth"/>
-        <executeJS function="return {{RowOnStorefront.rowWidthJS('full-bleed', '0')}}" stepKey="rowWidth"/>
+        <executeJS function="return {{RowOnStorefront.rowWidthJS('1')}}" stepKey="rowWidth"/>
         <assertGreaterThan stepKey="assertRowWidthGreaterThanZero">
             <expectedResult type="int">0</expectedResult>
             <actualResult type="variable">rowWidth</actualResult>

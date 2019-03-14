@@ -8,27 +8,13 @@
 
 <entities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:mftf:DataGenerator/etc/dataProfileSchema.xsd">
-    <entity name="PageBuilderFirstColumnInStage" type="pagebuilder_column">
-        <data key="index">1</data>
-        <data key="pageName" unique="suffix">testcmspage</data>
-    </entity>
-    <entity name="PageBuilderSecondColumnInStage" type="pagebuilder_column">
-        <data key="index">2</data>
-        <data key="pageName" unique="suffix">testcmspage</data>
-    </entity>
-    <entity name="PageBuilderThirdColumnInStage" type="pagebuilder_column">
-        <data key="index">3</data>
-        <data key="pageName" unique="suffix">testcmspage</data>
-    </entity>
-    <!-- Column Width -->
-    <entity name="PageBuilderColumnWidthPropertyDefault" type="pagebuilder_column_width_property">
-        <data key="value">50%</data>
-    </entity>
-    <!-- Column Width -->
-    <entity name="PageBuilderColumnAlignSelfPropertyDefault" type="pagebuilder_column_align_self_property">
-        <data key="value">stretch</data>
-    </entity>
     <!-- Appearance -->
+    <entity name="PageBuilderColumnAppearanceProperty_FullHeight" type="pagebuilder_column_appearance_property">
+        <data key="name">Appearance</data>
+        <data key="section">appearance_fieldset</data>
+        <data key="fieldName">appearance</data>
+        <data key="value">full-height</data>
+    </entity>
     <entity name="PageBuilderColumnAppearanceProperty_Bottom" type="pagebuilder_column_appearance_property">
         <data key="name">Appearance</data>
         <data key="section">appearance_fieldset</data>
@@ -131,6 +117,7 @@
     </entity>
     <!-- Column Styles -->
     <entity name="PageBuilderColumnStyles" type="pagebuilder_column_styles">
+        <data key="alignmentTop">align-self: flex-start</data>
         <data key="alignmentBottom">align-self: flex-end</data>
         <data key="alignmentCenter">align-self: center</data>
         <data key="alignmentFull">align-self: stretch</data>

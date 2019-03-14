@@ -8,6 +8,9 @@ namespace Magento\PageBuilder\Mtf\App\State;
 use Magento\Mtf\App\State\AbstractState;
 use Magento\Mtf\App\State\StateHandlerInterface;
 
+/**
+ * MTF test observer for managing PageBuilder's state
+ */
 class PageBuilderHandler implements StateHandlerInterface
 {
     /**

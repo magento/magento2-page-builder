@@ -88,7 +88,7 @@
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <dontSeeElement selector="{{ColumnOnBackend.column}}" stepKey="dontSeeColumn"/>
-        <dontSeeElement selector="{{ColumnOnBackend.columnGroup}}" stepKey="dontSeeColumnGroup"/>
+        <dontSeeElement selector="{{ColumnOnBackend.columnGroup('1')}}" stepKey="dontSeeColumnGroup"/>
         <comment userInput="Validate Row Height shrinks with removal of columns" stepKey="commentValidateRowHeight"/>
         <actionGroup ref="validateContentTypeHeightOnStage" stepKey="assertRowHeightMatchesExpectedAfterDeleteColumns">
             <argument name="contentType" value="PageBuilderRowContentType"/>
@@ -670,14 +670,14 @@
         </actionGroup>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <seeElement selector="{{ColumnOnBackend.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.alignmentBottom)}}" stepKey="seeFirstColumnAlignmentBottom"/>
-        <seeElement selector="{{ColumnOnBackend.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.minHeight)}}" stepKey="seeFirstColumnMinHeight"/>
-        <seeElement selector="{{ColumnOnBackend.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.bgColor)}}" stepKey="seeFirstColumnBgColor"/>
-        <seeElement selector="{{ColumnOnBackend.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.bgImage)}}" stepKey="seeFirstColumnBgImage"/>
-        <seeElement selector="{{ColumnOnBackend.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.bgPosition)}}" stepKey="seeFirstColumnBgPosition"/>
-        <seeElement selector="{{ColumnOnBackend.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.bgSize)}}" stepKey="seeFirstColumnBgSize"/>
-        <seeElement selector="{{ColumnOnBackend.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.bgRepeat)}}" stepKey="seeFirstColumnBgRepeat"/>
-        <seeElement selector="{{ColumnOnBackend.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.bgAttachment)}}" stepKey="seeFirstColumnBgAttachment"/>
+        <seeElement selector="{{ColumnOnBackend.columnStyle('1', PageBuilderColumnStyles.alignmentBottom)}}" stepKey="seeFirstColumnAlignmentBottom"/>
+        <seeElement selector="{{ColumnOnBackend.columnStyle('1', PageBuilderColumnStyles.minHeight)}}" stepKey="seeFirstColumnMinHeight"/>
+        <seeElement selector="{{ColumnOnBackend.columnStyle('1', PageBuilderColumnStyles.bgColor)}}" stepKey="seeFirstColumnBgColor"/>
+        <seeElement selector="{{ColumnOnBackend.columnStyle('1', PageBuilderColumnStyles.bgImage)}}" stepKey="seeFirstColumnBgImage"/>
+        <seeElement selector="{{ColumnOnBackend.columnStyle('1', PageBuilderColumnStyles.bgPosition)}}" stepKey="seeFirstColumnBgPosition"/>
+        <seeElement selector="{{ColumnOnBackend.columnStyle('1', PageBuilderColumnStyles.bgSize)}}" stepKey="seeFirstColumnBgSize"/>
+        <seeElement selector="{{ColumnOnBackend.columnStyle('1', PageBuilderColumnStyles.bgRepeat)}}" stepKey="seeFirstColumnBgRepeat"/>
+        <seeElement selector="{{ColumnOnBackend.columnStyle('1', PageBuilderColumnStyles.bgAttachment)}}" stepKey="seeFirstColumnBgAttachment"/>
     </test>
     <test name="ColumnAppearanceSettingsShowOnFrontend">
         <annotations>
@@ -749,11 +749,11 @@
         <amOnPage url="column{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <waitForPageLoad stepKey="waitForPageLoadStoreFront"/>
         <seeElement selector="{{ColumnOnFrontend.column1Height}}" stepKey="seeColumn1MinHeightApplied"/>
-        <seeElement selector="{{ColumnOnFrontend.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.alignmentBottom)}}" stepKey="seeColumn1AlignmentApplied"/>
-        <seeElement selector="{{ColumnOnFrontend.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.minHeight)}}" stepKey="seeColumn1HeightApplied"/>
-        <seeElement selector="{{ColumnOnFrontend.columnStyle(PageBuilderSecondColumnInStage.index, PageBuilderColumnStyles.alignmentCenter)}}" stepKey="seeColumn2AlignmentApplied"/>
-        <seeElement selector="{{ColumnOnFrontend.columnStyle(PageBuilderSecondColumnInStage.index, PageBuilderColumnStyles.minHeight)}}" stepKey="seeColumn2MinHeightApplied"/>
-        <seeElement selector="{{ColumnOnFrontend.columnStyle(PageBuilderThirdColumnInStage.index, PageBuilderColumnStyles.alignmentFull)}}" stepKey="seeColumn3AppearanceApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.columnStyle('1', PageBuilderColumnStyles.alignmentBottom)}}" stepKey="seeColumn1AlignmentApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.columnStyle('1', PageBuilderColumnStyles.minHeight)}}" stepKey="seeColumn1HeightApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.columnStyle('2', PageBuilderColumnStyles.alignmentCenter)}}" stepKey="seeColumn2AlignmentApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.columnStyle('2', PageBuilderColumnStyles.minHeight)}}" stepKey="seeColumn2MinHeightApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.columnStyle('3', PageBuilderColumnStyles.alignmentFull)}}" stepKey="seeColumn3AppearanceApplied"/>
     </test>
     <test name="ColumnChangesPreserved">
         <annotations>
@@ -1183,14 +1183,14 @@
             <argument name="containerTargetIndex" value="1" />
             <argument name="contentTypeIndex" value="3"/>
         </actionGroup>
-        <waitForElementVisible selector="{{ColumnOnBackend.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.widthOneTwelfth)}}" stepKey="seeFirstColumnWidth"/>
-        <seeElement selector="{{ColumnOnBackend.columnStyle(PageBuilderSecondColumnInStage.index, PageBuilderColumnStyles.widthFiveTwelfth)}}" stepKey="seeSecondColumnWidth"/>
-        <seeElement selector="{{ColumnOnBackend.columnStyle(PageBuilderThirdColumnInStage.index, PageBuilderColumnStyles.widthHalf)}}" stepKey="seeThirdColumnWidth"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.columnStyle('1', PageBuilderColumnStyles.widthOneTwelfth)}}" stepKey="seeFirstColumnWidth"/>
+        <seeElement selector="{{ColumnOnBackend.columnStyle('2', PageBuilderColumnStyles.widthFiveTwelfth)}}" stepKey="seeSecondColumnWidth"/>
+        <seeElement selector="{{ColumnOnBackend.columnStyle('3', PageBuilderColumnStyles.widthHalf)}}" stepKey="seeThirdColumnWidth"/>
         <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeColumn1">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <waitForElementVisible selector="{{ColumnOnBackend.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.widthHalf)}}" stepKey="seeFirstColumnWidthDistributed"/>
-        <seeElement selector="{{ColumnOnBackend.columnStyle(PageBuilderSecondColumnInStage.index, PageBuilderColumnStyles.widthHalf)}}" stepKey="seeSecondColumnWidthDistributed"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.columnStyle('1', PageBuilderColumnStyles.widthHalf)}}" stepKey="seeFirstColumnWidthDistributed"/>
+        <seeElement selector="{{ColumnOnBackend.columnStyle('2', PageBuilderColumnStyles.widthHalf)}}" stepKey="seeSecondColumnWidthDistributed"/>
     </test>
     <test name="ColumnFullHeightShowsOnFrontend">
         <annotations>
@@ -1505,7 +1505,7 @@
             <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
         </actionGroup>
         <dontSeeElementInDOM selector="{{ColumnOnBackend.column}}" stepKey="dontSeeColumn"/>
-        <dontSeeElementInDOM selector="{{ColumnOnBackend.columnGroup}}" stepKey="dontSeeColumnGroup"/>
+        <dontSeeElementInDOM selector="{{ColumnOnBackend.columnGroup('1')}}" stepKey="dontSeeColumnGroup"/>
     </test>
     <test name="ColumnCannotAddInsideColumn">
         <annotations>

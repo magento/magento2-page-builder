@@ -178,7 +178,6 @@
     <actionGroup name="validateBackgroundImageContainer">
         <arguments>
             <argument name="section"/>
-            <argument name="pageNamePrefix" defaultValue="admin" type="string"/>
             <argument name="backgroundImage"/>
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
@@ -187,8 +186,7 @@
         <!-- Retrieve background image from computed styles -->
         <executeJS function="return window.getComputedStyle({{section.baseJS(index)}}).backgroundImage" stepKey="backgroundImageValue"/>
         <!-- Grab base URL -->
-        <executeJS function="return '{{pageNamePrefix}}'" stepKey="pageNamePrefix"/>
-        <grabFromCurrentUrl regex="/(^.+(?=\/$pageNamePrefix))/" stepKey="baseURL"/>
+        <executeJS function="return window.location.origin" stepKey="baseURL"/>
         <!-- Convert all characters in string variables to regex friendly strings  -->
         <executeJS function="return '{$baseURL}'.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\\\^\\$\|]/g, '\\\\$&amp;')" stepKey="regexBaseURL"/>
         <executeJS function="return '{{backgroundImage.path}}'.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\\\^\\$\|]/g, '\\\\$&amp;')" stepKey="regexFilePath"/>

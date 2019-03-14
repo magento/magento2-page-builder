@@ -52,6 +52,7 @@
         <element name="hr" type="button" selector="(//div[@data-content-type='block'])[{{arg1}}]/hr" parameterized="true"/>
         <element name="empty" type="text" selector="//div[@data-content-type='block'][{{arg1}}][not(*)]" parameterized="true"/>
         <element name="textContent" type="text" selector="(//div[@data-content-type='block'])[{{arg1}}]//div[contains(text(),'{{arg2}}')]" parameterized="true"/>
+        <element name="content" type="text" selector="(//div[contains(@class,'pagebuilder-block')])[{{arg1}}]//div[contains(@class,'block-static-block')]" parameterized="true"/>
         <!-- Advanced Configuration -->
         <element name="alignment" type="text" selector="(//div[@data-content-type='block'])[{{arg1}}][contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
         <element name="noAlignment" type="text" selector="(//div[@data-content-type='block'])[{{arg1}}][not(contains(@style,'text-align:'))]" parameterized="true"/>

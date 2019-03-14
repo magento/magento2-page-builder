@@ -12,18 +12,21 @@
         <arguments>
             <argument name="block" defaultValue=""/>
         </arguments>
+        <waitForElementVisible selector="{{BlockOnForm.selectBlockBtn}}" stepKey="waitForSelectBlockBtn"/>
         <click selector="{{BlockOnForm.selectBlockBtn}}" stepKey="clickSelectBlockBtn"/>
+        <waitForPageLoad stepKey="waitForGridSlideOut"/>
         <waitForElementVisible selector="{{BlockOnGrid.searchBox}}" stepKey="waitForBlockGrid" />
         <fillField selector="{{BlockOnGrid.searchBox}}" userInput="{{block.identifier}}" stepKey="enterBlockTitle"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
         <click selector="{{BlockOnGrid.searchBtn}}" stepKey="clickSearchBtn"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear2"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
         <waitForElementVisible selector="{{BlockOnGrid.selectBtn(block.identifier)}}" stepKey="waitForSearchResult"/>
         <click selector="{{BlockOnGrid.selectBtn(block.identifier)}}" stepKey="clickSelectBtn"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear3"/>
+        <waitForPageLoad stepKey="waitForPageLoad3"/>
         <waitForElementVisible selector="{{BlockOnGrid.addSelectedBtn}}" stepKey="waitForAddSelected"/>
         <click selector="{{BlockOnGrid.addSelectedBtn}}" stepKey="clickAddSelected"/>
-        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForPageLoad stepKey="waitForPageLoad4"/>
+        <waitForElementVisible selector="{{BlockOnForm.title(block.title)}}" stepKey="waitToSeeBlockTitle"/>
     </actionGroup>
     <actionGroup name="verifyBlockOnStage">
         <arguments>
@@ -44,6 +47,7 @@
             <argument name="minHeight"/>
             <argument name="padding"/>
             <argument name="index" defaultValue="1" type="string"/>
+            <argument name="acceptableOffset" defaultValue="2" type="string"/>
         </arguments>
         <executeJS function="return document.querySelectorAll('{{block.baseCSS}} {{container.baseCSS}}')[{{index}}-1].clientHeight;" stepKey="containerHeight"/>
         <assertGreaterThanOrEqual stepKey="assertContainerHeightGreaterThanOrEqualMinHeight">
@@ -52,10 +56,25 @@
         </assertGreaterThanOrEqual>
         <executeJS function="return document.querySelectorAll('{{block.baseCSS}} {{container.baseCSS}}')[{{index}}-1].getBoundingClientRect().bottom-{{padding.paddingBottom}}" stepKey="containerBottomPositionMinusPadding"/>
         <executeJS function="return document.querySelectorAll('{{block.baseCSS}} {{content.baseCSS}}')[{{index}}-1].getBoundingClientRect().bottom" stepKey="contentBottomPosition"/>
-        <executeJS function="return Math.round(({$containerBottomPositionMinusPadding}/{$contentBottomPosition})*100)/100" stepKey="bottomPositionRatio"/>
-        <assertEquals stepKey="assertBottomPositionRatio">
-            <expectedResult type="int">1</expectedResult>
-            <actualResult type="variable">bottomPositionRatio</actualResult>
+        <executeJS function="return Math.abs({$containerBottomPositionMinusPadding} - {$contentBottomPosition})" stepKey="bottomPositionDifference"/>
+        <assertLessThanOrEqual stepKey="assertBottomPosition">
+            <expectedResult type="int">{{acceptableOffset}}</expectedResult>
+            <actualResult type="variable">bottomPositionDifference</actualResult>
+        </assertLessThanOrEqual>
+    </actionGroup>
+    <actionGroup name="verifyVerticalAlignmentCenterInBlock">
+        <arguments>
+            <argument name="block" defaultValue="BlockOnStorefront"/>
+            <argument name="container"/>
+            <argument name="containerIndex" defaultValue="1" type="string"/>
+            <argument name="content"/>
+            <argument name="contentIndex" defaultValue="1" type="string"/>
+        </arguments>
+        <executeJS function="return document.querySelectorAll('{{block.baseCSS}} {{container.baseCSS}}')[{{containerIndex}}-1].clientHeight/2 + document.querySelectorAll('{{block.baseCSS}} {{container.baseCSS}}')[{{containerIndex}}-1].getBoundingClientRect().top" stepKey="containerCenter"/>
+        <executeJS function="return document.querySelectorAll('{{block.baseCSS}} {{content.baseCSS}}')[{{contentIndex}}-1].clientHeight/2 + document.querySelectorAll('{{block.baseCSS}} {{content.baseCSS}}')[{{contentIndex}}-1].getBoundingClientRect().top" stepKey="contentCenter"/>
+        <assertEquals stepKey="assertBottomPosition">
+            <expectedResult type="variable">containerCenter</expectedResult>
+            <actualResult type="variable">contentCenter</actualResult>
         </assertEquals>
     </actionGroup>
     <actionGroup name="verifyAlignmentRightInBlock">

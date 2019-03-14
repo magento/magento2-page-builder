@@ -1,0 +1,2151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="BlockRenderEmptyImageThroughBlockContentType">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Block Content"/>
+            <title value="Render Empty Image Through Block Content Type"/>
+            <description value="Verify that admin are able to add a block instance type with empty image to Block Content Block and see it on frontend and on the stage"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MC-3740"/>
+            <useCaseId value="MC-1405"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+            <group value="pagebuilder-block-content"/>
+            <group value="pagebuilder-image"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultCmsPage" stepKey="createCMSPage"/>
+            <createData entity="_defaultBlock" stepKey="createCMSBlock"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSBlock" stepKey="deletePreReqBlock"/>
+            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!--Add Image to block-->
+        <comment userInput="Adding image to block" stepKey="commentAddingImageToBlock"/>
+        <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage1">
+            <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragImageIntoStage">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="saveCMSBlock" stepKey="clickSaveBlock"/>
+        <!--User goes to created CMS page-->
+        <comment userInput="User goes to created CMS page" stepKey="NavigateToCMSPage"/>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPanelAddContentMenuSection">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
+            <argument name="block" value="$$createCMSBlock$$"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <!--Check that image was not rendered on the stage-->
+        <comment userInput="Check that image was not rendered on the stage" stepKey="commentCheckingThatImageIsNotRenderedOnTheStage"/>
+        <executeJS function="return jQuery('.pagebuilder-block').css('height');" stepKey="height"/>
+        <assertGreaterThanOrEqual stepKey="assertElementHight">
+            <actualResult type="variable">height</actualResult>
+            <expectedResult type="string">10px</expectedResult>
+        </assertGreaterThanOrEqual>
+        <seeElementInDOM selector="{{ImageOnStorefront.imageDisplay}}" stepKey="seeThatEmptyImageExistsInDomOnStage"/>
+        <dontSeeElement selector="{{ImageOnStorefront.imageDisplay}}" stepKey="notSeeImageOnStage"/>
+        <actionGroup ref="openOptionsMenu" stepKey="openEditMenuOnStage3">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <seeElement selector="{{BlockOnStage.overlay('1')}}" stepKey="seeOverlayOnBlock"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!--Verify block on the frontend-->
+        <comment userInput="Verify Block On Store front" stepKey="commentCheckingThatImageIsNotRenderedOnTheStoreFront"/>
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <seeElementInDOM selector="{{ImageOnStorefront.imageDisplay}}" stepKey="seeThatEmptyImageExistsInDomOnStorefront"/>
+        <dontSeeElement selector="{{ImageOnStorefront.imageDisplay}}" stepKey="notSeeImageOnFrontend"/>
+    </test>
+    <test name="BlockImageIsRightAligned">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Block Content"/>
+            <title value="Image Can Be Right Aligned In Block"/>
+            <description value="A user can right align an image in a Block"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-4293"/>
+            <testCaseId value="MC-5174"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+            <group value="pagebuilder-block-content"/>
+            <group value="pagebuilder-image"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultBlock" stepKey="createCMSBlock"/>
+            <createData entity="_defaultCmsPage" stepKey="createCMSPage"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage">
+                <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
+            </actionGroup>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSBlock" stepKey="deletePreReqBlock"/>
+            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage"/>
+            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
+                <argument name="FolderName" value="{{PageBuilderImageProperty_PNG.path}}"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage">
+                <argument name="Image" value="PageBuilderImageProperty_PNG"/>
+            </actionGroup>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Go to edit page of Block and configure Image -->
+        <comment userInput="Go to edit page of Block and configure image" stepKey="commentGoToBlockEditPage"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragImageIntoStage">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachImageFile">
+            <argument name="property" value="PageBuilderImageProperty_PNG"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterImageCaptionProperty">
+            <argument name="property" value="PageBuilderImageCaptionProperty"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAlignment">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyRight"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsInBlock"/>
+        <actionGroup ref="saveCMSBlock" stepKey="clickSaveBlock"/>
+        <!-- Go to CMS Page and choose Block -->
+        <comment userInput="Go to CMS Page and choose Block" stepKey="commentGoToCMSPage"/>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPanelAddContentMenuSection">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStageAfterDrop">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
+            <argument name="block" value="$$createCMSBlock$$"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Verify Right Alignment On Stage - Before Save -->
+        <comment userInput="Verify right alignment on stage before save" stepKey="commentVerifyRightAlignmentOnStageBeforeSave"/>
+        <seeElement selector="({{ImageOnStorefront.alignment('1', PageBuilderAdvancedAlignmentPropertyRight.value)}}{{BlockOnStorefront.ancestor}})[1]" stepKey="seeImageAlignmentRightBeforeSave"/>
+        <actionGroup ref="verifyAlignmentRightInBlock" stepKey="verifyAlignmentRightInBlockBeforeSave">
+            <argument name="container" value="{{RowOnStorefront.innerCSS}}"/>
+            <argument name="content" value="{{ImageOnStorefront.imageElementCSS}}"/>
+            <argument name="containerPadding" value="PageBuilderPaddingProperty10"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStageAfterSave"/>
+        <!-- Verify Right Alignment On Stage - After Save -->
+        <comment userInput="Verify right alignment on stage after save" stepKey="commentVerifyRightAlignmentOnStageAfterSave"/>
+        <seeElement selector="({{ImageOnStorefront.alignment('1', PageBuilderAdvancedAlignmentPropertyRight.value)}}{{BlockOnStorefront.ancestor}})[1]" stepKey="seeImageAlignmentRightAfterSave"/>
+        <actionGroup ref="verifyAlignmentRightInBlock" stepKey="verifyAlignmentRightInBlockAfterSave">
+            <argument name="container" value="{{RowOnStorefront.innerCSS}}"/>
+            <argument name="content" value="{{ImageOnStorefront.imageElementCSS}}"/>
+            <argument name="containerPadding" value="PageBuilderPaddingProperty10"/>
+        </actionGroup>
+        <!-- Verify Right Alignment In Storefront -->
+        <comment userInput="Verify right alignment in storefront" stepKey="commentVerifyRightAlignmentInStorefront"/>
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <seeElement selector="({{ImageOnStorefront.alignment('1', PageBuilderAdvancedAlignmentPropertyRight.value)}}{{BlockOnStorefront.ancestor}})[1]" stepKey="seeImageAlignmentRightStorefront"/>
+        <actionGroup ref="verifyAlignmentRightInBlock" stepKey="verifyAlignmentRightInBlockStorefront">
+            <argument name="container" value="{{RowOnStorefront.innerCSS}}"/>
+            <argument name="content" value="{{ImageOnStorefront.imageElementCSS}}"/>
+            <argument name="containerPadding" value="PageBuilderPaddingProperty10"/>
+        </actionGroup>
+    </test>
+    <test name="BlockRenderImageThroughBlockContentType">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Block Content"/>
+            <title value="Render Image Through Block Content Type"/>
+            <description value="Verify that users are able to successfully render and use the image content type through the Block content type."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MC-14874"/>
+            <useCaseId value="MC-13769"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+            <group value="pagebuilder-block-content"/>
+            <group value="pagebuilder-image"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <createData entity="_emptyCmsBlock" stepKey="createCMSBlock"/>
+            <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage1">
+                <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
+            </actionGroup>
+        </before>
+        <after>
+            <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
+            <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock"/>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
+                <argument name="FolderName" value="{{PageBuilderImageProperty_JPG.path}}"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage">
+                <argument name="Image" value="PageBuilderImageProperty_JPG"/>
+            </actionGroup>
+            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder2">
+                <argument name="FolderName" value="{{PageBuilderMobileImagePropertyGif.path}}"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage2">
+                <argument name="Image" value="PageBuilderMobileImagePropertyGif"/>
+            </actionGroup>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Add Image -->
+        <comment userInput="Add Image" stepKey="commentAddImage"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragImageIntoStage">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <!-- Edit Image -->
+        <comment userInput="Edit Image" stepKey="commentEditImage"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuImage">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachImage">
+            <argument name="property" value="PageBuilderImageProperty_JPG"/>
+        </actionGroup>
+        <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachMobileImage">
+            <argument name="property" value="PageBuilderMobileImagePropertyGif"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterLink">
+            <argument name="property" value="PageBuilderImageLinkProperty"/>
+            <argument name="selection" value="{{ExternalLink.url}}"/>
+            <argument name="newTab" value="PageBuilderImageNewTab_False"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterImageCaption">
+            <argument name="property" value="PageBuilderImageCaptionProperty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterAltText">
+            <argument name="property" value="PageBuilderImageAltTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterTitleAttribute">
+            <argument name="property" value="PageBuilderImageTitleAttributeProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsImage"/>
+        <actionGroup ref="saveCMSBlock" stepKey="saveCMSBlock"/>
+        <!-- Validate CMS Block Stage -->
+        <comment userInput="Validate CMS Block Stage" stepKey="commentValidateCMSBlockStage"/>
+        <waitForElementVisible selector="{{ImageOnStage.base('1')}}" stepKey="waitForImageCMSBlockStage"/>
+        <see selector="{{ImageOnStage.imageCaption('1')}}" userInput="{{PageBuilderImageCaptionProperty.value}}" stepKey="seeImageCaptionCMSBlockStage"/>
+        <seeElement selector="{{ImageOnStage.imageAltText('1', PageBuilderImageAltTextProperty.value)}}" stepKey="seeImageAltTextCMSBlockStage"/>
+        <seeElement selector="{{ImageOnStage.imageTitleAttribute('1', PageBuilderImageTitleAttributeProperty.value)}}" stepKey="seeImageTitleAttributeCMSBlockStage"/>
+        <actionGroup ref="validateImage" stepKey="validateImageCMSBlockStage">
+            <argument name="section" value="ImageOnStage"/>
+            <argument name="image" value="PageBuilderImageProperty_JPG"/>
+        </actionGroup>
+        <!-- Add Block to CMS Page -->
+        <comment userInput="Add Block to CMS Page" stepKey="commentAddBlockToCMSPage"/>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPanelAddContentMenuSection">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoPageStage">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDropBlock">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInPageGrid">
+            <argument name="block" value="$$createCMSBlock$$"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="savePageEditPanelSettingsBlock"/>
+        <!-- Validate CMS Page Stage -->
+        <comment userInput="Validate CMS Page Stage" stepKey="commentValidateCMSPageStage"/>
+        <waitForElementVisible selector="{{ImageOnStorefront.base('1')}}" stepKey="waitForImageCMSPageStage"/>
+        <seeElement selector="{{ImageOnStorefront.imageDesktop('1')}}" stepKey="seeDesktopImageCMSPageStage"/>
+        <see selector="{{ImageOnStorefront.imageCaption('1')}}" userInput="{{PageBuilderImageCaptionProperty.value}}" stepKey="seeImageCaptionCMSPageStage"/>
+        <seeElement selector="{{ImageOnStorefront.imageAltText('1', PageBuilderImageAltTextProperty.value)}}" stepKey="seeImageAltTextCMSPageStage"/>
+        <seeElement selector="{{ImageOnStorefront.imageTitleAttribute('1', PageBuilderImageTitleAttributeProperty.value)}}" stepKey="seeImageTitleAttributeCMSPageStage"/>
+        <seeElement selector="{{ImageOnStorefront.imageLink('1', PageBuilderImageLinkProperty.value)}}" stepKey="seeImageLinkCMSPageStage"/>
+        <seeElement selector="{{ImageOnStorefront.imageLinkTarget('1', PageBuilderImageNewTab_False.stageValue)}}" stepKey="seeImageLinkTargetCMSPageStage"/>
+        <actionGroup ref="validateImage" stepKey="validateImageCMSPageStage">
+            <argument name="section" value="ImageOnStorefront"/>
+            <argument name="image" value="PageBuilderImageProperty_JPG"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate CMS Page Storefront -->
+        <comment userInput="Validate CMS Page Storefront" stepKey="commentValidateCMSPageStorefront"/>
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{ImageOnStorefront.base('1')}}" stepKey="waitForImageCMSPageStorefront"/>
+        <seeElement selector="{{ImageOnStorefront.imageDesktop('1')}}" stepKey="seeDesktopImageCMSPageStorefront"/>
+        <see selector="{{ImageOnStorefront.imageCaption('1')}}" userInput="{{PageBuilderImageCaptionProperty.value}}" stepKey="seeImageCaptionCMSPageStorefront"/>
+        <seeElement selector="{{ImageOnStorefront.imageAltText('1', PageBuilderImageAltTextProperty.value)}}" stepKey="seeImageAltTextCMSPageStorefront"/>
+        <seeElement selector="{{ImageOnStorefront.imageTitleAttribute('1', PageBuilderImageTitleAttributeProperty.value)}}" stepKey="seeImageTitleAttributeCMSPageStorefront"/>
+        <seeElement selector="{{ImageOnStorefront.imageLink('1', PageBuilderImageLinkProperty.value)}}" stepKey="seeImageLinkCMSPageStorefront"/>
+        <seeElement selector="{{ImageOnStorefront.imageLinkTarget('1', PageBuilderImageNewTab_False.stageValue)}}" stepKey="seeImageLinkTargetCMSPageStorefront"/>
+        <actionGroup ref="validateImage" stepKey="validateImageCMSPageStorefront">
+            <argument name="section" value="ImageOnStorefront"/>
+            <argument name="image" value="PageBuilderImageProperty_JPG"/>
+        </actionGroup>
+        <!-- Validate CMS Page Storefront Mobile -->
+        <comment userInput="Validate CMS Page Storefront Mobile" stepKey="commentValidateCMSPageStorefrontMobile"/>
+        <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobileCMSPageStorefront"/>
+        <waitForElementVisible selector="{{ImageOnStorefront.base('1')}}" stepKey="waitForImageCMSPageStorefrontMobile"/>
+        <seeElement selector="{{ImageOnStorefront.imageMobile('1')}}" stepKey="seeMobileImageCMSPageStorefrontMobile"/>
+        <see selector="{{ImageOnStorefront.imageCaption('1')}}" userInput="{{PageBuilderImageCaptionProperty.value}}" stepKey="seeImageCaptionCMSPageStorefrontMobile"/>
+        <seeElement selector="{{ImageOnStorefront.imageAltText('1', PageBuilderImageAltTextProperty.value)}}" stepKey="seeImageAltTextCMSPageStorefrontMobile"/>
+        <seeElement selector="{{ImageOnStorefront.imageTitleAttribute('1', PageBuilderImageTitleAttributeProperty.value)}}" stepKey="seeImageTitleAttributeCMSPageStorefrontMobile"/>
+        <seeElement selector="{{ImageOnStorefront.imageLink('1', PageBuilderImageLinkProperty.value)}}" stepKey="seeImageLinkCMSPageStorefrontMobile"/>
+        <seeElement selector="{{ImageOnStorefront.imageLinkTarget('1', PageBuilderImageNewTab_False.stageValue)}}" stepKey="seeImageLinkTargetCMSPageStorefrontMobile"/>
+        <actionGroup ref="validateImage" stepKey="validateImageCMSPageStorefrontMobile">
+            <argument name="section" value="ImageOnStorefront"/>
+            <argument name="image" value="PageBuilderMobileImagePropertyGif"/>
+        </actionGroup>
+        <click selector="{{ImageOnStorefront.imageLink('1', PageBuilderImageLinkProperty.value)}}" stepKey="clickImageCMSPageStorefront"/>
+        <wait time="3" stepKey="waitArbitraryTimeForPotentialNavigationToOccurCMSPageStorefront"/>
+        <seeCurrentUrlEquals url="{{PageBuilderImageLinkProperty.value}}" stepKey="seeThatUrlIsChangedToImageLinkUrl"/>
+    </test>
+    <test name="BlockRenderVideoThroughBlockContentType">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Block Content"/>
+            <title value="Render Video Through Block Content Type"/>
+            <description value="Verify that users are able to successfully render and use the video content type through the Block content type."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MC-14832"/>
+            <useCaseId value="MC-13769"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+            <group value="pagebuilder-block-content"/>
+            <group value="pagebuilder-video"/>
+        </annotations>
+        <before>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <createData entity="_emptyCmsBlock" stepKey="createCMSBlock"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage1">
+                <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
+            </actionGroup>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock"/>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Add Video -->
+        <comment userInput="Add Video" stepKey="commentAddVideo"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragVideoIntoStage">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
+        </actionGroup>
+        <!-- Edit Video -->
+        <comment userInput="Edit Video" stepKey="commentEditVideo"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuVideo">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrlProperty">
+            <argument name="property" value="PageBuilderVideoUrl_YouTube"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoWidthProperty">
+            <argument name="property" value="PageBuilderVideoWidth_500"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsVideo"/>
+        <actionGroup ref="saveCMSBlock" stepKey="saveCMSBlock"/>
+        <!-- Validate CMS Block Stage -->
+        <comment userInput="Validate CMS Block Stage" stepKey="commentValidateCMSBlockStage"/>
+        <actionGroup ref="validateVideo" stepKey="validateCMSBlockStage">
+            <argument name="page" value="VideoOnStage"/>
+            <argument name="url" value="PageBuilderVideoUrl_YouTube"/>
+            <argument name="width" value="PageBuilderVideoWidth_500"/>
+        </actionGroup>
+        <!-- Add Block to CMS Page -->
+        <comment userInput="Add Block to CMS Page" stepKey="commentAddBlockToCMSPage"/>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPanelAddContentMenuSection">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDropBlock">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
+            <argument name="block" value="$$createCMSBlock$$"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsBlock"/>
+        <!-- Validate CMS Page Stage -->
+        <comment userInput="Validate CMS Page Stage" stepKey="commentValidateCMSPageStage"/>
+        <actionGroup ref="validateVideo" stepKey="validateCMSPageStage">
+            <argument name="page" value="VideoOnStorefront"/>
+            <argument name="url" value="PageBuilderVideoUrl_YouTube"/>
+            <argument name="width" value="PageBuilderVideoWidth_500"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate CMS Page Storefront -->
+        <comment userInput="Validate CMS Page Storefront" stepKey="commentValidateCMSPageStorefront"/>
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <actionGroup ref="validateVideo" stepKey="validateCMSPageStorefront">
+            <argument name="page" value="VideoOnStorefront"/>
+            <argument name="url" value="PageBuilderVideoUrl_YouTube"/>
+            <argument name="width" value="PageBuilderVideoWidth_500"/>
+        </actionGroup>
+    </test>
+    <test name="BlockRenderBannerPosterAppearanceThroughBlockContentType">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Block Content"/>
+            <title value="Render Banner Poster Appearance Through Block Content Type"/>
+            <description value="Verify that users are able to successfully render and use the banner content type poster appearance through the Block content type."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MC-15188"/>
+            <useCaseId value="MC-13769"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+            <group value="pagebuilder-block-content"/>
+            <group value="pagebuilder-banner"/>
+            <group value="pagebuilder-bannerPoster"/>
+        </annotations>
+        <before>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <createData entity="_emptyCmsBlock" stepKey="createCMSBlock"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage1">
+                <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
+            </actionGroup>
+        </before>
+        <after>
+            <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
+            <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock"/>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="navigateToDesktopImageFolder">
+                <argument name="FolderName" value="{{PageBuilderBackgroundImage_JPG.path}}"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="deleteBackgroundImage">
+                <argument name="Image" value="PageBuilderBackgroundImage_JPG"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="deleteMobileBackgroundImage">
+                <argument name="Image" value="PageBuilderBackgroundMobileImage_GIF"/>
+            </actionGroup>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Add Banner -->
+        <comment userInput="Add Banner" stepKey="commentAddBanner"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBannerIntoStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <!-- Edit Banner -->
+        <comment userInput="Edit Banner" stepKey="commentEditBanner"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setAppearance">
+            <argument name="property" value="PageBuilderAppearance_Poster"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="setMinHeight">
+            <argument name="property" value="PageBuilderBannerMinimumHeightProperty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="setBackgroundColor">
+            <argument name="property" value="PageBuilderBackgroundColor_Plaintext_Green"/>
+        </actionGroup>
+        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachBackgroundImage">
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
+        </actionGroup>
+        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachBackgroundMobileImage">
+            <argument name="property" value="PageBuilderBackgroundMobileImage_GIF"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="setBackgroundPosition">
+            <argument name="property" value="PageBuilderBackgroundPosition_Center"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setBackgroundSize">
+            <argument name="property" value="PageBuilderBackgroundSize_Auto"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="setBackgroundAttachment">
+            <argument name="property" value="PageBuilderBackgroundAttachment_Fixed"/>
+        </actionGroup>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="setBackgroundRepeat">
+            <argument name="property" value="PageBuilderBackgroundRepeat_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="addTextToTinyMCE" stepKey="addTextToTinyMCE">
+            <argument name="property" value="PageBuilderBannerMessageProperty"/>
+            <argument name="section" value="BannerOnConfigurationPanel"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="setLink">
+            <argument name="property" value="PageBuilderBannerLinkUrlPropertyValidate"/>
+            <argument name="selection" value="{{ExternalLink.url}}"/>
+            <argument name="newTab" value="PageBuilderBannerNewTabDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="setShowButton">
+            <argument name="property" value="PageBuilderBannerShowButtonOnHoverProperty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="setButtonText">
+            <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="setButtonType">
+            <argument name="property" value="PageBuilderBannerButtonTypeSecondaryProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="setShowOverlay">
+            <argument name="property" value="PageBuilderBannerShowContentOverlayOnHoverProperty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="setOverlayColor">
+            <argument name="property" value="PageBuilderBannerOverlayColor_Blue_Opaque"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="saveCMSBlock" stepKey="saveCMSBlock"/>
+        <!-- Validate CMS Block Stage -->
+        <comment userInput="Validate CMS Block Stage" stepKey="commentValidateCMSBlockStage"/>
+        <seeElement selector="{{BannerOnBackend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seeAppearanceCMSBlockStage"/>
+        <actionGroup ref="validateOverlayPositionPoster" stepKey="validateOverlayPositionCMSBlockStage">
+            <argument name="page" value="BannerOnBackend"/>
+        </actionGroup>
+        <seeElement selector="{{BannerOnBackend.posterMinimumHeight('1', PageBuilderBannerMinimumHeightProperty.value)}}" stepKey="seeMinimumHeightCMSBlockStage"/>
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateHeightCMSBlockStage">
+            <argument name="content" value="{{BannerOnBackend.wrapperCSS}}"/>
+            <argument name="height" value="PageBuilderBannerMinimumHeightProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateBackgroundAttributesWithNoImage" stepKey="validateBackgroundAttributesCMSBlockStage">
+            <argument name="section" value="BannerOnBackend"/>
+            <argument name="backgroundColor" value="PageBuilderBackgroundColor_Plaintext_Green"/>
+            <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_Center"/>
+            <argument name="backgroundSize" value="PageBuilderBackgroundSize_Auto"/>
+            <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
+            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Fixed"/>
+        </actionGroup>
+        <actionGroup ref="validateBackgroundImage" stepKey="validateBackgroundImageCMSBlockStage">
+            <argument name="section" value="BannerOnBackend"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
+        </actionGroup>
+        <seeElement selector="{{BannerOnBackend.messageContent('1', PageBuilderBannerMessageProperty.value)}}" stepKey="seeMessageContentCMSBlockStage"/>
+        <seeElementInDOM selector="{{BannerOnBackend.button('1')}}" stepKey="seeButtonInDOMCMSBlockStage"/>
+        <dontSeeElement selector="{{BannerOnBackend.button('1')}}" stepKey="dontSeeButtonCMSBlockStage"/>
+        <seeElement selector="{{BannerOnBackend.transparentOverlay('1')}}" stepKey="seeTransparentOverlayCMSBlockStage"/>
+        <moveMouseOver selector="{{BannerOnBackend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="moveMouseOverBannerCMSBlockStage"/>
+        <seeElement selector="{{BannerOnBackend.button('1')}}" stepKey="seeButtonOnHoverCMSBlockStage"/>
+        <seeElement selector="{{BannerOnBackend.buttonText('1', PageBuilderBannerButtonTextProperty.value)}}" stepKey="seeButtonTextOnHoverCMSBlockStage"/>
+        <seeElement selector="{{BannerOnBackend.buttonType('1', PageBuilderBannerButtonTypeSecondaryProperty.value)}}" stepKey="seeButtonTypeOnHoverCMSBlockStage"/>
+        <seeElement selector="{{BannerOnBackend.overlayBackgroundColor('1', PageBuilderBannerOverlayColor_Blue_Opaque.value)}}" stepKey="seeOverlayOnHoverCMSBlockStage"/>
+        <executeJS function="return {{BannerOnBackend.overlayJS('1')}}.getBoundingClientRect().left" stepKey="overlayLeftPositionCMSBlockStage"/>
+        <executeJS function="return document.evaluate(&quot;{{BannerOnBackend.button('1')}}&quot;, document.body).iterateNext().getBoundingClientRect().left" stepKey="buttonLeftPositionCMSBlockStage"/>
+        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSBlockStage}-{$overlayLeftPositionCMSBlockStage}-{{PageBuilderPaddingProperty40.paddingLeft}}))" stepKey="buttonMinusOverlayMinusPaddingCMSBlockStage"/>
+        <assertLessThanOrEqual stepKey="assertButtonLeftAlignedCMSBlockStage">
+            <expectedResult type="int">5</expectedResult>
+            <actualResult type="variable">buttonMinusOverlayMinusPaddingCMSBlockStage</actualResult>
+        </assertLessThanOrEqual>
+        <executeJS function="return window.getComputedStyle({{BannerOnBackend.wrapperJS('1')}}).textAlign" stepKey="grabDefaultComputedTextAlignCMSBlockStage"/>
+        <assertEquals stepKey="assertDefaultComputedTextAlignCMSBlockStage">
+            <expectedResult type="string">{{PageBuilderAdvancedAlignmentPropertyStart.value}}</expectedResult>
+            <actualResult type="variable">grabDefaultComputedTextAlignCMSBlockStage</actualResult>
+        </assertEquals>
+        <!-- Add Block to CMS Page -->
+        <comment userInput="Add Block to CMS Page" stepKey="commentAddBlockToCMSPage"/>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPanelAddContentMenuSection">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDropBlock">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
+            <argument name="block" value="$$createCMSBlock$$"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsBlock"/>
+        <!-- Validate CMS Page Stage -->
+        <comment userInput="Validate CMS Page Stage" stepKey="commentValidateCMSPageStage"/>
+        <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seeAppearanceCMSPageStage"/>
+        <actionGroup ref="validateOverlayPositionPoster" stepKey="validateOverlayPositionCMSPageStage">
+            <argument name="page" value="BannerOnFrontend"/>
+        </actionGroup>
+        <seeElement selector="{{BannerOnFrontend.posterMinimumHeight('1', PageBuilderBannerMinimumHeightProperty.value)}}" stepKey="seeMinimumHeightCMSPageStage"/>
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateHeightCMSPageStage">
+            <argument name="content" value="{{BannerOnFrontend.wrapperCSS}}"/>
+            <argument name="height" value="PageBuilderBannerMinimumHeightProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateBackgroundAttributesWithNoImage" stepKey="validateBackgroundAttributesCMSPageStage">
+            <argument name="section" value="BannerOnFrontend"/>
+            <argument name="backgroundColor" value="PageBuilderBackgroundColor_Plaintext_Green"/>
+            <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_Center"/>
+            <argument name="backgroundSize" value="PageBuilderBackgroundSize_Auto"/>
+            <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
+            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Fixed"/>
+        </actionGroup>
+        <actionGroup ref="validateBackgroundImageContainer" stepKey="validateBackgroundImageCMSPageStage">
+            <argument name="section" value="BannerOnFrontend"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
+        </actionGroup>
+        <seeElement selector="{{BannerOnFrontend.messageContent('1', PageBuilderBannerMessageProperty.value)}}" stepKey="seeMessageContentCMSPageStage"/>
+        <seeElementInDOM selector="{{BannerOnFrontend.button('1')}}" stepKey="seeButtonInDOMCMSPageStage"/>
+        <dontSeeElement selector="{{BannerOnFrontend.button('1')}}" stepKey="dontSeeButtonCMSPageStage"/>
+        <seeElement selector="{{BannerOnFrontend.transparentOverlay('1')}}" stepKey="seeTransparentOverlayCMSPageStage"/>
+        <executeJS function="return {{BannerOnFrontend.overlayJS('1')}}.getBoundingClientRect().left" stepKey="overlayLeftPositionCMSPageStage"/>
+        <executeJS function="return document.evaluate(&quot;{{BannerOnFrontend.button('1')}}&quot;, document.body).iterateNext().getBoundingClientRect().left" stepKey="buttonLeftPositionCMSPageStage"/>
+        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSPageStage}-{$overlayLeftPositionCMSPageStage}-{{PageBuilderPaddingProperty40.paddingLeft}}))" stepKey="buttonMinusOverlayMinusPaddingCMSPageStage"/>
+        <assertLessThanOrEqual stepKey="assertButtonLeftAlignedCMSPageStage">
+            <expectedResult type="int">5</expectedResult>
+            <actualResult type="variable">buttonMinusOverlayMinusPaddingCMSPageStage</actualResult>
+        </assertLessThanOrEqual>
+        <executeJS function="return window.getComputedStyle({{BannerOnFrontend.wrapperJS('1')}}).textAlign" stepKey="grabDefaultComputedTextAlignCMSPageStage"/>
+        <assertEquals stepKey="assertDefaultComputedTextAlignCMSPageStage">
+            <expectedResult type="string">{{PageBuilderAdvancedAlignmentPropertyStart.value}}</expectedResult>
+            <actualResult type="variable">grabDefaultComputedTextAlignCMSPageStage</actualResult>
+        </assertEquals>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate CMS Page Storefront -->
+        <comment userInput="Validate CMS Page Storefront" stepKey="commentValidateCMSPageStorefront"/>
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStoreFront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seeAppearanceCMSPageStorefront"/>
+        <actionGroup ref="validateOverlayPositionPoster" stepKey="validateOverlayPositionCMSPageStorefront">
+            <argument name="page" value="BannerOnFrontend"/>
+        </actionGroup>
+        <seeElement selector="{{BannerOnFrontend.posterMinimumHeight('1', PageBuilderBannerMinimumHeightProperty.value)}}" stepKey="seeMinimumHeightCMSPageStorefront"/>
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateHeightCMSPageStorefront">
+            <argument name="content" value="{{BannerOnFrontend.wrapperCSS}}"/>
+            <argument name="height" value="PageBuilderBannerMinimumHeightProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateBackgroundAttributesWithNoImage" stepKey="validateBackgroundAttributesCMSPageStorefront">
+            <argument name="section" value="BannerOnFrontend"/>
+            <argument name="backgroundColor" value="PageBuilderBackgroundColor_Plaintext_Green"/>
+            <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_Center"/>
+            <argument name="backgroundSize" value="PageBuilderBackgroundSize_Auto"/>
+            <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
+            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Fixed"/>
+        </actionGroup>
+        <actionGroup ref="validateBackgroundImageContainer" stepKey="validateBackgroundImageCMSPageStorefront">
+            <argument name="section" value="BannerOnFrontend"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
+        </actionGroup>
+        <seeElement selector="{{BannerOnFrontend.messageContent('1', PageBuilderBannerMessageProperty.value)}}" stepKey="seeMessageContentCMSPageStorefront"/>
+        <seeElementInDOM selector="{{BannerOnFrontend.button('1')}}" stepKey="seeButtonInDOMCMSPageStorefront"/>
+        <dontSeeElement selector="{{BannerOnFrontend.button('1')}}" stepKey="dontSeeButtonCMSPageStorefront"/>
+        <seeElement selector="{{BannerOnFrontend.transparentOverlay('1')}}" stepKey="seeTransparentOverlayCMSPageStorefront"/>
+        <moveMouseOver selector="{{BannerOnFrontend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="moveMouseOverBannerCMSPageStorefront"/>
+        <seeElement selector="{{BannerOnFrontend.button('1')}}" stepKey="seeButtonOnHoverCMSPageStorefront"/>
+        <seeElement selector="{{BannerOnFrontend.buttonText('1', PageBuilderBannerButtonTextProperty.value)}}" stepKey="seeButtonTextOnHoverCMSPageStorefront"/>
+        <seeElement selector="{{BannerOnFrontend.buttonType('1', PageBuilderBannerButtonTypeSecondaryProperty.value)}}" stepKey="seeButtonTypeOnHoverCMSPageStorefront"/>
+        <seeElement selector="{{BannerOnFrontend.overlayBackgroundColor('1', PageBuilderBannerOverlayColor_Blue_Opaque.value)}}" stepKey="seeOverlayOnHoverCMSPageStorefront"/>
+        <executeJS function="return {{BannerOnFrontend.overlayJS('1')}}.getBoundingClientRect().left" stepKey="overlayLeftPositionCMSPageStorefront"/>
+        <executeJS function="return document.evaluate(&quot;{{BannerOnFrontend.button('1')}}&quot;, document.body).iterateNext().getBoundingClientRect().left" stepKey="buttonLeftPositionCMSPageStorefront"/>
+        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSPageStorefront}-{$overlayLeftPositionCMSPageStorefront}-{{PageBuilderPaddingProperty40.paddingLeft}}))" stepKey="buttonMinusOverlayMinusPaddingCMSPageStorefront"/>
+        <assertLessThanOrEqual stepKey="assertButtonLeftAlignedCMSPageStorefront">
+            <expectedResult type="int">5</expectedResult>
+            <actualResult type="variable">buttonMinusOverlayMinusPaddingCMSPageStorefront</actualResult>
+        </assertLessThanOrEqual>
+        <executeJS function="return window.getComputedStyle({{BannerOnFrontend.wrapperJS('1')}}).textAlign" stepKey="grabDefaultComputedTextAlignCMSPageStorefront"/>
+        <assertEquals stepKey="assertDefaultComputedTextAlignCMSPageStorefront">
+            <expectedResult type="string">{{PageBuilderAdvancedAlignmentPropertyStart.value}}</expectedResult>
+            <actualResult type="variable">grabDefaultComputedTextAlignCMSPageStorefront</actualResult>
+        </assertEquals>
+        <!-- Validate Banner Link -->
+        <comment userInput="Validate Banner Link" stepKey="commentValidateBannerLinkCMSPageStorefront"/>
+        <click selector="{{BannerOnFrontend.linkUrl('1', PageBuilderBannerLinkUrlPropertyValidate.value)}}" stepKey="clickLinkUrlCMSPageStorefront"/>
+        <wait time="3" stepKey="waitArbitraryTimeForPotentialNavigationToOccurCMSPageStorefront"/>
+        <seeCurrentUrlEquals url="{{PageBuilderBannerLinkUrlPropertyValidate.value}}" stepKey="seeThatUrlIsChangedToButtonUrlCMSPageStorefront"/>
+        <!-- Validate CMS Page Storefront Mobile -->
+        <comment userInput="Validate CMS Page Storefront Mobile" stepKey="commentValidateCMSPageStorefrontMobile"/>
+        <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStoreFrontMobile">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <actionGroup ref="validateOverlayPositionPoster" stepKey="validateOverlayPositionCMSPageStorefrontMobile">
+            <argument name="page" value="BannerOnFrontend"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateHeightCMSPageStorefrontMobile">
+            <argument name="content" value="{{BannerOnFrontend.wrapperCSS}}"/>
+            <argument name="height" value="PageBuilderBannerMinimumHeightProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateBackgroundImageContainer" stepKey="validateBackgroundImageCMSPageStorefrontMobile">
+            <argument name="section" value="BannerOnFrontend"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundMobileImage_GIF"/>
+        </actionGroup>
+        <seeElementInDOM selector="{{BannerOnFrontend.button('1')}}" stepKey="seeButtonInDOMCMSPageStorefrontMobile"/>
+        <dontSeeElement selector="{{BannerOnFrontend.button('1')}}" stepKey="dontSeeButtonCMSPageStorefrontMobile"/>
+        <seeElement selector="{{BannerOnFrontend.transparentOverlay('1')}}" stepKey="seeTransparentOverlayCMSPageStorefrontMobile"/>
+        <moveMouseOver selector="{{BannerOnFrontend.base('1')}}" stepKey="moveMouseOverBannerCMSPageStorefrontMobile"/>
+        <seeElement selector="{{BannerOnFrontend.button('1')}}" stepKey="seeButtonOnHoverCMSPageStorefrontMobile"/>
+        <seeElement selector="{{BannerOnFrontend.overlayBackgroundColor('1', PageBuilderBannerOverlayColor_Blue_Opaque.value)}}" stepKey="seeOverlayOnHoverCMSPageStorefrontMobile"/>
+        <!-- Validate Banner Link Mobile -->
+        <comment userInput="Validate Banner Link" stepKey="commentValidateBannerLinkCMSPageStorefrontMobile"/>
+        <click selector="{{BannerOnFrontend.linkUrl('1', PageBuilderBannerLinkUrlPropertyValidate.value)}}" stepKey="clickLinkUrlCMSPageStorefrontMobile"/>
+        <wait time="3" stepKey="waitArbitraryTimeForPotentialNavigationToOccurCMSPageStorefrontMobile"/>
+        <seeCurrentUrlEquals url="{{PageBuilderBannerLinkUrlPropertyValidate.value}}" stepKey="seeThatUrlIsChangedToButtonUrlCMSPageStorefrontMobile"/>
+    </test>
+    <test name="BlockRenderBannerCollageLeftAppearanceThroughBlockContentType" extends="BlockRenderBannerPosterAppearanceThroughBlockContentType">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Block Content"/>
+            <title value="Render Banner Collage Left Appearance Through Block Content Type"/>
+            <description value="Verify that users are able to successfully render and use the banner content type collage left appearance through the Block content type."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MC-15190"/>
+            <useCaseId value="MC-13769"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+            <group value="pagebuilder-block-content"/>
+            <group value="pagebuilder-banner"/>
+            <group value="pagebuilder-bannerCollageLeft"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setAppearance">
+            <argument name="property" value="PageBuilderAppearance_CollageLeft"/>
+        </actionGroup>
+        <seeElement selector="{{BannerOnBackend.appearance('1', PageBuilderAppearance_CollageLeft.value)}}" stepKey="seeAppearanceCMSBlockStage"/>
+        <actionGroup ref="validateOverlayPositionCollageLeft" stepKey="validateOverlayPositionCMSBlockStage">
+            <argument name="page" value="BannerOnBackend"/>
+        </actionGroup>
+        <seeElement selector="{{BannerOnBackend.collageMinimumHeight('1', PageBuilderBannerMinimumHeightProperty.value)}}" stepKey="seeMinimumHeightCMSBlockStage"/>
+        <moveMouseOver selector="{{BannerOnBackend.appearance('1', PageBuilderAppearance_CollageLeft.value)}}" stepKey="moveMouseOverBannerCMSBlockStage"/>
+        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSBlockStage}-{$overlayLeftPositionCMSBlockStage}-30))" stepKey="buttonMinusOverlayMinusPaddingCMSBlockStage"/>
+        <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderAppearance_CollageLeft.value)}}" stepKey="seeAppearanceCMSPageStage"/>
+        <actionGroup ref="validateOverlayPositionCollageLeft" stepKey="validateOverlayPositionCMSPageStage">
+            <argument name="page" value="BannerOnFrontend"/>
+        </actionGroup>
+        <seeElement selector="{{BannerOnFrontend.collageMinimumHeight('1', PageBuilderBannerMinimumHeightProperty.value)}}" stepKey="seeMinimumHeightCMSPageStage"/>
+        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSPageStage}-{$overlayLeftPositionCMSPageStage}-30))" stepKey="buttonMinusOverlayMinusPaddingCMSPageStage"/>
+        <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderAppearance_CollageLeft.value)}}" stepKey="seeAppearanceCMSPageStorefront"/>
+        <actionGroup ref="validateOverlayPositionCollageLeft" stepKey="validateOverlayPositionCMSPageStorefront">
+            <argument name="page" value="BannerOnFrontend"/>
+        </actionGroup>
+        <seeElement selector="{{BannerOnFrontend.collageMinimumHeight('1', PageBuilderBannerMinimumHeightProperty.value)}}" stepKey="seeMinimumHeightCMSPageStorefront"/>
+        <moveMouseOver selector="{{BannerOnFrontend.appearance('1', PageBuilderAppearance_CollageLeft.value)}}" stepKey="moveMouseOverBannerCMSPageStorefront"/>
+        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSPageStorefront}-{$overlayLeftPositionCMSPageStorefront}-30))" stepKey="buttonMinusOverlayMinusPaddingCMSPageStorefront"/>
+        <executeJS function="return Math.abs({{BannerOnFrontend.wrapperJS('1')}}.getBoundingClientRect().width - {{PageBuilderPaddingProperty40.paddingLeft}} - {{PageBuilderPaddingProperty40.paddingRight}})" stepKey="widthOfWrapperMinusPaddingCMSPageStorefrontMobile" before="validateOverlayPositionCMSPageStorefrontMobile"/>
+        <actionGroup ref="validateOverlayPositionCollageLeft" stepKey="validateOverlayPositionCMSPageStorefrontMobile">
+            <argument name="page" value="BannerOnFrontend"/>
+            <argument name="expectedOverlayWidth" value="{$widthOfWrapperMinusPaddingCMSPageStorefrontMobile}"/>
+        </actionGroup>
+    </test>
+    <test name="BlockRenderBannerCollageCenteredAppearanceThroughBlockContentType" extends="BlockRenderBannerPosterAppearanceThroughBlockContentType">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Block Content"/>
+            <title value="Render Banner Collage Centered Appearance Through Block Content Type"/>
+            <description value="Verify that users are able to successfully render and use the banner content type collage centered appearance through the Block content type."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MC-15189"/>
+            <useCaseId value="MC-13769"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+            <group value="pagebuilder-block-content"/>
+            <group value="pagebuilder-banner"/>
+            <group value="pagebuilder-bannerCollageCentered"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setAppearance">
+            <argument name="property" value="PageBuilderBannerCollageCenteredProperty"/>
+        </actionGroup>
+        <seeElement selector="{{BannerOnBackend.appearance('1', PageBuilderBannerCollageCenteredProperty.value)}}" stepKey="seeAppearanceCMSBlockStage"/>
+        <actionGroup ref="validateOverlayPositionCollageCenter" stepKey="validateOverlayPositionCMSBlockStage">
+            <argument name="page" value="BannerOnBackend"/>
+        </actionGroup>
+        <seeElement selector="{{BannerOnBackend.collageMinimumHeight('1', PageBuilderBannerMinimumHeightProperty.value)}}" stepKey="seeMinimumHeightCMSBlockStage"/>
+        <moveMouseOver selector="{{BannerOnBackend.appearance('1', PageBuilderBannerCollageCenteredProperty.value)}}" stepKey="moveMouseOverBannerCMSBlockStage"/>
+        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSBlockStage}-{$overlayLeftPositionCMSBlockStage}-30))" stepKey="buttonMinusOverlayMinusPaddingCMSBlockStage"/>
+        <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderBannerCollageCenteredProperty.value)}}" stepKey="seeAppearanceCMSPageStage"/>
+        <actionGroup ref="validateOverlayPositionCollageCenter" stepKey="validateOverlayPositionCMSPageStage">
+            <argument name="page" value="BannerOnFrontend"/>
+        </actionGroup>
+        <seeElement selector="{{BannerOnFrontend.collageMinimumHeight('1', PageBuilderBannerMinimumHeightProperty.value)}}" stepKey="seeMinimumHeightCMSPageStage"/>
+        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSPageStage}-{$overlayLeftPositionCMSPageStage}-30))" stepKey="buttonMinusOverlayMinusPaddingCMSPageStage"/>
+        <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderBannerCollageCenteredProperty.value)}}" stepKey="seeAppearanceCMSPageStorefront"/>
+        <actionGroup ref="validateOverlayPositionCollageCenter" stepKey="validateOverlayPositionCMSPageStorefront">
+            <argument name="page" value="BannerOnFrontend"/>
+        </actionGroup>
+        <seeElement selector="{{BannerOnFrontend.collageMinimumHeight('1', PageBuilderBannerMinimumHeightProperty.value)}}" stepKey="seeMinimumHeightCMSPageStorefront"/>
+        <moveMouseOver selector="{{BannerOnFrontend.appearance('1', PageBuilderBannerCollageCenteredProperty.value)}}" stepKey="moveMouseOverBannerCMSPageStorefront"/>
+        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSPageStorefront}-{$overlayLeftPositionCMSPageStorefront}-30))" stepKey="buttonMinusOverlayMinusPaddingCMSPageStorefront"/>
+        <executeJS function="return Math.abs({{BannerOnFrontend.wrapperJS('1')}}.getBoundingClientRect().width - {{PageBuilderPaddingProperty40.paddingLeft}} - {{PageBuilderPaddingProperty40.paddingRight}})" stepKey="widthOfWrapperMinusPaddingCMSPageStorefrontMobile" before="validateOverlayPositionCMSPageStorefrontMobile"/>
+        <actionGroup ref="validateOverlayPositionCollageCenter" stepKey="validateOverlayPositionCMSPageStorefrontMobile">
+            <argument name="page" value="BannerOnFrontend"/>
+            <argument name="expectedOverlayWidth" value="{$widthOfWrapperMinusPaddingCMSPageStorefrontMobile}"/>
+        </actionGroup>
+    </test>
+    <test name="BlockRenderBannerCollageRightAppearanceThroughBlockContentType" extends="BlockRenderBannerPosterAppearanceThroughBlockContentType">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Block Content"/>
+            <title value="Render Banner Collage Right Appearance Through Block Content Type"/>
+            <description value="Verify that users are able to successfully render and use the banner content type collage right appearance through the Block content type."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MC-15191"/>
+            <useCaseId value="MC-13769"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+            <group value="pagebuilder-block-content"/>
+            <group value="pagebuilder-banner"/>
+            <group value="pagebuilder-bannerCollageRight"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setAppearance">
+            <argument name="property" value="PageBuilderAppearance_CollageRight"/>
+        </actionGroup>
+        <seeElement selector="{{BannerOnBackend.appearance('1', PageBuilderAppearance_CollageRight.value)}}" stepKey="seeAppearanceCMSBlockStage"/>
+        <actionGroup ref="validateOverlayPositionCollageRight" stepKey="validateOverlayPositionCMSBlockStage">
+            <argument name="page" value="BannerOnBackend"/>
+        </actionGroup>
+        <seeElement selector="{{BannerOnBackend.collageMinimumHeight('1', PageBuilderBannerMinimumHeightProperty.value)}}" stepKey="seeMinimumHeightCMSBlockStage"/>
+        <moveMouseOver selector="{{BannerOnBackend.appearance('1', PageBuilderAppearance_CollageRight.value)}}" stepKey="moveMouseOverBannerCMSBlockStage"/>
+        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSBlockStage}-{$overlayLeftPositionCMSBlockStage}-30))" stepKey="buttonMinusOverlayMinusPaddingCMSBlockStage"/>
+        <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderAppearance_CollageRight.value)}}" stepKey="seeAppearanceCMSPageStage"/>
+        <actionGroup ref="validateOverlayPositionCollageRight" stepKey="validateOverlayPositionCMSPageStage">
+            <argument name="page" value="BannerOnFrontend"/>
+        </actionGroup>
+        <seeElement selector="{{BannerOnFrontend.collageMinimumHeight('1', PageBuilderBannerMinimumHeightProperty.value)}}" stepKey="seeMinimumHeightCMSPageStage"/>
+        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSPageStage}-{$overlayLeftPositionCMSPageStage}-30))" stepKey="buttonMinusOverlayMinusPaddingCMSPageStage"/>
+        <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderAppearance_CollageRight.value)}}" stepKey="seeAppearanceCMSPageStorefront"/>
+        <actionGroup ref="validateOverlayPositionCollageRight" stepKey="validateOverlayPositionCMSPageStorefront">
+            <argument name="page" value="BannerOnFrontend"/>
+        </actionGroup>
+        <seeElement selector="{{BannerOnFrontend.collageMinimumHeight('1', PageBuilderBannerMinimumHeightProperty.value)}}" stepKey="seeMinimumHeightCMSPageStorefront"/>
+        <moveMouseOver selector="{{BannerOnFrontend.appearance('1', PageBuilderAppearance_CollageRight.value)}}" stepKey="moveMouseOverBannerCMSPageStorefront"/>
+        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSPageStorefront}-{$overlayLeftPositionCMSPageStorefront}-30))" stepKey="buttonMinusOverlayMinusPaddingCMSPageStorefront"/>
+        <executeJS function="return Math.abs({{BannerOnFrontend.wrapperJS('1')}}.getBoundingClientRect().width - {{PageBuilderPaddingProperty40.paddingLeft}} - {{PageBuilderPaddingProperty40.paddingRight}})" stepKey="widthOfWrapperMinusPaddingCMSPageStorefrontMobile" before="validateOverlayPositionCMSPageStorefrontMobile"/>
+        <actionGroup ref="validateOverlayPositionCollageRight" stepKey="validateOverlayPositionCMSPageStorefrontMobile">
+            <argument name="page" value="BannerOnFrontend"/>
+            <argument name="expectedOverlayWidth" value="{$widthOfWrapperMinusPaddingCMSPageStorefrontMobile}"/>
+        </actionGroup>
+    </test>
+    <test name="BlockRenderBannerThroughBlockContentTypeTinyMCE4WysiwygEnabledByDefault">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Block Content"/>
+            <title value="Render Banner Through Block Content Type With TinyMCE4 and Wysiwyg Enabled By Default"/>
+            <description value="Verify that users are able to successfully render and use the Banner content type through the Block content type with TinyMCE4 and Wysiwyg Enabled By default."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MC-15192"/>
+            <useCaseId value="MC-13769"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+            <group value="pagebuilder-block-content"/>
+            <group value="pagebuilder-banner"/>
+            <group value="pagebuilder-bannerPoster"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="configWYSIWYG"/>
+            <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="configTinyMCE"/>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <createData entity="_emptyCmsBlock" stepKey="createCMSBlock"/>
+            <createData entity="_defaultCmsPage" stepKey="createPreReqCMSPage"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage1">
+                <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
+            </actionGroup>
+        </before>
+        <after>
+            <deleteData createDataKey="createPreReqCMSPage" stepKey="deletePreReqCMSPage"/>
+            <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock"/>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Add Banner -->
+        <comment userInput="Add Banner" stepKey="commentAddBanner"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBannerIntoStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <!-- Inline Edit: Add Text -->
+        <comment userInput="Inline Edit: Add Text" stepKey="commentInlineEditAddText"/>
+        <actionGroup ref="focusOnInlineTinyMCEEditor" stepKey="focusOnInlineTinyMCEEditor">
+            <argument name="section" value="BannerOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="addTextToTinyMCEInline" stepKey="addTextToTinyMCEInline">
+            <argument name="section" value="BannerOnBackend"/>
+            <argument name="text" value="{{PageBuilderBannerMessageProperty.value}}"/>
+        </actionGroup>
+        <!-- Inline Edit: Add Variable -->
+        <comment userInput="Inline Edit: Add Variable" stepKey="commentInlineEditAddVariable"/>
+        <actionGroup ref="focusOnInlineTinyMCEEditor" stepKey="focusOnInlineTinyMCEEditor2">
+            <argument name="section" value="BannerOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="addVariableToTinyMCEInline" stepKey="addVariableToTinyMCE">
+            <argument name="variable" value="TinyMCEVariableBaseURL"/>
+        </actionGroup>
+        <!-- Inline Edit: Add Widget -->
+        <comment userInput="Inline Edit: Add Widget" stepKey="commentInlineEditAddWidget"/>
+        <actionGroup ref="focusOnInlineTinyMCEEditor" stepKey="focusOnInlineTinyMCEEditor3">
+            <argument name="section" value="BannerOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="addPageLinkWidgetToTinyMCEInline" stepKey="addPageLinkWidgetToTinyMCE">
+            <argument name="widget" value="TinyMCEWidgetCMSPageLink"/>
+            <argument name="page" value="$$createPreReqCMSPage.identifier$$"/>
+        </actionGroup>
+        <!-- Inline Edit: Add Image -->
+        <comment userInput="Inline Edit: Add Image" stepKey="commentInlineEditAddImage"/>
+        <actionGroup ref="focusOnInlineTinyMCEEditor" stepKey="focusOnInlineTinyMCEEditor4">
+            <argument name="section" value="BannerOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="clickInsertImageInTinyMCE" stepKey="clickInsertImageInTinyMCE"/>
+        <actionGroup ref="clickBrowseBtnOnUploadPopup" stepKey="clickBrowserBtn"/>
+        <actionGroup ref="VerifyMediaGalleryStorageActions" stepKey="VerifyMediaGalleryStorageBtn"/>
+        <actionGroup ref="clickMediaGalleryStorageRootArrow" stepKey="clickMediaGalleryStorageRootArrow"/>
+        <actionGroup ref="CreateImageFolder" stepKey="CreateImageFolder">
+            <argument name="ImageFolder" value="ImageFolder"/>
+        </actionGroup>
+        <actionGroup ref="attachImage" stepKey="attachImage">
+            <argument name="Image" value="ImageUpload3"/>
+        </actionGroup>
+        <actionGroup ref="saveImage" stepKey="insertImage"/>
+        <actionGroup ref="fillOutUploadImagePopup" stepKey="fillOutUploadImagePopup"/>
+        <actionGroup ref="saveCMSBlock" stepKey="saveCMSBlock"/>
+        <!-- Validate CMS Block Stage -->
+        <comment userInput="Validate CMS Block Stage" stepKey="commentValidateCMSBlockStage"/>
+        <seeElement selector="{{BannerOnBackend.messageContent('1', PageBuilderBannerMessageProperty.value)}}" stepKey="seeTextCMSBlockStage"/>
+        <seeElement selector="{{BannerOnBackend.messageContent('1', TinyMCEVariableBaseURL.editPanelValue)}}" stepKey="seeVariableCMSBlockStage"/>
+        <seeElement selector="{{BannerOnBackend.messageContent('1', TinyMCEWidgetCMSPageLink.editPanelValue)}}" stepKey="seeWidgetCMSBlockStage"/>
+        <seeElement selector="{{BannerOnBackend.base('1')}}{{CmsWYSIWYGSection.imageSource(ImageUpload3.fileName)}}" stepKey="seeImageFileNameCMSBlockStage"/>
+        <seeElement selector="{{BannerOnBackend.base('1')}}{{CmsWYSIWYGSection.imageSource(ImageUpload3.extension)}}" stepKey="seeImageExtensionCMSBlockStage"/>
+        <seeElement selector="{{BannerOnBackend.base('1')}}{{CmsWYSIWYGSection.ImageAlt(ImageUpload3.content)}}" stepKey="seeImageAltCMSBlockStage"/>
+        <!-- Add Block to CMS Page -->
+        <comment userInput="Add Block to CMS Page" stepKey="commentAddBlockToCMSPage"/>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPanelAddContentMenuSection">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDropBlock">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
+            <argument name="block" value="$$createCMSBlock$$"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsBlock"/>
+        <!-- Validate CMS Page Stage -->
+        <comment userInput="Validate CMS Page Stage" stepKey="commentValidateCMSPageStage"/>
+        <seeElement selector="{{BannerOnFrontend.messageContent('1', PageBuilderBannerMessageProperty.value)}}" stepKey="seeTextCMSPageStage"/>
+        <seeElement selector="{{BannerOnFrontend.messageContent('1', _ENV.MAGENTO_BASE_URL)}}" stepKey="seeVariableCMSPageStage"/>
+        <seeElement selector="{{BannerOnFrontend.messageContentWidget('1', _ENV.MAGENTO_BASE_URL, $$createPreReqCMSPage.identifier$$)}}" stepKey="seeWidgetCMSPageStage"/>
+        <seeElement selector="{{BannerOnFrontend.base('1')}}{{CmsWYSIWYGSection.imageSource(ImageUpload3.fileName)}}" stepKey="seeImageFileNameCMSPageStage"/>
+        <seeElement selector="{{BannerOnFrontend.base('1')}}{{CmsWYSIWYGSection.imageSource(ImageUpload3.extension)}}" stepKey="seeImageExtensionCMSPageStage"/>
+        <seeElement selector="{{BannerOnFrontend.base('1')}}{{CmsWYSIWYGSection.ImageAlt(ImageUpload3.content)}}" stepKey="seeImageAltCMSPageStage"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate CMS Page Storefront -->
+        <comment userInput="Validate CMS Page Storefront" stepKey="commentValidateCMSPageStorefront"/>
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <seeElement selector="{{BannerOnFrontend.messageContent('1', PageBuilderBannerMessageProperty.value)}}" stepKey="seeTextCMSPageStorefront"/>
+        <seeElement selector="{{BannerOnFrontend.messageContent('1', _ENV.MAGENTO_BASE_URL)}}" stepKey="seeVariableCMSPageStorefront"/>
+        <seeElement selector="{{BannerOnFrontend.messageContentWidget('1', _ENV.MAGENTO_BASE_URL, $$createPreReqCMSPage.identifier$$)}}" stepKey="seeWidgetCMSPageStorefront"/>
+        <seeElement selector="{{BannerOnFrontend.base('1')}}{{CmsWYSIWYGSection.imageSource(ImageUpload3.fileName)}}" stepKey="seeImageFileNameCMSPageStorefront"/>
+        <seeElement selector="{{BannerOnFrontend.base('1')}}{{CmsWYSIWYGSection.imageSource(ImageUpload3.extension)}}" stepKey="seeImageExtensionCMSPageStorefront"/>
+        <seeElement selector="{{BannerOnFrontend.base('1')}}{{CmsWYSIWYGSection.ImageAlt(ImageUpload3.content)}}" stepKey="seeImageAltCMSPageStorefront"/>
+        <!-- Click Page Link Widget -->
+        <comment userInput="Click Page Link Widget" stepKey="clickClickPageLinkWidget"/>
+        <click selector="{{BannerOnFrontend.messageContentWidget('1', _ENV.MAGENTO_BASE_URL, $$createPreReqCMSPage.identifier$$)}}" stepKey="clickWidgetCMSPageStorefront"/>
+        <wait time="3" stepKey="waitArbitraryTimeForPotentialNavigationToOccurStorefront"/>
+        <seeCurrentUrlEquals url="{{_ENV.MAGENTO_BASE_URL}}$$createPreReqCMSPage.identifier$$" stepKey="seeThatUrlIsChangedToPageLinkWidgetUrlStorefront"/>
+    </test>
+    <test name="BlockRenderBannerThroughBlockContentTypeTinyMCE4WysiwygDisabledByDefault" extends="BlockRenderBannerThroughBlockContentTypeTinyMCE4WysiwygEnabledByDefault">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Block Content"/>
+            <title value="Render Banner Through Block Content Type With TinyMCE4 and Wysiwyg Disabled By Default"/>
+            <description value="Verify that users are able to successfully render and use the Banner content type through the Block content type with TinyMCE4 and Wysiwyg Disabled By Default."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MC-15193"/>
+            <useCaseId value="MC-13769"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+            <group value="pagebuilder-block-content"/>
+            <group value="pagebuilder-banner"/>
+            <group value="pagebuilder-bannerPoster"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set cms/wysiwyg/enabled hidden" stepKey="configWYSIWYG"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG" before="deleteCMSBlock"/>
+        </after>
+    </test>
+    <test name="BlockRenderBannerThroughBlockContentTypeTinyMCE4WysiwygDisabledCompletely">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Block Content"/>
+            <title value="Render Banner Through Block Content Type With TinyMCE4 and Wysiwyg Disabled Completely"/>
+            <description value="Verify that users are able to successfully render and use the Banner content type through the Block content type with TinyMCE4 and Wysiwyg Disabled Completely."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MC-15194"/>
+            <useCaseId value="MC-13769"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+            <group value="pagebuilder-block-content"/>
+            <group value="pagebuilder-banner"/>
+            <group value="pagebuilder-bannerPoster"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set cms/wysiwyg/enabled disabled" stepKey="configWYSIWYG"/>
+            <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="configTinyMCE"/>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <createData entity="_emptyCmsBlock" stepKey="createCMSBlock"/>
+            <createData entity="_defaultCmsPage" stepKey="createPreReqCMSPage"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage1">
+                <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
+            </actionGroup>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG"/>
+            <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock"/>
+            <deleteData createDataKey="createPreReqCMSPage" stepKey="deletePreReqCMSPage"/>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Add Banner -->
+        <comment userInput="Add Banner" stepKey="commentAddBanner"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBannerIntoStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <!-- Inline Edit: Add Text -->
+        <comment userInput="Inline Edit: Add Text" stepKey="commentInlineEditAddText"/>
+        <actionGroup ref="focusOnInlineTextAreaEditor" stepKey="focusOnInlineTextAreaEditor">
+            <argument name="section" value="BannerOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="addTextToTinyMCEInlineWYSIWYGDisabled" stepKey="addTextToTinyMCEInline">
+            <argument name="section" value="BannerOnBackend"/>
+            <argument name="text" value="{{PageBuilderBannerMessageProperty.value}}"/>
+        </actionGroup>
+        <!-- Inline Edit: Add Variable -->
+        <actionGroup ref="focusOnInlineTextAreaEditor" stepKey="focusOnInlineTextAreaEditor2">
+            <argument name="section" value="BannerOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="addTextToTinyMCEInlineWYSIWYGDisabled" stepKey="addVariableToTinyMCE">
+            <argument name="section" value="BannerOnBackend"/>
+            <argument name="text" value="{{PageBuilderTextArea_VariableBaseURL.editPanelValue}}"/>
+        </actionGroup>
+        <!-- Inline Edit: Add Widget -->
+        <comment userInput="Inline Edit: Add Widget" stepKey="commentInlineEditAddWidget"/>
+        <actionGroup ref="focusOnInlineTextAreaEditor" stepKey="focusOnInlineTextAreaEditor3">
+            <argument name="section" value="BannerOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="addTextToTinyMCEInlineWYSIWYGDisabled" stepKey="addPageLinkWidgetToTinyMCE">
+            <argument name="section" value="BannerOnBackend"/>
+            <argument name="text" value="{{PageBuilderTextArea_WidgetCMSHomepageLink.editPanelValue}}"/>
+        </actionGroup>
+        <actionGroup ref="saveCMSBlock" stepKey="saveCMSBlock"/>
+        <!-- Validate CMS Block Stage -->
+        <comment userInput="Validate CMS Block Stage" stepKey="commentValidateCMSBlockStage"/>
+        <actionGroup ref="assertTextareaContainsValue" stepKey="assertTextareaContainsValueCMSBlockStage">
+            <argument name="selector" value="{{BannerOnBackend.textArea('1')}}"/>
+            <argument name="value" value="{{PageBuilderBannerMessageProperty.value}}{{PageBuilderTextArea_VariableBaseURL.editPanelValue}}{{PageBuilderTextArea_WidgetCMSHomepageLink.editPanelValue}}"/>
+        </actionGroup>
+        <!-- Add Block to CMS Page -->
+        <comment userInput="Add Block to CMS Page" stepKey="commentAddBlockToCMSPage"/>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPanelAddContentMenuSection">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDropBlock">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
+            <argument name="block" value="$$createCMSBlock$$"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsBlock"/>
+        <!-- Validate CMS Page Stage -->
+        <comment userInput="Validate CMS Page Stage" stepKey="commentValidateCMSPageStage"/>
+        <seeElement selector="{{BannerOnFrontend.messageContentTextArea('1', PageBuilderBannerMessageProperty.value)}}" stepKey="seeTextCMSPageStage"/>
+        <seeElement selector="{{BannerOnFrontend.messageContentTextArea('1', _ENV.MAGENTO_BASE_URL)}}" stepKey="seeVariableCMSPageStage"/>
+        <seeElement selector="{{BannerOnFrontend.messageContentWidget('1', _ENV.MAGENTO_BASE_URL, PageBuilderTextArea_WidgetCMSHomepageLink.identifier)}}" stepKey="seeWidgetCMSPageStage"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate CMS Page Storefront -->
+        <comment userInput="Validate CMS Page Storefront" stepKey="commentValidateCMSPageStorefront"/>
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <seeElement selector="{{BannerOnFrontend.messageContentTextArea('1', PageBuilderBannerMessageProperty.value)}}" stepKey="seeTextCMSPageStorefront"/>
+        <seeElement selector="{{BannerOnFrontend.messageContentTextArea('1', _ENV.MAGENTO_BASE_URL)}}" stepKey="seeVariableCMSPageStorefront"/>
+        <seeElement selector="{{BannerOnFrontend.messageContentWidget('1', _ENV.MAGENTO_BASE_URL, PageBuilderTextArea_WidgetCMSHomepageLink.identifier)}}" stepKey="seeWidgetCMSPageStorefront"/>
+        <!-- Click Page Link Widget -->
+        <comment userInput="Click Page Link Widget" stepKey="clickClickPageLinkWidget"/>
+        <click selector="{{BannerOnFrontend.messageContentWidget('1', _ENV.MAGENTO_BASE_URL, PageBuilderTextArea_WidgetCMSHomepageLink.identifier)}}" stepKey="clickWidgetCMSPageStorefront"/>
+        <wait time="3" stepKey="waitArbitraryTimeForPotentialNavigationToOccurStorefront"/>
+        <seeCurrentUrlEquals url="{{_ENV.MAGENTO_BASE_URL}}{{PageBuilderTextArea_WidgetCMSHomepageLink.identifier}}" stepKey="seeThatUrlIsChangedToPageLinkWidgetUrlStorefront"/>
+    </test>
+    <test name="BlockRenderSliderThroughBlockContentType">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Block Content"/>
+            <title value="Render Slider Through Block Content Type"/>
+            <description value="Verify that users are able to successfully render and use the slider content type through the Block content type."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MC-15206"/>
+            <useCaseId value="MC-13769"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+            <group value="pagebuilder-block-content"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-sliderCommon"/>
+        </annotations>
+        <before>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <createData entity="_emptyCmsBlock" stepKey="createCMSBlock"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage1">
+                <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
+            </actionGroup>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock"/>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Add Slider -->
+        <comment userInput="Add Slider" stepKey="commentAddSlider"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragSliderOntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <!-- Edit Slide 1 -->
+        <comment userInput="Edit Slide 1" stepKey="commentEditSlide1"/>
+        <actionGroup ref="focusOnInlineTinyMCEEditor" stepKey="focusOnInlineTinyMCEEditor">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="addTextToTinyMCEInline" stepKey="addTextToTinyMCEInline">
+            <argument name="section" value="SlideOnBackend"/>
+            <argument name="text" value="{{PageBuilderSlideItemContent_Slide1.value}}"/>
+        </actionGroup>
+        <!-- Edit Slider -->
+        <comment userInput="Edit Slider" stepKey="commentEditSlider"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusSlide"/>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openSliderEditPanel">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="enterAutoPlay">
+            <argument name="property" value="PageBuilderSliderAutoPlay_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterAutoPlaySpeed">
+            <argument name="property" value="PageBuilderSliderAutoPlaySpeed_50000"/>
+        </actionGroup>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="enterFade">
+            <argument name="property" value="PageBuilderSliderFade_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="enterInfiniteLoop">
+            <argument name="property" value="PageBuilderSliderInfiniteLoop_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="enterShowArrow">
+            <argument name="property" value="PageBuilderSliderShowArrows_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="enterShowDots">
+            <argument name="property" value="PageBuilderSliderShowDots_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSliderMinHeight">
+            <argument name="property" value="PageBuilderSliderMinHeight_500"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
+        <!-- Add Slide 2 -->
+        <comment userInput="Add Slide 2" stepKey="commentAddSlide2"/>
+        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanelSlide2">
+            <argument name="section" value="SlideOnBackend"/>
+            <argument name="targetIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="setMinHeight">
+            <argument name="property" value="PageBuilderSlideItemMinimumHeight_Empty"/>
+        </actionGroup>
+        <actionGroup ref="addTextToTinyMCE" stepKey="addTextToTinyMCE">
+            <argument name="property" value="PageBuilderSlideItemContent_Slide2"/>
+            <argument name="section" value="SlideOnConfigurationPanel"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <actionGroup ref="saveCMSBlock" stepKey="saveCMSBlock"/>
+        <!-- Validate CMS Block Stage -->
+        <comment userInput="Validate CMS Block Stage" stepKey="commentValidateCMSBlockStage"/>
+        <seeElement selector="{{SliderOnStage.autoPlay('1', PageBuilderSliderAutoPlay_Enabled.value)}}" stepKey="seeAutoPlayCMSBlockStage"/>
+        <seeElement selector="{{SliderOnStage.autoPlaySpeed('1', PageBuilderSliderAutoPlaySpeed_50000.value)}}" stepKey="seeAutoPlaySpeedCMSBlockStage"/>
+        <seeElement selector="{{SliderOnStage.fade('1', PageBuilderSliderFade_Enabled.value)}}" stepKey="seeFadeCMSBlockStage"/>
+        <seeElement selector="{{SliderOnStage.infiniteLoop('1', PageBuilderSliderInfiniteLoop_Enabled.value)}}" stepKey="seeInfiniteLoopCMSBlockStage"/>
+        <seeElement selector="{{SliderOnStage.showArrows('1', PageBuilderSliderShowArrows_Enabled.value)}}" stepKey="seeArrowsCMSBlockStage"/>
+        <seeElement selector="{{SliderOnStage.showDots('1', PageBuilderSliderShowDots_Enabled.value)}}" stepKey="seeDotsCMSBlockStage"/>
+        <seeElement selector="{{SliderOnStage.minHeight('1', PageBuilderSliderMinHeight_500.value)}}" stepKey="seeMinHeightCMSBlockStage"/>
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateHeightSlide1CMSBlockStage">
+            <argument name="content" value="{{SlideOnBackend.wrapperCSS}}"/>
+            <argument name="height" value="PageBuilderSlideItemMinimumHeight_300"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <click selector="{{SliderOnStage.slideNavigationDot('1', '1')}}" stepKey="clickSlide1CMSBlockStage"/>
+        <waitForPageLoad stepKey="waitForSlide1CMSBlockStage"/>
+        <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeSlide1ContentCMSBlockStage"/>
+        <click selector="{{SliderOnStage.slideNavigationDot('1', '2')}}" stepKey="clickSlide2CMSBlockStage"/>
+        <waitForPageLoad stepKey="waitForSlide2CMSBlockStage"/>
+        <seeElement selector="{{SlideOnBackend.messageContent('2', PageBuilderSlideItemContent_Slide2.value)}}" stepKey="seeSlide2ContentCMSBlockStage"/>
+        <click selector="{{SliderOnStage.previousSlideArrow('1')}}" stepKey="clickPreviousSlideArrowCMSBlockStage"/>
+        <waitForPageLoad stepKey="waitForPreviousSlideCMSBlockStage"/>
+        <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeSlide1ContentCMSBlockStage2"/>
+        <click selector="{{SliderOnStage.previousSlideArrow('1')}}" stepKey="clickPreviousSlideArrowCMSBlockStage2"/>
+        <waitForPageLoad stepKey="waitForPreviousSlideCMSBlockStage2"/>
+        <seeElement selector="{{SlideOnBackend.messageContent('2', PageBuilderSlideItemContent_Slide2.value)}}" stepKey="seeSlide2ContentCMSBlockStage2"/>
+        <click selector="{{SliderOnStage.nextSlideArrow('1')}}" stepKey="clickNextSlideArrowCMSBlockStage"/>
+        <waitForPageLoad stepKey="waitForNextSlideCMSBlockStage"/>
+        <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeSlide1ContentCMSBlockStage3"/>
+        <click selector="{{SliderOnStage.nextSlideArrow('1')}}" stepKey="clickNextSlideArrowCMSBlockStage2"/>
+        <waitForPageLoad stepKey="waitForNextSlideCMSBlockStage2"/>
+        <seeElement selector="{{SlideOnBackend.messageContent('2', PageBuilderSlideItemContent_Slide2.value)}}" stepKey="seeSlide2ContentCMSBlockStage3"/>
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateHeightSlide2CMSBlockStage">
+            <argument name="content" value="{{SlideOnBackend.wrapperCSS}}"/>
+            <argument name="height" value="PageBuilderSliderMinHeight_500"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <!-- Add Block to CMS Page -->
+        <comment userInput="Add Block to CMS Page" stepKey="commentAddBlockToCMSPage"/>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPanelAddContentMenuSection">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDropBlock">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
+            <argument name="block" value="$$createCMSBlock$$"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsBlock"/>
+        <!-- Validate CMS Page Stage -->
+        <comment userInput="Validate CMS Page Stage" stepKey="commentValidateCMSPageStage"/>
+        <seeElement selector="{{SliderOnFrontend.autoPlay('1', PageBuilderSliderAutoPlay_Enabled.value)}}" stepKey="seeAutoPlayCMSPageStage"/>
+        <seeElement selector="{{SliderOnFrontend.autoPlaySpeed('1', PageBuilderSliderAutoPlaySpeed_50000.value)}}" stepKey="seeAutoPlaySpeedCMSPageStage"/>
+        <seeElement selector="{{SliderOnFrontend.fade('1', PageBuilderSliderFade_Enabled.value)}}" stepKey="seeFadeCMSPageStage"/>
+        <seeElement selector="{{SliderOnFrontend.infiniteLoop('1', PageBuilderSliderInfiniteLoop_Enabled.value)}}" stepKey="seeInfiniteLoopCMSPageStage"/>
+        <seeElement selector="{{SliderOnFrontend.showArrows('1', PageBuilderSliderShowArrows_Enabled.value)}}" stepKey="seeArrowsCMSPageStage"/>
+        <seeElement selector="{{SliderOnFrontend.showDots('1', PageBuilderSliderShowDots_Enabled.value)}}" stepKey="seeDotsCMSPageStage"/>
+        <seeElement selector="{{SliderOnFrontend.minHeight('1', PageBuilderSliderMinHeight_500.value)}}" stepKey="seeHeightCMSPageStage"/>
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateHeightSlide1CMSPageStage">
+            <argument name="content" value="{{SlideOnFrontend.wrapperCSS}}"/>
+            <argument name="height" value="PageBuilderSlideItemMinimumHeight_300"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate CMS Page Storefront -->
+        <comment userInput="Validate CMS Page Storefront" stepKey="commentValidateCMSPageStorefront"/>
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <seeElement selector="{{SliderOnFrontend.autoPlay('1', PageBuilderSliderAutoPlay_Enabled.value)}}" stepKey="seeAutoPlayCMSPageStorefront"/>
+        <seeElement selector="{{SliderOnFrontend.autoPlaySpeed('1', PageBuilderSliderAutoPlaySpeed_50000.value)}}" stepKey="seeAutoPlaySpeedCMSPageStorefront"/>
+        <seeElement selector="{{SliderOnFrontend.fade('1', PageBuilderSliderFade_Enabled.value)}}" stepKey="seeFadeCMSPageStorefront"/>
+        <seeElement selector="{{SliderOnFrontend.infiniteLoop('1', PageBuilderSliderInfiniteLoop_Enabled.value)}}" stepKey="seeInfiniteLoopCMSPageStorefront"/>
+        <seeElement selector="{{SliderOnFrontend.showArrows('1', PageBuilderSliderShowArrows_Enabled.value)}}" stepKey="seeArrowsCMSPageStorefront"/>
+        <seeElement selector="{{SliderOnFrontend.showDots('1', PageBuilderSliderShowDots_Enabled.value)}}" stepKey="seeDotsCMSPageStorefront"/>
+        <seeElement selector="{{SliderOnFrontend.minHeight('1', PageBuilderSliderMinHeight_500.value)}}" stepKey="seeHeightCMSPageStorefront"/>
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateHeightSlide1CMSPageStorefront">
+            <argument name="content" value="{{SlideOnFrontend.wrapperCSS}}"/>
+            <argument name="height" value="PageBuilderSlideItemMinimumHeight_300"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <click selector="{{SliderOnFrontend.slideNavigationDot('1', '1')}}" stepKey="clickSlide1CMSPageStorefront"/>
+        <waitForPageLoad stepKey="waitForSlide1CMSPageStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeSlide1ContentCMSPageStorefront"/>
+        <click selector="{{SliderOnFrontend.slideNavigationDot('1', '2')}}" stepKey="clickSlide2CMSPageStorefront"/>
+        <waitForPageLoad stepKey="waitForSlide2CMSPageStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.messageContent('2', PageBuilderSlideItemContent_Slide2.value)}}" stepKey="seeSlide2ContentCMSPageStorefront"/>
+        <click selector="{{SliderOnFrontend.previousSlideArrow('1')}}" stepKey="clickPreviousSlideArrowCMSPageStorefront"/>
+        <waitForPageLoad stepKey="waitForPreviousSlideCMSPageStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeSlide1ContentCMSPageStorefront2"/>
+        <click selector="{{SliderOnFrontend.previousSlideArrow('1')}}" stepKey="clickPreviousSlideArrowCMSPageStorefront2"/>
+        <waitForPageLoad stepKey="waitForPreviousSlideCMSPageStorefront2"/>
+        <seeElement selector="{{SlideOnFrontend.messageContent('2', PageBuilderSlideItemContent_Slide2.value)}}" stepKey="seeSlide2ContentCMSPageStorefront2"/>
+        <click selector="{{SliderOnFrontend.nextSlideArrow('1')}}" stepKey="clickNextSlideArrowCMSPageStorefront"/>
+        <waitForPageLoad stepKey="waitForNextSlideCMSPageStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeSlide1ContentCMSPageStorefront3"/>
+        <click selector="{{SliderOnFrontend.nextSlideArrow('1')}}" stepKey="clickNextSlideArrowCMSPageStorefront2"/>
+        <waitForPageLoad stepKey="waitForNextSlideCMSPageStorefront2"/>
+        <seeElement selector="{{SlideOnFrontend.messageContent('2', PageBuilderSlideItemContent_Slide2.value)}}" stepKey="seeSlide2ContentCMSPageStorefront3"/>
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateHeightSlide2CMSPageStorefront">
+            <argument name="content" value="{{SlideOnFrontend.wrapperCSS}}"/>
+            <argument name="height" value="PageBuilderSliderMinHeight_500"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+    </test>
+    <test name="BlockRenderSlideItemPosterAppearanceThroughBlockContentType">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Block Content"/>
+            <title value="Render Slide Item Poster Appearance Through Block Content Type"/>
+            <description value="Verify that users are able to successfully render and use the slide item content type poster appearance through the Block content type."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MC-15207"/>
+            <useCaseId value="MC-13769"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+            <group value="pagebuilder-block-content"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-slideItemPoster"/>
+        </annotations>
+        <before>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <createData entity="_emptyCmsBlock" stepKey="createCMSBlock"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage1">
+                <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
+            </actionGroup>
+        </before>
+        <after>
+            <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
+            <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock"/>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="navigateToDesktopImageFolder">
+                <argument name="FolderName" value="{{PageBuilderBackgroundImage_JPG.path}}"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="deleteBackgroundImage">
+                <argument name="Image" value="PageBuilderBackgroundImage_JPG"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="deleteMobileBackgroundImage">
+                <argument name="Image" value="PageBuilderBackgroundMobileImage_GIF"/>
+            </actionGroup>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Add Slider -->
+        <comment userInput="Add Slider" stepKey="commentAddSlider"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragSliderIntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <!-- Edit Slider -->
+        <comment userInput="Edit Slider" stepKey="commentEditSlider"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanelAfterDrop">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setAppearance">
+            <argument name="property" value="PageBuilderAppearance_Poster"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="setSlideName">
+            <argument name="property" value="PageBuilderSlideItemSlideName_Slide1"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="setMinHeight">
+            <argument name="property" value="PageBuilderSlideItemMinimumHeight_500"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="setBackgroundColor">
+            <argument name="property" value="PageBuilderBackgroundColor_Plaintext_Green"/>
+        </actionGroup>
+        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachBackgroundImage">
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
+        </actionGroup>
+        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachBackgroundMobileImage">
+            <argument name="property" value="PageBuilderBackgroundMobileImage_GIF"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="setBackgroundPosition">
+            <argument name="property" value="PageBuilderBackgroundPosition_Center"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setBackgroundSize">
+            <argument name="property" value="PageBuilderBackgroundSize_Auto"/>
+        </actionGroup>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="setBackgroundRepeat">
+            <argument name="property" value="PageBuilderBackgroundRepeat_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="addTextToTinyMCE" stepKey="addTextToTinyMCE">
+            <argument name="property" value="PageBuilderSlideItemContent_Slide1"/>
+            <argument name="section" value="SlideOnConfigurationPanel"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="setLink">
+            <argument name="property" value="PageBuilderSlideItemLinkURL_External"/>
+            <argument name="selection" value="{{ExternalLink.url}}"/>
+            <argument name="newTab" value="PageBuilderSlideItemLinkNewTab_False"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="setShowButton">
+            <argument name="property" value="PageBuilderSlideItemShowButton_OnHover"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="setButtonText">
+            <argument name="property" value="PageBuilderSlideItemButtonText_Common"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="setButtonType">
+            <argument name="property" value="PageBuilderSlideItemButtonType_Secondary"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="setShowOverlay">
+            <argument name="property" value="PageBuilderSlideItemShowOverlay_OnHover"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="setOverlayColor">
+            <argument name="property" value="PageBuilderSlideItemOverlayColor_Blue_Opaque"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="saveCMSBlock" stepKey="saveCMSBlock"/>
+        <!-- Validate CMS Block Stage -->
+        <comment userInput="Validate CMS Block Stage" stepKey="commentValidateCMSBlockStage"/>
+        <seeElement selector="{{SlideOnBackend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seeAppearanceCMSBlockStage"/>
+        <actionGroup ref="validateOverlayPositionPoster" stepKey="validateOverlayPositionCMSBlockStage">
+            <argument name="page" value="SlideOnBackend"/>
+        </actionGroup>
+        <seeElement selector="{{SlideOnBackend.slideName('1', PageBuilderSlideItemSlideName_Slide1.value)}}" stepKey="seeSlideNameCMSBlockStage"/>
+        <moveMouseOver selector="{{SliderOnStage.activeSlideNavigationDot}}" stepKey="mouseOverSlideDotCMSBlockStage"/>
+        <see userInput="{{PageBuilderSlideItemSlideName_Slide1.value}}" selector="{{SliderOnStage.slideNavigationDotNameTooltip('1')}}" stepKey="seeSlideName1InTooltipCMSBlockStage"/>
+        <seeElement selector="{{SlideOnBackend.posterMinimumHeight('1', PageBuilderSlideItemMinimumHeight_500.value)}}" stepKey="seeMinimumHeightCMSBlockStage"/>
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateHeightCMSBlockStage">
+            <argument name="content" value="{{SlideOnBackend.wrapperCSS}}"/>
+            <argument name="height" value="PageBuilderSlideItemMinimumHeight_500"/>
+        </actionGroup>
+        <actionGroup ref="validateBackgroundAttributesWithNoImageForSlide" stepKey="validateBackgroundAttributesCMSBlockStage">
+            <argument name="section" value="SlideOnBackend"/>
+            <argument name="backgroundColor" value="PageBuilderBackgroundColor_Plaintext_Green"/>
+            <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_Center"/>
+            <argument name="backgroundSize" value="PageBuilderBackgroundSize_Auto"/>
+            <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
+            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Fixed"/>
+        </actionGroup>
+        <actionGroup ref="validateBackgroundImage" stepKey="validateBackgroundImageCMSBlockStage">
+            <argument name="section" value="SlideOnBackend"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
+        </actionGroup>
+        <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeMessageContentCMSBlockStage"/>
+        <seeElementInDOM selector="{{SlideOnBackend.button('1')}}" stepKey="seeButtonInDOMCMSBlockStage"/>
+        <dontSeeElement selector="{{SlideOnBackend.button('1')}}" stepKey="dontSeeButtonCMSBlockStage"/>
+        <seeElement selector="{{SlideOnBackend.transparentOverlay('1')}}" stepKey="seeTransparentOverlayCMSBlockStage"/>
+        <moveMouseOver selector="{{SlideOnBackend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="moveMouseOverSlideCMSBlockStage"/>
+        <seeElement selector="{{SlideOnBackend.button('1')}}" stepKey="seeButtonOnHoverCMSBlockStage"/>
+        <seeElement selector="{{SlideOnBackend.buttonText('1', PageBuilderSlideItemButtonText_Common.value)}}" stepKey="seeButtonTextOnHoverCMSBlockStage"/>
+        <seeElement selector="{{SlideOnBackend.buttonType('1', PageBuilderSlideItemButtonType_Secondary.value)}}" stepKey="seeButtonTypeOnHoverCMSBlockStage"/>
+        <seeElement selector="{{SlideOnBackend.overlayBackgroundColor('1', PageBuilderSlideItemOverlayColor_Blue_Opaque.value)}}" stepKey="seeOverlayOnHoverCMSBlockStage"/>
+        <executeJS function="return {{SlideOnBackend.overlayJS('1')}}.getBoundingClientRect().left" stepKey="overlayLeftPositionCMSBlockStage"/>
+        <executeJS function="return document.evaluate(&quot;{{SlideOnBackend.button('1')}}&quot;, document.body).iterateNext().getBoundingClientRect().left" stepKey="buttonLeftPositionCMSBlockStage"/>
+        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSBlockStage}-{$overlayLeftPositionCMSBlockStage}-{{PageBuilderPaddingProperty40.paddingLeft}}))" stepKey="buttonMinusOverlayMinusPaddingCMSBlockStage"/>
+        <assertLessThanOrEqual stepKey="assertButtonLeftAlignedCMSBlockStage">
+            <expectedResult type="int">5</expectedResult>
+            <actualResult type="variable">buttonMinusOverlayMinusPaddingCMSBlockStage</actualResult>
+        </assertLessThanOrEqual>
+        <executeJS function="return window.getComputedStyle({{SlideOnBackend.wrapperJS('1')}}).textAlign" stepKey="grabDefaultComputedTextAlignCMSBlockStage"/>
+        <assertEquals stepKey="assertDefaultComputedTextAlignCMSBlockStage">
+            <expectedResult type="string">{{PageBuilderAdvancedAlignmentPropertyStart.value}}</expectedResult>
+            <actualResult type="variable">grabDefaultComputedTextAlignCMSBlockStage</actualResult>
+        </assertEquals>
+        <!-- Add Block to CMS Page -->
+        <comment userInput="Add Block to CMS Page" stepKey="commentAddBlockToCMSPage"/>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPanelAddContentMenuSection">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDropBlock">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
+            <argument name="block" value="$$createCMSBlock$$"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsBlock"/>
+        <!-- Validate CMS Page Stage -->
+        <comment userInput="Validate CMS Page Stage" stepKey="commentValidateCMSPageStage"/>
+        <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seeAppearanceCMSPageStage"/>
+        <actionGroup ref="validateOverlayPositionPoster" stepKey="validateOverlayPositionCMSPageStage">
+            <argument name="page" value="SlideOnFrontend"/>
+        </actionGroup>
+        <seeElement selector="{{SlideOnFrontend.minimumHeight('1', PageBuilderSlideItemMinimumHeight_500.value)}}" stepKey="seeMinimumHeightCMSPageStage"/>
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateHeightCMSPageStage">
+            <argument name="content" value="{{SlideOnFrontend.wrapperCSS}}"/>
+            <argument name="height" value="PageBuilderSlideItemMinimumHeight_500"/>
+        </actionGroup>
+        <actionGroup ref="validateBackgroundAttributesWithNoImageForSlide" stepKey="validateBackgroundAttributesCMSPageStage">
+            <argument name="section" value="SlideOnFrontend"/>
+            <argument name="backgroundColor" value="PageBuilderBackgroundColor_Plaintext_Green"/>
+            <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_Center"/>
+            <argument name="backgroundSize" value="PageBuilderBackgroundSize_Auto"/>
+            <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
+            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Fixed"/>
+        </actionGroup>
+        <actionGroup ref="validateBackgroundImageContainer" stepKey="validateBackgroundImageCMSPageStage">
+            <argument name="section" value="SlideOnFrontend"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
+        </actionGroup>
+        <seeElement selector="{{SlideOnFrontend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeMessageContentCMSPageStage"/>
+        <seeElementInDOM selector="{{SlideOnFrontend.button('1')}}" stepKey="seeButtonInDOMCMSPageStage"/>
+        <dontSeeElement selector="{{SlideOnFrontend.button('1')}}" stepKey="dontSeeButtonCMSPageStage"/>
+        <seeElement selector="{{SlideOnFrontend.transparentOverlay('1')}}" stepKey="seeTransparentOverlayCMSPageStage"/>
+        <executeJS function="return {{SlideOnFrontend.overlayJS('1')}}.getBoundingClientRect().left" stepKey="overlayLeftPositionCMSPageStage"/>
+        <executeJS function="return document.evaluate(&quot;{{SlideOnFrontend.button('1')}}&quot;, document.body).iterateNext().getBoundingClientRect().left" stepKey="buttonLeftPositionCMSPageStage"/>
+        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSPageStage}-{$overlayLeftPositionCMSPageStage}-{{PageBuilderPaddingProperty40.paddingLeft}}))" stepKey="buttonMinusOverlayMinusPaddingCMSPageStage"/>
+        <assertLessThanOrEqual stepKey="assertButtonLeftAlignedCMSPageStage">
+            <expectedResult type="int">5</expectedResult>
+            <actualResult type="variable">buttonMinusOverlayMinusPaddingCMSPageStage</actualResult>
+        </assertLessThanOrEqual>
+        <executeJS function="return window.getComputedStyle({{SlideOnFrontend.wrapperJS('1')}}).textAlign" stepKey="grabDefaultComputedTextAlignCMSPageStage"/>
+        <assertEquals stepKey="assertDefaultComputedTextAlignCMSPageStage">
+            <expectedResult type="string">{{PageBuilderAdvancedAlignmentPropertyStart.value}}</expectedResult>
+            <actualResult type="variable">grabDefaultComputedTextAlignCMSPageStage</actualResult>
+        </assertEquals>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate CMS Page Storefront -->
+        <comment userInput="Validate CMS Page Storefront" stepKey="commentValidateCMSPageStorefront"/>
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToStoreFront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seeAppearanceCMSPageStorefront"/>
+        <actionGroup ref="validateOverlayPositionPoster" stepKey="validateOverlayPositionCMSPageStorefront">
+            <argument name="page" value="SlideOnFrontend"/>
+        </actionGroup>
+        <seeElement selector="{{SlideOnFrontend.slideName('1', PageBuilderSlideItemSlideName_Slide1.value)}}" stepKey="seeSlideNameCMSPageStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.minimumHeight('1', PageBuilderSlideItemMinimumHeight_500.value)}}" stepKey="seeMinimumHeightCMSPageStorefront"/>
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateHeightCMSPageStorefront">
+            <argument name="content" value="{{SlideOnFrontend.wrapperCSS}}"/>
+            <argument name="height" value="PageBuilderSlideItemMinimumHeight_500"/>
+        </actionGroup>
+        <actionGroup ref="validateBackgroundAttributesWithNoImageForSlide" stepKey="validateBackgroundAttributesCMSPageStorefront">
+            <argument name="section" value="SlideOnFrontend"/>
+            <argument name="backgroundColor" value="PageBuilderBackgroundColor_Plaintext_Green"/>
+            <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_Center"/>
+            <argument name="backgroundSize" value="PageBuilderBackgroundSize_Auto"/>
+            <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
+            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Fixed"/>
+        </actionGroup>
+        <actionGroup ref="validateBackgroundImageContainer" stepKey="validateBackgroundImageCMSPageStorefront">
+            <argument name="section" value="SlideOnFrontend"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
+        </actionGroup>
+        <seeElement selector="{{SlideOnFrontend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeMessageContentCMSPageStorefront"/>
+        <seeElementInDOM selector="{{SlideOnFrontend.button('1')}}" stepKey="seeButtonInDOMCMSPageStorefront"/>
+        <dontSeeElement selector="{{SlideOnFrontend.button('1')}}" stepKey="dontSeeButtonCMSPageStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.transparentOverlay('1')}}" stepKey="seeTransparentOverlayCMSPageStorefront"/>
+        <moveMouseOver selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="moveMouseOverSlideCMSPageStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.button('1')}}" stepKey="seeButtonOnHoverCMSPageStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideItemButtonText_Common.value)}}" stepKey="seeButtonTextOnHoverCMSPageStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.buttonType('1', PageBuilderSlideItemButtonType_Secondary.value)}}" stepKey="seeButtonTypeOnHoverCMSPageStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.overlayBackgroundColor('1', PageBuilderSlideItemOverlayColor_Blue_Opaque.value)}}" stepKey="seeOverlayOnHoverCMSPageStorefront"/>
+        <executeJS function="return {{SlideOnFrontend.overlayJS('1')}}.getBoundingClientRect().left" stepKey="overlayLeftPositionCMSPageStorefront"/>
+        <executeJS function="return document.evaluate(&quot;{{SlideOnFrontend.button('1')}}&quot;, document.body).iterateNext().getBoundingClientRect().left" stepKey="buttonLeftPositionCMSPageStorefront"/>
+        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSPageStorefront}-{$overlayLeftPositionCMSPageStorefront}-{{PageBuilderPaddingProperty40.paddingLeft}}))" stepKey="buttonMinusOverlayMinusPaddingCMSPageStorefront"/>
+        <assertLessThanOrEqual stepKey="assertButtonLeftAlignedCMSPageStorefront">
+            <expectedResult type="int">5</expectedResult>
+            <actualResult type="variable">buttonMinusOverlayMinusPaddingCMSPageStorefront</actualResult>
+        </assertLessThanOrEqual>
+        <executeJS function="return window.getComputedStyle({{SlideOnFrontend.wrapperJS('1')}}).textAlign" stepKey="grabDefaultComputedTextAlignCMSPageStorefront"/>
+        <assertEquals stepKey="assertDefaultComputedTextAlignCMSPageStorefront">
+            <expectedResult type="string">{{PageBuilderAdvancedAlignmentPropertyStart.value}}</expectedResult>
+            <actualResult type="variable">grabDefaultComputedTextAlignCMSPageStorefront</actualResult>
+        </assertEquals>
+        <!-- Validate Slide Link -->
+        <comment userInput="Validate Slide Link" stepKey="commentValidateSlideLinkCMSPageStorefront"/>
+        <click selector="{{SlideOnFrontend.linkUrl('1', PageBuilderSlideItemLinkURL_External.value)}}" stepKey="clickLinkUrlCMSPageStorefront"/>
+        <wait time="3" stepKey="waitArbitraryTimeForPotentialNavigationToOccurCMSPageStorefront"/>
+        <seeCurrentUrlEquals url="{{PageBuilderSlideItemLinkURL_External.value}}" stepKey="seeThatUrlIsChangedToButtonUrlCMSPageStorefront"/>
+        <!-- Validate CMS Page Storefront Mobile -->
+        <comment userInput="Validate CMS Page Storefront Mobile" stepKey="commentValidateCMSPageStorefrontMobile"/>
+        <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStoreFrontMobile">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <actionGroup ref="validateOverlayPositionPoster" stepKey="validateOverlayPositionCMSPageStorefrontMobile">
+            <argument name="page" value="SlideOnFrontend"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateHeightCMSPageStorefrontMobile">
+            <argument name="content" value="{{SlideOnFrontend.wrapperCSS}}"/>
+            <argument name="height" value="PageBuilderSlideItemMinimumHeight_500"/>
+        </actionGroup>
+        <actionGroup ref="validateBackgroundImageContainer" stepKey="validateBackgroundImageCMSPageStorefrontMobile">
+            <argument name="section" value="SlideOnFrontend"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundMobileImage_GIF"/>
+        </actionGroup>
+        <seeElementInDOM selector="{{SlideOnFrontend.button('1')}}" stepKey="seeButtonInDOMCMSPageStorefrontMobile"/>
+        <dontSeeElement selector="{{SlideOnFrontend.button('1')}}" stepKey="dontSeeButtonCMSPageStorefrontMobile"/>
+        <seeElement selector="{{SlideOnFrontend.transparentOverlay('1')}}" stepKey="seeTransparentOverlayCMSPageStorefrontMobile"/>
+        <moveMouseOver selector="{{SlideOnFrontend.base('1')}}" stepKey="moveMouseOverSlideCMSPageStorefrontMobile"/>
+        <seeElement selector="{{SlideOnFrontend.button('1')}}" stepKey="seeButtonOnHoverCMSPageStorefrontMobile"/>
+        <seeElement selector="{{SlideOnFrontend.overlayBackgroundColor('1', PageBuilderSlideItemOverlayColor_Blue_Opaque.value)}}" stepKey="seeOverlayOnHoverCMSPageStorefrontMobile"/>
+        <!-- Validate Slide Link Mobile -->
+        <comment userInput="Validate Slide Link" stepKey="commentValidateSlideLinkCMSPageStorefrontMobile"/>
+        <click selector="{{SlideOnFrontend.linkUrl('1', PageBuilderSlideItemLinkURL_External.value)}}" stepKey="clickLinkUrlCMSPageStorefrontMobile"/>
+        <wait time="3" stepKey="waitArbitraryTimeForPotentialNavigationToOccurCMSPageStorefrontMobile"/>
+        <seeCurrentUrlEquals url="{{PageBuilderSlideItemLinkURL_External.value}}" stepKey="seeThatUrlIsChangedToButtonUrlCMSPageStorefrontMobile"/>
+    </test>
+    <test name="BlockRenderSlideItemCollageLeftAppearanceThroughBlockContentType" extends="BlockRenderSlideItemPosterAppearanceThroughBlockContentType">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Block Content"/>
+            <title value="Render Slide Item Collage Left Appearance Through Block Content Type"/>
+            <description value="Verify that users are able to successfully render and use the slide item content type collage left appearance through the Block content type."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MC-15208"/>
+            <useCaseId value="MC-13769"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+            <group value="pagebuilder-block-content"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-slideItemCollageLeft"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setAppearance">
+            <argument name="property" value="PageBuilderAppearance_CollageLeft"/>
+        </actionGroup>
+        <seeElement selector="{{SlideOnBackend.appearance('1', PageBuilderAppearance_CollageLeft.value)}}" stepKey="seeAppearanceCMSBlockStage"/>
+        <actionGroup ref="validateOverlayPositionCollageLeft" stepKey="validateOverlayPositionCMSBlockStage">
+            <argument name="page" value="SlideOnBackend"/>
+        </actionGroup>
+        <seeElement selector="{{SlideOnBackend.collageMinimumHeight('1', PageBuilderSlideItemMinimumHeight_500.value)}}" stepKey="seeMinimumHeightCMSBlockStage"/>
+        <moveMouseOver selector="{{SlideOnBackend.appearance('1', PageBuilderAppearance_CollageLeft.value)}}" stepKey="moveMouseOverSlideCMSBlockStage"/>
+        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSBlockStage}-{$overlayLeftPositionCMSBlockStage}-30))" stepKey="buttonMinusOverlayMinusPaddingCMSBlockStage"/>
+        <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_CollageLeft.value)}}" stepKey="seeAppearanceCMSPageStage"/>
+        <actionGroup ref="validateOverlayPositionCollageLeft" stepKey="validateOverlayPositionCMSPageStage">
+            <argument name="page" value="SlideOnFrontend"/>
+        </actionGroup>
+        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSPageStage}-{$overlayLeftPositionCMSPageStage}-30))" stepKey="buttonMinusOverlayMinusPaddingCMSPageStage"/>
+        <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_CollageLeft.value)}}" stepKey="seeAppearanceCMSPageStorefront"/>
+        <actionGroup ref="validateOverlayPositionCollageLeft" stepKey="validateOverlayPositionCMSPageStorefront">
+            <argument name="page" value="SlideOnFrontend"/>
+        </actionGroup>
+        <moveMouseOver selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_CollageLeft.value)}}" stepKey="moveMouseOverSlideCMSPageStorefront"/>
+        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSPageStorefront}-{$overlayLeftPositionCMSPageStorefront}-30))" stepKey="buttonMinusOverlayMinusPaddingCMSPageStorefront"/>
+        <executeJS function="return Math.abs({{SlideOnFrontend.wrapperJS('1')}}.getBoundingClientRect().width - {{PageBuilderPaddingProperty40.paddingLeft}} - {{PageBuilderPaddingProperty40.paddingRight}})" stepKey="widthOfWrapperMinusPaddingCMSPageStorefrontMobile" before="validateOverlayPositionCMSPageStorefrontMobile"/>
+        <actionGroup ref="validateOverlayPositionCollageLeft" stepKey="validateOverlayPositionCMSPageStorefrontMobile">
+            <argument name="page" value="SlideOnFrontend"/>
+            <argument name="expectedOverlayWidth" value="{$widthOfWrapperMinusPaddingCMSPageStorefrontMobile}"/>
+        </actionGroup>
+    </test>
+    <test name="BlockRenderSlideItemCollageCenterAppearanceThroughBlockContentType" extends="BlockRenderSlideItemPosterAppearanceThroughBlockContentType">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Block Content"/>
+            <title value="Render Slide Item Collage Center Appearance Through Block Content Type"/>
+            <description value="Verify that users are able to successfully render and use the slide item content type collage center appearance through the Block content type."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MC-15209"/>
+            <useCaseId value="MC-13769"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+            <group value="pagebuilder-block-content"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-slideItemCollageCenter"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setAppearance">
+            <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
+        </actionGroup>
+        <seeElement selector="{{SlideOnBackend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="seeAppearanceCMSBlockStage"/>
+        <actionGroup ref="validateOverlayPositionCollageCenter" stepKey="validateOverlayPositionCMSBlockStage">
+            <argument name="page" value="SlideOnBackend"/>
+        </actionGroup>
+        <seeElement selector="{{SlideOnBackend.collageMinimumHeight('1', PageBuilderSlideItemMinimumHeight_500.value)}}" stepKey="seeMinimumHeightCMSBlockStage"/>
+        <moveMouseOver selector="{{SlideOnBackend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="moveMouseOverSlideCMSBlockStage"/>
+        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSBlockStage}-{$overlayLeftPositionCMSBlockStage}-30))" stepKey="buttonMinusOverlayMinusPaddingCMSBlockStage"/>
+        <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="seeAppearanceCMSPageStage"/>
+        <actionGroup ref="validateOverlayPositionCollageCenter" stepKey="validateOverlayPositionCMSPageStage">
+            <argument name="page" value="SlideOnFrontend"/>
+        </actionGroup>
+        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSPageStage}-{$overlayLeftPositionCMSPageStage}-30))" stepKey="buttonMinusOverlayMinusPaddingCMSPageStage"/>
+        <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="seeAppearanceCMSPageStorefront"/>
+        <actionGroup ref="validateOverlayPositionCollageCenter" stepKey="validateOverlayPositionCMSPageStorefront">
+            <argument name="page" value="SlideOnFrontend"/>
+        </actionGroup>
+        <moveMouseOver selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="moveMouseOverSlideCMSPageStorefront"/>
+        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSPageStorefront}-{$overlayLeftPositionCMSPageStorefront}-30))" stepKey="buttonMinusOverlayMinusPaddingCMSPageStorefront"/>
+        <executeJS function="return Math.abs({{SlideOnFrontend.wrapperJS('1')}}.getBoundingClientRect().width - {{PageBuilderPaddingProperty40.paddingLeft}} - {{PageBuilderPaddingProperty40.paddingRight}})" stepKey="widthOfWrapperMinusPaddingCMSPageStorefrontMobile" before="validateOverlayPositionCMSPageStorefrontMobile"/>
+        <actionGroup ref="validateOverlayPositionCollageCenter" stepKey="validateOverlayPositionCMSPageStorefrontMobile">
+            <argument name="page" value="SlideOnFrontend"/>
+            <argument name="expectedOverlayWidth" value="{$widthOfWrapperMinusPaddingCMSPageStorefrontMobile}"/>
+        </actionGroup>
+    </test>
+    <test name="BlockRenderSlideItemCollageRightAppearanceThroughBlockContentType" extends="BlockRenderSlideItemPosterAppearanceThroughBlockContentType">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Block Content"/>
+            <title value="Render Slide Item Collage Right Appearance Through Block Content Type"/>
+            <description value="Verify that users are able to successfully render and use the slide item content type collage right appearance through the Block content type."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MC-15210"/>
+            <useCaseId value="MC-13769"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+            <group value="pagebuilder-block-content"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-slideItemCollageRight"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setAppearance">
+            <argument name="property" value="PageBuilderAppearance_CollageRight"/>
+        </actionGroup>
+        <seeElement selector="{{SlideOnBackend.appearance('1', PageBuilderAppearance_CollageRight.value)}}" stepKey="seeAppearanceCMSBlockStage"/>
+        <actionGroup ref="validateOverlayPositionCollageRight" stepKey="validateOverlayPositionCMSBlockStage">
+            <argument name="page" value="SlideOnBackend"/>
+        </actionGroup>
+        <seeElement selector="{{SlideOnBackend.collageMinimumHeight('1', PageBuilderSlideItemMinimumHeight_500.value)}}" stepKey="seeMinimumHeightCMSBlockStage"/>
+        <moveMouseOver selector="{{SlideOnBackend.appearance('1', PageBuilderAppearance_CollageRight.value)}}" stepKey="moveMouseOverSlideCMSBlockStage"/>
+        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSBlockStage}-{$overlayLeftPositionCMSBlockStage}-30))" stepKey="buttonMinusOverlayMinusPaddingCMSBlockStage"/>
+        <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_CollageRight.value)}}" stepKey="seeAppearanceCMSPageStage"/>
+        <actionGroup ref="validateOverlayPositionCollageRight" stepKey="validateOverlayPositionCMSPageStage">
+            <argument name="page" value="SlideOnFrontend"/>
+        </actionGroup>
+        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSPageStage}-{$overlayLeftPositionCMSPageStage}-30))" stepKey="buttonMinusOverlayMinusPaddingCMSPageStage"/>
+        <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_CollageRight.value)}}" stepKey="seeAppearanceCMSPageStorefront"/>
+        <actionGroup ref="validateOverlayPositionCollageRight" stepKey="validateOverlayPositionCMSPageStorefront">
+            <argument name="page" value="SlideOnFrontend"/>
+        </actionGroup>
+        <moveMouseOver selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_CollageRight.value)}}" stepKey="moveMouseOverSlideCMSPageStorefront"/>
+        <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSPageStorefront}-{$overlayLeftPositionCMSPageStorefront}-30))" stepKey="buttonMinusOverlayMinusPaddingCMSPageStorefront"/>
+        <executeJS function="return Math.abs({{SlideOnFrontend.wrapperJS('1')}}.getBoundingClientRect().width - {{PageBuilderPaddingProperty40.paddingLeft}} - {{PageBuilderPaddingProperty40.paddingRight}})" stepKey="widthOfWrapperMinusPaddingCMSPageStorefrontMobile" before="validateOverlayPositionCMSPageStorefrontMobile"/>
+        <actionGroup ref="validateOverlayPositionCollageRight" stepKey="validateOverlayPositionCMSPageStorefrontMobile">
+            <argument name="page" value="SlideOnFrontend"/>
+            <argument name="expectedOverlayWidth" value="{$widthOfWrapperMinusPaddingCMSPageStorefrontMobile}"/>
+        </actionGroup>
+    </test>
+    <test name="BlockRenderSlideItemThroughBlockContentTypeTinyMCE4WysiwygEnabledByDefault">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Block Content"/>
+            <title value="Render Slide Items Through Block Content Type With TinyMCE4 and Wysiwyg Enabled By Default"/>
+            <description value="Verify that users are able to successfully render and use the slide item content type through the Block content type with TinyMCE4 and Wysiwyg Enabled By default."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MC-15211"/>
+            <useCaseId value="MC-13769"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+            <group value="pagebuilder-block-content"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-slideItemPoster"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="configWYSIWYG"/>
+            <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="configTinyMCE"/>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <createData entity="_emptyCmsBlock" stepKey="createCMSBlock"/>
+            <createData entity="_defaultCmsPage" stepKey="createPreReqCMSPage"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage1">
+                <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
+            </actionGroup>
+        </before>
+        <after>
+            <deleteData createDataKey="createPreReqCMSPage" stepKey="deletePreReqCMSPage"/>
+            <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock"/>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Add Slider -->
+        <comment userInput="Add Slider" stepKey="commentAddSlider"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragSliderIntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <!-- Inline Edit: Add Text -->
+        <comment userInput="Inline Edit: Add Text" stepKey="commentInlineEditAddText"/>
+        <actionGroup ref="focusOnInlineTinyMCEEditor" stepKey="focusOnInlineTinyMCEEditor">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="addTextToTinyMCEInline" stepKey="addTextToTinyMCEInline">
+            <argument name="section" value="SlideOnBackend"/>
+            <argument name="text" value="{{PageBuilderSlideItemContent_Slide1.value}}"/>
+        </actionGroup>
+        <!-- Inline Edit: Add Variable -->
+        <comment userInput="Inline Edit: Add Variable" stepKey="commentInlineEditAddVariable"/>
+        <actionGroup ref="focusOnInlineTinyMCEEditor" stepKey="focusOnInlineTinyMCEEditor2">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="addVariableToTinyMCEInline" stepKey="addVariableToTinyMCE">
+            <argument name="variable" value="TinyMCEVariableBaseURL"/>
+        </actionGroup>
+        <!-- Inline Edit: Add Widget -->
+        <comment userInput="Inline Edit: Add Widget" stepKey="commentInlineEditAddWidget"/>
+        <actionGroup ref="focusOnInlineTinyMCEEditor" stepKey="focusOnInlineTinyMCEEditor3">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="addPageLinkWidgetToTinyMCEInline" stepKey="addPageLinkWidgetToTinyMCE">
+            <argument name="widget" value="TinyMCEWidgetCMSPageLink"/>
+            <argument name="page" value="$$createPreReqCMSPage.identifier$$"/>
+        </actionGroup>
+        <!-- Inline Edit: Add Image -->
+        <comment userInput="Inline Edit: Add Image" stepKey="commentInlineEditAddImage"/>
+        <actionGroup ref="focusOnInlineTinyMCEEditor" stepKey="focusOnInlineTinyMCEEditor4">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="clickInsertImageInTinyMCE" stepKey="clickInsertImageInTinyMCE"/>
+        <actionGroup ref="clickBrowseBtnOnUploadPopup" stepKey="clickBrowserBtn"/>
+        <actionGroup ref="VerifyMediaGalleryStorageActions" stepKey="VerifyMediaGalleryStorageBtn"/>
+        <actionGroup ref="clickMediaGalleryStorageRootArrow" stepKey="clickMediaGalleryStorageRootArrow"/>
+        <actionGroup ref="CreateImageFolder" stepKey="CreateImageFolder">
+            <argument name="ImageFolder" value="ImageFolder"/>
+        </actionGroup>
+        <actionGroup ref="attachImage" stepKey="attachImage">
+            <argument name="Image" value="ImageUpload3"/>
+        </actionGroup>
+        <actionGroup ref="saveImage" stepKey="insertImage"/>
+        <actionGroup ref="fillOutUploadImagePopup" stepKey="fillOutUploadImagePopup"/>
+        <actionGroup ref="saveCMSBlock" stepKey="saveCMSBlock"/>
+        <!-- Validate CMS Block Stage -->
+        <comment userInput="Validate CMS Block Stage" stepKey="commentValidateCMSBlockStage"/>
+        <actionGroup ref="focusOnInlineTinyMCEEditor" stepKey="focusOnInlineTinyMCEEditor5">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
+        <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeTextCMSBlockStage"/>
+        <seeElement selector="{{SlideOnBackend.messageContent('1', TinyMCEVariableBaseURL.editPanelValue)}}" stepKey="seeVariableCMSBlockStage"/>
+        <seeElement selector="{{SlideOnBackend.messageContent('1', TinyMCEWidgetCMSPageLink.editPanelValue)}}" stepKey="seeWidgetCMSBlockStage"/>
+        <seeElement selector="{{SlideOnBackend.base('1')}}{{CmsWYSIWYGSection.imageSource(ImageUpload3.fileName)}}" stepKey="seeImageFileNameCMSBlockStage"/>
+        <seeElement selector="{{SlideOnBackend.base('1')}}{{CmsWYSIWYGSection.imageSource(ImageUpload3.extension)}}" stepKey="seeImageExtensionCMSBlockStage"/>
+        <seeElement selector="{{SlideOnBackend.base('1')}}{{CmsWYSIWYGSection.ImageAlt(ImageUpload3.content)}}" stepKey="seeImageAltCMSBlockStage"/>
+        <!-- Add Block to CMS Page -->
+        <comment userInput="Add Block to CMS Page" stepKey="commentAddBlockToCMSPage"/>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPanelAddContentMenuSection">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDropBlock">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
+            <argument name="block" value="$$createCMSBlock$$"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsBlock"/>
+        <!-- Validate CMS Page Stage -->
+        <comment userInput="Validate CMS Page Stage" stepKey="commentValidateCMSPageStage"/>
+        <seeElement selector="{{SlideOnFrontend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeTextCMSPageStage"/>
+        <seeElement selector="{{SlideOnFrontend.messageContent('1', _ENV.MAGENTO_BASE_URL)}}" stepKey="seeVariableCMSPageStage"/>
+        <seeElement selector="{{SlideOnFrontend.messageContentWidget('1', _ENV.MAGENTO_BASE_URL, $$createPreReqCMSPage.identifier$$)}}" stepKey="seeWidgetCMSPageStage"/>
+        <seeElement selector="{{SlideOnFrontend.base('1')}}{{CmsWYSIWYGSection.imageSource(ImageUpload3.fileName)}}" stepKey="seeImageFileNameCMSPageStage"/>
+        <seeElement selector="{{SlideOnFrontend.base('1')}}{{CmsWYSIWYGSection.imageSource(ImageUpload3.extension)}}" stepKey="seeImageExtensionCMSPageStage"/>
+        <seeElement selector="{{SlideOnFrontend.base('1')}}{{CmsWYSIWYGSection.ImageAlt(ImageUpload3.content)}}" stepKey="seeImageAltCMSPageStage"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate CMS Page Storefront -->
+        <comment userInput="Validate CMS Page Storefront" stepKey="commentValidateCMSPageStorefront"/>
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <seeElement selector="{{SlideOnFrontend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeTextCMSPageStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.messageContent('1', _ENV.MAGENTO_BASE_URL)}}" stepKey="seeVariableCMSPageStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.messageContentWidget('1', _ENV.MAGENTO_BASE_URL, $$createPreReqCMSPage.identifier$$)}}" stepKey="seeWidgetCMSPageStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.base('1')}}{{CmsWYSIWYGSection.imageSource(ImageUpload3.fileName)}}" stepKey="seeImageFileNameCMSPageStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.base('1')}}{{CmsWYSIWYGSection.imageSource(ImageUpload3.extension)}}" stepKey="seeImageExtensionCMSPageStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.base('1')}}{{CmsWYSIWYGSection.ImageAlt(ImageUpload3.content)}}" stepKey="seeImageAltCMSPageStorefront"/>
+        <!-- Click Page Link Widget -->
+        <comment userInput="Click Page Link Widget" stepKey="clickClickPageLinkWidget"/>
+        <click selector="{{SlideOnFrontend.messageContentWidget('1', _ENV.MAGENTO_BASE_URL, $$createPreReqCMSPage.identifier$$)}}" stepKey="clickWidgetCMSPageStorefront"/>
+        <wait time="3" stepKey="waitArbitraryTimeForPotentialNavigationToOccurStorefront"/>
+        <seeCurrentUrlEquals url="{{_ENV.MAGENTO_BASE_URL}}$$createPreReqCMSPage.identifier$$" stepKey="seeThatUrlIsChangedToPageLinkWidgetUrlStorefront"/>
+    </test>
+    <test name="BlockRenderSlideItemThroughBlockContentTypeTinyMCE4WysiwygDisabledByDefault" extends="BlockRenderSlideItemThroughBlockContentTypeTinyMCE4WysiwygEnabledByDefault">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Block Content"/>
+            <title value="Render Slide Item Through Block Content Type With TinyMCE4 and Wysiwyg Disabled By Default"/>
+            <description value="Verify that users are able to successfully render and use the slide item content type through the Block content type with TinyMCE4 and Wysiwyg Disabled By Default."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MC-15212"/>
+            <useCaseId value="MC-13769"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+            <group value="pagebuilder-block-content"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-slideItemPoster"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set cms/wysiwyg/enabled hidden" stepKey="configWYSIWYG"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG" before="deleteCMSBlock"/>
+        </after>
+    </test>
+    <test name="BlockRenderSlideItemThroughBlockContentTypeTinyMCE4WysiwygDisabledCompletely">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Block Content"/>
+            <title value="Render Slide Item Through Block Content Type With TinyMCE4 and Wysiwyg Disabled Completely"/>
+            <description value="Verify that users are able to successfully render and use the slide item content type through the Block content type with TinyMCE4 and Wysiwyg Disabled Completely."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MC-15213"/>
+            <useCaseId value="MC-13769"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+            <group value="pagebuilder-block-content"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-slideItemPoster"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set cms/wysiwyg/enabled disabled" stepKey="configWYSIWYG"/>
+            <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="configTinyMCE"/>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <createData entity="_emptyCmsBlock" stepKey="createCMSBlock"/>
+            <createData entity="_defaultCmsPage" stepKey="createPreReqCMSPage"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage1">
+                <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
+            </actionGroup>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG"/>
+            <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock"/>
+            <deleteData createDataKey="createPreReqCMSPage" stepKey="deletePreReqCMSPage"/>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Add Slider -->
+        <comment userInput="Add Slider" stepKey="commentAddSlider"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragSliderIntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <!-- Inline Edit: Add Text -->
+        <comment userInput="Inline Edit: Add Text" stepKey="commentInlineEditAddText"/>
+        <actionGroup ref="focusOnInlineTextAreaEditor" stepKey="focusOnInlineTextAreaEditor">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="addTextToTinyMCEInlineWYSIWYGDisabled" stepKey="addTextToTinyMCEInline">
+            <argument name="section" value="SlideOnBackend"/>
+            <argument name="text" value="{{PageBuilderSlideItemContent_Slide1.value}}"/>
+        </actionGroup>
+        <!-- Inline Edit: Add Variable -->
+        <actionGroup ref="focusOnInlineTextAreaEditor" stepKey="focusOnInlineTextAreaEditor2">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="addTextToTinyMCEInlineWYSIWYGDisabled" stepKey="addVariableToTinyMCE">
+            <argument name="section" value="SlideOnBackend"/>
+            <argument name="text" value="{{PageBuilderTextArea_VariableBaseURL.editPanelValue}}"/>
+        </actionGroup>
+        <!-- Inline Edit: Add Widget -->
+        <comment userInput="Inline Edit: Add Widget" stepKey="commentInlineEditAddWidget"/>
+        <actionGroup ref="focusOnInlineTextAreaEditor" stepKey="focusOnInlineTextAreaEditor3">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="addTextToTinyMCEInlineWYSIWYGDisabled" stepKey="addPageLinkWidgetToTinyMCE">
+            <argument name="section" value="SlideOnBackend"/>
+            <argument name="text" value="{{PageBuilderTextArea_WidgetCMSHomepageLink.editPanelValue}}"/>
+        </actionGroup>
+        <actionGroup ref="saveCMSBlock" stepKey="saveCMSBlock"/>
+        <!-- Validate CMS Block Stage -->
+        <comment userInput="Validate CMS Block Stage" stepKey="commentValidateCMSBlockStage"/>
+        <actionGroup ref="assertTextareaContainsValue" stepKey="assertTextareaContainsValueCMSBlockStage">
+            <argument name="selector" value="{{SlideOnBackend.textArea('1')}}"/>
+            <argument name="value" value="{{PageBuilderSlideItemContent_Slide1.value}}{{PageBuilderTextArea_VariableBaseURL.editPanelValue}}{{PageBuilderTextArea_WidgetCMSHomepageLink.editPanelValue}}"/>
+        </actionGroup>
+        <!-- Add Block to CMS Page -->
+        <comment userInput="Add Block to CMS Page" stepKey="commentAddBlockToCMSPage"/>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPanelAddContentMenuSection">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDropBlock">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
+            <argument name="block" value="$$createCMSBlock$$"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsBlock"/>
+        <!-- Validate CMS Page Stage -->
+        <comment userInput="Validate CMS Page Stage" stepKey="commentValidateCMSPageStage"/>
+        <seeElement selector="{{SlideOnFrontend.messageContentTextArea('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeTextCMSPageStage"/>
+        <seeElement selector="{{SlideOnFrontend.messageContentTextArea('1', _ENV.MAGENTO_BASE_URL)}}" stepKey="seeVariableCMSPageStage"/>
+        <seeElement selector="{{SlideOnFrontend.messageContentWidget('1', _ENV.MAGENTO_BASE_URL, PageBuilderTextArea_WidgetCMSHomepageLink.identifier)}}" stepKey="seeWidgetCMSPageStage"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate CMS Page Storefront -->
+        <comment userInput="Validate CMS Page Storefront" stepKey="commentValidateCMSPageStorefront"/>
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <seeElement selector="{{SlideOnFrontend.messageContentTextArea('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeTextCMSPageStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.messageContentTextArea('1', _ENV.MAGENTO_BASE_URL)}}" stepKey="seeVariableCMSPageStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.messageContentWidget('1', _ENV.MAGENTO_BASE_URL, PageBuilderTextArea_WidgetCMSHomepageLink.identifier)}}" stepKey="seeWidgetCMSPageStorefront"/>
+        <!-- Click Page Link Widget -->
+        <comment userInput="Click Page Link Widget" stepKey="clickClickPageLinkWidget"/>
+        <click selector="{{SlideOnFrontend.messageContentWidget('1', _ENV.MAGENTO_BASE_URL, PageBuilderTextArea_WidgetCMSHomepageLink.identifier)}}" stepKey="clickWidgetCMSPageStorefront"/>
+        <wait time="3" stepKey="waitArbitraryTimeForPotentialNavigationToOccurStorefront"/>
+        <seeCurrentUrlEquals url="{{_ENV.MAGENTO_BASE_URL}}{{PageBuilderTextArea_WidgetCMSHomepageLink.identifier}}" stepKey="seeThatUrlIsChangedToPageLinkWidgetUrlStorefront"/>
+    </test>
+    <test name="BlockRenderMapThroughBlockContentType">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Block Content"/>
+            <title value="Render Map Through Block Content Type"/>
+            <description value="Verify that users are able to successfully render and use the Map content type through the Block content type."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MC-15153"/>
+            <useCaseId value="MC-13769"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+            <group value="pagebuilder-block-content"/>
+            <group value="pagebuilder-map"/>
+            <group value="pagebuilder-mapMapSettings"/>
+            <group value="pagebuilder-requiresValidMapAPIKey"/>
+        </annotations>
+        <before>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <createData entity="_emptyCmsBlock" stepKey="createCMSBlock"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage1">
+                <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
+            </actionGroup>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setEmptyGoogleMapsAPIKey"/>
+            <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock"/>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Add Map -->
+        <comment userInput="Add Map" stepKey="commentAddMap"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSectionMedia">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragMapIntoStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <!-- Edit Map -->
+        <comment userInput="Edit Map" stepKey="commentEditMap"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuMap">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <!-- Enter Height: 500 -->
+        <comment userInput="Enter Height: 500" stepKey="commentEnterHeight"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHeight">
+            <argument name="property" value="PageBuilderMapHeightProperty500px"/>
+        </actionGroup>
+        <!-- Add 1st Location -->
+        <comment userInput="Add 1st Location" stepKey="commentAddLocation1"/>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName">
+            <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLatitude">
+            <argument name="property" value="PageBuilderMapLatitude_0"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLongitude">
+            <argument name="property" value="PageBuilderMapLongitude_0"/>
+        </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
+        <!-- Add 2nd Location -->
+        <comment userInput="Add 2nd Location" stepKey="commentAddLocation2"/>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton2"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName2">
+            <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLatitude2">
+            <argument name="property" value="PageBuilderMapLatitude_0"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLongitude2">
+            <argument name="property" value="PageBuilderMapLongitude_NegativeMax"/>
+        </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm2"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsMap"/>
+        <!-- Save Block and Set Valid API Key -->
+        <comment userInput="Save Block and Set Valid API Key" stepKey="commentSaveBlockAndSetKey"/>
+        <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key {{googleMapsAPIKey.valid}}" stepKey="setValidGoogleMapsAPIKey"/>
+        <actionGroup ref="saveCMSBlock" stepKey="saveCMSBlock"/>
+        <!-- Validate CMS Block Stage -->
+        <comment userInput="Validate CMS Block Stage" stepKey="commentValidateCMSBlockStage"/>
+        <actionGroup ref="validateMapHeight" stepKey="validateMapHeightCMSBlockStage">
+            <argument name="height" value="PageBuilderMapHeightProperty500px"/>
+        </actionGroup>
+        <actionGroup ref="verifyNumberOfPinsOnMap" stepKey="verifyNumberOfPinsOnMapCMSBlockStage">
+            <argument name="page" value="MapOnStage"/>
+            <argument name="count" value="2"/>
+        </actionGroup>
+        <!-- Add Block to CMS Page -->
+        <comment userInput="Add Block to CMS Page" stepKey="commentAddBlockToCMSPage"/>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPanelAddContentMenuSection">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDropBlock">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
+            <argument name="block" value="$$createCMSBlock$$"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsBlock"/>
+        <!-- Validate CMS Page Stage -->
+        <comment userInput="Validate CMS Page Stage" stepKey="commentValidateCMSPageStage"/>
+        <actionGroup ref="validateMapHeight" stepKey="validateMapHeightCMSPageStage">
+            <argument name="section" value="MapOnStorefront"/>
+            <argument name="height" value="PageBuilderMapHeightProperty500px"/>
+        </actionGroup>
+        <actionGroup ref="verifyNumberOfPinsOnMapNoClick" stepKey="verifyNumberOfPinsOnMapCMSPageStage">
+            <argument name="page" value="MapOnStorefront"/>
+            <argument name="count" value="2"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate CMS Page Storefront -->
+        <comment userInput="Validate CMS Page Storefront" stepKey="commentValidateCMSPageStorefront"/>
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <actionGroup ref="validateMapHeight" stepKey="validateMapHeightCMSPageStorefront">
+            <argument name="section" value="MapOnStorefront"/>
+            <argument name="height" value="PageBuilderMapHeightProperty500px"/>
+        </actionGroup>
+        <actionGroup ref="verifyNumberOfPinsOnMap" stepKey="verifyNumberOfPinsOnMapCMSPageStorefront">
+            <argument name="page" value="MapOnStorefront"/>
+            <argument name="count" value="2"/>
+        </actionGroup>
+    </test>
+</tests>

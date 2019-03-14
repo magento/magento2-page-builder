@@ -331,18 +331,18 @@
         <waitForElementVisible selector="{{ImageOnStorefront.imageDisplay}}" stepKey="seeMainImageDisplayed"/>
         <waitForElementVisible selector="{{ImageOnStorefront.imageSource(PageBuilderImageProperty_JPG2.fileName)}}" stepKey="seeMainImageSource4"/>
         <assertElementContainsAttribute selector="{{ImageOnStorefront.imageElement('1')}}" attribute="style" expectedValue="max-width: 100%" stepKey="assertImageHasFullWidthStyle"/>
-        <seeElementInDOM selector="{{ImageOnStorefront.imageLink(PageBuilderImageLinkProperty.value)}}" stepKey="seeImageLinkInDOM"/>
-        <seeElementInDOM selector="{{ImageOnStorefront.imageLinkTarget(PageBuilderImageNewTab_True.stageValue)}}" stepKey="seeImageTargetInDOM"/>
-        <seeElementInDOM selector="{{ImageOnStorefront.imageHasAltText(PageBuilderImageAltTextProperty.value)}}" stepKey="seeImageAltText"/>
-        <seeElementInDOM selector="{{ImageOnStorefront.imageHasTitleTag(PageBuilderImageTitleAttributeProperty.value)}}" stepKey="seeImageAltText2"/>
+        <seeElementInDOM selector="{{ImageOnStorefront.imageLink('1', PageBuilderImageLinkProperty.value)}}" stepKey="seeImageLinkInDOM"/>
+        <seeElementInDOM selector="{{ImageOnStorefront.imageLinkTarget('1', PageBuilderImageNewTab_True.stageValue)}}" stepKey="seeImageTargetInDOM"/>
+        <seeElementInDOM selector="{{ImageOnStorefront.imageAltText('1', PageBuilderImageAltTextProperty.value)}}" stepKey="seeImageAltText"/>
+        <seeElementInDOM selector="{{ImageOnStorefront.imageTitleAttribute('1', PageBuilderImageTitleAttributeProperty.value)}}" stepKey="seeImageAltText2"/>
         <seeElementInDOM selector="{{ImageOnStorefront.imageSource(PageBuilderMobileImagePropertyGif.fileName)}}" stepKey="seeMainImageSource5"/>
-        <see userInput="{{PageBuilderImageCaptionProperty.value}}" selector="{{ImageOnStorefront.imageHasCaption}}" stepKey="seeCaptionDisplayedOnStorefront"/>
+        <see userInput="{{PageBuilderImageCaptionProperty.value}}" selector="{{ImageOnStorefront.imageCaption('1')}}" stepKey="seeCaptionDisplayedOnStorefront"/>
         <dontSeeElement selector="{{ImageOnStorefront.imageElement('2')}}" stepKey="dontSeeMobileImageElement"/>
         <resizeWindow width="767" height="1024" stepKey="resizeWindowToMobile"/>
         <dontSeeElement selector="{{ImageOnStorefront.imageElement('1')}}" stepKey="dontSeeMainImageOnMobile"/>
         <seeElement selector="{{ImageOnStorefront.imageElement('2')}}" stepKey="seeMobileImageElementOnMobile"/>
         <assertElementContainsAttribute selector="{{ImageOnStorefront.imageElement('2')}}" attribute="style" expectedValue="max-width: 100%" stepKey="assertMobileImageHasFullWidthStyle"/>
-        <see userInput="{{PageBuilderImageCaptionProperty.value}}" selector="{{ImageOnStorefront.imageHasCaption}}" stepKey="seeCaptionDisplayedOnStorefrontMobile"/>
+        <see userInput="{{PageBuilderImageCaptionProperty.value}}" selector="{{ImageOnStorefront.imageCaption('1')}}" stepKey="seeCaptionDisplayedOnStorefrontMobile"/>
         <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
     </test>
     <test name="ImageDuplicate">
@@ -1446,8 +1446,8 @@
         <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCmsPage">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
-        <waitForElementVisible selector="{{ImageOnStorefront.imageHasCaption}}" stepKey="waitForCaptionVisible" />
+        <waitForElementVisible selector="{{ImageOnStorefront.imageCaption('1')}}" stepKey="waitForCaptionVisible" />
         <dontSeeJsError stepKey="dontSeeThrownErrorOnStorefront" />
-        <see selector="{{ImageOnStorefront.imageHasCaption}}" userInput="{{PageBuilderImageCaptionProperty_HtmlCode.value}}" stepKey="seeHtmlCodeOnStorefront" />
+        <see selector="{{ImageOnStorefront.imageCaption('1')}}" userInput="{{PageBuilderImageCaptionProperty_HtmlCode.value}}" stepKey="seeHtmlCodeOnStorefront" />
     </test>
 </tests>

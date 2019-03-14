@@ -215,7 +215,6 @@
         <actionGroup ref="validateBackgroundImageContainer" stepKey="validateImageOnStorefront1">
             <argument name="section" value="BannerOnFrontend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
-            <argument name="pageNamePrefix" value="banner"/>
         </actionGroup>
         <!-- Validate mobile image is displayed when browser is resized -->
         <comment userInput="Validate mobile image is displayed when browser is resized" stepKey="commentMobileImage"/>
@@ -223,7 +222,6 @@
         <actionGroup ref="validateBackgroundImageContainer" stepKey="validateMobileImageOnStorefront">
             <argument name="section" value="BannerOnFrontend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundMobileImage_GIF"/>
-            <argument name="pageNamePrefix" value="banner"/>
         </actionGroup>
     </test>
     <test name="BannerCollageRightMobileWithoutMobileImageValues">
@@ -294,7 +292,6 @@
         <actionGroup ref="validateBackgroundImageContainer" stepKey="validateImageOnStorefront1">
             <argument name="section" value="BannerOnFrontend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
-            <argument name="pageNamePrefix" value="banner"/>
         </actionGroup>
         <!-- Validate desktop image still visible in mobile view -->
         <comment userInput="Validate desktop image still visible in mobile view" stepKey="commentDesktopImageMobileView"/>
@@ -302,7 +299,6 @@
         <actionGroup ref="validateBackgroundImageContainer" stepKey="validateImageOnStorefront2">
             <argument name="section" value="BannerOnFrontend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
-            <argument name="pageNamePrefix" value="banner"/>
         </actionGroup>
     </test>
     <test name="BannerCollageRightButtonNeverShow">
@@ -1125,7 +1121,6 @@
         <actionGroup ref="validateBackgroundImageContainer" stepKey="validateImageOnStorefront">
             <argument name="section" value="BannerOnFrontend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
-            <argument name="pageNamePrefix" value="banner"/>
         </actionGroup>
         <seeElement selector="{{BannerOnFrontend.messageContent('1', PageBuilderBannerMessageProperty.value)}}" stepKey="seeMessageContentStorefront"/>
         <seeElement selector="{{BannerOnFrontend.linkUrl('1', PageBuilderBannerLinkUrlProperty.value)}}" stepKey="seeLinkUrl"/>
@@ -1172,7 +1167,6 @@
         <actionGroup ref="validateBackgroundImageContainer" stepKey="validateMobileImageOnStorefront">
             <argument name="section" value="BannerOnFrontend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundMobileImage_GIF"/>
-            <argument name="pageNamePrefix" value="banner"/>
         </actionGroup>
         <click selector="{{BannerOnFrontend.linkUrl('1', PageBuilderBannerLinkUrlProperty.value)}}" stepKey="clickLinkUrl"/>
         <switchToNextTab stepKey="switchToNextTab"/>
