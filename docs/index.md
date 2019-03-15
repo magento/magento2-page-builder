@@ -1,7 +1,7 @@
 # What is Page Builder?
 
 Page Builder is a Magento extension for creating content with drag-and-drop controls. 
-We call these controls content types, which provide several key features including:
+We call these controls content types, which provide several key features, including:
 
 - **Dragging-and-dropping** of UI controls to build a page.
 - **Live previews** of how the content will look on the storefront.
