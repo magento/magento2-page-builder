@@ -1,6 +1,6 @@
 # Install Page Builder Examples
 
-You can find the code examples used and referred to within this documentation on GitHub in the [pagebuilder-examples repo](https://github.com/magento-devdocs/pagebuilder-examples).
+You can find the code examples used, and referred to, within this documentation on GitHub in the [pagebuilder-examples repo](https://github.com/magento-devdocs/pagebuilder-examples).
 This repo contains two types of examples:
 
 - Fully functional content type modules
