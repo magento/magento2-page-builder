@@ -6,7 +6,7 @@ Page Builder Admin icons follow the same design principles as the core [Magento 
 
 ## Page Builder icons
 
-Here are the available Page Builder Admin font icons (with class names) for use within your content type as needed:
+Here are the available Page Builder Admin font icons (with class names) for use within your content type:
 
 ![Page Builder admin icons](../images/pagebuilder-icons.png){:width="870px" height="auto"}
 
@@ -106,7 +106,7 @@ The following CSS rule set shows one general way to link your icons through CSS:
 }
 ```
 
-If you are creating an icon for the panel, replace the `background-image` attribute with `content` (as described in the content type tutorial, [Step 6: Add an icon](../create-custom-content-type/step-6-add-icon.md)).
+If you create an icon for the panel, replace the `background-image` attribute with `content` (as described in the content type tutorial, [Step 6: Add an icon](../create-custom-content-type/step-6-add-icon.md)).
 
 | Attribute              | Description                                                  |
 | ---------------------- | ------------------------------------------------------------ |

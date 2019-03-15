@@ -55,7 +55,7 @@ The following is a simple overview of the data flow:
 
 1. Page Builder's reader() reads the data from associated elements in the persisted rendered output of the master format. It does this by traversing through the content type's DOM tree and searching for the associated elements declared in the content types definition XML. Then it uses the various attributes, styles, and other configurations to read the data from the specific area of the DOM element.
 2. Page Builder's element converters convert the data for each data mapping entry () to an internal supported format if required, this ensures the data collected from the DOM nodes is compatible with Page Builder's internal data store and UI component fields.
-3. Page Builder's mass converters can change data for all content type elements, not just one. For more details see [converter interface](configurations.md).
+3. Page Builder's mass converters can change data for all content type elements, not just one. For more details, see [converter interface](configurations.md).
 4. Page Builder creates its content types and populates the `Magento_PageBuilder/js/data-store` with data.
 5. End-users change the data in the data store within the form editor or when using the various live-editing options on the stage.
 6. Page Builder converts the data using mass converters.
@@ -129,14 +129,14 @@ For example:
 
 Page Builder stores data for content types in a simple object called the DataStore: `Magento_PageBuilder/js/data-store`.
 
-The parameter `name` from [content type configuration](configurations.md) is the name of a parameter in the DataStore.
+The `name` parameter from the [content type configuration](configurations.md) is the name of a parameter in the `DataStore`.
 You can use the `subscribe` method to listen for changes in the DataStore and perform custom actions on the data.
 
 This is how the system binds the data from the DataStore to your elements attribute or style. When you include a new attribute or style, you must specify where it should retrieve its data from the content type. These `name` values normally bind to the field names within UI component forms. The field names are the keys we use to save the data.
 
 ## Content type configuration
 
-Please see [content type configuration](configurations.md) for more information.
+See [content type configuration](configurations.md) for more information.
 
 ## Appearances
 
