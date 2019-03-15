@@ -43,7 +43,7 @@ $categorySetup->addAttribute(
 );
 ```
 
-The following steps change a custom product attribute's input type to Page Builder using the Admin:
+The following steps change a custom product attribute's input type to Page Builder using the Admin UI:
 
 1. On the Admin sidebar, click **Stores**.
 2. Under **Attributes**, click on **Product**.
