@@ -1,4 +1,4 @@
-# Overwriting responsive breakpoints
+# How to change breakpoints
 
 This topic describes how to change the default mobile breakpoint in Page Builder.
 

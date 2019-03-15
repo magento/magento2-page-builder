@@ -84,7 +84,7 @@ If you already have Magento 2.3.0 or Page Builder installed, clear your composer
     bin/magento setup:upgrade
     ```
     
-4. Activate Page Builder from the Admin UI as described in [Activate Page Builder](activate-pagebuilder.md).
+4. Activate Page Builder from the Admin UI as described in [Activate Page Builder](../how-to/how-to-deactivate-pagebuilder.md).
 
 ### Updating Composer installation
 

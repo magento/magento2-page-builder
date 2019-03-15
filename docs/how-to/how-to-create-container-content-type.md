@@ -1,4 +1,4 @@
-# How to develop a container content type
+# How to create a container content type
 
 This tutorial takes you through the process of creating a module with the name `VendorName_CustomContainer`.
 
@@ -1009,7 +1009,7 @@ bin/magento module:enable --clear-static-content VendorName_CustomContainer
 bin/magento setup:upgrade
 ```
 
-You should now see a new custom content type in PageBuilder called **Custom Container** with a default appearance of **left**.
+You should now see a new custom content type in Page Builder called **Custom Container** with a default appearance of **left**.
 
 ![Custom Containers Panel](../images/custom-containers-panel.png)
 

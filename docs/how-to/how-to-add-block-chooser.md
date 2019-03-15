@@ -1,6 +1,4 @@
-# Block chooser
-
-## What's in this topic
+# How to add a block chooser
 
 This topic describes how to use the block chooser UI component for a custom content type.
 
@@ -19,7 +17,7 @@ Extends all `abstract` configuration.
   <tr>
     <td><code>dataUrlConfigPath</code></td>
     <td>String</td>
-    <td>The path inside the PageBuilder configuration object that points to the controller URL used to request data for display in the grid. </br>For example, if you utilize the <code>additional_data</code> configuration feature and you add the URL you could specify <code>content_types.mycontenttype.additional_data.my_cusom_property.my_data_url</code>.</td>
+    <td>The path inside the Page Builder configuration object that points to the controller URL used to request data for display in the grid. </br>For example, if you use the <code>additional_data</code> configuration feature and add the URL, you could specify <code>content_types.mycontenttype.additional_data.my_cusom_property.my_data_url</code>.</td>
   </tr>
   <tr>
     <td><code>requestParameter</code></td>
