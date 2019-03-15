@@ -8,7 +8,7 @@ This repo contains two types of examples:
 
 ## Fully functional content type modules
 
-The custom content type modules are here for you to download and install so you can learn by example. These content type modules include the following three:
+The following custom content type modules are here for you to download and install so you can learn by example:
 
 - **[PageBuilderQuote](https://github.com/magento-devdocs/pagebuilder-examples/tree/master/PageBuilderQuote)** — This is the completed module featured in the [content type tutorial](../create-custom-content-type/overview.md). This module provides an example of a simple content type that provides stylized quotations you can use for things like customer testimonials.
 - **[PageBuilderGrid](https://github.com/magento-devdocs/pagebuilder-examples/tree/master/PageBuilderGrid)** — This module shows how you can create a content type to rebuild the Magento Luma home page using a grid structure with grid items.
