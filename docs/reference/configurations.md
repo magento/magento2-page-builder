@@ -1,4 +1,4 @@
-# Configuration
+# Page Builder configurations
 
 **Note:**
 *We are revising configuration, format will change. We will publish draft of new improved configuration soon to get feedback.*
@@ -15,7 +15,7 @@ Use the content type and menu section configuration to add new content types, ex
 | `children`          | List of children content types that can accept this type as a parent.                                                                       |
 | `appearances`       | Appearance configuration.                                                                                                                   |
 | `is_system`        | Determines menu visibility for the component. System components should not be visible in the menu. Default value is true.                   |
-| `additional_data`   | Allows to specify additional data for component, see [additional configurations](additional-configurations.md) for more information. |
+| `additional_data`   | Allows you to specify additional data for the component. See [additional configurations](../how-to/how-to-add-additional-configurations.md) for more information. |
 {:style="table-layout:auto"}
 
 | Attribute           | Description                                                                                                                                 |

@@ -1,14 +1,14 @@
-# Icons and images
+# How to add icons and images
 
 ## Overview
 
-PageBuilder Admin icons follow the same design principles as the core [Magento Admin icons]. They are simple, flat, and monochromatic to prevent the loss of detail at smaller sizes, while making their shapes easier to comprehend.
+Page Builder Admin icons follow the same design principles as the core [Magento Admin icons]. They are simple, flat, and monochromatic to prevent the loss of detail at smaller sizes, while making their shapes easier to comprehend.
 
 ## Page Builder icons
 
-Here are the available PageBuilder Admin font icons (with class names) for use within your content type as needed:
+Here are the available Page Builder Admin font icons (with class names) for use within your content type:
 
-![PageBuilder admin icons](../images/pagebuilder-icons.png){:width="870px" height="auto"}
+![Page Builder admin icons](../images/pagebuilder-icons.png){:width="870px" height="auto"}
 
 Page Builder references these icons by their class names. For example, Page Builder's Heading content type references `icon-pagebuilder-heading` for its panel icon configuration file, as shown here:
 
@@ -106,7 +106,7 @@ The following CSS rule set shows one general way to link your icons through CSS:
 }
 ```
 
-If you are creating an icon for the panel, replace the `background-image` attribute with `content` (as described in the content type tutorial, [Step 6: Add an icon](../create-basic-content-type/step-6-add-icon.md)).
+If you create an icon for the panel, replace the `background-image` attribute with `content` (as described in the content type tutorial, [Step 6: Add an icon](../create-custom-content-type/step-6-add-icon.md)).
 
 | Attribute              | Description                                                  |
 | ---------------------- | ------------------------------------------------------------ |

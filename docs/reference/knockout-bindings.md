@@ -1,4 +1,4 @@
-# Knockout Bindings
+# Page Builder Knockout bindings
 
 ## Summary
 
