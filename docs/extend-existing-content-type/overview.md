@@ -1,4 +1,4 @@
-# Extending existing content types
+# Overview
 
 One of quickest ways to customize Page Builder is by changing how _existing_ content types look and behave. End-users can already edit Page Builder's content types in several ways. But sometimes your end-users will want to change the structure or modify properties that do not exist on a given content type. In those cases, you can extend an existing content type by customizing its existing _appearance_ or adding a new _appearance_.
 
@@ -24,7 +24,6 @@ Page Builder defines these appearances in the Banner's configuration file (`Mage
 Within each `appearance` element, you can change content types in the following ways:
 
 - Add new style properties.
-
 - Add or change templates.
 - Add to or change existing forms.
 - Add new attributes.
