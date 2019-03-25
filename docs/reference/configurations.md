@@ -190,7 +190,7 @@ Parent policies will overwrite any child policies that are set.
     <parent name="row" policy="allow"/>
     <parent name="column" policy="allow"/>
 </parents>
-``` 
+```
 
 ### `children`
 
@@ -212,7 +212,7 @@ The `children` element specifies which content types can accept this type as a p
     <child name="row" policy="deny"/>
     <child name="column" policy="deny"/>
 </children>
-``` 
+```
 
 ### `appearances` 
 
@@ -249,17 +249,15 @@ Every content type requires a default appearance to ensure that other modules ar
 
 Set the `default` attribute to "true" in an `appearance` node to set the default appearance for a content type.
 
-### `data_mapping`
-
-| Element            | Description                                                                                           |
-| ------------------ | ----------------------------------------------------------------------------------------------------- |
-| `elements`         | The container for all the elements of the content type.                                               |
-| `element`          | The name of the element that contains data for the master format and the render and preview template. |
-| `property`         | Specifies style property for the element in the master format                                         |
-| `attribute`        | Specifies attribute for the element in master format                                                  |
-| `css`              | Specifies whether element has classes and in which variable they should be read                       |
-| `html`             | Specifies whether element has html content and in which variable they should be read                  |
-| `tag`              | Allows you to read the tag name of the element and map it back to the master format.                  |
+| Element     | Description                                                  |
+| ----------- | ------------------------------------------------------------ |
+| `elements`  | The container for all the elements of the content type.      |
+| `element`   | The name of the element that contains data for the master format and the render and preview template. |
+| `style`     | Specifies style property for the element in the master format |
+| `attribute` | Specifies attribute for the element in master format         |
+| `css`       | Specifies whether element has classes and in which variable they should be read |
+| `html`      | Specifies whether element has html content and in which variable they should be read |
+| `tag`       | Allows you to read the tag name of the element and map it back to the master format. |
 {:style="table-layout:auto"}
 
 **Example:**

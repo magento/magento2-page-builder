@@ -16,7 +16,7 @@ And the same three Quote controls are shown rendered here on a mock testimonial 
 
 ## Quote module
 
-As with most things in Magento, content types for Page Builder are housed in modules. The convention for naming modules that are solely dedicated to Page Builder, such as our Quote content type, is to prefix all the content type name with `PageBuilder`. This helps visually group content type modules within your vendor directory. Of course, this convention doesn't apply If you are adding a content type as part of an existing module.
+As with most things in Magento, content types for Page Builder are housed in modules. The convention for naming modules that are solely dedicated to Page Builder, such as our Quote content type, is to prefix all content type names with `PageBuilder`. This helps visually group content type modules within your vendor directory. Of course, this convention does not apply if you are adding a content type as part of an existing module.
 
 Applying this convention to the module for our Quote content type, we get the name `PageBuilderQuote`, and can set up our module as shown here:
 
@@ -28,7 +28,7 @@ After registering your module (`bin/magento setup:upgrade`) you will be ready to
 
 The steps for creating the Quote content type are illustrated and described below. The reality is not quite this linear, but these steps do represent the basic phases and flow for building new Page Builder content types.
 
-![Creating Custom Content Types](../images/content-type-overview.png)
+![Creating Custom Content Types](../images/content-type-overview.svg)
 
 1. **Add configuration**: Create an XML file to define your content type and reference the other files that control the appearance and behavior of your content type.  
 2. **Add templates**: Create HTML templates that define the appearance of your content types on the Admin stage (`preview.html`) and the storefront (`master.html`).
