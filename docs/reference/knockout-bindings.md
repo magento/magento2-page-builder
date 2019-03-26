@@ -2,14 +2,14 @@
 
 ## Summary
 
-As part of the Page Builder application, we provide a number of new Knockout bindings to add additional functionality to certain content types through Knockouts binding syntax.
+As part of the Page Builder application, we provide a number of several new Knockout bindings to add more functionality to certain content types through Knockouts binding syntax.
 
 | Binding Name   | Description                                                    | 
 | -------------- | -------------------------------------------------------------- |
 | `sortable`       | Enables sorting the children of a bound element. We use this within container content types such as the root container, row and columns to enable drag and drop capabilities on their children content types. This can be used for easy access to the jQuery UI sortable functionality within your module. |
 | `draggable`      | Enables draggable functionality on DOM elements. We use this to enable the content types in the left menu to be dragged and dropped into containers on the stage. |              
-| `liveEdit`      | Enables basic live text editing on the stage, this also supports displaying additional items within the live edit UI for easier modification. You can read more about how to use live edit within our [How to add a custom Toolbar](../how-to/how-to-add-custom-toolbar.md) guide. |           
-| `hasFocusNoScroll` | Enables an element to use Knockout `hasFocus` binding without it causing the browser to scroll to the element, we use this within Slider to ensure the correct slide is focused but we do not want to scroll this into view always. |        
+| `liveEdit`      | Enables basic live text editing on the stage. This also supports displaying additional items within the live edit UI for easier modification. You can read more about how to use live edit within our [How to add a custom Toolbar](../how-to/how-to-add-custom-toolbar.md) guide. |           
+| `hasFocusNoScroll` | Enables an element to use Knockout `hasFocus` binding without it causing the browser to scroll to the element. We use this within Slider to ensure the correct slide is focused but we do not want to scroll this into view always. |        
 {:style="table-layout:auto"}
 
 ### `sortable` binding
@@ -24,14 +24,14 @@ Within Page Builder, we use the `sortable` binding to pass preview-component opt
 
 **Configuration:**
 
-Please see the options listed on jQuery UI's Sortable API page: http://api.jqueryui.com/sortable/
+See the options listed on jQuery UI's Sortable API page: http://api.jqueryui.com/sortable/
 
 **Usage:**
 
 ```html
 <div data-bind="sortable: getSortableOptions()" />
 ```
-_As jQuery UI can have callback functions we recommend providing this configuration from a function within your Knockout view model._
+_Because jQuery UI can have callback functions, we recommend providing this configuration from a function within your Knockout view model._
 
 ### `draggable` binding
 
@@ -45,18 +45,18 @@ Within Page Builder, we use this binding for the left panel's content types. The
 
 **Configuration:**
 
-Please see the options listed on jQuery UI's Sortable API page: http://api.jqueryui.com/draggable/
+See the options listed on jQuery UI's Sortable API page: http://api.jqueryui.com/draggable/
 
 **Usage:**
 
 ```html
 <div data-bind="draggable: getDraggableOptions()" />
 ```
-_As jQuery UI can have callback functions we recommend providing this configuration from a function within your Knockout view model._
+_Because jQuery UI can have callback functions, we recommend providing this configuration from a function within your Knockout view model._
 
 ### `liveEdit` binding
 
-This binding provides basic text live editing functionality to the current element, it does this by adding the `contenteditable` functionality to the bound element.
+This binding provides basic text live editing functionality to the current element. It does this by adding the `contenteditable` functionality to the bound element.
 
 **Configuration:**
 
@@ -74,7 +74,7 @@ This binding provides basic text live editing functionality to the current eleme
 
 ### `hasFocusNoScroll` binding
 
-This binding enables the functionality of Knockout's [hasFocus](https://knockoutjs.com/documentation/hasfocus-binding.html) binding whilst removing the automatic scrolling that will occur when focusing an element within the browser.
+This binding enables the functionality of Knockout's [hasFocus](https://knockoutjs.com/documentation/hasfocus-binding.html) binding while removing the automatic scrolling that occurs when focusing an element within the browser.
 
 The binding has no configuration and must be passed an observable with a boolean value. 
 
