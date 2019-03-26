@@ -12,7 +12,7 @@ Many of Page Builder's content types have only one `appearance` element. These i
 
 Page Builder defines these appearances in the Banner's configuration file (`Magento/PageBuilder/view/adminhtml/pagebuilder/content_type/banner.xml`), as shown here:
 
-```
+```xml
 <appearances>
     <appearance name="collage-left"...>
     <appearance name="collage-centered"...>
