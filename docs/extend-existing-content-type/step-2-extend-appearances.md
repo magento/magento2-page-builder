@@ -1,6 +1,6 @@
 # Step 2: Extend appearances
 
-In this step, you will extend two of the four Banner appearances (`collage-left` and `collage-right`) by adding a new `max_height` property to each. This property stops the Banner from growing beyond a certain height as end-users enter text.
+In this step, you will extend two of the four Banner appearances (`collage-left` and `collage-right`) by adding a new `max_height` style to each. This property stops the Banner from growing beyond a certain height as end-users enter text.
 
 ## Create a content configuration file
 
