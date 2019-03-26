@@ -19,9 +19,9 @@ Because we are extending the Banner, we start by creating a new configuration fi
 
 ![Extension config file structure](../images/appearance-extension-config-file.png){:width="511px" height="auto"}
 
-## Add the appearances you want to extend
+## Add properties to appearances
 
-We are only extending two Banner appearances, which means we only need to define two `appearance` elements in the config file, as shown here:
+Currently, you cannot extend just one appearance of a content type. You have to extend them all. In our example, we are extending the Banner content type, which has four appearances. Our example shows how you add a max-height property to all four of the Banner appearances.
 
 ```xml
 <?xml version="1.0"?>
@@ -34,7 +34,6 @@ We are only extending two Banner appearances, which means we only need to define
                         <style name="max_height" source="max_height" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                     </element>
                 </elements>
-                <form>pagebuilder_banner_collage_left_form</form>
             </appearance>
             <appearance name="collage-right">
                 <elements>
@@ -42,7 +41,20 @@ We are only extending two Banner appearances, which means we only need to define
                         <style name="max_height" source="max_height" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                     </element>
                 </elements>
-                <form>pagebuilder_banner_collage_right_form</form>
+            </appearance>
+            <appearance name="poster">
+                <elements>
+                    <element name="wrapper">
+                        <style name="max_height" source="max_height" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                    </element>
+                </elements>
+            </appearance>
+            <appearance name="collage-centered">
+                <elements>
+                    <element name="wrapper">
+                        <style name="max_height" source="max_height" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                    </element>
+                </elements>
             </appearance>
         </appearances>
     </type>
@@ -59,7 +71,6 @@ The following table describes the elements in our extension configuration.
 | `elements`    | The grouping element that specifies one or more `element` nodes. |
 | `element`     | The element maps styles and other appearance extensions from the form editor to the HTML templates that render content on the Admin stage and storefront. We want our appearance styles to map to the `wrapper` element of the Banner's templates, so the element for each appearance extension is named `wrapper`. |
 | `style`       | The `style` element configures the bindings from the form field to the template elements. In this case, our style is applied to the `wrapper` element of the template. The style `name` represents the CSS `max-height` style. The `source` is the name of the form field you want the style bound to. Hint: The field name added in step 3 is `max-height`. |
-| `form`        | Each appearance can use a different form to merge with or overwrite the Banner's form. You will create the form in step 3. |
 
 {:style="table-layout:auto"}
 

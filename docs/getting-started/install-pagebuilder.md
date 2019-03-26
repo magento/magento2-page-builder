@@ -1,6 +1,7 @@
 # Install Page Builder
 
-Page Builder is automatically installed with Magento Commerce 2.3.1. There is nothing else you need to do. However, If you want to contribute to the Page Builder code or documentation, you can use the GitHub installation as follows.
+{: .bs-callout .bs-callout-info }
+These installation instructions are only for contributors to the Page Builder code or documentation. For everyone else, **Page Builder is automatically installed with Magento Commerce 2.3.1. There is nothing else you need to do.**
 
 ## GitHub installation for Contributors
 
