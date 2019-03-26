@@ -4,42 +4,41 @@ In this step, you will extend the Banner form (`pagebuilder_banner_form.xml`) by
 
 ## Create the appearance forms
 
-Page Builder forms are UI component forms. This means they follow the same conventions as any other UI component form. If you are not already familiar with UI component forms, you can learn more about them from the [UI Components Guide](https://devdocs.magento.com/guides/v2.3/ui_comp_guide/concepts/ui_comp_xmldeclaration_concept.html). For this tutorial, we provide you with the basic markup for setting up these forms.
+Page Builder forms are UI component forms. This means they follow the same conventions as any other UI component form. If you are not already familiar with UI component forms, you can learn more about them from the [UI Components Guide](https://devdocs.magento.com/guides/v2.3/ui_comp_guide/concepts/ui_comp_xmldeclaration_concept.html). For this tutorial, we provide you with the basic markup for setting up an empty form.
 
 Your file structure for the Banner extension forms and corresponding layouts should look like this: 
 
-![Extension forms file structure](../images/extension-forms-files.png){:width="433px" height="auto"}
+![Extension forms file structure](../images/extension-forms-files.png){:width="544px" height="auto"}
 
-When setting up your extension forms, ensure you are inheriting from the form of the content type you want to extend. In our case, we are extending from the Banner's form: `page-banner-form` . The basic XML configuration for both forms is as follows. 
+When setting up your extension form, ensure you have named your form with the same name as that of the content type you want to extend. In our case, we are extending from the Banner's form: `page-banner-form.xml` . The basic XML configuration for both forms is as follows. 
 
 ### `collage-left` form
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd"
-      extends="pagebuilder_banner_form">
+      xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
     <argument name="data" xsi:type="array">
         <item name="js_config" xsi:type="array">
             <item name="provider" xsi:type="string">
-                pagebuilder_banner_collage_left_form.pagebuilder_banner_collage_left_form_data_source
+                pagebuilder_banner_form.pagebuilder_banner_form_data_source
             </item>
         </item>
         <item name="label" xsi:type="string" translate="true">Banner</item>
     </argument>
     <settings>
         <deps>
-            <dep>pagebuilder_banner_collage_left_form.pagebuilder_banner_collage_left_form_data_source</dep>
+            <dep>pagebuilder_banner_form.pagebuilder_banner_form_data_source</dep>
         </deps>
-        <namespace>pagebuilder_banner_collage_left_form</namespace>
+        <namespace>pagebuilder_banner_form</namespace>
     </settings>
-    <dataSource name="pagebuilder_banner_collage_left_form_data_source">
+    <dataSource name="pagebuilder_banner_form_data_source">
         <argument name="data" xsi:type="array">
             <item name="js_config" xsi:type="array">
                 <item name="component" xsi:type="string">Magento_PageBuilder/js/form/provider</item>
             </item>
         </argument>
-        <dataProvider name="pagebuilder_banner_collage_left_form_data_source" class="Magento\PageBuilder\Model\ContentType\DataProvider">
+        <dataProvider name="pagebuilder_banner_form_data_source" class="Magento\PageBuilder\Model\ContentType\DataProvider">
             <settings>
                 <requestFieldName/>
                 <primaryFieldName/>
@@ -49,47 +48,6 @@ When setting up your extension forms, ensure you are inheriting from the form of
   
   <!--Add Fieldsets and fields-->
   
-</form>
-```
-
-### `collage-right` form
-
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd"
-      extends="pagebuilder_banner_form">
-    <argument name="data" xsi:type="array">
-        <item name="js_config" xsi:type="array">
-            <item name="provider" xsi:type="string">
-                pagebuilder_banner_collage_right_form.pagebuilder_banner_collage_right_form_data_source
-            </item>
-        </item>
-        <item name="label" xsi:type="string" translate="true">Banner</item>
-    </argument>
-    <settings>
-        <deps>
-            <dep>pagebuilder_banner_collage_right_form.pagebuilder_banner_collage_right_form_data_source</dep>
-        </deps>
-        <namespace>pagebuilder_banner_collage_right_form</namespace>
-    </settings>
-    <dataSource name="pagebuilder_banner_collage_right_form_data_source">
-        <argument name="data" xsi:type="array">
-            <item name="js_config" xsi:type="array">
-                <item name="component" xsi:type="string">Magento_PageBuilder/js/form/provider</item>
-            </item>
-        </argument>
-        <dataProvider name="pagebuilder_banner_collage_right_form_data_source"
-                      class="Magento\PageBuilder\Model\ContentType\DataProvider">
-            <settings>
-                <requestFieldName/>
-                <primaryFieldName/>
-            </settings>
-        </dataProvider>
-    </dataSource>
-  
-  <!--Add Fieldsets and fields-->
-
 </form>
 ```
 
@@ -97,7 +55,7 @@ When setting up your extension forms, ensure you are inheriting from the form of
 
 Before you add a field to the form of an existing content type, you need to know where to add it. In other words, you need to decide which fieldset to put your field in. We want to put our new max-height field with the Banner's existing min-height field, which is the `appearance_fieldset`.
 
-The markup for adding the field to the fieldset looks exactly like this for both forms:  
+The markup for adding the field to the fieldset looks like this:  
 
 ```xml
 <fieldset name="appearance_fieldset"
