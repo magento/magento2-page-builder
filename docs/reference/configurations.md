@@ -16,8 +16,8 @@ There are a number of simple attributes that can be configured within the `<type
 | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
 | `name`              | Describes the content types internal name, this is used to when the system references the content type.      |
 | `label`             | Label displayed within the menu and stage.                                                                                                      |
-| `menu_section`      | Allocate the content type to a menu section, the menu section must exist and be defined in `menu_section.xml`.
-| `icon`              | CSS class for icon to be displayed within the menu alongside the content types name. See [How to add icons and images](../how-to/how-to-add-icons-images.md) for more guidance.                                                                                                         |
+| `menu_section`      | Allocate the content type to a menu section, the menu section must exist and be defined in `menu_section.xml`.   |
+| `icon`              | CSS class for icon to be displayed within the menu alongside the content types name. See [How to add icons and images](../how-to/how-to-add-icons-images.md) for more guidance.  |
 | `component`         | View model responsible for rendering the preview and master format.                                                                         |
 | `preview_component` | Helper component that contains preview specific logic. Helper component is optional.                                                        |
 | `master_component`  | Contains master format rendering logic that is generic for all appearances. Content component is optional.                                  |
