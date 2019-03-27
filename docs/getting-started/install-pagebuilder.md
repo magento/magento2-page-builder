@@ -13,14 +13,14 @@ Before installing Page Builder for making contributions, make sure you have the 
 
 1. Clone the Page Builder repos into the root directory of your Magento Commerce 2.3+ installation:
 
-    ```bash
+    ```terminal
     git clone https://github.com/magento/magento2-page-builder
     git clone https://github.com/magento/magento2-page-builder-ee
     ```
 
 2. From the root directory of your Magento Commerce installation, use the `dev/tools/build-ee.php` script to symlink `magento2-page-builder` and `magento2-page-builder-ee` repos into your Magento Commerce installation:
 
-    ```bash
+    ```terminal
     php dev/tools/build-ee.php --command=link --ee-source="magento2-page-builder" --ce-source="."
     php dev/tools/build-ee.php --command=link --ee-source="magento2-page-builder-ee" --ce-source="."
     ```
@@ -31,7 +31,7 @@ Before installing Page Builder for making contributions, make sure you have the 
 
 3. Enable the Page Builder module using the following command:
 
-    ```bash
+    ```terminal
     bin/magento setup:upgrade
     ```
 
@@ -45,7 +45,7 @@ If you plan to contribute to Page Builder, you need to install Node.js dependenc
 
 Navigate to the `pagebuilder` directory and install Page Builder dependencies using the following command:
 
-```bash
+```terminal
 cd pagebuilder && npm install
 ```
 
