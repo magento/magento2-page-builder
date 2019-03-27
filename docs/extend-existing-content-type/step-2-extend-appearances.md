@@ -71,7 +71,6 @@ The following table describes the elements in our extension configuration.
 | `elements`    | The grouping element that specifies one or more `element` nodes. |
 | `element`     | The element maps styles and other appearance extensions from the form editor to the HTML templates that render content on the Admin stage and storefront. We want our appearance styles to map to the `wrapper` element of the Banner's templates, so the element for each appearance extension is named `wrapper`. |
 | `style`       | The `style` element configures the bindings from the form field to the template elements. In this case, our style is applied to the `wrapper` element of the template. The style `name` represents the CSS `max-height` style. The `source` is the name of the form field you want the style bound to. Hint: The field name added in step 3 is `max-height`. |
-
 {:style="table-layout:auto"}
 
 ## Next

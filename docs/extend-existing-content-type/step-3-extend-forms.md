@@ -91,7 +91,6 @@ Some of the key elements are described here.
 | `field`    | The field `name` should match the CSS max-height style property, but in snake_case. Fields also have a `sortOrder` you can use to place your field above or below existing fields. The `formElement` for a field describes the HTML form type, such as input, checkbox, select, and more. |
 | `argument` | Provides the way to add a `default` value to your field. Our default value is set to `300`. |
 | `settings` | Provides the markup that gives your field a label, CSS styling, validation, and other properties as needed. |
-
 {:style="table-layout:auto"}
 
 After adding max-height field as previously shown, flush your cache, drag a banner to the Admin stage, open the editor, and see your new style property field being rendered in the Banner's form, as shown here:

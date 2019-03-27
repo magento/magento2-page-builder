@@ -50,6 +50,7 @@ The CSS for integrating SVG and PNG images with the font icons used by Page Buil
 | `width`         | Sets the width of the content area that most closely matches the widths of Page Builder icon fonts. |
 | `height`        | Sets the height of the content area that most closely matches the widths of Page Builder icon fonts. |
 | `margin-bottom` | Pulls the SVG or PNG image down within the panel container to more closely match the positioning of Page Builder's font icon. |
+{:style="table-layout:auto"}
 
 When deployed, your icon images are linked from `pub/static` as shown here: 
 
@@ -77,7 +78,6 @@ The last step is to add our icon's class name to our config file. Previous to th
 That's it. Now you can regenerate your static assets, empty your browser cache, and do a hard reload of your Admin page to see your new icon in the panel. 
 
 ## Next
-
-Congratulations! You just finished the last step in this tutorial. To wrap things up, find out [What's next](whats-next.md).
+[Summary](summary.md).
 
 

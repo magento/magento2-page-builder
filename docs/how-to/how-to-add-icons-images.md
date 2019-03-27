@@ -114,6 +114,7 @@ If you create an icon for the panel, replace the `background-image` attribute wi
 | `background-image url` | The `url` used for the `background-image` is the most critical part of your own CSS classes. Always use the `@{baseDir}` variable followed by your full module name, followed by the path to your image, starting with `css`. When deployed, Page Builder creates a link in the static output where the browser can resolve it, as described below. |
 | `width`                | Sets the width of the icon image.                            |
 | `height`               | Sets the height of the icon image.                           |
+{:style="table-layout:auto"}
 
 When deployed, your CSS classes and links to your icons are generated in `pub/static`, as shown here: 
 

@@ -76,6 +76,7 @@ define(['Magento_PageBuilder/js/content-type/uploader'], function (Uploader) {
 | `initialValue`     | Object[]  | The image value to set for the initial state of the uploader component. | yes     | None                                                                                                    |
 | `onChangeCallback` | Function  | The callback to execute when the end-user selects an image.                           | no    | Magento saves the image to the provided `dataStore` using `uploaderConfig.dataScope` as the key.        |
 | `onDeleteCallback` | Function  | The callback to execute when the end-user deletes the current image from storage. | no    | Magento removes the image from to the provided `dataStore` using `uploaderConfig.dataScope` as the key. |
+{:style="table-layout:auto"}
 
 ## Step 3: Add markup for the uploader
 
