@@ -1,10 +1,10 @@
 # Overview
 
-One of quickest ways to customize Page Builder is by changing how _existing_ content types look and behave. End-users can already edit Page Builder's content types in several ways. But sometimes your end-users will want to change the structure or modify properties that do not exist on a given content type. In those cases, you can extend an existing content type by customizing its existing _appearance_ or adding a new _appearance_.
+One of the quickest ways to customize Page Builder is by changing how _existing_ content types look and behave. End-users can already use Page Builder's content types to customize their content using the form editor. But sometimes your end-users will want to change the structure or set properties that do not exist on the content type. In those cases, you can extend an existing content type by customizing its existing _appearance_ or adding a new _appearance_.
 
 ## Appearances
 
-An **appearance** is an XML element in a content type's configuration file that lets you modify existing properties, templates, styles, and form fields, or create new ones. In other words, all Page Builder content types (existing or custom) are extended through appearances.
+An **appearance** is an XML element (in the content type's config file) that defines a view for your content type. This view defines HTML templates, styles, form fields, and other elements, which you can customize in various ways. To extend existing Page Builder content types, you can either modify existing appearances or create new ones.
 
 Many of Page Builder's content types have only one `appearance` element. These include the Heading, Text, Image, Video, Tabs, and more. Other content types have several appearances. For example, the Banner content type has four appearances, as shown here:
 
@@ -21,7 +21,8 @@ Page Builder defines these appearances in the Banner's configuration file (`Mage
 </appearances>
 ```
 
-Within each `appearance` element, you can change content types in the following ways:
+In Page Builder 1.0.0, when you customize content types that have multiple appearances (like the Banner), you must apply your changes to all the appearances, not just one. Customizing a single appearance of a content type that defines multiple appearances is not currently supported.  
+You can use appearances to change content types in the following ways:
 
 - Add new style properties.
 - Add or change templates.
@@ -31,19 +32,19 @@ Within each `appearance` element, you can change content types in the following 
 
 ## Banner extension tutorial
 
-In this tutorial, you will extend the Banner content type by adding a new `max-height` style property to two of the Banner's existing appearances: `collage-left` and `collage-right`.
+In this tutorial, you will learn how to extend one of Page Builder's existing content types by adding a new `max-height` style property to the Banner's existing appearances.
 
 ![Page Builder Banner menu item](../images/extend-banner-menu.png){:width="815px" height="auto"}
 
 ## Banner extension steps
 
-These steps show the basic pattern for adding style properties using existing appearances to extend a content type:
+These steps show the basic pattern for adding style properties and form fields to existing content type appearances:
 
 ![Creating Custom Content Types](../images/extension-steps-overview.svg)
 
 1. **Create an extension module**: Create a basic module for your Banner extensions.
 2. **Extend appearances**: Extend the existing content type's configuration file by customizing an existing appearance with new style properties.
-3. **Extend forms**: Extend the existing content type's UI component form by adding new form fields and changing defaults for existing fields.
+3. **Extend forms**: Extend the existing content type's UI component form by adding new form fields and/or changing defaults for existing fields.
 
 ## Next
 

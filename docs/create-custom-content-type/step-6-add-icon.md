@@ -78,6 +78,6 @@ The last step is to add our icon's class name to our config file. Previous to th
 That's it. Now you can regenerate your static assets, empty your browser cache, and do a hard reload of your Admin page to see your new icon in the panel. 
 
 ## Next
-[Summary](summary.md).
+[Tutorial summary](summary.md).
 
 

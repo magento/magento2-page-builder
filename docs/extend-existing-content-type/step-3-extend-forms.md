@@ -4,7 +4,7 @@ In this step, you will extend the Banner form (`pagebuilder_banner_form.xml`) by
 
 ## Create the appearance forms
 
-Page Builder forms are UI component forms. This means they follow the same conventions as any other UI component form. If you are not already familiar with UI component forms, you can learn more about them from the [UI Components Guide](https://devdocs.magento.com/guides/v2.3/ui_comp_guide/concepts/ui_comp_xmldeclaration_concept.html). For this tutorial, we provide you with the basic markup for setting up an empty form.
+Page Builder forms are UI component forms. This means they follow the same conventions as any other UI component form in Magento. If you are not already familiar with UI component forms, you can learn more about them from the [UI Components Guide](https://devdocs.magento.com/guides/v2.3/ui_comp_guide/concepts/ui_comp_xmldeclaration_concept.html). For this tutorial, we provide you with the basic markup for setting up an empty form.
 
 Your file structure for the Banner extension forms and corresponding layouts should look like this: 
 
@@ -53,7 +53,7 @@ When setting up your extension form, ensure you have named your form with the sa
 
 ## Add fieldsets and fields
 
-Before you add a field to the form of an existing content type, you need to know where to add it. In other words, you need to decide which fieldset to put your field in. We want to put our new max-height field with the Banner's existing min-height field, which is the `appearance_fieldset`.
+Before you add a field to the form of an existing content type, you need to know where to add it. In other words, you need to decide which fieldset to put your field in. We want to put our new max-height field below the Banner's existing min-height field, which is in the the `appearance_fieldset`.
 
 The markup for adding the field to the fieldset looks like this:  
 
@@ -83,20 +83,20 @@ The markup for adding the field to the fieldset looks like this:
 </fieldset>
 ```
 
-Some of the key elements are described here.
+The following table describes some key elements:
 
 | Elements   | Description                                                  |
 | ---------- | ------------------------------------------------------------ |
 | `fieldset` | The fieldset `name` should match the name of the fieldset from the Banner's form. The `appearance_fieldset` is common to all the content type forms and, by default, appears at the top of the forms using the `sortOrder` of 10. |
 | `field`    | The field `name` should match the CSS max-height style property, but in snake_case. Fields also have a `sortOrder` you can use to place your field above or below existing fields. The `formElement` for a field describes the HTML form type, such as input, checkbox, select, and more. |
-| `argument` | Provides the way to add a `default` value to your field. Our default value is set to `300`. |
+| `argument` | Provides the way to add a `default` value to your field. We set our default value to `300`. |
 | `settings` | Provides the markup that gives your field a label, CSS styling, validation, and other properties as needed. |
 {:style="table-layout:auto"}
 
-After adding max-height field as previously shown, flush your cache, drag a banner to the Admin stage, open the editor, and see your new style property field being rendered in the Banner's form, as shown here:
+After adding max-height field as shown, flush your cache, drag a banner to the Admin stage, open the editor, and see your new style property field being rendered in the Banner's form, as shown here:
 
 ![Appearance fieldset](../images/appearance-fieldset.png){:width="934px" height="auto"}
 
 ## Conclusion
 
-That's it! You should now be familiar with the basics of extending and existing content type. There is much more to learn, but hopefully this gives you a better understanding of how the existing Page Builder content types can be customized to fit your end-user's needs.
+That's it! You should now be familiar with the basics of extending an existing content type. There is much more to learn, but we hope this gives you a better understanding of how you can customize the existing Page Builder content types to fit your end-user's needs.
