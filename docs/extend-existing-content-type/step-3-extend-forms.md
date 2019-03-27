@@ -1,6 +1,6 @@
 # Step 3: Extend forms
 
-In this step, you will extend the Banner form (`pagebuilder_banner_form.xml`) by adding a form field for entering a `max-height` value for the `collage-left` and `collage-right` appearances. 
+In this step, you will customize the Banner form (`pagebuilder_banner_form.xml`) by adding a form field for entering a `max-height` value for the `collage-left` and `collage-right` appearances. 
 
 ## Create the appearance forms
 
@@ -53,7 +53,7 @@ When setting up your extension form, ensure you have named your form with the sa
 
 ## Add fieldsets and fields
 
-Before you add a field to the form of an existing content type, you need to know where to add it. In other words, you need to decide which fieldset to put your field in. We want to put our new max-height field below the Banner's existing min-height field, which is in the the `appearance_fieldset`.
+Before you add a field to the form of an existing content type, you need to know where to add it. In other words, you need to decide which fieldset to put your field in. We want to put our new `max_height` field below the Banner's existing `min_height` field, which is in the the `appearance_fieldset`.
 
 The markup for adding the field to the fieldset looks like this:  
 
@@ -93,7 +93,7 @@ The following table describes some key elements:
 | `settings` | Provides the markup that gives your field a label, CSS styling, validation, and other properties as needed. |
 {:style="table-layout:auto"}
 
-After adding max-height field as shown, flush your cache, drag a banner to the Admin stage, open the editor, and see your new style property field being rendered in the Banner's form, as shown here:
+After adding the max_height field, flush your cache, drag a banner to the Admin stage, open the editor, and see your new style property field being rendered in the Banner's form, as shown here:
 
 ![Appearance fieldset](../images/appearance-fieldset.png){:width="934px" height="auto"}
 
