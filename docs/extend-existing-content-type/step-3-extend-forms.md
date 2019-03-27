@@ -2,17 +2,17 @@
 
 In this step, you will customize the Banner form (`pagebuilder_banner_form.xml`) by adding a form field for entering a `max-height` value for the `collage-left` and `collage-right` appearances. 
 
-## Create the appearance forms
+## Create the appearance form
 
 Page Builder forms are UI component forms. This means they follow the same conventions as any other UI component form in Magento. If you are not already familiar with UI component forms, you can learn more about them from the [UI Components Guide](https://devdocs.magento.com/guides/v2.3/ui_comp_guide/concepts/ui_comp_xmldeclaration_concept.html). For this tutorial, we provide you with the basic markup for setting up an empty form.
 
-Your file structure for the Banner extension forms and corresponding layouts should look like this: 
+Your file structure for the Banner extension form and corresponding layout should look like this: 
 
 ![Extension forms file structure](../images/extension-forms-files.png){:width="544px" height="auto"}
 
-When setting up your extension form, ensure you have named your form with the same name as that of the content type you want to extend. In our case, we are extending from the Banner's form: `page-banner-form.xml` . The basic XML configuration for both forms is as follows. 
+### Extension form
 
-### `collage-left` form
+When customizing an existing form, make sure you name your form with the same name as the existing content type's form. In our case, we are customizing the Banner's form, which means we must name our form: `page-banner-form.xml`. Here's the basic XML configuration for the Banner form extension: 
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
