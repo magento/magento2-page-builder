@@ -8,5 +8,5 @@
 
 To start learning about Page Builder and Page Builder development:
 
- - [What is Page Builder?](index.md ) - for developers.
- - [Page Builder User Guide](https://docs.magento.com/m2/ee/user_guide/cms/page-builder.html) - for end-users.
+ - For developers: [What is Page Builder?](https://devdocs.magento.com/page-builder/docs/index.html)
+ - For end-users: [Page Builder User Guide](https://docs.magento.com/m2/ee/user_guide/cms/page-builder.html)
