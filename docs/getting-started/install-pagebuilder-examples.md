@@ -16,7 +16,7 @@ To learn by example, the [Example directory](https://github.com/magento-devdocs/
 
 ## Extension modules for existing content types
 
-The [Example directory](https://github.com/magento-devdocs/pagebuilder-examples/tree/master/Example) also provides the completed extension module described in the [Extend a content type tutorial](../extend-existing-content-type/overview.md). More extension modules will be added in the coming weeks.
+The [Example directory](https://github.com/magento-devdocs/pagebuilder-examples/tree/master/Example) also provides the completed extension module described in the [Extend a content type tutorial](../extend-existing-content-type/overview.md).
 
 ## Example code for how-to topics
 
