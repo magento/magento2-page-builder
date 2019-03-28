@@ -1,6 +1,6 @@
 # Summary
 
-If you made it this far, congratulations! We hope this tutorial was useful for learning the basics of creating a completely new content type for your end-users. 
+If you made it this far, congratulations! We hope this tutorial was useful for learning the basics of creating a completely new content type for your end users. 
 
 ## Next topics
 Here's a list of good next topics to learn more about customizing Page Builder:
