@@ -200,6 +200,7 @@ These are declared under the `<elements />` node within the appearance.
 | Attribute           | Description                                                                            |
 | ------------------- | -------------------------------------------------------------------------------------- |
 | `name`              | The name for the element that will be used to reference the data mapping configuration from your templates. This must be unique within the current appearance.    |
+{:style="table-layout:auto"}
 
 The name specified here is used within your templates bindings to retrieve the data from your configuration.
 
@@ -475,7 +476,7 @@ We discourage modifying existing menu sections if they do not belong to your mod
 | `name`              | The internal name for this menu section, will be used by content types to reference your section.      |
 | `translate`         | Determine which aspects of the menu section should be translated.                                                                                    |
 | `sortOrder`         | The sort order in relation to other menu sections, within our configuration we step these 10 integers apart to allow for new sections to be added in between. |
-| `label`             | The label to be displayed within the left menu    |                                                                                      |
+| `label`             | The label to be displayed within the left menu    |
 {:style="table-layout:auto"}
 
 The following is an example of a menu section configuration in `view/adminhtml/pagebuilder/menu_section.xml`:

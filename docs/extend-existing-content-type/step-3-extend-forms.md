@@ -1,18 +1,18 @@
 # Step 3: Extend forms
 
-In this step, you will extend the Banner form (`pagebuilder_banner_form.xml`) by adding a form field for entering a `max-height` value for the `collage-left` and `collage-right` appearances. 
+In this step, you will customize the Banner form (`pagebuilder_banner_form.xml`) by adding a form field for entering a `max-height` value for the `collage-left` and `collage-right` appearances. 
 
-## Create the appearance forms
+## Create the appearance form
 
-Page Builder forms are UI component forms. This means they follow the same conventions as any other UI component form. If you are not already familiar with UI component forms, you can learn more about them from the [UI Components Guide](https://devdocs.magento.com/guides/v2.3/ui_comp_guide/concepts/ui_comp_xmldeclaration_concept.html). For this tutorial, we provide you with the basic markup for setting up an empty form.
+Page Builder forms are UI component forms. This means they follow the same conventions as any other UI component form in Magento. If you are not already familiar with UI component forms, you can learn more about them from the [UI Components Guide](https://devdocs.magento.com/guides/v2.3/ui_comp_guide/concepts/ui_comp_xmldeclaration_concept.html). For this tutorial, we provide you with the basic markup for setting up an empty form.
 
-Your file structure for the Banner extension forms and corresponding layouts should look like this: 
+Your file structure for the Banner extension form and corresponding layout should look like this: 
 
 ![Extension forms file structure](../images/extension-forms-files.png){:width="544px" height="auto"}
 
-When setting up your extension form, ensure you have named your form with the same name as that of the content type you want to extend. In our case, we are extending from the Banner's form: `page-banner-form.xml` . The basic XML configuration for both forms is as follows. 
+### Extension form
 
-### `collage-left` form
+When customizing an existing form, make sure you name your form with the same name as the existing content type's form. In our case, we are customizing the Banner's form, which means we must name our form: `page-banner-form.xml`. Here's the basic XML configuration for the Banner form extension: 
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -53,7 +53,7 @@ When setting up your extension form, ensure you have named your form with the sa
 
 ## Add fieldsets and fields
 
-Before you add a field to the form of an existing content type, you need to know where to add it. In other words, you need to decide which fieldset to put your field in. We want to put our new max-height field with the Banner's existing min-height field, which is the `appearance_fieldset`.
+Before you add a field to the form of an existing content type, you need to know where to add it. In other words, you need to decide which fieldset to put your field in. We want to put our new `max_height` field below the Banner's existing `min_height` field, which is in the the `appearance_fieldset`.
 
 The markup for adding the field to the fieldset looks like this:  
 
@@ -83,21 +83,20 @@ The markup for adding the field to the fieldset looks like this:
 </fieldset>
 ```
 
-Some of the key elements are described here.
+The following table describes some key elements:
 
 | Elements   | Description                                                  |
 | ---------- | ------------------------------------------------------------ |
 | `fieldset` | The fieldset `name` should match the name of the fieldset from the Banner's form. The `appearance_fieldset` is common to all the content type forms and, by default, appears at the top of the forms using the `sortOrder` of 10. |
 | `field`    | The field `name` should match the CSS max-height style property, but in snake_case. Fields also have a `sortOrder` you can use to place your field above or below existing fields. The `formElement` for a field describes the HTML form type, such as input, checkbox, select, and more. |
-| `argument` | Provides the way to add a `default` value to your field. Our default value is set to `300`. |
+| `argument` | Provides the way to add a `default` value to your field. We set our default value to `300`. |
 | `settings` | Provides the markup that gives your field a label, CSS styling, validation, and other properties as needed. |
-
 {:style="table-layout:auto"}
 
-After adding max-height field as previously shown, flush your cache, drag a banner to the Admin stage, open the editor, and see your new style property field being rendered in the Banner's form, as shown here:
+After adding the `max_height` field, flush your cache, drag a banner to the Admin stage, open the editor, and see your new style property field being rendered in the Banner's form, as shown here:
 
 ![Appearance fieldset](../images/appearance-fieldset.png){:width="934px" height="auto"}
 
 ## Conclusion
 
-That's it! You should now be familiar with the basics of extending and existing content type. There is much more to learn, but hopefully this gives you a better understanding of how the existing Page Builder content types can be customized to fit your end-user's needs.
+That's it! You should now be familiar with the basics of extending an existing content type. There is much more to learn, but we hope this gives you a better understanding of how you can customize the existing Page Builder content types to fit your end-user's needs.

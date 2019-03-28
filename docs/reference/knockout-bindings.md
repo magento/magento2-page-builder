@@ -41,7 +41,7 @@ view/adminhtml/web/ts/js/binding/draggable.ts
 
 This binding serves as an interface for jQuery UI Draggable.
 
-Within Page Builder, we use this binding for the left panel's content types. The configuration and usage of the `draggable` binding can be seen in the Panel component:
+Within Page Builder, we use this binding for the left panel's content types. You can see the configuration and usage of the `draggable` binding in the Panel component. If you have access to the Page Builder repo, you can find the Panel component template here: https://github.com/magento/magento2-page-builder/blob/develop/app/code/Magento/PageBuilder/view/adminhtml/web/template/panel.html.
 
 **Configuration:**
 
@@ -56,18 +56,19 @@ _Because jQuery UI can have callback functions, we recommend providing this conf
 
 ### `liveEdit` binding
 
-This binding provides basic text live editing functionality to the current element. It does this by adding the `contenteditable` functionality to the bound element.
+This binding provides basic text live editing functionality to the current element. It does this by adding `contenteditable` to the bound element.
 
 **Configuration:**
 
 | Name           | Description                                                    | 
 | -------------- | -------------------------------------------------------------- |
-| `field`        | The field name from the UI component form which you wish the live edit instance to edit. | 
-| `placeholder`  | _Optional_. A placeholder to display if there is no data for this field.
+| `field`        | The field name from the UI component form you want the live edit instance to edit. | 
+| `placeholder`  | _Optional_. A placeholder to display when there is no data entered for this field.
 | `selectAll`    | _Optional_. Selects all text on focus within the live edit field. We use this within tabs. |           
 {:style="table-layout:auto"}
 
 **Usage:**
+
 ```html
 <div data-bind="liveEdit: { field: 'field', placeholder: $t('Placeholder'), selectAll: true }" />
 ```
@@ -79,6 +80,7 @@ This binding enables the functionality of Knockout's [hasFocus](https://knockout
 The binding has no configuration and must be passed an observable with a boolean value. 
 
 **Usage:**
+
 ```html
 <div data-bind="hasFocusNoScroll: anObservable" />
 ```

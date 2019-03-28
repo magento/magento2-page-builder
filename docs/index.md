@@ -18,11 +18,11 @@ For end-users, this means _no coding required_. For you as a developer, it means
 
 This documentation describes how to do both.  
 
-## Getting started
+## Getting started with Page Builder development
 
 The following topics will help you get started with Page Builder development:
 
-- [Install Page Builder](getting-started/install-pagebuilder.md)
+- [Contributors Only - Install Page Builder](getting-started/install-pagebuilder.md)
 - [View Page Builder](getting-started/view-pagebuilder.md)
 - [Install Page Builder Examples](getting-started/install-pagebuilder-examples.md)
-
+- [Check out the User Guide](https://docs.magento.com/m2/ee/user_guide/cms/page-builder.html)
