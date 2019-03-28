@@ -1,6 +1,6 @@
 # Step 2: Extend appearances
 
-In this step, you will extend all four Banner appearances by adding a new `max_height` style to each. The max-height property stops the Banner from growing beyond a certain height as end-users enter banner text.
+In this step, you will extend all four Banner appearances by adding a new `max_height` style to each. The `max-height` property stops the Banner from growing beyond a certain height as end users enter banner text.
 
 ## Create a content configuration file
 
@@ -15,13 +15,13 @@ As mentioned before, Page Builder defines the Banner's appearances within the `b
 </appearances>
 ```
 
-To customize these appearances, we need to create a new configuration file named `banner.xml`. Our configuration file must be the same name as the Banner's configuration file. This ensures that Magento merges our appearance customizations with the Banner's existing configuration. Your file structure for the `banner.xml` extension should look like this:
+To customize these appearances, you must create a new configuration file named `banner.xml`. The configuration file must use the same name as the Banner's configuration file. This ensures that Magento merges the appearance customizations with the Banner's existing configuration. Your file structure for the `banner.xml` extension should look like this:
 
 ![Extension config file structure](../images/appearance-extension-config-file.png){:width="511px" height="auto"}
 
 ## Add properties to appearances
 
-In the Page Builder 1.0.0 release, you cannot extend just one appearance of a content type. You must extend them all. In our example, we are extending all four appearances of the Banner content type by adding a max-height style property to these appearances:
+In the Page Builder 1.0.0, you cannot extend just one appearance of a content type. You must extend them all. In the following example, we are extending all four appearances of the Banner content type by adding a `max-height` style property to these appearances:
 
 ```xml
 <?xml version="1.0"?>

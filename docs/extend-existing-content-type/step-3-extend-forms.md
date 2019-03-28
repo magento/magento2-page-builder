@@ -93,7 +93,7 @@ The following table describes some key elements:
 | `settings` | Provides the markup that gives your field a label, CSS styling, validation, and other properties as needed. |
 {:style="table-layout:auto"}
 
-After adding the max_height field, flush your cache, drag a banner to the Admin stage, open the editor, and see your new style property field being rendered in the Banner's form, as shown here:
+After adding the `max_height` field, flush your cache, drag a banner to the Admin stage, open the editor, and see your new style property field being rendered in the Banner's form, as shown here:
 
 ![Appearance fieldset](../images/appearance-fieldset.png){:width="934px" height="auto"}
 

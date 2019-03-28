@@ -1,10 +1,10 @@
 # Overview
 
-One of the quickest ways to customize Page Builder is by changing how _existing_ content types look and behave. End-users can already use Page Builder's content types to customize their content using the form editor. But sometimes your end-users will want to change the structure or set properties that do not exist on the content type. In those cases, you can extend an existing content type by customizing its existing _appearance_ or adding a new _appearance_.
+One of the quickest ways to customize Page Builder is by changing how _existing_ content types look and behave. End users can already use Page Builder's content types to customize their content using the form editor. But your end users may want to change the structure or set properties that do not exist on the content type. In those cases, you can extend an existing content type by customizing its  _appearance_ or adding a new _appearance_.
 
 ## Appearances
 
-An **appearance** is an XML element (in the content type's config file) that defines a view for your content type. This view defines HTML templates, styles, form fields, and other elements, which you can customize in various ways. To extend existing Page Builder content types, you can either modify existing appearances or create new ones.
+An **appearance** is an XML element (in the content type's configuration file) that defines a view for your content type. This view defines HTML templates, styles, form fields, and other elements that you can customize in various ways. To extend existing Page Builder content types, you can either modify existing appearances or create new ones.
 
 Many of Page Builder's content types have only one `appearance` element. These include the Heading, Text, Image, Video, Tabs, and more. Other content types have several appearances. For example, the Banner content type has four appearances, as shown here:
 

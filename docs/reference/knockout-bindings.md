@@ -41,7 +41,7 @@ view/adminhtml/web/ts/js/binding/draggable.ts
 
 This binding serves as an interface for jQuery UI Draggable.
 
-Within Page Builder, we use this binding for the left panel's content types. The configuration and usage of the `draggable` binding can be seen in the Panel component. If you have access to the Page Builder repo, you can find the Panel component template here: https://github.com/magento/magento2-page-builder/blob/develop/app/code/Magento/PageBuilder/view/adminhtml/web/template/panel.html.
+Within Page Builder, we use this binding for the left panel's content types. You can see the configuration and usage of the `draggable` binding in the Panel component. If you have access to the Page Builder repo, you can find the Panel component template here: https://github.com/magento/magento2-page-builder/blob/develop/app/code/Magento/PageBuilder/view/adminhtml/web/template/panel.html.
 
 **Configuration:**
 
