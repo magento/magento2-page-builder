@@ -8,7 +8,7 @@ You can find the Page Builder examples used in this documentation on GitHub in t
 
 ## Custom content type modules
 
-The [Example directory](https://github.com/magento-devdocs/pagebuilder-examples/tree/master/Example) on the repo provides the following custom content-type modules for you to download and install. The Page Builder team members created these modules to serve as examples for learning. They are not fully tested or guaranteed to work perfectly. However, we will do our best to improve these examples and keep them updated with the latest releases of Page Builder. 
+The [Example directory](https://github.com/magento-devdocs/pagebuilder-examples/tree/master/Example) on the repo provides custom content-type modules for you to download and install. The Page Builder team members created these modules to serve as examples for learning. They are not fully tested or guaranteed to work perfectly. However, we will do our best to improve these examples and keep them updated with the latest releases of Page Builder. 
 
 - **[PageBuilderQuote](https://github.com/magento-devdocs/pagebuilder-examples/tree/master/Example/PageBuilderQuote)** — Create by [Bruce Denham](https://github.com/bdenham). This module shows you how to create a content type for a customer testimonial page. This is the completed Quote module featured in the [Create a content type tutorial](../create-custom-content-type/overview.md).
 - **[PageBuilderGrid](https://github.com/magento-devdocs/pagebuilder-examples/tree/master/Example/PageBuilderGrid)** — Created by [Dave Macaulay](https://github.com/davemacaulay). This module shows you how to create a content type that recreates the layout of the Magento Luma-themed home page using a grid structure with grid items.
@@ -16,7 +16,9 @@ The [Example directory](https://github.com/magento-devdocs/pagebuilder-examples/
 
 ## Extension modules for existing content types
 
-- **[PageBuilderExtensionBanner](https://github.com/magento-devdocs/pagebuilder-examples/tree/master/Example/PageBuilderExtensionBanner)** — Create by [Bruce Denham](https://github.com/bdenham). This module shows how to customize an existing content type: the Banner. This is the completed module featured in the [Extend a content type tutorial](../extend-existing-content-type/overview.md).
+The [Example directory](https://github.com/magento-devdocs/pagebuilder-examples/tree/master/Example) also provides the completed extension module featured in the [Extend a content type tutorial](../extend-existing-content-type/overview.md):
+
+- **[PageBuilderExtensionBanner](https://github.com/magento-devdocs/pagebuilder-examples/tree/master/Example/PageBuilderExtensionBanner)** — This Banner extension module shows the basic pattern for customizing existing content types using appearances.
 
 ## Example code for how-to topics
 
