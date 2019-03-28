@@ -2,7 +2,7 @@
 
 If you made it this far, congratulations! We hope this tutorial was useful for learning the basics of creating a completely new content type for your end users. 
 
-## Next topics
+## Next steps
 Review the following topics to learn more about customizing Page Builder:
 
 ### Tutorials
