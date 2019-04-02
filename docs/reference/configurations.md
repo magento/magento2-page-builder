@@ -197,6 +197,7 @@ To enable your appearance to effectively read and write data from the master for
 These are declared under the `<elements />` node within the appearance. 
 
 ###### `element`
+
 | Attribute           | Description                                                                            |
 | ------------------- | -------------------------------------------------------------------------------------- |
 | `name`              | The name for the element that will be used to reference the data mapping configuration from your templates. This must be unique within the current appearance.    |
