@@ -24,7 +24,7 @@ There are a number of simple attributes that can be configured within the `<type
 | `form`              | UI component form that provides the form controls for editing your content type.|
 | `icon`              | Optional. Class name for your PNG or SVG image (or font icon) displayed in the Page Builder panel alongside the label. If you don't provide an icon value, the Page Builder panel displays the content type name without an icon. |
 | `sortOrder`         | Optional. The listed order within the menu section. For example, `sortOrder=21` puts the content type third in the `Elements` menu section, after the content types with `sortOrder` values of 10 and 20. |
-| `translate`         | Identifies the attribute you want Magento to translate. Here, the `label` value is set for translation. |
+| `translate`         | Identifies the attribute you want Magento to translate. |
 
 #### Basic Configuration Example
 As an example of the configurable attributes we can look into the Text content types basic configuration.
