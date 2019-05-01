@@ -14,15 +14,17 @@ There are a number of simple attributes that can be configured within the `<type
 
 | Attribute           | Description                                                                                                                                 |
 | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
-| `name`              | Describes the content types internal name, this is used to when the system references the content type.      |
-| `label`             | Label displayed within the menu and stage.                                                                                                      |
-| `menu_section`      | Allocate the content type to a menu section, the menu section must exist and be defined in `menu_section.xml`.   |
+| `name`              | Name of the content type that Magento uses for XML merging. The convention for using multi-word names is to separate the words with hyphens.      |
+| `label`             | Label displayed in the Page Builder panel, option menu, and on the Admin stage.                                                                                                      |
+| `menu_section`      | Menu section or category in the panel menu where your content type is displayed. The default menu sections are Layout, Elements, Media, and Add Content. See [Panel configurations](../how-to/how-to-customize-panel.md) for more details.  |
 | `icon`              | CSS class for icon to be displayed within the menu alongside the content types name. See [How to add icons and images](../how-to/how-to-add-icons-images.md) for more guidance.  |
-| `component`         | View model responsible for rendering the preview and master format.                                                                         |
-| `preview_component` | Helper component that contains preview specific logic. Helper component is optional.                                                        |
-| `master_component`  | Contains master format rendering logic that is generic for all appearances. Content component is optional.                                  |
-| `form`              | UI component form used for editing the content type.                                                                                         |
-{:style="table-layout:auto"}
+| `component`         | View model responsible for rendering the preview and master format. The component does not need to specify the `.js` extension. There are two component types to choose from: `content-type` and `content-type-collection`. Use `Magento_PageBuilder/js/content-type` for static content types that do not have children. Use `Magento_PageBuilder/js/content-type-collection` for content types that can contain children, otherwise known as container content types.                                                                        |
+| `preview_component` | JavaScript file (`preview.js` or `preview-collection.js`) that provides rendering logic within the Admin UI. The preview component does not need to specify the `.js` extension. <br/><br/>For _collection_ content types, you need to either reference your own `preview-collection` component or reference Page Builder's `preview-collection` (`preview_component="Magento_PageBuilder/js/content-type/preview-collection"`). If you don't specify the `preview_component`, Page Builder uses the base `Preview` component shown in the code: `Magento_PageBuilder/js/content-type/preview`. |
+| `master_component`  | JavaScript file (`master.js` or `master-collection.js`) that provides rendering logic generic for all appearances of your content type when rendered on the storefront. The master component does not need to specify the `.js` extension. <br/><br/>For _collection_ content types, you need to either reference your own `master-collection` component or reference Page Builder's `master-collection` (`master_component="Magento_PageBuilder/js/content-type/master-collection"`). If you don't specify the `master_component`, Page Builder uses the base `Master` component shown in the code: `Magento_PageBuilder/js/content-type/master`. |
+| `form`              | UI component form that provides the form controls for editing your content type.|
+| `icon`              | Optional. Class name for your PNG or SVG image (or font icon) displayed in the Page Builder panel alongside the label. If you don't provide an icon value, the Page Builder panel displays the content type name without an icon. |
+| `sortOrder`         | Optional. The listed order within the menu section. For example, `sortOrder=21` puts the content type third in the `Elements` menu section, after the content types with `sortOrder` values of 10 and 20. |
+| `translate`         | Identifies the attribute you want Magento to translate. |
 
 #### Basic Configuration Example
 As an example of the configurable attributes we can look into the Text content types basic configuration.
@@ -46,7 +48,7 @@ There are a number of child elements which can be configured, these are typicall
 | `parents`           | Defines the default policy and matrix of which content types this content type can have as a parent. For instance the Slide content type defines a default policy of `deny` with an exception allowing this content type to only be housed within the Slider content type. |
 | `children`          | Similar to the `parents` option, however this defines the allowed `children` of the current content type. As with the Slide example this time the Slider defines the Slide as it's only allowed child. |
 | `appearances`       | Configures various appearances along with associated data mapping elements. This is a crucial part of all content types and defines how the master and preview systems should retrieve and display their data. |
-| `is_system`         | Determines menu visibility for the component. System components are not be visible in the menu. The default value for this is true. We use this to hide child or "special" content types that are added by other content types. For instance the Slide is not able to be dragged into the stage itself, thus it's not a system content type. |
+| `is_system`         | Determines menu visibility for the content type. System content types are visible in the menu. The default value for this is true. By setting this to false, you can hide child or "special" content types that are added by other content types. For example, you cannot directly drag a Slide content type onto the stage, which means it is not a system content type. |
 | `additional_data`   | Allows you to specify additional data for the component. See [additional configurations](../how-to/how-to-add-additional-configurations.md) for more information. |
 {:style="table-layout:auto"}
 
