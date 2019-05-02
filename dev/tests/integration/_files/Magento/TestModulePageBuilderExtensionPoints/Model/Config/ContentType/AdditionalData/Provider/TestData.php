@@ -6,7 +6,7 @@
 
 declare(strict_types=1);
 
-namespace Magento\TestModulePageBuilderDataMigration\Model\Config\ContentType\AdditionalData\Provider;
+namespace Magento\TestModulePageBuilderExtensionPoints\Model\Config\ContentType\AdditionalData\Provider;
 
 use Magento\PageBuilder\Model\Config\ContentType\AdditionalData\ProviderInterface;
 
