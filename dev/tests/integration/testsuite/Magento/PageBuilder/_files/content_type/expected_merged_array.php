@@ -118,6 +118,12 @@ return [
                             'xsi:type' => 'number',
                             'value' => '-90',
                         ],
+                        'settingWithTypeObject' => [
+                            'name' => 'settingWithTypeObject',
+                            'xsi:type' => 'object',
+                            'value' => 'Magento\\TestModulePageBuilderExtensionPoints\\Model\\Config\\'
+                                . 'ContentType\\AdditionalData\\Provider\\TestData',
+                        ],
                     ],
                 ],
                 'config2' => [
@@ -157,6 +163,12 @@ return [
                                     'xsi:type' => 'number',
                                     'value' => '-90',
                                 ],
+                                'settingWithTypeObject' => [
+                                    'name' => 'settingWithTypeObject',
+                                    'xsi:type' => 'object',
+                                    'value' => 'Magento\\TestModulePageBuilderExtensionPoints\\Model\\Config\\'
+                                        . 'ContentType\\AdditionalData\\Provider\\TestData',
+                                ],
                             ],
                         ],
                     ],
@@ -189,6 +201,12 @@ return [
                     'name' => 'settingWithTypeNumber2',
                     'xsi:type' => 'number',
                     'value' => '-90',
+                ],
+                'settingWithTypeObject' => [
+                    'name' => 'settingWithTypeObject',
+                    'xsi:type' => 'object',
+                    'value' => 'Magento\\TestModulePageBuilderExtensionPoints\\Model\\Config\\'
+                        . 'ContentType\\AdditionalData\\Provider\\TestData',
                 ],
             ],
             'name' => 'type1',
