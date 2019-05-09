@@ -30,7 +30,7 @@ class Preview extends \Magento\Framework\App\Action\Action implements HttpPostAc
     /**
      * @var \Magento\Backend\Model\Auth
      */
-    protected $auth;
+    private $auth;
 
     /**
      * Constructor
