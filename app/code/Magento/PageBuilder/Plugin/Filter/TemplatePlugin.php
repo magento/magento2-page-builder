@@ -19,6 +19,11 @@ class TemplatePlugin
     const HTML_CONTENT_TYPE_PATTERN = '/data-content-type="html"/si';
 
     /**
+     * @var \Magento\Framework\Escaper
+     */
+    private $escaper;
+
+    /**
      * @var \Magento\Framework\View\ConfigInterface
      */
     private $viewConfig;
@@ -42,15 +47,20 @@ class TemplatePlugin
      * @param \Psr\Log\LoggerInterface $logger
      * @param \Magento\Framework\View\ConfigInterface $viewConfig
      * @param \Magento\Framework\Math\Random $mathRandom
+     * @param \Magento\Framework\Escaper|null $escaper
      */
     public function __construct(
         \Psr\Log\LoggerInterface $logger,
         \Magento\Framework\View\ConfigInterface $viewConfig,
-        \Magento\Framework\Math\Random $mathRandom
+        \Magento\Framework\Math\Random $mathRandom,
+        \Magento\Framework\Escaper $escaper = null
     ) {
         $this->logger = $logger;
         $this->viewConfig = $viewConfig;
         $this->mathRandom = $mathRandom;
+        $this->escaper = $escaper ?? \Magento\Framework\App\ObjectManager::getInstance()->get(
+            \Magento\Framework\Escaper::class
+        );
     }
 
     /**
@@ -130,7 +140,7 @@ class TemplatePlugin
 
         $result = $proceed($construction);
 
-        return htmlspecialchars($result);
+        return $this->escaper->escapeHtml($result);
     }
 
     /**
