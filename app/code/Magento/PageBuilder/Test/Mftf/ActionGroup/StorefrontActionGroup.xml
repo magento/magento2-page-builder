@@ -7,8 +7,12 @@
 -->
 
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
     <actionGroup name="navigateToStoreFront">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="contentType"/>
         </arguments>
@@ -16,6 +20,10 @@
         <waitForPageLoad time="30" stepKey="waitForPageLoad"/>
     </actionGroup>
     <actionGroup name="navigateToStoreFrontWithStoreView">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="contentType"/>
             <argument name="storeView"/>
@@ -24,6 +32,10 @@
         <waitForPageLoad time="30" stepKey="waitForPageLoad"/>
     </actionGroup>
     <actionGroup name="validateContentTypeInsideContainerStorefront">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="contentType"/>
             <argument name="contentTypeIndex" defaultValue="1" type="string"/>
@@ -33,6 +45,10 @@
         <waitForElementVisible time="30" selector="{{PageBuilderStoreFront.contentTypeInsideContainerStorefront(containerTargetType.role, containerTargetIndex, contentType.role, contentTypeIndex)}}" stepKey="waitForContentTypeStorefront"/>
     </actionGroup>
     <actionGroup name="validateContentTypeInsideContainerStorefrontInDOM">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="contentType"/>
             <argument name="contentTypeIndex" defaultValue="1" type="string"/>
@@ -42,6 +58,10 @@
         <waitForElement time="30" selector="{{PageBuilderStoreFront.contentTypeInsideContainerStorefront(containerTargetType.role, containerTargetIndex, contentType.role, contentTypeIndex)}}" stepKey="waitForContentTypeStorefront"/>
     </actionGroup>
     <actionGroup name="verifyCmsPageLinkOnFrontend">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="CMSPage"/>
             <argument name="index"/>

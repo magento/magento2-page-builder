@@ -7,15 +7,19 @@
 -->
 
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
     <actionGroup name="searchBlockInGrid">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="block" defaultValue=""/>
         </arguments>
         <waitForElementVisible selector="{{BlockOnForm.selectBlockBtn}}" stepKey="waitForSelectBlockBtn"/>
         <click selector="{{BlockOnForm.selectBlockBtn}}" stepKey="clickSelectBlockBtn"/>
         <waitForPageLoad stepKey="waitForGridSlideOut"/>
-        <waitForElementVisible selector="{{BlockOnGrid.searchBox}}" stepKey="waitForBlockGrid" />
+        <waitForElementVisible selector="{{BlockOnGrid.searchBox}}" stepKey="waitForBlockGrid"/>
         <fillField selector="{{BlockOnGrid.searchBox}}" userInput="{{block.identifier}}" stepKey="enterBlockTitle"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <click selector="{{BlockOnGrid.searchBtn}}" stepKey="clickSearchBtn"/>
@@ -29,6 +33,10 @@
         <waitForElementVisible selector="{{BlockOnForm.title(block.title)}}" stepKey="waitToSeeBlockTitle"/>
     </actionGroup>
     <actionGroup name="verifyBlockOnStage">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="block"/>
             <argument name="index" defaultValue="1" type="string"/>
@@ -40,6 +48,10 @@
         <see selector="{{BlockOnStage.content(index)}}" userInput="{{block.content}}" stepKey="seeBlockContentOnStage"/>
     </actionGroup>
     <actionGroup name="verifyVerticalAlignmentBottomInBlock">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="block" defaultValue="BlockOnStorefront"/>
             <argument name="container"/>
@@ -63,6 +75,10 @@
         </assertLessThanOrEqual>
     </actionGroup>
     <actionGroup name="verifyVerticalAlignmentCenterInBlock">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="block" defaultValue="BlockOnStorefront"/>
             <argument name="container"/>
@@ -78,6 +94,10 @@
         </assertEquals>
     </actionGroup>
     <actionGroup name="verifyAlignmentRightInBlock">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="block" defaultValue="BlockOnStorefront"/>
             <argument name="container" type="string"/>

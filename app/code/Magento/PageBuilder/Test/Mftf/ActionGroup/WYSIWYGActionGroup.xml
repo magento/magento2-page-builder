@@ -7,8 +7,12 @@
 -->
 
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
     <actionGroup name="addTextToTinyMCE">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="property" defaultValue=""/>
             <argument name="section" defaultValue="TextOnConfiguration"/>
@@ -23,6 +27,10 @@
         <switchToIFrame stepKey="exitIFrame"/>
     </actionGroup>
     <actionGroup name="addTextToTinyMCEInline">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="section"/>
             <argument name="text" defaultValue="{{PageBuilderTextProperty.value}}" type="string"/>
@@ -37,6 +45,10 @@
         <waitForPageLoad stepKey="waitForUnFocus"/>
     </actionGroup>
     <actionGroup name="addTextToTinyMCEInlineWYSIWYGDisabled" extends="addTextToTinyMCEInline">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <comment userInput="addTextToTinyMCEInlineWYSIWYGDisabled" stepKey="comment"/>
         <waitForElementVisible selector="{{section.textArea(index)}}" stepKey="waitForEditorFocused"/>
         <pressKey selector="{{section.textArea(index)}}" userInput="{{text}}" stepKey="enterText"/>
@@ -45,9 +57,17 @@
         <waitForPageLoad stepKey="waitForUnFocus"/>
     </actionGroup>
     <actionGroup name="replaceTextToTinyMCE" extends="addTextToTinyMCE">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <executeJS function="tinymce.activeEditor.setContent('{{property.value}}')" stepKey="addTextToWYSIWYG"/>
     </actionGroup>
     <actionGroup name="addVariableToTinyMCE">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="variable" defaultValue=""/>
         </arguments>
@@ -62,10 +82,18 @@
         <waitForElementNotVisible selector="{{VariableSection.InsertWidget}}" stepKey="waitForVariableModalToClose"/>
     </actionGroup>
     <actionGroup name="addVariableToTinyMCEInline" extends="addVariableToTinyMCE">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <waitForElementVisible selector="{{TinyMCESection.InsertVariableIcon}}" stepKey="waitForInsertVariable1"/>
         <click selector="{{TinyMCESection.InsertVariableIcon}}" stepKey="clickInsertVariable1"/>
     </actionGroup>
     <actionGroup name="addVariableToTinyMCE3" extends="addVariableToTinyMCE">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="variable" defaultValue=""/>
         </arguments>
@@ -75,6 +103,10 @@
         <waitForElementVisible selector="{{TextOnConfiguration.tinyMCE3VariableBtn}}" stepKey="waitForVariableModalToClose"/>
     </actionGroup>
     <actionGroup name="addPageLinkVariableWYSIWYGDisabled">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="variable" defaultValue=""/>
         </arguments>
@@ -91,6 +123,10 @@
         <assertContains actual="getText" actualType="variable" expected="{{variable.editPanelValue}}" expectedType="string" stepKey="assertValue"/>
     </actionGroup>
     <actionGroup name="addPageLinkWidgetToTinyMCE">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="widget" defaultValue=""/>
             <argument name="page" defaultValue="" type="string"/>
@@ -120,10 +156,18 @@
         <waitForElementNotVisible selector="{{WidgetSection.InsertWidget}}" stepKey="waitForInsertWidgetModalToClose"/>
     </actionGroup>
     <actionGroup name="addPageLinkWidgetToTinyMCEInline" extends="addPageLinkWidgetToTinyMCE">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <waitForElementVisible selector="{{TinyMCESection.InsertWidgetIcon}}" stepKey="waitForInsertWidget1"/>
         <click selector="{{TinyMCESection.InsertWidgetIcon}}" stepKey="clickAddWidgetBtn"/>
     </actionGroup>
     <actionGroup name="addPageLinkWidgetToTinyMCE3" extends="addPageLinkWidgetToTinyMCE">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="widget" defaultValue=""/>
             <argument name="page" defaultValue="" type="string"/>
@@ -134,6 +178,10 @@
         <waitForElementVisible selector="{{TextOnConfiguration.tinyMCE3WidgetBtn}}" stepKey="waitForInsertWidgetModalToClose"/>
     </actionGroup>
     <actionGroup name="addPageLinkWidgetWYSIWYGDisabled" extends="addPageLinkWidgetToTinyMCE">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="widget" defaultValue=""/>
             <argument name="page" defaultValue="" type="string"/>
@@ -146,6 +194,10 @@
         <assertContains actual="getText" actualType="variable" expected="{{widget.editPanelValue}}" expectedType="string" stepKey="assertValue"/>
     </actionGroup>
     <actionGroup name="validateTextInTinyMCE">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="property" defaultValue=""/>
             <argument name="section" defaultValue="TextOnConfiguration"/>
@@ -157,6 +209,10 @@
         <switchToIFrame stepKey="exitIFrame"/>
     </actionGroup>
     <actionGroup name="insertLinkInWYSIWYG">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="section" defaultValue="TinyMCESection"/>
             <argument name="url" type="string"/>
@@ -177,6 +233,10 @@
         <waitForElementNotVisible selector="{{WYSIWYGInsertLinkModal.modal}}" stepKey="waitForInsertLinkModalGone"/>
     </actionGroup>
     <actionGroup name="assertTextareaContainsValue">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="selector" type="string"/>
             <argument name="value" type="string"/>
@@ -188,20 +248,32 @@
         </assertContains>
     </actionGroup>
     <actionGroup name="clickInsertImageInTinyMCE">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <!-- This goes in CE repo -->
         <comment userInput="clickInsertImageInTinyMCE" stepKey="comment"/>
         <waitForElementVisible selector="{{TinyMCESection.InsertImageIcon}}" stepKey="waitForInsertImageIcon"/>
         <click selector="{{TinyMCESection.InsertImageIcon}}" stepKey="clickInsertImageIcon"/>
-        <waitForPageLoad stepKey="waitForPageLoad" />
+        <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForElementVisible selector="{{MediaGallerySection.Browse}}" stepKey="waitForBrowseImagesButton"/>
     </actionGroup>
     <actionGroup name="clickMediaGalleryStorageRootArrow">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <!-- This goes in CE repo -->
         <click selector="{{MediaGallerySection.StorageRootArrow}}" stepKey="clickStorageRootArrow"/>
         <waitForPageLoad stepKey="waitForPageLoad2"/>
         <waitForElement selector="{{MediaGallerySection.StorageRootArrowClicked}}" stepKey="waitForStorageRootArrowClicked"/>
     </actionGroup>
     <actionGroup name="inlineEditWYSIWYGFromStage">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="contentType"/>
             <argument name="content" type="string"/>
@@ -214,6 +286,10 @@
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="loseFocusFromEditor"/>
     </actionGroup>
     <actionGroup name="inlineEditTextAreaFromStage">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="contentType"/>
             <argument name="content" type="string"/>

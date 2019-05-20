@@ -7,8 +7,12 @@
 -->
 
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
     <actionGroup name="switchSlide">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="sliderSection" defaultValue="SliderOnStage"/>
             <argument name="slideSection" defaultValue="SlideOnBackend"/>
@@ -21,9 +25,17 @@
         <waitForElementVisible selector="{{slideSection.base(slideIndex)}}" stepKey="waitForSlide"/>
     </actionGroup>
     <actionGroup name="inlineEditWYSIWYGFromStageForSlideCollageAppearancesInSmallColumns" extends="inlineEditWYSIWYGFromStage">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <click selector="{{SlideOnBackend.base(index)}}" stepKey="focusOnEditorArea"/>
     </actionGroup>
     <actionGroup name="validateBackgroundAttributesWithNoImageForSlide" extends="validateBackgroundAttributesWithNoImage">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <comment userInput="---merging to remove step---" stepKey="waitForBackgroundAttachment"/>
     </actionGroup>
 </actionGroups>

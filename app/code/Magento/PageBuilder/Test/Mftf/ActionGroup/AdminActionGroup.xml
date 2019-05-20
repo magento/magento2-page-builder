@@ -7,9 +7,13 @@
 -->
 
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
     <actionGroup name="navigateToCMSPage">
         <!-- This goes in CE repo -->
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="CMSPage"/>
         </arguments>
@@ -28,17 +32,29 @@
         <seeElement selector="{{CmsNewPagePageContentSection.header}}" stepKey="seeContentSectionHeaderForPage"/>
     </actionGroup>
     <actionGroup name="navigateToAPageWithPageBuilder">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <waitForPageLoad stepKey="waitForDashboardPageLoad"/>
         <amOnPage url="{{CmsPagesPage.url}}/new" stepKey="amOnPageBuilderPage"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
     </actionGroup>
     <actionGroup name="addPageBuilderPageTitle">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="contentType"/>
         </arguments>
         <fillField selector="{{CmsNewPagePageActionsSection.pageTitle}}" userInput="{{contentType.name}}{{PageBuilderPageTitle.pageName}}" stepKey="enterPageTitle"/>
     </actionGroup>
     <actionGroup name="switchToPageBuilderStage">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="sectionSelector" defaultValue="{{CmsNewPagePageContentSection.header}}" type="string"/>
             <argument name="sectionDependentSelector" defaultValue="{{CmsNewPagePageContentSection.header}}._show" type="string"/>
@@ -52,19 +68,35 @@
         <waitForElementVisible time="30" selector="{{RowOnStage.base(rowIndex)}}" stepKey="waitForPageBuilderRow"/>
     </actionGroup>
     <actionGroup name="verifyPageBuilderVisibleOnPage">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <waitForElementVisible selector="{{PageBuilderPanel.layoutMenuSection}}" stepKey="seePageBuilderVisible"/>
         <dontSee userInput="Enable Advanced CMS" stepKey="dontSeeEnableAdvancedCMSBtn"/>
     </actionGroup>
     <actionGroup name="verifyPageBuilderVisibleOnStaging">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <scrollTo selector="{{PageBuilderPanel.layoutMenuSection}}" stepKey="scrollToIdentifyPageBuilder"/>
         <waitForElementVisible selector="{{PageBuilderPanel.layoutMenuSection}}" stepKey="seePageBuilderVisible"/>
         <dontSee userInput="Enable Advanced CMS" stepKey="dontSeeEnableAdvancedCMSBtn"/>
     </actionGroup>
     <actionGroup name="verifyPageBuilderNotVisibleOnPage">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <dontSee userInput="Enable Advanced CMS" stepKey="dontSeeEnableAdvancedCMSBtn"/>
         <dontSee selector="{{PageBuilderPanel.layoutMenuSection}}" stepKey="seePageBuilderVisible"/>
     </actionGroup>
     <actionGroup name="verifyFullWidthLayout">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="index" defaultValue="0" type="string"/>
         </arguments>

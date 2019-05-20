@@ -9,6 +9,10 @@
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
     <actionGroup name="validateButtonItemContent">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="page"/>
             <argument name="text" defaultValue="PageBuilderButtonItemText_Empty"/>
@@ -25,6 +29,10 @@
         <waitForElementVisible selector="{{page.buttonItemNewTab(index, newTab.stageValue)}}" stepKey="waitForButtonNewTab"/>
     </actionGroup>
     <actionGroup name="inlineEditButton">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="text"/>
             <argument name="index" defaultValue="1" type="string"/>
@@ -40,6 +48,10 @@
         <waitForPageLoad stepKey="waitForUnFocus"/>
     </actionGroup>
     <actionGroup name="moveButton">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="x" defaultValue="null" type="string"/>
             <argument name="y" defaultValue="null" type="string"/>
@@ -57,6 +69,10 @@
         <waitForElementVisible selector="{{ButtonItemOnStage.base(buttonIndexToMove)}}" stepKey="waitForButton2"/>
     </actionGroup>
     <actionGroup name="validateButtonGroupInlineAppearance">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="buttonGroupPage"/>
             <argument name="buttonItemPage"/>
@@ -83,6 +99,10 @@
         </assertEquals>
     </actionGroup>
     <actionGroup name="validateButtonGroupInlineAppearanceWraps">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="buttonGroupPage"/>
             <argument name="buttonItemPage"/>
@@ -109,6 +129,10 @@
         </assertGreaterThan>
     </actionGroup>
     <actionGroup name="validateButtonGroupStackedAppearance">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="buttonGroupPage"/>
             <argument name="buttonItemPage"/>
@@ -135,6 +159,10 @@
         </assertGreaterThan>
     </actionGroup>
     <actionGroup name="validateButtonItemsSameSize">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="buttonGroupPage"/>
             <argument name="buttonItemPage"/>
@@ -160,6 +188,10 @@
         </assertEquals>
     </actionGroup>
     <actionGroup name="validateButtonItemsDifferentSizes" extends="validateButtonItemsSameSize">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <comment userInput="validateButtonItemsDifferentSizes" stepKey="comment"/>
         <seeElement selector="{{buttonGroupPage.sameSizeValue(buttonGroupIndex, PageBuilderButtonGroupSameSize_Disabled.value)}}" stepKey="seeButtonSameSizeValue"/>
         <assertNotEquals stepKey="assertButtonWidthSize">
@@ -168,6 +200,10 @@
         </assertNotEquals>
     </actionGroup>
     <actionGroup name="validateButtonItemsDefaultMargin">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="buttonItemPage"/>
             <argument name="buttonIndex" defaultValue="1" type="string"/>

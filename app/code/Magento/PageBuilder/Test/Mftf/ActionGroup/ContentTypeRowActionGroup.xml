@@ -7,9 +7,13 @@
 -->
 
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
     <!-- Validate Row Parallax Background -->
     <actionGroup name="validateRowBackgroundAttributesWithAllUpdatedAndParallaxEnabled">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="page" defaultValue=""/>
             <argument name="index" defaultValue="1" type="string"/>
@@ -29,6 +33,10 @@
         <waitForElementVisible selector="{{page.backgroundAttachment(index, backgroundAttachment.value)}}" stepKey="waitForBackgroundAttachment"/>
     </actionGroup>
     <actionGroup name="validateRowParallaxBackgroundAttributes">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="page" defaultValue=""/>
             <argument name="index" defaultValue="1" type="string"/>
@@ -40,10 +48,18 @@
         <waitForElementVisible selector="{{page.parallaxSpeed(index, parallaxSpeedValue.value)}}" stepKey="waitForParallaxBackgroundSpeed"/>
     </actionGroup>
     <actionGroup name="validateBackgroundImageContainerForParallaxRow" extends="validateBackgroundImageContainer">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <comment userInput="validateBackgroundImageContainerForParallaxRow" stepKey="comment"/>
         <executeJS function="return window.getComputedStyle({{section.parallaxJS(index)}}).backgroundImage" stepKey="backgroundImageValue"/>
     </actionGroup>
     <actionGroup name="validateContainedRowAppearance">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="pageOrStageWidthJS" defaultValue="{{PageBuilderStage.stageWidthJS}}" type="string"/>
             <argument name="section" defaultValue="RowOnStage"/>
@@ -64,6 +80,10 @@
         <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
     </actionGroup>
     <actionGroup name="validateFullWidthRowAppearance">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="pageOrStageWidthJS" defaultValue="{{PageBuilderStage.stageWidthJS}}" type="string"/>
             <argument name="section" defaultValue="RowOnStage"/>
@@ -99,6 +119,10 @@
         <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
     </actionGroup>
     <actionGroup name="validateFullBleedRowAppearance" extends="validateFullWidthRowAppearance">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <executeJS function="return Math.abs({$rowChildElementWidth} - {$rowWidth})" stepKey="rowMinusChildWidth" after="pageMinusRowWidth"/>
         <assertLessThanOrEqual stepKey="assertRowWidthGreaterThanOrEqualToContents">
             <expectedResult type="int">{{acceptableOffset}}</expectedResult>

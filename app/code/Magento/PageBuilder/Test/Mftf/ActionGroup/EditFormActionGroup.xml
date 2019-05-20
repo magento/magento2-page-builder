@@ -7,8 +7,12 @@
 -->
 
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
     <actionGroup name="closeEditPanelSettings">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="baseContent" defaultValue="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" type="string"/>
         </arguments>
@@ -20,6 +24,10 @@
         <waitForElementVisible time="10" selector="{{baseContent}}" stepKey="waitForCmsPageSaveButton"/>
     </actionGroup>
     <actionGroup name="saveEditPanelSettings">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="baseContent" defaultValue="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" type="string"/>
         </arguments>
@@ -31,6 +39,10 @@
         <waitForElementVisible time="10" selector="{{baseContent}}" stepKey="waitForCmsPageSaveButton"/>
     </actionGroup>
     <actionGroup name="saveEditPanelAndValidateFieldError">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="property"/>
         </arguments>
@@ -42,6 +54,10 @@
         <waitForElementVisible selector="{{EditPanelForm.panelSectionError(property.section)}}" stepKey="waitForSectionError"/>
     </actionGroup>
     <actionGroup name="saveEditPanelAndValidateFieldErrorGeneralSection">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="form" defaultValue="EditPanelForm"/>
             <argument name="property"/>
@@ -53,13 +69,21 @@
         <waitForElementVisible selector="{{EditPanelForm.panelFieldValidationErrorMessage(property.section, property.fieldName, property.errorMessage)}}" stepKey="waitForErrorMessage"/>
     </actionGroup>
     <actionGroup name="saveEditPanelSettingsFullScreen">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <waitForPageLoad stepKey="waitForPageLoad"/>
-        <waitForElementVisible time="5" selector="{{EditPanelForm.editFormSave}}" stepKey="waitForColumnSaveButton" />
+        <waitForElementVisible time="5" selector="{{EditPanelForm.editFormSave}}" stepKey="waitForColumnSaveButton"/>
         <click selector="{{EditPanelForm.editFormSave}}" stepKey="clickSaveColumn"/>
         <waitForPageLoad stepKey="waitForSavePanelClose"/>
-        <waitForElementNotVisible time="5" selector="{{EditPanelForm.editForm}}" stepKey="waitForEditFormNotVisible" />
+        <waitForElementNotVisible time="5" selector="{{EditPanelForm.editForm}}" stepKey="waitForEditFormNotVisible"/>
     </actionGroup>
     <actionGroup name="expandConfigurationSection">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="section" defaultValue="AdvancedForm"/>
         </arguments>
@@ -69,6 +93,10 @@
         <waitForElementVisible selector="{{EditPanelForm.editPanelSectionExpanded(section.dataIndex)}}" stepKey="waitForSectionExpanded"/>
     </actionGroup>
     <actionGroup name="fillSlideOutPanelField">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="property"/>
         </arguments>
@@ -81,6 +109,10 @@
         <waitForElementVisible time="2" selector="{{EditPanelForm.panelSectionChangedIcon(property.section)}}" stepKey="waitForSectionChangedIcon"/>
     </actionGroup>
     <actionGroup name="fillSlideOutPanelFieldGeneral">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <!-- This action group does not assert against the section changed icon since this doesn't exist for General sections -->
         <arguments>
             <argument name="property"/>
@@ -92,6 +124,10 @@
         <click selector="{{EditPanelForm.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
     </actionGroup>
     <actionGroup name="fillSlideOutPanelTextArea">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <!-- This action group does not assert against the section changed icon since this doesn't exist for General sections -->
         <arguments>
             <argument name="property"/>
@@ -101,6 +137,10 @@
         <fillField selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" userInput="{{property.value}}" stepKey="fillPropertyField"/>
     </actionGroup>
     <actionGroup name="fillSlideOutPanelFieldAndExpectToSeeErrorInFieldset">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="property"/>
         </arguments>
@@ -112,6 +152,10 @@
         <waitForElementVisible time="2" selector="{{EditPanelForm.panelSectionError(property.section)}}" stepKey="waitForSectionChangedIcon"/>
     </actionGroup>
     <actionGroup name="fillSlideOutPanelMultiSelectField">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="property"/>
         </arguments>
@@ -126,6 +170,10 @@
         <see selector="{{EditPanelForm.panelMultiSelectFieldControl(property.section, property.fieldName)}}" userInput="{{property.value}}" stepKey="seeResultInField"/>
     </actionGroup>
     <actionGroup name="fillSlideOutPanelLinkUrlField">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="property"/>
             <argument name="selection" type="string"/>
@@ -140,6 +188,10 @@
         <click selector="{{EditPanelForm.panelFieldLabel((property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
     </actionGroup>
     <actionGroup name="fillOutUrlInput">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="fieldName"/>
             <argument name="linkName"/>
@@ -148,18 +200,18 @@
         </arguments>
         <waitForElementVisible selector="{{PageBuilderLinkAttributeAdmin.LinkSelect('fieldName')}}" stepKey="waitForButtonLinkSelect"/>
         <seeElement selector="{{PageBuilderLinkAttributeAdmin.LinkSelect('fieldName')}}" stepKey="seeButtonLinkSelect"/>
-        <selectOption selector="{{EditPanelForm.panelFieldControl(PageBuilderButtonItemLink_NotSecure.section, PageBuilderButtonItemLink_NotSecure.fieldName)}}" userInput="{{linkName}}" stepKey="selectOption" />
+        <selectOption selector="{{EditPanelForm.panelFieldControl(PageBuilderButtonItemLink_NotSecure.section, PageBuilderButtonItemLink_NotSecure.fieldName)}}" userInput="{{linkName}}" stepKey="selectOption"/>
         <!--See dropdown beside Button Link Select-->
-        <waitForElementVisible selector="{{PageBuilderLinkAttributeAdmin.LinkDropdown}}" stepKey="waitButtonLinkDropdownInput" />
-        <seeElement selector="{{PageBuilderLinkAttributeAdmin.LinkDropdown}}" stepKey="seeButtonLinkDropdownInput" />
-        <click selector="{{PageBuilderLinkAttributeAdmin.LinkDropdown}}" stepKey="expandButtonLinkDropdownInput1" />
+        <waitForElementVisible selector="{{PageBuilderLinkAttributeAdmin.LinkDropdown}}" stepKey="waitButtonLinkDropdownInput"/>
+        <seeElement selector="{{PageBuilderLinkAttributeAdmin.LinkDropdown}}" stepKey="seeButtonLinkDropdownInput"/>
+        <click selector="{{PageBuilderLinkAttributeAdmin.LinkDropdown}}" stepKey="expandButtonLinkDropdownInput1"/>
         <!--Type 2 first letters into Search box-->
         <click selector="{{PageBuilderLinkAttributeAdmin.LinkSearch}}" stepKey="focusOnField"/>
         <fillField selector="{{PageBuilderLinkAttributeAdmin.LinkSearch}}" userInput="{{searchString}}" stepKey="fill2FirstLetters"/>
-        <waitForElementVisible selector="{{PageBuilderLinkAttributeAdmin.SearchResult(searchResult)}}" stepKey="waitForSearchResult" />
+        <waitForElementVisible selector="{{PageBuilderLinkAttributeAdmin.SearchResult(searchResult)}}" stepKey="waitForSearchResult"/>
         <seeElement selector="{{PageBuilderLinkAttributeAdmin.SearchResult(searchResult)}}" stepKey="seeCMSPageAOnSearchResult"/>
         <click selector="{{PageBuilderLinkAttributeAdmin.SearchResult(searchResult)}}" stepKey="selectResult"/>
-        <dontSee selector="{{PageBuilderLinkAttributeAdmin.SearchResultBox}}" stepKey="dropdownCollapses" />
+        <dontSee selector="{{PageBuilderLinkAttributeAdmin.SearchResultBox}}" stepKey="dropdownCollapses"/>
         <grabTextFrom selector="{{PageBuilderLinkAttributeAdmin.DropdownInput}}" stepKey="textFromDropDown1"/>
         <assertEquals stepKey="assertEquals1" message="pass">
             <expectedResult type="string">{{searchResult}}</expectedResult>
@@ -167,6 +219,10 @@
         </assertEquals>
     </actionGroup>
     <actionGroup name="clearSlideOutPanelFieldGeneral">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="property"/>
         </arguments>
@@ -177,6 +233,10 @@
         <click selector="{{EditPanelForm.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
     </actionGroup>
     <actionGroup name="selectSlideOutPanelField">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="property"/>
         </arguments>
@@ -186,6 +246,10 @@
         <waitForElementVisible time="2" selector="{{EditPanelForm.panelSectionChangedIcon(property.section)}}" stepKey="waitForSectionChangedIcon"/>
     </actionGroup>
     <actionGroup name="selectSlideOutPanelFieldGeneral">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="property"/>
         </arguments>
@@ -196,6 +260,10 @@
         <click selector="{{EditPanelForm.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
     </actionGroup>
     <actionGroup name="conditionalClickSlideOutPanelFieldGeneral">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="property"/>
         </arguments>
@@ -204,6 +272,10 @@
         <waitForElementVisible selector="{{EditPanelForm.panelFieldControlCheckboxState(property.fieldName, property.value)}}" stepKey="waitForAttributeStateChange"/>
     </actionGroup>
     <actionGroup name="clickSlideOutPanelFieldGeneral">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="property"/>
         </arguments>
@@ -212,6 +284,10 @@
         <waitForElementVisible selector="{{EditPanelForm.panelSectionChangedIcon(property.section)}}" stepKey="waitForSectionUpdated"/>
     </actionGroup>
     <actionGroup name="clickSlideOutPanelFieldOpenInNewTab">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="property"/>
         </arguments>
@@ -220,6 +296,10 @@
         <waitForElementVisible selector="{{EditPanelForm.panelSectionChangedIcon(property.section)}}" stepKey="waitForSectionUpdated"/>
     </actionGroup>
     <actionGroup name="chooseVisualSelectOption">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="property"/>
         </arguments>
@@ -228,6 +308,10 @@
         <click selector='//div[@data-index="{{property.section}}" and contains(@class,"_show")]//li[@name="{{property.value}}"]' stepKey="chooseVisualSelectOption"/>
     </actionGroup>
     <actionGroup name="scrollToSlideOutPanelField">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="property"/>
         </arguments>
@@ -235,6 +319,10 @@
         <waitForElementVisible time="10" selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForScroll"/>
     </actionGroup>
     <actionGroup name="seeInFieldSlideOutProperty">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="property"/>
         </arguments>
@@ -243,6 +331,10 @@
         <seeInField selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" userInput="{{property.value}}" stepKey="seeInFieldProperty"/>
     </actionGroup>
     <actionGroup name="seeInFieldSlideOutPropertyAlternate">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <!-- Use when value in field changes after saving -->
         <arguments>
             <argument name="property"/>
@@ -252,6 +344,10 @@
         <seeInField selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" userInput="{{property.editPanelValue}}" stepKey="seeInFieldProperty"/>
     </actionGroup>
     <actionGroup name="seeInFieldWithoutLabelSlideOutProperty">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="property"/>
         </arguments>
@@ -260,6 +356,10 @@
         <seeInField selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" userInput="{{property.value}}" stepKey="seeInFieldProperty"/>
     </actionGroup>
     <actionGroup name="seeInFieldSlideOutIsZeroProperty">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <!-- must have this instead of using seeInFieldSlideOutProperty w/ argument of 0 because of MFTF bug -->
         <arguments>
             <argument name="property"/>
@@ -268,6 +368,10 @@
         <seeInField selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" userInput="0" stepKey="seeInFieldProperty"/>
     </actionGroup>
     <actionGroup name="seeInSlideOutMultiSelectField">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="property"/>
         </arguments>
@@ -276,6 +380,10 @@
         <see selector="{{EditPanelForm.panelMultiSelectFieldControl(property.section, property.fieldName)}}" userInput="{{property.value}}" stepKey="seeInFieldProperty"/>
     </actionGroup>
     <actionGroup name="seeOptionIsSelectedSlideOutProperty">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="property"/>
         </arguments>
@@ -283,6 +391,10 @@
         <seeInField selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" userInput="{{property.value}}" stepKey="seeOptionIsSelectedProperty"/>
     </actionGroup>
     <actionGroup name="seeOptionIsCheckedSlideOutProperty">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="property"/>
         </arguments>
@@ -290,6 +402,10 @@
         <seeCheckboxIsChecked selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="seeOptionIsCheckedProperty"/>
     </actionGroup>
     <actionGroup name="seeOptionIsNotCheckedSlideOutProperty">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="property"/>
         </arguments>
@@ -297,6 +413,10 @@
         <dontSeeCheckboxIsChecked selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="dontSeeOptionIsCheckedProperty"/>
     </actionGroup>
     <actionGroup name="seeSlideOutPanelFieldOpenInNewTab">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="property"/>
         </arguments>
@@ -304,6 +424,10 @@
         <seeCheckboxIsChecked selector="{{EditPanelForm.panelFieldControlCheckbox(property.fieldName)}}" stepKey="clickProperty"/>
     </actionGroup>
     <actionGroup name="seeSlideOutPanelFieldNotOpenInNewTab">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="property"/>
         </arguments>
@@ -311,6 +435,10 @@
         <dontSeeCheckboxIsChecked selector="{{EditPanelForm.panelFieldControlCheckbox(property.fieldName)}}" stepKey="clickProperty"/>
     </actionGroup>
     <actionGroup name="validateSlideOutPanelField">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="property"/>
         </arguments>
@@ -319,6 +447,10 @@
         <seeElementInDOM selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="seePropertyControl"/>
     </actionGroup>
     <actionGroup name="validateSlideOutPanelLinkUrlField">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="property"/>
             <argument name="selection" type="string"/>
@@ -331,6 +463,10 @@
         <waitForElementVisible time="10" selector="{{EditPanelForm.panelFieldControlCheckboxState(newTab.fieldName, newTab.value)}}" stepKey="waitForNewTab"/>
     </actionGroup>
     <actionGroup name="validateSlideOutPanelFieldIsDisabled">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="property"/>
         </arguments>
@@ -338,6 +474,10 @@
         <seeElement selector="{{EditPanelForm.panelFieldDisabled(property.section, property.fieldName)}}" stepKey="seePropertyControl"/>
     </actionGroup>
     <actionGroup name="validateSlideOutPanelFieldIsNotDisabled">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="property"/>
         </arguments>
@@ -345,6 +485,10 @@
         <seeElement selector="{{EditPanelForm.panelFieldNotDisabled(property.section, property.fieldName)}}" stepKey="seePropertyControl"/>
     </actionGroup>
     <actionGroup name="validateSlideOutPanelFieldIsRequired">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="property"/>
         </arguments>
@@ -352,6 +496,10 @@
         <seeElement selector='{{EditPanelForm.panelFieldRequired(property.section, property.fieldName)}}' stepKey="seePropertyIsRequired"/>
     </actionGroup>
     <actionGroup name="validateSlideOutPanelFieldIsNotRequired">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="property"/>
         </arguments>
@@ -359,30 +507,50 @@
         <dontSeeElement selector='{{EditPanelForm.panelFieldRequired(property.section, property.fieldName)}}' stepKey="seePropertyIsNotRequired"/>
     </actionGroup>
     <actionGroup name="validateSlideOutPanelFieldPlaceholderText">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="property"/>
         </arguments>
         <waitForElement time="2" selector="{{EditPanelForm.panelFieldPlaceholderText(property.section, property.fieldName, property.placeholderText)}}" stepKey="waitForElement"/>
     </actionGroup>
     <actionGroup name="validateSlideOutPanelFieldNoPlaceholderText">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="property"/>
         </arguments>
         <waitForElement selector="{{EditPanelForm.panelFieldNoPlaceholderText(property.section, property.fieldName)}}" stepKey="waitForElement"/>
     </actionGroup>
     <actionGroup name="validateSlideOutPanelFieldAfterLabelText">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="property"/>
         </arguments>
         <waitForElementVisible time="2" selector="{{EditPanelForm.panelFieldAfterLabelText(property.fieldName, property.afterLabelText)}}" stepKey="waitForElementVisible"/>
     </actionGroup>
     <actionGroup name="validateSlideOutPanelFieldNoAfterLabelText">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="property"/>
         </arguments>
         <dontSeeElementInDOM selector="{{EditPanelForm.panelFieldNoAfterLabelText(property.fieldName)}}" stepKey="dontSeeElementInDOM"/>
     </actionGroup>
     <actionGroup name="validateSlideOutPanelFieldNotPresent">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="property"/>
         </arguments>
@@ -390,6 +558,10 @@
         <dontSee selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="dontSeeField"/>
     </actionGroup>
     <actionGroup name="validateAlignmentFieldIsNotDisabled">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="property"/>
         </arguments>
@@ -397,25 +569,33 @@
         <dontSeeElement selector='//div[@data-index="{{property.section}}"]/descendant::div[@name="{{property.value}}" and contains(@class, "_disabled")]' stepKey="seeAlignmentNotDisabled"/>
     </actionGroup>
     <actionGroup name="validateVisualSelects">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="property1" defaultValue=""/>
             <argument name="property2" defaultValue=""/>
             <argument name="property3" defaultValue=""/>
             <argument name="property4" defaultValue=""/>
         </arguments>
-        <waitForElement selector="{{EditPanelForm.panelFieldControl(property1.section, property1.fieldName)}}" stepKey="waitForElementVisible" />
+        <waitForElement selector="{{EditPanelForm.panelFieldControl(property1.section, property1.fieldName)}}" stepKey="waitForElementVisible"/>
         <seeElement selector="{{VisualSelectComponent.firstSelection(property1.value)}}" stepKey="seeFirstSelection"/>
         <seeElement selector="{{VisualSelectComponent.firstSelection(property2.value)}}" stepKey="seeSecondSelection"/>
         <seeElement selector="{{VisualSelectComponent.firstSelection(property3.value)}}" stepKey="seeThirdSelection"/>
         <seeElement selector="{{VisualSelectComponent.firstSelection(property4.value)}}" stepKey="seeFourthSelection"/>
     </actionGroup>
     <actionGroup name="validateVerticalAlignmentVisualSelects">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="property1" defaultValue=""/>
             <argument name="property2" defaultValue=""/>
             <argument name="property3" defaultValue=""/>
         </arguments>
-        <waitForElement selector="{{EditPanelForm.panelFieldControl(property1.section, property1.fieldName)}}" stepKey="waitForElementVisible" />
+        <waitForElement selector="{{EditPanelForm.panelFieldControl(property1.section, property1.fieldName)}}" stepKey="waitForElementVisible"/>
         <seeElement selector="{{VisualSelectComponent.firstSelection(property1.value)}}" stepKey="seeFirstSelection"/>
         <seeElement selector="{{VisualSelectComponent.firstSelection(property2.value)}}" stepKey="seeSecondSelection"/>
         <seeElement selector="{{VisualSelectComponent.firstSelection(property3.value)}}" stepKey="seeThirdSelection"/>

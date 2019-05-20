@@ -9,6 +9,10 @@
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
     <actionGroup name="clickAddLocationButton">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <comment userInput="clickAddLocationButton" stepKey="comment"/>
         <waitForPageLoad stepKey="waitForPageLoad1"/>
         <waitForElementVisible selector="{{EditMapForm.addLocationButton}}" stepKey="waitForAddLocationButton"/>
@@ -22,6 +26,10 @@
         <dontSeeElementInDOM selector="{{AddLocationForm.googleModalOkButton('1')}}" stepKey="dontSeeGoogleModalInDOM"/>
     </actionGroup>
     <actionGroup name="saveLocationForm">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <comment userInput="saveLocationForm" stepKey="comment"/>
         <waitForElementVisible selector="{{AddLocationForm.editFormSave}}" stepKey="waitForSaveButton"/>
         <click selector="{{AddLocationForm.editFormSave}}" stepKey="clickSaveButton"/>
@@ -30,6 +38,10 @@
         <waitForElementVisible selector="{{EditPanelForm.editFormSave}}" stepKey="waitForSaveEditMapFormButton"/>
     </actionGroup>
     <actionGroup name="closeLocationForm">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <comment userInput="closeLocationForm" stepKey="comment"/>
         <waitForElementVisible selector="{{AddLocationForm.cancelButton}}" stepKey="waitForCancelButton"/>
         <click selector="{{AddLocationForm.cancelButton}}" stepKey="clickCancelButton"/>
@@ -38,6 +50,10 @@
         <waitForElementVisible selector="{{EditPanelForm.editFormSave}}" stepKey="waitForSaveEditMapFormButton"/>
     </actionGroup>
     <actionGroup name="clickLocationGridRow">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="locationName"/>
         </arguments>
@@ -54,6 +70,10 @@
         <dontSeeElementInDOM selector="{{AddLocationForm.googleModalOkButton('1')}}" stepKey="dontSeeGoogleModalInDOM"/>
     </actionGroup>
     <actionGroup name="clickEditButtonOnLocationGrid">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="locationName"/>
         </arguments>
@@ -71,6 +91,10 @@
         <dontSeeElementInDOM selector="{{AddLocationForm.googleModalOkButton('1')}}" stepKey="dontSeeGoogleModalInDOM"/>
     </actionGroup>
     <actionGroup name="deleteLocationFromGrid">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="locationName"/>
         </arguments>
@@ -84,6 +108,10 @@
         <waitForElementNotVisible selector="{{PageBuilderDataGrid.gridRow(locationName.fieldName, locationName.value)}}" stepKey="waitForGridRowNotVisible"/>
     </actionGroup>
     <actionGroup name="validateLocationGridData">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="locationName"/>
             <argument name="address" defaultValue="PageBuilderMapStreetAddress_Default"/>
@@ -106,6 +134,10 @@
         <seeElement selector="{{PageBuilderDataGrid.gridSelectButtonByIndex(rowIndex)}}" stepKey="seeSelectButton"/>
     </actionGroup>
     <actionGroup name="clickMapToAddOrMovePin">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="x" defaultValue="null" type="string"/>
             <argument name="y" defaultValue="null" type="string"/>
@@ -120,6 +152,10 @@
         <wait time="2" stepKey="waitForPinMove"/>
     </actionGroup>
     <actionGroup name="moveMapPinByDraggingAndDroppingPin">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="x" defaultValue="null" type="string"/>
             <argument name="y" defaultValue="null" type="string"/>
@@ -133,6 +169,10 @@
         <wait time="2" stepKey="waitForPinMove"/>
     </actionGroup>
     <actionGroup name="verifyMapHasPin">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="page" defaultValue="MapOnStage"/>
             <argument name="index" defaultValue="1" type="string"/>
@@ -144,6 +184,10 @@
         <waitForElementVisible selector="{{page.allPins(index)}}" stepKey="waitForMapWithPin"/>
     </actionGroup>
     <actionGroup name="verifyNumberOfPinsOnMapNoClick">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="page" defaultValue="MapOnStage"/>
             <argument name="mapIndex" defaultValue="1" type="string"/>
@@ -154,11 +198,19 @@
         <seeNumberOfElements selector="{{page.allPins(mapIndex)}}" userInput="{{count}}" stepKey="seeNumberOfPins"/>
     </actionGroup>
     <actionGroup name="verifyNumberOfPinsOnMap" extends="verifyNumberOfPinsOnMapNoClick">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <conditionalClick selector="{{page.googleModalOkButton(mapIndex)}}" dependentSelector="{{page.googleModalOkButton(mapIndex)}}" visible="true" stepKey="clickOkButton" after="waitForMap"/>
         <waitForElementNotVisible selector="{{page.googleModalOkButton(mapIndex)}}" stepKey="waitForGoogleModalGone" after="clickOkButton"/>
         <dontSeeElementInDOM selector="{{page.googleModalOkButton(mapIndex)}}" stepKey="dontSeeGoogleModalInDOM" after="waitForGoogleModalGone"/>
     </actionGroup>
     <actionGroup name="dontSeeMapPin">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="page" defaultValue="MapOnStage"/>
             <argument name="index" defaultValue="1" type="string"/>
@@ -170,6 +222,10 @@
         <dontSeeElement selector="{{page.allPins(index)}}" stepKey="dontSeeMapPin"/>
     </actionGroup>
     <actionGroup name="validateMapButtons">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="page" defaultValue="MapOnStage"/>
             <argument name="index" defaultValue="1" type="string"/>
@@ -185,6 +241,10 @@
         <waitForElementVisible selector="{{page.zoomOut(index)}}" stepKey="waitForMapZoomOut"/>
     </actionGroup>
     <actionGroup name="validateNoMapButtons">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="page" defaultValue="MapOnStage"/>
             <argument name="index" defaultValue="1" type="string"/>
@@ -201,9 +261,17 @@
         <dontSeeElementInDOM selector="{{page.zoomOut(index)}}" stepKey="dontSeeMapZoomOut"/>
     </actionGroup>
     <actionGroup name="validateMapHelperText">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <waitForElementVisible selector="{{AddLocationForm.helperText}}" stepKey="seeMapHelperText"/>
     </actionGroup>
     <actionGroup name="validateMapSettings">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="page"/>
             <argument name="height" defaultValue="PageBuilderMapHeightDefaultProperty"/>
@@ -216,6 +284,10 @@
         <waitForElementVisible selector="{{page.showControls(index, showControls.value)}}" stepKey="waitForShowControls"/>
     </actionGroup>
     <actionGroup name="validateMapSettingsWithErrorOverlay">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="page"/>
             <argument name="height" defaultValue="PageBuilderMapHeightDefaultProperty"/>
@@ -233,6 +305,10 @@
         <seeElementInDOM selector="{{page.showControls(index, showControls.value)}}" stepKey="seeInDOMShowControls"/>
     </actionGroup>
     <actionGroup name="validateEmptyMapStoreFront">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
@@ -247,6 +323,10 @@
         </assertEquals>
     </actionGroup>
     <actionGroup name="openMapPinTooltipWindow">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="page" defaultValue="MapOnStage"/>
             <argument name="mapIndex" defaultValue="1" type="string"/>
@@ -262,6 +342,10 @@
         <waitForElementVisible selector="{{page.tooltipWindow(mapIndex)}}" stepKey="waitForPinTooltip"/>
     </actionGroup>
     <actionGroup name="closeMapPinTooltipWindow">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="page" defaultValue="MapOnStage"/>
             <argument name="mapIndex" defaultValue="1" type="string"/>
@@ -273,6 +357,10 @@
         <waitForElementNotVisible selector="{{page.tooltipWindow(mapIndex)}}" stepKey="waitForPinTooltipGone"/>
     </actionGroup>
     <actionGroup name="validateMapPinLocationData">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="page"/>
             <argument name="locationName" defaultValue="PageBuilderMapLocationName_Default"/>
@@ -294,13 +382,13 @@
         <waitForElement selector="{{page.clickablePin(mapIndex, pinIndex)}}" stepKey="waitForPin"/>
         <click selector="{{page.clickablePin(mapIndex, pinIndex)}}" stepKey="clickPin"/>
         <waitForElementVisible selector="{{page.tooltipWindow(mapIndex)}}" stepKey="waitForPinTooltip"/>
-        <waitForElement selector="{{page.locationNameElement(mapIndex)}}" stepKey="waitForLocationName" />
+        <waitForElement selector="{{page.locationNameElement(mapIndex)}}" stepKey="waitForLocationName"/>
         <see selector="{{page.locationNameElement(mapIndex)}}" userInput="{{locationName.value}}" stepKey="seeLocationName"/>
-        <waitForElement selector="{{page.commentElement(mapIndex)}}" stepKey="waitForComment" />
+        <waitForElement selector="{{page.commentElement(mapIndex)}}" stepKey="waitForComment"/>
         <see selector="{{page.commentElement(mapIndex)}}" userInput="{{comment.value}}" stepKey="seeComment"/>
-        <waitForElement selector="{{page.phoneNumberElement(mapIndex)}}" stepKey="waitForPhoneNumber" />
+        <waitForElement selector="{{page.phoneNumberElement(mapIndex)}}" stepKey="waitForPhoneNumber"/>
         <see selector="{{page.phoneNumberElement(mapIndex)}}" userInput="{{phoneNumber.value}}" stepKey="seePhoneNumber"/>
-        <waitForElement selector="{{page.addressCityStateZipCountryElement(mapIndex)}}" stepKey="waitForAddressVisible" />
+        <waitForElement selector="{{page.addressCityStateZipCountryElement(mapIndex)}}" stepKey="waitForAddressVisible"/>
         <see selector="{{page.addressCityStateZipCountryElement(mapIndex)}}" userInput="{{address.value}}\n{{city.value}}, {{state.value}} {{zip.value}}\n{{country.value}}" stepKey="seeAddress"/>
         <moveMouseOver selector="{{page.base(mapIndex)}}" x="-1" y="0" stepKey="moveMouseOutsideMap"/>
         <waitForPageLoad stepKey="waitForOptionMenuGone"/>
@@ -308,6 +396,10 @@
         <waitForElementNotVisible selector="{{page.tooltipWindow(mapIndex)}}" stepKey="waitForPinTooltipGone"/>
     </actionGroup>
     <actionGroup name="validateNoPinTooltip">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <comment userInput="validateNoPinTooltip" stepKey="comment"/>
         <waitForElementVisible selector="{{AddLocationForm.googleMapsLink('1')}}" stepKey="waitForMap"/>
         <conditionalClick selector="{{AddLocationForm.googleModalOkButton('1')}}" dependentSelector="{{AddLocationForm.googleModalOkButton('1')}}" visible="true" stepKey="clickOkButton"/>
@@ -318,6 +410,10 @@
         <dontSeeElementInDOM selector="{{AddLocationForm.tooltipWindow}}" stepKey="dontSeeTooltip"/>
     </actionGroup>
     <actionGroup name="verifyPinLocationEqual">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="page"/>
             <argument name="comparedPinLocation" type="string"/>
@@ -331,6 +427,10 @@
         </assertEquals>
     </actionGroup>
     <actionGroup name="verifyPinLocationNotEqual">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="page"/>
             <argument name="comparedPinLocation" type="string"/>
@@ -345,6 +445,10 @@
         </assertNotEquals>
     </actionGroup>
     <actionGroup name="verifyCoordinatesNotEqual">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="property"/>
             <argument name="comparedCoordinate" type="string"/>
@@ -357,6 +461,10 @@
         </assertNotEquals>
     </actionGroup>
     <actionGroup name="verifyMapLatitudeAndLongitude">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="page"/>
             <argument name="latitude"/>
@@ -369,6 +477,10 @@
         <waitForElementVisible selector="{{page.longitude(index, longitude.value)}}" stepKey="waitForLongitude"/>
     </actionGroup>
     <actionGroup name="verifyMapLatitudeAndLongitudeAlternate">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <!-- Need an alternate action group: MQE-965 -->
         <arguments>
             <argument name="page"/>
@@ -382,6 +494,10 @@
         <waitForElementVisible selector="{{page.longitude(index, longitude)}}" stepKey="waitForLongitude"/>
     </actionGroup>
     <actionGroup name="validateMapErrorMessageStage">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
@@ -390,6 +506,10 @@
         <see userInput="{{PageBuilderMapCommonData.mapErrorMessageAdmin}}" selector="{{MapOnStage.errorContainer(index)}}" stepKey="seeMapErrorMessage"/>
     </actionGroup>
     <actionGroup name="validateMapErrorMessageAddLocationForm">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
@@ -397,6 +517,10 @@
         <see userInput="{{PageBuilderMapCommonData.mapErrorMessageAdmin}}" selector="{{AddLocationForm.errorContainer(index)}}" stepKey="seeMapErrorMessage"/>
     </actionGroup>
     <actionGroup name="validateMapErrorMessageStorefront">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
@@ -406,25 +530,41 @@
         <see userInput="{{PageBuilderMapCommonData.mapErrorMessageStorefront}}" selector="{{MapOnStorefront.errorMessage(index)}}" stepKey="seeMapErrorMessage"/>
     </actionGroup>
     <actionGroup name="validateWarningMessageLink">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="section"/>
         </arguments>
         <waitForElementVisible selector="{{section.warningMessageLink('1')}}" stepKey="waitForWarningMessageLink"/>
         <click selector="{{section.warningMessageLink('1')}}" stepKey="clickLink"/>
         <waitForPageLoad stepKey="waitForLinkClick"/>
-        <switchToNextTab stepKey="switchToOpenedLink" />
+        <switchToNextTab stepKey="switchToOpenedLink"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <seeInCurrentUrl url="{{AdminContentManagementPage.url}}#cms_pagebuilder" stepKey="validateURL"/>
         <seeElement selector="{{ContentManagementSection.GoogleMapsAPIKeyInputField}}" stepKey="seeGoogleMapsAPIKeyInputField"/>
-        <closeTab stepKey="closeOpenedTab" />
+        <closeTab stepKey="closeOpenedTab"/>
     </actionGroup>
     <actionGroup name="validateAdvancedStyleWithAllUpdatedMapWithErrorOverlay" extends="validateAdvancedStyleWithAllUpdatedNotVisible">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <waitForElementVisible selector="{{page.warningMessageLink(index)}}" stepKey="dontSeeElement"/>
     </actionGroup>
     <actionGroup name="validateAdvancedStyleWithNoAlignmentMapWithErrorOverlay" extends="validateAdvancedStyleWithNoAlignmentNotVisible">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <waitForElementVisible selector="{{page.warningMessageLink(index)}}" stepKey="dontSeeElement"/>
     </actionGroup>
     <actionGroup name="validateMapHeight">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="section" defaultValue="MapOnStage"/>
             <argument name="height" defaultValue="PageBuilderMapHeightDefaultProperty"/>

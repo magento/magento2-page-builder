@@ -7,8 +7,12 @@
 -->
 
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
     <actionGroup name="fillOutColorPicker">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="colorCode"/>
         </arguments>
@@ -18,6 +22,10 @@
         <pressKey selector="{{ColorPicker.inputField}}" parameterArray="['{{colorCode.value}}',\Facebook\WebDriver\WebDriverKeys::ENTER]" stepKey="pressKeyEnter"/>
     </actionGroup>
     <actionGroup name="pickColorSwatchCell">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="property"/>
         </arguments>
@@ -30,6 +38,10 @@
         <seeInField selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" userInput="{{property.value}}" stepKey="seeColorInField"/>
     </actionGroup>
     <actionGroup name="openAndValidateColorPickerValue">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="color" type="string"/>
         </arguments>
@@ -39,12 +51,20 @@
         <seeInField selector="{{ColorPicker.inputField}}" userInput="{{color}}" stepKey="seeExpectedColor"/>
     </actionGroup>
     <actionGroup name="seeColorInColorSwatch">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="property"/>
         </arguments>
         <waitForElementVisible selector="{{ColorPicker.panelColorSwatchColor(property.section, property.fieldName, property.rgb)}}" stepKey="waitForColorSwatchColor"/>
     </actionGroup>
     <actionGroup name="seeNoColorInColorSwatch">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="property"/>
         </arguments>

@@ -7,8 +7,12 @@
 -->
 
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
     <actionGroup name="switchTabs">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="section"/>
             <argument name="from" defaultValue="1" type="string"/>
@@ -21,6 +25,10 @@
         <assertElementContainsAttribute selector="{{section.tabPanel(to)}}" attribute="aria-hidden" expectedValue="false" stepKey="assertNewTabVisible"/>
     </actionGroup>
     <actionGroup name="inlineEditTabItemName">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="tabName" defaultValue="{{PageBuilderTabNameRandom1.value}}" type="string"/>
             <argument name="index" defaultValue="1" type="string"/>
@@ -34,6 +42,10 @@
         <waitForPageLoad stepKey="waitForUnFocus"/>
     </actionGroup>
     <actionGroup name="moveTabItem">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="x" defaultValue="null" type="string"/>
             <argument name="y" defaultValue="null" type="string"/>
@@ -52,6 +64,10 @@
         <waitForElementVisible selector="{{TabOnStage.tabHeader(tabItemIndexToMove)}}" stepKey="waitForTabItem2"/>
     </actionGroup>
     <actionGroup name="validateTabHeadersAlignedCenter">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="tabGroupSection" defaultValue="TabsOnStage"/>
             <argument name="tabItemSection" defaultValue="TabOnStage"/>

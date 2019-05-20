@@ -7,8 +7,12 @@
 -->
 
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
     <actionGroup name="validateBackgroundAttributesWithNoImageOrColor">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="section"/>
             <argument name="backgroundPosition" defaultValue="PageBuilderBackgroundPosition_Default"/>
@@ -27,6 +31,10 @@
         <waitForElementVisible selector="{{section.backgroundAttachment(index, backgroundAttachment.value)}}" stepKey="waitForBackgroundAttachment"/>
     </actionGroup>
     <actionGroup name="validateBackgroundAttributesWithNoColor">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="section"/>
             <argument name="backgroundImage"/>
@@ -46,6 +54,10 @@
         <waitForElementVisible selector="{{section.backgroundAttachment(index, backgroundAttachment.value)}}" stepKey="waitForBackgroundAttachment"/>
     </actionGroup>
     <actionGroup name="validateBackgroundAttributesWithNoImage">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="section"/>
             <argument name="backgroundColor"/>
@@ -64,6 +76,10 @@
         <waitForElementVisible selector="{{section.backgroundAttachment(index, backgroundAttachment.value)}}" stepKey="waitForBackgroundAttachment"/>
     </actionGroup>
     <actionGroup name="validateBackgroundAttributes">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="section"/>
             <argument name="backgroundImage"/>
@@ -84,6 +100,10 @@
         <waitForElementVisible selector="{{section.backgroundAttachment(index, backgroundAttachment.value)}}" stepKey="waitForBackgroundAttachment"/>
     </actionGroup>
     <actionGroup name="validateMobileBackgroundAttributesWithNoImageOrColor">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="section"/>
             <argument name="mobileBackgroundPosition" defaultValue="PageBuilderBackgroundPosition_Default"/>
@@ -102,6 +122,10 @@
         <waitForElementVisible selector="{{section.mobileBackgroundAttachment(index, mobileBackgroundAttachment.value)}}" stepKey="waitForBackgroundAttachment"/>
     </actionGroup>
     <actionGroup name="validateMobileBackgroundAttributes">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="section"/>
             <argument name="mobileBackgroundColor"/>
@@ -120,6 +144,10 @@
         <waitForElementVisible selector="{{section.mobileBackgroundAttachment(index, mobileBackgroundAttachment.value)}}" stepKey="waitForBackgroundAttachment"/>
     </actionGroup>
     <actionGroup name="validateBackgroundImage">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="section"/>
             <argument name="backgroundImage"/>
@@ -139,6 +167,10 @@
         </assertRegExp>
     </actionGroup>
     <actionGroup name="validateBackgroundMobileImage">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="section"/>
             <argument name="backgroundMobileImage"/>
@@ -162,6 +194,10 @@
         <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
     </actionGroup>
     <actionGroup name="validateNoBackgroundImage">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="section"/>
             <argument name="index" defaultValue="1" type="string"/>
@@ -176,6 +212,10 @@
         </assertEquals>
     </actionGroup>
     <actionGroup name="validateBackgroundImageContainer">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="section"/>
             <argument name="backgroundImage"/>

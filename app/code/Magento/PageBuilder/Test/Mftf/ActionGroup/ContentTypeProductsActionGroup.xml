@@ -7,8 +7,12 @@
 -->
 
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
     <actionGroup name="validateProductInProducts">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="page" defaultValue="ProductsOnStage"/>
             <argument name="productsIndex" defaultValue="1" type="string"/>
@@ -46,6 +50,10 @@
         </assertEquals>
     </actionGroup>
     <actionGroup name="validateProductCountInProducts">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="page" defaultValue=""/>
             <argument name="index" defaultValue="1" type="string"/>
@@ -56,6 +64,10 @@
         <assertCount stepKey="assertCount" expected="{{count}}" expectedType="int" actualType="variable" actual="grabProducts"/>
     </actionGroup>
     <actionGroup name="addConditionToProductConditions">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="conditionType" defaultValue="PageBuilderProductsConditionCategory"/>
             <argument name="conditionInput" defaultValue="1" type="string"/>
@@ -71,6 +83,10 @@
         <fillField selector="{{ProductsContentTypeForm.conditionsListConditionInput}}" userInput="{{conditionInput}}" stepKey="fillCategoryField"/>
     </actionGroup>
     <actionGroup name="addConditionsCombinationToProductsAndSetAggregateParameters">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="aggregatorType" defaultValue="all" type="string"/>
             <argument name="booleanValueForAggregator" defaultValue="1" type="string"/>
@@ -92,6 +108,10 @@
         <click selector="{{ProductsContentTypeForm.conditionsListText}}" stepKey="clearOptions2"/>
     </actionGroup>
     <actionGroup name="clickProductImageInProductsOnStorefront">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="product" type="string"/>
         </arguments>
@@ -101,6 +121,10 @@
         <see selector="{{StorefrontProductInfoMainSection.productName}}" userInput="{{product}}" stepKey="seeProductName"/>
     </actionGroup>
     <actionGroup name="clickProductNameInProductsOnStorefront">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="product" type="string"/>
         </arguments>
@@ -110,6 +134,10 @@
         <see selector="{{StorefrontProductInfoMainSection.productName}}" userInput="{{product}}" stepKey="seeProductName"/>
     </actionGroup>
     <actionGroup name="clickProductAddToCartInProductsOnStorefront">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="product" type="string"/>
         </arguments>
@@ -119,6 +147,10 @@
         <see userInput="You added {{product}} to your shopping cart." stepKey="seeAddToCartSuccessMessage"/>
     </actionGroup>
     <actionGroup name="clickProductAddToCompareInProductsOnStorefront">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="product" type="string"/>
         </arguments>
@@ -128,6 +160,10 @@
         <see userInput="You added product {{product}} to the comparison list." stepKey="seeComparisonListSuccessMessage"/>
     </actionGroup>
     <actionGroup name="clickProductAddToWishListInProductsOnStorefront">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="product" type="string"/>
         </arguments>

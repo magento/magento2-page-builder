@@ -7,8 +7,12 @@
 -->
 
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
     <actionGroup name="openPageBuilderFullScreen">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <waitForElementVisible selector="{{PageBuilderStage.openFullScreen}}" stepKey="waitForFullScreenButton"/>
         <click selector="{{PageBuilderStage.openFullScreen}}" stepKey="clickFullScreenButton"/>
         <waitForPageLoad stepKey="waitForFullScreenAnimation"/>
@@ -16,12 +20,20 @@
         <seeElement selector="{{PageBuilderStage.exitFullScreen}}" stepKey="seeExitFullScreenButton"/>
     </actionGroup>
     <actionGroup name="exitPageBuilderFullScreen">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <waitForElementVisible selector="{{PageBuilderStage.exitFullScreen}}" stepKey="waitForExitPageBuilderFullScreenButton"/>
         <click selector="{{PageBuilderStage.exitFullScreen}}" stepKey="exitPageBuilderFullScreen"/>
         <waitForPageLoad stepKey="waitForExitFullScreen"/>
         <dontSeeElementInDOM selector="{{PageBuilderStage.exitFullScreen}}" stepKey="dontSeeExitPageBuilderFullScreenButton"/>
     </actionGroup>
     <actionGroup name="validateContentTypeHeightOnStage">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="contentType"/>
             <argument name="index" defaultValue="1" type="string"/>
@@ -37,6 +49,10 @@
         </assertEquals>
     </actionGroup>
     <actionGroup name="validateContentTypeHeightOnStageWithoutPadding">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="contentType"/>
             <argument name="index" defaultValue="1" type="string"/>
@@ -50,6 +66,10 @@
         </assertEquals>
     </actionGroup>
     <actionGroup name="validateContentTypeInsideContainerStage">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="contentType"/>
             <argument name="contentTypeIndex" defaultValue="1" type="string"/>
@@ -60,6 +80,10 @@
         <waitForElementVisible time="30" selector="{{PageBuilderStage.contentTypeInsideContainerStage(containerTargetType.role, containerTargetIndex, positionInContainer, contentType.role, contentTypeIndex)}}" stepKey="waitForContentTypeStage"/>
     </actionGroup>
     <actionGroup name="validateContentTypeNotInsideContainerStage">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="contentType"/>
             <argument name="contentTypeIndex" defaultValue="1" type="string"/>
@@ -71,6 +95,10 @@
         <dontSeeElementInDOM selector="{{PageBuilderStage.contentTypeInsideContainerStage(containerTargetType.role, containerTargetIndex, positionInContainer, contentType.role, contentTypeIndex)}}" stepKey="dontSeeContentTypeInContainer"/>
     </actionGroup>
     <actionGroup name="goToMediaStorageFromStage">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="contentType"/>
             <argument name="index" defaultValue="1" type="string"/>
@@ -79,11 +107,15 @@
         </arguments>
         <comment userInput="Hover over content type in stage and click Select From Gallery button" stepKey="commentHover"/>
         <moveMouseOver selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, index)}}" x="{{x}}" y="{{y}}" stepKey="onMouseOverImageContentTypeStage"/>
-        <waitForElementVisible selector="{{PageBuilderStage.onHoverSelectFromGalleryButton(contentType.role, index)}}" stepKey="seeSelectFromGalleryBtn2" />
-        <click selector="{{PageBuilderStage.onHoverSelectFromGalleryButton(contentType.role, index)}}" stepKey="clickSelectFromGalleryBtn1" />
+        <waitForElementVisible selector="{{PageBuilderStage.onHoverSelectFromGalleryButton(contentType.role, index)}}" stepKey="seeSelectFromGalleryBtn2"/>
+        <click selector="{{PageBuilderStage.onHoverSelectFromGalleryButton(contentType.role, index)}}" stepKey="clickSelectFromGalleryBtn1"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
     </actionGroup>
     <actionGroup name="verifySelectFromGalleryButtonWorks">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="contentType"/>
             <argument name="index" defaultValue="1" type="string"/>
@@ -104,6 +136,10 @@
         <waitForPageLoad stepKey="waitForPageLoad2"/>
     </actionGroup>
     <actionGroup name="uploadImageToContentTypeFromStage">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="property"/>
             <argument name="section" defaultValue="PageBuilderStage"/>
@@ -114,6 +150,10 @@
         <waitForElementVisible selector="{{section.imageSourceByIndex(index, property.fileName)}}" stepKey="waitForMainImageSource1"/>
     </actionGroup>
     <actionGroup name="verifyUploadImageButtons">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="contentType"/>
             <argument name="section" defaultValue="PageBuilderStage"/>
@@ -124,10 +164,14 @@
         <comment userInput="Verify Upload Image and Select From Gallery buttons appear on hover" stepKey="comment"/>
         <moveMouseOver selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, index)}}" x="{{x}}" y="{{y}}" stepKey="mouseOverContentType"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
-        <seeElement selector="{{section.onHoverUploadImageButton(contentType.role, index)}}" stepKey="seeUploadImageButton" />
+        <seeElement selector="{{section.onHoverUploadImageButton(contentType.role, index)}}" stepKey="seeUploadImageButton"/>
         <seeElement selector="{{section.onHoverSelectFromGalleryButton(contentType.role, index)}}" stepKey="seeSelectFromGalleryButton"/>
     </actionGroup>
     <actionGroup name="focusOnInlineTinyMCEEditor">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="section" defaultValue="TextOnStage"/>
             <argument name="index" defaultValue="1" type="string"/>
@@ -139,6 +183,10 @@
         <waitForElementVisible selector="{{section.tinymceInFocus(index)}}" stepKey="waitForEditorFocused"/>
     </actionGroup>
     <actionGroup name="focusOnInlineTextAreaEditor">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="section" defaultValue="TextOnStage"/>
             <argument name="index" defaultValue="1" type="string"/>

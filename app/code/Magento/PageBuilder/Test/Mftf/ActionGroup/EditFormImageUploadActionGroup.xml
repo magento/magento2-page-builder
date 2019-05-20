@@ -7,8 +7,12 @@
 -->
 
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
     <actionGroup name="attachFileSlideOutProperty">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="property"/>
         </arguments>
@@ -17,6 +21,10 @@
         <waitForElementVisible selector="{{EditPanelForm.backgroundImagePreview}}" stepKey="waitForImageUpload"/>
     </actionGroup>
     <actionGroup name="attachFileSlideOutPropertyGeneral">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="property"/>
         </arguments>
@@ -26,6 +34,10 @@
         <waitForElementVisible time="10" selector="{{EditPanelForm.editFormUploadedImage(property.section, property.fieldName)}}" stepKey="waitForImageUploaded"/>
     </actionGroup>
     <actionGroup name="attachInvalidFileOnSlideOut">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="property"/>
         </arguments>
@@ -39,6 +51,10 @@
         <dontSeeElementInDOM selector="{{EditPanelForm.backgroundImagePreview}}" stepKey="dontSeeImage"/>
     </actionGroup>
     <actionGroup name="clickSelectFromGallerySlideOut">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="property"/>
         </arguments>
@@ -48,13 +64,21 @@
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
     </actionGroup>
     <actionGroup name="seeImageUploadedOnSlideOut">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="property"/>
         </arguments>
-        <waitForElement selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElement" />
+        <waitForElement selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElement"/>
         <waitForElementVisible selector="{{EditPanelForm.editFormUploadedImageSource(property.section, property.fieldName, property.fileName, property.extension)}}" stepKey="seeUploadedFile"/>
     </actionGroup>
     <actionGroup name="seeNoImageUploadedOnSlideOut">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="property"/>
         </arguments>

@@ -7,8 +7,12 @@
 -->
 
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
     <actionGroup name="dragContentTypeToStage">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="contentType"/>
             <argument name="containerTargetType" defaultValue="PageBuilderRowContentType"/>
@@ -18,9 +22,13 @@
         <dragAndDrop selector1="{{PageBuilderPanel.draggableContentTypeInPanel(contentType.name)}}" selector2="{{PageBuilderStage.contentTypeContainer(containerTargetType.role, containerTargetIndex)}}" stepKey="dropContentTypeIntoStage"/>
         <waitForPageLoad stepKey="waitForAnimation" time="30"/>
         <dontSeeJsError stepKey="doNotSeeJSErrorInConsole"/>
-        <waitForElementVisible time="10" selector="{{PageBuilderStage.contentTypeInStage(contentType.role)}}" stepKey="waitForContentTypeInStage" />
+        <waitForElementVisible time="10" selector="{{PageBuilderStage.contentTypeInStage(contentType.role)}}" stepKey="waitForContentTypeInStage"/>
     </actionGroup>
     <actionGroup name="dragContentTypeToStageByIndex">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="contentType"/>
             <argument name="contentTypeNumber" defaultValue="1" type="string"/>
@@ -31,9 +39,13 @@
         <dragAndDrop selector1="{{PageBuilderPanel.draggableContentTypeInPanel(contentType.name)}}" selector2="{{PageBuilderStage.contentTypeContainer(containerTargetType.role, containerTargetIndex)}}" stepKey="dropContentTypeIntoStage"/>
         <waitForPageLoad stepKey="waitForAnimation" time="30"/>
         <dontSeeJsError stepKey="doNotSeeJSErrorInConsole"/>
-        <waitForElementVisible time="10" selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, contentTypeNumber)}}" stepKey="waitForContentTypeInStage" />
+        <waitForElementVisible time="10" selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, contentTypeNumber)}}" stepKey="waitForContentTypeInStage"/>
     </actionGroup>
     <actionGroup name="dragContentTypeToContainer">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="contentType"/>
             <argument name="contentTypeIndex" defaultValue="1" type="string"/>
@@ -48,10 +60,14 @@
         <dragAndDrop selector1="{{pageBuilderArea}}{{PageBuilderPanel.draggableContentTypeInPanel(contentType.name)}}" selector2="{{PageBuilderStage.contentTypeContainer(containerTargetType.role, containerTargetIndex)}}" x="{{offsetXCoordinate}}" y="{{offsetYCoordinate}}" stepKey="dropContentTypeIntoStage"/>
         <waitForPageLoad stepKey="waitForAnimation" time="30"/>
         <dontSeeJsError stepKey="doNotSeeJSErrorInConsole"/>
-        <waitForElementVisible time="10" selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForContentTypeInStage" />
+        <waitForElementVisible time="10" selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForContentTypeInStage"/>
         <waitForPageLoad stepKey="waitForToolbarsToLoad" time="30"/>
     </actionGroup>
     <actionGroup name="dragContentTypeToHiddenContainer">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="contentType"/>
             <argument name="contentTypeIndex" defaultValue="1" type="string"/>
@@ -65,11 +81,15 @@
         <dragAndDrop selector1="{{PageBuilderPanel.draggableContentTypeInPanel(contentType.name)}}" selector2="{{PageBuilderStage.contentTypeContainer(containerTargetType.role, containerTargetIndex)}}" x="{{offsetXCoordinate}}" y="{{offsetYCoordinate}}" stepKey="dropContentTypeIntoStage"/>
         <waitForPageLoad stepKey="waitForAnimation" time="30"/>
         <dontSeeJsError stepKey="doNotSeeJSErrorInConsole"/>
-        <waitForElementNotVisible time="10" selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForContentTypeNotOnStage" />
-        <dontSeeElementInDOM selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" stepKey="dontSeeElementInContainer" />
+        <waitForElementNotVisible time="10" selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForContentTypeNotOnStage"/>
+        <dontSeeElementInDOM selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" stepKey="dontSeeElementInContainer"/>
     </actionGroup>
     <!-- Test to ensure a content block doesn't receive drop events -->
     <actionGroup name="dragContentTypeToContentType">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="contentType"/>
             <argument name="contentTypeIndex" defaultValue="1" type="string"/>
@@ -84,6 +104,10 @@
         <waitForElementVisible time="30" selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForContentTypeInStage"/>
     </actionGroup>
     <actionGroup name="dragContentTypeToDropZone">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="contentType"/>
             <argument name="contentTypeIndex" defaultValue="1" type="string"/>
@@ -102,6 +126,10 @@
         <waitForElementVisible time="30" selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForContentTypeInStage"/>
     </actionGroup>
     <actionGroup name="cannotDragContentTypeToTarget">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="contentType"/>
             <argument name="contentTypeIndex" defaultValue="1" type="string"/>
@@ -119,6 +147,10 @@
         <dontSeeElementInDOM selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" stepKey="dontSeeElement"/>
     </actionGroup>
     <actionGroup name="moveContentTypeToContainer">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="contentType"/>
             <argument name="contentTypeIndex" defaultValue="1" type="string"/>
@@ -141,6 +173,10 @@
         <waitForElementVisible time="30" selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForContentTypeInStage"/>
     </actionGroup>
     <actionGroup name="cannotMoveContentTypeToContainer" extends="moveContentTypeToContainer">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="positionInContainer" defaultValue="1" type="string"/>
         </arguments>
@@ -148,6 +184,10 @@
         <dontSeeElementInDOM selector="{{PageBuilderStage.contentTypeInsideContainerStage(containerTargetType.role, containerTargetIndex, positionInContainer, contentType.role, contentTypeIndex)}}" stepKey="dontSeeContentTypeInContainer" after="waitForContentTypeInStage"/>
     </actionGroup>
     <actionGroup name="dragContentTypeNextToExistingContentType">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="contentType" defaultValue=""/>
             <argument name="existingContentType" defaultValue=""/>
@@ -160,7 +200,7 @@
         <dragAndDrop selector1="{{PageBuilderPanel.draggableContentTypeInPanel(contentType.name)}}" selector2="{{PageBuilderStage.contentTypeInStageByIndex(existingContentType.role, existingContentTypeIndex)}}" x="{{offsetXCoordinate}}" y="{{offsetYCoordinate}}" stepKey="dropContentTypeIntoStage"/>
         <waitForPageLoad stepKey="waitForAnimation" time="30"/>
         <dontSeeJsError stepKey="doNotSeeJSErrorInConsole"/>
-        <waitForElementVisible time="10" selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForContentTypeInStage" />
+        <waitForElementVisible time="10" selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForContentTypeInStage"/>
         <waitForPageLoad stepKey="waitForToolbarsToLoad" time="30"/>
     </actionGroup>
 </actionGroups>

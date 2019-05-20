@@ -7,8 +7,12 @@
 -->
 
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
     <actionGroup name="verifyHeadingInStage">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="headingType" defaultValue="PageBuilderHeadingTypeDefaultProperty"/>
             <argument name="headingText" defaultValue="PageBuilderHeadingTextProperty"/>
@@ -19,6 +23,10 @@
         <seeElement selector="{{HeadingOnStage.headingText(headingType.value, headingText.value, index)}}" stepKey="seeStageHeadingText"/>
     </actionGroup>
     <actionGroup name="verifyHeadingInStageWithAlignment">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="headingType" defaultValue="PageBuilderHeadingTypeDefaultProperty"/>
             <argument name="headingText" defaultValue="PageBuilderHeadingTextProperty"/>
@@ -31,6 +39,10 @@
         <seeElement selector="{{HeadingOnStage.headingText(headingType.value, headingText.value, index)}}" stepKey="seeStageHeadingText"/>
     </actionGroup>
     <actionGroup name="clickInsideLiveEditHeading">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="index" defaultValue="1" type="string"/>
             <argument name="headingType" defaultValue="PageBuilderHeadingTypeDefaultProperty"/>
@@ -45,6 +57,10 @@
         <seeElement selector="{{HeadingOnStage.headingTextAlignToolbar(index, headingAlignment.toolbar)}}" stepKey="seeHeadingAlignmentToolbar"/>
     </actionGroup>
     <actionGroup name="clickOutsideLiveEditHeading">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="index" defaultValue="1" type="string"/>
             <argument name="headingType" defaultValue="PageBuilderHeadingTypeDefaultProperty"/>
@@ -59,6 +75,10 @@
         <dontSeeElement selector="{{HeadingOnStage.headingTextAlignToolbar(index, headingAlignment.toolbar)}}" stepKey="dontSeeHeadingAlignmentToolbar"/>
     </actionGroup>
     <actionGroup name="enterHeadingOnStage">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="index" defaultValue="1" type="string"/>
             <argument name="headingText" defaultValue="PageBuilderHeadingTextProperty"/>
@@ -77,6 +97,10 @@
         <seeElement selector="{{HeadingOnStage.headingTextAlignToolbarSelected(index, headingAlignment.toolbar)}}" stepKey="seeAlignmentSelected"/>
     </actionGroup>
     <actionGroup name="verifyHeadingInStorefront">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="page" defaultValue=""/>
             <argument name="headingType" defaultValue="PageBuilderHeadingTypeDefaultProperty"/>
@@ -88,6 +112,10 @@
         <seeElement selector="{{HeadingOnStorefront.headingText(headingType.value, headingText.value, index)}}" stepKey="seeStorefrontHeadingText"/>
     </actionGroup>
     <actionGroup name="verifyHeadingInStorefrontWithAlignment">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="page" defaultValue=""/>
             <argument name="headingType" defaultValue="PageBuilderHeadingTypeDefaultProperty"/>
@@ -101,6 +129,10 @@
         <seeElement selector="{{HeadingOnStorefront.headingText(headingType.value, headingText.value, index)}}" stepKey="seeStorefrontHeadingText"/>
     </actionGroup>
     <actionGroup name="verifyHeadingDefaultAdvancedConfiguration">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="page" defaultValue=""/>
             <argument name="headingType" defaultValue="PageBuilderHeadingTypeDefaultProperty"/>
@@ -120,6 +152,10 @@
         <waitForElementVisible selector="{{page.noPadding(headingType.value, index)}}" stepKey="waitForPaddingVisible"/>
     </actionGroup>
     <actionGroup name="verifyHeadingAdvancedConfigurationWithAllUpdated">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="page" defaultValue=""/>
             <argument name="headingType" defaultValue="PageBuilderHeadingTypeDefaultProperty"/>
@@ -144,6 +180,10 @@
         <waitForElementVisible selector="{{page.padding(headingType.value, index, padding.value)}}" stepKey="waitForPaddingVisible"/>
     </actionGroup>
     <actionGroup name="verifyHeadingDefaultAdvancedConfigurationNotVisible">
+        <annotations>
+            <description>TBD</description>
+            <page>pageBuilder</page>
+        </annotations>
         <arguments>
             <argument name="page" defaultValue=""/>
             <argument name="headingType" defaultValue="PageBuilderHeadingTypeDefaultProperty"/>
