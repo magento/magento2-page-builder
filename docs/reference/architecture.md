@@ -47,6 +47,7 @@ This means you don't have to change your custom extensions if you're using UI co
 | Master template   | `master_template`     | Template used to render the content type to the master format |
 | Form              | `form`                | Form used to edit attributes of the content type             |
 | Reader            | `reader`              | Reads data for the content type from the master format       |
+{:style="table-layout:auto"}
 
 ## Data flow
 
@@ -155,6 +156,7 @@ Appearances provide several ways to customize your content types. For example, y
 | Content type components | `Vendor/ModuleName/view/adminhtml/web/js/content-type/content-type-name` |
 | Content type templates  | `Vendor/ModuleName/view/adminhtml/web/template/content-type/content-type-name/appearance-name` |
 | Styles                  | `Vendor/ModuleName/view/adminhtml/web/css/source/content-type/content-type-name` |
+{:style="table-layout:auto"}
 
 **Note:**
 We have also considered introducing an appearance component and/or moving the initialization of the libraries to bindings. This would allow you to add custom logic per appearance changes and libraries per appearance for content types like the `slider` and the `tabs`.

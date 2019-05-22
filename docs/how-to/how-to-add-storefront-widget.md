@@ -1,9 +1,8 @@
 # How to add a storefront widget
 
-A storefront widget is a JavaScript component that handles the behavior of a content type after Page Builder renders it on the storefront. 
-For example, the Tabs and Sliders have their own storefront widgets to handle the end-user's tapping of tabs and swiping of slides on the storefront.
-However, Page Builder also executes storefront widgets on the Admin stage for block and dynamic block content types. 
-This allows end-users to preview how Page Builder will render the blocks and dynamic blocks on the storefront.
+A storefront widget is a JavaScript component that handles the behavior of a content type after Page Builder renders it on the storefront. For example, the Tabs and Sliders have their own storefront widgets to handle the end-user's tapping of tabs and swiping of slides on the storefront.
+
+However, Page Builder also executes storefront widgets on the Admin stage for block and dynamic block content types. This allows end-users to preview how Page Builder will render the blocks and dynamic blocks on the storefront. 
 
 Adding a storefront widget to your content type is a simple two-step process:
 

@@ -1,6 +1,6 @@
 # View Page Builder
 
-After activating Page Builder, you can view it by navigating to one of several locations within the Admin UI:
+You can view Page Builder by navigating to one of several locations within the Admin UI:
 
 - Catalog Product
 - Catalog Category

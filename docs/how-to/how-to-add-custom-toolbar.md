@@ -52,6 +52,7 @@ The `OptionInterface` and `ValueInterface` define the structure of toolbar optio
 | `value`  | Field option value, such as a CSS class (as shown in the code example). |
 | `label`  | Field option label, such as a label for a select option (as shown in the code example) |
 | `icon`   | CSS class name for the icon to display in the toolbar to represent the field's option. If you don't include a CSS class, the toolbar will display the label instead. |
+{:style="table-layout:auto"}
 
 ## Step 2: Create `Toolbar` instance
 

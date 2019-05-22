@@ -19,17 +19,17 @@
         <!-- Location Pin Configuration -->
         <element name="latitude" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(@data-locations,'&quot;position&quot;:{&quot;latitude&quot;:{{arg2}},')]" parameterized="true"/>
         <element name="longitude" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(@data-locations,',&quot;longitude&quot;:{{arg2}}}')]" parameterized="true"/>
-        <element name="tooltipWindow" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[@class='gm-style-iw']" parameterized="true"/>
-        <element name="tooltipWindowClose" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[@class='gm-style-iw']//..//button[@title='Close']" parameterized="true"/>
-        <element name="locationName" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[@class='gm-style-iw']//h3/b[.='{{arg2}}']" parameterized="true"/>
-        <element name="comment" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[@class='gm-style-iw']//p[.='{{arg2}}']" parameterized="true"/>
-        <element name="phoneNumber" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[@class='gm-style-iw']//p[.='Phone: {{arg2}}']" parameterized="true"/>
-        <element name="noPhoneNumber" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[@class='gm-style-iw']//p[.='{{arg2}}']" parameterized="true"/>
-        <element name="addressCityStateZipCountry" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[@class='gm-style-iw']//span[.='{{arg2}}{{arg3}}{{arg4}}{{arg5}}{{arg6}}']" parameterized="true"/>
-        <element name="locationNameElement" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[@class='gm-style-iw']//h3/b" parameterized="true"/>
-        <element name="commentElement" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[@class='gm-style-iw']//p" parameterized="true"/>
-        <element name="phoneNumberElement" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[@class='gm-style-iw']//p" parameterized="true"/>
-        <element name="addressCityStateZipCountryElement" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[@class='gm-style-iw']//span" parameterized="true"/>
+        <element name="tooltipWindow" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(concat(' ', normalize-space(@class), ' '), ' gm-style-iw ')]" parameterized="true"/>
+        <element name="tooltipWindowClose" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(concat(' ', normalize-space(@class), ' '), ' gm-style-iw ')]//..//button[@title='Close']" parameterized="true"/>
+        <element name="locationName" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(concat(' ', normalize-space(@class), ' '), ' gm-style-iw ')]//h3/b[.='{{arg2}}']" parameterized="true"/>
+        <element name="comment" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(concat(' ', normalize-space(@class), ' '), ' gm-style-iw ')]//p[.='{{arg2}}']" parameterized="true"/>
+        <element name="phoneNumber" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(concat(' ', normalize-space(@class), ' '), ' gm-style-iw ')]//p[.='Phone: {{arg2}}']" parameterized="true"/>
+        <element name="noPhoneNumber" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(concat(' ', normalize-space(@class), ' '), ' gm-style-iw ')]//p[.='{{arg2}}']" parameterized="true"/>
+        <element name="addressCityStateZipCountry" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(concat(' ', normalize-space(@class), ' '), ' gm-style-iw ')]//span[.='{{arg2}}{{arg3}}{{arg4}}{{arg5}}{{arg6}}']" parameterized="true"/>
+        <element name="locationNameElement" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(concat(' ', normalize-space(@class), ' '), ' gm-style-iw ')]//h3/b" parameterized="true"/>
+        <element name="commentElement" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(concat(' ', normalize-space(@class), ' '), ' gm-style-iw ')]//p" parameterized="true"/>
+        <element name="phoneNumberElement" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(concat(' ', normalize-space(@class), ' '), ' gm-style-iw ')]//p" parameterized="true"/>
+        <element name="addressCityStateZipCountryElement" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(concat(' ', normalize-space(@class), ' '), ' gm-style-iw ')]//span" parameterized="true"/>
         <!-- Map Settings Configuration -->
         <element name="height" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(@data-bind,'renderMap') and contains(@style,'height: {{arg2}}px;')]" parameterized="true"/>
         <element name="noHeight" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(@data-bind,'renderMap') and not(contains(@style,'height:'))]" parameterized="true"/>
@@ -68,17 +68,17 @@
         <!-- Location Pin Configuration -->
         <element name="latitude" type="text" selector="(//div[@data-content-type='map'])[{{arg1}}][contains(@data-locations,'&quot;position&quot;:{&quot;latitude&quot;:{{arg2}},')]" parameterized="true"/>
         <element name="longitude" type="text" selector="(//div[@data-content-type='map'])[{{arg1}}][contains(@data-locations,',&quot;longitude&quot;:{{arg2}}}')]" parameterized="true"/>
-        <element name="tooltipWindow" type="text" selector="(//div[@data-content-type='map'])[{{arg1}}]//div[@class='gm-style-iw']" parameterized="true"/>
-        <element name="tooltipWindowClose" type="text" selector="(//div[@data-content-type='map'])[{{arg1}}]//div[@class='gm-style-iw']//..//button[@title='Close']" parameterized="true"/>
-        <element name="locationName" type="text" selector="(//div[@data-content-type='map'])[{{arg1}}]//div[@class='gm-style-iw']//h3/b[.='{{arg2}}']" parameterized="true"/>
-        <element name="comment" type="text" selector="(//div[@data-content-type='map'])[{{arg1}}]//div[@class='gm-style-iw']//p[.='{{arg2}}']" parameterized="true"/>
-        <element name="phoneNumber" type="text" selector="(//div[@data-content-type='map'])[{{arg1}}]//div[@class='gm-style-iw']//p[.='Phone: {{arg2}}']" parameterized="true"/>
-        <element name="noPhoneNumber" type="text" selector="(//div[@data-content-type='map'])[{{arg1}}]//div[@class='gm-style-iw']//p[.='{{arg2}}']" parameterized="true"/>
-        <element name="addressCityStateZipCountry" type="text" selector="(//div[@data-content-type='map'])[{{arg1}}]//div[@class='gm-style-iw']//span[.='{{arg2}}{{arg3}}{{arg4}}{{arg5}}{{arg6}}']" parameterized="true"/>
-        <element name="locationNameElement" type="text" selector="(//div[@data-content-type='map'])[{{arg1}}]//div[@class='gm-style-iw']//h3/b" parameterized="true"/>
-        <element name="commentElement" type="text" selector="(//div[@data-content-type='map'])[{{arg1}}]//div[@class='gm-style-iw']//p" parameterized="true"/>
-        <element name="phoneNumberElement" type="text" selector="(//div[@data-content-type='map'])[{{arg1}}]//div[@class='gm-style-iw']//p" parameterized="true"/>
-        <element name="addressCityStateZipCountryElement" type="text" selector="(//div[@data-content-type='map'])[{{arg1}}]//div[@class='gm-style-iw']//span" parameterized="true"/>
+        <element name="tooltipWindow" type="text" selector="(//div[@data-content-type='map'])[{{arg1}}]//div[contains(concat(' ', normalize-space(@class), ' '), ' gm-style-iw ')]" parameterized="true"/>
+        <element name="tooltipWindowClose" type="text" selector="(//div[@data-content-type='map'])[{{arg1}}]//div[contains(concat(' ', normalize-space(@class), ' '), ' gm-style-iw ')]//..//button[@title='Close']" parameterized="true"/>
+        <element name="locationName" type="text" selector="(//div[@data-content-type='map'])[{{arg1}}]//div[contains(concat(' ', normalize-space(@class), ' '), ' gm-style-iw ')]//h3/b[.='{{arg2}}']" parameterized="true"/>
+        <element name="comment" type="text" selector="(//div[@data-content-type='map'])[{{arg1}}]//div[contains(concat(' ', normalize-space(@class), ' '), ' gm-style-iw ')]//p[.='{{arg2}}']" parameterized="true"/>
+        <element name="phoneNumber" type="text" selector="(//div[@data-content-type='map'])[{{arg1}}]//div[contains(concat(' ', normalize-space(@class), ' '), ' gm-style-iw ')]//p[.='Phone: {{arg2}}']" parameterized="true"/>
+        <element name="noPhoneNumber" type="text" selector="(//div[@data-content-type='map'])[{{arg1}}]//div[contains(concat(' ', normalize-space(@class), ' '), ' gm-style-iw ')]//p[.='{{arg2}}']" parameterized="true"/>
+        <element name="addressCityStateZipCountry" type="text" selector="(//div[@data-content-type='map'])[{{arg1}}]//div[contains(concat(' ', normalize-space(@class), ' '), ' gm-style-iw ')]//span[.='{{arg2}}{{arg3}}{{arg4}}{{arg5}}{{arg6}}']" parameterized="true"/>
+        <element name="locationNameElement" type="text" selector="(//div[@data-content-type='map'])[{{arg1}}]//div[contains(concat(' ', normalize-space(@class), ' '), ' gm-style-iw ')]//h3/b" parameterized="true"/>
+        <element name="commentElement" type="text" selector="(//div[@data-content-type='map'])[{{arg1}}]//div[contains(concat(' ', normalize-space(@class), ' '), ' gm-style-iw ')]//p" parameterized="true"/>
+        <element name="phoneNumberElement" type="text" selector="(//div[@data-content-type='map'])[{{arg1}}]//div[contains(concat(' ', normalize-space(@class), ' '), ' gm-style-iw ')]//p" parameterized="true"/>
+        <element name="addressCityStateZipCountryElement" type="text" selector="(//div[@data-content-type='map'])[{{arg1}}]//div[contains(concat(' ', normalize-space(@class), ' '), ' gm-style-iw ')]//span" parameterized="true"/>
         <!-- Map Settings Configuration -->
         <element name="height" type="button" selector="(//div[@data-content-type='map'])[{{arg1}}][contains(@style,'height: {{arg2}}px;')]" parameterized="true"/>
         <element name="noHeight" type="button" selector="(//div[@data-content-type='map'])[{{arg1}}][not(contains(@style,'height:'))]" parameterized="true"/>
@@ -122,7 +122,7 @@
         <element name="clickablePin" type="button" selector="//div[@data-index='position']//div[@class='map-field']//map//area"/>
         <element name="allPins" type="button" selector="//div[@data-index='position']//div[@class='map-field']//img[not(@usemap) and contains(@src,'spotlight-poi2_hdpi.png')]|//div[@data-index='position']//div[@class='map-field']//img[not(@usemap) and contains(@src,'spotlight-poi2.png')]"/>
         <element name="pinLocations" type="text" selector="(//div[@data-index='position']//div[contains(@style,'transform: matrix(1, 0, 0, 1, ')])[{{arg1}}]" parameterized="true"/>
-        <element name="tooltipWindow" type="text" selector="//div[@data-index='position']//div[@class='map-field']//div[@class='gm-style-iw']"/>
+        <element name="tooltipWindow" type="text" selector="//div[@data-index='position']//div[@class='map-field']//div[contains(concat(' ', normalize-space(@class), ' '), ' gm-style-iw ')]"/>
         <element name="helperText" type="button" selector="//div[@data-index='position']//span[.='You can move the pin by clicking or dragging it where you want. To alter the zoom please use the controls.']"/>
         <element name="renderedMap" type="button" selector="//div[@data-index='position']//div[@class='map-field']//div[contains(@class, 'gm-style')]"/>
         <element name="googleMapsLink" type="button" selector="//div[@data-index='position']//div[@class='map-field' and not(contains(@style,'display: none;'))]//a//img[{{arg1}}]" parameterized="true"/>
