@@ -235,6 +235,7 @@ class TemplatePlugin
             $preDecodedOuterHtml = $document->saveHTML($htmlContentTypeNode);
 
             // clear empty <div> wrapper around outerHTML to replace with $clonedHtmlContentTypeNode
+            // phpcs:ignore Magento2.Functions.DiscouragedFunction
             $decodedInnerHtml = preg_replace('#^<[^>]*>|</[^>]*>$#', '', html_entity_decode($preDecodedOuterHtml));
 
             // Use $clonedHtmlContentTypeNode's placeholder to inject decoded inner html
@@ -268,6 +269,7 @@ class TemplatePlugin
             $backgroundImages = $node->attributes->getNamedItem('data-background-images');
             if ($backgroundImages->nodeValue !== '') {
                 $elementClass = uniqid('background-image-');
+                // phpcs:ignore Magento2.Functions.DiscouragedFunction
                 $images = json_decode(stripslashes($backgroundImages->nodeValue), true);
                 if (count($images) > 0) {
                     $style = $xpath->document->createElement(
