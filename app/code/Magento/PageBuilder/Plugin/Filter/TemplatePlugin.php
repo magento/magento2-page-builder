@@ -171,7 +171,7 @@ class TemplatePlugin
         $domDocument = new \DOMDocument('1.0', 'UTF-8');
         set_error_handler(
             function ($errorNumber, $errorString) {
-                throw new \Exception($errorString, $errorNumber);
+                throw new \DOMException($errorString, $errorNumber);
             }
         );
         $string = mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8');
