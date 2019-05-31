@@ -44,22 +44,32 @@ class TemplatePlugin
     private $mathRandom;
 
     /**
+     * @var \Magento\Framework\Serialize\Serializer\Json
+     */
+    private $json;
+
+    /**
      * @param \Psr\Log\LoggerInterface $logger
      * @param \Magento\Framework\View\ConfigInterface $viewConfig
      * @param \Magento\Framework\Math\Random $mathRandom
      * @param \Magento\Framework\Escaper|null $escaper
+     * @param \Magento\Framework\Serialize\Serializer\Json|null $json
      */
     public function __construct(
         \Psr\Log\LoggerInterface $logger,
         \Magento\Framework\View\ConfigInterface $viewConfig,
         \Magento\Framework\Math\Random $mathRandom,
-        \Magento\Framework\Escaper $escaper = null
+        \Magento\Framework\Escaper $escaper = null,
+        \Magento\Framework\Serialize\Serializer\Json $json = null
     ) {
         $this->logger = $logger;
         $this->viewConfig = $viewConfig;
         $this->mathRandom = $mathRandom;
         $this->escaper = $escaper ?? \Magento\Framework\App\ObjectManager::getInstance()->get(
             \Magento\Framework\Escaper::class
+        );
+        $this->json = $json ?? \Magento\Framework\App\ObjectManager::getInstance()->get(
+            \Magento\Framework\Serialize\Serializer\Json::class
         );
     }
 
@@ -269,8 +279,7 @@ class TemplatePlugin
             $backgroundImages = $node->attributes->getNamedItem('data-background-images');
             if ($backgroundImages->nodeValue !== '') {
                 $elementClass = uniqid('background-image-');
-                // phpcs:ignore Magento2.Functions.DiscouragedFunction
-                $images = json_decode(stripslashes($backgroundImages->nodeValue), true);
+                $images = $this->json->unserialize(stripslashes($backgroundImages->nodeValue));
                 if (count($images) > 0) {
                     $style = $xpath->document->createElement(
                         'style',
