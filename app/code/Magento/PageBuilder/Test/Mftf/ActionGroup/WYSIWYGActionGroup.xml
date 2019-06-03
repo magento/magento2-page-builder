@@ -11,7 +11,6 @@
     <actionGroup name="addTextToTinyMCE">
         <annotations>
             <description>TBD</description>
-            <page>pageBuilder</page>
         </annotations>
         <arguments>
             <argument name="property" defaultValue=""/>
@@ -29,7 +28,6 @@
     <actionGroup name="addTextToTinyMCEInline">
         <annotations>
             <description>TBD</description>
-            <page>pageBuilder</page>
         </annotations>
         <arguments>
             <argument name="section"/>
@@ -47,7 +45,6 @@
     <actionGroup name="addTextToTinyMCEInlineWYSIWYGDisabled" extends="addTextToTinyMCEInline">
         <annotations>
             <description>TBD</description>
-            <page>pageBuilder</page>
         </annotations>
         <comment userInput="addTextToTinyMCEInlineWYSIWYGDisabled" stepKey="comment"/>
         <waitForElementVisible selector="{{section.textArea(index)}}" stepKey="waitForEditorFocused"/>
@@ -59,14 +56,12 @@
     <actionGroup name="replaceTextToTinyMCE" extends="addTextToTinyMCE">
         <annotations>
             <description>TBD</description>
-            <page>pageBuilder</page>
         </annotations>
         <executeJS function="tinymce.activeEditor.setContent('{{property.value}}')" stepKey="addTextToWYSIWYG"/>
     </actionGroup>
     <actionGroup name="addVariableToTinyMCE">
         <annotations>
             <description>TBD</description>
-            <page>pageBuilder</page>
         </annotations>
         <arguments>
             <argument name="variable" defaultValue=""/>
@@ -84,7 +79,6 @@
     <actionGroup name="addVariableToTinyMCEInline" extends="addVariableToTinyMCE">
         <annotations>
             <description>TBD</description>
-            <page>pageBuilder</page>
         </annotations>
         <waitForElementVisible selector="{{TinyMCESection.InsertVariableIcon}}" stepKey="waitForInsertVariable1"/>
         <click selector="{{TinyMCESection.InsertVariableIcon}}" stepKey="clickInsertVariable1"/>
@@ -92,7 +86,6 @@
     <actionGroup name="addVariableToTinyMCE3" extends="addVariableToTinyMCE">
         <annotations>
             <description>TBD</description>
-            <page>pageBuilder</page>
         </annotations>
         <arguments>
             <argument name="variable" defaultValue=""/>
@@ -105,7 +98,6 @@
     <actionGroup name="addPageLinkVariableWYSIWYGDisabled">
         <annotations>
             <description>TBD</description>
-            <page>pageBuilder</page>
         </annotations>
         <arguments>
             <argument name="variable" defaultValue=""/>
@@ -125,7 +117,6 @@
     <actionGroup name="addPageLinkWidgetToTinyMCE">
         <annotations>
             <description>TBD</description>
-            <page>pageBuilder</page>
         </annotations>
         <arguments>
             <argument name="widget" defaultValue=""/>
@@ -158,7 +149,6 @@
     <actionGroup name="addPageLinkWidgetToTinyMCEInline" extends="addPageLinkWidgetToTinyMCE">
         <annotations>
             <description>TBD</description>
-            <page>pageBuilder</page>
         </annotations>
         <waitForElementVisible selector="{{TinyMCESection.InsertWidgetIcon}}" stepKey="waitForInsertWidget1"/>
         <click selector="{{TinyMCESection.InsertWidgetIcon}}" stepKey="clickAddWidgetBtn"/>
@@ -166,7 +156,6 @@
     <actionGroup name="addPageLinkWidgetToTinyMCE3" extends="addPageLinkWidgetToTinyMCE">
         <annotations>
             <description>TBD</description>
-            <page>pageBuilder</page>
         </annotations>
         <arguments>
             <argument name="widget" defaultValue=""/>
@@ -180,7 +169,6 @@
     <actionGroup name="addPageLinkWidgetWYSIWYGDisabled" extends="addPageLinkWidgetToTinyMCE">
         <annotations>
             <description>TBD</description>
-            <page>pageBuilder</page>
         </annotations>
         <arguments>
             <argument name="widget" defaultValue=""/>
@@ -196,7 +184,6 @@
     <actionGroup name="validateTextInTinyMCE">
         <annotations>
             <description>TBD</description>
-            <page>pageBuilder</page>
         </annotations>
         <arguments>
             <argument name="property" defaultValue=""/>
@@ -211,7 +198,6 @@
     <actionGroup name="insertLinkInWYSIWYG">
         <annotations>
             <description>TBD</description>
-            <page>pageBuilder</page>
         </annotations>
         <arguments>
             <argument name="section" defaultValue="TinyMCESection"/>
@@ -235,7 +221,6 @@
     <actionGroup name="assertTextareaContainsValue">
         <annotations>
             <description>TBD</description>
-            <page>pageBuilder</page>
         </annotations>
         <arguments>
             <argument name="selector" type="string"/>
@@ -250,7 +235,6 @@
     <actionGroup name="clickInsertImageInTinyMCE">
         <annotations>
             <description>TBD</description>
-            <page>pageBuilder</page>
         </annotations>
         <!-- This goes in CE repo -->
         <comment userInput="clickInsertImageInTinyMCE" stepKey="comment"/>
@@ -262,7 +246,6 @@
     <actionGroup name="clickMediaGalleryStorageRootArrow">
         <annotations>
             <description>TBD</description>
-            <page>pageBuilder</page>
         </annotations>
         <!-- This goes in CE repo -->
         <click selector="{{MediaGallerySection.StorageRootArrow}}" stepKey="clickStorageRootArrow"/>
@@ -272,7 +255,6 @@
     <actionGroup name="inlineEditWYSIWYGFromStage">
         <annotations>
             <description>TBD</description>
-            <page>pageBuilder</page>
         </annotations>
         <arguments>
             <argument name="contentType"/>
@@ -288,7 +270,6 @@
     <actionGroup name="inlineEditTextAreaFromStage">
         <annotations>
             <description>TBD</description>
-            <page>pageBuilder</page>
         </annotations>
         <arguments>
             <argument name="contentType"/>

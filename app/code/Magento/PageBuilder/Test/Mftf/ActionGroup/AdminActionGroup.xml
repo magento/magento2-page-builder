@@ -12,7 +12,6 @@
         <!-- This goes in CE repo -->
         <annotations>
             <description>TBD</description>
-            <page>pageBuilder</page>
         </annotations>
         <arguments>
             <argument name="CMSPage"/>
@@ -34,7 +33,6 @@
     <actionGroup name="navigateToAPageWithPageBuilder">
         <annotations>
             <description>TBD</description>
-            <page>pageBuilder</page>
         </annotations>
         <waitForPageLoad stepKey="waitForDashboardPageLoad"/>
         <amOnPage url="{{CmsPagesPage.url}}/new" stepKey="amOnPageBuilderPage"/>
@@ -43,7 +41,6 @@
     <actionGroup name="addPageBuilderPageTitle">
         <annotations>
             <description>TBD</description>
-            <page>pageBuilder</page>
         </annotations>
         <arguments>
             <argument name="contentType"/>
@@ -53,7 +50,6 @@
     <actionGroup name="switchToPageBuilderStage">
         <annotations>
             <description>TBD</description>
-            <page>pageBuilder</page>
         </annotations>
         <arguments>
             <argument name="sectionSelector" defaultValue="{{CmsNewPagePageContentSection.header}}" type="string"/>
@@ -70,7 +66,6 @@
     <actionGroup name="verifyPageBuilderVisibleOnPage">
         <annotations>
             <description>TBD</description>
-            <page>pageBuilder</page>
         </annotations>
         <waitForElementVisible selector="{{PageBuilderPanel.layoutMenuSection}}" stepKey="seePageBuilderVisible"/>
         <dontSee userInput="Enable Advanced CMS" stepKey="dontSeeEnableAdvancedCMSBtn"/>
@@ -78,7 +73,6 @@
     <actionGroup name="verifyPageBuilderVisibleOnStaging">
         <annotations>
             <description>TBD</description>
-            <page>pageBuilder</page>
         </annotations>
         <scrollTo selector="{{PageBuilderPanel.layoutMenuSection}}" stepKey="scrollToIdentifyPageBuilder"/>
         <waitForElementVisible selector="{{PageBuilderPanel.layoutMenuSection}}" stepKey="seePageBuilderVisible"/>
@@ -87,7 +81,6 @@
     <actionGroup name="verifyPageBuilderNotVisibleOnPage">
         <annotations>
             <description>TBD</description>
-            <page>pageBuilder</page>
         </annotations>
         <dontSee userInput="Enable Advanced CMS" stepKey="dontSeeEnableAdvancedCMSBtn"/>
         <dontSee selector="{{PageBuilderPanel.layoutMenuSection}}" stepKey="seePageBuilderVisible"/>
@@ -95,7 +88,6 @@
     <actionGroup name="verifyFullWidthLayout">
         <annotations>
             <description>TBD</description>
-            <page>pageBuilder</page>
         </annotations>
         <arguments>
             <argument name="index" defaultValue="0" type="string"/>
