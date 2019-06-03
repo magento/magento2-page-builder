@@ -279,6 +279,7 @@ class TemplatePlugin
             $backgroundImages = $node->attributes->getNamedItem('data-background-images');
             if ($backgroundImages->nodeValue !== '') {
                 $elementClass = uniqid('background-image-');
+                // phpcs:ignore Magento2.Functions.DiscouragedFunction
                 $images = $this->json->unserialize(stripslashes($backgroundImages->nodeValue));
                 if (count($images) > 0) {
                     $style = $xpath->document->createElement(
