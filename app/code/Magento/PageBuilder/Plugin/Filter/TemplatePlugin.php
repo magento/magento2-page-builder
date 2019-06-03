@@ -7,8 +7,6 @@ declare(strict_types=1);
 
 namespace Magento\PageBuilder\Plugin\Filter;
 
-use Magento\Store\Model\Store;
-
 /**
  * Plugin to the template filter to process any background images added by Page Builder
  */
@@ -17,11 +15,6 @@ class TemplatePlugin
     const BACKGROUND_IMAGE_PATTERN = '/data-background-images/si';
 
     const HTML_CONTENT_TYPE_PATTERN = '/data-content-type="html"/si';
-
-    /**
-     * @var \Magento\Framework\Escaper
-     */
-    private $escaper;
 
     /**
      * @var \Magento\Framework\View\ConfigInterface
@@ -52,22 +45,17 @@ class TemplatePlugin
      * @param \Psr\Log\LoggerInterface $logger
      * @param \Magento\Framework\View\ConfigInterface $viewConfig
      * @param \Magento\Framework\Math\Random $mathRandom
-     * @param \Magento\Framework\Escaper|null $escaper
      * @param \Magento\Framework\Serialize\Serializer\Json|null $json
      */
     public function __construct(
         \Psr\Log\LoggerInterface $logger,
         \Magento\Framework\View\ConfigInterface $viewConfig,
         \Magento\Framework\Math\Random $mathRandom,
-        \Magento\Framework\Escaper $escaper = null,
         \Magento\Framework\Serialize\Serializer\Json $json = null
     ) {
         $this->logger = $logger;
         $this->viewConfig = $viewConfig;
         $this->mathRandom = $mathRandom;
-        $this->escaper = $escaper ?? \Magento\Framework\App\ObjectManager::getInstance()->get(
-            \Magento\Framework\Escaper::class
-        );
         $this->json = $json ?? \Magento\Framework\App\ObjectManager::getInstance()->get(
             \Magento\Framework\Serialize\Serializer\Json::class
         );
@@ -125,32 +113,6 @@ class TemplatePlugin
         }
 
         return $result;
-    }
-
-    /**
-     * Determine if custom variable directive's return value needs to be escaped and do so if true
-     *
-     * @param \Magento\Framework\Filter\Template $subject
-     * @param \Closure $proceed
-     * @param string[] $construction
-     * @return string
-     */
-    public function aroundCustomvarDirective(
-        \Magento\Framework\Filter\Template $subject,
-        \Closure $proceed,
-        $construction
-    ) {
-        // Determine the need to escape the return value of observed method.
-        // Admin context requires store ID of 0; in that context return value should be escaped
-        $shouldEscape = $subject->getStoreId() !== null && (int) $subject->getStoreId() === Store::DEFAULT_STORE_ID;
-
-        if (!$shouldEscape) {
-            return $proceed($construction);
-        }
-
-        $result = $proceed($construction);
-
-        return $this->escaper->escapeHtml($result);
     }
 
     /**
