@@ -335,7 +335,7 @@ export default class Preview implements PreviewInterface {
         const contentTypeData = contentType.dataStore.getState();
         const index = contentType.parentContentType.getChildren()().indexOf(contentType) + 1 || null;
 
-        return new Promise((resolve) => {
+        return new Promise<ContentTypeInterface>((resolve) => {
             createContentType(
                 contentType.config,
                 contentType.parentContentType,

@@ -19,7 +19,7 @@ export default class MasterFormatRenderer {
      */
     public applyBindings(rootContainer: ContentTypeCollectionInterface): Promise<string> {
         const element = $("<div>");
-        return new Promise((resolve) => {
+        return new Promise<string>((resolve) => {
             engine.waitForFinishRender().then(() => {
                 ko.cleanNode(element[0]);
                 const filtered: JQuery = filterHtml(element);
