@@ -30,14 +30,14 @@ class CustomVarTemplate
     }
 
     /**
-     * Determine if custom variable directive's return value needs to be escaped and do so if true
+     * Determine if custom variable within a Page Builder CMS Block directive's return value needs to be escaped
      *
-     * @param \Magento\Framework\Filter\Template $subject
+     * @param \Magento\Email\Model\Template\Filter $subject
      * @param string $result
      * @return string
      */
     public function afterCustomvarDirective(
-        \Magento\Framework\Filter\Template $subject,
+        \Magento\Email\Model\Template\Filter $subject,
         $result
     ) {
         // Determine the need to escape the return value of observed method.
