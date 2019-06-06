@@ -8,22 +8,23 @@ declare(strict_types=1);
 namespace Magento\PageBuilder\Plugin\Filter;
 
 use Magento\Store\Model\Store;
+use Magento\Framework\Escaper;
 
 /**
  * Plugin to the template filter to escape custom variable directives
  */
-class CustomVarTemplatePlugin
+class CustomVarTemplate
 {
     /**
-     * @var \Magento\Framework\Escaper
+     * @var Escaper
      */
     private $escaper;
 
     /**
-     * @param \Magento\Framework\Escaper $escaper
+     * @param Escaper $escaper
      */
     public function __construct(
-        \Magento\Framework\Escaper $escaper
+        Escaper $escaper
     ) {
         $this->escaper = $escaper;
     }
@@ -32,24 +33,21 @@ class CustomVarTemplatePlugin
      * Determine if custom variable directive's return value needs to be escaped and do so if true
      *
      * @param \Magento\Framework\Filter\Template $subject
-     * @param \Closure $proceed
-     * @param string[] $construction
+     * @param string $result
      * @return string
      */
-    public function aroundCustomvarDirective(
+    public function afterCustomvarDirective(
         \Magento\Framework\Filter\Template $subject,
-        \Closure $proceed,
-        $construction
+        $result
     ) {
         // Determine the need to escape the return value of observed method.
         // Admin context requires store ID of 0; in that context return value should be escaped
         $shouldEscape = $subject->getStoreId() !== null && (int) $subject->getStoreId() === Store::DEFAULT_STORE_ID;
 
-        if (!$shouldEscape) {
-            return $proceed($construction);
+        if ($shouldEscape) {
+            return $this->escaper->escapeHtml($result);
+        } else {
+            return $result;
         }
-
-        $result = $proceed($construction);
-        return $this->escaper->escapeHtml($result);
     }
 }

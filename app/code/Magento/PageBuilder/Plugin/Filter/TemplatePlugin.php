@@ -45,20 +45,18 @@ class TemplatePlugin
      * @param \Psr\Log\LoggerInterface $logger
      * @param \Magento\Framework\View\ConfigInterface $viewConfig
      * @param \Magento\Framework\Math\Random $mathRandom
-     * @param \Magento\Framework\Serialize\Serializer\Json|null $json
+     * @param \Magento\Framework\Serialize\Serializer\Json $json
      */
     public function __construct(
         \Psr\Log\LoggerInterface $logger,
         \Magento\Framework\View\ConfigInterface $viewConfig,
         \Magento\Framework\Math\Random $mathRandom,
-        \Magento\Framework\Serialize\Serializer\Json $json = null
+        \Magento\Framework\Serialize\Serializer\Json $json
     ) {
         $this->logger = $logger;
         $this->viewConfig = $viewConfig;
         $this->mathRandom = $mathRandom;
-        $this->json = $json ?? \Magento\Framework\App\ObjectManager::getInstance()->get(
-            \Magento\Framework\Serialize\Serializer\Json::class
-        );
+        $this->json = $json;
     }
 
     /**
