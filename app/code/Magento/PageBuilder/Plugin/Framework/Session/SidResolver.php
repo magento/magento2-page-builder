@@ -25,23 +25,25 @@ class SidResolver
     }
 
     /**
+     * Get Sid for pagebuilder preview
+     *
      * @param \Magento\Framework\Session\SidResolver $subject
-     * @param \Closure $proceed
+     * @param string|null $result
      * @param \Magento\Framework\Session\SessionManagerInterface $session
      *
      * @return string|null
      */
-    public function aroundGetSid(
+    public function afterGetSid(
         \Magento\Framework\Session\SidResolver $subject,
-        \Closure $proceed,
+        $result,
         \Magento\Framework\Session\SessionManagerInterface $session
     ) {
-        if (strpos($this->request->getPathInfo(), 'pagebuilder/contenttype/preview')) {
+        if (strpos($this->request->getPathInfo(), 'pagebuilder/contenttype/preview') !== false) {
             return $this->request->getQuery(
                 $subject->getSessionIdQueryParam($session)
             );
         }
 
-        return $proceed($session);
+        return $result;
     }
 }
