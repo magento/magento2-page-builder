@@ -10,7 +10,6 @@ namespace Magento\PageBuilder\Controller\ContentType;
 
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\App\Action\HttpPostActionInterface;
-use Magento\Framework\Exception\AuthenticationException;
 
 /**
  * Preview controller to render blocks preview on Stage
@@ -28,39 +27,27 @@ class Preview extends \Magento\Framework\App\Action\Action implements HttpPostAc
     private $rendererPool;
 
     /**
-     * @var \Magento\Backend\Model\Auth
-     */
-    private $auth;
-
-    /**
      * Constructor
      *
      * @param \Magento\Backend\App\Action\Context $context
      * @param \Magento\PageBuilder\Model\Stage\RendererPool $rendererPool
-     * @param \Magento\Backend\Model\Auth $auth
      */
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
-        \Magento\PageBuilder\Model\Stage\RendererPool $rendererPool,
-        \Magento\Backend\Model\Auth $auth
+        \Magento\PageBuilder\Model\Stage\RendererPool $rendererPool
     ) {
         parent::__construct($context);
 
         $this->rendererPool = $rendererPool;
-        $this->auth = $auth;
     }
 
     /**
      * Generates an HTML preview for the stage
      *
      * @return \Magento\Framework\Controller\ResultInterface
-     * @throws \Magento\Framework\Exception\AuthenticationException
      */
     public function execute()
     {
-        if (!$this->auth->isLoggedIn()) {
-            throw new AuthenticationException(__('An authentication error occurred. Verify and try again.'));
-        }
         $pageResult = $this->resultFactory->create(ResultFactory::TYPE_PAGE);
         // Some template filters and directive processors expect this to be called in order to function.
         $pageResult->initLayout();
