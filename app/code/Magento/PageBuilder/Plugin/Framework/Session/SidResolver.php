@@ -38,7 +38,7 @@ class SidResolver
         $result,
         \Magento\Framework\Session\SessionManagerInterface $session
     ) {
-        if (strpos($this->request->getPathInfo(), 'pagebuilder/contenttype/preview') !== false) {
+        if (strpos($this->request->getPathInfo(), '/pagebuilder/contenttype/preview') === 0) {
             return $this->request->getQuery(
                 $subject->getSessionIdQueryParam($session)
             );
