@@ -7,8 +7,6 @@ declare(strict_types=1);
 
 namespace Magento\PageBuilder\Plugin\Filter;
 
-use Magento\Store\Model\Store;
-
 /**
  * Plugin to the template filter to process any background images added by Page Builder
  */
@@ -39,18 +37,26 @@ class TemplatePlugin
     private $mathRandom;
 
     /**
+     * @var \Magento\Framework\Serialize\Serializer\Json
+     */
+    private $json;
+
+    /**
      * @param \Psr\Log\LoggerInterface $logger
      * @param \Magento\Framework\View\ConfigInterface $viewConfig
      * @param \Magento\Framework\Math\Random $mathRandom
+     * @param \Magento\Framework\Serialize\Serializer\Json $json
      */
     public function __construct(
         \Psr\Log\LoggerInterface $logger,
         \Magento\Framework\View\ConfigInterface $viewConfig,
-        \Magento\Framework\Math\Random $mathRandom
+        \Magento\Framework\Math\Random $mathRandom,
+        \Magento\Framework\Serialize\Serializer\Json $json
     ) {
         $this->logger = $logger;
         $this->viewConfig = $viewConfig;
         $this->mathRandom = $mathRandom;
+        $this->json = $json;
     }
 
     /**
@@ -108,32 +114,6 @@ class TemplatePlugin
     }
 
     /**
-     * Determine if custom variable directive's return value needs to be escaped and do so if true
-     *
-     * @param \Magento\Framework\Filter\Template $subject
-     * @param \Closure $proceed
-     * @param string[] $construction
-     * @return string
-     */
-    public function aroundCustomvarDirective(
-        \Magento\Framework\Filter\Template $subject,
-        \Closure $proceed,
-        $construction
-    ) {
-        // Determine the need to escape the return value of observed method.
-        // Admin context requires store ID of 0; in that context return value should be escaped
-        $shouldEscape = $subject->getStoreId() !== null && (int) $subject->getStoreId() === Store::DEFAULT_STORE_ID;
-
-        if (!$shouldEscape) {
-            return $proceed($construction);
-        }
-
-        $result = $proceed($construction);
-
-        return htmlspecialchars($result);
-    }
-
-    /**
      * Create a DOM document from a given string
      *
      * @param string $html
@@ -161,7 +141,7 @@ class TemplatePlugin
         $domDocument = new \DOMDocument('1.0', 'UTF-8');
         set_error_handler(
             function ($errorNumber, $errorString) {
-                throw new \Exception($errorString, $errorNumber);
+                throw new \DOMException($errorString, $errorNumber);
             }
         );
         $string = mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8');
@@ -225,6 +205,7 @@ class TemplatePlugin
             $preDecodedOuterHtml = $document->saveHTML($htmlContentTypeNode);
 
             // clear empty <div> wrapper around outerHTML to replace with $clonedHtmlContentTypeNode
+            // phpcs:ignore Magento2.Functions.DiscouragedFunction
             $decodedInnerHtml = preg_replace('#^<[^>]*>|</[^>]*>$#', '', html_entity_decode($preDecodedOuterHtml));
 
             // Use $clonedHtmlContentTypeNode's placeholder to inject decoded inner html
@@ -258,7 +239,8 @@ class TemplatePlugin
             $backgroundImages = $node->attributes->getNamedItem('data-background-images');
             if ($backgroundImages->nodeValue !== '') {
                 $elementClass = uniqid('background-image-');
-                $images = json_decode(stripslashes($backgroundImages->nodeValue), true);
+                // phpcs:ignore Magento2.Functions.DiscouragedFunction
+                $images = $this->json->unserialize(stripslashes($backgroundImages->nodeValue));
                 if (count($images) > 0) {
                     $style = $xpath->document->createElement(
                         'style',
