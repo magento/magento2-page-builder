@@ -30,7 +30,6 @@ define(["knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/res
       this.dataStore = new _dataStore();
       this.afterRenderDeferred = (0, _promiseDeferred)();
       this.template = "Magento_PageBuilder/content-type/preview";
-      this.render = new _render();
       this.collection = new _collection();
       this.applyBindingsDebounce = _underscore.debounce(function () {
         _this.render.applyBindings(_this.rootContainer).then(function (renderedOutput) {
@@ -43,10 +42,13 @@ define(["knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/res
       }, 500);
       this.pageBuilder = pageBuilder;
       this.id = pageBuilder.id;
+      this.render = new _render(pageBuilder.id);
       this.rootContainer = rootContainer;
       (0, _matrix.generateAllowedParents)(); // Fire an event after the DOM has rendered
 
       this.afterRenderDeferred.promise.then(function () {
+        _this.render.setupChannel();
+
         _events.trigger("stage:" + _this.id + ":renderAfter", {
           stage: _this
         });

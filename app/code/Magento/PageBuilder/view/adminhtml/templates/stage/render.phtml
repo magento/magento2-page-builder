@@ -1,0 +1,14 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var \Magento\PageBuilder\Block\Adminhtml\Stage\Render $block */
+?>
+Page Builder Render Frame
+<script type="text/javascript">
+    require(['Magento_PageBuilder/js/render/frame'], function (listen) {
+        listen('<?= $block->escapeUrl($block->getBaseUrl()); ?>');
+    });
+</script>

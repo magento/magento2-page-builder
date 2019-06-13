@@ -32,7 +32,7 @@ export default class Stage {
     public afterRenderDeferred: DeferredInterface = deferred();
     public rootContainer: ContentTypeCollectionInterface;
     private template: string = "Magento_PageBuilder/content-type/preview";
-    private render: Render = new Render();
+    private render: Render;
     private collection: Collection = new Collection();
 
     /**
@@ -56,11 +56,13 @@ export default class Stage {
     constructor(pageBuilder: PageBuilderInterface, rootContainer: ContentTypeCollectionInterface) {
         this.pageBuilder = pageBuilder;
         this.id = pageBuilder.id;
+        this.render = new Render(pageBuilder.id);
         this.rootContainer = rootContainer;
         generateAllowedParents();
 
         // Fire an event after the DOM has rendered
         this.afterRenderDeferred.promise.then(() => {
+            this.render.setupChannel();
             events.trigger(`stage:${ this.id }:renderAfter`, {stage: this});
         });
 

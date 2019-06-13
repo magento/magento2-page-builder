@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/master-format/filter-html"], function (_jquery, _knockout, _engine, _directives, _filterHtml) {
+define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/master-format/render/serialize"], function (_config, _serialize) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -9,38 +9,83 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "Mag
   function () {
     "use strict";
 
-    function MasterFormatRenderer() {}
-
-    var _proto = MasterFormatRenderer.prototype;
-
+    /**
+     * @param stageId 
+     */
+    function MasterFormatRenderer(stageId) {
+      this.ready = false;
+      this.stageId = stageId;
+    }
     /**
      * Render the root container into a string
      *
      * @param {ContentTypeCollection} rootContainer
      * @returns {Promise<string>}
      */
+
+
+    var _proto = MasterFormatRenderer.prototype;
+
     _proto.applyBindings = function applyBindings(rootContainer) {
-      var element = (0, _jquery)("<div>");
-      return new Promise(function (resolve) {
-        _engine.waitForFinishRender().then(function () {
-          _knockout.cleanNode(element[0]);
+      var _this = this;
 
-          var filtered = (0, _filterHtml)(element);
-          var output = (0, _directives)(filtered.html());
-          element.remove();
-          resolve(output);
-        });
+      if (!this.getRenderFrame()) {
+        console.error("No render frame present for Page Builder instance.");
+        return;
+      }
 
-        _knockout.applyBindingsToNode(element[0], {
-          template: {
-            data: rootContainer.content,
-            name: rootContainer.content.template
+      return new Promise(function (resolve, reject) {
+        if (_this.ready) {
+          _this.channel.port1.postMessage((0, _serialize.getSerializedTree)(rootContainer));
+
+          _this.channel.port1.onmessage = function (event) {
+            if (event.isTrusted) {
+              console.log(event.data);
+              resolve(event.data);
+            } else {
+              reject();
+            }
+          };
+        }
+      });
+    }
+    /**
+     * Setup the channel, wait for the frame to load and be ready for the port
+     */
+    ;
+
+    _proto.setupChannel = function setupChannel() {
+      var _this2 = this;
+
+      this.channel = new MessageChannel();
+      var frame = this.getRenderFrame();
+
+      frame.onload = function () {
+        window.addEventListener("message", function (event) {
+          if (event.data === "PB_RENDER_READY") {
+            frame.contentWindow.postMessage("PB_RENDER_PORT", _this2.getTargetOrigin(), [_this2.channel.port2]);
+            _this2.ready = true;
           }
         });
-      }).catch(function (error) {
-        console.error(error);
-        return null;
-      });
+      };
+    }
+    /**
+     * Retrieve the target origin
+     */
+    ;
+
+    _proto.getTargetOrigin = function getTargetOrigin() {
+      return new URL(_config.getConfig('render_url')).origin;
+    }
+    /**
+     * Retrieve the render frame
+     * 
+     * @returns {HTMLIFrameElement}
+     */
+    ;
+
+    _proto.getRenderFrame = function getRenderFrame() {
+      return document.getElementById("render_frame_" + this.stageId);
     };
 
     return MasterFormatRenderer;

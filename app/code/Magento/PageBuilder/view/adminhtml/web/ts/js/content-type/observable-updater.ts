@@ -5,7 +5,7 @@
 
 import ko from "knockout";
 import _ from "underscore";
-import {ConverterInterface} from "../content-type-config.types";
+import {ConverterInterface, ContentTypeConfigAppearanceElementsInterface} from "../content-type-config.types";
 import ConverterPool from "../converter/converter-pool";
 import {DataObject} from "../data-store";
 import MassConverterPool from "../mass-converter/converter-pool";
@@ -50,79 +50,64 @@ export default class ObservableUpdater {
             return;
         }
 
-        const config = appearanceConfiguration.elements;
+        const generatedData = this.generate(appearanceConfiguration.elements, appearanceConfiguration.converters, data);
+        for (const element in generatedData) {
+            viewModel.data[element] = {};
+            Object.keys(generatedData[element]).forEach((key) => {
+                viewModel.data[element][key] = ko.observable(generatedData[element][key]);
+            });
+        }
+    }
 
-        data = this.convertData(data, appearanceConfiguration.converters);
+    /**
+     * Generate binding object to be applied to master format
+     * 
+     * @param elements 
+     * @param converters 
+     * @param data 
+     */
+    public generate(elements: ContentTypeConfigAppearanceElementsInterface, converters: ConverterInterface[], data: DataObject) {
+        const convertedData = this.convertData(data, converters);
+        const generatedData: {[key: string]: {[key: string]: {}}} = {};
 
-        for (const elementName of Object.keys(config)) {
-            if (viewModel.data[elementName] === undefined) {
-                viewModel.data[elementName] = {
-                    attributes: ko.observable({}),
-                    style: ko.observable({}),
-                    css: ko.observable({}),
-                    html: ko.observable({}),
+        for (const elementName of Object.keys(elements)) {
+            const elementConfig = elements[elementName];
+            if (generatedData[elementName] === undefined) {
+                generatedData[elementName] = {
+                    attributes: {},
+                    style: {},
+                    css: {},
+                    html: {},
                 };
             }
 
-            if (config[elementName].style !== undefined) {
-                const currentStyles = viewModel.data[elementName].style();
-                let newStyles = this.convertStyle(config[elementName], data);
-
-                if (currentStyles) {
-                    /**
-                     * If so we need to retrieve the previous styles applied to this element and create a new object
-                     * which forces all of these styles to be "false". Knockout doesn't clean existing styles when
-                     * applying new styles to an element. This resolves styles sticking around when they should be
-                     * removed.
-                     */
-                    const removeCurrentStyles = Object.keys(currentStyles)
-                        .reduce((object: object, styleName: string) => {
-                            return Object.assign(object, {[styleName]: ""});
-                        }, {});
-
-                    if (!_.isEmpty(removeCurrentStyles)) {
-                        newStyles = _.extend(removeCurrentStyles, newStyles);
-                    }
-                }
-
-                viewModel.data[elementName].style(newStyles);
+            if (elementConfig.style !== undefined) {
+                // @todo retrieve previous styles 
+                generatedData[elementName].style = this.generateStyles({}, elementConfig, convertedData);
             }
 
-            if (config[elementName].attributes !== undefined) {
-                const attributeData = this.convertAttributes(config[elementName], data);
-
-                attributeData["data-element"] = elementName;
-                viewModel.data[elementName].attributes(attributeData);
+            if (elementConfig.attributes !== undefined) {
+                generatedData[elementName].attributes = this.generateAttributes(elementName, elementConfig, convertedData);
             }
 
-            if (config[elementName].html !== undefined) {
-                viewModel.data[elementName].html(this.convertHtml(config[elementName], data));
+            if (elementConfig.html !== undefined) {
+                generatedData[elementName].html = this.convertHtml(elementConfig, convertedData);
             }
 
-            if (config[elementName].css !== undefined && config[elementName].css.var in data) {
-                const css = get<string>(data, config[elementName].css.var);
-                const newClasses: {[key: string]: boolean} = {};
-
-                if (css && css.length > 0) {
-                    css.toString().split(" ").map(
-                        (value: any, index: number) => newClasses[value] = true,
-                    );
-                }
-                for (const className of Object.keys(viewModel.data[elementName].css())) {
-                    if (!(className in newClasses)) {
-                        newClasses[className] = false;
-                    }
-                }
-                viewModel.data[elementName].css(newClasses);
+            if (elementConfig.css !== undefined && elementConfig.css.var in convertedData) {
+                // @todo retrieve previous CSS classes 
+                generatedData[elementName].css = this.generateCss({}, elementConfig, convertedData);
             }
 
-            if (config[elementName].tag !== undefined) {
-                if (viewModel.data[elementName][config[elementName].tag.var] === undefined) {
-                    viewModel.data[elementName][config[elementName].tag.var] = ko.observable("");
+            if (elementConfig.tag !== undefined && elementConfig.tag.var !== undefined) {
+                if (generatedData[elementName][elementConfig.tag.var] === undefined) {
+                    generatedData[elementName][elementConfig.tag.var] = "";
                 }
-                viewModel.data[elementName][config[elementName].tag.var](data[config[elementName].tag.var]);
+                generatedData[elementName][elementConfig.tag.var] = convertedData[elementConfig.tag.var];
             }
         }
+        
+        return generatedData;
     }
 
     /**
@@ -137,6 +122,75 @@ export default class ObservableUpdater {
             data = this.massConverterPool.get(converterConfig.component).toDom(data, converterConfig.config);
         }
         return data;
+    }
+
+
+    /**
+     * Generate style bindings for master format
+     * 
+     * @param currentStyles 
+     * @param config 
+     * @param data 
+     */
+    private generateStyles(currentStyles: {}, config: {}, data: {}): {} {
+        let newStyles = this.convertStyle(config, data);
+
+        if (currentStyles) {
+            /**
+             * If so we need to retrieve the previous styles applied to this element and create a new object
+             * which forces all of these styles to be "false". Knockout doesn't clean existing styles when
+             * applying new styles to an element. This resolves styles sticking around when they should be
+             * removed.
+             */
+            const removeCurrentStyles = Object.keys(currentStyles)
+                .reduce((object: object, styleName: string) => {
+                    return Object.assign(object, {[styleName]: ""});
+                }, {});
+
+            if (!_.isEmpty(removeCurrentStyles)) {
+                newStyles = _.extend(removeCurrentStyles, newStyles);
+            }
+        }
+
+        return newStyles;
+    }
+
+    /**
+     * Generate attributes for master format
+     * 
+     * @param elementName 
+     * @param config 
+     * @param data 
+     */
+    private generateAttributes(elementName: string, config: {}, data: {}): {} {
+        const attributeData = this.convertAttributes(config, data);
+        attributeData["data-element"] = elementName;
+        return attributeData;
+    }
+
+    /**
+     * Generate CSS bindings for master format
+     * 
+     * @param currentCss 
+     * @param config 
+     * @param data 
+     */
+    private generateCss(currentCss: {}, config: {}, data: {}): {} {
+        const css = get<string>(data, config.css.var);
+        const newClasses: {[key: string]: boolean} = {};
+
+        if (css && css.length > 0) {
+            css.toString().split(" ").map(
+                (value: any, index: number) => newClasses[value] = true,
+            );
+        }
+        for (const className of Object.keys(currentCss)) {
+            if (!(className in newClasses)) {
+                newClasses[className] = false;
+            }
+        }
+
+        return newClasses;
     }
 
     /**

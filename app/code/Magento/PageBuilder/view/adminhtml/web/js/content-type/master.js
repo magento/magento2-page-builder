@@ -63,6 +63,25 @@ define(["underscore", "Magento_PageBuilder/js/utils/object", "Magento_PageBuilde
       return result;
     }
     /**
+     * Retrieve our DOM bindings from our data
+     */
+    ;
+
+    _proto.getBindings = function getBindings() {
+      var data = _underscore.extend({
+        name: this.contentType.config.name
+      }, this.contentType.dataStore.getState());
+
+      var appearance = data && data.appearance !== undefined ? data.appearance : undefined;
+      var config = (0, _appearanceConfig)(this.contentType.config.name, appearance);
+
+      if (undefined === config || undefined === config.elements) {
+        return;
+      }
+
+      return this.observableUpdater.generate(config.elements, config.converters, data);
+    }
+    /**
      * Attach event to updating data in data store to update observables
      */
     ;
@@ -84,6 +103,8 @@ define(["underscore", "Magento_PageBuilder/js/utils/object", "Magento_PageBuilde
     }
     /**
      * Update observables
+     * 
+     * @deprecated
      */
     ;
 
