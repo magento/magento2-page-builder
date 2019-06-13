@@ -69,6 +69,22 @@ export default class Master {
     }
 
     /**
+     * Retrieve our DOM bindings from our data
+     */
+    public getBindings() {
+        const data = _.extend({name: this.contentType.config.name}, this.contentType.dataStore.getState());
+        const appearance = data && data.appearance !== undefined ? data.appearance as string : undefined;
+        const config = appearanceConfig(this.contentType.config.name, appearance);
+        if (undefined === config
+            || undefined === config.elements
+        ) {
+            return;
+        }
+
+        return this.observableUpdater.generate(config.elements, config.converters, data);
+    }
+
+    /**
      * Attach event to updating data in data store to update observables
      */
     protected bindEvents(): void {
@@ -88,6 +104,8 @@ export default class Master {
 
     /**
      * Update observables
+     * 
+     * @deprecated
      */
     private updateObservables(): void {
         this.observableUpdater.update(

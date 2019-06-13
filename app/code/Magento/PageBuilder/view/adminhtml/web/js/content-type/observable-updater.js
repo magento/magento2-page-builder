@@ -37,91 +37,75 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/object", "Magent
         return;
       }
 
-      var config = appearanceConfiguration.elements;
-      data = this.convertData(data, appearanceConfiguration.converters);
+      var generatedData = this.generate(appearanceConfiguration.elements, appearanceConfiguration.converters, data);
 
-      var _arr = Object.keys(config);
+      var _loop = function _loop(element) {
+        viewModel.data[element] = {};
+        Object.keys(generatedData[element]).forEach(function (key) {
+          viewModel.data[element][key] = _knockout.observable(generatedData[element][key]);
+        });
+      };
+
+      for (var element in generatedData) {
+        _loop(element);
+      }
+    }
+    /**
+     * Generate binding object to be applied to master format
+     * 
+     * @param elements 
+     * @param converters 
+     * @param data 
+     */
+    ;
+
+    _proto.generate = function generate(elements, converters, data) {
+      var convertedData = this.convertData(data, converters);
+      var generatedData = {};
+
+      var _arr = Object.keys(elements);
 
       for (var _i = 0; _i < _arr.length; _i++) {
         var elementName = _arr[_i];
+        var elementConfig = elements[elementName];
 
-        if (viewModel.data[elementName] === undefined) {
-          viewModel.data[elementName] = {
-            attributes: _knockout.observable({}),
-            style: _knockout.observable({}),
-            css: _knockout.observable({}),
-            html: _knockout.observable({})
+        if (generatedData[elementName] === undefined) {
+          generatedData[elementName] = {
+            attributes: {},
+            style: {},
+            css: {},
+            html: {}
           };
         }
 
-        if (config[elementName].style !== undefined) {
-          var currentStyles = viewModel.data[elementName].style();
-          var newStyles = this.convertStyle(config[elementName], data);
+        if (elementConfig.style !== undefined) {
+          // @todo retrieve previous styles 
+          generatedData[elementName].style = this.generateStyles({}, elementConfig, convertedData);
+        }
 
-          if (currentStyles) {
-            /**
-             * If so we need to retrieve the previous styles applied to this element and create a new object
-             * which forces all of these styles to be "false". Knockout doesn't clean existing styles when
-             * applying new styles to an element. This resolves styles sticking around when they should be
-             * removed.
-             */
-            var removeCurrentStyles = Object.keys(currentStyles).reduce(function (object, styleName) {
-              var _Object$assign;
+        if (elementConfig.attributes !== undefined) {
+          generatedData[elementName].attributes = this.generateAttributes(elementName, elementConfig, convertedData);
+        }
 
-              return Object.assign(object, (_Object$assign = {}, _Object$assign[styleName] = "", _Object$assign));
-            }, {});
+        if (elementConfig.html !== undefined) {
+          generatedData[elementName].html = this.convertHtml(elementConfig, convertedData);
+        }
 
-            if (!_underscore.isEmpty(removeCurrentStyles)) {
-              newStyles = _underscore.extend(removeCurrentStyles, newStyles);
-            }
+        if (elementConfig.css !== undefined && elementConfig.css.var in convertedData) {
+          // @todo retrieve previous CSS classes 
+          generatedData[elementName].css = this.generateCss({}, elementConfig, convertedData);
+        }
+
+        if (elementConfig.tag !== undefined && elementConfig.tag.var !== undefined) {
+          if (generatedData[elementName][elementConfig.tag.var] === undefined) {
+            generatedData[elementName][elementConfig.tag.var] = "";
           }
 
-          viewModel.data[elementName].style(newStyles);
-        }
-
-        if (config[elementName].attributes !== undefined) {
-          var attributeData = this.convertAttributes(config[elementName], data);
-          attributeData["data-element"] = elementName;
-          viewModel.data[elementName].attributes(attributeData);
-        }
-
-        if (config[elementName].html !== undefined) {
-          viewModel.data[elementName].html(this.convertHtml(config[elementName], data));
-        }
-
-        if (config[elementName].css !== undefined && config[elementName].css.var in data) {
-          (function () {
-            var css = (0, _object.get)(data, config[elementName].css.var);
-            var newClasses = {};
-
-            if (css && css.length > 0) {
-              css.toString().split(" ").map(function (value, index) {
-                return newClasses[value] = true;
-              });
-            }
-
-            var _arr2 = Object.keys(viewModel.data[elementName].css());
-
-            for (var _i2 = 0; _i2 < _arr2.length; _i2++) {
-              var className = _arr2[_i2];
-
-              if (!(className in newClasses)) {
-                newClasses[className] = false;
-              }
-            }
-
-            viewModel.data[elementName].css(newClasses);
-          })();
-        }
-
-        if (config[elementName].tag !== undefined) {
-          if (viewModel.data[elementName][config[elementName].tag.var] === undefined) {
-            viewModel.data[elementName][config[elementName].tag.var] = _knockout.observable("");
-          }
-
-          viewModel.data[elementName][config[elementName].tag.var](data[config[elementName].tag.var]);
+          generatedData[elementName][elementConfig.tag.var] = convertedData[elementConfig.tag.var];
         }
       }
+
+      return generatedData;
     }
     /**
      * Process data for elements before its converted to knockout format
@@ -133,16 +117,16 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/object", "Magent
     ;
 
     _proto.convertData = function convertData(data, convertersConfig) {
-      for (var _iterator = convertersConfig, _isArray = Array.isArray(_iterator), _i3 = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
+      for (var _iterator = convertersConfig, _isArray = Array.isArray(_iterator), _i2 = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
         var _ref;
 
         if (_isArray) {
-          if (_i3 >= _iterator.length) break;
-          _ref = _iterator[_i3++];
+          if (_i2 >= _iterator.length) break;
+          _ref = _iterator[_i2++];
         } else {
-          _i3 = _iterator.next();
-          if (_i3.done) break;
-          _ref = _i3.value;
+          _i2 = _iterator.next();
+          if (_i2.done) break;
+          _ref = _i2.value;
         }
 
         var converterConfig = _ref;
@@ -150,6 +134,83 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/object", "Magent
       }
 
       return data;
+    }
+    /**
+     * Generate style bindings for master format
+     * 
+     * @param currentStyles 
+     * @param config 
+     * @param data 
+     */
+    ;
+
+    _proto.generateStyles = function generateStyles(currentStyles, config, data) {
+      var newStyles = this.convertStyle(config, data);
+
+      if (currentStyles) {
+        /**
+         * If so we need to retrieve the previous styles applied to this element and create a new object
+         * which forces all of these styles to be "false". Knockout doesn't clean existing styles when
+         * applying new styles to an element. This resolves styles sticking around when they should be
+         * removed.
+         */
+        var removeCurrentStyles = Object.keys(currentStyles).reduce(function (object, styleName) {
+          var _Object$assign;
+
+          return Object.assign(object, (_Object$assign = {}, _Object$assign[styleName] = "", _Object$assign));
+        }, {});
+
+        if (!_underscore.isEmpty(removeCurrentStyles)) {
+          newStyles = _underscore.extend(removeCurrentStyles, newStyles);
+        }
+      }
+
+      return newStyles;
+    }
+    /**
+     * Generate attributes for master format
+     * 
+     * @param elementName 
+     * @param config 
+     * @param data 
+     */
+    ;
+
+    _proto.generateAttributes = function generateAttributes(elementName, config, data) {
+      var attributeData = this.convertAttributes(config, data);
+      attributeData["data-element"] = elementName;
+      return attributeData;
+    }
+    /**
+     * Generate CSS bindings for master format
+     * 
+     * @param currentCss 
+     * @param config 
+     * @param data 
+     */
+    ;
+
+    _proto.generateCss = function generateCss(currentCss, config, data) {
+      var css = (0, _object.get)(data, config.css.var);
+      var newClasses = {};
+
+      if (css && css.length > 0) {
+        css.toString().split(" ").map(function (value, index) {
+          return newClasses[value] = true;
+        });
+      }
+
+      var _arr2 = Object.keys(currentCss);
+
+      for (var _i3 = 0; _i3 < _arr2.length; _i3++) {
+        var className = _arr2[_i3];
+
+        if (!(className in newClasses)) {
+          newClasses[className] = false;
+        }
+      }
+
+      return newClasses;
     }
     /**
      * Convert attributes
