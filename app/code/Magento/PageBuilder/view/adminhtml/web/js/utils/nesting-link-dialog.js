@@ -18,7 +18,7 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/modal/dismissible-co
     var dataStoreContent = dataStore.getState();
     var inlineMessage = dataStoreContent[inlineMessageField];
     var linkUrl = dataStoreContent[linkUrlField];
-    var aLinkRegex = /<a[\s]+([^>]+)>|<a>|<\/a>/igm;
+    var aLinkRegex = /(<a[\s]+[^>]+).+(?=<\/a>)<\/a>/igm;
 
     if (wysiwyg && inlineMessage.match(aLinkRegex) && linkUrl && ["page", "product", "category", "default"].indexOf(linkUrl.type) !== -1 && linkUrl[linkUrl.type] && linkUrl[linkUrl.type].length !== 0) {
       var inlineEditor = (0, _jquery)("#" + wysiwyg.elementId);
