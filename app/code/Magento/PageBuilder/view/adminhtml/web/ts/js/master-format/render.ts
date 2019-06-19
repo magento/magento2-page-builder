@@ -38,11 +38,10 @@ export default class MasterFormatRenderer {
                     message: getSerializedTree(rootContainer),
                 });
                 this.channel.port1.onmessage = (event) => {
-                    console.log(event);
                     if (event.isTrusted) {
                         if (event.data.type === "render") {
-                            console.log(event.data);
-                            resolve(event.data);
+                            console.log(event.data.message);
+                            resolve(event.data.message);
                         }
                         if (event.data.type === "template") {
                             this.loadTemplate(event.data.message);
@@ -77,9 +76,7 @@ export default class MasterFormatRenderer {
      * @param name
      */
     private loadTemplate(name: string): void {
-        console.log("request template", name);
         require(["text!" + name], (template: string) => {
-            console.log("load template", name, template);
             this.channel.port1.postMessage({
                 type: "template",
                 message: {

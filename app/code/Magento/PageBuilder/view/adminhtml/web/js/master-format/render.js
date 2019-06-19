@@ -42,12 +42,10 @@ define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/master-format/r
           });
 
           _this.channel.port1.onmessage = function (event) {
-            console.log(event);
-
             if (event.isTrusted) {
               if (event.data.type === "render") {
-                console.log(event.data);
-                resolve(event.data);
+                console.log(event.data.message);
+                resolve(event.data.message);
               }
 
               if (event.data.type === "template") {
@@ -90,11 +88,7 @@ define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/master-format/r
     _proto.loadTemplate = function loadTemplate(name) {
       var _this3 = this;
 
-      console.log("request template", name);
-
       require(["text!" + name], function (template) {
-        console.log("load template", name, template);
-
         _this3.channel.port1.postMessage({
           type: "template",
           message: {

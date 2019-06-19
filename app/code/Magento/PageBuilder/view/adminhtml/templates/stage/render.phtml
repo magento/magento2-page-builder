@@ -24,6 +24,7 @@
                     removeItem: function (id) {
                         return delete this._data[id];
                     },
+
                     clear: function () {
                         return this._data = {};
                     }
@@ -41,7 +42,18 @@
                 'text': 'Magento_PageBuilder/js/render/requirejs/text',
             }
         },
-    })
+    });
+
+    require([
+        'ko',
+        'Magento_Ui/js/lib/knockout/template/engine',
+    ], function (ko, templateEngine) {
+        'use strict';
+
+        ko.uid = 0;
+
+        ko.setTemplateEngine(templateEngine);
+    });
 </script>
 <script type="text/javascript">
     require(['Magento_PageBuilder/js/render/frame'], function (listen) {
