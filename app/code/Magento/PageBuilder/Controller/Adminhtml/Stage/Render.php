@@ -7,7 +7,15 @@
 
 namespace Magento\PageBuilder\Controller\Adminhtml\Stage;
 
-class Render extends \Magento\Backend\App\Action
+use Magento\Framework\App\Action\HttpGetActionInterface;
+use Magento\RequireJs\Block\Html\Head\Config;
+
+/**
+ * Class Render
+ *
+ * Iframe to render Page Builder stage in isolation
+ */
+class Render extends \Magento\Backend\App\Action implements HttpGetActionInterface
 {
     /**
      * Preview transactional email action
@@ -16,7 +24,19 @@ class Render extends \Magento\Backend\App\Action
      */
     public function execute()
     {
-        $this->_view->loadLayout();
-        $this->_view->renderLayout();
+        $layout = $this->_view->getLayout();
+        $requireJs = $layout->createBlock(
+            \Magento\Backend\Block\Page\RequireJs::class,
+            'require.js'
+        );
+        $requireJs->setTemplate('Magento_Backend::page/js/require_js.phtml');
+        /* @var \Magento\PageBuilder\Block\Adminhtml\Stage\Render $renderBlock */
+        $renderBlock = $layout->createBlock(
+            \Magento\PageBuilder\Block\Adminhtml\Stage\Render::class,
+            'stage_render'
+        );
+        $renderBlock->setTemplate('Magento_PageBuilder::stage/render.phtml');
+        $this->getResponse()->setBody($requireJs->toHtml() . $renderBlock->toHtml());
+        $this->getResponse()->sendResponse();
     }
 }

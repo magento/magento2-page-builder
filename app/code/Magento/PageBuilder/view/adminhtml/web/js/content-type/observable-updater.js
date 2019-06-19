@@ -52,10 +52,10 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/object", "Magent
     }
     /**
      * Generate binding object to be applied to master format
-     * 
-     * @param elements 
-     * @param converters 
-     * @param data 
+     *
+     * @param elements
+     * @param converters
+     * @param data
      */
     ;
 
@@ -79,7 +79,7 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/object", "Magent
         }
 
         if (elementConfig.style !== undefined) {
-          // @todo retrieve previous styles 
+          // @todo retrieve previous styles
           generatedData[elementName].style = this.generateStyles({}, elementConfig, convertedData);
         }
 
@@ -92,7 +92,7 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/object", "Magent
         }
 
         if (elementConfig.css !== undefined && elementConfig.css.var in convertedData) {
-          // @todo retrieve previous CSS classes 
+          // @todo retrieve previous CSS classes
           generatedData[elementName].css = this.generateCss({}, elementConfig, convertedData);
         }
 
@@ -137,10 +137,10 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/object", "Magent
     }
     /**
      * Generate style bindings for master format
-     * 
-     * @param currentStyles 
-     * @param config 
-     * @param data 
+     *
+     * @param currentStyles
+     * @param config
+     * @param data
      */
     ;
 
@@ -169,10 +169,10 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/object", "Magent
     }
     /**
      * Generate attributes for master format
-     * 
-     * @param elementName 
-     * @param config 
-     * @param data 
+     *
+     * @param elementName
+     * @param config
+     * @param data
      */
     ;
 
@@ -183,10 +183,10 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/object", "Magent
     }
     /**
      * Generate CSS bindings for master format
-     * 
-     * @param currentCss 
-     * @param config 
-     * @param data 
+     *
+     * @param currentCss
+     * @param config
+     * @param data
      */
     ;
 

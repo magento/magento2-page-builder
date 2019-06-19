@@ -1,26 +1,25 @@
-import _ from "underscore";
-import ContentTypeInterface from "../../content-type.types";
 import ContentTypeCollection from "../../content-type-collection";
+import ContentTypeInterface from "../../content-type.types";
 import appearanceConfig from "../../content-type/appearance-config";
 import { DataObject } from "../../data-store";
 
 export interface TreeItem {
     template: string;
     data: DataObject;
-    children: TreeItem[]
+    children: TreeItem[];
 }
 
 /**
  * Serailize the tree as a simplified object for rendering
- * 
- * @param contentType 
+ *
+ * @param contentType
  */
 export function buildTree(contentType: ContentTypeInterface) {
     const data = getMasterData(contentType);
     const tree: TreeItem = {
         template: getTemplate(contentType, data.appearance),
         data,
-        children: []
+        children: [],
     };
 
     if (contentType instanceof ContentTypeCollection && contentType.getChildren()().length > 0) {
@@ -34,8 +33,8 @@ export function buildTree(contentType: ContentTypeInterface) {
 
 /**
  * Get a serialized version of the tree
- * 
- * @param contentType 
+ *
+ * @param contentType
  */
 export function getSerializedTree(contentType: ContentTypeInterface) {
     return buildTree(contentType);
@@ -43,17 +42,17 @@ export function getSerializedTree(contentType: ContentTypeInterface) {
 
 /**
  * Retrieve the template for the content type \
- * @param contentType 
- * @param appearance 
+ * @param contentType
+ * @param appearance
  */
-function getTemplate(contentType: ContentTypeInterface, appearance: string) : string {
-    return appearanceConfig(contentType.config.name, appearance).master_template
+function getTemplate(contentType: ContentTypeInterface, appearance: string): string {
+    return appearanceConfig(contentType.config.name, appearance).master_template;
 }
 
 /**
  * Retrieve the master data from the content types instance
- * 
- * @param contentType 
+ *
+ * @param contentType
  */
 function getMasterData(contentType: ContentTypeInterface) {
     return contentType.content.getBindings() || {};

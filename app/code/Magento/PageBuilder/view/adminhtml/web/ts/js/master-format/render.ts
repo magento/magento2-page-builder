@@ -3,17 +3,17 @@
  * See COPYING.txt for license details.
  */
 
-import ContentTypeCollectionInterface from "../content-type-collection.types";
 import Config from "../config";
+import ContentTypeCollectionInterface from "../content-type-collection.types";
 import { getSerializedTree } from "./render/serialize";
 
 export default class MasterFormatRenderer {
-    stageId: string;
-    channel: MessageChannel;
-    ready: boolean = false;
+    public stageId: string;
+    public channel: MessageChannel;
+    public ready: boolean = false;
 
     /**
-     * @param stageId 
+     * @param stageId
      */
     constructor(stageId: string) {
         this.stageId = stageId;
@@ -33,11 +33,20 @@ export default class MasterFormatRenderer {
 
         return new Promise((resolve, reject) => {
             if (this.ready) {
-                this.channel.port1.postMessage(getSerializedTree(rootContainer));
+                this.channel.port1.postMessage({
+                    type: "render",
+                    message: getSerializedTree(rootContainer),
+                });
                 this.channel.port1.onmessage = (event) => {
+                    console.log(event);
                     if (event.isTrusted) {
-                        console.log(event.data);
-                        resolve(event.data);
+                        if (event.data.type === "render") {
+                            console.log(event.data);
+                            resolve(event.data);
+                        }
+                        if (event.data.type === "template") {
+                            this.loadTemplate(event.data.message);
+                        }
                     } else {
                         reject();
                     }
@@ -55,7 +64,7 @@ export default class MasterFormatRenderer {
         frame.onload = () => {
             window.addEventListener("message", (event) => {
                 if (event.data === "PB_RENDER_READY") {
-                    frame.contentWindow.postMessage("PB_RENDER_PORT", this.getTargetOrigin(), [this.channel.port2]);
+                    frame.contentWindow.postMessage("PB_RENDER_PORT", "*", [this.channel.port2]);
                     this.ready = true;
                 }
             });
@@ -63,18 +72,37 @@ export default class MasterFormatRenderer {
     }
 
     /**
+     * Load a template for the child render frame
+     *
+     * @param name
+     */
+    private loadTemplate(name: string): void {
+        console.log("request template", name);
+        require(["text!" + name], (template: string) => {
+            console.log("load template", name, template);
+            this.channel.port1.postMessage({
+                type: "template",
+                message: {
+                    name,
+                    template,
+                },
+            });
+        });
+    }
+
+    /**
      * Retrieve the target origin
      */
-    private getTargetOrigin() : string {
-        return new URL(Config.getConfig('render_url')).origin;
+    private getTargetOrigin(): string {
+        return new URL(Config.getConfig("render_url")).origin;
     }
 
     /**
      * Retrieve the render frame
-     * 
+     *
      * @returns {HTMLIFrameElement}
      */
-    private getRenderFrame() : HTMLIFrameElement {
+    private getRenderFrame(): HTMLIFrameElement {
         return document.getElementById("render_frame_" + this.stageId) as HTMLIFrameElement;
     }
 }
