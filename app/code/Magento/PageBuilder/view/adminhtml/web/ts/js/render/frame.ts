@@ -1,11 +1,15 @@
 import $ from "jquery";
 import ko from "knockout";
 import engine from "Magento_Ui/js/lib/knockout/template/engine";
-import { TreeItem } from "../master-format/render/serialize";
-import RenderViewModel from "./view-model";
-import RenderContentType from "./content-type";
 import filterHtml from "../master-format/filter-html";
+import { TreeItem } from "../master-format/render/serialize";
 import decodeAllDataUrlsInString from "../utils/directives";
+import RenderContentType from "./content-type";
+import RenderViewModel from "./view-model";
+
+let port: MessagePort = null;
+const portDeferred: JQueryDeferred<MessagePort> = $.Deferred();
+const deferredTemplates: {[key: string]: JQueryDeferred<string>} = {};
 
 /**
  * Listen for requests from the parent window for a render
@@ -15,23 +19,66 @@ export default function listen(baseUrl: string) {
         "message",
         (event) => {
             if (event.ports && event.ports.length) {
-                const port = event.ports[0];
-                port.onmessage = (event) => {
-                    render(event.data).then((output) => {
-                        port.postMessage(output);
-                    });
+                port = event.ports[0];
+                portDeferred.resolve(port);
+                port.onmessage = (messageEvent) => {
+                    if (messageEvent.data.type === "render") {
+                        render(messageEvent.data.message).then((output) => {
+                            port.postMessage({
+                                type: "render",
+                                message: output,
+                            });
+                        });
+                    }
+                    if (messageEvent.data.type === "template") {
+                        const message = messageEvent.data.message;
+                        if (message.name in deferredTemplates) {
+                            deferredTemplates[message.name].resolve(message.template);
+                            delete deferredTemplates[message.name];
+                        }
+                    }
                 };
             }
         },
         false,
     );
-    window.parent.postMessage("PB_RENDER_READY", new URL(baseUrl).origin);
+    window.parent.postMessage("PB_RENDER_READY", "*");
+}
+
+/**
+ * Load a template from the parent window
+ *
+ * @param name
+ */
+export function loadTemplate(name: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+        if (!(name in deferredTemplates)) {
+            deferredTemplates[name] = $.Deferred();
+        }
+        deferredTemplates[name].then((template: string) => {
+            resolve(template);
+        });
+
+        if (port) {
+            port.postMessage({
+                type: "template",
+                message: name,
+            });
+        } else {
+            portDeferred.then((messagePort) => {
+                messagePort.postMessage({
+                    type: "template",
+                    message: name,
+                });
+            });
+        }
+    });
 }
 
 /**
  * Perform a render of the provided data
- * 
- * @param tree 
+ *
+ * @param tree
  */
 function render(tree: TreeItem) {
     return new Promise((resolve, reject) => {
@@ -58,20 +105,20 @@ function render(tree: TreeItem) {
 
 /**
  * Convert the serialised data back into a renderable tree conforming to the same interface as the previous renderer
- * 
- * @param tree 
+ *
+ * @param tree
  */
 function createRenderTree(tree: TreeItem): RenderContentType {
     const contentType = new RenderContentType(
         new RenderViewModel(
             tree.template,
-            tree.data
-        )
+            tree.data,
+        ),
     );
     if (tree.children.length > 0) {
         tree.children.forEach((child) => {
             contentType.children.push(
-                createRenderTree(child)
+                createRenderTree(child),
             );
         });
     }

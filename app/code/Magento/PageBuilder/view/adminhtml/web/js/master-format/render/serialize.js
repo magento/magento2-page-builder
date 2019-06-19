@@ -2,8 +2,8 @@
 define(["Magento_PageBuilder/js/content-type-collection", "Magento_PageBuilder/js/content-type/appearance-config"], function (_contentTypeCollection, _appearanceConfig) {
   /**
    * Serailize the tree as a simplified object for rendering
-   * 
-   * @param contentType 
+   *
+   * @param contentType
    */
   function buildTree(contentType) {
     var data = getMasterData(contentType);
@@ -23,8 +23,8 @@ define(["Magento_PageBuilder/js/content-type-collection", "Magento_PageBuilder/j
   }
   /**
    * Get a serialized version of the tree
-   * 
-   * @param contentType 
+   *
+   * @param contentType
    */
 
 
@@ -33,8 +33,8 @@ define(["Magento_PageBuilder/js/content-type-collection", "Magento_PageBuilder/j
   }
   /**
    * Retrieve the template for the content type \
-   * @param contentType 
-   * @param appearance 
+   * @param contentType
+   * @param appearance
    */
 
 
@@ -43,8 +43,8 @@ define(["Magento_PageBuilder/js/content-type-collection", "Magento_PageBuilder/j
   }
   /**
    * Retrieve the master data from the content types instance
-   * 
-   * @param contentType 
+   *
+   * @param contentType
    */
 
 

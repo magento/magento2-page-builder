@@ -5,7 +5,7 @@
 
 import ko from "knockout";
 import _ from "underscore";
-import {ConverterInterface, ContentTypeConfigAppearanceElementsInterface} from "../content-type-config.types";
+import {ContentTypeConfigAppearanceElementsInterface, ConverterInterface} from "../content-type-config.types";
 import ConverterPool from "../converter/converter-pool";
 import {DataObject} from "../data-store";
 import MassConverterPool from "../mass-converter/converter-pool";
@@ -61,12 +61,16 @@ export default class ObservableUpdater {
 
     /**
      * Generate binding object to be applied to master format
-     * 
-     * @param elements 
-     * @param converters 
-     * @param data 
+     *
+     * @param elements
+     * @param converters
+     * @param data
      */
-    public generate(elements: ContentTypeConfigAppearanceElementsInterface, converters: ConverterInterface[], data: DataObject) {
+    public generate(
+        elements: ContentTypeConfigAppearanceElementsInterface,
+        converters: ConverterInterface[],
+        data: DataObject,
+    ) {
         const convertedData = this.convertData(data, converters);
         const generatedData: {[key: string]: {[key: string]: {}}} = {};
 
@@ -82,12 +86,16 @@ export default class ObservableUpdater {
             }
 
             if (elementConfig.style !== undefined) {
-                // @todo retrieve previous styles 
+                // @todo retrieve previous styles
                 generatedData[elementName].style = this.generateStyles({}, elementConfig, convertedData);
             }
 
             if (elementConfig.attributes !== undefined) {
-                generatedData[elementName].attributes = this.generateAttributes(elementName, elementConfig, convertedData);
+                generatedData[elementName].attributes = this.generateAttributes(
+                    elementName,
+                    elementConfig,
+                    convertedData,
+                );
             }
 
             if (elementConfig.html !== undefined) {
@@ -95,7 +103,7 @@ export default class ObservableUpdater {
             }
 
             if (elementConfig.css !== undefined && elementConfig.css.var in convertedData) {
-                // @todo retrieve previous CSS classes 
+                // @todo retrieve previous CSS classes
                 generatedData[elementName].css = this.generateCss({}, elementConfig, convertedData);
             }
 
@@ -106,7 +114,7 @@ export default class ObservableUpdater {
                 generatedData[elementName][elementConfig.tag.var] = convertedData[elementConfig.tag.var];
             }
         }
-        
+
         return generatedData;
     }
 
@@ -124,13 +132,12 @@ export default class ObservableUpdater {
         return data;
     }
 
-
     /**
      * Generate style bindings for master format
-     * 
-     * @param currentStyles 
-     * @param config 
-     * @param data 
+     *
+     * @param currentStyles
+     * @param config
+     * @param data
      */
     private generateStyles(currentStyles: {}, config: {}, data: {}): {} {
         let newStyles = this.convertStyle(config, data);
@@ -157,10 +164,10 @@ export default class ObservableUpdater {
 
     /**
      * Generate attributes for master format
-     * 
-     * @param elementName 
-     * @param config 
-     * @param data 
+     *
+     * @param elementName
+     * @param config
+     * @param data
      */
     private generateAttributes(elementName: string, config: {}, data: {}): {} {
         const attributeData = this.convertAttributes(config, data);
@@ -170,10 +177,10 @@ export default class ObservableUpdater {
 
     /**
      * Generate CSS bindings for master format
-     * 
-     * @param currentCss 
-     * @param config 
-     * @param data 
+     *
+     * @param currentCss
+     * @param config
+     * @param data
      */
     private generateCss(currentCss: {}, config: {}, data: {}): {} {
         const css = get<string>(data, config.css.var);

@@ -1,26 +1,79 @@
 /*eslint-disable */
-define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "Magento_PageBuilder/js/render/view-model", "Magento_PageBuilder/js/render/content-type", "Magento_PageBuilder/js/master-format/filter-html", "Magento_PageBuilder/js/utils/directives"], function (_jquery, _knockout, _engine, _viewModel, _contentType, _filterHtml, _directives) {
+define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "Magento_PageBuilder/js/master-format/filter-html", "Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/render/content-type", "Magento_PageBuilder/js/render/view-model"], function (_jquery, _knockout, _engine, _filterHtml, _directives, _contentType, _viewModel) {
+  var port = null;
+
+  var portDeferred = _jquery.Deferred();
+
+  var deferredTemplates = {};
   /**
    * Listen for requests from the parent window for a render
    */
+
   function listen(baseUrl) {
     window.addEventListener("message", function (event) {
       if (event.ports && event.ports.length) {
-        var port = event.ports[0];
+        port = event.ports[0];
+        portDeferred.resolve(port);
 
-        port.onmessage = function (event) {
-          render(event.data).then(function (output) {
-            port.postMessage(output);
-          });
+        port.onmessage = function (messageEvent) {
+          if (messageEvent.data.type === "render") {
+            render(messageEvent.data.message).then(function (output) {
+              port.postMessage({
+                type: "render",
+                message: output
+              });
+            });
+          }
+
+          if (messageEvent.data.type === "template") {
+            var message = messageEvent.data.message;
+
+            if (message.name in deferredTemplates) {
+              deferredTemplates[message.name].resolve(message.template);
+              delete deferredTemplates[message.name];
+            }
+          }
         };
       }
     }, false);
-    window.parent.postMessage("PB_RENDER_READY", new URL(baseUrl).origin);
+    window.parent.postMessage("PB_RENDER_READY", "*");
+  }
+  /**
+   * Load a template from the parent window
+   *
+   * @param name
+   */
+
+
+  function loadTemplate(name) {
+    return new Promise(function (resolve, reject) {
+      if (!(name in deferredTemplates)) {
+        deferredTemplates[name] = _jquery.Deferred();
+      }
+
+      deferredTemplates[name].then(function (template) {
+        resolve(template);
+      });
+
+      if (port) {
+        port.postMessage({
+          type: "template",
+          message: name
+        });
+      } else {
+        portDeferred.then(function (messagePort) {
+          messagePort.postMessage({
+            type: "template",
+            message: name
+          });
+        });
+      }
+    });
   }
   /**
    * Perform a render of the provided data
-   * 
-   * @param tree 
+   *
+   * @param tree
    */
 
 
@@ -48,8 +101,8 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "Mag
   }
   /**
    * Convert the serialised data back into a renderable tree conforming to the same interface as the previous renderer
-   * 
-   * @param tree 
+   *
+   * @param tree
    */
 
 
@@ -65,6 +118,8 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "Mag
     return contentType;
   }
 
-  return listen;
+  return Object.assign(listen, {
+    loadTemplate: loadTemplate
+  });
 });
 //# sourceMappingURL=frame.js.map

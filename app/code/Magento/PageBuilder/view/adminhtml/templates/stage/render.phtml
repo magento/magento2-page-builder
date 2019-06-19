@@ -6,9 +6,46 @@
 
 /** @var \Magento\PageBuilder\Block\Adminhtml\Stage\Render $block */
 ?>
-Page Builder Render Frame
+<script type="text/javascript">
+    // Shim localStorage as it won't work correctly in our sandboxed iframe
+    Object.defineProperty(
+        window,
+        'localStorage',
+        {
+            get: function () {
+                return {
+                    _data: {},
+                    setItem: function (id, val) {
+                        return this._data[id] = String(val);
+                    },
+                    getItem: function (id) {
+                        return this._data.hasOwnProperty(id) ? this._data[id] : undefined;
+                    },
+                    removeItem: function (id) {
+                        return delete this._data[id];
+                    },
+                    clear: function () {
+                        return this._data = {};
+                    }
+                };
+            }
+        }
+    );
+</script>
+<script type="text/javascript" src="<?= $block->escapeUrl($block->getRequireJsUrl()); ?>"></script>
+<script type="text/javascript" src="<?= $block->escapeUrl($block->getRequireJsConfigUrl()); ?>"></script>
+<script type="text/javascript">
+    require.config({
+        'map': {
+            '*': {
+                'text': 'Magento_PageBuilder/js/render/requirejs/text',
+            }
+        },
+    })
+</script>
 <script type="text/javascript">
     require(['Magento_PageBuilder/js/render/frame'], function (listen) {
         listen('<?= $block->escapeUrl($block->getBaseUrl()); ?>');
     });
 </script>
+Page Builder Render Frame
