@@ -1,6 +1,13 @@
 /*eslint-disable */
 define(["mage/requirejs/text", "Magento_PageBuilder/js/render/frame"], function (_text, _frame) {
   /**
+   * Within our render frame we override the RequireJS text! plugin, this is originally implemented within
+   * lib/web/mage/requirejs/text.js. The override uses the MessageChannel to communicate with the parent frame to
+   * retrieve any requested HTML knockout template. We do this due to the sandbox restrictions on the iframe disallow
+   * XHR requests to the same origin domain.
+   */
+
+  /**
    * Load a template
    *
    * @param name

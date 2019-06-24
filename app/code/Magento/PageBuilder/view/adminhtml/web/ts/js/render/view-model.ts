@@ -1,11 +1,16 @@
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
 import ko from "knockout";
 import RenderContentType from "./content-type";
 
 export default class RenderViewModel {
-    data: {} = {};
-    contentType: RenderContentType;
-    template: string;
-    masterTemplate: string = "Magento_PageBuilder/content-type/master-collection";
+    public data: {} = {};
+    public contentType: RenderContentType;
+    public template: string;
+    public masterTemplate: string = "Magento_PageBuilder/content-type/master-collection";
 
     constructor(template: string, data: {}) {
         this.template = template;
@@ -14,8 +19,8 @@ export default class RenderViewModel {
 
     /**
      * Convert the flat object into observables for render
-     * 
-     * @param generatedData 
+     *
+     * @param generatedData
      */
     private convertDataToObservables(generatedData: {[key: string]: any}) {
         const convertedData: any = {};

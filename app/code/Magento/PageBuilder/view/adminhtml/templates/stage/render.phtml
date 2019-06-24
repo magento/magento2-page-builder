@@ -7,7 +7,9 @@
 /** @var \Magento\PageBuilder\Block\Adminhtml\Stage\Render $block */
 ?>
 <script type="text/javascript">
-    // Shim localStorage as it won't work correctly in our sandboxed iframe
+    <?php
+    // Shim localStorage without detection as it will not work as the iframe is sandboxed.
+    ?>
     Object.defineProperty(
         window,
         'localStorage',
@@ -36,6 +38,9 @@
 <script type="text/javascript" src="<?= $block->escapeUrl($block->getRequireJsUrl()); ?>"></script>
 <script type="text/javascript" src="<?= $block->escapeUrl($block->getRequireJsConfigUrl()); ?>"></script>
 <script type="text/javascript">
+    <?php
+    // Override the text! RequireJS plugin to allow us to load templates from the parent window
+    ?>
     require.config({
         'map': {
             '*': {
@@ -44,6 +49,13 @@
         },
     });
 
+    <?php
+    /**
+     * To be able to override the text plugin we need the Magento template engine to be used, as the template engine
+     * within lib has a dependency on the text! plugin we need to ensure we set the template engine before the
+     * dependency blocks us.
+     */
+    ?>
     require([
         'ko',
         'Magento_Ui/js/lib/knockout/template/engine',
@@ -51,13 +63,12 @@
         'use strict';
 
         ko.uid = 0;
-
         ko.setTemplateEngine(templateEngine);
     });
 </script>
 <script type="text/javascript">
     require(['Magento_PageBuilder/js/render/frame'], function (listen) {
-        listen('<?= $block->escapeUrl($block->getBaseUrl()); ?>');
+        listen();
     });
 </script>
 Page Builder Render Frame

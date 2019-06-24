@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/master-format/render/serialize"], function (_config, _serialize) {
+define(["jquery", "Magento_PageBuilder/js/master-format/render/serialize"], function (_jquery, _serialize) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -14,6 +14,7 @@ define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/master-format/r
      */
     function MasterFormatRenderer(stageId) {
       this.ready = false;
+      this.readyDeferred = _jquery.Deferred();
       this.stageId = stageId;
     }
     /**
@@ -55,11 +56,19 @@ define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/master-format/r
               reject();
             }
           };
+        } else {
+          _this.readyDeferred.then(function () {
+            _this.applyBindings(rootContainer).then(function (rendered) {
+              resolve(rendered);
+            }).catch(function () {
+              reject();
+            });
+          });
         }
       });
     }
     /**
-     * Setup the channel, wait for the frame to load and be ready for the port
+     * Create a channel to communicate with our sandboxed iframe
      */
     ;
 
@@ -74,12 +83,14 @@ define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/master-format/r
           if (event.data === "PB_RENDER_READY") {
             frame.contentWindow.postMessage("PB_RENDER_PORT", "*", [_this2.channel.port2]);
             _this2.ready = true;
+
+            _this2.readyDeferred.resolve();
           }
         });
       };
     }
     /**
-     * Load a template for the child render frame
+     * Use the text! RequireJS plugin to load a template and send it back to the child render iframe
      *
      * @param name
      */
@@ -97,14 +108,6 @@ define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/master-format/r
           }
         });
       });
-    }
-    /**
-     * Retrieve the target origin
-     */
-    ;
-
-    _proto.getTargetOrigin = function getTargetOrigin() {
-      return new URL(_config.getConfig("render_url")).origin;
     }
     /**
      * Retrieve the render frame

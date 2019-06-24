@@ -8,7 +8,7 @@ import ContentTypeInterface from "../content-type.types";
 import {DataObject} from "../data-store";
 import {get} from "../utils/object";
 import appearanceConfig from "./appearance-config";
-import ObservableUpdater from "./observable-updater";
+import ObservableUpdater, {GeneratedElementsData} from "./observable-updater";
 import ObservableObject from "./observable-updater.types";
 
 /**
@@ -71,7 +71,7 @@ export default class Master {
     /**
      * Retrieve our DOM bindings from our data
      */
-    public getBindings() {
+    public getBindings(): DataObject & GeneratedElementsData {
         const data = _.extend({name: this.contentType.config.name}, this.contentType.dataStore.getState());
         const appearance = data && data.appearance !== undefined ? data.appearance as string : undefined;
         const config = appearanceConfig(this.contentType.config.name, appearance);
@@ -104,7 +104,7 @@ export default class Master {
 
     /**
      * Update observables
-     * 
+     *
      * @deprecated
      */
     private updateObservables(): void {

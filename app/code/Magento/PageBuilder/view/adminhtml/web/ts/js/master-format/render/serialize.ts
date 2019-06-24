@@ -1,6 +1,12 @@
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
 import ContentTypeCollection from "../../content-type-collection";
 import ContentTypeInterface from "../../content-type.types";
 import appearanceConfig from "../../content-type/appearance-config";
+import {GeneratedElementsData} from "../../content-type/observable-updater";
 import { DataObject } from "../../data-store";
 
 export interface TreeItem {
@@ -54,6 +60,6 @@ function getTemplate(contentType: ContentTypeInterface, appearance: string): str
  *
  * @param contentType
  */
-function getMasterData(contentType: ContentTypeInterface) {
+function getMasterData(contentType: ContentTypeInterface): GeneratedElementsData {
     return contentType.content.getBindings() || {};
 }
