@@ -103,7 +103,7 @@ define(["underscore", "Magento_PageBuilder/js/utils/object", "Magento_PageBuilde
     }
     /**
      * Update observables
-     * 
+     *
      * @deprecated
      */
     ;

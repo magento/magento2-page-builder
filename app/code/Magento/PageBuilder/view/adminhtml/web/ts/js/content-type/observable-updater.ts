@@ -5,7 +5,11 @@
 
 import ko from "knockout";
 import _ from "underscore";
-import {ContentTypeConfigAppearanceElementsInterface, ConverterInterface} from "../content-type-config.types";
+import {
+    ContentTypeConfigAppearanceElementInterface,
+    ContentTypeConfigAppearanceElementsInterface,
+    ConverterInterface,
+} from "../content-type-config.types";
 import ConverterPool from "../converter/converter-pool";
 import {DataObject} from "../data-store";
 import MassConverterPool from "../mass-converter/converter-pool";
@@ -52,10 +56,12 @@ export default class ObservableUpdater {
 
         const generatedData = this.generate(appearanceConfiguration.elements, appearanceConfiguration.converters, data);
         for (const element in generatedData) {
-            viewModel.data[element] = {};
-            Object.keys(generatedData[element]).forEach((key) => {
-                viewModel.data[element][key] = ko.observable(generatedData[element][key]);
-            });
+            if (generatedData.hasOwnProperty(element)) {
+                viewModel.data[element] = {};
+                Object.keys(generatedData[element]).forEach((key) => {
+                    viewModel.data[element][key] = ko.observable(generatedData[element][key]);
+                });
+            }
         }
     }
 
@@ -70,9 +76,9 @@ export default class ObservableUpdater {
         elements: ContentTypeConfigAppearanceElementsInterface,
         converters: ConverterInterface[],
         data: DataObject,
-    ) {
+    ): GeneratedElementsData {
         const convertedData = this.convertData(data, converters);
-        const generatedData: {[key: string]: {[key: string]: {}}} = {};
+        const generatedData: GeneratedElementsData = {};
 
         for (const elementName of Object.keys(elements)) {
             const elementConfig = elements[elementName];
@@ -125,7 +131,7 @@ export default class ObservableUpdater {
      * @param {ConverterInterface[]} convertersConfig
      * @returns {object}
      */
-    public convertData(data: object, convertersConfig: ConverterInterface[]) {
+    public convertData(data: DataObject, convertersConfig: ConverterInterface[]): DataObject {
         for (const converterConfig of convertersConfig) {
             data = this.massConverterPool.get(converterConfig.component).toDom(data, converterConfig.config);
         }
@@ -139,7 +145,11 @@ export default class ObservableUpdater {
      * @param config
      * @param data
      */
-    private generateStyles(currentStyles: {}, config: {}, data: {}): {} {
+    private generateStyles(
+        currentStyles: {},
+        config: ContentTypeConfigAppearanceElementInterface,
+        data: DataObject,
+    ): {} {
         let newStyles = this.convertStyle(config, data);
 
         if (currentStyles) {
@@ -169,7 +179,11 @@ export default class ObservableUpdater {
      * @param config
      * @param data
      */
-    private generateAttributes(elementName: string, config: {}, data: {}): {} {
+    private generateAttributes(
+        elementName: string,
+        config: ContentTypeConfigAppearanceElementInterface,
+        data: DataObject,
+    ): {} {
         const attributeData = this.convertAttributes(config, data);
         attributeData["data-element"] = elementName;
         return attributeData;
@@ -182,13 +196,13 @@ export default class ObservableUpdater {
      * @param config
      * @param data
      */
-    private generateCss(currentCss: {}, config: {}, data: {}): {} {
+    private generateCss(currentCss: {}, config: ContentTypeConfigAppearanceElementInterface, data: DataObject): {} {
         const css = get<string>(data, config.css.var);
         const newClasses: {[key: string]: boolean} = {};
 
         if (css && css.length > 0) {
             css.toString().split(" ").map(
-                (value: any, index: number) => newClasses[value] = true,
+                (value: string) => newClasses[value] = true,
             );
         }
         for (const className of Object.keys(currentCss)) {
@@ -207,8 +221,8 @@ export default class ObservableUpdater {
      * @param {DataObject} data
      * @returns {object}
      */
-    private convertAttributes(config: any, data: DataObject) {
-        const result: any = {};
+    private convertAttributes(config: ContentTypeConfigAppearanceElementInterface, data: DataObject) {
+        const result: DataObject = {};
         for (const attributeConfig of config.attributes) {
             if ("read" === attributeConfig.persistence_mode) {
                 continue;
@@ -236,7 +250,7 @@ export default class ObservableUpdater {
      * @param {object}data
      * @returns {object}
      */
-    private convertStyle(config: any, data: any) {
+    private convertStyle(config: ContentTypeConfigAppearanceElementInterface, data: DataObject) {
         const result: {[key: string]: string} = {};
         if (config.style) {
             for (const propertyConfig of config.style) {
@@ -273,7 +287,7 @@ export default class ObservableUpdater {
      * @param {DataObject} data
      * @returns {string}
      */
-    private convertHtml(config: any, data: DataObject) {
+    private convertHtml(config: ContentTypeConfigAppearanceElementInterface, data: DataObject) {
         let value = config.html.var ? get(data, config.html.var, config.html.placeholder) : config.html.placeholder;
         const converter = this.converterResolver(config.html);
         if (this.converterPool.get(converter)) {
@@ -285,4 +299,11 @@ export default class ObservableUpdater {
         }
         return value;
     }
+}
+
+export interface GeneratedElementsData {
+    [key: string]: {
+        [key: string]: {};
+    };
+    appearance?: any;
 }

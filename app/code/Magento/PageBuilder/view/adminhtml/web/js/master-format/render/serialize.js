@@ -1,6 +1,11 @@
 /*eslint-disable */
 define(["Magento_PageBuilder/js/content-type-collection", "Magento_PageBuilder/js/content-type/appearance-config"], function (_contentTypeCollection, _appearanceConfig) {
   /**
+   * Copyright © Magento, Inc. All rights reserved.
+   * See COPYING.txt for license details.
+   */
+
+  /**
    * Serailize the tree as a simplified object for rendering
    *
    * @param contentType

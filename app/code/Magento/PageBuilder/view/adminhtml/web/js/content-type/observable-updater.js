@@ -40,10 +40,12 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/object", "Magent
       var generatedData = this.generate(appearanceConfiguration.elements, appearanceConfiguration.converters, data);
 
       var _loop = function _loop(element) {
-        viewModel.data[element] = {};
-        Object.keys(generatedData[element]).forEach(function (key) {
-          viewModel.data[element][key] = _knockout.observable(generatedData[element][key]);
-        });
+        if (generatedData.hasOwnProperty(element)) {
+          viewModel.data[element] = {};
+          Object.keys(generatedData[element]).forEach(function (key) {
+            viewModel.data[element][key] = _knockout.observable(generatedData[element][key]);
+          });
+        }
       };
 
       for (var element in generatedData) {
@@ -195,7 +197,7 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/object", "Magent
       var newClasses = {};
 
       if (css && css.length > 0) {
-        css.toString().split(" ").map(function (value, index) {
+        css.toString().split(" ").map(function (value) {
           return newClasses[value] = true;
         });
       }

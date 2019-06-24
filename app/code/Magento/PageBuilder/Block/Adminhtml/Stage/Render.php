@@ -32,15 +32,6 @@ class Render extends Template
         $this->fileManager = $fileManager;
     }
 
-    /**
-     * @return string
-     * @throws \Magento\Framework\Exception\LocalizedException
-     */
-    public function getLocalStoragePolyfillIUrl() : string
-    {
-        $asset = $this->_assetRepo->createAsset('mage/polyfill.js');
-        return $asset->getUrl();
-    }
 
     /**
      * Generate the URL to RequireJS

@@ -94,7 +94,7 @@ export interface DataMappingInterface {
 }
 
 export interface DataMappingHtmlInterface extends DataMappingInterface {
-
+    placeholder: string;
 }
 
 export interface DataMappingCssInterface extends DataMappingInterface {

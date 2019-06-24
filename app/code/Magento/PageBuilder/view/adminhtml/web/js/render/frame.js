@@ -1,5 +1,9 @@
 /*eslint-disable */
 define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "Magento_PageBuilder/js/master-format/filter-html", "Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/render/content-type", "Magento_PageBuilder/js/render/view-model"], function (_jquery, _knockout, _engine, _filterHtml, _directives, _contentType, _viewModel) {
+  /**
+   * Copyright © Magento, Inc. All rights reserved.
+   * See COPYING.txt for license details.
+   */
   var port = null;
 
   var portDeferred = _jquery.Deferred();
@@ -9,7 +13,7 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "Mag
    * Listen for requests from the parent window for a render
    */
 
-  function listen(baseUrl) {
+  function listen() {
     window.addEventListener("message", function (event) {
       if (event.ports && event.ports.length) {
         port = event.ports[0];
@@ -46,7 +50,7 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "Mag
 
 
   function loadTemplate(name) {
-    return new Promise(function (resolve, reject) {
+    return new Promise(function (resolve) {
       if (!(name in deferredTemplates)) {
         deferredTemplates[name] = _jquery.Deferred();
       }

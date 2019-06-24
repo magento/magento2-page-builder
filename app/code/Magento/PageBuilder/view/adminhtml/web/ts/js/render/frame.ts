@@ -1,3 +1,8 @@
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
 import $ from "jquery";
 import ko from "knockout";
 import engine from "Magento_Ui/js/lib/knockout/template/engine";
@@ -14,7 +19,7 @@ const deferredTemplates: {[key: string]: JQueryDeferred<string>} = {};
 /**
  * Listen for requests from the parent window for a render
  */
-export default function listen(baseUrl: string) {
+export default function listen() {
     window.addEventListener(
         "message",
         (event) => {
@@ -51,7 +56,7 @@ export default function listen(baseUrl: string) {
  * @param name
  */
 export function loadTemplate(name: string): Promise<string> {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
         if (!(name in deferredTemplates)) {
             deferredTemplates[name] = $.Deferred();
         }

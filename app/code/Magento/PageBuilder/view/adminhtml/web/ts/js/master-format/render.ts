@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-import Config from "../config";
+import $ from "jquery";
 import ContentTypeCollectionInterface from "../content-type-collection.types";
 import { getSerializedTree } from "./render/serialize";
 
@@ -11,6 +11,7 @@ export default class MasterFormatRenderer {
     public stageId: string;
     public channel: MessageChannel;
     public ready: boolean = false;
+    private readyDeferred: JQueryDeferred<void> = $.Deferred();
 
     /**
      * @param stageId
@@ -50,12 +51,20 @@ export default class MasterFormatRenderer {
                         reject();
                     }
                 };
+            } else {
+                this.readyDeferred.then(() => {
+                    this.applyBindings(rootContainer).then((rendered: string) => {
+                        resolve(rendered);
+                    }).catch(() => {
+                        reject();
+                    });
+                });
             }
         });
     }
 
     /**
-     * Setup the channel, wait for the frame to load and be ready for the port
+     * Create a channel to communicate with our sandboxed iframe
      */
     public setupChannel() {
         this.channel = new MessageChannel();
@@ -65,13 +74,14 @@ export default class MasterFormatRenderer {
                 if (event.data === "PB_RENDER_READY") {
                     frame.contentWindow.postMessage("PB_RENDER_PORT", "*", [this.channel.port2]);
                     this.ready = true;
+                    this.readyDeferred.resolve();
                 }
             });
         };
     }
 
     /**
-     * Load a template for the child render frame
+     * Use the text! RequireJS plugin to load a template and send it back to the child render iframe
      *
      * @param name
      */
@@ -85,13 +95,6 @@ export default class MasterFormatRenderer {
                 },
             });
         });
-    }
-
-    /**
-     * Retrieve the target origin
-     */
-    private getTargetOrigin(): string {
-        return new URL(Config.getConfig("render_url")).origin;
     }
 
     /**

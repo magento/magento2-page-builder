@@ -1,5 +1,9 @@
 /*eslint-disable */
 define(["knockout"], function (_knockout) {
+  /**
+   * Copyright © Magento, Inc. All rights reserved.
+   * See COPYING.txt for license details.
+   */
   var RenderViewModel =
   /*#__PURE__*/
   function () {
@@ -13,8 +17,8 @@ define(["knockout"], function (_knockout) {
     }
     /**
      * Convert the flat object into observables for render
-     * 
-     * @param generatedData 
+     *
+     * @param generatedData
      */
 
 
