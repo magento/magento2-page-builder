@@ -52,11 +52,13 @@ class HtmlFilter
         // Remove all <script /> tags, on* attributes from output
         /** @var \DOMElement $item */
         foreach (iterator_to_array($dom->getElementsByTagName('*')) as $item) {
-            if ($item->tagName === 'script') {
+            if (in_array($item->tagName, ['script', 'meta', 'iframe', 'embed', 'object'])) {
                 $item->parentNode->removeChild($item);
             } else {
                 foreach (iterator_to_array($item->attributes) as $attribute) {
-                    if (stripos($attribute->name, 'on') === 0) {
+                    if (stripos($attribute->name, 'on') === 0 ||
+                        stripos(ltrim($attribute->value), 'javascript') === 0
+                    ) {
                         $item->removeAttribute($attribute->name);
                     }
                 }
