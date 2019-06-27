@@ -184,7 +184,7 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_Ui/js/modal/
     var htmlDisplayContentTypeConfig = _config.getContentTypeConfig(stageConfig.html_display_content_type);
 
     if (rootContentTypeConfig) {
-      return (0, _contentTypeFactory)(rootContentTypeConfig, rootContainer, stage.id, {}).then(function (rootContentType) {
+      return (0, _contentTypeFactory)(rootContentTypeConfig, rootContainer, stage.id).then(function (rootContentType) {
         if (!rootContentType) {
           return Promise.reject("Unable to create initial " + stageConfig.root_content_type + " content type " + " within stage.");
         }

@@ -1,19 +1,20 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/content-type-collection", "Magento_PageBuilder/js/content-type/appearance-config"], function (_contentTypeCollection, _appearanceConfig) {
+define(["Magento_PageBuilder/js/content-type-collection"], function (_contentTypeCollection) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
 
   /**
-   * Serailize the tree as a simplified object for rendering
+   * Serialize the tree as a simplified object for rendering
    *
    * @param contentType
    */
   function buildTree(contentType) {
-    var data = getMasterData(contentType);
+    var data = getData(contentType);
     var tree = {
-      template: getTemplate(contentType, data.appearance),
+      name: contentType.config.name,
+      id: contentType.id,
       data: data,
       children: []
     };
@@ -37,24 +38,14 @@ define(["Magento_PageBuilder/js/content-type-collection", "Magento_PageBuilder/j
     return buildTree(contentType);
   }
   /**
-   * Retrieve the template for the content type \
-   * @param contentType
-   * @param appearance
-   */
-
-
-  function getTemplate(contentType, appearance) {
-    return (0, _appearanceConfig)(contentType.config.name, appearance).master_template;
-  }
-  /**
    * Retrieve the master data from the content types instance
    *
    * @param contentType
    */
 
 
-  function getMasterData(contentType) {
-    return contentType.content.getBindings() || {};
+  function getData(contentType) {
+    return contentType.dataStore.getState() || {};
   }
 
   return {

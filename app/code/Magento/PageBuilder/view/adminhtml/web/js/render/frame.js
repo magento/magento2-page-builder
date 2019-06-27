@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "Magento_PageBuilder/js/master-format/filter-html", "Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/render/content-type", "Magento_PageBuilder/js/render/view-model"], function (_jquery, _knockout, _engine, _filterHtml, _directives, _contentType, _viewModel) {
+define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/master-format/filter-html", "Magento_PageBuilder/js/utils/directives"], function (_jquery, _knockout, _engine, _config, _contentTypeFactory, _filterHtml, _directives) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -13,7 +13,9 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "Mag
    * Listen for requests from the parent window for a render
    */
 
-  function listen() {
+  function listen(config) {
+    _config.setConfig(config);
+
     window.addEventListener("message", function (event) {
       if (event.ports && event.ports.length) {
         port = event.ports[0];
@@ -77,49 +79,68 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "Mag
   /**
    * Perform a render of the provided data
    *
-   * @param tree
+   * @param message
    */
 
 
-  function render(tree) {
+  function render(message) {
     return new Promise(function (resolve, reject) {
-      var renderTree = createRenderTree(tree);
-      var element = document.createElement("div");
+      createRenderTree(message.stageId, message.tree).then(function (rootContainer) {
+        var element = document.createElement("div");
 
-      _engine.waitForFinishRender().then(function () {
-        _knockout.cleanNode(element);
+        _engine.waitForFinishRender().then(function () {
+          _knockout.cleanNode(element);
 
-        var filtered = (0, _filterHtml)((0, _jquery)(element));
-        var output = (0, _directives)(filtered.html());
-        element.remove();
-        resolve(output);
-      });
+          var filtered = (0, _filterHtml)((0, _jquery)(element));
+          var output = (0, _directives)(filtered.html());
+          element.remove();
+          resolve(output);
+        });
 
-      _knockout.applyBindingsToNode(element, {
-        template: {
-          data: renderTree.content,
-          name: renderTree.content.template
-        }
+        _knockout.applyBindingsToNode(element, {
+          template: {
+            data: rootContainer.content,
+            name: rootContainer.content.template
+          }
+        });
       });
     });
   }
   /**
-   * Convert the serialised data back into a renderable tree conforming to the same interface as the previous renderer
+   * Rebuild the interfaces within our frame
    *
+   * @param stageId
    * @param tree
+   * @param parent
    */
 
 
-  function createRenderTree(tree) {
-    var contentType = new _contentType(new _viewModel(tree.template, tree.data));
-
-    if (tree.children.length > 0) {
-      tree.children.forEach(function (child) {
-        contentType.children.push(createRenderTree(child));
-      });
+  function createRenderTree(stageId, tree, parent) {
+    if (parent === void 0) {
+      parent = null;
     }
 
-    return contentType;
+    return new Promise(function (resolve, reject) {
+      (0, _contentTypeFactory)(_config.getContentTypeConfig(tree.name), parent, stageId, tree.data, parent !== null ? tree.children.length : null).then(function (contentType) {
+        // Ensure  we retain the original tree ID's
+        contentType.id = tree.id;
+
+        if (tree.children.length > 0) {
+          var childPromises = [];
+          tree.children.forEach(function (child) {
+            childPromises.push(createRenderTree(stageId, child, contentType));
+          });
+          Promise.all(childPromises).then(function (children) {
+            children.forEach(function (child) {
+              contentType.addChild(child);
+            });
+            resolve(contentType);
+          });
+        } else {
+          resolve(contentType);
+        }
+      });
+    });
   }
 
   return Object.assign(listen, {

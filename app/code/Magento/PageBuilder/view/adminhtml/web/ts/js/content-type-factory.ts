@@ -36,7 +36,10 @@ export default function createContentType(
         (resolve: (contentType: ContentTypeInterface | ContentTypeCollectionInterface) => void,
          reject: (error: string) => void,
     ) => {
+        const t0 = performance.now();
         loadModule([config.component], (contentTypeComponent: typeof ContentType) => {
+            const t1 = performance.now();
+            console.log("Call to load " + config.component + " took " + (t1 - t0) + " milliseconds.")
             try {
                 const contentType = new contentTypeComponent(
                     parentContentType,
@@ -107,6 +110,10 @@ function prepareData(config: ContentTypeConfigInterface, data: {}) {
  * @returns {FieldDefaultsInterface}
  */
 function prepareDefaults(fields: ConfigFieldInterface): FieldDefaultsInterface {
+    if (_.isEmpty(fields)) {
+        return {};
+    }
+
     return _.mapObject(fields, (field) => {
         if (!_.isUndefined(field.default)) {
             return field.default;
