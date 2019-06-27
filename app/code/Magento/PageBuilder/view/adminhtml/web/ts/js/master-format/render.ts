@@ -36,7 +36,10 @@ export default class MasterFormatRenderer {
             if (this.ready) {
                 this.channel.port1.postMessage({
                     type: "render",
-                    message: getSerializedTree(rootContainer),
+                    message: {
+                        stageId: this.stageId,
+                        tree: getSerializedTree(rootContainer),
+                    },
                 });
                 this.channel.port1.onmessage = (event) => {
                     if (event.isTrusted) {

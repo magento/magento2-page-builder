@@ -39,7 +39,10 @@ define(["jquery", "Magento_PageBuilder/js/master-format/render/serialize"], func
         if (_this.ready) {
           _this.channel.port1.postMessage({
             type: "render",
-            message: (0, _serialize.getSerializedTree)(rootContainer)
+            message: {
+              stageId: _this.stageId,
+              tree: (0, _serialize.getSerializedTree)(rootContainer)
+            }
           });
 
           _this.channel.port1.onmessage = function (event) {

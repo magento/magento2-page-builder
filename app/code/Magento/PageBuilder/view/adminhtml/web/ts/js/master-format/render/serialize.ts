@@ -5,25 +5,26 @@
 
 import ContentTypeCollection from "../../content-type-collection";
 import ContentTypeInterface from "../../content-type.types";
-import appearanceConfig from "../../content-type/appearance-config";
 import {GeneratedElementsData} from "../../content-type/observable-updater";
 import { DataObject } from "../../data-store";
 
 export interface TreeItem {
-    template: string;
+    name: string;
+    id: string;
     data: DataObject;
     children: TreeItem[];
 }
 
 /**
- * Serailize the tree as a simplified object for rendering
+ * Serialize the tree as a simplified object for rendering
  *
  * @param contentType
  */
 export function buildTree(contentType: ContentTypeInterface) {
-    const data = getMasterData(contentType);
+    const data = getData(contentType);
     const tree: TreeItem = {
-        template: getTemplate(contentType, data.appearance),
+        name: contentType.config.name,
+        id: contentType.id,
         data,
         children: [],
     };
@@ -47,19 +48,10 @@ export function getSerializedTree(contentType: ContentTypeInterface) {
 }
 
 /**
- * Retrieve the template for the content type \
- * @param contentType
- * @param appearance
- */
-function getTemplate(contentType: ContentTypeInterface, appearance: string): string {
-    return appearanceConfig(contentType.config.name, appearance).master_template;
-}
-
-/**
  * Retrieve the master data from the content types instance
  *
  * @param contentType
  */
-function getMasterData(contentType: ContentTypeInterface): GeneratedElementsData {
-    return contentType.content.getBindings() || {};
+function getData(contentType: ContentTypeInterface): GeneratedElementsData {
+    return contentType.dataStore.getState() || {};
 }
