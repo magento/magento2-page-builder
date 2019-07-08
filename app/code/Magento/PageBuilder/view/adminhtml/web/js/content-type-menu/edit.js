@@ -20,7 +20,7 @@ define(["Magento_PageBuilder/js/events", "underscore"], function (_events, _unde
       this.dataStore = dataStore;
 
       _events.on("form:" + this.instance.id + ":saveAfter", function (data) {
-        _this.dataStore.setState(data);
+        _this.dataStore.setState(_this.filterData(data));
       });
     }
     /**
@@ -41,6 +41,32 @@ define(["Magento_PageBuilder/js/events", "underscore"], function (_events, _unde
         namespace: this.getFormNamespace(contentTypeData),
         title: this.instance.config.label
       });
+    }
+    /**
+     * Filter the data for storage
+     *
+     * @param data
+     */
+    ;
+
+    _proto.filterData = function filterData(data) {
+      var _this2 = this;
+
+      var filtered = {};
+
+      _underscore.each(data, function (value, key) {
+        if (_underscore.isObject(value)) {
+          value = _this2.filterData(value);
+        }
+
+        if (_underscore.isArray(value) && _underscore.isEmpty(value)) {
+          value = [];
+        }
+
+        filtered[key] = value;
+      });
+
+      return filtered;
     }
     /**
      * Determine the form namespace based on the currently set appearance
