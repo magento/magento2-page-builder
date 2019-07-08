@@ -26,11 +26,7 @@ define(["Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/c
     }
 
     return new Promise(function (resolve, reject) {
-      var t0 = performance.now();
       (0, _loader)([config.component], function (contentTypeComponent) {
-        var t1 = performance.now();
-        console.log("Call to load " + config.component + " took " + (t1 - t0) + " milliseconds.");
-
         try {
           var contentType = new contentTypeComponent(parentContentType, config, stageId);
           Promise.all([(0, _previewFactory)(contentType, config), (0, _masterFactory)(contentType, config)]).then(function (_ref) {
