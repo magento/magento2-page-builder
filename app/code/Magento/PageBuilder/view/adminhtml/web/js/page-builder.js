@@ -23,6 +23,8 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "mageUtils", "und
 
       _config.setConfig(config);
 
+      _config.setMode("Preview");
+
       this.initialValue = initialValue;
       this.isFullScreen(config.isFullScreen);
       this.config = config; // Create the required root container for the stage

@@ -8,7 +8,7 @@ import ko from "knockout";
 import events from "Magento_PageBuilder/js/events";
 import utils from "mageUtils";
 import _ from "underscore";
-import Config from "./config";
+import Config, {Mode} from "./config";
 import ContentTypeCollectionInterface from "./content-type-collection";
 import createContentType from "./content-type-factory";
 import PageBuilderInterface from "./page-builder.types";
@@ -33,6 +33,7 @@ export default class PageBuilder implements PageBuilderInterface {
 
     constructor(config: any, initialValue: string) {
         Config.setConfig(config);
+        Config.setMode("Preview");
         this.initialValue = initialValue;
         this.isFullScreen(config.isFullScreen);
         this.config = config;

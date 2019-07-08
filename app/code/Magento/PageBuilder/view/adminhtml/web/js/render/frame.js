@@ -16,6 +16,8 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "Mag
   function listen(config) {
     _config.setConfig(config);
 
+    _config.setMode("Master");
+
     window.addEventListener("message", function (event) {
       if (event.ports && event.ports.length) {
         port = event.ports[0];
@@ -103,6 +105,8 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "Mag
             name: rootContainer.content.template
           }
         });
+      }).catch(function (error) {
+        reject(error);
       });
     });
   }
@@ -139,6 +143,8 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "Mag
         } else {
           resolve(contentType);
         }
+      }).catch(function (error) {
+        reject(error);
       });
     });
   }

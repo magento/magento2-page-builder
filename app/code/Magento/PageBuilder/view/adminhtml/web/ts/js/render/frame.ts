@@ -23,6 +23,7 @@ const deferredTemplates: {[key: string]: JQueryDeferred<string>} = {};
  */
 export default function listen(config: object) {
     Config.setConfig(config);
+    Config.setMode("Master");
     window.addEventListener(
         "message",
         (event) => {
@@ -108,6 +109,8 @@ function render(message: {stageId: string, tree: TreeItem}) {
                     },
                 },
             );
+        }).catch((error) => {
+            reject(error);
         });
     });
 }
@@ -148,6 +151,8 @@ function createRenderTree(
             } else {
                 resolve(contentType);
             }
+        }).catch((error) => {
+            reject(error);
         });
     });
 }
