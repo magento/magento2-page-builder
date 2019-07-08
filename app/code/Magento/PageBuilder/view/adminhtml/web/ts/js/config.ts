@@ -6,8 +6,9 @@
 import _ from "underscore";
 import ContentTypeConfigInterface from "./content-type-config.types";
 
-export default class Config {
+export type Mode = "Preview" | "Master";
 
+export default class Config {
     /**
      * Set the initial config
      *
@@ -15,6 +16,22 @@ export default class Config {
      */
     public static setConfig(config: object): void {
         Config.config = _.extend(Config.config, config);
+    }
+
+    /**
+     * Set the applications mode
+     *
+     * @param mode
+     */
+    public static setMode(mode: Mode): void {
+        Config.mode = mode;
+    }
+
+    /**
+     * Retrieve the applications mode
+     */
+    public static getMode(): Mode {
+        return Config.mode;
     }
 
     /**
@@ -50,4 +67,5 @@ export default class Config {
     private static config: any = {
         dataContentTypeAttributeName: "data-content-type",
     };
+    private static mode: Mode;
 }

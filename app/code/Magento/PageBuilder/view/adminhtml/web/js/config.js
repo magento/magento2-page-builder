@@ -20,6 +20,24 @@ define(["underscore"], function (_underscore) {
       Config.config = _underscore.extend(Config.config, config);
     }
     /**
+     * Set the applications mode
+     *
+     * @param mode
+     */
+    ;
+
+    Config.setMode = function setMode(mode) {
+      Config.mode = mode;
+    }
+    /**
+     * Retrieve the applications mode
+     */
+    ;
+
+    Config.getMode = function getMode() {
+      return Config.mode;
+    }
+    /**
      * Retrieve the init config
      *
      * @param {string} key
