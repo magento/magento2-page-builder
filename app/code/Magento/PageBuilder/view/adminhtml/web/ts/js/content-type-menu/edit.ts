@@ -19,8 +19,8 @@ export default class Edit {
     constructor(instance: ContentTypeInterface, dataStore: DataStore) {
         this.instance = instance;
         this.dataStore = dataStore;
-        events.on("form:" + this.instance.id + ":saveAfter", (data: any) => {
-            this.dataStore.setState(data);
+        events.on("form:" + this.instance.id + ":saveAfter", (data: DataObject) => {
+            this.dataStore.setState(this.filterData(data));
         });
     }
 
@@ -38,6 +38,25 @@ export default class Edit {
             namespace: this.getFormNamespace(contentTypeData),
             title: this.instance.config.label,
         });
+    }
+
+    /**
+     * Filter the data for storage
+     *
+     * @param data
+     */
+    private filterData(data: DataObject): DataObject {
+        const filtered: DataObject = {};
+        _.each(data, (value: any, key: string) => {
+            if (_.isObject(value)) {
+                value = this.filterData(value);
+            }
+            if (_.isArray(value) && _.isEmpty(value)) {
+                value = [];
+            }
+            filtered[key] = value;
+        });
+        return filtered;
     }
 
     /**
