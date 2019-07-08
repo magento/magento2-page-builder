@@ -8,8 +8,8 @@ import ContentTypeInterface from "../content-type.types";
 import {DataObject} from "../data-store";
 import {get} from "../utils/object";
 import appearanceConfig from "./appearance-config";
-import ObservableUpdater, {GeneratedElementsData} from "./observable-updater";
-import ObservableObject from "./observable-updater.types";
+import ObservableUpdater from "./observable-updater";
+import ObservableObject, {GeneratedElementsData} from "./observable-updater.types";
 
 /**
  * @api

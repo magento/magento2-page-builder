@@ -17,12 +17,14 @@ import {get} from "../utils/object";
 import {fromSnakeToCamelCase} from "../utils/string";
 import appearanceConfig from "./appearance-config";
 import Master from "./master";
+import {GeneratedElementsData} from "./observable-updater.types";
 import Preview from "./preview";
 
 export default class ObservableUpdater {
     private converterPool: typeof ConverterPool;
     private massConverterPool: typeof MassConverterPool;
     private converterResolver: (config: object) => string;
+    private previousData: GeneratedElementsData = {};
 
     /**
      * @param {typeof ConverterPool} converterPool
@@ -82,6 +84,9 @@ export default class ObservableUpdater {
 
         for (const elementName of Object.keys(elements)) {
             const elementConfig = elements[elementName];
+            if (this.previousData[elementName] === undefined) {
+                this.previousData[elementName] = {};
+            }
             if (generatedData[elementName] === undefined) {
                 generatedData[elementName] = {
                     attributes: {},
@@ -92,8 +97,12 @@ export default class ObservableUpdater {
             }
 
             if (elementConfig.style !== undefined) {
-                // @todo retrieve previous styles
-                generatedData[elementName].style = this.generateStyles({}, elementConfig, convertedData);
+                let previousStyles = {};
+                if (typeof this.previousData[elementName].style !== "undefined") {
+                    previousStyles = this.previousData[elementName].style;
+                }
+                generatedData[elementName].style = this.generateStyles(previousStyles, elementConfig, convertedData);
+                this.previousData[elementName].style = generatedData[elementName].style;
             }
 
             if (elementConfig.attributes !== undefined) {
@@ -109,8 +118,12 @@ export default class ObservableUpdater {
             }
 
             if (elementConfig.css !== undefined && elementConfig.css.var in convertedData) {
-                // @todo retrieve previous CSS classes
-                generatedData[elementName].css = this.generateCss({}, elementConfig, convertedData);
+                let previousCss = {};
+                if (typeof this.previousData[elementName].css !== "undefined") {
+                    previousCss = this.previousData[elementName].css;
+                }
+                generatedData[elementName].css = this.generateCss(previousCss, elementConfig, convertedData);
+                this.previousData[elementName].css = generatedData[elementName].css;
             }
 
             if (elementConfig.tag !== undefined && elementConfig.tag.var !== undefined) {
@@ -299,11 +312,4 @@ export default class ObservableUpdater {
         }
         return value;
     }
-}
-
-export interface GeneratedElementsData {
-    [key: string]: {
-        [key: string]: {};
-    };
-    appearance?: any;
 }

@@ -9,3 +9,10 @@ export default interface ObservableObject {
         [key: string]: KnockoutObservable<any>;
     };
 }
+
+export interface GeneratedElementsData {
+    [key: string]: {
+        [key: string]: {};
+    };
+    appearance?: any;
+}

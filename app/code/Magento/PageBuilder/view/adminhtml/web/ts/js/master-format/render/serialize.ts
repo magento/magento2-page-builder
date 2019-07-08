@@ -5,7 +5,7 @@
 
 import ContentTypeCollection from "../../content-type-collection";
 import ContentTypeInterface from "../../content-type.types";
-import {GeneratedElementsData} from "../../content-type/observable-updater";
+import {GeneratedElementsData} from "../../content-type/observable-updater.types";
 import { DataObject } from "../../data-store";
 
 export interface TreeItem {

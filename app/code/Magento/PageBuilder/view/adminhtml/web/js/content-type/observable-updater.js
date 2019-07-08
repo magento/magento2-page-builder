@@ -15,6 +15,7 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/object", "Magent
      * @param {(config: object) => string} converterResolver
      */
     function ObservableUpdater(converterPool, massConverterPool, converterResolver) {
+      this.previousData = {};
       this.converterPool = converterPool;
       this.massConverterPool = massConverterPool;
       this.converterResolver = converterResolver;
@@ -71,6 +72,10 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/object", "Magent
         var elementName = _arr[_i];
         var elementConfig = elements[elementName];
 
+        if (this.previousData[elementName] === undefined) {
+          this.previousData[elementName] = {};
+        }
+
         if (generatedData[elementName] === undefined) {
           generatedData[elementName] = {
             attributes: {},
@@ -81,8 +86,14 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/object", "Magent
         }
 
         if (elementConfig.style !== undefined) {
-          // @todo retrieve previous styles
-          generatedData[elementName].style = this.generateStyles({}, elementConfig, convertedData);
+          var previousStyles = {};
+
+          if (typeof this.previousData[elementName].style !== "undefined") {
+            previousStyles = this.previousData[elementName].style;
+          }
+
+          generatedData[elementName].style = this.generateStyles(previousStyles, elementConfig, convertedData);
+          this.previousData[elementName].style = generatedData[elementName].style;
         }
 
         if (elementConfig.attributes !== undefined) {
@@ -94,8 +105,14 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/object", "Magent
         }
 
         if (elementConfig.css !== undefined && elementConfig.css.var in convertedData) {
-          // @todo retrieve previous CSS classes
-          generatedData[elementName].css = this.generateCss({}, elementConfig, convertedData);
+          var previousCss = {};
+
+          if (typeof this.previousData[elementName].css !== "undefined") {
+            previousCss = this.previousData[elementName].css;
+          }
+
+          generatedData[elementName].css = this.generateCss(previousCss, elementConfig, convertedData);
+          this.previousData[elementName].css = generatedData[elementName].css;
         }
 
         if (elementConfig.tag !== undefined && elementConfig.tag.var !== undefined) {
