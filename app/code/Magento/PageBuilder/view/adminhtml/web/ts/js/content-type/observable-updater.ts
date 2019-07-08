@@ -59,9 +59,15 @@ export default class ObservableUpdater {
         const generatedData = this.generate(appearanceConfiguration.elements, appearanceConfiguration.converters, data);
         for (const element in generatedData) {
             if (generatedData.hasOwnProperty(element)) {
-                viewModel.data[element] = {};
+                if (viewModel.data[element] === undefined) {
+                    viewModel.data[element] = {};
+                }
                 Object.keys(generatedData[element]).forEach((key) => {
-                    viewModel.data[element][key] = ko.observable(generatedData[element][key]);
+                    if (viewModel.data[element][key] !== undefined && ko.isObservable(viewModel.data[element][key])) {
+                        viewModel.data[element][key](generatedData[element][key]);
+                    } else {
+                        viewModel.data[element][key] = ko.observable(generatedData[element][key]);
+                    }
                 });
             }
         }
