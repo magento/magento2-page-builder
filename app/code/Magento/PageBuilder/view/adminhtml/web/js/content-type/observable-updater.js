@@ -42,9 +42,16 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/object", "Magent
 
       var _loop = function _loop(element) {
         if (generatedData.hasOwnProperty(element)) {
-          viewModel.data[element] = {};
+          if (viewModel.data[element] === undefined) {
+            viewModel.data[element] = {};
+          }
+
           Object.keys(generatedData[element]).forEach(function (key) {
-            viewModel.data[element][key] = _knockout.observable(generatedData[element][key]);
+            if (viewModel.data[element][key] !== undefined && _knockout.isObservable(viewModel.data[element][key])) {
+              viewModel.data[element][key](generatedData[element][key]);
+            } else {
+              viewModel.data[element][key] = _knockout.observable(generatedData[element][key]);
+            }
           });
         }
       };
