@@ -32,10 +32,16 @@ define(["knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/res
       this.template = "Magento_PageBuilder/content-type/preview";
       this.collection = new _collection();
       this.applyBindingsDebounce = _underscore.debounce(function () {
+        _this.renderingLock = (0, _promiseDeferred)();
+
         _this.render.applyBindings(_this.rootContainer).then(function (renderedOutput) {
           return _events.trigger("stage:" + _this.id + ":masterFormatRenderAfter", {
             value: renderedOutput
           });
+        }).then(function () {
+          _this.renderingLock.resolve();
+
+          _this.renderingLock = null;
         }).catch(function (error) {
           console.error(error);
         });

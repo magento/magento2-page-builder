@@ -32,6 +32,9 @@ var config = {
             },
             'mage/validation': {
                 'Magento_PageBuilder/js/system/config/validator-rules-mixin': true
+            },
+            'Magento_Ui/js/form/form': {
+                'Magento_PageBuilder/js/form/form-mixin': true
             }
         }
     }
