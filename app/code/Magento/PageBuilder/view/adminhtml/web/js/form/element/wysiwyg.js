@@ -79,6 +79,7 @@ define([
             if (!this.isComponentInitialized()) {
                 this.loading(true);
                 this.pageBuilder = new PageBuilder(this.wysiwygConfigData(), this.initialValue);
+                events.trigger('pagebuilder:register', {ns: this.ns, instance: this.pageBuilder});
                 this.initPageBuilderListeners();
                 this.isComponentInitialized(true);
 

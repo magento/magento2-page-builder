@@ -31,6 +31,7 @@ export default class Stage {
     public dataStore: DataStore = new DataStore();
     public afterRenderDeferred: DeferredInterface = deferred();
     public rootContainer: ContentTypeCollectionInterface;
+    public renderingLock: DeferredInterface;
     private template: string = "Magento_PageBuilder/content-type/preview";
     private render: Render;
     private collection: Collection = new Collection();
@@ -41,10 +42,14 @@ export default class Stage {
      * @type {(() => void) & _.Cancelable}
      */
     private applyBindingsDebounce = _.debounce(() => {
+        this.renderingLock = deferred();
         this.render.applyBindings(this.rootContainer)
             .then((renderedOutput: string) => events.trigger(`stage:${ this.id }:masterFormatRenderAfter`, {
                 value: renderedOutput,
-            })).catch((error: Error) => {
+            })).then(() => {
+                this.renderingLock.resolve();
+                this.renderingLock = null;
+            }).catch((error: Error) => {
                 console.error(error);
             });
     }, 500);
