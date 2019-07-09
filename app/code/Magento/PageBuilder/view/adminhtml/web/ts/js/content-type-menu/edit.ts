@@ -41,22 +41,12 @@ export default class Edit {
     }
 
     /**
-     * Filter the data for storage
+     * Serialize and unserialize the data to ensure it can be serialized in the future
      *
      * @param data
      */
     private filterData(data: DataObject): DataObject {
-        const filtered: DataObject = {};
-        _.each(data, (value: any, key: string) => {
-            if (_.isObject(value)) {
-                value = this.filterData(value);
-            }
-            if (_.isArray(value) && _.isEmpty(value)) {
-                value = [];
-            }
-            filtered[key] = value;
-        });
-        return filtered;
+        return JSON.parse(JSON.stringify(data));
     }
 
     /**

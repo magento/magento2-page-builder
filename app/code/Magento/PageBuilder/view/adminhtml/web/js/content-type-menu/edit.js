@@ -43,30 +43,14 @@ define(["Magento_PageBuilder/js/events", "underscore"], function (_events, _unde
       });
     }
     /**
-     * Filter the data for storage
+     * Serialize and unserialize the data to ensure it can be serialized in the future
      *
      * @param data
      */
     ;
 
     _proto.filterData = function filterData(data) {
-      var _this2 = this;
-
-      var filtered = {};
-
-      _underscore.each(data, function (value, key) {
-        if (_underscore.isObject(value)) {
-          value = _this2.filterData(value);
-        }
-
-        if (_underscore.isArray(value) && _underscore.isEmpty(value)) {
-          value = [];
-        }
-
-        filtered[key] = value;
-      });
-
-      return filtered;
+      return JSON.parse(JSON.stringify(data));
     }
     /**
      * Determine the form namespace based on the currently set appearance
