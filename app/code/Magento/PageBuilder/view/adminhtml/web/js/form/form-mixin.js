@@ -35,10 +35,7 @@ define(['jquery', 'underscore', 'Magento_PageBuilder/js/events', 'consoleLogger'
          */
         save: function (redirect, data) {
             var self = this,
-                superFunction = this._super,
-                submit = function () {
-                    superFunction.apply(self, [redirect, data]);
-                };
+                submit = this._super.bind(self, redirect, data);
 
             if (this.pageBuilderInstances.length > 0) {
                 let locks = this.pageBuilderInstances.map(function (instance) {
