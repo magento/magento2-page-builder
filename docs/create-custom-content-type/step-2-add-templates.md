@@ -62,6 +62,7 @@ The following table describes each `appearance` attribute in our example.
 | `preview_template` | References the `preview.html` (the Admin preview template) for rendering the preview appearance of your content type on the stage within the Admin UI. |
 | `master_template`  | References the `master.html` (the master format storefront template) for rendering the appearance of your content type on the storefront for customers to see. |
 | `reader`           | Reads content type data from the master format.      |
+{:style="table-layout:auto"}
 
 ## Quote `preview_template`
 

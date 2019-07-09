@@ -28,7 +28,7 @@ export default function nestingLinkDialog(
     const dataStoreContent = dataStore.getState() as DataObject;
     const inlineMessage = dataStoreContent[inlineMessageField] as string;
     const linkUrl = dataStoreContent[linkUrlField] as FieldDefaultsInterface;
-    const aLinkRegex = /<a[\s]+([^>]+)>|<a>|<\/a>/igm;
+    const aLinkRegex = /(<a[\s]+[^>]+).+(?=<\/a>)<\/a>/igm;
     if (wysiwyg &&
         inlineMessage.match(aLinkRegex) &&
         linkUrl &&

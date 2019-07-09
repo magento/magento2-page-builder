@@ -28,6 +28,7 @@ The data store maintains its own events system and does not use the global event
 Because of this, you need to create an instance of `dataStore` to observe events.
 
 Page Builder fires a single event called `state`, which returns the entire state of the data store. Page Builder fires this event whenever the state changes.
+
 ```js
 dataStore.events.on("state", function (state) {
     console.log(state);    
