@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "underscore", "Magento_PageBuilder/js/master-format/render/serialize"], function (_jquery, _underscore, _serialize) {
+define(["jquery", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/master-format/render/serialize"], function (_jquery, _underscore, _config, _serialize) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -114,6 +114,8 @@ define(["jquery", "underscore", "Magento_PageBuilder/js/master-format/render/ser
           }
         });
       };
+
+      frame.src = _config.getConfig("render_url");
     }
     /**
      * Use the text! RequireJS plugin to load a template and send it back to the child render iframe
