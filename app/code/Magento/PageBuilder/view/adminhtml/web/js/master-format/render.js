@@ -1,9 +1,17 @@
 /*eslint-disable */
-define(["jquery", "Magento_PageBuilder/js/master-format/render/serialize"], function (_jquery, _serialize) {
+define(["jquery", "underscore", "Magento_PageBuilder/js/master-format/render/serialize"], function (_jquery, _underscore, _serialize) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
+  function debugLog(message) {
+    if (_underscore.isObject(message) || _underscore.isArray(message)) {
+      message = JSON.stringify(message);
+    }
+
+    (0, _jquery)("[name=debug]").append(message + "\n");
+  }
+
   var MasterFormatRenderer =
   /*#__PURE__*/
   function () {
@@ -31,28 +39,39 @@ define(["jquery", "Magento_PageBuilder/js/master-format/render/serialize"], func
       var _this = this;
 
       if (!this.getRenderFrame()) {
+        debugLog("No render frame");
         console.error("No render frame present for Page Builder instance.");
         return;
       }
 
       return new Promise(function (resolve, reject) {
         if (_this.ready) {
-          _this.channel.port1.postMessage({
-            type: "render",
-            message: {
-              stageId: _this.stageId,
-              tree: (0, _serialize.getSerializedTree)(rootContainer)
-            }
-          });
+          debugLog("Frame is ready, posting data");
+
+          try {
+            _this.channel.port1.postMessage({
+              type: "render",
+              message: {
+                stageId: _this.stageId,
+                tree: (0, _serialize.getSerializedTree)(rootContainer)
+              }
+            });
+          } catch (e) {
+            debugLog("Error in postMessage");
+            debugLog(e);
+          }
 
           _this.channel.port1.onmessage = function (event) {
             if (event.isTrusted) {
               if (event.data.type === "render") {
                 console.log(event.data.message);
+                debugLog("Render complete, resolving event");
                 resolve(event.data.message);
               }
 
               if (event.data.type === "template") {
+                debugLog("Requested template " + event.data.message);
+
                 _this.loadTemplate(event.data.message);
               }
             } else {
@@ -60,7 +79,11 @@ define(["jquery", "Magento_PageBuilder/js/master-format/render/serialize"], func
             }
           };
         } else {
+          debugLog("Frame not ready, waiting for ready...");
+
           _this.readyDeferred.then(function () {
+            debugLog("Frame became ready");
+
             _this.applyBindings(rootContainer).then(function (rendered) {
               resolve(rendered);
             }).catch(function () {
@@ -103,6 +126,8 @@ define(["jquery", "Magento_PageBuilder/js/master-format/render/serialize"], func
       var _this3 = this;
 
       require(["text!" + name], function (template) {
+        debugLog("Loaded template " + name);
+
         _this3.channel.port1.postMessage({
           type: "template",
           message: {
