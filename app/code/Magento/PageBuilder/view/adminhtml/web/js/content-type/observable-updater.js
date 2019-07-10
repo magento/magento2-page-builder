@@ -95,7 +95,7 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/object", "Magent
         if (elementConfig.style !== undefined) {
           var previousStyles = {};
 
-          if (typeof this.previousData[elementName].style !== "undefined") {
+          if (this.previousData[elementName].style !== undefined) {
             previousStyles = this.previousData[elementName].style;
           }
 
@@ -114,7 +114,7 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/object", "Magent
         if (elementConfig.css !== undefined && elementConfig.css.var in convertedData) {
           var previousCss = {};
 
-          if (typeof this.previousData[elementName].css !== "undefined") {
+          if (this.previousData[elementName].css !== undefined) {
             previousCss = this.previousData[elementName].css;
           }
 
@@ -333,7 +333,7 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/object", "Magent
 
           if (typeof value === "object") {
             _underscore.extend(result, value);
-          } else if (typeof value !== "undefined") {
+          } else if (value !== undefined) {
             result[(0, _string.fromSnakeToCamelCase)(propertyConfig.name)] = value;
           }
         }

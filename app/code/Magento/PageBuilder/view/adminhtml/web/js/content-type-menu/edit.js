@@ -43,9 +43,11 @@ define(["Magento_PageBuilder/js/events", "underscore"], function (_events, _unde
       });
     }
     /**
-     * Serialize and unserialize the data to ensure it can be serialized in the future
+     * Flip flop to JSON and back again to ensure all data received from the form is serializable. Magento by default
+     * adds functions into some basic types which cannot be serialized when calling PostMessage.
      *
-     * @param data
+     * @param {DataObject} data
+     * @returns {DataObject}
      */
     ;
 

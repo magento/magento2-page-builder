@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/resource/jquery/ui/jquery.ui.touch-punch", "underscore", "Magento_PageBuilder/js/binding/sortable", "Magento_PageBuilder/js/collection", "Magento_PageBuilder/js/data-store", "Magento_PageBuilder/js/drag-drop/matrix", "Magento_PageBuilder/js/master-format/render", "Magento_PageBuilder/js/stage-builder", "Magento_PageBuilder/js/utils/promise-deferred"], function (_knockout, _events, _jqueryUi, _underscore, _sortable, _collection, _dataStore, _matrix, _render, _stageBuilder, _promiseDeferred) {
+define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/resource/jquery/ui/jquery.ui.touch-punch", "underscore", "Magento_PageBuilder/js/binding/sortable", "Magento_PageBuilder/js/collection", "Magento_PageBuilder/js/data-store", "Magento_PageBuilder/js/drag-drop/matrix", "Magento_PageBuilder/js/master-format/render", "Magento_PageBuilder/js/stage-builder", "Magento_PageBuilder/js/utils/promise-deferred"], function (_jquery, _knockout, _events, _jqueryUi, _underscore, _sortable, _collection, _dataStore, _matrix, _render, _stageBuilder, _promiseDeferred) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -8,6 +8,11 @@ define(["knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/res
   /*#__PURE__*/
   function () {
     "use strict";
+
+    /**
+     * We always complete a single render when the stage is first loaded, so we can set the lock when the stage is
+     * created. The lock is used to halt the parent forms submission when Page Builder is rendering.
+     */
 
     /**
      * Debounce the applyBindings call by 500ms to stop duplicate calls
@@ -29,10 +34,11 @@ define(["knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/res
       this.focusChild = _knockout.observable(false);
       this.dataStore = new _dataStore();
       this.afterRenderDeferred = (0, _promiseDeferred)();
+      this.renderingLock = _jquery.Deferred();
       this.template = "Magento_PageBuilder/content-type/preview";
       this.collection = new _collection();
       this.applyBindingsDebounce = _underscore.debounce(function () {
-        _this.renderingLock = (0, _promiseDeferred)();
+        _this.renderingLock = _jquery.Deferred();
 
         _this.render.applyBindings(_this.rootContainer).then(function (renderedOutput) {
           return _events.trigger("stage:" + _this.id + ":masterFormatRenderAfter", {
@@ -40,8 +46,6 @@ define(["knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/res
           });
         }).then(function () {
           _this.renderingLock.resolve();
-
-          _this.renderingLock = null;
         }).catch(function (error) {
           console.error(error);
         });

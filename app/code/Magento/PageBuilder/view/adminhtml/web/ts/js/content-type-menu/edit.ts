@@ -41,9 +41,11 @@ export default class Edit {
     }
 
     /**
-     * Serialize and unserialize the data to ensure it can be serialized in the future
+     * Flip flop to JSON and back again to ensure all data received from the form is serializable. Magento by default
+     * adds functions into some basic types which cannot be serialized when calling PostMessage.
      *
-     * @param data
+     * @param {DataObject} data
+     * @returns {DataObject}
      */
     private filterData(data: DataObject): DataObject {
         return JSON.parse(JSON.stringify(data));
