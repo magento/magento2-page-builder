@@ -104,7 +104,7 @@ export default class ObservableUpdater {
 
             if (elementConfig.style !== undefined) {
                 let previousStyles = {};
-                if (typeof this.previousData[elementName].style !== "undefined") {
+                if (this.previousData[elementName].style !== undefined) {
                     previousStyles = this.previousData[elementName].style;
                 }
                 generatedData[elementName].style = this.generateStyles(previousStyles, elementConfig, convertedData);
@@ -125,7 +125,7 @@ export default class ObservableUpdater {
 
             if (elementConfig.css !== undefined && elementConfig.css.var in convertedData) {
                 let previousCss = {};
-                if (typeof this.previousData[elementName].css !== "undefined") {
+                if (this.previousData[elementName].css !== undefined) {
                     previousCss = this.previousData[elementName].css;
                 }
                 generatedData[elementName].css = this.generateCss(previousCss, elementConfig, convertedData);
@@ -288,7 +288,7 @@ export default class ObservableUpdater {
                 }
                 if (typeof value === "object") {
                     _.extend(result, value);
-                } else if (typeof value !== "undefined") {
+                } else if (value !== undefined) {
                     result[fromSnakeToCamelCase(propertyConfig.name)] = value;
                 }
             }

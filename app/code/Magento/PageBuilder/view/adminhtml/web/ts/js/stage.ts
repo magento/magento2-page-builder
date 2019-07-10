@@ -3,6 +3,7 @@
  * See COPYING.txt for license details.
  */
 
+import $ from "jquery";
 import ko from "knockout";
 import events from "Magento_PageBuilder/js/events";
 import "Magento_PageBuilder/js/resource/jquery/ui/jquery.ui.touch-punch";
@@ -31,7 +32,11 @@ export default class Stage {
     public dataStore: DataStore = new DataStore();
     public afterRenderDeferred: DeferredInterface = deferred();
     public rootContainer: ContentTypeCollectionInterface;
-    public renderingLock: DeferredInterface;
+    /**
+     * We always complete a single render when the stage is first loaded, so we can set the lock when the stage is
+     * created. The lock is used to halt the parent forms submission when Page Builder is rendering.
+     */
+    public renderingLock: JQueryDeferred<boolean> = $.Deferred();
     private template: string = "Magento_PageBuilder/content-type/preview";
     private render: Render;
     private collection: Collection = new Collection();
@@ -42,13 +47,12 @@ export default class Stage {
      * @type {(() => void) & _.Cancelable}
      */
     private applyBindingsDebounce = _.debounce(() => {
-        this.renderingLock = deferred();
+        this.renderingLock = $.Deferred();
         this.render.applyBindings(this.rootContainer)
             .then((renderedOutput: string) => events.trigger(`stage:${ this.id }:masterFormatRenderAfter`, {
                 value: renderedOutput,
             })).then(() => {
                 this.renderingLock.resolve();
-                this.renderingLock = null;
             }).catch((error: Error) => {
                 console.error(error);
             });
