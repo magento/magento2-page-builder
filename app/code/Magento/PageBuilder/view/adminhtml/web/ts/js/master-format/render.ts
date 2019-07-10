@@ -5,6 +5,7 @@
 
 import $ from "jquery";
 import _ from "underscore";
+import Config from "../config";
 import ContentTypeCollectionInterface from "../content-type-collection.types";
 import { getSerializedTree } from "./render/serialize";
 
@@ -100,6 +101,7 @@ export default class MasterFormatRenderer {
                 }
             });
         };
+        frame.src = Config.getConfig("render_url");
     }
 
     /**
