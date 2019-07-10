@@ -17,7 +17,7 @@ import {loadTemplate} from "../frame";
  */
 export function load(
     name: string, req: () => {},
-    onLoad: {(template: string): {}, error: (error: string) => {}}
+    onLoad: {(template: string): {}, error: (error: string) => {}},
 ): void {
     loadTemplate(name).then((template) => {
         onLoad(template);
