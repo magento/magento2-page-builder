@@ -6,9 +6,12 @@
 
 /** @var \Magento\PageBuilder\Block\Adminhtml\Stage\Render $block */
 ?>
-<script type="text/javascript">
+<script>
     <?php
-    // Shim localStorage without detection as it will not work as the iframe is sandboxed.
+    /**
+     * Shim localStorage always within the iframe to ensure any calls from Magento API's do not fail due to same origin
+     * policies.
+     */
     ?>
     Object.defineProperty(
         window,
@@ -35,11 +38,14 @@
         }
     );
 </script>
-<script type="text/javascript" src="<?= $block->escapeUrl($block->getRequireJsUrl()); ?>"></script>
-<script type="text/javascript" src="<?= $block->escapeUrl($block->getRequireJsConfigUrl()); ?>"></script>
-<script type="text/javascript">
+<script src="<?= $block->escapeUrl($block->getRequireJsUrl()); ?>"></script>
+<script src="<?= $block->escapeUrl($block->getRequireJsConfigUrl()); ?>"></script>
+<script>
     <?php
-    // Override the text! RequireJS plugin to allow us to load templates from the parent window
+    /**
+     * Override the text! plugin within the iframe to ensure we can pipe any XHR requests through to the parent window
+     * as the same origin policy will not allow us to load the templates within this iframe.
+     */
     ?>
     require.config({
         'map': {
@@ -66,9 +72,9 @@
         ko.setTemplateEngine(templateEngine);
     });
 </script>
-<script type="text/javascript">
+<script>
     require(['Magento_PageBuilder/js/render/frame'], function (listen) {
-        listen(<?= $this->getPageBuilderConfig(); ?>);
+        listen(<?= /* @noEscape */ $block->getPageBuilderConfig(); ?>);
     });
 </script>
-Page Builder Render Frame
+<div>Page Builder Render Frame</div>

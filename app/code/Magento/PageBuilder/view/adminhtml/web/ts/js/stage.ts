@@ -20,13 +20,6 @@ import buildStage from "./stage-builder";
 import {StageUpdateAfterParamsInterface} from "./stage-events.types";
 import deferred, {DeferredInterface} from "./utils/promise-deferred";
 
-export function debugLog(message: any) {
-    if (_.isObject(message) || _.isArray(message)) {
-        message = JSON.stringify(message);
-    }
-    $("[name=debug]").append(message + "\n");
-}
-
 export default class Stage {
     public static readonly rootContainerName: string = "root-container";
     public pageBuilder: PageBuilderInterface;
@@ -54,14 +47,11 @@ export default class Stage {
      * @type {(() => void) & _.Cancelable}
      */
     private applyBindingsDebounce = _.debounce(() => {
-        debugLog("------------------------------------------");
-        debugLog("Lock created");
         this.renderingLock = $.Deferred();
         this.render.applyBindings(this.rootContainer)
             .then((renderedOutput: string) => events.trigger(`stage:${ this.id }:masterFormatRenderAfter`, {
                 value: renderedOutput,
             })).then(() => {
-                debugLog("Lock resolved");
                 this.renderingLock.resolve();
             }).catch((error: Error) => {
                 console.error(error);
