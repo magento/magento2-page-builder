@@ -4,14 +4,6 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  function debugLog(message) {
-    if (_underscore.isObject(message) || _underscore.isArray(message)) {
-      message = JSON.stringify(message);
-    }
-
-    (0, _jquery)("[name=debug]").append(message + "\n");
-  }
-
   var Stage =
   /*#__PURE__*/
   function () {
@@ -46,8 +38,6 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
       this.template = "Magento_PageBuilder/content-type/preview";
       this.collection = new _collection();
       this.applyBindingsDebounce = _underscore.debounce(function () {
-        debugLog("------------------------------------------");
-        debugLog("Lock created");
         _this.renderingLock = _jquery.Deferred();
 
         _this.render.applyBindings(_this.rootContainer).then(function (renderedOutput) {
@@ -55,8 +45,6 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
             value: renderedOutput
           });
         }).then(function () {
-          debugLog("Lock resolved");
-
           _this.renderingLock.resolve();
         }).catch(function (error) {
           console.error(error);
@@ -187,8 +175,6 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
   }();
 
   Stage.rootContainerName = "root-container";
-  return Object.assign(Stage, {
-    debugLog: debugLog
-  });
+  return Stage;
 });
 //# sourceMappingURL=stage.js.map

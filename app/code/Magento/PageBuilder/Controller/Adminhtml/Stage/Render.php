@@ -17,6 +17,8 @@ use Magento\RequireJs\Block\Html\Head\Config;
  */
 class Render extends \Magento\Backend\App\Action implements HttpGetActionInterface
 {
+    const ADMIN_RESOURCE = 'Magento_Backend::content';
+
     /**
      * Preview transactional email action
      *

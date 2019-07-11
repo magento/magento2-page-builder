@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-define(['jquery', 'Magento_PageBuilder/js/events', 'consoleLogger', 'Magento_PageBuilder/js/stage'], function ($, events, consoleLogger, stage) {
+define(['jquery', 'Magento_PageBuilder/js/events', 'consoleLogger'], function ($, events, consoleLogger) {
     'use strict';
 
     var mixin = {
@@ -50,14 +50,12 @@ define(['jquery', 'Magento_PageBuilder/js/events', 'consoleLogger', 'Magento_Pag
                 if (locks.length === 0) {
                     submit();
                 } else {
-                    stage.debugLog('Lock detected, waiting for resolution');
                     timeout = setTimeout(function () {
                         consoleLogger.error('Page Builder was rendering for 5 seconds without releasing locks.');
                     }, 5000);
 
                     $('body').trigger('processStart');
                     $.when.apply(null, locks).then(function () {
-                        stage.debugLog('Resolved lock, saving');
                         $('body').trigger('processStop');
                         clearTimeout(timeout);
                         submit();
