@@ -3,7 +3,12 @@
  * See COPYING.txt for license details.
  */
 
-define(['jquery', 'Magento_PageBuilder/js/events', 'consoleLogger'], function ($, events, consoleLogger) {
+define([
+    'underscore',
+    'jquery',
+    'Magento_PageBuilder/js/events',
+    'consoleLogger'
+], function (_, $, events, consoleLogger) {
     'use strict';
 
     var mixin = {
@@ -35,32 +40,29 @@ define(['jquery', 'Magento_PageBuilder/js/events', 'consoleLogger'], function ($
          * @param {Object} data
          */
         save: function (redirect, data) {
-            var self = this,
-                submit = this._super.bind(self, redirect, data),
-                locks,
+            var submit = this._super.bind(this, redirect, data),
                 timeout;
 
-            if (this.pageBuilderInstances.length === 0) {
+            if (_.isEmpty(this.pageBuilderInstances)) {
                 submit();
             } else {
-                locks = this.pageBuilderInstances.map(function (instance) {
-                    return instance.stage.renderingLock;
-                });
+                timeout = setTimeout(function () {
+                    consoleLogger.error('Page Builder was rendering for 5 seconds without releasing locks.');
+                }, 5000);
 
-                if (locks.length === 0) {
+                $('body').trigger('processStart');
+
+                // Wait for all rendering locks within Page Builder stages to resolve
+                $.when.apply(
+                    null,
+                    this.pageBuilderInstances.map(function (instance) {
+                        return instance.stage.renderingLock;
+                    })
+                ).then(function () {
+                    $('body').trigger('processStop');
+                    clearTimeout(timeout);
                     submit();
-                } else {
-                    timeout = setTimeout(function () {
-                        consoleLogger.error('Page Builder was rendering for 5 seconds without releasing locks.');
-                    }, 5000);
-
-                    $('body').trigger('processStart');
-                    $.when.apply(null, locks).then(function () {
-                        $('body').trigger('processStop');
-                        clearTimeout(timeout);
-                        submit();
-                    });
-                }
+                });
             }
         }
     };

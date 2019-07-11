@@ -10,11 +10,6 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
     "use strict";
 
     /**
-     * We always complete a single render when the stage is first loaded, so we can set the lock when the stage is
-     * created. The lock is used to halt the parent forms submission when Page Builder is rendering.
-     */
-
-    /**
      * Debounce the applyBindings call by 500ms to stop duplicate calls
      *
      * @type {(() => void) & _.Cancelable}
@@ -34,7 +29,6 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
       this.focusChild = _knockout.observable(false);
       this.dataStore = new _dataStore();
       this.afterRenderDeferred = (0, _promiseDeferred)();
-      this.renderingLock = _jquery.Deferred();
       this.template = "Magento_PageBuilder/content-type/preview";
       this.collection = new _collection();
       this.applyBindingsDebounce = _underscore.debounce(function () {
