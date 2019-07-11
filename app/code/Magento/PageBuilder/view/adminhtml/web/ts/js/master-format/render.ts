@@ -93,19 +93,16 @@ export default class MasterFormatRenderer {
         debugLog("Setting up channel");
         this.channel = new MessageChannel();
         const frame = this.getRenderFrame();
-        frame.onload = () => {
-            debugLog("onLoad called");
-            window.addEventListener("message", (event) => {
-                debugLog("onLoad message called");
-                debugLog(event);
-                if (event.data === "PB_RENDER_READY") {
-                    frame.contentWindow.postMessage("PB_RENDER_PORT", "*", [this.channel.port2]);
-                    this.ready = true;
-                    this.readyDeferred.resolve();
-                    debugLog("channel is ready");
-                }
-            });
-        };
+        window.addEventListener("message", (event) => {
+            debugLog("onLoad message called");
+            debugLog(event);
+            if (event.data === "PB_RENDER_READY") {
+                frame.contentWindow.postMessage("PB_RENDER_PORT", "*", [this.channel.port2]);
+                this.ready = true;
+                this.readyDeferred.resolve();
+                debugLog("channel is ready");
+            }
+        });
         frame.src = Config.getConfig("render_url");
     }
 

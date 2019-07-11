@@ -104,24 +104,19 @@ define(["jquery", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBu
       debugLog("Setting up channel");
       this.channel = new MessageChannel();
       var frame = this.getRenderFrame();
+      window.addEventListener("message", function (event) {
+        debugLog("onLoad message called");
+        debugLog(event);
 
-      frame.onload = function () {
-        debugLog("onLoad called");
-        window.addEventListener("message", function (event) {
-          debugLog("onLoad message called");
-          debugLog(event);
+        if (event.data === "PB_RENDER_READY") {
+          frame.contentWindow.postMessage("PB_RENDER_PORT", "*", [_this2.channel.port2]);
+          _this2.ready = true;
 
-          if (event.data === "PB_RENDER_READY") {
-            frame.contentWindow.postMessage("PB_RENDER_PORT", "*", [_this2.channel.port2]);
-            _this2.ready = true;
+          _this2.readyDeferred.resolve();
 
-            _this2.readyDeferred.resolve();
-
-            debugLog("channel is ready");
-          }
-        });
-      };
-
+          debugLog("channel is ready");
+        }
+      });
       frame.src = _config.getConfig("render_url");
     }
     /**
