@@ -36,7 +36,7 @@ export default class Stage {
      * We always complete a single render when the stage is first loaded, so we can set the lock when the stage is
      * created. The lock is used to halt the parent forms submission when Page Builder is rendering.
      */
-    public renderingLock: JQueryDeferred<boolean> = $.Deferred();
+    public renderingLock: JQueryDeferred<void>;
     private template: string = "Magento_PageBuilder/content-type/preview";
     private render: Render;
     private collection: Collection = new Collection();
