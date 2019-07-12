@@ -9,7 +9,7 @@
 <script>
     <?php
     /**
-     * Shim localStorage always within the iframe to ensure any calls from Magento API's do not fail due to same origin
+     * Shim localStorage within the iframe to ensure any calls from Magento API's do not fail due to same origin
      * policies.
      */
     ?>
@@ -50,7 +50,7 @@
     require.config({
         'map': {
             '*': {
-                'text': 'Magento_PageBuilder/js/render/requirejs/text',
+                'text': 'Magento_PageBuilder/js/master-format/render/requirejs/text',
             }
         },
     });
@@ -59,7 +59,8 @@
     /**
      * To be able to override the text plugin we need the Magento template engine to be used, as the template engine
      * within lib has a dependency on the text! plugin we need to ensure we set the template engine before the
-     * dependency blocks us.
+     * dependency blocks us. If we try to just override using the RequireJS config above our !text plugin will never
+     * get overridden as our template engine cannot load.
      */
     ?>
     require([
@@ -73,7 +74,7 @@
     });
 </script>
 <script>
-    require(['Magento_PageBuilder/js/render/frame'], function (listen) {
+    require(['Magento_PageBuilder/js/master-format/render/frame'], function (listen) {
         listen(<?= /* @noEscape */ $block->getPageBuilderConfig(); ?>);
     });
 </script>

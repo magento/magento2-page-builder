@@ -20,7 +20,7 @@ class Render extends \Magento\Backend\App\Action implements HttpGetActionInterfa
     const ADMIN_RESOURCE = 'Magento_Backend::content';
 
     /**
-     * Preview transactional email action
+     * Render the RequireJS and Page Builder render blocks without any additional layout
      *
      * @return void
      */
