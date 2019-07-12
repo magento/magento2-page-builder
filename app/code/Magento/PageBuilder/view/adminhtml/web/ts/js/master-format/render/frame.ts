@@ -6,13 +6,14 @@
 import $ from "jquery";
 import ko from "knockout";
 import engine from "Magento_Ui/js/lib/knockout/template/engine";
-import Config from "../config";
-import ContentTypeCollectionInterface from "../content-type-collection.types";
-import createContentType from "../content-type-factory";
-import ContentTypeInterface from "../content-type.types";
-import filterHtml from "../master-format/filter-html";
-import { TreeItem } from "../master-format/render/serialize";
-import decodeAllDataUrlsInString from "../utils/directives";
+import Config from "../../config";
+import ConfigInterface from "../../config.types";
+import ContentTypeCollectionInterface from "../../content-type-collection.types";
+import createContentType from "../../content-type-factory";
+import ContentTypeInterface from "../../content-type.types";
+import decodeAllDataUrlsInString from "../../utils/directives";
+import filterHtml from "../filter-html";
+import { TreeItem } from "./serialize";
 
 let port: MessagePort = null;
 const portDeferred: JQueryDeferred<MessagePort> = $.Deferred();
@@ -21,9 +22,14 @@ const deferredTemplates: {[key: string]: JQueryDeferred<string>} = {};
 /**
  * Listen for requests from the parent window for a render
  */
-export default function listen(config: object) {
+export default function listen(config: ConfigInterface) {
     Config.setConfig(config);
     Config.setMode("Master");
+
+    /**
+     * Create a listener within our iframe so we can observe messages from the parent, once we receive a port on the
+     * MessageChannel we utilise that for all communication.
+     */
     window.addEventListener(
         "message",
         (event) => {
@@ -51,11 +57,14 @@ export default function listen(config: object) {
         },
         false,
     );
+
+    // Inform the parent iframe that we're ready to receive the port
     window.parent.postMessage("PB_RENDER_READY", "*");
 }
 
 /**
- * Load a template from the parent window
+ * Use our MessageChannel to load a template from the parent window, this is required as the iframe isn't allowed to
+ * make same origin XHR requests.
  *
  * @param name
  */
@@ -116,7 +125,7 @@ function render(message: {stageId: string, tree: TreeItem}) {
 }
 
 /**
- * Rebuild the interfaces within our frame
+ * Rebuild the content type tree using their original data and configuration
  *
  * @param stageId
  * @param tree

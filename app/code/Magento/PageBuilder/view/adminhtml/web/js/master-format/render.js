@@ -18,7 +18,7 @@ define(["jquery", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/maste
       this.stageId = stageId;
     }
     /**
-     * Render the root container into a string
+     * Render the root container into a string utilising our sandboxed iframe
      *
      * @param {ContentTypeCollection} rootContainer
      * @returns {Promise<string>}
@@ -70,7 +70,9 @@ define(["jquery", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/maste
       });
     }
     /**
-     * Create a channel to communicate with our sandboxed iframe
+     * Create a channel to communicate with our sandboxed iframe. Firstly add a listener to the current window and then
+     * set the src of the iframe. Listening for a specific message event with a predefined term and then hand over the
+     * MessageChannel port to allow communication between the main window and iframe.
      */
     ;
 

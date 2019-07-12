@@ -4,9 +4,8 @@
  */
 
 import _ from "underscore";
+import ConfigInterface, {Mode} from "./config.types";
 import ContentTypeConfigInterface from "./content-type-config.types";
-
-export type Mode = "Preview" | "Master";
 
 export default class Config {
     /**
@@ -14,7 +13,7 @@ export default class Config {
      *
      * @param config
      */
-    public static setConfig(config: object): void {
+    public static setConfig(config: ConfigInterface): void {
         Config.config = _.extend(Config.config, config);
     }
 
@@ -40,7 +39,7 @@ export default class Config {
      * @param {string} key
      * @returns {T}
      */
-    public static getConfig<T = any>(key?: string): T {
+    public static getConfig(key?: string) {
         if (key) {
             if (typeof Config.config[key] !== "undefined") {
                 return Config.config[key];

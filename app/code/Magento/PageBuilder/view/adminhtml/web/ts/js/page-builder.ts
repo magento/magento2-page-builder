@@ -8,7 +8,7 @@ import ko from "knockout";
 import events from "Magento_PageBuilder/js/events";
 import utils from "mageUtils";
 import _ from "underscore";
-import Config, {Mode} from "./config";
+import Config from "./config";
 import ContentTypeCollectionInterface from "./content-type-collection";
 import createContentType from "./content-type-factory";
 import PageBuilderInterface from "./page-builder.types";

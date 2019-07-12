@@ -22,7 +22,7 @@ export default class MasterFormatRenderer {
     }
 
     /**
-     * Render the root container into a string
+     * Render the root container into a string utilising our sandboxed iframe
      *
      * @param {ContentTypeCollection} rootContainer
      * @returns {Promise<string>}
@@ -67,7 +67,9 @@ export default class MasterFormatRenderer {
     }
 
     /**
-     * Create a channel to communicate with our sandboxed iframe
+     * Create a channel to communicate with our sandboxed iframe. Firstly add a listener to the current window and then
+     * set the src of the iframe. Listening for a specific message event with a predefined term and then hand over the
+     * MessageChannel port to allow communication between the main window and iframe.
      */
     public setupChannel() {
         this.channel = new MessageChannel();

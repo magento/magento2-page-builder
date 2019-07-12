@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/master-format/filter-html", "Magento_PageBuilder/js/utils/directives"], function (_jquery, _knockout, _engine, _config, _contentTypeFactory, _filterHtml, _directives) {
+define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/master-format/filter-html"], function (_jquery, _knockout, _engine, _config, _contentTypeFactory, _directives, _filterHtml) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -17,6 +17,11 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "Mag
     _config.setConfig(config);
 
     _config.setMode("Master");
+    /**
+     * Create a listener within our iframe so we can observe messages from the parent, once we receive a port on the
+     * MessageChannel we utilise that for all communication.
+     */
+
 
     window.addEventListener("message", function (event) {
       if (event.ports && event.ports.length) {
@@ -43,11 +48,13 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "Mag
           }
         };
       }
-    }, false);
+    }, false); // Inform the parent iframe that we're ready to receive the port
+
     window.parent.postMessage("PB_RENDER_READY", "*");
   }
   /**
-   * Load a template from the parent window
+   * Use our MessageChannel to load a template from the parent window, this is required as the iframe isn't allowed to
+   * make same origin XHR requests.
    *
    * @param name
    */
@@ -111,7 +118,7 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "Mag
     });
   }
   /**
-   * Rebuild the interfaces within our frame
+   * Rebuild the content type tree using their original data and configuration
    *
    * @param stageId
    * @param tree

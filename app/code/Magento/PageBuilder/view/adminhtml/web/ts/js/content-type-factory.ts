@@ -5,7 +5,7 @@
 
 import events from "Magento_PageBuilder/js/events";
 import _ from "underscore";
-import Config, {Mode} from "./config";
+import Config from "./config";
 import ContentType from "./content-type";
 import ContentTypeCollectionInterface from "./content-type-collection.types";
 import ContentTypeConfigInterface, {ConfigFieldInterface} from "./content-type-config.types";

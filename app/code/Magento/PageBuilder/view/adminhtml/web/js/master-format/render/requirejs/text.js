@@ -1,5 +1,10 @@
 /*eslint-disable */
-define(["mage/requirejs/text", "Magento_PageBuilder/js/render/frame"], function (_text, _frame) {
+define(["mage/requirejs/text", "Magento_PageBuilder/js/master-format/render/frame"], function (_text, _frame) {
+  /**
+   * Copyright © Magento, Inc. All rights reserved.
+   * See COPYING.txt for license details.
+   */
+
   /**
    * Within our render frame we override the RequireJS text! plugin, this is originally implemented within
    * lib/web/mage/requirejs/text.js. The override uses the MessageChannel to communicate with the parent frame to
