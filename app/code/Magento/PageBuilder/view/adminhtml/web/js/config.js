@@ -20,9 +20,10 @@ define(["underscore"], function (_underscore) {
       Config.config = _underscore.extend(Config.config, config);
     }
     /**
-     * Set the applications mode
+     * Set the current instances mode, this differs between preview or master depending on whether we're rendering the
+     * admins preview or rendering the master format.
      *
-     * @param mode
+     * @param {"Preview" | "Master"} mode
      */
     ;
 
@@ -30,7 +31,7 @@ define(["underscore"], function (_underscore) {
       Config.mode = mode;
     }
     /**
-     * Retrieve the applications mode
+     * Retrieve the current instances mode
      */
     ;
 
