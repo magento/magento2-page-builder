@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-import * as consoleLogger from "consoleLogger";
+import consoleLogger from "consoleLogger";
 import ko from "knockout";
 import {
     ContentTypeConfigAppearanceElementInterface,

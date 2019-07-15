@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["consoleLogger", "knockout", "Magento_PageBuilder/js/content-type/appearance-config", "Magento_PageBuilder/js/content-type/observable-updater/attributes", "Magento_PageBuilder/js/content-type/observable-updater/css", "Magento_PageBuilder/js/content-type/observable-updater/html", "Magento_PageBuilder/js/content-type/observable-updater/style"], function (consoleLogger, _knockout, _appearanceConfig, _attributes, _css, _html, _style) {
+define(["consoleLogger", "knockout", "Magento_PageBuilder/js/content-type/appearance-config", "Magento_PageBuilder/js/content-type/observable-updater/attributes", "Magento_PageBuilder/js/content-type/observable-updater/css", "Magento_PageBuilder/js/content-type/observable-updater/html", "Magento_PageBuilder/js/content-type/observable-updater/style"], function (_consoleLogger, _knockout, _appearanceConfig, _attributes, _css, _html, _style) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -172,7 +172,8 @@ define(["consoleLogger", "knockout", "Magento_PageBuilder/js/content-type/appear
       }
 
       if (this.bindingGenerators[binding] === undefined) {
-        consoleLogger.error("Unable to find Knockout binding generator for " + binding);
+        _consoleLogger.error("Unable to find Knockout binding generator for " + binding);
+
         return {};
       } // Generate the associated binding using our dedicated generators
 
