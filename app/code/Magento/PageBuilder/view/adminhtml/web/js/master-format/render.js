@@ -55,15 +55,15 @@ define(["jquery", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/maste
                 _this.loadTemplate(event.data.message);
               }
             } else {
-              reject();
+              reject("Render event was not trusted.");
             }
           };
         } else {
           _this.readyDeferred.then(function () {
             _this.applyBindings(rootContainer).then(function (rendered) {
               resolve(rendered);
-            }).catch(function () {
-              reject();
+            }).catch(function (error) {
+              reject(error);
             });
           });
         }

@@ -1,3 +1,7 @@
+import {ContentTypeConfigAppearanceElementInterface} from "../content-type-config.types";
+import ConverterPool from "../converter/converter-pool";
+import {DataObject} from "../data-store";
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
@@ -11,8 +15,15 @@ export default interface ObservableObject {
 }
 
 export interface GeneratedElementsData {
-    [key: string]: {
-        [key: string]: {};
-    };
+    [key: string]: Record<string, {}>;
     appearance?: any;
 }
+
+export type BindingGenerator = (
+    elementName: string,
+    config: ContentTypeConfigAppearanceElementInterface,
+    data: DataObject,
+    converterResolver: (config: object) => string,
+    converterPool: typeof ConverterPool,
+    previousData: Record<string, any>,
+) => Record<string, any> | string;

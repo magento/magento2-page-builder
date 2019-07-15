@@ -322,19 +322,14 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
       var contentTypeData = contentType.dataStore.getState();
       var index = contentType.parentContentType.getChildren()().indexOf(contentType) + 1 || null;
-      return new Promise(function (resolve) {
-        (0, _contentTypeFactory)(contentType.config, contentType.parentContentType, contentType.stageId, contentTypeData).then(function (duplicateContentType) {
-          if (autoAppend) {
-            contentType.parentContentType.addChild(duplicateContentType, index);
-          }
+      return (0, _contentTypeFactory)(contentType.config, contentType.parentContentType, contentType.stageId, contentTypeData).then(function (duplicateContentType) {
+        if (autoAppend) {
+          contentType.parentContentType.addChild(duplicateContentType, index);
+        }
 
-          _this3.dispatchContentTypeCloneEvents(contentType, duplicateContentType, index, direct);
+        _this3.dispatchContentTypeCloneEvents(contentType, duplicateContentType, index, direct);
 
-          resolve(duplicateContentType);
-        });
-      }).catch(function (error) {
-        console.error(error);
-        return null;
+        return duplicateContentType;
       });
     }
     /**

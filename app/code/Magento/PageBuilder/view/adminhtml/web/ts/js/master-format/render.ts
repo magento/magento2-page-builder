@@ -51,15 +51,15 @@ export default class MasterFormatRenderer {
                             this.loadTemplate(event.data.message);
                         }
                     } else {
-                        reject();
+                        reject("Render event was not trusted.");
                     }
                 };
             } else {
                 this.readyDeferred.then(() => {
                     this.applyBindings(rootContainer).then((rendered: string) => {
                         resolve(rendered);
-                    }).catch(() => {
-                        reject();
+                    }).catch((error) => {
+                        reject(error);
                     });
                 });
             }
