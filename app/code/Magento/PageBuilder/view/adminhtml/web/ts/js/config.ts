@@ -18,16 +18,17 @@ export default class Config {
     }
 
     /**
-     * Set the applications mode
+     * Set the current instances mode, this differs between preview or master depending on whether we're rendering the
+     * admins preview or rendering the master format.
      *
-     * @param mode
+     * @param {"Preview" | "Master"} mode
      */
     public static setMode(mode: Mode): void {
         Config.mode = mode;
     }
 
     /**
-     * Retrieve the applications mode
+     * Retrieve the current instances mode
      */
     public static getMode(): Mode {
         return Config.mode;
