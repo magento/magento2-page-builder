@@ -121,7 +121,7 @@ return [
                         'settingWithTypeObject' => [
                             'name' => 'settingWithTypeObject',
                             'xsi:type' => 'object',
-                            'value' => 'Magento\\TestModulePageBuilderDataMigration\\Model\\Config\\'
+                            'value' => 'Magento\\TestModulePageBuilderExtensionPoints\\Model\\Config\\'
                                 . 'ContentType\\AdditionalData\\Provider\\TestData',
                         ],
                     ],
@@ -166,7 +166,7 @@ return [
                                 'settingWithTypeObject' => [
                                     'name' => 'settingWithTypeObject',
                                     'xsi:type' => 'object',
-                                    'value' => 'Magento\\TestModulePageBuilderDataMigration\\Model\\Config\\'
+                                    'value' => 'Magento\\TestModulePageBuilderExtensionPoints\\Model\\Config\\'
                                         . 'ContentType\\AdditionalData\\Provider\\TestData',
                                 ],
                             ],
@@ -205,7 +205,7 @@ return [
                 'settingWithTypeObject' => [
                     'name' => 'settingWithTypeObject',
                     'xsi:type' => 'object',
-                    'value' => 'Magento\\TestModulePageBuilderDataMigration\\Model\\Config\\'
+                    'value' => 'Magento\\TestModulePageBuilderExtensionPoints\\Model\\Config\\'
                         . 'ContentType\\AdditionalData\\Provider\\TestData',
                 ],
             ],

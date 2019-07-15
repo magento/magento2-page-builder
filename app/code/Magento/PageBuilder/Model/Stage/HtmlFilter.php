@@ -49,9 +49,20 @@ class HtmlFilter
             $this->loggerInterface->critical($e->getMessage());
         }
         libxml_use_internal_errors($previous);
-        // Remove all <script /> tags from output
-        foreach (iterator_to_array($dom->getElementsByTagName('script')) as $item) {
-            $item->parentNode->removeChild($item);
+        // Remove all <script /> tags, on* attributes from output
+        /** @var \DOMElement $item */
+        foreach (iterator_to_array($dom->getElementsByTagName('*')) as $item) {
+            if (in_array($item->tagName, ['script', 'meta', 'embed', 'object'])) {
+                $item->parentNode->removeChild($item);
+            } else {
+                foreach (iterator_to_array($item->attributes) as $attribute) {
+                    if (stripos($attribute->name, 'on') === 0 ||
+                        stripos(ltrim($attribute->value), 'javascript') === 0
+                    ) {
+                        $item->removeAttribute($attribute->name);
+                    }
+                }
+            }
         }
         $xpath = new \DOMXPath($dom);
         $htmlContentTypes = $xpath->query(
@@ -59,7 +70,7 @@ class HtmlFilter
         );
         foreach ($htmlContentTypes as $htmlContentType) {
             /* @var \DOMElement $htmlContentType */
-            $innerHTML= '';
+            $innerHTML = '';
             $children = $htmlContentType->childNodes;
             foreach ($children as $child) {
                 $innerHTML .= $child->ownerDocument->saveXML($child);
