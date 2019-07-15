@@ -63,10 +63,10 @@ define(["consoleLogger", "knockout", "Magento_PageBuilder/js/content-type/appear
 
 
           Object.keys(generatedBindings[element]).forEach(function (key) {
-            var elementData = viewModel.data[element][key];
+            var elementBindings = viewModel.data[element][key];
 
-            if (elementData !== undefined && _knockout.isObservable(elementData)) {
-              elementData(generatedBindings[element][key]);
+            if (elementBindings !== undefined && _knockout.isObservable(elementBindings)) {
+              elementBindings(generatedBindings[element][key]);
             } else {
               viewModel.data[element][key] = _knockout.observable(generatedBindings[element][key]);
             }

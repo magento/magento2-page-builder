@@ -88,9 +88,9 @@ export default class ObservableUpdater {
                  * observable. If no observable already exists create a new one.
                  */
                 Object.keys(generatedBindings[element]).forEach((key) => {
-                    const elementData = viewModel.data[element][key];
-                    if (elementData !== undefined && ko.isObservable(elementData)) {
-                        elementData(generatedBindings[element][key]);
+                    const elementBindings = viewModel.data[element][key];
+                    if (elementBindings !== undefined && ko.isObservable(elementBindings)) {
+                        elementBindings(generatedBindings[element][key]);
                     } else {
                         viewModel.data[element][key] = ko.observable(generatedBindings[element][key]);
                     }
