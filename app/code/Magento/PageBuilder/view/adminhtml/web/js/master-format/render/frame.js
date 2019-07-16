@@ -102,7 +102,6 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "Mag
 
           var filtered = (0, _filterHtml)((0, _jquery)(element));
           var output = (0, _directives)(filtered.html());
-          element.remove();
           resolve(output);
         });
 

@@ -106,7 +106,6 @@ function render(message: {stageId: string, tree: TreeItem}) {
                 ko.cleanNode(element);
                 const filtered: JQuery = filterHtml($(element));
                 const output = decodeAllDataUrlsInString(filtered.html());
-                element.remove();
                 resolve(output);
             });
             ko.applyBindingsToNode(
