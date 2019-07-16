@@ -38,7 +38,12 @@ class Render extends \Magento\Backend\App\Action implements HttpGetActionInterfa
             'stage_render'
         );
         $renderBlock->setTemplate('Magento_PageBuilder::stage/render.phtml');
-        $this->getResponse()->setBody($requireJs->toHtml() . $renderBlock->toHtml());
+        $babelPolyfill = $layout->createBlock(
+            \Magento\PageBuilder\Block\Adminhtml\Html\Head\BabelPolyfill::class,
+            'pagebuilder.babel.polyfill'
+        );
+        $babelPolyfill->setTemplate('Magento_PageBuilder::html/head/babel_polyfill.phtml');
+        $this->getResponse()->setBody($requireJs->toHtml() . $babelPolyfill->toHtml() . $renderBlock->toHtml());
         $this->getResponse()->sendResponse();
     }
 }
