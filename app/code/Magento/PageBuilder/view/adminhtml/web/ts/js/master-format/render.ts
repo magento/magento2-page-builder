@@ -28,12 +28,17 @@ export default class MasterFormatRenderer {
      * @returns {Promise<string>}
      */
     public applyBindings(rootContainer: ContentTypeCollectionInterface): Promise<string> {
-        if (!this.getRenderFrame()) {
-            console.error("No render frame present for Page Builder instance.");
-            return;
-        }
-
         return new Promise((resolve, reject) => {
+            if (!this.getRenderFrame()) {
+                // If the stage exists we should also have a frame
+                if (document.getElementById(this.stageId)) {
+                    return reject("No render frame present for Page Builder instance.");
+                }
+
+                // Otherwise the instance of Page Builder has been removed from the DOM and this is an old instance.
+                return reject();
+            }
+
             if (this.ready) {
                 this.channel.port1.postMessage({
                     type: "render",

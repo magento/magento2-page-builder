@@ -54,7 +54,9 @@ export default class Stage {
             })).then(() => {
                 this.renderingLock.resolve();
             }).catch((error: Error) => {
-                console.error(error);
+                if (error) {
+                    console.error(error);
+                }
             });
     }, 500);
 

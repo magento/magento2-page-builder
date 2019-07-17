@@ -30,12 +30,17 @@ define(["jquery", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/maste
     _proto.applyBindings = function applyBindings(rootContainer) {
       var _this = this;
 
-      if (!this.getRenderFrame()) {
-        console.error("No render frame present for Page Builder instance.");
-        return;
-      }
-
       return new Promise(function (resolve, reject) {
+        if (!_this.getRenderFrame()) {
+          // If the stage exists we should also have a frame
+          if (document.getElementById(_this.stageId)) {
+            return reject("No render frame present for Page Builder instance.");
+          } // Otherwise the instance of Page Builder has been removed from the DOM and this is an old instance.
+
+
+          return reject();
+        }
+
         if (_this.ready) {
           _this.channel.port1.postMessage({
             type: "render",
