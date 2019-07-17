@@ -75,7 +75,7 @@ export default class MasterFormatRenderer {
         this.channel = new MessageChannel();
         const frame = this.getRenderFrame();
         window.addEventListener("message", (event) => {
-            if (event.data === "PB_RENDER_READY") {
+            if (!this.ready && event.data === "PB_RENDER_READY") {
                 frame.contentWindow.postMessage("PB_RENDER_PORT", "*", [this.channel.port2]);
                 this.ready = true;
                 this.readyDeferred.resolve();
