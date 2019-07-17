@@ -82,7 +82,7 @@ define(["jquery", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/maste
       this.channel = new MessageChannel();
       var frame = this.getRenderFrame();
       window.addEventListener("message", function (event) {
-        if (event.data === "PB_RENDER_READY") {
+        if (!_this2.ready && event.data === "PB_RENDER_READY") {
           frame.contentWindow.postMessage("PB_RENDER_PORT", "*", [_this2.channel.port2]);
           _this2.ready = true;
 
