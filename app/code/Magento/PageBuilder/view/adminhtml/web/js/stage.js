@@ -41,7 +41,9 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
         }).then(function () {
           _this.renderingLock.resolve();
         }).catch(function (error) {
-          console.error(error);
+          if (error) {
+            console.error(error);
+          }
         });
       }, 500);
       this.pageBuilder = pageBuilder;
