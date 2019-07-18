@@ -36,6 +36,45 @@
             </item>
         </argument>
     </container>
+    <fieldset name="appearance_fieldset" sortOrder="20" component="Magento_PageBuilder/js/form/element/dependent-fieldset">
+        <settings>
+            <label translate="true">Appearance</label>
+            <additionalClasses>
+                <class name="admin__fieldset-visual-select-large">true</class>
+            </additionalClasses>
+            <collapsible>false</collapsible>
+            <opened>true</opened>
+            <imports>
+                <link name="hideFieldset">${$.name}.appearance:options</link>
+                <link name="hideLabel">${$.name}.appearance:options</link>
+            </imports>
+        </settings>
+        <field name="appearance" formElement="select" sortOrder="10" component="Magento_PageBuilder/js/form/element/dependent-visual-select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">default</item>
+                </item>
+            </argument>
+            <settings>
+                <additionalClasses>
+                    <class name="admin__field-wide">true</class>
+                    <class name="admin__field-visual-select-container">true</class>
+                </additionalClasses>
+                <dataType>text</dataType>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <elementTmpl>Magento_PageBuilder/form/element/visual-select</elementTmpl>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="AppearanceSourceMap" />
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+    </fieldset>
     <fieldset name="general" sortOrder="20">
         <settings>
             <label/>
@@ -207,46 +246,7 @@
                 </button>
             </container>
         </dynamicRows>
-    </fieldset>
-    <fieldset name="appearance_fieldset" sortOrder="30" component="Magento_PageBuilder/js/form/element/dependent-fieldset">
-        <settings>
-            <label translate="true">Appearance</label>
-            <additionalClasses>
-                <class name="admin__fieldset-visual-select-large">true</class>
-            </additionalClasses>
-            <collapsible>false</collapsible>
-            <opened>true</opened>
-            <imports>
-                <link name="hideFieldset">${$.name}.appearance:options</link>
-                <link name="hideLabel">${$.name}.appearance:options</link>
-            </imports>
-        </settings>
-        <field name="appearance" formElement="select" sortOrder="10" component="Magento_PageBuilder/js/form/element/dependent-visual-select">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="default" xsi:type="string">default</item>
-                </item>
-            </argument>
-            <settings>
-                <additionalClasses>
-                    <class name="admin__field-wide">true</class>
-                    <class name="admin__field-visual-select-container">true</class>
-                </additionalClasses>
-                <dataType>text</dataType>
-                <validation>
-                    <rule name="required-entry" xsi:type="boolean">true</rule>
-                </validation>
-                <elementTmpl>Magento_PageBuilder/form/element/visual-select</elementTmpl>
-            </settings>
-            <formElements>
-                <select>
-                    <settings>
-                        <options class="AppearanceSourceMap" />
-                    </settings>
-                </select>
-            </formElements>
-        </field>
-        <field name="height" sortOrder="20" formElement="input">
+        <field name="height" sortOrder="30" formElement="input">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="source" xsi:type="string">block</item>
@@ -266,14 +266,7 @@
                 </validation>
             </settings>
         </field>
-    </fieldset>
-    <fieldset name="map_settings" sortOrder="40">
-        <settings>
-            <label translate="true">Map Settings</label>
-            <collapsible>true</collapsible>
-            <opened>true</opened>
-        </settings>
-        <field name="show_controls" sortOrder="20" formElement="checkbox">
+        <field name="show_controls" sortOrder="40" formElement="checkbox">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="default" xsi:type="string">true</item>
