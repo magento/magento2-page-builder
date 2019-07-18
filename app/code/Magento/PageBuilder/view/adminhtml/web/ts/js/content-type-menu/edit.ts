@@ -19,8 +19,8 @@ export default class Edit {
     constructor(instance: ContentTypeInterface, dataStore: DataStore) {
         this.instance = instance;
         this.dataStore = dataStore;
-        events.on("form:" + this.instance.id + ":saveAfter", (data: any) => {
-            this.dataStore.setState(data);
+        events.on("form:" + this.instance.id + ":saveAfter", (data: DataObject) => {
+            this.dataStore.setState(this.filterData(data));
         });
     }
 
@@ -38,6 +38,17 @@ export default class Edit {
             namespace: this.getFormNamespace(contentTypeData),
             title: this.instance.config.label,
         });
+    }
+
+    /**
+     * Flip flop to JSON and back again to ensure all data received from the form is serializable. Magento by default
+     * adds functions into some basic types which cannot be serialized when calling PostMessage.
+     *
+     * @param {DataObject} data
+     * @returns {DataObject}
+     */
+    private filterData(data: DataObject): DataObject {
+        return JSON.parse(JSON.stringify(data));
     }
 
     /**

@@ -5,14 +5,24 @@
 
 import events from "Magento_PageBuilder/js/events";
 import _ from "underscore";
+import Config from "./config";
 import ContentType from "./content-type";
 import ContentTypeCollectionInterface from "./content-type-collection.types";
 import ContentTypeConfigInterface, {ConfigFieldInterface} from "./content-type-config.types";
 import ContentTypeInterface from "./content-type.types";
 import {ContentTypeMountEventParamsInterface} from "./content-type/content-type-events.types";
+import Master from "./content-type/master";
+import MasterCollection from "./content-type/master-collection";
 import masterFactory from "./content-type/master-factory";
+import Preview from "./content-type/preview";
+import PreviewCollection from "./content-type/preview-collection";
 import previewFactory from "./content-type/preview-factory";
 import loadModule from "./utils/loader";
+
+type ViewFactory = (
+    contentType: ContentTypeInterface | ContentTypeCollectionInterface,
+    config: ContentTypeConfigInterface,
+) => Promise<Preview | PreviewCollection | Master | MasterCollection>;
 
 /**
  * Create new content type
@@ -43,14 +53,10 @@ export default function createContentType(
                     config,
                     stageId,
                 );
-                Promise.all(
-                    [
-                        previewFactory(contentType, config),
-                        masterFactory(contentType, config),
-                    ],
-                ).then(([previewComponent, masterComponent]) => {
-                    contentType.preview = previewComponent;
-                    contentType.content = masterComponent;
+                const viewFactory: ViewFactory = Config.getMode() === "Preview" ? previewFactory : masterFactory;
+                viewFactory(contentType, config).then((viewComponent) => {
+                    const viewName = Config.getMode() === "Preview" ? "preview" : "content";
+                    contentType[viewName] = viewComponent;
                     contentType.dataStore.setState(
                         prepareData(config, data),
                     );
@@ -107,6 +113,10 @@ function prepareData(config: ContentTypeConfigInterface, data: {}) {
  * @returns {FieldDefaultsInterface}
  */
 function prepareDefaults(fields: ConfigFieldInterface): FieldDefaultsInterface {
+    if (_.isEmpty(fields)) {
+        return {};
+    }
+
     return _.mapObject(fields, (field) => {
         if (!_.isUndefined(field.default)) {
             return field.default;

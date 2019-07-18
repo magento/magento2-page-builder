@@ -335,24 +335,19 @@ export default class Preview implements PreviewInterface {
         const contentTypeData = contentType.dataStore.getState();
         const index = contentType.parentContentType.getChildren()().indexOf(contentType) + 1 || null;
 
-        return new Promise((resolve) => {
-            createContentType(
-                contentType.config,
-                contentType.parentContentType,
-                contentType.stageId,
-                contentTypeData,
-            ).then((duplicateContentType: ContentTypeInterface) => {
-                if (autoAppend) {
-                    contentType.parentContentType.addChild(duplicateContentType, index);
-                }
+        return createContentType(
+            contentType.config,
+            contentType.parentContentType,
+            contentType.stageId,
+            contentTypeData,
+        ).then((duplicateContentType: ContentTypeInterface) => {
+            if (autoAppend) {
+                contentType.parentContentType.addChild(duplicateContentType, index);
+            }
 
-                this.dispatchContentTypeCloneEvents(contentType, duplicateContentType, index, direct);
+            this.dispatchContentTypeCloneEvents(contentType, duplicateContentType, index, direct);
 
-                resolve(duplicateContentType);
-            });
-        }).catch((error) => {
-            console.error(error);
-            return null;
+            return duplicateContentType;
         });
     }
 

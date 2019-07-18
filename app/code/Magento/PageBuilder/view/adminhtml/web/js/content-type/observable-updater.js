@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "underscore", "Magento_PageBuilder/js/utils/object", "Magento_PageBuilder/js/utils/string", "Magento_PageBuilder/js/content-type/appearance-config"], function (_knockout, _underscore, _object, _string, _appearanceConfig) {
+define(["consoleLogger", "knockout", "Magento_PageBuilder/js/content-type/appearance-config", "Magento_PageBuilder/js/content-type/observable-updater/attributes", "Magento_PageBuilder/js/content-type/observable-updater/css", "Magento_PageBuilder/js/content-type/observable-updater/html", "Magento_PageBuilder/js/content-type/observable-updater/style"], function (_consoleLogger, _knockout, _appearanceConfig, _attributes, _css, _html, _style) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -15,12 +15,22 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/object", "Magent
      * @param {(config: object) => string} converterResolver
      */
     function ObservableUpdater(converterPool, massConverterPool, converterResolver) {
+      this.previousData = {};
+      this.bindingGenerators = {
+        attributes: _attributes,
+        css: _css,
+        html: _html,
+        style: _style
+      };
       this.converterPool = converterPool;
       this.massConverterPool = massConverterPool;
       this.converterResolver = converterResolver;
     }
     /**
-     * Generate our data.ELEMENT.style Knockout observable objects for use within master and preview formats.
+     * Update the associated viewModel with the generated data
+     *
+     * We create an API for each potential binding and make it available in the master and preview templates through
+     * the data variable. Each data variable will have associated observables that are updated on a data change.
      *
      * @param {Preview} viewModel
      * @param {DataObject} data
@@ -35,93 +45,82 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/object", "Magent
 
       if (undefined === appearanceConfiguration || undefined === appearanceConfiguration.elements) {
         return;
+      } // Generate Knockout bindings in objects for usage in preview and master templates
+
+
+      var generatedBindings = this.generateKnockoutBindings(appearanceConfiguration.elements, appearanceConfiguration.converters, data);
+
+      var _loop = function _loop(element) {
+        if (generatedBindings.hasOwnProperty(element)) {
+          // Ensure every element is represented by an object
+          if (viewModel.data[element] === undefined) {
+            viewModel.data[element] = {};
+          }
+          /**
+           * Iterate through each elements data (css, style, attributes) and apply data updates within the
+           * observable. If no observable already exists create a new one.
+           */
+
+
+          Object.keys(generatedBindings[element]).forEach(function (key) {
+            var elementBindings = viewModel.data[element][key];
+
+            if (elementBindings !== undefined && _knockout.isObservable(elementBindings)) {
+              elementBindings(generatedBindings[element][key]);
+            } else {
+              viewModel.data[element][key] = _knockout.observable(generatedBindings[element][key]);
+            }
+          });
+        }
+      };
+
+      for (var element in generatedBindings) {
+        _loop(element);
       }
+    }
+    /**
+     * Generate binding object to be applied to master format
+     *
+     * This function iterates through each element defined in the content types XML and generates a nested object of
+     * the associated Knockout binding data. We support 5 bindings attributes, style, css, html & tag.
+     *
+     * @param elements
+     * @param converters
+     * @param data
+     */
+    ;
 
-      var config = appearanceConfiguration.elements;
-      data = this.convertData(data, appearanceConfiguration.converters);
+    _proto.generateKnockoutBindings = function generateKnockoutBindings(elements, converters, data) {
+      var convertedData = this.convertData(data, converters);
+      var generatedData = {};
 
-      var _arr = Object.keys(config);
+      var _arr = Object.keys(elements);
 
       for (var _i = 0; _i < _arr.length; _i++) {
         var elementName = _arr[_i];
+        var elementConfig = elements[elementName];
 
-        if (viewModel.data[elementName] === undefined) {
-          viewModel.data[elementName] = {
-            attributes: _knockout.observable({}),
-            style: _knockout.observable({}),
-            css: _knockout.observable({}),
-            html: _knockout.observable({})
-          };
+        if (this.previousData[elementName] === undefined) {
+          this.previousData[elementName] = {};
         }
 
-        if (config[elementName].style !== undefined) {
-          var currentStyles = viewModel.data[elementName].style();
-          var newStyles = this.convertStyle(config[elementName], data);
+        generatedData[elementName] = {
+          attributes: this.generateKnockoutBinding("attributes", elementName, elementConfig, data),
+          style: this.generateKnockoutBinding("style", elementName, elementConfig, data),
+          css: elementConfig.css.var in convertedData ? this.generateKnockoutBinding("css", elementName, elementConfig, data) : {},
+          html: this.generateKnockoutBinding("html", elementName, elementConfig, data)
+        };
 
-          if (currentStyles) {
-            /**
-             * If so we need to retrieve the previous styles applied to this element and create a new object
-             * which forces all of these styles to be "false". Knockout doesn't clean existing styles when
-             * applying new styles to an element. This resolves styles sticking around when they should be
-             * removed.
-             */
-            var removeCurrentStyles = Object.keys(currentStyles).reduce(function (object, styleName) {
-              var _Object$assign;
-
-              return Object.assign(object, (_Object$assign = {}, _Object$assign[styleName] = "", _Object$assign));
-            }, {});
-
-            if (!_underscore.isEmpty(removeCurrentStyles)) {
-              newStyles = _underscore.extend(removeCurrentStyles, newStyles);
-            }
+        if (elementConfig.tag !== undefined && elementConfig.tag.var !== undefined) {
+          if (generatedData[elementName][elementConfig.tag.var] === undefined) {
+            generatedData[elementName][elementConfig.tag.var] = "";
           }
 
-          viewModel.data[elementName].style(newStyles);
-        }
-
-        if (config[elementName].attributes !== undefined) {
-          var attributeData = this.convertAttributes(config[elementName], data);
-          attributeData["data-element"] = elementName;
-          viewModel.data[elementName].attributes(attributeData);
-        }
-
-        if (config[elementName].html !== undefined) {
-          viewModel.data[elementName].html(this.convertHtml(config[elementName], data));
-        }
-
-        if (config[elementName].css !== undefined && config[elementName].css.var in data) {
-          (function () {
-            var css = (0, _object.get)(data, config[elementName].css.var);
-            var newClasses = {};
-
-            if (css && css.length > 0) {
-              css.toString().split(" ").map(function (value, index) {
-                return newClasses[value] = true;
-              });
-            }
-
-            var _arr2 = Object.keys(viewModel.data[elementName].css());
-
-            for (var _i2 = 0; _i2 < _arr2.length; _i2++) {
-              var className = _arr2[_i2];
-
-              if (!(className in newClasses)) {
-                newClasses[className] = false;
-              }
-            }
-
-            viewModel.data[elementName].css(newClasses);
-          })();
-        }
-
-        if (config[elementName].tag !== undefined) {
-          if (viewModel.data[elementName][config[elementName].tag.var] === undefined) {
-            viewModel.data[elementName][config[elementName].tag.var] = _knockout.observable("");
-          }
-
-          viewModel.data[elementName][config[elementName].tag.var](data[config[elementName].tag.var]);
+          generatedData[elementName][elementConfig.tag.var] = convertedData[elementConfig.tag.var];
         }
       }
+
+      return generatedData;
     }
     /**
      * Process data for elements before its converted to knockout format
@@ -133,154 +132,55 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/object", "Magent
     ;
 
     _proto.convertData = function convertData(data, convertersConfig) {
-      for (var _iterator = convertersConfig, _isArray = Array.isArray(_iterator), _i3 = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
+      for (var _iterator = convertersConfig, _isArray = Array.isArray(_iterator), _i2 = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
         var _ref;
 
         if (_isArray) {
-          if (_i3 >= _iterator.length) break;
-          _ref = _iterator[_i3++];
+          if (_i2 >= _iterator.length) break;
+          _ref = _iterator[_i2++];
         } else {
-          _i3 = _iterator.next();
-          if (_i3.done) break;
-          _ref = _i3.value;
+          _i2 = _iterator.next();
+          if (_i2.done) break;
+          _ref = _i2.value;
         }
 
         var converterConfig = _ref;
-        data = this.massConverterPool.get(converterConfig.component).toDom(data, converterConfig.config);
+        this.massConverterPool.get(converterConfig.component).toDom(data, converterConfig.config);
       }
 
       return data;
     }
     /**
-     * Convert attributes
+     * Generate an individual knockout binding
      *
-     * @param {object} config
-     * @param {DataObject} data
-     * @returns {object}
+     * @param binding
+     * @param elementName
+     * @param config
+     * @param data
      */
     ;
 
-    _proto.convertAttributes = function convertAttributes(config, data) {
-      var result = {};
-
-      for (var _iterator2 = config.attributes, _isArray2 = Array.isArray(_iterator2), _i4 = 0, _iterator2 = _isArray2 ? _iterator2 : _iterator2[Symbol.iterator]();;) {
-        var _ref2;
-
-        if (_isArray2) {
-          if (_i4 >= _iterator2.length) break;
-          _ref2 = _iterator2[_i4++];
-        } else {
-          _i4 = _iterator2.next();
-          if (_i4.done) break;
-          _ref2 = _i4.value;
-        }
-
-        var attributeConfig = _ref2;
-
-        if ("read" === attributeConfig.persistence_mode) {
-          continue;
-        }
-
-        var value = void 0;
-
-        if (!!attributeConfig.static) {
-          value = attributeConfig.value;
-        } else {
-          value = (0, _object.get)(data, attributeConfig.var);
-        }
-
-        var converter = this.converterResolver(attributeConfig);
-
-        if (this.converterPool.get(converter)) {
-          value = this.converterPool.get(converter).toDom(attributeConfig.var, data);
-        }
-
-        result[attributeConfig.name] = value;
+    _proto.generateKnockoutBinding = function generateKnockoutBinding(binding, elementName, config, data) {
+      if (config[binding] === undefined) {
+        return {};
       }
 
-      return result;
-    }
-    /**
-     * Convert style properties
-     *
-     * @param {object}config
-     * @param {object}data
-     * @returns {object}
-     */
-    ;
+      var previousData = {};
 
-    _proto.convertStyle = function convertStyle(config, data) {
-      var result = {};
-
-      if (config.style) {
-        for (var _iterator3 = config.style, _isArray3 = Array.isArray(_iterator3), _i5 = 0, _iterator3 = _isArray3 ? _iterator3 : _iterator3[Symbol.iterator]();;) {
-          var _ref3;
-
-          if (_isArray3) {
-            if (_i5 >= _iterator3.length) break;
-            _ref3 = _iterator3[_i5++];
-          } else {
-            _i5 = _iterator3.next();
-            if (_i5.done) break;
-            _ref3 = _i5.value;
-          }
-
-          var propertyConfig = _ref3;
-
-          if ("read" === propertyConfig.persistence_mode) {
-            continue;
-          }
-
-          var value = void 0;
-
-          if (!!propertyConfig.static) {
-            value = propertyConfig.value;
-          } else {
-            value = (0, _object.get)(data, propertyConfig.var);
-            var converter = this.converterResolver(propertyConfig);
-
-            if (this.converterPool.get(converter)) {
-              value = this.converterPool.get(converter).toDom(propertyConfig.var, data);
-            }
-          }
-
-          if (typeof value === "object") {
-            _underscore.extend(result, value);
-          } else if (typeof value !== "undefined") {
-            result[(0, _string.fromSnakeToCamelCase)(propertyConfig.name)] = value;
-          }
-        }
+      if (this.previousData[elementName][binding] !== undefined) {
+        previousData = this.previousData[elementName][binding];
       }
 
-      if (_underscore.isEmpty(result)) {
-        return null;
-      }
+      if (this.bindingGenerators[binding] === undefined) {
+        _consoleLogger.error("Unable to find Knockout binding generator for " + binding);
 
-      return result;
-    }
-    /**
-     * Convert html property
-     *
-     * @param {object} config
-     * @param {DataObject} data
-     * @returns {string}
-     */
-    ;
-
-    _proto.convertHtml = function convertHtml(config, data) {
-      var value = config.html.var ? (0, _object.get)(data, config.html.var, config.html.placeholder) : config.html.placeholder;
-      var converter = this.converterResolver(config.html);
-
-      if (this.converterPool.get(converter)) {
-        value = this.converterPool.get(converter).toDom(config.html.var, data);
-      } // if value is empty, use placeholder
+        return {};
+      } // Generate the associated binding using our dedicated generators
 
 
-      if (typeof value === "string" && !value.length && config.html.placeholder) {
-        value = config.html.placeholder;
-      }
-
-      return value;
+      var generatedBindingData = this.bindingGenerators[binding](elementName, config, data, this.converterResolver, this.converterPool, previousData);
+      this.previousData[elementName][binding] = generatedBindingData;
+      return generatedBindingData;
     };
 
     return ObservableUpdater;

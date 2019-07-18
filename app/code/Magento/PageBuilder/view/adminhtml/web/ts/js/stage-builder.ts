@@ -200,7 +200,7 @@ function buildEmpty(stage: Stage, initialValue: string) {
     const htmlDisplayContentTypeConfig = Config.getContentTypeConfig(stageConfig.html_display_content_type);
 
     if (rootContentTypeConfig) {
-        return createContentType(rootContentTypeConfig, rootContainer, stage.id, {})
+        return createContentType(rootContentTypeConfig, rootContainer, stage.id)
             .then((rootContentType: ContentTypeCollectionInterface) => {
                 if (!rootContentType) {
                     return Promise.reject(`Unable to create initial ${stageConfig.root_content_type} content type ` +

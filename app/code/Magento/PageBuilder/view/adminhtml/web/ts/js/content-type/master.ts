@@ -9,7 +9,7 @@ import {DataObject} from "../data-store";
 import {get} from "../utils/object";
 import appearanceConfig from "./appearance-config";
 import ObservableUpdater from "./observable-updater";
-import ObservableObject from "./observable-updater.types";
+import ObservableObject, {GeneratedElementsData} from "./observable-updater.types";
 
 /**
  * @api
@@ -88,6 +88,8 @@ export default class Master {
 
     /**
      * Update observables
+     *
+     * @deprecated
      */
     private updateObservables(): void {
         this.observableUpdater.update(
