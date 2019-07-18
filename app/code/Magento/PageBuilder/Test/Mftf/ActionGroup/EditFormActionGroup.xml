@@ -225,7 +225,7 @@
         </arguments>
         <waitForElement time="2" selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible"/>
         <seeElement selector='//li[@name="{{property.value}}"]' stepKey="seeVisualSelect"/>
-        <click selector='//div[@data-index="{{property.section}}" and contains(@class,"_show")]//li[@name="{{property.value}}"]' stepKey="chooseVisualSelectOption"/>
+        <click selector='//div[@data-index="{{property.section}}"]//li[@name="{{property.value}}"]' stepKey="chooseVisualSelectOption"/>
     </actionGroup>
     <actionGroup name="scrollToSlideOutPanelField">
         <arguments>
