@@ -16,7 +16,7 @@ import ColumnGroupPreview from "./preview";
  * @returns {number}
  */
 export function getDefaultGridSize(): number {
-    return parseInt(Config.getConfig<string>("column_grid_default"), 10);
+    return parseInt(Config.getConfig("column_grid_default"), 10);
 }
 
 /**
@@ -25,7 +25,7 @@ export function getDefaultGridSize(): number {
  * @returns {number}
  */
 export function getMaxGridSize(): number {
-    return parseInt(Config.getConfig<string>("column_grid_max"), 10);
+    return parseInt(Config.getConfig("column_grid_max"), 10);
 }
 
 /**

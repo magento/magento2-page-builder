@@ -20,7 +20,7 @@ define(["Magento_PageBuilder/js/events", "underscore"], function (_events, _unde
       this.dataStore = dataStore;
 
       _events.on("form:" + this.instance.id + ":saveAfter", function (data) {
-        _this.dataStore.setState(data);
+        _this.dataStore.setState(_this.filterData(data));
       });
     }
     /**
@@ -41,6 +41,18 @@ define(["Magento_PageBuilder/js/events", "underscore"], function (_events, _unde
         namespace: this.getFormNamespace(contentTypeData),
         title: this.instance.config.label
       });
+    }
+    /**
+     * Flip flop to JSON and back again to ensure all data received from the form is serializable. Magento by default
+     * adds functions into some basic types which cannot be serialized when calling PostMessage.
+     *
+     * @param {DataObject} data
+     * @returns {DataObject}
+     */
+    ;
+
+    _proto.filterData = function filterData(data) {
+      return JSON.parse(JSON.stringify(data));
     }
     /**
      * Determine the form namespace based on the currently set appearance
