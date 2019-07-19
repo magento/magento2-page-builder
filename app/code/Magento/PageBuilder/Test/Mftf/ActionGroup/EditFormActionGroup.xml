@@ -111,15 +111,8 @@
         <click selector="{{EditPanelForm.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
         <waitForElementVisible time="2" selector="{{EditPanelForm.panelSectionError(property.section)}}" stepKey="waitForSectionChangedIcon"/>
     </actionGroup>
-    <actionGroup name="fillSlideOutPanelFieldAndExpectToSeeErrorInFieldsetGeneral">
-        <arguments>
-            <argument name="property"/>
-        </arguments>
-        <waitForPageLoad stepKey="waitForPageLoad"/>
-        <waitForElement time="2" selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible"/>
-        <see userInput="{{property.name}}" selector="{{EditPanelForm.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="seePropertyLabel"/>
-        <fillField selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" userInput="{{property.value}}" stepKey="fillPropertyField"/>
-        <click selector="{{EditPanelForm.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
+    <actionGroup name="fillSlideOutPanelFieldAndExpectToSeeErrorInFieldsetGeneral" extends="fillSlideOutPanelFieldAndExpectToSeeErrorInFieldset">
+        <remove keyForRemoval="waitForSectionChangedIcon"/>
     </actionGroup>
     <actionGroup name="fillSlideOutPanelMultiSelectField">
         <arguments>
