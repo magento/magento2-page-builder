@@ -50,6 +50,7 @@ export default class MasterFormatRenderer {
                 this.channel.port1.onmessage = (event) => {
                     if (event.isTrusted) {
                         if (event.data.type === "render") {
+                            console.log(event.data.message);
                             resolve(event.data.message);
                         }
                         if (event.data.type === "template") {

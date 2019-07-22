@@ -12,6 +12,7 @@ import "./binding/sortable";
 import Collection from "./collection";
 import ContentTypeCollectionInterface from "./content-type-collection.types";
 import {ContentTypeRemovedParamsInterface} from "./content-type/content-type-events.types";
+import StyleRegistry from "./content-type/style-registry";
 import DataStore from "./data-store";
 import {generateAllowedParents} from "./drag-drop/matrix";
 import Render from "./master-format/render";
@@ -61,10 +62,13 @@ export default class Stage {
     }, 500);
 
     /**
-     * @param {PageBuilderInterface} pageBuilder
-     * @param {ContentTypeCollectionInterface} rootContainer
+     * @param pageBuilder
+     * @param rootContainer
      */
-    constructor(pageBuilder: PageBuilderInterface, rootContainer: ContentTypeCollectionInterface) {
+    constructor(
+        pageBuilder: PageBuilderInterface,
+        rootContainer: ContentTypeCollectionInterface,
+    ) {
         this.pageBuilder = pageBuilder;
         this.id = pageBuilder.id;
         this.render = new Render(pageBuilder.id);

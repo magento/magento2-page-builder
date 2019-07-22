@@ -26,7 +26,7 @@ export default function create(
     return new Promise(
         (resolve: (previewComponent: Preview | PreviewCollection) => void, reject: (e: string) => void,
     ) => {
-        observableUpdaterFactory(config, previewConverterResolver).then((observableUpdater) => {
+        observableUpdaterFactory(config, previewConverterResolver, contentType.stageId).then((observableUpdater) => {
             loadModule([config.preview_component], (previewComponent: typeof Preview | typeof PreviewCollection) => {
                 try {
                     const preview = new previewComponent(

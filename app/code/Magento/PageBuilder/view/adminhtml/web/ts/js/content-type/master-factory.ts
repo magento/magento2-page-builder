@@ -26,7 +26,7 @@ export default function create(
     return new Promise(
         (resolve: (masterComponent: Master | MasterCollection) => void, reject: (error: string) => void,
     ) => {
-        observableUpdaterFactory(config, converterResolver).then((observableUpdater) => {
+        observableUpdaterFactory(config, converterResolver, contentType.stageId).then((observableUpdater) => {
             loadModule([config.master_component], (masterComponent: typeof Master | typeof MasterCollection) => {
                 try {
                     const master = new masterComponent(

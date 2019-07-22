@@ -9,6 +9,7 @@ import ConverterPool from "../../converter/converter-pool";
 import {DataObject} from "../../data-store";
 import {get} from "../../utils/object";
 import {fromSnakeToCamelCase} from "../../utils/string";
+import {Style} from "../style-registry";
 
 /**
  * Generate Knockout compatible bindings for the elements style binding
@@ -27,7 +28,7 @@ export default function generate(
     converterResolver: (config: object) => string,
     converterPool: typeof ConverterPool,
     previousData: Record<string, any>,
-) {
+): Style {
     let newStyles: Record<string, string> = {};
     if (config.style) {
         for (const propertyConfig of config.style) {

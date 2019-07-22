@@ -10,11 +10,12 @@ define(["consoleLogger", "knockout", "Magento_PageBuilder/js/content-type/appear
     "use strict";
 
     /**
-     * @param {typeof ConverterPool} converterPool
-     * @param {typeof MassConverterPool} massConverterPool
-     * @param {(config: object) => string} converterResolver
+     * @param converterPool
+     * @param massConverterPool
+     * @param converterResolver
+     * @param styleRegistry
      */
-    function ObservableUpdater(converterPool, massConverterPool, converterResolver) {
+    function ObservableUpdater(converterPool, massConverterPool, converterResolver, styleRegistry) {
       this.previousData = {};
       this.bindingGenerators = {
         attributes: _attributes,
@@ -25,6 +26,7 @@ define(["consoleLogger", "knockout", "Magento_PageBuilder/js/content-type/appear
       this.converterPool = converterPool;
       this.massConverterPool = massConverterPool;
       this.converterResolver = converterResolver;
+      this.styleRegistry = styleRegistry;
     }
     /**
      * Update the associated viewModel with the generated data
@@ -48,7 +50,7 @@ define(["consoleLogger", "knockout", "Magento_PageBuilder/js/content-type/appear
       } // Generate Knockout bindings in objects for usage in preview and master templates
 
 
-      var generatedBindings = this.generateKnockoutBindings(appearanceConfiguration.elements, appearanceConfiguration.converters, data);
+      var generatedBindings = this.generateKnockoutBindings(viewModel.contentType, appearanceConfiguration.elements, appearanceConfiguration.converters, data);
 
       var _loop = function _loop(element) {
         if (generatedBindings.hasOwnProperty(element)) {
@@ -84,13 +86,14 @@ define(["consoleLogger", "knockout", "Magento_PageBuilder/js/content-type/appear
      * This function iterates through each element defined in the content types XML and generates a nested object of
      * the associated Knockout binding data. We support 5 bindings attributes, style, css, html & tag.
      *
+     * @param contentType
      * @param elements
      * @param converters
      * @param data
      */
     ;
 
-    _proto.generateKnockoutBindings = function generateKnockoutBindings(elements, converters, data) {
+    _proto.generateKnockoutBindings = function generateKnockoutBindings(contentType, elements, converters, data) {
       var convertedData = this.convertData(data, converters);
       var generatedData = {};
 
@@ -104,10 +107,12 @@ define(["consoleLogger", "knockout", "Magento_PageBuilder/js/content-type/appear
           this.previousData[elementName] = {};
         }
 
+        var elementCssNames = this.generateStylesAndClassNames(contentType, elementName, elementConfig, data);
         generatedData[elementName] = {
           attributes: this.generateKnockoutBinding("attributes", elementName, elementConfig, data),
-          style: this.generateKnockoutBinding("style", elementName, elementConfig, data),
-          css: elementConfig.css.var in convertedData ? this.generateKnockoutBinding("css", elementName, elementConfig, data) : {},
+          style: {},
+          // @deprecated in favour of <style /> block generation
+          css: elementConfig.css.var in convertedData ? Object.assign(this.generateKnockoutBinding("css", elementName, elementConfig, data), elementCssNames) : elementCssNames,
           html: this.generateKnockoutBinding("html", elementName, elementConfig, data)
         };
 
@@ -149,6 +154,27 @@ define(["consoleLogger", "knockout", "Magento_PageBuilder/js/content-type/appear
       }
 
       return data;
+    }
+    /**
+     * Generate all our styles and store them for rendering into <style /> block, return classes assigned to style
+     * blocks
+     *
+     * @param contentType
+     * @param elementName
+     * @param config
+     * @param data
+     */
+    ;
+
+    _proto.generateStylesAndClassNames = function generateStylesAndClassNames(contentType, elementName, config, data) {
+      var _elementCssNames;
+
+      var className = "pb-" + contentType.config.name.charAt(0) + "-" + elementName;
+      var elementCssNames = (_elementCssNames = {}, _elementCssNames[className] = true, _elementCssNames[className + "-" + contentType.id] = true, _elementCssNames); // Also generate styles and store in registry to be placed into style sheet later on
+
+      var styles = this.generateKnockoutBinding("style", elementName, config, data);
+      this.styleRegistry.updateStyles(className + "-" + contentType.id, styles);
+      return elementCssNames;
     }
     /**
      * Generate an individual knockout binding

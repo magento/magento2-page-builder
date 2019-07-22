@@ -5,11 +5,13 @@
 
 import consoleLogger from "consoleLogger";
 import ko from "knockout";
+import Config from "../config";
 import {
     ContentTypeConfigAppearanceElementInterface,
     ContentTypeConfigAppearanceElementsInterface,
     ConverterInterface,
 } from "../content-type-config.types";
+import ContentTypeInterface from "../content-type.types";
 import ConverterPool from "../converter/converter-pool";
 import {DataObject} from "../data-store";
 import MassConverterPool from "../mass-converter/converter-pool";
@@ -21,6 +23,7 @@ import {default as generateCss} from "./observable-updater/css";
 import {default as generateHtml} from "./observable-updater/html";
 import {default as generateStyle} from "./observable-updater/style";
 import Preview from "./preview";
+import StyleRegistry, {Style} from "./style-registry";
 
 type Binding = "attributes" | "css" | "html" | "style";
 
@@ -28,6 +31,7 @@ export default class ObservableUpdater {
     private converterPool: typeof ConverterPool;
     private massConverterPool: typeof MassConverterPool;
     private converterResolver: (config: object) => string;
+    private styleRegistry: StyleRegistry;
     private previousData: GeneratedElementsData = {};
     private bindingGenerators: Record<Binding, BindingGenerator> = {
         attributes: generateAttributes,
@@ -37,18 +41,21 @@ export default class ObservableUpdater {
     };
 
     /**
-     * @param {typeof ConverterPool} converterPool
-     * @param {typeof MassConverterPool} massConverterPool
-     * @param {(config: object) => string} converterResolver
+     * @param converterPool
+     * @param massConverterPool
+     * @param converterResolver
+     * @param styleRegistry
      */
     constructor(
         converterPool: typeof ConverterPool,
         massConverterPool: typeof MassConverterPool,
         converterResolver: (config: object) => string,
+        styleRegistry: StyleRegistry,
     ) {
         this.converterPool = converterPool;
         this.massConverterPool = massConverterPool;
         this.converterResolver = converterResolver;
+        this.styleRegistry = styleRegistry;
     }
 
     /**
@@ -71,6 +78,7 @@ export default class ObservableUpdater {
 
         // Generate Knockout bindings in objects for usage in preview and master templates
         const generatedBindings = this.generateKnockoutBindings(
+            viewModel.contentType,
             appearanceConfiguration.elements,
             appearanceConfiguration.converters,
             data,
@@ -105,11 +113,13 @@ export default class ObservableUpdater {
      * This function iterates through each element defined in the content types XML and generates a nested object of
      * the associated Knockout binding data. We support 5 bindings attributes, style, css, html & tag.
      *
+     * @param contentType
      * @param elements
      * @param converters
      * @param data
      */
     public generateKnockoutBindings(
+        contentType: ContentTypeInterface,
         elements: ContentTypeConfigAppearanceElementsInterface,
         converters: ConverterInterface[],
         data: DataObject,
@@ -122,12 +132,16 @@ export default class ObservableUpdater {
             if (this.previousData[elementName] === undefined) {
                 this.previousData[elementName] = {};
             }
+            const elementCssNames = this.generateStylesAndClassNames(contentType, elementName, elementConfig, data);
 
             generatedData[elementName] = {
                 attributes: this.generateKnockoutBinding("attributes", elementName, elementConfig, data),
-                style: this.generateKnockoutBinding("style", elementName, elementConfig, data),
+                style: {}, // @deprecated in favour of <style /> block generation
                 css: elementConfig.css.var in convertedData ?
-                    this.generateKnockoutBinding("css", elementName, elementConfig, data) : {},
+                    Object.assign(
+                        this.generateKnockoutBinding("css", elementName, elementConfig, data),
+                        elementCssNames,
+                    ) : elementCssNames,
                 html: this.generateKnockoutBinding("html", elementName, elementConfig, data),
             };
 
@@ -154,6 +168,37 @@ export default class ObservableUpdater {
             this.massConverterPool.get(converterConfig.component).toDom(data, converterConfig.config);
         }
         return data;
+    }
+
+    /**
+     * Generate all our styles and store them for rendering into <style /> block, return classes assigned to style
+     * blocks
+     *
+     * @param contentType
+     * @param elementName
+     * @param config
+     * @param data
+     */
+    private generateStylesAndClassNames(
+        contentType: ContentTypeInterface,
+        elementName: string,
+        config: ContentTypeConfigAppearanceElementInterface,
+        data: DataObject,
+    ) {
+        const className = `pb-${contentType.config.name.charAt(0)}-${elementName}`;
+        const elementCssNames = {[className]: true, [`${className}-${contentType.id}`]: true};
+
+        // Also generate styles and store in registry to be placed into style sheet later on
+        const styles = this.generateKnockoutBinding(
+            "style",
+            elementName,
+            config,
+            data,
+        ) as Style;
+
+        this.styleRegistry.updateStyles(`${className}-${contentType.id}`, styles);
+
+        return elementCssNames;
     }
 
     /**

@@ -1,10 +1,11 @@
 /*eslint-disable */
-define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/master-format/filter-html"], function (_jquery, _knockout, _engine, _config, _contentTypeFactory, _directives, _filterHtml) {
+define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type/style-registry", "Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/master-format/filter-html"], function (_jquery, _knockout, _engine, _config, _contentTypeFactory, _styleRegistry, _directives, _filterHtml) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
   var port = null;
+  var styleRegistry;
 
   var portDeferred = _jquery.Deferred();
 
@@ -93,27 +94,29 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "Mag
 
 
   function render(message) {
-    return new Promise(function (resolve, reject) {
-      createRenderTree(message.stageId, message.tree).then(function (rootContainer) {
-        var element = document.createElement("div");
+    if (!styleRegistry) {
+      styleRegistry = new _styleRegistry(message.stageId);
+    }
 
-        _engine.waitForFinishRender().then(function () {
-          _knockout.cleanNode(element);
+    return createRenderTree(message.stageId, message.tree).then(function (rootContainer) {
+      var element = document.createElement("div"); // Assign the observer before executing the render to ensure no race condition occurs
 
-          var filtered = (0, _filterHtml)((0, _jquery)(element));
-          var output = (0, _directives)(filtered.html());
-          resolve(output);
-        });
+      var engineRender = _engine.waitForFinishRender().then(function () {
+        _knockout.cleanNode(element);
 
-        _knockout.applyBindingsToNode(element, {
-          template: {
-            data: rootContainer.content,
-            name: rootContainer.content.template
-          }
-        });
-      }).catch(function (error) {
-        reject(error);
+        var filtered = (0, _filterHtml)((0, _jquery)(element));
+        var output = (0, _directives)(filtered.html());
+        return output;
       });
+
+      _knockout.applyBindingsToNode(element, {
+        template: {
+          data: rootContainer.content,
+          name: rootContainer.content.template
+        }
+      });
+
+      return engineRender;
     });
   }
   /**
@@ -130,28 +133,24 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "Mag
       parent = null;
     }
 
-    return new Promise(function (resolve, reject) {
-      (0, _contentTypeFactory)(_config.getContentTypeConfig(tree.name), parent, stageId, tree.data, parent !== null ? tree.children.length : null).then(function (contentType) {
-        // Ensure  we retain the original tree ID's
-        contentType.id = tree.id;
+    return (0, _contentTypeFactory)(_config.getContentTypeConfig(tree.name), parent, stageId, tree.data, parent !== null ? tree.children.length : null).then(function (contentType) {
+      // Ensure  we retain the original tree ID's
+      contentType.id = tree.id;
 
-        if (tree.children.length > 0) {
-          var childPromises = [];
-          tree.children.forEach(function (child) {
-            childPromises.push(createRenderTree(stageId, child, contentType));
+      if (tree.children.length > 0) {
+        var childPromises = [];
+        tree.children.forEach(function (child) {
+          childPromises.push(createRenderTree(stageId, child, contentType));
+        });
+        return Promise.all(childPromises).then(function (children) {
+          children.forEach(function (child) {
+            contentType.addChild(child);
           });
-          Promise.all(childPromises).then(function (children) {
-            children.forEach(function (child) {
-              contentType.addChild(child);
-            });
-            resolve(contentType);
-          });
-        } else {
-          resolve(contentType);
-        }
-      }).catch(function (error) {
-        reject(error);
-      });
+          return contentType;
+        });
+      }
+
+      return contentType;
     });
   }
 

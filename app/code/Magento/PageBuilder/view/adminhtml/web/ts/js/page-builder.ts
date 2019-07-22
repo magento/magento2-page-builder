@@ -11,6 +11,7 @@ import _ from "underscore";
 import Config from "./config";
 import ContentTypeCollectionInterface from "./content-type-collection";
 import createContentType from "./content-type-factory";
+import StyleRegistry from "./content-type/style-registry";
 import PageBuilderInterface from "./page-builder.types";
 import Panel from "./panel";
 import Stage from "./stage";
@@ -30,6 +31,7 @@ export default class PageBuilder implements PageBuilderInterface {
     public wrapperStyles: KnockoutObservable<{[key: string]: string}> = ko.observable({});
     private previousWrapperStyles: {[key: string]: string} = {};
     private previousPanelHeight: number;
+    private styleRegistry: StyleRegistry;
 
     constructor(config: any, initialValue: string) {
         Config.setConfig(config);
@@ -45,6 +47,7 @@ export default class PageBuilder implements PageBuilderInterface {
             this.id,
         ).then((rootContainer: ContentTypeCollectionInterface) => {
             this.stage = new Stage(this, rootContainer);
+            this.styleRegistry = new StyleRegistry(this.stage.id);
             this.isStageReady(true);
         });
 

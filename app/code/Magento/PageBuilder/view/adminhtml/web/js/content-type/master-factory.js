@@ -14,7 +14,7 @@ define(["Magento_PageBuilder/js/utils/loader", "Magento_PageBuilder/js/content-t
    */
   function create(contentType, config) {
     return new Promise(function (resolve, reject) {
-      (0, _observableUpdaterFactory)(config, _converterResolver).then(function (observableUpdater) {
+      (0, _observableUpdaterFactory)(config, _converterResolver, contentType.stageId).then(function (observableUpdater) {
         (0, _loader)([config.master_component], function (masterComponent) {
           try {
             var master = new masterComponent(contentType, observableUpdater);

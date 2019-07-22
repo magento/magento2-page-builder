@@ -53,6 +53,7 @@ define(["jquery", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/maste
           _this.channel.port1.onmessage = function (event) {
             if (event.isTrusted) {
               if (event.data.type === "render") {
+                console.log(event.data.message);
                 resolve(event.data.message);
               }
 

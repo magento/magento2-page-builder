@@ -11,11 +11,13 @@ import ConfigInterface from "../../config.types";
 import ContentTypeCollectionInterface from "../../content-type-collection.types";
 import createContentType from "../../content-type-factory";
 import ContentTypeInterface from "../../content-type.types";
+import StyleRegistry from "../../content-type/style-registry";
 import decodeAllDataUrlsInString from "../../utils/directives";
 import filterHtml from "../filter-html";
 import { TreeItem } from "./serialize";
 
 let port: MessagePort = null;
+let styleRegistry: StyleRegistry;
 const portDeferred: JQueryDeferred<MessagePort> = $.Deferred();
 const deferredTemplates: {[key: string]: JQueryDeferred<string>} = {};
 
@@ -98,28 +100,29 @@ export function loadTemplate(name: string): Promise<string> {
  *
  * @param message
  */
-function render(message: {stageId: string, tree: TreeItem}) {
-    return new Promise((resolve, reject) => {
-        createRenderTree(message.stageId, message.tree).then((rootContainer: ContentTypeCollectionInterface) => {
-            const element = document.createElement("div");
-            engine.waitForFinishRender().then(() => {
-                ko.cleanNode(element);
-                const filtered: JQuery = filterHtml($(element));
-                const output = decodeAllDataUrlsInString(filtered.html());
-                resolve(output);
-            });
-            ko.applyBindingsToNode(
-                element,
-                {
-                    template: {
-                        data: rootContainer.content,
-                        name: rootContainer.content.template,
-                    },
-                },
-            );
-        }).catch((error) => {
-            reject(error);
+function render(message: {stageId: string, tree: TreeItem}): Promise<string> {
+    if (!styleRegistry) {
+        styleRegistry = new StyleRegistry(message.stageId);
+    }
+    return createRenderTree(message.stageId, message.tree).then((rootContainer: ContentTypeCollectionInterface) => {
+        const element = document.createElement("div");
+        // Assign the observer before executing the render to ensure no race condition occurs
+        const engineRender = engine.waitForFinishRender().then(() => {
+            ko.cleanNode(element);
+            const filtered: JQuery = filterHtml($(element));
+            const output = decodeAllDataUrlsInString(filtered.html());
+            return output;
         });
+        ko.applyBindingsToNode(
+            element,
+            {
+                template: {
+                    data: rootContainer.content,
+                    name: rootContainer.content.template,
+                },
+            },
+        );
+        return engineRender;
     });
 }
 
@@ -135,32 +138,29 @@ function createRenderTree(
     tree: TreeItem,
     parent: ContentTypeCollectionInterface = null,
 ): Promise<ContentTypeCollectionInterface> {
-    return new Promise((resolve, reject) => {
-        createContentType(
-            Config.getContentTypeConfig(tree.name),
-            parent,
-            stageId,
-            tree.data,
-            parent !== null ? tree.children.length : null,
-        ).then((contentType: ContentTypeCollectionInterface) => {
-            // Ensure  we retain the original tree ID's
-            contentType.id = tree.id;
-            if (tree.children.length > 0) {
-                const childPromises: Array<Promise<ContentTypeInterface | ContentTypeCollectionInterface>> = [];
-                tree.children.forEach((child) => {
-                    childPromises.push(createRenderTree(stageId, child, contentType));
+    return createContentType(
+        Config.getContentTypeConfig(tree.name),
+        parent,
+        stageId,
+        tree.data,
+        parent !== null ? tree.children.length : null,
+    ).then((contentType: ContentTypeCollectionInterface) => {
+        // Ensure  we retain the original tree ID's
+        contentType.id = tree.id;
+
+        if (tree.children.length > 0) {
+            const childPromises: Array<Promise<ContentTypeInterface | ContentTypeCollectionInterface>> = [];
+            tree.children.forEach((child) => {
+                childPromises.push(createRenderTree(stageId, child, contentType));
+            });
+            return Promise.all(childPromises).then((children) => {
+                children.forEach((child) => {
+                    contentType.addChild(child);
                 });
-                Promise.all(childPromises).then((children) => {
-                    children.forEach((child) => {
-                        contentType.addChild(child);
-                    });
-                    resolve(contentType);
-                });
-            } else {
-                resolve(contentType);
-            }
-        }).catch((error) => {
-            reject(error);
-        });
+                return contentType;
+            });
+        }
+
+        return contentType;
     });
 }

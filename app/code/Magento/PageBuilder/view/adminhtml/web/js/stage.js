@@ -16,8 +16,8 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
      */
 
     /**
-     * @param {PageBuilderInterface} pageBuilder
-     * @param {ContentTypeCollectionInterface} rootContainer
+     * @param pageBuilder
+     * @param rootContainer
      */
     function Stage(pageBuilder, rootContainer) {
       var _this = this;
