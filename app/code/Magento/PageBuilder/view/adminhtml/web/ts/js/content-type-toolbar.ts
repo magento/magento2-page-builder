@@ -11,6 +11,7 @@ import Preview from "./content-type/preview";
 import {PreviewCollectionInterface} from "./content-type/preview-collection.types";
 import {PreviewInterface} from "./content-type/preview.types";
 import checkStageFullScreen from "./utils/check-stage-full-screen";
+import deferred, {DeferredInterface} from "./utils/promise-deferred";
 
 /**
  * @api
@@ -18,7 +19,9 @@ import checkStageFullScreen from "./utils/check-stage-full-screen";
 export default class Toolbar {
     public options: KnockoutObservableArray<OptionInterface> = ko.observableArray([]);
     public observer: MutationObserver;
+    public afterRenderDeferred: DeferredInterface = deferred();
     private preview: Preview;
+    private element: Element;
 
     /**
      * Toolbar Options constructor
@@ -38,6 +41,16 @@ export default class Toolbar {
      */
     get template(): string {
          return "Magento_PageBuilder/content-type-toolbar";
+    }
+
+    /**
+     * On render init the toolbar
+     *
+     * @param {Element} element
+     */
+    public afterRender(element: Element): void {
+        this.element = element;
+        this.afterRenderDeferred.resolve(element);
     }
 
     /**
