@@ -33,7 +33,15 @@
     </dataSource>
     <fieldset name="appearance_fieldset" sortOrder="10" component="Magento_PageBuilder/js/form/element/dependent-fieldset">
         <settings>
-            <label/>
+            <label translate="true">Appearance</label>
+            <additionalClasses>
+                <class name="admin__fieldset-visual-select-large">true</class>
+            </additionalClasses>
+            <collapsible>false</collapsible>
+            <opened>true</opened>
+            <imports>
+                <link name="hideLabel">${$.name}.appearance:options</link>
+            </imports>
         </settings>
         <field name="appearance" formElement="select" sortOrder="10" component="Magento_PageBuilder/js/form/element/dependent-visual-select">
             <argument name="data" xsi:type="array">
