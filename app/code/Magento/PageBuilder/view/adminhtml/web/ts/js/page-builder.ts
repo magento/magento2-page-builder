@@ -16,6 +16,7 @@ import PageBuilderInterface from "./page-builder.types";
 import Panel from "./panel";
 import Stage from "./stage";
 import {StageToggleFullScreenParamsInterface} from "./stage-events.types";
+import PreviewStyles from "./content-type/preview-styles";
 
 export default class PageBuilder implements PageBuilderInterface {
     public template: string = "Magento_PageBuilder/page-builder";
@@ -29,6 +30,7 @@ export default class PageBuilder implements PageBuilderInterface {
     public isFullScreen: KnockoutObservable<boolean> = ko.observable(false);
     public loading: KnockoutObservable<boolean> = ko.observable(true);
     public wrapperStyles: KnockoutObservable<{[key: string]: string}> = ko.observable({});
+    public previewStyles: PreviewStyles;
     private previousWrapperStyles: {[key: string]: string} = {};
     private previousPanelHeight: number;
     private styleRegistry: StyleRegistry;
@@ -48,6 +50,7 @@ export default class PageBuilder implements PageBuilderInterface {
         ).then((rootContainer: ContentTypeCollectionInterface) => {
             this.stage = new Stage(this, rootContainer);
             this.styleRegistry = new StyleRegistry(this.stage.id);
+            this.previewStyles = new PreviewStyles(this.stage.id);
             this.isStageReady(true);
         });
 

@@ -1,5 +1,5 @@
 /*eslint-disable */
-define([], function () {
+define(["Magento_PageBuilder/js/events"], function (_events) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -28,6 +28,12 @@ define([], function () {
 
     _proto.updateStyles = function updateStyles(className, styles) {
       this.styles[className] = styles;
+
+      _events.trigger("styles:update", {
+        className: className,
+        styles: styles,
+        stageId: this.stageId
+      });
     }
     /**
      * Retrieve all styles

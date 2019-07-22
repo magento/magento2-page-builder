@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "Magento_PageBuilder/js/events", "mageUtils", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type/style-registry", "Magento_PageBuilder/js/panel", "Magento_PageBuilder/js/stage"], function (_jquery, _knockout, _events, _mageUtils, _underscore, _config, _contentTypeFactory, _styleRegistry, _panel, _stage) {
+define(["jquery", "knockout", "Magento_PageBuilder/js/events", "mageUtils", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type/style-registry", "Magento_PageBuilder/js/panel", "Magento_PageBuilder/js/stage", "Magento_PageBuilder/js/content-type/preview-styles"], function (_jquery, _knockout, _events, _mageUtils, _underscore, _config, _contentTypeFactory, _styleRegistry, _panel, _stage, _previewStyles) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -32,6 +32,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "mageUtils", "und
       (0, _contentTypeFactory)(_config.getContentTypeConfig(_stage.rootContainerName), null, this.id).then(function (rootContainer) {
         _this.stage = new _stage(_this, rootContainer);
         _this.styleRegistry = new _styleRegistry(_this.stage.id);
+        _this.previewStyles = new _previewStyles(_this.stage.id);
 
         _this.isStageReady(true);
       });
