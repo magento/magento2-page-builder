@@ -4,6 +4,7 @@
  */
 
 import $ from "jquery";
+import events from "Magento_PageBuilder/js/events";
 import _ from "underscore";
 import ContentTypeConfigInterface from "../../content-type-config.types";
 import HideShowOption from "../../content-type-menu/hide-show-option";
@@ -12,6 +13,7 @@ import Toolbar, {ContentTypeToolbarPreviewInterface} from "../../content-type-to
 import {OptionInterface} from "../../content-type-toolbar.types";
 import ContentTypeInterface from "../../content-type.types";
 import deferred, {DeferredInterface} from "../../utils/promise-deferred";
+import {ContentTypeDroppedCreateEventParamsInterface} from "../content-type-events.types";
 import ObservableUpdater from "../observable-updater";
 import BasePreview from "../preview";
 
@@ -38,15 +40,6 @@ export default class Preview extends BasePreview implements ContentTypeToolbarPr
             this,
             this.getToolbarOptions(),
         );
-
-        Promise.all([
-            this.afterRenderDeferred.promise,
-            this.toolbar.afterRenderDeferred.promise,
-        ]).then(([element]) => {
-            _.defer(() => {
-                $(element).focus();
-            });
-        });
     }
 
     /**
@@ -77,6 +70,24 @@ export default class Preview extends BasePreview implements ContentTypeToolbarPr
     public afterRender(element: Element): void {
         this.element = element;
         this.afterRenderDeferred.resolve(element);
+    }
+
+    public bindEvents() {
+        super.bindEvents();
+
+        // When a heading is dropped for the first time show heading toolbar
+        events.on("heading:dropAfter", (args: ContentTypeDroppedCreateEventParamsInterface) => {
+            if (args.id === this.contentType.id) {
+                Promise.all([
+                    this.afterRenderDeferred.promise,
+                    this.toolbar.afterRenderDeferred.promise,
+                ]).then(([element]) => {
+                    _.defer(() => {
+                        $(element).focus();
+                    });
+                });
+            }
+        });
     }
 
     /**

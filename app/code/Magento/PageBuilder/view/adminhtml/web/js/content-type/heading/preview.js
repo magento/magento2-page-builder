@@ -4,7 +4,7 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
-define(["jquery", "underscore", "Magento_PageBuilder/js/content-type-menu/hide-show-option", "Magento_PageBuilder/js/content-type-toolbar", "Magento_PageBuilder/js/utils/promise-deferred", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _underscore, _hideShowOption, _contentTypeToolbar, _promiseDeferred, _preview) {
+define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/content-type-menu/hide-show-option", "Magento_PageBuilder/js/content-type-toolbar", "Magento_PageBuilder/js/utils/promise-deferred", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _events, _underscore, _hideShowOption, _contentTypeToolbar, _promiseDeferred, _preview) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -31,13 +31,6 @@ define(["jquery", "underscore", "Magento_PageBuilder/js/content-type-menu/hide-s
       _this = _preview2.call(this, contentType, config, observableUpdater) || this;
       _this.afterRenderDeferred = (0, _promiseDeferred)();
       _this.toolbar = new _contentTypeToolbar(_assertThisInitialized(_assertThisInitialized(_this)), _this.getToolbarOptions());
-      Promise.all([_this.afterRenderDeferred.promise, _this.toolbar.afterRenderDeferred.promise]).then(function (_ref) {
-        var element = _ref[0];
-
-        _underscore.defer(function () {
-          (0, _jquery)(element).focus();
-        });
-      });
       return _this;
     }
     /**
@@ -72,6 +65,25 @@ define(["jquery", "underscore", "Magento_PageBuilder/js/content-type-menu/hide-s
     _proto.afterRender = function afterRender(element) {
       this.element = element;
       this.afterRenderDeferred.resolve(element);
+    };
+
+    _proto.bindEvents = function bindEvents() {
+      var _this2 = this;
+
+      _preview2.prototype.bindEvents.call(this); // When a heading is dropped for the first time show heading toolbar
+
+
+      _events.on("heading:dropAfter", function (args) {
+        if (args.id === _this2.contentType.id) {
+          Promise.all([_this2.afterRenderDeferred.promise, _this2.toolbar.afterRenderDeferred.promise]).then(function (_ref) {
+            var element = _ref[0];
+
+            _underscore.defer(function () {
+              (0, _jquery)(element).focus();
+            });
+          });
+        }
+      });
     }
     /**
      * Build and return the tool bar options for heading
