@@ -101,7 +101,6 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
     _proto.onFocus = function onFocus() {
       var _this = this;
 
-      this.clearSelection();
       this.getFixedToolbarContainer().addClass("pagebuilder-toolbar-active");
 
       _events2.trigger("stage:interactionStart"); // Wait for everything else to finish
@@ -130,7 +129,6 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
     ;
 
     _proto.onBlur = function onBlur() {
-      this.clearSelection();
       this.getFixedToolbarContainer().removeClass("pagebuilder-toolbar-active").find(".mce-tinymce-inline").css("transform", "");
 
       _events2.trigger("stage:interactionStop");
@@ -150,20 +148,6 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
 
     _proto.setContentFromDataStoreToWysiwyg = function setContentFromDataStoreToWysiwyg() {
       this.getAdapter().setContent(this.dataStore.get(this.fieldName));
-    }
-    /**
-     * Clear any selections in the editable area
-     */
-    ;
-
-    _proto.clearSelection = function clearSelection() {
-      if (window.getSelection) {
-        if (window.getSelection().empty) {
-          window.getSelection().empty();
-        } else if (window.getSelection().removeAllRanges) {
-          window.getSelection().removeAllRanges();
-        }
-      }
     }
     /**
      * Adjust padding on stage if in fullscreen mode to accommodate inline wysiwyg toolbar overflowing fixed viewport

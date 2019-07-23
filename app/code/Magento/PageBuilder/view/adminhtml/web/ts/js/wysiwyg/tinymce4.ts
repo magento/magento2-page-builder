@@ -127,8 +127,6 @@ export default class Wysiwyg implements WysiwygInterface {
      * Called for the onFocus event
      */
     private onFocus() {
-        this.clearSelection();
-
         this.getFixedToolbarContainer()
             .addClass("pagebuilder-toolbar-active");
 
@@ -157,8 +155,6 @@ export default class Wysiwyg implements WysiwygInterface {
      * Called for the onBlur events
      */
     private onBlur() {
-        this.clearSelection();
-
         this.getFixedToolbarContainer()
             .removeClass("pagebuilder-toolbar-active")
             .find(".mce-tinymce-inline")
@@ -184,19 +180,6 @@ export default class Wysiwyg implements WysiwygInterface {
         this.getAdapter().setContent(
             this.dataStore.get(this.fieldName) as string,
         );
-    }
-
-    /**
-     * Clear any selections in the editable area
-     */
-    private clearSelection(): void {
-        if (window.getSelection) {
-            if (window.getSelection().empty) {
-                window.getSelection().empty();
-            } else if (window.getSelection().removeAllRanges) {
-                window.getSelection().removeAllRanges();
-            }
-        }
     }
 
     /**
