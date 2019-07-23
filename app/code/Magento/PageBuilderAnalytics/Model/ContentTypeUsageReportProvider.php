@@ -99,12 +99,14 @@ class ContentTypeUsageReportProvider
                     $query->getSelect()->limit($this->batchSize, $batch * $this->batchSize)
                 );
                 foreach ($batchQuery->fetchAll() as $row) {
-                    foreach ($contentTypes as $type) {
-                        // Count the amount of content types within the content
-                        $typeCounts[$type['name']] += substr_count(
-                           (string)$row['content'],
-                            'data-content-type="' . $type['name'] . '"'
-                        );
+                    if (is_string($row['content'])) {
+                        foreach ($contentTypes as $type) {
+                            // Count the amount of content types within the content
+                            $typeCounts[$type['name']] += substr_count(
+                               $row['content'],
+                                'data-content-type="' . $type['name'] . '"'
+                            );
+                        }
                     }
                 }
             }
