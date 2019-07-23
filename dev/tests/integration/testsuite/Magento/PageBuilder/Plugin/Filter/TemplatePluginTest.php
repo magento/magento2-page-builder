@@ -47,8 +47,8 @@ class TemplatePluginTest extends \PHPUnit\Framework\TestCase
     public function testFiltering(string $preFiltered, string $postFiltered, string $preFilteredBasename)
     {
         $this->assertEquals(
-            $postFiltered,
-            $this->templateFilter->filter($preFiltered),
+            $this->formatHtml($postFiltered),
+            $this->formatHtml($this->templateFilter->filter($preFiltered)),
             "Failed asserting that two strings are equal after filtering $preFilteredBasename"
         );
     }
@@ -78,5 +78,16 @@ class TemplatePluginTest extends \PHPUnit\Framework\TestCase
         }
 
         return $dataProviderArgs;
+    }
+
+    /**
+     * Strip whitespace from the HTML to conduct a fairer comparison
+     *
+     * @param string $html
+     * @return string|string[]|null
+     */
+    private function formatHtml(string $html): string
+    {
+        return preg_replace('/(?<=>)\s+|\s+(?=<)/m', '', $html);
     }
 }
