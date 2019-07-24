@@ -34,6 +34,8 @@
         <element name="gridSizeTooltipWithMax" type="button" selector="(//div[contains(@class, 'pagebuilder-column-group')])[{{arg1}}]/descendant::div[contains(@class, 'grid-panel-tooltip')][1]//span//p//span[text()='{{arg2}}']" parameterized="true"/>
         <element name="gridSizeError" type="button" selector="(//div[contains(@class, 'pagebuilder-column-group')])[{{arg1}}]/descendant::div[contains(@class, 'admin__field-error') and contains(text(), '{{arg2}}')]" parameterized="true"/>
         <element name="appearance" type="text" selector="(//div[@data-content-type='column'])[{{arg1}}][@data-appearance='{{arg2}}']" parameterized="true"/>
+        <element name="minHeight" type="text" selector="(//div[@data-content-type='column'])[{{arg1}}][contains(@style,'min-height: {{arg2}}px;')]" parameterized="true"/>
+        <element name="verticalAlignContainer" type="text" selector="(//div[@data-content-type='column'])[{{arg1}}]/div[contains(@class,'column-container')][contains(@style,'justify-content: {{arg2}};')]" parameterized="true"/>
         <!-- Background Configuration -->
         <element name="backgroundPosition" type="button" selector="(//div[contains(@class,'pagebuilder-column') and contains(@class,'pagebuilder-content-type')])[{{arg1}}][contains(@style,'background-position: {{arg2}};')]" parameterized="true"/>
         <element name="backgroundSize" type="button" selector="(//div[contains(@class,'pagebuilder-column') and contains(@class,'pagebuilder-content-type')])[{{arg1}}][contains(@style,'background-size: {{arg2}};')]" parameterized="true"/>
@@ -43,9 +45,6 @@
         <element name="noBackgroundColor" type="button" selector="(//div[contains(@class,'pagebuilder-column') and contains(@class,'pagebuilder-content-type')])[{{arg1}}][not(contains(@style,'background-color:'))]" parameterized="true"/>
         <element name="backgroundImage" type="button" selector="(//div[contains(@class,'pagebuilder-column') and contains(@class,'pagebuilder-content-type')])[{{arg1}}][contains(@style,'background-image: url(') and contains(@style,'{{arg2}}')]" parameterized="true"/>
         <element name="noBackgroundImage" type="button" selector="(//div[contains(@class,'pagebuilder-column') and contains(@class,'pagebuilder-content-type')])[{{arg1}}][not(contains(@style,'background-image:'))]" parameterized="true"/>
-        <!-- Layout Configuration -->
-        <element name="minHeight" type="text" selector="(//div[@data-content-type='column'])[{{arg1}}][contains(@style,'min-height: {{arg2}}px;')]" parameterized="true"/>
-        <element name="verticalAlignContainer" type="text" selector="(//div[@data-content-type='column'])[{{arg1}}]/div[contains(@class,'column-container')][contains(@style,'justify-content: {{arg2}};')]" parameterized="true"/>
         <!-- Advanced Configuration -->
         <element name="alignment" type="button" selector="((//div[contains(@class, 'pagebuilder-column-group')])[{{arg1}}]/descendant::div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-column')])[{{arg2}}][contains(@style, 'text-align: {{arg3}};')]" parameterized="true"/>
         <element name="border" type="button" selector="((//div[contains(@class, 'pagebuilder-column-group')])[{{arg1}}]/descendant::div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-column')])[{{arg2}}][contains(@style, 'border-style: {{arg3}};')]" parameterized="true"/>
@@ -100,6 +99,8 @@
         <element name="columnPadding" type="button" selector="[data-content-type='column']:first-child[style*='padding: 5px;']"/>
         <element name="columnClass" type="button" selector="[data-content-type='column']:first-child.first-class.second-class.third-class"/>
         <element name="appearance" type="text" selector="(//div[@data-content-type='column'])[{{arg1}}][@data-appearance='{{arg2}}']" parameterized="true"/>
+        <element name="minHeight" type="text" selector="(//div[@data-content-type='column'])[{{arg1}}][contains(@style,'min-height: {{arg2}}px;')]" parameterized="true"/>
+        <element name="verticalAlignContainer" type="text" selector="(//div[@data-content-type='column'])[{{arg1}}][contains(@style,'justify-content: {{arg2}};')]" parameterized="true"/>
         <!-- Background Configuration -->
         <element name="backgroundPosition" type="button" selector="(//div[@data-content-type='column'])[{{arg1}}][contains(@style,'background-position: {{arg2}};')]" parameterized="true"/>
         <element name="backgroundSize" type="button" selector="(//div[@data-content-type='column'])[{{arg1}}][contains(@style,'background-size: {{arg2}};')]" parameterized="true"/>
@@ -110,8 +111,5 @@
         <element name="backgroundImage" type="button" selector="(//div[@data-content-type='column'])[{{arg1}}][contains(@style,'background-image: url(') and contains(@style,'{{arg2}}')]" parameterized="true"/>
         <element name="noBackgroundImage" type="button" selector="(//div[@data-content-type='column'])[{{arg1}}][not(contains(@style,'background-image:'))]" parameterized="true"/>
         <element name="backgroundMobileImage" type="button" selector="(//div[@data-content-type='column'])[{{arg1}}][contains(@style,'background-image: url(') and contains(@style,'{{arg2}}')]" parameterized="true"/>
-        <!-- Layout Configuration -->
-        <element name="minHeight" type="text" selector="(//div[@data-content-type='column'])[{{arg1}}][contains(@style,'min-height: {{arg2}}px;')]" parameterized="true"/>
-        <element name="verticalAlignContainer" type="text" selector="(//div[@data-content-type='column'])[{{arg1}}][contains(@style,'justify-content: {{arg2}};')]" parameterized="true"/>
     </section>
 </sections>

@@ -38,7 +38,7 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelField" stepKey="enterMinHeightProperty">
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty">
             <argument name="property" value="PageBuilderMinHeightProperty_500"/>
         </actionGroup>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterVerticalAlignmentBottomProperty">
@@ -360,7 +360,7 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterParallaxBackgroundSpeed">
             <argument name="property" value="PageBuilderRowParallaxSpeed_2"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelField" stepKey="enterMinHeightProperty">
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty">
             <argument name="property" value="PageBuilderMinHeightProperty_500"/>
         </actionGroup>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterVerticalAlignmentCenterProperty">
@@ -1103,7 +1103,7 @@
         <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="setBackgroundRepeatColumn1">
             <argument name="property" value="PageBuilderBackgroundRepeat_Enabled"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelField" stepKey="setMinHeightColumn1">
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="setMinHeightColumn1">
             <argument name="property" value="PageBuilderMinHeightProperty_200"/>
         </actionGroup>
         <actionGroup ref="chooseVisualSelectOption" stepKey="setVerticalAlignmentColumn1">
@@ -1119,7 +1119,7 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="setBackgroundColorColumn2">
             <argument name="property" value="PageBuilderBackgroundColor_RGB_Blue"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelField" stepKey="setMinHeightColumn2">
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="setMinHeightColumn2">
             <argument name="property" value="PageBuilderMinHeightProperty_500"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsColumn2"/>
@@ -1683,10 +1683,10 @@
             <argument name="property" value="PageBuilderBackgroundRepeat_Enabled"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="setMinHeightTab1">
-            <argument name="property" value="PageBuilderMinHeightProperty_200"/>
+            <argument name="property" value="PageBuilderTabMinimumHeight200Property"/>
         </actionGroup>
         <actionGroup ref="chooseVisualSelectOption" stepKey="setVerticalAlignmentTab1">
-            <argument name="property" value="PageBuilderVerticalAlignmentPropertyCenter"/>
+            <argument name="property" value="PageBuilderTabVerticalAlignmentPropertyCenter"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsTab1"/>
         <!-- Add Divider To Tab 1 -->
@@ -1709,7 +1709,7 @@
             <argument name="property" value="PageBuilderBackgroundColor_RGB_Blue"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="setMinHeightTab2">
-            <argument name="property" value="PageBuilderMinHeightProperty_Empty"/>
+            <argument name="property" value="PageBuilderTabMinimumHeightEmptyProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsTab2"/>
         <actionGroup ref="saveCMSBlock" stepKey="saveCMSBlock"/>
@@ -1751,12 +1751,12 @@
         <actionGroup ref="validateLayoutStylesWithAllUpdated" stepKey="validateTab1LayoutCMSBlockStage">
             <argument name="page" value="TabOnStage"/>
             <argument name="index" value="1"/>
-            <argument name="minHeight" value="PageBuilderMinHeightProperty_200"/>
-            <argument name="verticalAlignContainer" value="PageBuilderVerticalAlignmentPropertyCenter"/>
+            <argument name="minHeight" value="PageBuilderTabMinimumHeight200Property"/>
+            <argument name="verticalAlignContainer" value="PageBuilderTabVerticalAlignmentPropertyCenter"/>
         </actionGroup>
         <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateTab1MinHeightCMSBlockStage">
             <argument name="content" value="{{TabOnStage.tabContentCSS}}"/>
-            <argument name="height" value="PageBuilderMinHeightProperty_200"/>
+            <argument name="height" value="PageBuilderTabMinimumHeight200Property"/>
             <argument name="padding" value="PageBuilderPaddingProperty40"/>
             <argument name="border" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
             <argument name="index" value="1"/>
@@ -1798,7 +1798,7 @@
         <seeElement selector="{{TabOnStorefront.backgroundColor('2', PageBuilderBackgroundColor_RGB_Blue.rgb)}}" stepKey="seeTab2BackgroundColorCMSPageStage"/>
         <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateTab2MinHeightCMSPageStage">
             <argument name="content" value="{{TabOnStorefront.tabContentCSS}}"/>
-            <argument name="height" value="PageBuilderMinHeightProperty_0"/>
+            <argument name="height" value="PageBuilderTabMinHeight0Property"/>
             <argument name="padding" value="PageBuilderPaddingProperty40"/>
             <argument name="index" value="2"/>
         </actionGroup>
@@ -1849,12 +1849,12 @@
         <actionGroup ref="validateLayoutStylesWithAllUpdated" stepKey="validateTab1LayoutCMSPageStorefront">
             <argument name="page" value="TabOnStorefront"/>
             <argument name="index" value="1"/>
-            <argument name="minHeight" value="PageBuilderMinHeightProperty_200"/>
-            <argument name="verticalAlignContainer" value="PageBuilderVerticalAlignmentPropertyCenter"/>
+            <argument name="minHeight" value="PageBuilderTabMinimumHeight200Property"/>
+            <argument name="verticalAlignContainer" value="PageBuilderTabVerticalAlignmentPropertyCenter"/>
         </actionGroup>
         <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateTab1MinHeightCMSPageStorefront">
             <argument name="content" value="{{TabOnStorefront.tabContentCSS}}"/>
-            <argument name="height" value="PageBuilderMinHeightProperty_200"/>
+            <argument name="height" value="PageBuilderTabMinimumHeight200Property"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="verifyVerticalAlignmentCenterInBlock" stepKey="verifyVerticalAlignmentCenterCMSPageStorefront">
@@ -1887,7 +1887,7 @@
         </actionGroup>
         <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateRowHeightCMSPageStorefrontMobile">
             <argument name="content" value="{{TabOnStorefront.baseCSS}}"/>
-            <argument name="height" value="PageBuilderMinHeightProperty_200"/>
+            <argument name="height" value="PageBuilderTabMinimumHeight200Property"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="validateDividerWidthPercentage" stepKey="validateDividerWidthCMSPageStorefrontMobile">
@@ -1952,12 +1952,12 @@
         <actionGroup ref="validateLayoutStylesWithAllUpdated" stepKey="validateTab1LayoutCMSPageStage2">
             <argument name="page" value="TabOnStorefront"/>
             <argument name="index" value="1"/>
-            <argument name="minHeight" value="PageBuilderMinHeightProperty_200"/>
-            <argument name="verticalAlignContainer" value="PageBuilderVerticalAlignmentPropertyCenter"/>
+            <argument name="minHeight" value="PageBuilderTabMinimumHeight200Property"/>
+            <argument name="verticalAlignContainer" value="PageBuilderTabVerticalAlignmentPropertyCenter"/>
         </actionGroup>
         <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateTab1MinHeightCMSPageStage2">
             <argument name="content" value="{{TabOnStorefront.tabContentCSS}}"/>
-            <argument name="height" value="PageBuilderMinHeightProperty_200"/>
+            <argument name="height" value="PageBuilderTabMinimumHeight200Property"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="verifyVerticalAlignmentCenterInBlock" stepKey="verifyVerticalAlignmentCenterCMSPageStage2">
