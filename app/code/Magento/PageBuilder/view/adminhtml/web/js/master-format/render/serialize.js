@@ -45,7 +45,7 @@ define(["Magento_PageBuilder/js/content-type-collection"], function (_contentTyp
 
 
   function getData(contentType) {
-    return contentType.dataStore.getState() || {};
+    return JSON.parse(JSON.stringify(contentType.dataStore.getState())) || {};
   }
 
   return {

@@ -53,5 +53,5 @@ export function getSerializedTree(contentType: ContentTypeInterface) {
  * @param contentType
  */
 function getData(contentType: ContentTypeInterface): GeneratedElementsData {
-    return contentType.dataStore.getState() || {};
+    return JSON.parse(JSON.stringify(contentType.dataStore.getState())) || {};
 }
