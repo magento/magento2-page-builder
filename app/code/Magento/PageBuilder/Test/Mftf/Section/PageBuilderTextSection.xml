@@ -100,6 +100,6 @@
         <element name="noMargins" type="text" selector="(//div[@data-content-type='text'])[{{arg1}}][not(contains(@style,'margin:'))]" parameterized="true"/>
         <element name="padding" type="text" selector="(//div[@data-content-type='text'])[{{arg1}}][contains(@style,'padding: {{arg2}}px;')]" parameterized="true"/>
         <element name="noPadding" type="text" selector="(//div[@data-content-type='text'])[{{arg1}}][not(contains(@style,'padding:'))]" parameterized="true"/>
-        <element name="emptyText" type="text" selector="//div[@data-content-type='text']/p[not(text())]"/>
+        <element name="emptyText" type="text" selector="//div[@data-content-type='text' and not(text())]"/>
     </section>
 </sections>
