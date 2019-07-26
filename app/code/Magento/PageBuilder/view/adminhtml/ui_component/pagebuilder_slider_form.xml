@@ -40,7 +40,6 @@
             <collapsible>false</collapsible>
             <opened>true</opened>
             <imports>
-                <link name="hideFieldset">${$.name}.appearance:options</link>
                 <link name="hideLabel">${$.name}.appearance:options</link>
             </imports>
         </settings>
@@ -69,10 +68,27 @@
                 </select>
             </formElements>
         </field>
+        <field name="min_height" sortOrder="20" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="number">300</item>
+                </item>
+            </argument>
+            <settings>
+                <label translate="true">Minimum Height</label>
+                <additionalClasses>
+                    <class name="admin__field-small">true</class>
+                </additionalClasses>
+                <addAfter translate="true">px</addAfter>
+                <validation>
+                    <rule name="validate-number" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+        </field>
     </fieldset>
     <fieldset name="settings" sortOrder="20">
         <settings>
-            <label translate="true">Settings</label>
+            <label translate="true">Slider Settings</label>
             <collapsible>true</collapsible>
             <opened>true</opened>
         </settings>
@@ -205,23 +221,6 @@
                     </settings>
                 </checkbox>
             </formElements>
-        </field>
-        <field name="min_height" sortOrder="60" formElement="input">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="default" xsi:type="number">300</item>
-                </item>
-            </argument>
-            <settings>
-                <label translate="true">Minimum Height</label>
-                <additionalClasses>
-                    <class name="admin__field-small">true</class>
-                </additionalClasses>
-                <addAfter translate="true">px</addAfter>
-                <validation>
-                    <rule name="validate-number" xsi:type="boolean">true</rule>
-                </validation>
-            </settings>
         </field>
     </fieldset>
 </form>
