@@ -2901,13 +2901,20 @@
         <pressKey selector="{{TextOnStage.tinymce('1')}}" userInput="{{PageBuilderVariableWidgetText.value}}" stepKey="fillWysiwygField"/>
         <waitForElementVisible selector="{{TextOnStage.text('1', PageBuilderVariableWidgetText.value)}}" stepKey="waitForTextOnStage"/>
         <seeElement selector="{{TextOnStage.text('1', PageBuilderVariableWidgetText.value)}}" stepKey="seeTextOnStage" />
-        <pressKey selector="{{TextOnStage.tinymce('1')}}" parameterArray="[\Facebook\WebDriver\WebDriverKeys::COMMAND, 'a']" stepKey="selectAllText"/>
+        <executeJS function="document.execCommand('selectall', null, false);" stepKey="selectAllText"/>
         <waitForPageLoad stepKey="waitForTextSelect"/>
-        <pressKey selector="{{TextOnStage.tinymce('1')}}" parameterArray="[\Facebook\WebDriver\WebDriverKeys::COMMAND, 'c']" stepKey="copyAllText"/>
+        <pressKey selector="{{TextOnStage.tinymce('1')}}" parameterArray="[\Facebook\WebDriver\WebDriverKeys::CONTROL, \Facebook\WebDriver\WebDriverKeys::INSERT]" stepKey="copyAllText"/>
         <waitForPageLoad stepKey="waitForTextCopy"/>
-        <pressKey selector="{{TextOnStage.tinymce('1')}}" parameterArray="[\Facebook\WebDriver\WebDriverKeys::COMMAND, 'v']" stepKey="pasteAllText"/>
+        <pressKey selector="{{TextOnStage.tinymce('1')}}" parameterArray="[\Facebook\WebDriver\WebDriverKeys::ARROW_RIGHT, \Facebook\WebDriver\WebDriverKeys::ENTER]" stepKey="unSelectTextAndNewLine"/>
+        <waitForPageLoad stepKey="waitForUnselect"/>
+        <pressKey selector="{{TextOnStage.tinymce('1')}}" parameterArray="[\Facebook\WebDriver\WebDriverKeys::SHIFT, \Facebook\WebDriver\WebDriverKeys::INSERT]" stepKey="pasteAllText"/>
         <waitForPageLoad stepKey="waitForTextPaste"/>
-        <seeNumberOfElements selector="{{TextOnStage.textParagraph('1')}}" userInput="1" stepKey="seeOnlyOneParagraph"/>
+        <seeNumberOfElements selector="{{TextOnStage.text('1', PageBuilderVariableWidgetText.value)}}" userInput="2" stepKey="seeTwoParagraphs"/>
+        <executeJS function="document.execCommand('selectall', null, false);" stepKey="selectAllText2"/>
+        <waitForPageLoad stepKey="waitForTextSelect2"/>
+        <pressKey selector="{{TextOnStage.tinymce('1')}}" parameterArray="[\Facebook\WebDriver\WebDriverKeys::SHIFT, \Facebook\WebDriver\WebDriverKeys::INSERT]" stepKey="pasteAllText2"/>
+        <waitForPageLoad stepKey="waitForTextPaste2"/>
+        <seeNumberOfElements selector="{{TextOnStage.text('1', PageBuilderVariableWidgetText.value)}}" userInput="1" stepKey="seeOnlyOneParagraph"/>
     </test>
     <test name="TextAddLinkToTextInlineWYSIWYG">
         <annotations>
