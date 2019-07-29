@@ -4,6 +4,7 @@
  */
 
 import {DataObject} from "../../data-store";
+import {removeQuotesInMediaDirectives} from "../../utils/directives";
 import {get} from "../../utils/object";
 import ConverterInterface from "../converter-interface";
 
@@ -31,6 +32,6 @@ export default class Decode implements ConverterInterface {
      * @returns {string}
      */
     public toDom(name: string, data: DataObject): string {
-        return get(data, name);
+        return removeQuotesInMediaDirectives(get(data, name));
     }
 }
