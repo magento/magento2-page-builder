@@ -135,7 +135,10 @@ class Config
             'content_types' => $this->getContentTypes(),
             'stage_config' => $this->data,
             'media_url' => $this->urlBuilder->getBaseUrl(['_type' => UrlInterface::URL_TYPE_MEDIA]),
-            'preview_url' => $this->frontendUrlBuilder->getUrl('pagebuilder/contenttype/preview'),
+            'preview_url' => $this->frontendUrlBuilder
+                ->addSessionParam()
+                ->getUrl('pagebuilder/contenttype/preview'),
+            'render_url' => $this->urlBuilder->getUrl('pagebuilder/stage/render'),
             'column_grid_default' => $this->scopeConfig->getValue(self::XML_PATH_COLUMN_GRID_DEFAULT),
             'column_grid_max' => $this->scopeConfig->getValue(self::XML_PATH_COLUMN_GRID_MAX),
             'can_use_inline_editing_on_stage' => $this->isWysiwygProvisionedForEditingOnStage(),

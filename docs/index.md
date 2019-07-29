@@ -1,83 +1,28 @@
-# Page Builder pre-release access
+# What is Page Builder?
 
-Pre-release access to Page Builder is opened to all Magento Partners with *no support* from Magento.
-Use this access to:
+Page Builder is a Magento extension for creating content by dragging-and-dropping pre-built controls. 
+We call these controls "content types." The available content types are shown in Page Builder's menu:
 
-- Explore extension points to build custom modules and integrations for 3rd party services, such as Facebook and Instagram.
-- Try out customization options and extend its functionality beyond its default features.
-- Preview to prepare a migration plan from BlueFoot 1.0 to Page Builder.
+![Page Builder content types](images/pagebuilder-content-types.png){:width="615px" height="auto"}
 
-Should you find an issue in Page Builder functionality, please report it on GitHub.
+These content types provide several key features, including:
 
-## Installation
+- **Drag-and-drop** functionality for content creation.
+- **Live previews** of how the content will look on the storefront.
+- **Form editors** for entering and customizing the content.
 
-See [Install Page Builder](getting-started/install-pagebuilder.md)
+For end-users, this means _no coding required_. For you as a developer, it means you will use content types to customize Page Builder in order to meet the end-user's needs. There are two ways to customize Page Builder using content types:
 
-<!-- {% comment %} -->
+- **Extend** existing content types
+- **Create** new content types
 
-## Developer documentation
+This documentation describes how to do both.  
 
-### Getting started
+## Getting started with Page Builder development
 
-* [Install Page Builder](getting-started/install-pagebuilder.md)
-* [Activate Page Builder](getting-started/activate-pagebuilder.md)
-* [View Page Builder](getting-started/view-pagebuilder.md)
+The following topics will help you get started with Page Builder development:
 
-### Create a content type
-
-* [Overview](create-basic-content-type/overview.md)
-* [Step 1: Add configuration](create-basic-content-type/step-1-add-configuration.md)
-* [Step 2: Add templates](create-basic-content-type/step-2-add-templates.md)
-* [Step 3: Add components](create-basic-content-type/step-3-add-components.md)
-* [Step 4: Add form](create-basic-content-type/step-4-add-form.md)
-* [Step 5: Add styles](create-basic-content-type/step-5-add-styles.md)
-* [Step 6: Add an icon](create-basic-content-type/step-6-add-icon.md)
-* [What's next](create-basic-content-type/whats-next.md)
-
-### Configurations
-
-* [Main configurations](configurations/content-type-configuration.md)
-* [Additional configurations](configurations/additional-configurations.md)
-* [Panel configurations](configurations/panel-configurations.md)
-* [Option menu configurations](configurations/option-menu-configurations.md)
-* [Icons and images](configurations/icons-and-images.md)
-* [Block chooser configuration](configurations/block-chooser-configuration.md)
-* [Full-width page layout configuration](configurations/full-width-page-layout-configuration.md)
-* [Responsive layout configuration](configurations/responsive-layout-configuration.md)
-* [Storefront configuration](configurations/storefront-configuration.md)
-* [Selector configuration](configurations/selector-configuration.md)
-* [Product conditions configuration](configurations/product-conditions-configuration.md)
-* [Server-side rendered previews](configurations/server-side-rendered-previews.md)
-
-### How tos
-
-* [How to develop a container content type](how-to/how-to-develop-container-content-type.md)
-* [How to use the Image Uploader](how-to/how-to-use-image-uploader.md)
-* [How to use the Image Uploader](how-to/how-to-use-image-uploader.md)
-* [How to add inline text editing](how-to/how-to-add-inline-text-editing.md)
-* [How to add a custom toolbar](how-to/how-to-add-custom-toolbar.md)
-* [How to convert product attribute fields to use Page Builder](how-to/how-to-convert-product-attributes-to-use-pagebuilder.md)
-* [How to store a component master format as a widget-directive](how-to/how-to-store-master-format-as-widget-directive.md)
-
-### Reference
-
-* [Architecture](reference/architecture.md)
-* [Events](reference/events.md)
-* [Knockout bindings](reference/knockout-bindings.md)
-
-### Migration
-
-* [Migrate from BlueFoot](migration/migrate-from-bluefoot.md)
-* [Migrate custom content types from BlueFoot](migration/migrate-custom-content-types-from-bluefoot.md)
-
-### Other
-
-* [Release notes](release-notes.md)
-* [Component status](comp-status2.md)
-* [Contribution guide](https://github.com/magento/magento2-page-builder/blob/develop/CONTRIBUTING.md)
-
-<!-- {% endcomment %} -->
-
-## Contribute to Page Builder
-
-We appreciate any and all contributions to PageBuilder. If you are interested in contributing to this repository, please see our [Contribution guide](https://github.com/magento/magento2-page-builder/blob/develop/CONTRIBUTING.md).
+- [Contributors Only - Install Page Builder](getting-started/install-pagebuilder.md)
+- [View Page Builder](getting-started/view-pagebuilder.md)
+- [Install Page Builder Examples](getting-started/install-pagebuilder-examples.md)
+- [Check out the User Guide](https://docs.magento.com/m2/ee/user_guide/cms/page-builder.html)

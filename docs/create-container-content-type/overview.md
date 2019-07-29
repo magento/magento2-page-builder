@@ -1,1 +1,0 @@
-# Container content type overview

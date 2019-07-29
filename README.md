@@ -9,6 +9,10 @@ Use this access to:
 
 Should you find an issue in Page Builder functionality, please report it on GitHub.
 
+## Documentation
+
+Please use this link to access the latest Page Builder documentation: https://devdocs.magento.com/page-builder/docs/index.html
+
 ## GitHub installation only
 
 **The pre-release version of Page Builder MUST be installed by cloning the GitHub repos as described here.**
@@ -42,11 +46,6 @@ Before installing Page Builder, make sure you have:
     ```bash
     bin/magento setup:upgrade
     ```
-
-## Developer documentation
-
-We will update the developer documentation frequently during beta. Please use this link to access the latest updates: 
-[Page Builder developer documentation](https://devdocs.magedevteam.com/72/page-builder/docs/getting-started/introduction.html)
 
 ## Contribute to Page Builder
 

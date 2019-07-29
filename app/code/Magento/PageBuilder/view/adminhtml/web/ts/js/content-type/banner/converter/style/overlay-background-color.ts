@@ -26,7 +26,7 @@ export default class OverlayBackgroundColor implements ConverterInterface {
      * @returns {string | object}
      */
     public toDom(name: string, data: DataObject): string | object {
-        const value = get(data, name);
+        const value = get<string | object>(data, name);
         if (data.show_overlay === "always" && value !== "" && value !== undefined) {
             return value;
         }

@@ -43,14 +43,16 @@ export interface ContentTypeConfigAppearanceInterface {
     reader: string;
     path: string;
     converters: ConverterInterface[];
-    elements: {
-        [key: string]: ContentTypeConfigAppearanceElementInterface;
-    };
+    elements: ContentTypeConfigAppearanceElementsInterface;
     preview_template: string;
     master_template: string;
     render: string;
     default: string;
     form: string;
+}
+
+export interface ContentTypeConfigAppearanceElementsInterface {
+    [key: string]: ContentTypeConfigAppearanceElementInterface;
 }
 
 export interface ConverterInterface {
@@ -92,7 +94,7 @@ export interface DataMappingInterface {
 }
 
 export interface DataMappingHtmlInterface extends DataMappingInterface {
-
+    placeholder: string;
 }
 
 export interface DataMappingCssInterface extends DataMappingInterface {
