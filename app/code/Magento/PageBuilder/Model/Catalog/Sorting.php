@@ -87,7 +87,7 @@ class Sorting
         \Magento\Catalog\Model\ResourceModel\Product\Collection $collection
     ): \Magento\Catalog\Model\ResourceModel\Product\Collection {
         $sortBuilder = $this->getSortingInstance($option);
-        $_collection = $sortBuilder->sort($collection);
+        $_collection = $sortBuilder->sort($collection->setCurPage(0));
 
         if ($_collection->isLoaded()) {
             $_collection->clear();
