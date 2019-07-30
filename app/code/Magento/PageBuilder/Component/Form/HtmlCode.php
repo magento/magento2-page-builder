@@ -17,7 +17,7 @@ use Magento\Variable\Model\Variable\Config as VariableConfig;
  */
 class HtmlCode extends \Magento\Ui\Component\Form\Field
 {
-    const HTML_ID = 'HTML_ID';
+    const HTML_ID_PLACEHOLDER = 'HTML_ID_PLACEHOLDER';
 
     /**
      * @var BackendUrlInterface
@@ -75,15 +75,19 @@ class HtmlCode extends \Magento\Ui\Component\Form\Field
     public function prepare()
     {
         $config = $this->getData('config');
-        $config['widgetUrl'] = $this->backendUrl->getUrl('adminhtml/widget/index')
-            . 'widget_target_id/' . self::HTML_ID . '/';
-
-        $fileBrowserUrlParams = [
-            'current_tree_path' => $this->imagesHelper->idEncode($this->currentTreePath),
-        ];
-
-        $config['imageUrl'] = $this->backendUrl->getUrl('cms/wysiwyg_images/index', $fileBrowserUrlParams)
-            . 'target_element_id/' . self::HTML_ID . '/';
+        $config['widgetUrl'] = $this->backendUrl->getUrl(
+            'adminhtml/widget/index',
+            [
+                'widget_target_id' => self::HTML_ID_PLACEHOLDER
+            ]
+        );
+        $config['imageUrl'] = $this->backendUrl->getUrl(
+            'cms/wysiwyg_images/index',
+            [
+                'current_tree_path' => $this->imagesHelper->idEncode($this->currentTreePath),
+                'target_element_id' => self::HTML_ID_PLACEHOLDER
+            ]
+        );
         $config['variableUrl'] = $this->variableConfig->getVariablesWysiwygActionUrl();
         $this->setData('config', $config);
         parent::prepare();

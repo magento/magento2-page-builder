@@ -3,18 +3,17 @@
  * See COPYING.txt for license details.
  */
 
-/*eslint-disable vars-on-top, strict */
-
 define([
     'Magento_Ui/js/form/element/textarea',
-    'mage/adminhtml/wysiwyg/widget',
+    'mage/adminhtml/wysiwyg/widget'
 ], function (Textarea) {
     'use strict';
 
+    const HTML_ID_PLACEHOLDER = 'HTML_ID_PLACEHOLDER';
+
     return Textarea.extend({
         defaults: {
-            elementTmpl: 'Magento_PageBuilder/form/element/html-code',
-            htmlId: 'HTML_ID'
+            elementTmpl: 'Magento_PageBuilder/form/element/html-code'
         },
 
         /**
@@ -22,7 +21,7 @@ define([
          */
         clickInsertWidget: function () {
             return widgetTools.openDialog(
-                this.widgetUrl.replace(this.htmlId, this.uid)
+                this.widgetUrl.replace(HTML_ID_PLACEHOLDER, this.uid)
             );
         },
 
@@ -31,7 +30,7 @@ define([
          */
         clickInsertImage: function () {
             return MediabrowserUtility.openDialog(
-                this.imageUrl.replace(this.htmlId, this.uid)
+                this.imageUrl.replace(HTML_ID_PLACEHOLDER, this.uid)
             );
         },
 
@@ -40,7 +39,8 @@ define([
          */
         clickInsertVariable: function () {
             return MagentovariablePlugin.loadChooser(
-                this.variableUrl, this.uid
+                this.variableUrl,
+                this.uid
             );
         },
     });
