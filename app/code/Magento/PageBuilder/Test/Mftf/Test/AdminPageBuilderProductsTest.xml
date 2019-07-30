@@ -1646,4 +1646,173 @@
         </actionGroup>
         <dontSeeElementInDOM selector="{{ProductsOnStorefront.product('1')}}" stepKey="validateProductCountStorefrontAfterChangingToFalse"/>
     </test>
+    <test name="AdminPageBuilderProductsCanBeSorted">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Products"/>
+            <title value="Sort products"/>
+            <description value="Ensure products can be sorted by the sort field within the admin."/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-15250"/>
+            <testCaseId value="MC-18771"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-products"/>
+        </annotations>
+        <before>
+            <createData entity="PageBuilderProductsSubCategory" stepKey="createPreReqCategory"/>
+            <createData entity="SortProduct1" stepKey="createPreReqProduct1">
+                <requiredEntity createDataKey="createPreReqCategory"/>
+            </createData>
+            <createData entity="SortProduct2" stepKey="createPreReqProduct2">
+                <requiredEntity createDataKey="createPreReqCategory"/>
+            </createData>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createPreReqProduct1" stepKey="deletePreReqProduct1"/>
+            <deleteData createDataKey="createPreReqProduct2" stepKey="deletePreReqProduct2"/>
+            <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCategory"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionAddContent">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragProductsIntoStage">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="addConditionToProductConditions" stepKey="addCategory">
+            <argument name="conditionInput" value="$$createPreReqCategory.id$$"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate stage -->
+        <comment userInput="Validate stage" stepKey="commentValidateStage"/>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage">
+            <argument name="page" value="ProductsOnStage"/>
+            <argument name="count" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProduct1Stage">
+            <argument name="page" value="ProductsOnStage"/>
+            <argument name="product" value="SortProduct1"/>
+            <argument name="productIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProduct2Stage">
+            <argument name="page" value="ProductsOnStage"/>
+            <argument name="product" value="SortProduct2"/>
+            <argument name="productIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate stage -->
+        <comment userInput="Validate stage" stepKey="commentValidateStage1"/>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage1">
+            <argument name="page" value="ProductsOnStage"/>
+            <argument name="count" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProduct1Stage1">
+            <argument name="page" value="ProductsOnStage"/>
+            <argument name="product" value="SortProduct1"/>
+            <argument name="productIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProduct2Stage1">
+            <argument name="page" value="ProductsOnStage"/>
+            <argument name="product" value="SortProduct2"/>
+            <argument name="productIndex" value="1"/>
+        </actionGroup>
+        <!-- Validate default order on store front -->
+        <comment userInput="Validate default order on store front" stepKey="commentValidateDefaultOrder"/>
+        <openNewTab stepKey="openTabToValidateStorefront" />
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductCountStorefront">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="count" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProduct1Storefront">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="product" value="SortProduct1"/>
+            <argument name="productIndex" value="2"/>
+            <argument name="isClickable" value="auto"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProduct2Storefront">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="product" value="SortProduct2"/>
+            <argument name="productIndex" value="1"/>
+            <argument name="isClickable" value="auto"/>
+        </actionGroup>
+        <closeTab stepKey="closeStorefrontTab" />
+        <reloadPage stepKey="reloadPage" />
+        <waitForPageLoad stepKey="waitForReload" />
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage1"/>
+        <!-- Update sort by -->
+        <comment userInput="Update sort by" stepKey="commentUpdateSortBy"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditForSortBy">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterSortBy">
+            <argument name="property" value="PageBuilderProductsSortByOldestTop"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage2">
+            <argument name="page" value="ProductsOnStage"/>
+            <argument name="count" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProduct1Stage2">
+            <argument name="page" value="ProductsOnStage"/>
+            <argument name="product" value="SortProduct1"/>
+            <argument name="productIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProduct2Stage2">
+            <argument name="page" value="ProductsOnStage"/>
+            <argument name="product" value="SortProduct2"/>
+            <argument name="productIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage1"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage3">
+            <argument name="page" value="ProductsOnStage"/>
+            <argument name="count" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProduct1Stage3">
+            <argument name="page" value="ProductsOnStage"/>
+            <argument name="product" value="SortProduct1"/>
+            <argument name="productIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProduct2Stage3">
+            <argument name="page" value="ProductsOnStage"/>
+            <argument name="product" value="SortProduct2"/>
+            <argument name="productIndex" value="2"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <openNewTab stepKey="openTabToValidateStorefront1" />
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront1">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductCountStorefront1">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="count" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProduct1Storefront1">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="product" value="SortProduct1"/>
+            <argument name="productIndex" value="1"/>
+            <argument name="isClickable" value="auto"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProduct2Storefront1">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="product" value="SortProduct2"/>
+            <argument name="productIndex" value="2"/>
+            <argument name="isClickable" value="auto"/>
+        </actionGroup>
+        <closeTab stepKey="closeStoreFrontTab1"/>
+    </test>
 </tests>

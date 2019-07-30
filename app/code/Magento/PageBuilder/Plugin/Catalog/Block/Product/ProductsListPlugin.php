@@ -50,4 +50,17 @@ class ProductsListPlugin
             return $result;
         }
     }
+
+    /**
+     * Include sort order in cache key
+     *
+     * @param \Magento\CatalogWidget\Block\Product\ProductsList $subject
+     * @param array $cacheKeys
+     * @return array
+     */
+    public function afterGetCacheKeyInfo(\Magento\CatalogWidget\Block\Product\ProductsList $subject, array $cacheKeys)
+    {
+        $cacheKeys[] = $subject->getData('sort_order');
+        return $cacheKeys;
+    }
 }
