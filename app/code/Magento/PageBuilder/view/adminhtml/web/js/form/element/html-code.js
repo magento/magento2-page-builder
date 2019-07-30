@@ -9,7 +9,7 @@ define([
 ], function (Textarea) {
     'use strict';
 
-    const HTML_ID_PLACEHOLDER = 'HTML_ID_PLACEHOLDER';
+    var HTML_ID_PLACEHOLDER = 'HTML_ID_PLACEHOLDER';
 
     return Textarea.extend({
         defaults: {
