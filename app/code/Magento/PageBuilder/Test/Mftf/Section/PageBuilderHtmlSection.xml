@@ -9,6 +9,7 @@
         xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
     <section name="HtmlOnStage">
         <element name="base" type="text" selector="(//div[contains(@class,'pagebuilder-html')]//div[contains(@data-bind,'text: data.main.html') or contains(@class,'placeholder-html-empty')])[{{arg1}}]" parameterized="true"/>
+        <element name="baseCSS" type="text" selector="[data-content-type=html][data-element=main]"/>
         <element name="hidden" type="text" selector="(//*[@data-content-type='html'])[{{arg1}}]/ancestor::*[contains(@class, 'pagebuilder-content-type-wrapper') and contains(@class, 'pagebuilder-content-type-hidden')]" parameterized="true"/>
         <element name="notHidden" type="text" selector="(//div[contains(@class,'pagebuilder-html')])[{{arg1}}]/parent::*[contains(@class, 'pagebuilder-content-type-wrapper') and not(contains(@class, 'pagebuilder-content-type-hidden'))][1]" parameterized="true"/>
         <element name="empty" type="text" selector="(//div[contains(@class,'placeholder-html-empty')])[{{arg1}}]" parameterized="true"/>
@@ -32,6 +33,8 @@
         <element name="hidden" type="text" selector="(//div[@data-content-type='html'])[{{arg1}}][contains(@style, 'display: none')]" parameterized="true"/>
         <element name="notHidden" type="text" selector="(//div[@data-content-type='html'])[{{arg1}}][not(contains(@style, 'display: none'))]" parameterized="true"/>
         <element name="html" type="text" selector="(//div[@data-content-type='html'])[{{arg1}}]{{arg2}}" parameterized="true"/>
+        <element name="widgetLink" type="text" selector="(//div[@data-content-type='html'])[{{arg1}}]//a[contains(@href,'{{arg2}}html-code{{arg3}}')]" parameterized="true"/>
+        <element name="text" type="text" selector="(//div[@data-content-type='html'])[{{arg1}}]//*[contains(text(),'{{arg2}}')]" parameterized="true"/>
         <!-- Advanced Configuration -->
         <element name="alignment" type="text" selector="(//div[@data-content-type='html'])[{{arg1}}][contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
         <element name="noAlignment" type="text" selector="(//div[@data-content-type='html'])[{{arg1}}][not(contains(@style,'text-align:'))]" parameterized="true"/>
@@ -44,6 +47,13 @@
         <element name="noCssClasses" type="text" selector="(//div[@data-content-type='html'])[{{arg1}}][not(@class)]" parameterized="true"/>
         <element name="margins" type="text" selector="(//div[@data-content-type='html'])[{{arg1}}][contains(@style,'margin: {{arg2}}px;')]" parameterized="true"/>
         <element name="padding" type="text" selector="(//div[@data-content-type='html'])[{{arg1}}][contains(@style,'padding: {{arg2}}px;')]" parameterized="true"/>
+    </section>
+    <section name="HtmlOnConfiguration">
+        <element name="insertWidgetButton" type="text" selector="//button[contains(@class,'action-add-widget')]//*[.='Insert Widget...']"/>
+        <element name="insertImageButton" type="text" selector="//button[contains(@class,'action-add-image')]//*[.='Insert Image...']"/>
+        <element name="insertVariableButton" type="text" selector="//button[contains(@class,'add-variable')]//*[.='Insert Variable...']"/>
+        <element name="textarea" type="text" selector="//div[@data-index='html']//textarea"/>
+        <element name="textareaCSS" type="text" selector="div[data-index=html] textarea[name=html]"/>
     </section>
     <section name="HtmlOnBackendArbitraryHtml">
         <element name="content" type="button" selector="//div[contains(@class, 'pagebuilder-html')][1]//div[contains(text(), '&lt;div class=&quot;my-div&quot;&gt;&lt;/div&gt;')]"/>
