@@ -17,7 +17,7 @@ class Sorting
      * @var array
      */
     protected $sortClasses = [
-        'default' => Sorting\DefaultSorting::class
+        'date_newest_top' => Sorting\Date\NewestTop::class
     ];
 
     /**
@@ -72,7 +72,7 @@ class Sorting
         if (isset($this->sortInstances[$sortOption])) {
             return $this->sortInstances[$sortOption];
         }
-        return $this->sortInstances['default'];
+        return $this->sortInstances['date_newest_top'];
     }
 
     /**
@@ -87,7 +87,7 @@ class Sorting
         \Magento\Catalog\Model\ResourceModel\Product\Collection $collection
     ): \Magento\Catalog\Model\ResourceModel\Product\Collection {
         $sortBuilder = $this->getSortingInstance($option);
-        $_collection = $sortBuilder->sort($collection->setCurPage(0));
+        $_collection = $sortBuilder->sort($collection);
 
         if ($_collection->isLoaded()) {
             $_collection->clear();

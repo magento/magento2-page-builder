@@ -32,6 +32,7 @@ abstract class StockAbstract extends SortAbstract implements SortInterface
 
         $baseSet = clone $collection;
         $finalSet = clone $collection;
+        $collection->setCurPage(0);
 
         $collection->joinField(
             'child_id',

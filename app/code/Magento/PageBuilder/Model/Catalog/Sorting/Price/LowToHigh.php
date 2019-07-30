@@ -28,6 +28,6 @@ class LowToHigh extends PriceAbstract
      */
     public function getLabel(): string
     {
-        return __('Price: Low to high');
+        return __('Price: low to high');
     }
 }

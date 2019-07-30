@@ -36,6 +36,6 @@ class Descending extends AttributeAbstract
      */
     public function getLabel(): string
     {
-        return __('SKU: Descending');
+        return __('SKU: descending');
     }
 }
