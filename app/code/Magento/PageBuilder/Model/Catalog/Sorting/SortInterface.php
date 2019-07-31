@@ -4,17 +4,17 @@
  * See COPYING.txt for license details.
  */
 
+declare(strict_types=1);
+
 namespace Magento\PageBuilder\Model\Catalog\Sorting;
 
 /**
  * Interface SortInterface
- *
- * @package Magento\PageBuilder\Model\Catalog\Sorting
  */
 interface SortInterface
 {
     /**
-     * Sort method
+     * Sort products in product widget collection according to specified option.
      *
      * @param \Magento\Catalog\Model\ResourceModel\Product\Collection $collection
      * @return \Magento\Catalog\Model\ResourceModel\Product\Collection
@@ -24,9 +24,9 @@ interface SortInterface
     ): \Magento\Catalog\Model\ResourceModel\Product\Collection;
 
     /**
-     * Sorting label
+     * Sorting option short description
      *
-     * @return string
+     * @return \Magento\Framework\Phrase
      */
-    public function getLabel(): string;
+    public function getLabel(): \Magento\Framework\Phrase;
 }

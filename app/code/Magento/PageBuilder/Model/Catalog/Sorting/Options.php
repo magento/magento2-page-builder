@@ -3,12 +3,13 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
+declare(strict_types=1);
+
 namespace Magento\PageBuilder\Model\Catalog\Sorting;
 
 /**
  * Class Sorting Options
- *
- * @package Magento\PageBuilder\Model\Catalog\Sorting
  */
 class Options implements \Magento\Framework\Data\OptionSourceInterface
 {
@@ -18,8 +19,6 @@ class Options implements \Magento\Framework\Data\OptionSourceInterface
     private $sorting;
 
     /**
-     * Options constructor.
-     *
      * @param \Magento\PageBuilder\Model\Catalog\Sorting $sorting
      */
     public function __construct(

@@ -4,14 +4,14 @@
  * See COPYING.txt for license details.
  */
 
+declare(strict_types=1);
+
 namespace Magento\PageBuilder\Model\Catalog\Sorting\Date;
 
-use \Magento\PageBuilder\Model\Catalog\Sorting\AttributeAbstract;
+use Magento\PageBuilder\Model\Catalog\Sorting\AttributeAbstract;
 
 /**
  * Class NewestTop
- *
- * @package Magento\PageBuilder\Model\Catalog\Sorting\Date
  */
 class NewestTop extends AttributeAbstract
 {
@@ -34,7 +34,7 @@ class NewestTop extends AttributeAbstract
     /**
      * @inheritdoc
      */
-    public function getLabel(): string
+    public function getLabel(): \Magento\Framework\Phrase
     {
         return __('Newest products first');
     }

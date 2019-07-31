@@ -4,14 +4,14 @@
  * See COPYING.txt for license details.
  */
 
+declare(strict_types=1);
+
 namespace Magento\PageBuilder\Model\Catalog\Sorting;
 
-use \Magento\Framework\DB\Select;
+use Magento\Framework\DB\Select;
 
 /**
  * Class PriceAbstract
- *
- * @package Magento\PageBuilder\Model\Catalog\Sorting
  */
 abstract class PriceAbstract extends SortAbstract implements SortInterface
 {

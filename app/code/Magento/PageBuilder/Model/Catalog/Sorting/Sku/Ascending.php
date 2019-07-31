@@ -4,14 +4,14 @@
  * See COPYING.txt for license details.
  */
 
+declare(strict_types=1);
+
 namespace Magento\PageBuilder\Model\Catalog\Sorting\Sku;
 
-use \Magento\PageBuilder\Model\Catalog\Sorting\AttributeAbstract;
+use Magento\PageBuilder\Model\Catalog\Sorting\AttributeAbstract;
 
 /**
  * Class Sku\Ascending
- *
- * @package Magento\PageBuilder\Model\Catalog\Sorting\Sku
  */
 class Ascending extends AttributeAbstract
 {
@@ -34,7 +34,7 @@ class Ascending extends AttributeAbstract
     /**
      * @inheritdoc
      */
-    public function getLabel(): string
+    public function getLabel(): \Magento\Framework\Phrase
     {
         return __('SKU: ascending');
     }

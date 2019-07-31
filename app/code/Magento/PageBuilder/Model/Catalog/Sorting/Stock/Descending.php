@@ -4,12 +4,12 @@
  * See COPYING.txt for license details.
  */
 
+declare(strict_types=1);
+
 namespace Magento\PageBuilder\Model\Catalog\Sorting\Stock;
 
 /**
  * Class Stock\Descending
- *
- * @package Magento\PageBuilder\Model\Catalog\Sorting\Stock
  */
 class Descending extends \Magento\PageBuilder\Model\Catalog\Sorting\StockAbstract
 {
@@ -24,7 +24,7 @@ class Descending extends \Magento\PageBuilder\Model\Catalog\Sorting\StockAbstrac
     /**
      * @inheritdoc
      */
-    public function getLabel(): string
+    public function getLabel(): \Magento\Framework\Phrase
     {
         return __('Stock: high stock first');
     }

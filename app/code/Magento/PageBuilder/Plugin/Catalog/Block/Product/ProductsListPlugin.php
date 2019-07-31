@@ -4,9 +4,11 @@
  * See COPYING.txt for license details.
  */
 
+declare(strict_types=1);
+
 namespace Magento\PageBuilder\Plugin\Catalog\Block\Product;
 
-use \Magento\PageBuilder\Model\Catalog\Sorting;
+use Magento\PageBuilder\Model\Catalog\Sorting;
 
 /**
  * Catalog Products List widget block plugin

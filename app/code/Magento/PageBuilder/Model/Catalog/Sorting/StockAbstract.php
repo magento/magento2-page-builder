@@ -4,17 +4,31 @@
  * See COPYING.txt for license details.
  */
 
+declare(strict_types=1);
+
 namespace Magento\PageBuilder\Model\Catalog\Sorting;
 
-use \Magento\Framework\DB\Select;
+use Magento\Framework\DB;
 
 /**
  * Class StockAbstract
- *
- * @package Magento\PageBuilder\Model\Catalog\Sorting
  */
 abstract class StockAbstract extends SortAbstract implements SortInterface
 {
+    /**
+     * @var \Magento\Framework\Module\ModuleManagerInterface
+     */
+    private $moduleManager;
+
+    /**
+     * @param \Magento\Framework\Module\ModuleManagerInterface $moduleManager
+     */
+    public function __construct(
+        \Magento\Framework\Module\ModuleManagerInterface $moduleManager
+    ) {
+        $this->moduleManager = $moduleManager;
+    }
+
     /**
      * @inheritdoc
      */
@@ -48,7 +62,7 @@ abstract class StockAbstract extends SortAbstract implements SortInterface
             'cataloginventory_stock_item',
             'qty',
             'product_id=entity_id',
-            ['stock_id' => $this->getStockId()],
+            ['stock_id' => \Magento\CatalogInventory\Model\Stock::DEFAULT_STOCK_ID],
             'left'
         );
 
@@ -57,15 +71,21 @@ abstract class StockAbstract extends SortAbstract implements SortInterface
             'cataloginventory_stock_item',
             'qty',
             'product_id=child_id',
-            ['stock_id' => $this->getStockId()],
+            ['stock_id' => \Magento\CatalogInventory\Model\Stock::DEFAULT_STOCK_ID],
             'left'
         );
 
         $collection->getSelect()
-            ->columns('IF(SUM(`at_parent_qty`.`qty`), SUM(`at_parent_qty`.`qty`), SUM(`at_qty`.`qty`)) as final_qty')
+            ->columns(
+                [
+                    'final_qty' => new DB\Sql\ColumnValueExpression(
+                        'IF(SUM(`at_parent_qty`.`qty`), SUM(`at_parent_qty`.`qty`), SUM(`at_qty`.`qty`))'
+                    )
+                ]
+            )
             ->group('entity_id')
             ->having('final_qty > 0')
-            ->reset(Select::ORDER)
+            ->reset(DB\Select::ORDER)
             ->order('final_qty '.$this->getSortDirection());
 
         $resultIds = [];
@@ -79,8 +99,8 @@ abstract class StockAbstract extends SortAbstract implements SortInterface
         $ids = array_unique(array_merge($resultIds, $baseSet->getAllIds()));
 
         $finalSet->getSelect()
-            ->reset(Select::ORDER)
-            ->reset(Select::WHERE);
+            ->reset(DB\Select::ORDER)
+            ->reset(DB\Select::WHERE);
 
         $finalSet->addAttributeToFilter('entity_id', ['in' => $ids]);
         if (count($ids)) {

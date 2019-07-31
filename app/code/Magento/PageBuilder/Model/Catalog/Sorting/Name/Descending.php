@@ -4,14 +4,14 @@
  * See COPYING.txt for license details.
  */
 
+declare(strict_types=1);
+
 namespace Magento\PageBuilder\Model\Catalog\Sorting\Name;
 
-use \Magento\PageBuilder\Model\Catalog\Sorting\AttributeAbstract;
+use Magento\PageBuilder\Model\Catalog\Sorting\AttributeAbstract;
 
 /**
  * Class Name\Descending
- *
- * @package Magento\PageBuilder\Model\Catalog\Sorting\Name
  */
 class Descending extends AttributeAbstract
 {
@@ -34,7 +34,7 @@ class Descending extends AttributeAbstract
     /**
      * @inheritdoc
      */
-    public function getLabel(): string
+    public function getLabel(): \Magento\Framework\Phrase
     {
         return __('Name: Z - A');
     }

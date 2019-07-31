@@ -4,41 +4,15 @@
  * See COPYING.txt for license details.
  */
 
+declare(strict_types=1);
+
 namespace Magento\PageBuilder\Model\Catalog\Sorting;
 
 /**
  * Class SortAbstract
- *
- * @package Magento\PageBuilder\Model\Catalog\Sorting
  */
 class SortAbstract
 {
-    /**
-     * @var \Magento\Framework\Module\ModuleManagerInterface
-     */
-    protected $moduleManager;
-
-    /**
-     * SortAbstract constructor.
-     *
-     * @param \Magento\Framework\Module\ModuleManagerInterface $moduleManager
-     */
-    public function __construct(
-        \Magento\Framework\Module\ModuleManagerInterface $moduleManager
-    ) {
-        $this->moduleManager = $moduleManager;
-    }
-
-    /**
-     * Stock ID
-     *
-     * @return int
-     */
-    protected function getStockId(): int
-    {
-        return \Magento\CatalogInventory\Model\Stock::DEFAULT_STOCK_ID;
-    }
-
     /**
      * Sorting ascending order
      *

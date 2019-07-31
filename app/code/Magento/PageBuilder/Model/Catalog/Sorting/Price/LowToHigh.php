@@ -4,14 +4,14 @@
  * See COPYING.txt for license details.
  */
 
+declare(strict_types=1);
+
 namespace Magento\PageBuilder\Model\Catalog\Sorting\Price;
 
-use \Magento\PageBuilder\Model\Catalog\Sorting\PriceAbstract;
+use Magento\PageBuilder\Model\Catalog\Sorting\PriceAbstract;
 
 /**
  * Class Price\LowToHigh
- *
- * @package Magento\PageBuilder\Model\Catalog\Sorting\Price
  */
 class LowToHigh extends PriceAbstract
 {
@@ -26,7 +26,7 @@ class LowToHigh extends PriceAbstract
     /**
      * @inheritdoc
      */
-    public function getLabel(): string
+    public function getLabel(): \Magento\Framework\Phrase
     {
         return __('Price: low to high');
     }
