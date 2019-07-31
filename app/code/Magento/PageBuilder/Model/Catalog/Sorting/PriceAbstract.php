@@ -26,10 +26,10 @@ abstract class PriceAbstract extends SortAbstract implements SortInterface
     public function sort(
         \Magento\Catalog\Model\ResourceModel\Product\Collection $collection
     ): \Magento\Catalog\Model\ResourceModel\Product\Collection {
-        $collection->joinAttribute('price', 'catalog_product/price', 'entity_id', null, 'left');
+        $collection->joinAttribute('sorting_price', 'catalog_product/price', 'entity_id', null, 'left');
         $collection->getSelect()
             ->reset(Select::ORDER)
-            ->order('price '.$this->getSortDirection());
+            ->order('sorting_price '.$this->getSortDirection());
 
         return $collection;
     }
