@@ -44,7 +44,7 @@ abstract class StockAbstract extends SortAbstract implements SortInterface
             return $collection;
         }
 
-        $baseSet = clone $collection;
+        $baseSetIds = $collection->getAllIds();
         $finalSet = clone $collection;
         $collection->setCurPage(0);
 
@@ -96,7 +96,7 @@ abstract class StockAbstract extends SortAbstract implements SortInterface
             $resultIds[] = $item->getId();
         }
 
-        $ids = array_unique(array_merge($resultIds, $baseSet->getAllIds()));
+        $ids = array_unique(array_merge($resultIds, $baseSetIds));
 
         $finalSet->getSelect()
             ->reset(DB\Select::ORDER)
