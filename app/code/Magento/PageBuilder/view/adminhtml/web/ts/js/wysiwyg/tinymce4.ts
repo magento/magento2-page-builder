@@ -56,7 +56,7 @@ export default class Wysiwyg implements WysiwygInterface {
     private fieldName: string;
 
     /**
-     * Create a debouce to save the content into the data store
+     * Create a debounce to save the content into the data store
      */
     private saveContentDebounce = _.debounce(
         this.saveContentFromWysiwygToDataStore.bind(this),
