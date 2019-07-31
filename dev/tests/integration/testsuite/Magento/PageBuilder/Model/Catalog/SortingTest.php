@@ -6,7 +6,7 @@
 
 namespace Magento\PageBuilder\Model\Catalog;
 
-use \Magento\TestFramework\Helper\Bootstrap;
+use Magento\TestFramework\Helper\Bootstrap;
 
 /**
  * Class SortingTest
