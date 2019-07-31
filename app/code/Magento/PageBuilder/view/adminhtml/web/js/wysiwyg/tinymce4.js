@@ -44,7 +44,7 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
      */
 
     /**
-     * Create a debouce to save the content into the data store
+     * Create a debounce to save the content into the data store
      */
 
     /**

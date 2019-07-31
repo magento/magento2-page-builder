@@ -4,7 +4,7 @@
  */
 
 /**
- * The frame does not need to create or observe events, however the app will naturally attempt too. So let's stop that!
+ * The frame does not need to create or observe events, however the app will naturally attempt to. So let's stop that!
  */
 export default {
     on() {
