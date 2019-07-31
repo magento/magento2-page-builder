@@ -14,17 +14,17 @@ namespace Magento\PageBuilder\Model\Catalog\Sorting;
 class SortAbstract
 {
     /**
-     * @var \Magento\Framework\Module\Manager
+     * @var \Magento\Framework\Module\ModuleManagerInterface
      */
     protected $moduleManager;
 
     /**
      * SortAbstract constructor.
      *
-     * @param \Magento\Framework\Module\Manager $moduleManager
+     * @param \Magento\Framework\Module\ModuleManagerInterface $moduleManager
      */
     public function __construct(
-        \Magento\Framework\Module\Manager $moduleManager
+        \Magento\Framework\Module\ModuleManagerInterface $moduleManager
     ) {
         $this->moduleManager = $moduleManager;
     }

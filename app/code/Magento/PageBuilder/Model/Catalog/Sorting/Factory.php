@@ -16,7 +16,7 @@ class Factory
     /**
      * @var \Magento\Framework\ObjectManagerInterface
      */
-    protected $_objectManager;
+    private $_objectManager;
 
     /**
      * @param \Magento\Framework\ObjectManagerInterface $objectManager
