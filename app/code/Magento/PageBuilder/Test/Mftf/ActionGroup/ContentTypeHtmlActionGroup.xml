@@ -43,4 +43,11 @@
             <actualResult type="variable">getValueFromTextarea</actualResult>
         </assertContains>
     </actionGroup>
+    <actionGroup name="clickHtmlInsertImageButton">
+        <comment userInput="clickHtmlInsertImageButton" stepKey="commentClickHtmlInsertImageButton"/>
+        <waitForElementVisible selector="{{HtmlOnConfiguration.insertImageButton}}" stepKey="waitForInsertImageButton"/>
+        <click selector="{{HtmlOnConfiguration.insertImageButton}}" stepKey="clickInsertImageButton"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible selector="{{MediaGallerySection.StorageRootArrow}}" stepKey="waitForStorageRootArrow"/>
+    </actionGroup>
 </actionGroups>

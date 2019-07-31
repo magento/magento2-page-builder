@@ -53,13 +53,11 @@
         </actionGroup>
         <!-- Add media directives -->
         <comment userInput="Add media directives" stepKey="commentAddMediaDirectives"/>
-         <actionGroup ref="addPageLinkWidgetToHtmlCodeWYSIWYGDisabled" stepKey="addPageLinkWidgetToHtmlCodeWYSIWYGDisabled">
+        <actionGroup ref="addPageLinkWidgetToHtmlCodeWYSIWYGDisabled" stepKey="addPageLinkWidgetToHtmlCodeWYSIWYGDisabled">
             <argument name="widget" value="PageBuilderTextArea_WidgetCMSPageLink"/>
             <argument name="page" value="html-code{{PageBuilderPageTitle.pageName}}"/>
         </actionGroup>
-        <actionGroup ref="clickButton" stepKey="clickInsertImageInHtmlCode">
-            <argument name="button" value="{{HtmlOnConfiguration.insertImageButton}}"/>
-        </actionGroup>
+        <actionGroup ref="clickHtmlInsertImageButton" stepKey="clickInsertImageInHtmlCode"/>
         <actionGroup ref="clickMediaGalleryStorageRootArrow" stepKey="clickMediaGalleryStorageRootArrow"/>
         <actionGroup ref="CreateImageFolder" stepKey="CreateImageFolder">
             <argument name="ImageFolder" value="ImageFolder"/>
