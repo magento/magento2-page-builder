@@ -16,19 +16,19 @@ class Sorting
     /**
      * @var array
      */
-    protected $sortClasses = [
+    private $sortClasses = [
         'date_newest_top' => Sorting\Date\NewestTop::class
     ];
 
     /**
      * @var Sorting\Factory
      */
-    protected $factory;
+    private $factory;
 
     /**
      * @var array
      */
-    protected $sortInstances = [];
+    private $sortInstances = [];
 
     /**
      * Sorting constructor.
