@@ -11,28 +11,39 @@ namespace Magento\PageBuilder\Model\Catalog\Sorting;
 use Magento\Framework\DB;
 
 /**
- * Class StockAbstract
+ * Class for sorting by stock
  */
-abstract class StockAbstract extends SortAbstract implements SortInterface
+class Stock implements SortInterface
 {
+    /**
+     * @var string
+     */
+    private $label;
+
+    /**
+     * @var string
+     */
+    private $sort_direction;
+
     /**
      * @var \Magento\Framework\Module\ModuleManagerInterface
      */
     private $moduleManager;
 
     /**
+     * @param string $label
+     * @param string $sort_direction
      * @param \Magento\Framework\Module\ModuleManagerInterface $moduleManager
      */
     public function __construct(
+        string $label,
+        string $sort_direction,
         \Magento\Framework\Module\ModuleManagerInterface $moduleManager
     ) {
+        $this->label = $label;
+        $this->sort_direction = $sort_direction;
         $this->moduleManager = $moduleManager;
     }
-
-    /**
-     * @inheritdoc
-     */
-    abstract protected function getSortDirection(): string;
 
     /**
      * @inheritdoc
@@ -86,7 +97,7 @@ abstract class StockAbstract extends SortAbstract implements SortInterface
             ->group('entity_id')
             ->having('final_qty > 0')
             ->reset(DB\Select::ORDER)
-            ->order('final_qty '.$this->getSortDirection());
+            ->order('final_qty '.$this->sort_direction);
 
         $resultIds = [];
 
@@ -108,5 +119,13 @@ abstract class StockAbstract extends SortAbstract implements SortInterface
         }
 
         return $finalSet;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getLabel(): \Magento\Framework\Phrase
+    {
+        return __($this->label);
     }
 }

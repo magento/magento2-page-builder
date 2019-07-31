@@ -11,14 +11,31 @@ namespace Magento\PageBuilder\Model\Catalog\Sorting;
 use Magento\Framework\DB\Select;
 
 /**
- * Class PriceAbstract
+ * Class for sorting by price
  */
-abstract class PriceAbstract extends SortAbstract implements SortInterface
+class Price implements SortInterface
 {
     /**
-     * @inheritdoc
+     * @var string
      */
-    abstract protected function getSortDirection();
+    private $label;
+
+    /**
+     * @var string
+     */
+    private $sort_direction;
+
+    /**
+     * @param string $label
+     * @param string $sort_direction
+     */
+    public function __construct(
+        string $label,
+        string $sort_direction
+    ) {
+        $this->label = $label;
+        $this->sort_direction = $sort_direction;
+    }
 
     /**
      * @inheritdoc
@@ -29,8 +46,16 @@ abstract class PriceAbstract extends SortAbstract implements SortInterface
         $collection->joinAttribute('sorting_price', 'catalog_product/price', 'entity_id', null, 'left');
         $collection->getSelect()
             ->reset(Select::ORDER)
-            ->order('sorting_price '.$this->getSortDirection());
+            ->order('sorting_price '.$this->sort_direction);
 
         return $collection;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getLabel(): \Magento\Framework\Phrase
+    {
+        return __($this->label);
     }
 }
