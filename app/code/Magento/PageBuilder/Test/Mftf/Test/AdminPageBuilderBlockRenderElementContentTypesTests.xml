@@ -953,6 +953,13 @@
             </actionGroup>
         </before>
         <after>
+            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder2">
+                <argument name="FolderName" value="{{ImageFolder.name}}"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage2">
+                <argument name="Image" value="ImageUpload3"/>
+            </actionGroup>
             <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock"/>
             <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
             <actionGroup ref="logout" stepKey="logout"/>
@@ -973,12 +980,85 @@
         <actionGroup ref="fillSlideOutPanelTextArea" stepKey="enterHtmlContent">
             <argument name="property" value="PageBuilderHtmlPropertyButton"/>
         </actionGroup>
+        <!-- Add media directives -->
+        <comment userInput="Add media directives" stepKey="commentAddMediaDirectives"/>
+        <actionGroup ref="addPageLinkWidgetToHtmlCodeWYSIWYGDisabled" stepKey="addPageLinkWidgetToHtmlCodeWYSIWYGDisabled">
+            <argument name="widget" value="PageBuilderTextArea_WidgetCMSPageLink"/>
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <actionGroup ref="clickHtmlInsertImageButton" stepKey="clickInsertImageInHtmlCode"/>
+        <actionGroup ref="clickMediaGalleryStorageRootArrow" stepKey="clickMediaGalleryStorageRootArrow"/>
+        <actionGroup ref="CreateImageFolder" stepKey="CreateImageFolder">
+            <argument name="ImageFolder" value="ImageFolder"/>
+        </actionGroup>
+        <actionGroup ref="attachImage" stepKey="attachImage1">
+            <argument name="Image" value="ImageUpload3"/>
+        </actionGroup>
+        <actionGroup ref="saveImage" stepKey="insertImage"/>
+        <actionGroup ref="assertTextareaContainsValue" stepKey="assertImageInTextareaValueBeforeSave">
+            <argument name="value" value="{{ImageUpload3.value}}"/>
+            <argument name="selector" value="{{HtmlOnConfiguration.textarea}}"/>
+        </actionGroup>
+        <actionGroup ref="addVariableToHtmlCodeWYSIWYGDisabled" stepKey="addVariableToHtmlCodeWYSIWYGDisabled">
+            <argument name="variable" value="PageBuilderTextArea_VariableBaseURL"/>
+        </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsHtml"/>
-        <actionGroup ref="saveCMSBlock" stepKey="saveCMSBlock"/>
         <!-- Validate CMS Block Stage -->
         <comment userInput="Validate CMS Block Stage" stepKey="commentValidateCMSBlockStage"/>
         <seeElement selector="{{HtmlOnStage.base('1')}}" stepKey="seeHtmlBaseCMSBlockStage"/>
         <seeElement selector="{{HtmlOnStage.html('1', PageBuilderHtmlPropertyButton.selector)}}" stepKey="seeHtmlCMSBlockStage"/>
+        <executeJS function="return document.querySelectorAll('{{HtmlOnStage.baseCSS}}')[0].innerText;" stepKey="actualTextFromHtmlCode"/>
+        <assertContains stepKey="assertWidgetOnStage">
+            <expectedResult type="string">{{TinyMCEWidgetCMSPageLink.stageValue}}</expectedResult>
+            <actualResult type="variable">actualTextFromHtmlCode</actualResult>
+        </assertContains>
+        <assertContains stepKey="assertImageOnStage">
+            <expectedResult type="string">{{ImageUpload3.value}}</expectedResult>
+            <actualResult type="variable">actualTextFromHtmlCode</actualResult>
+        </assertContains>
+        <assertContains stepKey="assertVariableOnStage">
+            <expectedResult type="string">{{TinyMCEVariableBaseURL.stageValue}}</expectedResult>
+            <actualResult type="variable">actualTextFromHtmlCode</actualResult>
+        </assertContains>
+        <actionGroup ref="saveCMSBlock" stepKey="saveCMSBlock"/>
+        <!-- Validate CMS Block Stage After Save -->
+        <comment userInput="Validate CMS Block Stage After Save" stepKey="commentValidateCMSBlockStageAfterSave"/>
+        <seeElement selector="{{HtmlOnStage.base('1')}}" stepKey="seeHtmlBaseCMSBlockStageAfterSave"/>
+        <seeElement selector="{{HtmlOnStage.html('1', PageBuilderHtmlPropertyButton.selector)}}" stepKey="seeHtmlCMSBlockStageAfterSave"/>
+        <executeJS function="return document.querySelectorAll('{{HtmlOnStage.baseCSS}}')[0].innerText;" stepKey="actualTextFromHtmlCodeAfterSave"/>
+        <assertContains stepKey="assertWidgetOnStageAfterSave">
+            <expectedResult type="string">{{TinyMCEWidgetCMSPageLink.stageValue}}</expectedResult>
+            <actualResult type="variable">actualTextFromHtmlCodeAfterSave</actualResult>
+        </assertContains>
+        <assertContains stepKey="assertImageOnStageAfterSave">
+            <expectedResult type="string">{{ImageUpload3.value}}</expectedResult>
+            <actualResult type="variable">actualTextFromHtmlCodeAfterSave</actualResult>
+        </assertContains>
+        <assertContains stepKey="assertVariableOnStageAfterSave">
+            <expectedResult type="string">{{TinyMCEVariableBaseURL.stageValue}}</expectedResult>
+            <actualResult type="variable">actualTextFromHtmlCodeAfterSave</actualResult>
+        </assertContains>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStageAfterSave">
+            <argument name="contentType" value="PageBuilderHtmlContentType"/>
+        </actionGroup>
+        <!-- Validate Edit Panel After Save -->
+        <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanelAfterSave"/>
+        <actionGroup ref="assertTextareaContainsValue" stepKey="assertButtonInTextareaValueAfterSave">
+            <argument name="value" value="{{PageBuilderHtmlPropertyButton.value}}"/>
+            <argument name="selector" value="{{HtmlOnConfiguration.textarea}}"/>
+        </actionGroup>
+        <actionGroup ref="assertTextareaContainsValue" stepKey="assertWidgetInTextareaValueAfterSave">
+            <argument name="value" value="{{PageBuilderTextArea_WidgetCMSPageLink.editPanelValue}}"/>
+            <argument name="selector" value="{{HtmlOnConfiguration.textarea}}"/>
+        </actionGroup>
+        <actionGroup ref="assertTextareaContainsValue" stepKey="assertImageInTextareaValueAfterSave">
+            <argument name="value" value="{{ImageUpload3.value}}"/>
+            <argument name="selector" value="{{HtmlOnConfiguration.textarea}}"/>
+        </actionGroup>
+        <actionGroup ref="assertTextareaContainsValue" stepKey="assertVariableInTextareaValueAfterSave">
+            <argument name="value" value="{{PageBuilderTextArea_VariableBaseURL.editPanelValue}}"/>
+            <argument name="selector" value="{{HtmlOnConfiguration.textarea}}"/>
+        </actionGroup>
         <!-- Add Block to CMS Page -->
         <comment userInput="Add Block to CMS Page" stepKey="commentAddBlockToCMSPage"/>
         <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
@@ -1001,6 +1081,19 @@
         <comment userInput="Validate CMS Page Stage" stepKey="commentValidateCMSPageStage"/>
         <seeElement selector="{{HtmlOnStorefront.base('1')}}" stepKey="seeHtmlBaseCMSPageStage"/>
         <seeElement selector="{{HtmlOnStorefront.html('1', PageBuilderHtmlPropertyButton.selector)}}" stepKey="seeHtmlCMSPageStage"/>
+        <executeJS function="return document.querySelectorAll('{{HtmlOnStage.baseCSS}}')[0].innerText;" stepKey="actualTextFromHtmlCodeCMSPageStage"/>
+        <assertContains stepKey="assertWidgetOnStageCMSPageStage">
+            <expectedResult type="string">{{_ENV.MAGENTO_BASE_URL}}$$createCMSPage.identifier$$</expectedResult>
+            <actualResult type="variable">actualTextFromHtmlCodeCMSPageStage</actualResult>
+        </assertContains>
+        <assertContains stepKey="assertImageOnStageCMSPageStage">
+            <expectedResult type="string">{{ImageUpload3.value}}</expectedResult>
+            <actualResult type="variable">actualTextFromHtmlCodeCMSPageStage</actualResult>
+        </assertContains>
+        <assertContains stepKey="assertVariableOnStageCMSPageStage">
+            <expectedResult type="string">{{_ENV.MAGENTO_BASE_URL}}</expectedResult>
+            <actualResult type="variable">actualTextFromHtmlCodeCMSPageStage</actualResult>
+        </assertContains>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate CMS Page Storefront -->
         <comment userInput="Validate CMS Page Storefront" stepKey="commentValidateCMSPageStorefront"/>
@@ -1012,5 +1105,21 @@
         <click selector="{{HtmlOnStorefront.html('1', PageBuilderHtmlPropertyButton.selectorOnFrontend)}}" stepKey="clickRenderedHtmlButtonCMSPageStorefront"/>
         <wait time="3" stepKey="waitArbitraryTimeForPotentialNavigationToOccurCMSPageStorefront"/>
         <seeCurrentUrlEquals url="{{PageBuilderHtmlPropertyButton.url}}" stepKey="seeThatUrlIsChangedToHtmlLinkUrl"/>
+        <openNewTab stepKey="openNewTab"/>
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront2">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <seeElement selector="{{HtmlOnStorefront.widgetLink('1', _ENV.MAGENTO_BASE_URL, $$createCMSPage.identifier$$)}}" stepKey="seeWidgetStorefront"/>
+        <seeElement selector="{{StorefrontCMSPageSection.imageSource(ImageUpload3.fileName)}}" stepKey="seeMediaSourceStorefront"/>
+        <executeJS function="return document.querySelectorAll('{{HtmlOnStorefront.baseCSS}}')[0].innerText;" stepKey="actualTextStorefront"/>
+        <assertContains stepKey="assertVariableStorefront">
+            <expectedResult type="string">{{_ENV.MAGENTO_BASE_URL}}</expectedResult>
+            <actualResult type="variable">actualTextStorefront</actualResult>
+        </assertContains>
+        <!-- Click Page Link Widget Storefront -->
+        <comment userInput="Click Page Link Widget Storefront" stepKey="clickClickPageLinkWidgetStorefront"/>
+        <click selector="{{HtmlOnStorefront.widgetLink('1', _ENV.MAGENTO_BASE_URL, $$createCMSPage.identifier$$)}}" stepKey="clickWidgetStorefront"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <seeCurrentUrlEquals url="{{_ENV.MAGENTO_BASE_URL}}$$createCMSPage.identifier$$" stepKey="seeThatUrlIsChangedToPageLinkWidgetUrlStorefront"/>
     </test>
 </tests>
