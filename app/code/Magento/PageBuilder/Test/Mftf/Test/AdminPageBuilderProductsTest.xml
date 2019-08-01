@@ -1657,6 +1657,7 @@
             <testCaseId value="MC-18771"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-products"/>
+            <group value="DM"/>
         </annotations>
         <before>
             <createData entity="PageBuilderProductsSubCategory" stepKey="createPreReqCategory"/>
@@ -1690,6 +1691,9 @@
         </actionGroup>
         <actionGroup ref="addConditionToProductConditions" stepKey="addCategory">
             <argument name="conditionInput" value="$$createPreReqCategory.id$$"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterDefaultSortBy">
+            <argument name="property" value="PageBuilderProductsSortByNewestTop"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate stage -->
