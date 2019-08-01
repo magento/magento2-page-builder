@@ -23,7 +23,7 @@ class Stock implements SortInterface
     /**
      * @var string
      */
-    private $sort_direction;
+    private $sortDirection;
 
     /**
      * @var \Magento\Framework\Module\ModuleManagerInterface
@@ -32,16 +32,16 @@ class Stock implements SortInterface
 
     /**
      * @param string $label
-     * @param string $sort_direction
+     * @param string $sortDirection
      * @param \Magento\Framework\Module\ModuleManagerInterface $moduleManager
      */
     public function __construct(
         string $label,
-        string $sort_direction,
+        string $sortDirection,
         \Magento\Framework\Module\ModuleManagerInterface $moduleManager
     ) {
         $this->label = $label;
-        $this->sort_direction = $sort_direction;
+        $this->sortDirection = $sortDirection;
         $this->moduleManager = $moduleManager;
     }
 
@@ -97,7 +97,7 @@ class Stock implements SortInterface
             ->group('entity_id')
             ->having('final_qty > 0')
             ->reset(DB\Select::ORDER)
-            ->order('final_qty '.$this->sort_direction);
+            ->order('final_qty '.$this->sortDirection);
 
         $resultIds = [];
 

@@ -23,7 +23,7 @@ class Attribute implements SortInterface
     /**
      * @var string
      */
-    private $sort_direction;
+    private $sortDirection;
 
     /**
      * @var string
@@ -32,16 +32,16 @@ class Attribute implements SortInterface
 
     /**
      * @param string $label
-     * @param string $sort_direction
+     * @param string $sortDirection
      * @param string $attribute_field
      */
     public function __construct(
         string $label,
-        string $sort_direction,
+        string $sortDirection,
         string $attribute_field
     ) {
         $this->label = $label;
-        $this->sort_direction = $sort_direction;
+        $this->sortDirection = $sortDirection;
         $this->attribute_field = $attribute_field;
     }
 
@@ -52,7 +52,7 @@ class Attribute implements SortInterface
         \Magento\Catalog\Model\ResourceModel\Product\Collection $collection
     ): \Magento\Catalog\Model\ResourceModel\Product\Collection {
         $collection->getSelect()->reset(Select::ORDER);
-        $collection->addOrder($this->attribute_field, $this->sort_direction);
+        $collection->addOrder($this->attribute_field, $this->sortDirection);
         return $collection;
     }
 

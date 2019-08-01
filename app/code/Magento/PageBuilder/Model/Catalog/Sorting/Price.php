@@ -23,18 +23,18 @@ class Price implements SortInterface
     /**
      * @var string
      */
-    private $sort_direction;
+    private $sortDirection;
 
     /**
      * @param string $label
-     * @param string $sort_direction
+     * @param string $sortDirection
      */
     public function __construct(
         string $label,
-        string $sort_direction
+        string $sortDirection
     ) {
         $this->label = $label;
-        $this->sort_direction = $sort_direction;
+        $this->sortDirection = $sortDirection;
     }
 
     /**
@@ -46,7 +46,7 @@ class Price implements SortInterface
         $collection->joinAttribute('sorting_price', 'catalog_product/price', 'entity_id', null, 'left');
         $collection->getSelect()
             ->reset(Select::ORDER)
-            ->order('sorting_price '.$this->sort_direction);
+            ->order('sorting_price '.$this->sortDirection);
 
         return $collection;
     }
