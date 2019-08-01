@@ -46,7 +46,8 @@ class Price implements OptionInterface
         $collection->joinAttribute('sorting_price', 'catalog_product/price', 'entity_id', null, 'left');
         $collection->getSelect()
             ->reset(Select::ORDER)
-            ->order('sorting_price '.$this->sortDirection);
+            ->order('sorting_price '.$this->sortDirection)
+            ->order('entity_id');
 
         return $collection;
     }

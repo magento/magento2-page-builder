@@ -97,7 +97,8 @@ class Stock implements OptionInterface
             ->group('entity_id')
             ->having('final_qty > 0')
             ->reset(DB\Select::ORDER)
-            ->order('final_qty '.$this->sortDirection);
+            ->order('final_qty '.$this->sortDirection)
+            ->order('entity_id');
 
         $resultIds = [];
 
