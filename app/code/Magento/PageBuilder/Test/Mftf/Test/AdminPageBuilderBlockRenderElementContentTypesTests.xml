@@ -953,6 +953,8 @@
             </actionGroup>
         </before>
         <after>
+            <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock"/>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
             <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
             <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder2">
                 <argument name="FolderName" value="{{ImageFolder.name}}"/>
@@ -960,8 +962,6 @@
             <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage2">
                 <argument name="Image" value="ImageUpload3"/>
             </actionGroup>
-            <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock"/>
-            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <!-- Add HTML -->
@@ -1003,23 +1003,6 @@
             <argument name="variable" value="PageBuilderTextArea_VariableBaseURL"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsHtml"/>
-        <!-- Validate CMS Block Stage -->
-        <comment userInput="Validate CMS Block Stage" stepKey="commentValidateCMSBlockStage"/>
-        <seeElement selector="{{HtmlOnStage.base('1')}}" stepKey="seeHtmlBaseCMSBlockStage"/>
-        <seeElement selector="{{HtmlOnStage.html('1', PageBuilderHtmlPropertyButton.selector)}}" stepKey="seeHtmlCMSBlockStage"/>
-        <executeJS function="return document.querySelectorAll('{{HtmlOnStage.baseCSS}}')[0].innerText;" stepKey="actualTextFromHtmlCode"/>
-        <assertContains stepKey="assertWidgetOnStage">
-            <expectedResult type="string">{{TinyMCEWidgetCMSPageLink.stageValue}}</expectedResult>
-            <actualResult type="variable">actualTextFromHtmlCode</actualResult>
-        </assertContains>
-        <assertContains stepKey="assertImageOnStage">
-            <expectedResult type="string">{{ImageUpload3.value}}</expectedResult>
-            <actualResult type="variable">actualTextFromHtmlCode</actualResult>
-        </assertContains>
-        <assertContains stepKey="assertVariableOnStage">
-            <expectedResult type="string">{{TinyMCEVariableBaseURL.stageValue}}</expectedResult>
-            <actualResult type="variable">actualTextFromHtmlCode</actualResult>
-        </assertContains>
         <actionGroup ref="saveCMSBlock" stepKey="saveCMSBlock"/>
         <!-- Validate CMS Block Stage After Save -->
         <comment userInput="Validate CMS Block Stage After Save" stepKey="commentValidateCMSBlockStageAfterSave"/>
@@ -1038,27 +1021,6 @@
             <expectedResult type="string">{{TinyMCEVariableBaseURL.stageValue}}</expectedResult>
             <actualResult type="variable">actualTextFromHtmlCodeAfterSave</actualResult>
         </assertContains>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStageAfterSave">
-            <argument name="contentType" value="PageBuilderHtmlContentType"/>
-        </actionGroup>
-        <!-- Validate Edit Panel After Save -->
-        <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanelAfterSave"/>
-        <actionGroup ref="assertTextareaContainsValue" stepKey="assertButtonInTextareaValueAfterSave">
-            <argument name="value" value="{{PageBuilderHtmlPropertyButton.value}}"/>
-            <argument name="selector" value="{{HtmlOnConfiguration.textarea}}"/>
-        </actionGroup>
-        <actionGroup ref="assertTextareaContainsValue" stepKey="assertWidgetInTextareaValueAfterSave">
-            <argument name="value" value="{{PageBuilderTextArea_WidgetCMSPageLink.editPanelValue}}"/>
-            <argument name="selector" value="{{HtmlOnConfiguration.textarea}}"/>
-        </actionGroup>
-        <actionGroup ref="assertTextareaContainsValue" stepKey="assertImageInTextareaValueAfterSave">
-            <argument name="value" value="{{ImageUpload3.value}}"/>
-            <argument name="selector" value="{{HtmlOnConfiguration.textarea}}"/>
-        </actionGroup>
-        <actionGroup ref="assertTextareaContainsValue" stepKey="assertVariableInTextareaValueAfterSave">
-            <argument name="value" value="{{PageBuilderTextArea_VariableBaseURL.editPanelValue}}"/>
-            <argument name="selector" value="{{HtmlOnConfiguration.textarea}}"/>
-        </actionGroup>
         <!-- Add Block to CMS Page -->
         <comment userInput="Add Block to CMS Page" stepKey="commentAddBlockToCMSPage"/>
         <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
@@ -1105,7 +1067,6 @@
         <click selector="{{HtmlOnStorefront.html('1', PageBuilderHtmlPropertyButton.selectorOnFrontend)}}" stepKey="clickRenderedHtmlButtonCMSPageStorefront"/>
         <wait time="3" stepKey="waitArbitraryTimeForPotentialNavigationToOccurCMSPageStorefront"/>
         <seeCurrentUrlEquals url="{{PageBuilderHtmlPropertyButton.url}}" stepKey="seeThatUrlIsChangedToHtmlLinkUrl"/>
-        <openNewTab stepKey="openNewTab"/>
         <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront2">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
