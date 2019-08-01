@@ -13,7 +13,7 @@ use Magento\Framework\DB\Select;
 /**
  * Class for sorting by price
  */
-class Price implements SortInterface
+class Price implements OptionInterface
 {
     /**
      * @var string

@@ -13,7 +13,7 @@ use Magento\Framework\DB\Select;
 /**
  * Class for sorting by specified attribute
  */
-class Attribute implements SortInterface
+class SimpleOption implements OptionInterface
 {
     /**
      * @var string

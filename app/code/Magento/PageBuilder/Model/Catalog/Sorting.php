@@ -24,7 +24,7 @@ class Sorting
     private $factory;
 
     /**
-     * @var Sorting\SortInterface[]
+     * @var Sorting\OptionInterface[]
      */
     private $sortInstances = [];
 
@@ -62,9 +62,9 @@ class Sorting
      * Get the instance of the first option which is None
      *
      * @param string $sortOption
-     * @return Sorting\SortInterface
+     * @return Sorting\OptionInterface
      */
-    public function getSortingInstance($sortOption): Sorting\SortInterface
+    public function getSortingInstance($sortOption): Sorting\OptionInterface
     {
         if (isset($this->sortInstances[$sortOption])) {
             return $this->sortInstances[$sortOption];

@@ -13,7 +13,7 @@ use Magento\Framework\DB;
 /**
  * Class for sorting by stock
  */
-class Stock implements SortInterface
+class Stock implements OptionInterface
 {
     /**
      * @var string

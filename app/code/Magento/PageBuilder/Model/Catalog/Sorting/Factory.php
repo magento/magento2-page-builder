@@ -31,16 +31,16 @@ class Factory
      *
      * @param string $className
      * @param array $data
-     * @return SortInterface
+     * @return OptionInterface
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function create($className, array $data = []): SortInterface
+    public function create($className, array $data = []): OptionInterface
     {
         $instance = $this->_objectManager->create($className, $data);
 
-        if (!$instance instanceof \Magento\PageBuilder\Model\Catalog\Sorting\SortInterface) {
+        if (!$instance instanceof \Magento\PageBuilder\Model\Catalog\Sorting\OptionInterface) {
             throw new \Magento\Framework\Exception\LocalizedException(
-                __('%1 doesn\'t implement SortInterface', $className)
+                __('%1 doesn\'t implement OptionInterface', $className)
             );
         }
         return $instance;

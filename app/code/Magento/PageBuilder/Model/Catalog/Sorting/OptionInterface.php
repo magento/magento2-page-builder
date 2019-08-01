@@ -9,9 +9,9 @@ declare(strict_types=1);
 namespace Magento\PageBuilder\Model\Catalog\Sorting;
 
 /**
- * Interface SortInterface
+ * Interface OptionInterface
  */
-interface SortInterface
+interface OptionInterface
 {
     /**
      * Sort products in product widget collection according to specified option.
