@@ -464,7 +464,7 @@
         <!-- Verify Text in Tab on storefront -->
         <comment userInput="View Tab on storefront" stepKey="viewTabOnStorefront"/>
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
-        <seeElementInDOM selector="{{TextOnStorefront.emptyText}}" stepKey="seeTextContentType"/>
+        <seeElementInDOM selector="{{TextOnStorefront.base('1')}}" stepKey="seeTextContentType"/>
         <seeElement selector="{{StorefrontCMSPageSection.imageSource(ImageUpload3.fileName)}}" stepKey="assertMediaSource"/>
         <seeElement selector="{{TextOnStorefront.text('1', _ENV.MAGENTO_BASE_URL)}}" stepKey="waitForVariableStorefront"/>
         <seeElement selector="{{TextOnStorefront.textWidget('1', _ENV.MAGENTO_BASE_URL, $$createCMSPageB.identifier$$)}}" stepKey="waitForWidgetStorefront"/>
@@ -2170,7 +2170,7 @@
         <!--Verify Content Block on storefront-->
         <comment userInput="Verify empty Content Block on storefront" stepKey="commentVerifyEmptyBlock"/>
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
-        <seeElementInDOM selector="{{TextOnStorefront.emptyText}}" stepKey="seeTextContentType"/>
+        <seeElementInDOM selector="{{TextOnStorefront.base('1')}}" stepKey="seeTextContentType"/>
         <seeElement selector="{{StorefrontCMSPageSection.imageSource(ImageUpload3.fileName)}}" stepKey="assertMediaSource"/>
         <seeElement selector="{{TextOnStorefront.text('1', _ENV.MAGENTO_BASE_URL)}}" stepKey="waitForVariableStorefront"/>
         <seeElement selector="{{TextOnStorefront.textWidget('1', _ENV.MAGENTO_BASE_URL,  $$createCMSPageB.identifier$$)}}" stepKey="waitForWidgetStorefront"/>
@@ -2769,5 +2769,193 @@
         <waitForElementVisible selector="{{TextOnStage.base('1')}}" stepKey="waitForTextVisible" />
         <seeElement selector="{{TextOnStage.base('1')}}" stepKey="seeText" />
         <seeElement selector="{{TextOnStage.text('1', PageBuilderTextProperty.value)}}" stepKey="seeTestStringInText"/>
+    </test>
+    <test name="TextAddVariableWithinStringInlineWYSWIYG">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Text"/>
+            <title value="Add variable into string"/>
+            <description value="Ensure a user can add a variable in the middle of a string"/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MC-4137"/>
+            <testCaseId value="MC-18691"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-text"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage1">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTextIntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <click selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnTextEditorArea"/>
+        <comment userInput="Write text into WYSIWYG" stepKey="commentWriteTextIntoWysiwyg"/>
+        <pressKey selector="{{TextOnStage.tinymce('1')}}" userInput="{{PageBuilderVariableWidgetText.value}}" stepKey="fillWysiwygField"/>
+        <waitForElementVisible selector="{{TextOnStage.text('1', PageBuilderVariableWidgetText.value)}}" stepKey="waitForTextOnStage"/>
+        <seeElement selector="{{TextOnStage.text('1', PageBuilderTextProperty.value)}}" stepKey="seeTextOnStage"/>
+        <comment userInput="Move caret 3 spaces to the left" stepKey="commentMoveCaretLeft"/>
+        <pressKey selector="{{TextOnStage.tinymce('1')}}" parameterArray="[\Facebook\WebDriver\WebDriverKeys::LEFT, \Facebook\WebDriver\WebDriverKeys::LEFT, \Facebook\WebDriver\WebDriverKeys::LEFT]" stepKey="pressLeftKey"/>
+        <comment userInput="Input variable into text content type" stepKey="commentInputVariableIntoStage"/>
+        <actionGroup ref="addVariableToTinyMCEInline" stepKey="addVariableToTinyMCE">
+            <argument name="variable" value="TinyMCEVariableBaseURL"/>
+        </actionGroup>
+        <comment userInput="Verify variable has been placed in between string" stepKey="commentVerifyWidgetWithinString"/>
+        <waitForElementVisible selector="{{TextOnStage.text('1', TinyMCEVariableBaseURL.editPanelValue)}}" stepKey="waitForVariable"/>
+        <seeElement selector="{{TextOnStage.text('1', TinyMCEVariableBaseURL.editPanelValue)}}" stepKey="seeVariableOnStage"/>
+        <dontSeeElement selector="{{TextOnStage.text('1', PageBuilderVariableWidgetText.value)}}" stepKey="dontSeeOriginalTextOnStage"/>
+        <seeElement selector="{{TextOnStage.text('1', PageBuilderVariableWidgetText.expectedString1)}}" stepKey="seeExpectedString" />
+        <seeElement selector="{{TextOnStage.text('1', PageBuilderVariableWidgetText.expectedString2)}}" stepKey="seeExpectedString1" />
+    </test>
+    <test name="TextAddWidgetWithinStringInlineWYSIWYG">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Text"/>
+            <title value="Add widget into string"/>
+            <description value="Ensure a user is able to add a widget into the middle of string"/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MC-4137"/>
+            <testCaseId value="MC-18692"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-text"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
+            <createData entity="_defaultCmsPage" stepKey="createCMSPageB" />
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
+            <deleteData createDataKey="createCMSPageB" stepKey="deletePreReqCMSPageB" />
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage1">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTextIntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <click selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnTextEditorArea"/>
+        <comment userInput="Write text into WYSIWYG" stepKey="commentWriteTextIntoWysiwyg"/>
+        <pressKey selector="{{TextOnStage.tinymce('1')}}" userInput="{{PageBuilderVariableWidgetText.value}}" stepKey="fillWysiwygField"/>
+        <waitForElementVisible selector="{{TextOnStage.text('1', PageBuilderVariableWidgetText.value)}}" stepKey="waitForTextOnStage"/>
+        <seeElement selector="{{TextOnStage.text('1', PageBuilderTextProperty.value)}}" stepKey="seeTextOnStage"/>
+        <comment userInput="Move caret 3 spaces to the left" stepKey="commentMoveCaretLeft"/>
+        <pressKey selector="{{TextOnStage.tinymce('1')}}" parameterArray="[\Facebook\WebDriver\WebDriverKeys::LEFT, \Facebook\WebDriver\WebDriverKeys::LEFT, \Facebook\WebDriver\WebDriverKeys::LEFT]" stepKey="pressLeftKey"/>
+        <comment userInput="Input variable into text content type" stepKey="commentInputVariableIntoStage"/>
+        <actionGroup ref="addPageLinkWidgetToTinyMCEInline" stepKey="addPageLinkWidgetToTinyMCE">
+            <argument name="widget" value="TinyMCEWidgetCMSPageLink"/>
+            <argument name="page" value="$$createCMSPageB.identifier$$"/>
+        </actionGroup>
+        <comment userInput="Verify widget has been placed in between string" stepKey="commentVerifyWidgetWithinString"/>
+        <waitForElementVisible selector="{{TextOnStage.text('1', TinyMCEWidgetCMSPageLink.editPanelValue)}}" stepKey="waitForWidgetStage1"/>
+        <seeElement selector="{{TextOnStage.text('1', TinyMCEWidgetCMSPageLink.editPanelValue)}}" stepKey="seeWidgetOnStage"/>
+        <dontSeeElement selector="{{TextOnStage.text('1', PageBuilderVariableWidgetText.value)}}" stepKey="dontSeeOriginalTextOnStage"/>
+        <seeElement selector="{{TextOnStage.text('1', PageBuilderVariableWidgetText.expectedString1)}}" stepKey="seeExpectedString" />
+        <seeElement selector="{{TextOnStage.text('1', PageBuilderVariableWidgetText.expectedString2)}}" stepKey="seeExpectedString1" />
+    </test>
+    <test name="TextCopyAndPasteAllTextInlineWYSIWYG">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Text"/>
+            <title value="Copy and paste all text"/>
+            <description value="Ensure a user can copy all text and paste it over the original text without duplicating"/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MC-4137"/>
+            <testCaseId value="MC-18693"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-text"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage1">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTextIntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <click selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnTextEditorArea"/>
+        <comment userInput="Write text into WYSIWYG" stepKey="commentWriteTextIntoWysiwyg"/>
+        <pressKey selector="{{TextOnStage.tinymce('1')}}" userInput="{{PageBuilderVariableWidgetText.value}}" stepKey="fillWysiwygField"/>
+        <waitForElementVisible selector="{{TextOnStage.text('1', PageBuilderVariableWidgetText.value)}}" stepKey="waitForTextOnStage"/>
+        <seeElement selector="{{TextOnStage.text('1', PageBuilderVariableWidgetText.value)}}" stepKey="seeTextOnStage" />
+        <executeJS function="document.execCommand('selectall', null, false);" stepKey="selectAllText"/>
+        <waitForPageLoad stepKey="waitForTextSelect"/>
+        <pressKey selector="{{TextOnStage.tinymce('1')}}" parameterArray="[\Facebook\WebDriver\WebDriverKeys::CONTROL, \Facebook\WebDriver\WebDriverKeys::INSERT]" stepKey="copyAllText"/>
+        <waitForPageLoad stepKey="waitForTextCopy"/>
+        <pressKey selector="{{TextOnStage.tinymce('1')}}" parameterArray="[\Facebook\WebDriver\WebDriverKeys::ARROW_RIGHT, \Facebook\WebDriver\WebDriverKeys::ENTER]" stepKey="unSelectTextAndNewLine"/>
+        <waitForPageLoad stepKey="waitForUnselect"/>
+        <pressKey selector="{{TextOnStage.tinymce('1')}}" parameterArray="[\Facebook\WebDriver\WebDriverKeys::SHIFT, \Facebook\WebDriver\WebDriverKeys::INSERT]" stepKey="pasteAllText"/>
+        <waitForPageLoad stepKey="waitForTextPaste"/>
+        <seeNumberOfElements selector="{{TextOnStage.text('1', PageBuilderVariableWidgetText.value)}}" userInput="2" stepKey="seeTwoParagraphs"/>
+        <executeJS function="document.execCommand('selectall', null, false);" stepKey="selectAllText2"/>
+        <waitForPageLoad stepKey="waitForTextSelect2"/>
+        <pressKey selector="{{TextOnStage.tinymce('1')}}" parameterArray="[\Facebook\WebDriver\WebDriverKeys::SHIFT, \Facebook\WebDriver\WebDriverKeys::INSERT]" stepKey="pasteAllText2"/>
+        <waitForPageLoad stepKey="waitForTextPaste2"/>
+        <seeNumberOfElements selector="{{TextOnStage.text('1', PageBuilderVariableWidgetText.value)}}" userInput="1" stepKey="seeOnlyOneParagraph"/>
+    </test>
+    <test name="TextAddLinkToTextInlineWYSIWYG">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Text"/>
+            <title value="Add link to text"/>
+            <description value="Ensure a user is able to add a link to text within the inline WYSIWYG"/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MC-13631"/>
+            <testCaseId value="MC-18694"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-text"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage1">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTextIntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <click selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnTextEditorArea"/>
+        <comment userInput="Write text into WYSIWYG" stepKey="commentWriteTextIntoWysiwyg"/>
+        <pressKey selector="{{TextOnStage.tinymce('1')}}" userInput="{{PageBuilderTextProperty.value}}" stepKey="fillWysiwygField"/>
+        <waitForElementVisible selector="{{TextOnStage.text('1', PageBuilderTextProperty.value)}}" stepKey="waitForTextOnStage"/>
+        <seeElement selector="{{TextOnStage.text('1', PageBuilderVariableWidgetText.value)}}" stepKey="seeTextOnStage" />
+        <executeJS function="document.execCommand('selectall', null, false);" stepKey="selectAllText"/>
+        <waitForPageLoad stepKey="waitForTextSelect"/>
+        <actionGroup ref="insertLinkInWYSIWYGExistingText" stepKey="insertLinkInWYSIWYG">
+            <argument name="url" value="{{ExternalLink.googleUrl}}"/>
+            <argument name="wysiwygArea" value="{{WYSIWYGOnPageBuilderInline.inlineCss}}"/>
+        </actionGroup>
+        <seeElement selector="{{TextOnStage.textAnchorText('1', PageBuilderTextProperty.value)}}" stepKey="seeAnchorInWysiwyg"/>
     </test>
 </tests>

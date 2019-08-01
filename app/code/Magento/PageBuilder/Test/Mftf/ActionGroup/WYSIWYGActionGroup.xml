@@ -176,6 +176,24 @@
         <waitForPageLoad stepKey="waitForPageLoad2"/>
         <waitForElementNotVisible selector="{{WYSIWYGInsertLinkModal.modal}}" stepKey="waitForInsertLinkModalGone"/>
     </actionGroup>
+    <actionGroup name="insertLinkInWYSIWYGExistingText">
+        <arguments>
+            <argument name="section" defaultValue="TinyMCESection"/>
+            <argument name="url" type="string"/>
+            <argument name="title" type="string" defaultValue=""/>
+            <argument name="wysiwygArea" defaultValue="{{WYSIWYGOnPageBuilderInline.notCss}}" type="string"/>
+        </arguments>
+        <comment userInput="insertLinkInWYSIWYGExistingText" stepKey="comment"/>
+        <waitForElementVisible selector="{{wysiwygArea}} {{section.InsertLink}}" stepKey="waitForInsertLinkButton"/>
+        <click selector="{{wysiwygArea}} {{section.InsertLink}}" stepKey="clickInsertLinkButton"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible selector="{{WYSIWYGInsertLinkModal.modal}}" stepKey="waitForInsertLinkModal"/>
+        <fillField selector="{{WYSIWYGInsertLinkModal.urlInput}}" userInput="{{url}}" stepKey="insertUrl"/>
+        <fillField selector="{{WYSIWYGInsertLinkModal.titleInput}}" userInput="{{title}}" stepKey="insertTitle"/>
+        <click selector="{{WYSIWYGInsertLinkModal.okButton}}" stepKey="clickOkButton"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <waitForElementNotVisible selector="{{WYSIWYGInsertLinkModal.modal}}" stepKey="waitForInsertLinkModalGone"/>
+    </actionGroup>
     <actionGroup name="assertTextareaContainsValue">
         <arguments>
             <argument name="selector" type="string"/>
