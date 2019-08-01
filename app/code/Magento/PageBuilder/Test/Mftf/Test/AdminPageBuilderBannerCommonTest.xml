@@ -2018,68 +2018,6 @@
         <seeElement selector="{{BannerOnBackend.emptyBanner('1')}}" stepKey="seeBannerPlaceholder2"/>
         <dontSeeElementInDOM selector="{{BannerOnBackend.imageOnStage('1',PageBuilderBackgroundImage_JPG.fileName)}}" stepKey="dontSeeImageInDOM2"/>
     </test>
-    <test name="BannerInlineEditStaysFocusedWhileDraggingAndDropping">
-        <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Banner"/>
-            <title value="Banner - Inline Edit Stays Focused While Dragging And Dropping"/>
-            <description value="Verify that the Banner inline edit stays in focus while users drag and drop content"/>
-            <severity value="MINOR"/>
-            <useCaseId value="MC-937"/>
-            <testCaseId value="MC-3840"/>
-            <group value="pagebuilder"/>
-            <group value="pagebuilder-banner"/>
-        </annotations>
-        <before>
-            <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG"/>
-            <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="enableTinyMCE4"/>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        </before>
-        <after>
-            <actionGroup ref="logout" stepKey="logout"/>
-        </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentType" value="PageBuilderBannerContentType"/>
-        </actionGroup>
-        <!-- Add Banner -->
-        <comment userInput="Add Banner" stepKey="commentAddBanner"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
-            <argument name="contentType" value="PageBuilderBannerContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToContainer" stepKey="dragContentTypeIntoContainer">
-            <argument name="contentType" value="PageBuilderBannerContentType"/>
-        </actionGroup>
-        <!-- Activate Inline Edit -->
-        <comment userInput="Activate Inline Edit" stepKey="commentInlineEdit"/>
-        <click selector="{{PageBuilderStage.inlineWYSIWYGEditor(PageBuilderBannerContentType.role, '1')}}" stepKey="focusOnEditorArea"/>
-        <waitForElementVisible selector="{{PageBuilderStage.inlineWYSIWYGEditorPanel(PageBuilderBannerContentType.role, '1')}}" stepKey="waitForEditorPanel"/>
-        <!-- Add Columns -->
-        <comment userInput="Add Columns" stepKey="commentAddColumns"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection2">
-            <argument name="contentType" value="PageBuilderColumnContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
-            <argument name="contentType" value="PageBuilderColumnContentType"/>
-        </actionGroup>
-        <!-- Verify Editor Still In Focus -->
-        <comment userInput="Verify Editor Still In Focus" stepKey="commentEditorInFocus"/>
-        <seeElement selector="{{PageBuilderStage.inlineWYSIWYGEditorPanel(PageBuilderBannerContentType.role, '1')}}" stepKey="seeEditorPanel"/>
-        <!-- Verify Content Type Option Menus Are Hidden -->
-        <comment userInput="Verify Content Type Option Menus Are Hidden" stepKey="commentOptionsHidden"/>
-        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStage(PageBuilderBannerContentType.role)}}" stepKey="mouseOverBanner"/>
-        <waitForPageLoad stepKey="waitForPageLoad"/>
-        <seeElementInDOM selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(PageBuilderBannerContentType.role)}}" stepKey="seeBannerOptionsInDOM"/>
-        <dontSeeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(PageBuilderBannerContentType.role)}}" stepKey="dontSeeBannerOptions"/>
-        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStage(PageBuilderColumnContentType.role)}}" stepKey="mouseOverColumn"/>
-        <waitForPageLoad stepKey="waitForPageLoad2"/>
-        <seeElementInDOM selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(PageBuilderColumnContentType.role)}}" stepKey="seeColumnOptionsInDOM"/>
-        <dontSeeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(PageBuilderColumnContentType.role)}}" stepKey="dontSeeColumnOptions"/>
-        <!-- Verify Editor Still In Focus 2 -->
-        <comment userInput="Verify Editor Still In Focus 2" stepKey="commentEditorInFocus2"/>
-        <seeElement selector="{{PageBuilderStage.inlineWYSIWYGEditorPanel(PageBuilderBannerContentType.role, '1')}}" stepKey="seeEditorPanel2"/>
-    </test>
     <test name="BannerContentVariableCanWrap">
         <annotations>
             <features value="PageBuilder"/>

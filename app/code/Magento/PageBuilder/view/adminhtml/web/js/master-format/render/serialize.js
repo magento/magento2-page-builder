@@ -45,7 +45,11 @@ define(["Magento_PageBuilder/js/content-type-collection"], function (_contentTyp
 
 
   function getData(contentType) {
-    return contentType.dataStore.getState() || {};
+    /**
+     * Flip flop to JSON and back again to ensure all data is serializable. Magento by default adds functions into
+     * some basic types which cannot be serialized when calling PostMessage.
+     */
+    return JSON.parse(JSON.stringify(contentType.dataStore.getState())) || {};
   }
 
   return {
