@@ -69,8 +69,6 @@ class SortingTest extends \PHPUnit\Framework\TestCase
                 )
             );
 
-            $collection->getSize();
-
             $this->assertEquals(
                 $actualOrder,
                 $expectedOrder,
