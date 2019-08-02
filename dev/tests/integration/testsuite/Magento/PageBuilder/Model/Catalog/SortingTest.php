@@ -69,6 +69,8 @@ class SortingTest extends \PHPUnit\Framework\TestCase
                 )
             );
 
+            $collection->getSize();
+
             $this->assertEquals(
                 $actualOrder,
                 $expectedOrder,
@@ -124,10 +126,10 @@ class SortingTest extends \PHPUnit\Framework\TestCase
                         '1_PB_PRODUCT'
                     ],
                     'low_stock_first' => [
+                        'B_PB_PRODUCT',
                         '1_PB_PRODUCT',
                         'a_pb_product',
-                        'C_PB_PRODUCT',
-                        'B_PB_PRODUCT'
+                        'C_PB_PRODUCT'
                     ],
                     'high_stock_first' => [
                         'C_PB_PRODUCT',
@@ -139,10 +141,8 @@ class SortingTest extends \PHPUnit\Framework\TestCase
                         '1_PB_PRODUCT',
                         'a_pb_product',
                         'C_PB_PRODUCT',
-                        'B_PB_PRODUCT'
                     ],
                     'price_low_to_high' => [
-                        'B_PB_PRODUCT',
                         'C_PB_PRODUCT',
                         'a_pb_product',
                         '1_PB_PRODUCT'
