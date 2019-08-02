@@ -28,21 +28,21 @@ class SimpleOption implements OptionInterface
     /**
      * @var string
      */
-    private $attribute_field;
+    private $attributeField;
 
     /**
      * @param string $label
      * @param string $sortDirection
-     * @param string $attribute_field
+     * @param string $attributeField
      */
     public function __construct(
         string $label,
         string $sortDirection,
-        string $attribute_field
+        string $attributeField
     ) {
         $this->label = $label;
         $this->sortDirection = $sortDirection;
-        $this->attribute_field = $attribute_field;
+        $this->attributeField = $attributeField;
     }
 
     /**
@@ -52,7 +52,9 @@ class SimpleOption implements OptionInterface
         \Magento\Catalog\Model\ResourceModel\Product\Collection $collection
     ): \Magento\Catalog\Model\ResourceModel\Product\Collection {
         $collection->getSelect()->reset(Select::ORDER);
-        $collection->addOrder($this->attribute_field, $this->sortDirection);
+        $collection->addAttributeToSort($this->attributeField, $this->sortDirection);
+        $collection->addAttributeToSort('entity_id', $this->sortDirection);
+
         return $collection;
     }
 
