@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/utils/object"], function (_object) {
+define(["Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/utils/object"], function (_directives, _object) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -38,7 +38,7 @@ define(["Magento_PageBuilder/js/utils/object"], function (_object) {
     ;
 
     _proto.toDom = function toDom(name, data) {
-      return (0, _object.get)(data, name);
+      return (0, _directives.removeQuotesInMediaDirectives)((0, _object.get)(data, name));
     };
 
     return Decode;
