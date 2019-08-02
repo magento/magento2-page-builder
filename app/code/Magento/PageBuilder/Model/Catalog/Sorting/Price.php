@@ -43,11 +43,9 @@ class Price implements OptionInterface
     public function sort(
         \Magento\Catalog\Model\ResourceModel\Product\Collection $collection
     ): \Magento\Catalog\Model\ResourceModel\Product\Collection {
-        $collection->joinAttribute('sorting_price', 'catalog_product/price', 'entity_id', null, 'left');
-        $collection->getSelect()
-            ->reset(Select::ORDER)
-            ->order('sorting_price '.$this->sortDirection)
-            ->order('entity_id');
+        $collection->getSelect()->reset(Select::ORDER);
+        $collection->addAttributeToSort('price', $this->sortDirection);
+        $collection->addAttributeToSort('entity_id', $this->sortDirection);
 
         return $collection;
     }
