@@ -5,7 +5,7 @@
 define([
     'jquery',
     'Magento_PageBuilder/js/events',
-    'jquery/ui'
+    'jquery-ui-modules/tabs'
 ], function ($, events) {
     'use strict';
 
