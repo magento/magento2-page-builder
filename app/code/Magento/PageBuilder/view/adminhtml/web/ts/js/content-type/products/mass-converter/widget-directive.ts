@@ -22,10 +22,12 @@ export default class WidgetDirective extends BaseWidgetDirective {
         const attributes = super.fromDom(data, config) as {
             conditions_encoded: string;
             products_count: number;
+            sort_order: string;
         };
 
         data.conditions_encoded = this.decodeWysiwygCharacters(attributes.conditions_encoded || "");
         data.products_count = attributes.products_count;
+        data.sort_order = attributes.sort_order;
         return data;
     }
 
@@ -44,6 +46,7 @@ export default class WidgetDirective extends BaseWidgetDirective {
             id_path: "",
             show_pager: 0,
             products_count: data.products_count,
+            sort_order: data.sort_order,
             type_name: "Catalog Products List",
             conditions_encoded: this.encodeWysiwygCharacters(data.conditions_encoded || ""),
         };
