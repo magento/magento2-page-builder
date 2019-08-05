@@ -4,7 +4,7 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/utils/check-stage-full-screen"], function (_jquery, _knockout, _events, _checkStageFullScreen) {
+define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/utils/check-stage-full-screen", "Magento_PageBuilder/js/utils/promise-deferred"], function (_jquery, _knockout, _events, _checkStageFullScreen, _promiseDeferred) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -26,6 +26,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
      */
     function Toolbar(preview, options) {
       this.options = _knockout.observableArray([]);
+      this.afterRenderDeferred = (0, _promiseDeferred)();
       this.preview = preview;
       this.options(options);
     }
@@ -39,12 +40,23 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
     var _proto = Toolbar.prototype;
 
     /**
+     * On render init the toolbar
+     *
+     * @param {Element} element
+     */
+    _proto.afterRender = function afterRender(element) {
+      this.element = element;
+      this.afterRenderDeferred.resolve(element);
+    }
+    /**
      * Upon clicking the option update the value as directed
      * When user toggles the option off, set the value back to default
      *
      * @param {OptionInterface} option
      * @param {ValueInterface} value
      */
+    ;
+
     _proto.onOptionClick = function onOptionClick(option, value) {
       var defaultValue = this.preview.config.fields[option.key].default;
       var currentValue = this.preview.contentType.dataStore.get(option.key);

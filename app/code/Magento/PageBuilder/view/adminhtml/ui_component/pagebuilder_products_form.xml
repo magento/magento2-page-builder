@@ -89,7 +89,21 @@
                 </arguments>
             </block>
         </htmlContent>
-        <field name="products_count" sortOrder="10" formElement="input">
+        <field name="sort_order" sortOrder="10" formElement="select">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Sort By</label>
+                <dataScope>sort_order</dataScope>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="Magento\PageBuilder\Model\Catalog\Sorting\Options"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="products_count" sortOrder="20" formElement="input">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="default" xsi:type="number">5</item>
