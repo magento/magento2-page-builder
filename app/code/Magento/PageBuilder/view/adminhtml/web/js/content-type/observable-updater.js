@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["consoleLogger", "knockout", "Magento_PageBuilder/js/content-type/appearance-config", "Magento_PageBuilder/js/content-type/observable-updater/attributes", "Magento_PageBuilder/js/content-type/observable-updater/css", "Magento_PageBuilder/js/content-type/observable-updater/html", "Magento_PageBuilder/js/content-type/observable-updater/style"], function (_consoleLogger, _knockout, _appearanceConfig, _attributes, _css, _html, _style) {
+define(["consoleLogger", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/content-type/appearance-config", "Magento_PageBuilder/js/content-type/observable-updater/attributes", "Magento_PageBuilder/js/content-type/observable-updater/css", "Magento_PageBuilder/js/content-type/observable-updater/html", "Magento_PageBuilder/js/content-type/observable-updater/style", "Magento_PageBuilder/js/content-type/style-registry"], function (_consoleLogger, _knockout, _events, _appearanceConfig, _attributes, _css, _html, _style, _styleRegistry) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -169,11 +169,18 @@ define(["consoleLogger", "knockout", "Magento_PageBuilder/js/content-type/appear
     _proto.generateStylesAndClassNames = function generateStylesAndClassNames(contentType, elementName, config, data) {
       var _elementCssNames;
 
-      var className = "pb-" + contentType.config.name.charAt(0) + "-" + elementName;
+      var className = (0, _styleRegistry.generateElementClassName)(contentType.config.name, elementName);
       var elementCssNames = (_elementCssNames = {}, _elementCssNames[className] = true, _elementCssNames[className + "-" + contentType.id] = true, _elementCssNames); // Also generate styles and store in registry to be placed into style sheet later on
 
       var styles = this.generateKnockoutBinding("style", elementName, config, data);
-      this.styleRegistry.updateStyles(className + "-" + contentType.id, styles);
+      this.styleRegistry.setStyles(className + "-" + contentType.id, styles);
+
+      _events.trigger("styles:update", {
+        className: className,
+        styles: styles,
+        stageId: contentType.stageId
+      });
+
       return elementCssNames;
     }
     /**

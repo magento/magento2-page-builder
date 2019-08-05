@@ -11,7 +11,8 @@ var config = {
 
             /* Utilities */
             'google-map': 'Magento_PageBuilder/js/utils/map',
-            'object-path': 'Magento_PageBuilder/js/resource/object-path'
+            'object-path': 'Magento_PageBuilder/js/resource/object-path',
+            'csso': 'Magento_PageBuilder/js/resource/csso/csso-browser'
         }
     },
     shim: {

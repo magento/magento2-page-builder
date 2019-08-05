@@ -3,6 +3,7 @@
  * See COPYING.txt for license details.
  */
 
+import csso from "csso";
 import $ from "jquery";
 import ko from "knockout";
 import engine from "Magento_Ui/js/lib/knockout/template/engine";
@@ -11,7 +12,7 @@ import ConfigInterface from "../../config.types";
 import ContentTypeCollectionInterface from "../../content-type-collection.types";
 import createContentType from "../../content-type-factory";
 import ContentTypeInterface from "../../content-type.types";
-import StyleRegistry from "../../content-type/style-registry";
+import StyleRegistry, {generateCss} from "../../content-type/style-registry";
 import decodeAllDataUrlsInString from "../../utils/directives";
 import filterHtml from "../filter-html";
 import { TreeItem } from "./serialize";
@@ -109,6 +110,9 @@ function render(message: {stageId: string, tree: TreeItem}): Promise<string> {
         // Assign the observer before executing the render to ensure no race condition occurs
         const engineRender = engine.waitForFinishRender().then(() => {
             ko.cleanNode(element);
+            $(element).append(
+                $("<style />").html(generateMasterCss(styleRegistry)),
+            );
             const filtered: JQuery = filterHtml($(element));
             const output = decodeAllDataUrlsInString(filtered.html());
             return output;
@@ -163,4 +167,13 @@ function createRenderTree(
 
         return contentType;
     });
+}
+
+/**
+ * Generate the master format CSS
+ *
+ * @param registry
+ */
+function generateMasterCss(registry: StyleRegistry): string {
+    return csso.minify(generateCss(registry.getAllStyles())).css;
 }

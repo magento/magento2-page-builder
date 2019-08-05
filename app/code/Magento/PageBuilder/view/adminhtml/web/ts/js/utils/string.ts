@@ -18,3 +18,12 @@ export function fromSnakeToCamelCase(currentString: string): string {
     }
     return parts[0] + newString;
 }
+
+/**
+ * Convert a camel case string to snake case
+ *
+ * @param currentString
+ */
+export function fromCamelCaseToSnake(currentString: string): string {
+    return currentString.replace(/[A-Z]/g, (m) => "-" + m.toLowerCase());
+}

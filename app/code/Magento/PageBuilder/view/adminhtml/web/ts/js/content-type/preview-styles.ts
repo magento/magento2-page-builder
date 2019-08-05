@@ -5,8 +5,7 @@
 
 import ko from "knockout";
 import events from "Magento_PageBuilder/js/events";
-import _ from "underscore";
-import {Style, StylesUpdateEventParams} from "./style-registry";
+import {generateCssBlock, StylesUpdateEventParams} from "./style-registry";
 
 interface StyleBlock {
     className: string;
@@ -15,13 +14,13 @@ interface StyleBlock {
 
 export default class PreviewStyles {
     public styleBlocks: KnockoutObservableArray<StyleBlock> = ko.observableArray([]);
-    private stageId: string;
+    private readonly stageId: string;
 
     constructor(stageId: string) {
         this.stageId = stageId;
         events.on("styles:update", (args: StylesUpdateEventParams) => {
             if (args.stageId === this.stageId) {
-                const css = this.generateCss(args.className, args.styles);
+                const css = generateCssBlock(args.className, args.styles);
                 // Remove any existing style blocks for the current class name
                 const existingBlock = this.styleBlocks().find((block) => block.className === args.className);
                 if (existingBlock) {
@@ -46,22 +45,5 @@ export default class PreviewStyles {
      */
     public getTemplate() {
         return "Magento_PageBuilder/content-type/preview-styles";
-    }
-
-    /**
-     * Generate CSS to push into the blocks
-     *
-     * @param className
-     * @param styles
-     */
-    private generateCss(className: string, styles: Style) {
-        let generatedStyles = "";
-        Object.keys(styles).forEach((key: string) => {
-            if (!_.isEmpty(styles[key])) {
-                const formattedKey = key.replace(/[A-Z]/g, (m) => "-" + m.toLowerCase());
-                generatedStyles += `${formattedKey}: ${styles[key]}; `;
-            }
-        });
-        return `.${className} { ${generatedStyles} }`;
     }
 }

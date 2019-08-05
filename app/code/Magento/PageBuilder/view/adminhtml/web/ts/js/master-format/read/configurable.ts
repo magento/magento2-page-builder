@@ -13,12 +13,16 @@ import {
     DataMappingStyleInterface,
 } from "../../content-type-config.types";
 import appearanceConfig from "../../content-type/appearance-config";
-import ConverterPool from "../../converter/converter-pool";
+import {generateElementClassName} from "../../content-type/style-registry";
+import {ConverterPool} from "../../converter/converter-pool";
 import converterPoolFactory from "../../converter/converter-pool-factory";
-import MassConverterPool from "../../mass-converter/converter-pool";
+import {DataObject} from "../../data-store";
+import {DataConverterPool} from "../../mass-converter/converter-pool";
 import massConverterPoolFactory from "../../mass-converter/converter-pool-factory";
-import PropertyReaderPool from "../../property/property-reader-pool";
+import {PropertyReaderPool} from "../../property/property-reader-pool";
 import propertyReaderPoolFactory from "../../property/property-reader-pool-factory";
+import StylePropertyReaderInterface from "../../property/style-property-reader-interface.types";
+import {BuilderStyles} from "../../stage-builder";
 import {ReadInterface} from "../read-interface";
 
 /**
@@ -29,68 +33,73 @@ export default class Configurable implements ReadInterface {
     /**
      * Read data from the dom based on configuration
      *
-     * @param element HTMLElement
-     * @returns {Promise<any>}
+     * @param element
+     * @param styles
      */
-    public read(element: HTMLElement): Promise<any> {
-        const role = element.getAttribute(Config.getConfig("dataContentTypeAttributeName"));
-        const config = appearanceConfig(role, element.getAttribute("data-appearance"));
-        const componentsPromise: Array<Promise<any>> = [
-            propertyReaderPoolFactory(role),
-            converterPoolFactory(role),
-            massConverterPoolFactory(role),
+    public read(element: HTMLElement, styles: BuilderStyles): Promise<DataObject> {
+        const contentTypeName = element.getAttribute(Config.getConfig("dataContentTypeAttributeName"));
+        const config = appearanceConfig(contentTypeName, element.getAttribute("data-appearance"));
+        const componentsPromise: [
+            Promise<PropertyReaderPool>,
+            Promise<ConverterPool>,
+            Promise<DataConverterPool>
+        ] = [
+            propertyReaderPoolFactory(contentTypeName),
+            converterPoolFactory(contentTypeName),
+            massConverterPoolFactory(contentTypeName),
         ];
-        return new Promise((resolve: (data: object) => void) => {
-            Promise.all(componentsPromise).then((loadedComponents) => {
-                const [propertyReaderPool, converterPool, massConverterPool] = loadedComponents;
-                let data = {};
-                for (const elementName of Object.keys(config.elements)) {
-                    const elementConfig = config.elements[elementName];
-                    const currentElement = this.findElementByName(element, elementName);
+        console.log(styles);
+        return Promise.all(componentsPromise).then(([propertyReaderPool, converterPool, massConverterPool]) => {
+            let data = {};
+            for (const elementName of Object.keys(config.elements)) {
+                const elementConfig = config.elements[elementName];
+                const currentElement = this.findElementByName(element, elementName);
 
-                    // If we cannot locate the current element skip trying to read any attributes from it
-                    if (currentElement === null || currentElement === undefined) {
-                        continue;
-                    }
+                // If we cannot locate the current element skip trying to read any attributes from it
+                if (currentElement === null || currentElement === undefined) {
+                    continue;
+                }
 
-                    if (elementConfig.style.length) {
+                if (elementConfig.style.length) {
+                    const elementClass = /pb-[a-z]-[a-z]*-[A-Z0-9]{7}/.exec(currentElement.className);
+                    if (elementClass) {
+                        const elementStyles = styles["." + elementClass.pop()];
                         data = this.readStyle(
                             elementConfig.style,
                             currentElement,
                             data,
                             propertyReaderPool,
                             converterPool,
+                            elementStyles,
                         );
-                    }
-
-                    if (elementConfig.attributes.length) {
-                        data = this.readAttributes(
-                            elementConfig.attributes,
-                            currentElement,
-                            data,
-                            propertyReaderPool,
-                            converterPool,
-                        );
-                    }
-
-                    if (undefined !== elementConfig.html.var) {
-                        data = this.readHtml(elementConfig, currentElement, data, converterPool);
-                    }
-
-                    if (undefined !== elementConfig.tag.var) {
-                        data = this.readHtmlTag(elementConfig, currentElement, data);
-                    }
-
-                    if (undefined !== elementConfig.css.var) {
-                        data = this.readCss(elementConfig, currentElement, data);
                     }
                 }
 
-                data = this.convertData(config, data, massConverterPool);
-                resolve(data);
-            }).catch((error) => {
-                console.error(error);
-            });
+                if (elementConfig.attributes.length) {
+                    data = this.readAttributes(
+                        elementConfig.attributes,
+                        currentElement,
+                        data,
+                        propertyReaderPool,
+                        converterPool,
+                    );
+                }
+
+                if (undefined !== elementConfig.html.var) {
+                    data = this.readHtml(elementConfig, currentElement, data, converterPool);
+                }
+
+                if (undefined !== elementConfig.tag.var) {
+                    data = this.readHtmlTag(elementConfig, currentElement, data);
+                }
+
+                if (undefined !== elementConfig.css.var) {
+                    data = this.readCss(elementConfig, currentElement, data, elementName, contentTypeName);
+                }
+            }
+
+            data = this.convertData(config, data, massConverterPool);
+            return data;
         });
     }
 
@@ -135,8 +144,8 @@ export default class Configurable implements ReadInterface {
         config: DataMappingAttributesInterface[],
         element: HTMLElement,
         data: object,
-        propertyReaderPool: typeof PropertyReaderPool,
-        converterPool: typeof ConverterPool,
+        propertyReaderPool: PropertyReaderPool,
+        converterPool: ConverterPool,
     ) {
         const result: {[key: string]: any} = {};
         for (const attributeConfig of config) {
@@ -163,19 +172,20 @@ export default class Configurable implements ReadInterface {
     /**
      * Read style properties for element
      *
-     * @param {DataMappingStyleInterface[]} config
-     * @param {HTMLElement} element
-     * @param {object} data
-     * @param {typeof PropertyReaderPool} propertyReaderPool
-     * @param {typeof ConverterPool} converterPool
-     * @returns {{[p: string]: string}}
+     * @param config
+     * @param element
+     * @param data
+     * @param propertyReaderPool
+     * @param converterPool
+     * @param styles
      */
     private readStyle(
         config: DataMappingStyleInterface[],
         element: HTMLElement,
         data: object,
-        propertyReaderPool: typeof PropertyReaderPool,
-        converterPool: typeof ConverterPool,
+        propertyReaderPool: PropertyReaderPool<StylePropertyReaderInterface>,
+        converterPool: ConverterPool,
+        styles: CSSStyleDeclaration[],
     ) {
         const result: {[key: string]: any} = _.extend({}, data);
         for (const propertyConfig of config) {
@@ -184,7 +194,7 @@ export default class Configurable implements ReadInterface {
             }
             let value = !!propertyConfig.static
                 ? propertyConfig.value
-                : propertyReaderPool.get(propertyConfig.reader).read(element, propertyConfig.name);
+                : propertyReaderPool.get(propertyConfig.reader).read(element, propertyConfig.name, styles);
             if (converterPool.get(propertyConfig.converter)) {
                 value = converterPool.get(propertyConfig.converter).fromDom(value);
             }
@@ -211,27 +221,35 @@ export default class Configurable implements ReadInterface {
     }
 
     /**
-     * Read element's css
+     * Read custom CSS classes attached to element
      *
-     * @param {ContentTypeConfigAppearanceElementInterface} config
-     * @param {HTMLElement} element
-     * @param {object} data
-     * @returns {any}
+     * @param config
+     * @param element
+     * @param data
+     * @param elementName
+     * @param contentTypeName
      */
-    private readCss(config: ContentTypeConfigAppearanceElementInterface, element: HTMLElement, data: object) {
+    private readCss(
+        config: ContentTypeConfigAppearanceElementInterface,
+        element: HTMLElement,
+        data: DataObject,
+        elementName: string,
+        contentTypeName: string,
+    ) {
         const result: {[key: string]: string} = {};
-        let css: string = element.getAttribute("class") !== null
+        const css: string = element.getAttribute("class") !== null
             ? element.getAttribute("class")
             : "";
-        if (config.css !== undefined
-            && config.css.filter !== undefined
-            && config.css.filter.length
-        ) {
-            for (const filterClass of config.css.filter) {
-                css = css.replace(filterClass, "");
-            }
+        const systemClass = generateElementClassName(contentTypeName, elementName);
+        let ignoredClasses: string[] = [systemClass];
+        let classes = css.split(" ").map((className) => className.trim());
+        if (config.css !== undefined && config.css.filter !== undefined && config.css.filter.length) {
+            ignoredClasses = ignoredClasses.concat(config.css.filter);
         }
-        result[config.css.var] = css.replace(/\s{2,}/g, " ").trim();
+        classes = classes.filter((className: string) => {
+            return !ignoredClasses.includes(className) && !className.startsWith(systemClass);
+        });
+        result[config.css.var] = classes.join(" ");
         return _.extend(data, result);
     }
 
@@ -248,7 +266,7 @@ export default class Configurable implements ReadInterface {
         config: ContentTypeConfigAppearanceElementInterface,
         element: HTMLElement,
         data: object,
-        converterPool: typeof ConverterPool,
+        converterPool: ConverterPool,
     ) {
         const result: {[key: string]: string} = {};
         let value = element.innerHTML;
@@ -269,7 +287,7 @@ export default class Configurable implements ReadInterface {
      * @param {typeof MassConverterPool} massConverterPool
      * @returns {object}
      */
-    private convertData(config: any, data: object, massConverterPool: typeof MassConverterPool) {
+    private convertData(config: any, data: object, massConverterPool: DataConverterPool): DataObject {
         for (const converterConfig of config.converters) {
             if (massConverterPool.get(converterConfig.component)) {
                 data = massConverterPool.get(converterConfig.component).fromDom(

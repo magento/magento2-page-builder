@@ -3,22 +3,33 @@
  * See COPYING.txt for license details.
  */
 
+import _ from "underscore";
 import {fromSnakeToCamelCase} from "../utils/string";
-import PropertyReaderInterface from "./property-reader-interface";
+import StylePropertyReaderInterface from "./style-property-reader-interface.types";
 
 /**
  * @api
  */
-export default class StylePropertyReader implements PropertyReaderInterface {
+export default class StylePropertyReader implements StylePropertyReaderInterface {
     /**
-     * Read style property from element
+     * Read styles for the element
      *
-     * @param {HTMLElement} element
-     * @param {string} source
-     * @returns {string | object}
+     * @param element
+     * @param source
+     * @param styles
      */
-    public read(element: HTMLElement, source: string): string | object {
-        const camelCasedSource = fromSnakeToCamelCase(source);
-        return element.style[camelCasedSource as keyof CSSStyleDeclaration];
+    public read(element: HTMLElement, source: string, styles: CSSStyleDeclaration[]): string | object {
+        if (!styles || !styles.length) {
+            return "";
+        }
+
+        let styleValue = "";
+        styles.forEach((style) => {
+            const value = style.getPropertyValue(source.replace("_", "-"));
+            if (!_.isEmpty(value)) {
+                styleValue = value;
+            }
+        });
+        return styleValue;
     }
 }

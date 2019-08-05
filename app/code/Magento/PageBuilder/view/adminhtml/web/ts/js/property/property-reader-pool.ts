@@ -3,11 +3,11 @@
  * See COPYING.txt for license details.
  */
 
-import PropertyReaderInterface from "./property-reader-interface";
+import PropertyReaderInterface from "./property-reader-interface.types";
 
-export class PropertyReaderPool {
+export class PropertyReaderPool<Reader = PropertyReaderInterface> {
     private propertyReaders: {
-        [key: string]: PropertyReaderInterface;
+        [key: string]: Reader;
     } = {};
 
     /**
@@ -16,7 +16,7 @@ export class PropertyReaderPool {
      * @param {string} name
      * @returns {PropertyReaderInterface}
      */
-    public get(name: string): PropertyReaderInterface {
+    public get(name: string): Reader {
         return this.propertyReaders[name] !== undefined ? this.propertyReaders[name] : null;
     }
 
@@ -26,7 +26,7 @@ export class PropertyReaderPool {
      * @param {string} name
      * @param {PropertyReaderInterface} property
      */
-    public register(name: string, property: PropertyReaderInterface) {
+    public register(name: string, property: Reader) {
         this.propertyReaders[name] = property;
     }
 }

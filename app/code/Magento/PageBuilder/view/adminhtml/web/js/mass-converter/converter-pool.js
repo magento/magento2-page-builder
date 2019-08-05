@@ -41,6 +41,8 @@ define([], function () {
 
   var _default = new DataConverterPool();
 
-  return _default;
+  return Object.assign(_default, {
+    DataConverterPool: DataConverterPool
+  });
 });
 //# sourceMappingURL=converter-pool.js.map

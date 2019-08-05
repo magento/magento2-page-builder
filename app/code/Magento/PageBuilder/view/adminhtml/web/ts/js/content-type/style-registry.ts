@@ -3,20 +3,22 @@
  * See COPYING.txt for license details.
  */
 
-import events from "Magento_PageBuilder/js/events";
 import _ from "underscore";
+import {fromCamelCaseToSnake} from "../utils/string";
+import ContentTypeConfigInterface from "../content-type-config.types";
 
 const styleRegistries: Record<string, StyleRegistry> = {};
 
+export type Styles = Record<string, Style>;
 export type Style = Record<string, any>;
 
 export default class StyleRegistry {
-    public stageId: string;
     private styles: Record<string, Style> = {};
 
-    constructor(stageId: string) {
-        this.stageId = stageId;
-        styleRegistries[stageId] = this;
+    constructor(identifier?: string) {
+        if (identifier) {
+            styleRegistries[identifier] = this;
+        }
     }
 
     /**
@@ -25,15 +27,27 @@ export default class StyleRegistry {
      * @param className
      * @param styles
      */
-    public updateStyles(className: string, styles: Style): void {
+    public setStyles(className: string, styles: Style): void {
         this.styles[className] = styles;
-        events.trigger("styles:update", {className, styles, stageId: this.stageId});
+    }
+
+    /**
+     * Retrieve styles for a class name
+     *
+     * @param className
+     */
+    public getStyles(className: string): Style {
+        if (this.styles[className]) {
+            return this.styles[className];
+        }
+
+        return {};
     }
 
     /**
      * Retrieve all styles
      */
-    public getStyles(): Record<string, Style> {
+    public getAllStyles(): Styles {
         return this.styles;
     }
 }
@@ -45,6 +59,47 @@ export default class StyleRegistry {
  */
 export function getStyleRegistryForStage(stageId: string): StyleRegistry {
     return styleRegistries[stageId] !== undefined ? styleRegistries[stageId] : null;
+}
+
+/**
+ * Generate CSS from styles
+ *
+ * @param styles
+ */
+export function generateCss(styles: Styles) {
+    let generatedCss = "";
+    Object.keys(styles).forEach((className: string) => {
+        if (!_.isEmpty(styles[className])) {
+            generatedCss += generateCssBlock(className, styles[className]);
+        }
+    });
+    return generatedCss;
+}
+
+/**
+ * Generate styles from an object
+ *
+ * @param className
+ * @param styles
+ */
+export function generateCssBlock(className: string, styles: Style) {
+    let generatedStyles = "";
+    Object.keys(styles).forEach((key: string) => {
+        if (!_.isEmpty(styles[key])) {
+            generatedStyles += `${fromCamelCaseToSnake(key)}: ${styles[key]}; `;
+        }
+    });
+    return `.${className} { ${generatedStyles} }`;
+}
+
+/**
+ * Generate an elements class name
+ *
+ * @param name
+ * @param elementName
+ */
+export function generateElementClassName(name: string, elementName: string): string {
+    return `pb-${name.charAt(0)}-${elementName}`;
 }
 
 export interface StylesUpdateEventParams {

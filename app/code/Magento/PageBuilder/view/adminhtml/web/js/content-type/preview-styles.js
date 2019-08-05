@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "Magento_PageBuilder/js/events", "underscore"], function (_knockout, _events, _underscore) {
+define(["knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/content-type/style-registry"], function (_knockout, _events, _styleRegistry) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -17,7 +17,7 @@ define(["knockout", "Magento_PageBuilder/js/events", "underscore"], function (_k
 
       _events.on("styles:update", function (args) {
         if (args.stageId === _this.stageId) {
-          var _css = _this.generateCss(args.className, args.styles); // Remove any existing style blocks for the current class name
+          var _css = (0, _styleRegistry.generateCssBlock)(args.className, args.styles); // Remove any existing style blocks for the current class name
 
 
           var existingBlock = _this.styleBlocks().find(function (block) {
@@ -51,26 +51,6 @@ define(["knockout", "Magento_PageBuilder/js/events", "underscore"], function (_k
 
     _proto.getTemplate = function getTemplate() {
       return "Magento_PageBuilder/content-type/preview-styles";
-    }
-    /**
-     * Generate CSS to push into the blocks
-     *
-     * @param className
-     * @param styles
-     */
-    ;
-
-    _proto.generateCss = function generateCss(className, styles) {
-      var generatedStyles = "";
-      Object.keys(styles).forEach(function (key) {
-        if (!_underscore.isEmpty(styles[key])) {
-          var formattedKey = key.replace(/[A-Z]/g, function (m) {
-            return "-" + m.toLowerCase();
-          });
-          generatedStyles += formattedKey + ": " + styles[key] + "; ";
-        }
-      });
-      return "." + className + " { " + generatedStyles + " }";
     };
 
     return PreviewStyles;

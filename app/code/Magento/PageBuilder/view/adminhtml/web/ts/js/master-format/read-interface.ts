@@ -3,6 +3,8 @@
  * See COPYING.txt for license details.
  */
 
+import {BuilderStyles} from "../stage-builder";
+
 /**
  * @api
  */
@@ -10,8 +12,8 @@ export interface ReadInterface {
     /**
      * Read data from the element
      *
-     * @param element HTMLElement
-     * @returns {Promise<any>}
+     * @param element
+     * @param styles
      */
-    read(element: HTMLElement): Promise<any>;
+    read(element: HTMLElement, styles: BuilderStyles): Promise<any>;
 }

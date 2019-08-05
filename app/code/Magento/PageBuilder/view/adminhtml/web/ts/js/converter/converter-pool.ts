@@ -5,7 +5,7 @@
 
 import ConverterInterface from "./converter-interface";
 
-class ConverterPool {
+export class ConverterPool {
     private converters: {
         [key: string]: ConverterInterface;
     } = {};

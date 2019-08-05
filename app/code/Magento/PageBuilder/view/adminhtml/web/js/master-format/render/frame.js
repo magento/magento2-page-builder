@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type/style-registry", "Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/master-format/filter-html"], function (_jquery, _knockout, _engine, _config, _contentTypeFactory, _styleRegistry, _directives, _filterHtml) {
+define(["csso", "jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type/style-registry", "Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/master-format/filter-html"], function (_csso, _jquery, _knockout, _engine, _config, _contentTypeFactory, _styleRegistry, _directives, _filterHtml) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -104,6 +104,7 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "Mag
       var engineRender = _engine.waitForFinishRender().then(function () {
         _knockout.cleanNode(element);
 
+        (0, _jquery)(element).append((0, _jquery)("<style />").html(generateMasterCss(styleRegistry)));
         var filtered = (0, _filterHtml)((0, _jquery)(element));
         var output = (0, _directives)(filtered.html());
         return output;
@@ -152,6 +153,16 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "Mag
 
       return contentType;
     });
+  }
+  /**
+   * Generate the master format CSS
+   *
+   * @param registry
+   */
+
+
+  function generateMasterCss(registry) {
+    return _csso.minify((0, _styleRegistry.generateCss)(registry.getAllStyles())).css;
   }
 
   return Object.assign(listen, {

@@ -11,12 +11,12 @@ import _ from "underscore";
 import Config from "./config";
 import ContentTypeCollectionInterface from "./content-type-collection";
 import createContentType from "./content-type-factory";
+import PreviewStyles from "./content-type/preview-styles";
 import StyleRegistry from "./content-type/style-registry";
 import PageBuilderInterface from "./page-builder.types";
 import Panel from "./panel";
 import Stage from "./stage";
 import {StageToggleFullScreenParamsInterface} from "./stage-events.types";
-import PreviewStyles from "./content-type/preview-styles";
 
 export default class PageBuilder implements PageBuilderInterface {
     public template: string = "Magento_PageBuilder/page-builder";

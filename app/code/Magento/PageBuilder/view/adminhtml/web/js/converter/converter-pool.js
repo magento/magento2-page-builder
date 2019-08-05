@@ -41,6 +41,8 @@ define([], function () {
 
   var _default = new ConverterPool();
 
-  return _default;
+  return Object.assign(_default, {
+    ConverterPool: ConverterPool
+  });
 });
 //# sourceMappingURL=converter-pool.js.map

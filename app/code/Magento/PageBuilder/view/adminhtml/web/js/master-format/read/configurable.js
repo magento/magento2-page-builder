@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "mageUtils", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/appearance-config", "Magento_PageBuilder/js/converter/converter-pool-factory", "Magento_PageBuilder/js/mass-converter/converter-pool-factory", "Magento_PageBuilder/js/property/property-reader-pool-factory"], function (_jquery, _mageUtils, _underscore, _config, _appearanceConfig, _converterPoolFactory, _converterPoolFactory2, _propertyReaderPoolFactory) {
+define(["jquery", "mageUtils", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/appearance-config", "Magento_PageBuilder/js/content-type/style-registry", "Magento_PageBuilder/js/converter/converter-pool-factory", "Magento_PageBuilder/js/mass-converter/converter-pool-factory", "Magento_PageBuilder/js/property/property-reader-pool-factory"], function (_jquery, _mageUtils, _underscore, _config, _appearanceConfig, _styleRegistry, _converterPoolFactory, _converterPoolFactory2, _propertyReaderPoolFactory) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -20,61 +20,63 @@ define(["jquery", "mageUtils", "underscore", "Magento_PageBuilder/js/config", "M
     /**
      * Read data from the dom based on configuration
      *
-     * @param element HTMLElement
-     * @returns {Promise<any>}
+     * @param element
+     * @param styles
      */
-    _proto.read = function read(element) {
+    _proto.read = function read(element, styles) {
       var _this = this;
 
-      var role = element.getAttribute(_config.getConfig("dataContentTypeAttributeName"));
-      var config = (0, _appearanceConfig)(role, element.getAttribute("data-appearance"));
-      var componentsPromise = [(0, _propertyReaderPoolFactory)(role), (0, _converterPoolFactory)(role), (0, _converterPoolFactory2)(role)];
-      return new Promise(function (resolve) {
-        Promise.all(componentsPromise).then(function (loadedComponents) {
-          var propertyReaderPool = loadedComponents[0],
-              converterPool = loadedComponents[1],
-              massConverterPool = loadedComponents[2];
-          var data = {};
+      var contentTypeName = element.getAttribute(_config.getConfig("dataContentTypeAttributeName"));
+      var config = (0, _appearanceConfig)(contentTypeName, element.getAttribute("data-appearance"));
+      var componentsPromise = [(0, _propertyReaderPoolFactory)(contentTypeName), (0, _converterPoolFactory)(contentTypeName), (0, _converterPoolFactory2)(contentTypeName)];
+      console.log(styles);
+      return Promise.all(componentsPromise).then(function (_ref) {
+        var propertyReaderPool = _ref[0],
+            converterPool = _ref[1],
+            massConverterPool = _ref[2];
+        var data = {};
 
-          var _arr = Object.keys(config.elements);
+        var _arr = Object.keys(config.elements);
 
-          for (var _i = 0; _i < _arr.length; _i++) {
-            var elementName = _arr[_i];
-            var elementConfig = config.elements[elementName];
+        for (var _i = 0; _i < _arr.length; _i++) {
+          var elementName = _arr[_i];
+          var elementConfig = config.elements[elementName];
 
-            var currentElement = _this.findElementByName(element, elementName); // If we cannot locate the current element skip trying to read any attributes from it
+          var currentElement = _this.findElementByName(element, elementName); // If we cannot locate the current element skip trying to read any attributes from it
 
 
-            if (currentElement === null || currentElement === undefined) {
-              continue;
-            }
+          if (currentElement === null || currentElement === undefined) {
+            continue;
+          }
 
-            if (elementConfig.style.length) {
-              data = _this.readStyle(elementConfig.style, currentElement, data, propertyReaderPool, converterPool);
-            }
+          if (elementConfig.style.length) {
+            var elementClass = /pb-[a-z]-[a-z]*-[A-Z0-9]{7}/.exec(currentElement.className);
 
-            if (elementConfig.attributes.length) {
-              data = _this.readAttributes(elementConfig.attributes, currentElement, data, propertyReaderPool, converterPool);
-            }
-
-            if (undefined !== elementConfig.html.var) {
-              data = _this.readHtml(elementConfig, currentElement, data, converterPool);
-            }
-
-            if (undefined !== elementConfig.tag.var) {
-              data = _this.readHtmlTag(elementConfig, currentElement, data);
-            }
-
-            if (undefined !== elementConfig.css.var) {
-              data = _this.readCss(elementConfig, currentElement, data);
+            if (elementClass) {
+              var elementStyles = styles["." + elementClass.pop()];
+              data = _this.readStyle(elementConfig.style, currentElement, data, propertyReaderPool, converterPool, elementStyles);
             }
           }
 
-          data = _this.convertData(config, data, massConverterPool);
-          resolve(data);
-        }).catch(function (error) {
-          console.error(error);
-        });
+          if (elementConfig.attributes.length) {
+            data = _this.readAttributes(elementConfig.attributes, currentElement, data, propertyReaderPool, converterPool);
+          }
+
+          if (undefined !== elementConfig.html.var) {
+            data = _this.readHtml(elementConfig, currentElement, data, converterPool);
+          }
+
+          if (undefined !== elementConfig.tag.var) {
+            data = _this.readHtmlTag(elementConfig, currentElement, data);
+          }
+
+          if (undefined !== elementConfig.css.var) {
+            data = _this.readCss(elementConfig, currentElement, data, elementName, contentTypeName);
+          }
+        }
+
+        data = _this.convertData(config, data, massConverterPool);
+        return data;
       });
     }
     /**
@@ -120,18 +122,18 @@ define(["jquery", "mageUtils", "underscore", "Magento_PageBuilder/js/config", "M
       var result = {};
 
       for (var _iterator = config, _isArray = Array.isArray(_iterator), _i2 = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
-        var _ref;
+        var _ref2;
 
         if (_isArray) {
           if (_i2 >= _iterator.length) break;
-          _ref = _iterator[_i2++];
+          _ref2 = _iterator[_i2++];
         } else {
           _i2 = _iterator.next();
           if (_i2.done) break;
-          _ref = _i2.value;
+          _ref2 = _i2.value;
         }
 
-        var attributeConfig = _ref;
+        var attributeConfig = _ref2;
 
         if ("write" === attributeConfig.persistence_mode) {
           continue;
@@ -157,37 +159,37 @@ define(["jquery", "mageUtils", "underscore", "Magento_PageBuilder/js/config", "M
     /**
      * Read style properties for element
      *
-     * @param {DataMappingStyleInterface[]} config
-     * @param {HTMLElement} element
-     * @param {object} data
-     * @param {typeof PropertyReaderPool} propertyReaderPool
-     * @param {typeof ConverterPool} converterPool
-     * @returns {{[p: string]: string}}
+     * @param config
+     * @param element
+     * @param data
+     * @param propertyReaderPool
+     * @param converterPool
+     * @param styles
      */
     ;
 
-    _proto.readStyle = function readStyle(config, element, data, propertyReaderPool, converterPool) {
+    _proto.readStyle = function readStyle(config, element, data, propertyReaderPool, converterPool, styles) {
       var result = _underscore.extend({}, data);
 
       for (var _iterator2 = config, _isArray2 = Array.isArray(_iterator2), _i3 = 0, _iterator2 = _isArray2 ? _iterator2 : _iterator2[Symbol.iterator]();;) {
-        var _ref2;
+        var _ref3;
 
         if (_isArray2) {
           if (_i3 >= _iterator2.length) break;
-          _ref2 = _iterator2[_i3++];
+          _ref3 = _iterator2[_i3++];
         } else {
           _i3 = _iterator2.next();
           if (_i3.done) break;
-          _ref2 = _i3.value;
+          _ref3 = _i3.value;
         }
 
-        var propertyConfig = _ref2;
+        var propertyConfig = _ref3;
 
         if ("write" === propertyConfig.persistence_mode) {
           continue;
         }
 
-        var value = !!propertyConfig.static ? propertyConfig.value : propertyReaderPool.get(propertyConfig.reader).read(element, propertyConfig.name);
+        var value = !!propertyConfig.static ? propertyConfig.value : propertyReaderPool.get(propertyConfig.reader).read(element, propertyConfig.name, styles);
 
         if (converterPool.get(propertyConfig.converter)) {
           value = converterPool.get(propertyConfig.converter).fromDom(value);
@@ -218,38 +220,33 @@ define(["jquery", "mageUtils", "underscore", "Magento_PageBuilder/js/config", "M
       return _underscore.extend(data, result);
     }
     /**
-     * Read element's css
+     * Read custom CSS classes attached to element
      *
-     * @param {ContentTypeConfigAppearanceElementInterface} config
-     * @param {HTMLElement} element
-     * @param {object} data
-     * @returns {any}
+     * @param config
+     * @param element
+     * @param data
+     * @param elementName
+     * @param contentTypeName
      */
     ;
 
-    _proto.readCss = function readCss(config, element, data) {
+    _proto.readCss = function readCss(config, element, data, elementName, contentTypeName) {
       var result = {};
       var css = element.getAttribute("class") !== null ? element.getAttribute("class") : "";
+      var systemClass = (0, _styleRegistry.generateElementClassName)(contentTypeName, elementName);
+      var ignoredClasses = [systemClass];
+      var classes = css.split(" ").map(function (className) {
+        return className.trim();
+      });
 
       if (config.css !== undefined && config.css.filter !== undefined && config.css.filter.length) {
-        for (var _iterator3 = config.css.filter, _isArray3 = Array.isArray(_iterator3), _i4 = 0, _iterator3 = _isArray3 ? _iterator3 : _iterator3[Symbol.iterator]();;) {
-          var _ref3;
-
-          if (_isArray3) {
-            if (_i4 >= _iterator3.length) break;
-            _ref3 = _iterator3[_i4++];
-          } else {
-            _i4 = _iterator3.next();
-            if (_i4.done) break;
-            _ref3 = _i4.value;
-          }
-
-          var filterClass = _ref3;
-          css = css.replace(filterClass, "");
-        }
+        ignoredClasses = ignoredClasses.concat(config.css.filter);
       }
 
-      result[config.css.var] = css.replace(/\s{2,}/g, " ").trim();
+      classes = classes.filter(function (className) {
+        return !ignoredClasses.includes(className) && !className.startsWith(systemClass);
+      });
+      result[config.css.var] = classes.join(" ");
       return _underscore.extend(data, result);
     }
     /**
@@ -285,16 +282,16 @@ define(["jquery", "mageUtils", "underscore", "Magento_PageBuilder/js/config", "M
     ;
 
     _proto.convertData = function convertData(config, data, massConverterPool) {
-      for (var _iterator4 = config.converters, _isArray4 = Array.isArray(_iterator4), _i5 = 0, _iterator4 = _isArray4 ? _iterator4 : _iterator4[Symbol.iterator]();;) {
+      for (var _iterator3 = config.converters, _isArray3 = Array.isArray(_iterator3), _i4 = 0, _iterator3 = _isArray3 ? _iterator3 : _iterator3[Symbol.iterator]();;) {
         var _ref4;
 
-        if (_isArray4) {
-          if (_i5 >= _iterator4.length) break;
-          _ref4 = _iterator4[_i5++];
+        if (_isArray3) {
+          if (_i4 >= _iterator3.length) break;
+          _ref4 = _iterator3[_i4++];
         } else {
-          _i5 = _iterator4.next();
-          if (_i5.done) break;
-          _ref4 = _i5.value;
+          _i4 = _iterator3.next();
+          if (_i4.done) break;
+          _ref4 = _i4.value;
         }
 
         var converterConfig = _ref4;

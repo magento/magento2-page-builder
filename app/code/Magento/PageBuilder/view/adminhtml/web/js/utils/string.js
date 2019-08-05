@@ -22,9 +22,22 @@ define([], function () {
 
     return parts[0] + newString;
   }
+  /**
+   * Convert a camel case string to snake case
+   *
+   * @param currentString
+   */
+
+
+  function fromCamelCaseToSnake(currentString) {
+    return currentString.replace(/[A-Z]/g, function (m) {
+      return "-" + m.toLowerCase();
+    });
+  }
 
   return {
-    fromSnakeToCamelCase: fromSnakeToCamelCase
+    fromSnakeToCamelCase: fromSnakeToCamelCase,
+    fromCamelCaseToSnake: fromCamelCaseToSnake
   };
 });
 //# sourceMappingURL=string.js.map

@@ -5,7 +5,7 @@
 
 import consoleLogger from "consoleLogger";
 import ko from "knockout";
-import Config from "../config";
+import events from "Magento_PageBuilder/js/events";
 import {
     ContentTypeConfigAppearanceElementInterface,
     ContentTypeConfigAppearanceElementsInterface,
@@ -23,7 +23,7 @@ import {default as generateCss} from "./observable-updater/css";
 import {default as generateHtml} from "./observable-updater/html";
 import {default as generateStyle} from "./observable-updater/style";
 import Preview from "./preview";
-import StyleRegistry, {Style} from "./style-registry";
+import StyleRegistry, {generateElementClassName, Style} from "./style-registry";
 
 type Binding = "attributes" | "css" | "html" | "style";
 
@@ -185,7 +185,7 @@ export default class ObservableUpdater {
         config: ContentTypeConfigAppearanceElementInterface,
         data: DataObject,
     ) {
-        const className = `pb-${contentType.config.name.charAt(0)}-${elementName}`;
+        const className = generateElementClassName(contentType.config.name, elementName);
         const elementCssNames = {[className]: true, [`${className}-${contentType.id}`]: true};
 
         // Also generate styles and store in registry to be placed into style sheet later on
@@ -196,7 +196,8 @@ export default class ObservableUpdater {
             data,
         ) as Style;
 
-        this.styleRegistry.updateStyles(`${className}-${contentType.id}`, styles);
+        this.styleRegistry.setStyles(`${className}-${contentType.id}`, styles);
+        events.trigger("styles:update", {className, styles, stageId: contentType.stageId});
 
         return elementCssNames;
     }

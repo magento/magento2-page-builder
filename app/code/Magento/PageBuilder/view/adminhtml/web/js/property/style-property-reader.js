@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/utils/string"], function (_string) {
+define(["underscore"], function (_underscore) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -18,15 +18,26 @@ define(["Magento_PageBuilder/js/utils/string"], function (_string) {
     var _proto = StylePropertyReader.prototype;
 
     /**
-     * Read style property from element
+     * Read styles for the element
      *
-     * @param {HTMLElement} element
-     * @param {string} source
-     * @returns {string | object}
+     * @param element
+     * @param source
+     * @param styles
      */
-    _proto.read = function read(element, source) {
-      var camelCasedSource = (0, _string.fromSnakeToCamelCase)(source);
-      return element.style[camelCasedSource];
+    _proto.read = function read(element, source, styles) {
+      if (!styles || !styles.length) {
+        return "";
+      }
+
+      var styleValue = "";
+      styles.forEach(function (style) {
+        var value = style.getPropertyValue(source.replace("_", "-"));
+
+        if (!_underscore.isEmpty(value)) {
+          styleValue = value;
+        }
+      });
+      return styleValue;
     };
 
     return StylePropertyReader;

@@ -8,26 +8,56 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_Ui/js/modal/
   /**
    * Build the stage with the provided value
    *
-   * @param {stage} stage
-   * @param {string} value
-   * @returns {Promise<void>}
+   * @param stage
+   * @param value
    */
   function buildFromContent(stage, value) {
-    var stageDocument = new DOMParser().parseFromString(value, "text/html");
+    var stageDocument = new DOMParser().parseFromString("<body>" + value + "</body>", "text/html");
     stageDocument.body.setAttribute(_config.getConfig("dataContentTypeAttributeName"), "stage");
-    return buildElementIntoStage(stageDocument.body, stage.rootContainer, stage);
+    return buildElementIntoStage(stageDocument.body, stage.rootContainer, stage, retrieveStylesFromBlock(stageDocument));
+  }
+  /**
+   * Retrieve the style blocks from the persisted value
+   *
+   * @param document
+   */
+
+
+  function retrieveStylesFromBlock(document) {
+    var styleBlocks = document.getElementsByTagName("style");
+    var styles = {};
+
+    if (styleBlocks.length > 0) {
+      Array.from(styleBlocks).forEach(function (styleBlock) {
+        var cssRules = styleBlock.sheet.cssRules;
+        Array.from(cssRules).forEach(function (rule) {
+          var selectors = rule.selectorText.split(",").map(function (selector) {
+            return selector.trim();
+          });
+          selectors.forEach(function (selector) {
+            if (!styles[selector]) {
+              styles[selector] = [];
+            }
+
+            styles[selector].push(rule.style);
+          });
+        });
+      });
+    }
+
+    return styles;
   }
   /**
    * Build an element and it's children into the stage
    *
-   * @param {Element} element
-   * @param {ContentTypeCollectionInterface} contentType
-   * @param {stage} stage
-   * @returns {Promise<void>}
+   * @param element
+   * @param contentType
+   * @param stage
+   * @param styles
    */
 
 
-  function buildElementIntoStage(element, contentType, stage) {
+  function buildElementIntoStage(element, contentType, stage, styles) {
     if (element instanceof HTMLElement && element.getAttribute(_config.getConfig("dataContentTypeAttributeName"))) {
       var childPromises = [];
       var childElements = [];
@@ -35,7 +65,7 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_Ui/js/modal/
 
       if (children.length > 0) {
         _.forEach(children, function (childElement) {
-          childPromises.push(createElementContentType(childElement, stage, contentType));
+          childPromises.push(createElementContentType(childElement, stage, styles, contentType));
           childElements.push(childElement);
         });
       } // Wait for all the promises to finish and add the instances to the stage
@@ -46,7 +76,7 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_Ui/js/modal/
           contentType.addChild(child); // Only render children if the content type implements the collection
 
           if (child instanceof _contentTypeCollection) {
-            return buildElementIntoStage(childElements[index], child, stage);
+            return buildElementIntoStage(childElements[index], child, stage, styles);
           }
         }));
       });
@@ -55,14 +85,14 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_Ui/js/modal/
   /**
    * Parse an element in the structure and build the required element
    *
-   * @param {Element} element
-   * @param {ContentTypeCollectionInterface} contentType
-   * @param {stage} stage
-   * @returns {Promise<ContentTypeInterface>}
+   * @param element
+   * @param stage
+   * @param styles
+   * @param contentType
    */
 
 
-  function createElementContentType(element, stage, contentType) {
+  function createElementContentType(element, stage, styles, contentType) {
     contentType = contentType || stage.rootContainer;
     var role = element.getAttribute(_config.getConfig("dataContentTypeAttributeName"));
 
@@ -76,20 +106,20 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_Ui/js/modal/
       return Promise.reject("Unable to load Page Builder configuration for content type \"" + role + "\".");
     }
 
-    return getElementData(element, config).then(function (data) {
+    return getElementData(element, config, styles).then(function (data) {
       return (0, _contentTypeFactory)(config, contentType, stage.id, data, getElementChildren(element).length);
     });
   }
   /**
    * Retrieve the elements data
    *
-   * @param {HTMLElement} element
-   * @param {ContentTypeConfigInterface} config
-   * @returns {Promise<{[p: string]: any}>}
+   * @param element
+   * @param config
+   * @param styles
    */
 
 
-  function getElementData(element, config) {
+  function getElementData(element, config, styles) {
     // Create an object with all fields for the content type with an empty value
     var result = createInitialElementData(config.fields);
     return new Promise(function (resolve) {
@@ -98,15 +128,10 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_Ui/js/modal/
       if (!_config.getConfig("content_types").hasOwnProperty(role)) {
         resolve(result);
       } else {
-        var readerComponents = (0, _appearanceConfig)(role, element.dataset.appearance).reader;
-        (0, _loader)([readerComponents], function () {
-          for (var _len = arguments.length, readers = new Array(_len), _key = 0; _key < _len; _key++) {
-            readers[_key] = arguments[_key];
-          }
-
-          var ReaderComponent = readers.pop();
+        var readerComponentName = (0, _appearanceConfig)(role, element.dataset.appearance).reader;
+        (0, _loader)([readerComponentName], function (ReaderComponent) {
           var reader = new ReaderComponent();
-          reader.read(element).then(function (readerData) {
+          reader.read(element, styles).then(function (readerData) {
             /**
              * Iterate through the reader data and set the values onto the result array to ensure dot notation
              * keys are properly handled.
@@ -206,9 +231,8 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_Ui/js/modal/
   /**
    * Build a stage with the provided content type, content observable and initial value
    *
-   * @param {Stage} stage
-   * @param {string} content
-   * @returns {Promise}
+   * @param stage
+   * @param content
    */
 
 
