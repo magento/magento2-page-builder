@@ -94,7 +94,7 @@
             <settings>
                 <dataType>text</dataType>
                 <imports>
-                    <link name="value">${ $.ns }.${ $.ns }.modal.pagebuilder_block_select_grid:externalValue</link>
+                    <link name="value">${ $.ns }.${ $.ns }.modal.pagebuilder_block_select_grid.columns.ids:lastSelected</link>
                 </imports>
             </settings>
         </field>
@@ -127,6 +127,9 @@
     </fieldset>
     <modal name="modal" sortOrder="30">
         <settings>
+            <listens>
+                <link name="pagebuilder_block_select_grid.pagebuilder_block_select_grid.columns.ids:lastSelected">closeModal</link>
+            </listens>
             <options>
                 <option name="title" xsi:type="string" translate="true">Select Block</option>
                 <option name="buttons" xsi:type="array">
@@ -163,6 +166,9 @@
                     <imports>false</imports>
                     <exports>true</exports>
                 </dataLinks>
+                <listens>
+                    <link name="pagebuilder_block_select_grid.pagebuilder_block_select_grid.columns.ids:lastSelected">save</link>
+                </listens>
             </settings>
         </insertListing>
     </modal>
