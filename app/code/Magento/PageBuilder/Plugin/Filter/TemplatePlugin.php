@@ -16,6 +16,8 @@ class TemplatePlugin
 
     const HTML_CONTENT_TYPE_PATTERN = '/data-content-type="html"/si';
 
+    const INLINE_IMAGE_PATTERN = '/<img/si';
+
     /**
      * @var \Magento\Framework\View\ConfigInterface
      */
@@ -76,6 +78,12 @@ class TemplatePlugin
         if (preg_match(self::BACKGROUND_IMAGE_PATTERN, $result)) {
             $document = $this->getDomDocument($result);
             $this->generateBackgroundImageStyles($document);
+        }
+
+        // Process images to add native lazy loading
+        if (preg_match(self::INLINE_IMAGE_PATTERN, $result)) {
+            $document = $this->getDomDocument($result);
+            $uniqueNodeNameToDecodedOuterHtmlMap = $this->generateLazyImages($document);
         }
 
         // Process any HTML content types, they need to be decoded on the front-end
@@ -257,6 +265,21 @@ class TemplatePlugin
                     $node->setAttribute('class', $classes . $elementClass);
                 }
             }
+        }
+    }
+
+    /**
+     * Make images lazy loaded
+     *
+     * @param \DOMDocument $document
+     */
+    private function generateLazyImages(\DOMDocument $document) : void
+    {
+        $xpath = new \DOMXPath($document);
+        $imgs = $xpath->query('//img');
+
+        foreach ($imgs as $img) {
+            $img->setAttribute('loading', 'lazy');
         }
     }
 
