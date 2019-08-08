@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="navigateToCMSPage">
+        <!-- This goes in CE repo -->
+        <arguments>
+            <argument name="CMSPage"/>
+        </arguments>
+        <amOnPage url="{{CmsPagesPage.url}}" stepKey="navigateToCMSPagesGrid"/>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <conditionalClick selector="{{CmsPagesPageActionsSection.clearAllButton}}" dependentSelector="{{CmsPagesPageActionsSection.activeFilters}}" visible="true" stepKey="clickToResetFilter"/>
+        <waitForPageLoad stepKey="waitForGridLoad"/>
+        <conditionalClick selector="//div[contains(@data-role, 'grid-wrapper')]/table/thead/tr/th/span[contains(text(), 'ID')]" dependentSelector="//span[contains(text(), 'ID')]/parent::th[not(contains(@class, '_descend'))]/parent::tr/parent::thead/parent::table/parent::div[contains(@data-role, 'grid-wrapper')]" visible="true" stepKey="clickToAttemptSortByIdDescending"/>
+        <waitForPageLoad stepKey="waitForFirstIdSortDescendingToFinish"/>
+        <!-- Conditional Click again in case it goes from default state to ascending on first click -->
+        <conditionalClick selector="//div[contains(@data-role, 'grid-wrapper')]/table/thead/tr/th/span[contains(text(), 'ID')]" dependentSelector="//span[contains(text(), 'ID')]/parent::th[not(contains(@class, '_descend'))]/parent::tr/parent::thead/parent::table/parent::div[contains(@data-role, 'grid-wrapper')]" visible="true" stepKey="secondClickToAttemptSortByIdDescending"/>
+        <waitForPageLoad stepKey="waitForSecondIdSortDescendingToFinish"/>
+        <click selector="{{CmsPagesPageActionsSection.select(CMSPage.identifier)}}" stepKey="clickSelectCreatedCMSPage"/>
+        <click selector="{{CmsPagesPageActionsSection.edit(CMSPage.identifier)}}" stepKey="navigateToCreatedCMSPage"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <seeElement selector="{{CmsNewPagePageContentSection.header}}" stepKey="seeContentSectionHeaderForPage"/>
+    </actionGroup>
+    <actionGroup name="navigateToAPageWithPageBuilder">
+        <waitForPageLoad stepKey="waitForDashboardPageLoad"/>
+        <amOnPage url="{{CmsPagesPage.url}}/new" stepKey="amOnPageBuilderPage"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+    </actionGroup>
+    <actionGroup name="addPageBuilderPageTitle">
+        <arguments>
+            <argument name="contentType"/>
+        </arguments>
+        <fillField selector="{{CmsNewPagePageActionsSection.pageTitle}}" userInput="{{contentType.name}}{{PageBuilderPageTitle.pageName}}" stepKey="enterPageTitle"/>
+    </actionGroup>
+    <actionGroup name="switchToPageBuilderStage">
+        <arguments>
+            <argument name="sectionSelector" defaultValue="{{CmsNewPagePageContentSection.header}}" type="string"/>
+            <argument name="sectionDependentSelector" defaultValue="{{CmsNewPagePageContentSection.header}}._show" type="string"/>
+            <argument name="rowIndex" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible time="30" selector="{{sectionSelector}}" stepKey="waitForSection"/>
+        <conditionalClick selector="{{sectionSelector}}" dependentSelector="{{sectionDependentSelector}}" visible="false" stepKey="expandSection"/>
+        <waitForPageLoad time="30" stepKey="waitForStageToLoad"/>
+        <!-- Wait for the first row to be added into the stage for it to be "ready" -->
+        <waitForElementNotVisible selector="{{PageBuilderStage.stageLoading}}" stepKey="waitForStageLoadingGraphicNotVisible"/>
+        <waitForElementVisible time="30" selector="{{RowOnStage.base(rowIndex)}}" stepKey="waitForPageBuilderRow"/>
+    </actionGroup>
+    <actionGroup name="verifyPageBuilderVisibleOnPage">
+        <waitForElementVisible selector="{{PageBuilderPanel.layoutMenuSection}}" stepKey="seePageBuilderVisible"/>
+        <dontSee userInput="Enable Advanced CMS" stepKey="dontSeeEnableAdvancedCMSBtn"/>
+    </actionGroup>
+    <actionGroup name="verifyPageBuilderVisibleOnStaging">
+        <scrollTo selector="{{PageBuilderPanel.layoutMenuSection}}" stepKey="scrollToIdentifyPageBuilder"/>
+        <waitForElementVisible selector="{{PageBuilderPanel.layoutMenuSection}}" stepKey="seePageBuilderVisible"/>
+        <dontSee userInput="Enable Advanced CMS" stepKey="dontSeeEnableAdvancedCMSBtn"/>
+    </actionGroup>
+    <actionGroup name="verifyPageBuilderNotVisibleOnPage">
+        <dontSee userInput="Enable Advanced CMS" stepKey="dontSeeEnableAdvancedCMSBtn"/>
+        <dontSee selector="{{PageBuilderPanel.layoutMenuSection}}" stepKey="seePageBuilderVisible"/>
+    </actionGroup>
+    <actionGroup name="verifyFullWidthLayout">
+        <arguments>
+            <argument name="index" defaultValue="0" type="string"/>
+        </arguments>
+        <executeJS function="return document.querySelectorAll('[data-content-type=row]')[{{index}}].clientWidth" stepKey="rowWidth"/>
+        <executeJS function="return document.querySelector('[class=page-wrapper]').clientWidth" stepKey="pageWidth"/>
+        <assertEquals stepKey="assertRowWidth100Percent">
+            <expectedResult type="variable">pageWidth</expectedResult>
+            <actualResult type="variable">rowWidth</actualResult>
+        </assertEquals>
+        <assertGreaterThan stepKey="assertRowWidthGreaterThanZero">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">rowWidth</actualResult>
+        </assertGreaterThan>
+    </actionGroup>
+</actionGroups>

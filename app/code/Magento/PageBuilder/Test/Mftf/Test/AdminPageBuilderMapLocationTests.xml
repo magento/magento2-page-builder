@@ -1,0 +1,1489 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="MapLocationsGridAppearance">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Map"/>
+            <title value="Locations - Locations Grid Appearance"/>
+            <description value="Make sure the locations grid appears as expected (column names, empty message, pagination items)."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MAGETWO-88132"/>
+            <testCaseId value="MC-2461"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="pagebuilder-mapLocation"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionMedia">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragIntoStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <!-- Validate Grid Column Headers-->
+        <comment userInput="Validate Grid Column Headers" stepKey="commentValidateGrid"/>
+        <waitForElementVisible selector="{{PageBuilderDataGrid.gridBase}}" stepKey="waitForGrid"/>
+        <waitForElementVisible selector="{{PageBuilderDataGrid.gridColumnHeader('1', PageBuilderMapGrid.col1)}}" stepKey="waitForLocationName"/>
+        <waitForElementVisible selector="{{PageBuilderDataGrid.gridColumnHeader('2', PageBuilderMapGrid.col2)}}" stepKey="waitForPhoneNumber"/>
+        <waitForElementVisible selector="{{PageBuilderDataGrid.gridColumnHeader('3', PageBuilderMapGrid.col3)}}" stepKey="waitForAddress"/>
+        <waitForElementVisible selector="{{PageBuilderDataGrid.gridColumnHeader('4', PageBuilderMapGrid.col4)}}" stepKey="waitForCity"/>
+        <waitForElementVisible selector="{{PageBuilderDataGrid.gridColumnHeader('5', PageBuilderMapGrid.col5)}}" stepKey="waitForState"/>
+        <waitForElementVisible selector="{{PageBuilderDataGrid.gridColumnHeader('6', PageBuilderMapGrid.col6)}}" stepKey="waitForZip"/>
+        <waitForElementVisible selector="{{PageBuilderDataGrid.gridColumnHeader('7', PageBuilderMapGrid.col7)}}" stepKey="waitForCountry"/>
+        <waitForElementVisible selector="{{PageBuilderDataGrid.gridColumnHeader('8', PageBuilderMapGrid.col8)}}" stepKey="waitForSelect"/>
+        <!-- Validate No Grid Pagination -->
+        <comment userInput="Validate No Grid Pagination" stepKey="commentValidateNoGridPagination"/>
+        <waitForElementNotVisible selector="{{PageBuilderDataGrid.gridPagination}}" stepKey="waitForPaginationNotVisible"/>
+        <!-- Validate Empty Grid Message-->
+        <comment userInput="Validate Empty Grid Message" stepKey="commentValidateEmptyGrid"/>
+        <waitForElementVisible selector="{{PageBuilderDataGrid.emptyGridMessage(PageBuilderMapGrid.emptyMessage)}}" stepKey="waitForEmptyGrid"/>
+        <!-- Add Location -->
+        <comment userInput="Add Location" stepKey="commentAddLocation"/>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLatitude">
+            <argument name="property" value="PageBuilderMapLatitude_Positive39_74"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLongitude">
+            <argument name="property" value="PageBuilderMapLongitude_Positive9_67"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName">
+            <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
+        <!-- Validate Grid Pagination -->
+        <comment userInput="Validate Grid Pagination" stepKey="commentValidateGridPagination"/>
+        <waitForElementVisible selector="{{PageBuilderDataGrid.gridPagination}}" stepKey="waitForPagination"/>
+        <waitForElementVisible selector="{{PageBuilderDataGrid.gridPaginationLeftButton}}" stepKey="waitForPaginationLeft"/>
+        <waitForElementVisible selector="{{PageBuilderDataGrid.gridPaginationRightButton}}" stepKey="waitForPaginationRight"/>
+        <seeInField selector="{{PageBuilderDataGrid.gridPaginationPage}}" userInput="1" stepKey="seePaginationPage"/>
+        <waitForElementVisible selector="{{PageBuilderDataGrid.gridPaginationTotalPages('1')}}" stepKey="waitForPaginationTotalPages"/>
+    </test>
+    <test name="MapVerifyEditButtonOnLocationsGrid">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Map"/>
+            <title value="Locations - Verify Edit Button On Locations Grid"/>
+            <description value="Verify that the edit button on the locations grid takes user to the edit location form."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MAGETWO-88132"/>
+            <testCaseId value="MC-2475"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="pagebuilder-mapLocation"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionMedia">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragIntoStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <!-- Add Location -->
+        <comment userInput="Add Location" stepKey="commentAddLocation"/>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLatitude">
+            <argument name="property" value="PageBuilderMapLatitude_Positive39_74"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLongitude">
+            <argument name="property" value="PageBuilderMapLongitude_Positive9_67"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName">
+            <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
+        <!-- Click Edit Button -->
+        <comment userInput="Click Edit Button" stepKey="commentClickEditButton"/>
+        <actionGroup ref="clickEditButtonOnLocationGrid" stepKey="clickEditButtonOnLocationGrid">
+            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateEditPanelField">
+            <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
+    </test>
+    <test name="MapLocationsGridRowSortingForEachColumn">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Map"/>
+            <title value="Locations - Locations Grid Row Sorting For Each Column"/>
+            <description value="Make sure the locations grid can sort rows as expected by sorting each column."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MAGETWO-88132"/>
+            <testCaseId value="MC-2468"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="pagebuilder-mapLocation"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionMedia">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragIntoStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <!-- Add 1st Location -->
+        <comment userInput="Add 1st Location" stepKey="commentAddLocation1"/>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton1"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLatitude">
+            <argument name="property" value="PageBuilderMapLatitude_Positive39_74"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLongitude">
+            <argument name="property" value="PageBuilderMapLongitude_Positive9_67"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName">
+            <argument name="property" value="PageBuilderMapLocationName_a"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterPhoneNumber">
+            <argument name="property" value="PageBuilderMapPhoneNumber_B"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterStreetAddress">
+            <argument name="property" value="PageBuilderMapStreetAddress_z"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterCity">
+            <argument name="property" value="PageBuilderMapCity_0"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterState">
+            <argument name="property" value="PageBuilderMapState_a"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterZip">
+            <argument name="property" value="PageBuilderMapZipCode_B"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelMultiSelectField" stepKey="enterCountry">
+            <argument name="property" value="PageBuilderMapCountry_Zimbabwe"/>
+        </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm1"/>
+        <!-- Add 2nd Location -->
+        <comment userInput="Add 2nd Location" stepKey="commentAddLocation2"/>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton2"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLatitude2">
+            <argument name="property" value="PageBuilderMapLatitude_Positive39_74"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLongitude2">
+            <argument name="property" value="PageBuilderMapLongitude_Positive9_67"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName2">
+            <argument name="property" value="PageBuilderMapLocationName_B"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterPhoneNumber2">
+            <argument name="property" value="PageBuilderMapPhoneNumber_z"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterStreetAddress2">
+            <argument name="property" value="PageBuilderMapStreetAddress_0"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterCity2">
+            <argument name="property" value="PageBuilderMapCity_a"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterState2">
+            <argument name="property" value="PageBuilderMapState_B"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterZip2">
+            <argument name="property" value="PageBuilderMapZipCode_z"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelMultiSelectField" stepKey="enterCountry2">
+            <argument name="property" value="PageBuilderMapCountry_Afghanistan"/>
+        </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm2"/>
+        <!-- Add 3rd Location -->
+        <comment userInput="Add 3rd Location" stepKey="commentAddLocation3"/>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton3"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLatitude3">
+            <argument name="property" value="PageBuilderMapLatitude_Positive39_74"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLongitude3">
+            <argument name="property" value="PageBuilderMapLongitude_Positive9_67"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName3">
+            <argument name="property" value="PageBuilderMapLocationName_z"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterPhoneNumber3">
+            <argument name="property" value="PageBuilderMapPhoneNumber_0"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterStreetAddress3">
+            <argument name="property" value="PageBuilderMapStreetAddress_a"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterCity3">
+            <argument name="property" value="PageBuilderMapCity_B"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterState3">
+            <argument name="property" value="PageBuilderMapState_z"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterZip3">
+            <argument name="property" value="PageBuilderMapZipCode_0"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelMultiSelectField" stepKey="enterCountry3">
+            <argument name="property" value="PageBuilderMapCountry_Canada"/>
+        </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm3"/>
+        <!-- Add 4th Location -->
+        <comment userInput="Add 4th Location" stepKey="commentAddLocation4"/>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton4"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLatitude4">
+            <argument name="property" value="PageBuilderMapLatitude_Positive39_74"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLongitude4">
+            <argument name="property" value="PageBuilderMapLongitude_Positive9_67"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName4">
+            <argument name="property" value="PageBuilderMapLocationName_0"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterPhoneNumber4">
+            <argument name="property" value="PageBuilderMapPhoneNumber_a"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterStreetAddress4">
+            <argument name="property" value="PageBuilderMapStreetAddress_B"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterCity4">
+            <argument name="property" value="PageBuilderMapCity_z"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterState4">
+            <argument name="property" value="PageBuilderMapState_0"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterZip4">
+            <argument name="property" value="PageBuilderMapZipCode_a"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelMultiSelectField" stepKey="enterCountry4">
+            <argument name="property" value="PageBuilderMapCountry_USA"/>
+        </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm4"/>
+        <!-- Validate Sort Order: Default -->
+        <comment userInput="Validate Sort Order: Default" stepKey="commentValidateGridDefault"/>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridDataDefault1">
+            <argument name="locationName" value="PageBuilderMapLocationName_a"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_B"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_z"/>
+            <argument name="city" value="PageBuilderMapCity_0"/>
+            <argument name="state" value="PageBuilderMapState_a"/>
+            <argument name="zip" value="PageBuilderMapZipCode_B"/>
+            <argument name="country" value="PageBuilderMapCountry_Zimbabwe"/>
+            <argument name="rowIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridDataDefault2">
+            <argument name="locationName" value="PageBuilderMapLocationName_B"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_z"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_0"/>
+            <argument name="city" value="PageBuilderMapCity_a"/>
+            <argument name="state" value="PageBuilderMapState_B"/>
+            <argument name="zip" value="PageBuilderMapZipCode_z"/>
+            <argument name="country" value="PageBuilderMapCountry_Afghanistan"/>
+            <argument name="rowIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridDataDefault3">
+            <argument name="locationName" value="PageBuilderMapLocationName_z"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_0"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_a"/>
+            <argument name="city" value="PageBuilderMapCity_B"/>
+            <argument name="state" value="PageBuilderMapState_z"/>
+            <argument name="zip" value="PageBuilderMapZipCode_0"/>
+            <argument name="country" value="PageBuilderMapCountry_Canada"/>
+            <argument name="rowIndex" value="3"/>
+        </actionGroup>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridDataDefault4">
+            <argument name="locationName" value="PageBuilderMapLocationName_0"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_a"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_B"/>
+            <argument name="city" value="PageBuilderMapCity_z"/>
+            <argument name="state" value="PageBuilderMapState_0"/>
+            <argument name="zip" value="PageBuilderMapZipCode_a"/>
+            <argument name="country" value="PageBuilderMapCountry_USA"/>
+            <argument name="rowIndex" value="4"/>
+        </actionGroup>
+        <!-- Sort Location Name Ascending -->
+        <comment userInput="Sort Location Name Ascending" stepKey="commentSortLocationName1"/>
+        <click selector="{{PageBuilderDataGrid.gridColumnHeader('1', PageBuilderMapGrid.col1)}}" stepKey="clickLocationName1"/>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <!-- Validate Sort Order: Location Name Ascending -->
+        <comment userInput="Validate Sort Order: Location Name Ascending" stepKey="commentValidateGridLocationName1"/>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridDataLocationName1">
+            <argument name="locationName" value="PageBuilderMapLocationName_0"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_a"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_B"/>
+            <argument name="city" value="PageBuilderMapCity_z"/>
+            <argument name="state" value="PageBuilderMapState_0"/>
+            <argument name="zip" value="PageBuilderMapZipCode_a"/>
+            <argument name="country" value="PageBuilderMapCountry_USA"/>
+            <argument name="rowIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridDataLocationName2">
+            <argument name="locationName" value="PageBuilderMapLocationName_a"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_B"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_z"/>
+            <argument name="city" value="PageBuilderMapCity_0"/>
+            <argument name="state" value="PageBuilderMapState_a"/>
+            <argument name="zip" value="PageBuilderMapZipCode_B"/>
+            <argument name="country" value="PageBuilderMapCountry_Zimbabwe"/>
+            <argument name="rowIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridDataLocationName3">
+            <argument name="locationName" value="PageBuilderMapLocationName_B"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_z"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_0"/>
+            <argument name="city" value="PageBuilderMapCity_a"/>
+            <argument name="state" value="PageBuilderMapState_B"/>
+            <argument name="zip" value="PageBuilderMapZipCode_z"/>
+            <argument name="country" value="PageBuilderMapCountry_Afghanistan"/>
+            <argument name="rowIndex" value="3"/>
+        </actionGroup>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridDataLocationName4">
+            <argument name="locationName" value="PageBuilderMapLocationName_z"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_0"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_a"/>
+            <argument name="city" value="PageBuilderMapCity_B"/>
+            <argument name="state" value="PageBuilderMapState_z"/>
+            <argument name="zip" value="PageBuilderMapZipCode_0"/>
+            <argument name="country" value="PageBuilderMapCountry_Canada"/>
+            <argument name="rowIndex" value="4"/>
+        </actionGroup>
+        <!-- Sort Location Name Descending -->
+        <comment userInput="Sort Location Name Descending" stepKey="commentSortLocationName2"/>
+        <click selector="{{PageBuilderDataGrid.gridColumnHeader('1', PageBuilderMapGrid.col1)}}" stepKey="clickLocationName2"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <!-- Validate Sort Order: Location Name Descending -->
+        <comment userInput="Validate Sort Order: Location Name Descending" stepKey="commentValidateGridLocationName2"/>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridDataLocationName5">
+            <argument name="locationName" value="PageBuilderMapLocationName_0"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_a"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_B"/>
+            <argument name="city" value="PageBuilderMapCity_z"/>
+            <argument name="state" value="PageBuilderMapState_0"/>
+            <argument name="zip" value="PageBuilderMapZipCode_a"/>
+            <argument name="country" value="PageBuilderMapCountry_USA"/>
+            <argument name="rowIndex" value="4"/>
+        </actionGroup>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridDataLocationName6">
+            <argument name="locationName" value="PageBuilderMapLocationName_a"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_B"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_z"/>
+            <argument name="city" value="PageBuilderMapCity_0"/>
+            <argument name="state" value="PageBuilderMapState_a"/>
+            <argument name="zip" value="PageBuilderMapZipCode_B"/>
+            <argument name="country" value="PageBuilderMapCountry_Zimbabwe"/>
+            <argument name="rowIndex" value="3"/>
+        </actionGroup>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridDataLocationName7">
+            <argument name="locationName" value="PageBuilderMapLocationName_B"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_z"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_0"/>
+            <argument name="city" value="PageBuilderMapCity_a"/>
+            <argument name="state" value="PageBuilderMapState_B"/>
+            <argument name="zip" value="PageBuilderMapZipCode_z"/>
+            <argument name="country" value="PageBuilderMapCountry_Afghanistan"/>
+            <argument name="rowIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridDataLocationName8">
+            <argument name="locationName" value="PageBuilderMapLocationName_z"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_0"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_a"/>
+            <argument name="city" value="PageBuilderMapCity_B"/>
+            <argument name="state" value="PageBuilderMapState_z"/>
+            <argument name="zip" value="PageBuilderMapZipCode_0"/>
+            <argument name="country" value="PageBuilderMapCountry_Canada"/>
+            <argument name="rowIndex" value="1"/>
+        </actionGroup>
+        <!-- Sort Phone Number Ascending -->
+        <comment userInput="Sort Phone Number Ascending" stepKey="commentSortPhoneNumber1"/>
+        <click selector="{{PageBuilderDataGrid.gridColumnHeader('2', PageBuilderMapGrid.col2)}}" stepKey="clickPhoneNumber1"/>
+        <waitForPageLoad stepKey="waitForPageLoad3"/>
+        <!-- Validate Sort Order: Phone Number Ascending -->
+        <comment userInput="Validate Sort Order: Phone Number Ascending" stepKey="commentValidateGridPhoneNumber1"/>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridDataPhoneNumber1">
+            <argument name="locationName" value="PageBuilderMapLocationName_z"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_0"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_a"/>
+            <argument name="city" value="PageBuilderMapCity_B"/>
+            <argument name="state" value="PageBuilderMapState_z"/>
+            <argument name="zip" value="PageBuilderMapZipCode_0"/>
+            <argument name="country" value="PageBuilderMapCountry_Canada"/>
+            <argument name="rowIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridDataPhoneNumber2">
+            <argument name="locationName" value="PageBuilderMapLocationName_0"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_a"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_B"/>
+            <argument name="city" value="PageBuilderMapCity_z"/>
+            <argument name="state" value="PageBuilderMapState_0"/>
+            <argument name="zip" value="PageBuilderMapZipCode_a"/>
+            <argument name="country" value="PageBuilderMapCountry_USA"/>
+            <argument name="rowIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridDataPhoneNumber3">
+            <argument name="locationName" value="PageBuilderMapLocationName_a"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_B"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_z"/>
+            <argument name="city" value="PageBuilderMapCity_0"/>
+            <argument name="state" value="PageBuilderMapState_a"/>
+            <argument name="zip" value="PageBuilderMapZipCode_B"/>
+            <argument name="country" value="PageBuilderMapCountry_Zimbabwe"/>
+            <argument name="rowIndex" value="3"/>
+        </actionGroup>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridDataPhoneNumber4">
+            <argument name="locationName" value="PageBuilderMapLocationName_B"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_z"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_0"/>
+            <argument name="city" value="PageBuilderMapCity_a"/>
+            <argument name="state" value="PageBuilderMapState_B"/>
+            <argument name="zip" value="PageBuilderMapZipCode_z"/>
+            <argument name="country" value="PageBuilderMapCountry_Afghanistan"/>
+            <argument name="rowIndex" value="4"/>
+        </actionGroup>
+        <!-- Sort Phone Number Descending -->
+        <comment userInput="Sort Phone Number Descending" stepKey="commentSortPhoneNumber2"/>
+        <click selector="{{PageBuilderDataGrid.gridColumnHeader('2', PageBuilderMapGrid.col2)}}" stepKey="clickPhoneNumber2"/>
+        <waitForPageLoad stepKey="waitForPageLoad4"/>
+        <!-- Validate Sort Order: Phone Number Descending -->
+        <comment userInput="Validate Sort Order: Phone Number Descending" stepKey="commentValidateGridPhoneNumber2"/>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridDataPhoneNumber5">
+            <argument name="locationName" value="PageBuilderMapLocationName_B"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_z"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_0"/>
+            <argument name="city" value="PageBuilderMapCity_a"/>
+            <argument name="state" value="PageBuilderMapState_B"/>
+            <argument name="zip" value="PageBuilderMapZipCode_z"/>
+            <argument name="country" value="PageBuilderMapCountry_Afghanistan"/>
+            <argument name="rowIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridDataPhoneNumber6">
+            <argument name="locationName" value="PageBuilderMapLocationName_a"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_B"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_z"/>
+            <argument name="city" value="PageBuilderMapCity_0"/>
+            <argument name="state" value="PageBuilderMapState_a"/>
+            <argument name="zip" value="PageBuilderMapZipCode_B"/>
+            <argument name="country" value="PageBuilderMapCountry_Zimbabwe"/>
+            <argument name="rowIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridDataPhoneNumber7">
+            <argument name="locationName" value="PageBuilderMapLocationName_0"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_a"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_B"/>
+            <argument name="city" value="PageBuilderMapCity_z"/>
+            <argument name="state" value="PageBuilderMapState_0"/>
+            <argument name="zip" value="PageBuilderMapZipCode_a"/>
+            <argument name="country" value="PageBuilderMapCountry_USA"/>
+            <argument name="rowIndex" value="3"/>
+        </actionGroup>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridDataPhoneNumber8">
+            <argument name="locationName" value="PageBuilderMapLocationName_z"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_0"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_a"/>
+            <argument name="city" value="PageBuilderMapCity_B"/>
+            <argument name="state" value="PageBuilderMapState_z"/>
+            <argument name="zip" value="PageBuilderMapZipCode_0"/>
+            <argument name="country" value="PageBuilderMapCountry_Canada"/>
+            <argument name="rowIndex" value="4"/>
+        </actionGroup>
+        <!-- Sort Street Address Ascending -->
+        <comment userInput="Sort Street Address Ascending" stepKey="commentSortStreetAddress1"/>
+        <click selector="{{PageBuilderDataGrid.gridColumnHeader('3', PageBuilderMapGrid.col3)}}" stepKey="clickStreetAddress1"/>
+        <waitForPageLoad stepKey="waitForPageLoad5"/>
+        <!-- Validate Sort Order: Street Address Ascending -->
+        <comment userInput="Validate Sort Order: Street Address Ascending" stepKey="commentValidateGridStreetAddress1"/>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridDataStreetAddress1">
+            <argument name="locationName" value="PageBuilderMapLocationName_B"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_z"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_0"/>
+            <argument name="city" value="PageBuilderMapCity_a"/>
+            <argument name="state" value="PageBuilderMapState_B"/>
+            <argument name="zip" value="PageBuilderMapZipCode_z"/>
+            <argument name="country" value="PageBuilderMapCountry_Afghanistan"/>
+            <argument name="rowIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridDataStreetAddress2">
+            <argument name="locationName" value="PageBuilderMapLocationName_z"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_0"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_a"/>
+            <argument name="city" value="PageBuilderMapCity_B"/>
+            <argument name="state" value="PageBuilderMapState_z"/>
+            <argument name="zip" value="PageBuilderMapZipCode_0"/>
+            <argument name="country" value="PageBuilderMapCountry_Canada"/>
+            <argument name="rowIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridDataStreetAddress3">
+            <argument name="locationName" value="PageBuilderMapLocationName_0"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_a"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_B"/>
+            <argument name="city" value="PageBuilderMapCity_z"/>
+            <argument name="state" value="PageBuilderMapState_0"/>
+            <argument name="zip" value="PageBuilderMapZipCode_a"/>
+            <argument name="country" value="PageBuilderMapCountry_USA"/>
+            <argument name="rowIndex" value="3"/>
+        </actionGroup>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridDataStreetAddress4">
+            <argument name="locationName" value="PageBuilderMapLocationName_a"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_B"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_z"/>
+            <argument name="city" value="PageBuilderMapCity_0"/>
+            <argument name="state" value="PageBuilderMapState_a"/>
+            <argument name="zip" value="PageBuilderMapZipCode_B"/>
+            <argument name="country" value="PageBuilderMapCountry_Zimbabwe"/>
+            <argument name="rowIndex" value="4"/>
+        </actionGroup>
+        <!-- Sort Street Address Descending -->
+        <comment userInput="Sort Street Address Descending" stepKey="commentSortStreetAddress2"/>
+        <click selector="{{PageBuilderDataGrid.gridColumnHeader('3', PageBuilderMapGrid.col3)}}" stepKey="clickStreetAddress2"/>
+        <waitForPageLoad stepKey="waitForPageLoad6"/>
+        <!-- Validate Sort Order: Street Address Descending -->
+        <comment userInput="Validate Sort Order: Street Address Descending" stepKey="commentValidateGridStreetAddress2"/>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridDataStreetAddress5">
+            <argument name="locationName" value="PageBuilderMapLocationName_a"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_B"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_z"/>
+            <argument name="city" value="PageBuilderMapCity_0"/>
+            <argument name="state" value="PageBuilderMapState_a"/>
+            <argument name="zip" value="PageBuilderMapZipCode_B"/>
+            <argument name="country" value="PageBuilderMapCountry_Zimbabwe"/>
+            <argument name="rowIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridDataStreetAddress6">
+            <argument name="locationName" value="PageBuilderMapLocationName_0"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_a"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_B"/>
+            <argument name="city" value="PageBuilderMapCity_z"/>
+            <argument name="state" value="PageBuilderMapState_0"/>
+            <argument name="zip" value="PageBuilderMapZipCode_a"/>
+            <argument name="country" value="PageBuilderMapCountry_USA"/>
+            <argument name="rowIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridDataStreetAddress7">
+            <argument name="locationName" value="PageBuilderMapLocationName_z"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_0"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_a"/>
+            <argument name="city" value="PageBuilderMapCity_B"/>
+            <argument name="state" value="PageBuilderMapState_z"/>
+            <argument name="zip" value="PageBuilderMapZipCode_0"/>
+            <argument name="country" value="PageBuilderMapCountry_Canada"/>
+            <argument name="rowIndex" value="3"/>
+        </actionGroup>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridDataStreetAddress8">
+            <argument name="locationName" value="PageBuilderMapLocationName_B"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_z"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_0"/>
+            <argument name="city" value="PageBuilderMapCity_a"/>
+            <argument name="state" value="PageBuilderMapState_B"/>
+            <argument name="zip" value="PageBuilderMapZipCode_z"/>
+            <argument name="country" value="PageBuilderMapCountry_Afghanistan"/>
+            <argument name="rowIndex" value="4"/>
+        </actionGroup>
+        <!-- Sort City Ascending -->
+        <comment userInput="Sort City Ascending" stepKey="commentSortCity1"/>
+        <click selector="{{PageBuilderDataGrid.gridColumnHeader('4', PageBuilderMapGrid.col4)}}" stepKey="clickCity1"/>
+        <waitForPageLoad stepKey="waitForPageLoad7"/>
+        <!-- Validate Sort Order: City Ascending -->
+        <comment userInput="Validate Sort Order: City Ascending" stepKey="commentValidateGridCity1"/>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridDataCity1">
+            <argument name="locationName" value="PageBuilderMapLocationName_a"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_B"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_z"/>
+            <argument name="city" value="PageBuilderMapCity_0"/>
+            <argument name="state" value="PageBuilderMapState_a"/>
+            <argument name="zip" value="PageBuilderMapZipCode_B"/>
+            <argument name="country" value="PageBuilderMapCountry_Zimbabwe"/>
+            <argument name="rowIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridDataCity2">
+            <argument name="locationName" value="PageBuilderMapLocationName_B"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_z"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_0"/>
+            <argument name="city" value="PageBuilderMapCity_a"/>
+            <argument name="state" value="PageBuilderMapState_B"/>
+            <argument name="zip" value="PageBuilderMapZipCode_z"/>
+            <argument name="country" value="PageBuilderMapCountry_Afghanistan"/>
+            <argument name="rowIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridDataCity3">
+            <argument name="locationName" value="PageBuilderMapLocationName_z"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_0"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_a"/>
+            <argument name="city" value="PageBuilderMapCity_B"/>
+            <argument name="state" value="PageBuilderMapState_z"/>
+            <argument name="zip" value="PageBuilderMapZipCode_0"/>
+            <argument name="country" value="PageBuilderMapCountry_Canada"/>
+            <argument name="rowIndex" value="3"/>
+        </actionGroup>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridDataCity4">
+            <argument name="locationName" value="PageBuilderMapLocationName_0"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_a"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_B"/>
+            <argument name="city" value="PageBuilderMapCity_z"/>
+            <argument name="state" value="PageBuilderMapState_0"/>
+            <argument name="zip" value="PageBuilderMapZipCode_a"/>
+            <argument name="country" value="PageBuilderMapCountry_USA"/>
+            <argument name="rowIndex" value="4"/>
+        </actionGroup>
+        <!-- Sort City Descending -->
+        <comment userInput="Sort City Descending" stepKey="commentSortCity2"/>
+        <click selector="{{PageBuilderDataGrid.gridColumnHeader('4', PageBuilderMapGrid.col4)}}" stepKey="clickCity2"/>
+        <waitForPageLoad stepKey="waitForPageLoad8"/>
+        <!-- Validate Sort Order: City Descending -->
+        <comment userInput="Validate Sort Order: City Descending" stepKey="commentValidateGridCity2"/>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridDataCity5">
+            <argument name="locationName" value="PageBuilderMapLocationName_0"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_a"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_B"/>
+            <argument name="city" value="PageBuilderMapCity_z"/>
+            <argument name="state" value="PageBuilderMapState_0"/>
+            <argument name="zip" value="PageBuilderMapZipCode_a"/>
+            <argument name="country" value="PageBuilderMapCountry_USA"/>
+            <argument name="rowIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridDataCity6">
+            <argument name="locationName" value="PageBuilderMapLocationName_z"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_0"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_a"/>
+            <argument name="city" value="PageBuilderMapCity_B"/>
+            <argument name="state" value="PageBuilderMapState_z"/>
+            <argument name="zip" value="PageBuilderMapZipCode_0"/>
+            <argument name="country" value="PageBuilderMapCountry_Canada"/>
+            <argument name="rowIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridDataCity7">
+            <argument name="locationName" value="PageBuilderMapLocationName_B"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_z"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_0"/>
+            <argument name="city" value="PageBuilderMapCity_a"/>
+            <argument name="state" value="PageBuilderMapState_B"/>
+            <argument name="zip" value="PageBuilderMapZipCode_z"/>
+            <argument name="country" value="PageBuilderMapCountry_Afghanistan"/>
+            <argument name="rowIndex" value="3"/>
+        </actionGroup>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridDataCity8">
+            <argument name="locationName" value="PageBuilderMapLocationName_a"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_B"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_z"/>
+            <argument name="city" value="PageBuilderMapCity_0"/>
+            <argument name="state" value="PageBuilderMapState_a"/>
+            <argument name="zip" value="PageBuilderMapZipCode_B"/>
+            <argument name="country" value="PageBuilderMapCountry_Zimbabwe"/>
+            <argument name="rowIndex" value="4"/>
+        </actionGroup>
+        <!-- Sort State Ascending -->
+        <comment userInput="Sort State Ascending" stepKey="commentSortState1"/>
+        <click selector="{{PageBuilderDataGrid.gridColumnHeader('5', PageBuilderMapGrid.col5)}}" stepKey="clickState1"/>
+        <waitForPageLoad stepKey="waitForPageLoad9"/>
+        <!-- Validate Sort Order: State Ascending -->
+        <comment userInput="Validate Sort Order: State Ascending" stepKey="commentValidateGridState1"/>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridDataState1">
+            <argument name="locationName" value="PageBuilderMapLocationName_0"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_a"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_B"/>
+            <argument name="city" value="PageBuilderMapCity_z"/>
+            <argument name="state" value="PageBuilderMapState_0"/>
+            <argument name="zip" value="PageBuilderMapZipCode_a"/>
+            <argument name="country" value="PageBuilderMapCountry_USA"/>
+            <argument name="rowIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridDataState2">
+            <argument name="locationName" value="PageBuilderMapLocationName_a"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_B"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_z"/>
+            <argument name="city" value="PageBuilderMapCity_0"/>
+            <argument name="state" value="PageBuilderMapState_a"/>
+            <argument name="zip" value="PageBuilderMapZipCode_B"/>
+            <argument name="country" value="PageBuilderMapCountry_Zimbabwe"/>
+            <argument name="rowIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridDataState3">
+            <argument name="locationName" value="PageBuilderMapLocationName_B"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_z"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_0"/>
+            <argument name="city" value="PageBuilderMapCity_a"/>
+            <argument name="state" value="PageBuilderMapState_B"/>
+            <argument name="zip" value="PageBuilderMapZipCode_z"/>
+            <argument name="country" value="PageBuilderMapCountry_Afghanistan"/>
+            <argument name="rowIndex" value="3"/>
+        </actionGroup>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridDataState4">
+            <argument name="locationName" value="PageBuilderMapLocationName_z"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_0"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_a"/>
+            <argument name="city" value="PageBuilderMapCity_B"/>
+            <argument name="state" value="PageBuilderMapState_z"/>
+            <argument name="zip" value="PageBuilderMapZipCode_0"/>
+            <argument name="country" value="PageBuilderMapCountry_Canada"/>
+            <argument name="rowIndex" value="4"/>
+        </actionGroup>
+        <!-- Sort State Descending -->
+        <comment userInput="Sort State Descending" stepKey="commentSortState2"/>
+        <click selector="{{PageBuilderDataGrid.gridColumnHeader('5', PageBuilderMapGrid.col5)}}" stepKey="clickState2"/>
+        <waitForPageLoad stepKey="waitForPageLoad10"/>
+        <!-- Validate Sort Order: State Descending -->
+        <comment userInput="Validate Sort Order: State Descending" stepKey="commentValidateGridState2"/>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridDataState5">
+            <argument name="locationName" value="PageBuilderMapLocationName_z"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_0"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_a"/>
+            <argument name="city" value="PageBuilderMapCity_B"/>
+            <argument name="state" value="PageBuilderMapState_z"/>
+            <argument name="zip" value="PageBuilderMapZipCode_0"/>
+            <argument name="country" value="PageBuilderMapCountry_Canada"/>
+            <argument name="rowIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridDataState6">
+            <argument name="locationName" value="PageBuilderMapLocationName_B"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_z"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_0"/>
+            <argument name="city" value="PageBuilderMapCity_a"/>
+            <argument name="state" value="PageBuilderMapState_B"/>
+            <argument name="zip" value="PageBuilderMapZipCode_z"/>
+            <argument name="country" value="PageBuilderMapCountry_Afghanistan"/>
+            <argument name="rowIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridDataState7">
+            <argument name="locationName" value="PageBuilderMapLocationName_a"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_B"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_z"/>
+            <argument name="city" value="PageBuilderMapCity_0"/>
+            <argument name="state" value="PageBuilderMapState_a"/>
+            <argument name="zip" value="PageBuilderMapZipCode_B"/>
+            <argument name="country" value="PageBuilderMapCountry_Zimbabwe"/>
+            <argument name="rowIndex" value="3"/>
+        </actionGroup>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridDataState8">
+            <argument name="locationName" value="PageBuilderMapLocationName_0"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_a"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_B"/>
+            <argument name="city" value="PageBuilderMapCity_z"/>
+            <argument name="state" value="PageBuilderMapState_0"/>
+            <argument name="zip" value="PageBuilderMapZipCode_a"/>
+            <argument name="country" value="PageBuilderMapCountry_USA"/>
+            <argument name="rowIndex" value="4"/>
+        </actionGroup>
+        <!-- Sort Zip Ascending -->
+        <comment userInput="Sort Zip Ascending" stepKey="commentSortZip1"/>
+        <click selector="{{PageBuilderDataGrid.gridColumnHeader('6', PageBuilderMapGrid.col6)}}" stepKey="clickZip1"/>
+        <waitForPageLoad stepKey="waitForPageLoad11"/>
+        <!-- Validate Sort Order: Zip Ascending -->
+        <comment userInput="Validate Sort Order: Zip Ascending" stepKey="commentValidateGridZip1"/>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridDataZip1">
+            <argument name="locationName" value="PageBuilderMapLocationName_z"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_0"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_a"/>
+            <argument name="city" value="PageBuilderMapCity_B"/>
+            <argument name="state" value="PageBuilderMapState_z"/>
+            <argument name="zip" value="PageBuilderMapZipCode_0"/>
+            <argument name="country" value="PageBuilderMapCountry_Canada"/>
+            <argument name="rowIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridDataZip2">
+            <argument name="locationName" value="PageBuilderMapLocationName_0"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_a"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_B"/>
+            <argument name="city" value="PageBuilderMapCity_z"/>
+            <argument name="state" value="PageBuilderMapState_0"/>
+            <argument name="zip" value="PageBuilderMapZipCode_a"/>
+            <argument name="country" value="PageBuilderMapCountry_USA"/>
+            <argument name="rowIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridDataZip3">
+            <argument name="locationName" value="PageBuilderMapLocationName_a"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_B"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_z"/>
+            <argument name="city" value="PageBuilderMapCity_0"/>
+            <argument name="state" value="PageBuilderMapState_a"/>
+            <argument name="zip" value="PageBuilderMapZipCode_B"/>
+            <argument name="country" value="PageBuilderMapCountry_Zimbabwe"/>
+            <argument name="rowIndex" value="3"/>
+        </actionGroup>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridDataZip4">
+            <argument name="locationName" value="PageBuilderMapLocationName_B"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_z"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_0"/>
+            <argument name="city" value="PageBuilderMapCity_a"/>
+            <argument name="state" value="PageBuilderMapState_B"/>
+            <argument name="zip" value="PageBuilderMapZipCode_z"/>
+            <argument name="country" value="PageBuilderMapCountry_Afghanistan"/>
+            <argument name="rowIndex" value="4"/>
+        </actionGroup>
+        <!-- Sort Zip Descending -->
+        <comment userInput="Sort Zip Descending" stepKey="commentSortZip2"/>
+        <click selector="{{PageBuilderDataGrid.gridColumnHeader('6', PageBuilderMapGrid.col6)}}" stepKey="clickZip2"/>
+        <waitForPageLoad stepKey="waitForPageLoad12"/>
+        <!-- Validate Sort Order: Zip Descending -->
+        <comment userInput="Validate Sort Order: Zip Descending" stepKey="commentValidateGridZip2"/>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridDataZip5">
+            <argument name="locationName" value="PageBuilderMapLocationName_B"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_z"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_0"/>
+            <argument name="city" value="PageBuilderMapCity_a"/>
+            <argument name="state" value="PageBuilderMapState_B"/>
+            <argument name="zip" value="PageBuilderMapZipCode_z"/>
+            <argument name="country" value="PageBuilderMapCountry_Afghanistan"/>
+            <argument name="rowIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridDataZip6">
+            <argument name="locationName" value="PageBuilderMapLocationName_a"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_B"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_z"/>
+            <argument name="city" value="PageBuilderMapCity_0"/>
+            <argument name="state" value="PageBuilderMapState_a"/>
+            <argument name="zip" value="PageBuilderMapZipCode_B"/>
+            <argument name="country" value="PageBuilderMapCountry_Zimbabwe"/>
+            <argument name="rowIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridDataZip7">
+            <argument name="locationName" value="PageBuilderMapLocationName_0"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_a"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_B"/>
+            <argument name="city" value="PageBuilderMapCity_z"/>
+            <argument name="state" value="PageBuilderMapState_0"/>
+            <argument name="zip" value="PageBuilderMapZipCode_a"/>
+            <argument name="country" value="PageBuilderMapCountry_USA"/>
+            <argument name="rowIndex" value="3"/>
+        </actionGroup>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridDataZip8">
+            <argument name="locationName" value="PageBuilderMapLocationName_z"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_0"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_a"/>
+            <argument name="city" value="PageBuilderMapCity_B"/>
+            <argument name="state" value="PageBuilderMapState_z"/>
+            <argument name="zip" value="PageBuilderMapZipCode_0"/>
+            <argument name="country" value="PageBuilderMapCountry_Canada"/>
+            <argument name="rowIndex" value="4"/>
+        </actionGroup>
+        <!-- Sort Country Ascending -->
+        <comment userInput="Sort Country Ascending" stepKey="commentSortCountry1"/>
+        <click selector="{{PageBuilderDataGrid.gridColumnHeader('7', PageBuilderMapGrid.col7)}}" stepKey="clickCountry1"/>
+        <waitForPageLoad stepKey="waitForPageLoad13"/>
+        <!-- Validate Sort Order: Country Ascending -->
+        <comment userInput="Validate Sort Order: Country Ascending" stepKey="commentValidateGridCountry1"/>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridDataCountry4">
+            <argument name="locationName" value="PageBuilderMapLocationName_B"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_z"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_0"/>
+            <argument name="city" value="PageBuilderMapCity_a"/>
+            <argument name="state" value="PageBuilderMapState_B"/>
+            <argument name="zip" value="PageBuilderMapZipCode_z"/>
+            <argument name="country" value="PageBuilderMapCountry_Afghanistan"/>
+            <argument name="rowIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridDataCountry1">
+            <argument name="locationName" value="PageBuilderMapLocationName_z"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_0"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_a"/>
+            <argument name="city" value="PageBuilderMapCity_B"/>
+            <argument name="state" value="PageBuilderMapState_z"/>
+            <argument name="zip" value="PageBuilderMapZipCode_0"/>
+            <argument name="country" value="PageBuilderMapCountry_Canada"/>
+            <argument name="rowIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridDataCountry2">
+            <argument name="locationName" value="PageBuilderMapLocationName_0"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_a"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_B"/>
+            <argument name="city" value="PageBuilderMapCity_z"/>
+            <argument name="state" value="PageBuilderMapState_0"/>
+            <argument name="zip" value="PageBuilderMapZipCode_a"/>
+            <argument name="country" value="PageBuilderMapCountry_USA"/>
+            <argument name="rowIndex" value="3"/>
+        </actionGroup>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridDataCountry3">
+            <argument name="locationName" value="PageBuilderMapLocationName_a"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_B"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_z"/>
+            <argument name="city" value="PageBuilderMapCity_0"/>
+            <argument name="state" value="PageBuilderMapState_a"/>
+            <argument name="zip" value="PageBuilderMapZipCode_B"/>
+            <argument name="country" value="PageBuilderMapCountry_Zimbabwe"/>
+            <argument name="rowIndex" value="4"/>
+        </actionGroup>
+        <!-- Sort Country Descending -->
+        <comment userInput="Sort Country Descending" stepKey="commentSortCountry2"/>
+        <click selector="{{PageBuilderDataGrid.gridColumnHeader('7', PageBuilderMapGrid.col7)}}" stepKey="clickCountry2"/>
+        <waitForPageLoad stepKey="waitForPageLoad14"/>
+        <!-- Validate Sort Order: Country Descending -->
+        <comment userInput="Validate Sort Order: Country Descending" stepKey="commentValidateGridCountry2"/>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridDataCountry5">
+            <argument name="locationName" value="PageBuilderMapLocationName_a"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_B"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_z"/>
+            <argument name="city" value="PageBuilderMapCity_0"/>
+            <argument name="state" value="PageBuilderMapState_a"/>
+            <argument name="zip" value="PageBuilderMapZipCode_B"/>
+            <argument name="country" value="PageBuilderMapCountry_Zimbabwe"/>
+            <argument name="rowIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridDataCountry6">
+            <argument name="locationName" value="PageBuilderMapLocationName_0"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_a"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_B"/>
+            <argument name="city" value="PageBuilderMapCity_z"/>
+            <argument name="state" value="PageBuilderMapState_0"/>
+            <argument name="zip" value="PageBuilderMapZipCode_a"/>
+            <argument name="country" value="PageBuilderMapCountry_USA"/>
+            <argument name="rowIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridDataCountry7">
+            <argument name="locationName" value="PageBuilderMapLocationName_z"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_0"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_a"/>
+            <argument name="city" value="PageBuilderMapCity_B"/>
+            <argument name="state" value="PageBuilderMapState_z"/>
+            <argument name="zip" value="PageBuilderMapZipCode_0"/>
+            <argument name="country" value="PageBuilderMapCountry_Canada"/>
+            <argument name="rowIndex" value="3"/>
+        </actionGroup>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridDataCountry8">
+            <argument name="locationName" value="PageBuilderMapLocationName_B"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_z"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_0"/>
+            <argument name="city" value="PageBuilderMapCity_a"/>
+            <argument name="state" value="PageBuilderMapState_B"/>
+            <argument name="zip" value="PageBuilderMapZipCode_z"/>
+            <argument name="country" value="PageBuilderMapCountry_Afghanistan"/>
+            <argument name="rowIndex" value="4"/>
+        </actionGroup>
+    </test>
+    <test name="MapLocationsGridSaveRowSortOrder">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Map"/>
+            <title value="Locations - Locations Grid Save Row Sort Order"/>
+            <description value="Make sure the locations grid can save the sort order of the rows after a page save."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MAGETWO-88132"/>
+            <testCaseId value="MC-2483"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="pagebuilder-mapLocation"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionMedia">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragIntoStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <!-- Add 1st Location -->
+        <comment userInput="Add 1st Location" stepKey="commentAddLocation1"/>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton1"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLatitude">
+            <argument name="property" value="PageBuilderMapLatitude_Positive39_74"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLongitude">
+            <argument name="property" value="PageBuilderMapLongitude_Positive9_67"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName">
+            <argument name="property" value="PageBuilderMapLocationName_a"/>
+        </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm1"/>
+        <!-- Add 2nd Location -->
+        <comment userInput="Add 2nd Location" stepKey="commentAddLocation2"/>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton2"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLatitude2">
+            <argument name="property" value="PageBuilderMapLatitude_Positive39_74"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLongitude2">
+            <argument name="property" value="PageBuilderMapLongitude_Positive9_67"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName2">
+            <argument name="property" value="PageBuilderMapLocationName_B"/>
+        </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm2"/>
+        <!-- Sort Location Name Descending -->
+        <comment userInput="Sort Location Name Descending" stepKey="commentSort"/>
+        <click selector="{{PageBuilderDataGrid.gridColumnHeader('1', PageBuilderMapGrid.col1)}}" stepKey="clickLocationName1"/>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <click selector="{{PageBuilderDataGrid.gridColumnHeader('1', PageBuilderMapGrid.col1)}}" stepKey="clickLocationName2"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Save Page -->
+        <comment userInput="Save Page" stepKey="commentSavePage"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Grid Sort Order -->
+        <comment userInput="Validate Grid Sort Order" stepKey="commentValidateGridOrder"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGrid1">
+            <argument name="locationName" value="PageBuilderMapLocationName_B"/>
+            <argument name="rowIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGrid2">
+            <argument name="locationName" value="PageBuilderMapLocationName_a"/>
+            <argument name="rowIndex" value="2"/>
+        </actionGroup>
+    </test>
+    <test name="MapLocationsGridCancelRowSortOrderChanges">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Map"/>
+            <title value="Locations - Locations Grid Cancel Row Sort Order Changes"/>
+            <description value="Make sure the locations grid sort order is not saved before a page save."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MAGETWO-88132"/>
+            <testCaseId value="MC-2479"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="pagebuilder-mapLocation"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionMedia">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragIntoStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <!-- Add 1st Location -->
+        <comment userInput="Add 1st Location" stepKey="commentAddLocation1"/>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton1"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLatitude">
+            <argument name="property" value="PageBuilderMapLatitude_Positive39_74"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLongitude">
+            <argument name="property" value="PageBuilderMapLongitude_Positive9_67"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName">
+            <argument name="property" value="PageBuilderMapLocationName_a"/>
+        </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm1"/>
+        <!-- Add 2nd Location -->
+        <comment userInput="Add 2nd Location" stepKey="commentAddLocation2"/>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton2"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLatitude2">
+            <argument name="property" value="PageBuilderMapLatitude_Positive39_74"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLongitude2">
+            <argument name="property" value="PageBuilderMapLongitude_Positive9_67"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName2">
+            <argument name="property" value="PageBuilderMapLocationName_B"/>
+        </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm2"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Save Page -->
+        <comment userInput="Save Page" stepKey="commentSavePage"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Sort Location Name Descending -->
+        <comment userInput="Sort Location Name Descending" stepKey="commentSort"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <click selector="{{PageBuilderDataGrid.gridColumnHeader('1', PageBuilderMapGrid.col1)}}" stepKey="clickLocationName1"/>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <click selector="{{PageBuilderDataGrid.gridColumnHeader('1', PageBuilderMapGrid.col1)}}" stepKey="clickLocationName2"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <!-- Reload Page -->
+        <comment userInput="Reload Page" stepKey="commentReloadPage"/>
+        <reloadPage stepKey="reloadPage"/>
+        <waitForPageLoad stepKey="waitForPageLoad3"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!-- Validate Grid Sort Order -->
+        <comment userInput="Validate Grid Sort Order" stepKey="commentValidateGridOrder"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGrid1">
+            <argument name="locationName" value="PageBuilderMapLocationName_a"/>
+            <argument name="rowIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGrid2">
+            <argument name="locationName" value="PageBuilderMapLocationName_B"/>
+            <argument name="rowIndex" value="2"/>
+        </actionGroup>
+    </test>
+    <test name="MapLocationsGridNewLocationsCorrectSortOrder">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Map"/>
+            <title value="Locations - Locations Grid Will Save New Locations In Correct Sort Order"/>
+            <description value="Make sure the locations grid will display newly added locations in the correct sort order if sorting is saved on the grid."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MAGETWO-88132"/>
+            <testCaseId value="MC-2453"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="pagebuilder-mapLocation"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionMedia">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragIntoStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <!-- Add 1st Location -->
+        <comment userInput="Add 1st Location" stepKey="commentAddLocation1"/>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton1"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLatitude">
+            <argument name="property" value="PageBuilderMapLatitude_Positive39_74"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLongitude">
+            <argument name="property" value="PageBuilderMapLongitude_Positive9_67"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName">
+            <argument name="property" value="PageBuilderMapLocationName_a"/>
+        </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm1"/>
+        <!-- Sort Location Name Descending -->
+        <comment userInput="Sort Location Name Descending" stepKey="commentSort"/>
+        <click selector="{{PageBuilderDataGrid.gridColumnHeader('1', PageBuilderMapGrid.col1)}}" stepKey="clickLocationName1"/>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <click selector="{{PageBuilderDataGrid.gridColumnHeader('1', PageBuilderMapGrid.col1)}}" stepKey="clickLocationName2"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <!-- Add 2nd Location -->
+        <comment userInput="Add 2nd Location" stepKey="commentAddLocation2"/>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton2"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLatitude2">
+            <argument name="property" value="PageBuilderMapLatitude_Positive39_74"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLongitude2">
+            <argument name="property" value="PageBuilderMapLongitude_Positive9_67"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName2">
+            <argument name="property" value="PageBuilderMapLocationName_B"/>
+        </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm2"/>
+        <!-- Validate Grid Sort Order -->
+        <comment userInput="Validate Grid Sort Order" stepKey="commentValidateGridOrder"/>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGrid1">
+            <argument name="locationName" value="PageBuilderMapLocationName_B"/>
+            <argument name="rowIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGrid2">
+            <argument name="locationName" value="PageBuilderMapLocationName_a"/>
+            <argument name="rowIndex" value="2"/>
+        </actionGroup>
+    </test>
+    <test name="MapEditAllLocationAttributes">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Map"/>
+            <title value="Locations - Edit Location"/>
+            <description value="Verify that a user can edit a location."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MAGETWO-88132"/>
+            <testCaseId value="MC-2459"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="pagebuilder-mapLocation"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionMedia">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragIntoStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <!-- Add Location -->
+        <comment userInput="Add Location" stepKey="commentAddLocation"/>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLatitude">
+            <argument name="property" value="PageBuilderMapLatitude_Positive39_74"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLongitude">
+            <argument name="property" value="PageBuilderMapLongitude_Positive9_67"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName">
+            <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterPhoneNumber">
+            <argument name="property" value="PageBuilderMapPhoneNumber_TestPhoneNumber"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterStreetAddress">
+            <argument name="property" value="PageBuilderMapStreetAddress_1234FakeDrive"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterCity">
+            <argument name="property" value="PageBuilderMapCity_FakeCity"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterState">
+            <argument name="property" value="PageBuilderMapState_Texas"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterZip">
+            <argument name="property" value="PageBuilderMapZipCode_12345_6789"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelMultiSelectField" stepKey="enterCountry">
+            <argument name="property" value="PageBuilderMapCountry_USA"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterComment">
+            <argument name="property" value="PageBuilderMapComment_TestComment"/>
+        </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Save Page -->
+        <comment userInput="Save Page" stepKey="commentSavePage"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Edit Location -->
+        <comment userInput="Edit Location" stepKey="commentEditLocation"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="clickLocationGridRow" stepKey="clickLocationGridRow">
+            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName2">
+            <argument name="property" value="PageBuilderMapLocationName_TestLocationEdit"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterPhoneNumber2">
+            <argument name="property" value="PageBuilderMapPhoneNumber_TestPhoneNumberEdit"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterStreetAddress2">
+            <argument name="property" value="PageBuilderMapStreetAddress_1234FakeDriveEdit"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterCity2">
+            <argument name="property" value="PageBuilderMapCity_FakeCityEdit"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterState2">
+            <argument name="property" value="PageBuilderMapState_Ontario"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterZip2">
+            <argument name="property" value="PageBuilderMapZipCode_98765"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelMultiSelectField" stepKey="enterCountry2">
+            <argument name="property" value="PageBuilderMapCountry_Canada"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterComment2">
+            <argument name="property" value="PageBuilderMapComment_TestComment2"/>
+        </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm2"/>
+        <!-- Validate Locations Grid -->
+        <comment userInput="Validate Locations Grid" stepKey="commentValidateValidateLocationsGrid1"/>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridData">
+            <argument name="locationName" value="PageBuilderMapLocationName_TestLocationEdit"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_TestPhoneNumberEdit"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_1234FakeDriveEdit"/>
+            <argument name="city" value="PageBuilderMapCity_FakeCityEdit"/>
+            <argument name="state" value="PageBuilderMapState_Ontario"/>
+            <argument name="zip" value="PageBuilderMapZipCode_98765"/>
+            <argument name="country" value="PageBuilderMapCountry_Canada"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <!-- Save Page After Edit -->
+        <comment userInput="Save Page After Edit" stepKey="commentSavePage2"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!-- Validate Locations Grid After Save -->
+        <comment userInput="Validate Locations Grid After Save" stepKey="commentValidateLocationsGrid2"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridData2">
+            <argument name="locationName" value="PageBuilderMapLocationName_TestLocationEdit"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_TestPhoneNumberEdit"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_1234FakeDriveEdit"/>
+            <argument name="city" value="PageBuilderMapCity_FakeCityEdit"/>
+            <argument name="state" value="PageBuilderMapState_Ontario"/>
+            <argument name="zip" value="PageBuilderMapZipCode_98765"/>
+            <argument name="country" value="PageBuilderMapCountry_Canada"/>
+        </actionGroup>
+        <!-- Validate Locations Form -->
+        <comment userInput="Validate Locations Form" stepKey="commentValidateLocationsForm"/>
+        <actionGroup ref="clickLocationGridRow" stepKey="clickLocationGridRow2">
+            <argument name="locationName" value="PageBuilderMapLocationName_TestLocationEdit"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateLocation">
+            <argument name="property" value="PageBuilderMapLocationName_TestLocationEdit"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validatePhoneNumber">
+            <argument name="property" value="PageBuilderMapPhoneNumber_TestPhoneNumberEdit"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateAddress">
+            <argument name="property" value="PageBuilderMapStreetAddress_1234FakeDriveEdit"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateCity">
+            <argument name="property" value="PageBuilderMapCity_FakeCityEdit"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateState">
+            <argument name="property" value="PageBuilderMapState_Ontario"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateZip">
+            <argument name="property" value="PageBuilderMapZipCode_98765"/>
+        </actionGroup>
+        <actionGroup ref="seeInSlideOutMultiSelectField" stepKey="validateCountry">
+            <argument name="property" value="PageBuilderMapCountry_Canada"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateComment">
+            <argument name="property" value="PageBuilderMapComment_TestComment2"/>
+        </actionGroup>
+    </test>
+    <test name="MapDeleteLocation">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Map"/>
+            <title value="Locations - Delete Location"/>
+            <description value="Verify that a user can delete a location."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MAGETWO-88132"/>
+            <testCaseId value="MC-2472"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="pagebuilder-mapLocation"/>
+            <group value="pagebuilder-requiresValidMapAPIKey"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setEmptyGoogleMapsAPIKey"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionMedia">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragIntoStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <!-- Add Location -->
+        <comment userInput="Add Location" stepKey="commentAddLocation"/>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLatitude">
+            <argument name="property" value="PageBuilderMapLatitude_Positive39_74"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLongitude">
+            <argument name="property" value="PageBuilderMapLongitude_Positive9_67"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName">
+            <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Save Page and Set Valid API Key -->
+        <comment userInput="Save Page and Set Valid API Key" stepKey="commentSavePageAndSetKey"/>
+        <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key {{googleMapsAPIKey.valid}}" stepKey="setValidGoogleMapsAPIKey"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="verifyMapHasPin" stepKey="verifyMapHasPinStage">
+            <argument name="page" value="MapOnStage"/>
+        </actionGroup>
+        <!-- Delete Location -->
+        <comment userInput="Delete Location" stepKey="commentDeleteLocation"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="deleteLocationFromGrid" stepKey="deleteLocationFromGrid">
+            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{PageBuilderDataGrid.emptyGridMessage(PageBuilderMapGrid.emptyMessage)}}" stepKey="waitForEmptyGrid1"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage1"/>
+        <actionGroup ref="dontSeeMapPin" stepKey="dontSeeMapPin1"/>
+        <!-- Save Page After Delete -->
+        <comment userInput="Save Page After Delete" stepKey="commentSavePage2"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
+        <actionGroup ref="dontSeeMapPin" stepKey="dontSeeMapPin2"/>
+        <!-- Validate Edit Panel After Save -->
+        <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{PageBuilderDataGrid.emptyGridMessage(PageBuilderMapGrid.emptyMessage)}}" stepKey="waitForEmptyGrid2"/>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="validateEmptyMapStoreFront" stepKey="validateEmptyMapStoreFront"/>
+    </test>
+</tests>

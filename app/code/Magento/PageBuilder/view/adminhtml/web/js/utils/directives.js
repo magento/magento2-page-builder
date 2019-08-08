@@ -16,6 +16,7 @@ define(["Magento_PageBuilder/js/config"], function (_config) {
    *
    * @param {string} url
    * @returns {boolean}
+   * @api
    */
 
   function isDirectiveDataUrl(url) {
@@ -26,6 +27,7 @@ define(["Magento_PageBuilder/js/config"], function (_config) {
    *
    * @param {string} directive
    * @returns {string}
+   * @api
    */
 
 
@@ -37,6 +39,7 @@ define(["Magento_PageBuilder/js/config"], function (_config) {
    *
    * @param {string} url
    * @returns {string}
+   * @api
    */
 
 
@@ -52,6 +55,7 @@ define(["Magento_PageBuilder/js/config"], function (_config) {
    *
    * @param {string} str
    * @returns {string}
+   * @api
    */
 
 
@@ -65,6 +69,7 @@ define(["Magento_PageBuilder/js/config"], function (_config) {
    *
    * @param {Array} image
    * @returns {string}
+   * @api
    */
 
 
@@ -78,10 +83,15 @@ define(["Magento_PageBuilder/js/config"], function (_config) {
    *
    * @param {string} html
    * @returns {string}
+   * @api
    */
 
 
   function removeQuotesInMediaDirectives(html) {
+    if (!html) {
+      return "";
+    }
+
     var mediaDirectiveRegExp = /\{\{\s*media\s+url\s*=\s*(.*?)\s*\}\}/g;
     var urlRegExp = /\{\{\s*media\s+url\s*=\s*(.*)\s*\}\}/;
     var mediaDirectiveMatches = html.match(mediaDirectiveRegExp);
@@ -104,10 +114,15 @@ define(["Magento_PageBuilder/js/config"], function (_config) {
    *
    * @param {string} html
    * @returns {string}
+   * @api
    */
 
 
   function convertMediaDirectivesToUrls(html) {
+    if (!html) {
+      return "";
+    }
+
     var mediaDirectiveRegExp = /\{\{\s*media\s+url\s*=\s*"?[^"\s\}]+"?\s*\}\}/g;
     var mediaDirectiveMatches = html.match(mediaDirectiveRegExp);
 

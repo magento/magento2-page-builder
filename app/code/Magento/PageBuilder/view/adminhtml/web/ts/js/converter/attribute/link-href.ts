@@ -2,29 +2,44 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-import _ from "underscore";
-import ConverterInterface from "../converter-interface";
 
+import _ from "underscore";
+import {DataObject} from "../../data-store";
+import {get} from "../../utils/object";
+import ConverterInterface from "../converter-interface";
+import LinkObject from "../link-object.types";
+
+/**
+ * @api
+ */
 export default class CreateValueForHref implements ConverterInterface {
     /**
      * @type object
      */
-    private widgetParamsByLinkType: object = {
+    private widgetParamsByLinkType: {
+        [key: string]: {
+            type: string;
+            page_id?: string;
+            id_path?: string;
+            template: string;
+            type_name: string;
+        };
+    } = {
         category: {
             type: "Magento\\Catalog\\Block\\Category\\Widget\\Link",
-            id_path: `category/:href`,
+            id_path: "category/:href",
             template: "Magento_PageBuilder::widget/link_href.phtml",
             type_name: "Catalog Category Link",
         },
         product: {
             type: "Magento\\Catalog\\Block\\Product\\Widget\\Link",
-            id_path: `product/:href`,
+            id_path: "product/:href",
             template: "Magento_PageBuilder::widget/link_href.phtml",
             type_name: "Catalog Product Link",
         },
         page: {
             type: "Magento\\Cms\\Block\\Widget\\Page\\Link",
-            page_id: `:href`,
+            page_id: ":href",
             template: "Magento_PageBuilder::widget/link_href.phtml",
             type_name: "CMS Page Link",
         },
@@ -47,9 +62,8 @@ export default class CreateValueForHref implements ConverterInterface {
      * @param data Object
      * @returns {string}
      */
-    public toDom(name: string, data: object): string {
-
-        const link = data[name];
+    public toDom(name: string, data: DataObject): string {
+        const link = get<LinkObject>(data, name);
         let href = "";
 
         if (!link) {
@@ -60,24 +74,29 @@ export default class CreateValueForHref implements ConverterInterface {
         const isHrefId = !isNaN(parseInt(link[linkType], 10));
 
         if (isHrefId && link) {
-            href = this.convertToWidget(link[linkType], this.widgetParamsByLinkType[linkType]);
-        } else if (link[linkType]) {
+            href = this.convertToWidget(link[linkType], linkType);
+        } else if (typeof link[linkType] === "string") {
             href = link[linkType];
         }
+
         return href;
     }
 
     /**
      * @param {string} href
-     * @param {object} widgetAttributes
+     * @param {string} linkType
      * @returns {string}
      */
-    private convertToWidget(href: string, widgetAttributes: object): string {
+    private convertToWidget(href: string, linkType: string): string {
+        if (!href || !this.widgetParamsByLinkType[linkType]) {
+            return href;
+        }
+
         const attributesString = _.map(
-            widgetAttributes,
-            (val: string, key: string) => `${key}='${val.replace(":href", href)}'`).join(" ");
+            this.widgetParamsByLinkType[linkType],
+            (val: string, key: string) => `${key}='${val.replace(":href", href)}'`,
+        ).join(" ");
 
         return `{{widget ${attributesString} }}`;
     }
-
 }

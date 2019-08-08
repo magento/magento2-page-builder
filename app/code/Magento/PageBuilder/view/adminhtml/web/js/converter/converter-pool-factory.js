@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/utils/loader", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/converter/converter-pool"], function (_loader, _config, _converterPool) {
+define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/utils/loader", "Magento_PageBuilder/js/converter/converter-pool"], function (_config, _loader, _converterPool) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -12,21 +12,24 @@ define(["Magento_PageBuilder/js/utils/loader", "Magento_PageBuilder/js/config", 
     var config = _config.getContentTypeConfig(contentType);
 
     var converters = [];
+    var appearanceName;
 
     var _arr = Object.keys(config.appearances);
 
     for (var _i = 0; _i < _arr.length; _i++) {
-      var appearanceName = _arr[_i];
-      var dataMapping = config.appearances[appearanceName].data_mapping;
+      appearanceName = _arr[_i];
+      var appearance = config.appearances[appearanceName];
 
-      if (dataMapping !== undefined && dataMapping.elements !== undefined) {
-        var _arr2 = Object.keys(dataMapping.elements);
+      if (appearance !== undefined && appearance.elements !== undefined) {
+        var elementName = void 0;
+
+        var _arr2 = Object.keys(appearance.elements);
 
         for (var _i2 = 0; _i2 < _arr2.length; _i2++) {
-          var elementName = _arr2[_i2];
+          elementName = _arr2[_i2];
 
-          if (dataMapping.elements[elementName].style !== undefined) {
-            for (var _iterator = dataMapping.elements[elementName].style, _isArray = Array.isArray(_iterator), _i3 = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
+          if (appearance.elements[elementName].style !== undefined) {
+            for (var _iterator = appearance.elements[elementName].style, _isArray = Array.isArray(_iterator), _i3 = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
               var _ref;
 
               if (_isArray) {
@@ -38,20 +41,20 @@ define(["Magento_PageBuilder/js/utils/loader", "Magento_PageBuilder/js/config", 
                 _ref = _i3.value;
               }
 
-              var _propertyConfig = _ref;
+              var propertyConfig = _ref;
 
-              if (!!_propertyConfig.converter && converters.indexOf(_propertyConfig.converter) === -1 && !_converterPool.get(_propertyConfig.converter)) {
-                converters.push(_propertyConfig.converter);
+              if (!!propertyConfig.converter && converters.indexOf(propertyConfig.converter) === -1 && !_converterPool.get(propertyConfig.converter)) {
+                converters.push(propertyConfig.converter);
               }
 
-              if (!!_propertyConfig.preview_converter && converters.indexOf(_propertyConfig.preview_converter) === -1 && !_converterPool.get(_propertyConfig.preview_converter)) {
-                converters.push(_propertyConfig.preview_converter);
+              if (!!propertyConfig.preview_converter && converters.indexOf(propertyConfig.preview_converter) === -1 && !_converterPool.get(propertyConfig.preview_converter)) {
+                converters.push(propertyConfig.preview_converter);
               }
             }
           }
 
-          if (dataMapping.elements[elementName].attributes !== undefined) {
-            for (var _iterator2 = dataMapping.elements[elementName].attributes, _isArray2 = Array.isArray(_iterator2), _i4 = 0, _iterator2 = _isArray2 ? _iterator2 : _iterator2[Symbol.iterator]();;) {
+          if (appearance.elements[elementName].attributes !== undefined) {
+            for (var _iterator2 = appearance.elements[elementName].attributes, _isArray2 = Array.isArray(_iterator2), _i4 = 0, _iterator2 = _isArray2 ? _iterator2 : _iterator2[Symbol.iterator]();;) {
               var _ref2;
 
               if (_isArray2) {
@@ -63,20 +66,20 @@ define(["Magento_PageBuilder/js/utils/loader", "Magento_PageBuilder/js/config", 
                 _ref2 = _i4.value;
               }
 
-              var _attributeConfig = _ref2;
+              var attributeConfig = _ref2;
 
-              if (!!_attributeConfig.converter && converters.indexOf(_attributeConfig.converter) === -1 && !_converterPool.get(_attributeConfig.converter)) {
-                converters.push(_attributeConfig.converter);
+              if (!!attributeConfig.converter && converters.indexOf(attributeConfig.converter) === -1 && !_converterPool.get(attributeConfig.converter)) {
+                converters.push(attributeConfig.converter);
               }
 
-              if (!!_attributeConfig.preview_converter && converters.indexOf(_attributeConfig.preview_converter) === -1 && !_converterPool.get(_attributeConfig.preview_converter)) {
-                converters.push(_attributeConfig.preview_converter);
+              if (!!attributeConfig.preview_converter && converters.indexOf(attributeConfig.preview_converter) === -1 && !_converterPool.get(attributeConfig.preview_converter)) {
+                converters.push(attributeConfig.preview_converter);
               }
             }
           }
 
-          if (dataMapping.elements[elementName].html !== undefined) {
-            var htmlConfig = dataMapping.elements[elementName].html;
+          if (appearance.elements[elementName].html !== undefined) {
+            var htmlConfig = appearance.elements[elementName].html;
 
             if (!!htmlConfig.converter && converters.indexOf(htmlConfig.converter) === -1 && !_converterPool.get(htmlConfig.converter)) {
               converters.push(htmlConfig.converter);

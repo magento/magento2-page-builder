@@ -6,17 +6,14 @@
 import Config from "../config";
 
 /**
- * Validate if content has page builder format
+ * Validate if content has page builder format by checking for any data-content-type attributes
  *
  * @param {string} content
  * @returns {boolean}
  */
-export default function Validate(content: string) {
-    const stageDocument = document.createElement("div");
-
-    stageDocument.setAttribute(Config.getConfig("dataRoleAttributeName"), "stage");
-    stageDocument.innerHTML = content;
+export default function validate(content: string) {
+    const stageDocument = new DOMParser().parseFromString(content, "text/html");
     return !!stageDocument.querySelector(
-        "[" + Config.getConfig("dataRoleAttributeName") + "=\"row\"]",
+        `[${Config.getConfig("dataContentTypeAttributeName")}]`,
     );
 }

@@ -7,9 +7,27 @@
 //  Default appearance styles
 //  _____________________________________________
 
-div[data-role='video'] > iframe {
-    box-sizing: border-box;
-    height: 400px;
-    max-width: 100%;
-    width: 100%;
+div[data-content-type='video'] {
+    font-size: 0;
+
+    .pagebuilder-video-inner {
+        box-sizing: border-box;
+        display: inline-block;
+        width: 100%;
+    }
+
+    .pagebuilder-video-container {
+        border-radius: inherit;
+        overflow: hidden;
+        padding-top: 56.25%;
+        position: relative;
+    }
+
+    iframe {
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+    }
 }

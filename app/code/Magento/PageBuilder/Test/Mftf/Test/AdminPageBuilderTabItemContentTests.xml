@@ -1,0 +1,1158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="CanAddTextToTab">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Tabs"/>
+            <title value="Tabs Content - Add Text to Tabs container and view on Admin and Storefront"/>
+            <description value="As a Content Manager I want tab to be a container so that I can add any content inside the Tab, not only text"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-88269"/>
+            <testCaseId value="MC-2873"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-tabs-content"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <!-- Add Tabs to Stage -->
+        <comment userInput="Add Tabs to Stage" stepKey="addTabsToStage"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection1">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <!-- Validate Tabs default state On Stage -->
+        <comment userInput="User sees tabs displayed with 1st default tab item created by default" stepKey="confirmTabsOnStage"/>
+        <waitForPageLoad stepKey="waitForTabsToLoad" time="30"/>
+        <waitForElementVisible selector="{{TabOnStage.tabContent('1')}}" stepKey="waitForFirstTabContent"/>
+        <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="waitForFirstTabHeader"/>
+        <!-- Add Text to Tab -->
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSectionElements">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextOntoTab">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderTabContentType"/>
+            <argument name="containerTargetIndex" value="1" />
+        </actionGroup>
+        <actionGroup ref="clickOutsideTextInlineEditing" stepKey="closeLiveEdit"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText">
+            <argument name="property" value="PageBuilderTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Verify Tab Height Adjusts to Content - Depends on MQE-818 -->
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Verify Text in Tab on storefront -->
+        <comment userInput="View Tab on storefront" stepKey="viewTabOnStorefront"/>
+        <amOnPage url="tabs{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <see userInput="{{PageBuilderTextProperty.value}}" stepKey="assertTextOnStorefront"/>
+    </test>
+    <test name="CanAddContentTypeToTab">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Tabs"/>
+            <title value="Tabs Content - Add ContentType to Tabs container and view on Admin and Storefront"/>
+            <description value="As a Content Manager I want tab to be a container so that I can add any content inside the Tab, not only text"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-88269"/>
+            <testCaseId value="MC-2644"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-tabs-content"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <createData entity="_defaultBlock" stepKey="createPreReqBlock" />
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <!-- Add Tabs to Stage -->
+        <comment userInput="Add Tabs to Stage" stepKey="addTabsToStage"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <!-- Validate Tabs default state On Stage -->
+        <comment userInput="User sees tabs displayed with 1st default tab item created by default" stepKey="confirmTabsOnStage"/>
+        <waitForPageLoad stepKey="waitForTabsToLoad" time="30"/>
+        <waitForElementVisible selector="{{TabOnStage.tabContent('1')}}" stepKey="waitForFirstTabContent"/>
+        <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="waitForFirstTabHeader"/>
+        <!-- Add Block to Tab -->
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection2">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextOntoTab">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+            <argument name="containerTargetType" value="PageBuilderTabContentType"/>
+            <argument name="containerTargetIndex" value="1" />
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
+            <argument name="block" value="$$createPreReqBlock$$"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Verify Block in Tab on storefront -->
+        <comment userInput="View Tab on storefront" stepKey="viewTabOnStorefront"/>
+        <amOnPage url="tabs{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <see userInput="$$createPreReqBlock.content$$" stepKey="seeBlockContentOnCmsStage"/>
+    </test>
+    <test name="CanAddButtonToTab">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Tabs"/>
+            <title value="Tabs Content - Add Buttons to Tabs container and view on Admin and Storefront"/>
+            <description value="As a Content Manager I want tab to be a container so that I can add any content inside the Tab, not only text"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-88269"/>
+            <testCaseId value="MC-2679"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-tabs-content"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <!-- Add Tabs to Stage -->
+        <comment userInput="Add Tabs to Stage" stepKey="addTabsToStage"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <!-- Validate Tabs default state On Stage -->
+        <comment userInput="User sees tabs displayed with 1st default tab item created by default" stepKey="confirmTabsOnStage"/>
+        <waitForPageLoad stepKey="waitForTabsToLoad" time="30"/>
+        <waitForElementVisible selector="{{TabOnStage.tabContent('1')}}" stepKey="waitForFirstTabContent"/>
+        <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="waitForFirstTabHeader"/>
+        <!-- Add Button to Tab -->
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragButtonOntoTab">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+            <argument name="containerTargetType" value="PageBuilderTabContentType"/>
+            <argument name="containerTargetIndex" value="1" />
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Verify Button in Tab on storefront -->
+        <comment userInput="View Tab on storefront" stepKey="viewTabOnStorefront"/>
+        <amOnPage url="tabs{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <seeElement selector="{{ButtonItemOnStorefrontEmptyLink.buttonItemType('1', PageBuilderButtonItemType_Primary.value)}}" stepKey="seeButtonTextOnStorefront"/>
+    </test>
+    <test name="CanAddImageToTab">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Tabs"/>
+            <title value="Tabs Content - Add Image to Tabs container and view on Admin and Storefront"/>
+            <description value="As a Content Manager I want tab to be a container so that I can add any content inside the Tab, not only text"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-88269"/>
+            <testCaseId value="MC-2819"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-tabs-content"/>
+            <group value="pagebuilder-image"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <!-- Add Tabs to Stage -->
+        <comment userInput="Add Tabs to Stage" stepKey="addTabsToStage"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <!-- Validate Tabs default state On Stage -->
+        <comment userInput="User sees tabs displayed with 1st default tab item created by default" stepKey="confirmTabsOnStage"/>
+        <waitForPageLoad stepKey="waitForTabsToLoad" time="30"/>
+        <waitForElementVisible selector="{{TabOnStage.tabContent('1')}}" stepKey="waitForFirstTabContent"/>
+        <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="waitForFirstTabHeader"/>
+        <!-- Add Image to Tab -->
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection2">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragImageOntoTab">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+            <argument name="containerTargetType" value="PageBuilderTabContentType"/>
+            <argument name="containerTargetIndex" value="1" />
+        </actionGroup>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
+        <seeElement selector="{{ImageOnStageWithoutImageUploaded.uploadImageBtn}}" stepKey="seeUploadImageBtn" />
+        <seeElement selector="{{ImageOnStageWithoutImageUploaded.selectFromGalleryBtn}}" stepKey="seeSelectFromGalleryBtn" />
+        <!-- Attach image A to PageBuilder stage-->
+        <attachFile userInput="{{PageBuilderImageProperty_StageJPG.value}}" selector="{{ImageOnStageWithoutImageUploaded.attachImageBtn}}" stepKey="attachImageFileOnStage"/>
+        <waitForElementVisible selector="{{ImageOnStageWithoutImageUploaded.imagePreview}}" stepKey="waitForImagePreview"/>
+        <waitForElementVisible selector="{{ImageOnStageWithoutImageUploaded.imageSource('magentoStage')}}" stepKey="waitForImageSource"/>
+        <seeElement selector="{{ImageOnStageWithoutImageUploaded.imageSource('magentoStage')}}" stepKey="seeImageSourceOnStage" />
+        <seeElement selector="{{ImageOnStageWithoutImageUploaded.imageSourceByIndex('1', PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="seeImageOnStage"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Verify Image in Tab on storefront -->
+        <comment userInput="View Tab on storefront" stepKey="viewTabOnStorefront"/>
+        <amOnPage url="tabs{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <seeElement selector="{{ImageOnStorefront.imageSource(PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="seeImage2Source"/>
+    </test>
+    <test name="CanAddVideoToTab">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Tabs"/>
+            <title value="Tabs Content - Add Video to Tabs container and view on Admin and Storefront"/>
+            <description value="As a Content Manager I want tab to be a container so that I can add any content inside the Tab, not only text"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-88269"/>
+            <testCaseId value="MC-2683"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-video"/>
+            <group value="pagebuilder-tabs-content"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <!-- Add Tabs to Stage -->
+        <comment userInput="Add Tabs to Stage" stepKey="addTabsToStage"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <!-- Validate Tabs default state On Stage -->
+        <comment userInput="User sees tabs displayed with 1st default tab item created by default" stepKey="confirmTabsOnStage"/>
+        <waitForPageLoad stepKey="waitForTabsToLoad" time="30"/>
+        <waitForElementVisible selector="{{TabOnStage.tabContent('1')}}" stepKey="waitForFirstTabContent"/>
+        <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="waitForFirstTabHeader"/>
+        <!-- Add Video to Tab -->
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection2">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragVideoOntoTab">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
+            <argument name="containerTargetType" value="PageBuilderTabContentType"/>
+            <argument name="containerTargetIndex" value="1" />
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrlProperty">
+            <argument name="property" value="PageBuilderVideoUrl_YouTube"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoWidthProperty">
+            <argument name="property" value="PageBuilderVideoWidth_500"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate stage after save" stepKey="validateProductsInTabsOnStage"/>
+        <actionGroup ref="validateContentTypeInsideContainerStage" stepKey="checkContentTypeInContainerStage2">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
+            <argument name="containerTargetType" value="PageBuilderTabsContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetIndex" value="1"/>
+        </actionGroup>
+        <!-- Verify Video in Tab on storefront -->
+        <comment userInput="View Tab on storefront" stepKey="viewTabOnStorefront"/>
+        <amOnPage url="tabs{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <actionGroup ref="validateVideo" stepKey="validateStorefront">
+            <argument name="page" value="VideoOnStorefront"/>
+            <argument name="url" value="PageBuilderVideoUrl_YouTube"/>
+            <argument name="width" value="PageBuilderVideoWidth_500"/>
+        </actionGroup>
+    </test>
+    <test name="CanAddBannerToTab">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Tabs"/>
+            <title value="Tabs Content - Add Banner to Tabs container and view on Admin and Storefront"/>
+            <description value="As a Content Manager I want tab to be a container so that I can add any content inside the Tab, not only text"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-88269"/>
+            <testCaseId value="MC-2720"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-tabs-content"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <!-- Add Tabs to Stage -->
+        <comment userInput="Add Tabs to Stage" stepKey="addTabsToStage"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <!-- Validate Tabs default state On Stage -->
+        <comment userInput="User sees tabs displayed with 1st default tab item created by default" stepKey="confirmTabsOnStage"/>
+        <waitForPageLoad stepKey="waitForTabsToLoad" time="30"/>
+        <waitForElementVisible selector="{{TabOnStage.tabContent('1')}}" stepKey="waitForFirstTabContent"/>
+        <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="waitForFirstTabHeader"/>
+        <!-- Add Banner to Tab -->
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection2">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragBannerOntoTab">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderTabContentType"/>
+            <argument name="containerTargetIndex" value="1" />
+        </actionGroup>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="addTextToTinyMCE" stepKey="addTextToTinyMCE">
+            <argument name="property" value="PageBuilderBannerMessageProperty"/>
+            <argument name="section" value="BannerOnConfigurationPanel"/>
+        </actionGroup>
+        <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Verify Banner in Tab on storefront -->
+        <comment userInput="View Tab on storefront" stepKey="viewTabOnStorefront"/>
+        <amOnPage url="tabs{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <seeElement selector="{{BannerOnFrontend.messageContent('1', PageBuilderBannerMessageProperty.value)}}" stepKey="verifyMessage"/>
+    </test>
+    <test name="CanAddSliderToTab">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Tabs"/>
+            <title value="Tabs Content - Add Slider to Tabs container and view on Admin and Storefront"/>
+            <description value="As a Content Manager I want tab to be a container so that I can add any content inside the Tab, not only text"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-88269"/>
+            <testCaseId value="MC-2564"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-tabs-content"/>
+            <group value="pagebuilder-slide"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <!-- Add Tabs to Stage -->
+        <comment userInput="Add Tabs to Stage" stepKey="addTabsToStage"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection2">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragSliderOntoTab">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+            <argument name="containerTargetType" value="PageBuilderTabContentType"/>
+            <argument name="containerTargetIndex" value="1" />
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanelAfterDrop">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
+        <!-- Edit First Slide -->
+        <comment userInput="Edit First Slide" stepKey="EditFirstSlide"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideTitle1">
+            <argument name="property" value="PageBuilderSlideItemSlideName_Slide1"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterBackgroundColor">
+            <argument name="property" value="PageBuilderBackgroundColor_Plaintext_Green"/>
+        </actionGroup>
+        <actionGroup ref="addTextToTinyMCE" stepKey="addTextToTinyMCE">
+            <argument name="property" value="PageBuilderSlideItemContent_Slide1"/>
+            <argument name="section" value="SlideOnConfigurationPanel"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterSlideLinkURL1">
+            <argument name="property" value="PageBuilderSlideItemLinkURL_External"/>
+            <argument name="selection" value="{{ExternalLink.url}}"/>
+            <argument name="newTab" value="PageBuilderSlideItemLinkNewTab_False"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="PageBuilderSlideItemShowButton_Always">
+            <argument name="property" value="PageBuilderSlideItemShowButton_Always"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideButtonText1">
+            <argument name="property" value="PageBuilderSlideItemButtonText_Slide1"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Verify Slider in Tab on storefront -->
+        <comment userInput="View Tab on storefront" stepKey="viewTabOnStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <seeElement selector="{{SlideOnFrontend.base('1')}}" stepKey="seeSliderOnPageBuilderPage"/>
+        <seeElement selector="{{SlideOnFrontend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeSlide1ContentDisplayed"/>
+        <seeElement selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideItemButtonText_Slide1.value)}}" stepKey="seeSlide1ButtonTextDisplayed"/>
+        <seeElement selector="{{SlideOnFrontend.linkUrl('1', PageBuilderSlideItemLinkURL_External.value)}}" stepKey="seeSlide1LinkURL"/>
+        <seeElement selector="{{SlideOnFrontend.backgroundColor('1', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeSlideBackgroundColor"/>
+        <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="verifySlide1HasPosterAppearanceOnStorefront"/>
+    </test>
+    <test name="CanAddSliderToSecondaryTab">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Tabs"/>
+            <title value="Tabs Content - Add Slider to non-default secondary Tab container and view on Admin and Storefront"/>
+            <description value="As a Content Manager I want slider in non-default secondary tab to render on Admin and Storefront so that my content is viewable"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-3926"/>
+            <testCaseId value="MC-4218"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-tabs-content"/>
+            <group value="pagebuilder-slide"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <!-- Add Tabs to Stage -->
+        <comment userInput="Add Tabs to Stage" stepKey="addTabsToStage"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="duplicateSmallContentType" stepKey="duplicateSmallContentType">
+            <argument name="section" value="TabOnStage"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection2">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragSliderOntoTab">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+            <argument name="containerTargetType" value="PageBuilderTabContentType"/>
+            <argument name="containerTargetIndex" value="2" />
+        </actionGroup>
+        <!-- Edit First Slide -->
+        <comment userInput="Edit First Slide" stepKey="EditFirstSlide"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideTitle1">
+            <argument name="property" value="PageBuilderSlideItemSlideName_Slide1"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterBackgroundColor">
+            <argument name="property" value="PageBuilderBackgroundColor_Plaintext_Green"/>
+        </actionGroup>
+        <actionGroup ref="addTextToTinyMCE" stepKey="addTextToTinyMCE">
+            <argument name="property" value="PageBuilderSlideItemContent_Slide1"/>
+            <argument name="section" value="SlideOnConfigurationPanel"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterSlideLinkURL1">
+            <argument name="property" value="PageBuilderSlideItemLinkURL_External"/>
+            <argument name="selection" value="{{ExternalLink.url}}"/>
+            <argument name="newTab" value="PageBuilderSlideItemLinkNewTab_False"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="PageBuilderSlideItemShowButton_Always">
+            <argument name="property" value="PageBuilderSlideItemShowButton_Always"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideButtonText1">
+            <argument name="property" value="PageBuilderSlideItemButtonText_Slide1"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Verify slide looks OK in tab on stage before save -->
+        <comment userInput="Verify slide looks OK in tab on stage before save" stepKey="commentVerifySlideBeforeSave"/>
+        <scrollTo selector="{{TabOnStage.tabHeader('1')}}" x="0" y="-100" stepKey="scrollToTab"/>
+        <click selector="{{TabOnStage.tabHeader('1')}}" stepKey="switchToDefaultTab"/>
+        <waitForPageLoad stepKey="waitForTabSwitch" />
+        <click selector="{{TabOnStage.tabHeader('2')}}" stepKey="switchToSecondTabOnStage"/>
+        <waitForPageLoad stepKey="waitForTabSwitch2" />
+        <seeElement selector="{{SlideOnBackend.base('1')}}" stepKey="seeSliderOnOnStage"/>
+        <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeSlide1ContentDisplayedOnStage"/>
+        <seeElement selector="{{SlideOnBackend.buttonText('1', PageBuilderSlideItemButtonText_Slide1.value)}}" stepKey="seeSlide1ButtonTextDisplayedOnStage"/>
+        <seeElement selector="{{SlideOnBackend.backgroundColor('1', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeSlideBackgroundColorOnStage"/>
+        <seeElement selector="{{SlideOnBackend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="verifySlide1HasPosterAppearanceOnStage"/>
+        <!-- Verify slide looks OK in tab on stage after save -->
+        <comment userInput="Verify slide looks OK in tab on stage after save" stepKey="commentVerifySlideAfterSave"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <click selector="{{TabOnStage.tabHeader('2')}}" stepKey="switchToSecondTabOnStageAgainAfterSave"/>
+        <waitForPageLoad stepKey="waitForTabSwitch3" />
+        <seeElement selector="{{SlideOnBackend.base('1')}}" stepKey="seeSliderOnOnStageAgainAfterSave"/>
+        <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeSlide1ContentDisplayedOnStageAgainAfterSave"/>
+        <seeElement selector="{{SlideOnBackend.buttonText('1', PageBuilderSlideItemButtonText_Slide1.value)}}" stepKey="seeSlide1ButtonTextDisplayedOnStageAgainAfterSave"/>
+        <seeElement selector="{{SlideOnBackend.backgroundColor('1', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeSlideBackgroundColorOnStageAgainAfterSave"/>
+        <seeElement selector="{{SlideOnBackend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="verifySlide1HasPosterAppearanceOnStageAgainAfterSave"/>
+        <!-- Verify Slider in Secondary Tab on storefront -->
+        <comment userInput="View Slider in secondary Tab on storefront" stepKey="viewTabOnStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <click selector="{{TabOnStorefront.tabHeader('2')}}" stepKey="switchToSecondTabOnStorefront"/>
+        <waitForPageLoad stepKey="waitForPageLoadAfterClickingTabHeader" />
+        <waitForElementVisible selector="{{SlideOnFrontend.base('1')}}" stepKey="waitForSliderToBeVisible" />
+        <seeElement selector="{{SlideOnFrontend.base('1')}}" stepKey="seeSliderOnFrontend"/>
+        <seeElement selector="{{SlideOnFrontend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeSlide1ContentDisplayedOnFrontend"/>
+        <seeElement selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideItemButtonText_Slide1.value)}}" stepKey="seeSlide1ButtonTextDisplayedOnFrontend"/>
+        <seeElement selector="{{SlideOnFrontend.linkUrl('1', PageBuilderSlideItemLinkURL_External.value)}}" stepKey="seeSlide1LinkURLOnFrontend"/>
+        <seeElement selector="{{SlideOnFrontend.backgroundColor('1', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeSlideBackgroundColorOnFrontend"/>
+        <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="verifySlide1HasPosterAppearanceOnStorefrontOnFrontend"/>
+    </test>
+    <test name="CanAddMapToTab">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Tabs"/>
+            <title value="Tabs Content - Add Map to Tabs container and view on Admin and Storefront"/>
+            <description value="As a Content Manager I want tab to be a container so that I can add any content inside the Tab, not only text"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-88269"/>
+            <testCaseId value="MC-2756"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-tabs-content"/>
+            <group value="pagebuilder-map"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <!-- Add Tabs to Stage -->
+        <comment userInput="Add Tabs to Stage" stepKey="addTabsToStage"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <!-- Validate Tabs default state On Stage -->
+        <comment userInput="User sees tabs displayed with 1st default tab item created by default" stepKey="confirmTabsOnStage"/>
+        <waitForPageLoad stepKey="waitForTabsToLoad" time="30"/>
+        <waitForElementVisible selector="{{TabOnStage.tabContent('1')}}" stepKey="waitForFirstTabContent"/>
+        <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="waitForFirstTabHeader"/>
+        <!-- Add Map to Tab -->
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSectionMedia">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragMapOntoTab">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+            <argument name="containerTargetType" value="PageBuilderTabContentType"/>
+            <argument name="containerTargetIndex" value="1" />
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Verify Map in Tab on storefront -->
+        <comment userInput="View Tab on storefront" stepKey="viewTabOnStorefront"/>
+        <amOnPage url="tabs{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <actionGroup ref="validateEmptyMapStoreFront" stepKey="validateEmptyMapStoreFront"/>
+    </test>
+    <test name="CanAddColumnToTab">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Tabs"/>
+            <title value="Tabs Content - Add Column to Tabs container and view on Admin and Storefront"/>
+            <description value="As a Content Manager I want tab to be a container so that I can add any content inside the Tab, not only text"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-88269"/>
+            <testCaseId value="MC-2670"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-tabs-content"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <!-- Add Tabs to Stage -->
+        <comment userInput="Add Tabs to Stage" stepKey="addTabsToStage"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <!-- Validate Tabs default state On Stage -->
+        <comment userInput="User sees tabs displayed with 1st default tab item created by default" stepKey="confirmTabsOnStage"/>
+        <waitForPageLoad stepKey="waitForTabsToLoad" time="30"/>
+        <waitForElementVisible selector="{{TabOnStage.tabContent('1')}}" stepKey="waitForFirstTabContent"/>
+        <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="waitForFirstTabHeader"/>
+        <!-- Add Column to Tab -->
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragColumnOntoTab">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderTabContentType"/>
+            <argument name="containerTargetIndex" value="1" />
+        </actionGroup>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForFirstColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty1">
+            <argument name="property" value="PageBuilderMinHeightProperty_500"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterBackgroundColorProperty">
+            <argument name="property" value="PageBuilderBackgroundColorProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForSecondColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty2">
+            <argument name="property" value="PageBuilderMinHeightProperty_500"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <actionGroup ref="saveCmsPage" stepKey="saveCmsPage"/>
+        <!-- Verify Column in Tab on storefront -->
+        <comment userInput="View Tab on storefront" stepKey="viewTabOnStorefront"/>
+        <amOnPage url="tabs{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <seeElement selector="{{ColumnOnFrontend.column1Height}}" stepKey="seeColumn1MinHeightApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.column1BackgroundColor}}" stepKey="seeColumn1BackgroundColorApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.column2BackgroundWidth}}" stepKey="seeColumn2DefaultWidthApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.column2Height}}" stepKey="seeColumn2HeightApplied"/>
+    </test>
+    <test name="CanAddHeadingToTab">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Tabs"/>
+            <title value="Tabs Content - Add Heading to Tabs container and view on Admin and Storefront"/>
+            <description value="As a Content Manager I want tab to be a container so that I can add any content inside the Tab, not only text"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-88269"/>
+            <testCaseId value="MC-2567"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-tabs-content"/>
+            <group value="pagebuilder-heading"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <!-- Add Tabs to Stage -->
+        <comment userInput="Add Tabs to Stage" stepKey="addTabsToStage"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <!-- Validate Tabs default state On Stage -->
+        <comment userInput="User sees tabs displayed with 1st default tab item created by default" stepKey="confirmTabsOnStage"/>
+        <waitForPageLoad stepKey="waitForTabsToLoad" time="30"/>
+        <waitForElementVisible selector="{{TabOnStage.tabContent('1')}}" stepKey="waitForFirstTabContent"/>
+        <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="waitForFirstTabHeader"/>
+        <!-- Add Heading to Tab -->
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingOntoTab">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderTabContentType"/>
+            <argument name="containerTargetIndex" value="1" />
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHeadingTextProperty">
+            <argument name="property" value="PageBuilderHeadingTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Verify Heading in Tab on storefront -->
+        <comment userInput="View Tab on storefront" stepKey="viewTabOnStorefront"/>
+        <amOnPage url="tabs{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <actionGroup ref="verifyHeadingInStorefront" stepKey="verifyHeadingInStorefront"/>
+    </test>
+    <test name="CanAddDividerToTab">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Tabs"/>
+            <title value="Tabs Content - Add Divider to Tabs container and view on Admin and Storefront"/>
+            <description value="As a Content Manager I want tab to be a container so that I can add any content inside the Tab, not only text"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-88269"/>
+            <testCaseId value="MC-2889"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-tabs-content"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <!-- Add Tabs to Stage -->
+        <comment userInput="Add Tabs to Stage" stepKey="addTabsToStage"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <!-- Validate Tabs default state On Stage -->
+        <comment userInput="User sees tabs displayed with 1st default tab item created by default" stepKey="confirmTabsOnStage"/>
+        <waitForPageLoad stepKey="waitForTabsToLoad" time="30"/>
+        <waitForElementVisible selector="{{TabOnStage.tabContent('1')}}" stepKey="waitForFirstTabContent"/>
+        <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="waitForFirstTabHeader"/>
+        <!-- Add Divider to Tab -->
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSectionElements">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragDividerOntoTab">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderTabContentType"/>
+            <argument name="containerTargetIndex" value="1" />
+        </actionGroup>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterDividerLineColor">
+            <argument name="property" value="PageBuilderDividerLineColor_FF5733"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterDividerLineThickness">
+            <argument name="property" value="PageBuilderDividerLineThickness_10"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterDividerLineWidth">
+            <argument name="property" value="PageBuilderDividerLineWidth_50"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Verify Divider in Tab on storefront -->
+        <comment userInput="View Tab on storefront" stepKey="viewTabOnStorefront"/>
+        <amOnPage url="tabs{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <actionGroup ref="validateDivider" stepKey="validateStorefront">
+            <argument name="page" value="DividerOnStorefront"/>
+            <argument name="color" value="PageBuilderDividerLineColor_FF5733"/>
+            <argument name="thickness" value="PageBuilderDividerLineThickness_10"/>
+            <argument name="width" value="PageBuilderDividerLineWidth_50"/>
+        </actionGroup>
+    </test>
+    <test name="CanAddHtmlToTab">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Tabs"/>
+            <title value="Tabs Content - Add HTML to Tabs container and view on Admin and Storefront"/>
+            <description value="As a Content Manager I want tab to be a container so that I can add any content inside the Tab, not only text"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-88269"/>
+            <testCaseId value="MC-2591"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-tabs-content"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <!-- Add Tabs to Stage -->
+        <comment userInput="Add Tabs to Stage" stepKey="addTabsToStage"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <!-- Validate Tabs default state On Stage -->
+        <comment userInput="User sees tabs displayed with 1st default tab item created by default" stepKey="confirmTabsOnStage"/>
+        <waitForPageLoad stepKey="waitForTabsToLoad" time="30"/>
+        <waitForElementVisible selector="{{TabOnStage.tabContent('1')}}" stepKey="waitForFirstTabContent"/>
+        <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="waitForFirstTabHeader"/>
+        <!-- Add HTML to Tab -->
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection2">
+            <argument name="contentType" value="PageBuilderHtmlContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragHtmlOntoTab">
+            <argument name="contentType" value="PageBuilderHtmlContentType"/>
+            <argument name="containerTargetType" value="PageBuilderTabContentType"/>
+            <argument name="containerTargetIndex" value="1" />
+        </actionGroup>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderHtmlContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelTextArea" stepKey="enterHtmlContent">
+            <argument name="property" value="PageBuilderHtmlPropertyButton"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Verify Divider in Tab on storefront -->
+        <comment userInput="View Tab on storefront" stepKey="viewTabOnStorefront"/>
+        <amOnPage url="tabs{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <waitForElementVisible selector="{{HtmlOnStorefront.base('1')}}" stepKey="waitForHtmlBaseStorefront"/>
+        <waitForElementVisible selector="{{HtmlOnStorefront.html('1', PageBuilderHtmlPropertyButton.selectorOnFrontend)}}" stepKey="waitForHtmlStorefront"/>
+    </test>
+    <test name="CannotAddTabsToTab">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Tabs"/>
+            <title value="Tabs Content - Tabs does not allow drag and drop of Tabs within"/>
+            <description value="As a Content Manager I want tab to be a container so that I can add any content inside the Tab, not only text"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-88269"/>
+            <testCaseId value="MC-2733"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-tabs-content"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <!-- Add Tabs to Stage -->
+        <comment userInput="Add Tabs to Stage" stepKey="addTabsToStage"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <!-- Validate Tabs default state On Stage -->
+        <comment userInput="User sees tabs displayed with 1st default tab item created by default" stepKey="confirmTabsOnStage"/>
+        <waitForPageLoad stepKey="waitForTabsToLoad" time="30"/>
+        <waitForElementVisible selector="{{TabOnStage.tabContent('1')}}" stepKey="waitForFirstTabContent"/>
+        <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="waitForFirstTabHeader"/>
+        <!-- Try to drag Tabs onto Tab -->
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTabsOntoTab">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+            <argument name="containerTargetType" value="PageBuilderTabContentType"/>
+            <argument name="containerTargetIndex" value="1" />
+        </actionGroup>
+        <dontSeeElementInDOM selector="{{TabOnStage.default('2')}}" stepKey="dontSeeNewTabsOnStage"/>
+    </test>
+    <test name="CannotAddRowToTab">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Tabs"/>
+            <title value="Tabs Content - Tabs does not allow drag and drop of Row within"/>
+            <description value="As a Content Manager I want tab to be a container so that I can add any content inside the Tab, not only text"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-88269"/>
+            <testCaseId value="MC-2710"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-tabs-content"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <!-- Add Tabs to Stage -->
+        <comment userInput="Add Tabs to Stage" stepKey="addTabsToStage"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <!-- Validate Tabs default state On Stage -->
+        <comment userInput="User sees tabs displayed with 1st default tab item created by default" stepKey="confirmTabsOnStage"/>
+        <waitForPageLoad stepKey="waitForTabsToLoad" time="30"/>
+        <waitForElementVisible selector="{{TabOnStage.tabContent('1')}}" stepKey="waitForFirstTabContent"/>
+        <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="waitForFirstTabHeader"/>
+        <!-- Try to drag Row onto Tab -->
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragRowOntoTab">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetType" value="PageBuilderTabContentType"/>
+            <argument name="containerTargetIndex" value="1" />
+        </actionGroup>
+        <dontSeeElementInDOM selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-tabs')])[1]//div[contains(@class, 'pagebuilder-row')]" stepKey="dontSeeNewRowOnStage"/>
+    </test>
+    <test name="CannotAddColumnToTabInsideColumn">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Tabs"/>
+            <title value="Tabs Content - Cannot add column to Tab that is already inside a column"/>
+            <description value="As a Content Manager I want tab to be a container so that I can add any content inside the Tab, not only text"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-88269"/>
+            <testCaseId value="MC-2816"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-tabs-content"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <!-- Add Columns to Stage -->
+        <comment userInput="Drag Columns to Stage" stepKey="commentDragColumnsToStage"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <seeNumberOfElements selector="{{ColumnOnBackend.columnGroupColumns('1')}}" userInput="2" stepKey="seeElementColumn"/>
+        <!-- Add Tabs to Column -->
+        <comment userInput="Drag Tabs to Column" stepKey="commentDragTabsToColumn"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTabsIntoFirstColumn">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+        </actionGroup>
+        <!-- Validate Tabs default state On Stage -->
+        <comment userInput="User sees tabs displayed with 1st default tab item created by default" stepKey="confirmTabsInColumn"/>
+        <waitForElementVisible selector="{{TabOnStage.tabContent('1')}}" stepKey="waitForFirstTabContent"/>
+        <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="waitForFirstTabHeader"/>
+        <!-- Try to drag Column onto Tab -->
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragColumnOntoTab">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderTabContentType"/>
+            <argument name="containerTargetIndex" value="1" />
+        </actionGroup>
+        <dontSeeElementInDOM selector="{{TabOnStage.tabColumnContent}}" stepKey="dontSeeNewColumnsInTabs"/>
+    </test>
+    <test name="CanAddProductsToTab">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Tabs"/>
+            <title value="Tabs Content - Add Products to Tabs container and view on Admin and Storefront"/>
+            <description value="As a Content Manager I want tab to be a container so that I can add any content inside the Tab, not only text"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-515"/>
+            <testCaseId value="MC-3140"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-tabs-content"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <!-- Add Tabs to Stage -->
+        <comment userInput="Add Tabs to Stage" stepKey="addTabsToStage"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <!-- Add Products to Tab -->
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection2">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragProductsOntoTab">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+            <argument name="containerTargetType" value="PageBuilderTabContentType"/>
+            <argument name="containerTargetIndex" value="1" />
+        </actionGroup>
+        <!-- Validate Stage -->
+        <comment userInput="User sees Products displayed in Tabs on Stage" stepKey="confirmProductsInTabs"/>
+        <actionGroup ref="validateContentTypeInsideContainerStage" stepKey="checkContentTypeInContainerStage">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+            <argument name="containerTargetType" value="PageBuilderTabsContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate stage after save" stepKey="validateProductsInTabsOnStage"/>
+        <actionGroup ref="validateContentTypeInsideContainerStage" stepKey="checkContentTypeInContainerStage2">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+            <argument name="containerTargetType" value="PageBuilderTabsContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetIndex" value="1"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="View Products inside Tabs on storefront" stepKey="viewProductsInTabsOnStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeInsideContainerStorefrontInDOM" stepKey="checkContentTypeInContainerStorefront">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+            <argument name="containerTargetType" value="PageBuilderTabsContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetIndex" value="1"/>
+        </actionGroup>
+    </test>
+    <test name="TabMaintainsDefaultMinimumHeightWithContent">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Tabs"/>
+            <title value="Tabs Content - Add Heading to Tabs container and verify minimum height on Admin and Storefront"/>
+            <description value="As a Content Manager I want tab to be a container so that I can add any content inside the Tab, not only text"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-4112"/>
+            <testCaseId value="MC-4209"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-tabs-content"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <!-- Add Tabs to Stage -->
+        <comment userInput="Add Tabs to Stage" stepKey="addTabsToStage"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <!-- Add Heading to Tab -->
+        <comment userInput="Add Heading to Tab" stepKey="addHeadingToTab"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingOntoTab">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderTabContentType"/>
+            <argument name="containerTargetIndex" value="1" />
+        </actionGroup>
+        <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage">
+            <argument name="index" value="1"/>
+            <argument name="headingText" value="PageBuilderHeadingTextProperty"/>
+            <argument name="headingType" value="PageBuilderHeadingTypeProperty_H1"/>
+            <argument name="headingAlignment" value="PageBuilderHeadingAlignmentProperty_center"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Add Button to Tab -->
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragButtonOntoTab">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+            <argument name="containerTargetType" value="PageBuilderTabContentType"/>
+            <argument name="containerTargetIndex" value="1" />
+        </actionGroup>
+        <!-- Verify Tab height on stage -->
+        <comment userInput="Verify Tab height on stage" stepKey="verifyTabOnStage"/>
+        <executeJS function="return {{TabOnStage.tabContentHeightJS('0')}}" stepKey="tabContentHeightStage"/>
+        <executeJS function="return {{PageBuilderTabMinimumHeightDefaultProperty.value}} + {{PageBuilderPaddingProperty40.paddingTop}} + {{PageBuilderPaddingProperty40.paddingBottom}}" stepKey="tabExpectedHeight"/>
+        <assertEquals stepKey="assertTabHeightStage">
+            <expectedResult type="variable">tabExpectedHeight</expectedResult>
+            <actualResult type="variable">tabContentHeightStage</actualResult>
+        </assertEquals>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Verify Tab height on storefront -->
+        <comment userInput="Verify Tab height on storefront" stepKey="viewTabOnStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{TabOnStorefront.tabContent('1')}}" stepKey="waitForTabContentVisible"/>
+        <executeJS function="return {{TabsOnFrontend.tabsContentHeightJS('0')}}" stepKey="tabContentHeightStorefront"/>
+        <assertEquals stepKey="assertTabHeightStorefrontEqualsStage">
+            <expectedResult type="string">{{PageBuilderTabMinimumHeightDefaultProperty.value}}</expectedResult>
+            <actualResult type="variable">tabContentHeightStorefront</actualResult>
+        </assertEquals>
+    </test>
+</tests>

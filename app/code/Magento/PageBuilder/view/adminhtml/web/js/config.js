@@ -7,6 +7,8 @@ define(["underscore"], function (_underscore) {
   var Config =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     function Config() {}
 
     /**
@@ -16,14 +18,33 @@ define(["underscore"], function (_underscore) {
      */
     Config.setConfig = function setConfig(config) {
       Config.config = _underscore.extend(Config.config, config);
-    };
+    }
+    /**
+     * Set the current instances mode, this differs between preview or master depending on whether we're rendering the
+     * admins preview or rendering the master format.
+     *
+     * @param {"Preview" | "Master"} mode
+     */
+    ;
+
+    Config.setMode = function setMode(mode) {
+      Config.mode = mode;
+    }
+    /**
+     * Retrieve the current instances mode
+     */
+    ;
+
+    Config.getMode = function getMode() {
+      return Config.mode;
+    }
     /**
      * Retrieve the init config
      *
-     * @param key
-     * @returns {any}
+     * @param {string} key
+     * @returns {T}
      */
-
+    ;
 
     Config.getConfig = function getConfig(key) {
       if (key) {
@@ -35,14 +56,14 @@ define(["underscore"], function (_underscore) {
       }
 
       return Config.config;
-    };
+    }
     /**
      * Retrieve a content type from the configuration
      *
      * @param {string} contentType
      * @returns {any}
      */
-
+    ;
 
     Config.getContentTypeConfig = function getContentTypeConfig(contentType) {
       if (typeof Config.getConfig("content_types")[contentType] !== "undefined") {
@@ -56,7 +77,7 @@ define(["underscore"], function (_underscore) {
   }();
 
   Config.config = {
-    dataRoleAttributeName: "data-role"
+    dataContentTypeAttributeName: "data-content-type"
   };
   return Config;
 });

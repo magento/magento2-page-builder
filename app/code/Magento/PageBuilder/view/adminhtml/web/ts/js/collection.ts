@@ -4,21 +4,26 @@
  */
 
 import ko from "knockout";
+import ContentTypeCollectionInterface from "./content-type-collection.types";
+import ContentTypeInterface from "./content-type.types";
 import { moveArrayItemIntoArray, removeArrayItem } from "./utils/array";
 
+/**
+ * @api
+ */
 export default class Collection {
-    public children: KnockoutObservableArray<any>;
+    public children: KnockoutObservableArray<ContentTypeInterface | ContentTypeCollectionInterface>;
 
-    constructor(children?: KnockoutObservableArray<any>) {
+    constructor(children?: KnockoutObservableArray<ContentTypeInterface | ContentTypeCollectionInterface>) {
         this.children = children ? children : ko.observableArray([]);
     }
 
     /**
      * Return the children of the current element
      *
-     * @returns {KnockoutObservableArray<ContentTypeInterface>}
+     * @returns {KnockoutObservableArray<ContentTypeInterface | ContentTypeCollectionInterface>}
      */
-    public getChildren(): KnockoutObservableArray<any> {
+    public getChildren(): KnockoutObservableArray<ContentTypeInterface | ContentTypeCollectionInterface> {
         return this.children;
     }
 
@@ -51,7 +56,7 @@ export default class Collection {
      *
      * @param children
      */
-    public setChildren(children: KnockoutObservableArray<any>) {
+    public setChildren(children: KnockoutObservableArray<ContentTypeInterface | ContentTypeCollectionInterface>) {
         this.children = children;
     }
 }

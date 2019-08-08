@@ -1,0 +1,1639 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="DefaultSystemBordersAppearInAdmin">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Common Tests"/>
+            <title value="System Borders Default Style in Admin"/>
+            <description value="A user should be able to see default system borders for all content types in admin preview"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-1954"/>
+            <testCaseId value="MC-2382"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-common"/>
+            <group value="pagebuilder-heading"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Validate Row Box Shadow -->
+        <comment userInput="Validate Row Box-Shadow" stepKey="commentValidateRowBoxShadow"/>
+        <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-row'),null).getPropertyValue('box-shadow')" stepKey="getDefaultRowBoxShadowStyle"/>
+        <assertEquals stepKey="assertDefaultRowBoxShadowStyle" message="pass">
+            <expectedResult type="string">{{PageBuilderBoxShadowProperty_Default.value}}</expectedResult>
+            <actualResult type="variable">getDefaultRowBoxShadowStyle</actualResult>
+        </assertEquals>
+        <moveMouseOver selector="{{RowOnStage.base('1')}}" stepKey="moveMouseOverRow"/>
+        <waitForPageLoad stepKey="waitForRowHoverAnimation"/>
+        <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-row'),null).getPropertyValue('box-shadow')" stepKey="getDefaultRowHoverBoxShadowStyle"/>
+        <assertEquals stepKey="assertDefaultRowHoverBoxShadowStyle" message="pass">
+            <expectedResult type="string">{{PageBuilderBoxShadowOnHoverProperty_Default.value}}</expectedResult>
+            <actualResult type="variable">getDefaultRowHoverBoxShadowStyle</actualResult>
+        </assertEquals>
+        <!-- Validate Column Box Shadow -->
+        <comment userInput="Validate Column Box-Shadow" stepKey="commentValidateColumnBoxShadow"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="resetMouseOverColumn"/>
+        <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-column'),null).getPropertyValue('box-shadow')" stepKey="getDefaultColumnBoxShadowStyle"/>
+        <assertEquals stepKey="assertDefaultColumnBoxShadowStyle" message="pass">
+            <expectedResult type="string">{{PageBuilderBoxShadowProperty_Default.value}}</expectedResult>
+            <actualResult type="variable">getDefaultColumnBoxShadowStyle</actualResult>
+        </assertEquals>
+        <moveMouseOver selector="{{ColumnOnBackend.base('1')}}" stepKey="moveMouseOverColumn"/>
+        <waitForPageLoad stepKey="waitForColumnHoverAnimation"/>
+        <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-column'),null).getPropertyValue('box-shadow')" stepKey="getDefaultColumnHoverBoxShadowStyle"/>
+        <assertEquals stepKey="assertDefaultColumnHoverBoxShadowStyle" message="pass">
+            <expectedResult type="string">{{PageBuilderBoxShadowOnHoverProperty_Default.value}}</expectedResult>
+            <actualResult type="variable">getDefaultColumnHoverBoxShadowStyle</actualResult>
+        </assertEquals>
+        <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeColumn1">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeColumn2">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <!-- Validate Tabs Box Shadow -->
+        <comment userInput="Validate Tabs Box-Shadow" stepKey="commentValidateTabsBoxShadow"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="resetMouseOverTabs"/>
+        <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-tabs'),null).getPropertyValue('box-shadow')" stepKey="getDefaultTabsBoxShadowStyle"/>
+        <assertEquals stepKey="assertDefaultTabsBoxShadowStyle" message="pass">
+            <expectedResult type="string">{{PageBuilderBoxShadowProperty_No_Box_Shadow.value}}</expectedResult>
+            <actualResult type="variable">getDefaultTabsBoxShadowStyle</actualResult>
+        </assertEquals>
+        <moveMouseOver selector="{{TabsOnStage.base('1')}}" stepKey="moveMouseOverTabs"/>
+        <waitForPageLoad stepKey="waitForTabsHoverAnimation"/>
+        <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-tabs'),null).getPropertyValue('box-shadow')" stepKey="getDefaultTabsHoverBoxShadowStyle"/>
+        <assertEquals stepKey="assertDefaultTabsHoverBoxShadowStyle" message="pass">
+            <expectedResult type="string">{{PageBuilderBoxShadowOnHoverProperty_Default.value}}</expectedResult>
+            <actualResult type="variable">getDefaultTabsHoverBoxShadowStyle</actualResult>
+        </assertEquals>
+        <actionGroup ref="removeContentTypeFromStage" stepKey="removeTabs">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <!-- Validate Text Box Shadow -->
+        <comment userInput="Validate Text Box-Shadow" stepKey="commentValidateTextBoxShadow"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTextIntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideTextInlineEditing" stepKey="closeLiveEdit"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="resetMouseOverText"/>
+        <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-text'),null).getPropertyValue('box-shadow')" stepKey="getDefaultTextBoxShadowStyle"/>
+        <assertEquals stepKey="assertDefaultTextBoxShadowStyle" message="pass">
+            <expectedResult type="string">{{PageBuilderBoxShadowProperty_No_Box_Shadow.value}}</expectedResult>
+            <actualResult type="variable">getDefaultTextBoxShadowStyle</actualResult>
+        </assertEquals>
+        <moveMouseOver selector="{{TextOnStage.base('1')}}" stepKey="moveMouseOverText"/>
+        <waitForPageLoad stepKey="waitForTextHoverAnimation"/>
+        <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-text'),null).getPropertyValue('box-shadow')" stepKey="getDefaultTextHoverBoxShadowStyle"/>
+        <assertEquals stepKey="assertDefaultTextHoverBoxShadowStyle" message="pass">
+            <expectedResult type="string">{{PageBuilderBoxShadowOnHoverProperty_Default.value}}</expectedResult>
+            <actualResult type="variable">getDefaultTextHoverBoxShadowStyle</actualResult>
+        </assertEquals>
+        <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeText">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <!-- Validate Heading Box Shadow -->
+        <comment userInput="Validate Heading Box-Shadow" stepKey="commentValidateHeadingBoxShadow"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragHeadingIntoStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="resetMouseOverHeading"/>
+        <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-heading'),null).getPropertyValue('box-shadow')" stepKey="getDefaultHeadingBoxShadowStyle"/>
+        <assertEquals stepKey="assertDefaultHeadingBoxShadowStyle" message="pass">
+            <expectedResult type="string">{{PageBuilderBoxShadowProperty_No_Box_Shadow.value}}</expectedResult>
+            <actualResult type="variable">getDefaultHeadingBoxShadowStyle</actualResult>
+        </assertEquals>
+        <moveMouseOver selector="{{HeadingOnStage.base('1')}}" stepKey="moveMouseOverHeading"/>
+        <waitForPageLoad stepKey="waitForHeadingHoverAnimation"/>
+        <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-heading'),null).getPropertyValue('box-shadow')" stepKey="getDefaultHeadingHoverBoxShadowStyle"/>
+        <assertEquals stepKey="assertDefaultHeadingHoverBoxShadowStyle" message="pass">
+            <expectedResult type="string">{{PageBuilderBoxShadowOnHoverProperty_Default.value}}</expectedResult>
+            <actualResult type="variable">getDefaultHeadingHoverBoxShadowStyle</actualResult>
+        </assertEquals>
+        <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeHeading">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <!-- Validate Buttons Box Shadow -->
+        <comment userInput="Validate Buttons Box-Shadow" stepKey="commentValidateButtonsBoxShadow"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsIntoStage">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="resetMouseOverButtons"/>
+        <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-buttons'),null).getPropertyValue('box-shadow')" stepKey="getDefaultButtonsBoxShadowStyle"/>
+        <assertEquals stepKey="assertDefaultButtonsBoxShadowStyle" message="pass">
+            <expectedResult type="string">{{PageBuilderBoxShadowProperty_No_Box_Shadow.value}}</expectedResult>
+            <actualResult type="variable">getDefaultButtonsBoxShadowStyle</actualResult>
+        </assertEquals>
+        <moveMouseOver selector="{{ButtonGroupOnStage.base('1')}}" stepKey="moveMouseOverButtons"/>
+        <waitForPageLoad stepKey="waitForButtonsHoverAnimation"/>
+        <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-buttons'),null).getPropertyValue('box-shadow')" stepKey="getDefaultButtonsHoverBoxShadowStyle"/>
+        <assertEquals stepKey="assertDefaultButtonsHoverBoxShadowStyle" message="pass">
+            <expectedResult type="string">{{PageBuilderBoxShadowOnHoverProperty_Default.value}}</expectedResult>
+            <actualResult type="variable">getDefaultButtonsHoverBoxShadowStyle</actualResult>
+        </assertEquals>
+        <actionGroup ref="removeContentTypeFromStage" stepKey="removeButtons">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <!-- Validate Divider Box Shadow -->
+        <comment userInput="Validate Divider Box-Shadow" stepKey="commentValidateDividerBoxShadow"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragDividerIntoStage">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="resetMouseOverDivider"/>
+        <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-divider'),null).getPropertyValue('box-shadow')" stepKey="getDefaultDividerBoxShadowStyle"/>
+        <assertEquals stepKey="assertDefaultDividerBoxShadowStyle" message="pass">
+            <expectedResult type="string">{{PageBuilderBoxShadowProperty_No_Box_Shadow.value}}</expectedResult>
+            <actualResult type="variable">getDefaultDividerBoxShadowStyle</actualResult>
+        </assertEquals>
+        <moveMouseOver selector="{{DividerOnStage.base('1')}}" stepKey="moveMouseOverDivider"/>
+        <waitForPageLoad stepKey="waitForDividerHoverAnimation"/>
+        <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-divider'),null).getPropertyValue('box-shadow')" stepKey="getDefaultDividerHoverBoxShadowStyle"/>
+        <assertEquals stepKey="assertDefaultDividerHoverBoxShadowStyle" message="pass">
+            <expectedResult type="string">{{PageBuilderBoxShadowOnHoverProperty_Default.value}}</expectedResult>
+            <actualResult type="variable">getDefaultDividerHoverBoxShadowStyle</actualResult>
+        </assertEquals>
+        <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeDivider">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <!-- Validate Html Box Shadow -->
+        <comment userInput="Validate Html Box-Shadow" stepKey="commentValidateHtmlBoxShadow"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragHtmlIntoStage">
+            <argument name="contentType" value="PageBuilderHtmlContentType"/>
+        </actionGroup>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="resetMouseOverHtml"/>
+        <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-html'),null).getPropertyValue('box-shadow')" stepKey="getDefaultHtmlBoxShadowStyle"/>
+        <assertEquals stepKey="assertDefaultHtmlBoxShadowStyle" message="pass">
+            <expectedResult type="string">{{PageBuilderBoxShadowProperty_No_Box_Shadow.value}}</expectedResult>
+            <actualResult type="variable">getDefaultHtmlBoxShadowStyle</actualResult>
+        </assertEquals>
+        <moveMouseOver selector="{{HtmlOnStage.base('1')}}" stepKey="moveMouseOverHtml"/>
+        <waitForPageLoad stepKey="waitForHtmlHoverAnimation"/>
+        <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-html'),null).getPropertyValue('box-shadow')" stepKey="getDefaultHtmlHoverBoxShadowStyle"/>
+        <assertEquals stepKey="assertDefaultHtmlHoverBoxShadowStyle" message="pass">
+            <expectedResult type="string">{{PageBuilderBoxShadowOnHoverProperty_Default.value}}</expectedResult>
+            <actualResult type="variable">getDefaultHtmlHoverBoxShadowStyle</actualResult>
+        </assertEquals>
+        <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeHtml">
+            <argument name="contentType" value="PageBuilderHtmlContentType"/>
+        </actionGroup>
+        <!-- Validate Image Box Shadow -->
+        <comment userInput="Validate Image Box-Shadow" stepKey="commentValidateImageBoxShadow"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSectionMedia">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragImageIntoStage">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="resetMouseOverImage"/>
+        <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-image'),null).getPropertyValue('box-shadow')" stepKey="getDefaultImageBoxShadowStyle"/>
+        <assertEquals stepKey="assertDefaultImageBoxShadowStyle" message="pass">
+            <expectedResult type="string">{{PageBuilderBoxShadowProperty_No_Box_Shadow.value}}</expectedResult>
+            <actualResult type="variable">getDefaultImageBoxShadowStyle</actualResult>
+        </assertEquals>
+        <moveMouseOver selector="{{ImageOnStageWithoutImageUploaded.base('1')}}" stepKey="moveMouseOverImage"/>
+        <waitForPageLoad stepKey="waitForImageHoverAnimation"/>
+        <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-image'),null).getPropertyValue('box-shadow')" stepKey="getDefaultImageHoverBoxShadowStyle"/>
+        <assertEquals stepKey="assertDefaultImageHoverBoxShadowStyle" message="pass">
+            <expectedResult type="string">{{PageBuilderBoxShadowOnHoverProperty_Default.value}}</expectedResult>
+            <actualResult type="variable">getDefaultImageHoverBoxShadowStyle</actualResult>
+        </assertEquals>
+        <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeImage">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <!-- Validate Video Box Shadow -->
+        <comment userInput="Validate Video Box-Shadow" stepKey="commentValidateVideoBoxShadow"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragVideoIntoStage">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
+        </actionGroup>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="resetMouseOverVideo"/>
+        <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-video'),null).getPropertyValue('box-shadow')" stepKey="getDefaultVideoBoxShadowStyle"/>
+        <assertEquals stepKey="assertDefaultVideoBoxShadowStyle" message="pass">
+            <expectedResult type="string">{{PageBuilderBoxShadowProperty_No_Box_Shadow.value}}</expectedResult>
+            <actualResult type="variable">getDefaultVideoBoxShadowStyle</actualResult>
+        </assertEquals>
+        <moveMouseOver selector="{{VideoOnStage.base('1')}}" stepKey="moveMouseOverVideo"/>
+        <waitForPageLoad stepKey="waitForVideoHoverAnimation"/>
+        <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-video'),null).getPropertyValue('box-shadow')" stepKey="getDefaultVideoHoverBoxShadowStyle"/>
+        <assertEquals stepKey="assertDefaultVideoHoverBoxShadowStyle" message="pass">
+            <expectedResult type="string">{{PageBuilderBoxShadowOnHoverProperty_Default.value}}</expectedResult>
+            <actualResult type="variable">getDefaultVideoHoverBoxShadowStyle</actualResult>
+        </assertEquals>
+        <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeVideo">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
+        </actionGroup>
+        <!-- Validate Banner Box Shadow -->
+        <comment userInput="Validate Banner Box-Shadow" stepKey="commentValidateBannerBoxShadow"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBannerIntoStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="resetMouseOverBanner"/>
+        <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-banner'),null).getPropertyValue('box-shadow')" stepKey="getDefaultBannerBoxShadowStyle"/>
+        <assertEquals stepKey="assertDefaultBannerBoxShadowStyle" message="pass">
+            <expectedResult type="string">{{PageBuilderBoxShadowProperty_No_Box_Shadow.value}}</expectedResult>
+            <actualResult type="variable">getDefaultBannerBoxShadowStyle</actualResult>
+        </assertEquals>
+        <moveMouseOver selector="{{BannerOnBackend.base('1')}}" stepKey="moveMouseOverBanner"/>
+        <waitForPageLoad stepKey="waitForBannerHoverAnimation"/>
+        <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-banner'),null).getPropertyValue('box-shadow')" stepKey="getDefaultBannerHoverBoxShadowStyle"/>
+        <assertEquals stepKey="assertDefaultBannerHoverBoxShadowStyle" message="pass">
+            <expectedResult type="string">{{PageBuilderBoxShadowOnHoverProperty_Default.value}}</expectedResult>
+            <actualResult type="variable">getDefaultBannerHoverBoxShadowStyle</actualResult>
+        </assertEquals>
+        <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeBanner">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <!-- Validate Slider Box Shadow -->
+        <comment userInput="Validate Slider Box-Shadow" stepKey="commentValidateSliderBoxShadow"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragSliderIntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="resetMouseOverSlider"/>
+        <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-slider .slider-container'),null).getPropertyValue('box-shadow')" stepKey="getDefaultSliderBoxShadowStyle"/>
+        <assertEquals stepKey="assertDefaultSliderBoxShadowStyle" message="pass">
+            <expectedResult type="string">{{PageBuilderBoxShadowProperty_No_Box_Shadow.value}}</expectedResult>
+            <actualResult type="variable">getDefaultSliderBoxShadowStyle</actualResult>
+        </assertEquals>
+        <moveMouseOver selector="{{SliderOnStage.base('1')}}" stepKey="moveMouseOverSlider"/>
+        <waitForPageLoad stepKey="waitForSliderHoverAnimation"/>
+        <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-slider .slider-container'),null).getPropertyValue('box-shadow')" stepKey="getDefaultSliderHoverBoxShadowStyle"/>
+        <assertEquals stepKey="assertDefaultSliderHoverBoxShadowStyle" message="pass">
+            <expectedResult type="string">{{PageBuilderBoxShadowOnHoverProperty_Default.value}}</expectedResult>
+            <actualResult type="variable">getDefaultSliderHoverBoxShadowStyle</actualResult>
+        </assertEquals>
+        <actionGroup ref="removeContentTypeFromStage" stepKey="removeSlider">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <!-- Validate Map Box Shadow -->
+        <comment userInput="Validate Map Box-Shadow" stepKey="commentValidateMapBoxShadow"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragMapIntoStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="resetMouseOverMap"/>
+        <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-map'),null).getPropertyValue('box-shadow')" stepKey="getDefaultMapBoxShadowStyle"/>
+        <assertEquals stepKey="assertDefaultMapBoxShadowStyle" message="pass">
+            <expectedResult type="string">{{PageBuilderBoxShadowProperty_No_Box_Shadow.value}}</expectedResult>
+            <actualResult type="variable">getDefaultMapBoxShadowStyle</actualResult>
+        </assertEquals>
+        <moveMouseOver selector="{{MapOnStage.base('1')}}" stepKey="moveMouseOverMap"/>
+        <waitForPageLoad stepKey="waitForMapHoverAnimation"/>
+        <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-map'),null).getPropertyValue('box-shadow')" stepKey="getDefaultMapHoverBoxShadowStyle"/>
+        <assertEquals stepKey="assertDefaultMapHoverBoxShadowStyle" message="pass">
+            <expectedResult type="string">{{PageBuilderBoxShadowOnHoverProperty_Default.value}}</expectedResult>
+            <actualResult type="variable">getDefaultMapHoverBoxShadowStyle</actualResult>
+        </assertEquals>
+        <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeMap">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <!-- Validate Block Box Shadow -->
+        <comment userInput="Validate Block Box-Shadow" stepKey="commentValidateBlockBoxShadow"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSectionAddContent">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="resetMouseOverBlock"/>
+        <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-block'),null).getPropertyValue('box-shadow')" stepKey="getDefaultBlockBoxShadowStyle"/>
+        <assertEquals stepKey="assertDefaultBlockBoxShadowStyle" message="pass">
+            <expectedResult type="string">{{PageBuilderBoxShadowProperty_No_Box_Shadow.value}}</expectedResult>
+            <actualResult type="variable">getDefaultBlockBoxShadowStyle</actualResult>
+        </assertEquals>
+        <moveMouseOver selector="{{BlockOnStage.base('1')}}" stepKey="moveMouseOverBlock"/>
+        <waitForPageLoad stepKey="waitForBlockHoverAnimation"/>
+        <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-block'),null).getPropertyValue('box-shadow')" stepKey="getDefaultBlockHoverBoxShadowStyle"/>
+        <assertEquals stepKey="assertDefaultBlockHoverBoxShadowStyle" message="pass">
+            <expectedResult type="string">{{PageBuilderBoxShadowOnHoverProperty_Default.value}}</expectedResult>
+            <actualResult type="variable">getDefaultBlockHoverBoxShadowStyle</actualResult>
+        </assertEquals>
+        <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeBlock">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <!-- Validate Products Box Shadow -->
+        <comment userInput="Validate Products Box-Shadow" stepKey="commentValidateProductsBoxShadow"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragProductIntoStage">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="resetMouseOverProducts"/>
+        <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-products'),null).getPropertyValue('box-shadow')" stepKey="getDefaultProductsBoxShadowStyle"/>
+        <assertEquals stepKey="assertDefaultProductsBoxShadowStyle" message="pass">
+            <expectedResult type="string">{{PageBuilderBoxShadowProperty_No_Box_Shadow.value}}</expectedResult>
+            <actualResult type="variable">getDefaultProductsBoxShadowStyle</actualResult>
+        </assertEquals>
+        <moveMouseOver selector="{{ProductsOnStage.base('1')}}" stepKey="moveMouseOverProducts"/>
+        <waitForPageLoad stepKey="waitForProductsHoverAnimation"/>
+        <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-products'),null).getPropertyValue('box-shadow')" stepKey="getDefaultProductsHoverBoxShadowStyle"/>
+        <assertEquals stepKey="assertDefaultProductsHoverBoxShadowStyle" message="pass">
+            <expectedResult type="string">{{PageBuilderBoxShadowOnHoverProperty_Default.value}}</expectedResult>
+            <actualResult type="variable">getDefaultProductsHoverBoxShadowStyle</actualResult>
+        </assertEquals>
+    </test>
+    <test name="NoConfirmationOnDefaultStateContentTypeRemoval">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Common Tests"/>
+            <title value="Delete Content Modal - No confirmation when removing an empty content type"/>
+            <description value="A user should not be prompt when removing a content type in its default state with no children"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-86799"/>
+            <testCaseId value="MC-2802"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-common"/>
+            <group value="pagebuilder-heading"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Add a single header into the first row -->
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragHeaderIntoStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Add an additional row to attempt removal of a row -->
+        <actionGroup ref="dragContentTypeToStageByIndex" stepKey="dragRowIntoStage">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="contentTypeNumber" value="2"/>
+        </actionGroup>
+
+        <!-- Attempt to remove both content types validating the confirmation window is never displayed -->
+        <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeHeader">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <dontSee selector="{{PageBuilderStage.modal}}" stepKey="dontSeeModalHeader"/>
+        <dontSee selector="{{PageBuilderStage.modalOk}}" stepKey="dontSeeModalOkHeader" />
+        <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeRow">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <dontSee selector="{{PageBuilderStage.modal}}" stepKey="dontSeeModalRow"/>
+        <dontSee selector="{{PageBuilderStage.modalOk}}" stepKey="dontSeeModalOkRow" />
+    </test>
+    <test name="ConfirmationOnContainerWithChildrenRemoval">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Common Tests"/>
+            <title value="Delete Content Modal - Removal confirmation on container content type with children"/>
+            <description value="The user should be prompted when removing a content type which has children"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-86799"/>
+            <testCaseId value="MC-2832"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-common"/>
+            <group value="pagebuilder-heading"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Add a single header into the first row -->
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragHeaderIntoStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Add an additional row so we're able to delete the first one -->
+        <actionGroup ref="dragContentTypeToStageByIndex" stepKey="dragRowIntoStage">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="contentTypeNumber" value="2"/>
+        </actionGroup>
+        <!-- Remove second row now containing heading -->
+        <actionGroup ref="removeContentTypeFromStageByIndex" stepKey="removeSecondRow">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="contentTypeNumber" value="2"/>
+            <argument name="x" value="10"/>
+            <argument name="y" value="0"/>
+        </actionGroup>
+        <!-- As the row now contains a header it should prompt on removal -->
+        <waitForElementVisible time="10" selector="{{PageBuilderStage.modal}}" stepKey="waitForModalVisible"/>
+        <seeElementInDOM selector="{{PageBuilderStage.modal}}" stepKey="seeModal"/>
+        <seeElementInDOM selector="{{PageBuilderStage.modalOk}}" stepKey="seeModalOk" />
+
+        <!-- Confirm removal of the row -->
+        <actionGroup ref="confirmRemovalModal" stepKey="confirmRemoval"/>
+        <wait time="2" stepKey="waitForRemovalModal" />
+
+        <!-- Validate the item is removed -->
+        <seeNumberOfElements selector="{{RowOnStage.allRows}}" userInput="1" stepKey="seeElementRow"/>
+    </test>
+    <test name="ConfirmationOnConfiguredContentTypeRemoval">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Common Tests"/>
+            <title value="Delete Content Modal - Removal confirmation on normal content type"/>
+            <description value="The user should be prompted when removing a content type which has had data modified within"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-86799"/>
+            <testCaseId value="MC-2854"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-common"/>
+            <group value="pagebuilder-heading"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Add a single header into the first row -->
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragHeaderIntoStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Configure our heading -->
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterHeadingTypePropertyH5">
+            <argument name="property" value="PageBuilderHeadingTypeProperty_H5"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHeadingTitleProperty">
+            <argument name="property" value="PageBuilderHeadingTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+
+        <!-- As the header has configuration data it should not prompt for removal -->
+        <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeHeader">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <waitForElementVisible time="2" selector="{{PageBuilderStage.modal}}" stepKey="waitForModalVisible"/>
+        <seeElementInDOM selector="{{PageBuilderStage.modal}}" stepKey="seeModal"/>
+        <seeElementInDOM selector="{{PageBuilderStage.modalOk}}" stepKey="seeModalOk" />
+
+        <!-- Confirm removal of the header -->
+        <actionGroup ref="confirmRemovalModal" stepKey="confirmRemoval"/>
+        <wait time="2" stepKey="waitForRemovalModal" />
+
+        <!-- Validate the item is removed -->
+        <dontSeeElement selector="{{PageBuilderStage.contentTypeInStage(PageBuilderHeadingContentType.role)}}" stepKey="dontSeeHeaderInStage"/>
+    </test>
+    <test name="NoRemovalConfirmationModalAfterConfiguringContentToDefaultState">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Common Tests"/>
+            <title value="Delete Content Modal - Verify No Removal Confirmation Modal After Configuring Content Back To Default State"/>
+            <description value="The user should not see a removal confirmation modal if they reconfigure their content to match default state"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-87059"/>
+            <testCaseId value="MC-2835"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-common"/>
+            <group value="pagebuilder-heading"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Add 2nd Row and Heading-->
+        <comment userInput="2nd Row and Heading" stepKey="commentAdd"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage1">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <scrollTo selector="{{CmsNewPagePageActionsSection.pageTitle}}" stepKey="scrollToTop"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragContentTypeToStage2">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
+        <scrollTo selector="div.pagebuilder-header" x="0" y="-100" stepKey="scrollToTop2"/>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Configure Heading -->
+        <comment userInput="Configure Heading" stepKey="commentEditHeading1"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHeadingTitleProperty">
+            <argument name="property" value="PageBuilderHeadingTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <waitForElementVisible selector="{{HeadingOnStage.baseByTagName(PageBuilderHeadingTypeProperty_H2.value, '1')}}" stepKey="validateHeading1"/>
+        <!-- Configure Heading Back To Default -->
+        <comment userInput="Configure Heading Back To Default" stepKey="commentEditHeading2"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHeadingTitle2">
+            <argument name="property" value="PageBuilderHeadingTextDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <!-- Remove Heading -->
+        <comment userInput="Remove Heading" stepKey="commentRemoveHeading"/>
+        <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeHeading">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <!-- Verify No Modal 1 -->
+        <comment userInput="Verify No Modal 1" stepKey="commentNoModal1"/>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <dontSee selector="{{PageBuilderStage.modal}}" stepKey="dontSeeModalHeading"/>
+        <dontSee selector="{{PageBuilderStage.modalOk}}" stepKey="dontSeeModalOkHeading"/>
+        <seeNumberOfElements selector="{{RowOnStage.allRows}}" userInput="2" stepKey="seeRows1"/>
+        <!-- Remove Parent Row -->
+        <comment userInput="Remove Parent Row" stepKey="commentRemoveRow"/>
+        <actionGroup ref="removeContentTypeFromStageByIndex" stepKey="removeRow">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="contentTypeNumber" value="2"/>
+        </actionGroup>
+        <!-- Verify No Modal 2 -->
+        <comment userInput="Verify No Modal 2" stepKey="commentNoModal2"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <dontSee selector="{{PageBuilderStage.modal}}" stepKey="dontSeeModalRow"/>
+        <dontSee selector="{{PageBuilderStage.modalOk}}" stepKey="dontSeeModalOkRow"/>
+        <seeNumberOfElements selector="{{RowOnStage.allRows}}" userInput="1" stepKey="seeRows2"/>
+    </test>
+    <test name="DismissRemovalConfirmationModal">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Common Tests"/>
+            <title value="Delete Content Modal - Dismissing the removal confirmation modal"/>
+            <description value="The user should not be prompted after selecting 'Do not show this again'"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-86799"/>
+            <testCaseId value="MC-2598"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-common"/>
+            <group value="pagebuilder-heading"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Add a single header into the first row -->
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragHeaderIntoStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Configure our heading -->
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterHeadingTypePropertyH5">
+            <argument name="property" value="PageBuilderHeadingTypeProperty_H5"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHeadingTitleProperty">
+            <argument name="property" value="PageBuilderHeadingTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+
+        <!-- Duplicate heading -->
+        <actionGroup ref="duplicateContentType" stepKey="duplicateHeadingOnce">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+
+        <!-- Remove the first heading, expect a prompt -->
+        <actionGroup ref="removeContentTypeFromStageByIndex" stepKey="removeFirstHeader">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="contentTypeNumber" value="1"/>
+        </actionGroup>
+        
+        <waitForElementVisible time="2" selector="{{PageBuilderStage.modal}}" stepKey="waitForModalVisible"/>
+        <seeElementInDOM selector="{{PageBuilderStage.modal}}" stepKey="seeModal"/>
+        <seeElementInDOM selector="{{PageBuilderStage.modalOk}}" stepKey="seeModalOk" />
+        <waitForElementVisible selector="{{PageBuilderStage.modalDoNotShowThisAgain}}" stepKey="waitForDoNotShowThisAgain"/>
+        <click selector="{{PageBuilderStage.modalDoNotShowThisAgain}}" stepKey="clickDoNotShowThisAgain"/>
+        <actionGroup ref="confirmRemovalModal" stepKey="confirmRemoval"/>
+        <wait time="2" stepKey="waitForRemovalModal" />
+
+        <!-- Attempt to remove secondary heading, no modal should appear even though it's configured -->
+        <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeSecondHeader">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <dontSee selector="{{PageBuilderStage.modal}}" stepKey="dontSeeModalHeader"/>
+        <dontSee selector="{{PageBuilderStage.modalOk}}" stepKey="dontSeeModalOkHeader" />
+
+        <!-- Validate the items are removed -->
+        <dontSeeElement selector="{{PageBuilderStage.contentTypeInStage(PageBuilderHeadingContentType.role)}}" stepKey="dontSeeHeaderInStage"/>
+    </test>
+    <test name="DismissedConfirmationPersistsSession">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Common Tests"/>
+            <title value="Delete Content Modal - Dismissed confirmation persists session"/>
+            <description value="The user should not be prompted within the current session for removal"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-86799"/>
+            <testCaseId value="MC-2511"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-common"/>
+            <group value="pagebuilder-heading"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Set the page title, as we'll be saving the page -->
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+
+        <!-- Add a single header into the first row -->
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragHeaderIntoStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Configure our heading -->
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterHeadingTypePropertyH5">
+            <argument name="property" value="PageBuilderHeadingTypeProperty_H5"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHeadingTitleProperty">
+            <argument name="property" value="PageBuilderHeadingTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+
+        <!-- Duplicate heading, we shall attempt to remove this after save -->
+        <actionGroup ref="duplicateContentType" stepKey="duplicateHeadingOnce">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+
+        <!-- Remove the first heading, check to not receive this warning again -->
+        <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeFirstHeader">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <waitForElementVisible time="2" selector="{{PageBuilderStage.modal}}" stepKey="waitForModalVisible"/>
+        <seeElementInDOM selector="{{PageBuilderStage.modal}}" stepKey="seeModal"/>
+        <seeElementInDOM selector="{{PageBuilderStage.modalOk}}" stepKey="seeModalOk" />
+        <waitForElementVisible selector="{{PageBuilderStage.modalDoNotShowThisAgain}}" stepKey="waitForDoNotShowThisAgain"/>
+        <click selector="{{PageBuilderStage.modalDoNotShowThisAgain}}" stepKey="clickDoNotShowThisAgain"/>
+        <actionGroup ref="confirmRemovalModal" stepKey="confirmRemoval"/>
+
+        <!-- Save the page -->
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsNewPagePageActionsSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+
+        <!-- Attempt to remove secondary heading, no modal should appear even though it's configured -->
+        <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeSecondHeader">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <dontSee selector="{{PageBuilderStage.modal}}" stepKey="dontSeeModalHeader"/>
+        <dontSee selector="{{PageBuilderStage.modalOk}}" stepKey="dontSeeModalOkHeader" />
+
+        <!-- Validate the items are removed -->
+        <dontSeeElement selector="{{PageBuilderStage.contentTypeInStage(PageBuilderHeadingContentType.role)}}" stepKey="dontSeeHeaderInStage"/>
+    </test>
+    <test name="CancelOnRemovalConfirmationModal">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Common Tests"/>
+            <title value="Delete Content Modal - Cancel Removal Confirmation Modal"/>
+            <description value="The user should be able to click cancel in removal confirmation modal and not have content removed."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-87059"/>
+            <testCaseId value="MC-2588"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-common"/>
+            <group value="pagebuilder-heading"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Add Heading -->
+        <comment userInput="Add Heading" stepKey="commentAddHeading"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Configure Heading -->
+        <comment userInput="Configure Heading" stepKey="commentHeading"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterHeadingType">
+            <argument name="property" value="PageBuilderHeadingTypeProperty_H2"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHeadingTitle">
+            <argument name="property" value="PageBuilderHeadingTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <waitForElementVisible selector="{{HeadingOnStage.baseByTagName(PageBuilderHeadingTypeProperty_H2.value, '1')}}" stepKey="validateHeading1"/>
+        <!-- Click Remove Then Cancel In Modal -->
+        <comment userInput="Click Remove Then Cancel In Modal" stepKey="commentCancel"/>
+        <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeHeading">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderStage.modal}}" stepKey="waitForModalVisible"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderStage.modalCancel}}" stepKey="waitForCancelButton"/>
+        <click selector="{{PageBuilderStage.modalCancel}}" stepKey="clickCancelButton"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <waitForElementNotVisible time="10" selector="{{PageBuilderStage.modal}}" stepKey="waitForModalGone"/>
+        <!-- Verify Heading Still Exists -->
+        <comment userInput="Verify Heading Still Exists" stepKey="validateHeading"/>
+        <waitForElementVisible selector="{{HeadingOnStage.baseByTagName(PageBuilderHeadingTypeProperty_H2.value, '1')}}" stepKey="validateHeading2"/>
+    </test>
+    <test name="XOnRemovalConfirmationModal">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Common Tests"/>
+            <title value="Delete Content Modal - Click X On Removal Confirmation Modal"/>
+            <description value="The user should be able to click on the 'X' button in removal confirmation modal and not have content removed."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-87059"/>
+            <testCaseId value="MC-2789"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-common"/>
+            <group value="pagebuilder-heading"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Add Heading -->
+        <comment userInput="Add Heading" stepKey="commentAddHeading"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Configure Heading -->
+        <comment userInput="Configure Heading" stepKey="commentEditHeading"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterHeadingType">
+            <argument name="property" value="PageBuilderHeadingTypeProperty_H2"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHeadingTitle">
+            <argument name="property" value="PageBuilderHeadingTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <waitForElementVisible selector="{{HeadingOnStage.baseByTagName(PageBuilderHeadingTypeProperty_H2.value, '1')}}" stepKey="validateHeading1"/>
+        <!-- Click Remove Then X In Modal -->
+        <comment userInput="Click Remove Then X In Modal" stepKey="commentX"/>
+        <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeHeading">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderStage.modal}}" stepKey="waitForModalVisible"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderStage.modalX}}" stepKey="waitForXButton"/>
+        <click selector="{{PageBuilderStage.modalX}}" stepKey="clickXButton"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <waitForElementNotVisible time="10" selector="{{PageBuilderStage.modal}}" stepKey="waitForModalGone"/>
+        <!-- Verify Heading Still Exists -->
+        <comment userInput="Verify Heading Still Exists" stepKey="validateHeading"/>
+        <waitForElementVisible selector="{{HeadingOnStage.baseByTagName(PageBuilderHeadingTypeProperty_H2.value, '1')}}" stepKey="validateHeading2"/>
+    </test>
+    <test name="LoginCycleResetsRemoveConfirmationDismissal">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Common Tests"/>
+            <title value="Delete Content Modal - Dismissed confirmation is removed on logout"/>
+            <description value="The users choice to not show the confirmation again should be reset on logout"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-86799"/>
+            <testCaseId value="MC-2392"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-common"/>
+            <group value="pagebuilder-heading"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Add a single header into the first row -->
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragHeaderIntoStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Configure our heading -->
+        <comment userInput="Configure first heading" stepKey="commentFirstHeading"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterHeadingTypePropertyH5">
+            <argument name="property" value="PageBuilderHeadingTypeProperty_H5"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHeadingTitleProperty">
+            <argument name="property" value="PageBuilderHeadingTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+
+        <!-- Duplicate heading, we shall attempt to remove this after save -->
+        <comment userInput="Duplicate initial heading" stepKey="commentDuplicateFirstHeading"/>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateHeadingOnce">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+
+        <!-- Remove the first heading, check to not receive this warning again -->
+        <comment userInput="Remove first heading, validate modal is displayed" stepKey="commentRemoveFirstHeading"/>
+        <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeFirstHeader">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <waitForElementVisible time="10" selector="{{PageBuilderStage.modal}}" stepKey="waitForModalVisible"/>
+        <seeElementInDOM selector="{{PageBuilderStage.modal}}" stepKey="seeModal"/>
+        <seeElementInDOM selector="{{PageBuilderStage.modalOk}}" stepKey="seeModalOk" />
+        <waitForElementVisible selector="{{PageBuilderStage.modalDoNotShowThisAgain}}" stepKey="waitForDoNotShowThisAgain"/>
+        <click selector="{{PageBuilderStage.modalDoNotShowThisAgain}}" stepKey="clickDoNotShowThisAgain"/>
+        <actionGroup ref="confirmRemovalModal" stepKey="confirmRemoval"/>
+        <wait time="2" stepKey="waitForRemovalModal" />
+
+        <!-- Attempt to remove secondary heading, no modal should appear even though it's configured -->
+        <comment userInput="Remove second heading, validate modal is not displayed" stepKey="commentRemoveSecondHeading"/>
+        <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeSecondHeader">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <dontSee selector="{{PageBuilderStage.modal}}" stepKey="dontSeeModalHeader"/>
+        <dontSee selector="{{PageBuilderStage.modalOk}}" stepKey="dontSeeModalOkHeader" />
+
+        <!-- Validate the items are removed -->
+        <dontSeeElement selector="{{PageBuilderStage.contentTypeInStage(PageBuilderHeadingContentType.role)}}" stepKey="dontSeeHeaderInStage"/>
+
+        <!-- Logout, then login -->
+        <comment userInput="Complete a login cycle" stepKey="commentLoginCycle"/>
+        <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+        <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+        <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+
+        <!-- Add a single header into the first row -->
+        <comment userInput="Add a heading to the stage" stepKey="commentAddHeading"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSectionElements">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragThirdHeaderIntoStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeadingAgain">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Configure our heading -->
+        <comment userInput="Configure new heading" stepKey="commentConfigureHeading"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterHeadingTypePropertyH52">
+            <argument name="property" value="PageBuilderHeadingTypeProperty_H5"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHeadingTitleProperty2">
+            <argument name="property" value="PageBuilderHeadingTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+
+        <!-- Remove the heading, we should receive the warning again -->
+        <comment userInput="Remove the third heading, see modal" stepKey="commentRemoveThirdHeading"/>
+        <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeThirdHeader">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <waitForElementVisible time="10" selector="{{PageBuilderStage.modal}}" stepKey="waitForModalVisible2"/>
+        <seeElementInDOM selector="{{PageBuilderStage.modal}}" stepKey="seeModal2"/>
+        <seeElementInDOM selector="{{PageBuilderStage.modalOk}}" stepKey="seeModalOk2" />
+        <actionGroup ref="confirmRemovalModal" stepKey="confirmRemoval2"/>
+        <wait time="2" stepKey="waitForRemovalModal1" />
+
+        <!-- Validate the items are removed -->
+        <dontSeeElement selector="{{PageBuilderStage.contentTypeInStage(PageBuilderHeadingContentType.role)}}" stepKey="dontSeeHeaderInStage2"/>
+    </test>
+    <test name="EditPanelColorPickerUpdatesFromFieldInput">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Common Tests"/>
+            <title value="Color Picker - Validate Color Picker Updates From Input Field Values"/>
+            <description value="Validate that when the user inputs different types of color values into the Background Color input field, the color picker updates with the appropriate color."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-90828"/>
+            <testCaseId value="MC-1347"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-common"/>
+            <group value="pagebuilder-banner"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <createData entity="_defaultCmsPage" stepKey="createCMSPage"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBannerIntoStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <!-- Input: Plaintext -->
+        <comment userInput="Input: Plaintext" stepKey="commentPlaintext"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="inputPlaintext">
+            <argument name="property" value="PageBuilderBackgroundColor_Plaintext_Green"/>
+        </actionGroup>
+        <actionGroup ref="seeColorInColorSwatch" stepKey="seeSwatchPlaintextColor">
+            <argument name="property" value="PageBuilderBackgroundColor_Plaintext_Green"/>
+        </actionGroup>
+        <actionGroup ref="openAndValidateColorPickerValue" stepKey="validatePlaintext">
+            <argument name="color" value="{{PageBuilderBackgroundColor_Plaintext_Green.hex}}"/>
+        </actionGroup>
+        <!-- Input: Hex -->
+        <comment userInput="Input: Hex" stepKey="commentHex"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="inputHex">
+            <argument name="property" value="PageBuilderBackgroundColor_Hex_White"/>
+        </actionGroup>
+        <actionGroup ref="seeColorInColorSwatch" stepKey="seeSwatchHexColor">
+            <argument name="property" value="PageBuilderBackgroundColor_Hex_White"/>
+        </actionGroup>
+        <actionGroup ref="openAndValidateColorPickerValue" stepKey="validateHex">
+            <argument name="color" value="{{PageBuilderBackgroundColor_Hex_White.hex}}"/>
+        </actionGroup>
+        <!-- Input: RGB -->
+        <comment userInput="Input: RGB" stepKey="commentRGB"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="inputRGB">
+            <argument name="property" value="PageBuilderBackgroundColor_RGB_Blue"/>
+        </actionGroup>
+        <actionGroup ref="seeColorInColorSwatch" stepKey="seeSwatchRGBColor">
+            <argument name="property" value="PageBuilderBackgroundColor_RGB_Blue"/>
+        </actionGroup>
+        <actionGroup ref="openAndValidateColorPickerValue" stepKey="validateRGB">
+            <argument name="color" value="{{PageBuilderBackgroundColor_RGB_Blue.hex}}"/>
+        </actionGroup>
+        <!-- Input: RGBa -->
+        <comment userInput="Input: RGBa" stepKey="commentRGBa"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="inputRGBa">
+            <argument name="property" value="PageBuilderBackgroundColor_RGBa_Blue"/>
+        </actionGroup>
+        <actionGroup ref="seeColorInColorSwatch" stepKey="seeSwatchRGBaColor">
+            <argument name="property" value="PageBuilderBackgroundColor_RGBa_Blue"/>
+        </actionGroup>
+        <actionGroup ref="openAndValidateColorPickerValue" stepKey="validateRGBa">
+            <argument name="color" value="{{PageBuilderBackgroundColor_RGBa_Blue.value}}"/>
+        </actionGroup>
+        <!-- Input: HSL -->
+        <comment userInput="Input: HSL" stepKey="commentHSL"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="inputHSL">
+            <argument name="property" value="PageBuilderBackgroundColor_HSL_Orange"/>
+        </actionGroup>
+        <actionGroup ref="seeColorInColorSwatch" stepKey="seeSwatchHSLColor">
+            <argument name="property" value="PageBuilderBackgroundColor_HSL_Orange"/>
+        </actionGroup>
+        <actionGroup ref="openAndValidateColorPickerValue" stepKey="validateHSL">
+            <argument name="color" value="{{PageBuilderBackgroundColor_HSL_Orange.hex}}"/>
+        </actionGroup>
+        <!-- Input: HSLa -->
+        <comment userInput="Input: HSLa" stepKey="commentHSLa"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="inputHSLa">
+            <argument name="property" value="PageBuilderBackgroundColor_HSLa_Orange"/>
+        </actionGroup>
+        <actionGroup ref="seeColorInColorSwatch" stepKey="seeSwatchHSLaColor">
+            <argument name="property" value="PageBuilderBackgroundColor_HSLa_Orange"/>
+        </actionGroup>
+        <actionGroup ref="openAndValidateColorPickerValue" stepKey="validateHSLa">
+            <argument name="color" value="{{PageBuilderBackgroundColor_HSLa_Orange.rgb}}"/>
+        </actionGroup>
+        <!-- Input: HSV -->
+        <comment userInput="Input: HSV" stepKey="commentHSV"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="inputHSV">
+            <argument name="property" value="PageBuilderBackgroundColor_HSV_Orange"/>
+        </actionGroup>
+        <actionGroup ref="seeColorInColorSwatch" stepKey="seeSwatchHSVColor">
+            <argument name="property" value="PageBuilderBackgroundColor_HSV_Orange"/>
+        </actionGroup>
+        <actionGroup ref="openAndValidateColorPickerValue" stepKey="validateHSV">
+            <argument name="color" value="{{PageBuilderBackgroundColor_HSV_Orange.hex}}"/>
+        </actionGroup>
+        <!-- Input: HSVa -->
+        <comment userInput="Input: HSVa" stepKey="commentHSVa"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="inputHSVa">
+            <argument name="property" value="PageBuilderBackgroundColor_HSVa_Orange"/>
+        </actionGroup>
+        <actionGroup ref="seeColorInColorSwatch" stepKey="seeSwatchHSVaColor">
+            <argument name="property" value="PageBuilderBackgroundColor_HSVa_Orange"/>
+        </actionGroup>
+        <actionGroup ref="openAndValidateColorPickerValue" stepKey="validateHSVa">
+            <argument name="color" value="{{PageBuilderBackgroundColor_HSVa_Orange.rgb}}"/>
+        </actionGroup>
+    </test>
+    <test name="EditPanelColorPickerWindowFunctionality">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Common Tests"/>
+            <title value="Color Picker - Validate Color Picker Window Functionality"/>
+            <description value="Validate the following for the color picker window: 1) Hex chart, 2) Favorite colors, 3) Color picker area, 4) Light/Dark slide, 5) Hex Input, 6) Cancel button, 7) Apply button."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-90828"/>
+            <testCaseId value="MC-2852"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-common"/>
+            <group value="pagebuilder-banner"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <createData entity="_defaultCmsPage" stepKey="createCMSPage"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBannerIntoStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <!-- Open Color Picker -->
+        <comment userInput="Open Color Picker" stepKey="commentOpen"/>
+        <actionGroup ref="openAndValidateColorPickerValue" stepKey="validateDefault">
+            <argument name="color" value="{{PageBuilderBackgroundColor_Default.value}}"/>
+        </actionGroup>
+        <!-- Validate Hex Chart -->
+        <comment userInput="Validate Hex Chart" stepKey="commentHexChart"/>
+        <waitForElementVisible selector="{{ColorPicker.firstColorBox}}" stepKey="waitForFirstColorBox"/>
+        <waitForElementVisible selector="{{ColorPicker.allColorBoxes}}" stepKey="waitForColorBoxes"/>
+        <seeNumberOfElements selector="{{ColorPicker.allColorBoxes}}" userInput="64" stepKey="verifyNumberOfColorBoxes"/>
+        <!-- Validate Color Wheel -->
+        <comment userInput="Validate Color Wheel" stepKey="commentColorWheel"/>
+        <waitForElementVisible selector="{{ColorPicker.colorWheelColor(PageBuilderBackgroundColor_Default.colorWheelDefault)}}" stepKey="waitForColorWheelDefaultColor"/>
+        <click selector="{{ColorPicker.colorWheel}}" stepKey="clickColorWheel"/>
+        <waitForElementVisible selector="{{ColorPicker.panelColorSwatchColor(PageBuilderBackgroundColor_CenterColorPicker.section, PageBuilderBackgroundColor_CenterColorPicker.fieldName, PageBuilderBackgroundColor_CenterColorPicker.rgb)}}" stepKey="waitForColorSwatchColor"/>
+        <seeInField selector="{{ColorPicker.inputField}}" userInput="{{PageBuilderBackgroundColor_CenterColorPicker.hex}}" stepKey="seeColorInInputField"/>
+        <!-- Validate Clear Color Button-->
+        <comment userInput="Validate Clear Color Button" stepKey="commentClearColorButton"/>
+        <click selector="{{ColorPicker.clearColorBtn}}" stepKey="clickClearColorButton"/>
+        <waitForElementVisible selector="{{ColorPicker.panelColorSwatchColor(PageBuilderBackgroundColor_Default.section, PageBuilderBackgroundColor_Default.fieldName, PageBuilderBackgroundColor_Default.colorSwatchColor)}}" stepKey="waitForColorSwatchColor2"/>
+        <seeInField selector="{{ColorPicker.inputField}}" userInput="{{PageBuilderBackgroundColor_Default.value}}" stepKey="seeColorInInputField2"/>
+        <!-- Validate Hue Slider -->
+        <comment userInput="Validate Hue Slider" stepKey="commentHueSlider"/>
+        <click selector="{{ColorPicker.hueSlider}}" stepKey="clickHueSlider"/>
+        <waitForElementVisible selector="{{ColorPicker.panelColorSwatchColor(PageBuilderBackgroundColor_CenterColorHueSlider.section, PageBuilderBackgroundColor_CenterColorHueSlider.fieldName, PageBuilderBackgroundColor_CenterColorHueSlider.rgb)}}" stepKey="waitForColorSwatchColor3"/>
+        <seeInField selector="{{ColorPicker.inputField}}" userInput="{{PageBuilderBackgroundColor_CenterColorHueSlider.hex}}" stepKey="seeColorInInputField3"/>
+        <!-- Validate Light/Dark Slider -->
+        <comment userInput="Validate Light/Dark Slider" stepKey="commentLightDarkSlider"/>
+        <click selector="{{ColorPicker.lightDarkSlider}}" stepKey="clickLightDarkSlider"/>
+        <waitForElementVisible selector="{{ColorPicker.panelColorSwatchColor(PageBuilderBackgroundColor_CenterColorHueSlider.section, PageBuilderBackgroundColor_CenterColorHueSlider.fieldName, PageBuilderBackgroundColor_CenterColorHueSlider.rgbaCenterOfLightDarkSlider)}}" stepKey="waitForColorSwatchColor4"/>
+        <seeInField selector="{{ColorPicker.inputField}}" userInput="{{PageBuilderBackgroundColor_CenterColorHueSlider.rgbaCenterOfLightDarkSlider}}" stepKey="seeColorInInputField4"/>
+        <!-- Validate Hex Input Field -->
+        <comment userInput="Validate Hex Input Field" stepKey="commentHexInput"/>
+        <fillField selector="{{ColorPicker.inputField}}" userInput="{{PageBuilderBackgroundColor_Plaintext_Green.value}}" stepKey="inputColorInInputField"/>
+        <clickWithLeftButton selector="{{ColorPicker.inputField}}" x="0" y="0" stepKey="clickOffInputField"/>
+        <waitForElementVisible selector="{{ColorPicker.panelColorSwatchColor(PageBuilderBackgroundColor_Plaintext_Green.section, PageBuilderBackgroundColor_Plaintext_Green.fieldName, PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="waitForColorSwatchColor5"/>
+        <!-- Validate Apply Button -->
+        <comment userInput="Validate Apply Button" stepKey="commentApplyButton"/>
+        <click selector="{{ColorPicker.applyBtn}}" stepKey="clickApplyButton"/>
+        <waitForElementNotVisible selector="{{ColorPicker.colorPickerWindow}}" stepKey="waitForColorPickerWindowGone"/>
+        <actionGroup ref="seeInFieldSlideOutPropertyAlternate" stepKey="validateBackgroundColor">
+            <argument name="property" value="PageBuilderBackgroundColor_Plaintext_Green"/>
+        </actionGroup>
+        <!-- Validate Cancel Button -->
+        <comment userInput="Validate Cancel Button" stepKey="commentCancelButton"/>
+        <actionGroup ref="openAndValidateColorPickerValue" stepKey="validateColorPicker">
+            <argument name="color" value="{{PageBuilderBackgroundColor_Plaintext_Green.hex}}"/>
+        </actionGroup>
+        <fillField selector="{{ColorPicker.inputField}}" userInput="{{PageBuilderBackgroundColor_Hex_White.value}}" stepKey="inputColorInInputField2"/>
+        <clickWithLeftButton selector="{{ColorPicker.inputField}}" x="0" y="0" stepKey="clickOffInputField2"/>
+        <waitForElementVisible selector="{{ColorPicker.panelColorSwatchColor(PageBuilderBackgroundColor_Hex_White.section, PageBuilderBackgroundColor_Hex_White.fieldName, PageBuilderBackgroundColor_Hex_White.rgb)}}" stepKey="waitForColorSwatchColor6"/>
+        <click selector="{{ColorPicker.cancelBtn}}" stepKey="clickCancelButton"/>
+        <waitForElementNotVisible selector="{{ColorPicker.colorPickerWindow}}" stepKey="waitForColorPickerWindowGone2"/>
+        <actionGroup ref="seeInFieldSlideOutPropertyAlternate" stepKey="validateBackgroundColor2">
+            <argument name="property" value="PageBuilderBackgroundColor_Plaintext_Green"/>
+        </actionGroup>
+        <actionGroup ref="openAndValidateColorPickerValue" stepKey="validateColorPicker2">
+            <argument name="color" value="{{PageBuilderBackgroundColor_Plaintext_Green.hex}}"/>
+        </actionGroup>
+        <!-- Validate Favorite Colors -->
+        <comment userInput="Validate Favorite Colors" stepKey="commentFavoriteColors"/>
+        <waitForElementVisible selector="{{ColorPicker.activeFavoriteColorBox(PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="waitForActiveFavoriteColor"/>
+    </test>
+    <test name="AdminPageBuilderURLInputLinkTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Common Tests"/>
+            <title value="Link - Admin are able to add External URL link into PageBuilder content"/>
+            <description value="Admin are able to add External URL link into PageBuilder content"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-71571"/>
+            <testCaseId value="MC-1342"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-common"/>
+            <group value="pagebuilder-link"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
+            <actionGroup ref="logout" stepKey="logout"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage1">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeIntoStage">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage">
+            <argument name="section" value="ButtonItemOnStage"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{PageBuilderLinkAttributeAdmin.LinkSelect('button_link')}}" stepKey="waitForButtonLinkSelect"/>
+        <seeElement selector="{{PageBuilderLinkAttributeAdmin.LinkSelect('button_link')}}" stepKey="seeButtonLinkSelect"/>
+        <seeOptionIsSelected selector="{{PageBuilderLinkAttributeAdmin.LinkSelect('button_link')}}" userInput="URL" stepKey="seeButtonLinkSelectedByDefault" />
+        <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="fillButton1LinkField">
+            <argument name="property" value="PageBuilderButtonItemLink_NotSecure"/>
+            <argument name="selection" value="{{ExternalLink.url}}"/>
+            <argument name="newTab" value="PageBuilderButtonItemOpenInNewTab_False"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage1"/>
+
+        <!--Go to storefront to verify External Link-->
+        <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
+        <waitForPageLoad  stepKey="waitForPageLoad1"/>
+        <seeElement selector="{{PageBuilderLinkAttributeStoreFront.ExternalURLInCurrentTab(PageBuilderButtonItemLink_NotSecure.value)}}" stepKey="seeExternalLinkOnStoreFront" />
+        <click selector=".pagebuilder-button-primary" stepKey="clickButton"/>
+        <grabFromCurrentUrl stepKey="grabFromCurrentUrl1"/>
+        <assertEquals stepKey="assertEquals1" message="pass">
+            <expectedResult type="string">{{PageBuilderButtonItemLink_NotSecure.value}}</expectedResult>
+            <actualResult type="variable">grabFromCurrentUrl1</actualResult>
+        </assertEquals>
+
+        <!--Go to admin to edit Secure External Link-->
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage2">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <click selector=".placeholder-text" stepKey="clickOnEditButton"/>
+        <waitForElementVisible selector="//div[contains(@class, 'buttons-container')]//a[@title='Edit']" stepKey="waitForSettingBtn" />
+        <click selector="//div[contains(@class, 'buttons-container')]//a[@title='Edit']" stepKey="clickSelectButtonOnFirstItem"/>
+        <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="fillButton1SecureLinkField">
+            <argument name="property" value="PageBuilderButtonItemLink_Secure"/>
+            <argument name="selection" value="{{ExternalLink.url}}"/>
+            <argument name="newTab" value="PageBuilderButtonItemOpenInNewTab_True"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
+
+        <!--Go to storefront to verify Secure External Link-->
+        <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage2"/>
+        <waitForPageLoad  stepKey="waitForPageLoad3"/>
+        <seeElement selector="{{PageBuilderLinkAttributeStoreFront.ExternalURLInNewTab(PageBuilderButtonItemLink_Secure.value)}}" stepKey="seeExternalSecureLinkOnStoreFront" />
+        <click selector=".pagebuilder-button-primary" stepKey="clickButton2"/>
+        <switchToNextTab stepKey="switchToNextTab"/>
+        <grabFromCurrentUrl stepKey="grabFromCurrentUrl2"/>
+        <assertEquals stepKey="assertEquals2" message="pass">
+            <expectedResult type="string">{{PageBuilderButtonItemLink_Secure.value}}</expectedResult>
+            <actualResult type="variable">grabFromCurrentUrl2</actualResult>
+        </assertEquals>
+    </test>
+    <test name="AdminPageBuilderCategoryButtonLinkTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Common Tests"/>
+            <title value="Link - Admin are able to add Category link into PageBuilder content"/>
+            <description value="Admin are able to add Category link link into PageBuilder content"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-88961"/>
+            <testCaseId value="MC-1319"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-common"/>
+            <group value="pagebuilder-link"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
+            <actionGroup ref="logout" stepKey="logout"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <createData entity="SimpleSubCategory" stepKey="createCategoryB"/>
+        <createData entity="NewSubCategoryWithParent" stepKey="createSubCategoryY">
+            <requiredEntity createDataKey="createCategoryB"/>
+        </createData>
+        <createData entity="_defaultCategory" stepKey="createCategoryA"/>
+        <createData entity="NewSubCategoryWithParent" stepKey="createSubCategoryX">
+            <requiredEntity createDataKey="createCategoryA"/>
+        </createData>
+
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage1">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeIntoStage">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage1">
+            <argument name="section" value="ButtonItemOnStage"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{PageBuilderLinkAttributeAdmin.LinkSelect('button_link')}}" stepKey="waitForButtonLinkSelect"/>
+        <seeElement selector="{{PageBuilderLinkAttributeAdmin.LinkSelect('button_link')}}" stepKey="seeButtonLinkSelect"/>
+        <selectOption selector="{{EditPanelForm.panelFieldControl(PageBuilderButtonItemLink_NotSecure.section, PageBuilderButtonItemLink_NotSecure.fieldName)}}" userInput="Category" stepKey="selectOption" />
+
+        <!--See dropdown beside Button Link Select-->
+        <waitForElementVisible selector="{{PageBuilderLinkAttributeAdmin.LinkDropdown}}" stepKey="waitButtonLinkDropdownInput" />
+        <seeElement selector="{{PageBuilderLinkAttributeAdmin.LinkDropdown}}" stepKey="seeButtonLinkDropdownInput" />
+        <click selector="{{PageBuilderLinkAttributeAdmin.LinkDropdown}}" stepKey="expandButtonLinkDropdownInput1" />
+        <see userInput="Default Category" stepKey="seeLevel1Category"/>
+        <see userInput="$createCategoryA.name$" stepKey="seeLevel2Category"/>
+        <dontSee userInput="$createSubCategoryX.name$" stepKey="dontSeeLevel3Category"/>
+
+        <!--Type 2 first letters into Search box-->
+        <pressKey selector="{{PageBuilderLinkAttributeAdmin.LinkSearch}}" parameterArray="['su',\Facebook\WebDriver\WebDriverKeys::ENTER]" stepKey="pressKeyEnter"/>
+        <waitForElementVisible selector="{{PageBuilderLinkAttributeAdmin.SearchResult($createSubCategoryX.name$)}}" stepKey="waitForSearchResult" />
+        <see userInput="$createSubCategoryX.name$" stepKey="seeSubCategoryOnSearchResult"/>
+        <click selector="{{PageBuilderLinkAttributeAdmin.SearchResult($createSubCategoryX.name$)}}" stepKey="clickSubCategoryXOnSearchResult"/>
+        <dontSee selector="{{PageBuilderLinkAttributeAdmin.SearchResultBox}}" stepKey="dropdownCollapses" />
+        <grabTextFrom selector="{{PageBuilderLinkAttributeAdmin.DropdownInput}}" stepKey="textFromDropDown1"/>
+        <assertEquals stepKey="assertEquals1" message="pass">
+            <expectedResult type="string">$createSubCategoryX.name$</expectedResult>
+            <actualResult type="variable">textFromDropDown1</actualResult>
+        </assertEquals>
+        <seeElement selector="{{PageBuilderLinkAttributeAdmin.RemoveBtn}}" stepKey="seeXButtonInField1" />
+
+        <!--Expand dropdown again to verify highlighted not cleared yet-->
+        <click selector="{{PageBuilderLinkAttributeAdmin.LinkDropdown}}" stepKey="expandButtonLinkDropdownInput3" />
+        <seeInField  selector="{{PageBuilderLinkAttributeAdmin.LinkSearch}}" userInput="su" stepKey="seeSearchNotCleared"/>
+        <wait time="3" stepKey="wait"/>
+        <seeElement selector="{{PageBuilderLinkAttributeAdmin.LinkItemSelected($createSubCategoryX.name$)}}" stepKey="seeSearchResultHighlighted" />
+
+        <!--Select another category from dropdown-->
+        <click selector="{{PageBuilderLinkAttributeAdmin.SearchResult($createSubCategoryY.name$)}}" stepKey="clickSubCategoryYOnSearchResult"/>
+        <grabTextFrom selector="{{PageBuilderLinkAttributeAdmin.DropdownInput}}" stepKey="textFromDropDown2"/>
+        <assertEquals stepKey="assertEquals2" message="pass">
+            <expectedResult type="string">$createSubCategoryY.name$</expectedResult>
+            <actualResult type="variable">textFromDropDown2</actualResult>
+        </assertEquals>
+        <seeElement selector="{{PageBuilderLinkAttributeAdmin.RemoveBtn}}" stepKey="seeXButtonInField2" />
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage1"/>
+
+        <!--Go to storefront to verify Category Link-->
+        <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
+        <waitForPageLoad  stepKey="waitForPageLoad1"/>
+        <seeElement selector="{{ButtonItemOnStorefront.buttonItemType('1', PageBuilderButtonItemType_Primary.value)}}" stepKey="seeButtonItemOnStoreFront"/>
+        <seeElement selector="{{ButtonItemOnStorefront.buttonItemContainsUrl('1', $createSubCategoryY.name_lwr$)}}" stepKey="seeExternalLinkOnStoreFront" />
+        <click selector=".pagebuilder-button-primary" stepKey="clickButton"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <see userInput="$createSubCategoryY.name$" stepKey="seeCategoryName" />
+
+        <deleteData createDataKey="createSubCategoryY" stepKey="deletePreReqSubCategoryY" />
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage2">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <click selector=".placeholder-text" stepKey="clickOnEditButton"/>
+        <waitForElementVisible selector="//div[contains(@class, 'buttons-container')]//a[@title='Edit']" stepKey="waitForSettingBtn" />
+        <click selector="//div[contains(@class, 'buttons-container')]//a[@title='Edit']" stepKey="clickSelectButtonOnFirstItem"/>
+        <waitForElementVisible selector="{{PageBuilderLinkAttributeAdmin.LinkSelect('button_link')}}" stepKey="waitForButtonLinkSelect2"/>
+        <grabTextFrom selector="{{PageBuilderLinkAttributeAdmin.DropdownInput}}" stepKey="textFromDropDown3"/>
+        <assertRegExp stepKey="assertEquals3" message="pass">
+            <expectedResult type="string">/Category with ID: [0-9]+ doesn't exist$/</expectedResult>
+            <actualResult type="variable">textFromDropDown3</actualResult>
+        </assertRegExp>
+        <deleteData createDataKey="createCategoryA" stepKey="deletePreReqCatalogA" />
+    </test>
+    <test name="AdminPageBuilderProductButtonLinkTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Common Tests"/>
+            <title value="Link - Admin are able to add Product link into PageBuilder content"/>
+            <description value="Admin are able to add Product link link into PageBuilder content"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-88962"/>
+            <testCaseId value="MC-2814"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-common"/>
+            <group value="pagebuilder-link"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
+            <actionGroup ref="logout" stepKey="logout"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <createData entity="_defaultCategory" stepKey="createPreReqCategory"/>
+        <createData entity="_newDefaultProduct" stepKey="createPreReqProduct1">
+            <requiredEntity createDataKey="createPreReqCategory"/>
+        </createData>
+        <createData entity="_newDefaultProduct" stepKey="createPreReqProduct2">
+            <requiredEntity createDataKey="createPreReqCategory"/>
+        </createData>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage1">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeIntoStage">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage1">
+            <argument name="section" value="ButtonItemOnStage"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{PageBuilderLinkAttributeAdmin.LinkSelect('button_link')}}" stepKey="waitForButtonLinkSelect"/>
+        <seeElement selector="{{PageBuilderLinkAttributeAdmin.LinkSelect('button_link')}}" stepKey="seeButtonLinkSelect"/>
+        <selectOption selector="{{EditPanelForm.panelFieldControl(PageBuilderButtonItemLink_NotSecure.section, PageBuilderButtonItemLink_NotSecure.fieldName)}}" userInput="Product" stepKey="selectOption" />
+
+        <!--See dropdown beside Button Link Select-->
+        <waitForElementVisible selector="{{PageBuilderLinkAttributeAdmin.LinkDropdown}}" stepKey="waitButtonLinkDropdownInput" />
+        <seeElement selector="{{PageBuilderLinkAttributeAdmin.LinkDropdown}}" stepKey="seeButtonLinkDropdownInput" />
+        <click selector="{{PageBuilderLinkAttributeAdmin.LinkDropdown}}" stepKey="expandButtonLinkDropdownInput1" />
+        <dontSee userInput="$createPreReqProduct1.name$" stepKey="dontSeeProduct1"/>
+        <dontSee userInput="$createPreReqProduct2.name$" stepKey="dontSeeProduct2"/>
+
+        <!--Type 2 first letters into Search box-->
+        <pressKey selector="{{PageBuilderLinkAttributeAdmin.LinkSearch}}" parameterArray="['te',\Facebook\WebDriver\WebDriverKeys::ENTER]" stepKey="pressKeyEnter"/>
+        <waitForElementVisible selector="{{PageBuilderLinkAttributeAdmin.SearchResult($createPreReqProduct1.name$)}}" stepKey="waitForSearchResult" />
+        <see userInput="$createPreReqProduct1.name$" stepKey="seeProduct1OnSearchResult"/>
+        <click selector="{{PageBuilderLinkAttributeAdmin.SearchResult($createPreReqProduct1.name$)}}" stepKey="clickProduct1XOnSearchResult"/>
+        <dontSee selector="{{PageBuilderLinkAttributeAdmin.SearchResultBox}}" stepKey="dropdownCollapses" />
+        <grabTextFrom selector="{{PageBuilderLinkAttributeAdmin.DropdownInput}}" stepKey="textFromDropDown1"/>
+        <assertEquals stepKey="assertEquals1" message="pass">
+            <expectedResult type="string">$createPreReqProduct1.name$</expectedResult>
+            <actualResult type="variable">textFromDropDown1</actualResult>
+        </assertEquals>
+        <seeElement selector="{{PageBuilderLinkAttributeAdmin.RemoveBtn}}" stepKey="seeXButtonInField1" />
+
+        <!--Expand dropdown again to verify highlighted not cleared yet-->
+        <click selector="{{PageBuilderLinkAttributeAdmin.LinkDropdown}}" stepKey="expandButtonLinkDropdownInput2" />
+        <seeInField  selector="{{PageBuilderLinkAttributeAdmin.LinkSearch}}" userInput="te" stepKey="seeSearchNotCleared"/>
+        <seeElement selector="{{PageBuilderLinkAttributeAdmin.LinkItemSelected($createPreReqProduct1.name$)}}" stepKey="seeSearchResultHighlighted" />
+
+        <!--Select another product from dropdown-->
+        <click selector="{{PageBuilderLinkAttributeAdmin.SearchResult($createPreReqProduct2.name$)}}" stepKey="clickProduct2OnSearchResult"/>
+        <grabTextFrom selector="{{PageBuilderLinkAttributeAdmin.DropdownInput}}" stepKey="textFromDropDown2"/>
+        <assertEquals stepKey="assertEquals2" message="pass">
+            <expectedResult type="string">$createPreReqProduct2.name$</expectedResult>
+            <actualResult type="variable">textFromDropDown2</actualResult>
+        </assertEquals>
+        <seeElement selector="{{PageBuilderLinkAttributeAdmin.RemoveBtn}}" stepKey="seeXButtonInField2" />
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage1"/>
+
+        <!--Go to storefront to verify Product Link-->
+        <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
+        <waitForPageLoad  stepKey="waitForPageLoad1"/>
+        <seeElement selector="{{ButtonItemOnStorefront.buttonItemType('1', PageBuilderButtonItemType_Primary.value)}}" stepKey="seeButtonItemOnStoreFront"/>
+        <seeElement selector="{{ButtonItemOnStorefront.buttonItemContainsUrl('1', $createPreReqProduct2.name$)}}" stepKey="seeExternalLinkOnStoreFront" />
+        <click selector=".pagebuilder-button-primary" stepKey="clickButton"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <see userInput="$createPreReqProduct2.name$" stepKey="seeProductName" />
+
+        <deleteData createDataKey="createPreReqProduct2" stepKey="deletePreReqProduct2" />
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage2">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <click selector=".placeholder-text" stepKey="clickOnEditButton"/>
+        <waitForElementVisible selector="//div[contains(@class, 'buttons-container')]//a[@title='Edit']" stepKey="waitForSettingBtn" />
+        <click selector="//div[contains(@class, 'buttons-container')]//a[@title='Edit']" stepKey="clickSelectButtonOnFirstItem"/>
+        <waitForElementVisible selector="{{PageBuilderLinkAttributeAdmin.LinkSelect('button_link')}}" stepKey="waitForButtonLinkSelect2"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoading1" />
+        <grabTextFrom selector="{{PageBuilderLinkAttributeAdmin.DropdownInput}}" stepKey="textFromDropDown3"/>
+        <assertRegExp stepKey="assertEquals3" message="pass">
+            <expectedResult type="string">/^Product with ID: [0-9]+ doesn't exist$/</expectedResult>
+            <actualResult type="variable">textFromDropDown3</actualResult>
+        </assertRegExp>
+        <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCategory" />
+        <deleteData createDataKey="createPreReqProduct1" stepKey="deletePreReqProduct1" />
+    </test>
+    <test name="AdminPageBuilderPageButtonLinkTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Common Tests"/>
+            <title value="Link - Admin are able to add CMS Page link into PageBuilder content"/>
+            <description value="Admin are able to add CMS Page link into PageBuilder content"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-88960"/>
+            <testCaseId value="MC-2912"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-common"/>
+            <group value="pagebuilder-link"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
+            <actionGroup ref="logout" stepKey="logout"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <createData entity="_newDefaultCmsPage" stepKey="createCMSPageA" />
+        <createData entity="_newDefaultCmsPage" stepKey="createCMSPageB" />
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage1">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeIntoStage">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage1">
+            <argument name="section" value="ButtonItemOnStage"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{PageBuilderLinkAttributeAdmin.LinkSelect('button_link')}}" stepKey="waitForButtonLinkSelect"/>
+        <seeElement selector="{{PageBuilderLinkAttributeAdmin.LinkSelect('button_link')}}" stepKey="seeButtonLinkSelect"/>
+        <selectOption selector="{{EditPanelForm.panelFieldControl(PageBuilderButtonItemLink_NotSecure.section, PageBuilderButtonItemLink_NotSecure.fieldName)}}" userInput="Page" stepKey="selectOption" />
+
+        <!--See dropdown beside Button Link Select-->
+        <waitForElementVisible selector="{{PageBuilderLinkAttributeAdmin.LinkDropdown}}" stepKey="waitButtonLinkDropdownInput" />
+        <seeElement selector="{{PageBuilderLinkAttributeAdmin.LinkDropdown}}" stepKey="seeButtonLinkDropdownInput" />
+        <click selector="{{PageBuilderLinkAttributeAdmin.LinkDropdown}}" stepKey="expandButtonLinkDropdownInput1" />
+        <see userInput="$createCMSPageA.title$" stepKey="seeCMSPageA"/>
+
+        <!--Type 2 first letters into Search box-->
+        <click selector="{{PageBuilderLinkAttributeAdmin.LinkSearch}}" stepKey="focusOnField"/>
+        <fillField selector="{{PageBuilderLinkAttributeAdmin.LinkSearch}}" userInput="cm" stepKey="fill2FirstLetters"/>
+        <waitForElementVisible selector="{{PageBuilderLinkAttributeAdmin.SearchResult($createCMSPageA.title$)}}" stepKey="waitForSearchResult" />
+        <seeElement selector="{{PageBuilderLinkAttributeAdmin.SearchResult($createCMSPageA.title$)}}" stepKey="seeCMSPageAOnSearchResult"/>
+        <click selector="{{PageBuilderLinkAttributeAdmin.SearchResult($createCMSPageA.title$)}}" stepKey="clickCMSPageAXOnSearchResult"/>
+        <dontSee selector="{{PageBuilderLinkAttributeAdmin.SearchResultBox}}" stepKey="dropdownCollapses" />
+        <grabTextFrom selector="{{PageBuilderLinkAttributeAdmin.DropdownInput}}" stepKey="textFromDropDown1"/>
+        <assertEquals stepKey="assertEquals1" message="pass">
+            <expectedResult type="string">$createCMSPageA.title$</expectedResult>
+            <actualResult type="variable">textFromDropDown1</actualResult>
+        </assertEquals>
+        <seeElement selector="{{PageBuilderLinkAttributeAdmin.RemoveBtn}}" stepKey="seeXButtonInField1" />
+
+        <!--Expand dropdown again to verify highlighted not cleared yet-->
+        <click selector="{{PageBuilderLinkAttributeAdmin.LinkDropdown}}" stepKey="expandButtonLinkDropdownInput2" />
+        <seeInField  selector="{{PageBuilderLinkAttributeAdmin.LinkSearch}}" userInput="cm" stepKey="seeSearchNotCleared"/>
+        <seeElement selector="{{PageBuilderLinkAttributeAdmin.LinkItemSelected($createCMSPageA.title$)}}" stepKey="seeSearchResultHighlighted" />
+
+        <!--Select another page from dropdown-->
+        <click selector="{{PageBuilderLinkAttributeAdmin.SearchResult($createCMSPageB.title$)}}" stepKey="clickCMSPageBOnSearchResult"/>
+        <grabTextFrom selector="{{PageBuilderLinkAttributeAdmin.DropdownInput}}" stepKey="textFromDropDown2"/>
+        <assertEquals stepKey="assertEquals2" message="pass">
+            <expectedResult type="string">$createCMSPageB.title$</expectedResult>
+            <actualResult type="variable">textFromDropDown2</actualResult>
+        </assertEquals>
+        <seeElement selector="{{PageBuilderLinkAttributeAdmin.RemoveBtn}}" stepKey="seeXButtonInField2" />
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage1"/>
+
+        <!--Go to storefront to verify CMS Page Link-->
+        <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
+        <waitForPageLoad  stepKey="waitForPageLoad1"/>
+        <seeElement selector="{{ButtonItemOnStorefront.buttonItemType('1', PageBuilderButtonItemType_Primary.value)}}" stepKey="seeButtonItemOnStoreFront"/>
+        <seeElement selector="{{ButtonItemOnStorefront.buttonItemContainsUrl('1', $createCMSPageB.identifier$)}}" stepKey="seePageLinkOnStoreFront" />
+        <click selector=".pagebuilder-button-primary" stepKey="clickButton"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <see userInput="$createCMSPageB.title$" stepKey="seePageName" />
+
+        <!--Verify Link when Page get deleted -->
+        <deleteData createDataKey="createCMSPageB" stepKey="deleteCreatedCMSPageB" />
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage2">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <click selector=".placeholder-text" stepKey="clickOnEditButton"/>
+        <waitForElementVisible selector="//div[contains(@class, 'buttons-container')]//a[@title='Edit']" stepKey="waitForSettingBtn" />
+        <click selector="//div[contains(@class, 'buttons-container')]//a[@title='Edit']" stepKey="clickSelectButtonOnFirstItem"/>
+        <waitForElementVisible selector="{{PageBuilderLinkAttributeAdmin.LinkSelect('button_link')}}" stepKey="waitForButtonLinkSelect2"/>
+        <grabTextFrom selector="{{PageBuilderLinkAttributeAdmin.DropdownInput}}" stepKey="textFromDropDown3"/>
+        <assertRegExp stepKey="assertEquals3" message="pass">
+            <expectedResult type="string">/^Page with ID: [0-9]+ doesn't exist$/</expectedResult>
+            <actualResult type="variable">textFromDropDown3</actualResult>
+        </assertRegExp>
+        <deleteData createDataKey="createCMSPageA" stepKey="deletePreReqCMSPageA" />
+    </test>
+    <test name="EditFormModalNoResetButton">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Common Tests"/>
+            <title value="Content Types edit form modal should not have reset button"/>
+            <description value="If user opens edit form modal, they should not see reset button"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-5790"/>
+            <testCaseId value="MC-5791"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-row"/>
+            <group value="pagebuilder-common"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <dontSeeElementInDOM selector="{{EditPanelForm.editFormReset}}" stepKey="dontSeeInDOMResetButton"/>
+    </test>
+</tests>

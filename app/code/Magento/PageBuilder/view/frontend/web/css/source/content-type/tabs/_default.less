@@ -3,16 +3,11 @@
 //  * See COPYING.txt for license details.
 //  */
 
-@f6: #f6f6f6;
-@ccc: #ccc;
-@color-black: #000;
-@color-white: #fff;
-
 //
 //  Default appearance styles
 //  _____________________________________________
 
-div[data-role='tabs'] {
+div[data-content-type='tabs'] {
     .tabs-navigation {
         display: block;
         font-size: 0;
@@ -24,14 +19,17 @@ div[data-role='tabs'] {
         }
 
         li.tab-header {
-            background: @f6;
-            border: 1px solid @ccc;
-            border-bottom: 0 !important;
+            background: @color-gray-light0;
+            border: 1px solid @color-gray80;
+            border-bottom: 0;
             border-bottom-left-radius: 0 !important;
             border-bottom-right-radius: 0 !important;
             display: inline-block;
             margin: 0;
+            max-width: 100%;
+            overflow-wrap: break-word;
             position: relative;
+            word-wrap: break-word;
             z-index: 1;
 
             &:not(:first-child) {
@@ -61,7 +59,7 @@ div[data-role='tabs'] {
             }
 
             &:last-child {
-                border-right: 1px solid @ccc;
+                border-right: 1px solid @color-gray80;
             }
 
             &.ui-state-active {
@@ -77,12 +75,13 @@ div[data-role='tabs'] {
     }
 
     .tabs-content {
-        border: 1px solid @ccc;
+        border: 1px solid @color-gray80;
+        box-sizing: border-box;
         overflow: hidden;
         position: relative;
         z-index: 9;
 
-        [data-role='tab-item'] {
+        [data-content-type='tab-item'] {
             box-sizing: border-box;
             min-height: inherit;
 
@@ -101,5 +100,15 @@ div[data-role='tabs'] {
         .tabs-content {
             border-top-right-radius: 0 !important;
         }
+    }
+}
+
+//
+//  Responsive Classes
+//  _____________________________________________
+
+@media only screen and (max-width: @screen__m) {
+    [data-content-type='tab-item'] {
+        background-attachment: scroll !important;
     }
 }

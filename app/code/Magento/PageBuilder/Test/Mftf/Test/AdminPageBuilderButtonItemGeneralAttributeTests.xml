@@ -1,0 +1,645 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="ButtonItemEmptyButtonText">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Buttons"/>
+            <title value="Button Item - Empty Button Text"/>
+            <description value="A user should be able to enter empty text for the button text attribute on a button item."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MAGETWO-90474"/>
+            <testCaseId value="MC-2443"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-buttons"/>
+            <group value="pagebuilder-buttonItem"/>
+            <group value="pagebuilder-buttonItemGeneral"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <!-- Add Button Text -->
+        <comment userInput="Add Button Text" stepKey="commentAddButtonText"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage1">
+            <argument name="section" value="ButtonItemOnStage"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="fillButtonText">
+            <argument name="property" value="PageBuilderButtonItemText_Empty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage1"/>
+        <actionGroup ref="validateButtonItemContent" stepKey="validateStage1">
+            <argument name="page" value="ButtonItemOnStage"/>
+            <argument name="text" value="PageBuilderButtonItemText_Empty"/>
+        </actionGroup>
+        <!-- Save Page -->
+        <comment userInput="Save Page" stepKey="commentSavePage"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
+        <actionGroup ref="validateButtonItemContent" stepKey="validateStage2">
+            <argument name="page" value="ButtonItemOnStage"/>
+            <argument name="text" value="PageBuilderButtonItemText_Empty"/>
+        </actionGroup>
+        <!-- Validate Edit Panel After Save -->
+        <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage2">
+            <argument name="section" value="ButtonItemOnStage"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateButtonText">
+            <argument name="property" value="PageBuilderButtonItemText_Empty"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{ButtonItemOnStorefrontEmptyLink.base('1')}}" stepKey="waitForButtonElementStorefront"/>
+        <waitForElement selector="{{ButtonItemOnStorefrontEmptyLink.buttonItemText('1', PageBuilderButtonItemText_Empty.value)}}" stepKey="waitForButtonTextStorefront"/>
+        <waitForElementVisible selector="{{ButtonItemOnStorefrontEmptyLink.buttonItemType('1', PageBuilderButtonItemType_Primary.value)}}" stepKey="waitForButtonTypeStorefront"/>
+        <waitForElementVisible selector="{{ButtonItemOnStorefrontEmptyLink.buttonItemUrl('1', PageBuilderButtonItemLink_Empty.value)}}" stepKey="waitForButtonUrlStorefront"/>
+        <waitForElementVisible selector="{{ButtonItemOnStorefrontEmptyLink.buttonItemNewTab('1', PageBuilderButtonItemOpenInNewTab_False.stageValue)}}" stepKey="waitForButtonNewTabStorefront"/>
+    </test>
+    <test name="ButtonItemOneCharacterButtonText">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Buttons"/>
+            <title value="Button Item - One Character Button Text"/>
+            <description value="A user should be able to enter one character for the button text attribute on a button item."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MAGETWO-90474"/>
+            <testCaseId value="MC-2470"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-buttons"/>
+            <group value="pagebuilder-buttonItem"/>
+            <group value="pagebuilder-buttonItemGeneral"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <!-- Add Button Text -->
+        <comment userInput="Add Button Text" stepKey="commentAddButtonText"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage1">
+            <argument name="section" value="ButtonItemOnStage"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="fillButtonText">
+            <argument name="property" value="PageBuilderButtonItemText_OneCharacter"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage1"/>
+        <actionGroup ref="validateButtonItemContent" stepKey="validateStage1">
+            <argument name="page" value="ButtonItemOnStage"/>
+            <argument name="text" value="PageBuilderButtonItemText_OneCharacter"/>
+        </actionGroup>
+        <!-- Save Page -->
+        <comment userInput="Save Page" stepKey="commentSavePage"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
+        <actionGroup ref="validateButtonItemContent" stepKey="validateStage2">
+            <argument name="page" value="ButtonItemOnStage"/>
+            <argument name="text" value="PageBuilderButtonItemText_OneCharacter"/>
+        </actionGroup>
+        <!-- Validate Edit Panel After Save -->
+        <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage2">
+            <argument name="section" value="ButtonItemOnStage"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateButtonText">
+            <argument name="property" value="PageBuilderButtonItemText_OneCharacter"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="validateButtonItemContent" stepKey="validateStorefront">
+            <argument name="page" value="ButtonItemOnStorefrontEmptyLink"/>
+            <argument name="text" value="PageBuilderButtonItemText_OneCharacter"/>
+        </actionGroup>
+    </test>
+    <test name="ButtonItemCommonCharactersButtonText">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Buttons"/>
+            <title value="Button Item - Common Characters Button Text"/>
+            <description value="A user should be able to enter common characters for the button text attribute on a button item."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MAGETWO-90474"/>
+            <testCaseId value="MC-2451"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-buttons"/>
+            <group value="pagebuilder-buttonItem"/>
+            <group value="pagebuilder-buttonItemGeneral"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <!-- Add Button Text -->
+        <comment userInput="Add Button Text" stepKey="commentAddButtonText"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage1">
+            <argument name="section" value="ButtonItemOnStage"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="fillButtonText">
+            <argument name="property" value="PageBuilderButtonItemText_CommonCharacters"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage1"/>
+        <actionGroup ref="validateButtonItemContent" stepKey="validateStage1">
+            <argument name="page" value="ButtonItemOnStage"/>
+            <argument name="text" value="PageBuilderButtonItemText_CommonCharacters"/>
+        </actionGroup>
+        <!-- Save Page -->
+        <comment userInput="Save Page" stepKey="commentSavePage"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
+        <actionGroup ref="validateButtonItemContent" stepKey="validateStage2">
+            <argument name="page" value="ButtonItemOnStage"/>
+            <argument name="text" value="PageBuilderButtonItemText_CommonCharacters"/>
+        </actionGroup>
+        <!-- Validate Edit Panel After Save -->
+        <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage2">
+            <argument name="section" value="ButtonItemOnStage"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateButtonText">
+            <argument name="property" value="PageBuilderButtonItemText_CommonCharacters"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="validateButtonItemContent" stepKey="validateStorefront">
+            <argument name="page" value="ButtonItemOnStorefrontEmptyLink"/>
+            <argument name="text" value="PageBuilderButtonItemText_CommonCharacters"/>
+        </actionGroup>
+    </test>
+    <test name="ButtonItemSpecialCharactersButtonText">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Buttons"/>
+            <title value="Button Item - Special Characters Button Text"/>
+            <description value="A user should be able to enter special characters for the button text attribute on a button item."/>
+            <!-- Add special characters in MAGETWO-92103 after bug is resolved -->
+            <severity value="AVERAGE"/>
+            <useCaseId value="MAGETWO-90474"/>
+            <testCaseId value="MC-2457"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-buttons"/>
+            <group value="pagebuilder-buttonItem"/>
+            <group value="pagebuilder-buttonItemGeneral"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <!-- Add Button Text -->
+        <comment userInput="Add Button Text" stepKey="commentAddButtonText"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage1">
+            <argument name="section" value="ButtonItemOnStage"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="fillButtonText">
+            <argument name="property" value="PageBuilderButtonItemText_SpecialCharacters"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage1"/>
+        <actionGroup ref="validateButtonItemContent" stepKey="validateStage1">
+            <argument name="page" value="ButtonItemOnStage"/>
+            <argument name="text" value="PageBuilderButtonItemText_SpecialCharacters"/>
+        </actionGroup>
+        <!-- Save Page -->
+        <comment userInput="Save Page" stepKey="commentSavePage"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
+        <actionGroup ref="validateButtonItemContent" stepKey="validateStage2">
+            <argument name="page" value="ButtonItemOnStage"/>
+            <argument name="text" value="PageBuilderButtonItemText_SpecialCharacters"/>
+        </actionGroup>
+        <!-- Validate Edit Panel After Save -->
+        <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage2">
+            <argument name="section" value="ButtonItemOnStage"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateButtonText">
+            <argument name="property" value="PageBuilderButtonItemText_SpecialCharacters"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="validateButtonItemContent" stepKey="validateStorefront">
+            <argument name="page" value="ButtonItemOnStorefrontEmptyLink"/>
+            <argument name="text" value="PageBuilderButtonItemText_SpecialCharacters"/>
+        </actionGroup>
+    </test>
+    <test name="ButtonItemLongButtonText">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Buttons"/>
+            <title value="Button Item - Long Button Text"/>
+            <description value="A user should be able to enter a long string for the button text attribute on a button item."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MAGETWO-90474"/>
+            <testCaseId value="MC-2481"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-buttons"/>
+            <group value="pagebuilder-buttonItem"/>
+            <group value="pagebuilder-buttonItemGeneral"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <!-- Add Button Text -->
+        <comment userInput="Add Button Text" stepKey="commentAddButtonText"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage1">
+            <argument name="section" value="ButtonItemOnStage"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="fillButtonText">
+            <argument name="property" value="PageBuilderButtonItemText_200Characters"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage1"/>
+        <actionGroup ref="validateButtonItemContent" stepKey="validateStage1">
+            <argument name="page" value="ButtonItemOnStage"/>
+            <argument name="text" value="PageBuilderButtonItemText_200Characters"/>
+        </actionGroup>
+        <!-- Get Width Of Button -->
+        <executeJS function="return Math.round({{ButtonItemOnStage.jsButtonSelector('1')}}.clientWidth)" stepKey="buttonWidth"/>
+        <comment userInput="buttonWidth: $buttonWidth" stepKey="commentButtonWidth"/>
+        <!-- Get Width Of Button Group -->
+        <executeJS function="return Math.round({{ButtonGroupOnStage.jsButtonGroupSelector('1')}}.clientWidth)" stepKey="buttonGroupWidth"/>
+        <comment userInput="buttonGroupWidth: $buttonGroupWidth" stepKey="commentButtonGroupWidth"/>
+        <!-- Validate Button Item is not larger than Button Group -->
+        <comment userInput="Validate Button Item is not larger than Button Group" stepKey="commentButtonWidthValidation"/>
+        <assertGreaterOrEquals stepKey="validateButtonGroupIsLargerThanButtonItem">
+            <expectedResult type="variable">$buttonWidth</expectedResult>
+            <actualResult type="variable">$buttonGroupWidth</actualResult>
+        </assertGreaterOrEquals>
+        <!-- Save Page -->
+        <comment userInput="Save Page" stepKey="commentSavePage"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
+        <actionGroup ref="validateButtonItemContent" stepKey="validateStage2">
+            <argument name="page" value="ButtonItemOnStage"/>
+            <argument name="text" value="PageBuilderButtonItemText_200Characters"/>
+        </actionGroup>
+        <!-- Validate Edit Panel After Save -->
+        <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage2">
+            <argument name="section" value="ButtonItemOnStage"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateButtonText">
+            <argument name="property" value="PageBuilderButtonItemText_200Characters"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="validateButtonItemContent" stepKey="validateStorefront">
+            <argument name="page" value="ButtonItemOnStorefrontEmptyLink"/>
+            <argument name="text" value="PageBuilderButtonItemText_200Characters"/>
+        </actionGroup>
+        <!-- Get Width Of Button on Store Front -->
+        <executeJS function="return Math.round({{ButtonItemOnStorefrontEmptyLink.jsButtonSelector('1')}}.clientWidth)" stepKey="buttonWidthStoreFront"/>
+        <comment userInput="buttonWidthStoreFront: $buttonWidthStoreFront" stepKey="commentButtonWidthStoreFront"/>
+        <!-- Get Width Of Button Group on Store Front -->
+        <executeJS function="return Math.round({{ButtonGroupOnStorefront.jsButtonGroupSelector('1')}}.clientWidth)" stepKey="buttonGroupWidthStoreFront"/>
+        <comment userInput="buttonGroupWidthStoreFront: $buttonGroupWidthStoreFront" stepKey="commentButtonGroupWidthStoreFront"/>
+        <!-- Validate Button Item is not larger than Button Group on Store Front -->
+        <comment userInput="Validate Button Item is not larger than Button Group" stepKey="commentButtonWidthValidationStoreFront"/>
+        <assertGreaterOrEquals stepKey="validateButtonGroupIsLargerThanButtonItemOnStoreFront">
+            <expectedResult type="variable">$buttonWidthStoreFront</expectedResult>
+            <actualResult type="variable">$buttonGroupWidthStoreFront</actualResult>
+        </assertGreaterOrEquals>
+    </test>
+    <test name="ButtonItemPrimaryButtonType">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Buttons"/>
+            <title value="Button Item - Primary Button Type"/>
+            <description value="A user should be able to enter primary for the button type attribute on a button item."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MAGETWO-90474"/>
+            <testCaseId value="MC-2485"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-buttons"/>
+            <group value="pagebuilder-buttonItem"/>
+            <group value="pagebuilder-buttonItemGeneral"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <!-- Add Button Type -->
+        <comment userInput="Add Button Type" stepKey="commentAddButtonType"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage1">
+            <argument name="section" value="ButtonItemOnStage"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="fillButtonType">
+            <argument name="property" value="PageBuilderButtonItemType_Primary"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage1"/>
+        <actionGroup ref="validateButtonItemContent" stepKey="validateStage1">
+            <argument name="page" value="ButtonItemOnStage"/>
+            <argument name="type" value="PageBuilderButtonItemType_Primary"/>
+        </actionGroup>
+        <!-- Save Page -->
+        <comment userInput="Save Page" stepKey="commentSavePage"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
+        <actionGroup ref="validateButtonItemContent" stepKey="validateStage2">
+            <argument name="page" value="ButtonItemOnStage"/>
+            <argument name="type" value="PageBuilderButtonItemType_Primary"/>
+        </actionGroup>
+        <!-- Validate Edit Panel After Save -->
+        <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage2">
+            <argument name="section" value="ButtonItemOnStage"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateButtonType">
+            <argument name="property" value="PageBuilderButtonItemType_Primary"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{ButtonItemOnStorefrontEmptyLink.base('1')}}" stepKey="waitForButtonElementStorefront"/>
+        <waitForElement selector="{{ButtonItemOnStorefrontEmptyLink.buttonItemText('1', PageBuilderButtonItemText_Empty.value)}}" stepKey="waitForButtonTextStorefront"/>
+        <waitForElementVisible selector="{{ButtonItemOnStorefrontEmptyLink.buttonItemType('1', PageBuilderButtonItemType_Primary.value)}}" stepKey="waitForButtonTypeStorefront"/>
+        <waitForElementVisible selector="{{ButtonItemOnStorefrontEmptyLink.buttonItemUrl('1', PageBuilderButtonItemLink_Empty.value)}}" stepKey="waitForButtonEmptyLinkUrlStorefront"/>
+    </test>
+    <test name="ButtonItemSecondaryButtonType">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Buttons"/>
+            <title value="Button Item - Secondary Button Type"/>
+            <description value="A user should be able to enter secondary for the button type attribute on a button item."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MAGETWO-90474"/>
+            <testCaseId value="MC-2471"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-buttons"/>
+            <group value="pagebuilder-buttonItem"/>
+            <group value="pagebuilder-buttonItemGeneral"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <!-- Add Button Type -->
+        <comment userInput="Add Button Type" stepKey="commentAddButtonType"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage1">
+            <argument name="section" value="ButtonItemOnStage"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="fillButtonType">
+            <argument name="property" value="PageBuilderButtonItemType_Secondary"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage1"/>
+        <actionGroup ref="validateButtonItemContent" stepKey="validateStage1">
+            <argument name="page" value="ButtonItemOnStage"/>
+            <argument name="type" value="PageBuilderButtonItemType_Secondary"/>
+        </actionGroup>
+        <!-- Save Page -->
+        <comment userInput="Save Page" stepKey="commentSavePage"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
+        <actionGroup ref="validateButtonItemContent" stepKey="validateStage2">
+            <argument name="page" value="ButtonItemOnStage"/>
+            <argument name="type" value="PageBuilderButtonItemType_Secondary"/>
+        </actionGroup>
+        <!-- Validate Edit Panel After Save -->
+        <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage2">
+            <argument name="section" value="ButtonItemOnStage"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateButtonType">
+            <argument name="property" value="PageBuilderButtonItemType_Secondary"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{ButtonItemOnStorefrontEmptyLink.base('1')}}" stepKey="waitForButtonElementStorefront"/>
+        <waitForElement selector="{{ButtonItemOnStorefrontEmptyLink.buttonItemText('1', PageBuilderButtonItemText_Empty.value)}}" stepKey="waitForButtonTextStorefront"/>
+        <waitForElementVisible selector="{{ButtonItemOnStorefrontEmptyLink.buttonItemType('1', PageBuilderButtonItemType_Secondary.value)}}" stepKey="waitForButtonTypeStorefront"/>
+        <waitForElementVisible selector="{{ButtonItemOnStorefrontEmptyLink.buttonItemUrl('1', PageBuilderButtonItemLink_Empty.value)}}" stepKey="waitForButtonEmptyLinkUrlStorefront"/>
+    </test>
+    <test name="ButtonItemLinkButtonType">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Buttons"/>
+            <title value="Button Item - Link Button Type"/>
+            <description value="A user should be able to enter link for the button type attribute on a button item."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MAGETWO-90474"/>
+            <testCaseId value="MC-2484"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-buttons"/>
+            <group value="pagebuilder-buttonItem"/>
+            <group value="pagebuilder-buttonItemGeneral"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <!-- Add Button Type -->
+        <comment userInput="Add Button Type" stepKey="commentAddButtonType"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage1">
+            <argument name="section" value="ButtonItemOnStage"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="fillButtonType">
+            <argument name="property" value="PageBuilderButtonItemType_Link"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage1"/>
+        <actionGroup ref="validateButtonItemContent" stepKey="validateStage1">
+            <argument name="page" value="ButtonItemOnStage"/>
+            <argument name="type" value="PageBuilderButtonItemType_Link"/>
+        </actionGroup>
+        <!-- Save Page -->
+        <comment userInput="Save Page" stepKey="commentSavePage"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
+        <actionGroup ref="validateButtonItemContent" stepKey="validateStage2">
+            <argument name="page" value="ButtonItemOnStage"/>
+            <argument name="type" value="PageBuilderButtonItemType_Link"/>
+        </actionGroup>
+        <!-- Validate Edit Panel After Save -->
+        <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage2">
+            <argument name="section" value="ButtonItemOnStage"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateButtonType">
+            <argument name="property" value="PageBuilderButtonItemType_Link"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{ButtonItemOnStorefrontEmptyLink.base('1')}}" stepKey="waitForButtonElementStorefront"/>
+        <waitForElement selector="{{ButtonItemOnStorefrontEmptyLink.buttonItemText('1', PageBuilderButtonItemText_Empty.value)}}" stepKey="waitForButtonTextStorefront"/>
+        <waitForElementVisible selector="{{ButtonItemOnStorefrontEmptyLink.buttonItemType('1', PageBuilderButtonItemType_Link.value)}}" stepKey="waitForButtonTypeStorefront"/>
+        <waitForElementVisible selector="{{ButtonItemOnStorefrontEmptyLink.buttonItemUrl('1', PageBuilderButtonItemLink_Empty.value)}}" stepKey="waitForButtonEmptyLinkUrlStorefront"/>
+    </test>
+</tests>

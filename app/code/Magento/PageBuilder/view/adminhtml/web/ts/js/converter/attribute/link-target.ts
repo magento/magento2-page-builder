@@ -3,8 +3,14 @@
  * See COPYING.txt for license details.
  */
 
+import {DataObject} from "../../data-store";
+import {get} from "../../utils/object";
 import ConverterInterface from "../converter-interface";
+import LinkObject from "../link-object.types";
 
+/**
+ * @api
+ */
 export default class CreateValueForTarget implements ConverterInterface {
     /**
      * Convert value to internal format
@@ -23,11 +29,12 @@ export default class CreateValueForTarget implements ConverterInterface {
      * @param data Object
      * @returns {string}
      */
-    public toDom(name: string, data: object): string {
-        if (!data[name]) {
+    public toDom(name: string, data: DataObject): string {
+        const value = get<LinkObject>(data, name);
+        if (!value) {
             return "";
         }
 
-        return data[name].setting ? "_blank" : "";
+        return value.setting ? "_blank" : "";
     }
 }

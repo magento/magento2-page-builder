@@ -7,12 +7,35 @@
 //  Collage right appearance styles
 //  _____________________________________________
 
-.pagebuilder-slide {
-    .pagebuilder-collage-overlay {
+.pagebuilder-slide[data-appearance='collage-right'] {
+    .pagebuilder-overlay {
         -moz-transition: background-color 500ms ease;
         -o-transition: background-color 500ms ease;
         -webkit-transition: background-color 500ms ease;
-        padding: 35px 20px;
+        margin-left: auto;
         transition: background-color 500ms ease;
+
+        &.wysiwyg-container {
+            .mce-tinymce-inline {
+                left: 29px !important;
+                right: 29px;
+                top: 30px !important;
+            }
+
+            .pagebuilder-empty-slide {
+                padding: 30px;
+            }
+        }
+    }
+}
+
+//
+//  Collage right appearance styles rendered through Block
+//  ______________________________________________________
+
+
+[data-content-type='slide'][data-appearance='collage-right'] {
+    .pagebuilder-overlay {
+        margin-left: auto;
     }
 }

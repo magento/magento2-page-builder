@@ -8,11 +8,21 @@
 //  _____________________________________________
 
 .pagebuilder-banner {
-    background-color: @color-gray98;
-    .pagebuilder-empty-banner {
-        color: @color-gray65-lighten;
-        font-size: 20px;
-        font-weight: lighter;
+    cursor: text;
+
+    .pagebuilder-banner-wrapper {
+        background-color: @color-gray98;
+    }
+
+    .pagebuilder-overlay {
+        -moz-transition: background-color 500ms ease;
+        -o-transition: background-color 500ms ease;
+        -webkit-transition: background-color 500ms ease;
+        transition: background-color 500ms ease;
+
+        &:not(.pagebuilder-poster-overlay) {
+            max-width: 540px;
+        }
     }
 
     .pagebuilder-banner-button {
@@ -20,8 +30,114 @@
         -o-transition: all 500ms ease;
         -webkit-transition: all 500ms ease;
         cursor: default;
-        margin-top: 20px;
+        margin: @margin 0 0 0;
+        max-width: 100%;
         opacity: 1;
         transition: all 500ms ease;
+
+        span[contenteditable=true] {
+            display: block;
+        }
+    }
+
+    .pagebuilder-banner-text-content {
+        position: relative;
+
+        .mce-tinymce-inline {
+            left: -1px !important;
+            right: -1px;
+            z-index: 20;
+        }
+
+        > .mce-content-body {
+            min-height: 50px;
+            min-width: 10px;
+
+            + .placeholder-text {
+                font-size: 14px;
+                height: 0;
+                pointer-events: none;
+                position: relative;
+                top: -45px;
+            }
+
+            img {
+                height: auto;
+            }
+        }
+
+        > .mce-edit-focus {
+            ~ .placeholder-text {
+                display: none;
+            }
+        }
+
+        .inline-wysiwyg-textarea {
+            border: 0;
+            margin: 2px 0;
+            min-height: 50px;
+            min-width: 100%;
+            padding: 5px;
+            resize: none;
+            text-align: inherit;
+
+            &:focus {
+                background-color: @color-white;
+                resize: vertical;
+            }
+        }
+
+        &.pagebuilder-toolbar-active {
+            .inline-wysiwyg,
+            .inline-wysiwyg-textarea {
+                box-shadow: 0 0 0 1px @color-gray80;
+            }
+        }
+    }
+}
+
+.pagebuilder-content-type-hidden {
+    > .pagebuilder-banner {
+        cursor: default;
+    }
+}
+
+.pagebuilder-banner-wrapper {
+    background-clip: padding-box;
+    border-radius: inherit;
+}
+
+//
+//  Default appearance styles rendered through stage and Block
+//  __________________________________________________________
+
+.pagebuilder-banner-wrapper {
+    .pagebuilder-overlay {
+        padding: 30px;
+    }
+}
+
+//
+//  Default appearance styles rendered through Block only
+//  _____________________________________________________
+
+[data-content-type='banner'] {
+    .pagebuilder-banner-wrapper {
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+
+        .pagebuilder-overlay:not(.pagebuilder-poster-overlay) {
+            max-width: 540px;
+        }
+
+        [data-element='content'] {
+            min-height: 50px;
+        }
+
+        .pagebuilder-banner-button {
+            margin: @margin 0 0 0;
+            max-width: 100%;
+            word-break: break-word;
+        }
     }
 }

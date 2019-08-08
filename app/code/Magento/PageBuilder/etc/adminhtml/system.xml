@@ -18,6 +18,40 @@
                         <![CDATA[Includes advanced tools to design page layouts, add Magento content (Product and Category data, CMS content and Blocks), and format text.<br /><br />For Product Attributes — Page Builder can be selected as the “input type” to design layouts and create content.]]>
                     </comment>
                 </field>
+                <field id="google_maps_api_key" translate="label comment" type="text" sortOrder="2010" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Google Maps API Key</label>
+                    <comment>
+                        <![CDATA[Enter API key to use the Map content type. <a href="https://developers.google.com/maps/documentation/javascript/get-api-key" target="_blank">Get API Key</a>.]]>
+                    </comment>
+                </field>
+                <field id="google_maps_api_key_validator" translate="button_label valid_label invalid_label" sortOrder="2011" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <attribute type="button_label">Test Key</attribute>
+                    <attribute type="valid_label">Key is valid</attribute>
+                    <attribute type="invalid_label">Key is invalid. Try a different key.</attribute>
+                    <attribute type="source_field">cms_pagebuilder_google_maps_api_key</attribute>
+                    <frontend_model>Magento\PageBuilder\Block\Adminhtml\System\Config\Form\Field\GoogleMapsApiKey</frontend_model>
+                </field>
+                <field id="google_maps_style" translate="label comment" type="textarea" sortOrder="2020" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Google Maps Style</label>
+                    <validate>validate-google-map-style</validate>
+                    <comment>
+                        <![CDATA[Paste the Google Maps style JSON code here to change the look and feel of the Map content type. <a href="https://mapstyle.withgoogle.com/" target="_blank">Create Map Style</a>.]]>
+                    </comment>
+                </field>
+                <field id="column_grid_default" translate="label comment" type="text" sortOrder="2030" showInDefault="1" showInWebsite="0" showInStore="0" canRestore="1">
+                    <label>Default Column Grid Size</label>
+                    <validate>validate-number validate-digits validate-default-grid-size validate-greater-than-one</validate>
+                    <comment>
+                        <![CDATA[Grid size determines the default number of columns available.]]>
+                    </comment>
+                </field>
+                <field id="column_grid_max" translate="label comment" type="text" sortOrder="2040" showInDefault="1" showInWebsite="0" showInStore="0" canRestore="1">
+                    <label>Maximum Column Grid Size</label>
+                    <validate>validate-number validate-digits validate-greater-than-one</validate>
+                    <comment>
+                        <![CDATA[Maximum grid size determines the maximum amount of columns available.]]>
+                    </comment>
+                </field>
             </group>
         </section>
     </system>

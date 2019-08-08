@@ -7,22 +7,6 @@
 //  Default appearance styles
 //  _____________________________________________
 
-.pagebuilder-content-type.children-min-height.pagebuilder-row {
-    > .element-children {
-        min-height: inherit;
-        padding: 0;
-    }
-}
-
-.pagebuilder-content-type.pagebuilder-row {
-    margin-bottom: 10px;
-    min-height: inherit;
-
-    &.empty-row {
-        min-height: 300px;
-    }
-}
-
 .jarallax {
     position: relative;
     z-index: 0;
@@ -41,4 +25,26 @@
     top: 0;
     width: 100%;
     z-index: -1;
+}
+
+.pagebuilder-content-type.children-min-height.pagebuilder-row {
+    > .element-children {
+        min-height: inherit;
+        padding: 0;
+    }
+}
+
+.pagebuilder-content-type.pagebuilder-row {
+    margin-bottom: 10px;
+    min-height: inherit;
+    transition: min-height .3s ease-in-out;
+
+    &.empty-container {
+        min-height: 300px;
+    }
+}
+
+.pagebuilder-content-type-hidden .pagebuilder-content-type.pagebuilder-row:before {
+    opacity: 1;
+    visibility: visible;
 }

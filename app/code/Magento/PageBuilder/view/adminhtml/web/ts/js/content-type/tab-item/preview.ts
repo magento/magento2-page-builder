@@ -3,14 +3,17 @@
  * See COPYING.txt for license details.
  */
 
-import $t from "mage/translate";
-import Options from "../../content-type-menu";
-import Option from "../../content-type-menu/option";
-import OptionInterface from "../../content-type-menu/option.d";
+import $ from "jquery";
+import ko from "knockout";
+import ConditionalRemoveOption from "../../content-type-menu/conditional-remove-option";
+import {OptionsInterface} from "../../content-type-menu/option.types";
 import PreviewCollection from "../preview-collection";
+import TabsPreview from "../tabs/preview";
 
+/**
+ * @api
+ */
 export default class Preview extends PreviewCollection {
-
     /**
      * Fields that should not be considered when evaluating whether an object has been configured.
      *
@@ -20,42 +23,83 @@ export default class Preview extends PreviewCollection {
     protected fieldsToIgnoreOnRemove: string[] = ["tab_name"];
 
     /**
-     * Get the options instance
+     * Force the focus on the clicked tab header
      *
-     * @returns {Options}
+     * @param {number} index
+     * @param {JQueryEventObject} event
      */
-    public getOptions(): Options {
-        const options = super.getOptions();
-        options.removeOption("move");
-        options.removeOption("title");
-        return options;
+    public onClick(index: number, event: JQueryEventObject): void {
+        $(event.currentTarget).find("[contenteditable]").focus();
+        event.stopPropagation();
     }
 
     /**
-     * Return an array of options
+     * On focus in set the focused button
      *
-     * @returns {Array<Option>}
+     * @param {number} index
+     * @param {Event} event
      */
-    public retrieveOptions(): OptionInterface[] {
-        const options = super.retrieveOptions();
-        const newOptions = options.filter((option) => {
-            return (option.code !== "remove");
-        });
-        const removeClasses = ["remove-structural"];
-        let removeFn = this.onOptionRemove;
-        if (this.parent.parent.children().length <= 1) {
-            removeFn = () => { return; };
-            removeClasses.push("disabled");
+    public onFocusIn(index: number, event: Event): void {
+        const parentPreview = this.contentType.parentContentType.preview as TabsPreview;
+        if (parentPreview.focusedTab() !== index) {
+            parentPreview.setFocusedTab(index, true);
         }
-        newOptions.push(new Option(
-            this,
-            "remove",
-            "<i class='icon-admin-pagebuilder-remove'></i>",
-            $t("Remove"),
-            removeFn,
-            removeClasses,
-            100,
-        ));
-        return newOptions;
+    }
+
+    /**
+     * On focus out set the focused tab to null
+     *
+     * @param {number} index
+     * @param {JQueryEventObject} event
+     */
+    public onFocusOut(index: number, event: JQueryEventObject): void {
+        if (this.contentType && this.contentType.parentContentType) {
+            const parentPreview = this.contentType.parentContentType.preview as TabsPreview;
+            const unfocus = () => {
+                window.getSelection().removeAllRanges();
+                parentPreview.focusedTab(null);
+            };
+            if (event.relatedTarget && $.contains(parentPreview.wrapperElement, event.relatedTarget)) {
+                // Verify the focus was not onto the options menu
+                if ($(event.relatedTarget).closest(".pagebuilder-options").length > 0) {
+                    unfocus();
+                } else {
+                    // Have we moved the focus onto another button in the current group?
+                    const tabItem = ko.dataFor(event.relatedTarget) as Preview;
+                    if (tabItem &&
+                        tabItem.contentType &&
+                        tabItem.contentType.parentContentType &&
+                        tabItem.contentType.parentContentType.id ===
+                        this.contentType.parentContentType.id
+                    ) {
+                        const newIndex = tabItem
+                            .contentType
+                            .parentContentType.children()
+                            .indexOf(tabItem.contentType);
+                        parentPreview.setFocusedTab(newIndex, true);
+                    } else {
+                        unfocus();
+                    }
+                }
+            } else if (parentPreview.focusedTab() === index) {
+                unfocus();
+            }
+        }
+    }
+
+    /**
+     * Get the options instance
+     *
+     * @returns {OptionsInterface}
+     */
+    public retrieveOptions(): OptionsInterface {
+        const options = super.retrieveOptions();
+        delete options.move;
+        delete options.title;
+        options.remove = new ConditionalRemoveOption({
+            ...options.remove.config,
+            preview: this,
+        });
+        return options;
     }
 }

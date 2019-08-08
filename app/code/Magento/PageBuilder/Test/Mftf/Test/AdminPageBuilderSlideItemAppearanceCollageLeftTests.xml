@@ -1,0 +1,579 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="SlideItemCollageLeftCanInlineEditContent" extends="SlideItemPosterCanInlineEditContent">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Collage Left - Can Inline Edit Slide Content"/>
+            <description value="Verify that users are able to inline edit a collage left Slide's content from the stage"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-937"/>
+            <testCaseId value="MC-3846"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-slideItemCollageLeft"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
+            <argument name="property" value="PageBuilderAppearance_CollageLeft"/>
+        </actionGroup>
+    </test>
+    <test name="SlideItemCollageLeftWYSIWYGDisabledInlineEdit" extends="SlideItemPosterCanInlineEditContent">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Collage Left - Inline Edit With WYSIWYG Disabled"/>
+            <description value="Verify that a user can inline edit slide collage left content when WYSIWYG is disabled"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-3228"/>
+            <testCaseId value="MC-3981"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-slideItemCollageLeft"/>
+        </annotations>
+        <before>
+            <remove keyForRemoval="enableWYSIWYG"/>
+            <remove keyForRemoval="enableTinyMCE4"/>
+            <magentoCLI command="config:set cms/wysiwyg/enabled disabled" stepKey="disableWYSIWYG" before="loginAsAdmin"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG" before="logout"/>
+        </after>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
+            <argument name="property" value="PageBuilderAppearance_CollageLeft"/>
+        </actionGroup>
+        <actionGroup ref="inlineEditTextAreaFromStage" stepKey="inlineEdit">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+            <argument name="content" value="{{PageBuilderSlideItemContent_Slide1.value}}"/>
+        </actionGroup>
+        <executeJS function="return document.querySelector('{{SlideOnConfigurationPanel.textArea}}').value" stepKey="seeMessageText"/>
+        <assertEquals stepKey="assertTextAreaValueEditPanel" after="seeMessageText">
+            <expectedResult type="string">{{PageBuilderSlideItemContent_Slide1.value}}</expectedResult>
+            <actualResult type="variable">seeMessageText</actualResult>
+        </assertEquals>
+        <actionGroup ref="assertTextareaContainsValue" stepKey="seeMessageContentStage">
+            <argument name="selector" value="{{PageBuilderStage.inlineTextAreaEditor(PageBuilderSlideContentType.role, '1')}}"/>
+            <argument name="value" value="{{PageBuilderSlideItemContent_Slide1.value}}"/>
+        </actionGroup>
+        <seeElement selector="{{SlideOnFrontend.messageContentTextArea('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeMessageContentStorefront"/>
+    </test>
+    <test name="SlideItemCollageLeftTinyMCE3InlineEdit" extends="SlideItemPosterCanInlineEditContent">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Collage Left - Inline Edit With TinyMCE3 Enabled"/>
+            <description value="Verify that a user can inline edit slide collage left content when TinyMCE3 is enabled"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-3228"/>
+            <testCaseId value="MC-3974"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-slideItemCollageLeft"/>
+        </annotations>
+        <before>
+            <remove keyForRemoval="enableTinyMCE4"/>
+            <magentoCLI command="config:set cms/wysiwyg/editor Magento_Tinymce3/tinymce3Adapter" stepKey="enableTinyMCE3" before="loginAsAdmin"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="enableTinyMCE4" before="logout"/>
+        </after>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
+            <argument name="property" value="PageBuilderAppearance_CollageLeft"/>
+        </actionGroup>
+        <actionGroup ref="inlineEditTextAreaFromStage" stepKey="inlineEdit">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+            <argument name="content" value="{{PageBuilderSlideItemContent_Slide1.value}}"/>
+        </actionGroup>
+        <actionGroup ref="assertTextareaContainsValue" stepKey="seeMessageContentStage">
+            <argument name="selector" value="{{PageBuilderStage.inlineTextAreaEditor(PageBuilderSlideContentType.role, '1')}}"/>
+            <argument name="value" value="{{PageBuilderSlideItemContent_Slide1.value}}"/>
+        </actionGroup>
+        <seeElement selector="{{SlideOnFrontend.messageContentTextArea('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeMessageContentStorefront"/>
+    </test>
+    <test name="SlideItemCollageLeftCanInlineEditContentWhenIn25PercentWidthColumn" extends="SlideItemPosterCanInlineEditContentWhenIn25PercentWidthColumn">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Collage Left - Can Inline Edit Slide Content When In 25 Percent Width Column"/>
+            <description value="Verify that users are able to inline edit a collage left slide's content from the stage when the slide is in a 25 percent width column"/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MC-3228"/>
+            <testCaseId value="MC-3978"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-slideItemCollageLeft"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
+            <argument name="property" value="PageBuilderAppearance_CollageLeft"/>
+        </actionGroup>
+        <actionGroup ref="inlineEditWYSIWYGFromStageForSlideCollageAppearancesInSmallColumns" stepKey="inlineEdit">
+            <argument name="contentType" value="PageBuilderSlideContentType"/>
+            <argument name="content" value="{{PageBuilderSlideItemContent_Slide1.value}}"/>
+        </actionGroup>
+    </test>
+    <test name="SlideCollageLeftMobileWithMobileImageValues" extends="SlideCollageCenteredMobileWithMobileImageValues">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Collage Left - Check value of a collage left mobile Slide with mobile image"/>
+            <description value="Check value of a collage left mobile Slide with mobile image"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-75774"/>
+            <testCaseId value="MC-2607"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-slideItemCollageLeft"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
+            <argument name="property" value="PageBuilderAppearance_CollageLeft"/>
+        </actionGroup>
+    </test>
+    <test name="SlideCollageLeftMobileWithoutMobileImageValues" extends="SlideCollageCenteredMobileWithoutMobileImageValues">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Collage Left - Check value of a collage left mobile Slide without mobile image"/>
+            <description value="Check value of a collage left mobile Slide without mobile image"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-75774"/>
+            <testCaseId value="MC-2576"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-slideItemCollageLeft"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
+            <argument name="property" value="PageBuilderAppearance_CollageLeft"/>
+        </actionGroup>
+    </test>
+    <test name="SlideCollageLeftButtonNeverShow" extends="SlideItemPosterButtonNeverShow">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Collage Left - Check collage left button never show state works"/>
+            <description value="Check collage left button never show state works"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-75774"/>
+            <testCaseId value="MC-2575"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-slideItemCollageLeft"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
+            <argument name="property" value="PageBuilderAppearance_CollageLeft"/>
+        </actionGroup>
+        <seeElement selector="{{SlideOnBackend.appearance('1', PageBuilderAppearance_CollageLeft.value)}}" stepKey="seeAppearanceStage"/>
+        <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_CollageLeft.value)}}" stepKey="seeAppearanceStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_CollageLeft.value)}}" stepKey="seeAppearanceStorefrontMobile"/>
+    </test>
+    <test name="SlideCollageLeftButtonOnHover" extends="SlideItemPosterButtonOnHover">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Collage Left - Check collage left button on hover state works"/>
+            <description value="Check collage left button on hover state works"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-75774"/>
+            <testCaseId value="MC-2625"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-slideItemCollageLeft"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
+            <argument name="property" value="PageBuilderAppearance_CollageLeft"/>
+        </actionGroup>
+        <seeElement selector="{{SlideOnBackend.appearance('1', PageBuilderAppearance_CollageLeft.value)}}" stepKey="seeAppearanceStage"/>
+        <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_CollageLeft.value)}}" stepKey="seeAppearanceStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_CollageLeft.value)}}" stepKey="seeAppearanceStorefrontMobile"/>
+    </test>
+    <test name="SlideCollageLeftOverlayNeverShow" extends="SlideItemPosterOverlayNeverShow">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Collage Left - Check collage left overlay never show state works"/>
+            <description value="Check collage left overlay never show state works"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-75774"/>
+            <testCaseId value="MC-2849"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-slideItemCollageLeft"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
+            <argument name="property" value="PageBuilderAppearance_CollageLeft"/>
+        </actionGroup>
+        <seeElement selector="{{SlideOnBackend.appearance('1', PageBuilderAppearance_CollageLeft.value)}}" stepKey="seeAppearanceStage"/>
+        <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_CollageLeft.value)}}" stepKey="seeAppearanceStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_CollageLeft.value)}}" stepKey="seeAppearanceStorefrontMobile"/>
+    </test>
+    <test name="SlideCollageLeftOverlayOnHover" extends="SlideItemPosterOverlayOnHover">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Collage Left - Check collage left overlay on hover state works"/>
+            <description value="Check collage left overlay on hover state works"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-75774"/>
+            <testCaseId value="MC-2581"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-slideItemCollageLeft"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
+            <argument name="property" value="PageBuilderAppearance_CollageLeft"/>
+        </actionGroup>
+        <seeElement selector="{{SlideOnBackend.appearance('1', PageBuilderAppearance_CollageLeft.value)}}" stepKey="seeAppearanceStage"/>
+        <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_CollageLeft.value)}}" stepKey="seeAppearanceStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_CollageLeft.value)}}" stepKey="seeAppearanceStorefrontMobile"/>
+    </test>
+    <test name="SlideCollageLeftOverlayAndButtonOnHover" extends="SlideItemPosterOverlayAndButtonOnHover">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Collage Left - Check collage left button and overlay on hover state works"/>
+            <description value="Check collage left button and overlay on hover state works"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-75774"/>
+            <testCaseId value="MC-2701"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-slideItemCollageLeft"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
+            <argument name="property" value="PageBuilderAppearance_CollageLeft"/>
+        </actionGroup>
+        <seeElement selector="{{SlideOnBackend.appearance('1', PageBuilderAppearance_CollageLeft.value)}}" stepKey="seeAppearanceStage"/>
+        <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_CollageLeft.value)}}" stepKey="seeAppearanceStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_CollageLeft.value)}}" stepKey="seeAppearanceStorefrontMobile"/>
+    </test>
+    <test name="SlideCollageLeftOverlayPosition">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Collage Left - Check collage left overlay position is correct"/>
+            <description value="Check collage left overlay is correct"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-4116"/>
+            <testCaseId value="MC-4973"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-slideItemCollageLeft"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragSliderIntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanelAfterDrop">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
+        <!-- Fill Out Edit Panel -->
+        <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
+            <argument name="property" value="PageBuilderAppearance_CollageLeft"/>
+        </actionGroup>
+        <actionGroup ref="addTextToTinyMCE" stepKey="addTextToTinyMCE">
+            <argument name="property" value="PageBuilderSlideItemContent_Slide1"/>
+            <argument name="section" value="SlideOnConfigurationPanel"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowOverlay">
+            <argument name="property" value="PageBuilderSlideItemShowOverlay_Always"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterOverlayColor">
+            <argument name="property" value="PageBuilderSlideItemOverlayColor_Blue_Opaque"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <actionGroup ref="validateOverlayPositionCollageLeft" stepKey="validateOverlayPositionStage">
+            <argument name="page" value="SlideOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="validateOverlayPositionTop" stepKey="validateOverlayPositionTopStage">
+            <argument name="page" value="SlideOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="validateOverlayPositionBottom" stepKey="validateOverlayPositionBottomStage">
+            <argument name="page" value="SlideOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
+        <actionGroup ref="validateOverlayPositionCollageLeft" stepKey="validateOverlayPositionStageAfterSave">
+            <argument name="page" value="SlideOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="validateOverlayPositionTop" stepKey="validateOverlayPositionTopStageAfterSave">
+            <argument name="page" value="SlideOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="validateOverlayPositionBottom" stepKey="validateOverlayPositionBottomStageAfterSave">
+            <argument name="page" value="SlideOnBackend"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="validateOverlayPositionCollageLeft" stepKey="validateOverlayPositionStorefront">
+            <argument name="page" value="SlideOnFrontend"/>
+        </actionGroup>
+        <actionGroup ref="validateOverlayPositionTop" stepKey="validateOverlayPositionTopStorefront">
+            <argument name="page" value="SlideOnFrontend"/>
+        </actionGroup>
+        <actionGroup ref="validateOverlayPositionBottom" stepKey="validateOverlayPositionBottomStorefront">
+            <argument name="page" value="SlideOnFrontend"/>
+        </actionGroup>
+    </test>
+    <test name="SliderCollageLeftButtonsCanBeEditedInline" extends="SliderItemPosterButtonsCanBeEditedInline">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Collage Left - Ability to edit a collage left slider button inline on the stage"/>
+            <description value="A user should be able to edit a collage left slider button inline on the stage"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-87988"/>
+            <testCaseId value="MC-4036"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-slideItemCollageLeft"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
+            <argument name="property" value="PageBuilderAppearance_CollageLeft"/>
+        </actionGroup>
+    </test>
+    <test name="SlideItemCollageLeftUpdateAdvancedConfigurationValues" extends="SlideItemPosterUpdateAdvancedConfigurationValues">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Collage Left - Update Advanced Configuration Values"/>
+            <description value="Validate that updating every attribute in the Advanced Configuration form for collage left Slide item will update the Stage and Storefront correctly."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-3228"/>
+            <testCaseId value="MC-4038"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-slideItemCollageLeft"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
+            <argument name="property" value="PageBuilderAppearance_CollageLeft"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldPadding" stepKey="enterPadding">
+            <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
+        </actionGroup>
+        <seeElement selector="{{SlideOnBackend.collageAlignment('1', PageBuilderAdvancedAlignmentPropertyCenter.value)}}" stepKey="seeAlignmentStage"/>
+        <seeElement selector="{{SlideOnBackend.collageBorder('1', PageBuilderAdvancedBorderPropertyDouble.value)}}" stepKey="seeBorderStage"/>
+        <seeElement selector="{{SlideOnBackend.collageBorderColor('1', PageBuilderAdvancedBorderColorProperty_green.rgb)}}" stepKey="seeBorderColorStage"/>
+        <seeElement selector="{{SlideOnBackend.collageBorderWidth('1', PageBuilderAdvancedBorderWidthProperty10.value)}}" stepKey="seeBorderWidthStage"/>
+        <seeElement selector="{{SlideOnBackend.collageBorderRadius('1', PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="seeBorderRadiusStage"/>
+        <seeElement selector="{{SlideOnBackend.collageMargins('1', PageBuilderMarginsPropertyUnique.value)}}" stepKey="seeMarginsStage"/>
+        <seeElement selector="{{SlideOnBackend.collagePadding('1', PageBuilderPaddingPropertyUnique.value)}}" stepKey="seePaddingStage"/>
+        <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding">
+            <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
+        </actionGroup>
+        <seeElement selector="{{SlideOnBackend.collageAlignment('1', PageBuilderAdvancedAlignmentPropertyCenter.value)}}" stepKey="seeAlignmentStage2"/>
+        <seeElement selector="{{SlideOnBackend.collageBorder('1', PageBuilderAdvancedBorderPropertyDouble.value)}}" stepKey="seeBorderStage2"/>
+        <seeElement selector="{{SlideOnBackend.collageBorderColor('1', PageBuilderAdvancedBorderColorProperty_green.rgb)}}" stepKey="seeBorderColorStage2"/>
+        <seeElement selector="{{SlideOnBackend.collageBorderWidth('1', PageBuilderAdvancedBorderWidthProperty10.value)}}" stepKey="seeBorderWidthStage2"/>
+        <seeElement selector="{{SlideOnBackend.collageBorderRadius('1', PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="seeBorderRadiusStage2"/>
+        <seeElement selector="{{SlideOnBackend.collageMargins('1', PageBuilderMarginsPropertyUnique.value)}}" stepKey="seeMarginsStage2"/>
+        <seeElement selector="{{SlideOnBackend.collagePadding('1', PageBuilderPaddingPropertyUnique.value)}}" stepKey="seePaddingStage2"/>
+        <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding2">
+            <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
+        </actionGroup>
+        <seeElement selector="{{SlideOnFrontend.collagePadding('1', PageBuilderPaddingPropertyUnique.value)}}" stepKey="seePaddingStorefront"/>
+    </test>
+    <test name="SlideItemCollageLeftUpdateAllAttributes" extends="SlideItemPosterUpdateAllAttributes">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Slide Collage Left - Update All Attributes"/>
+            <description value="A user should be able to add a collage left slide with all attribute fields filled."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-3228"/>
+            <testCaseId value="MC-2535"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-slideItemCollageLeft"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
+            <argument name="property" value="PageBuilderAppearance_CollageLeft"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldPadding" stepKey="enterPadding">
+            <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
+        </actionGroup>
+        <seeElement selector="{{SlideOnBackend.appearance('1', PageBuilderAppearance_CollageLeft.value)}}" stepKey="seeAppearanceStage"/>
+        <seeElement selector="{{SlideOnBackend.collageMinimumHeight('1', PageBuilderSlideItemMinimumHeight_500.value)}}" stepKey="seeMinimumHeightStage"/>
+        <seeElement selector="{{SlideOnBackend.collageAlignment('1', PageBuilderAdvancedAlignmentPropertyCenter.value)}}" stepKey="seeAlignmentStage"/>
+        <seeElement selector="{{SlideOnBackend.collageBorder('1', PageBuilderAdvancedBorderPropertyDouble.value)}}" stepKey="seeBorderStage"/>
+        <seeElement selector="{{SlideOnBackend.collageBorderColor('1', PageBuilderAdvancedBorderColorProperty_green.rgb)}}" stepKey="seeBorderColorStage"/>
+        <seeElement selector="{{SlideOnBackend.collageBorderWidth('1', PageBuilderAdvancedBorderWidthProperty10.value)}}" stepKey="seeBorderWidthStage"/>
+        <seeElement selector="{{SlideOnBackend.collageBorderRadius('1', PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="seeBorderRadiusStage"/>
+        <seeElement selector="{{SlideOnBackend.cssClasses('1', PageBuilderAdvancedCssClassesPropertyThreeClasses.value)}}" stepKey="seeCSSClassesStage"/>
+        <seeElement selector="{{SlideOnBackend.collageMargins('1', PageBuilderMarginsPropertyUnique.value)}}" stepKey="seeMarginsStage"/>
+        <seeElement selector="{{SlideOnBackend.collagePadding('1', PageBuilderPaddingPropertyUnique.value)}}" stepKey="seePaddingStage"/>
+        <seeElement selector="{{SlideOnBackend.appearance('1', PageBuilderAppearance_CollageLeft.value)}}" stepKey="seeAppearanceStage2"/>
+        <seeElement selector="{{SlideOnBackend.collageMinimumHeight('1', PageBuilderSlideItemMinimumHeight_500.value)}}" stepKey="seeMinimumHeightStage2"/>
+        <seeElement selector="{{SlideOnBackend.collageAlignment('1', PageBuilderAdvancedAlignmentPropertyCenter.value)}}" stepKey="seeAlignmentStage2"/>
+        <seeElement selector="{{SlideOnBackend.collageBorder('1', PageBuilderAdvancedBorderPropertyDouble.value)}}" stepKey="seeBorderStage2"/>
+        <seeElement selector="{{SlideOnBackend.collageBorderColor('1', PageBuilderAdvancedBorderColorProperty_green.rgb)}}" stepKey="seeBorderColorStage2"/>
+        <seeElement selector="{{SlideOnBackend.collageBorderWidth('1', PageBuilderAdvancedBorderWidthProperty10.value)}}" stepKey="seeBorderWidthStage2"/>
+        <seeElement selector="{{SlideOnBackend.collageBorderRadius('1', PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="seeBorderRadiusStage2"/>
+        <seeElement selector="{{SlideOnBackend.collageMargins('1', PageBuilderMarginsPropertyUnique.value)}}" stepKey="seeMarginsStage2"/>
+        <seeElement selector="{{SlideOnBackend.collagePadding('1', PageBuilderPaddingPropertyUnique.value)}}" stepKey="seePaddingStage2"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAppearance">
+            <argument name="property" value="PageBuilderAppearance_CollageLeft"/>
+        </actionGroup>
+        <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding">
+            <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
+        </actionGroup>
+        <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_CollageLeft.value)}}" stepKey="seeAppearanceStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.collagePadding('1', PageBuilderPaddingPropertyUnique.value)}}" stepKey="seePaddingStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_CollageLeft.value)}}" stepKey="seeMobileAppearanceStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.collagePadding('1', PageBuilderPaddingPropertyUnique.value)}}" stepKey="seeMobilePaddingStorefront"/>
+    </test>
+    <test name="SlideItemCollageLeftWithBordersAndPaddingEqualToMinHeight" extends="RowWithBordersAndPaddingEqualToMinHeight">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Collage Left - Slide with borders and padding is equal to min height"/>
+            <description value="A user can see collage left Slide height with borders and padding is equal to min height"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-5079"/>
+            <testCaseId value="MC-5798"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-slideItemCollageLeft"/>
+        </annotations>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" after="enterPageTitle" stepKey="expandMenuSection">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" after="commentConfigureContentType" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" after="dragContentTypeToStage" stepKey="openEditPanel">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" after="openEditPanel" stepKey="enterAppearanceCollageLeftProperty">
+            <argument name="property" value="PageBuilderAppearance_CollageLeft"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty">
+            <argument name="property" value="PageBuilderSlideItemMinimumHeight_300"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateContentTypeHeightBeforeSave">
+            <argument name="content" value="{{SlideOnBackend.wrapperCSS}}"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateContentTypeHeightAfterSave">
+            <argument name="content" value="{{SlideOnBackend.wrapperCSS}}"/>
+        </actionGroup>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateContentTypeHeightStorefront">
+            <argument name="content" value="{{SlideOnFrontend.wrapperCSS}}"/>
+        </actionGroup>
+    </test>
+    <test name="SliderCollageLeftHtmlValueInButtons" extends="SliderCollageCenterHtmlValueInButtons">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Collage Left - HTML Value In Buttons Does Not Render As HTML"/>
+            <description value="Validate that html can be entered into the button and that the html doesn't render on stage and storefront."/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-849"/>
+            <testCaseId value="MC-3660"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slider"/>
+            <group value="pagebuilder-sliderCollageLeft"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearance">
+            <argument name="property" value="PageBuilderAppearance_CollageLeft"/>
+        </actionGroup>
+    </test>
+    <test name="SliderCollageLeftNonBreakingSpaceValueInButtons" extends="SliderCollageCenterNonBreakingSpaceValueInButtons">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Collage Left - Non Breaking Space In Button Does Not Render as nbsp;"/>
+            <description value="Validate that non breaking space can be entered into the button and that the html doesn't render on stage and storefront as nbsp."/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-3889"/>
+            <testCaseId value="MC-4203"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slider"/>
+            <group value="pagebuilder-sliderCollageLeft"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearance">
+            <argument name="property" value="PageBuilderAppearance_CollageLeft"/>
+        </actionGroup>
+    </test>
+    <test name="SlideOverlayAndButtonDoNotGoOutsideContainerOnCollageLeftAppearance" extends="SlideOverlayAndButtonDoNotGoOutsideContainerOnPosterAppearance">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Collage Left - Slide Overlay and Button do not go outside container on collage left appearance"/>
+            <description value="User should be able to place a slide with Collage Left appearance inside a narrow column without the contents spilling outside of the column."/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-5372"/>
+            <testCaseId value="MC-5936"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slider"/>
+            <group value="pagebuilder-sliderCollageLeft"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
+            <argument name="property" value="PageBuilderAppearance_CollageLeft"/>
+        </actionGroup>
+        <actionGroup ref="validateOverlayAndButtonCollage" stepKey="validateSlideOnStage">
+            <argument name="column" value="ColumnOnBackend"/>
+            <argument name="element" value="SlideOnBackend"/>
+            <argument name="elementBorderWidth" value="PageBuilderAdvancedBorderWidthProperty10"/>
+            <argument name="diffThreshold" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateOverlayAndButtonCollage" stepKey="validateSlideOnStorefront">
+            <argument name="column" value="ColumnOnFrontend"/>
+            <argument name="element" value="SlideOnFrontend"/>
+            <argument name="elementBorderWidth" value="PageBuilderAdvancedBorderWidthProperty10"/>
+            <argument name="diffThreshold" value="0"/>
+        </actionGroup>
+    </test>
+    <test name="SliderCollageLeftAlignmentInheritance" extends="SliderPosterAlignmentInheritance">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Collage Left - Alignment Inherits"/>
+            <description value="A user should be able to have a parent container content type pass its alignment to its children"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-4290"/>
+            <testCaseId value="MC-6024"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-sliderCollageLeft"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
+            <argument name="property" value="PageBuilderAppearance_CollageLeft"/>
+        </actionGroup>
+        <executeJS function="return Math.abs(Math.round({$buttonLeftPosition}-{$overlayLeftPosition}-30))" stepKey="buttonMinusOverlayMinusPadding"/>
+        <executeJS function="return Math.abs(Math.round({$overlayRightPosition}-{$buttonRightPosition}-30))" stepKey="overlayMinusButtonMinusPadding"/>
+        <executeJS function="return Math.abs(Math.round({$overlayRightPositionAfterSave}-{$buttonRightPositionAfterSave}-30))" stepKey="overlayMinusButtonMinusPaddingAfterSave"/>
+        <executeJS function="return Math.abs(Math.round({$overlayRightPositionStoreFront}-{$buttonRightPositionStoreFront}-30))" stepKey="overlayMinusButtonMinusPaddingStoreFront"/>
+    </test>
+</tests>

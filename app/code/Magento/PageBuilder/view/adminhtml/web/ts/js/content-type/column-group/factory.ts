@@ -4,26 +4,33 @@
  */
 
 import Config from "../../config";
+import ContentTypeCollectionInterface from "../../content-type-collection.types";
 import createContentType from "../../content-type-factory";
-import Column from "../column/preview";
-import ColumnGroup from "./preview";
+import ColumnPreview from "../column/preview";
 
 /**
- * Create a column and add it to it's parent
+ * Create a column and add it to it's column group
  *
- * @param {ColumnGroup} parent
+ * @param {ContentTypeCollectionInterface} columnGroup
  * @param {number} width
  * @param {number} index
- * @returns {Promise<Column>}
+ * @returns {Promise<ContentTypeCollectionInterface>}
  */
-export function createColumn(parent: ColumnGroup, width: number, index?: number): Promise<Column> {
+export function createColumn(
+    columnGroup: ContentTypeCollectionInterface,
+    width: number,
+    index?: number,
+): Promise<ContentTypeCollectionInterface<ColumnPreview>> {
     return createContentType(
         Config.getContentTypeConfig("column"),
-        parent,
-        parent.stageId,
+        columnGroup,
+        columnGroup.stageId,
         {width: parseFloat(width.toString()) + "%"},
-    ).then((column) => {
-        parent.addChild(column, index);
+    ).then((column: ContentTypeCollectionInterface<ColumnPreview>) => {
+        columnGroup.addChild(column, index);
         return column;
+    }).catch((error) => {
+        console.error(error);
+        return null;
     });
 }

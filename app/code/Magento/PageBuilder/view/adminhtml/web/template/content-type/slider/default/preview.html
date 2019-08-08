@@ -5,25 +5,34 @@
  */
 -->
 
-<div class="pagebuilder-content-type pagebuilder-slider children-min-height" data-bind="afterRender: onAfterRender, event: { mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
-
-    <!-- ko template: getOptions().template --><!-- /ko -->
-    <div class="slider-container" data-bind="style: previewStyle">
-        <!-- ko template: previewChildTemplate --><!-- /ko -->
+<div class="pagebuilder-content-type pagebuilder-slider children-min-height"
+     attr="data.main.attributes"
+     event="{ mouseover: onMouseOver, mouseout: onMouseOut },  mouseoverBubble: false">
+    <render args="getOptions().template" />
+    <div class="slider-container"
+         css="data.main.css"
+         ko-style="data.main.style">
+        <render args="childTemplate" />
     </div>
     <div class="slider-controls focus-options">
-        <!-- ko if: $parent.children().length > 0 -->
-        <div class="slider-navigation" data-bind="sortableChildren: {handle: '.navigation-dot-anchor', containment: 'parent', placeholder: 'navigation-dot sortable-placeholder', tolerance: 'pointer', start: function () { onSortStart.apply($parent.preview, arguments); }, stop: function () { onSortStop.apply($parent.preview, arguments); } }, foreach: $parent.getChildren()">
-            <div class="navigation-dot" data-bind="css: {active: $parent.activeSlide() === $index()}, attr: {id: 'navigation-' + parent.id, tabindex: $index}, hasFocusNoScroll: $parent.focusedSlide() === $index(), event: { focusin: function () { $parent.setFocusedSlide($index()) }, focusout: function () { $parent.setFocusedSlide(null) } }">
-                <!-- ko with: preview -->
-                    <!-- ko template: getOptions().template --><!-- /ko -->
-                <!-- /ko -->
-                <a class="navigation-dot-anchor" href="#" data-bind="click: function () { $parent.navigateToSlide($index()); $parent.setFocusedSlide($index()); }"></a>
-                <!-- ko if: preview.previewData.slide_name() !== "" -->
-                <span class="tooltip-content" role="tooltip" data-bind="text: preview.previewData.slide_name()"></span>
-                <!-- /ko -->
+        <div class="slider-navigation"
+             afterRender="afterNavigationRender"
+             each="$parent.getChildren()"
+             data-bind="sortableChildren: { handle: '.navigation-dot-anchor', containment: 'parent', placeholder: 'navigation-dot sortable-placeholder', tolerance: 'pointer', start: onSortStart.bind($parent.preview), stop: onSortStop.bind($parent.preview) }">
+            <div class="navigation-dot"
+                 tabindex="0"
+                 event="focusin: $parent.setFocusedSlide.bind($parent, $index(), false), focusout: $parent.onFocusOut.bind($parent)"
+                 css="active: $parent.activeSlide() === $index(), focus: $parent.focusedSlide() === $index()">
+                <a class="navigation-dot-anchor" href="#" click="$parent.onControlClick.bind($parent, $index())" data-bind="hasFocusNoScroll: $parent.focusedSlide() === $index()"/>
+                <with args="preview">
+                    <render with="preview" args="getOptions().template" />
+                </with>
+                <span if="preview.previewData.slide_name() !== ''"
+                      class="tooltip-content"
+                      role="tooltip"
+                      text="preview.previewData.slide_name()">
+                </span>
             </div>
         </div>
-        <!-- /ko -->
     </div>
 </div>

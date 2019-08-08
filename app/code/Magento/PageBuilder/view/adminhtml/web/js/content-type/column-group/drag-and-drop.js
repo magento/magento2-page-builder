@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/content-type/column-group/resizing"], function (_resizing) {
+define([], function () {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -8,15 +8,16 @@ define(["Magento_PageBuilder/js/content-type/column-group/resizing"], function (
   /**
    * Calculate the drop positions of a column group
    *
-   * @param {ColumnGroup} group
+   * @param {ContentTypeCollectionInterface} group
    * @returns {any[]}
    */
   function calculateDropPositions(group) {
+    var resizeUtils = group.preview.getResizeUtils();
     var dropPositions = [];
     group.children().forEach(function (column, index) {
-      var left = column.element.position().left;
-      var width = column.element.outerWidth(true);
-      var canShrink = (0, _resizing.getAcceptedColumnWidth)((0, _resizing.getColumnWidth)(column).toString()) > (0, _resizing.getSmallestColumnWidth)();
+      var left = column.preview.element.position().left;
+      var width = column.preview.element.outerWidth(true);
+      var canShrink = resizeUtils.getAcceptedColumnWidth(resizeUtils.getColumnWidth(column).toString()) > resizeUtils.getSmallestColumnWidth();
       dropPositions.push({
         affectedColumn: column,
         canShrink: canShrink,

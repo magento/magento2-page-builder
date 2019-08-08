@@ -8,17 +8,20 @@
 //  _____________________________________________
 
 .pagebuilder-slide {
-    background-color: @color-gray98;
+    cursor: text;
+    min-height: inherit;
 
-    .pagebuilder-options {
-        left: 100%;
-        transform: translate(-100%, 0);
+    .pagebuilder-slide-wrapper {
+        background-color: @color-gray98;
     }
 
     .pagebuilder-empty-slide {
         color: @color-gray65-lighten;
-        font-size: 20px;
+        font-size: 14px;
         font-weight: lighter;
+    }
+    .pagebuilder-overlay:not(.pagebuilder-poster-overlay) {
+        max-width: 540px;
     }
 
     .pagebuilder-slide-button {
@@ -26,8 +29,118 @@
         -o-transition: all 500ms ease;
         -webkit-transition: all 500ms ease;
         cursor: default;
-        margin-top: 20px;
+        margin: @margin 0 0 0;
+        max-width: 100%;
         opacity: 1;
         transition: all 500ms ease;
+
+        span[contenteditable=true] {
+            display: block;
+            overflow: hidden;
+        }
+    }
+
+    .wysiwyg-container {
+        position: relative;
+
+        ol {
+            list-style: decimal;
+            padding-left: @margin;
+            li {
+                margin: 0 0 @margin 0;
+            }
+        }
+        .inline-wysiwyg {
+            line-height: 1.3;
+            min-height: 50px;
+
+            .mce-offscreen-selection {
+                left: -99999px;
+            }
+        }
+        .mce-tinymce-inline {
+            left: -1px !important;
+            right: -1px;
+            top: 0;
+        }
+        .pagebuilder-empty-slide {
+            left: 0;
+            pointer-events: none;
+            position: absolute;
+            top: 0;
+            width: 100%;
+        }
+        > .mce-edit-focus {
+            ~ .pagebuilder-options,
+            ~ .pagebuilder-empty-slide {
+                display: none;
+            }
+        }
+        &.pagebuilder-toolbar-active {
+            .inline-wysiwyg {
+                box-shadow: 0 0 0 1px rgb(153, 153, 153);
+            }
+        }
+    }
+
+    .inline-wysiwyg-textarea {
+        border: 0;
+        margin: 2px 0;
+        min-height: 50px;
+        padding: 5px;
+        resize: none;
+        width: 100%;
+
+        &:focus {
+            box-shadow: 0 0 0 1px @color-gray80;
+            resize: vertical;
+        }
+    }
+}
+
+//
+//  Default appearance styles rendered through stage and Block
+//  __________________________________________________________
+
+.pagebuilder-slide-wrapper {
+    .pagebuilder-overlay {
+        padding: 30px;
+    }
+}
+
+//
+//  Default appearance styles rendered through Block only
+//  _____________________________________________________
+
+[data-content-type='slide'] {
+    min-height: inherit;
+
+    > [data-element='link'],
+    > [data-element='empty_link'] {
+        min-height: inherit;
+    }
+
+    .pagebuilder-slide-wrapper {
+        min-height: inherit;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+
+        .pagebuilder-overlay:not(.pagebuilder-poster-overlay) {
+            max-width: 540px;
+        }
+
+        [data-element='content'] {
+            min-height: 50px;
+
+            img {
+                height: auto;
+            }
+        }
+
+        .pagebuilder-slide-button {
+            margin: 20px 0 0 0;
+            max-width: 100%;
+            word-break: break-word;
+        }
     }
 }

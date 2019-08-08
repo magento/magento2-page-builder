@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="openPageBuilderFullScreen">
+        <waitForElementVisible selector="{{PageBuilderStage.openFullScreen}}" stepKey="waitForFullScreenButton"/>
+        <click selector="{{PageBuilderStage.openFullScreen}}" stepKey="clickFullScreenButton"/>
+        <waitForPageLoad stepKey="waitForFullScreenAnimation"/>
+        <seeElement selector="{{PageBuilderStage.stageWrapperFullScreen}}" stepKey="seeStageFullScreen"/>
+        <seeElement selector="{{PageBuilderStage.exitFullScreen}}" stepKey="seeExitFullScreenButton"/>
+    </actionGroup>
+    <actionGroup name="exitPageBuilderFullScreen">
+        <waitForElementVisible selector="{{PageBuilderStage.exitFullScreen}}" stepKey="waitForExitPageBuilderFullScreenButton"/>
+        <click selector="{{PageBuilderStage.exitFullScreen}}" stepKey="exitPageBuilderFullScreen"/>
+        <waitForPageLoad stepKey="waitForExitFullScreen"/>
+        <dontSeeElementInDOM selector="{{PageBuilderStage.exitFullScreen}}" stepKey="dontSeeExitPageBuilderFullScreenButton"/>
+    </actionGroup>
+    <actionGroup name="validateContentTypeHeightOnStage">
+        <arguments>
+            <argument name="contentType"/>
+            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="containerDefaultHeight" defaultValue="1"/>
+            <argument name="expectedPaddingTop" defaultValue="1"/>
+            <argument name="expectedPaddingBottom" defaultValue="1"/>
+        </arguments>
+        <executeJS function="{{PageBuilderStage.computedHeightOnStage(contentType.role,index)}}" stepKey="actualStageContentTypeHeight"/>
+        <executeJS function="return Math.round({{containerDefaultHeight.value}}+{{expectedPaddingTop.paddingTop}}+{{expectedPaddingBottom.paddingBottom}})" stepKey="expectedContentTypeHeightWithPadding"/>
+        <assertEquals stepKey="assertHeightOnStageMatchesExpected">
+            <expectedResult type="variable">actualStageContentTypeHeight</expectedResult>
+            <actualResult type="variable">expectedContentTypeHeightWithPadding</actualResult>
+        </assertEquals>
+    </actionGroup>
+    <actionGroup name="validateContentTypeHeightOnStageWithoutPadding">
+        <arguments>
+            <argument name="contentType"/>
+            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="containerDefaultHeight" defaultValue="1"/>
+        </arguments>
+        <executeJS function="{{PageBuilderStage.computedHeightOnStage(contentType.role,index)}}" stepKey="actualStageContentTypeHeight"/>
+        <executeJS function="return Math.round({{containerDefaultHeight.value}})" stepKey="expectedContentTypeHeightWithPadding"/>
+        <assertEquals stepKey="assertHeightOnStageMatchesExpected">
+            <expectedResult type="variable">actualStageContentTypeHeight</expectedResult>
+            <actualResult type="variable">expectedContentTypeHeightWithPadding</actualResult>
+        </assertEquals>
+    </actionGroup>
+    <actionGroup name="validateContentTypeInsideContainerStage">
+        <arguments>
+            <argument name="contentType"/>
+            <argument name="contentTypeIndex" defaultValue="1" type="string"/>
+            <argument name="containerTargetType"/>
+            <argument name="containerTargetIndex" defaultValue="1" type="string"/>
+            <argument name="positionInContainer" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible time="30" selector="{{PageBuilderStage.contentTypeInsideContainerStage(containerTargetType.role, containerTargetIndex, positionInContainer, contentType.role, contentTypeIndex)}}" stepKey="waitForContentTypeStage"/>
+    </actionGroup>
+    <actionGroup name="validateContentTypeNotInsideContainerStage">
+        <arguments>
+            <argument name="contentType"/>
+            <argument name="contentTypeIndex" defaultValue="1" type="string"/>
+            <argument name="containerTargetType"/>
+            <argument name="containerTargetIndex" defaultValue="1" type="string"/>
+            <argument name="positionInContainer" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible time="30" selector="{{PageBuilderStage.contentTypeInStageByIndex(containerTargetType.role, containerTargetIndex)}}" stepKey="waitForContentTypeStage"/>
+        <dontSeeElementInDOM selector="{{PageBuilderStage.contentTypeInsideContainerStage(containerTargetType.role, containerTargetIndex, positionInContainer, contentType.role, contentTypeIndex)}}" stepKey="dontSeeContentTypeInContainer"/>
+    </actionGroup>
+    <actionGroup name="goToMediaStorageFromStage">
+        <arguments>
+            <argument name="contentType"/>
+            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="x" defaultValue="null" type="string"/>
+            <argument name="y" defaultValue="null" type="string"/>
+        </arguments>
+        <comment userInput="Hover over content type in stage and click Select From Gallery button" stepKey="commentHover"/>
+        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, index)}}" x="{{x}}" y="{{y}}" stepKey="onMouseOverImageContentTypeStage"/>
+        <waitForElementVisible selector="{{PageBuilderStage.onHoverSelectFromGalleryButton(contentType.role, index)}}" stepKey="seeSelectFromGalleryBtn2" />
+        <click selector="{{PageBuilderStage.onHoverSelectFromGalleryButton(contentType.role, index)}}" stepKey="clickSelectFromGalleryBtn1" />
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+    </actionGroup>
+    <actionGroup name="verifySelectFromGalleryButtonWorks">
+        <arguments>
+            <argument name="contentType"/>
+            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="x" defaultValue="null" type="string"/>
+            <argument name="y" defaultValue="null" type="string"/>
+        </arguments>
+        <comment userInput="verifySelectFromGalleryButtonWorks" stepKey="comment"/>
+        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, index)}}" x="{{x}}" y="{{y}}" stepKey="mouseOverContentType"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible selector="{{PageBuilderStage.onHoverSelectFromGalleryButton(contentType.role, index)}}" stepKey="waitForSelectFromGallery"/>
+        <click selector="{{PageBuilderStage.onHoverSelectFromGalleryButton(contentType.role, index)}}" stepKey="clickSelectFromGallery"/>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <waitForElementVisible selector="{{MediaGallerySection.CreateFolder}}" stepKey="waitForAddSelectedFilesButton"/>
+        <seeElement selector="{{MediaGallerySection.CreateFolder}}" stepKey="seeAddSelectedFilesButton"/>
+        <waitForElementVisible selector="{{MediaGallerySection.StorageRootArrow}}" stepKey="waitForStorageRootArrow"/>
+        <seeElement selector="{{MediaGallerySection.StorageRootArrow}}" stepKey="seeStorageRootArrow"/>
+        <click selector="{{MediaGallerySection.CancelBtn}}" stepKey="clickCancelButton"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+    </actionGroup>
+    <actionGroup name="uploadImageToContentTypeFromStage">
+        <arguments>
+            <argument name="property"/>
+            <argument name="section" defaultValue="PageBuilderStage"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <attachFile userInput="{{property.value}}" selector="{{section.uploadImageInput(index)}}" stepKey="attachImageFromLocalToStage"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
+        <waitForElementVisible selector="{{section.imageSourceByIndex(index, property.fileName)}}" stepKey="waitForMainImageSource1"/>
+    </actionGroup>
+    <actionGroup name="verifyUploadImageButtons">
+        <arguments>
+            <argument name="contentType"/>
+            <argument name="section" defaultValue="PageBuilderStage"/>
+            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="x" defaultValue="null" type="string"/>
+            <argument name="y" defaultValue="null" type="string"/>
+        </arguments>
+        <comment userInput="Verify Upload Image and Select From Gallery buttons appear on hover" stepKey="comment"/>
+        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, index)}}" x="{{x}}" y="{{y}}" stepKey="mouseOverContentType"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <seeElement selector="{{section.onHoverUploadImageButton(contentType.role, index)}}" stepKey="seeUploadImageButton" />
+        <seeElement selector="{{section.onHoverSelectFromGalleryButton(contentType.role, index)}}" stepKey="seeSelectFromGalleryButton"/>
+    </actionGroup>
+    <actionGroup name="focusOnInlineTinyMCEEditor">
+        <arguments>
+            <argument name="section" defaultValue="TextOnStage"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <comment userInput="focusOnInlineTinyMCEEditor" stepKey="comment"/>
+        <waitForElementVisible selector="{{section.tinymce(index)}}" stepKey="waitForEditor"/>
+        <click selector="{{section.tinymce(index)}}" stepKey="clickEditor"/>
+        <waitForPageLoad stepKey="waitForEditorToBeFocused"/>
+        <waitForElementVisible selector="{{section.tinymceInFocus(index)}}" stepKey="waitForEditorFocused"/>
+    </actionGroup>
+    <actionGroup name="focusOnInlineTextAreaEditor">
+        <arguments>
+            <argument name="section" defaultValue="TextOnStage"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <comment userInput="focusOnInlineTextAreaEditor" stepKey="comment"/>
+        <waitForElementVisible selector="{{section.textArea(index)}}" stepKey="waitForEditor"/>
+        <click selector="{{section.textArea(index)}}" stepKey="clickEditor"/>
+        <waitForPageLoad stepKey="waitForEditorToBeFocused"/>
+    </actionGroup>
+</actionGroups>

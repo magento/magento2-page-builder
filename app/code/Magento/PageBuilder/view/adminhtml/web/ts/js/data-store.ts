@@ -4,39 +4,59 @@
  */
 
 import $ from "jquery";
+import {get, set} from "./utils/object";
 
 interface DataStoreEvent {
     state: DataObject;
 }
 
-export interface DataObject {
-    // State object can only contain primitives
-    [key: string]: undefined | null | string | number | boolean | any[];
+export interface DataObject<T = any> {
+    [key: string]: T;
 }
 
 export default class DataStore {
     private state: DataObject = {};
-    private events: JQuery.PlainObject = $({});
+    private events: JQuery = $({});
+    private previousState: DataObject = {};
 
     /**
-     * Retrieve data from the state for an editable area
+     * Retrieve specific data from the data store
+     *
+     * @param {string} key
+     * @param defaultValue
+     * @returns {T}
      */
-    public get(): DataObject {
+    public get<T>(key: string, defaultValue?: any): T {
+        return get(this.state, key, defaultValue);
+    }
+
+    /**
+     * Retrieve the entire state of the data object
+     *
+     * @returns {DataObject}
+     */
+    public getState() {
         return this.state;
     }
 
     /**
-     * Update the state for an individual editable area
+     * Set a specific keys value in the data store
      *
-     * @param data
-     * @param key
+     * @param {string} key
+     * @param value
      */
-    public update(data: DataObject | undefined | null | string | number | boolean, key?: string | number): void {
-        const storeState = key ? this.state : data;
-        if (key) {
-            storeState[key] = data;
-        }
-        this.state = storeState;
+    public set(key: string, value: any) {
+        set(this.state, key, value);
+        this.emitState();
+    }
+
+    /**
+     * Update the entire state for the content type
+     *
+     * @param {DataObject} state
+     */
+    public setState(state: DataObject) {
+        this.state = state;
         this.emitState();
     }
 
@@ -48,17 +68,26 @@ export default class DataStore {
     public unset(key: string | number): void {
         const storeState = this.state;
         delete storeState[key];
-        this.update(storeState);
+        this.setState(storeState);
     }
 
     /**
-     * Subscribe to data changes on an editable area
+     * Subscribe to data changes within the data store of a content type
      *
      * @param {(state: DataObject, event: Event) => void} handler
+     * @param {string | number} key
      */
-    public subscribe(handler: (state: DataObject, event: Event) => void): void {
+    public subscribe(handler: (state: DataObject, event: Event) => void, key?: string | number): void {
         this.events.on("state", (event: Event, data: DataStoreEvent) => {
-            handler(data.state, event);
+            if (key) {
+                if (this.previousState[key] !== data.state[key]) {
+                    handler(data.state, event);
+                }
+            } else {
+                if (this.previousState !== data.state) {
+                    handler(data.state, event);
+                }
+            }
         });
     }
 

@@ -5,8 +5,19 @@
  */
 -->
 
-<div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview pagebuilder-block pagebuilder-no-blur pagebuilder-live-edit" event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
-    <div if="data.main.html()" attr="data.main.attributes" css="data.main.css" ko-style="data.main.style" html="data.main.html"></div>
-    <div ifnot="data.main.html()" class="placeholder-text" translate="'Block'"></div>
+<div class="pagebuilder-content-type pagebuilder-block" event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false" css="{'pagebuilder-block-overlay': displayingBlockPreview()}">
+    <div attr="data.main.attributes" ko-style="data.main.style" css="data.main.css">
+        <div if="displayingBlockPreview" class="rendered-content" html="data.main.html" afterRender="initializeWidgets"></div>
+        <div ifnot="displayingBlockPreview" class="pagebuilder-block-placeholder">
+            <span class="placeholder-text" text="placeholderText"/>
+        </div>
+    </div>
+    <div data-role="spinner"
+         class="admin__data-grid-loading-mask"
+         if="loading">
+        <div class="spinner">
+            <span repeat="8"/>
+        </div>
+    </div>
     <render args="getOptions().template" />
 </div>

@@ -7,66 +7,57 @@
 //  Default appearance styles
 //  _____________________________________________
 
-.redactor-toolbar {
-    a {
-        &.re-font-color {
-            height: 42px;
-            padding-bottom: 0;
-            padding-top: 0;
-            .redactor-color-picker {
-                background: @color-black;
-                border: 2px solid @color-pagebuilder-light-gray;
-                border-radius: 10px;
-                float: left;
-                height: 18px;
-                margin: 12px 0;
-                width: 18px;
-            }
+.pagebuilder-content-type.pagebuilder-text {
+    border-width: 0;
+
+    .mce-tinymce-inline {
+        left: -1px !important;
+        right: -1px;
+        z-index: 20;
+    }
+    > .mce-content-body {
+        overflow: auto;
+
+        + .placeholder-text {
+            left: 0;
+            pointer-events: none;
+            position: absolute;
+            top: 0;
+        }
+
+        img {
+            height: auto;
+        }
+    }
+    > .mce-edit-focus {
+        ~ .pagebuilder-options,
+        ~ .placeholder-text {
+            display: none;
+        }
+    }
+
+    .inline-wysiwyg-textarea {
+        border: 0;
+        margin: 2px 0;
+        padding: 5px;
+        resize: none;
+        width: 100%;
+
+        &:focus {
+            resize: vertical;
         }
     }
 }
 
-.pagebuilder-entity {
-    .pagebuilder-textarea {
-        ol {
-            list-style: decimal;
-            padding-left: @margin;
-            li {
-                margin: 0 0 @margin 0;
-            }
-        }
-        p {
-            margin-bottom: @margin;
-        }
-        ul {
-            list-style: disc;
-            padding-left: @margin;
-            li {
-                margin: 0 0 @margin 0;
-            }
-        }
-    }
-
-    .redactor-toolbar {
-        -moz-border-radius: 3px;
-        -webkit-border-radius: 3px;
-        background: @color-pagebuilder-darker-gray;
-        border-radius: 3px;
-        left: 10px !important;
-        position: absolute !important;
-        top: -40px !important;
-
-        a {
-            color: @color-pagebuilder-light-gray;
-
-            &:hover {
-                background: @color-pagebuilder-dark-gray;
-                color: @color-pagebuilder-light-gray;
-            }
-        }
-    }
+.pagebuilder-stage.interacting .pagebuilder-content-type.pagebuilder-text:not(.pagebuilder-toolbar-active) {
+    pointer-events: none;
 }
 
-.redactor-placeholder {
-    min-height: 10px;
+//
+//  Styles rendered through Blocks
+//  ______________________________
+
+[data-content-type='text'] {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
 }

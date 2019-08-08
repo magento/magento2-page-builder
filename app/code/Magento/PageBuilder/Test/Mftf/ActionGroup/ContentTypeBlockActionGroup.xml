@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="searchBlockInGrid">
+        <arguments>
+            <argument name="block" defaultValue=""/>
+        </arguments>
+        <waitForElementVisible selector="{{BlockOnForm.selectBlockBtn}}" stepKey="waitForSelectBlockBtn"/>
+        <click selector="{{BlockOnForm.selectBlockBtn}}" stepKey="clickSelectBlockBtn"/>
+        <waitForPageLoad stepKey="waitForGridSlideOut"/>
+        <waitForElementVisible selector="{{BlockOnGrid.searchBox}}" stepKey="waitForBlockGrid" />
+        <fillField selector="{{BlockOnGrid.searchBox}}" userInput="{{block.identifier}}" stepKey="enterBlockTitle"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <click selector="{{BlockOnGrid.searchBtn}}" stepKey="clickSearchBtn"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <waitForElementVisible selector="{{BlockOnGrid.selectBtn(block.identifier)}}" stepKey="waitForSearchResult"/>
+        <click selector="{{BlockOnGrid.selectBtn(block.identifier)}}" stepKey="clickSelectBtn"/>
+        <waitForPageLoad stepKey="waitForPageLoad3"/>
+        <waitForElementVisible selector="{{BlockOnGrid.addSelectedBtn}}" stepKey="waitForAddSelected"/>
+        <click selector="{{BlockOnGrid.addSelectedBtn}}" stepKey="clickAddSelected"/>
+        <waitForPageLoad stepKey="waitForPageLoad4"/>
+        <waitForElementVisible selector="{{BlockOnForm.title(block.title)}}" stepKey="waitToSeeBlockTitle"/>
+    </actionGroup>
+    <actionGroup name="verifyBlockOnStage">
+        <arguments>
+            <argument name="block"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStageByIndex(PageBuilderBlockContentType.role, index)}}" stepKey="onMouseOverContentTypeStage"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible selector="{{BlockOnStage.title(index, block.title)}}" stepKey="wait"/>
+        <seeElement selector="{{BlockOnStage.title(index,block.title)}}" stepKey="seeOptionMenuTitle"/>
+        <see selector="{{BlockOnStage.content(index)}}" userInput="{{block.content}}" stepKey="seeBlockContentOnStage"/>
+    </actionGroup>
+    <actionGroup name="verifyVerticalAlignmentBottomInBlock">
+        <arguments>
+            <argument name="block" defaultValue="BlockOnStorefront"/>
+            <argument name="container"/>
+            <argument name="content"/>
+            <argument name="minHeight"/>
+            <argument name="padding"/>
+            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="acceptableOffset" defaultValue="2" type="string"/>
+        </arguments>
+        <executeJS function="return document.querySelectorAll('{{block.baseCSS}} {{container.baseCSS}}')[{{index}}-1].clientHeight;" stepKey="containerHeight"/>
+        <assertGreaterThanOrEqual stepKey="assertContainerHeightGreaterThanOrEqualMinHeight">
+            <expectedResult type="string">{{minHeight}}</expectedResult>
+            <actualResult type="variable">containerHeight</actualResult>
+        </assertGreaterThanOrEqual>
+        <executeJS function="return document.querySelectorAll('{{block.baseCSS}} {{container.baseCSS}}')[{{index}}-1].getBoundingClientRect().bottom-{{padding.paddingBottom}}" stepKey="containerBottomPositionMinusPadding"/>
+        <executeJS function="return document.querySelectorAll('{{block.baseCSS}} {{content.baseCSS}}')[{{index}}-1].getBoundingClientRect().bottom" stepKey="contentBottomPosition"/>
+        <executeJS function="return Math.abs({$containerBottomPositionMinusPadding} - {$contentBottomPosition})" stepKey="bottomPositionDifference"/>
+        <assertLessThanOrEqual stepKey="assertBottomPosition">
+            <expectedResult type="int">{{acceptableOffset}}</expectedResult>
+            <actualResult type="variable">bottomPositionDifference</actualResult>
+        </assertLessThanOrEqual>
+    </actionGroup>
+    <actionGroup name="verifyVerticalAlignmentCenterInBlock">
+        <arguments>
+            <argument name="block" defaultValue="BlockOnStorefront"/>
+            <argument name="container"/>
+            <argument name="containerIndex" defaultValue="1" type="string"/>
+            <argument name="content"/>
+            <argument name="contentIndex" defaultValue="1" type="string"/>
+        </arguments>
+        <executeJS function="return document.querySelectorAll('{{block.baseCSS}} {{container.baseCSS}}')[{{containerIndex}}-1].clientHeight/2 + document.querySelectorAll('{{block.baseCSS}} {{container.baseCSS}}')[{{containerIndex}}-1].getBoundingClientRect().top" stepKey="containerCenter"/>
+        <executeJS function="return document.querySelectorAll('{{block.baseCSS}} {{content.baseCSS}}')[{{contentIndex}}-1].clientHeight/2 + document.querySelectorAll('{{block.baseCSS}} {{content.baseCSS}}')[{{contentIndex}}-1].getBoundingClientRect().top" stepKey="contentCenter"/>
+        <assertEquals stepKey="assertBottomPosition">
+            <expectedResult type="variable">containerCenter</expectedResult>
+            <actualResult type="variable">contentCenter</actualResult>
+        </assertEquals>
+    </actionGroup>
+    <actionGroup name="verifyAlignmentRightInBlock">
+        <arguments>
+            <argument name="block" defaultValue="BlockOnStorefront"/>
+            <argument name="container" type="string"/>
+            <argument name="content" type="string"/>
+            <argument name="containerPadding"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <!-- Verify container width is larger than content width -->
+        <comment userInput="Verify container width is larger than content width" stepKey="commentVerifyWidth"/>
+        <executeJS function="return document.querySelectorAll('{{block.baseCSS}} {{container}}')[{{index}}-1].clientWidth;" stepKey="containerWidth"/>
+        <executeJS function="return document.querySelectorAll('{{block.baseCSS}} {{content}}')[{{index}}-1].clientWidth;" stepKey="contentWidth"/>
+        <assertGreaterThan stepKey="assertContainerHeightIsGreater">
+            <expectedResult type="variable">contentWidth</expectedResult>
+            <actualResult type="variable">containerWidth</actualResult>
+        </assertGreaterThan>
+        <!-- Verify position right of container matches content -->
+        <comment userInput="Verify position right of container matches content" stepKey="commentVerifyRightPosition"/>
+        <executeJS function="return document.querySelectorAll('{{block.baseCSS}} {{container}}')[{{index}}-1].getBoundingClientRect().right-{{containerPadding.paddingRight}};" stepKey="containerRightMinusPadding"/>
+        <executeJS function="return document.querySelectorAll('{{block.baseCSS}} {{content}}')[{{index}}-1].getBoundingClientRect().right;" stepKey="contentRight"/>
+        <executeJS function="return Math.round(({$containerRightMinusPadding}/{$contentRight})*100)/100" stepKey="rightPositionRatio"/>
+        <assertEquals stepKey="assertRightPositionRatio">
+            <expectedResult type="int">1</expectedResult>
+            <actualResult type="variable">rightPositionRatio</actualResult>
+        </assertEquals>
+    </actionGroup>
+</actionGroups>

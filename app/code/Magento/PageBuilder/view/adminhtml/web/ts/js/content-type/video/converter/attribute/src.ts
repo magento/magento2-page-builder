@@ -4,6 +4,8 @@
  */
 
 import ConverterInterface from "../../../../converter/converter-interface";
+import {DataObject} from "../../../../data-store";
+import {get} from "../../../../utils/object";
 
 export default class Src implements ConverterInterface {
     /**
@@ -23,8 +25,8 @@ export default class Src implements ConverterInterface {
      * @param data Object
      * @returns {string}
      */
-    public toDom(name: string, data: object): string {
-        const value = data[name];
+    public toDom(name: string, data: DataObject): string {
+        const value = get<string>(data, name);
         if (value === undefined) {
             return "";
         }

@@ -1,0 +1,42 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var Magento\PageBuilder\Block\GoogleMapsApi $block */
+?>
+<script>
+    require.config({
+        paths: {
+            googleMaps: '<?= $block->escapeJs($block->getLibraryUrl()); ?>'
+        },
+        config: {
+            'Magento_PageBuilder/js/utils/map': {
+                style: '<?= $block->escapeJs($block->getStyle()); ?>'
+            },
+            'Magento_PageBuilder/js/content-type/map/preview': {
+                apiKey: '<?= $block->escapeJs($block->getApiKey()); ?>',
+                apiKeyErrorMessage: '<?= $block->escapeJs($block->getInvalidApiKeyMessage()); ?>'
+            },
+            'Magento_PageBuilder/js/form/element/map': {
+                apiKey: '<?= $block->escapeJs($block->getApiKey()); ?>',
+                apiKeyErrorMessage: '<?= $block->escapeJs($block->getInvalidApiKeyMessage()); ?>'
+            },
+        }
+    });
+</script>
+
+<?php
+// Include the googleMaps dependency only if we have an API key set, this removes unnecessary calls to Google
+if ($block->shouldIncludeGoogleMapsLibrary()) : ?>
+<script>
+    require.config({
+        shim: {
+            'Magento_PageBuilder/js/utils/map': {
+                deps: ['googleMaps']
+            }
+        }
+    });
+</script>
+<?php endif; ?>

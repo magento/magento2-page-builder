@@ -1,85 +1,81 @@
-# magento2-page-builder
+## Page Builder pre-release access
 
-## PageBuilder Early Access Program
+Pre-release access to Page Builder is opened to all Magento Partners with *no support* from Magento team.
+Use this access to:
 
-The PageBuilder Early Access Program (EAP) gives partners the following perks:
+- Explore extension points to build custom modules and integrations for 3rd party services, such as Facebook and Instagram.
+- Try out customization options and extend its functionality beyond its default features.
+- Preview to prepare a migration plan from BlueFoot 1.0 to Page Builder.
 
-* Explore PageBuilder extension points to build custom modules and integrations for 3rd party services, such as Facebook, Instagram, etc.
-* Try out PageBuilder customization options and extend its functionality beyond its default features.
-* Preview PageBuilder to prepare a migration plan from BlueFoot 1.0 to PageBuilder.
- 
-**Note:**
-*This program should not be used to design and launch a production website using early code.*
+Should you find an issue in Page Builder functionality, please report it on GitHub.
 
-## Installation
+## Documentation
 
-We offer two methods for installing PageBuilder:
+Please use this link to access the latest Page Builder documentation: https://devdocs.magento.com/page-builder/docs/index.html
 
-* As a [Composer package] - use this option if you do not plan to contribute to the PageBuilder code repository 
-* Using the [GitHub repository] - use this option to install PageBuilder from the GitHub repository and contribute to the code 
+## GitHub installation only
 
-[Composer package]: app/code/Magento/PageBuilder/docs/install.md#composer-installation
-[GitHub repository]: app/code/Magento/PageBuilder/docs/install.md#github-installation
+**The pre-release version of Page Builder MUST be installed by cloning the GitHub repos as described here.**
 
-## Developer documentation
+Before installing Page Builder, make sure you have:
 
-This project repository contains PageBuilder developer documentation on the following topics:
+* A local development installation of Magento Commerce 2.3+
+* Access to the Page Builder repository
+* [npm package manager](https://www.npmjs.com/get-npm)
 
-1. [Architecture overview]
-1. [BlueFoot to PageBuilder data migration]
-1. [Third-party content type migration]
-1. [Iconography]
-1. [Module integration]
-1. [Additional data configuration]
-1. [Content type configuration]
-1. [How to add a new content type]
-1. [Events]
-1. [Master format]
-1. [Visual select]
+1. Clone the Page Builder repos into the root directory of your Magento Commerce 2.3+ installation:
 
-[Architecture overview]: app/code/Magento/PageBuilder/docs/architecture-overview.md
-[BlueFoot to PageBuilder data migration]: app/code/Magento/PageBuilder/docs/bluefoot-data-migration.md
-[Third-party content type migration]: app/code/Magento/PageBuilder/docs/new-content-type-example.md
-[Iconography]: app/code/Magento/PageBuilder/docs/iconography.md
-[Module integration]: app/code/Magento/PageBuilder/docs/module-integration.md
-[Additional data configuration]: app/code/Magento/PageBuilder/docs/custom-configuration.md
-[Content type configuration]: app/code/Magento/PageBuilder/docs/content-type-configuration.md
-[How to add a new content type]: app/code/Magento/PageBuilder/docs/how-to-add-new-content-type.md
-[Events]: app/code/Magento/PageBuilder/docs/events.md
-[Master format]: app/code/Magento/PageBuilder/docs/master-format.md
-[Visual select]: app/code/Magento/PageBuilder/docs/visual-select.md
+    ```bash
+    git clone https://github.com/magento/magento2-page-builder
+    git clone https://github.com/magento/magento2-page-builder-ee
+    ```
 
-## Contribute to PageBuilder
+2. From the root directory of your Magento Commerce installation, use the `dev/tools/build-ee.php` script to symlink `magento2-page-builder` and `magento2-page-builder-ee` repos into your Magento Commerce installation:
 
-We appreciate any and all contributions to PageBuilder. 
-A good place to start is by looking at our [features roadmap] and list of [known issues].
+    ```bash
+    php dev/tools/build-ee.php --command=link --ee-source="magento2-page-builder" --ce-source="."
+    php dev/tools/build-ee.php --command=link --ee-source="magento2-page-builder-ee" --ce-source="."
+    ```
+    
+    The results should look like this:
+    
+    ![Symlinks to Page Builder](docs/images/symlinked-pagebuilder.png)
 
-If you are interested in contributing to this repository, please see our [Contribution Guide].
+3. Enable the Page Builder module using the following command:
 
-[Contribution Guide]: app/code/Magento/PageBuilder/docs/CONTRIBUTING.md
-[features roadmap]: app/code/Magento/PageBuilder/docs/roadmap.md#planned-features-and-functionality
-[known issues]: app/code/Magento/PageBuilder/docs/roadmap.md#known-issues
+    ```bash
+    bin/magento setup:upgrade
+    ```
 
-## PageBuilder updates from the Magento core team
+## Contribute to Page Builder
 
-The PageBuilder team updates the code every 2 weeks.
-**These changes may introduce breaking changes.**
+We appreciate any and all contributions to Page Builder. If you are interested in contributing to this repository, please see our [Contribution Guide].
 
-To help you prepare for these changes, we are publishing a [roadmap] of features and issues that we are going to work on in the following months.
+## TypeScript
+This module utilises TypeScript within our adminhtml web directory. This requires an additional build step or watch command to be running during development on this module.
 
-[roadmap]: app/code/Magento/PageBuilder/docs/roadmap.md
+We use a combination of `tsc` from TypeScript and Babel 7.* with the TypeScript env. This enables us to have fast build times for the large TypeScript code base we have.
 
-## Provide feedback
+#### `npx ts:build`
+Runs a single build of all TypeScript files within the defined directory. This utilises Babel with the TypeScript present.
 
-We want to hear what you think of PageBuilder!
-We are particularly interested on your thoughts on the following:
+#### `npx ts:watch`
+Runs a continuous watch of files and builds them as it detects file changes.
 
-* [How would you customize PageBuilder and what do you need to accomplish this task?](https://github.com/magento/magento2-page-builder/issues/57)
-* [What web content API do you use or would like to see in PageBuilder?](https://github.com/magento/magento2-page-builder/issues/58)
+#### `npx ts:lint`
+Runs TSLint to verify linting of all TypeScript files
 
-To participate in technical discussions and ask questions, join us in [Slack].
+#### `npx ts:defs`
+Generates TypeScript definitions for the whole module to be published as a types package.
 
-For all other questions or requests, contact [Olena Tkacheva].
+#### `npx ts:errors`
+Displays any TypeScript errors currently within the code base. This utilises `tsc` with the no emit flag.
 
-[Slack]: https://magentocommeng.slack.com/
-[Olena Tkacheva]: https://magentocommeng.slack.com/messages/@UAFV915FB
+#### `npx ts:errors:watch`
+Same as above but watches for file changes.
+
+#### `npx start`
+Command used to start development on this module, uses `concurrently` to spawn instances of `npx ts:watch` and `npx ts:errors:watch`.
+
+[Contribution Guide]: CONTRIBUTING.md
+[Slack]: https://magentocommeng.slack.com/messages/GANS1R4C9

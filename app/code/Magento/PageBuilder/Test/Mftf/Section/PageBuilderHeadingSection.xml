@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
+    <section name="HeadingOnStage">
+        <element name="all" type="button" selector="//div[contains(@class,'pagebuilder-heading')]"/>
+        <element name="base" type="text" selector="(//*[@data-content-type='heading'])[{{arg1}}]" parameterized="true"/>
+        <element name="hidden" type="text" selector="(//*[@data-content-type='heading'])[{{arg1}}]/ancestor::*[contains(@class, 'pagebuilder-content-type-wrapper') and contains(@class, 'pagebuilder-content-type-hidden')]" parameterized="true"/>
+        <element name="notHidden" type="text" selector="(//div[contains(@class,'pagebuilder-heading')])[{{arg1}}]/parent::*[contains(@class, 'pagebuilder-content-type-wrapper') and not(contains(@class, 'pagebuilder-content-type-hidden'))][1]" parameterized="true"/>
+        <element name="baseByTagName" type="text" selector="(//{{arg1}}[@data-content-type='heading'])[{{arg2}}]" parameterized="true"/>
+        <element name="allHeadingsInContainer" type="button" selector="(//div[contains(@class, '{{arg1}}-container')])[{{arg2}}]//div[contains(@class,'pagebuilder-heading')]" parameterized="true"/>
+        <element name="headingText" type="button" selector="(//{{arg1}}[@data-content-type='heading'][.= '{{arg2}}'])[{{arg3}}]" parameterized="true"/>
+        <element name="headingPlaceholder" type="button" selector="(//{{arg1}}[@data-content-type='heading'][contains(@data-placeholder,'{{arg2}}')])[{{arg3}}]" parameterized="true"/>
+        <element name="headingOnStage" type="text" selector="(//{{arg1}}[@data-content-type='heading'][contains(@data-bind,'heading_text')])[{{arg2}}]" parameterized="true"/>
+        <element name="headingType" type="button" selector="(//{{arg1}}[@data-content-type='heading'])[{{arg2}}]" parameterized="true"/>
+        <element name="headingEditableText" type="button" selector="(//div[contains(@class, 'pagebuilder-heading')])[{{arg1}}]//h2[contains(@contenteditable, 'true')]" parameterized="true"/>
+        <element name="headingTypeToolbar" type="text" selector="(//div[contains(@class,'pagebuilder-heading')])[{{arg1}}]//span[text()='{{arg2}}']" parameterized="true"/>
+        <element name="headingTypeToolbarSelected" type="text" selector="(//div[contains(@class,'pagebuilder-heading')])[{{arg1}}]//a[contains(@class, 'toolbar-active')]//span[text()='{{arg2}}']" parameterized="true"/>
+        <element name="headingTextAlignToolbar" type="button" selector="(//div[contains(@class,'pagebuilder-heading')])[{{arg1}}]//i[contains(@class,'icon-pagebuilder-align-{{arg2}}')]" parameterized="true"/>
+        <element name="headingTextAlignToolbarSelected" type="button" selector="(//div[contains(@class,'pagebuilder-heading')])[{{arg1}}]//a[contains(@class, 'toolbar-active')]//i[contains(@class,'icon-pagebuilder-align-{{arg2}}')]" parameterized="true"/>
+        <element name="headingToolbarButtonViewportPositionTop" type="button" selector="return document.querySelector('.pagebuilder-toolbar-options-wrapper ul:{{arg1}}-child li:{{arg1}}-child').getBoundingClientRect().top;" parameterized="true"/>
+        <element name="headingToolbarViewportPositionTop" type="button" selector="return document.querySelectorAll('.pagebuilder-heading .pagebuilder-toolbar-options-wrapper')[{{arg1}}].getBoundingClientRect().top;" parameterized="true"/>
+        <element name="headingToolbarViewportPositionBottom" type="button" selector="return document.querySelectorAll('.pagebuilder-heading .pagebuilder-toolbar-options-wrapper')[{{arg1}}].getBoundingClientRect().bottom;" parameterized="true"/>
+        <element name="headingContentTypeViewportPositionTop" type="button" selector="return document.querySelectorAll('.pagebuilder-heading')[{{arg1}}].getBoundingClientRect().top;" parameterized="true"/>
+        <element name="headingContentTypeViewportPositionBottom" type="button" selector="return document.querySelectorAll('.pagebuilder-heading')[{{arg1}}].getBoundingClientRect().bottom;" parameterized="true"/>
+        <!-- Advanced Configuration -->
+        <element name="alignment" type="text" selector="(//div[contains(@class,'pagebuilder-heading')]//{{arg1}})[{{arg2}}][contains(@style,'text-align: {{arg3}};')]" parameterized="true"/>
+        <element name="noAlignment" type="text" selector="(//{{arg1}}[@data-content-type='heading'])[{{arg2}}][not(contains(@style,'text-align:'))]" parameterized="true"/>
+        <element name="border" type="text" selector="(//{{arg1}}[@data-content-type='heading'])[{{arg2}}][contains(@style,'border-style: {{arg3}};')]" parameterized="true"/>
+        <element name="borderColor" type="text" selector="(//{{arg1}}[@data-content-type='heading'])[{{arg2}}][contains(@style,'border-color: {{arg3}};')]" parameterized="true"/>
+        <element name="noBorderColor" type="text" selector="(//{{arg1}}[@data-content-type='heading'])[{{arg2}}][not(contains(@style,'border-color:'))]" parameterized="true"/>
+        <element name="borderWidth" type="text" selector="(//{{arg1}}[@data-content-type='heading'])[{{arg2}}][contains(@style,'border-width: {{arg3}}px;')]" parameterized="true"/>
+        <element name="borderRadius" type="text" selector="(//{{arg1}}[@data-content-type='heading'])[{{arg2}}][contains(@style,'border-radius: {{arg3}}px;')]" parameterized="true"/>
+        <element name="cssClasses" type="text" selector="(//{{arg1}}[@data-content-type='heading'])[{{arg2}}][contains(@class,'{{arg3}}')]" parameterized="true"/>
+        <element name="noCssClasses" type="text" selector="(//{{arg1}}[@data-content-type='heading'])[{{arg2}}][@class='placeholder-text' or not(@class)]" parameterized="true"/>
+        <element name="margins" type="text" selector="(//{{arg1}}[@data-content-type='heading'])[{{arg2}}][contains(@style,'margin: {{arg3}}px;')]" parameterized="true"/>
+        <element name="noMargins" type="text" selector="(//{{arg1}}[@data-content-type='heading'])[{{arg2}}][not(contains(@style,'margin:'))]" parameterized="true"/>
+        <element name="padding" type="text" selector="(//{{arg1}}[@data-content-type='heading'])[{{arg2}}][contains(@style,'padding: {{arg3}}px;')]" parameterized="true"/>
+        <element name="noPadding" type="text" selector="(//{{arg1}}[@data-content-type='heading'])[{{arg2}}][not(contains(@style,'padding:'))]" parameterized="true"/>
+    </section>
+    <section name="HeadingOnStorefront">
+        <element name="base" type="text" selector="(//*[@data-content-type='heading'])[{{arg2}}]" parameterized="true"/>
+        <element name="baseByTagName" type="text" selector="(//{{arg1}}[@data-content-type='heading'])[{{arg2}}]" parameterized="true"/>
+        <element name="baseJs" type="text" selector="document.querySelectorAll('[data-content-type=\'heading\']')[{{arg1}}]" parameterized="true"/>
+        <element name="hidden" type="text" selector="(//*[@data-content-type='heading'])[{{arg1}}][contains(@style, 'display: none')]" parameterized="true"/>
+        <element name="notHidden" type="text" selector="(//*[@data-content-type='heading'])[{{arg1}}][not(contains(@style, 'display: none'))]" parameterized="true"/>
+        <element name="headingNoText" type="button" selector="(//{{arg1}}[@data-content-type='heading' and .=''])[{{arg2}}]" parameterized="true"/>
+        <element name="headingText" type="button" selector="(//{{arg1}}[@data-content-type='heading' and .='{{arg2}}'])[{{arg3}}]" parameterized="true"/>
+        <element name="headingType" type="button" selector="(//{{arg1}}[@data-content-type='heading'])[{{arg2}}]" parameterized="true"/>
+        <!-- Advanced Configuration -->
+        <element name="alignment" type="text" selector="(//{{arg1}}[@data-content-type='heading'])[{{arg2}}][contains(@style,'text-align: {{arg3}};')]" parameterized="true"/>
+        <element name="noAlignment" type="text" selector="(//{{arg1}}[@data-content-type='heading'])[{{arg2}}][not(contains(@style,'text-align:'))]" parameterized="true"/>
+        <element name="border" type="text" selector="(//{{arg1}}[@data-content-type='heading'])[{{arg2}}][contains(@style,'border-style: {{arg3}};')]" parameterized="true"/>
+        <element name="borderColor" type="text" selector="(//{{arg1}}[@data-content-type='heading'])[{{arg2}}][contains(@style,'border-color: {{arg3}};')]" parameterized="true"/>
+        <element name="noBorderColor" type="text" selector="(//{{arg1}}[@data-content-type='heading'])[{{arg2}}][not(contains(@style,'border-color:'))]" parameterized="true"/>
+        <element name="borderWidth" type="text" selector="(//{{arg1}}[@data-content-type='heading'])[{{arg2}}][contains(@style,'border-width: {{arg3}}px;')]" parameterized="true"/>
+        <element name="borderRadius" type="text" selector="(//{{arg1}}[@data-content-type='heading'])[{{arg2}}][contains(@style,'border-radius: {{arg3}}px;')]" parameterized="true"/>
+        <element name="cssClasses" type="text" selector="(//{{arg1}}[@data-content-type='heading'])[{{arg2}}][contains(@class,'{{arg3}}')]" parameterized="true"/>
+        <element name="noCssClasses" type="text" selector="(//{{arg1}}[@data-content-type='heading'])[{{arg2}}][not(@class)]" parameterized="true"/>
+        <element name="margins" type="text" selector="(//{{arg1}}[@data-content-type='heading'])[{{arg2}}][contains(@style,'margin: {{arg3}}px;')]" parameterized="true"/>
+        <element name="noMargins" type="text" selector="(//{{arg1}}[@data-content-type='heading'])[{{arg2}}][not(contains(@style,'margin:'))]" parameterized="true"/>
+        <element name="padding" type="text" selector="(//{{arg1}}[@data-content-type='heading'])[{{arg2}}][contains(@style,'padding: {{arg3}}px;')]" parameterized="true"/>
+        <element name="noPadding" type="text" selector="(//{{arg1}}[@data-content-type='heading'])[{{arg2}}][not(contains(@style,'padding:'))]" parameterized="true"/>
+    </section>
+</sections>

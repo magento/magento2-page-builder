@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
+    <section name="ProductsOnStage">
+        <element name="base" type="text" selector="(//div[contains(@class,'pagebuilder-products')]//div[contains(@data-appearance,'grid')])[{{arg1}}]" parameterized="true"/>
+        <element name="price" type="text" selector="//div[contains(@class,'pagebuilder-products')]//div[contains(@data-appearance,'grid')]//div[contains(@data-role,'priceBox')]"/>
+        <element name="hidden" type="text" selector="(//div[contains(@class,'pagebuilder-products')]//div[contains(@data-appearance,'grid')])[{{arg1}}]/ancestor::*[contains(@class, 'pagebuilder-content-type-wrapper') and contains(@class, 'pagebuilder-content-type-hidden')]" parameterized="true"/>
+        <element name="notHidden" type="text" selector="(//div[contains(@class,'pagebuilder-products') and not(contains(@class,'placeholder'))])[{{arg1}}]//parent::*[contains(@class, 'pagebuilder-content-type-wrapper') and not(contains(@class, 'pagebuilder-content-type-hidden'))][1]" parameterized="true"/>
+        <element name="emptyProductsPlaceholder" type="text" selector="(//div[contains(@class,'pagebuilder-products')]//div[contains(@data-appearance,'grid')])[{{arg1}}]//*[contains(@class,'pagebuilder-products-placeholder')]" parameterized="true"/>
+        <element name="product" type="text" selector="(//div[contains(@class,'pagebuilder-products')]//div[contains(@data-appearance,'grid')])[{{arg1}}]//ol//li[contains(@class,'product-item')]" parameterized="true"/>
+        <element name="productImage" type="text" selector="(//div[contains(@class,'pagebuilder-products')]//div[contains(@data-appearance,'grid')]//ol//li[contains(@class,'product-item')])[{{arg1}}]//img[@class='product-image-photo']" parameterized="true"/>
+        <element name="productImageCSS" type="text" selector=".pagebuilder-products div[data-appearance=grid] ol li.product-item img.product-image-photo"/>
+        <element name="productName" type="text" selector="(//div[contains(@class,'pagebuilder-products')]//div[contains(@data-appearance,'grid')]//ol//li[contains(@class,'product-item')])[{{arg1}}]//strong//a[@class='product-item-link' and @href and contains(.,'{{arg2}}')]" parameterized="true"/>
+        <element name="productPrice" type="text" selector="(//div[contains(@class,'pagebuilder-products')]//div[contains(@data-appearance,'grid')]//ol//li[contains(@class,'product-item')])[{{arg1}}]//span[@class='price' and .='${{arg2}}']" parameterized="true"/>
+        <element name="productPriceContainer" type="text" selector=".pagebuilder-products div[data-appearance=grid] ol li.product-item div.price-box"/>
+        <element name="productAddToCart" type="text" selector="(//div[contains(@class,'pagebuilder-products')]//div[contains(@data-appearance,'grid')]//ol//li[contains(@class,'product-item')])[{{arg1}}]//button[contains(@class,'tocart') and @title='Add to Cart']" parameterized="true"/>
+        <element name="productAddToWishList" type="text" selector="(//div[contains(@class,'pagebuilder-products')]//div[contains(@data-appearance,'grid')]//ol//li[contains(@class,'product-item')])[{{arg1}}]//a[contains(@class,'towishlist') and @title='Add to Wish List']" parameterized="true"/>
+        <element name="productAddToCompare" type="text" selector="(//div[contains(@class,'pagebuilder-products')]//div[contains(@data-appearance,'grid')]//ol//li[contains(@class,'product-item')])[{{arg1}}]//a[contains(@class,'tocompare') and @title='Add to Compare']" parameterized="true"/>
+        <element name="productActions" type="text" selector=".pagebuilder-products div[data-appearance=grid] ol li.product-item div.product-item-actions"/>
+        <!-- Advanced Configuration -->
+        <element name="alignment" type="text" selector="(//div[contains(@class,'pagebuilder-products')]//div[contains(@data-appearance,'grid')])[{{arg1}}][contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
+        <element name="noAlignment" type="text" selector="(//div[contains(@class,'pagebuilder-products')]//div[contains(@data-appearance,'grid')])[{{arg1}}][not(contains(@style,'text-align:'))]" parameterized="true"/>
+        <element name="border" type="text" selector="(//div[contains(@class,'pagebuilder-products')]//div[contains(@data-appearance,'grid')])[{{arg1}}][contains(@style,'border-style: {{arg2}};')]" parameterized="true"/>
+        <element name="borderColor" type="text" selector="(//div[contains(@class,'pagebuilder-products')]//div[contains(@data-appearance,'grid')])[{{arg1}}][contains(@style,'border-color: {{arg2}};')]" parameterized="true"/>
+        <element name="noBorderColor" type="text" selector="(//div[contains(@class,'pagebuilder-products')]//div[contains(@data-appearance,'grid')])[{{arg1}}][not(contains(@style,'border-color:'))]" parameterized="true"/>
+        <element name="borderWidth" type="text" selector="(//div[contains(@class,'pagebuilder-products')]//div[contains(@data-appearance,'grid')])[{{arg1}}][contains(@style,'border-width: {{arg2}}px;')]" parameterized="true"/>
+        <element name="borderRadius" type="text" selector="(//div[contains(@class,'pagebuilder-products')]//div[contains(@data-appearance,'grid')])[{{arg1}}][contains(@style,'border-radius: {{arg2}}px;')]" parameterized="true"/>
+        <element name="cssClasses" type="text" selector="(//div[contains(@class,'pagebuilder-products')]//div[contains(@data-appearance,'grid')])[{{arg1}}][contains(@class,'{{arg2}}')]" parameterized="true"/>
+        <element name="noCssClasses" type="text" selector="(//div[contains(@class,'pagebuilder-products')]//div[contains(@data-appearance,'grid')])[{{arg1}}][not(@class)]" parameterized="true"/>
+        <element name="margins" type="text" selector="(//div[contains(@class,'pagebuilder-products')]//div[contains(@data-appearance,'grid')])[{{arg1}}][contains(@style,'margin: {{arg2}}px;')]" parameterized="true"/>
+        <element name="padding" type="text" selector="(//div[contains(@class,'pagebuilder-products')]//div[contains(@data-appearance,'grid')])[{{arg1}}][contains(@style,'padding: {{arg2}}px;')]" parameterized="true"/>
+    </section>
+    <section name="ProductsContentTypeForm">
+        <element name="conditionsListText" type="text" selector="//label[contains(@class,'admin__field-label')]//span[text()='Condition']"/>
+        <element name="conditionsList" type="text" selector=".rule-param-children"/>
+        <element name="conditionsListAddButton" type="button" selector="(//*[contains(@class,'rule-param-new-child')]//img)[{{arg1}}]" parameterized="true"/>
+        <element name="conditionsListAddTypeSelect" type="select" selector="(//*[contains(@class,'rule-param-new-child')]//select)[{{arg1}}]" parameterized="true"/>
+        <element name="conditionsListConditionPlaceholder" type="button" selector="//ul[contains(@class,'rule-param-children')]//a[text()='...']"/>
+        <element name="conditionsListConditionInput" type="button" selector=".rule-param-edit input"/>
+        <element name="conditionsListSavedValue" type="text" selector="//ul[contains(@class,'rule-param-children')]//li[{{arg1}}]//span[@class='rule-param'][{{arg2}}]/a" parameterized="true"/>
+        <element name="conditionsCombinationAggregateSelector" type="button" selector="//ul[contains(@class,'rule-param-children')]//span[contains(@class,'rule-param')]//select[contains(@id,'1--{{arg1}}__aggregator')]/ancestor::span[contains(@class,'rule-param')]//a" parameterized="true"/>
+        <element name="conditionsCombinationAggregateSelectorSelect" type="button" selector="//ul[contains(@class,'rule-param-children')]//span[contains(@class,'rule-param')]//select[contains(@id,'1--{{arg1}}__aggregator')]" parameterized="true"/>
+        <element name="conditionsCombinationAggregateBooleanSelector" type="button" selector="//ul[contains(@class,'rule-param-children')]//span[contains(@class,'rule-param')]//select[contains(@id,'1--{{arg1}}__value')]/ancestor::span[contains(@class,'rule-param')]//a" parameterized="true"/>
+        <element name="conditionsCombinationAggregateBooleanSelectorSelect" type="button" selector="//ul[contains(@class,'rule-param-children')]//span[contains(@class,'rule-param')]//select[contains(@id,'1--{{arg1}}__value')]" parameterized="true"/>
+        <element name="productsCountInput" type="input" selector="input[name='products_count']"/>
+    </section>
+    <section name="ProductsOnStorefront">
+        <element name="base" type="text" selector="(//div[contains(@data-content-type,'products')])[{{arg1}}]" parameterized="true"/>
+        <element name="price" type="text" selector="//div[contains(@data-content-type,'products')]//div[contains(@data-role,'priceBox')]"/>
+        <element name="hidden" type="text" selector="(//div[contains(@data-content-type,'products')])[{{arg1}}][contains(@style, 'display: none')]" parameterized="true"/>
+        <element name="notHidden" type="text" selector="(//div[contains(@data-content-type,'products')])[{{arg1}}][not(contains(@style, 'display: none'))]" parameterized="true"/>
+        <element name="product" type="text" selector="(//div[contains(@data-content-type,'products')])[{{arg1}}]//ol//li[contains(@class,'product-item')]" parameterized="true"/>
+        <element name="productImage" type="text" selector="(//div[contains(@data-content-type,'products')]//ol//li[contains(@class,'product-item')])[{{arg1}}]//img[@class='product-image-photo']" parameterized="true"/>
+        <element name="productImageCSS" type="text" selector="div[data-content-type=products] ol li.product-item img.product-image-photo"/>
+        <element name="productImageByProductName" type="text" selector="//div[contains(@data-content-type,'products')]//ol//li[contains(@class,'product-item')]//a[contains(.,'{{arg1}}')]//ancestor::li[contains(@class,'product-item')]//img[@class='product-image-photo']" parameterized="true"/>
+        <element name="productName" type="text" selector="(//div[contains(@data-content-type,'products')])//ol//li[contains(@class,'product-item')][{{arg1}}]//strong//a[@class='product-item-link' and @href and contains(.,'{{arg2}}')]" parameterized="true"/>
+        <element name="productNameByProductName" type="text" selector="//div[contains(@data-content-type,'products')]//ol//li[contains(@class,'product-item')]//a[contains(.,'{{arg1}}')]" parameterized="true"/>
+        <element name="productPrice" type="text" selector="(//div[contains(@data-content-type,'products')]//ol//li[contains(@class,'product-item')])[{{arg1}}]//span[@class='price' and .='${{arg2}}']" parameterized="true"/>
+        <element name="productPriceContainer" type="text" selector="div[data-content-type=products] ol li.product-item div.price-box"/>
+        <element name="productAddToCart" type="text" selector="(//div[contains(@data-content-type,'products')]//ol//li[contains(@class,'product-item')])[{{arg1}}]//button[contains(@class,'tocart') and @title='Add to Cart']" parameterized="true"/>
+        <element name="productAddToCartByProductName" type="text" selector="//div[contains(@data-content-type,'products')]//ol//li[contains(@class,'product-item')]//a[contains(.,'{{arg1}}')]//ancestor::li[contains(@class,'product-item')]//button[contains(@class,'tocart') and @title='Add to Cart']" parameterized="true"/>
+        <element name="productAddToWishList" type="text" selector="(//div[contains(@data-content-type,'products')]//ol//li[contains(@class,'product-item')])[{{arg1}}]//a[contains(@class,'towishlist') and @title='Add to Wish List']" parameterized="true"/>
+        <element name="productAddToWishListByProductName" type="text" selector="//div[contains(@data-content-type,'products')]//ol//li[contains(@class,'product-item')]//a[contains(.,'{{arg1}}')]//ancestor::li[contains(@class,'product-item')]//a[contains(@class,'towishlist') and @title='Add to Wish List']" parameterized="true"/>
+        <element name="productAddToCompare" type="text" selector="(//div[contains(@data-content-type,'products')]//ol//li[contains(@class,'product-item')])[{{arg1}}]//a[contains(@class,'tocompare') and @title='Add to Compare']" parameterized="true"/>
+        <element name="productAddToCompareByProductName" type="text" selector="//div[contains(@data-content-type,'products')]//ol//li[contains(@class,'product-item')]//a[contains(.,'{{arg1}}')]//ancestor::li[contains(@class,'product-item')]//a[contains(@class,'tocompare') and @title='Add to Compare']" parameterized="true"/>
+        <element name="productActions" type="text" selector="div[data-content-type=products] ol li.product-item div.product-item-actions"/>
+        <!-- Advanced Configuration -->
+        <element name="alignment" type="text" selector="(//div[contains(@data-content-type,'products')])[{{arg1}}][contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
+        <element name="noAlignment" type="text" selector="(//div[contains(@data-content-type,'products')])[{{arg1}}][not(contains(@style,'text-align:'))]" parameterized="true"/>
+        <element name="border" type="text" selector="(//div[contains(@data-content-type,'products')])[{{arg1}}][contains(@style,'border-style: {{arg2}};')]" parameterized="true"/>
+        <element name="borderColor" type="text" selector="(//div[contains(@data-content-type,'products')])[{{arg1}}][contains(@style,'border-color: {{arg2}};')]" parameterized="true"/>
+        <element name="noBorderColor" type="text" selector="(//div[contains(@data-content-type,'products')])[{{arg1}}][not(contains(@style,'border-color:'))]" parameterized="true"/>
+        <element name="borderWidth" type="text" selector="(//div[contains(@data-content-type,'products')])[{{arg1}}][contains(@style,'border-width: {{arg2}}px;')]" parameterized="true"/>
+        <element name="borderRadius" type="text" selector="(//div[contains(@data-content-type,'products')])[{{arg1}}][contains(@style,'border-radius: {{arg2}}px;')]" parameterized="true"/>
+        <element name="cssClasses" type="text" selector="(//div[contains(@data-content-type,'products')])[{{arg1}}][contains(@class,'{{arg2}}')]" parameterized="true"/>
+        <element name="noCssClasses" type="text" selector="(//div[contains(@data-content-type,'products')])[{{arg1}}]" parameterized="true"/>
+        <element name="margins" type="text" selector="(//div[contains(@data-content-type,'products')])[{{arg1}}][contains(@style,'margin: {{arg2}}px;')]" parameterized="true"/>
+        <element name="padding" type="text" selector="(//div[contains(@data-content-type,'products')])[{{arg1}}][contains(@style,'padding: {{arg2}}px;')]" parameterized="true"/>
+    </section>
+</sections>

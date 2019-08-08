@@ -1,0 +1,968 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="ValidateGridDefaultSizeOnStage">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Grid Size: Verify default grid size"/>
+            <description value="Verify the default grid size (12) is set correctly within the stage."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-950"/>
+            <testCaseId value="MC-2280"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-columnGridSize"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logOut"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <comment userInput="Validate default grid size on initial drop" stepKey="commentValidateInitial"/>
+        <actionGroup ref="openGridSizeForm" stepKey="openGridSizeForm" />
+        <seeInField selector="{{ColumnOnBackend.gridSizeInput('1')}}" userInput="{{PageBuilderGridSize.defaultGridSize}}" stepKey="seeDefaultGridSize"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <comment userInput="Validate default grid size after save" stepKey="commentValidateAfterSave"/>
+        <actionGroup ref="openGridSizeForm" stepKey="openGridSizeFormAfterSave" />
+        <seeInField selector="{{ColumnOnBackend.gridSizeInput('1')}}" userInput="{{PageBuilderGridSize.defaultGridSize}}" stepKey="seeDefaultGridSizeAfterSave"/>
+    </test>
+    <test name="ValidateGridInputFocusedOnOpen">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Grid Size: Verify grid form input is auto focused"/>
+            <description value="Verify when the grid form is opened the field is focused"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-950"/>
+            <testCaseId value="MC-2281"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-columnGridSize"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logOut"/>
+        </after>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <!-- Validate input is focused -->
+        <comment userInput="Validate input is focused" stepKey="commentValidateInitial"/>
+        <actionGroup ref="openGridSizeForm" stepKey="openGridSizeForm" />
+        <executeJS function="return window.getSelection().toString();" stepKey="getSelectedTextFromWindow"/>
+        <assertEquals stepKey="assertSelectionIsDefaultGridSize">
+            <expectedResult type="variable">getSelectedTextFromWindow</expectedResult>
+            <actualResult type="string">{{PageBuilderGridSize.defaultGridSize}}</actualResult>
+        </assertEquals>
+    </test>
+    <test name="ColumnValidateOddDefaultGridSizeIsSplitCorrectly">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Grid Size: Verify that the initial two column split is correct when the default grid size is odd."/>
+            <description value="Verify that the initial two column split is correct when the default grid size is odd."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-950"/>
+            <testCaseId value="MC-2309"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-columnGridSize"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set cms/pagebuilder/column_grid_default 5" stepKey="setDefaultGridSize"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/pagebuilder/column_grid_default 12" stepKey="setDefaultGridSize"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('1', '3/5')}}" stepKey="verifyFirstColumn"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('2', '2/5')}}" stepKey="verifySecondColumn"/>
+    </test>
+    <test name="ColumnValidateColumnGridTooltipMessage">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Grid Size: Column grid panel tooltip updates with max column size."/>
+            <description value="Verify that the tooltip for grid size updates to reflect the max column size."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-950"/>
+            <testCaseId value="MC-2313"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-columnGridSize"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set cms/pagebuilder/column_grid_default 3" stepKey="setDefaultGridSize"/>
+            <magentoCLI command="config:set cms/pagebuilder/column_grid_max 5" stepKey="setMaxGridSize"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/pagebuilder/column_grid_default 12" stepKey="setDefaultGridSize"/>
+            <magentoCLI command="config:set cms/pagebuilder/column_grid_max 16" stepKey="setMaxGridSize"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="openGridSizeForm" stepKey="openGridSizeForm" />
+        <click selector="{{ColumnOnBackend.gridSizeTooltip('1')}}" stepKey="clickWithinPanel"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.gridSizeTooltipWithMax('1', PageBuilderGridSize.gridSize_5)}}" stepKey="verifyTooltip"/>
+    </test>
+    <test name="SetDefaultGridSize14">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Grid Size: Set the grid size to 14"/>
+            <description value="Set the grid size to 14 and validate columns width doesn't change"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-950"/>
+            <testCaseId value="MC-2282"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-columnGridSize"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logOut"/>
+        </after>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth" stepKey="columnOneWidthGrid12"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('2')}}').clientWidth" stepKey="columnTwoWidthGrid12"/>
+        <actionGroup ref="updateGridSize" stepKey="updateGridSizeTo14">
+            <argument name="gridSize" value="14"/>
+        </actionGroup>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth" stepKey="columnOneWidthGrid14"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('2')}}').clientWidth" stepKey="columnTwoWidthGrid14"/>
+        <!-- Validate first column unchanged -->
+        <comment userInput="Validate first column unchanged" stepKey="commentValidateFirstCommentUnchanged"/>
+        <assertEquals stepKey="assertFirstColumnsWidth">
+            <expectedResult type="variable">columnOneWidthGrid12</expectedResult>
+            <actualResult type="variable">columnOneWidthGrid14</actualResult>
+        </assertEquals>
+        <!-- Validate second column unchanged -->
+        <comment userInput="Validate second column unchanged" stepKey="commentValidateSecondCommentUnchanged"/>
+        <assertEquals stepKey="assertSecondColumnsWidth">
+            <expectedResult type="variable">columnTwoWidthGrid12</expectedResult>
+            <actualResult type="variable">columnTwoWidthGrid14</actualResult>
+        </assertEquals>
+    </test>
+    <test name="SetDefaultGridSize7">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Grid Size: Set the grid size to 7"/>
+            <description value="Set the grid size to 7 and validate columns adjust to fit new grid size"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-950"/>
+            <testCaseId value="MC-2283"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-columnGridSize"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/pagebuilder/column_grid_default 12" stepKey="setDefaultGridSize"/>
+            <actionGroup ref="logout" stepKey="logOut"/>
+        </after>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth" stepKey="columnOneWidthGrid12"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('2')}}').clientWidth" stepKey="columnTwoWidthGrid12"/>
+        <actionGroup ref="updateGridSize" stepKey="updateGridSizeTo7">
+            <argument name="gridSize" value="7"/>
+        </actionGroup>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth" stepKey="columnOneWidthGrid7"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('2')}}').clientWidth" stepKey="columnTwoWidthGrid7"/>
+        <!-- Validate first column grew larger -->
+        <comment userInput="Validate first column grew larger" stepKey="commentValidateFirstCommentUnchanged"/>
+        <assertGreaterThan stepKey="assertOriginalWidthGreaterThanNewWidth">
+            <expectedResult type="variable">columnOneWidthGrid12</expectedResult>
+            <actualResult type="variable">columnOneWidthGrid7</actualResult>
+        </assertGreaterThan>
+        <!-- Validate second column shrunk -->
+        <comment userInput="Validate second column shrunk" stepKey="commentValidateSecondCommentUnchanged"/>
+        <assertLessThan stepKey="assertOriginalWidthLessThanNewWidth">
+            <expectedResult type="variable">columnTwoWidthGrid12</expectedResult>
+            <actualResult type="variable">columnTwoWidthGrid7</actualResult>
+        </assertLessThan>
+        <seeElement selector="{{ColumnOnBackend.displayLabel('1','4/7')}}" stepKey="checkWidthFirstColumn"/>
+        <seeElement selector="{{ColumnOnBackend.displayLabel('2','3/7')}}" stepKey="checkWidthSecondColumn"/>
+    </test>
+    <test name="ValidateColumnsMaintainRatioWithoutHistory">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Grid Size: Set the grid size and restore without history"/>
+            <description value="Set the grid size to 6, change 1st column to 1/6 clear history and change back to 12 grid size"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-950"/>
+            <testCaseId value="MC-2332"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-columnGridSize"/>
+            <group value="pagebuilder-divider"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logOut"/>
+        </after>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="updateGridSize" stepKey="updateGridSizeTo6">
+            <argument name="gridSize" value="6"/>
+        </actionGroup>
+        <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="2" stepKey="seeNumberOfColumns2"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('1','3/6')}}" stepKey="validateLeftColumnWidth"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('2','3/6')}}" stepKey="validateRightColumnWidth"/>
+        <!-- Drag divider into first column to clear history -->
+        <comment userInput="Drag divider into first column to clear history" stepKey="commentAddDividerToColumn" />
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <!-- Resize first column to 1/6 -->
+        <comment userInput="Resize first column to 1/6" stepKey="commentResizeColumn" />
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnResizeGridLine('1')}}').clientWidth" stepKey="guideWidth"/>
+        <dragAndDrop selector1="{{ColumnOnBackend.columnX('1')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('1')}}" x="$guideWidth" stepKey="resizeColumn1"/>
+        <waitForPageLoad stepKey="waitForDragAndDrop"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('1','1/6')}}" stepKey="validateLeftColumnWidth2"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('2','5/6')}}" stepKey="validateRightColumnWidth2"/>
+        <!-- Change grid size back to 12 and validate column maintained ratio -->
+        <comment userInput="Change grid size back to 12 and validate column maintained ratio" stepKey="commentSetGridSizeTo12" />
+        <actionGroup ref="updateGridSize" stepKey="updateGridSizeTo12">
+            <argument name="gridSize" value="12"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('1','2/12')}}" stepKey="validateLeftColumnWidth3"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('2','10/12')}}" stepKey="validateRightColumnWidth3"/>
+    </test>
+    <test name="ValidateGridSizeFormDisablesStage">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Grid Size: Check the stage can't be interacted with when the grid size form is open."/>
+            <description value="Check the stage can't be interacted with when the grid size form is open."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-950"/>
+            <testCaseId value="MC-2284"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-columnGridSize"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logOut"/>
+        </after>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragAdditionalRow">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="openGridSizeForm" stepKey="openGridSizeForm" />
+        <!-- Validate column options dont display -->
+        <comment userInput="Validate column options dont display" stepKey="commentColumnOptionsHidden"/>
+        <moveMouseOver selector="{{ColumnOnBackend.columnX('2')}}" stepKey="moveMouseOverColumn" />
+        <waitForPageLoad stepKey="waitForAnimations" />
+        <waitForElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenuByIndex(PageBuilderColumnContentType.role, '2')}}" stepKey="waitForColumnOptions" />
+        <dontSee selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenuByIndex(PageBuilderColumnContentType.role, '2')}}" stepKey="dontSeeColumnOptions" />
+        <waitForElementNotVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenuByIndex(PageBuilderColumnContentType.role, '2')}}" stepKey="notVisibleColumnOptions" />
+        <!-- Validate row options dont display -->
+        <comment userInput="Validate row options dont display" stepKey="commentRowOptionsHidden"/>
+        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStageByIndex(PageBuilderRowContentType.role, '2')}}" x="10" y="10" stepKey="moveMouseOverRow" />
+        <waitForPageLoad stepKey="waitForRowAnimations" />
+        <waitForElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenuByIndex(PageBuilderRowContentType.role, '2')}}" stepKey="waitForRowOptions" />
+        <dontSee selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenuByIndex(PageBuilderRowContentType.role, '2')}}" stepKey="dontSeeRowOptions" />
+        <!-- Close grid form and check options are restored -->
+        <comment userInput="Close grid form and check options are restored" stepKey="commentCloseAndValidateOptionsAreRestored"/>
+        <actionGroup ref="closeGridSizeForm" stepKey="closeGridForm" />
+        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStage(PageBuilderRowContentType.role)}}" x="10" y="0" stepKey="onMouseOverContentTypeStage"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(PageBuilderRowContentType.role)}}" stepKey="waitForOptions"/>
+    </test>
+    <test name="ValidateGridSizeFormDisablesStageAfterTabItemOptions">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Grid Size: Options panels should not appear when grid form is open"/>
+            <description value="Verify that switching directly from the tab items options to grid form keeps stage disabled"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-950"/>
+            <testCaseId value="MC-2350"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-columnGridSize"/>
+            <group value="pagebuilder-tabs"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logOut"/>
+        </after>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragAdditionalRow">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragAdditionalRow2">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="openGridSizeForm" stepKey="openGridSizeForm" />
+        <!-- Validate column options don't display -->
+        <comment userInput="Validate column options don't display" stepKey="commentColumnOptionsHidden"/>
+        <moveMouseOver selector="{{ColumnOnBackend.columnX('2')}}" stepKey="moveMouseOverColumn" />
+        <waitForPageLoad stepKey="waitForAnimations" />
+        <waitForElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenuByIndex(PageBuilderColumnContentType.role, '2')}}" stepKey="waitForColumnOptions" />
+        <dontSee selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenuByIndex(PageBuilderColumnContentType.role, '2')}}" stepKey="dontSeeColumnOptions" />
+        <waitForElementNotVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenuByIndex(PageBuilderColumnContentType.role, '2')}}" stepKey="notVisibleColumnOptions" />
+        <!-- Validate row options don't display -->
+        <comment userInput="Validate row options don't display" stepKey="commentRowOptionsHidden"/>
+        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStageByIndex(PageBuilderRowContentType.role, '3')}}" x="10" y="10" stepKey="moveMouseOverRow" />
+        <waitForPageLoad stepKey="waitForRowAnimations" />
+        <waitForElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenuByIndex(PageBuilderRowContentType.role, '3')}}" stepKey="waitForRowOptions" />
+        <dontSee selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenuByIndex(PageBuilderRowContentType.role, '3')}}" stepKey="dontSeeRowOptions" />
+        <!-- Close grid form and check options are restored -->
+        <comment userInput="Close grid form and check options are restored" stepKey="commentCloseAndValidateOptionsAreRestored"/>
+        <actionGroup ref="closeGridSizeForm" stepKey="closeGridForm" />
+        <scrollTo selector="{{CmsNewPagePageActionsSection.pageTitle}}" stepKey="scrollToTop"/>
+        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStage(PageBuilderRowContentType.role)}}" x="10" y="0" stepKey="onMouseOverContentTypeStage"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(PageBuilderRowContentType.role)}}" stepKey="waitForOptions"/>
+    </test>
+    <test name="ValidateUnfocusUpdatesGrid">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Grid Size: Unfocusing Grid Form Updates Grid"/>
+            <description value="Checks if unfocusing / clicking out of the column group updates the grid size"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-950"/>
+            <testCaseId value="MC-2286"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-columnGridSize"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logOut"/>
+        </after>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="openGridSizeForm" stepKey="openGridSizeForm" />
+        <fillField selector="{{ColumnOnBackend.gridSizeInput('1')}}" userInput="8" stepKey="enterGridSize"/>
+        <actionGroup ref="closeGridSizeForm" stepKey="closeGridFormByClicking" />
+        <seeElement selector="{{ColumnOnBackend.displayLabel('1','4/8')}}" stepKey="checkWidthFirstColumn"/>
+        <seeElement selector="{{ColumnOnBackend.displayLabel('2','4/8')}}" stepKey="checkWidthSecondColumn"/>
+    </test>
+    <test name="ValidateEmptyColumnsDeletedOnSmallerGridSize">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Grid Size: Set grid size smaller to remove column"/>
+            <description value="Check if empty columns will be deleted when reducing the grid size under the amount of columns"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-950"/>
+            <testCaseId value="MC-2287"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-columnGridSize"/>
+            <group value="pagebuilder-divider"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logOut"/>
+        </after>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateColumn2">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="4" stepKey="seeNumberOfColumns4"/>
+        <actionGroup ref="updateGridSize" stepKey="updateGridSizeTo1">
+            <argument name="gridSize" value="3"/>
+        </actionGroup>
+        <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="3" stepKey="seeNumberOfColumns3"/>
+    </test>
+    <test name="ValidateResizeOnUnevenGrid">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Grid Size: Verify we can resize columns on uneven grid sizes"/>
+            <description value="Verify we can resize columns on uneven grid sizes"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-950"/>
+            <testCaseId value="MC-2295"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-columnGridSize"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logOut"/>
+        </after>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="3" stepKey="seeNumberOfColumns3"/>
+        <actionGroup ref="updateGridSize" stepKey="updateGridSizeTo7">
+            <argument name="gridSize" value="7"/>
+        </actionGroup>
+        <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="3" stepKey="seeNumberOfColumnsStill3"/>
+        <actionGroup ref="closeGridSizeForm" stepKey="closeGridSizeForm"/>
+        <!-- Verify Initial Column Sizes -->
+        <comment userInput="Verify Initial Column Sizes " stepKey="context0"/>
+        <seeElement selector="{{ColumnOnBackend.displayLabel('1','2/7')}}" stepKey="checkWidthFirstColumn"/>
+        <seeElement selector="{{ColumnOnBackend.displayLabel('2','2/7')}}" stepKey="checkWidthSecondColumn"/>
+        <seeElement selector="{{ColumnOnBackend.displayLabel('3','3/7')}}" stepKey="checkWidthThirdColumn"/>
+        <!-- Grab grid guide location for column 1 -->
+        <comment userInput="Grab grid guide width" stepKey="context1"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnResizeGridLine('1')}}').clientWidth" stepKey="guideWidth"/>
+        <!-- Resize Column 1 -->
+        <comment userInput="Resize Column 1" stepKey="context2"/>
+        <dragAndDrop selector1="{{ColumnOnBackend.columnX('1')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('1')}}" x="$guideWidth" stepKey="resizeColumn1"/>
+        <waitForPageLoad stepKey="waitForDragAndDrop"/>
+        <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="3" stepKey="seeNumberOfColumnsStill32"/>
+        <!-- Verify New Column Sizes -->
+        <comment userInput="Verify New Column Sizes " stepKey="context3"/>
+        <seeElement selector="{{ColumnOnBackend.displayLabel('1','1/7')}}" stepKey="checkWidthFirstColumn2"/>
+        <seeElement selector="{{ColumnOnBackend.displayLabel('2','3/7')}}" stepKey="checkWidthSecondColumn2"/>
+        <seeElement selector="{{ColumnOnBackend.displayLabel('3','3/7')}}" stepKey="checkWidthThirdColumn2"/>
+    </test>
+    <test name="ValidateResizeHistory">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Grid Size: Verify when changing back to previous grid size the original division is restored."/>
+            <description value="Verify when changing back to previous grid size the original division is restored."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-950"/>
+            <testCaseId value="MC-2296"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-columnGridSize"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logOut"/>
+        </after>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <executeJS function="return parseInt(document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth / 10, 10) * 10;" stepKey="columnOneWidthGrid12"/>
+        <executeJS function="return parseInt(document.querySelector('{{ColumnOnBackend.columnX('2')}}').clientWidth / 10, 10) * 10;" stepKey="columnTwoWidthGrid12"/>
+        <assertEquals stepKey="assertColumnsAreEqual">
+            <expectedResult type="variable">columnOneWidthGrid12</expectedResult>
+            <actualResult type="variable">columnTwoWidthGrid12</actualResult>
+        </assertEquals>
+        <actionGroup ref="updateGridSize" stepKey="updateGridSizeTo13">
+            <argument name="gridSize" value="13"/>
+        </actionGroup>
+        <executeJS function="return parseInt(document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth / 10, 10) * 10;" stepKey="columnOneWidthGrid13"/>
+        <executeJS function="return parseInt(document.querySelector('{{ColumnOnBackend.columnX('2')}}').clientWidth / 10, 10) * 10;" stepKey="columnTwoWidthGrid13"/>
+        <!-- Validate first column grew larger -->
+        <comment userInput="Validate first column grew larger" stepKey="commentValidateFirstCommentUnchanged"/>
+        <assertGreaterThan stepKey="assertColumnOneGreaterThanColumnTwo">
+            <expectedResult type="variable">columnTwoWidthGrid13</expectedResult>
+            <actualResult type="variable">columnOneWidthGrid13</actualResult>
+        </assertGreaterThan>
+        <fillField selector="{{ColumnOnBackend.gridSizeInput('1')}}" userInput="12" stepKey="resetGridSizeTo12"/>
+        <pressKey selector="{{ColumnOnBackend.gridSizeInput('1')}}" parameterArray="['su',\Facebook\WebDriver\WebDriverKeys::ENTER]" stepKey="pressKeyEnter"/>
+        <waitForPageLoad stepKey="waitForUpdate" />
+        <executeJS function="return parseInt(document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth / 10, 10) * 10;" stepKey="columnOneWidthGrid12Restored"/>
+        <executeJS function="return parseInt(document.querySelector('{{ColumnOnBackend.columnX('2')}}').clientWidth / 10, 10) * 10;" stepKey="columnTwoWidthGrid12Restored"/>
+        <!-- Validate columns are equal again -->
+        <comment userInput="Validate columns are equal again" stepKey="commentValidateColumnsEqual"/>
+        <assertEquals stepKey="assertColumnsAreEqualAgain">
+            <expectedResult type="variable">columnOneWidthGrid12Restored</expectedResult>
+            <actualResult type="variable">columnTwoWidthGrid12Restored</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertColumn1IsRestored">
+            <expectedResult type="variable">columnOneWidthGrid12</expectedResult>
+            <actualResult type="variable">columnOneWidthGrid12Restored</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertColumn2IsRestored">
+            <expectedResult type="variable">columnTwoWidthGrid12</expectedResult>
+            <actualResult type="variable">columnTwoWidthGrid12Restored</actualResult>
+        </assertEquals>
+    </test>
+    <test name="CanAddColumnToSmallGridSize">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Grid Size: Verify we can add a column into a grid with a small size."/>
+            <description value="Set grid size to 3, add new column, validate existence and equal widths for all columns."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-950"/>
+            <testCaseId value="MC-2297"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-columnGridSize"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logOut"/>
+        </after>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="updateGridSize" stepKey="updateGridSizeTo3">
+            <argument name="gridSize" value="3"/>
+        </actionGroup>
+        <actionGroup ref="closeGridSizeForm" stepKey="closeGridSizeForm"/>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="3" stepKey="seeNumberOfColumns3"/>
+        <seeElement selector="{{ColumnOnBackend.displayLabel('1','1/3')}}" stepKey="checkWidthFirstColumn"/>
+        <seeElement selector="{{ColumnOnBackend.displayLabel('2','1/3')}}" stepKey="checkWidthSecondColumn"/>
+        <seeElement selector="{{ColumnOnBackend.displayLabel('3','1/3')}}" stepKey="checkWidthThirdColumn"/>
+    </test>
+    <test name="CannotAddColumnToFullSmallGridSize">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Grid Size: Verify we cannot add a column to a full group with a small grid size."/>
+            <description value="Set grid size to 2, attempt to add additional column, validate no column added."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-950"/>
+            <testCaseId value="MC-2298"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-columnGridSize"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logOut"/>
+        </after>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="updateGridSize" stepKey="updateGridSizeTo2">
+            <argument name="gridSize" value="2"/>
+        </actionGroup>
+        <actionGroup ref="closeGridSizeForm" stepKey="closeGridSizeForm"/>
+        <waitForElementVisible selector="{{PageBuilderStage.contentTypeInStageByIndex(PageBuilderColumnContentType.role, '1')}}" stepKey="waitForColumn1Visible"/>
+        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStageByIndex(PageBuilderColumnContentType.role, '1')}}" stepKey="mouseOverColumn1"/>
+        <waitForElementVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenuByIndex(PageBuilderColumnContentType.role, '1')}}" stepKey="waitForOptionsMenu"/>
+        <click selector="{{PageBuilderContentTypeOptionsMenu.contentTypeDuplicate(PageBuilderColumnContentType.role, '1')}}" stepKey="clickDuplicate"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible selector="{{PageBuilderStage.modalOk}}" stepKey="waitForCannotDuplicateColumnModal"/>
+        <seeElement selector="{{PageBuilderStage.errorModal(PageBuilderColumnDuplicate.cannotDuplicateColumnErrorMessage)}}" stepKey="seeErrorMessage"/>
+        <click selector="{{PageBuilderStage.modalOk}}" stepKey="closeModal"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="2" stepKey="seeNumberOfColumns2"/>
+    </test>
+    <test name="ValidateMaxColumnError">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Grid Size: Cant set grid size above max"/>
+            <description value="Checks if setting the grid size above the max prompts an error"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-950"/>
+            <testCaseId value="MC-2299"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-columnGridSize"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logOut"/>
+        </after>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="openGridSizeForm" stepKey="openGridSizeForm" />
+        <actionGroup ref="updateGridSizeInvalid" stepKey="enterGridSizeOverMax">
+            <argument name="gridSize" value="50"/>
+            <argument name="index" value="1"/>
+            <argument name="errorMessage" value="PageBuilderGridSize.maximumGridSizeErrorMessage"/>
+        </actionGroup>
+    </test>
+    <test name="ValidateInvalidGridSizeError">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Grid Size: Cant set grid size above to invalid number"/>
+            <description value="Checks if setting the grid size to negative prompts an error"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-950"/>
+            <testCaseId value="MC-2302"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-columnGridSize"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logOut"/>
+        </after>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="openGridSizeForm" stepKey="openGridSizeForm" />
+        <actionGroup ref="updateGridSizeInvalid" stepKey="enterNegativeGridSize">
+            <argument name="gridSize" value="-50"/>
+            <argument name="index" value="1"/>
+            <argument name="errorMessage" value="PageBuilderGridSize.minimumGridSizeErrorMessage"/>
+        </actionGroup>
+        <actionGroup ref="updateGridSizeInvalid" stepKey="enterGridSize1">
+            <argument name="gridSize" value="1"/>
+            <argument name="index" value="1"/>
+            <argument name="errorMessage" value="PageBuilderGridSize.minimumGridSizeErrorMessage"/>
+        </actionGroup>
+        <actionGroup ref="updateGridSizeInvalid" stepKey="enterGridSize0">
+            <argument name="gridSize" value="0"/>
+            <argument name="index" value="1"/>
+            <argument name="errorMessage" value="PageBuilderGridSize.minimumGridSizeErrorMessage"/>
+        </actionGroup>
+        <!-- Check validation occurs when entering as text -->
+        <comment userInput="Check validation occurs when entering as text" stepKey="commentValidateStringInput"/>
+        <executeJS function="document.evaluate(&quot;{{ColumnOnBackend.gridSizeInput('1')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.setAttribute('type', 'text')" stepKey="changeInputToText" />
+        <actionGroup ref="updateGridSizeInvalid" stepKey="enterInvalidGridSizeString">
+            <argument name="gridSize" value="InvalidString"/>
+            <argument name="index" value="1"/>
+            <argument name="errorMessage" value="PageBuilderGridSize.invalidNumberErrorMessage"/>
+        </actionGroup>
+    </test>
+    <test name="ValidateDifferentGridSizePerGroup">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Grid Size: Set different grid sizes for multiple groups"/>
+            <description value="Checks if able to set separate grid sizes for multiple column groups"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-950"/>
+            <testCaseId value="MC-2301"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-columnGridSize"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logOut"/>
+        </after>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragSecondRowIntoStage">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragColumn1IntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragColumn2IntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="updateGridSize" stepKey="updateGridSize1">
+            <argument name="index" value="1"/>
+            <argument name="gridSize" value="6"/>
+        </actionGroup>
+        <seeElement selector="{{ColumnOnBackend.displayLabel('1','3/6')}}" stepKey="checkWidthFirstColumnGroupColumn1"/>
+        <seeElement selector="{{ColumnOnBackend.displayLabel('2','3/6')}}" stepKey="checkWidthFirstColumnGroupColumn2"/>
+        <actionGroup ref="updateGridSize" stepKey="updateGridSize2">
+            <argument name="index" value="2"/>
+            <argument name="gridSize" value="8"/>
+        </actionGroup>
+        <seeElement selector="{{ColumnOnBackend.displayLabel('3','4/8')}}" stepKey="checkWidthSecondColumnGroupColumn1"/>
+        <seeElement selector="{{ColumnOnBackend.displayLabel('4','4/8')}}" stepKey="checkWidthSecondColumnGroupColumn2"/>
+    </test>
+    <test name="ValidateGridPanelWontCloseWithError">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Grid Size: Grid Form Stays Open When Error Is Present"/>
+            <description value="Verify the grid panel is displayed always when an error is present"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-950"/>
+            <testCaseId value="MC-2304"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-columnGridSize"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logOut"/>
+        </after>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="openGridSizeForm" stepKey="openGridSizeForm" />
+        <actionGroup ref="updateGridSizeInvalid" stepKey="enterInvalidGridSize">
+            <argument name="gridSize" value="50"/>
+            <argument name="index" value="1"/>
+            <argument name="errorMessage" value="PageBuilderGridSize.maximumGridSizeErrorMessage"/>
+        </actionGroup>
+        <click selector="{{ColumnOnBackend.columnGroup('1')}}" stepKey="clickOtherArea"/>
+        <seeElement selector="{{ColumnOnBackend.gridSizeError('1', 'maximum grid size supported')}}" stepKey="verifyMaxError2"/>
+        <fillField selector="{{ColumnOnBackend.gridSizeInput('1')}}" userInput="8" stepKey="enterValidGridSize"/>
+        <actionGroup ref="closeGridSizeForm" stepKey="closeGridFormByClicking2" />
+        <waitForElement selector="{{ColumnOnBackend.gridSizeInput('1')}}" stepKey="waitForValidatePanelClosed"/>
+        <dontSeeElement selector="{{ColumnOnBackend.gridSizeInput('1')}}" stepKey="validatePanelClosed"/>
+    </test>
+    <test name="ValidateGridSizeSmallerThanColumnsError">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Grid Size: Cant reduce grid size lower than full columns"/>
+            <description value="Verify that setting the grid size lower than full columns prompts error"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-950"/>
+            <testCaseId value="MC-2300"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-columnGridSize"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logOut"/>
+        </after>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="updateGridSize" stepKey="updateGridSizeTo4">
+            <argument name="gridSize" value="4"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="addColumn1">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="addColumn2">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="3"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="addText1">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="addText2">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="addText3">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="3"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="addText4">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="4"/>
+        </actionGroup>
+        <actionGroup ref="openGridSizeForm" stepKey="openGridSizeForm" />
+        <actionGroup ref="updateGridSizeInvalid" stepKey="enterInvalidGridSize">
+            <argument name="gridSize" value="3"/>
+            <argument name="index" value="1"/>
+            <argument name="errorMessage" value="PageBuilderGridSize.smallerThanTotalColumnsErrorMessage"/>
+        </actionGroup>
+    </test>
+    <test name="MoveColumnBetweenGroupsOfDifferentGridSize">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Grid Size: Move columns between different groups of different sizes"/>
+            <description value="Verify that columns can be moved between column groups of varying grid size"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-950"/>
+            <testCaseId value="MC-2303"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-columnGridSize"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logOut"/>
+        </after>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragSecondRowIntoStage">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragColumn1IntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragColumn2IntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="updateGridSize" stepKey="updateGridSize1">
+            <argument name="index" value="1"/>
+            <argument name="gridSize" value="8"/>
+        </actionGroup>
+        <actionGroup ref="closeGridSizeForm" stepKey="closeGridFormByClicking" />
+        <actionGroup ref="dragColumnToAnotherColumnGroup" stepKey="moveColumnToSecondGroup">
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetIndex" value="3"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('1', '8/8')}}" stepKey="verifyOriginalColumnGroup"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('2', '1/12')}}" stepKey="verifyMovedColumn"/>
+    </test>
+    <test name="ValidateGridPanelWontCloseOnArrowClick">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Grid Size: Extensible grid form shouldn't close after clicking number spinners"/>
+            <description value="Verify that the grid form stays open after clicking the number spinners in input"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-950"/>
+            <testCaseId value="MC-2308"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-columnGridSize"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logOut"/>
+        </after>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="openGridSizeForm" stepKey="openGridSizeForm" />
+        <click selector="{{ColumnOnBackend.gridSizeTooltip('1')}}" stepKey="clickWithinPanel"/>
+        <seeElement selector="{{ColumnOnBackend.gridSizeInput('1')}}" stepKey="verifyPanelStillOpen"/>
+    </test>
+</tests>

@@ -1,0 +1,984 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="DividerEmptyLineColor">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Divider"/>
+            <title value="Line Color - Empty"/>
+            <description value="Validate Empty Line Color For Divider"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-90475"/>
+            <testCaseId value="MC-2529"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-divider"/>
+            <group value="pagebuilder-divider-general"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragDividerIntoStage">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="clearSlideOutPanelFieldGeneral" stepKey="enterDividerLineColor">
+            <argument name="property" value="PageBuilderDividerLineColor_Empty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <actionGroup ref="validateDividerWithoutColor" stepKey="validateStage">
+            <argument name="page" value="DividerOnStage"/>
+            <argument name="thickness" value="PageBuilderDividerLineThickness_Default"/>
+            <argument name="width" value="PageBuilderDividerLineWidth_Default"/>
+        </actionGroup>
+        <!-- Validate Edit Panel -->
+        <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateColor1">
+            <argument name="property" value="PageBuilderDividerLineColor_Empty"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
+        <actionGroup ref="validateDividerWithoutColor" stepKey="validateStage2">
+            <argument name="page" value="DividerOnStage"/>
+            <argument name="thickness" value="PageBuilderDividerLineThickness_Default"/>
+            <argument name="width" value="PageBuilderDividerLineWidth_Default"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage3">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <!-- Validate Edit Panel After Save -->
+        <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateColor">
+            <argument name="property" value="PageBuilderDividerLineColor_Empty"/>
+        </actionGroup>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="validateDividerWithoutColor" stepKey="validateStorefront">
+            <argument name="page" value="DividerOnStorefront"/>
+            <argument name="thickness" value="PageBuilderDividerLineThickness_Default"/>
+            <argument name="width" value="PageBuilderDividerLineWidth_Default"/>
+        </actionGroup>
+    </test>
+    <test name="DividerYellowLineColor">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Divider"/>
+            <title value="Line Color - Plaintext"/>
+            <description value="Validate Yellow Line Color For Divider"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-90475"/>
+            <testCaseId value="MC-2779"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-divider"/>
+            <group value="pagebuilder-divider-general"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragDividerIntoStage">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterDividerLineColor">
+            <argument name="property" value="PageBuilderDividerLineColor_Yellow"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <actionGroup ref="validateDivider" stepKey="validateStage">
+            <argument name="page" value="DividerOnStage"/>
+            <argument name="color" value="PageBuilderDividerLineColor_Yellow"/>
+            <argument name="thickness" value="PageBuilderDividerLineThickness_Default"/>
+            <argument name="width" value="PageBuilderDividerLineWidth_Default"/>
+        </actionGroup>
+        <!-- Validate Edit Panel -->
+        <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutPropertyAlternate" stepKey="validateColor1">
+            <argument name="property" value="PageBuilderDividerLineColor_Yellow"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
+        <actionGroup ref="validateDivider" stepKey="validateStage2">
+            <argument name="page" value="DividerOnStage"/>
+            <argument name="color" value="PageBuilderDividerLineColor_Yellow"/>
+            <argument name="thickness" value="PageBuilderDividerLineThickness_Default"/>
+            <argument name="width" value="PageBuilderDividerLineWidth_Default"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage3">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <!-- Validate Edit Panel After Save -->
+        <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
+        <actionGroup ref="seeInFieldSlideOutPropertyAlternate" stepKey="validateColor">
+            <argument name="property" value="PageBuilderDividerLineColor_Yellow"/>
+        </actionGroup>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="validateDivider" stepKey="validateStorefront">
+            <argument name="page" value="DividerOnStorefront"/>
+            <argument name="color" value="PageBuilderDividerLineColor_Yellow"/>
+            <argument name="thickness" value="PageBuilderDividerLineThickness_Default"/>
+            <argument name="width" value="PageBuilderDividerLineWidth_Default"/>
+        </actionGroup>
+    </test>
+    <test name="DividerHexLineColor">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Divider"/>
+            <title value="Line Color - Hex"/>
+            <description value="Validate Hex Line Color For Divider"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-90475"/>
+            <testCaseId value="MC-2640"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-divider"/>
+            <group value="pagebuilder-divider-general"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragDividerIntoStage">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterDividerLineColor">
+            <argument name="property" value="PageBuilderDividerLineColor_FF5733"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <actionGroup ref="validateDivider" stepKey="validateStage">
+            <argument name="page" value="DividerOnStage"/>
+            <argument name="color" value="PageBuilderDividerLineColor_FF5733"/>
+            <argument name="thickness" value="PageBuilderDividerLineThickness_Default"/>
+            <argument name="width" value="PageBuilderDividerLineWidth_Default"/>
+        </actionGroup>
+        <!-- Validate Edit Panel -->
+        <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateColor1">
+            <argument name="property" value="PageBuilderDividerLineColor_FF5733"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
+        <actionGroup ref="validateDivider" stepKey="validateStage2">
+            <argument name="page" value="DividerOnStage"/>
+            <argument name="color" value="PageBuilderDividerLineColor_FF5733"/>
+            <argument name="thickness" value="PageBuilderDividerLineThickness_Default"/>
+            <argument name="width" value="PageBuilderDividerLineWidth_Default"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage3">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <!-- Validate Edit Panel After Save -->
+        <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateColor">
+            <argument name="property" value="PageBuilderDividerLineColor_FF5733"/>
+        </actionGroup>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="validateDivider" stepKey="validateStorefront">
+            <argument name="page" value="DividerOnStorefront"/>
+            <argument name="color" value="PageBuilderDividerLineColor_FF5733"/>
+            <argument name="thickness" value="PageBuilderDividerLineThickness_Default"/>
+            <argument name="width" value="PageBuilderDividerLineWidth_Default"/>
+        </actionGroup>
+    </test>
+    <test name="DividerRGBLineColor">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Divider"/>
+            <title value="Line Color - RGB"/>
+            <description value="Validate RGB Line Color For Divider"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-90475"/>
+            <testCaseId value="MC-2745"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-divider"/>
+            <group value="pagebuilder-divider-general"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragDividerIntoStage">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterDividerLineColor">
+            <argument name="property" value="PageBuilderDividerLineColor_RGB255_087_051"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <actionGroup ref="validateDivider" stepKey="validateStage">
+            <argument name="page" value="DividerOnStage"/>
+            <argument name="color" value="PageBuilderDividerLineColor_RGB255_087_051"/>
+            <argument name="thickness" value="PageBuilderDividerLineThickness_Default"/>
+            <argument name="width" value="PageBuilderDividerLineWidth_Default"/>
+        </actionGroup>
+        <!-- Validate Edit Panel -->
+        <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutPropertyAlternate" stepKey="validateColor1">
+            <argument name="property" value="PageBuilderDividerLineColor_RGB255_087_051"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
+        <actionGroup ref="validateDivider" stepKey="validateStage2">
+            <argument name="page" value="DividerOnStage"/>
+            <argument name="color" value="PageBuilderDividerLineColor_RGB255_087_051"/>
+            <argument name="thickness" value="PageBuilderDividerLineThickness_Default"/>
+            <argument name="width" value="PageBuilderDividerLineWidth_Default"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage3">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <!-- Validate Edit Panel After Save -->
+        <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
+        <actionGroup ref="seeInFieldSlideOutPropertyAlternate" stepKey="validateColor">
+            <argument name="property" value="PageBuilderDividerLineColor_RGB255_087_051"/>
+        </actionGroup>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="validateDivider" stepKey="validateStorefront">
+            <argument name="page" value="DividerOnStorefront"/>
+            <argument name="color" value="PageBuilderDividerLineColor_RGB255_087_051"/>
+            <argument name="thickness" value="PageBuilderDividerLineThickness_Default"/>
+            <argument name="width" value="PageBuilderDividerLineWidth_Default"/>
+        </actionGroup>
+    </test>
+    <test name="DividerRGBALineColor">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Divider"/>
+            <title value="Line Color - RGBa"/>
+            <description value="Validate RGBA Line Color For Divider"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-90475"/>
+            <testCaseId value="MC-2520"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-divider"/>
+            <group value="pagebuilder-divider-general"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragDividerIntoStage">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterDividerLineColor">
+            <argument name="property" value="PageBuilderDividerLineColor_RGBA255_087_051_50"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <actionGroup ref="validateDivider" stepKey="validateStage">
+            <argument name="page" value="DividerOnStage"/>
+            <argument name="color" value="PageBuilderDividerLineColor_RGBA255_087_051_50"/>
+            <argument name="thickness" value="PageBuilderDividerLineThickness_Default"/>
+            <argument name="width" value="PageBuilderDividerLineWidth_Default"/>
+        </actionGroup>
+        <!-- Validate Edit Panel -->
+        <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateColor1">
+            <argument name="property" value="PageBuilderDividerLineColor_RGBA255_087_051_50"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
+        <actionGroup ref="validateDivider" stepKey="validateStage2">
+            <argument name="page" value="DividerOnStage"/>
+            <argument name="color" value="PageBuilderDividerLineColor_RGBA255_087_051_50"/>
+            <argument name="thickness" value="PageBuilderDividerLineThickness_Default"/>
+            <argument name="width" value="PageBuilderDividerLineWidth_Default"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage3">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <!-- Validate Edit Panel After Save -->
+        <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
+        <actionGroup ref="seeInFieldSlideOutPropertyAlternate" stepKey="validateColor">
+            <argument name="property" value="PageBuilderDividerLineColor_RGBA255_087_051_50"/>
+        </actionGroup>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="validateDivider" stepKey="validateStorefront">
+            <argument name="page" value="DividerOnStorefront"/>
+            <argument name="color" value="PageBuilderDividerLineColor_RGBA255_087_051_50"/>
+            <argument name="thickness" value="PageBuilderDividerLineThickness_Default"/>
+            <argument name="width" value="PageBuilderDividerLineWidth_Default"/>
+        </actionGroup>
+    </test>
+    <test name="DividerHSLLineColor">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Divider"/>
+            <title value="Line Color - HSL"/>
+            <description value="Validate HSL Line Color For Divider"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-90475"/>
+            <testCaseId value="MC-2855"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-divider"/>
+            <group value="pagebuilder-divider-general"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragDividerIntoStage">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterDividerLineColor">
+            <argument name="property" value="PageBuilderDividerLineColor_HSL11_100_60"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <actionGroup ref="validateDivider" stepKey="validateStage">
+            <argument name="page" value="DividerOnStage"/>
+            <argument name="color" value="PageBuilderDividerLineColor_HSL11_100_60"/>
+            <argument name="thickness" value="PageBuilderDividerLineThickness_Default"/>
+            <argument name="width" value="PageBuilderDividerLineWidth_Default"/>
+        </actionGroup>
+        <!-- Validate Edit Panel -->
+        <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutPropertyAlternate" stepKey="validateColor1">
+            <argument name="property" value="PageBuilderDividerLineColor_HSL11_100_60"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
+        <actionGroup ref="validateDivider" stepKey="validateStage2">
+            <argument name="page" value="DividerOnStage"/>
+            <argument name="color" value="PageBuilderDividerLineColor_HSL11_100_60"/>
+            <argument name="thickness" value="PageBuilderDividerLineThickness_Default"/>
+            <argument name="width" value="PageBuilderDividerLineWidth_Default"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage3">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <!-- Validate Edit Panel After Save -->
+        <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
+        <actionGroup ref="seeInFieldSlideOutPropertyAlternate" stepKey="validateColor">
+            <argument name="property" value="PageBuilderDividerLineColor_HSL11_100_60"/>
+        </actionGroup>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="validateDivider" stepKey="validateStorefront">
+            <argument name="page" value="DividerOnStorefront"/>
+            <argument name="color" value="PageBuilderDividerLineColor_HSL11_100_60"/>
+            <argument name="thickness" value="PageBuilderDividerLineThickness_Default"/>
+            <argument name="width" value="PageBuilderDividerLineWidth_Default"/>
+        </actionGroup>
+    </test>
+    <test name="DividerHSLALineColor">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Divider"/>
+            <title value="Line Color - HSLa"/>
+            <description value="Validate HSLA Line Color For Divider"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-90475"/>
+            <testCaseId value="MC-2619"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-divider"/>
+            <group value="pagebuilder-divider-general"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragDividerIntoStage">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterDividerLineColor">
+            <argument name="property" value="PageBuilderDividerLineColor_HSLA11_100_60_50"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <actionGroup ref="validateDivider" stepKey="validateStage">
+            <argument name="page" value="DividerOnStage"/>
+            <argument name="color" value="PageBuilderDividerLineColor_HSLA11_100_60_50"/>
+            <argument name="thickness" value="PageBuilderDividerLineThickness_Default"/>
+            <argument name="width" value="PageBuilderDividerLineWidth_Default"/>
+        </actionGroup>
+        <!-- Validate Edit Panel -->
+        <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutPropertyAlternate" stepKey="validateColor1">
+            <argument name="property" value="PageBuilderDividerLineColor_HSLA11_100_60_50"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
+        <actionGroup ref="validateDivider" stepKey="validateStage2">
+            <argument name="page" value="DividerOnStage"/>
+            <argument name="color" value="PageBuilderDividerLineColor_HSLA11_100_60_50"/>
+            <argument name="thickness" value="PageBuilderDividerLineThickness_Default"/>
+            <argument name="width" value="PageBuilderDividerLineWidth_Default"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage3">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <!-- Validate Edit Panel After Save -->
+        <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
+        <actionGroup ref="seeInFieldSlideOutPropertyAlternate" stepKey="validateColor">
+            <argument name="property" value="PageBuilderDividerLineColor_HSLA11_100_60_50"/>
+        </actionGroup>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="validateDivider" stepKey="validateStorefront">
+            <argument name="page" value="DividerOnStorefront"/>
+            <argument name="color" value="PageBuilderDividerLineColor_HSLA11_100_60_50"/>
+            <argument name="thickness" value="PageBuilderDividerLineThickness_Default"/>
+            <argument name="width" value="PageBuilderDividerLineWidth_Default"/>
+        </actionGroup>
+    </test>
+    <test name="DividerInvalidLineColor">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Divider"/>
+            <title value="Line Color - Invalid"/>
+            <description value="Validate Invalid Line Color For Divider"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-90475"/>
+            <testCaseId value="MC-2530"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-divider"/>
+            <group value="pagebuilder-divider-general"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragDividerIntoStage">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterDividerLineColor">
+            <argument name="property" value="PageBuilderDividerLineColor_Invalid"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSection" stepKey="validateError">
+            <argument name="property" value="PageBuilderDividerLineColor_Invalid"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <actionGroup ref="validateDivider" stepKey="validateStage">
+            <argument name="page" value="DividerOnStage"/>
+            <argument name="color" value="PageBuilderDividerLineColor_Empty"/>
+            <argument name="thickness" value="PageBuilderDividerLineThickness_Default"/>
+            <argument name="width" value="PageBuilderDividerLineWidth_Default"/>
+        </actionGroup>
+        <!-- Set Valid After Invalid Line Color -->
+        <comment userInput="Set Valid After Invalid Line Color" stepKey="commentSetBackgroundColor2"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBackgroundColor2">
+            <argument name="property" value="PageBuilderDividerLineColor_Invalid"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSection" stepKey="validateError2">
+            <argument name="property" value="PageBuilderDividerLineColor_Invalid"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBackgroundColor3">
+            <argument name="property" value="PageBuilderDividerLineColor_FF5733"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Stage: Check Line Color After Valid Save -->
+        <comment userInput="Stage: Check Line Color After Valid Save" stepKey="commentStageCheck2"/>
+        <actionGroup ref="validateDivider" stepKey="validateStage2">
+            <argument name="page" value="DividerOnStage"/>
+            <argument name="color" value="PageBuilderDividerLineColor_FF5733"/>
+            <argument name="thickness" value="PageBuilderDividerLineThickness_Default"/>
+            <argument name="width" value="PageBuilderDividerLineWidth_Default"/>
+        </actionGroup>
+    </test>
+    <test name="DividerEmptyLineThickness">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Divider"/>
+            <title value="Line Thickness - Empty"/>
+            <description value="Validate Empty Line Thickness For Divider"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-90475"/>
+            <testCaseId value="MC-2766"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-divider"/>
+            <group value="pagebuilder-divider-general"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragDividerIntoStage">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="clearSlideOutPanelFieldGeneral" stepKey="enterDividerLineThickness">
+            <argument name="property" value="PageBuilderDividerLineThickness_Empty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <actionGroup ref="validateDividerWithoutThickness" stepKey="validateStage">
+            <argument name="page" value="DividerOnStage"/>
+            <argument name="color" value="PageBuilderDividerLineColor_Default"/>
+            <argument name="width" value="PageBuilderDividerLineWidth_Default"/>
+        </actionGroup>
+        <!-- Validate Edit Panel -->
+        <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateThickness1">
+            <argument name="property" value="PageBuilderDividerLineThickness_Empty"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
+        <actionGroup ref="validateDividerWithoutThickness" stepKey="validateStage2">
+            <argument name="page" value="DividerOnStage"/>
+            <argument name="color" value="PageBuilderDividerLineColor_Default"/>
+            <argument name="width" value="PageBuilderDividerLineWidth_Default"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage3">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <!-- Validate Edit Panel After Save -->
+        <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateThickness">
+            <argument name="property" value="PageBuilderDividerLineThickness_Empty"/>
+        </actionGroup>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="validateDividerWithoutThickness" stepKey="validateStorefront">
+            <argument name="page" value="DividerOnStorefront"/>
+            <argument name="color" value="PageBuilderDividerLineColor_Default"/>
+            <argument name="width" value="PageBuilderDividerLineWidth_Default"/>
+        </actionGroup>
+    </test>
+    <test name="DividerNormalLineThickness">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Divider"/>
+            <title value="Line Thickness - Normal"/>
+            <description value="Validate Normal Line Thickness For Divider"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-90475"/>
+            <testCaseId value="MC-2675"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-divider"/>
+            <group value="pagebuilder-divider-general"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragDividerIntoStage">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterDividerLineThickness">
+            <argument name="property" value="PageBuilderDividerLineThickness_10"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <actionGroup ref="validateDivider" stepKey="validateStage">
+            <argument name="page" value="DividerOnStage"/>
+            <argument name="color" value="PageBuilderDividerLineColor_Default"/>
+            <argument name="thickness" value="PageBuilderDividerLineThickness_10"/>
+            <argument name="width" value="PageBuilderDividerLineWidth_Default"/>
+        </actionGroup>
+        <!-- Validate Edit Panel -->
+        <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateThickness1">
+            <argument name="property" value="PageBuilderDividerLineThickness_10"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
+        <actionGroup ref="validateDivider" stepKey="validateStage2">
+            <argument name="page" value="DividerOnStage"/>
+            <argument name="color" value="PageBuilderDividerLineColor_Default"/>
+            <argument name="thickness" value="PageBuilderDividerLineThickness_10"/>
+            <argument name="width" value="PageBuilderDividerLineWidth_Default"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage3">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <!-- Validate Edit Panel After Save -->
+        <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateThickness">
+            <argument name="property" value="PageBuilderDividerLineThickness_10"/>
+        </actionGroup>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="validateDivider" stepKey="validateStorefront">
+            <argument name="page" value="DividerOnStorefront"/>
+            <argument name="color" value="PageBuilderDividerLineColor_Default"/>
+            <argument name="thickness" value="PageBuilderDividerLineThickness_10"/>
+            <argument name="width" value="PageBuilderDividerLineWidth_Default"/>
+        </actionGroup>
+    </test>
+    <test name="DividerZeroLineThickness">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Divider"/>
+            <title value="Line Thickness - Zero"/>
+            <description value="Validate Zero Line Thickness For Divider"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-90475"/>
+            <testCaseId value="MC-2842"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-divider"/>
+            <group value="pagebuilder-divider-general"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragDividerIntoStage">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterDividerLineThickness">
+            <argument name="property" value="PageBuilderDividerLineThickness_0"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <waitForElementNotVisible selector="{{DividerOnStage.thickness('1', PageBuilderDividerLineThickness_0.value)}}" stepKey="waitForThicknessVisibleStage"/>
+        <!-- Validate Edit Panel -->
+        <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateThickness1">
+            <argument name="property" value="PageBuilderDividerLineThickness_0"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
+        <waitForElementNotVisible selector="{{DividerOnStage.thickness('1', PageBuilderDividerLineThickness_0.value)}}" stepKey="waitForThicknessVisibleStageSave"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage3">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <!-- Validate Edit Panel After Save -->
+        <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateThickness">
+            <argument name="property" value="PageBuilderDividerLineThickness_0"/>
+        </actionGroup>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <waitForElementNotVisible selector="{{DividerOnStorefront.thickness('1', PageBuilderDividerLineThickness_0.value)}}" stepKey="waitForThicknessVisibleStorefront"/>
+    </test>
+    <test name="DividerNegativeLineThickness">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Divider"/>
+            <title value="Line Thickness - Negative"/>
+            <description value="Validate Negative Line Thickness For Divider"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-90475"/>
+            <testCaseId value="MC-2632"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-divider"/>
+            <group value="pagebuilder-divider-general"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragDividerIntoStage">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterDividerLineThickness">
+            <argument name="property" value="PageBuilderDividerLineThickness_Negative"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <actionGroup ref="validateDivider" stepKey="validateStage">
+            <argument name="page" value="DividerOnStage"/>
+            <argument name="color" value="PageBuilderDividerLineColor_Default"/>
+            <argument name="thickness" value="PageBuilderDividerLineThickness_Default"/>
+            <argument name="width" value="PageBuilderDividerLineWidth_Default"/>
+        </actionGroup>
+        <!-- Validate Edit Panel -->
+        <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateThickness1">
+            <argument name="property" value="PageBuilderDividerLineThickness_Negative"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
+        <actionGroup ref="validateDividerWithoutThickness" stepKey="validateStage2">
+            <argument name="page" value="DividerOnStage"/>
+            <argument name="color" value="PageBuilderDividerLineColor_Default"/>
+            <argument name="width" value="PageBuilderDividerLineWidth_Default"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage3">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <!-- Validate Edit Panel After Save -->
+        <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateThickness">
+            <argument name="property" value="PageBuilderDividerLineThickness_Empty"/>
+        </actionGroup>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="validateDividerWithoutThickness" stepKey="validateStorefront">
+            <argument name="page" value="DividerOnStorefront"/>
+            <argument name="color" value="PageBuilderDividerLineColor_Default"/>
+            <argument name="width" value="PageBuilderDividerLineWidth_Default"/>
+        </actionGroup>
+    </test>
+</tests>

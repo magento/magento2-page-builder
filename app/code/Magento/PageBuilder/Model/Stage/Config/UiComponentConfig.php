@@ -3,11 +3,16 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+declare(strict_types=1);
+
 namespace Magento\PageBuilder\Model\Stage\Config;
 
 use Magento\Framework\Config\DataInterfaceFactory;
 use Magento\Ui\Config\Converter;
 
+/**
+ * Retrieve fields and default values from associated UI component forms for content types
+ */
 class UiComponentConfig
 {
     /**
@@ -29,11 +34,11 @@ class UiComponentConfig
     /**
      * Retrieve fields for UI Component
      *
-     * @param $componentName
+     * @param string $componentName
      *
      * @return array
      */
-    public function getFields($componentName)
+    public function getFields($componentName) : array
     {
         $componentConfig = $this->configFactory->create(
             ['componentName' => $componentName]
@@ -44,14 +49,19 @@ class UiComponentConfig
             function ($item, $key) {
                 // Determine if this item has a formElement key
                 if (isset($item[Converter::DATA_ARGUMENTS_KEY]['data']['config']['formElement'])) {
-                    $elementConfig
-                        = $item[Converter::DATA_ARGUMENTS_KEY]['data']['config'];
-                    return [
-                        $key => [
-                            'default' => (isset($elementConfig['default'])
-                                ? $elementConfig['default'] : '')
-                        ]
-                    ];
+                    $elementConfig = $item[Converter::DATA_ARGUMENTS_KEY]['data']['config'];
+                    // If the field has a dataScope use that for the key instead of the name
+                    if (isset($elementConfig['dataScope'])) {
+                        $key = $elementConfig['dataScope'];
+                    }
+                    $field = [];
+                    // Generate our nested field array with defaults supporting dot notation within the key
+                    $this->generateFieldArray(
+                        $field,
+                        $key . ".default",
+                        (isset($elementConfig['default']) ? $elementConfig['default'] : '')
+                    );
+                    return $field;
                 }
             }
         );
@@ -60,43 +70,44 @@ class UiComponentConfig
     }
 
     /**
-     * Retrieve buttons associated with a UI component
+     * Recursively generate our field array, allowing for dot notation within the key
      *
-     * @param $componentName
-     *
-     * @return array
+     * @param array $array
+     * @param string $path
+     * @param string|array $value
      */
-    public function getButtons($componentName)
+    private function generateFieldArray(array &$array, string $path, $value)
     {
-        $componentConfig = $this->configFactory->create(
-            ['componentName' => $componentName]
-        )->get($componentName);
+        $keys = explode(".", $path);
 
-        // Does the component have any buttons assigned?
-        if (isset($componentConfig[Converter::DATA_ARGUMENTS_KEY]['data']['buttons'])) {
-            return $componentConfig[Converter::DATA_ARGUMENTS_KEY]['data']['buttons'];
+        foreach ($keys as $key) {
+            $array = &$array[$key];
         }
 
-        return [];
+        $array = $value;
     }
 
     /**
      * Iterate over components within the configuration and run a defined callback function
      *
-     * @param $config
-     * @param $callback
+     * @param array $config
+     * @param \Closure $callback
      * @param bool $key
      *
      * @return array
      */
-    private function iterateComponents($config, $callback, $key = false)
+    private function iterateComponents($config, $callback, $key = false) : array
     {
         $values = $callback($config, $key) ?: [];
         if (isset($config[Converter::DATA_COMPONENTS_KEY])
             && !empty($config[Converter::DATA_COMPONENTS_KEY])
+            && (!isset($config[Converter::DATA_ARGUMENTS_KEY]['data']['config']['componentType'])
+                || isset($config[Converter::DATA_ARGUMENTS_KEY]['data']['config']['componentType'])
+                && $config[Converter::DATA_ARGUMENTS_KEY]['data']['config']['componentType'] !== 'dynamicRows'
+            )
         ) {
             foreach ($config[Converter::DATA_COMPONENTS_KEY] as $key => $child) {
-                $values = array_merge(
+                $values = array_merge_recursive(
                     $values,
                     $this->iterateComponents($child, $callback, $key) ?: []
                 );

@@ -1,72 +1,108 @@
 /*eslint-disable */
-define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/utils/delayed-promise", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _knockout, _uiEvents, _config, _delayedPromise, _preview) {
-  function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-menu/hide-show-option", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _knockout, _translate, _config, _hideShowOption, _preview) {
+  /**
+   * Copyright © Magento, Inc. All rights reserved.
+   * See COPYING.txt for license details.
+   */
+
+  /**
+   * @api
+   */
   var Preview =
   /*#__PURE__*/
-  function (_BasePreview) {
-    _inheritsLoose(Preview, _BasePreview);
+  function (_preview2) {
+    "use strict";
 
-    function Preview() {
-      var _temp, _this;
+    _inheritsLoose(Preview, _preview2);
 
-      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
+    /**
+     * @inheritdoc
+     */
+    function Preview(contentType, config, observableUpdater) {
+      var _this;
 
-      return (_temp = _this = _BasePreview.call.apply(_BasePreview, [this].concat(args)) || this, _this.displayPreview = _knockout.observable(false), _temp) || _this;
+      _this = _preview2.call(this, contentType, config, observableUpdater) || this;
+      _this.displayPreview = _knockout.observable(false);
+      _this.messages = {
+        EMPTY: (0, _translate)("Empty Products"),
+        NO_RESULTS: (0, _translate)("No products were found matching your condition"),
+        LOADING: (0, _translate)("Loading..."),
+        UNKNOWN_ERROR: (0, _translate)("An unknown error occurred. Please try again.")
+      };
+      _this.placeholderText = _knockout.observable(_this.messages.EMPTY);
+      return _this;
     }
+    /**
+     * Return an array of options
+     *
+     * @returns {OptionsInterface}
+     */
+
 
     var _proto = Preview.prototype;
 
+    _proto.retrieveOptions = function retrieveOptions() {
+      var options = _preview2.prototype.retrieveOptions.call(this);
+
+      options.hideShow = new _hideShowOption({
+        preview: this,
+        icon: _hideShowOption.showIcon,
+        title: _hideShowOption.showText,
+        action: this.onOptionVisibilityToggle,
+        classes: ["hide-show-content-type"],
+        sort: 40
+      });
+      return options;
+    }
     /**
-     * Bind events
+     * @inheritdoc
      */
-    _proto.bindEvents = function bindEvents() {
+    ;
+
+    _proto.afterObservablesUpdated = function afterObservablesUpdated() {
       var _this2 = this;
 
-      _BasePreview.prototype.bindEvents.call(this); // When a products type is dropped for the first time open the edit panel
+      _preview2.prototype.afterObservablesUpdated.call(this);
 
+      this.displayPreview(false);
+      var data = this.contentType.dataStore.getState();
 
-      _uiEvents.on("products:block:dropped:create", function (event, params) {
-        if (event.id === _this2.parent.id) {
-          (0, _delayedPromise)(300)().then(function () {
-            _this2.edit.open();
-          });
+      if (typeof data.conditions_encoded !== "string" || data.conditions_encoded.length === 0) {
+        this.placeholderText(this.messages.EMPTY);
+        return;
+      }
+
+      var url = _config.getConfig("preview_url");
+
+      var requestConfig = {
+        // Prevent caching
+        method: "POST",
+        data: {
+          role: this.config.name,
+          directive: this.data.main.html()
         }
-      });
+      };
+      this.placeholderText(this.messages.LOADING);
 
-      _uiEvents.on("previewObservables:updated", function (event, params) {
-        if (event.preview.parent.id !== _this2.parent.id) {
+      _jquery.ajax(url, requestConfig).done(function (response) {
+        if (typeof response.data !== "object" || !Boolean(response.data.content)) {
+          _this2.placeholderText(_this2.messages.NO_RESULTS);
+
           return;
         }
 
-        _this2.displayPreview(false);
-
-        var data = _this2.parent.dataStore.get();
-
-        if (typeof data.conditions_encoded !== "string" || data.conditions_encoded.length === 0) {
-          return;
-        }
-
-        var url = _config.getConfig("preview_url");
-
-        var requestData = {
-          role: _this2.config.name,
-          directive: _this2.data.main.html()
-        };
-
-        _jquery.post(url, requestData, function (response) {
-          var content = response.content !== undefined ? response.content.trim() : "";
-
-          if (content.length === 0) {
-            return;
-          }
-
-          _this2.data.main.html(content);
+        if (response.data.error) {
+          _this2.data.main.html(response.data.error);
+        } else {
+          _this2.data.main.html(response.data.content);
 
           _this2.displayPreview(true);
-        });
+        }
+      }).fail(function () {
+        _this2.placeholderText(_this2.messages.UNKNOWN_ERROR);
       });
     };
 

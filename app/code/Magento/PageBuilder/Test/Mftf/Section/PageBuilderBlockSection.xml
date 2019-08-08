@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
+    <section name="BlockOnStage">
+        <element name="html" type="text" selector="((//div[contains(@class,'pagebuilder-block')])[{{arg1}}]//div[contains(@data-bind,'html: data.main.html')])[{{arg2}}]//div[contains(@class,'placeholder-html-code')]" parameterized="true"/>
+        <element name="status" type="text" selector="((//div[contains(@class,'pagebuilder-block')])[{{arg1}}]//span[contains(@class,'placeholder') and text()='{{arg}}'])" parameterized="true"/>
+        <element name="deleted" type="text" selector="((//div[contains(@class,'pagebuilder-block')])[{{arg1}}]//span[contains(@class,'placeholder') and contains(text(),'Block with ID: {{arg}} doesn')])" parameterized="true"/>
+        <element name="title" type="text" selector="(//div[contains(@class,'pagebuilder-block')])[{{arg1}}]//div[contains(@class,'pagebuilder-options-wrapper')]//div[contains(@class,'option-title') and text()='{{arg}}']" parameterized="true"/>
+        <element name="base" type="text" selector="(//div[contains(@class,'pagebuilder-block')])[{{arg1}}]" parameterized="true"/>
+        <element name="hidden" type="text" selector="(//div[contains(@class,'pagebuilder-block')])[{{arg1}}]/ancestor::*[contains(@class, 'pagebuilder-content-type-wrapper') and contains(@class, 'pagebuilder-content-type-hidden')]" parameterized="true"/>
+        <element name="notHidden" type="text" selector="(//div[contains(@class,'pagebuilder-block') and not(contains(@class,'placeholder'))])[{{arg1}}]/parent::*[contains(@class, 'pagebuilder-content-type-wrapper') and not(contains(@class, 'pagebuilder-content-type-hidden'))][1]" parameterized="true"/>
+        <element name="hr" type="button" selector="((//div[contains(@class,'pagebuilder-block')])[{{arg1}}]//div[@data-identifier])[{{arg2}}]//hr" parameterized="true"/>
+        <element name="content" type="text" selector="(//div[contains(@class,'pagebuilder-block')])[{{arg1}}]//div[contains(@class,'block-static-block')]" parameterized="true"/>
+        <!-- Advanced Configuration -->
+        <element name="alignment" type="text" selector="(//div[contains(@class,'pagebuilder-block')])[{{arg1}}]//div[contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
+        <element name="noAlignment" type="text" selector="(//div[contains(@class,'pagebuilder-block')])[{{arg1}}]//div[not(contains(@style,'text-align:'))]" parameterized="true"/>
+        <element name="border" type="text" selector="(//div[contains(@class,'pagebuilder-block')])[{{arg1}}]//div[contains(@style,'border-style: {{arg2}};')]" parameterized="true"/>
+        <element name="borderColor" type="text" selector="(//div[contains(@class,'pagebuilder-block')])[{{arg1}}]//div[contains(@style,'border-color: {{arg2}};')]" parameterized="true"/>
+        <element name="noBorderColor" type="text" selector="(//div[contains(@class,'pagebuilder-block')])[{{arg1}}]//div[not(contains(@style,'border-color:'))]" parameterized="true"/>
+        <element name="borderWidth" type="text" selector="(//div[contains(@class,'pagebuilder-block')])[{{arg1}}]//div[contains(@style,'border-width: {{arg2}}px;')]" parameterized="true"/>
+        <element name="borderRadius" type="text" selector="(//div[contains(@class,'pagebuilder-block')])[{{arg1}}]//div[contains(@style,'border-radius: {{arg2}}px;')]" parameterized="true"/>
+        <element name="cssClasses" type="text" selector="(//div[contains(@class,'pagebuilder-block')])[{{arg1}}]//div[contains(@class,'{{arg2}}')]" parameterized="true"/>
+        <element name="noCssClasses" type="text" selector="(//div[contains(@class,'pagebuilder-block')])[{{arg1}}]//div[not(@class)]" parameterized="true"/>
+        <element name="margins" type="text" selector="(//div[contains(@class,'pagebuilder-block')])[{{arg1}}]//div[contains(@style,'margin: {{arg2}}px;')]" parameterized="true"/>
+        <element name="padding" type="text" selector="(//div[contains(@class,'pagebuilder-block')])[{{arg1}}]//div[contains(@style,'padding: {{arg2}}px;')]" parameterized="true"/>
+        <element name="overlay" type="text" selector="(//div[contains(@class,'pagebuilder-block') and contains(@class,'pagebuilder-block-overlay')])[{{arg1}}]" parameterized="true"/>
+    </section>
+    <section name="BlockOnGrid">
+        <element name="searchBox" type="text" selector="//input[contains(@class,'data-grid-search-control')]"/>
+        <element name="searchBtn" type="text" selector=".action-submit"/>
+        <element name="selectBtn" type="text" selector="//div[text()='{{arg}}']/parent::td//preceding-sibling::td//button[text()='Select']" parameterized="true"/>
+        <element name="addSelectedBtn" type="text" selector="//aside[contains(@class, '_show')]//button/span[text()='Add Selected']"/>
+    </section>
+    <section name="BlockOnForm">
+        <element name="title" type="text" selector="(//div[contains(@class,'pagebuilder-block')]//div[contains(@class,'block-title') and text()='{{arg1}}'])" parameterized="true"/>
+        <element name="selectBlockBtn" type="button" selector="(//div[contains(@class,'pagebuilder-block')]//button/span[text()='Select Block'])"/>
+    </section>
+    <section name="BlockOnStorefront">
+        <element name="ancestor" type="text" selector="[ancestor::div[@data-content-type='block']]"/>
+        <element name="html" type="text" selector="(//div[@data-content-type='html'])[{{arg1}}]//a[contains(@class,'pagebuilder-button-primary')]" parameterized="true"/>
+        <element name="base" type="text" selector="(//div[@data-content-type='block'])[{{arg1}}]" parameterized="true"/>
+        <element name="baseCSS" type="text" selector="[data-content-type=block]"/>
+        <element name="hidden" type="text" selector="(//div[@data-content-type='block'])[{{arg1}}][contains(@style, 'display: none')]" parameterized="true"/>
+        <element name="notHidden" type="text" selector="(//div[@data-content-type='block'])[{{arg1}}][not(contains(@style, 'display: none'))]" parameterized="true"/>
+        <element name="hr" type="button" selector="(//div[@data-content-type='block'])[{{arg1}}]/hr" parameterized="true"/>
+        <element name="empty" type="text" selector="//div[@data-content-type='block'][{{arg1}}][not(*)]" parameterized="true"/>
+        <element name="textContent" type="text" selector="(//div[@data-content-type='block'])[{{arg1}}]//div[contains(text(),'{{arg2}}')]" parameterized="true"/>
+        <element name="content" type="text" selector="(//div[contains(@class,'pagebuilder-block')])[{{arg1}}]//div[contains(@class,'block-static-block')]" parameterized="true"/>
+        <!-- Advanced Configuration -->
+        <element name="alignment" type="text" selector="(//div[@data-content-type='block'])[{{arg1}}][contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
+        <element name="noAlignment" type="text" selector="(//div[@data-content-type='block'])[{{arg1}}][not(contains(@style,'text-align:'))]" parameterized="true"/>
+        <element name="border" type="text" selector="(//div[@data-content-type='block'])[{{arg1}}][contains(@style,'border-style: {{arg2}};')]" parameterized="true"/>
+        <element name="borderColor" type="text" selector="(//div[@data-content-type='block'])[{{arg1}}][contains(@style,'border-color: {{arg2}};')]" parameterized="true"/>
+        <element name="noBorderColor" type="text" selector="(//div[@data-content-type='block'])[{{arg1}}][not(contains(@style,'border-color:'))]" parameterized="true"/>
+        <element name="borderWidth" type="text" selector="(//div[@data-content-type='block'])[{{arg1}}][contains(@style,'border-width: {{arg2}}px;')]" parameterized="true"/>
+        <element name="borderRadius" type="text" selector="(//div[@data-content-type='block'])[{{arg1}}][contains(@style,'border-radius: {{arg2}}px;')]" parameterized="true"/>
+        <element name="cssClasses" type="text" selector="(//div[@data-content-type='block'])[{{arg1}}][contains(@class,'{{arg2}}')]" parameterized="true"/>
+        <element name="noCssClasses" type="text" selector="(//div[@data-content-type='row'])[{{arg1}}]/div[not(@class)]" parameterized="true"/>
+        <element name="margins" type="text" selector="(//div[@data-content-type='block'])[{{arg1}}][contains(@style,'margin: {{arg2}}px;')]" parameterized="true"/>
+        <element name="padding" type="text" selector="(//div[@data-content-type='block'])[{{arg1}}][contains(@style,'padding: {{arg2}}px;')]" parameterized="true"/>
+        <element name="text" type="text" selector="(//div[@data-content-type='block'])[{{arg1}}]//div[@data-content-type='text'][{{arg2}}]" parameterized="true"/>
+    </section>
+</sections>

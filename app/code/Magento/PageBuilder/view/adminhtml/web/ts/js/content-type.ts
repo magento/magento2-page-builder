@@ -3,45 +3,46 @@
  * See COPYING.txt for license details.
  */
 
-import ko from "knockout";
+import events from "Magento_PageBuilder/js/events";
 import mageUtils from "mageUtils";
-import events from "uiEvents";
-import Content from "./content";
-import ContentTypeConfigInterface from "./content-type-config.d";
-import ContentTypeInterface from "./content-type.d";
+import ContentTypeCollectionInterface from "./content-type-collection.types";
+import ContentTypeConfigInterface from "./content-type-config.types";
+import ContentTypeInterface from "./content-type.types";
+import Master from "./content-type/master";
+import Preview from "./content-type/preview";
 import DataStore from "./data-store";
-import Preview from "./preview";
 
-export default class ContentType implements ContentTypeInterface {
+export default class ContentType<P extends Preview = Preview, M extends Master = Master>
+    implements ContentTypeInterface<P, M>
+{
     public id: string = mageUtils.uniqueid();
-    public parent: ContentTypeInterface;
+    public parentContentType: ContentTypeCollectionInterface;
     public stageId: string;
     public config: ContentTypeConfigInterface;
-    public data = {};
-    public wrapperStyle: KnockoutObservable<object> = ko.observable({width: "100%"});
-    public element: JQuery<HTMLElement>;
+    public element: JQuery;
     public dataStore: DataStore = new DataStore();
-    public preview: Preview;
-    public content: Content;
+    public preview: P;
+    public content: M;
+    public dropped: boolean = false;
 
     /**
-     * @param {ContentTypeInterface} parent
+     * @param {ContentTypeInterface} parentContentType
      * @param {ContentTypeConfigInterface} config
      * @param {string} stageId
      */
     constructor(
-        parent: ContentTypeInterface,
+        parentContentType: ContentTypeCollectionInterface,
         config: ContentTypeConfigInterface,
         stageId: string,
     ) {
-        this.parent = parent;
+        this.parentContentType = parentContentType;
         this.config = config;
         this.stageId = stageId;
         this.bindEvents();
     }
 
     protected bindEvents() {
-        const eventName: string = this.id + ":updated";
+        const eventName: string = this.config.name + ":" + this.id + ":updateAfter";
         const paramObj: any = {};
         paramObj[this.id] = this;
         this.dataStore.subscribe(
@@ -53,7 +54,7 @@ export default class ContentType implements ContentTypeInterface {
 
         this.dataStore.subscribe(
             () => events.trigger(
-                "stage:updated",
+                "stage:updateAfter",
                 {stageId: this.stageId},
             ),
         );

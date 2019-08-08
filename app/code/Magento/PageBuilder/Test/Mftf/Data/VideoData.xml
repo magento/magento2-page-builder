@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<entities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:DataGenerator/etc/dataProfileSchema.xsd">
+    <!-- URL -->
+    <entity name="PageBuilderVideoUrl_Default" type="pagebuilder_video_url_property">
+        <data key="name">Video URL</data>
+        <data key="section">general</data>
+        <data key="fieldName">video_source</data>
+        <data key="text">Video</data>
+    </entity>
+    <entity name="PageBuilderVideoUrl_YouTube" type="pagebuilder_video_url_property">
+        <data key="name">Video URL</data>
+        <data key="section">general</data>
+        <data key="fieldName">video_source</data>
+        <data key="value">https://www.youtube.com/embed/slOtnjsbff0</data>
+        <data key="renderedValue">https://www.youtube.com/embed/slOtnjsbff0</data>
+    </entity>
+    <entity name="PageBuilder_InvalidVideoURL_Text" type="pagebuilder_video_url_property">
+        <data key="name">Video URL</data>
+        <data key="section">general</data>
+        <data key="fieldName">video_source</data>
+        <data key="value">Test</data>
+        <data key="errorMessage">Please enter a valid video URL.</data>
+    </entity>
+    <entity name="PageBuilder_InvalidVideoURL_HTML" type="pagebuilder_video_url_property">
+        <data key="name">Video URL</data>
+        <data key="section">general</data>
+        <data key="fieldName">video_source</data>
+        <data key="value">&lt;iframe width=&quot;1280&quot; height=&quot;720&quot; src=&quot;https://www.youtube.com/embed/bLXEUP6vKEk"&gt;&lt;/iframe&gt;</data>
+        <data key="errorMessage">Please enter a valid video URL.</data>
+    </entity>
+    <entity name="PageBuilderVideoUrl_NonEmbedded" type="pagebuilder_video_url_property">
+        <data key="name">Video URL</data>
+        <data key="section">general</data>
+        <data key="fieldName">video_source</data>
+        <data key="value">https://www.youtube.com/watch?v=slOtnjsbff0</data>
+        <data key="renderedValue">https://www.youtube.com/embed/slOtnjsbff0</data>
+    </entity>
+    <!-- Width -->
+    <entity name="PageBuilderVideoWidth_500" type="pagebuilder_video_width_property">
+        <data key="name">Maximum Width</data>
+        <data key="section">general</data>
+        <data key="fieldName">max_width</data>
+        <data key="value">500</data>
+    </entity>
+    <!-- Height -->
+    <entity name="PageBuilderVideoContainerHeight" type="pagebuilder_video_height_property">
+        <data key="value">281</data>
+    </entity>
+</entities>

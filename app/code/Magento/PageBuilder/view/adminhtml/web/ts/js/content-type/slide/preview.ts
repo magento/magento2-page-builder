@@ -3,173 +3,89 @@
  * See COPYING.txt for license details.
  */
 
-import ko from "knockout";
+import $ from "jquery";
 import $t from "mage/translate";
-import ContentTypeConfigInterface from "../../content-type-config.d";
-import Options from "../../content-type-menu";
-import Option from "../../content-type-menu/option";
-import OptionInterface from "../../content-type-menu/option.d";
-import ContentTypeInterface from "../../content-type.d";
-import {StyleAttributeMapperResult} from "../../master-format/style-attribute-mapper";
-import {fromHex} from "../../utils/color-converter";
-import {percentToDecimal} from "../../utils/number-converter";
-import ObservableUpdater from "../observable-updater";
+import events from "Magento_PageBuilder/js/events";
+import _ from "underscore";
+import {PreviewSortableSortUpdateEventParams} from "../../binding/sortable-children.types";
+import Config from "../../config";
+import ConditionalRemoveOption from "../../content-type-menu/conditional-remove-option";
+import {OptionsInterface} from "../../content-type-menu/option.types";
+import Uploader from "../../uploader";
+import delayUntil from "../../utils/delay-until";
+import nestingLinkDialog from "../../utils/nesting-link-dialog";
+import WysiwygFactory from "../../wysiwyg/factory";
+import WysiwygInterface from "../../wysiwyg/wysiwyg-interface";
+import {ContentTypeMountEventParamsInterface} from "../content-type-events.types";
 import BasePreview from "../preview";
+import SliderPreview from "../slider/preview";
 
+/**
+ * @api
+ */
 export default class Preview extends BasePreview {
-    private showOverlayHover: KnockoutObservable<boolean> = ko.observable(false);
-    private showButtonHover: KnockoutObservable<boolean> =  ko.observable(false);
-    private buttonPlaceholder: string = $t("Edit Button Text");
+    public buttonPlaceholder: string = $t("Edit Button Text");
+    /**
+     * Wysiwyg instance
+     */
+    private wysiwyg: WysiwygInterface;
 
     /**
-     * @param {ContentTypeInterface} parent
-     * @param {ContentTypeConfigInterface} config
-     * @param {ObservableUpdater} observableUpdater
+     * The textarea element in disabled mode
      */
-    constructor(
-        parent: ContentTypeInterface,
-        config: ContentTypeConfigInterface,
-        observableUpdater: ObservableUpdater,
-    ) {
-        super(parent, config, observableUpdater);
-        const slider = this.parent.parent;
-        this.displayLabel($t(`Slide ${slider.children().indexOf(this.parent) + 1}`));
-        slider.children.subscribe((children) => {
-            const index = children.indexOf(this.parent);
-            this.displayLabel($t(`Slide ${slider.children().indexOf(this.parent) + 1}`));
-        });
-    }
-    /**
-     * Get the slide wrapper attributes for the preview
-     *
-     * @returns {any}
-     */
-    public getBackgroundStyles() {
-        const data = this.previewData;
-        let backgroundImage: string = "none";
-        if (data.background_image() && data.background_image() !== "" &&
-            data.background_image() !== undefined &&
-            data.background_image()[0] !== undefined) {
-            backgroundImage = "url(" + data.background_image()[0].url + ")";
-        }
-        return {
-            backgroundImage,
-            backgroundSize: data.background_size(),
-            minHeight: data.min_height() ? data.min_height() + "px" : "300px",
-            overflow: "hidden",
-            paddingBottom: "",
-            paddingLeft: "",
-            paddingRight: "",
-            paddingTop: "",
-        };
-    }
+    private textarea: HTMLTextAreaElement;
 
     /**
-     * Get the slide overlay attributes for the preview
-     *
-     * @returns {any}
+     * The element the text content type is bound to
      */
-    public getOverlayStyles() {
-        const data = this.previewData;
-        const paddingTop = data.margins_and_padding().padding.top || "0";
-        const paddingRight = data.margins_and_padding().padding.right || "0";
-        const paddingBottom = data.margins_and_padding().padding.bottom || "0";
-        const paddingLeft = data.margins_and_padding().padding.left || "0";
-        return {
-            backgroundColor: this.getOverlayColorStyle().backgroundColor,
-            minHeight: data.min_height ? data.min_height() + "px" : "300px",
-            paddingBottom: paddingBottom + "px",
-            paddingLeft: paddingLeft + "px",
-            paddingRight: paddingRight + "px",
-            paddingTop: paddingTop + "px",
-        };
-    }
+    private element: HTMLElement;
 
     /**
-     * Get the overlay background style for the preview
-     *
-     * @returns {any}
+     * Slide flag
      */
-    public getOverlayColorStyle() {
-        const data = this.previewData;
-        let overlayColor: string = "transparent";
-        if (data.show_overlay() === "always" || this.showOverlayHover()) {
-            if (data.overlay_color() !== "" && data.overlay_color() !== undefined) {
-                const colors = data.overlay_color();
-                const alpha = percentToDecimal(data.overlay_transparency());
-                overlayColor = fromHex(colors, alpha);
-            } else {
-                overlayColor = "transparent";
-            }
-        }
-        return {
-            backgroundColor: overlayColor,
-        };
-    }
+    private slideChanged: boolean = true;
 
     /**
-     * Is there content in the WYSIWYG?
-     *
-     * @returns {boolean}
+     * @param {HTMLElement} element
      */
-    public isContentEmpty(): boolean {
-        const data = this.previewData.content();
-        return data === "" || data === undefined;
-    }
+    public afterRenderWysiwyg(element: HTMLElement) {
+        this.element = element;
+        element.id = this.contentType.id + "-editor";
 
-    /**
-     * Get the content for the preview
-     *
-     * @returns {any}
-     */
-    public getContentHtml() {
-        if (this.isContentEmpty()) {
-            return $t("Edit slide text");
-        } else {
-            return $t(this.previewData.content());
-        }
-    }
-
-    /**
-     * Get the button text for the preview
-     *
-     * @returns {any}
-     */
-    public getButtonStyles() {
-        const buttonStyle = {
-            opacity : "0",
-            visibility : "hidden",
-        };
-        if (this.previewData.show_button() === "always" || this.showButtonHover()) {
-            buttonStyle.opacity = "1";
-            buttonStyle.visibility = "visible";
-        }
-        return buttonStyle;
-    }
-
-    /**
-     * Get the link href for preview
-     *
-     * @returns {String}
-     */
-    public getHref() {
-        let href = "";
-        if (!!this.previewData.link_url && typeof this.previewData.link_url() === "object") {
-            href = this.previewData.link_url()[this.previewData.link_url().type];
-        }
-        return href;
+        /**
+         * afterRenderWysiwyg is called whenever Knockout causes a DOM re-render. This occurs frequently within Slider
+         * due to Slick's inability to perform a refresh with Knockout managing the DOM. Due to this the original
+         * WYSIWYG instance will be detached from this slide and we need to re-initialize on click.
+         */
+        this.wysiwyg = null;
     }
 
     /**
      * Set state based on overlay mouseover event for the preview
      */
     public onMouseOverWrapper() {
-        if (this.previewData.show_overlay() === "on_hover") {
-            this.showOverlayHover(true);
-
+        // Triggers the visibility of the overlay content to show
+        if (this.data.main.attributes()["data-show-overlay"] === "hover") {
+            this.data.overlay.attributes(
+                Object.assign(
+                    this.data.overlay.attributes(),
+                    {"data-background-color-orig": this.data.overlay.style().backgroundColor},
+                ),
+            );
+            this.data.overlay.style(
+                Object.assign(
+                    this.data.overlay.style(),
+                    {backgroundColor: this.data.overlay.attributes()["data-overlay-color"]},
+                ),
+            );
         }
-        if (this.previewData.show_button() === "on_hover") {
-            this.showButtonHover(true);
+        if (this.data.main.attributes()["data-show-button"] === "hover") {
+            this.data.button.style(
+                Object.assign(
+                    this.data.button.style(),
+                    {opacity: 1, visibility: "visible"},
+                ),
+            );
         }
     }
 
@@ -177,138 +93,346 @@ export default class Preview extends BasePreview {
      * Set state based on overlay mouseout event for the preview
      */
     public onMouseOutWrapper() {
-        if (this.previewData.show_overlay() === "on_hover") {
-            this.showOverlayHover(false);
+        // Triggers the visibility of the overlay content to hide
+        if (this.data.main.attributes()["data-show-overlay"] === "hover") {
+            this.data.overlay.style(
+                Object.assign(
+                    this.data.overlay.style(),
+                    {backgroundColor: this.data.overlay.attributes()["data-background-color-orig"]},
+                ),
+            );
         }
-        if (this.previewData.show_button() === "on_hover") {
-            this.showButtonHover(false);
+        if (this.data.main.attributes()["data-show-button"] === "hover") {
+            this.data.button.style(
+                Object.assign(
+                    this.data.button.style(),
+                    {opacity: 0, visibility: "hidden"},
+                ),
+            );
         }
     }
-
-    /**
-     * Extract data values our of observable functions
-     * Update the style attribute mapper converts images to directives, override it to include the correct URL
-     *
-     * @param {StyleAttributeMapperResult} styles
-     * @returns {StyleAttributeMapperResult}
-     */
 
     /**
      * Get the options instance
      *
-     * @returns {Options}
+     * @returns {OptionsInterface}
      */
-    public getOptions(): Options {
-        const options = super.getOptions();
-        options.removeOption("move");
+    public retrieveOptions(): OptionsInterface {
+        const options = super.retrieveOptions();
+        delete options.move;
+        options.remove = new ConditionalRemoveOption({
+            ...options.remove.config,
+            preview: this,
+        });
         return options;
     }
 
     /**
-     * Get the slide wrapper styles for the storefront
+     * Get registry callback reference to uploader UI component
      *
-     * @returns {object}
+     * @returns {Uploader}
      */
-    public getSlideStyles(type: string): {} {
-        const data = this.previewData;
-        const style = _.clone(this.getStyle());
+    public getUploader() {
+        const initialImageValue = this.contentType.dataStore
+            .get<object[]>(this.config.additional_data.uploaderConfig.dataScope, "");
 
-        let backgroundImage: any = "";
-        if (type === "image") {
-            backgroundImage = this.getImage() ? this.getStyle().backgroundImage : "none";
-        }
-
-        if (type === "mobileImage") {
-            if (this.getMobileImage()) {
-                backgroundImage = this.getStyle().mobileImage;
-            } else {
-                if (this.getImage()) {
-                    backgroundImage = this.getStyle().backgroundImage;
-                } else {
-                    backgroundImage = "none";
-                }
-            }
-        }
-
-        return Object.assign(
-            style,
-            {
-                backgroundImage,
-                backgroundSize: data.background_size(),
-                border: "",
-                borderColor: "",
-                borderRadius: "",
-                borderWidth: "",
-                marginBottom: "",
-                marginLeft: "",
-                marginRight: "",
-                marginTop: "",
-                paddingBottom: "",
-                paddingLeft: "",
-                paddingRight: "",
-                paddingTop: "",
-            },
+        // Create uploader
+        return new Uploader(
+            "imageuploader_" + this.contentType.id,
+            this.config.additional_data.uploaderConfig,
+            this.contentType.id,
+            this.contentType.dataStore,
+            initialImageValue,
         );
     }
 
     /**
-     * Get the slide overlay attributes for the storefront
+     * Makes WYSIWYG active
      *
-     * @returns {object}
+     * @param {Preview} preview
+     * @param {JQueryEventObject} event
+     * @returns {Boolean}
      */
-    public getOverlayAttributes(): {} {
-        const data = this.previewData;
-        let overlayColorAttr: string = "transparent";
-        if (data.show_overlay() !== "never_show") {
-            if (data.overlay_color() !== "" && data.overlay_color() !== undefined) {
-                overlayColorAttr = fromHex(data.overlay_color(), percentToDecimal(data.overlay_transparency()));
-            }
-        }
-        return {
-            "data-overlay-color" : overlayColorAttr,
+    public activateEditor(preview: Preview, event: JQueryEventObject) {
+        const activate = () => {
+            const element = this.wysiwyg && this.element || this.textarea;
+            element.focus();
         };
+
+        if (!this.slideChanged) {
+            event.preventDefault();
+            return false;
+        }
+
+        if (this.element && !this.wysiwyg) {
+            this.element.removeAttribute("contenteditable");
+            _.defer(() => {
+                this.initWysiwyg(true)
+                    .then(() => delayUntil(
+                        () => {
+                            activate();
+                            this.restoreSelection(this.element, this.saveSelection());
+                        },
+                        () => this.element.classList.contains("mce-edit-focus"),
+                        10,
+                    )).catch((error) => {
+                        // If there's an error with init of WYSIWYG editor push into the console to aid support
+                        console.error(error);
+                    });
+            });
+        } else {
+            activate();
+        }
     }
 
     /**
-     * Return an array of options
+     * Stop event to prevent execution of action when editing textarea.
      *
-     * @returns {Array<Option>}
+     * @param {Preview} preview
+     * @param {JQueryEventObject} event
+     * @returns {Boolean}
      */
-    public retrieveOptions(): OptionInterface[] {
-        const options = super.retrieveOptions();
-        const newOptions = options.filter((option) => {
-            return (option.code !== "remove");
+    public stopEvent(preview: Preview, event: JQueryEventObject) {
+        event.stopPropagation();
+
+        return true;
+    }
+
+    /**
+     * @returns {Boolean}
+     */
+    public isWysiwygSupported(): boolean {
+        return Config.getConfig("can_use_inline_editing_on_stage");
+    }
+
+    /**
+     * @param {HTMLTextAreaElement} element
+     */
+    public initTextarea(element: HTMLTextAreaElement)
+    {
+        this.textarea = element;
+
+        // set initial value of textarea based on data store
+        this.textarea.value = this.contentType.dataStore.get<string>("content");
+        this.adjustTextareaHeightBasedOnScrollHeight();
+
+        // Update content in our stage preview textarea after its slideout counterpart gets updated
+        events.on(`form:${this.contentType.id}:saveAfter`, () => {
+            this.textarea.value = this.contentType.dataStore.get<string>("content");
+            this.adjustTextareaHeightBasedOnScrollHeight();
         });
-        const removeClasses = ["remove-structural"];
-        let removeFn = this.onOptionRemove;
-        if (this.parent.parent.children().length <= 1) {
-            removeFn = () => { return; };
-            removeClasses.push("disabled");
-        }
-        newOptions.push(new Option(
-            this,
-            "remove",
-            "<i class='icon-admin-pagebuilder-remove'></i>",
-            $t("Remove"),
-            removeFn,
-            removeClasses,
-            100,
-        ));
-        return newOptions;
     }
-    protected afterStyleMapped(styles: StyleAttributeMapperResult): StyleAttributeMapperResult {
-        // Extract data values our of observable functions
-        // The style attribute mapper converts images to directives, override it to include the correct URL
-        const data = this.previewData;
-        if (data.background_image() && typeof data.background_image()[0] === "object") {
-            styles.backgroundImage = "url(" + data.background_image()[0].url + ")";
-        }
-        if (data.mobile_image()
-            && data.mobile_image() !== ""
-            && typeof data.mobile_image()[0] === "object"
-        ) {
-            styles.mobileImage = "url(" + data.mobile_image()[0].url + ")";
-        }
-        return styles;
+
+    /**
+     * Save current value of textarea in data store
+     */
+    public onTextareaKeyUp()
+    {
+        this.adjustTextareaHeightBasedOnScrollHeight();
+        this.contentType.dataStore.set("content", this.textarea.value);
     }
+
+    /**
+     * Start stage interaction on textarea blur
+     */
+    public onTextareaFocus()
+    {
+        $(this.textarea).closest(".pagebuilder-content-type").addClass("pagebuilder-toolbar-active");
+        events.trigger("stage:interactionStart");
+    }
+
+    /**
+     * Stop stage interaction on textarea blur
+     */
+    public onTextareaBlur()
+    {
+        $(this.textarea).closest(".pagebuilder-content-type").removeClass("pagebuilder-toolbar-active");
+        events.trigger("stage:interactionStop");
+    }
+
+    /**
+     * Init the WYSIWYG
+     *
+     * @param {boolean} focus Should wysiwyg focus after initialization?
+     * @returns Promise
+     */
+    public initWysiwyg(focus: boolean = false) {
+        if (this.wysiwyg) {
+            return;
+        }
+
+        const wysiwygConfig = this.config.additional_data.wysiwygConfig.wysiwygConfigData;
+
+        if (focus) {
+            wysiwygConfig.adapter.settings.auto_focus = this.element.id;
+        }
+
+        return WysiwygFactory(
+            this.contentType.id,
+            this.element.id,
+            this.config.name,
+            wysiwygConfig,
+            this.contentType.dataStore,
+            "content",
+            this.contentType.stageId,
+        ).then((wysiwyg: WysiwygInterface): void => {
+            this.wysiwyg = wysiwyg;
+        });
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected bindEvents() {
+        super.bindEvents();
+
+        events.on(`${this.config.name}:${this.contentType.id}:updateAfter`, () => {
+            const dataStore = this.contentType.dataStore.getState();
+            const imageObject = (dataStore[this.config.additional_data.uploaderConfig.dataScope] as object[])[0] || {};
+            events.trigger(`image:${this.contentType.id}:assignAfter`, imageObject);
+            nestingLinkDialog(this.contentType.dataStore, this.wysiwyg, "content", "link_url");
+        });
+
+        // Remove wysiwyg before assign new instance.
+        events.on("childContentType:sortUpdate", (args: PreviewSortableSortUpdateEventParams) => {
+            if (args.instance.id === this.contentType.parentContentType.id) {
+               this.wysiwyg = null;
+            }
+        });
+
+        events.on(`${this.config.name}:mountAfter`, (args: ContentTypeMountEventParamsInterface) => {
+            if (args.id === this.contentType.id) {
+                // Update the display label for the slide
+                const slider = this.contentType.parentContentType;
+                this.displayLabel($t(`Slide ${slider.children().indexOf(this.contentType) + 1}`));
+                slider.children.subscribe((children) => {
+                    const index = children.indexOf(this.contentType);
+                    this.displayLabel($t(`Slide ${slider.children().indexOf(this.contentType) + 1}`));
+                });
+            }
+        });
+
+        events.on(`${this.config.name}:renderAfter`, (args: ContentTypeMountEventParamsInterface) => {
+            if (args.id === this.contentType.id) {
+                const slider = this.contentType.parentContentType;
+
+                $((slider.preview as SliderPreview).element).on("beforeChange", () => {
+                    this.slideChanged = false;
+                });
+                $((slider.preview as SliderPreview).element).on("afterChange", () => {
+                    this.slideChanged = true;
+                });
+            }
+        });
+    }
+
+    /**
+     * Update image data inside data store
+     *
+     * @param {Array} data - list of each files' data
+     */
+    private onImageUploaded(data: object[]) {
+        this.contentType.dataStore.set(
+            this.config.additional_data.uploaderConfig.dataScope,
+            data,
+        );
+    }
+
+    /**
+     * Adjust textarea's height based on scrollHeight
+     */
+    private adjustTextareaHeightBasedOnScrollHeight()
+    {
+        this.textarea.style.height = "";
+        const scrollHeight = this.textarea.scrollHeight;
+        const minHeight = parseInt($(this.textarea).css("min-height"), 10);
+
+        if (scrollHeight === minHeight) { // leave height at 'auto'
+            return;
+        }
+
+        $(this.textarea).height(scrollHeight);
+    }
+
+    /**
+     * Save the current selection to be restored at a later point
+     *
+     * @returns {Selection}
+     */
+    private saveSelection(): Selection {
+        if (window.getSelection) {
+            const selection = window.getSelection();
+            if (selection.getRangeAt && selection.rangeCount) {
+                const range = selection.getRangeAt(0).cloneRange();
+                $(range.startContainer.parentNode).attr("data-startContainer", "true");
+                $(range.endContainer.parentNode).attr("data-endContainer", "true");
+                return {
+                    startContainer: range.startContainer,
+                    startOffset: range.startOffset,
+                    endContainer: range.endContainer,
+                    endOffset: range.endOffset,
+                };
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Restore the original selection
+     *
+     * @param {HTMLElement} element
+     * @param {Selection} selection
+     */
+    private restoreSelection(element: HTMLElement, selection: Selection) {
+        if (selection && window.getSelection) {
+            // Find the original container that had the selection
+            const startContainerParent = $(element).find("[data-startContainer]");
+            startContainerParent.removeAttr("data-startContainer");
+            const startContainer: HTMLElement = this.findTextNode(
+                startContainerParent,
+                selection.startContainer.nodeValue,
+            );
+            const endContainerParent = $(element).find("[data-endContainer]");
+            endContainerParent.removeAttr("data-endContainer");
+            let endContainer: HTMLElement = startContainer;
+            if (selection.endContainer.nodeValue !== selection.startContainer.nodeValue) {
+                endContainer = this.findTextNode(
+                    endContainerParent,
+                    selection.endContainer.nodeValue,
+                );
+            }
+
+            if (startContainer && endContainer) {
+                const newSelection = window.getSelection();
+                newSelection.removeAllRanges();
+
+                const range = document.createRange();
+                range.setStart(startContainer, selection.startOffset);
+                range.setEnd(endContainer, selection.endOffset);
+                newSelection.addRange(range);
+            }
+        }
+    }
+
+    /**
+     * Find a text node within an existing element
+     *
+     * @param {HTMLElement} element
+     * @param {string} text
+     * @returns {HTMLElement}
+     */
+    private findTextNode(element: JQuery, text: string): HTMLElement {
+        if (text && text.trim().length > 0) {
+            return element.contents().toArray().find((node: HTMLElement) => {
+                return node.nodeType === Node.TEXT_NODE && text === node.nodeValue;
+            });
+        }
+    }
+}
+
+interface Selection {
+    startContainer: Node;
+    startOffset: number;
+    endContainer: Node;
+    endOffset: number;
 }

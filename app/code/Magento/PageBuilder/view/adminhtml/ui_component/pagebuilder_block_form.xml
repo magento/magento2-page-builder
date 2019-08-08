@@ -24,7 +24,7 @@
                 <item name="component" xsi:type="string">Magento_PageBuilder/js/form/provider</item>
             </item>
         </argument>
-        <dataProvider name="pagebuilder_block_form_data_source" class="Magento\PageBuilder\Model\ContentBlock\DataProvider">
+        <dataProvider name="pagebuilder_block_form_data_source" class="Magento\PageBuilder\Model\ContentType\DataProvider">
             <settings>
                 <requestFieldName/>
                 <primaryFieldName/>
@@ -44,7 +44,7 @@
                 <link name="hideLabel">${$.name}.appearance:options</link>
             </imports>
         </settings>
-        <field name="appearance" formElement="select" sortOrder="10" component="Magento_PageBuilder/js/form/element/dependent-select">
+        <field name="appearance" formElement="select" sortOrder="10" component="Magento_PageBuilder/js/form/element/dependent-visual-select">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="default" xsi:type="string">default</item>
@@ -74,20 +74,96 @@
         <settings>
             <label/>
         </settings>
-        <field name="identifier" sortOrder="20" formElement="input">
+        <component component="Magento_PageBuilder/js/form/element/block-chooser" name="block_chooser" sortOrder="10">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="source" xsi:type="string">page</item>
+                    <item name="requestParameter" xsi:type="string">block_id</item>
+                    <item name="dataUrlConfigPath" xsi:type="string">content_types.block.additional_data.chooserConfig.dataUrl</item>
+                    <item name="modalName" xsi:type="string">ns = ${ $.ns }, index = modal</item>
+                    <item name="buttonTitle" xsi:type="string" translate="true">Select Block</item>
+                    <item name="displayMetadata" xsi:type="boolean">false</item>
                 </item>
             </argument>
             <settings>
-                <dataScope>identifier</dataScope>
+                <imports>
+                    <link name="id">${ $.ns }.${ $.ns }.general.block_id:value</link>
+                </imports>
+            </settings>
+        </component>
+        <field name="block_id" formElement="hidden" sortOrder="20">
+            <settings>
                 <dataType>text</dataType>
-                <label translate="true">Block</label>
+                <imports>
+                    <link name="value">${ $.ns }.${ $.ns }.modal.pagebuilder_block_select_grid:externalValue</link>
+                </imports>
+            </settings>
+        </field>
+        <field name="template" formElement="select" sortOrder="30" component="Magento_PageBuilder/js/form/element/dependent-select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">default</item>
+                </item>
+            </argument>
+            <settings>
+                <label translate="true">Template</label>
+                <dataType>text</dataType>
                 <validation>
                     <rule name="required-entry" xsi:type="boolean">true</rule>
                 </validation>
             </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options>
+                            <option name="0" xsi:type="array">
+                                <item name="value" xsi:type="string">widget/static_block/default.phtml</item>
+                                <item name="label" xsi:type="string" translate="true">CMS Static Block Default Template</item>
+                            </option>
+                        </options>
+                    </settings>
+                </select>
+            </formElements>
         </field>
     </fieldset>
+    <modal name="modal" sortOrder="30">
+        <settings>
+            <options>
+                <option name="title" xsi:type="string" translate="true">Select Block</option>
+                <option name="buttons" xsi:type="array">
+                    <item name="0" xsi:type="array">
+                        <item name="text" xsi:type="string" translate="true">Cancel</item>
+                        <item name="actions" xsi:type="array">
+                            <item name="0" xsi:type="string">closeModal</item>
+                        </item>
+                    </item>
+                    <item name="1" xsi:type="array">
+                        <item name="text" xsi:type="string">Add Selected</item>
+                        <item name="class" xsi:type="string">action-primary</item>
+                        <item name="actions" xsi:type="array">
+                            <item name="0" xsi:type="array">
+                                <item name="targetName" xsi:type="string">${ $.name }.pagebuilder_block_select_grid</item>
+                                <item name="actionName" xsi:type="string">save</item>
+                            </item>
+                            <item name="1" xsi:type="string">closeModal</item>
+                        </item>
+                    </item>
+                </option>
+            </options>
+        </settings>
+        <insertListing name="pagebuilder_block_select_grid" sortOrder="10">
+            <settings>
+                <externalData>block_id</externalData>
+                <externalProvider>${ $.ns }.pagebuilder_block_select_grid_data_source</externalProvider>
+                <loading>false</loading>
+                <selectionsProvider>${ $.ns }.${ $.ns }.columns.ids</selectionsProvider>
+                <autoRender>true</autoRender>
+                <dataScope>block_id</dataScope>
+                <ns>pagebuilder_block_select_grid</ns>
+                <dataLinks>
+                    <imports>false</imports>
+                    <exports>true</exports>
+                </dataLinks>
+            </settings>
+        </insertListing>
+    </modal>
 </form>

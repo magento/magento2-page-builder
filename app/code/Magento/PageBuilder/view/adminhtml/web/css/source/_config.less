@@ -3,6 +3,11 @@
 //  * See COPYING.txt for license details.
 //  */
 
+.error-border (@color) {
+    border: 1px solid @color;
+    overflow: hidden;
+}
+
 [data-role='modal'] {
     .action-pagebuilder-cancel,
     .action-pagebuilder-cancel:hover {
@@ -13,5 +18,30 @@
         list-style-position: inside;
         margin-bottom: 15px;
         margin-top: 15px;
+    }
+
+    .admin__field {
+        &._error {
+            .url-input-element-linked-element {
+                input,
+                .action-select-wrap {
+                    .error-border(@field-error-control__border-color);
+                }
+            }
+
+            .admin__field-control > .admin__field-design-options > .layout-onion {
+                .error-border(@field-error-control__border-color);
+            }
+            ._error {
+                .admin__control-wysiwig {
+                    .textarea {
+                        .error-border(@field-error-control__border-color);
+                    }
+                    .mce-tinymce {
+                        .error-border(@field-error-control__border-color);
+                    }
+                }
+            }
+        }
     }
 }

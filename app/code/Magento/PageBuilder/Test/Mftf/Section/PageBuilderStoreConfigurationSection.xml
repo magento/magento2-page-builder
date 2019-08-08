@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
+    <section name="ContentManagementSection">
+        <element name="PageBuilderOptions" type="button" selector="#cms_pagebuilder-head"/>
+        <element name="CheckIfPageBuilderTabExpanded" type="button" selector="#cms_pagebuilder-head:not(.open)"/>
+        <element name="EnablePageBuilderSystemValue" type="button" selector="#cms_pagebuilder_enabled_inherit"/>
+        <element name="EnablePageBuilder" type="button" selector="#cms_pagebuilder_enabled"/>
+        <element name="DisclaimerMessage" type="text" selector="//aside[@data-type='popup']//div[@class='modal-inner-wrap']"/>
+        <element name="CancelBtn" type="button" selector=".action-pagebuilder-cancel"/>
+        <element name="TurnOffBtn" type="button" selector=".action-accept"/>
+        <element name="ConfigurationFieldLabel" type="button" selector="//div[contains(@class,'form-inline')]//fieldset[@id='{{arg1}}']//tr[@id='{{arg2}}']//span[.='{{arg3}}']" parameterized="true"/>
+        <element name="GoogleMapsAPIKeyInputField" type="input" selector="#cms_pagebuilder_google_maps_api_key"/>
+        <element name="GoogleMapsAPIKeyTestKeyButton" type="button" selector="#cms_pagebuilder_google_maps_api_key_validator"/>
+        <element name="GoogleMapsAPIKeyTestKeyResult" type="button" selector="#cms_pagebuilder_google_maps_api_key_validator .result"/>
+        <element name="GoogleMapsAPIKeyHelperText" type="text" selector="#row_cms_pagebuilder_google_maps_api_key .value .note span"/>
+        <element name="GoogleMapsGetAPIKeyLink" type="button" selector="#row_cms_pagebuilder_google_maps_api_key a[href]"/>
+        <element name="GoogleMapsStyleInputField" type="input" selector="#cms_pagebuilder_google_maps_style"/>
+        <element name="GoogleMapsStyleInputFieldError" type="input" selector="#cms_pagebuilder_google_maps_style[aria-invalid='true']"/>
+        <element name="GoogleMapsStyleErrorMessage" type="text" selector="#cms_pagebuilder_google_maps_style-error"/>
+        <element name="GoogleMapsStyleHelperText" type="text" selector="#row_cms_pagebuilder_google_maps_style .value .note span"/>
+        <element name="GoogleMapsCreateMapStyleLink" type="button" selector="#row_cms_pagebuilder_google_maps_style a[href]"/>
+        <element name="ColumnGridDefaultInputField" type="input" selector="#cms_pagebuilder_column_grid_default"/>
+        <element name="ColumnGridDefaultInputFieldError" type="input" selector="//label[@class='mage-error'][@for='cms_pagebuilder_column_grid_default']"/>
+        <element name="ColumnGridDefaultHelperText" type="text" selector="#row_cms_pagebuilder_column_grid_default .value .note span"/>
+        <element name="ColumnGridMaxInputField" type="input" selector="#cms_pagebuilder_column_grid_max"/>
+        <element name="ColumnGridMaxInputFieldError" type="input" selector="//label[@class='mage-error'][@for='cms_pagebuilder_column_grid_max']"/>
+        <element name="ColumnGridMaxHelperText" type="text" selector="#row_cms_pagebuilder_column_grid_max .value .note span"/>
+        <element name="UseSystem" type="input" selector="[name='groups[pagebuilder][fields][{{arg1}}][inherit]']" parameterized="true"/>
+        <element name="UseSystemChecked" type="input" selector="[name='groups[pagebuilder][fields][{{arg1}}][inherit]']:checked" parameterized="true"/>
+    </section>
+</sections>

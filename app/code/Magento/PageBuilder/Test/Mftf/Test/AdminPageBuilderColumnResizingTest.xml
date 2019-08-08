@@ -1,0 +1,912 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="ColumnResize1to0">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Resize Column: 1:0 Ratio"/>
+            <description value="A user should be able to resize a columns to achieve a ratio of 1:0."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-950"/>
+            <testCaseId value="MC-2717"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-columnResize"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logOut"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <!-- Get 3/6 Column Width -->
+        <comment userInput="Get 3/6 Column Width" stepKey="context1"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth" stepKey="initalColumnWidth"/>
+        <!-- Assert the initial width classes are correct -->
+        <waitForElement selector="{{ColumnOnBackend.columnByIndexAndWidthClass('1','50')}}" stepKey="assertInitialWidthClass1"/>
+        <waitForElement selector="{{ColumnOnBackend.columnByIndexAndWidthClass('2','50')}}" stepKey="assertInitialWidthClass2"/>
+        <!-- Change Columns To 1:0 Ratio -->
+        <comment userInput="Change Columns To 1:0 Ratio" stepKey="context2"/>
+        <actionGroup ref="removeContentTypeFromStageByIndex" stepKey="removeSecondColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeNumber" value="2"/>
+        </actionGroup>
+        <!-- Assert the width class changed to 100 correctly on the first column -->
+        <waitForElement selector="{{ColumnOnBackend.columnByIndexAndWidthClass('1','100')}}" stepKey="assertWidthClass1"/>
+        <!-- Add a new column -->
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <!-- Verify Column Number and Size -->
+        <comment userInput="Verify Column Number and Size" stepKey="context3"/>
+        <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="1" stepKey="seeNumberOfColumns"/>
+        <seeNumberOfElements selector="{{DividerOnStage.allDividers}}" userInput="1" stepKey="seeNumberOfDividers"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth" stepKey="columnOneWidth"/>
+        <executeJS function="return Math.round({$columnOneWidth}/{$initalColumnWidth})" stepKey="columnRatio"/>
+        <assertEquals stepKey="assertRatioIsCorrect">
+            <expectedResult type="int">2</expectedResult>
+            <actualResult type="variable">columnRatio</actualResult>
+        </assertEquals>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Verify After Save -->
+        <comment userInput="Verify After Save" stepKey="commentAfterSave"/>
+        <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="1" stepKey="seeNumberOfColumns2"/>
+        <seeNumberOfElements selector="{{DividerOnStage.allDividers}}" userInput="1" stepKey="seeNumberOfDividers2"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth" stepKey="columnOneWidth2"/>
+        <executeJS function="return Math.round({$columnOneWidth2}/{$initalColumnWidth})" stepKey="columnRatio2"/>
+        <assertEquals stepKey="assertRatioIsCorrect2">
+            <expectedResult type="int">2</expectedResult>
+            <actualResult type="variable">columnRatio2</actualResult>
+        </assertEquals>
+        <!-- Verify Storefront -->
+        <comment userInput="Verify Storefront" stepKey="frontEndContext"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <seeNumberOfElements selector="{{ColumnOnFrontend.allColumns}}" userInput="1" stepKey="seeNumberOfColumns3"/>
+        <seeNumberOfElements selector="{{DividerOnStorefront.allDividers}}" userInput="1" stepKey="seeNumberOfDividers3"/>
+        <executeJS function="return document.querySelector('{{ColumnOnFrontend.allColumnGroups}}').clientWidth" stepKey="columnGroupWidthFrontend"/>
+        <executeJS function="return document.querySelector('{{ColumnOnFrontend.columnX('1')}}').clientWidth" stepKey="columnOneWidthFrontend"/>
+        <executeJS function="return Math.round({$columnGroupWidthFrontend}/{$columnOneWidthFrontend})" stepKey="columnRatioFrontend"/>
+        <assertEquals stepKey="assertFrontendRatioIsCorrect">
+            <expectedResult type="int">1</expectedResult>
+            <actualResult type="variable">columnRatioFrontend</actualResult>
+        </assertEquals>
+    </test>
+    <test name="ColumnResize5to1">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Resize Column: 5:1 Ratio"/>
+            <description value="A user should be able to resize a columns to achieve a ratio of 5:1."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MC-2740"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-columnResize"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logOut"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <!-- Grab grid guide width -->
+        <comment userInput="Grab grid guide width" stepKey="context0"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnResizeGridLine('10')}}').clientWidth" stepKey="guideWidth"/>
+        <!-- Change Columns To 5:1 Ratio -->
+        <comment userInput="Change Columns To 5:1 Ratio" stepKey="context1"/>
+        <dragAndDrop selector1="{{ColumnOnBackend.columnX('1')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('10')}}" x="$guideWidth" stepKey="dragColumnOneToFive"/>
+        <waitForPageLoad stepKey="waitForDragAndDrop"/>
+        <!-- Assert the width classes are correct after manual resize -->
+        <waitForElement selector="{{ColumnOnBackend.columnByIndexAndWidthClass('1','90')}}" stepKey="assertWidthClass1"/>
+        <waitForElement selector="{{ColumnOnBackend.columnByIndexAndWidthClass('2','20')}}" stepKey="assertWidthClass2"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage1">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage2">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
+        <!-- Verify Column Number and Size -->
+        <comment userInput="Verify Column Number and Size" stepKey="context3"/>
+        <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="2" stepKey="seeNumberOfColumns"/>
+        <seeNumberOfElements selector="{{DividerOnStage.allDividers}}" userInput="2" stepKey="seeNumberOfDividers"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth" stepKey="columnOneWidth"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('2')}}').clientWidth" stepKey="columnTwoWidth"/>
+        <executeJS function="return Math.round({$columnOneWidth}/{$columnTwoWidth})" stepKey="columnRatio"/>
+        <assertEquals stepKey="assertRatioIsCorrect">
+            <expectedResult type="int">5</expectedResult>
+            <actualResult type="variable">columnRatio</actualResult>
+        </assertEquals>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Verify After Save -->
+        <comment userInput="Verify After Save" stepKey="commentAfterSave"/>
+        <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="2" stepKey="seeNumberOfColumns2"/>
+        <seeNumberOfElements selector="{{DividerOnStage.allDividers}}" userInput="2" stepKey="seeNumberOfDividers2"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth" stepKey="columnOneWidth2"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('2')}}').clientWidth" stepKey="columnTwoWidth2"/>
+        <executeJS function="return Math.round({$columnOneWidth2}/{$columnTwoWidth2})" stepKey="columnRatio2"/>
+        <assertEquals stepKey="assertRatioIsCorrect2">
+            <expectedResult type="int">5</expectedResult>
+            <actualResult type="variable">columnRatio2</actualResult>
+        </assertEquals>
+        <!-- Verify Storefront -->
+        <comment userInput="Verify Storefront" stepKey="frontEndContext"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <seeNumberOfElements selector="{{ColumnOnFrontend.allColumns}}" userInput="2" stepKey="seeNumberOfColumns3"/>
+        <seeNumberOfElements selector="{{DividerOnStorefront.allDividers}}" userInput="2" stepKey="seeNumberOfDividers3"/>
+        <executeJS function="return document.querySelector('{{ColumnOnFrontend.columnX('1')}}').clientWidth" stepKey="columnOneWidthFrontend"/>
+        <executeJS function="return document.querySelector('{{ColumnOnFrontend.columnX('2')}}').clientWidth" stepKey="columnTwoWidthFrontend"/>
+        <executeJS function="return Math.round({$columnOneWidthFrontend}/{$columnTwoWidthFrontend})" stepKey="columnRatioFrontend"/>
+        <assertEquals stepKey="assertFrontendRatioIsCorrect">
+            <expectedResult type="int">5</expectedResult>
+            <actualResult type="variable">columnRatioFrontend</actualResult>
+        </assertEquals>
+    </test>
+    <test name="ColumnResize2to1">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Resize Column: 2:1 Ratio"/>
+            <description value="A user should be able to resize a columns to achieve a ratio of 2:1."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MC-2867"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-columnResize"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logOut"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <!-- Change Columns To 2:1 Ratio -->
+        <comment userInput="Change Columns To 2:1 Ratio" stepKey="context1"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragColumnIntoStage2">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnResizeGridLine('1')}}').clientWidth" stepKey="guideWidth"/>
+        <dragAndDrop selector1="{{ColumnOnBackend.columnX('2')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('8')}}" x="$guideWidth" stepKey="resizeColumnToTwo"/>
+        <waitForPageLoad stepKey="waitForDragAndDrop"/>
+        <actionGroup ref="removeContentTypeFromStageByIndex" stepKey="removeFirstColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeNumber" value="1"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage1">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage2">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
+        <!-- Verify Column Number and Size -->
+        <comment userInput="Verify Column Number and Size" stepKey="context3"/>
+        <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="2" stepKey="seeNumberOfColumns"/>
+        <seeNumberOfElements selector="{{DividerOnStage.allDividers}}" userInput="2" stepKey="seeNumberOfDividers"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth" stepKey="columnOneWidth"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('2')}}').clientWidth" stepKey="columnTwoWidth"/>
+        <executeJS function="return Math.round({$columnOneWidth}/{$columnTwoWidth})" stepKey="columnRatio"/>
+        <assertEquals stepKey="assertRatioIsCorrect">
+            <expectedResult type="int">2</expectedResult>
+            <actualResult type="variable">columnRatio</actualResult>
+        </assertEquals>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Verify After Save -->
+        <comment userInput="Verify After Save" stepKey="commentAfterSave"/>
+        <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="2" stepKey="seeNumberOfColumns2"/>
+        <seeNumberOfElements selector="{{DividerOnStage.allDividers}}" userInput="2" stepKey="seeNumberOfDividers2"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth" stepKey="columnOneWidth2"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('2')}}').clientWidth" stepKey="columnTwoWidth2"/>
+        <executeJS function="return Math.round({$columnOneWidth2}/{$columnTwoWidth2})" stepKey="columnRatio2"/>
+        <assertEquals stepKey="assertRatioIsCorrect2">
+            <expectedResult type="int">2</expectedResult>
+            <actualResult type="variable">columnRatio2</actualResult>
+        </assertEquals>
+        <!-- Verify Storefront -->
+        <comment userInput="Verify Storefront" stepKey="frontEndContext"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <seeNumberOfElements selector="{{ColumnOnFrontend.allColumns}}" userInput="2" stepKey="seeNumberOfColumns3"/>
+        <seeNumberOfElements selector="{{DividerOnStorefront.allDividers}}" userInput="2" stepKey="seeNumberOfDividers3"/>
+        <executeJS function="return document.querySelector('{{ColumnOnFrontend.columnX('1')}}').clientWidth" stepKey="columnOneWidthFrontend"/>
+        <executeJS function="return document.querySelector('{{ColumnOnFrontend.columnX('2')}}').clientWidth" stepKey="columnTwoWidthFrontend"/>
+        <executeJS function="return Math.round({$columnOneWidthFrontend}/{$columnTwoWidthFrontend})" stepKey="columnRatioFrontend"/>
+        <assertEquals stepKey="assertFrontendRatioIsCorrect">
+            <expectedResult type="int">2</expectedResult>
+            <actualResult type="variable">columnRatioFrontend</actualResult>
+        </assertEquals>
+    </test>
+    <test name="ColumnResize4to1to1">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Resize Column: 4:1:1 Ratio"/>
+            <description value="A user should be able to resize a columns to achieve a ratio of 4:1:1."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MC-2803"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-columnResize"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logOut"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <!-- Grab grid guide width -->
+        <comment userInput="Grab grid guide width" stepKey="context0"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnResizeGridLine('1')}}').clientWidth" stepKey="guideWidth"/>
+        <!-- Change Columns To 4:1:1 Ratio -->
+        <comment userInput="Change Columns To 4:1:1 Ratio" stepKey="context1"/>
+        <dragAndDrop selector1="{{ColumnOnBackend.columnX('1')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('8')}}" x="$guideWidth" stepKey="resizeColumn1ToEight"/>
+        <waitForPageLoad stepKey="waitForDragAndDrop"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragColumnIntoStage2">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
+        <dragAndDrop selector1="{{ColumnOnBackend.columnX('2')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('10')}}" x="$guideWidth" stepKey="resizeColumnToTwo"/>
+        <waitForPageLoad stepKey="waitForDragAndDrop2"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage1">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage2">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage3">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="3"/>
+        </actionGroup>
+        <!-- Verify Column Number and Size -->
+        <comment userInput="Verify Column Number and Size" stepKey="context3"/>
+        <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="3" stepKey="seeNumberOfColumns"/>
+        <seeNumberOfElements selector="{{DividerOnStage.allDividers}}" userInput="3" stepKey="seeNumberOfDividers"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth" stepKey="columnOneWidth"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('2')}}').clientWidth" stepKey="columnTwoWidth"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('3')}}').clientWidth" stepKey="columnThreeWidth"/>
+        <executeJS function="return Math.round({$columnOneWidth}/{$columnTwoWidth})" stepKey="columnRatio"/>
+        <assertEquals stepKey="assertRatioIsCorrect">
+            <expectedResult type="int">4</expectedResult>
+            <actualResult type="variable">columnRatio</actualResult>
+        </assertEquals>
+        <executeJS function="return Math.round({$columnOneWidth}/{$columnThreeWidth})" stepKey="columnRatio2"/>
+        <assertEquals stepKey="assertRatioIsCorrect2">
+            <expectedResult type="int">4</expectedResult>
+            <actualResult type="variable">columnRatio2</actualResult>
+        </assertEquals>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Verify After Save -->
+        <comment userInput="Verify After Save" stepKey="commentAfterSave"/>
+        <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="3" stepKey="seeNumberOfColumns2"/>
+        <seeNumberOfElements selector="{{DividerOnStage.allDividers}}" userInput="3" stepKey="seeNumberOfDividers2"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth" stepKey="columnOneWidth2"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('2')}}').clientWidth" stepKey="columnTwoWidth2"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('3')}}').clientWidth" stepKey="columnThreeWidth2"/>
+        <executeJS function="return Math.round({$columnOneWidth2}/{$columnTwoWidth2})" stepKey="columnRatio3"/>
+        <assertEquals stepKey="assertRatioIsCorrect3">
+            <expectedResult type="int">4</expectedResult>
+            <actualResult type="variable">columnRatio3</actualResult>
+        </assertEquals>
+        <executeJS function="return Math.round({$columnOneWidth2}/{$columnThreeWidth2})" stepKey="columnRatio4"/>
+        <assertEquals stepKey="assertRatioIsCorrect4">
+            <expectedResult type="int">4</expectedResult>
+            <actualResult type="variable">columnRatio4</actualResult>
+        </assertEquals>
+        <!-- Verify Storefront -->
+        <comment userInput="Verify Storefront" stepKey="frontEndContext"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <seeNumberOfElements selector="{{ColumnOnFrontend.allColumns}}" userInput="3" stepKey="seeNumberOfColumns3"/>
+        <seeNumberOfElements selector="{{DividerOnStorefront.allDividers}}" userInput="3" stepKey="seeNumberOfDividers3"/>
+        <executeJS function="return document.querySelector('{{ColumnOnFrontend.columnX('1')}}').clientWidth" stepKey="columnOneWidthFrontend"/>
+        <executeJS function="return document.querySelector('{{ColumnOnFrontend.columnX('2')}}').clientWidth" stepKey="columnTwoWidthFrontend"/>
+        <executeJS function="return document.querySelector('{{ColumnOnFrontend.columnX('3')}}').clientWidth" stepKey="columnThreeWidthFrontend"/>
+        <executeJS function="return Math.round({$columnOneWidthFrontend}/{$columnTwoWidthFrontend})" stepKey="columnRatioFrontend"/>
+        <assertEquals stepKey="assertFrontendRatioIsCorrect">
+            <expectedResult type="int">4</expectedResult>
+            <actualResult type="variable">columnRatioFrontend</actualResult>
+        </assertEquals>
+        <executeJS function="return Math.round({$columnOneWidthFrontend}/{$columnThreeWidthFrontend})" stepKey="columnRatioFrontend2"/>
+        <assertEquals stepKey="assertFrontendRatioIsCorrect2">
+            <expectedResult type="int">4</expectedResult>
+            <actualResult type="variable">columnRatioFrontend2</actualResult>
+        </assertEquals>
+    </test>
+    <test name="ColumnResize1to1">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Resize Column: 1:1 Ratio"/>
+            <description value="A user should be able to resize a columns to achieve a ratio of 1:1."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MC-2837"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-columnResize"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logOut"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage1">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage2">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
+        <!-- Verify Column Number and Size -->
+        <comment userInput="Verify Column Number and Size" stepKey="context3"/>
+        <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="2" stepKey="seeNumberOfColumns"/>
+        <seeNumberOfElements selector="{{DividerOnStage.allDividers}}" userInput="2" stepKey="seeNumberOfDividers"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth" stepKey="columnOneWidth"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('2')}}').clientWidth" stepKey="columnTwoWidth"/>
+        <executeJS function="return Math.round({$columnOneWidth}/{$columnTwoWidth})" stepKey="columnRatio"/>
+        <assertEquals stepKey="assertRatioIsCorrect">
+            <expectedResult type="int">1</expectedResult>
+            <actualResult type="variable">columnRatio</actualResult>
+        </assertEquals>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Verify After Save -->
+        <comment userInput="Verify After Save" stepKey="commentAfterSave"/>
+        <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="2" stepKey="seeNumberOfColumns2"/>
+        <seeNumberOfElements selector="{{DividerOnStage.allDividers}}" userInput="2" stepKey="seeNumberOfDividers2"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth" stepKey="columnOneWidth2"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('2')}}').clientWidth" stepKey="columnTwoWidth2"/>
+        <executeJS function="return Math.round({$columnOneWidth2}/{$columnTwoWidth2})" stepKey="columnRatio2"/>
+        <assertEquals stepKey="assertRatioIsCorrect2">
+            <expectedResult type="int">1</expectedResult>
+            <actualResult type="variable">columnRatio2</actualResult>
+        </assertEquals>
+        <!-- Verify Storefront -->
+        <comment userInput="Verify Storefront" stepKey="frontEndContext"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <seeNumberOfElements selector="{{ColumnOnFrontend.allColumns}}" userInput="2" stepKey="seeNumberOfColumns3"/>
+        <seeNumberOfElements selector="{{DividerOnStorefront.allDividers}}" userInput="2" stepKey="seeNumberOfDividers3"/>
+        <executeJS function="return document.querySelector('{{ColumnOnFrontend.columnX('1')}}').clientWidth" stepKey="columnOneWidthFrontend"/>
+        <executeJS function="return document.querySelector('{{ColumnOnFrontend.columnX('2')}}').clientWidth" stepKey="columnTwoWidthFrontend"/>
+        <executeJS function="return Math.round({$columnOneWidthFrontend}/{$columnTwoWidthFrontend})" stepKey="columnRatioFrontend"/>
+        <assertEquals stepKey="assertFrontendRatioIsCorrect">
+            <expectedResult type="int">1</expectedResult>
+            <actualResult type="variable">columnRatioFrontend</actualResult>
+        </assertEquals>
+    </test>
+    <test name="ColumnResize3to2to1">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Resize Column: 3:2:1 Ratio"/>
+            <description value="A user should be able to resize a columns to achieve a ratio of 3:2:1."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MC-2905"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-columnResize"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logOut"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <!-- Grab grid guide width at 5 -->
+        <comment userInput="Grab grid guide width" stepKey="context0"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnResizeGridLine('10')}}').clientWidth" stepKey="guideWidth"/>
+        <!-- Change Columns To 3:2:1 Ratio -->
+        <comment userInput="Change Columns To 3:2:1 Ratio" stepKey="context1"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragColumnIntoStage2">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
+        <dragAndDrop selector1="{{ColumnOnBackend.columnX('2')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('10')}}" x="$guideWidth" stepKey="resizeColumn2ToFive"/>
+        <waitForPageLoad stepKey="waitForDragAndDrop"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage1">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage2">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage3">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="3"/>
+        </actionGroup>
+        <!-- Verify Column Number and Size -->
+        <comment userInput="Verify Column Number and Size" stepKey="context3"/>
+        <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="3" stepKey="seeNumberOfColumns"/>
+        <seeNumberOfElements selector="{{DividerOnStage.allDividers}}" userInput="3" stepKey="seeNumberOfDividers"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth" stepKey="columnOneWidth"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('2')}}').clientWidth" stepKey="columnTwoWidth"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('3')}}').clientWidth" stepKey="columnThreeWidth"/>
+        <executeJS function="return Math.round({$columnOneWidth}/{$columnTwoWidth}*10)/10" stepKey="columnRatio"/>
+        <assertEquals stepKey="assertRatioIsCorrect">
+            <expectedResult type="float">1.5</expectedResult>
+            <actualResult type="variable">columnRatio</actualResult>
+        </assertEquals>
+        <executeJS function="return Math.round({$columnOneWidth}/{$columnThreeWidth})" stepKey="columnRatio2"/>
+        <assertEquals stepKey="assertRatioIsCorrect2">
+            <expectedResult type="float">3</expectedResult>
+            <actualResult type="variable">columnRatio2</actualResult>
+        </assertEquals>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Verify After Save -->
+        <comment userInput="Verify After Save" stepKey="commentAfterSave"/>
+        <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="3" stepKey="seeNumberOfColumns2"/>
+        <seeNumberOfElements selector="{{DividerOnStage.allDividers}}" userInput="3" stepKey="seeNumberOfDividers2"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth" stepKey="columnOneWidth2"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('2')}}').clientWidth" stepKey="columnTwoWidth2"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('3')}}').clientWidth" stepKey="columnThreeWidth2"/>
+        <executeJS function="return Math.round({$columnOneWidth2}/{$columnTwoWidth2}*10)/10" stepKey="columnRatio3"/>
+        <assertEquals stepKey="assertRatioIsCorrect3">
+            <expectedResult type="float">1.5</expectedResult>
+            <actualResult type="variable">columnRatio3</actualResult>
+        </assertEquals>
+        <executeJS function="return Math.round({$columnOneWidth2}/{$columnThreeWidth2})" stepKey="columnRatio4"/>
+        <assertEquals stepKey="assertRatioIsCorrect4">
+            <expectedResult type="float">3</expectedResult>
+            <actualResult type="variable">columnRatio4</actualResult>
+        </assertEquals>
+        <!-- Verify Storefront -->
+        <comment userInput="Verify Storefront" stepKey="frontEndContext"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <seeNumberOfElements selector="{{ColumnOnFrontend.allColumns}}" userInput="3" stepKey="seeNumberOfColumns3"/>
+        <seeNumberOfElements selector="{{DividerOnStorefront.allDividers}}" userInput="3" stepKey="seeNumberOfDividers3"/>
+        <executeJS function="return document.querySelector('{{ColumnOnFrontend.columnX('1')}}').clientWidth" stepKey="columnOneWidthFrontend"/>
+        <executeJS function="return document.querySelector('{{ColumnOnFrontend.columnX('2')}}').clientWidth" stepKey="columnTwoWidthFrontend"/>
+        <executeJS function="return document.querySelector('{{ColumnOnFrontend.columnX('3')}}').clientWidth" stepKey="columnThreeWidthFrontend"/>
+        <executeJS function="return Math.round({$columnOneWidthFrontend}/{$columnTwoWidthFrontend}*10)/10" stepKey="columnRatioFrontend"/>
+        <assertEquals stepKey="assertFrontendRatioIsCorrect">
+            <expectedResult type="int">1.5</expectedResult>
+            <actualResult type="variable">columnRatioFrontend</actualResult>
+        </assertEquals>
+        <executeJS function="return Math.round({$columnOneWidthFrontend}/{$columnThreeWidthFrontend})" stepKey="columnRatioFrontend2"/>
+        <assertEquals stepKey="assertFrontendRatioIsCorrect2">
+            <expectedResult type="int">3</expectedResult>
+            <actualResult type="variable">columnRatioFrontend2</actualResult>
+        </assertEquals>
+    </test>
+    <test name="ColumnResize3to1to1to1">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Resize Column: 3:1:1:1 Ratio"/>
+            <description value="A user should be able to resize a columns to achieve a ratio of 3:1:1:1."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MC-2678"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-columnResize"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logOut"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <!-- Change Columns To 3:1:1:1 Ratio -->
+        <comment userInput="Change Columns To 3:1:1:1 Ratio" stepKey="context1"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragColumnIntoStage2">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnResizeGridLine('1')}}').clientWidth" stepKey="guideWidth"/>
+        <dragAndDrop selector1="{{ColumnOnBackend.columnX('2')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('8')}}" x="$guideWidth" stepKey="resizeColumnToTwo"/>
+        <waitForPageLoad stepKey="waitForDragAndDrop"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragColumnIntoStage3">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="3"/>
+        </actionGroup>
+        <dragAndDrop selector1="{{ColumnOnBackend.columnX('3')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('10')}}" x="$guideWidth" stepKey="resizeSecondColumnToTwo"/>
+        <waitForPageLoad stepKey="waitForDragAndDrop2"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage1">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage2">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage3">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="3"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage4">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="4"/>
+        </actionGroup>
+        <!-- Verify Column Number and Size -->
+        <comment userInput="Verify Column Number and Size" stepKey="context3"/>
+        <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="4" stepKey="seeNumberOfColumns"/>
+        <seeNumberOfElements selector="{{DividerOnStage.allDividers}}" userInput="4" stepKey="seeNumberOfDividers"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth" stepKey="columnOneWidth"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('2')}}').clientWidth" stepKey="columnTwoWidth"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('3')}}').clientWidth" stepKey="columnThreeWidth"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('4')}}').clientWidth" stepKey="columnFourWidth"/>
+        <executeJS function="return Math.round({$columnOneWidth}/{$columnTwoWidth})" stepKey="columnRatio"/>
+        <assertEquals stepKey="assertRatioIsCorrect">
+            <expectedResult type="int">3</expectedResult>
+            <actualResult type="variable">columnRatio</actualResult>
+        </assertEquals>
+        <executeJS function="return Math.round({$columnOneWidth}/{$columnThreeWidth})" stepKey="columnRatio2"/>
+        <assertEquals stepKey="assertRatioIsCorrect2">
+            <expectedResult type="int">3</expectedResult>
+            <actualResult type="variable">columnRatio2</actualResult>
+        </assertEquals>
+        <executeJS function="return Math.round({$columnOneWidth}/{$columnFourWidth})" stepKey="columnRatio3"/>
+        <assertEquals stepKey="assertRatioIsCorrect3">
+            <expectedResult type="int">3</expectedResult>
+            <actualResult type="variable">columnRatio3</actualResult>
+        </assertEquals>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Verify After Save -->
+        <comment userInput="Verify After Save" stepKey="commentAfterSave"/>
+        <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="4" stepKey="seeNumberOfColumns2"/>
+        <seeNumberOfElements selector="{{DividerOnStage.allDividers}}" userInput="4" stepKey="seeNumberOfDividers2"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth" stepKey="columnOneWidth2"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('2')}}').clientWidth" stepKey="columnTwoWidth2"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('3')}}').clientWidth" stepKey="columnThreeWidth2"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('4')}}').clientWidth" stepKey="columnFourWidth2"/>
+        <executeJS function="return Math.round({$columnOneWidth2}/{$columnTwoWidth2})" stepKey="columnRatio4"/>
+        <assertEquals stepKey="assertRatioIsCorrect4">
+            <expectedResult type="int">3</expectedResult>
+            <actualResult type="variable">columnRatio4</actualResult>
+        </assertEquals>
+        <executeJS function="return Math.round({$columnOneWidth2}/{$columnThreeWidth2})" stepKey="columnRatio5"/>
+        <assertEquals stepKey="assertRatioIsCorrect5">
+            <expectedResult type="int">3</expectedResult>
+            <actualResult type="variable">columnRatio5</actualResult>
+        </assertEquals>
+        <executeJS function="return Math.round({$columnOneWidth2}/{$columnFourWidth2})" stepKey="columnRatio6"/>
+        <assertEquals stepKey="assertRatioIsCorrect6">
+            <expectedResult type="int">3</expectedResult>
+            <actualResult type="variable">columnRatio6</actualResult>
+        </assertEquals>
+        <!-- Verify Storefront -->
+        <comment userInput="Verify Storefront" stepKey="frontEndContext"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <seeNumberOfElements selector="{{ColumnOnFrontend.allColumns}}" userInput="4" stepKey="seeNumberOfColumns3"/>
+        <seeNumberOfElements selector="{{DividerOnStorefront.allDividers}}" userInput="4" stepKey="seeNumberOfDividers3"/>
+        <executeJS function="return document.querySelector('{{ColumnOnFrontend.columnX('1')}}').clientWidth" stepKey="columnOneWidthFrontend"/>
+        <executeJS function="return document.querySelector('{{ColumnOnFrontend.columnX('2')}}').clientWidth" stepKey="columnTwoWidthFrontend"/>
+        <executeJS function="return document.querySelector('{{ColumnOnFrontend.columnX('3')}}').clientWidth" stepKey="columnThreeWidthFrontend"/>
+        <executeJS function="return document.querySelector('{{ColumnOnFrontend.columnX('4')}}').clientWidth" stepKey="columnFourWidthFrontend"/>
+        <executeJS function="return Math.round({$columnOneWidthFrontend}/{$columnTwoWidthFrontend})" stepKey="columnRatioFrontend"/>
+        <assertEquals stepKey="assertFrontendRatioIsCorrect">
+            <expectedResult type="int">3</expectedResult>
+            <actualResult type="variable">columnRatioFrontend</actualResult>
+        </assertEquals>
+        <executeJS function="return Math.round({$columnOneWidthFrontend}/{$columnThreeWidthFrontend})" stepKey="columnRatioFrontend2"/>
+        <assertEquals stepKey="assertFrontendRatioIsCorrect2">
+            <expectedResult type="int">3</expectedResult>
+            <actualResult type="variable">columnRatioFrontend2</actualResult>
+        </assertEquals>
+        <executeJS function="return Math.round({$columnOneWidthFrontend}/{$columnFourWidthFrontend})" stepKey="columnRatioFrontend3"/>
+        <assertEquals stepKey="assertFrontendRatioIsCorrect3">
+            <expectedResult type="int">3</expectedResult>
+            <actualResult type="variable">columnRatioFrontend3</actualResult>
+        </assertEquals>
+    </test>
+    <test name="ColumnResize1to1to1">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Resize Column: 1:1:1 Ratio"/>
+            <description value="A user should be able to resize a columns to achieve a ratio of 1:1:1."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MC-2592"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-columnResize"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logOut"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <!-- Grab grid guide width -->
+        <comment userInput="Grab grid guide width" stepKey="context0"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnResizeGridLine('4')}}').clientWidth" stepKey="guideWidth"/>
+        <!-- Change Columns To 1:1:1 Ratio -->
+        <comment userInput="Change Columns To 1:1:1 Ratio" stepKey="context1"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragColumnIntoStage2">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
+        <dragAndDrop selector1="{{ColumnOnBackend.columnX('1')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('4')}}" x="$guideWidth" stepKey="resizeColumnToThird"/>
+        <waitForPageLoad stepKey="waitForDragAndDrop"/>
+        <dragAndDrop selector1="{{ColumnOnBackend.columnX('2')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('8')}}" x="$guideWidth" stepKey="resizeSecondColumnToThird"/>
+        <waitForPageLoad stepKey="waitForDragAndDrop2"/>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateFirstColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="removeContentTypeFromStageByIndex" stepKey="removeFirstColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeNumber" value="1"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage1">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage2">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage3">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="3"/>
+        </actionGroup>
+        <!-- Verify Column Number and Size -->
+        <comment userInput="Verify Column Number and Size" stepKey="context3"/>
+        <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="3" stepKey="seeNumberOfColumns"/>
+        <seeNumberOfElements selector="{{DividerOnStage.allDividers}}" userInput="3" stepKey="seeNumberOfDividers"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth" stepKey="columnOneWidth"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('2')}}').clientWidth" stepKey="columnTwoWidth"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('3')}}').clientWidth" stepKey="columnThreeWidth"/>
+        <executeJS function="return Math.round({$columnOneWidth}/{$columnTwoWidth})" stepKey="columnRatio"/>
+        <assertEquals stepKey="assertRatioIsCorrect">
+            <expectedResult type="int">1</expectedResult>
+            <actualResult type="variable">columnRatio</actualResult>
+        </assertEquals>
+        <executeJS function="return Math.round({$columnOneWidth}/{$columnThreeWidth})" stepKey="columnRatio2"/>
+        <assertEquals stepKey="assertRatioIsCorrect2">
+            <expectedResult type="int">1</expectedResult>
+            <actualResult type="variable">columnRatio2</actualResult>
+        </assertEquals>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Verify After Save -->
+        <comment userInput="Verify After Save" stepKey="commentAfterSave"/>
+        <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="3" stepKey="seeNumberOfColumns2"/>
+        <seeNumberOfElements selector="{{DividerOnStage.allDividers}}" userInput="3" stepKey="seeNumberOfDividers2"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth" stepKey="columnOneWidth2"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('2')}}').clientWidth" stepKey="columnTwoWidth2"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('3')}}').clientWidth" stepKey="columnThreeWidth2"/>
+        <executeJS function="return Math.round({$columnOneWidth2}/{$columnTwoWidth2})" stepKey="columnRatio3"/>
+        <assertEquals stepKey="assertRatioIsCorrect3">
+            <expectedResult type="int">1</expectedResult>
+            <actualResult type="variable">columnRatio3</actualResult>
+        </assertEquals>
+        <executeJS function="return Math.round({$columnOneWidth2}/{$columnThreeWidth2})" stepKey="columnRatio4"/>
+        <assertEquals stepKey="assertRatioIsCorrect4">
+            <expectedResult type="int">1</expectedResult>
+            <actualResult type="variable">columnRatio4</actualResult>
+        </assertEquals>
+        <!-- Verify Storefront -->
+        <comment userInput="Verify Storefront" stepKey="frontEndContext"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <seeNumberOfElements selector="{{ColumnOnFrontend.allColumns}}" userInput="3" stepKey="seeNumberOfColumns3"/>
+        <seeNumberOfElements selector="{{DividerOnStorefront.allDividers}}" userInput="3" stepKey="seeNumberOfDividers3"/>
+        <executeJS function="return document.querySelector('{{ColumnOnFrontend.columnX('1')}}').clientWidth" stepKey="columnOneWidthFrontend"/>
+        <executeJS function="return document.querySelector('{{ColumnOnFrontend.columnX('2')}}').clientWidth" stepKey="columnTwoWidthFrontend"/>
+        <executeJS function="return document.querySelector('{{ColumnOnFrontend.columnX('3')}}').clientWidth" stepKey="columnThreeWidthFrontend"/>
+        <executeJS function="return Math.round({$columnOneWidthFrontend}/{$columnTwoWidthFrontend})" stepKey="columnRatioFrontend"/>
+        <assertEquals stepKey="assertFrontendRatioIsCorrect">
+            <expectedResult type="int">1</expectedResult>
+            <actualResult type="variable">columnRatioFrontend</actualResult>
+        </assertEquals>
+        <executeJS function="return Math.round({$columnOneWidthFrontend}/{$columnThreeWidthFrontend})" stepKey="columnRatioFrontend2"/>
+        <assertEquals stepKey="assertFrontendRatioIsCorrect2">
+            <expectedResult type="int">1</expectedResult>
+            <actualResult type="variable">columnRatioFrontend2</actualResult>
+        </assertEquals>
+    </test>
+    <test name="ColumnResizeLeftColumnFromSecondColumnHandle">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Resize Column: Resize the first column via the second columns resize handle to the smallest possible column size"/>
+            <description value="Resize the first column via the second columns resize handle to the smallest possible column size"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-831"/>
+            <testCaseId value="MC-3219"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-columnResize"/>
+            <group value="pagebuilder-columnGridSize"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logOut"/>
+        </after>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateFirstColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <!-- Resizing columns to create 5/12, 1/12, 6/12 configuration, logic for resizing differs when dragging a 1/2 column to the left -->
+        <comment userInput="Resizing columns to create 5/12, 1/12, 6/12 configuration, logic for resizing differs when dragging a 1/2 column to the left" stepKey="commentInitialResize"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnResizeGridLine('1')}}').clientWidth" stepKey="guideWidth"/>
+        <dragAndDrop selector1="{{ColumnOnBackend.columnX('1')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('5')}}" x="$guideWidth" stepKey="resizeColumn1"/>
+        <waitForPageLoad stepKey="waitForDragAndDrop"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('1','5/12')}}" stepKey="validateFirstColumnWidth"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('2','1/12')}}" stepKey="validateSecondColumnWidth"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('3','6/12')}}" stepKey="validateThirdColumnWidth"/>
+        <!-- Resize left column to 4/12 via second column -->
+        <comment userInput="Resize left column to 4/12 via second column" stepKey="commentFourTwelth"/>
+        <dragAndDrop selector1="{{ColumnOnBackend.columnX('2')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('5')}}" x="$guideWidth" stepKey="resizeColumn1ViaColumn1"/>
+        <waitForPageLoad stepKey="waitForDragAndDrop2"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('1','4/12')}}" stepKey="validateFirstColumnWidth1"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('2','1/12')}}" stepKey="validateSecondColumnWidth1"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('3','7/12')}}" stepKey="validateThirdColumnWidth1"/>
+        <!-- Resize left column to 3/12 via second column -->
+        <comment userInput="Resize left column to 3/12 via second column" stepKey="commentThreeTwelth"/>
+        <dragAndDrop selector1="{{ColumnOnBackend.columnX('2')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('4')}}" x="$guideWidth" stepKey="resizeColumn1ViaColumn2"/>
+        <waitForPageLoad stepKey="waitForDragAndDrop3"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('1','3/12')}}" stepKey="validateFirstColumnWidth2"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('2','1/12')}}" stepKey="validateSecondColumnWidth2"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('3','8/12')}}" stepKey="validateThirdColumnWidth2"/>
+        <!-- Resize left column to 2/12 via second column -->
+        <comment userInput="Resize left column to 2/12 via second column" stepKey="commentTwoTwelth"/>
+        <dragAndDrop selector1="{{ColumnOnBackend.columnX('2')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('3')}}" x="$guideWidth" stepKey="resizeColumn1ViaColumn3"/>
+        <waitForPageLoad stepKey="waitForDragAndDrop4"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('1','2/12')}}" stepKey="validateFirstColumnWidth3"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('2','1/12')}}" stepKey="validateSecondColumnWidth3"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('3','9/12')}}" stepKey="validateThirdColumnWidth3"/>
+        <!-- Resize left column to 1/12 via second column -->
+        <comment userInput="Resize left column to 1/12 via second column" stepKey="commentOneTwelth"/>
+        <dragAndDrop selector1="{{ColumnOnBackend.columnX('2')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('2')}}" x="$guideWidth" stepKey="resizeColumn1ViaColumn4"/>
+        <waitForPageLoad stepKey="waitForDragAndDrop5"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('1','1/12')}}" stepKey="validateFirstColumnWidth4"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('2','1/12')}}" stepKey="validateSecondColumnWidth4"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('3','10/12')}}" stepKey="validateThirdColumnWidth4"/>
+    </test>
+</tests>

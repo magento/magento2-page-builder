@@ -5,21 +5,26 @@
 
 import {DataObject} from "../data-store";
 
-export interface ConverterInterface {
+/**
+ * @api
+ */
+interface ConverterInterface {
     /**
      * Convert value to internal format
      *
-     * @param value string
-     * @returns {string | object}
+     * @param {any} value
+     * @returns {any}
      */
-    fromDom(value: string): string | object;
+    fromDom(value: any): any;
 
     /**
      * Convert value to knockout format
      *
      * @param {string} name
      * @param {DataObject} data
-     * @returns {string | object}
+     * @returns {any}
      */
-    toDom(name: string, data: DataObject): string | object;
+    toDom(name: string, data: DataObject): any;
 }
+
+export default ConverterInterface;

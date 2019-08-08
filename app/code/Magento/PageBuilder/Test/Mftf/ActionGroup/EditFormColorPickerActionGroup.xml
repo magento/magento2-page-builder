@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="fillOutColorPicker">
+        <arguments>
+            <argument name="colorCode"/>
+        </arguments>
+        <click selector="{{ColorPicker.panelColorSwatch(colorCode.section, colorCode.fieldName)}}" stepKey="clickColorSwatch"/>
+        <waitForElementVisible selector="{{ColorPicker.inputField}}" stepKey="waitForColorPicker"/>
+        <fillField selector="{{ColorPicker.inputField}}" userInput=" " stepKey="inputBlueHexCodeIntoInputField1"/>
+        <pressKey selector="{{ColorPicker.inputField}}" parameterArray="['{{colorCode.value}}',\Facebook\WebDriver\WebDriverKeys::ENTER]" stepKey="pressKeyEnter"/>
+    </actionGroup>
+    <actionGroup name="pickColorSwatchCell">
+        <arguments>
+            <argument name="property"/>
+        </arguments>
+        <waitForElementVisible selector="{{ColorPicker.panelColorSwatch(property.section, property.fieldName)}}" stepKey="waitForColorSwatch"/>
+        <click selector="{{ColorPicker.panelColorSwatch(property.section, property.fieldName)}}" stepKey="openColorSwatch"/>
+        <waitForElementVisible selector="{{ColorPicker.colorBox(property.rgb)}}" stepKey="waitForColorPalleteCell"/>
+        <click selector="{{ColorPicker.colorBox(property.rgb)}}" stepKey="clickColorPalletteCell"/>
+        <waitForElementVisible selector="{{ColorPicker.applyBtn}}" stepKey="waitForApply"/>
+        <click selector="{{ColorPicker.applyBtn}}" stepKey="clickApply"/>
+        <seeInField selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" userInput="{{property.value}}" stepKey="seeColorInField"/>
+    </actionGroup>
+    <actionGroup name="openAndValidateColorPickerValue">
+        <arguments>
+            <argument name="color" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{ColorPicker.panelColorSwatch(PageBuilderBackgroundColor_Default.section, PageBuilderBackgroundColor_Default.fieldName)}}" stepKey="waitForColorSwatch"/>
+        <click selector="{{ColorPicker.panelColorSwatch(PageBuilderBackgroundColor_Default.section, PageBuilderBackgroundColor_Default.fieldName)}}" stepKey="clickColorSwatch"/>
+        <waitForElementVisible selector="{{ColorPicker.colorPickerWindow}}" stepKey="waitForColorPickerWindow"/>
+        <seeInField selector="{{ColorPicker.inputField}}" userInput="{{color}}" stepKey="seeExpectedColor"/>
+    </actionGroup>
+    <actionGroup name="seeColorInColorSwatch">
+        <arguments>
+            <argument name="property"/>
+        </arguments>
+        <waitForElementVisible selector="{{ColorPicker.panelColorSwatchColor(property.section, property.fieldName, property.rgb)}}" stepKey="waitForColorSwatchColor"/>
+    </actionGroup>
+    <actionGroup name="seeNoColorInColorSwatch">
+        <arguments>
+            <argument name="property"/>
+        </arguments>
+        <waitForElementVisible selector="{{ColorPicker.panelEmptyColorSwatch(property.section, property.fieldName)}}" stepKey="waitForEmptyColorSwatch"/>
+    </actionGroup>
+</actionGroups>

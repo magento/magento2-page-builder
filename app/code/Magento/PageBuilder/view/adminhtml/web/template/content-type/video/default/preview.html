@@ -5,12 +5,16 @@
  */
 -->
 
-<div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview pagebuilder-video" event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
+<div class="pagebuilder-content-type pagebuilder-video" event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
     <div attr="data.main.attributes" ko-style="data.main.style" css="data.main.css">
-        <ifnot args="data.video.attributes().src">
-            <i class="icon-pagebuilder-video"></i> <span translate="'Video'"></span>
-        </ifnot>
-        <iframe frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen if="data.video.attributes().src" attr="data.video.attributes" ko-style="data.video.style" css="data.video.css"></iframe>
+        <div class="pagebuilder-video-inner" attr="data.inner.attributes" ko-style="data.inner.style" css="data.inner.css">
+            <div class="pagebuilder-video-wrapper" attr="data.wrapper.attributes" ko-style="Object.assign(data.wrapper.style(), {backgroundColor: data.wrapper.style().borderColor})" css="data.wrapper.css">
+                <div class="pagebuilder-video-container">
+                    <iframe frameborder="0" allowfullscreen attr="data.video.attributes"/>
+                    <i class="icon-pagebuilder-video pagebuilder-video-placeholder" ifnot="data.video.attributes().src"/>
+                </div>
+            </div>
+        </div>
     </div>
     <render args="getOptions().template" />
 </div>

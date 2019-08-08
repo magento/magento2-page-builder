@@ -3,8 +3,13 @@
  * See COPYING.txt for license details.
  */
 
+import {DataObject} from "../../data-store";
+import {get} from "../../utils/object";
 import ConverterInterface from "../converter-interface";
 
+/**
+ * @api
+ */
 export default class Color implements ConverterInterface {
     /**
      * Convert value to internal format
@@ -35,8 +40,8 @@ export default class Color implements ConverterInterface {
      * @param data Object
      * @returns {string | object}
      */
-    public toDom(name: string, data: object): string {
-        return data[name];
+    public toDom(name: string, data: DataObject): string {
+        return get(data, name, "");
     }
 
     /**

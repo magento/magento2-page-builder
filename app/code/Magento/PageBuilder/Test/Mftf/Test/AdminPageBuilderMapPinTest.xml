@@ -1,0 +1,1296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="MapAddPinToMapByClickingOnMap">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Map"/>
+            <title value="Pin Tests - Add Pin To Map By Clicking On Map"/>
+            <description value="A user should be able to add a pin to a map on the Edit Panel by clicking the map and see the pin on Edit Panel, Stage, and Storefront. Cannot add pin on Stage or Storefront"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-87083"/>
+            <testCaseId value="MC-2613"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="pagebuilder-mapPinTests"/>
+            <group value="pagebuilder-requiresValidMapAPIKey"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key {{googleMapsAPIKey.valid}}" stepKey="setValidGoogleMapsAPIKey"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setEmptyGoogleMapsAPIKey"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionMedia">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeIntoStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
+        <!-- Add Pin To Map By Clicking -->
+        <comment userInput="Add Pin To Map By Clicking" stepKey="commentAddMapPin"/>
+        <actionGroup ref="clickMapToAddOrMovePin" stepKey="addMapPin"/>
+        <actionGroup ref="verifyMapHasPin" stepKey="verifyMapHasPinEditPanel">
+            <argument name="page" value="AddLocationForm"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName">
+            <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
+        <!-- Get Pin Location -->
+        <waitForElement selector="{{AddLocationForm.pinLocations('1')}}" stepKey="waitForPinLocationEditPanel1"/>
+        <grabAttributeFrom selector="{{AddLocationForm.pinLocations('1')}}" userInput="style" stepKey="initialPinLocationEditPanel"/>
+        <actionGroup ref="verifyPinLocationEqual" stepKey="verifyPinLocationEditPanel1">
+            <argument name="page" value="AddLocationForm"/>
+            <argument name="comparedPinLocation" value="initialPinLocationEditPanel"/>
+        </actionGroup>
+        <!-- Edit Panel: Verify Coordinates -->
+        <comment userInput="Edit Panel: Verify Coordinates" stepKey="commentVerifyCoordinates"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderMapLatitude_ClickedPin.section, PageBuilderMapLatitude_ClickedPin.fieldName)}}" stepKey="latitudeEditPanel"/>
+        <assertRegExp stepKey="assertLatitude">
+            <expectedResult type="string">{{PageBuilderMapLatitude_ClickedPin.value}}</expectedResult>
+            <actualResult type="variable">latitudeEditPanel</actualResult>
+        </assertRegExp>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderMapLongitude_ClickedPin.section, PageBuilderMapLongitude_ClickedPin.fieldName)}}" stepKey="longitudeEditPanel"/>
+        <assertRegExp stepKey="assertLongitude">
+            <expectedResult type="string">{{PageBuilderMapLongitude_ClickedPin.value}}</expectedResult>
+            <actualResult type="variable">longitudeEditPanel</actualResult>
+        </assertRegExp>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Stage: Verify Map Has Pin -->
+        <comment userInput="Stage: Verify Map Has Pin" stepKey="commentVerifyPinStage1"/>
+        <actionGroup ref="verifyMapHasPin" stepKey="verifyMapHasPinStage1"/>
+        <actionGroup ref="verifyMapLatitudeAndLongitudeAlternate" stepKey="verifyMapLatitudeAndLongitudeStage1">
+            <argument name="page" value="MapOnStage"/>
+            <argument name="latitude" value="$latitudeEditPanel"/>
+            <argument name="longitude" value="$longitudeEditPanel"/>
+        </actionGroup>
+        <actionGroup ref="verifyPinLocationEqual" stepKey="verifyPinLocationStage1">
+            <argument name="page" value="MapOnStage"/>
+            <argument name="comparedPinLocation" value="initialPinLocationEditPanel"/>
+        </actionGroup>
+        <!-- Verify Cannot Add Pin to Stage -->
+        <comment userInput="Verify Cannot Add Pin to Stage" stepKey="commentVerifyCannotAddPinStage1"/>
+        <clickWithLeftButton selector="{{MapOnStage.base('1')}}" x="5" y="5" stepKey="clickMapStage1"/>
+        <actionGroup ref="verifyNumberOfPinsOnMap" stepKey="verifyNumberOfPinsOnMapStage1">
+            <argument name="page" value="MapOnStage"/>
+            <argument name="count" value="1"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!-- Stage: Verify Map Has Pin After Save -->
+        <comment userInput="Stage: Verify Map Has Pin After Save" stepKey="commentVerifyPinStage2"/>
+        <actionGroup ref="verifyMapHasPin" stepKey="verifyMapHasPinStage2"/>
+        <actionGroup ref="verifyMapLatitudeAndLongitudeAlternate" stepKey="verifyMapLatitudeAndLongitudeStage2">
+            <argument name="page" value="MapOnStage"/>
+            <argument name="latitude" value="$latitudeEditPanel"/>
+            <argument name="longitude" value="$longitudeEditPanel"/>
+        </actionGroup>
+        <actionGroup ref="verifyPinLocationEqual" stepKey="verifyPinLocationStage2">
+            <argument name="page" value="MapOnStage"/>
+            <argument name="comparedPinLocation" value="initialPinLocationEditPanel"/>
+        </actionGroup>
+        <!-- Verify Cannot Add Pin to Stage After Save -->
+        <comment userInput="Verify Cannot Add Pin to Stage After Save" stepKey="commentVerifyCannotAddPinStage2"/>
+        <clickWithLeftButton selector="{{MapOnStage.base('1')}}" x="5" y="5" stepKey="clickMapStage2"/>
+        <actionGroup ref="verifyNumberOfPinsOnMap" stepKey="verifyNumberOfPinsOnMapStage2">
+            <argument name="page" value="MapOnStage"/>
+            <argument name="count" value="1"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="clickLocationGridRow" stepKey="clickLocationGridRow">
+            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
+        <actionGroup ref="verifyMapHasPin" stepKey="verifyMapHasPinEditPanel2">
+            <argument name="page" value="AddLocationForm"/>
+        </actionGroup>
+        <actionGroup ref="verifyPinLocationEqual" stepKey="verifyPinLocationEditPanel2">
+            <argument name="page" value="AddLocationForm"/>
+            <argument name="comparedPinLocation" value="initialPinLocationEditPanel"/>
+        </actionGroup>
+        <!-- Edit Panel: Verify Coordinates After Save -->
+        <comment userInput="Edit Panel: Verify Coordinates After Save" stepKey="commentVerifyCoordinates2"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderMapLatitude_ClickedPin.section, PageBuilderMapLatitude_ClickedPin.fieldName)}}" stepKey="latitudeEditPanel2"/>
+        <assertRegExp stepKey="assertLatitude2">
+            <expectedResult type="string">{{PageBuilderMapLatitude_ClickedPin.value}}</expectedResult>
+            <actualResult type="variable">latitudeEditPanel2</actualResult>
+        </assertRegExp>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderMapLongitude_ClickedPin.section, PageBuilderMapLongitude_ClickedPin.fieldName)}}" stepKey="longitudeEditPanel2"/>
+        <assertRegExp stepKey="assertLongitude2">
+            <expectedResult type="string">{{PageBuilderMapLongitude_ClickedPin.value}}</expectedResult>
+            <actualResult type="variable">longitudeEditPanel2</actualResult>
+        </assertRegExp>
+        <!-- Storefront: Verify Map Has Pin -->
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <comment userInput="Storefront: Verify Pin Position" stepKey="commentVerifyPinStorefront"/>
+        <actionGroup ref="verifyMapHasPin" stepKey="verifyMapHasPinStorefront">
+            <argument name="page" value="MapOnStorefront"/>
+        </actionGroup>
+        <actionGroup ref="verifyMapLatitudeAndLongitudeAlternate" stepKey="verifyMapLatitudeAndLongitudeStorefront">
+            <argument name="page" value="MapOnStorefront"/>
+            <argument name="latitude" value="$latitudeEditPanel"/>
+            <argument name="longitude" value="$longitudeEditPanel"/>
+        </actionGroup>
+        <actionGroup ref="verifyPinLocationEqual" stepKey="verifyPinLocationStorefront">
+            <argument name="page" value="MapOnStorefront"/>
+            <argument name="comparedPinLocation" value="initialPinLocationEditPanel"/>
+        </actionGroup>
+        <!-- Verify Cannot Add Pin to Storefront -->
+        <comment userInput="Verify Cannot Add Pin to Storefront" stepKey="commentVerifyCannotAddPinStorefront"/>
+        <clickWithLeftButton selector="{{MapOnStorefront.base('1')}}" x="5" y="5" stepKey="clickMapStorefront"/>
+        <actionGroup ref="verifyNumberOfPinsOnMap" stepKey="verifyNumberOfPinsOnMapStorefront">
+            <argument name="page" value="MapOnStorefront"/>
+            <argument name="count" value="1"/>
+        </actionGroup>
+    </test>
+    <test name="MapAddPinToMapByInputtingCoordinates">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Map"/>
+            <title value="Pin Tests - Add Pin To Map By Inputting Coordinates"/>
+            <description value="A user should be able to add a pin to a map on the Edit Panel by inputting coordinates and see the pin on Edit Panel, Stage, and Storefront."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-66519"/>
+            <testCaseId value="MC-2707"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="pagebuilder-mapPinTests"/>
+            <group value="pagebuilder-requiresValidMapAPIKey"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key {{googleMapsAPIKey.valid}}" stepKey="setValidGoogleMapsAPIKey"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setEmptyGoogleMapsAPIKey"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionMedia">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeIntoStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
+        <!-- Input Coordinates To Add Pin To Map -->
+        <comment userInput="Input Coordinates To Add Pin To Map" stepKey="commentAddMapPin"/>
+        <actionGroup ref="dontSeeMapPin" stepKey="dontSeeMapPin">
+            <argument name="page" value="AddLocationForm"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLatitude">
+            <argument name="property" value="PageBuilderMapLatitude_Positive39_74"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLongitude">
+            <argument name="property" value="PageBuilderMapLongitude_Negative104_99"/>
+        </actionGroup>
+        <actionGroup ref="verifyMapHasPin" stepKey="verifyMapHasPinEditPanel">
+            <argument name="page" value="AddLocationForm"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName">
+            <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
+        <!-- Get Pin Location -->
+        <waitForElement selector="{{AddLocationForm.pinLocations('1')}}" stepKey="waitForPinLocationEditPanel1"/>
+        <grabAttributeFrom selector="{{AddLocationForm.pinLocations('1')}}" userInput="style" stepKey="initialPinLocationEditPanel"/>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Stage: Verify Map Has Pin -->
+        <comment userInput="Stage: Verify Map Has Pin" stepKey="commentVerifyPinStage1"/>
+        <actionGroup ref="verifyMapHasPin" stepKey="verifyMapHasPinStage1"/>
+        <actionGroup ref="verifyPinLocationEqual" stepKey="verifyPinLocationStage">
+            <argument name="page" value="MapOnStage"/>
+            <argument name="comparedPinLocation" value="initialPinLocationEditPanel"/>
+        </actionGroup>
+        <actionGroup ref="verifyMapLatitudeAndLongitude" stepKey="verifyMapLatitudeAndLongitudeStage1">
+            <argument name="page" value="MapOnStage"/>
+            <argument name="latitude" value="PageBuilderMapLatitude_Positive39_74"/>
+            <argument name="longitude" value="PageBuilderMapLongitude_Negative104_99"/>
+        </actionGroup>
+        <!-- Save Page -->
+        <comment userInput="Save Page" stepKey="commentSavePage"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!-- Stage: Verify Map Has Pin After Save -->
+        <comment userInput="Stage: Verify Map Has Pin After Save" stepKey="commentVerifyPinStage2"/>
+        <actionGroup ref="verifyMapHasPin" stepKey="verifyMapHasPinStage2"/>
+        <actionGroup ref="verifyPinLocationEqual" stepKey="verifyPinLocationStage2">
+            <argument name="page" value="MapOnStage"/>
+            <argument name="comparedPinLocation" value="initialPinLocationEditPanel"/>
+        </actionGroup>
+        <actionGroup ref="verifyMapLatitudeAndLongitude" stepKey="verifyMapLatitudeAndLongitudeStage2">
+            <argument name="page" value="MapOnStage"/>
+            <argument name="latitude" value="PageBuilderMapLatitude_Positive39_74"/>
+            <argument name="longitude" value="PageBuilderMapLongitude_Negative104_99"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="clickLocationGridRow" stepKey="clickLocationGridRow">
+            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
+        <!-- Edit Panel: Verify Coordinates After Save -->
+        <comment userInput="Edit Panel: Verify Coordinates After Save" stepKey="commentVerifyCoordinates2"/>
+        <actionGroup ref="verifyMapHasPin" stepKey="verifyMapHasPinEditPanel2">
+            <argument name="page" value="AddLocationForm"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeLatitudeValue">
+            <argument name="property" value="PageBuilderMapLatitude_Positive39_74"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeLongitudeValue">
+            <argument name="property" value="PageBuilderMapLongitude_Negative104_99"/>
+        </actionGroup>
+        <actionGroup ref="verifyPinLocationEqual" stepKey="verifyPinLocationEditPanel">
+            <argument name="page" value="AddLocationForm"/>
+            <argument name="comparedPinLocation" value="initialPinLocationEditPanel"/>
+        </actionGroup>
+        <!-- Storefront: Verify Map Has Pin -->
+        <comment userInput="Storefront: Verify Map Has Pin" stepKey="commentVerifyStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <comment userInput="Storefront: Verify Pin Position" stepKey="commentVerifyPinStorefront"/>
+        <actionGroup ref="verifyMapHasPin" stepKey="verifyMapHasPinStorefront">
+            <argument name="page" value="MapOnStorefront"/>
+        </actionGroup>
+        <actionGroup ref="verifyPinLocationEqual" stepKey="verifyPinLocationStorefront">
+            <argument name="page" value="MapOnStorefront"/>
+            <argument name="comparedPinLocation" value="initialPinLocationEditPanel"/>
+        </actionGroup>
+        <actionGroup ref="verifyMapLatitudeAndLongitude" stepKey="verifyMapLatitudeAndLongitudeStorefront">
+            <argument name="page" value="MapOnStorefront"/>
+            <argument name="latitude" value="PageBuilderMapLatitude_Positive39_74"/>
+            <argument name="longitude" value="PageBuilderMapLongitude_Negative104_99"/>
+        </actionGroup>
+    </test>
+    <test name="MapMoveMapPinByClickingOnMap">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Map"/>
+            <title value="Pin Tests - Move Map Pin By Clicking On Map"/>
+            <description value="A user should be able to move a map pin by clicking on the map on the Edit Panel"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-87083"/>
+            <testCaseId value="MC-2552"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="pagebuilder-mapPinTests"/>
+            <group value="pagebuilder-requiresValidMapAPIKey"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key {{googleMapsAPIKey.valid}}" stepKey="setValidGoogleMapsAPIKey"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setEmptyGoogleMapsAPIKey"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionMedia">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeIntoStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
+        <!-- Add Pin To Map -->
+        <comment userInput="Add Pin To Map" stepKey="commentAddMapPin"/>
+        <actionGroup ref="clickMapToAddOrMovePin" stepKey="addMapPin"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName">
+            <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
+        <!-- Edit Panel: Get Initial Coordinates & Pin Location -->
+        <comment userInput="Edit Panel: Get Initial Coordinates" stepKey="commentEditPanelGetCoordinates"/>
+        <waitForElementVisible selector="{{EditPanelForm.panelFieldControl(PageBuilderMapLatitude_ClickedPin.section, PageBuilderMapLatitude_ClickedPin.fieldName)}}" stepKey="waitForLatitude1"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderMapLatitude_ClickedPin.section, PageBuilderMapLatitude_ClickedPin.fieldName)}}" stepKey="initialLatitudeEditPanel"/>
+        <waitForElementVisible selector="{{EditPanelForm.panelFieldControl(PageBuilderMapLongitude_ClickedPin.section, PageBuilderMapLongitude_ClickedPin.fieldName)}}" stepKey="waitForLongitude1"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderMapLongitude_ClickedPin.section, PageBuilderMapLongitude_ClickedPin.fieldName)}}" stepKey="initialLongitudeEditPanel"/>
+        <waitForElement selector="{{AddLocationForm.pinLocations('1')}}" stepKey="waitForPinLocationEditPanel1"/>
+        <grabAttributeFrom selector="{{AddLocationForm.pinLocations('1')}}" userInput="style" stepKey="initialPinLocationEditPanel"/>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Stage: Get Initial Pin Location -->
+        <comment userInput="Stage: Get Initial Pin Location" stepKey="commentStageGetPinLocation"/>
+        <waitForElementVisible selector="{{MapOnStage.pinLocations('1')}}" stepKey="waitForPinLocationStage"/>
+        <grabAttributeFrom selector="{{MapOnStage.pinLocations('1')}}" userInput="style" stepKey="initialPinLocationStage"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Storefront: Get Initial Pin Location -->
+        <comment userInput="Storefront: Get Initial Pin Location" stepKey="commentStorefrontGetPinLocation"/>
+        <openNewTab stepKey="openNewTab"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{MapOnStorefront.pinLocations('1')}}" stepKey="waitForPinLocationStoreFront"/>
+        <grabAttributeFrom selector="{{MapOnStorefront.pinLocations('1')}}" userInput="style" stepKey="initialPinLocationStorefront"/>
+        <!-- Switch Back To Backend -->
+        <comment userInput="Switch Back To Backend" stepKey="commentSwitchToBackend"/>
+        <switchToNextTab stepKey="switchToNextTab"/>
+        <reloadPage stepKey="reloadPage"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="clickLocationGridRow" stepKey="clickLocationGridRow">
+            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
+        <!-- Move Map Pin By Click -->
+        <comment userInput="Move Map Pin By Click" stepKey="commentMoveMapPin"/>
+        <actionGroup ref="clickMapToAddOrMovePin" stepKey="moveMapPinByClick">
+            <argument name="x" value="1"/>
+            <argument name="y" value="1"/>
+        </actionGroup>
+        <!-- Edit Panel: Verify Pin Location Moved -->
+        <comment userInput="Edit Panel: Verify Pin Location Moved" stepKey="commentVerifyPinMoveEditPanel"/>
+        <actionGroup ref="verifyCoordinatesNotEqual" stepKey="verifyLatitudeNotEqual1">
+            <argument name="property" value="PageBuilderMapLatitude_ClickedPin"/>
+            <argument name="comparedCoordinate" value="initialLatitudeEditPanel"/>
+        </actionGroup>
+        <actionGroup ref="verifyCoordinatesNotEqual" stepKey="verifyLongitudeNotEqual1">
+            <argument name="property" value="PageBuilderMapLongitude_ClickedPin"/>
+            <argument name="comparedCoordinate" value="initialLongitudeEditPanel"/>
+        </actionGroup>
+        <actionGroup ref="verifyPinLocationNotEqual" stepKey="verifyPinLocationEditPanel1">
+            <argument name="page" value="AddLocationForm"/>
+            <argument name="comparedPinLocation" value="initialPinLocationEditPanel"/>
+        </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm2"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <!-- Stage: Verify Pin Location Moved -->
+        <comment userInput="Stage: Verify Pin Location Moved" stepKey="commentVerifyPinMoveStage"/>
+        <actionGroup ref="verifyPinLocationNotEqual" stepKey="verifyPinLocationStage1">
+            <argument name="page" value="MapOnStage"/>
+            <argument name="comparedPinLocation" value="initialPinLocationStage"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage3"/>
+        <!-- Stage: Verify Map Pin Still Moved After Save -->
+        <comment userInput="Stage: Verify Pin Location Moved After Save" stepKey="commentVerifyPinMoveStage2"/>
+        <actionGroup ref="verifyPinLocationNotEqual" stepKey="verifyPinLocationStage2">
+            <argument name="page" value="MapOnStage"/>
+            <argument name="comparedPinLocation" value="initialPinLocationStage"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="clickLocationGridRow" stepKey="clickLocationGridRow2">
+            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
+        <!-- Edit Panel: Verify Pin Location Moved After Save -->
+        <comment userInput="Edit Panel: Verify Pin Location Moved After Save" stepKey="commentVerifyPinMoveEditPanel2"/>
+        <actionGroup ref="verifyCoordinatesNotEqual" stepKey="verifyLatitudeNotEqual2">
+            <argument name="property" value="PageBuilderMapLatitude_ClickedPin"/>
+            <argument name="comparedCoordinate" value="initialLatitudeEditPanel"/>
+        </actionGroup>
+        <actionGroup ref="verifyCoordinatesNotEqual" stepKey="verifyLongitudeNotEqual2">
+            <argument name="property" value="PageBuilderMapLongitude_ClickedPin"/>
+            <argument name="comparedCoordinate" value="initialLongitudeEditPanel"/>
+        </actionGroup>
+        <actionGroup ref="verifyPinLocationNotEqual" stepKey="verifyPinLocationEditPanel2">
+            <argument name="page" value="AddLocationForm"/>
+            <argument name="comparedPinLocation" value="initialPinLocationEditPanel"/>
+        </actionGroup>
+        <!-- Storefront: Verify Pin Location Moved -->
+        <comment userInput="Storefront: Verify Pin Location Moved" stepKey="commentVerifyPinMoveStorefront"/>
+        <switchToNextTab stepKey="switchToNextTab2"/>
+        <reloadPage stepKey="reloadPage2"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <actionGroup ref="verifyPinLocationNotEqual" stepKey="verifyPinLocationStorefront">
+            <argument name="page" value="MapOnStorefront"/>
+            <argument name="comparedPinLocation" value="initialPinLocationStorefront"/>
+        </actionGroup>
+    </test>
+    <test name="MapMoveMapPinByChangingCoordinates">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Map"/>
+            <title value="Pin Tests - Move Map Pin By Changing Coordinates"/>
+            <description value="A user should be able to move a map pin by changing the coordinates on the Edit Panel"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-66519"/>
+            <testCaseId value="MC-2660"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="pagebuilder-mapPinTests"/>
+            <group value="pagebuilder-requiresValidMapAPIKey"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key {{googleMapsAPIKey.valid}}" stepKey="setValidGoogleMapsAPIKey"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setEmptyGoogleMapsAPIKey"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionMedia">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragMapIntoStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
+        <!-- Add Pin To Map -->
+        <comment userInput="Add Pin To Map" stepKey="commentAddMapPin"/>
+        <actionGroup ref="clickMapToAddOrMovePin" stepKey="addMapPin"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName">
+            <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
+        <!-- Edit Panel: Get Initial Coordinates & Pin Location -->
+        <comment userInput="Edit Panel: Get Initial Coordinates" stepKey="commentEditPanelGetCoordinates"/>
+        <waitForElementVisible selector="{{EditPanelForm.panelFieldControl(PageBuilderMapLatitude_ClickedPin.section, PageBuilderMapLatitude_ClickedPin.fieldName)}}" stepKey="waitForLatitude1"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderMapLatitude_ClickedPin.section, PageBuilderMapLatitude_ClickedPin.fieldName)}}" stepKey="initialLatitudeEditPanel"/>
+        <waitForElementVisible selector="{{EditPanelForm.panelFieldControl(PageBuilderMapLongitude_ClickedPin.section, PageBuilderMapLongitude_ClickedPin.fieldName)}}" stepKey="waitForLongitude1"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderMapLongitude_ClickedPin.section, PageBuilderMapLongitude_ClickedPin.fieldName)}}" stepKey="initialLongitudeEditPanel"/>
+        <waitForElement selector="{{AddLocationForm.pinLocations('1')}}" stepKey="waitForPinLocationEditPanel1"/>
+        <grabAttributeFrom selector="{{AddLocationForm.pinLocations('1')}}" userInput="style" stepKey="initialPinLocationEditPanel"/>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Stage: Get Initial Pin Location -->
+        <comment userInput="Stage: Get Initial Pin Location" stepKey="commentStageGetPinLocation"/>
+        <waitForElementVisible selector="{{MapOnStage.pinLocations('1')}}" stepKey="waitForPinLocationStage"/>
+        <grabAttributeFrom selector="{{MapOnStage.pinLocations('1')}}" userInput="style" stepKey="initialPinLocationStage"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Storefront: Get Initial Pin Location -->
+        <comment userInput="Storefront: Get Initial Pin Location" stepKey="commentStorefrontGetPinLocation"/>
+        <openNewTab stepKey="openNewTab"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{MapOnStorefront.pinLocations('1')}}" stepKey="waitForPinLocationStoreFront"/>
+        <grabAttributeFrom selector="{{MapOnStorefront.pinLocations('1')}}" userInput="style" stepKey="initialPinLocationStorefront"/>
+        <!-- Switch Back To Backend -->
+        <comment userInput="Switch Back To Backend" stepKey="commentSwitchToBackend"/>
+        <switchToNextTab stepKey="switchToNextTab"/>
+        <reloadPage stepKey="reloadPage"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage1">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="clickLocationGridRow" stepKey="clickLocationGridRow">
+            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
+        <!-- Move Map Pin By Changing Coordinates -->
+        <comment userInput="Move Map Pin By Changing Coordinates" stepKey="commentMoveMapPin"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLatitude">
+            <argument name="property" value="PageBuilderMapLatitude_Positive39_74"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLongitude">
+            <argument name="property" value="PageBuilderMapLongitude_Negative104_99"/>
+        </actionGroup>
+        <!-- Edit Panel: Verify Pin Location Moved -->
+        <comment userInput="Edit Panel: Verify Pin Location Moved" stepKey="commentVerifyPinMoveEditPanel"/>
+        <actionGroup ref="verifyPinLocationNotEqual" stepKey="verifyPinLocationEditPanel1">
+            <argument name="page" value="AddLocationForm"/>
+            <argument name="comparedPinLocation" value="initialPinLocationEditPanel"/>
+        </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm2"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <!-- Stage: Verify Pin Location Moved -->
+        <comment userInput="Stage: Verify Pin Location Moved" stepKey="commentVerifyPinMoveStage"/>
+        <actionGroup ref="verifyPinLocationNotEqual" stepKey="verifyPinLocationStage1">
+            <argument name="page" value="MapOnStage"/>
+            <argument name="comparedPinLocation" value="initialPinLocationStage"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage3"/>
+        <!-- Stage: Verify Map Pin Still Moved After Save -->
+        <comment userInput="Stage: Verify Pin Location Moved After Save" stepKey="commentVerifyPinMoveStage2"/>
+        <actionGroup ref="verifyPinLocationNotEqual" stepKey="verifyPinLocationStage2">
+            <argument name="page" value="MapOnStage"/>
+            <argument name="comparedPinLocation" value="initialPinLocationStage"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="clickLocationGridRow" stepKey="clickLocationGridRow2">
+            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
+        <!-- Edit Panel: Verify Pin Location Moved After Save -->
+        <comment userInput="Edit Panel: Verify Pin Location Moved After Save" stepKey="commentVerifyPinMoveEditPanel2"/>
+        <actionGroup ref="verifyPinLocationNotEqual" stepKey="verifyPinLocationEditPanel2">
+            <argument name="page" value="AddLocationForm"/>
+            <argument name="comparedPinLocation" value="initialPinLocationEditPanel"/>
+        </actionGroup>
+        <!-- Storefront: Verify Pin Location Moved -->
+        <comment userInput="Storefront: Verify Pin Location Moved" stepKey="commentVerifyPinMoveStorefront"/>
+        <switchToNextTab stepKey="switchToNextTab2"/>
+        <reloadPage stepKey="reloadPage2"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <actionGroup ref="verifyPinLocationNotEqual" stepKey="verifyPinLocationStorefront">
+            <argument name="page" value="MapOnStorefront"/>
+            <argument name="comparedPinLocation" value="initialPinLocationStorefront"/>
+        </actionGroup>
+    </test>
+    <test name="MapMoveMapPinByDraggingAndDroppingPin">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Map"/>
+            <title value="Pin Tests - Move Map Pin By Dragging And Dropping Pin"/>
+            <description value="A user should be able to move a map pin by dragging and dropping the pin on the Edit Panel"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-66519"/>
+            <testCaseId value="MC-2731"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="pagebuilder-mapPinTests"/>
+            <group value="pagebuilder-requiresValidMapAPIKey"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key {{googleMapsAPIKey.valid}}" stepKey="setValidGoogleMapsAPIKey"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setEmptyGoogleMapsAPIKey"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionMedia">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeIntoStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
+        <!-- Add Pin To Map -->
+        <comment userInput="Add Pin To Map" stepKey="commentAddMapPin"/>
+        <actionGroup ref="clickMapToAddOrMovePin" stepKey="addMapPin"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName">
+            <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
+        <!-- Edit Panel: Get Initial Coordinates & Pin Location -->
+        <comment userInput="Edit Panel: Get Initial Coordinates" stepKey="commentEditPanelGetCoordinates"/>
+        <waitForElementVisible selector="{{EditPanelForm.panelFieldControl(PageBuilderMapLatitude_ClickedPin.section, PageBuilderMapLatitude_ClickedPin.fieldName)}}" stepKey="waitForLatitude1"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderMapLatitude_ClickedPin.section, PageBuilderMapLatitude_ClickedPin.fieldName)}}" stepKey="initialLatitudeEditPanel"/>
+        <waitForElementVisible selector="{{EditPanelForm.panelFieldControl(PageBuilderMapLongitude_ClickedPin.section, PageBuilderMapLongitude_ClickedPin.fieldName)}}" stepKey="waitForLongitude1"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderMapLongitude_ClickedPin.section, PageBuilderMapLongitude_ClickedPin.fieldName)}}" stepKey="initialLongitudeEditPanel"/>
+        <waitForElement selector="{{AddLocationForm.pinLocations('1')}}" stepKey="waitForPinLocationEditPanel1"/>
+        <grabAttributeFrom selector="{{AddLocationForm.pinLocations('1')}}" userInput="style" stepKey="initialPinLocationEditPanel"/>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Stage: Get Initial Pin Location -->
+        <comment userInput="Stage: Get Initial Pin Location" stepKey="commentStageGetPinLocation"/>
+        <waitForElementVisible selector="{{MapOnStage.pinLocations('1')}}" stepKey="waitForPinLocationStage"/>
+        <grabAttributeFrom selector="{{MapOnStage.pinLocations('1')}}" userInput="style" stepKey="initialPinLocationStage"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Storefront: Get Initial Pin Location -->
+        <comment userInput="Storefront: Get Initial Pin Location" stepKey="commentStorefrontGetPinLocation"/>
+        <openNewTab stepKey="openNewTab"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{MapOnStorefront.pinLocations('1')}}" stepKey="waitForPinLocationStoreFront"/>
+        <grabAttributeFrom selector="{{MapOnStorefront.pinLocations('1')}}" userInput="style" stepKey="initialPinLocationStorefront"/>
+        <!-- Switch Back To Backend -->
+        <comment userInput="Switch Back To Backend" stepKey="commentSwitchToBackend"/>
+        <switchToNextTab stepKey="switchToNextTab"/>
+        <reloadPage stepKey="reloadPage"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="clickLocationGridRow" stepKey="clickLocationGridRow">
+            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
+        <!-- Move Map Pin By Dragging And Dropping Pin -->
+        <comment userInput="Move Map Pin By Dragging And Dropping Pin" stepKey="commentMoveMapPin"/>
+        <actionGroup ref="moveMapPinByDraggingAndDroppingPin" stepKey="moveMapPinByDraggingAndDroppingPin">
+            <argument name="x" value="10"/>
+            <argument name="y" value="10"/>
+        </actionGroup>
+        <!-- Edit Panel: Verify Pin Location Moved -->
+        <comment userInput="Edit Panel: Verify Pin Location Moved" stepKey="commentVerifyPinMoveEditPanel"/>
+        <actionGroup ref="verifyPinLocationNotEqual" stepKey="verifyPinLocationEditPanel1">
+            <argument name="page" value="AddLocationForm"/>
+            <argument name="comparedPinLocation" value="initialPinLocationEditPanel"/>
+        </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm2"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <!-- Stage: Verify Pin Location Moved -->
+        <comment userInput="Stage: Verify Pin Location Moved" stepKey="commentVerifyPinMoveStage"/>
+        <actionGroup ref="verifyPinLocationNotEqual" stepKey="verifyPinLocationStage1">
+            <argument name="page" value="MapOnStage"/>
+            <argument name="comparedPinLocation" value="initialPinLocationStage"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage3"/>
+        <!-- Stage: Verify Map Pin Still Moved After Save -->
+        <comment userInput="Stage: Verify Pin Location Moved After Save" stepKey="commentVerifyPinMoveStage2"/>
+        <actionGroup ref="verifyPinLocationNotEqual" stepKey="verifyPinLocationStage2">
+            <argument name="page" value="MapOnStage"/>
+            <argument name="comparedPinLocation" value="initialPinLocationStage"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="clickLocationGridRow" stepKey="clickLocationGridRow2">
+            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
+        <!-- Edit Panel: Verify Pin Location Moved After Save -->
+        <comment userInput="Edit Panel: Verify Pin Location Moved After Save" stepKey="commentVerifyPinMoveEditPanel2"/>
+        <actionGroup ref="verifyPinLocationNotEqual" stepKey="verifyPinLocationEditPanel2">
+            <argument name="page" value="AddLocationForm"/>
+            <argument name="comparedPinLocation" value="initialPinLocationEditPanel"/>
+        </actionGroup>
+        <!-- Storefront: Verify Pin Location Moved -->
+        <comment userInput="Storefront: Verify Pin Location Moved" stepKey="commentVerifyPinMoveStorefront"/>
+        <switchToNextTab stepKey="switchToNextTab2"/>
+        <reloadPage stepKey="reloadPage2"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <actionGroup ref="verifyPinLocationNotEqual" stepKey="verifyPinLocationStorefront">
+            <argument name="page" value="MapOnStorefront"/>
+            <argument name="comparedPinLocation" value="initialPinLocationStorefront"/>
+        </actionGroup>
+    </test>
+    <test name="MapMoveMapPinByDraggingAndDroppingPinOffOfMap">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Map"/>
+            <title value="Pin Tests - Move Map Pin By Dragging And Dropping Pin Off Of Map"/>
+            <description value="A user should be able to move a map pin by dragging and dropping the pin off of the map on the Edit Panel"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-66519"/>
+            <testCaseId value="MC-2563"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="pagebuilder-mapPinTests"/>
+            <group value="pagebuilder-requiresValidMapAPIKey"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key {{googleMapsAPIKey.valid}}" stepKey="setValidGoogleMapsAPIKey"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setEmptyGoogleMapsAPIKey"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionMedia">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeIntoStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
+        <!-- Add Pin To Map -->
+        <comment userInput="Add Pin To Map" stepKey="commentAddMapPin"/>
+        <actionGroup ref="clickMapToAddOrMovePin" stepKey="addMapPin"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName">
+            <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
+        <!-- Edit Panel: Get Initial Coordinates & Pin Location -->
+        <comment userInput="Edit Panel: Get Initial Coordinates" stepKey="commentEditPanelGetCoordinates"/>
+        <waitForElementVisible selector="{{EditPanelForm.panelFieldControl(PageBuilderMapLatitude_ClickedPin.section, PageBuilderMapLatitude_ClickedPin.fieldName)}}" stepKey="waitForLatitude1"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderMapLatitude_ClickedPin.section, PageBuilderMapLatitude_ClickedPin.fieldName)}}" stepKey="initialLatitudeEditPanel"/>
+        <waitForElementVisible selector="{{EditPanelForm.panelFieldControl(PageBuilderMapLongitude_ClickedPin.section, PageBuilderMapLongitude_ClickedPin.fieldName)}}" stepKey="waitForLongitude1"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderMapLongitude_ClickedPin.section, PageBuilderMapLongitude_ClickedPin.fieldName)}}" stepKey="initialLongitudeEditPanel"/>
+        <waitForElement selector="{{AddLocationForm.pinLocations('1')}}" stepKey="waitForPinLocationEditPanel1"/>
+        <grabAttributeFrom selector="{{AddLocationForm.pinLocations('1')}}" userInput="style" stepKey="initialPinLocationEditPanel"/>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Stage: Get Initial Pin Location -->
+        <comment userInput="Stage: Get Initial Pin Location" stepKey="commentStageGetPinLocation"/>
+        <waitForElementVisible selector="{{MapOnStage.pinLocations('1')}}" stepKey="waitForPinLocationStage"/>
+        <grabAttributeFrom selector="{{MapOnStage.pinLocations('1')}}" userInput="style" stepKey="initialPinLocationStage"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Storefront: Get Initial Pin Location -->
+        <comment userInput="Storefront: Get Initial Pin Location" stepKey="commentStorefrontGetPinLocation"/>
+        <openNewTab stepKey="openNewTab"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{MapOnStorefront.pinLocations('1')}}" stepKey="waitForPinLocationStoreFront"/>
+        <grabAttributeFrom selector="{{MapOnStorefront.pinLocations('1')}}" userInput="style" stepKey="initialPinLocationStorefront"/>
+        <!-- Switch Back To Backend -->
+        <comment userInput="Switch Back To Backend" stepKey="commentSwitchToBackend"/>
+        <switchToNextTab stepKey="switchToNextTab"/>
+        <reloadPage stepKey="reloadPage"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="clickLocationGridRow" stepKey="clickLocationGridRow">
+            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
+        <!-- Move Map Pin By Dragging And Dropping Pin Off Of Map-->
+        <comment userInput="Move Map Pin By Dragging And Dropping Pin Off Of Map" stepKey="commentMoveMapPin"/>
+        <executeJS function="return {{AddLocationForm.baseJS}}.clientWidth" stepKey="mapWidth"/>
+        <actionGroup ref="moveMapPinByDraggingAndDroppingPin" stepKey="moveMapPinByDraggingAndDroppingPin">
+            <argument name="x" value="$mapWidth"/>
+        </actionGroup>
+        <!-- Edit Panel: Verify Pin Location Moved -->
+        <comment userInput="Edit Panel: Verify Pin Location Moved" stepKey="commentVerifyPinMoveEditPanel"/>
+        <actionGroup ref="verifyPinLocationNotEqual" stepKey="verifyPinLocationEditPanel1">
+            <argument name="page" value="AddLocationForm"/>
+            <argument name="comparedPinLocation" value="initialPinLocationEditPanel"/>
+        </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm2"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <!-- Stage: Verify Pin Location Moved -->
+        <comment userInput="Stage: Verify Pin Location Moved" stepKey="commentVerifyPinMoveStage"/>
+        <actionGroup ref="verifyPinLocationNotEqual" stepKey="verifyPinLocationStage1">
+            <argument name="page" value="MapOnStage"/>
+            <argument name="comparedPinLocation" value="initialPinLocationStage"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage3"/>
+        <!-- Stage: Verify Map Pin Still Moved After Save -->
+        <comment userInput="Stage: Verify Pin Location Moved After Save" stepKey="commentVerifyPinMoveStage2"/>
+        <actionGroup ref="verifyPinLocationNotEqual" stepKey="verifyPinLocationStage2">
+            <argument name="page" value="MapOnStage"/>
+            <argument name="comparedPinLocation" value="initialPinLocationStage"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="clickLocationGridRow" stepKey="clickLocationGridRow2">
+            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
+        <!-- Edit Panel: Verify Pin Location Moved After Save -->
+        <comment userInput="Edit Panel: Verify Pin Location Moved After Save" stepKey="commentVerifyPinMoveEditPanel2"/>
+        <actionGroup ref="verifyPinLocationNotEqual" stepKey="verifyPinLocationEditPanel2">
+            <argument name="page" value="AddLocationForm"/>
+            <argument name="comparedPinLocation" value="initialPinLocationEditPanel"/>
+        </actionGroup>
+        <!-- Storefront: Verify Pin Location Moved -->
+        <comment userInput="Storefront: Verify Pin Location Moved" stepKey="commentVerifyPinMoveStorefront"/>
+        <switchToNextTab stepKey="switchToNextTab2"/>
+        <reloadPage stepKey="reloadPage2"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <actionGroup ref="verifyPinLocationNotEqual" stepKey="verifyPinLocationStorefront">
+            <argument name="page" value="MapOnStorefront"/>
+            <argument name="comparedPinLocation" value="initialPinLocationStorefront"/>
+        </actionGroup>
+    </test>
+    <test name="MapAddPinThenRemoveThenAdd">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Map"/>
+            <title value="Pin Tests - Add Pin Then Remove Then Add and Verify"/>
+            <description value="Make sure the user can add a map after adding a map and then removing it."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MAGETWO-66519"/>
+            <testCaseId value="MC-2875"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="pagebuilder-mapPinTests"/>
+            <group value="pagebuilder-requiresValidMapAPIKey"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key {{googleMapsAPIKey.valid}}" stepKey="setValidGoogleMapsAPIKey"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setEmptyGoogleMapsAPIKey"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionMedia">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTextIntoStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <!-- Add Pin To Map -->
+        <comment userInput="Add Pin To Map" stepKey="commentAddPinToMap"/>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
+        <actionGroup ref="clickMapToAddOrMovePin" stepKey="addMapPin"/>
+        <!-- Enter Required Fields -->
+        <comment userInput="Enter Required Fields" stepKey="commentEnterRequiredFields"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName">
+            <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
+        <actionGroup ref="verifyMapHasPin" stepKey="verifyMapHasPinEditPanel1">
+            <argument name="page" value="AddLocationForm"/>
+        </actionGroup>
+        <!-- Empty Both Coordinate Fields -->
+        <comment userInput="Empty Both Coordinate Fields" stepKey="commentEmptyCoordinates"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLatitudeEmpty">
+            <argument name="property" value="PageBuilderMapLatitude_Empty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLongitudeEmpty">
+            <argument name="property" value="PageBuilderMapLongitude_Empty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSection" stepKey="validateErrorLatitudeEmpty">
+            <argument name="form" value="AddLocationForm"/>
+            <argument name="property" value="PageBuilderMapLatitude_Empty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSection" stepKey="validateErrorLongitudeEmpty">
+            <argument name="form" value="AddLocationForm"/>
+            <argument name="property" value="PageBuilderMapLongitude_Empty"/>
+        </actionGroup>
+        <actionGroup ref="dontSeeMapPin" stepKey="dontSeeMapPin">
+            <argument name="page" value="AddLocationForm"/>
+        </actionGroup>
+        <!-- Add Pin To Map After Error -->
+        <comment userInput="Add Pin To Map After Error" stepKey="commentAddPinToMap2"/>
+        <actionGroup ref="clickMapToAddOrMovePin" stepKey="addMapPin2"/>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="verifyMapHasPin" stepKey="verifyMapHasPinStage">
+            <argument name="page" value="MapOnStage"/>
+        </actionGroup>
+    </test>
+    <test name="MapPinTooltipWindowStaysOpenWhenPanningOnMap">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Map"/>
+            <title value="Pin Tests - Map Pin Tooltip Window Stays Open When Panning On Map"/>
+            <description value="Verify that the user can open and close the map pin tooltip window and that the tooltip window stays open as a user moves the map."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-88132"/>
+            <testCaseId value="MC-2445"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="pagebuilder-mapPinTests"/>
+            <group value="pagebuilder-requiresValidMapAPIKey"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key {{googleMapsAPIKey.valid}}" stepKey="setValidGoogleMapsAPIKey"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setEmptyGoogleMapsAPIKey"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionMedia">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeIntoStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <!-- Add Location -->
+        <comment userInput="Add Location" stepKey="commentAddLocation"/>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
+        <actionGroup ref="clickMapToAddOrMovePin" stepKey="addMapPin"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName">
+            <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="openMapPinTooltipWindow" stepKey="openMapPinTooltipWindowStage1"/>
+        <!-- Stage: Tooltip Stays Open When Map Moves -->
+        <comment userInput="Stage: Tooltip Stays Open When Map Moves" stepKey="commentMoveStage1"/>
+        <waitForElementVisible selector="{{MapOnStage.pinLocations('1')}}" stepKey="waitForPinLocationStage"/>
+        <grabAttributeFrom selector="{{MapOnStage.pinLocations('1')}}" userInput="style" stepKey="initialPinLocationStage"/>
+        <executeJS function="return document.querySelectorAll('{{MapOnStage.baseCSS}}')[0].getBoundingClientRect().height/4" stepKey="quarterMapHeightStage"/>
+        <dragAndDrop selector1="{{MapOnStage.base('1')}}" selector2="{{MapOnStage.base('1')}}" x="$quarterMapHeightStage" stepKey="moveMapStage1"/>
+        <waitForPageLoad stepKey="waitForDragAndDrop"/>
+        <actionGroup ref="verifyPinLocationNotEqual" stepKey="verifyPinLocationMovedStage1">
+            <argument name="page" value="MapOnStage"/>
+            <argument name="comparedPinLocation" value="initialPinLocationStage"/>
+        </actionGroup>
+        <seeElement selector="{{MapOnStage.tooltipWindow('1')}}" stepKey="seeTooltipWindowStage1"/>
+        <actionGroup ref="closeMapPinTooltipWindow" stepKey="closeMapPinTooltipWindowStage1"/>
+        <!-- Save Page -->
+        <comment userInput="Save Page" stepKey="commentSavePage"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="openMapPinTooltipWindow" stepKey="openMapPinTooltipWindowStage2"/>
+        <!-- Stage: Tooltip Stays Open When Map Moves After Save -->
+        <comment userInput="Stage: Tooltip Stays Open When Map Moves After Save" stepKey="commentMoveStage2"/>
+        <dragAndDrop selector1="{{MapOnStage.base('1')}}" selector2="{{MapOnStage.base('1')}}" x="$quarterMapHeightStage" stepKey="moveMapStage2"/>
+        <waitForPageLoad stepKey="waitForDragAndDrop2"/>
+        <actionGroup ref="verifyPinLocationNotEqual" stepKey="verifyPinLocationMovedStage2">
+            <argument name="page" value="MapOnStage"/>
+            <argument name="comparedPinLocation" value="initialPinLocationStage"/>
+        </actionGroup>
+        <seeElement selector="{{MapOnStage.tooltipWindow('1')}}" stepKey="seeTooltipWindowStage2"/>
+        <actionGroup ref="closeMapPinTooltipWindow" stepKey="closeMapPinTooltipWindowStage2"/>
+        <!-- Storefront: Tooltip Stays Open When Map Moves After Save -->
+        <comment userInput="Storefront: Tooltip Stays Open When Map Moves After Save" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="openMapPinTooltipWindow" stepKey="openMapPinTooltipWindowStorefront">
+            <argument name="page" value="MapOnStorefront"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{MapOnStorefront.pinLocations('1')}}" stepKey="waitForPinLocationStorefront"/>
+        <grabAttributeFrom selector="{{MapOnStorefront.pinLocations('1')}}" userInput="style" stepKey="initialPinLocationStorefront"/>
+        <executeJS function="return document.querySelectorAll('{{MapOnStage.baseCSS}}')[0].getBoundingClientRect().height/4" stepKey="quarterMapHeightStorefront"/>
+        <dragAndDrop selector1="{{MapOnStorefront.base('1')}}" selector2="{{MapOnStorefront.base('1')}}" x="$quarterMapHeightStorefront" stepKey="moveMapStorefront"/>
+        <waitForPageLoad stepKey="waitForDragAndDrop3"/>
+        <actionGroup ref="verifyPinLocationNotEqual" stepKey="verifyPinLocationMovedStorefront">
+            <argument name="page" value="MapOnStorefront"/>
+            <argument name="comparedPinLocation" value="initialPinLocationStorefront"/>
+        </actionGroup>
+        <seeElement selector="{{MapOnStorefront.tooltipWindow('1')}}" stepKey="seeTooltipWindowStorefront"/>
+        <actionGroup ref="closeMapPinTooltipWindow" stepKey="closeMapPinTooltipWindowStorefront">
+            <argument name="page" value="MapOnStorefront"/>
+        </actionGroup>
+    </test>
+    <test name="MapPinTooltipAllLocationData">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Map"/>
+            <title value="Pin Tests - Pin Tooltip All Location Data"/>
+            <description value="Verify tooltip with all location data appears on Stage and Storefront but not Edit Panel."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-66519"/>
+            <testCaseId value="MC-2556"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="pagebuilder-mapPinTests"/>
+            <group value="pagebuilder-requiresValidMapAPIKey"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key {{googleMapsAPIKey.valid}}" stepKey="setValidGoogleMapsAPIKey"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setEmptyGoogleMapsAPIKey"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionMedia">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeIntoStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <!-- Add Location -->
+        <comment userInput="Add Location" stepKey="commentAddLocation"/>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
+        <actionGroup ref="clickMapToAddOrMovePin" stepKey="addMapPin"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName">
+            <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterPhoneNumber">
+            <argument name="property" value="PageBuilderMapPhoneNumber_TestPhoneNumber"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterStreetAddress">
+            <argument name="property" value="PageBuilderMapStreetAddress_1234FakeDrive"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterCity">
+            <argument name="property" value="PageBuilderMapCity_FakeCity"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterState">
+            <argument name="property" value="PageBuilderMapState_Texas"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterZip">
+            <argument name="property" value="PageBuilderMapZipCode_12345_6789"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelMultiSelectField" stepKey="enterCountry">
+            <argument name="property" value="PageBuilderMapCountry_USA"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterComment">
+            <argument name="property" value="PageBuilderMapComment_TestComment"/>
+        </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage1"/>
+        <actionGroup ref="validateMapPinLocationData" stepKey="validateMapPinLocationDataStage1">
+            <argument name="page" value="MapOnStage"/>
+            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
+            <argument name="comment" value="PageBuilderMapComment_TestComment"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_TestPhoneNumber"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_1234FakeDrive"/>
+            <argument name="city" value="PageBuilderMapCity_FakeCity"/>
+            <argument name="state" value="PageBuilderMapState_Texas"/>
+            <argument name="zip" value="PageBuilderMapZipCode_12345_6789"/>
+            <argument name="country" value="PageBuilderMapCountry_USA"/>
+        </actionGroup>
+        <!-- Save Page -->
+        <comment userInput="Save Page" stepKey="commentSavePage"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
+        <actionGroup ref="validateMapPinLocationData" stepKey="validateMapPinLocationDataStage2">
+            <argument name="page" value="MapOnStage"/>
+            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
+            <argument name="comment" value="PageBuilderMapComment_TestComment"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_TestPhoneNumber"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_1234FakeDrive"/>
+            <argument name="city" value="PageBuilderMapCity_FakeCity"/>
+            <argument name="state" value="PageBuilderMapState_Texas"/>
+            <argument name="zip" value="PageBuilderMapZipCode_12345_6789"/>
+            <argument name="country" value="PageBuilderMapCountry_USA"/>
+        </actionGroup>
+        <!-- Verify No Tooltip On Edit Panel -->
+        <comment userInput="Verify No Tooltip On Edit Panel" stepKey="commentValidateEditPanel"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="clickLocationGridRow" stepKey="clickLocationGridRow">
+            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
+        <actionGroup ref="validateNoPinTooltip" stepKey="verifyNoTooltip"/>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="validateMapPinLocationData" stepKey="validateMapPinLocationDataStorefront">
+            <argument name="page" value="MapOnStorefront"/>
+            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
+            <argument name="comment" value="PageBuilderMapComment_TestComment"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_TestPhoneNumber"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_1234FakeDrive"/>
+            <argument name="city" value="PageBuilderMapCity_FakeCity"/>
+            <argument name="state" value="PageBuilderMapState_Texas"/>
+            <argument name="zip" value="PageBuilderMapZipCode_12345_6789"/>
+            <argument name="country" value="PageBuilderMapCountry_USA"/>
+        </actionGroup>
+    </test>
+    <test name="Map2LocationsWithSameCoordinates">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Map"/>
+            <title value="Pin Tests - 2 Locations With Same Coordinates"/>
+            <description value="Verify that the user can add 2 locations to a map with the same coordinates."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-88132"/>
+            <testCaseId value="MC-2480"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="pagebuilder-mapPinTests"/>
+            <group value="pagebuilder-requiresValidMapAPIKey"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setEmptyGoogleMapsAPIKey"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionMedia">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeIntoStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <!-- Add 1st Location -->
+        <comment userInput="Add 1st Location" stepKey="commentAddLocation1"/>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName">
+            <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLatitude">
+            <argument name="property" value="PageBuilderMapLatitude_Positive39_74"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLongitude">
+            <argument name="property" value="PageBuilderMapLongitude_Negative104_99"/>
+        </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
+        <!-- Add 2nd Location -->
+        <comment userInput="Add 2nd Location" stepKey="commentAddLocation2"/>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton2"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName2">
+            <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLatitude2">
+            <argument name="property" value="PageBuilderMapLatitude_Positive39_74"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLongitude2">
+            <argument name="property" value="PageBuilderMapLongitude_Negative104_99"/>
+        </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm2"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Save Page and Set Valid API Key -->
+        <comment userInput="Save Page and Set Valid API Key" stepKey="commentSavePageAndSetKey"/>
+        <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key {{googleMapsAPIKey.valid}}" stepKey="setValidGoogleMapsAPIKey"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
+        <actionGroup ref="verifyNumberOfPinsOnMap" stepKey="verifyNumberOfPinsOnMapStage">
+            <argument name="page" value="MapOnStage"/>
+            <argument name="count" value="2"/>
+        </actionGroup>
+        <!-- Validate Edit Panel -->
+        <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{PageBuilderDataGrid.gridBase}}" stepKey="waitForGrid"/>
+        <seeNumberOfElements selector="{{PageBuilderDataGrid.gridAllRows}}" userInput="2" stepKey="see2Rows"/>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="verifyNumberOfPinsOnMap" stepKey="verifyNumberOfPinsOnMapStorefront2">
+            <argument name="page" value="MapOnStorefront"/>
+            <argument name="count" value="2"/>
+        </actionGroup>
+    </test>
+    <test name="Map2LocationsOppositeSidesOfWorld">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Map"/>
+            <title value="Pin Tests - 2 Locations On Opposite Sides Of The World"/>
+            <description value="Verify that the user can add 2 locations to a map that are on opposite sides of the world."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-88132"/>
+            <testCaseId value="MC-2452"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="pagebuilder-mapPinTests"/>
+            <group value="pagebuilder-requiresValidMapAPIKey"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setEmptyGoogleMapsAPIKey"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionMedia">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeIntoStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <!-- Add 1st Location -->
+        <comment userInput="Add 1st Location" stepKey="commentAddLocation1"/>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName">
+            <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLatitude">
+            <argument name="property" value="PageBuilderMapLatitude_0"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLongitude">
+            <argument name="property" value="PageBuilderMapLongitude_0"/>
+        </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
+        <!-- Add 2nd Location -->
+        <comment userInput="Add 2nd Location" stepKey="commentAddLocation2"/>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton2"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName2">
+            <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLatitude2">
+            <argument name="property" value="PageBuilderMapLatitude_0"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLongitude2">
+            <argument name="property" value="PageBuilderMapLongitude_NegativeMax"/>
+        </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm2"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Save Page and Set Valid API Key -->
+        <comment userInput="Save Page and Set Valid API Key" stepKey="commentSavePageAndSetKey"/>
+        <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key {{googleMapsAPIKey.valid}}" stepKey="setValidGoogleMapsAPIKey"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
+        <actionGroup ref="verifyNumberOfPinsOnMap" stepKey="verifyNumberOfPinsOnMapStage2">
+            <argument name="page" value="MapOnStage"/>
+            <argument name="count" value="2"/>
+        </actionGroup>
+        <!-- Validate Edit Panel -->
+        <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{PageBuilderDataGrid.gridBase}}" stepKey="waitForGrid"/>
+        <seeNumberOfElements selector="{{PageBuilderDataGrid.gridAllRows}}" userInput="2" stepKey="see2Rows"/>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="verifyNumberOfPinsOnMap" stepKey="verifyNumberOfPinsOnMapStorefront2">
+            <argument name="page" value="MapOnStorefront"/>
+            <argument name="count" value="2"/>
+        </actionGroup>
+    </test>
+</tests>

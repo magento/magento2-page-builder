@@ -1,0 +1,1734 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="ColumnAddToRowAndHeightAdjusts">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Add column into a row and row height adjusts"/>
+            <description value="A user should be able to add a column group into a row."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-86953"/>
+            <testCaseId value="MC-2574"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <comment userInput="Validate Initial Row Height" stepKey="commentValidateRowHeight"/>
+        <actionGroup ref="validateContentTypeHeightOnStage" stepKey="assertInitialRowHeightMatchesExpected">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="index" value="1"/>
+            <argument name="containerDefaultHeight" value="PageBuilderRowDefaultHeight"/>
+            <argument name="expectedPaddingTop" value="PageBuilderPaddingProperty10"/>
+            <argument name="expectedPaddingBottom" value="PageBuilderPaddingProperty10"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <seeNumberOfElements selector="{{ColumnOnBackend.columnGroupColumns('1')}}" userInput="2" stepKey="seeElementColumn"/>
+        <comment userInput="Validate Initial Column Height On Stage Matches Expected" stepKey="commentValidateColumnHeight"/>
+        <actionGroup ref="validateContentTypeHeightOnStageWithoutPadding" stepKey="assertInitialColumnHeightMatchesExpected">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="index" value="1"/>
+            <argument name="containerDefaultHeight" value="PageBuilderMinHeightProperty_300"/>
+        </actionGroup>
+        <executeJS function="{{PageBuilderStage.computedHeightOnStage(PageBuilderColumnContentType.role,'1')}}" stepKey="actualStageInitialColumnHeight"/>
+        <comment userInput="Validate Row Height adjusts to Column Height" stepKey="commentValidateRowHeightAdjustToColumn"/>
+        <executeJS function="{{PageBuilderStage.computedHeightOnStage(PageBuilderRowContentType.role,'1')}}" stepKey="actualStageRowHeightWithColumns"/>
+        <executeJS function="return Math.round({$actualStageInitialColumnHeight}+{{PageBuilderAdvancedMarginsAndPaddingPropertyDefault.paddingTop}}+{{PageBuilderAdvancedMarginsAndPaddingPropertyDefault.paddingBottom}})" stepKey="expectedRowHeightWithPaddingAndColumns"/>
+        <assertEquals stepKey="assertRowHeightAdjustsToColumnHeight">
+            <expectedResult type="variable">actualStageInitialColumnHeight</expectedResult>
+            <actualResult type="variable">expectedRowHeightWithPaddingAndColumns</actualResult>
+        </assertEquals>
+    </test>
+    <test name="RemoveColumnFromStageAndRowShrinks">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Remove all columns from row and row shrinks to initial size"/>
+            <description value="A user should be able to remove columns from rows."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-86953"/>
+            <testCaseId value="MC-2695"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <seeNumberOfElements selector="{{ColumnOnBackend.columnGroupColumns('1')}}" userInput="2" stepKey="seeElementColumn"/>
+        <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeColumn1">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <seeNumberOfElements selector="{{ColumnOnBackend.columnGroupColumns('1')}}" userInput="1" stepKey="seeOneColumnInGroup" />
+        <!-- As the removal of the first column caused this ones width to change we have to confirm the removal -->
+        <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeColumn2">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <dontSeeElement selector="{{ColumnOnBackend.column}}" stepKey="dontSeeColumn"/>
+        <dontSeeElement selector="{{ColumnOnBackend.columnGroup('1')}}" stepKey="dontSeeColumnGroup"/>
+        <comment userInput="Validate Row Height shrinks with removal of columns" stepKey="commentValidateRowHeight"/>
+        <actionGroup ref="validateContentTypeHeightOnStage" stepKey="assertRowHeightMatchesExpectedAfterDeleteColumns">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="index" value="1"/>
+            <argument name="containerDefaultHeight" value="PageBuilderRowDefaultHeight"/>
+            <argument name="expectedPaddingTop" value="PageBuilderPaddingProperty10"/>
+            <argument name="expectedPaddingBottom" value="PageBuilderPaddingProperty10"/>
+        </actionGroup>
+    </test>
+    <test name="ColumnNoRequired">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Ensure column has no required background fields"/>
+            <description value="Slide out panel with should has no required background fields"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-1954"/>
+            <testCaseId value="MC-2639"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanel">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAppearanceMinHeightProperty">
+            <argument name="property" value="PageBuilderMinHeightProperty_500"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeBackgroundColorProperty">
+            <argument name="property" value="PageBuilderBackgroundColorProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeBackgroundImageProperty">
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeBackgroundPositionProperty">
+            <argument name="property" value="PageBuilderBackgroundPositionProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeBackgroundSizeProperty">
+            <argument name="property" value="PageBuilderBackgroundSizeProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeBackgroundRepeatProperty">
+            <argument name="property" value="PageBuilderBackgroundRepeatProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeBackgroundAttachmentProperty">
+            <argument name="property" value="PageBuilderBackgroundAttachmentProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="seeColumnMinHeightNotRequired">
+            <argument name="property" value="PageBuilderMinHeightProperty_500"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="seeBackgroundColorNotRequired">
+            <argument name="property" value="PageBuilderBackgroundColorProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="seeBackgroundImageIsRequired">
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="seeBackgroundPositionNotRequired">
+            <argument name="property" value="PageBuilderBackgroundPositionProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="seeBackgroundSizeNotRequired">
+            <argument name="property" value="PageBuilderBackgroundSizeProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="seeBackgroundRepeatNotRequired">
+            <argument name="property" value="PageBuilderBackgroundRepeatProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="seeBackgroundAttachmentNotRequired">
+            <argument name="property" value="PageBuilderBackgroundAttachmentProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="seeMinHeightNotRequired">
+            <argument name="property" value="PageBuilderMinHeightProperty_500"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="seeVerticalAlignmentNotRequired">
+            <argument name="property" value="PageBuilderVerticalAlignmentPropertyTop"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.base('1')}}" stepKey="waitForColumnOnStage" />
+    </test>
+    <test name="ColumnWithBordersAndPaddingEqualToMinHeight" extends="RowWithBordersAndPaddingEqualToMinHeight">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Column with borders and padding is equal to min height"/>
+            <description value="A user can see Column height with borders and padding is equal to min height"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-5079"/>
+            <testCaseId value="MC-5771"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+        </annotations>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" after="commentConfigureContentType" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanel">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateContentTypeHeightBeforeSave">
+            <argument name="content" value="{{ColumnOnBackend.baseCSS}}"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateContentTypeHeightAfterSave">
+            <argument name="content" value="{{ColumnOnBackend.baseCSS}}"/>
+        </actionGroup>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateContentTypeHeightStorefront">
+            <argument name="content" value="{{ColumnOnFrontend.baseCSS}}"/>
+        </actionGroup>
+    </test>
+    <test name="ColumnWithBordersPaddingAndLargeContentsGreaterThanMinHeight" extends="RowWithBordersPaddingAndLargeContentsGreaterThanMinHeight">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Column with borders, padding, and large content is greater than min height"/>
+            <description value="A user can see Column height with borders, padding, and large content is greater than min height"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-5079"/>
+            <testCaseId value="MC-5803"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+        </annotations>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" after="commentConfigureContentType" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanel">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragContentTypeToContainer">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeHeightGreaterThanMinHeight" stepKey="validateContentTypeHeightBeforeSave">
+            <argument name="content" value="{{ColumnOnBackend.baseCSS}}"/>
+            <argument name="border" value="PageBuilderAdvancedBorderWidthProperty10"/>
+            <argument name="height" value="PageBuilderMinHeightProperty_200"/>
+            <argument name="padding" value="PageBuilderPaddingProperty10"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeHeightGreaterThanMinHeight" stepKey="validateContentTypeHeightAfterSave">
+            <argument name="content" value="{{ColumnOnBackend.baseCSS}}"/>
+            <argument name="border" value="PageBuilderAdvancedBorderWidthProperty10"/>
+            <argument name="height" value="PageBuilderMinHeightProperty_200"/>
+            <argument name="padding" value="PageBuilderPaddingProperty10"/>
+        </actionGroup>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeHeightGreaterThanMinHeight" stepKey="validateContentTypeHeightStorefront">
+            <argument name="content" value="{{ColumnOnFrontend.baseCSS}}"/>
+            <argument name="height" value="PageBuilderMinHeightProperty_200"/>
+        </actionGroup>
+    </test>
+    <test name="ColumnConfigurationHasVerticalAlignment">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Column Configuration Has Vertical Alignment"/>
+            <description value="Slide out panel column configuration should have vertical alignment settings"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-929"/>
+            <testCaseId value="MC-2825"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Add column to stage and open configuration form -->
+        <comment userInput="Add column to stage" stepKey="commentAddColumnToStage"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForFirstColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <!-- Validate Vertical Alignment Fields -->
+        <comment userInput="Validate vertical alignment fields" stepKey="commentVerticalAlignment"/>
+        <actionGroup ref="validateVerticalAlignmentVisualSelects" stepKey="validateVerticalAlignment">
+            <argument name="property1" value="PageBuilderVerticalAlignmentPropertyTop"/>
+            <argument name="property2" value="PageBuilderVerticalAlignmentPropertyCenter"/>
+            <argument name="property3" value="PageBuilderVerticalAlignmentPropertyBottom"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="verticalAlignTopSelected">
+            <argument name="property" value="PageBuilderVerticalAlignmentPropertyTop"/>
+        </actionGroup>
+    </test>
+    <test name="ColumnContentIsVerticallyAligned">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Column Content Can Be Vertically Aligned"/>
+            <description value="A user can vertically align column contents"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-929"/>
+            <testCaseId value="MC-2743"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <!-- Configure First Column - Vertical Align Top -->
+        <comment userInput="Configure vertical align top" stepKey="commentConfigureVerticalAlignTop"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnGroupToStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateContentType">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForFirstColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty">
+            <argument name="property" value="PageBuilderMinHeightProperty_300"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterVerticalAlignmentTopProperty">
+            <argument name="property" value="PageBuilderVerticalAlignmentPropertyTop"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsFirstColumn"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragDividerToFirstColumn">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <!-- Configure Second Column - Vertical Align Center -->
+        <comment userInput="Configure vertical align center" stepKey="commentConfigureVerticalAlignCenter"/>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForSecondColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterVerticalAlignmenCenterProperty">
+            <argument name="property" value="PageBuilderVerticalAlignmentPropertyCenter"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsSecondColumn"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragDividerToSecondColumn">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="2"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <!-- Configure Third Column - Vertical Align Bottom -->
+        <comment userInput="Configure vertical align bottom" stepKey="commentConfigureVerticalAlignBottom"/>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForThirdColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="3"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterVerticalAlignmenBottomProperty">
+            <argument name="property" value="PageBuilderVerticalAlignmentPropertyBottom"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsThirdColumn"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragDividerToThirdColumn">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="3"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <!-- Verify Vertical Alignment On Stage - Before Save -->
+        <comment userInput="Verify vertical alignment on stage before save" stepKey="commentVerifyVerticalAlignmentOnStageBeforeSave"/>
+        <seeElement selector="{{ColumnOnBackend.columnChildrenStyle('1', '1', PageBuilderVerticalAlignmentPropertyTop.style)}}" stepKey="seeFirstColumnVerticalAlignmentTop"/>
+        <seeElement selector="{{ColumnOnBackend.columnChildrenStyle('1', '2', PageBuilderVerticalAlignmentPropertyCenter.style)}}" stepKey="seeFirstColumnVerticalAlignmentCenter"/>
+        <seeElement selector="{{ColumnOnBackend.columnChildrenStyle('1', '3', PageBuilderVerticalAlignmentPropertyBottom.style)}}" stepKey="seeFirstColumnVerticalAlignmentBottom"/>
+        <!-- Verify Vertical Alignment On Stage - After Save -->
+        <comment userInput="Verify vertical alignment on stage after save" stepKey="commentVerifyVerticalAlignmentOnStageAfterSave"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <seeElement selector="{{ColumnOnBackend.columnChildrenStyle('1', '1', PageBuilderVerticalAlignmentPropertyTop.style)}}" stepKey="seeFirstColumnVerticalAlignmentTopAfterSave"/>
+        <seeElement selector="{{ColumnOnBackend.columnChildrenStyle('1', '2', PageBuilderVerticalAlignmentPropertyCenter.style)}}" stepKey="seeFirstColumnVerticalAlignmentCenterAfterSave"/>
+        <seeElement selector="{{ColumnOnBackend.columnChildrenStyle('1', '3', PageBuilderVerticalAlignmentPropertyBottom.style)}}" stepKey="seeFirstColumnVerticalAlignmentBottomAfterSave"/>
+        <!-- Verify Vertical Alignment In Storefront -->
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <seeElement selector="{{ColumnOnFrontend.columnStyle('1', PageBuilderVerticalAlignmentPropertyTop.style)}}" stepKey="seeColumn1VerticalAlignmentTopApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.columnStyle('2', PageBuilderVerticalAlignmentPropertyCenter.style)}}" stepKey="seeColumn2VerticalAlignmentCenterApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.columnStyle('3', PageBuilderVerticalAlignmentPropertyBottom.style)}}" stepKey="seeColumn2VerticalAlignmentBottomApplied"/>
+    </test>
+    <test name="ColumnContentIsVerticallyAlignedWithAppearanceAndDifferentMinimumHeights">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Column Content Is Vertically Aligned with Appearance and Different Minimum Heights"/>
+            <description value="A user can vertically align column contents when appearance is applied."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-929"/>
+            <testCaseId value="MC-2504"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <!-- Configure First Column - Vertical Align Top -->
+        <comment userInput="Configure vertical align top" stepKey="commentConfigureVerticalAlignTop"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnGroupToStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateContentType">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForFirstColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceTopProperty">
+            <argument name="property" value="PageBuilderColumnAppearanceProperty_Top"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty500">
+            <argument name="property" value="PageBuilderMinHeightProperty_500"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterVerticalAlignmentTopProperty">
+            <argument name="property" value="PageBuilderVerticalAlignmentPropertyTop"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsFirstColumn"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragDividerToFirstColumn">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <!-- Configure Second Column - Vertical Align Center -->
+        <comment userInput="Configure vertical align center" stepKey="commentConfigureVerticalAlignCenter"/>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForSecondColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceCenterProperty">
+            <argument name="property" value="PageBuilderColumnAppearanceProperty_Center"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty300">
+            <argument name="property" value="PageBuilderMinHeightProperty_300"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterVerticalAlignmenCenterProperty">
+            <argument name="property" value="PageBuilderVerticalAlignmentPropertyCenter"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsSecondColumn"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragDividerToSecondColumn">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="2"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <!-- Configure Third Column - Vertical Align Bottom -->
+        <comment userInput="Configure vertical align bottom" stepKey="commentConfigureVerticalAlignBottom"/>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForThirdColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="3"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceCenterBottom">
+            <argument name="property" value="PageBuilderColumnAppearanceProperty_Bottom"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty200">
+            <argument name="property" value="PageBuilderMinHeightProperty_200"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterVerticalAlignmenBottomProperty">
+            <argument name="property" value="PageBuilderVerticalAlignmentPropertyBottom"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsThirdColumn"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragDividerToThirdColumn">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="3"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <!-- Verify Vertical Alignment On Stage - Before Save -->
+        <comment userInput="Verify vertical alignment on stage before save" stepKey="commentVerifyVerticalAlignmentOnStageBeforeSave"/>
+        <seeElement selector="{{ColumnOnBackend.columnChildrenStyle('1', '1', PageBuilderVerticalAlignmentPropertyTop.style)}}" stepKey="seeFirstColumnVerticalAlignmentTop"/>
+        <seeElement selector="{{ColumnOnBackend.columnChildrenStyle('1', '2', PageBuilderVerticalAlignmentPropertyCenter.style)}}" stepKey="seeFirstColumnVerticalAlignmentCenter"/>
+        <seeElement selector="{{ColumnOnBackend.columnChildrenStyle('1', '3', PageBuilderVerticalAlignmentPropertyBottom.style)}}" stepKey="seeFirstColumnVerticalAlignmentBottom"/>
+        <!-- Verify Vertical Alignment On Stage - After Save -->
+        <comment userInput="Verify vertical alignment on stage after save" stepKey="commentVerifyVerticalAlignmentOnStageAfterSave"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <seeElement selector="{{ColumnOnBackend.columnChildrenStyle('1', '1', PageBuilderVerticalAlignmentPropertyTop.style)}}" stepKey="seeFirstColumnVerticalAlignmentTopAfterSave"/>
+        <seeElement selector="{{ColumnOnBackend.columnChildrenStyle('1', '2', PageBuilderVerticalAlignmentPropertyCenter.style)}}" stepKey="seeFirstColumnVerticalAlignmentCenterAfterSave"/>
+        <seeElement selector="{{ColumnOnBackend.columnChildrenStyle('1', '3', PageBuilderVerticalAlignmentPropertyBottom.style)}}" stepKey="seeFirstColumnVerticalAlignmentBottomAfterSave"/>
+        <!-- Verify Vertical Alignment In Storefront -->
+        <comment userInput="Verify vertical alignment in storefront" stepKey="commentVerifyVerticalAlignmentInStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <seeElement selector="{{ColumnOnFrontend.columnStyle('1', PageBuilderVerticalAlignmentPropertyTop.style)}}" stepKey="seeColumn1VerticalAlignmentTopApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.columnStyle('2', PageBuilderVerticalAlignmentPropertyCenter.style)}}" stepKey="seeColumn2VerticalAlignmentCenterApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.columnStyle('3', PageBuilderVerticalAlignmentPropertyBottom.style)}}" stepKey="seeColumn2VerticalAlignmentBottomApplied"/>
+    </test>
+    <test name="ColumnPlaceholderInAdminPreview">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Column placeholder in admin preview"/>
+            <description value="A user should see the column placeholder that suggests any content types can be dragged there"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-87068"/>
+            <testCaseId value="MC-3456"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragFirstTwoColumns">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <waitForElementVisible time="5" selector="{{ColumnOnBackend.empty('1')}}" stepKey="waitForEmptyColumn"/>
+        <seeElementInDOM selector="{{ColumnOnBackend.empty('1')}}" stepKey="seeEmptyColumn"/>
+    </test>
+    <test name="ColumnLabelsUpdate">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Column labels for columns update when a new column is added"/>
+            <description value="A user should be able to see column labels update when a new column is added causing resize."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-87068"/>
+            <testCaseId value="MC-2583"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragFirstTwoColumns">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('1','6/12')}}" stepKey="findBeforeLabelColumn1"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('2','6/12')}}" stepKey="findBeforeLabelColumn2"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragNewColumnToFirstColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="1" />
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('1','1/12')}}" stepKey="findAfterLabelColumn1"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('2','5/12')}}" stepKey="findAfterLabelColumn2"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('3','6/12')}}" stepKey="findAfterLabelColumn3"/>
+    </test>
+    <test name="ColumnCanInteractEditPanel">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Can close the edit panel"/>
+            <description value="A user should be able to open the edit form on an added column."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-1954"/>
+            <testCaseId value="MC-2582"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <seeNumberOfElements selector="{{ColumnOnBackend.columnGroupColumns('1')}}" userInput="2" stepKey="seeElementColumn"/>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForFirstColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <seeElement selector="{{EditPanelForm.editForm}}" stepKey="seeEditForm"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask"/>
+        <waitForElementVisible time="2" selector="{{EditPanelForm.editFormClose}}" stepKey="waitForEditFormClose"/>
+        <click selector="{{EditPanelForm.editFormClose}}" stepKey="clickEditFormClose"/>
+        <waitForElementNotVisible time="2" selector="{{EditPanelForm.editForm}}" stepKey="waitClose" />
+        <dontSeeElement selector="{{EditPanelForm.editForm}}" stepKey="dontSeeEditForm"/>
+    </test>
+    <test name="ColumnSettingsAppearInAdmin">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Configuration settings apply in admin"/>
+            <description value="A user should be able to change and preview column configuration settings."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-72429"/>
+            <testCaseId value="MC-2655"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanel">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceAlignmentProperty">
+            <argument name="property" value="PageBuilderColumnAppearanceProperty_Bottom"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty">
+            <argument name="property" value="PageBuilderMinHeightProperty_500"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterBackgroundColorProperty">
+            <argument name="property" value="PageBuilderBackgroundColorProperty"/>
+        </actionGroup>
+        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterBackgroundPositionProperty">
+            <argument name="property" value="PageBuilderBackgroundPosition_TopLeft"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterBackgroundSizePropertyContain">
+            <argument name="property" value="PageBuilderBackgroundSize_Contain"/>
+        </actionGroup>
+        <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="enterBackgroundRepeatYes">
+            <argument name="property" value="PageBuilderBackgroundRepeatProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBackgroundAttachmentProperty">
+            <argument name="property" value="PageBuilderBackgroundAttachmentProperty"/>
+        </actionGroup>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <seeElement selector="{{ColumnOnBackend.columnStyle('1', PageBuilderColumnStyles.alignmentBottom)}}" stepKey="seeFirstColumnAlignmentBottom"/>
+        <seeElement selector="{{ColumnOnBackend.columnStyle('1', PageBuilderColumnStyles.minHeight)}}" stepKey="seeFirstColumnMinHeight"/>
+        <seeElement selector="{{ColumnOnBackend.columnStyle('1', PageBuilderColumnStyles.bgColor)}}" stepKey="seeFirstColumnBgColor"/>
+        <seeElement selector="{{ColumnOnBackend.columnStyle('1', PageBuilderColumnStyles.bgImage)}}" stepKey="seeFirstColumnBgImage"/>
+        <seeElement selector="{{ColumnOnBackend.columnStyle('1', PageBuilderColumnStyles.bgPosition)}}" stepKey="seeFirstColumnBgPosition"/>
+        <seeElement selector="{{ColumnOnBackend.columnStyle('1', PageBuilderColumnStyles.bgSize)}}" stepKey="seeFirstColumnBgSize"/>
+        <seeElement selector="{{ColumnOnBackend.columnStyle('1', PageBuilderColumnStyles.bgRepeat)}}" stepKey="seeFirstColumnBgRepeat"/>
+        <seeElement selector="{{ColumnOnBackend.columnStyle('1', PageBuilderColumnStyles.bgAttachment)}}" stepKey="seeFirstColumnBgAttachment"/>
+    </test>
+    <test name="ColumnAppearanceSettingsShowOnFrontend">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Column appearance settings show on frontend"/>
+            <description value="Validate column appearance settings appear on the frontend"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-1954"/>
+            <testCaseId value="MC-2383"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <scrollTo selector="{{CmsNewPagePageActionsSection.pageTitle}}" stepKey="scrollToTop"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragFirstTwoColumns">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <scrollTo selector="{{CmsNewPagePageActionsSection.pageTitle}}" stepKey="scrollToTop2"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragThirdColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="1" />
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForFirstColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterBackgroundAppearancePropertyBottom">
+            <argument name="property" value="PageBuilderColumnAppearanceProperty_Bottom"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty">
+            <argument name="property" value="PageBuilderMinHeightProperty_500"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForSecondColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterBackgroundAppearancePropertyCentered">
+            <argument name="property" value="PageBuilderColumnAppearanceProperty_Center"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty2">
+            <argument name="property" value="PageBuilderMinHeightProperty_500"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForThirdColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="3"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty3">
+            <argument name="property" value="PageBuilderMinHeightProperty_500"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
+        <actionGroup ref="saveCmsPage" stepKey="saveCmsPage"/>
+        <amOnPage url="column{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <waitForPageLoad stepKey="waitForPageLoadStoreFront"/>
+        <seeElement selector="{{ColumnOnFrontend.column1Height}}" stepKey="seeColumn1MinHeightApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.columnStyle('1', PageBuilderColumnStyles.alignmentBottom)}}" stepKey="seeColumn1AlignmentApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.columnStyle('1', PageBuilderColumnStyles.minHeight)}}" stepKey="seeColumn1HeightApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.columnStyle('2', PageBuilderColumnStyles.alignmentCenter)}}" stepKey="seeColumn2AlignmentApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.columnStyle('2', PageBuilderColumnStyles.minHeight)}}" stepKey="seeColumn2MinHeightApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.columnStyle('3', PageBuilderColumnStyles.alignmentFull)}}" stepKey="seeColumn3AppearanceApplied"/>
+    </test>
+    <test name="ColumnChangesPreserved">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Column settings appear on the column form after page save"/>
+            <description value="Validate selected column settings appear on the form after page save"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-1954"/>
+            <testCaseId value="MC-2384"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <amOnPage url="{{CmsPagesPage.url}}" stepKey="amOnEditPage"/>
+            <waitForPageLoad stepKey="waitForPageLoad"/>
+            <conditionalClick selector="{{CmsPagesPageActionsSection.clearAllButton}}" dependentSelector="{{CmsPagesPageActionsSection.activeFilters}}" stepKey="clickToResetFilter" visible="true"/>
+            <waitForPageLoad stepKey="waitForGridReload"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForFirstColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty">
+            <argument name="property" value="PageBuilderMinHeightProperty_500"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterBackgroundColorProperty">
+            <argument name="property" value="PageBuilderBackgroundColorProperty_087E8B"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBackgroundPositionProperty">
+            <argument name="property" value="PageBuilderBackgroundPosition_Default"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterBackgroundSizePropertyCover">
+            <argument name="property" value="PageBuilderBackgroundSize_Cover"/>
+        </actionGroup>
+        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
+        </actionGroup>
+        <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="clickBackgroundProperty">
+            <argument name="property" value="PageBuilderBackgroundRepeatProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBackgroundAttachmentProperty">
+            <argument name="property" value="PageBuilderBackgroundAttachmentProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForFirstColumnAfterSave">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="PageBuilderMinHeightProperty_500">
+            <argument name="property" value="PageBuilderMinHeightProperty_500"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeBackgroundColorProperty">
+            <argument name="property" value="PageBuilderBackgroundColorProperty_087E8B"/>
+        </actionGroup>
+        <seeElementInDOM selector="{{EditPanelForm.backgroundImagePreview}}" stepKey="backgroundImagePreview"/>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeBackgroundPositionProperty">
+            <argument name="property" value="PageBuilderBackgroundPosition_Default"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeBackgroundSizeProperty">
+            <argument name="property" value="PageBuilderBackgroundSize_Cover"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsCheckedSlideOutProperty" stepKey="seeBackgroundRepeatProperty">
+            <argument name="property" value="PageBuilderBackgroundRepeatProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeBackgroundAttachmentProperty">
+            <argument name="property" value="PageBuilderBackgroundAttachmentProperty"/>
+        </actionGroup>
+    </test>
+    <test name="PreviewBackgroundImage">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Upload and preview an image for column background style"/>
+            <description value="Upload an image file to edit column form and see a preview in the admin panel"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-1954"/>
+            <testCaseId value="MC-2395"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForFirstColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty">
+            <argument name="property" value="PageBuilderMinHeightProperty_500"/>
+        </actionGroup>
+        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
+        </actionGroup>
+    </test>
+    <test name="ColumnBackgroundColorPreserved">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Column background color is preserved on edit"/>
+            <description value="Validate column background color is preserved on edit"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-1954"/>
+            <testCaseId value="MC-2401"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <closeTab stepKey="closeTab" />
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragFirstColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragSecondColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetIndex" value="1" />
+            <argument name="contentTypeIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForFirstColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterBackgroundAppearanceProperty1">
+            <argument name="property" value="PageBuilderColumnAppearanceProperty_Bottom"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty1">
+            <argument name="property" value="PageBuilderMinHeightProperty_500"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterBackgroundColorProperty1">
+            <argument name="property" value="PageBuilderBackgroundColorProperty_087E8B"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForSecondColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterBackgroundAppearanceProperty2">
+            <argument name="property" value="PageBuilderColumnAppearanceProperty_Center"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty2">
+            <argument name="property" value="PageBuilderMinHeightProperty_300"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterBackgroundColorProperty2">
+            <argument name="property" value="PageBuilderBackgroundColorProperty_FF5A5F"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForThirdColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="3"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty3">
+            <argument name="property" value="PageBuilderMinHeightProperty_200"/>
+        </actionGroup>
+        <comment userInput="I fill out color into Background Color using Color Picker" stepKey="comment"/>
+        <actionGroup ref="fillOutColorPicker" stepKey="fillOutColor">
+            <argument name="colorCode" value="PageBuilderBackgroundColorProperty_3C3C3C"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutPropertyAlternate" stepKey="seeHEXInField7">
+            <argument name="property" value="PageBuilderBackgroundColorProperty_3C3C3C"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <openNewTab stepKey="openNewTab"/>
+        <amOnPage url="column{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <waitForPageLoad stepKey="waitForPageLoadStoreFront1"/>
+        <seeElement selector="{{ColumnOnFrontend.column1Height}}" stepKey="seeColumn1MinHeightApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.column1Appearance}}"  stepKey="seeColumn1AppearanceApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.column1BackgroundColorPeacock}}"  stepKey="seeColumn1BackgroundColorApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.column2Height300}}" stepKey="seeColumn2MinHeightApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.column2Appearance}}"  stepKey="seeColumn2AppearanceApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.column2BackgroundColorSalmon}}"  stepKey="seeColumn2BackgroundColorApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.column3Height200}}" stepKey="seeColumn3MinHeightApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.column3Appearance}}"  stepKey="seeColumn3AppearanceApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.column3BackgroundColorGrey}}"  stepKey="seeColumn3BackgroundColorApplied"/>
+        <switchToPreviousTab stepKey="switchToPreviousTab"/>
+        <reloadPage stepKey="reloadPage"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForSecondColumn1">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seePageBuilderAppearanceProperty">
+            <argument name="property" value="PageBuilderColumnAppearanceProperty_Center"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seePageBuilderMinHeightProperty_500">
+            <argument name="property" value="PageBuilderMinHeightProperty_300"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeBackgroundColorProperty">
+            <argument name="property" value="PageBuilderBackgroundColorProperty_FF5A5F"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsWithoutModifying"/>
+        <actionGroup ref="saveCmsPage" stepKey="saveCmsPage"/>
+        <switchToNextTab stepKey="switchToNextTab"/>
+        <amOnPage url="column{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage2"/>
+        <waitForPageLoad stepKey="waitForPageLoadStoreFront2"/>
+        <seeElement selector="{{ColumnOnFrontend.column1Height}}" stepKey="seeColumn1MinHeightApplied2"/>
+        <seeElement selector="{{ColumnOnFrontend.column1Appearance}}"  stepKey="seeColumn1AppearanceApplied2"/>
+        <seeElement selector="{{ColumnOnFrontend.column1BackgroundColorPeacock}}"  stepKey="seeColumn1BackgroundColorApplied2"/>
+        <seeElement selector="{{ColumnOnFrontend.column2Height300}}" stepKey="seeColumn2MinHeightApplied2"/>
+        <seeElement selector="{{ColumnOnFrontend.column2Appearance}}"  stepKey="seeColumn2AppearanceApplied2"/>
+        <seeElement selector="{{ColumnOnFrontend.column2BackgroundColorSalmon}}"  stepKey="seeColumn2BackgroundColorApplied2"/>
+        <seeElement selector="{{ColumnOnFrontend.column3Height200}}" stepKey="seeColumn3MinHeightApplied2"/>
+        <seeElement selector="{{ColumnOnFrontend.column3Appearance}}"  stepKey="seeColumn3AppearanceApplied2"/>
+        <seeElement selector="{{ColumnOnFrontend.column3BackgroundColorGrey}}"  stepKey="seeColumn3BackgroundColorApplied2"/>
+    </test>
+    <test name="ColumnValidateDefaultAndUpdateAdvancedConfigurationDefaultValues">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Validate Default and Update Advanced Configuration Default Values"/>
+            <description value="Validate the default values and updating values for every attribute in the Advanced Configuration form and on Stage for Column."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-83415"/>
+            <testCaseId value="MC-2746"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <!-- Validate Default Values -->
+        <comment userInput="Validate Default Values" stepKey="CommentValidateDefaultValues"/>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBorder">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
+        </actionGroup>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getBorderColor"/>
+        <assertEmpty actual="getBorderColor" actualType="variable" message="Text field has text: $getBorderColor" stepKey="assertBorderColor"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderRadius">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
+        </actionGroup>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedCssClassesDefaultProperty.section, PageBuilderAdvancedCssClassesDefaultProperty.fieldName)}}" stepKey="getCssClasses"/>
+        <assertEmpty actual="getCssClasses" actualType="variable" message="Text field was not empty. Had text: $getCssClasses" stepKey="assertCssClasses"/>
+        <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins">
+            <argument name="property" value="PageBuilderMarginsPropertyDefault"/>
+        </actionGroup>
+        <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding">
+            <argument name="property" value="PageBuilderPaddingProperty10"/>
+        </actionGroup>
+        <!-- Check for border radius -->
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedBorderRadiusProperty">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
+        </actionGroup>
+        <seeInField userInput="0" selector="{{AdvancedForm.advancedBorderRadius}}" stepKey="assertBorderRadiusDefaultValue"/>
+        <!-- Check for class field -->
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
+            <argument name="property" value="PageBuilderAdvancedCssClassesDefaultProperty"/>
+        </actionGroup>
+        <!-- Check for margins & paddings -->
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedMarginsAndPaddingProperty">
+            <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
+        </actionGroup>
+        <!-- Check border fields become enabled when changing border -->
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterAdvancedBorderProperty">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDotted"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotDisabled" stepKey="seeAdvancedBorderColorPropertyIsNotDisabled">
+            <argument name="property" value="PageBuilderAdvancedBorderColorProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotDisabled" stepKey="seeAdvancedBorderWidthPropertyIsNotDisabled">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
+        </actionGroup>
+        <!-- Validate the default values in the fields -->
+        <seeElement selector="{{AdvancedForm.advancedBorderWidthDefault}}" stepKey="assertBorderWidthDefaultValue"/>
+        <!-- Add test data into form -->
+        <comment userInput="I fill out Border Color into Border Color using Color Picker" stepKey="comment"/>
+        <actionGroup ref="fillOutColorPicker" stepKey="fillOutColor">
+            <argument name="colorCode" value="PageBuilderAdvancedBorderColorProperty_ffffff"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutPropertyAlternate" stepKey="seeHexInField7">
+            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_ffffff"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderWidthProperty">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderRadiusProperty">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedCssClassesProperty">
+            <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAlignmentLeft">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyLeft"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldMarginsAndPadding" stepKey="enterAdvancedMarginsAndPaddingProperty">
+            <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
+        </actionGroup>
+        <!-- Save form data -->
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveRowEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <waitForElementVisible time="2" selector="{{ColumnOnBackend.column}}" stepKey="waitForBackEndColumn"/>
+        <seeElement selector="{{ColumnOnBackend.alignment('1', '1', PageBuilderAdvancedAlignmentPropertyLeft.value)}}" stepKey="seetextAlignStyleOnStage"/>
+        <seeElement selector="{{ColumnOnBackend.border('1', '1', PageBuilderAdvancedBorderPropertyDotted.value)}}" stepKey="seeColumnBorderStyleOnStage"/>
+        <seeElement selector="{{ColumnOnBackend.borderColor('1', '1', PageBuilderAdvancedBorderColorProperty_ffffff.rgb)}}" stepKey="seeColumnBorderColorOnStage"/>
+        <seeElement selector="{{ColumnOnBackend.borderWidth('1', '1', PageBuilderAdvancedBorderWidthProperty10.value)}}" stepKey="seeColumnBorderWidthOnStage"/>
+        <seeElement selector="{{ColumnOnBackend.borderRadius('1', '1', PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="seeColumnBorderRadiusStyleOnStage"/>
+        <seeElement selector="{{ColumnOnBackend.margins('1', '1', PageBuilderAdvancedMarginsAndPaddingProperty.value)}}" stepKey="seeColumnMarginStyleOnStage"/>
+        <seeElement selector="{{ColumnOnBackend.padding('1', '1', PageBuilderAdvancedMarginsAndPaddingProperty.value)}}" stepKey="seeColumnPaddingStyleOnStage"/>
+        <seeElement selector="{{ColumnOnBackend.cssClasses('1', '1', PageBuilderAdvancedCssClassesPropertyThreeClasses.value)}}" stepKey="seeColumnClassOnStage"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
+        <seeElement selector="{{ColumnOnBackend.alignment('1', '1', PageBuilderAdvancedAlignmentPropertyLeft.value)}}" stepKey="seetextAlignStyleOnStageAfterSave"/>
+        <seeElement selector="{{ColumnOnBackend.border('1', '1', PageBuilderAdvancedBorderPropertyDotted.value)}}" stepKey="seeColumnBorderStyleOnStageAfterSave"/>
+        <seeElement selector="{{ColumnOnBackend.borderColor('1', '1', PageBuilderAdvancedBorderColorProperty_ffffff.rgb)}}" stepKey="seeColumnBorderColorOnStageAfterSave"/>
+        <seeElement selector="{{ColumnOnBackend.borderWidth('1', '1', PageBuilderAdvancedBorderWidthProperty10.value)}}" stepKey="seeColumnBorderWidthOnStageAfterSave"/>
+        <seeElement selector="{{ColumnOnBackend.borderRadius('1', '1', PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="seeColumnBorderRadiusStyleOnStageAfterSave"/>
+        <seeElement selector="{{ColumnOnBackend.margins('1', '1', PageBuilderAdvancedMarginsAndPaddingProperty.value)}}" stepKey="seeColumnMarginStyleOnStageAfterSave"/>
+        <seeElement selector="{{ColumnOnBackend.padding('1', '1', PageBuilderAdvancedMarginsAndPaddingProperty.value)}}" stepKey="seeColumnPaddingStyleOnStageAfterSave"/>
+        <seeElement selector="{{ColumnOnBackend.cssClasses('1', '1', PageBuilderAdvancedCssClassesPropertyThreeClasses.value)}}" stepKey="seeColumnClassOnStageAfterSave"/>
+        <!-- Validate form data has been persisted in the advanced section -->
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openSavedEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="validateTextAlignment" stepKey="seeOptionIsSelected">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyLeft"/>
+        </actionGroup>
+        <seeOptionIsSelected userInput="{{PageBuilderAdvancedBorderPropertyDotted.value}}" selector="{{AdvancedForm.advancedBorder}}" stepKey="assertBorderSavedInColumn"/>
+        <seeInField userInput="{{PageBuilderAdvancedBorderColorProperty_ffffff.value}}" selector="{{AdvancedForm.advancedBorderColor}}" stepKey="assertBorderColorSavedInColumn"/>
+        <seeInField userInput="{{PageBuilderAdvancedBorderWidthProperty10.value}}" selector="{{AdvancedForm.advancedBorderWidth}}" stepKey="assertBorderSizeSavedInColumn"/>
+        <seeInField userInput="{{PageBuilderAdvancedBorderRadiusProperty12.value}}" selector="{{AdvancedForm.advancedBorderRadius}}" stepKey="assertBorderRadiusSavedInColumn"/>
+        <seeInField userInput="{{PageBuilderAdvancedCssClassesPropertyThreeClasses.value}}" selector="{{AdvancedForm.advancedCssClasses}}" stepKey="assertCSSClassesSavedInColumn"/>
+        <seeInField userInput="{{PageBuilderAdvancedMarginsAndPaddingProperty.marginTop}}" selector="{{AdvancedForm.advancedMarginTop}}" stepKey="assertMarginTopSavedInColumn"/>
+        <seeInField userInput="{{PageBuilderAdvancedMarginsAndPaddingProperty.marginRight}}" selector="{{AdvancedForm.advancedMarginRight}}" stepKey="assertMarginRightSavedInColumn"/>
+        <seeInField userInput="{{PageBuilderAdvancedMarginsAndPaddingProperty.marginLeft}}" selector="{{AdvancedForm.advancedMarginLeft}}" stepKey="assertMarginLefSavedInColumn"/>
+        <seeInField userInput="{{PageBuilderAdvancedMarginsAndPaddingProperty.marginBottom}}" selector="{{AdvancedForm.advancedMarginBottom}}" stepKey="assertMarginBottomSavedInColumn"/>
+        <seeInField userInput="{{PageBuilderAdvancedMarginsAndPaddingProperty.paddingTop}}" selector="{{AdvancedForm.advancedPaddingTop}}" stepKey="assertPaddingTopSavedInColumn"/>
+        <seeInField userInput="{{PageBuilderAdvancedMarginsAndPaddingProperty.paddingRight}}" selector="{{AdvancedForm.advancedPaddingRight}}" stepKey="assertPaddingRightSavedInColumn"/>
+        <seeInField userInput="{{PageBuilderAdvancedMarginsAndPaddingProperty.paddingLeft}}" selector="{{AdvancedForm.advancedPaddingLeft}}" stepKey="assertPaddingLefSavedInColumn"/>
+        <seeInField userInput="{{PageBuilderAdvancedMarginsAndPaddingProperty.paddingBottom}}" selector="{{AdvancedForm.advancedPaddingBottom}}" stepKey="assertPaddingBottomSavedInColumn"/>
+        <!-- Validate the correct styles have been applied to the front-end -->
+        <amOnPage url="column{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <waitForPageLoad stepKey="waitForPageLoadStoreFront"/>
+        <waitForElementVisible time="2" selector="{{ColumnOnFrontend.columnDisplay}}" stepKey="waitForFrontEndColumn"/>
+        <seeElement selector="{{ColumnOnFrontend.columnTextAlign}}" stepKey="seetextAlignStyle"/>
+        <seeElement selector="{{ColumnOnFrontend.columnBorder}}" stepKey="seeColumnBorderStyle"/>
+        <seeElement selector="{{ColumnOnFrontend.columnBorderRadius}}" stepKey="seeColumnBorderRadiusStyle"/>
+        <seeElement selector="{{ColumnOnFrontend.columnMargin}}" stepKey="seeColumnMarginStyle"/>
+        <seeElement selector="{{ColumnOnFrontend.columnPadding}}" stepKey="seeColumnPaddingStyle"/>
+        <seeElement selector="{{ColumnOnFrontend.columnClass}}" stepKey="seeColumnClass"/>
+    </test>
+    <test name="RemovingColumnDistributesWidth">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Column Width Distribution"/>
+            <description value="Removing a column distributes column widths in group"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-83556"/>
+            <testCaseId value="MC-2750"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragFirstTwoColumns">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragThirdColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="1" />
+            <argument name="contentTypeIndex" value="3"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{ColumnOnBackend.columnStyle('1', PageBuilderColumnStyles.widthOneTwelfth)}}" stepKey="seeFirstColumnWidth"/>
+        <seeElement selector="{{ColumnOnBackend.columnStyle('2', PageBuilderColumnStyles.widthFiveTwelfth)}}" stepKey="seeSecondColumnWidth"/>
+        <seeElement selector="{{ColumnOnBackend.columnStyle('3', PageBuilderColumnStyles.widthHalf)}}" stepKey="seeThirdColumnWidth"/>
+        <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeColumn1">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{ColumnOnBackend.columnStyle('1', PageBuilderColumnStyles.widthHalf)}}" stepKey="seeFirstColumnWidthDistributed"/>
+        <seeElement selector="{{ColumnOnBackend.columnStyle('2', PageBuilderColumnStyles.widthHalf)}}" stepKey="seeSecondColumnWidthDistributed"/>
+    </test>
+    <test name="ColumnFullHeightShowsOnFrontend">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Columns are the same height in the row when one column contains multiple Heading content blocks"/>
+            <description value="Validate columns are the same height on the frontend when one contains content blocks"/>
+            <useCaseId value="MAGETWO-71365"/>
+            <testCaseId value="MC-2753"/>
+            <severity value="CRITICAL"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-heading"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragFirstColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeading1ToFirstColumn">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading1">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeNextToExistingContentType" stepKey="dragHeading2ToFirstColumn">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
+            <argument name="existingContentType" value="PageBuilderHeadingContentType"/>
+            <argument name="existingContentTypeIndex" value="1"/>
+            <argument name="offsetYCoordinate" value="25"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading2">
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeNextToExistingContentType" stepKey="dragHeading3ToFirstColumn">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="contentTypeIndex" value="3"/>
+            <argument name="existingContentType" value="PageBuilderHeadingContentType"/>
+            <argument name="existingContentTypeIndex" value="2"/>
+            <argument name="offsetYCoordinate" value="25"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading3">
+            <argument name="index" value="3"/>
+        </actionGroup>
+        <comment userInput="User sees 3 Heading content blocks displayed in first column on Stage" stepKey="confirmContentTypesOnStage"/>
+        <seeNumberOfElements selector="{{HeadingOnStage.allHeadingsInContainer(PageBuilderColumnContentType.role, '1')}}" userInput="3" stepKey="see3HeadingsInFirstColumn"/>
+        <actionGroup ref="saveCmsPage" stepKey="saveCmsPage"/>
+        <amOnPage url="column{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <seeElement selector="{{ColumnOnFrontend.column1HeightFull}}" stepKey="seeColumn1FullHeightApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.column2HeightFull}}" stepKey="seeColumn2FullHeightApplied"/>
+    </test>
+    <test name="DragMultipleColumnsIntoRow">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Row can contain multiple column groups"/>
+            <description value="Validate multiple columns can be dragged into a row"/>
+            <useCaseId value="MAGETWO-86953"/>
+            <testCaseId value="MC-2784"/>
+            <severity value="CRITICAL"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-heading"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragFirstColumnOntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToDropZone" stepKey="dragSecondColumnOntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="offsetXCoordinate" value="5" />
+            <argument name="offsetYCoordinate" value="5" />
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToDropZone" stepKey="dragThirdColumnOntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="offsetXCoordinate" value="5" />
+            <argument name="offsetYCoordinate" value="5" />
+        </actionGroup>
+        <!-- We validate for 6 columns as each group automatically creates 2 columns -->
+        <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="6" stepKey="validateColumnsAdded"/>
+    </test>
+    <test name="ColumnDuplicate">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Duplicating Column"/>
+            <description value="A user should be able to duplicate a column content type. Verify on Stage and Storefront."/>
+            <useCaseId value="MC-965"/>
+            <testCaseId value="MC-3595"/>
+            <severity value="CRITICAL"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-hideShow"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <!-- Add Column to Stage -->
+        <comment userInput="Add Column to Stage" stepKey="commentAddColumnToStage"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <!-- Add Heading to Column -->
+        <comment userInput="Add Heading to Column" stepKey="commentAddHeadingToColumn"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSectionHeading">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingTypeToStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage">
+            <argument name="index" value="1"/>
+            <argument name="headingText" value="PageBuilderHeadingTextProperty"/>
+            <argument name="headingType" value="PageBuilderHeadingTypeProperty_H2"/>
+            <argument name="headingAlignment" value="PageBuilderHeadingAlignmentProperty_left"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="hideContentType" stepKey="hideContentType">
+            <argument name="section" value="HeadingOnStage"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <!-- Duplicate -->
+        <comment userInput="Duplicate" stepKey="commentDuplicate"/>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateContentType">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <!-- Validate content type is disabled -->
+        <comment userInput="Validate content type is disabled" stepKey="commentValidateHiddenStage"/>
+        <waitForElementVisible selector="{{HeadingOnStage.hidden('1')}}" stepKey="waitForContentTypeHidden1"/>
+        <waitForElementVisible selector="{{HeadingOnStage.hidden('2')}}" stepKey="waitForContentTypeHidden2"/>
+        <!-- Stage: Validate Default Show/Hide State - After Save -->
+        <comment userInput="Stage: Validate Default Show/Hide State - After Save" stepKey="CommentValidateDefaultShowHideStateOnStageAfterSave"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <waitForElementVisible selector="{{HeadingOnStage.hidden('1')}}" stepKey="waitForContentTypeHiddenAfterSave1"/>
+        <waitForElementVisible selector="{{HeadingOnStage.hidden('2')}}" stepKey="waitForContentTypeHiddenAfterSave2"/>
+        <!-- Reset Stage and Verify Settings -->
+        <comment userInput="Reset stage and verify settings" stepKey="CommentResetStage"/>
+        <actionGroup ref="showContentType" stepKey="showContentTypeFirstTabs">
+            <argument name="section" value="HeadingOnStage"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="showContentType" stepKey="showContentTypeSecondHeading">
+            <argument name="section" value="HeadingOnStage"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="targetIndex" value="2"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{HeadingOnStage.notHidden('1')}}" stepKey="waitForContentTypeHiddenReset1"/>
+        <waitForElementVisible selector="{{HeadingOnStage.notHidden('2')}}" stepKey="waitForContentTypeHiddenReset2"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPageAfterReset"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <!-- Validate content type is enabled in Storefront -->
+        <comment userInput="Validate content type is enabled in Storefront" stepKey="commentValidateShownStorefront"/>
+        <waitForElementVisible selector="{{HeadingOnStorefront.notHidden('1')}}" stepKey="waitForContentTypeShownStorefront1"/>
+        <waitForElementVisible selector="{{HeadingOnStorefront.notHidden('2')}}" stepKey="waitForContentTypeShownStorefront2"/>
+    </test>
+    <test name="DuplicatingColumnWillDivideSourceColumn">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Duplicating a column will distribute the originals width"/>
+            <description value="When duplicating a column the width of the source column should be split for the new column"/>
+            <useCaseId value="MAGETWO-90754"/>
+            <testCaseId value="MC-883"/>
+            <severity value="CRITICAL"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-columnResize"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="3" stepKey="seeDuplicatedColumn"/>
+        <!-- Resize first column to 4/12 -->
+        <comment userInput="Grab grid guide width for 4/12" stepKey="commentRetrieveGuideWidth"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnResizeGridLine('4')}}').clientWidth" stepKey="guideWidthFirstColumn"/>
+        <comment userInput="Resize first column to 4/12" stepKey="commentResizeFirstColumn"/>
+        <dragAndDrop selector1="{{ColumnOnBackend.columnX('1')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('4')}}" x="$guideWidthFirstColumn" stepKey="resizeFirstColumn"/>
+        <waitForPageLoad stepKey="waitForDragAndDrop"/>
+        <!-- Resize second column to 4/12 -->
+        <comment userInput="Grab grid guide width for 4/12 for second column" stepKey="commentRetrieveGuideWidthForSecond"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnResizeGridLine('8')}}').clientWidth" stepKey="guideWidthSecondColumn"/>
+        <comment userInput="Resize second column to 4/12" stepKey="commentResizeSecondColumn"/>
+        <dragAndDrop selector1="{{ColumnOnBackend.columnX('2')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('8')}}" x="$guideWidthSecondColumn" stepKey="resizeSecondColumn"/>
+        <waitForPageLoad stepKey="waitForDragAndDrop2"/>
+        <!-- Check all columns have the same width -->
+        <comment userInput="Validate column widths are as expected" stepKey="commentValidateWidthsAreCorrect"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth" stepKey="columnOneWidth"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('2')}}').clientWidth" stepKey="columnTwoWidth"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('3')}}').clientWidth" stepKey="columnThreeWidth"/>
+        <executeJS function="return Math.round({$columnOneWidth}/{$columnTwoWidth})" stepKey="columnRatio"/>
+        <assertEquals stepKey="assertRatioIsCorrect">
+            <expectedResult type="int">1</expectedResult>
+            <actualResult type="variable">columnRatio</actualResult>
+        </assertEquals>
+        <executeJS function="return Math.round({$columnOneWidth}/{$columnThreeWidth})" stepKey="columnRatio2"/>
+        <assertEquals stepKey="assertRatioIsCorrect2">
+            <expectedResult type="int">1</expectedResult>
+            <actualResult type="variable">columnRatio2</actualResult>
+        </assertEquals>
+        <!-- Duplicate the second column -->
+        <comment userInput="Duplicate second column" stepKey="commentDuplicateSecondColumn"/>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateSecondColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="targetIndex" value="2"/>
+        </actionGroup>
+        <!-- Assert original 1st and 3rd column are unaffected -->
+        <comment userInput="Assert duplication was successful" stepKey="commentAssertDuplicateSuccess"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth" stepKey="columnOneWidthAfterDuplicate"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('4')}}').clientWidth" stepKey="columnOriginalThreeWidthAfterDuplicate"/>
+        <assertEquals stepKey="assertColumnOneWidthUnaffected">
+            <expectedResult type="variable">columnOneWidth</expectedResult>
+            <actualResult type="variable">columnOneWidthAfterDuplicate</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertColumnThreeWidthUnaffected">
+            <expectedResult type="variable">columnThreeWidth</expectedResult>
+            <actualResult type="variable">columnOriginalThreeWidthAfterDuplicate</actualResult>
+        </assertEquals>
+        <!-- Assert source and duplicated column are the same width -->
+        <comment userInput="Assert source and duplicate column as same width" stepKey="commentAssertDuplicateAndSourceWidth"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('2')}}').clientWidth" stepKey="columnTwoAfterDuplicate"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('3')}}').clientWidth" stepKey="columnThreeAfterDuplicate"/>
+        <executeJS function="return Math.round({$columnTwoAfterDuplicate}/{$columnThreeAfterDuplicate})" stepKey="columnAfterDuplicateRatio"/>
+        <assertEquals stepKey="assertDuplicatedRatioIsCorrect">
+            <expectedResult type="int">1</expectedResult>
+            <actualResult type="variable">columnAfterDuplicateRatio</actualResult>
+        </assertEquals>
+    </test>
+    <test name="ColumnCannotAddToStage">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Cannot add Column to Stage"/>
+            <description value="If user drags Column to Stage, it should have no effect"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-515"/>
+            <testCaseId value="MC-3142"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-columnGeneral"/>
+            <group value="pagebuilder-cannotAddToStage"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionLayout">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="cannotDragContentTypeToTarget" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+        </actionGroup>
+        <dontSeeElementInDOM selector="{{ColumnOnBackend.column}}" stepKey="dontSeeColumn"/>
+        <dontSeeElementInDOM selector="{{ColumnOnBackend.columnGroup('1')}}" stepKey="dontSeeColumnGroup"/>
+    </test>
+    <test name="ColumnCannotAddInsideColumn">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Cannot add a column inside another column"/>
+            <description value="If user drags column into a column, it should add to the column group but not add a column inside the targeted column"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-515"/>
+            <testCaseId value="MC-3143"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-columnGeneral"/>
+            <group value="pagebuilder-addToColumn"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionLayout">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <!-- Drag column into a column -->
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragRowOntoColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="2" />
+        </actionGroup>
+        <!-- Validate Stage -->
+        <comment userInput="User dont see column displayed in column on Stage" stepKey="confirmNoColumnInColumn"/>
+        <actionGroup ref="validateContentTypeNotInsideContainerStage" stepKey="checkContentTypeNotInContainerStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
+        <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="3" stepKey="seesThreeElementColumns"/>
+    </test>
+    <test name="ValidateColumnNotHideable">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Validate column has no hide / show capabilities"/>
+            <description value="Validate column has no hide / show capabilities"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-965"/>
+            <testCaseId value="MC-3520"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-hideShow"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <moveMouseOver selector="{{ColumnOnBackend.base('1')}}" stepKey="moveMouseOverColumn" />
+        <waitForPageLoad stepKey="waitForMouseOver" />
+        <waitForElementVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenuByIndex(PageBuilderColumnContentType.role, '1')}}" stepKey="waitForOptions"/>
+        <dontSeeElementInDOM selector="{{PageBuilderContentTypeOptionsMenu.contentTypeHide(PageBuilderColumnContentType.role, '1')}}" stepKey="dontSeeDomHideOption" />
+    </test>
+    <test name="ValidateShowHideOnColumnChildDefaultState">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Children of column is shown by default"/>
+            <description value="Children of column is shown by default in stage and storefront"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-965"/>
+            <testCaseId value="MC-3541"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-heading"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-hideShow"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <!-- Add Column to Stage -->
+        <comment userInput="Add Column to Stage" stepKey="commentAddColumnToStage"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <!-- Add Heading to Column -->
+        <comment userInput="Add Heading to Column" stepKey="commentAddHeadingToColumn"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSectionHeading">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingTypeToStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage">
+            <argument name="index" value="1"/>
+            <argument name="headingText" value="PageBuilderHeadingTextProperty"/>
+            <argument name="headingType" value="PageBuilderHeadingTypeProperty_H2"/>
+            <argument name="headingAlignment" value="PageBuilderHeadingAlignmentProperty_left"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Stage: Validate Default Show/Hide State - Before Save -->
+        <comment userInput="Stage: Validate Default Show/Hide State Before Save" stepKey="CommentValidateDefaultShowHideStateOnStageBeforeSave"/>
+        <seeElement selector="{{HeadingOnStage.notHidden('1')}}" stepKey="seeContentTypeNotHiddenStageBeforeSave"/>
+        <!-- Stage: Validate Default Show/Hide State - After Save -->
+        <comment userInput="Stage: Validate Default Show/Hide State - After Save" stepKey="CommentValidateDefaultShowHideStateOnStageAfterSave"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <seeElement selector="{{HeadingOnStage.notHidden('1')}}" stepKey="seeContentTypeNotHiddenStageAfterSave"/>
+        <!-- Storefront: Validate Default Show/Hide State -->
+        <comment userInput="Storefront: Validate Default Show/Hide State" stepKey="CommentValidateDefaultShowHideStateOnStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <seeElement selector="{{HeadingOnStorefront.notHidden('1')}}" stepKey="seeContentTypeNotHiddenStorefront"/>
+    </test>
+    <test name="ValidateColumnChildHideShow">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Validate children of column can be hidden"/>
+            <description value="Validate a heading within a column can be shown / hidden successfully"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-965"/>
+            <testCaseId value="MC-3521"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-heading"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-hideShow"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <closeTab stepKey="closeOpenedTab" />
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSectionColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnTypeToStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSectionHeading">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingTypeToStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage">
+            <argument name="index" value="1"/>
+            <argument name="headingText" value="PageBuilderHeadingTextProperty"/>
+            <argument name="headingType" value="PageBuilderHeadingTypeProperty_H2"/>
+            <argument name="headingAlignment" value="PageBuilderHeadingAlignmentProperty_left"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="hideContentType" stepKey="hideContentType">
+            <argument name="section" value="HeadingOnStage"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage1"/>
+        <!-- Validate content type remains disabled after save -->
+        <comment userInput="Validate content type remains disabled after save" stepKey="commentValidateHiddenStage"/>
+        <seeElement selector="{{HeadingOnStage.hidden('1')}}" stepKey="waitForContentTypeHidden" />
+        <!-- Validate store front -->
+        <comment userInput="Validate content type is disabled on storefront" stepKey="commentValidateHiddenStorefront"/>
+        <openNewTab stepKey="openNewTab" />
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <waitForElement selector="{{HeadingOnStorefront.base('1')}}" stepKey="waitForContentTypeNotVisible" />
+        <dontSeeElement selector="{{HeadingOnStorefront.base('1')}}" stepKey="dontSeeContentType" />
+        <seeElementInDOM selector="{{HeadingOnStorefront.hidden('1')}}" stepKey="waitForHiddenElement" />
+        <!-- Set content to visible in admin -->
+        <comment userInput="Set content to visible in admin" stepKey="commentSetContentToVisibleAdmin"/>
+        <switchToNextTab stepKey="switchBackToAdmin" />
+        <reloadPage stepKey="reloadPage" />
+        <waitForPageLoad stepKey="waitForAdminReload" />
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="showContentType" stepKey="showContentType">
+            <argument name="section" value="HeadingOnStage"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage1"/>
+        <!-- Validate Content Is Shown Storefront -->
+        <comment userInput="Validate Content Is Shown Storefront" stepKey="commentValidateContentIsShownStorefront"/>
+        <switchToNextTab stepKey="switchBackToStorefront" />
+        <reloadPage stepKey="reloadStorefront" />
+        <waitForPageLoad stepKey="waitForStorefrontReload" />
+        <dontSeeElementInDOM selector="{{HeadingOnStorefront.hidden('1')}}" stepKey="dontSeeHiddenElement"/>
+        <seeElement selector="{{HeadingOnStorefront.base('1')}}" stepKey="waitForContentTypeVisible" />
+    </test>
+</tests>

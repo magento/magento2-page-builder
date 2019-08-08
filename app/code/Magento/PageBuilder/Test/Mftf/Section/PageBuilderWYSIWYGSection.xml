@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
+    <section name="WYSIWYGInsertLinkModal">
+        <element name="modal" type="input" selector="[aria-label='Insert link']"/>
+        <element name="title" type="input" selector="//div[@aria-label='Insert link']//div[contains(@id,'-title') and .='Insert link']"/>
+        <element name="xButton" type="button" selector="[aria-label='Insert link'] button.mce-close"/>
+        <element name="urlInput" type="input" selector="//div[@aria-label='Insert link']//input[ancestor::div[label[.='Url']]]"/>
+        <element name="browseMediaGalleryButton" type="button" selector="//div[@aria-label='Insert link']//button[ancestor::div[label[.='Url']]]"/>
+        <element name="textToDisplayInput" type="input" selector="//div[@aria-label='Insert link']//input[ancestor::div[label[.='Text to display']]]"/>
+        <element name="titleInput" type="input" selector="//div[@aria-label='Insert link']//input[ancestor::div[label[.='Title']]]"/>
+        <element name="targetInput" type="input" selector="//div[@aria-label='Insert link']//button[ancestor::div[label[.='Target']]]"/>
+        <element name="okButton" type="button" selector="//div[@aria-label='Insert link']//button//span[.='Ok']"/>
+        <element name="cancelButton" type="button" selector="//div[@aria-label='Insert link']//button//span[.='Cancel']"/>
+    </section>
+    <section name="WYSIWYGOnPageBuilder">
+        <element name="undo" type="button" selector=".mce-tinymce:not(.mce-tinymce-inline) div[aria-label='Undo']"/>
+        <element name="redo" type="button" selector=".mce-tinymce:not(.mce-tinymce-inline) div[aria-label='Redo']"/>
+        <element name="fontSize" type="button" selector=".mce-tinymce:not(.mce-tinymce-inline) div[aria-label='Font Sizes']"/>
+        <element name="lineHeight" type="button" selector=".mce-tinymce:not(.mce-tinymce-inline) div[aria-label='Line Height']"/>
+        <element name="textColor" type="button" selector=".mce-tinymce:not(.mce-tinymce-inline) div[aria-label='Text color']"/>
+        <element name="backgroundColor" type="button" selector=".mce-tinymce:not(.mce-tinymce-inline) div[aria-label='Background color']"/>
+        <element name="formatSelector" type="button" selector="//div[contains(@class, 'mce-tinymce') and not(contains(@class, 'mce-tinymce-inline'))]//span[text()='Formats']"/>
+    </section>
+    <section name="WYSIWYGOnPageBuilderInline">
+        <element name="inlineCss" type="button" selector=".mce-tinymce.mce-tinymce-inline"/>
+        <element name="notCss" type="button" selector=".mce-tinymce:not(.mce-tinymce-inline)"/>
+        <element name="undo" type="button" selector=".mce-tinymce-inline div[aria-label='Undo']"/>
+        <element name="redo" type="button" selector=".mce-tinymce-inline div[aria-label='Redo']"/>
+        <element name="fontSize" type="button" selector=".mce-tinymce-inline div[aria-label='Font Sizes']"/>
+        <element name="lineHeight" type="button" selector=".mce-tinymce-inline div[aria-label='Line Height']"/>
+        <element name="textColor" type="button" selector=".mce-tinymce-inline div[aria-label='Text color']"/>
+        <element name="backgroundColor" type="button" selector=".mce-tinymce-inline div[aria-label='Background color']"/>
+        <element name="formatSelector" type="button" selector="//div[contains(@class, 'mce-tinymce')]//span[text()='Formats']"/>
+        <element name="imageSelector" type="button" selector=".mce-tinymce-inline div[aria-label='Insert/edit image']"/>
+        <element name="imageSelectorBrowse" type="button" selector="div[aria-label='Insert/edit image'] i.mce-i-browse"/>
+        <element name="imageSelectorOk" type="button" selector="//div[contains(@aria-label, 'Insert/edit image')]//span[contains(@class, 'mce-txt')][text()='Ok']"/>
+    </section>
+    <section name="MediaGallerySection">
+        <!-- This goes in CE repo -->
+        <element name="StorageRootArrowClicked" type="button" selector="#root > a.jstree-clicked"/>
+    </section>
+</sections>

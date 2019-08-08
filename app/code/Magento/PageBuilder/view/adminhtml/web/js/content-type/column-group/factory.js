@@ -6,19 +6,22 @@ define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-fa
    */
 
   /**
-   * Create a column and add it to it's parent
+   * Create a column and add it to it's column group
    *
-   * @param {ColumnGroup} parent
+   * @param {ContentTypeCollectionInterface} columnGroup
    * @param {number} width
    * @param {number} index
-   * @returns {Promise<Column>}
+   * @returns {Promise<ContentTypeCollectionInterface>}
    */
-  function createColumn(parent, width, index) {
-    return (0, _contentTypeFactory)(_config.getContentTypeConfig("column"), parent, parent.stageId, {
+  function createColumn(columnGroup, width, index) {
+    return (0, _contentTypeFactory)(_config.getContentTypeConfig("column"), columnGroup, columnGroup.stageId, {
       width: parseFloat(width.toString()) + "%"
     }).then(function (column) {
-      parent.addChild(column, index);
+      columnGroup.addChild(column, index);
       return column;
+    }).catch(function (error) {
+      console.error(error);
+      return null;
     });
   }
 

@@ -9,451 +9,25 @@
     <preference for="Magento\Ui\Component\Form\Element\Wysiwyg" type="Magento\PageBuilder\Component\Form\Element\Wysiwyg" />
     <preference for="Magento\Catalog\Ui\Component\Category\Form\Element\Wysiwyg" type="Magento\PageBuilder\Component\Form\Element\Wysiwyg" />
     <preference for="Magento\Framework\Data\Form\Element\Editor" type="Magento\PageBuilder\Block\Element\Editor" />
-    <preference for="Magento\PageBuilder\Model\Config\ConfigInterface" type="Magento\PageBuilder\Model\Config" />
-    <preference for="Magento\PageBuilder\Setup\DataConverter\StyleExtractorInterface" type="Magento\PageBuilder\Setup\DataConverter\StyleExtractor" />
-    <type name="Magento\Cms\Block\Page">
-        <plugin name="filter_dynamic_blocks" type="Magento\PageBuilder\Plugin\Cms\Block\Page" />
-    </type>
-    <type name="Magento\Cms\Block\Block">
-        <plugin name="filter_dynamic_blocks" type="Magento\PageBuilder\Plugin\Cms\Block\Block" />
-    </type>
+    <preference for="Magento\PageBuilder\Model\ConfigInterface" type="Magento\PageBuilder\Model\Config" />
     <type name="Magento\PageBuilder\Model\Stage\Config\UiComponentConfig">
         <arguments>
             <argument name="configFactory" xsi:type="object">uiComponentConfigFactory</argument>
         </arguments>
     </type>
-    <type name="Magento\PageBuilder\Model\Stage\Config">
-        <arguments>
-            <argument name="data" xsi:type="array">
-                <item name="root_content_type" xsi:type="string">row</item>
-                <item name="html_display_content_type" xsi:type="string">html</item>
-            </argument>
-        </arguments>
-    </type>
-    <type name="Magento\PageBuilder\Setup\DataConverter\RendererPool">
+    <type name="Magento\PageBuilder\Model\Stage\RendererPool">
         <arguments>
             <argument name="renderers" xsi:type="array">
-                <item name="default" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\Unmigrated</item>
-                <item name="row" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\Row</item>
-                <item name="column" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\Column</item>
-                <item name="column_group" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\ColumnGroup</item>
-                <item name="heading" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\Heading</item>
-                <item name="anchor" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\Anchor</item>
-                <item name="hr" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\Divider</item>
-                <item name="textarea" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\Textarea</item>
-                <item name="html" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\Html</item>
-                <item name="advanced_slider" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\AdvancedSlider</item>
-                <item name="advanced_slider_item" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\AdvancedSliderItem</item>
-                <item name="image" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\Image</item>
-                <item name="buttons" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\Buttons</item>
-                <item name="button_item" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\ButtonItem</item>
-                <item name="video" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\Video</item>
-                <item name="slider" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\AdvancedSlider</item>
-                <item name="slider_item" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\AdvancedSliderItem</item>
-                <item name="accordion" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\Accordion</item>
-                <item name="accordion_item" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\AccordionItem</item>
-                <item name="map" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\Map</item>
-                <item name="code" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\Code</item>
-                <item name="newsletter" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\Newsletter</item>
-                <item name="tabs" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\Tabs</item>
-                <item name="tabs_item" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\TabsItem</item>
-                <item name="search" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\Search</item>
-                <item name="static_block" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\Block</item>
-                <item name="driver" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\Driver</item>
-                <item name="product_list" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\ProductList</item>
-                <item name="product" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\Product</item>
+                <item name="default" xsi:type="object">Magento\PageBuilder\Model\Stage\Renderer\Block</item>
+                <item name="products" xsi:type="object">Magento\PageBuilder\Model\Stage\Renderer\WidgetDirective</item>
+                <item name="block" xsi:type="object">Magento\PageBuilder\Model\Stage\Renderer\CmsStaticBlock</item>
             </argument>
         </arguments>
     </type>
-    <virtualType name="ChildrenExtractor" type="Magento\PageBuilder\Setup\DataConverter\ChildrenExtractor\Configurable">
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
         <arguments>
-            <argument name="path" xsi:type="string">children</argument>
-        </arguments>
-    </virtualType>
-    <virtualType name="AdvancedSliderChildrenExtractor" type="Magento\PageBuilder\Setup\DataConverter\ChildrenExtractor\Configurable">
-        <arguments>
-            <argument name="path" xsi:type="string">children/advanced_slider_items</argument>
-        </arguments>
-    </virtualType>
-    <virtualType name="SliderChildrenExtractor" type="Magento\PageBuilder\Setup\DataConverter\ChildrenExtractor\Configurable">
-        <arguments>
-            <argument name="path" xsi:type="string">children/slider_items</argument>
-        </arguments>
-    </virtualType>
-    <virtualType name="AccordionChildrenExtractor" type="Magento\PageBuilder\Setup\DataConverter\ChildrenExtractor\Configurable">
-        <arguments>
-            <argument name="path" xsi:type="string">children/accordion_items</argument>
-        </arguments>
-    </virtualType>
-    <virtualType name="ButtonsChildrenExtractor" type="Magento\PageBuilder\Setup\DataConverter\ChildrenExtractor\Configurable">
-        <arguments>
-            <argument name="path" xsi:type="string">children/button_items</argument>
-        </arguments>
-    </virtualType>
-    <virtualType name="TabsChildrenExtractor" type="Magento\PageBuilder\Setup\DataConverter\ChildrenExtractor\Configurable">
-        <arguments>
-            <argument name="path" xsi:type="string">children/tabs_items</argument>
-        </arguments>
-    </virtualType>
-    <type name="Magento\PageBuilder\Setup\DataConverter\ChildrenExtractorPool">
-        <arguments>
-            <argument name="extractors" xsi:type="array">
-                <item name="default" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\ChildrenExtractor\Dummy</item>
-                <item name="row" xsi:type="object">ChildrenExtractor</item>
-                <item name="column" xsi:type="object">ChildrenExtractor</item>
-                <item name="advanced_slider" xsi:type="object">AdvancedSliderChildrenExtractor</item>
-                <item name="buttons" xsi:type="object">ButtonsChildrenExtractor</item>
-                <item name="slider" xsi:type="object">SliderChildrenExtractor</item>
-                <item name="accordion" xsi:type="object">AccordionChildrenExtractor</item>
-                <item name="tabs" xsi:type="object">TabsChildrenExtractor</item>
-            </argument>
-        </arguments>
-    </type>
-    <type name="Magento\PageBuilder\Setup\DataConverter\ChildrenRendererPool">
-        <arguments>
-            <argument name="renderers" xsi:type="array">
-                <item name="default" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\ChildrenRenderer\Concatenation</item>
-                <item name="row" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\ChildrenRenderer\Row</item>
-            </argument>
-        </arguments>
-    </type>
-    <virtualType name="HeadingEavAttributeLoader" type="Magento\PageBuilder\Setup\DataConverter\ConfigurableEavAttributeLoader">
-        <arguments>
-            <argument name="additionalEavAttributes" xsi:type="array">
-                <item name="title" xsi:type="string">title</item>
-                <item name="heading_type" xsi:type="string">heading_type</item>
-            </argument>
-        </arguments>
-    </virtualType>
-    <virtualType name="TextareaEavAttributeLoader" type="Magento\PageBuilder\Setup\DataConverter\ConfigurableEavAttributeLoader">
-        <arguments>
-            <argument name="additionalEavAttributes" xsi:type="array">
-                <item name="textarea" xsi:type="string">textarea</item>
-            </argument>
-        </arguments>
-    </virtualType>
-    <virtualType name="HtmlEavAttributeLoader" type="Magento\PageBuilder\Setup\DataConverter\ConfigurableEavAttributeLoader">
-        <arguments>
-            <argument name="additionalEavAttributes" xsi:type="array">
-                <item name="html" xsi:type="string">html</item>
-            </argument>
-        </arguments>
-    </virtualType>
-    <virtualType name="ImageEavAttributeLoader" type="Magento\PageBuilder\Setup\DataConverter\ConfigurableEavAttributeLoader">
-        <arguments>
-            <argument name="additionalEavAttributes" xsi:type="array">
-                <item name="image" xsi:type="string">image</item>
-                <item name="mobile_image" xsi:type="string">mobile_image</item>
-                <item name="alt_tag" xsi:type="string">alt_tag</item>
-                <item name="title_tag" xsi:type="string">title_tag</item>
-                <item name="has_lightbox" xsi:type="string">has_lightbox</item>
-                <item name="show_caption" xsi:type="string">show_caption</item>
-            </argument>
-        </arguments>
-    </virtualType>
-    <virtualType name="VideoEavAttributeLoader" type="Magento\PageBuilder\Setup\DataConverter\ConfigurableEavAttributeLoader">
-        <arguments>
-            <argument name="additionalEavAttributes" xsi:type="array">
-                <item name="video_height" xsi:type="string">video_height</item>
-                <item name="video_url" xsi:type="string">video_url</item>
-                <item name="video_width" xsi:type="string">video_width</item>
-            </argument>
-        </arguments>
-    </virtualType>
-    <type name="Magento\PageBuilder\Setup\DataConverter\Renderer\Heading">
-        <arguments>
-            <argument name="eavAttributeLoader" xsi:type="object">HeadingEavAttributeLoader</argument>
-        </arguments>
-    </type>
-    <virtualType name="AnchorEavAttributeLoader" type="Magento\PageBuilder\Setup\DataConverter\ConfigurableEavAttributeLoader">
-        <arguments>
-            <argument name="additionalEavAttributes" xsi:type="array">
-                <item name="anchor_id" xsi:type="string">anchor_id</item>
-            </argument>
-        </arguments>
-    </virtualType>
-    <type name="Magento\PageBuilder\Setup\DataConverter\Renderer\Anchor">
-        <arguments>
-            <argument name="eavAttributeLoader" xsi:type="object">AnchorEavAttributeLoader</argument>
-        </arguments>
-    </type>
-    <virtualType name="DividerEavAttributeLoader" type="Magento\PageBuilder\Setup\DataConverter\ConfigurableEavAttributeLoader">
-        <arguments>
-            <argument name="additionalEavAttributes" xsi:type="array">
-                <item name="color" xsi:type="string">color</item>
-                <item name="hr_width" xsi:type="string">hr_width</item>
-                <item name="hr_height" xsi:type="string">hr_height</item>
-            </argument>
-        </arguments>
-    </virtualType>
-    <type name="Magento\PageBuilder\Setup\DataConverter\Renderer\Divider">
-        <arguments>
-            <argument name="eavAttributeLoader" xsi:type="object">DividerEavAttributeLoader</argument>
-        </arguments>
-    </type>
-    <virtualType name="AdvancedSliderEavAttributeLoader" type="Magento\PageBuilder\Setup\DataConverter\ConfigurableEavAttributeLoader">
-        <arguments>
-            <argument name="additionalEavAttributes" xsi:type="array">
-                <item name="autoplay" xsi:type="string">autoplay</item>
-                <item name="autoplay_speed" xsi:type="string">autoplay_speed</item>
-                <item name="fade" xsi:type="string">fade</item>
-                <item name="is_infinite" xsi:type="string">is_infinite</item>
-                <item name="show_arrows" xsi:type="string">show_arrows</item>
-                <item name="show_dots" xsi:type="string">show_dots</item>
-                <item name="slider_advanced_settings" xsi:type="string">slider_advanced_settings</item>
-            </argument>
-        </arguments>
-    </virtualType>
-    <type name="Magento\PageBuilder\Setup\DataConverter\Renderer\AdvancedSlider">
-        <arguments>
-            <argument name="eavAttributeLoader" xsi:type="object">AdvancedSliderEavAttributeLoader</argument>
-        </arguments>
-    </type>
-    <virtualType name="AdvancedSliderItemEavAttributeLoader" type="Magento\PageBuilder\Setup\DataConverter\ConfigurableEavAttributeLoader">
-        <arguments>
-            <argument name="additionalEavAttributes" xsi:type="array">
-                <item name="title" xsi:type="string">title</item>
-                <item name="has_overlay" xsi:type="string">has_overlay</item>
-                <item name="link_text" xsi:type="string">link_text</item>
-                <item name="link_url" xsi:type="string">link_url</item>
-                <item name="textarea" xsi:type="string">textarea</item>
-                <item name="background_image" xsi:type="string">background_image</item>
-                <item name="image" xsi:type="string">image</item>
-                <item name="title_tag" xsi:type="string">title_tag</item>
-            </argument>
-        </arguments>
-    </virtualType>
-    <type name="Magento\PageBuilder\Setup\DataConverter\Renderer\AdvancedSliderItem">
-        <arguments>
-            <argument name="eavAttributeLoader" xsi:type="object">AdvancedSliderItemEavAttributeLoader</argument>
-        </arguments>
-    </type>
-    <virtualType name="SliderEavAttributeLoader" type="Magento\PageBuilder\Setup\DataConverter\ConfigurableEavAttributeLoader">
-        <arguments>
-            <argument name="additionalEavAttributes" xsi:type="array">
-                <item name="autoplay" xsi:type="string">autoplay</item>
-                <item name="autoplay_speed" xsi:type="string">autoplay_speed</item>
-                <item name="fade" xsi:type="string">fade</item>
-                <item name="is_infinite" xsi:type="string">is_infinite</item>
-                <item name="show_arrows" xsi:type="string">show_arrows</item>
-                <item name="show_dots" xsi:type="string">show_dots</item>
-                <item name="slider_advanced_settings" xsi:type="string">slider_advanced_settings</item>
-            </argument>
-        </arguments>
-    </virtualType>
-    <type name="Magento\PageBuilder\Setup\DataConverter\Renderer\Slider">
-        <arguments>
-            <argument name="eavAttributeLoader" xsi:type="object">SliderEavAttributeLoader</argument>
-        </arguments>
-    </type>
-    <virtualType name="AccordionEavAttributeLoader" type="Magento\PageBuilder\Setup\DataConverter\ConfigurableEavAttributeLoader" />
-    <type name="Magento\PageBuilder\Setup\DataConverter\Renderer\Accordion">
-        <arguments>
-            <argument name="eavAttributeLoader" xsi:type="object">AccordionEavAttributeLoader</argument>
-            <argument name="itemEavAttributeLoader" xsi:type="object">AccordionItemEavAttributeLoader</argument>
-        </arguments>
-    </type>
-    <virtualType name="AccordionItemEavAttributeLoader" type="Magento\PageBuilder\Setup\DataConverter\ConfigurableEavAttributeLoader">
-        <arguments>
-            <argument name="additionalEavAttributes" xsi:type="array">
-                <item name="title" xsi:type="string">title</item>
-                <item name="textarea" xsi:type="string">textarea</item>
-                <item name="open_on_load" xsi:type="string">open_on_load</item>
-            </argument>
-        </arguments>
-    </virtualType>
-    <type name="Magento\PageBuilder\Setup\DataConverter\Renderer\AccordionItem">
-        <arguments>
-            <argument name="eavAttributeLoader" xsi:type="object">AccordionItemEavAttributeLoader</argument>
-        </arguments>
-    </type>
-    <type name="Magento\PageBuilder\Setup\DataConverter\Renderer\Textarea">
-        <arguments>
-            <argument name="eavAttributeLoader" xsi:type="object">TextareaEavAttributeLoader</argument>
-        </arguments>
-    </type>
-    <type name="Magento\PageBuilder\Setup\DataConverter\Renderer\Html">
-        <arguments>
-            <argument name="eavAttributeLoader" xsi:type="object">HtmlEavAttributeLoader</argument>
-        </arguments>
-    </type>
-    <type name="Magento\PageBuilder\Setup\DataConverter\Renderer\Image">
-        <arguments>
-            <argument name="eavAttributeLoader" xsi:type="object">ImageEavAttributeLoader</argument>
-        </arguments>
-    </type>
-    <virtualType name="ButtonsEavAttributeLoader" type="Magento\PageBuilder\Setup\DataConverter\ConfigurableEavAttributeLoader">
-        <arguments>
-            <argument name="additionalEavAttributes" xsi:type="array">
-                <item name="button_items" xsi:type="string">button_items</item>
-            </argument>
-        </arguments>
-    </virtualType>
-    <type name="Magento\PageBuilder\Setup\DataConverter\Renderer\Buttons">
-        <arguments>
-            <argument name="eavAttributeLoader" xsi:type="object">ButtonsEavAttributeLoader</argument>
-        </arguments>
-    </type>
-    <virtualType name="ButtonItemEavAttributeLoader" type="Magento\PageBuilder\Setup\DataConverter\ConfigurableEavAttributeLoader">
-        <arguments>
-            <argument name="additionalEavAttributes" xsi:type="array">
-                <item name="link_text" xsi:type="string">link_text</item>
-                <item name="link_url" xsi:type="string">link_url</item>
-            </argument>
-        </arguments>
-    </virtualType>
-    <type name="Magento\PageBuilder\Setup\DataConverter\Renderer\ButtonItem">
-        <arguments>
-            <argument name="eavAttributeLoader" xsi:type="object">ButtonItemEavAttributeLoader</argument>
-        </arguments>
-    </type>
-    <virtualType name="TabsEavAttributeLoader" type="Magento\PageBuilder\Setup\DataConverter\ConfigurableEavAttributeLoader">
-        <arguments>
-            <argument name="additionalEavAttributes" xsi:type="array">
-                <item name="tabs_item" xsi:type="string">tabs_item</item>
-            </argument>
-        </arguments>
-    </virtualType>
-    <type name="Magento\PageBuilder\Setup\DataConverter\Renderer\Tabs">
-        <arguments>
-            <argument name="eavAttributeLoader" xsi:type="object">TabsEavAttributeLoader</argument>
-            <argument name="tabItemEavAttributeLoader" xsi:type="object">TabsItemEavAttributeLoader</argument>
-        </arguments>
-    </type>
-    <virtualType name="TabsItemEavAttributeLoader" type="Magento\PageBuilder\Setup\DataConverter\ConfigurableEavAttributeLoader">
-        <arguments>
-            <argument name="additionalEavAttributes" xsi:type="array">
-                <item name="textarea" xsi:type="string">textarea</item>
-                <item name="title" xsi:type="string">title</item>
-            </argument>
-        </arguments>
-    </virtualType>
-    <type name="Magento\PageBuilder\Setup\DataConverter\Renderer\TabsItem">
-        <arguments>
-            <argument name="eavAttributeLoader" xsi:type="object">TabsItemEavAttributeLoader</argument>
-        </arguments>
-    </type>
-    <type name="Magento\PageBuilder\Setup\DataConverter\Renderer\Video">
-        <arguments>
-            <argument name="eavAttributeLoader" xsi:type="object">VideoEavAttributeLoader</argument>
-        </arguments>
-    </type>
-    <virtualType name="MapEavAttributeLoader" type="Magento\PageBuilder\Setup\DataConverter\ConfigurableEavAttributeLoader">
-        <arguments>
-            <argument name="additionalEavAttributes" xsi:type="array">
-                <item name="map" xsi:type="string">map</item>
-                <item name="map_height" xsi:type="string">map_height</item>
-            </argument>
-        </arguments>
-    </virtualType>
-    <type name="Magento\PageBuilder\Setup\DataConverter\Renderer\Map">
-        <arguments>
-            <argument name="eavAttributeLoader" xsi:type="object">MapEavAttributeLoader</argument>
-        </arguments>
-    </type>
-    <virtualType name="DriverEavAttributeLoader" type="Magento\PageBuilder\Setup\DataConverter\ConfigurableEavAttributeLoader">
-        <arguments>
-            <argument name="additionalEavAttributes" xsi:type="array">
-                <item name="image" xsi:type="string">image</item>
-                <item name="mobile_image" xsi:type="string">mobile_image</item>
-                <item name="link_url" xsi:type="string">link_url</item>
-                <item name="link_text" xsi:type="string">link_text</item>
-                <item name="target_blank" xsi:type="string">target_blank</item>
-            </argument>
-        </arguments>
-    </virtualType>
-    <type name="Magento\PageBuilder\Setup\DataConverter\Renderer\Driver">
-        <arguments>
-            <argument name="eavAttributeLoader" xsi:type="object">DriverEavAttributeLoader</argument>
-        </arguments>
-    </type>
-    <virtualType name="ProductEavAttributeLoader" type="Magento\PageBuilder\Setup\DataConverter\ConfigurableEavAttributeLoader">
-        <arguments>
-            <argument name="additionalEavAttributes" xsi:type="array">
-                <item name="product_display" xsi:type="string">product_display</item>
-                <item name="product_id" xsi:type="string">product_id</item>
-            </argument>
-        </arguments>
-    </virtualType>
-    <type name="Magento\PageBuilder\Setup\DataConverter\Renderer\Product">
-        <arguments>
-            <argument name="eavAttributeLoader" xsi:type="object">ProductEavAttributeLoader</argument>
-        </arguments>
-    </type>
-    <virtualType name="CodeEavAttributeLoader" type="Magento\PageBuilder\Setup\DataConverter\ConfigurableEavAttributeLoader">
-        <arguments>
-            <argument name="additionalEavAttributes" xsi:type="array">
-                <item name="html" xsi:type="string">html</item>
-            </argument>
-        </arguments>
-    </virtualType>
-    <type name="Magento\PageBuilder\Setup\DataConverter\Renderer\Code">
-        <arguments>
-            <argument name="eavAttributeLoader" xsi:type="object">CodeEavAttributeLoader</argument>
-        </arguments>
-    </type>
-    <virtualType name="NewsletterEavAttributeLoader" type="Magento\PageBuilder\Setup\DataConverter\ConfigurableEavAttributeLoader">
-        <arguments>
-            <argument name="additionalEavAttributes" xsi:type="array">
-                <item name="button_text" xsi:type="string">button_text</item>
-                <item name="label" xsi:type="string">label</item>
-                <item name="title" xsi:type="string">title</item>
-                <item name="placeholder" xsi:type="string">placeholder</item>
-            </argument>
-        </arguments>
-    </virtualType>
-    <type name="Magento\PageBuilder\Setup\DataConverter\Renderer\Newsletter">
-        <arguments>
-            <argument name="eavAttributeLoader" xsi:type="object">NewsletterEavAttributeLoader</argument>
-        </arguments>
-    </type>
-    <virtualType name="SearchEavAttributeLoader" type="Magento\PageBuilder\Setup\DataConverter\ConfigurableEavAttributeLoader">
-        <arguments>
-            <argument name="additionalEavAttributes" xsi:type="array">
-                <item name="placeholder" xsi:type="string">placeholder</item>
-            </argument>
-        </arguments>
-    </virtualType>
-    <type name="Magento\PageBuilder\Setup\DataConverter\Renderer\Search">
-        <arguments>
-            <argument name="eavAttributeLoader" xsi:type="object">SearchEavAttributeLoader</argument>
-        </arguments>
-    </type>
-    <virtualType name="BlockEavAttributeLoader" type="Magento\PageBuilder\Setup\DataConverter\ConfigurableEavAttributeLoader">
-        <arguments>
-            <argument name="additionalEavAttributes" xsi:type="array">
-                <item name="block_id" xsi:type="string">block_id</item>
-            </argument>
-        </arguments>
-    </virtualType>
-    <type name="Magento\PageBuilder\Setup\DataConverter\Renderer\Block">
-        <arguments>
-            <argument name="eavAttributeLoader" xsi:type="object">BlockEavAttributeLoader</argument>
-        </arguments>
-    </type>
-    <virtualType name="ProductListEavAttributeLoader" type="Magento\PageBuilder\Setup\DataConverter\ConfigurableEavAttributeLoader">
-        <arguments>
-            <argument name="additionalEavAttributes" xsi:type="array">
-                <item name="category_id" xsi:type="string">category_id</item>
-                <item name="hide_out_of_stock" xsi:type="string">hide_out_of_stock</item>
-                <item name="product_count" xsi:type="string">product_count</item>
-            </argument>
-        </arguments>
-    </virtualType>
-    <type name="Magento\PageBuilder\Setup\DataConverter\Renderer\ProductList">
-        <arguments>
-            <argument name="eavAttributeLoader" xsi:type="object">ProductListEavAttributeLoader</argument>
-        </arguments>
-    </type>
-    <type name="Magento\PageBuilder\Setup\DataConverter\TreeConverter">
-        <arguments>
-            <argument name="unseparatableContentTypes" xsi:type="array">
-                <item name="advanced_slider_item" xsi:type="string">advanced_slider_item</item>
-                <item name="button_item" xsi:type="string">button_item</item>
-                <item name="slider_item" xsi:type="string">slider_item</item>
-                <item name="accordion_item" xsi:type="string">accordion_item</item>
-                <item name="tabs_item" xsi:type="string">tabs_item</item>
-                <item name="column" xsi:type="string">column</item>
+            <argument name="collections" xsi:type="array">
+                <item name="pagebuilder_block_select_grid_data_source" xsi:type="string">Magento\Cms\Model\ResourceModel\Block\Grid\Collection</item>
             </argument>
         </arguments>
     </type>
@@ -464,7 +38,7 @@
         <arguments>
             <argument name="readers" xsi:type="array">
                 <item name="contentTypeReader" xsi:type="object" sortOrder="10">Magento\PageBuilder\Model\Config\ContentType\Reader</item>
-                <item name="groupReader" xsi:type="object" sortOrder="20">Magento\PageBuilder\Model\Config\Group\Reader</item>
+                <item name="menuSectionReader" xsi:type="object" sortOrder="20">Magento\PageBuilder\Model\Config\MenuSection\Reader</item>
             </argument>
         </arguments>
     </type>
@@ -473,7 +47,62 @@
             <argument name="baseFiles" xsi:type="object">pageBuilderComponentAggregatedSourceBaseSorted</argument>
         </arguments>
     </type>
-    <virtualType name="pageBuilderComponentAggregatedSourceBase" type="Magento\Framework\View\File\Collector\Base">
+    <type name="Magento\PageBuilder\Model\WidgetInitializerConfig">
+        <arguments>
+            <argument name="config" xsi:type="array">
+                <item name="slider" xsi:type="array">
+                    <item name="default" xsi:type="array">
+                        <item name="component" xsi:type="string">Magento_PageBuilder/js/content-type/slider/appearance/default/widget</item>
+                        <!--optional if you want load widget per appearance-->
+                        <item name="appearance" xsi:type="string">default</item>
+                    </item>
+                </item>
+                <item name="map" xsi:type="array">
+                    <item name="default" xsi:type="array">
+                        <item name="component" xsi:type="string">Magento_PageBuilder/js/content-type/map/appearance/default/widget</item>
+                    </item>
+                </item>
+                <item name="row" xsi:type="array">
+                    <item name="default" xsi:type="array">
+                        <item name="component" xsi:type="string">Magento_PageBuilder/js/content-type/row/appearance/default/widget</item>
+                    </item>
+                </item>
+                <item name="tabs" xsi:type="array">
+                    <item name="default" xsi:type="array">
+                        <item name="component" xsi:type="string">Magento_PageBuilder/js/content-type/tabs/appearance/default/widget</item>
+                    </item>
+                </item>
+                <item name="slide" xsi:type="array">
+                    <item name="default" xsi:type="array">
+                        <!--required argument-->
+                        <item name="component" xsi:type="string">Magento_PageBuilder/js/widget/show-on-hover</item>
+                        <!--optional if you need provide some config for your widget-->
+                        <item name="config" xsi:type="array">
+                            <item name="buttonSelector" xsi:type="string">.pagebuilder-slide-button</item>
+                            <item name="showOverlay" xsi:type="string">hover</item>
+                            <item name="dataRole" xsi:type="string">slide</item>
+                        </item>
+                    </item>
+                </item>
+                <item name="banner" xsi:type="array">
+                    <item name="default" xsi:type="array">
+                        <item name="component" xsi:type="string">Magento_PageBuilder/js/widget/show-on-hover</item>
+                        <item name="config" xsi:type="array">
+                            <item name="buttonSelector" xsi:type="string">.pagebuilder-banner-button</item>
+                            <item name="showOverlay" xsi:type="string">hover</item>
+                            <item name="dataRole" xsi:type="string">banner</item>
+                        </item>
+                    </item>
+                </item>
+                <item name="buttons" xsi:type="array">
+                    <item name="default" xsi:type="array">
+                        <item name="component" xsi:type="string">Magento_PageBuilder/js/content-type/buttons/appearance/inline/widget</item>
+                    </item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+    <virtualType name="pageBuilderComponentAggregatedSourceBase" type="Magento\PageBuilder\Model\View\File\Collector\PageBuilder">
         <arguments>
             <argument name="subDir" xsi:type="string">pagebuilder</argument>
         </arguments>
@@ -488,4 +117,117 @@
             <argument name="subject" xsi:type="object">pageBuilderComponentAggregatedSourceBaseFiltered</argument>
         </arguments>
     </virtualType>
+    <virtualType name="Magento\PageBuilder\Block\Adminhtml\ContentType\Edit\ModalCancelButton" type="Magento\PageBuilder\Block\Adminhtml\ContentType\Edit\CancelButton">
+        <arguments>
+            <argument name="targetName" xsi:type="string">ns = pagebuilder_map_form, index = map_location_modal</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="pageBuilderProductCollectionFactory" type="Magento\Catalog\Model\ResourceModel\Product\CollectionFactory">
+        <arguments>
+            <argument name="instanceName" xsi:type="string">Magento\PageBuilder\Ui\DataProvider\Product\ProductCollection</argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\CatalogWidget\Block\Product\ProductsList">
+        <arguments>
+            <argument name="productCollectionFactory" xsi:type="object">pageBuilderProductCollectionFactory</argument>
+        </arguments>
+        <plugin name="pagebuilder_product_list" type="Magento\PageBuilder\Plugin\Catalog\Block\Product\ProductsListPlugin" />
+    </type>
+    <type name="Magento\Catalog\Helper\Output">
+        <arguments>
+            <argument name="directivePatterns" xsi:type="array">
+                <item name="backgroundImage" xsi:type="const">\Magento\PageBuilder\Plugin\Filter\TemplatePlugin::BACKGROUND_IMAGE_PATTERN</item>
+                <item name="htmlContentType" xsi:type="const">\Magento\PageBuilder\Plugin\Filter\TemplatePlugin::HTML_CONTENT_TYPE_PATTERN</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\Session\SidResolver">
+        <plugin name="pagebuilder_preview_sid_resolving" type="Magento\PageBuilder\Plugin\Framework\Session\SidResolver" />
+    </type>
+    <virtualType name="Magento\PageBuilder\Model\Catalog\Sorting\Date\NewestTop" type="Magento\PageBuilder\Model\Catalog\Sorting\SimpleOption">
+        <arguments>
+            <argument name="label" xsi:type="string">Newest products first</argument>
+            <argument name="sortDirection" xsi:type="const">\Magento\Framework\DB\Select::SQL_DESC</argument>
+            <argument name="attributeField" xsi:type="string">entity_id</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Magento\PageBuilder\Model\Catalog\Sorting\Date\OldestTop" type="Magento\PageBuilder\Model\Catalog\Sorting\SimpleOption">
+        <arguments>
+            <argument name="label" xsi:type="string">Oldest products first</argument>
+            <argument name="sortDirection" xsi:type="const">\Magento\Framework\DB\Select::SQL_ASC</argument>
+            <argument name="attributeField" xsi:type="string">entity_id</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Magento\PageBuilder\Model\Catalog\Sorting\Name\Ascending" type="Magento\PageBuilder\Model\Catalog\Sorting\SimpleOption">
+        <arguments>
+            <argument name="label" xsi:type="string">Name: A - Z</argument>
+            <argument name="sortDirection" xsi:type="const">\Magento\Framework\DB\Select::SQL_ASC</argument>
+            <argument name="attributeField" xsi:type="string">name</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Magento\PageBuilder\Model\Catalog\Sorting\Name\Descending" type="Magento\PageBuilder\Model\Catalog\Sorting\SimpleOption">
+        <arguments>
+            <argument name="label" xsi:type="string">Name: Z - A</argument>
+            <argument name="sortDirection" xsi:type="const">\Magento\Framework\DB\Select::SQL_DESC</argument>
+            <argument name="attributeField" xsi:type="string">name</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Magento\PageBuilder\Model\Catalog\Sorting\Sku\Ascending" type="Magento\PageBuilder\Model\Catalog\Sorting\SimpleOption">
+        <arguments>
+            <argument name="label" xsi:type="string">SKU: ascending</argument>
+            <argument name="sortDirection" xsi:type="const">\Magento\Framework\DB\Select::SQL_ASC</argument>
+            <argument name="attributeField" xsi:type="string">sku</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Magento\PageBuilder\Model\Catalog\Sorting\Sku\Descending" type="Magento\PageBuilder\Model\Catalog\Sorting\SimpleOption">
+        <arguments>
+            <argument name="label" xsi:type="string">SKU: descending</argument>
+            <argument name="sortDirection" xsi:type="const">\Magento\Framework\DB\Select::SQL_DESC</argument>
+            <argument name="attributeField" xsi:type="string">sku</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Magento\PageBuilder\Model\Catalog\Sorting\Stock\Ascending" type="Magento\PageBuilder\Model\Catalog\Sorting\SimpleOption">
+        <arguments>
+            <argument name="label" xsi:type="string">Stock: low stock first</argument>
+            <argument name="sortDirection" xsi:type="const">\Magento\Framework\DB\Select::SQL_ASC</argument>
+            <argument name="attributeField" xsi:type="string">quantity_and_stock_status</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Magento\PageBuilder\Model\Catalog\Sorting\Stock\Descending" type="Magento\PageBuilder\Model\Catalog\Sorting\SimpleOption">
+        <arguments>
+            <argument name="label" xsi:type="string">Stock: high stock first</argument>
+            <argument name="sortDirection" xsi:type="const">\Magento\Framework\DB\Select::SQL_DESC</argument>
+            <argument name="attributeField" xsi:type="string">quantity_and_stock_status</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Magento\PageBuilder\Model\Catalog\Sorting\Price\HighToLow" type="Magento\PageBuilder\Model\Catalog\Sorting\SimpleOption">
+        <arguments>
+            <argument name="label" xsi:type="string">Price: high to low</argument>
+            <argument name="sortDirection" xsi:type="const">\Magento\Framework\DB\Select::SQL_DESC</argument>
+            <argument name="attributeField" xsi:type="string">price</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Magento\PageBuilder\Model\Catalog\Sorting\Price\LowToHigh" type="Magento\PageBuilder\Model\Catalog\Sorting\SimpleOption">
+        <arguments>
+            <argument name="label" xsi:type="string">Price: low to high</argument>
+            <argument name="sortDirection" xsi:type="const">\Magento\Framework\DB\Select::SQL_ASC</argument>
+            <argument name="attributeField" xsi:type="string">price</argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\PageBuilder\Model\Catalog\Sorting">
+        <arguments>
+            <argument name="sortClasses" xsi:type="array">
+                <item name="date_newest_top" xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\Date\NewestTop</item>
+                <item name="date_oldest_top" xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\Date\OldestTop</item>
+                <item name="name_ascending" xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\Name\Ascending</item>
+                <item name="name_descending" xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\Name\Descending</item>
+                <item name="sku_ascending" xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\Sku\Ascending</item>
+                <item name="sku_descending" xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\Sku\Descending</item>
+                <item name="low_stock_first" xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\Stock\Ascending</item>
+                <item name="high_stock_first" xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\Stock\Descending</item>
+                <item name="price_high_to_low" xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\Price\HighToLow</item>
+                <item name="price_low_to_high" xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\Price\LowToHigh</item>
+            </argument>
+        </arguments>
+    </type>
 </config>

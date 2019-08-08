@@ -7,12 +7,11 @@
 //  Default appearance styles
 //  _____________________________________________
 
-div[data-role='slider'] {
+div[data-content-type='slider'] {
     display: none;
 
     &.slick-initialized {
         display: block;
-        margin-bottom: 35px !important; // required due to inline styles added by Slick
     }
 
     .slick-list,
@@ -21,6 +20,8 @@ div[data-role='slider'] {
         min-height: inherit;
 
         > div {
+            line-height: 0;
+            min-height: inherit;
             overflow: hidden;
             width: 100%;
         }

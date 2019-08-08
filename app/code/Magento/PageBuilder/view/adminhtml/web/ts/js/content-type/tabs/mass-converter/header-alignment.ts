@@ -3,31 +3,34 @@
  * See COPYING.txt for license details.
  */
 
-import {DataObject} from "../../../data-store";
-import MassConverterInterface from "../../../mass-converter/converter-interface";
+import MassConverterInterface, {
+    ConverterConfigInterface,
+    ConverterDataInterface,
+} from "../../../mass-converter/converter-interface";
+import {get} from "../../../utils/object";
 
 export default class HeaderAlignment implements MassConverterInterface {
 
     /**
      * Process data after it's read and converted by element converters
      *
-     * @param {object} data
-     * @param {object} config
+     * @param {ConverterDataInterface} data
+     * @param {ConverterConfigInterface} config
      * @returns {object}
      */
-    public fromDom(data: DataObject, config: object): object {
+    public fromDom(data: ConverterDataInterface, config: ConverterConfigInterface): object {
         return data;
     }
 
     /**
      * Add our tab alignment class into the data for the tabs
      *
-     * @param {object} data
-     * @param {object} config
+     * @param {ConverterDataInterface} data
+     * @param {ConverterConfigInterface} config
      * @returns {object}
      */
-    public toDom(data: DataObject, config: object): object {
-        data.css_classes += " tab-align-" + (data[config.navigation_alignment_variable] || "left");
+    public toDom(data: ConverterDataInterface, config: ConverterConfigInterface): object {
+        data.css_classes += " tab-align-" + get(data, config.navigation_alignment_variable, "left");
         return data;
     }
 }

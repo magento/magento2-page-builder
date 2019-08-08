@@ -6,110 +6,77 @@
  */
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
-    <content_types>
-        <type name="type2" translate="label" sortOrder="2">
-            <label>Type 2 Label</label>
-            <icon>pagebuilder-type2-custom-icon</icon>
-            <component>Path/to/custom/component</component>
-            <preview_component>Path/to/preview/custom/component</preview_component>
-            <backend_block>Path/to/custom/backend/block</backend_block>
-            <backend_template>Path/to/custom/backend/template</backend_template>
-            <is_visible>false</is_visible>
-            <form>pagebuilder_type2_custom_form</form>
-            <group>group2</group>
-            <allowed_parents>
-                <parent name="type1"/>
-            </allowed_parents>
-            <appearances>
-                <appearance name="default" default="true">
-                    <data name="data1">custom_value</data>
-                    <data name="data3">value3</data>
-                    <data_mapping>
-                        <elements>
-                            <element name="first_element" path=".">
-                                <style_properties>
-                                    <property name="style_attributes_change" source="custom_name" converter="Path/to/custom/converter" preview_converter="Path/to/preview/custom/converter" persist="true" virtual="false" />
-                                    <property name="style_attributes_add" source="attributes_add" converter="Path/to/custom/converter" preview_converter="Path/to/preview/custom/converter" persist="false" virtual="true" />
-                                    <property name="new_style" source="new-style"/>
-                                    <complex_property name="complex_style_attributes_change" converter="Path/to/custom/converter" preview_converter="Path/to/preview/custom/converter" virtual="false" reader="Path/to/custom/reader" />
-                                    <complex_property name="complex_style_attributes_add" converter="Path/to/custom/converter" preview_converter="Path/to/preview/custom/converter" virtual="true" reader="Path/to/custom/reader" />
-                                    <complex_property name="new_complex" reader="Path/to/reader"/>
-                                    <static_property source="static_style_attributes_change" value="custom_value" />
-                                    <static_property source="new_static" value="new-value"/>
-                                </style_properties>
-                                <attributes>
-                                    <attribute name="attribute_change" source="data-custom" converter="Path/to/custom/converter" preview_converter="Path/to/preview/custom/converter" virtual="false" persist="true"/>
-                                    <attribute name="attribute_add" source="attribute_add" converter="Path/to/custom/converter" preview_converter="Path/to/preview/custom/converter" virtual="false" persist="true"/>
-                                    <attribute name="new_attribute" source="data-new" converter="Path/to/custom/converter" preview_converter="Path/to/preview/custom/converter" virtual="true" persist="false"/>
-                                    <complex_attribute name="complex_style_attributes_change" converter="Path/to/custom/converter" preview_converter="Path/to/preview/custom/converter" virtual="false" reader="Path/to/custom/reader" />
-                                    <complex_attribute name="complex_style_attributes_add" converter="Path/to/custom/converter" preview_converter="Path/to/preview/custom/converter" virtual="true" reader="Path/to/custom/reader" />
-                                    <complex_attribute name="new_complex" reader="Path/to/reader"/>
-                                    <static_attribute source="static_attribute_change" value="custom_value" />
-                                    <static_attribute source="new_static" value="new-value"/>
-                                </attributes>
-                                <tag name="tag" converter="Path/to/custom/converter" />
-                                <html name="html"/>
-                                <css name="css_classes" converter="Path/to/custom/converter">
-                                    <filter>
-                                        <class source="new-class"/>
-                                    </filter>
-                                </css>
-                            </element>
-                            <element name="third_element" path="//div">
-                                <style_properties>
-                                    <property name="style_no_converter" source="no_converter"/>
-                                </style_properties>
-                                <attributes>
-                                    <attribute name="name" source="data-role"/>
-                                </attributes>
-                                <css name="css_classes"/>
-                            </element>
-                        </elements>
-                        <converters>
-                            <converter name="converter1" component="Path/to/custom/converter">
-                                <config>
-                                    <item name="change_value" value="custom_value"/>
-                                    <item name="new_value" value="value3"/>
-                                </config>
-                            </converter>
-                            <converter name="converter3" component="Path/to/custom/converter">
-                                <config>
-                                    <item name="item1" value="value1"/>
-                                </config>
-                            </converter>
-                        </converters>
-                    </data_mapping>
-                    <preview_template>Path/to/preview/custom/template</preview_template>
-                    <render_template>Path/to/render/custom/template</render_template>
-                    <readers>
-                        <reader name="reader1" component="Path/to/custom/reader1"/>
-                        <reader name="reader3" component="Path/to/custom/reader3"/>
-                    </readers>
-                    <form>Path/to/custom/form</form>
-                </appearance>
-                <appearance name="appearance4">
-                    <data_mapping>
-                        <elements>
-                            <element name="main" path=".">
-                                <style_properties>
-                                    <property name="style_converter" source="converter" converter="Path/to/converter"/>
-                                    <property name="style_no_converter" source="no_converter"/>
-                                </style_properties>
-                                <attributes>
-                                    <attribute name="name" source="data-role"/>
-                                </attributes>
-                                <css name="css_classes"/>
-                            </element>
-                        </elements>
-                    </data_mapping>
-                    <preview_template>Path/to/preview/template</preview_template>
-                    <render_template>Path/to/render/template</render_template>
-                    <readers>
-                        <reader name="default" component="Path/to/reader"/>
-                    </readers>
-                    <form>Path/to/custom/form</form>
-                </appearance>
-            </appearances>
-        </type>
-    </content_types>
+    <type name="type2" translate="label" sortOrder="2" label="Type 2 Label" icon="pagebuilder-type2-custom-icon" component="Path/to/custom/component" preview_component="Path/to/preview/custom/component" form="pagebuilder_type2_custom_form" menu_section="menu_section2">
+        <is_system>false</is_system>
+        <parents>
+            <parent name="stage" policy="deny"/>
+            <parent name="type1" policy="allow"/>
+        </parents>
+        <children default_policy="deny">
+            <child name="type3" policy="allow"/>
+        </children>
+        <appearances>
+            <appearance name="default" default="true" preview_template="Path/to/preview/custom/template" master_template="Path/to/render/custom/template" reader="Path/to/custom/reader">
+                <data name="data1">custom_value</data>
+                <data name="data3">value3</data>
+                <elements>
+                    <element name="first_element">
+                        <style name="style_attributes_change" source="custom_name" converter="Path/to/custom/converter" preview_converter="Path/to/preview/custom/converter" persistence_mode="write"/>
+                        <style name="style_attributes_add" source="attributes_add" converter="Path/to/custom/converter" preview_converter="Path/to/preview/custom/converter" persistence_mode="write"/>
+                        <style name="new_style" source="new-style"/>
+                        <style name="complex_style_attributes_change" converter="Path/to/custom/converter" preview_converter="Path/to/preview/custom/converter" reader="Path/to/custom/reader" persistence_mode="write"/>
+                        <style name="complex_style_attributes_add" converter="Path/to/custom/converter" preview_converter="Path/to/preview/custom/converter" reader="Path/to/custom/reader" persistence_mode="write"/>
+                        <style name="new_complex" reader="Path/to/reader"/>
+                        <static_style source="static_style_attributes_change" value="custom_value"/>
+                        <static_style source="new_static" value="new-value"/>
+                        <attribute name="attribute_change" source="data-custom" converter="Path/to/custom/converter" preview_converter="Path/to/preview/custom/converter" persistence_mode="write"/>
+                        <attribute name="attribute_add" source="attribute_add" converter="Path/to/custom/converter" preview_converter="Path/to/preview/custom/converter" persistence_mode="write"/>
+                        <attribute name="new_attribute" source="data-new" converter="Path/to/custom/converter" preview_converter="Path/to/preview/custom/converter" persistence_mode="write"/>
+                        <attribute name="complex_attribute_change" converter="Path/to/custom/converter" preview_converter="Path/to/preview/custom/converter" reader="Path/to/custom/reader" persistence_mode="write"/>
+                        <attribute name="complex_attribute_add" converter="Path/to/custom/converter" preview_converter="Path/to/preview/custom/converter" reader="Path/to/custom/reader" persistence_mode="write"/>
+                        <attribute name="new_complex_attribute" reader="Path/to/reader"/>
+                        <static_attribute source="static_attribute_change" value="custom_value"/>
+                        <static_attribute source="new_static" value="new-value"/>
+                        <tag name="tag" converter="Path/to/custom/converter"/>
+                        <html name="html"/>
+                        <css name="css_classes">
+                            <filter>
+                                <class source="new-class"/>
+                            </filter>
+                        </css>
+                    </element>
+                    <element name="third_element">
+                        <style name="style_no_converter" source="no_converter"/>
+                        <attribute name="name" source="data-content-type"/>
+                        <css name="css_classes"/>
+                    </element>
+                </elements>
+                <converters>
+                    <converter name="converter1" component="Path/to/custom/converter">
+                        <config>
+                            <item name="change_value" value="custom_value"/>
+                            <item name="new_value" value="value3"/>
+                        </config>
+                    </converter>
+                    <converter name="converter3" component="Path/to/custom/converter">
+                        <config>
+                            <item name="item1" value="value1"/>
+                        </config>
+                    </converter>
+                </converters>
+                <form>Path/to/custom/form</form>
+            </appearance>
+            <appearance name="appearance4" preview_template="Path/to/preview/template" master_template="Path/to/render/template" reader="Path/to/reader">
+                <elements>
+                    <element name="main">
+                        <style name="style_converter" source="converter" converter="Path/to/converter"/>
+                        <style name="style_no_converter" source="no_converter"/>
+                        <attribute name="name" source="data-content-type"/>
+                        <css name="css_classes"/>
+                    </element>
+                </elements>
+                <form>Path/to/custom/form</form>
+            </appearance>
+        </appearances>
+    </type>
 </config>

@@ -25,7 +25,7 @@
                 <item name="component" xsi:type="string">Magento_PageBuilder/js/content-type/products/form/provider</item>
             </item>
         </argument>
-        <dataProvider name="pagebuilder_products_form_data_source" class="Magento\PageBuilder\Model\ContentBlock\DataProvider">
+        <dataProvider name="pagebuilder_products_form_data_source" class="Magento\PageBuilder\Model\ContentType\DataProvider">
             <settings>
                 <requestFieldName/>
                 <primaryFieldName/>
@@ -45,7 +45,7 @@
                 <link name="hideLabel">${$.name}.appearance:options</link>
             </imports>
         </settings>
-        <field name="appearance" formElement="select" sortOrder="10" component="Magento_PageBuilder/js/form/element/dependent-select">
+        <field name="appearance" formElement="select" sortOrder="10" component="Magento_PageBuilder/js/form/element/dependent-visual-select">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="default" xsi:type="string">grid</item>
@@ -75,15 +75,35 @@
         <settings>
             <label />
         </settings>
-        <htmlContent name="conditions_form" template="Magento_PageBuilder/content-type/products/content">
+        <htmlContent name="conditions_form" template="Magento_PageBuilder/form/element/widget-conditions">
             <settings>
                 <additionalClasses>
                     <class name="admin__field">true</class>
                 </additionalClasses>
             </settings>
-            <block name="conditions_form" class="Magento\PageBuilder\Block\Adminhtml\ContentType\Products\Conditions" />
+            <block name="conditions_form" class="Magento\PageBuilder\Block\Adminhtml\Form\Element\ProductConditions">
+                <arguments>
+                    <argument name="formNamespace" xsi:type="string">pagebuilder_products_form</argument>
+                    <argument name="attribute" xsi:type="string">conditions_encoded</argument>
+                    <argument name="label" xsi:type="string" translate="true">Condition</argument>
+                </arguments>
+            </block>
         </htmlContent>
-        <field name="products_count" sortOrder="10" formElement="input">
+        <field name="sort_order" sortOrder="10" formElement="select">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Sort By</label>
+                <dataScope>sort_order</dataScope>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="Magento\PageBuilder\Model\Catalog\Sorting\Options"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="products_count" sortOrder="20" formElement="input">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="default" xsi:type="number">5</item>
@@ -92,8 +112,16 @@
             <settings>
                 <dataType>number</dataType>
                 <label translate="true">Number of Products to Display</label>
-                <notice translate="true">Defaults to 5.</notice>
+                <additionalClasses>
+                    <class name="admin__field-small">true</class>
+                </additionalClasses>
                 <dataScope>products_count</dataScope>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                    <rule name="validate-number" xsi:type="boolean">true</rule>
+                    <rule name="less-than-equals-to" xsi:type="number">999</rule>
+                    <rule name="greater-than-equals-to" xsi:type="number">1</rule>
+                </validation>
             </settings>
         </field>
     </fieldset>

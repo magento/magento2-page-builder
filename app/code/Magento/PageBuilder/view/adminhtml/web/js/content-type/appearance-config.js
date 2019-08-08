@@ -10,12 +10,13 @@ define(["Magento_PageBuilder/js/config"], function (_config) {
    *
    * @param {string} contentType
    * @param {string} appearance
-   * @returns {Object}
+   * @returns {ContentTypeConfigAppearanceInterface}
+   * @api
    */
   function getAppearanceConfig(contentType, appearance) {
     var contentTypeConfig = _config.getContentTypeConfig(contentType);
 
-    var config = {};
+    var config;
 
     if (contentTypeConfig.appearances !== undefined) {
       if (!appearance) {

@@ -5,55 +5,104 @@
 
 import $ from "jquery";
 import ko from "knockout";
-import events from "uiEvents";
+import $t from "mage/translate";
 import Config from "../../config";
-import delayedPromise from "../../utils/delayed-promise";
+import ContentTypeInterface from "../../content-type";
+import ContentTypeConfigInterface from "../../content-type-config.types";
+import HideShowOption from "../../content-type-menu/hide-show-option";
+import {OptionsInterface} from "../../content-type-menu/option.types";
+import ObservableUpdater from "../observable-updater";
 import BasePreview from "../preview";
 
+/**
+ * @api
+ */
 export default class Preview extends BasePreview {
     public displayPreview: KnockoutObservable<boolean> = ko.observable(false);
+    public placeholderText: KnockoutObservable<string>;
+    private messages = {
+        EMPTY: $t("Empty Products"),
+        NO_RESULTS: $t("No products were found matching your condition"),
+        LOADING: $t("Loading..."),
+        UNKNOWN_ERROR: $t("An unknown error occurred. Please try again."),
+    };
 
     /**
-     * Bind events
+     * @inheritdoc
      */
-    protected bindEvents() {
-        super.bindEvents();
+    constructor(
+        contentType: ContentTypeInterface,
+        config: ContentTypeConfigInterface,
+        observableUpdater: ObservableUpdater,
+    ) {
+        super(contentType, config, observableUpdater);
+        this.placeholderText = ko.observable(this.messages.EMPTY);
+    }
 
-        // When a products type is dropped for the first time open the edit panel
-        events.on("products:block:dropped:create", (event: Event, params: {[key: string]: any}) => {
-            if (event.id === this.parent.id) {
-                delayedPromise(300)().then(() => {
-                    this.edit.open();
-                });
-            }
+    /**
+     * Return an array of options
+     *
+     * @returns {OptionsInterface}
+     */
+    public retrieveOptions(): OptionsInterface {
+        const options = super.retrieveOptions();
+
+        options.hideShow = new HideShowOption({
+            preview: this,
+            icon: HideShowOption.showIcon,
+            title: HideShowOption.showText,
+            action: this.onOptionVisibilityToggle,
+            classes: ["hide-show-content-type"],
+            sort: 40,
         });
 
-        events.on("previewObservables:updated", (event, params) => {
-            if (event.preview.parent.id !== this.parent.id) {
-                return;
-            }
-            this.displayPreview(false);
+        return options;
+    }
 
-            const data = this.parent.dataStore.get();
+    /**
+     * @inheritdoc
+     */
+    protected afterObservablesUpdated(): void {
+        super.afterObservablesUpdated();
+        this.displayPreview(false);
 
-            if ((typeof data.conditions_encoded !== "string") || data.conditions_encoded.length === 0) {
-                return;
-            }
+        const data = this.contentType.dataStore.getState();
 
-            const url = Config.getConfig("preview_url");
-            const requestData = {
+        if ((typeof data.conditions_encoded !== "string") || data.conditions_encoded.length === 0) {
+            this.placeholderText(this.messages.EMPTY);
+
+            return;
+        }
+
+        const url = Config.getConfig("preview_url");
+        const requestConfig = {
+            // Prevent caching
+            method: "POST",
+            data: {
                 role: this.config.name,
                 directive: this.data.main.html(),
-            };
+            },
+        };
 
-            $.post(url, requestData, (response) => {
-                const content = response.content !== undefined ? response.content.trim() : "";
-                if (content.length === 0) {
+        this.placeholderText(this.messages.LOADING);
+
+        $.ajax(url, requestConfig)
+            .done((response) => {
+                if (typeof response.data !== "object" || !Boolean(response.data.content)) {
+                    this.placeholderText(this.messages.NO_RESULTS);
+
                     return;
                 }
-                this.data.main.html(content);
-                this.displayPreview(true);
+
+                if (response.data.error) {
+                    this.data.main.html(response.data.error);
+                } else {
+                    this.data.main.html(response.data.content);
+                    this.displayPreview(true);
+                }
+            })
+            .fail(() => {
+                this.placeholderText(this.messages.UNKNOWN_ERROR);
             });
-        });
     }
 }

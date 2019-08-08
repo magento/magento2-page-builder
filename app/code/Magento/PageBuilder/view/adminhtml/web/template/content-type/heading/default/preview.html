@@ -5,30 +5,29 @@
  */
 -->
 
-<div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview pagebuilder-heading pagebuilder-no-blur pagebuilder-live-edit" event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
-    <if args="data.main.heading_type() === 'h1'">
-        <h1 if="data.main.html()" attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" html="data.main.html"></h1>
-        <h1 ifnot="data.main.html()" class="placeholder-text" attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" translate="'Edit Heading Text'"></h1>
-    </if>
-    <if args="data.main.heading_type() === 'h2'">
-        <h2 if="data.main.html()" attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" html="data.main.html"></h2>
-        <h2 ifnot="data.main.html()" class="placeholder-text" attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" translate="'Edit Heading Text'"></h2>
-    </if>
-    <if args="data.main.heading_type() === 'h3'">
-        <h3 if="data.main.html()" attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" html="data.main.html"></h3>
-        <h3 ifnot="data.main.html()" class="placeholder-text" attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" translate="'Edit Heading Text'"></h3>
-    </if>
-    <if args="data.main.heading_type() === 'h4'">
-        <h4 if="data.main.html()" attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" html="data.main.html"></h4>
-        <h4 ifnot="data.main.html()" class="placeholder-text" attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" translate="'Edit Heading Text'"></h4>
-    </if>
-    <if args="data.main.heading_type() === 'h5'">
-        <h5 if="data.main.html()" attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" html="data.main.html"></h5>
-        <h5 ifnot="data.main.html()" class="placeholder-text" attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" translate="'Edit Heading Text'"></h5>
-    </if>
-    <if args="data.main.heading_type() === 'h6'">
-        <h6 if="data.main.html()" attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" html="data.main.html"></h6>
-        <h6 ifnot="data.main.html()" class="placeholder-text" attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" translate="'Edit Heading Text'"></h6>
-    </if>
+<div class="pagebuilder-content-type pagebuilder-heading" event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
     <render args="getOptions().template" />
+    <div class="pagebuilder-toolbar-container" tabindex="0" event="{ focusin: toolbar.onFocusIn, focusout: toolbar.onFocusOut }">
+        <with args="toolbar">
+            <render args="template" />
+        </with>
+        <if args="data.main.heading_type() === 'h1'">
+            <h1 attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" afterRender="function (element) { afterRender.call($data, element); }" data-bind="liveEdit: { field: 'heading_text', placeholder: $t('Edit Heading Text') }"></h1>
+        </if>
+        <if args="data.main.heading_type() === 'h2'">
+            <h2 attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" afterRender="function (element) { afterRender.call($data, element); }" data-bind="liveEdit: { field: 'heading_text', placeholder: $t('Edit Heading Text') }"></h2>
+        </if>
+        <if args="data.main.heading_type() === 'h3'">
+            <h3 attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" afterRender="function (element) { afterRender.call($data, element); }" data-bind="liveEdit: { field: 'heading_text', placeholder: $t('Edit Heading Text') }"></h3>
+        </if>
+        <if args="data.main.heading_type() === 'h4'">
+            <h4 attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" afterRender="function (element) { afterRender.call($data, element); }" data-bind="liveEdit: { field: 'heading_text', placeholder: $t('Edit Heading Text') }"></h4>
+        </if>
+        <if args="data.main.heading_type() === 'h5'">
+            <h5 attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" afterRender="function (element) { afterRender.call($data, element); }" data-bind="liveEdit: { field: 'heading_text', placeholder: $t('Edit Heading Text') }"></h5>
+        </if>
+        <if args="data.main.heading_type() === 'h6'">
+            <h6 attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" afterRender="function (element) { afterRender.call($data, element); }" data-bind="liveEdit: { field: 'heading_text', placeholder: $t('Edit Heading Text') }"></h6>
+        </if>
+    </div>
 </div>

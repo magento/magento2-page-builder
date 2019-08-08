@@ -8,8 +8,9 @@ define([], function () {
   /**
    * Convert from snake case to camel case
    *
-   * @param {string} string
+   * @param {string} currentString
    * @returns {string}
+   * @api
    */
   function fromSnakeToCamelCase(currentString) {
     var parts = currentString.split(/[_-]/);

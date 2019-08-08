@@ -1,0 +1,65 @@
+// /**
+//  * Copyright © Magento, Inc. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+//
+//  Source -> Inline WYSIWYG
+//  _____________________________________________
+
+.inline-wysiwyg {
+    .magento-placeholder {
+        height: auto;
+        margin: 5px;
+        min-height: 20px;
+        vertical-align: baseline;
+    }
+    ~ .mce-tinymce-inline {
+        display: block !important;
+        height: auto !important;
+        opacity: 0;
+        pointer-events: none;
+        position: absolute;
+        transform: translateY(0);
+        transition: transform 200ms, opacity 200ms, visibility 200ms;
+        visibility: hidden;
+        width: auto !important;
+
+        .mce-container,
+        .mce-container-body {
+            display: flex;
+            flex-wrap: wrap;
+            height: auto !important;
+            width: auto !important;
+        }
+        .mce-abs-layout-item {
+            position: static;
+        }
+    }
+    &.mce-edit-focus {
+        outline: none;
+        ~ .mce-tinymce-inline {
+            opacity: 1;
+            pointer-events: all;
+            visibility: visible !important;
+        }
+    }
+    &._right-aligned-toolbar ~ div.mce-tinymce-inline {
+        left: auto !important;
+    }
+    ul,
+    ol {
+        display: block;
+        margin-block-end: 1em;
+        margin-block-start: 1em;
+        margin-bottom: 2.5rem;
+        margin-inline-end: 0;
+        margin-inline-start: 0;
+        margin-top: 0;
+        padding-inline-start: 40px;
+
+        li {
+            margin: 0 0 1rem;
+        }
+    }
+}

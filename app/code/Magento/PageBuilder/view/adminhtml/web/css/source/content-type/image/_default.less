@@ -8,28 +8,35 @@
 //  _____________________________________________
 
 .pagebuilder-image {
-    border: 1px solid transparent;
     width: 100%;
+}
 
-    figure {
-        box-sizing: border-box;
-        margin: 0;
+.pagebuilder-content-type [data-content-type='image'] {
+    box-sizing: border-box;
+    margin: 0;
 
-        div.pagebuilder-image-empty-preview {
-            align-items: center;
-            background: @color-white-fog;
-            display: flex;
-            height: 300px;
-            justify-content: center;
-            width: 100%;
+    div.pagebuilder-image-empty-preview {
+        align-items: center;
+        background: @color-white-fog;
+        border-radius: inherit;
+        display: flex;
+        height: 300px;
+        justify-content: center;
+        width: 100%;
 
-            span {
-                color: @color-gray65-lighten;
-            }
+        span {
+            color: @color-gray65-lighten;
         }
+    }
 
-        figcaption {
-            padding: 15px 0;
-        }
+    figcaption {
+        padding: 15px 0;
+        word-wrap: break-word;
+    }
+
+    .preview-image,
+    [data-element='link'],
+    [data-element='link'] img {
+        border-radius: inherit;
     }
 }

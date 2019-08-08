@@ -6,18 +6,17 @@
 -->
 <div class="pagebuilder-stage"
      attr="id: id, 'data-role': 'pagebuilder-stage'"
-     css="'pagebuilder-show-borders': showBorders, 'pagebuilder-no-user-select': !userSelect(), 'panel-collapsed': parent.panel.isCollapsed, 'interacting': interacting">
-    <div class="pagebuilder-stage-loading" visible="loading" >
-        <div class="pagebuilder-emblem"></div>
-        <p translate="stageLoadingMessage"></p>
+     css="'pagebuilder-show-borders': showBorders, 'pagebuilder-no-user-select': !userSelect(), 'panel-collapsed': pageBuilder.panel.isCollapsed, 'interacting': interacting, 'focus-child': focusChild">
+    <div class="pagebuilder-stage-loading" visible="loading">
         <span class="spinner">
-                <span repeat="8" attr="'data-repeat-index': $index"/>
-            </span>
+            <span repeat="8" attr="'data-repeat-index': $index"/>
+        </span>
     </div>
     <div class="pagebuilder-canvas"
          css="active: !loading()"
-         each="children"
-         data-bind="sortable: { sortableClass: 'stage-container', handle: '.move-structural', items: '.pagebuilder-row-wrapper', connectWith: '.pagebuilder-canvas' }">
-        <div class="pagebuilder-row-wrapper" attr="id: id" ko-style="wrapperStyle" template="name: preview.previewTemplate, data: preview"></div>
+         afterRender="afterRenderDeferred.resolve">
+        <with args="rootContainer">
+            <render args="{ name: preview.template, data: preview }" />
+        </with>
     </div>
 </div>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="RestoreLayoutSetting">
+        <!-- Remove the existing layout update entries, as they can be merged in the wrong order -->
+        <remove keyForRemoval="selectOneColumn"/>
+        <remove keyForRemoval="selectNoLayoutUpdates1"/>
+        <remove keyForRemoval="selectNoLayoutUpdates2"/>
+        <!-- Set the defaults to those now set by Page Builder -->
+        <selectOption selector="{{DefaultLayoutsSection.pageLayout}}" userInput="{{PageBuilderFullWidthLayout.cms}}" stepKey="selectCmsFullWidth" after="expandDefaultLayouts"/>
+        <selectOption selector="{{DefaultLayoutsSection.categoryLayout}}" userInput="{{PageBuilderFullWidthLayout.category}}" stepKey="selectCategoryFullWidth" after="expandDefaultLayouts"/>
+        <selectOption selector="{{DefaultLayoutsSection.productLayout}}" userInput="{{PageBuilderFullWidthLayout.product}}" stepKey="selectProductFullWidth" after="expandDefaultLayouts"/>
+    </actionGroup>
+    <actionGroup name="validateLayoutStylesNoHeight">
+        <arguments>
+            <argument name="page"/>
+            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="verticalAlignContainer" defaultValue="PageBuilderVerticalAlignmentPropertyTop"/>
+        </arguments>
+        <waitForElement selector="{{page.container(index)}}" stepKey="waitForVerticalAlignContainer"/>
+        <seeElement selector="{{page.noMinHeight(index)}}" stepKey="dontSeeStyle"/>
+        <seeElement selector="{{page.containerStyle(index, verticalAlignContainer.style)}}" stepKey="seeVerticalAlignmentStyle"/>
+    </actionGroup>
+    <!-- Validate All Layout Styles -->
+    <actionGroup name="validateLayoutStylesWithAllUpdated">
+        <arguments>
+            <argument name="page"/>
+            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="minHeight" defaultValue="PageBuilderMinHeightProperty_Empty"/>
+            <argument name="verticalAlignContainer" defaultValue="PageBuilderVerticalAlignmentPropertyCenter"/>
+        </arguments>
+        <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForContentType"/>
+        <waitForElementVisible selector="{{page.minHeight(index, minHeight.value)}}" stepKey="waitForMinHeight"/>
+        <waitForElementVisible selector="{{page.verticalAlignContainer(index, verticalAlignContainer.value)}}" stepKey="waitForVerticalAlignContainer"/>
+    </actionGroup>
+    <!-- Validate Min Height -->
+    <actionGroup name="validateContentTypeHeightEqualToMinHeight">
+        <arguments>
+            <argument name="content" type="string"/>
+            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="border" defaultValue="PageBuilderAdvancedBorderWidthProperty0"/>
+            <argument name="height" defaultValue="PageBuilderMinHeightProperty_300"/>
+            <argument name="padding" defaultValue="PageBuilderPaddingPropertyDefault"/>
+            <argument name="pixelBuffer" defaultValue="5" type="string"/>
+        </arguments>
+        <executeJS function="return document.querySelectorAll('{{content}}')[{{index}}-1].getBoundingClientRect().height-{{padding.paddingTop}}-{{padding.paddingBottom}}-({{border.value}}*2)" stepKey="actualContentHeight"/>
+        <executeJS function="return Math.round(Math.abs({$actualContentHeight}-{{height.value}}))" stepKey="contentTypeHeightDifference"/>
+        <assertLessThanOrEqual stepKey="assertContentHeightRatio">
+            <expectedResult type="int">{{pixelBuffer}}</expectedResult>
+            <actualResult type="variable">contentTypeHeightDifference</actualResult>
+        </assertLessThanOrEqual>
+    </actionGroup>
+    <actionGroup name="validateContentTypeHeightGreaterThanMinHeight">
+        <arguments>
+            <argument name="content" type="string"/>
+            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="border" defaultValue="PageBuilderAdvancedBorderWidthProperty0"/>
+            <argument name="height" defaultValue="PageBuilderMinHeightProperty_300"/>
+            <argument name="padding" defaultValue="PageBuilderPaddingPropertyDefault"/>
+        </arguments>
+        <executeJS function="return document.querySelectorAll('{{content}}')[{{index}}-1].getBoundingClientRect().height-{{padding.paddingTop}}-{{padding.paddingBottom}}-({{border.value}}*2)" stepKey="actualContentHeight"/>
+        <assertGreaterThan stepKey="assertContentTypeHeightGreaterThanMinHeight">
+            <expectedResult type="int">{{height.value}}</expectedResult>
+            <actualResult type="variable">actualContentHeight</actualResult>
+        </assertGreaterThan>
+    </actionGroup>
+    <!-- Validate Max Width -->
+    <actionGroup name="validateContentTypeWidthEqualToMaxWidth">
+        <arguments>
+            <argument name="content" type="string"/>
+            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="border" defaultValue="PageBuilderAdvancedBorderWidthProperty0"/>
+            <argument name="width" defaultValue="PageBuilderVideoWidth_500"/>
+            <argument name="padding" defaultValue="PageBuilderPaddingPropertyDefault"/>
+            <argument name="pixelBuffer" defaultValue="5" type="string"/>
+        </arguments>
+        <executeJS function="return document.querySelectorAll('{{content}}')[{{index}}-1].getBoundingClientRect().width-{{padding.paddingLeft}}-{{padding.paddingRight}}-({{border.value}}*2)" stepKey="actualContentWidth"/>
+        <executeJS function="return Math.round(Math.abs({$actualContentWidth}-{{width.value}}))" stepKey="contentTypeWidthDifference"/>
+        <assertLessThanOrEqual stepKey="assertContentWidthDifference">
+            <expectedResult type="int">{{pixelBuffer}}</expectedResult>
+            <actualResult type="variable">contentTypeWidthDifference</actualResult>
+        </assertLessThanOrEqual>
+    </actionGroup>
+</actionGroups>

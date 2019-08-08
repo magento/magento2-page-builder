@@ -33,6 +33,7 @@ function getPathFromUrl(url: string): string {
  * @param {string} url
  * @param {string} otherUrl
  * @returns {string}
+ * @api
  */
 export function convertUrlToPathIfOtherUrlIsOnlyAPath(url: string, otherUrl: string): string {
     return isPathOnly(otherUrl) ? getPathFromUrl(url) : url;

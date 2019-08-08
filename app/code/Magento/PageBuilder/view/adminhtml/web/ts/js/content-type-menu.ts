@@ -4,22 +4,30 @@
  */
 
 import ko from "knockout";
-import OptionInterface from "./content-type-menu/option.d";
+import _ from "underscore";
+import OptionInterface, {OptionsInterface} from "./content-type-menu/option.types";
 import Preview from "./content-type/preview";
 
+/**
+ * @api
+ */
 export default class ContentTypeMenu {
-    private parent: Preview;
+    private preview: Preview;
     private options: KnockoutObservableArray<OptionInterface> = ko.observableArray([]);
 
     /**
      * Options constructor
      *
-     * @param parent
+     * @param preview
      * @param options
      */
-    constructor(parent: Preview, options: OptionInterface[]) {
-        this.parent = parent;
-        this.options(options);
+    constructor(preview: Preview, options: OptionsInterface) {
+        this.preview = preview;
+        const codes = _.keys(options);
+        _.values(options).forEach((option, index) => {
+            option.code = codes[index];
+            this.options.push(option);
+        });
         this.sort();
     }
 
@@ -28,34 +36,12 @@ export default class ContentTypeMenu {
     }
 
     /**
-     * Add an option into the options array
-     *
-     * @param option
-     */
-    public addOption(option: OptionInterface) {
-        this.options.push(option);
-        this.sort();
-    }
-
-    /**
-     * Remove an option
-     *
-     * @param code
-     */
-    public removeOption(code: string) {
-        this.options(this.options().filter((option: OptionInterface) => {
-            return (option.code !== code);
-        }));
-        this.sort();
-    }
-
-    /**
      * Get an option from the options array
      *
      * @param {string} code
-     * @returns {(OptionInterface | undefined) & (OptionInterface[] | undefined)}
+     * @returns {OptionInterface}
      */
-    public getOption(code: string) {
+    public getOption(code: string): OptionInterface {
         return this.options().find((option: OptionInterface) => {
             return (option.code === code);
         });

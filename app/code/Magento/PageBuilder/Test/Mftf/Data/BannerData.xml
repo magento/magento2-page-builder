@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<entities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="urn:magento:mftf:DataGenerator/etc/dataProfileSchema.xsd">
+    <!-- Appearance -->
+    <entity name="PageBuilderBannerAppearanceDefaultProperty" type="pagebuilder_banner_appearance_property">
+        <data key="name">Appearance</data>
+        <data key="section">appearance_fieldset</data>
+        <data key="fieldName">appearance</data>
+        <data key="value">poster</data>
+    </entity>
+    <entity name="PageBuilderBannerAppearance_Poster" type="pagebuilder_banner_appearance_property">
+        <data key="name">Appearance</data>
+        <data key="section">appearance_fieldset</data>
+        <data key="fieldName">appearance</data>
+        <data key="value">poster</data>
+    </entity>
+    <entity name="PageBuilderBannerCollageLeftProperty" type="pagebuilder_banner_appearance_property">
+        <data key="name">Appearance</data>
+        <data key="section">appearance_fieldset</data>
+        <data key="fieldName">appearance</data>
+        <data key="value">collage-left</data>
+    </entity>
+    <entity name="PageBuilderBannerCollageRightProperty" type="pagebuilder_banner_appearance_property">
+        <data key="name">Appearance</data>
+        <data key="section">appearance_fieldset</data>
+        <data key="fieldName">appearance</data>
+        <data key="value">collage-right</data>
+    </entity>
+    <entity name="PageBuilderBannerCollageCenteredProperty" type="pagebuilder_banner_appearance_property">
+        <data key="name">Appearance</data>
+        <data key="section">appearance_fieldset</data>
+        <data key="fieldName">appearance</data>
+        <data key="value">collage-centered</data>
+    </entity>
+    <!-- Minimum Height -->
+    <entity name="PageBuilderBannerMinimumHeightProperty" type="pagebuilder_banner_minimumHeight_property">
+        <data key="name">Minimum Height</data>
+        <data key="section">appearance_fieldset</data>
+        <data key="fieldName">min_height</data>
+        <data key="value">500</data>
+    </entity>
+    <entity name="PageBuilderBannerMinimumHeightDefaultProperty" type="pagebuilder_banner_minimumHeightDefault_property">
+        <data key="name">Minimum Height</data>
+        <data key="section">appearance_fieldset</data>
+        <data key="fieldName">min_height</data>
+        <data key="value">300</data>
+    </entity>
+    <!-- Message Text -->
+    <entity name="PageBuilderBannerMessageDefaultProperty" type="pagebuilder_banner_message_property">
+        <data key="name">Message Text</data>
+        <data key="section">contents</data>
+        <data key="role">textarea</data>
+        <data key="value"/>
+        <data key="placeholder">Edit Banner Text</data>
+    </entity>
+    <entity name="PageBuilderBannerMessageProperty" type="pagebuilder_banner_message_property">
+        <data key="name">Message Text</data>
+        <data key="section">contents</data>
+        <data key="role">textarea</data>
+        <data key="fieldName">message</data>
+        <data key="cmsPageLinkName" unique="suffix">cms-page-link-</data>
+        <data key="value">Good Night!</data>
+    </entity>
+    <entity name="PageBuilderBannerMessagePropertyLong" type="pagebuilder_banner_message_property">
+        <data key="name">Message Text</data>
+        <data key="section">contents</data>
+        <data key="role">textarea</data>
+        <data key="fieldName">message</data>
+        <data key="value">This is a really long message that will wrap when it is placed in a small container.</data>
+    </entity>
+    <entity name="PageBuilderBannerMessageInvalidProperty" type="pagebuilder_banner_message_property">
+        <data key="name">Message Text</data>
+        <data key="section">contents</data>
+        <data key="fieldName">message</data>
+        <data key="errorMessage">Adding link in both content and outer element is not allowed.</data>
+        <data key="stageErrorMessage">We are unable to support links within the content field whilst having a link set on the content type. Please remove the content type link if you'd like to set a link within the content. We will automatically remove the links within the content field.</data>
+    </entity>
+    <!-- Background Color -->
+    <entity name="PageBuilderBannerBackgroundColor_Empty" type="pagebuilder_banner_background_color_property">
+        <data key="name">Background Color</data>
+        <data key="section">background</data>
+        <data key="fieldName">background_color</data>
+        <data key="stageValue">rgb(250, 250, 250)</data>
+    </entity>
+    <!-- Link -->
+    <entity name="PageBuilderBannerLinkUrlProperty" type="pagebuilder_banner_linkUrl_property">
+        <data key="name">Link</data>
+        <data key="section">contents</data>
+        <data key="fieldName">link_url</data>
+        <data key="value">http://url.magento/</data>
+    </entity>
+    <entity name="PageBuilderBannerLinkUrlProperty_Empty" type="pagebuilder_banner_linkUrl_property">
+        <data key="name">Link</data>
+        <data key="section">contents</data>
+        <data key="fieldName">link_url</data>
+        <data key="value"/>
+    </entity>
+    <entity name="PageBuilderBannerLinkUrlPropertyValidate" type="pagebuilder_banner_linkUrl_property">
+        <data key="name">Link</data>
+        <data key="section">contents</data>
+        <data key="fieldName">link_url</data>
+        <data key="value">http://url.magento/</data>
+    </entity>
+    <entity name="PageBuilderBannerNewTabDefaultProperty" type="pagebuilder_banner_newTab_property">
+        <data key="name">Open in new tab</data>
+        <data key="section">contents</data>
+        <data key="fieldName">link_url</data>
+        <data key="value">false</data>
+    </entity>
+    <entity name="PageBuilderBannerNewTabProperty" type="pagebuilder_banner_newTab_property">
+        <data key="name">Open in new tab</data>
+        <data key="section">contents</data>
+        <data key="fieldName">link_url</data>
+        <data key="value">true</data>
+    </entity>
+    <entity name="PageBuilderBannerLinkUrlInvalidProperty" type="pagebuilder_banner_linkUrl_property">
+        <data key="name">Link</data>
+        <data key="section">contents</data>
+        <data key="fieldName">link_url</data>
+        <data key="errorMessage">Adding link in both content and outer element is not allowed.</data>
+    </entity>
+    <!-- Show Button -->
+    <entity name="PageBuilderBannerShowButtonDefaultProperty" type="pagebuilder_banner_show_button_property">
+        <data key="name">Show Button</data>
+        <data key="section">contents</data>
+        <data key="fieldName">show_button</data>
+        <data key="value">never</data>
+    </entity>
+    <entity name="PageBuilderBannerShowButtonAlwaysProperty" type="pagebuilder_banner_show_button_property">
+        <data key="name">Show Button</data>
+        <data key="section">contents</data>
+        <data key="fieldName">show_button</data>
+        <data key="value">always</data>
+    </entity>
+    <entity name="PageBuilderBannerShowButtonOnHoverProperty" type="pagebuilder_banner_show_button_property">
+        <data key="name">Show Button</data>
+        <data key="section">contents</data>
+        <data key="fieldName">show_button</data>
+        <data key="value">hover</data>
+    </entity>
+    <entity name="PageBuilderBannerShowButtonNeverProperty" type="pagebuilder_banner_show_button_property">
+        <data key="name">Show Button</data>
+        <data key="section">contents</data>
+        <data key="fieldName">show_button</data>
+        <data key="value">never</data>
+    </entity>
+    <!-- Button Text -->
+    <entity name="PageBuilderBannerButtonText_Default" type="pagebuilder_banner_button_text_property">
+        <data key="name">Button Text</data>
+        <data key="section">contents</data>
+        <data key="fieldName">button_text</data>
+        <data key="value"/>
+    </entity>
+    <entity name="PageBuilderBannerButtonTextProperty" type="pagebuilder_banner_button_text_property">
+        <data key="name">Button Text</data>
+        <data key="section">contents</data>
+        <data key="fieldName">button_text</data>
+        <data key="value">Good Morning!</data>
+    </entity>
+    <entity name="PageBuilderBannerButtonTextProperty2" type="pagebuilder_banner_button_text_property">
+        <data key="name">Button Text</data>
+        <data key="section">contents</data>
+        <data key="fieldName">button_text</data>
+        <data key="value">Editable</data>
+    </entity>
+    <entity name="PageBuilderBannerButtonTextPropertyLong" type="pagebuilder_banner_button_text_property">
+        <data key="name">Button Text</data>
+        <data key="section">contents</data>
+        <data key="fieldName">button_text</data>
+        <data key="value">Long button text that will wrap in a small container</data>
+    </entity>
+    <entity name="PageBuilderBannerButtonTextProperty_Html" type="pagebuilder_banner_button_text_property">
+        <data key="name">Button Text</data>
+        <data key="section">contents</data>
+        <data key="fieldName">button_text</data>
+        <data key="value">&lt;div data-info=&quot;abc&quot;&gt;test&lt;br/&gt;html&lt;/div&gt;</data>
+    </entity>
+    <entity name="PageBuilderBannerButtonTextProperty_Non_Breaking_Space" type="pagebuilder_banner_button_text_property">
+        <data key="name">Button Text</data>
+        <data key="section">contents</data>
+        <data key="fieldName">button_text</data>
+        <data key="value"> nbsp nbsp </data>
+    </entity>
+    <!-- Button Type -->
+    <entity name="PageBuilderBannerButtonTypeDefaultProperty" type="pagebuilder_banner_buttonTypeDefault_property">
+        <data key="name">Button Type</data>
+        <data key="section">contents</data>
+        <data key="fieldName">button_type</data>
+        <data key="value">pagebuilder-button-primary</data>
+        <data key="class">true</data>
+    </entity>
+    <entity name="PageBuilderBannerButtonTypePrimaryProperty" type="pagebuilder_banner_buttonType_property">
+        <data key="name">Button Type</data>
+        <data key="section">contents</data>
+        <data key="fieldName">button_type</data>
+        <data key="value">pagebuilder-button-primary</data>
+    </entity>
+    <entity name="PageBuilderBannerButtonTypeSecondaryProperty" type="pagebuilder_banner_buttonType_property">
+        <data key="name">Button Type</data>
+        <data key="section">contents</data>
+        <data key="fieldName">button_type</data>
+        <data key="value">pagebuilder-button-secondary</data>
+    </entity>
+    <entity name="PageBuilderBannerButtonTypeLinkProperty" type="pagebuilder_banner_buttonType_property">
+        <data key="name">Button Type</data>
+        <data key="section">contents</data>
+        <data key="fieldName">button_type</data>
+        <data key="value">pagebuilder-button-link</data>
+    </entity>
+    <!-- Show Overlay -->
+    <entity name="PageBuilderBannerShowContentOverlayAlwaysProperty" type="pagebuilder_banner_showContentOverlay_property">
+        <data key="name">Show Overlay</data>
+        <data key="section">contents</data>
+        <data key="fieldName">show_overlay</data>
+        <data key="value">always</data>
+    </entity>
+    <entity name="PageBuilderBannerShowContentOverlayOnHoverProperty" type="pagebuilder_banner_showContentOverlay_property">
+        <data key="name">Show Overlay</data>
+        <data key="section">contents</data>
+        <data key="fieldName">show_overlay</data>
+        <data key="value">hover</data>
+    </entity>
+    <entity name="PageBuilderBannerShowContentOverlayNeverShowProperty" type="pagebuilder_banner_showContentOverlay_property">
+        <data key="name">Show Overlay</data>
+        <data key="section">contents</data>
+        <data key="fieldName">show_overlay</data>
+        <data key="value">never</data>
+    </entity>
+    <entity name="PageBuilderBannerShowContentOverlayDefaultProperty" type="pagebuilder_banner_showContentOverlayDefault_property">
+        <data key="name">Show Overlay</data>
+        <data key="section">contents</data>
+        <data key="fieldName">show_overlay</data>
+        <data key="value">never</data>
+    </entity>
+    <!-- Overlay Color -->
+    <entity name="PageBuilderBannerContentOverlayColorProperty" type="pagebuilder_banner_overlay_color_property">
+        <data key="name">Overlay Color</data>
+        <data key="section">contents</data>
+        <data key="fieldName">overlay_color</data>
+        <data key="value">#ffffff</data>
+        <data key="rgb">255, 255, 255</data>
+    </entity>
+    <entity name="PageBuilderBannerOverlayColor_FF0000" type="pagebuilder_banner_overlay_color_property">
+        <data key="name">Overlay Color</data>
+        <data key="section">contents</data>
+        <data key="fieldName">overlay_color</data>
+        <data key="value">#ff0000</data>
+        <data key="rgb">255, 0, 0</data>
+    </entity>
+    <entity name="PageBuilderBannerOverlayColor_Blue_Opaque" type="pagebuilder_banner_overlay_color_property">
+        <data key="name">Overlay Color</data>
+        <data key="section">contents</data>
+        <data key="fieldName">overlay_color</data>
+        <data key="value">rgba(174, 198, 207, 0.7)</data>
+        <data key="rgb">rgba(174, 198, 207, 0.7)</data>
+    </entity>
+</entities>

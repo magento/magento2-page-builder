@@ -1,34 +1,52 @@
 /*eslint-disable */
-define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "uiEvents", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type/column-group/resizing", "Magento_PageBuilder/js/content-type/preview-collection"], function (_jquery, _knockout, _translate, _alert, _uiEvents, _config, _contentTypeFactory, _option, _resizing, _previewCollection) {
-  function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-  function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Ui/js/modal/alert", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type/column-group/grid-size", "Magento_PageBuilder/js/content-type/column-group/preview", "Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageBuilder/js/content-type/column/resize"], function (_jquery, _knockout, _translate, _events, _alert, _config, _contentTypeFactory, _option, _gridSize, _preview, _previewCollection, _resize) {
+  /**
+   * Copyright © Magento, Inc. All rights reserved.
+   * See COPYING.txt for license details.
+   */
+
+  /**
+   * @api
+   */
   var Preview =
   /*#__PURE__*/
-  function (_PreviewCollection) {
-    _inheritsLoose(Preview, _PreviewCollection);
+  function (_previewCollection2) {
+    "use strict";
+
+    _inheritsLoose(Preview, _previewCollection2);
 
     /**
-     * @param {ContentTypeInterface} parent
+     * Fields that should not be considered when evaluating whether an object has been configured.
+     *
+     * @see {Preview.isConfigured}
+     * @type {[string]}
+     */
+
+    /**
+     * @param {ContentTypeInterface} contentType
      * @param {ContentTypeConfigInterface} config
      * @param {ObservableUpdater} observableUpdater
      */
-    function Preview(parent, config, observableUpdater) {
+    function Preview(contentType, config, observableUpdater) {
       var _this;
 
-      _this = _PreviewCollection.call(this, parent, config, observableUpdater) || this;
+      _this = _previewCollection2.call(this, contentType, config, observableUpdater) || this; // Update the width label for the column
+
       _this.resizing = _knockout.observable(false);
+      _this.fieldsToIgnoreOnRemove = ["width"];
 
-      _this.previewData.width.subscribe(function (newWidth) {
-        var maxColumns = (0, _resizing.getMaxColumns)();
-        newWidth = parseFloat(newWidth);
-        newWidth = Math.round(newWidth / (100 / maxColumns));
-        var newLabel = newWidth + "/" + maxColumns;
-        var column = (0, _translate)("Column");
+      _this.contentType.dataStore.subscribe(_this.updateColumnWidthClass.bind(_assertThisInitialized(_assertThisInitialized(_this))), "width");
 
-        _this.displayLabel(column + " " + newLabel);
-      });
+      _this.contentType.dataStore.subscribe(_this.updateDisplayLabel.bind(_assertThisInitialized(_assertThisInitialized(_this))), "width");
+
+      _this.contentType.dataStore.subscribe(_this.triggerChildren.bind(_assertThisInitialized(_assertThisInitialized(_this))), "width");
+
+      _this.contentType.parentContentType.dataStore.subscribe(_this.updateDisplayLabel.bind(_assertThisInitialized(_assertThisInitialized(_this))), "grid_size");
 
       return _this;
     }
@@ -42,87 +60,101 @@ define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "ui
     _proto.bindEvents = function bindEvents() {
       var _this2 = this;
 
-      _PreviewCollection.prototype.bindEvents.call(this);
+      _previewCollection2.prototype.bindEvents.call(this);
+
+      _events.on("column:moveAfter", function (args) {
+        if (args.contentType.id === _this2.contentType.id) {
+          _this2.updateDisplayLabel();
+        }
+      });
 
       if (_config.getContentTypeConfig("column-group")) {
-        _uiEvents.on("column:block:mount", function (args) {
-          if (args.id === _this2.parent.id) {
+        _events.on("column:dropAfter", function (args) {
+          if (args.id === _this2.contentType.id) {
             _this2.createColumnGroup();
           }
         });
       }
-    };
+    }
     /**
      * Make a reference to the element in the column
      *
      * @param element
      */
-
+    ;
 
     _proto.initColumn = function initColumn(element) {
-      this.parent.element = (0, _jquery)(element);
+      this.element = (0, _jquery)(element);
+      this.updateColumnWidthClass();
 
-      _uiEvents.trigger("column:initElement", {
-        column: this.parent,
+      _events.trigger("column:initializeAfter", {
+        column: this.contentType,
         element: (0, _jquery)(element),
-        parent: this.parent.parent
+        columnGroup: this.contentType.parentContentType
       });
-    };
+    }
     /**
      * Return an array of options
      *
-     * @returns {Array<OptionInterface>}
+     * @returns {OptionsInterface}
      */
-
+    ;
 
     _proto.retrieveOptions = function retrieveOptions() {
-      var options = _PreviewCollection.prototype.retrieveOptions.call(this);
+      var options = _previewCollection2.prototype.retrieveOptions.call(this);
 
-      var newOptions = options.filter(function (option) {
-        return option.code !== "move";
+      options.move = new _option({
+        preview: this,
+        icon: "<i class='icon-admin-pagebuilder-handle'></i>",
+        title: (0, _translate)("Move"),
+        classes: ["move-column"],
+        sort: 10
       });
-      newOptions.unshift(new _option(this, "move", "<i class='icon-admin-pagebuilder-handle'></i>", (0, _translate)("Move"), null, ["move-column"], 10));
-      return newOptions;
-    };
+      return options;
+    }
     /**
      * Init the resize handle for the resizing functionality
      *
      * @param handle
      */
-
+    ;
 
     _proto.bindResizeHandle = function bindResizeHandle(handle) {
-      _uiEvents.trigger("column:bindResizeHandle", {
-        column: this.parent,
+      _events.trigger("column:resizeHandleBindAfter", {
+        column: this.contentType,
         handle: (0, _jquery)(handle),
-        parent: this.parent.parent
+        columnGroup: this.contentType.parentContentType
       });
-    };
+    }
     /**
      * Wrap the current column in a group if it not in a column-group
      *
-     * @returns {Promise<ContentTypeInterface>}
+     * @returns {Promise<ContentTypeCollectionInterface>}
      */
-
+    ;
 
     _proto.createColumnGroup = function createColumnGroup() {
       var _this3 = this;
 
-      if (this.parent.parent.config.name !== "column-group") {
-        var index = this.parent.parent.children().indexOf(this.parent); // Remove child instantly to stop content jumping around
+      if (this.contentType.parentContentType.config.name !== "column-group") {
+        var index = this.contentType.parentContentType.children().indexOf(this.contentType); // Remove child instantly to stop content jumping around
 
-        this.parent.parent.removeChild(this.parent); // Create a new instance of column group to wrap our columns with
+        this.contentType.parentContentType.removeChild(this.contentType); // Create a new instance of column group to wrap our columns with
 
-        return (0, _contentTypeFactory)(_config.getContentTypeConfig("column-group"), this.parent.parent, this.parent.stageId).then(function (columnGroup) {
-          return Promise.all([(0, _contentTypeFactory)(_this3.parent.config, columnGroup, columnGroup.stageId, {
-            width: "50%"
-          }), (0, _contentTypeFactory)(_this3.parent.config, columnGroup, columnGroup.stageId, {
-            width: "50%"
+        var defaultGridSize = (0, _gridSize.getDefaultGridSize)();
+        return (0, _contentTypeFactory)(_config.getContentTypeConfig("column-group"), this.contentType.parentContentType, this.contentType.stageId, {
+          grid_size: defaultGridSize
+        }).then(function (columnGroup) {
+          var col1Width = (Math.ceil(defaultGridSize / 2) * 100 / defaultGridSize).toFixed(Math.round(100 / defaultGridSize) !== 100 / defaultGridSize ? 8 : 0);
+          return Promise.all([(0, _contentTypeFactory)(_this3.contentType.config, columnGroup, columnGroup.stageId, {
+            width: col1Width + "%"
+          }), (0, _contentTypeFactory)(_this3.contentType.config, columnGroup, columnGroup.stageId, {
+            width: 100 - parseFloat(col1Width) + "%"
           })]).then(function (columns) {
             columnGroup.addChild(columns[0], 0);
             columnGroup.addChild(columns[1], 1);
 
-            _this3.parent.parent.addChild(columnGroup, index);
+            _this3.contentType.parentContentType.addChild(columnGroup, index);
 
             _this3.fireMountEvent(columnGroup, columns[0], columns[1]);
 
@@ -130,60 +162,60 @@ define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "ui
           });
         });
       }
-    };
+    }
     /**
      * Duplicate a child of the current instance
      *
-     * @param {Column} child
+     * @param {ContentTypeCollectionInterface<Preview>} contentType
      * @param {boolean} autoAppend
-     * @returns {Promise<ContentTypeInterface>|void}
+     * @returns {Promise<ContentTypeCollectionInterface> | void}
      */
+    ;
 
-
-    _proto.clone = function clone(child, autoAppend) {
+    _proto.clone = function clone(contentType, autoAppend) {
       if (autoAppend === void 0) {
         autoAppend = true;
       }
 
-      // Are we duplicating from a parent?
-      if (child.config.name !== "column" || this.parent.parent.children().length === 0 || this.parent.parent.children().length > 0 && (0, _resizing.getColumnsWidth)(this.parent.parent) < 100) {
-        return _PreviewCollection.prototype.clone.call(this, child, autoAppend);
+      var resizeUtils = this.contentType.parentContentType.preview.getResizeUtils(); // Are we duplicating from a container content type?
+
+      if (contentType.config.name !== "column" || this.contentType.parentContentType.children().length === 0 || this.contentType.parentContentType.children().length > 0 && resizeUtils.getColumnsWidth() < 100) {
+        return _previewCollection2.prototype.clone.call(this, contentType, autoAppend);
       } // Attempt to split the current column into parts
 
 
-      var splitTimes = Math.round((0, _resizing.getColumnWidth)(child) / (0, _resizing.getSmallestColumnWidth)());
+      var splitTimes = Math.round(resizeUtils.getColumnWidth(contentType) / resizeUtils.getSmallestColumnWidth());
 
       if (splitTimes > 1) {
-        _PreviewCollection.prototype.clone.call(this, child, autoAppend).then(function (duplicateBlock) {
-          var originalWidth = 0;
-          var duplicateWidth = 0;
+        var splitClone = _previewCollection2.prototype.clone.call(this, contentType, autoAppend);
 
-          for (var i = 0; i <= splitTimes; i++) {
-            if (splitTimes > 0) {
-              originalWidth += (0, _resizing.getSmallestColumnWidth)();
-              --splitTimes;
-            }
-
-            if (splitTimes > 0) {
-              duplicateWidth += (0, _resizing.getSmallestColumnWidth)();
-              --splitTimes;
-            }
-          }
-
-          (0, _resizing.updateColumnWidth)(child, (0, _resizing.getAcceptedColumnWidth)(originalWidth.toString()));
-          (0, _resizing.updateColumnWidth)(duplicateBlock, (0, _resizing.getAcceptedColumnWidth)(duplicateWidth.toString()));
-          return duplicateBlock;
-        });
+        if (splitClone) {
+          splitClone.then(function (duplicateContentType) {
+            /**
+             * Distribute the width across the original & duplicated columns, if the we have an odd number of
+             * split times apply it to the original.
+             */
+            var originalWidth = (Math.floor(splitTimes / 2) + splitTimes % 2) * resizeUtils.getSmallestColumnWidth();
+            var duplicateWidth = Math.floor(splitTimes / 2) * resizeUtils.getSmallestColumnWidth();
+            (0, _resize.updateColumnWidth)(contentType, resizeUtils.getAcceptedColumnWidth(originalWidth.toString()));
+            (0, _resize.updateColumnWidth)(duplicateContentType, resizeUtils.getAcceptedColumnWidth(duplicateWidth.toString()));
+            return duplicateContentType;
+          });
+        }
       } else {
         // Conduct an outward search on the children to locate a suitable shrinkable column
-        var shrinkableColumn = (0, _resizing.findShrinkableColumn)(child);
+        var shrinkableColumn = resizeUtils.findShrinkableColumn(contentType);
 
         if (shrinkableColumn) {
-          _PreviewCollection.prototype.clone.call(this, child, autoAppend).then(function (duplicateBlock) {
-            (0, _resizing.updateColumnWidth)(shrinkableColumn, (0, _resizing.getAcceptedColumnWidth)(((0, _resizing.getColumnWidth)(shrinkableColumn) - (0, _resizing.getSmallestColumnWidth)()).toString()));
-            (0, _resizing.updateColumnWidth)(duplicateBlock, (0, _resizing.getSmallestColumnWidth)());
-            return duplicateBlock;
-          });
+          var shrinkableClone = _previewCollection2.prototype.clone.call(this, contentType, autoAppend);
+
+          if (shrinkableClone) {
+            shrinkableClone.then(function (duplicateContentType) {
+              (0, _resize.updateColumnWidth)(shrinkableColumn, resizeUtils.getAcceptedColumnWidth((resizeUtils.getColumnWidth(shrinkableColumn) - resizeUtils.getSmallestColumnWidth()).toString()));
+              (0, _resize.updateColumnWidth)(duplicateContentType, resizeUtils.getSmallestColumnWidth());
+              return duplicateContentType;
+            });
+          }
         } else {
           // If we aren't able to duplicate inform the user why
           (0, _alert)({
@@ -192,63 +224,76 @@ define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "ui
           });
         }
       }
-    };
+    }
     /**
-     * Update the style attribute mapper converts images to directives, override it to include the correct URL
-     *
-     * @returns styles
+     * Update the display label for the column
      */
+    ;
 
+    _proto.updateDisplayLabel = function updateDisplayLabel() {
+      if (this.contentType.parentContentType.preview instanceof _preview) {
+        var newWidth = parseFloat(this.contentType.dataStore.get("width").toString());
+        var gridSize = this.contentType.parentContentType.preview.gridSize();
+        var newLabel = Math.round(newWidth / (100 / gridSize)) + "/" + gridSize;
+        this.displayLabel((0, _translate)("Column") + " " + newLabel);
+      }
+    }
+    /**
+     * Syncs the column-width-* class on the children-wrapper with the current width to the nearest tenth rounded up
+     */
+    ;
 
-    _proto.afterStyleMapped = function afterStyleMapped(styles) {
-      // Extract data values our of observable functions
-      // The style attribute mapper converts images to directives, override it to include the correct URL
-      if (this.previewData.background_image && _typeof(this.previewData.background_image()[0]) === "object") {
-        styles.backgroundImage = "url(" + this.previewData.background_image()[0].url + ")";
-      } // If we have left and right margins we need to minus this from the total width
-
-
-      if (this.previewData.margins_and_padding && this.previewData.margins_and_padding().margin) {
-        var margins = this.previewData.margins_and_padding().margin;
-        var horizontalMargin = parseInt(margins.left || 0, 10) + parseInt(margins.right || 0, 10);
-        styles.width = "calc(" + styles.width + " - " + horizontalMargin + "px)";
-      } // If the right margin is 0, we set it to 1px to overlap the columns to create a single border
-
-
-      if (styles.marginRight === "0px") {
-        styles.marginRight = "1px";
-      } // If the border is set to default we show no border in the admin preview, as we're unaware of the themes styles
-
-
-      if (this.previewData.border && this.previewData.border() === "_default") {
-        styles.border = "none";
+    _proto.updateColumnWidthClass = function updateColumnWidthClass() {
+      // Only update once instantiated
+      if (!this.element) {
+        return;
       }
 
-      return styles;
-    };
-    /**
-     * Fire the mount event for blocks
-     *
-     * @param {ContentTypeInterface[]} blocks
-     */
+      var currentClass = this.element.attr("class").match(/(?:^|\s)(column-width-\d{1,3})(?:$|\s)/);
 
+      if (currentClass !== null) {
+        this.element.removeClass(currentClass[1]);
+      }
+
+      var roundedWidth = Math.ceil(parseFloat(this.contentType.dataStore.get("width").toString()) / 10) * 10;
+      this.element.addClass("column-width-" + roundedWidth);
+    }
+    /**
+     * Fire the mount event for content types
+     *
+     * @param {ContentTypeInterface[]} contentTypes
+     */
+    ;
 
     _proto.fireMountEvent = function fireMountEvent() {
-      for (var _len = arguments.length, blocks = new Array(_len), _key = 0; _key < _len; _key++) {
-        blocks[_key] = arguments[_key];
+      for (var _len = arguments.length, contentTypes = new Array(_len), _key = 0; _key < _len; _key++) {
+        contentTypes[_key] = arguments[_key];
       }
 
-      blocks.forEach(function (block) {
-        _uiEvents.trigger("block:mount", {
-          id: block.id,
-          block: block
+      contentTypes.forEach(function (contentType) {
+        _events.trigger("contentType:mountAfter", {
+          id: contentType.id,
+          contentType: contentType
         });
 
-        _uiEvents.trigger(block.config.name + ":block:mount", {
-          id: block.id,
-          block: block
+        _events.trigger(contentType.config.name + ":mountAfter", {
+          id: contentType.id,
+          contentType: contentType
         });
       });
+    }
+    /**
+     * Delegate trigger call on children elements.
+     */
+    ;
+
+    _proto.triggerChildren = function triggerChildren() {
+      if (this.contentType.parentContentType.preview instanceof _preview) {
+        var newWidth = parseFloat(this.contentType.dataStore.get("width").toString());
+        this.delegate("trigger", "columnWidthChangeAfter", {
+          width: newWidth
+        });
+      }
     };
 
     return Preview;

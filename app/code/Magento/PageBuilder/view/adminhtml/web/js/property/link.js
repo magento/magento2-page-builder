@@ -4,9 +4,15 @@ define([], function () {
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
+
+  /**
+   * @api
+   */
   var Link =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     function Link() {
       this.regexpByLinkType = {
         category: new RegExp(/id_path=['"]category\/(\d+)/),
@@ -33,8 +39,8 @@ define([], function () {
         href = this.getIdFromWidgetSyntax(href, this.regexpByLinkType[attributeLinkType]);
       }
 
-      return _ref = {}, _ref[attributeLinkType] = href, _ref.setting = element.target === "_blank", _ref.type = attributeLinkType, _ref;
-    };
+      return _ref = {}, _ref[attributeLinkType] = href, _ref.setting = element.getAttribute("target") === "_blank", _ref.type = attributeLinkType, _ref;
+    }
     /**
      * Returns link value from widget string
      *
@@ -42,13 +48,13 @@ define([], function () {
      * @param {RegExp} regexp
      * @return {string}
      */
-
+    ;
 
     _proto.getIdFromWidgetSyntax = function getIdFromWidgetSyntax(href, regexp) {
       var attributeIdMatches = href.match(regexp);
 
       if (!attributeIdMatches) {
-        return href;
+        return "";
       }
 
       return attributeIdMatches[1];

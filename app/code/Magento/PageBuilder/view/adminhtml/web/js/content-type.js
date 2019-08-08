@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "mageUtils", "uiEvents", "Magento_PageBuilder/js/data-store"], function (_knockout, _mageUtils, _uiEvents, _dataStore) {
+define(["Magento_PageBuilder/js/events", "mageUtils", "Magento_PageBuilder/js/data-store"], function (_events, _mageUtils, _dataStore) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -7,25 +7,18 @@ define(["knockout", "mageUtils", "uiEvents", "Magento_PageBuilder/js/data-store"
   var ContentType =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     /**
-     * @param {ContentTypeInterface} parent
+     * @param {ContentTypeInterface} parentContentType
      * @param {ContentTypeConfigInterface} config
      * @param {string} stageId
      */
-    function ContentType(parent, config, stageId) {
+    function ContentType(parentContentType, config, stageId) {
       this.id = _mageUtils.uniqueid();
-      this.parent = void 0;
-      this.stageId = void 0;
-      this.config = void 0;
-      this.data = {};
-      this.wrapperStyle = _knockout.observable({
-        width: "100%"
-      });
-      this.element = void 0;
       this.dataStore = new _dataStore();
-      this.preview = void 0;
-      this.content = void 0;
-      this.parent = parent;
+      this.dropped = false;
+      this.parentContentType = parentContentType;
       this.config = config;
       this.stageId = stageId;
       this.bindEvents();
@@ -36,14 +29,14 @@ define(["knockout", "mageUtils", "uiEvents", "Magento_PageBuilder/js/data-store"
     _proto.bindEvents = function bindEvents() {
       var _this = this;
 
-      var eventName = this.id + ":updated";
+      var eventName = this.config.name + ":" + this.id + ":updateAfter";
       var paramObj = {};
       paramObj[this.id] = this;
       this.dataStore.subscribe(function () {
-        return _uiEvents.trigger(eventName, paramObj);
+        return _events.trigger(eventName, paramObj);
       });
       this.dataStore.subscribe(function () {
-        return _uiEvents.trigger("stage:updated", {
+        return _events.trigger("stage:updateAfter", {
           stageId: _this.stageId
         });
       });

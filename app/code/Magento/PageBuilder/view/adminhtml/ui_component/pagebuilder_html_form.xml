@@ -24,7 +24,7 @@
                 <item name="component" xsi:type="string">Magento_PageBuilder/js/form/provider</item>
             </item>
         </argument>
-        <dataProvider name="pagebuilder_html_form_data_source" class="Magento\PageBuilder\Model\ContentBlock\DataProvider">
+        <dataProvider name="pagebuilder_html_form_data_source" class="Magento\PageBuilder\Model\ContentType\DataProvider">
             <settings>
                 <requestFieldName/>
                 <primaryFieldName/>
@@ -44,7 +44,7 @@
                 <link name="hideLabel">${$.name}.appearance:options</link>
             </imports>
         </settings>
-        <field name="appearance" formElement="select" sortOrder="10" component="Magento_PageBuilder/js/form/element/dependent-select">
+        <field name="appearance" formElement="select" sortOrder="10" component="Magento_PageBuilder/js/form/element/dependent-visual-select">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="default" xsi:type="string">default</item>
@@ -74,20 +74,21 @@
         <settings>
             <label/>
         </settings>
-        <field name="html" formElement="textarea" sortOrder="10">
+        <field name="html" formElement="textarea" sortOrder="10" component="Magento_PageBuilder/js/form/element/html-code" class="Magento\PageBuilder\Component\Form\HtmlCode">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="source" xsi:type="string">page</item>
-                    <item name="default" xsi:type="string" translate="true">Type your HTML here...</item>
                 </item>
             </argument>
             <settings>
+                <additionalClasses>
+                    <class name="admin__field-wide">true</class>
+                    <class name="admin__font-console">true</class>
+                </additionalClasses>
                 <dataScope>html</dataScope>
                 <dataType>text</dataType>
-                <label translate="true">HTML</label>
-                <validation>
-                    <rule name="required-entry" xsi:type="boolean">true</rule>
-                </validation>
+                <placeholder translate="true">Enter HTML, CSS or JavaScript code</placeholder>
+                <notice translate="true">HTML code must be valid, all CSS &amp; JavaScript must be wrapped in their HTML elements.</notice>
             </settings>
         </field>
     </fieldset>

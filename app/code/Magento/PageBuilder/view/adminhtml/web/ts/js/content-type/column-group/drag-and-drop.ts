@@ -3,34 +3,33 @@
  * See COPYING.txt for license details.
  */
 
-import ColumnGroup from "../../content-type-collection";
-import Column from "../column/preview";
-import {getAcceptedColumnWidth, getColumnWidth, getSmallestColumnWidth} from "./resizing";
+import ContentTypeCollectionInterface from "../../content-type-collection.types";
+import ColumnPreview from "../column/preview";
+import ColumnGroupPreview from "./preview";
 
 /**
  * Calculate the drop positions of a column group
  *
- * @param {ColumnGroup} group
+ * @param {ContentTypeCollectionInterface} group
  * @returns {any[]}
  */
-export function calculateDropPositions(group: ColumnGroup): DropPosition[] {
+export function calculateDropPositions(group: ContentTypeCollectionInterface<ColumnGroupPreview>): DropPosition[] {
+    const resizeUtils = group.preview.getResizeUtils();
     const dropPositions: any[] = [];
-    group.children().forEach((column: Column, index: number) => {
-        const left = column.element.position().left;
-        const width = column.element.outerWidth(true);
-        const canShrink = getAcceptedColumnWidth(getColumnWidth(column).toString()) > getSmallestColumnWidth();
+    group.children().forEach((column: ContentTypeCollectionInterface<ColumnPreview>, index: number) => {
+        const left = column.preview.element.position().left;
+        const width = column.preview.element.outerWidth(true);
+        const canShrink = resizeUtils.getAcceptedColumnWidth(resizeUtils.getColumnWidth(column).toString()) >
+            resizeUtils.getSmallestColumnWidth();
         dropPositions.push(
             {
-                affectedColumn: column,
-                canShrink,
-                insertIndex: index,
-                left,
+                affectedColumn: column, canShrink,
+                insertIndex: index, left,
                 placement: "left",
                 right: left + (width / 2),
             },
             {
-                affectedColumn: column,
-                canShrink,
+                affectedColumn: column, canShrink,
                 insertIndex: index + 1,
                 left: left + (width / 2),
                 placement: "right",
@@ -46,6 +45,6 @@ export interface DropPosition {
     right: number;
     insertIndex: number;
     placement: string;
-    affectedColumn: Column;
+    affectedColumn: ContentTypeCollectionInterface<ColumnPreview>;
     canShrink: boolean;
 }

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
+    <section name="EditPanelForm">
+        <element name="editForm" type="text" selector='//div[contains(@class, "pagebuilder_modal_form_pagebuilder_modal_form_modal")]'/>
+        <element name="editFormTitle" type="text" selector=".modal-title[data-role='title']"/>
+        <element name="editFormClose" type="button" selector=".modal-header .page-main-actions [data-form-role='close']" timeout="30"/>
+        <element name="editFormReset" type="button" selector=".modal-header .page-main-actions [data-form-role='reset']" timeout="30"/>
+        <element name="editFormSave" type="button" selector=".modal-header .page-main-actions [data-form-role='save']" timeout="30"/>
+        <element name="editPanelSectionName" type="button" selector="//div[@data-index='{{arg1}}']" parameterized="true"/>
+        <element name="editPanelSectionExpanded" type="button" selector="//div[@data-index='{{arg1}}' and contains(@class,'_show')]" parameterized="true"/>
+        <element name="panelFieldLabel" type="text" selector='//aside//div[@data-index="{{arg1}}"]/descendant::div[@data-index="{{arg2}}"]/descendant::label[not(contains(@style,"display: none;"))] | //aside//div[@data-index="{{arg3}}"]/descendant::*[@class="admin__field-label" or @class="title"]/descendant::span[text()="{{arg4}}"][not(ancestor::legend)]' parameterized="true" />
+        <element name="panelSectionChangedIcon" type="text" selector="[data-index='{{arg1}}'] ._changed .admin__page-nav-item-message-icon" parameterized="true"/>
+        <element name="panelSectionError" type="text" selector="[data-index='{{arg1}}'] span._error .admin__page-nav-item-message-icon" parameterized="true"/>
+        <element name="panelFieldControl" type="input" selector='//aside//div[@data-index="{{arg1}}"]/descendant::*[@name="{{arg2}}"]' parameterized="true"/>
+        <element name="panelFieldControlCheckbox" type="input" selector="//input[@type='checkbox' and @name='{{arg1}}']" parameterized="true"/>
+        <element name="panelFieldControlCheckboxState" type="input" selector="//input[@type='checkbox' and @name='{{arg1}}' and @value='{{arg2}}']" parameterized="true"/>
+        <element name="panelFieldControlSwitch" type="input" selector="//*[@name='{{arg1}}']/parent::*/label" parameterized="true"/>
+        <element name="panelFieldOptions" type="input" selector='//div[@data-index="{{arg1}}"]/descendant::*[@name="{{arg2}}"]/option' parameterized="true"/>
+        <element name="panelFieldRequired" type="input" selector='//div[@data-index="{{arg1}}"]/descendant::div[@data-index="{{arg2}}" and contains(@class, "_required")]' parameterized="true"/>
+        <element name="panelFieldDisabled" type="input" selector='//div[@data-index="{{arg1}}"]/descendant::*[@name="{{arg2}}" and @disabled]' parameterized="true"/>
+        <element name="panelFieldNotDisabled" type="input" selector='//div[@data-index="{{arg1}}"]/descendant::*[@name="{{arg2}}" and not(@disabled)]' parameterized="true"/>
+        <element name="panelFieldPlaceholderText" type="text" selector='//div[@data-index="{{arg1}}"]/descendant::*[@name="{{arg2}}" and @placeholder="{{arg3}}"]' parameterized="true"/>
+        <element name="panelFieldNoPlaceholderText" type="input" selector='//div[@data-index="{{arg1}}"]/descendant::*[@name="{{arg2}}" and not(@placeholder)]' parameterized="true"/>
+        <element name="panelFieldAfterLabelText" type="text" selector="//div[@data-index='{{arg1}}']//span[@data-bind='text: addafter' and .='{{arg2}}']" parameterized="true"/>
+        <element name="panelFieldNoAfterLabelText" type="text" selector="//div[@data-index='{{arg1}}']//span[@data-bind='text: addafter']" parameterized="true"/>
+        <element name="panelFieldValidationError" type="input" selector="//div[contains(@class,'_insert_form')]//div[@data-index='{{arg1}}']//div[@data-index='{{arg2}}' and contains(@class,'_error')]//div[contains(@class,'')]//*[@name='{{arg2}}' or contains(@class,'mce-tinymce')]" parameterized="true"/>
+        <element name="panelFieldValidationErrorMessage" type="button" selector="//div[contains(@class,'_insert_form')]//div[@data-index='{{arg1}}']//div[contains(@class,'admin__field-control')]//*[@name='{{arg2}}' or contains(@class,'mce-tinymce')]//..//..//..//label[.='{{arg3}}']" parameterized="true"/>
+        <element name="panelMultiSelectFieldControl" type="input" selector="aside [data-index='{{arg1}}'] [data-index='{{arg2}}'] [data-role='advanced-select']" parameterized="true"/>
+        <element name="panelMultiSelectFieldControlInput" type="input" selector="aside [data-index='{{arg1}}'] [data-index='{{arg2}}'] .admin__action-multiselect-search" parameterized="true"/>
+        <element name="panelMultiSelectFieldControlResult" type="input" selector="//aside//div[@data-index='{{arg1}}']//div[@data-index='{{arg2}}']//div[contains(@class,'action-menu-item')]//span[.='{{arg3}}']" parameterized="true"/>
+        <element name="editFormAllRequiredFields" type="text" selector="aside.pagebuilder_modal_form_pagebuilder_modal_form_modal ._required:not([style*='display: none;'])"/>
+        <element name="editFormUploadedImage" type="button" selector="//div[@data-index='{{arg1}}']/descendant::*[@name='{{arg2}}']//..//..//img" parameterized="true"/>
+        <element name="editFormNoUploadedImage" type="button" selector="//span[text()='{{arg1}}']//parent::label//following-sibling::div//p[text()='Browse to find or drag image here']" parameterized="true"/>
+        <element name="editFormUploadedImageSource" type="button" selector="//div[@data-index='{{arg1}}']/descendant::*[@name='{{arg2}}']//..//..//img[contains(@src,'{{arg3}}') and contains(@src,'{{arg4}}')]" parameterized="true"/>
+        <element name="backgroundImagePreview" type="button" selector='//div[@data-index="background"]/descendant::img[@class="preview-image"]'/>
+        <element name="selectFromGalleryBtn" type="button" selector="//aside//div[@data-index='{{arg1}}']/descendant::*[@name='{{arg2}}']//..//label[text()='Select from Gallery']" parameterized="true"/>
+        <element name="invalidUploadTitle" type="text" selector="//aside[contains(@class,'modal-popup')]//header/h1[contains(.,'Attention')]"/>
+        <element name="invalidUploadMessage" type="text" selector="//aside[contains(@class,'modal-popup')]//div[@class='modal-content']//div[.=&quot;{{arg1}}&quot;]" parameterized="true"/>
+        <element name="invalidUploadOkBtn" type="text" selector="//aside[contains(@class,'modal-popup')]//footer//button//span[.='OK']"/>
+    </section>
+    <section name="AdvancedForm">
+        <element name="sectionName" type="button" selector="//div[@data-index='advanced']"/>
+        <element name="sectionExpanded" type="button" selector="//div[@data-index='advanced' and contains(@class,'_show')]"/>
+        <element name="advancedAlignment" type="select" selector="//select[@name='text_align']"/>
+        <element name="advancedBorder" type="select" selector="//select[@name='border']"/>
+        <element name="advancedBorderColor" type="input" selector="//input[@name='border_color']"/>
+        <element name="advancedBorderWidth" type="input" selector="//input[@name='border_width']"/>
+        <element name="advancedBorderWidthDefault" type="input" selector="//input[@name='border_width' and contains(@placeholder, 'Default')]"/>
+        <element name="advancedBorderSize" type="input" selector="//input[@name='border_width']"/>
+        <element name="advancedBorderRadius" type="input" selector="//input[@name='border_radius']"/>
+        <element name="advancedTextColor" type="input" selector="//input[@name='color']"/>
+        <element name="advancedCssClasses" type="input" selector="//input[@name='css_classes']"/>
+        <element name="cssClassesNote" type="text" selector="//div[@data-index='css_classes']//span[.='Space separated list of classes.']"/>
+        <element name="marginNote" type="input" selector="//div[@data-index='margins_and_padding']//span[.='Margin']"/>
+        <element name="paddingNote" type="input" selector="//div[@data-index='margins_and_padding']//span[.='Padding']"/>
+        <element name="advancedMarginsAndPadding" type="input" selector="//input[@name='margins_and_padding']"/>
+        <element name="advancedMarginsOrPaddingField" type="input" selector="//input[@name='{{arg1}}']" parameterized="true"/>
+        <element name="advancedMarginTop" type="input" selector="//input[@name='marginTop']"/>
+        <element name="advancedMarginRight" type="input" selector="//input[@name='marginRight']"/>
+        <element name="advancedMarginBottom" type="input" selector="//input[@name='marginBottom']"/>
+        <element name="advancedMarginLeft" type="input" selector="//input[@name='marginLeft']"/>
+        <element name="advancedPaddingTop" type="input" selector="//input[@name='paddingTop']"/>
+        <element name="advancedPaddingRight" type="input" selector="//input[@name='paddingRight']"/>
+        <element name="advancedPaddingBottom" type="input" selector="//input[@name='paddingBottom']"/>
+        <element name="advancedPaddingLeft" type="input" selector="//input[@name='paddingLeft']"/>
+        <element name="advancedMarginAndPaddingPlaceholderText" type="input" selector="//input[@name='{{arg1}}' and @placeholder='{{arg2}}']" parameterized="true"/>
+        <element name="advancedMarginAndPaddingErrorMessage" type="button" selector="//div[@data-index='margins_and_padding']/descendant::label[not(contains(@style,'display: none;'))][2]"/>
+    </section>
+    <section name="ColorPicker">
+        <element name="panelEmptyColorSwatch" type="button" selector="//div[contains(@class,'_insert_form')]//div[@data-index='{{arg1}}']//div[contains(@class,'admin__field-control')]//input[@name='{{arg2}}']//..//div[contains(@class,'sp-clear-display')]" parameterized="true"/>
+        <element name="panelColorSwatch" type="button" selector="//div[contains(@class,'_insert_form')]//div[@data-index='{{arg1}}']//div[contains(@class,'admin__field-control')]//input[@name='{{arg2}}']//..//div[@class='sp-preview']" parameterized="true"/>
+        <element name="panelColorSwatchColor" type="button" selector="//div[contains(@class,'_insert_form')]//div[@data-index='{{arg1}}']//div[contains(@class,'admin__field-control')]//input[@name='{{arg2}}']//..//div[@class='sp-preview']//div[contains(@style,'{{arg3}}')]" parameterized="true"/>
+        <element name="colorSwatch" type="button" selector=".sp-preview"/>
+        <element name="colorPickerWindow" type="button" selector=".sp-container:not(.sp-hidden)"/>
+        <element name="allColorBoxes" type="button" selector=".sp-container:not(.sp-hidden) .sp-palette-row:not(.sp-palette-row-selection) [data-color]"/>
+        <element name="colorBox" type="button" selector=".sp-container:not(.sp-hidden) [data-color='{{arg1}}']" parameterized="true"/>
+        <element name="firstColorBox" type="button" selector=".sp-container:not(.sp-hidden) [data-color='rgb(252, 0, 9)']"/>
+        <element name="activeFavoriteColorBox" type="button" selector=".sp-container:not(.sp-hidden) .sp-palette-row.sp-palette-row-selection .sp-thumb-active[data-color='{{arg1}}']" parameterized="true"/>
+        <element name="colorWheel" type="button" selector=".sp-container:not(.sp-hidden) .sp-val"/>
+        <element name="colorWheelColor" type="button" selector=".sp-container:not(.sp-hidden) .sp-color[style='background-color: {{arg1}};']" parameterized="true"/>
+        <element name="inputField" type="input" selector=".sp-container:not(.sp-hidden) .sp-input"/>
+        <element name="clearColorBtn" type="button" selector=".sp-container:not(.sp-hidden) [title='Clear Color Selection']"/>
+        <element name="hueSlider" type="button" selector=".sp-container:not(.sp-hidden) .sp-hue"/>
+        <element name="lightDarkSlider" type="button" selector=".sp-container:not(.sp-hidden) .sp-alpha"/>
+        <element name="cancelBtn" type="button" selector="//div[contains(@class,'sp-palette') and not(contains(@class,'sp-hidden'))]//a[text()='Cancel']"/>
+        <element name="applyBtn" type="button" selector="//div[contains(@class,'sp-palette') and not(contains(@class,'sp-hidden'))]//button[text()='Apply']"/>
+    </section>
+    <section name="VisualSelectComponent">
+        <element name="firstSelection" type="input" selector="//li[@name='{{var1}}']" parameterized="true"/>
+        <element name="secondSelection" type="input" selector="//li[@name='{{var1}}']" parameterized="true"/>
+        <element name="thirdSelection" type="input" selector="//li[@name='{{var1}}']" parameterized="true"/>
+        <element name="fourthSelection" type="input" selector="//li[@name='{{var1}}']" parameterized="true"/>
+    </section>
+    <section name="PageBuilderLinkAttributeAdmin">
+        <element name="LinkSelect" type="select" selector="//select[@name='{{var1}}']" parameterized="true"/>
+        <element name="LinkInput" type="input" selector="//select[@name='{{var1}}']/following-sibling::div/input" parameterized="true"/>
+        <element name="LinkDropdown" type="select" selector="//div[contains(@class,'url-input-element-linked-element')]/div"/>
+        <element name="LinkSearch" type="input" selector="//div[contains(@class,'url-input-element-linked-element')]//input"/>
+        <element name="SearchResultBox" type="select" selector=".action-menu._active"/>
+        <element name="LinkItemSelected" type="text" selector="//span[text()='{{var1}}']/parent::label/parent::div[contains(@class,'_selected')]" parameterized="true"/>
+        <element name="SearchResult" type="text" selector="//span[text()='{{var1}}']" parameterized="true"/>
+        <element name="DropdownInput" type="input" selector="//div[@class='url-input-element-linked-element']//div[@data-role='selected-option']"/>
+        <element name="RemoveBtn" type="button" selector="button[data-action='remove-selected-item']"/>
+    </section>
+</sections>

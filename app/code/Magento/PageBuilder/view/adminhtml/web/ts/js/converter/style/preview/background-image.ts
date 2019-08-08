@@ -3,8 +3,14 @@
  * See COPYING.txt for license details.
  */
 
+import {DataObject} from "../../../data-store";
+import {get} from "../../../utils/object";
 import ConverterInterface from "../../converter-interface";
+import ImageArrayObject from "../../image-array-object.types";
 
+/**
+ * @api
+ */
 export default class BackgroundImage implements ConverterInterface {
     /**
      * Convert value to internal format
@@ -23,8 +29,8 @@ export default class BackgroundImage implements ConverterInterface {
      * @param data Object
      * @returns {string}
      */
-    public toDom(name: string, data: object): string {
-        const value = data[name];
+    public toDom(name: string, data: DataObject): string {
+        const value = get<ImageArrayObject>(data, name);
         if (value && typeof value[0] === "object") {
             return "url(" + value[0].url + ")";
         }

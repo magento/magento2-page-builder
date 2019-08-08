@@ -3,8 +3,14 @@
  * See COPYING.txt for license details.
  */
 
+import {DataObject} from "../../data-store";
+import {get} from "../../utils/object";
 import ConverterInterface from "../converter-interface";
+import LinkObject from "../link-object.types";
 
+/**
+ * @api
+ */
 export default class CreateValueForLinkType implements ConverterInterface {
 
     /**
@@ -24,8 +30,8 @@ export default class CreateValueForLinkType implements ConverterInterface {
      * @param data Object
      * @returns {string}
      */
-    public toDom(name: string, data: object): string {
-
-        return data[name] ? data[name].type : "";
+    public toDom(name: string, data: DataObject): string {
+        const value = get<LinkObject>(data, name);
+        return value && value.type ? value.type : "default";
     }
 }

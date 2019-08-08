@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="AdminAddImageToWYSIWYGCatalogTest">
+        <before>
+            <magentoCLI command="config:set cms/pagebuilder/enabled 0" stepKey="disablePageBuilder" after="switchToTinyMCE4"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/pagebuilder/enabled 1" stepKey="enablePageBuilder" after="disableWYSIWYG"/>
+        </after>
+    </test>
+    <test name="VerifyTinyMCEv4IsNativeWYSIWYGOnCatalogTest">
+        <before>
+            <magentoCLI command="config:set cms/pagebuilder/enabled 0" stepKey="disablePageBuilder" after="switchToTinyMCE4"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/pagebuilder/enabled 1" stepKey="enablePageBuilder" after="disableWYSIWYG"/>
+        </after>
+    </test>
+    <test name="PageBuilderCatalogCategoryDisablePageBuilder">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Catalog Category"/>
+            <title value="Verify PageBuilder Does Not Appear When Disabled"/>
+            <description value="This test is intended to ensure that PageBuilder does not appear when disabled for Catalog Category."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-5773"/>
+            <testCaseId value="MC-14961"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-disable"/>
+            <group value="pagebuilder-catalog-category"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultCategory" stepKey="createCategory"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToCreatedCategory" stepKey="navigateToCreatedCategory">
+                <argument name="Category" value="$$createCategory$$"/>
+            </actionGroup>
+            <actionGroup ref="expandAdminProductSection" stepKey="expandAdminProductSection"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/pagebuilder/enabled 1" stepKey="enablePageBuilder"/>
+            <deleteData createDataKey="createCategory" stepKey="deleteCreatedCategory"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <seeElement selector="{{PageBuilderProductAttribute.PageBuilderBtn('description')}}" stepKey="seePageBuilderButton"/>
+        <dontSeeElementInDOM selector="{{CategoryContentSection.descriptionTextArea}}" stepKey="dontSeeDescriptionAreaInDOM"/>
+        <magentoCLI command="config:set cms/pagebuilder/enabled 0" stepKey="disablePageBuilder"/>
+        <actionGroup ref="navigateToCreatedCategory" stepKey="navigateToCreatedCategory">
+            <argument name="Category" value="$$createCategory$$"/>
+        </actionGroup>
+        <actionGroup ref="expandAdminProductSection" stepKey="expandAdminProductSection"/>
+        <seeElementInDOM selector="{{CategoryContentSection.descriptionTextArea}}" stepKey="seeDescriptionAreaInDOM"/>
+        <dontSeeElementInDOM selector="{{PageBuilderProductAttribute.PageBuilderBtn('description')}}" stepKey="dontSeePageBuilderButton"/>
+    </test>
+</tests>

@@ -3,8 +3,15 @@
  * See COPYING.txt for license details.
  */
 
+import _ from "underscore";
+import {DataObject} from "../../data-store";
+import {DataObjectMargins} from "../../property/margins";
+import {get} from "../../utils/object";
 import ConverterInterface from "../converter-interface";
 
+/**
+ * @api
+ */
 export default class Margins implements ConverterInterface {
     /**
      * Convert value to internal format
@@ -12,37 +19,40 @@ export default class Margins implements ConverterInterface {
      * @param value string
      * @returns {string | object}
      */
-    public fromDom(value: string): string | object {
-        const result = {};
+    public fromDom(value: DataObjectMargins): DataObjectMargins {
         if (undefined !== value.margin) {
-            result.margin = {
-                top: value.margin.top.replace("px", ""),
-                left: value.margin.left.replace("px", ""),
-                right: value.margin.right.replace("px", ""),
-                bottom: value.margin.bottom.replace("px", ""),
+            return {
+                margin: {
+                    top: value.margin.top.replace("px", ""),
+                    left: value.margin.left.replace("px", ""),
+                    right: value.margin.right.replace("px", ""),
+                    bottom: value.margin.bottom.replace("px", ""),
+                },
             };
         }
-        return result;
+        return {};
     }
 
     /**
      * Convert value to knockout format
      *
-     * @param name string
-     * @param data Object
+     * @param {string} name
+     * @param {DataObject} data
      * @returns {string | object}
      */
-    public toDom(name: string, data: object): string | object {
-        const result = {};
-        let value = data[name];
-        if (value && typeof value === "string") {
+    public toDom(name: string, data: DataObject): string | object {
+        const result: {
+            [key: string]: string;
+        } = {};
+        let value = get<DataObjectMargins>(data, name);
+        if (value && _.isString(value)) {
             value = JSON.parse(value);
         }
         if (value && undefined !== value.margin) {
-            result.marginLeft = value.margin.left + "px";
-            result.marginTop = value.margin.top + "px";
-            result.marginRight = value.margin.right + "px";
-            result.marginBottom = value.margin.bottom + "px";
+            result.marginLeft = value.margin.left ? value.margin.left + "px" : "";
+            result.marginTop = value.margin.top ? value.margin.top + "px" : "";
+            result.marginRight = value.margin.right ? value.margin.right + "px" : "";
+            result.marginBottom = value.margin.bottom ? value.margin.bottom + "px" : "";
         }
         return result;
     }

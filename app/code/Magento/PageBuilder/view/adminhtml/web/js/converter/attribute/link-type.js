@@ -1,12 +1,18 @@
 /*eslint-disable */
-define([], function () {
+define(["Magento_PageBuilder/js/utils/object"], function (_object) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
+
+  /**
+   * @api
+   */
   var CreateValueForLinkType =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     function CreateValueForLinkType() {}
 
     var _proto = CreateValueForLinkType.prototype;
@@ -19,7 +25,7 @@ define([], function () {
      */
     _proto.fromDom = function fromDom(value) {
       return value;
-    };
+    }
     /**
      * Convert value to knockout format
      *
@@ -27,10 +33,11 @@ define([], function () {
      * @param data Object
      * @returns {string}
      */
-
+    ;
 
     _proto.toDom = function toDom(name, data) {
-      return data[name] ? data[name].type : "";
+      var value = (0, _object.get)(data, name);
+      return value && value.type ? value.type : "default";
     };
 
     return CreateValueForLinkType;

@@ -1,0 +1,16 @@
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+
+<div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview pagebuilder-no-blur pagebuilder-live-edit pagebuilder-buttons" event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
+    <render args="getOptions().template" />
+    <div class="element-children buttons-container" each="contentType.getChildren()" attr="Object.assign({}, data.main.attributes(), { id: contentType.id + '-children' })" ko-style="data.main.style" css="data.main.css" data-bind="sortableChildren: getSortableOptions()">
+        <div class="pagebuilder-content-type-wrapper"
+             template="{ name: preview.template, data: preview, afterRender: function () { preview.dispatchAfterRenderEvent.apply(preview, arguments); } }"
+             attr="{ id: id }"
+             css="{'pagebuilder-content-type-hidden': !preview.display()}"></div>
+    </div>
+</div>

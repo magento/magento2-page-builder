@@ -3,25 +3,26 @@
  * See COPYING.txt for license details.
  */
 
-import loadModule from "Magento_PageBuilder/js/utils/loader";
 import Config from "../config";
+import loadModule from "../utils/loader";
 import PropertyReaderPool from "./property-reader-pool";
 
 /**
  * Create a new instance of property reader pool
  */
-export default function create(contentType: string): Promise<> {
+export default function create(contentType: string): Promise<typeof PropertyReaderPool> {
     const config = Config.getContentTypeConfig(contentType);
-    const propertyReaders = [];
-    for (const appearanceName: string of Object.keys(config.appearances)) {
-        const dataMapping = config.appearances[appearanceName].data_mapping;
-        if (dataMapping !== undefined && dataMapping.elements !== undefined) {
-            for (const elementName: string of Object.keys(dataMapping.elements)) {
-                const element = dataMapping.elements[elementName];
+    const propertyReaders: string[] = [];
+    let appearanceName: string;
+    for (appearanceName of Object.keys(config.appearances)) {
+        const appearance = config.appearances[appearanceName];
+        if (appearance !== undefined && appearance.elements !== undefined) {
+            let elementName: string;
+            for (elementName of Object.keys(appearance.elements)) {
+                const element = appearance.elements[elementName];
                 if (element.style !== undefined) {
                     for (const propertyConfig of element.style) {
-                        if (!!propertyConfig.complex
-                            && propertyConfig.reader
+                        if (propertyConfig.reader
                             && propertyReaders.indexOf(propertyConfig.reader) === -1
                             && !PropertyReaderPool.get(propertyConfig.reader)
                         ) {
@@ -32,8 +33,7 @@ export default function create(contentType: string): Promise<> {
 
                 if (element.attributes !== undefined) {
                     for (const attributeConfig of element.attributes) {
-                        if (!!attributeConfig.complex
-                            && attributeConfig.reader
+                        if (attributeConfig.reader
                             && propertyReaders.indexOf(attributeConfig.reader) === -1
                             && !PropertyReaderPool.get(attributeConfig.reader)
                         ) {
@@ -45,7 +45,7 @@ export default function create(contentType: string): Promise<> {
         }
     }
 
-    return new Promise((resolve: (PropertyReaderPool: object) => void) => {
+    return new Promise((resolve: (propertyReaderPool: typeof PropertyReaderPool) => void) => {
         loadModule(propertyReaders, (...loadedPropertyReaders: any[]) => {
             for (let i = 0; i < propertyReaders.length; i++) {
                 PropertyReaderPool.register(propertyReaders[i], new loadedPropertyReaders[i]());

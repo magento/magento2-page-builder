@@ -7,6 +7,16 @@
 
 .pagebuilder-header {
     text-align: right;
+
+    > .icon-pagebuilder-fullscreen {
+        cursor: pointer;
+        display: inline-block;
+        padding: 15px 0 15px 15px;
+    }
+
+    > .icon-pagebuilder-fullscreen-exit:before {
+        padding-left: 0;
+    }
 }
 
 .admin__fieldset > .admin__field > .admin__control-grouped {
@@ -19,52 +29,140 @@
 }
 
 .pagebuilder-stage-wrapper {
+    -moz-transition: .35s ease-in-out;
+    -webkit-transition: .35s ease-in-out;
+    background: @color-white;
+    position: relative;
+    transition: .35s ease-in-out;
+
+    ._disabled & {
+        opacity: .5;
+        pointer-events: none;
+    }
+
     &.stage-full-screen {
+        -moz-transform: translateZ(0);
+        -webkit-transform: translateZ(0);
         background: @color-white;
         height: 100%;
         left: 0;
         overflow: scroll;
-        padding: 10px;
+        overflow-x: hidden;
+        padding: 0;
         position: fixed;
         top: 0;
+        transform: translateZ(0);
         width: 100%;
         z-index: 800;
-    }
-}
 
-.pagebuilder-add-row-wrapper {
-    float: left;
-    text-align: center;
-    width: 100%;
+        .pagebuilder-header {
+            float: right;
+            height: 0;
+            padding: 0;
+            position: fixed;
+            position: -webkit-sticky;
+            position: sticky;
+            right: 0;
+            top: 0;
+            width: auto;
+            z-index: 101;
 
-    .pagebuilder-add-row {
-        -moz-border-radius: 5px;
-        -webkit-border-radius: 5px;
-        background: @row-color;
-        border-radius: 5px;
-        color: @color-white;
-        display: inline-block;
-        font-size: 26px;
-        height: 50px;
-        line-height: 50px;
-        width: 50px;
+            .icon-pagebuilder-fullscreen-exit {
+                background: rgba(255,255,255,.8);
+                border: none;
+                border-radius: 0;
+                box-shadow: none;
+                cursor: pointer;
+                display: inline-block;
+                margin: 0;
+                padding: 15px 20px;
+            }
+        }
 
-        &:hover {
-            background: darken(@row-color, 15%);
+        .pagebuilder-canvas {
+            padding-top: 30px;
+        }
+
+        .pagebuilder-panel-wrapper {
+            bottom: 0;
+            position: fixed;
+            position: -webkit-sticky;
+            position: sticky;
+            top: 0;
+            z-index: 102;
+
+            .pagebuilder-panel {
+                height: 100vh;
+                overflow-y: auto;
+
+                &::-webkit-scrollbar {
+                    width: 5px;
+                }
+
+                &::-webkit-scrollbar-thumb {
+                    background-color: darkgrey;
+                }
+
+                .pagebuilder-panel-menu-sections {
+                    padding-bottom: 41px;
+                }
+
+                .panel-controls {
+                    background-color: @color-very-dark-grayish-orange;
+                    bottom: 0;
+                    position: absolute;
+                    width: 100%;
+                }
+            }
+        }
+
+        .pagebuilder-stage {
+            margin-left: 150px;
         }
     }
 }
 
+.pagebuilder-wysiwyg-wrapper.pagebuilder-transition-out .pagebuilder-stage-wrapper {
+    .pagebuilder-stage-wrapper.stage-full-screen;
+
+    .pagebuilder-header {
+        .pagebuilder-stage-wrapper.stage-full-screen.pagebuilder-header;
+
+        .icon-pagebuilder-fullscreen-exit {
+            .pagebuilder-stage-wrapper.stage-full-screen.pagebuilder-header.icon-pagebuilder-fullscreen-exit;
+        }
+    }
+}
+
+.pagebuilder-wysiwyg-wrapper.pagebuilder-transition-in {
+    .pagebuilder-stage-wrapper {
+        -moz-transition: .175s ease-in-out;
+        -webkit-transition: .175s ease-in-out;
+        opacity: 0;
+        transform: scale(.8) translateZ(0);
+        transition: .175s ease-in-out;
+        visibility: hidden;
+    }
+
+    &.trigger-transition .pagebuilder-stage-wrapper {
+        opacity: 1;
+        transform: scale(1) translateZ(0);
+        visibility: visible;
+    }
+}
+
 .pagebuilder-stage {
-    -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* IE10+ */
-    /* Rules below not implemented in browsers yet */
+    -moz-transition: margin-left .35s ease-in-out;
+    -moz-user-select: none;
+    -ms-user-select: none;
     -o-user-select: none;
-    -webkit-user-select: none; /* Chrome/Safari */
+    -webkit-transition: margin-left .35s ease-in-out;
+    -webkit-user-select: none;
     font-size: 0;
-    margin-left: 170px; // temp
+    margin-left: 170px;
     min-height: 200px;
-    padding: 0 0 60px; // 60px to include the add row button
+    padding: 0;
+    transition: margin-left .35s ease-in-out;
     user-select: none;
 
     &.stage-full-screen {
@@ -73,12 +171,10 @@
 
     &.pagebuilder-no-user-select {
         * {
-            -moz-user-select: none !important; /* Firefox */
-            -ms-user-select: none !important; /* IE10+ */
-
-            /* Rules below not implemented in browsers yet */
+            -moz-user-select: none !important;
+            -ms-user-select: none !important;
             -o-user-select: none !important;
-            -webkit-user-select: none !important; /* Chrome/Safari */
+            -webkit-user-select: none !important;
             user-select: none !important;
         }
     }
@@ -88,20 +184,22 @@
     }
 
     .pagebuilder-stage-loading {
-        padding: 90px 0 30px;
-        text-align: center;
-
-        p {
-            font-size: 14px;
-            margin: 3rem 0;
+        .spinner {
+            font-size: 4rem;
+            left: 50%;
+            margin-left: -2rem;
+            margin-top: -2rem;
+            position: absolute;
+            top: 50%;
         }
     }
 
     .pagebuilder-canvas {
-        -moz-transition: 1s ease-in-out;
-        -webkit-transition: 1s ease-in-out;
+        -moz-transition: opacity .75s ease-in-out, visibility .75s ease-in-out, padding-top .35s ease-in-out;
+        -webkit-transition: opacity .75s ease-in-out, visibility .75s ease-in-out, padding-top .35s ease-in-out;
         opacity: 0;
-        transition: 1s ease-in-out;
+        padding-bottom: 120px;
+        transition: opacity .75s ease-in-out, visibility .75s ease-in-out, padding-top .35s ease-in-out;
         visibility: hidden;
 
         &.active {
@@ -129,8 +227,4 @@
     display: inline-block;
     vertical-align: top;
     width: 100%;
-
-    &.pagebuilder-sorting-original {
-        opacity: .4;
-    }
 }

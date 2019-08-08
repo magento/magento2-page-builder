@@ -6,7 +6,7 @@
 -->
 
 <div class="pagebuilder-image-uploader-container" data-role="drop-zone" css="_loading: isLoading, 'has-data': hasData()">
-    <div class="pagebuilder-options" data-bind="visible: hasData()">
+    <div class="pagebuilder-options" data-bind="visible: hasData() || isShowImageUploadOptions">
         <div class="pagebuilder-options-wrapper">
             <ul class="pagebuilder-options-links">
                 <li class="pagebuilder-options-link">
@@ -16,7 +16,7 @@
                     <label
                         data-bind="event: {change: addFileFromMediaGallery, click: openMediaBrowserDialog}"
                         class="file-uploader-button action-default"
-                        attr="id: mediaGalleryUid"
+                        attr="id: mediaGalleryUid, 'data-id': getFileId()"
                         disable="disabled"
                         data-force_static_path="1"
                         translate="translations.selectFromGallery"/>
@@ -29,7 +29,7 @@
     <div class="pagebuilder-image-uploader-container-dropzone-overlay">
         <span class="dropzone-placeholder-text" translate="translations.dropHere"></span>
     </div>
-    <div class="pagebuilder-image-empty-preview" data-bind="visible: !hasData()">
+    <div class="pagebuilder-image-empty-preview" data-bind="visible: !hasData() && isShowImageUploadInstructions">
         <div class="admin__field-control">
             <div class="file-uploader image-uploader">
                 <div class="file-uploader-area">
@@ -40,7 +40,7 @@
                     <label
                         data-bind="event: {change: addFileFromMediaGallery, click: openMediaBrowserDialog}"
                         class="file-uploader-button action-default"
-                        attr="id: mediaGalleryUid"
+                        attr="id: mediaGalleryUid, 'data-id': getFileId()"
                         disable="disabled"
                         data-force_static_path="1"
                         translate="translations.selectFromGallery"/>

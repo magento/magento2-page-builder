@@ -1,0 +1,442 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="ActivatePageBuilderFullScreen">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Panel"/>
+            <title value="Activate PageBuilder CMS in fullscreen mode and then unactivate it."/>
+            <description value="You should be able to activate PageBuilder FullScreen in Admin."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-71798"/>
+            <testCaseId value="MC-2524"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-panel"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <waitForElementVisible selector="{{PageBuilderStage.stageWrapper}}" stepKey="waitForStage"/>
+        <waitForElementVisible selector="{{PageBuilderStage.openFullScreen}}" stepKey="waitForFullScreenButton"/>
+        <waitForElementNotVisible selector="{{PageBuilderStage.stageWrapperFullScreen}}" stepKey="verifyStageNotFullScreen"/>
+        <click selector="{{PageBuilderStage.openFullScreen}}" stepKey="clickFullScreenButton"/>
+        <waitForElementVisible selector="{{PageBuilderStage.stageWrapperFullScreen}}" stepKey="waitForStageFullScreen"/>
+        <waitForElementVisible selector="{{PageBuilderStage.exitFullScreen}}" stepKey="waitForExitFullScreenButton"/>
+        <waitForElementNotVisible selector="{{PageBuilderStage.stageWrapper}}" stepKey="verifyStageNotNormalScreen"/>
+        <click selector="{{PageBuilderStage.exitFullScreen}}" stepKey="clickExitFullScreen"/>
+        <waitForElementVisible selector="{{PageBuilderStage.stageWrapper}}" stepKey="waitForStage2"/>
+        <waitForElementNotVisible selector="{{PageBuilderStage.stageWrapperFullScreen}}" stepKey="verifyStageNotFullScreen2"/>
+    </test>
+    <test name="ShowPanelMenuSections">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Panel"/>
+            <title value="Display Existing PageBuilder Panel Content Type Groups"/>
+            <description value="The PageBuilder panel should display existing content type groups, and open the first section by default."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-71566"/>
+            <testCaseId value="MC-4053"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-panel"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <seeElement selector='{{PageBuilderPanel.firstSection}}' parameterArray="['class' => 'active']" stepKey="firstSectionOfPanelIsOpen"/>
+        <actionGroup ref="validateMenuSectionsAndContentTypes" stepKey="validateMenuSectionsAndContentTypes"/>
+    </test>
+    <test name="SearchOneCharInPanel">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Panel"/>
+            <title value="Search for one character in PageBuilder Panel"/>
+            <description value="When typing one letter into the panel search box, I see Content Types that contains words that start with letter entered."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-71566"/>
+            <testCaseId value="MC-2866"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-panel"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <fillField selector="{{PageBuilderPanel.searchPanel}}" userInput="b" stepKey="fillSearch"/>
+        <see userInput="Buttons" selector="{{PageBuilderPanel.searchResults}}" stepKey="validateContentTypeButtons"/>
+        <see userInput="Banner" selector="{{PageBuilderPanel.searchResults}}" stepKey="validateContentTypeBanner"/>
+        <see userInput="Block" selector="{{PageBuilderPanel.searchResults}}" stepKey="validateContentTypeStaticBlock"/>
+    </test>
+    <test name="SearchRemovedContentType">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Panel"/>
+            <title value="Search for removed content type on PageBuilder Panel"/>
+            <description value="When typing Search/Code into the panel search box, I shouldn't see Code/Search Content Types displays"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-66517"/>
+            <testCaseId value="MC-1338"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-panel"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <fillField selector="{{PageBuilderPanel.searchPanel}}" userInput="Search" stepKey="fillSearch"/>
+        <dontSee userInput="Search" selector="{{PageBuilderPanel.searchResults}}" stepKey="validateSearchButtons"/>
+        <fillField selector="{{PageBuilderPanel.searchPanel}}" userInput="Code" stepKey="fillCode"/>
+        <see userInput="HTML Code" selector="{{PageBuilderPanel.searchResults}}" stepKey="validateCodeButtons"/>
+    </test>
+    <test name="SearchThreeCharInPanel">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Panel"/>
+            <title value="Search for three characters in PageBuilder Panel"/>
+            <description value="When typing three letters into the panel search box, I see content types that contains words that start with letters entered."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-71566"/>
+            <testCaseId value="MC-4024"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-panel"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <fillField selector="{{PageBuilderPanel.searchPanel}}" userInput="blo" stepKey="fillSearch"/>
+        <see userInput="Block" selector="{{PageBuilderPanel.searchResults}}" stepKey="validateStaticBlock"/>
+    </test>
+    <test name="SearchNoMatchesInPanel">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Panel"/>
+            <title value="Search for no matches in PageBuilder Panel"/>
+            <description value="When there is no match on a search, display appropriate message."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-71566"/>
+            <testCaseId value="MC-2604"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-panel"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <fillField selector="{{PageBuilderPanel.searchPanel}}" userInput="abcdef" stepKey="fillSearch"/>
+        <see userInput="Nothing found" selector="{{PageBuilderPanel.nothingFound}}" stepKey="validateNothingFound"/>
+    </test>
+    <test name="ClearSearchInPanel">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Panel"/>
+            <title value="Clear search in PageBuilder Panel using clear search button and backspace"/>
+            <description value="The clear search button is displayed only when I start typing in the search field. When a search is cleared, content type groups are displayed."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-71566"/>
+            <testCaseId value="MC-2454"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-panel"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <comment userInput="Verify Clear Search button is not shown before typing" stepKey="commentClearSearchButton"/>
+        <dontSeeElement selector='//*[@id="pagebuilder-panel"]/div[1]/a' stepKey="dontSeeClearSearch"/>
+        <fillField selector="{{PageBuilderPanel.searchPanel}}" userInput="i" stepKey="fillSearchFieldi"/>
+        <seeElement selector='{{PageBuilderPanel.searchField}}' stepKey="seeClearSearch"/>
+        <see userInput="Image" selector="{{PageBuilderPanel.searchResults}}" stepKey="validateImageAppears"/>
+        <dontSee userInput="Row" selector="{{PageBuilderPanel.searchResults}}" stepKey="validateRowDoesNotAppear"/>
+        <comment userInput="Use Clear Search button to show all content types on Pagebuilder panel" stepKey="commentClearSearch"/>
+        <click selector="{{PageBuilderPanel.clearSearch}}" stepKey="clickClearSearch"/>
+        <dontSee userInput="i" selector="{{PageBuilderPanel.searchPanel}}" stepKey="validateInputClearedAfterClickClear"/>
+        <actionGroup ref="validateMenuSectionsAndContentTypes" stepKey="validateMenuSectionsAndContentTypesAfterClickClear"/>
+        <actionGroup ref="closePageBuilderPanelMenuSections" stepKey="closePageBuilderPanelMenuSections"/>
+        <fillField selector="{{PageBuilderPanel.searchPanel}}" userInput="r" stepKey="fillSearchFieldr"/>
+        <see userInput="Row" selector="{{PageBuilderPanel.searchResults}}" stepKey="validateRowAppears"/>
+        <dontSee userInput="Column" selector="{{PageBuilderPanel.searchResults}}" stepKey="validateColumnDoesNotAppear"/>
+        <comment userInput="Clear input field using backspace to show all content types on Pagebuilder panel" stepKey="commentDeleteSearch"/>
+        <pressKey selector="{{PageBuilderPanel.searchPanel}}" parameterArray="[\WebDriverKeys::BACKSPACE]" stepKey="enterSearchInput"/>
+        <dontSee userInput="r" selector="{{PageBuilderPanel.searchPanel}}" stepKey="validateInputClearedAfterRemoveCharacters"/>
+        <scrollTo selector="{{CmsNewPagePageActionsSection.contentSectionName}}" stepKey="scrollToTopOfStage"/>
+        <actionGroup ref="validateMenuSectionsAndContentTypes" stepKey="validateMenuSectionsAndContentTypesAfterClearField"/>
+    </test>
+    <test name="SearchContentTypeAndAddToStage">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Panel"/>
+            <title value="Search for content blocks and add them to stage"/>
+            <description value="After search I can drag and drop content blocks onto the stage before and after clicking X on the panel search "/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-92004"/>
+            <testCaseId value="MC-2690"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-panel"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <comment userInput="Search Map in Panel and drag to stage" stepKey="commentSearchMap"/>
+        <fillField selector="{{PageBuilderPanel.searchPanel}}" userInput="Map" stepKey="fillSearchField"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <comment userInput="Clear search Map and drag Column to stage" stepKey="commentClearSearch"/>
+        <waitForElementVisible selector='{{PageBuilderPanel.searchField}}' stepKey="seeClearSearch"/>
+        <click selector='{{PageBuilderPanel.searchField}}' stepKey="clickClearSearch"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnToStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <dontSeeJsError stepKey="dontSeeJsError"/>
+    </test>
+    <test name="ValidatePanelContentTypesGroupedCorrectly">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Panel"/>
+            <title value="Content types are grouped as specified"/>
+            <description value="The panel should contain the proper menu sections with content types"/>
+            <severity value="MINOR"/>
+            <useCaseId value="MC-943"/>
+            <testCaseId value="MC-2897"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-panel"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Validate Layout menu section -->
+        <comment userInput="Validate layout menu section" stepKey="commentValidatePanel1"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInMenuSection('1', 'Layout', '1', 'Row')}}" stepKey="validateContentTypeRow"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInMenuSection('1', 'Layout', '2', 'Column')}}" stepKey="validateContentTypeColumn"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInMenuSection('1', 'Layout', '3', 'Tabs')}}" stepKey="validateContentTypeTabs"/>
+        <click selector="{{PageBuilderPanel.panelMenuSection('Layout')}}" stepKey="closeLayoutMenuSection"/>
+        <!-- Validate Elements menu section -->
+        <comment userInput="Validate elements menu section" stepKey="commentValidatePanel2"/>
+        <click selector="{{PageBuilderPanel.panelMenuSection('Elements')}}" stepKey="openElementMenuSection"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInMenuSection('2', 'Elements', '1', 'Text')}}" stepKey="validateContentTypeText"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInMenuSection('2', 'Elements', '2', 'Heading')}}" stepKey="validateContentTypeHeading"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInMenuSection('2', 'Elements', '3', 'Buttons')}}" stepKey="validateContentTypeButtons"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInMenuSection('2', 'Elements', '4', 'Divider')}}" stepKey="validateContentTypeDivider"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInMenuSection('2', 'Elements', '5', 'HTML Code')}}" stepKey="validateContentTypeHTML"/>
+        <click selector="{{PageBuilderPanel.panelMenuSection('Elements')}}" stepKey="closeElementMenuSection"/>
+        <!-- Validate Media menu section -->
+        <comment userInput="Validate media menu section" stepKey="commentValidatePanel3"/>
+        <click selector="{{PageBuilderPanel.panelMenuSection('Media')}}" stepKey="openMediaMenuSection"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInMenuSection('3', 'Media', '1', 'Image')}}" stepKey="validateContentTypeImage"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInMenuSection('3', 'Media', '2', 'Video')}}" stepKey="validateContentTypeVideo"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInMenuSection('3', 'Media', '3', 'Banner')}}" stepKey="validateContentTypeBanner"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInMenuSection('3', 'Media', '4', 'Slider')}}" stepKey="validateContentTypeSlider"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInMenuSection('3', 'Media', '5', 'Map')}}" stepKey="validateContentTypeMap"/>
+        <click selector="{{PageBuilderPanel.panelMenuSection('Media')}}" stepKey="closeMediaMenuSection"/>
+        <!-- Validate Add Content menu section -->
+        <comment userInput="Validate add content menu section" stepKey="commentValidatePanel4"/>
+        <click selector="{{PageBuilderPanel.panelMenuSection('Add Content')}}" stepKey="openAddContentMenuSection"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInMenuSection('4', 'Add Content', '1', 'Block')}}" stepKey="validateContentTypeBlock"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInMenuSection('4', 'Add Content', '2', 'Products')}}" stepKey="validateContentTypeProducts"/>
+        <click selector="{{PageBuilderPanel.panelMenuSection('Add Content')}}" stepKey="closeAddContentMenuSection"/>
+    </test>
+    <test name="ValidatePanelDefaultState">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Panel"/>
+            <title value="Panel default state as specified"/>
+            <description value="The panel should only have the layout menu section expanded"/>
+            <severity value="MINOR"/>
+            <useCaseId value="MC-943"/>
+            <testCaseId value="MC-4025"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-panel"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <seeElement selector="{{PageBuilderPanel.panelMenuSectionActive('Layout')}}" stepKey="checkLayoutActive"/>
+        <dontSeeElement selector="{{PageBuilderPanel.panelMenuSectionActive('Elements')}}" stepKey="checkInactiveMenuSection1"/>
+        <dontSeeElement selector="{{PageBuilderPanel.panelMenuSectionActive('Media')}}" stepKey="checkInactiveMenuSection2"/>
+        <dontSeeElement selector="{{PageBuilderPanel.panelMenuSectionActive('Add Content')}}" stepKey="checkInactiveMenuSection3"/>
+    </test>
+    <test name="ValidatePanelContentTypeIcons">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Panel"/>
+            <title value="Panel Icons are as specified"/>
+            <description value="The panel should have correct icons for each content type"/>
+            <severity value="MINOR"/>
+            <useCaseId value="MC-943"/>
+            <testCaseId value="MC-3199"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-panel"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Validate Layout Icons -->
+        <comment userInput="Validate layout icons" stepKey="commentValidatePanel1"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('row','Row')}}" stepKey="validateRowIcon"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('column','Column')}}" stepKey="validateColumnIcon"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('tabs','Tabs')}}" stepKey="validateTabsIcon"/>
+        <click selector="{{PageBuilderPanel.panelMenuSection('Layout')}}" stepKey="closeLayoutMenuSection"/>
+        <!-- Validate Elements Icons -->
+        <comment userInput="Validate elements icons" stepKey="commentValidatePanel2"/>
+        <click selector="{{PageBuilderPanel.panelMenuSection('Elements')}}" stepKey="openElementsMenuSection"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('text','Text')}}" stepKey="validateTextIcon"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('heading','Heading')}}" stepKey="validateHeadingIcon"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('button','Buttons')}}" stepKey="validateButtonsIcon"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('divider','Divider')}}" stepKey="validateDividerIcon"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('code','HTML Code')}}" stepKey="validateHTMLIcon"/>
+        <click selector="{{PageBuilderPanel.panelMenuSection('Elements')}}" stepKey="closeElementsMenuSection"/>
+        <!-- Validate Media Icons -->
+        <comment userInput="Validate media icons" stepKey="commentValidatePanel3"/>
+        <click selector="{{PageBuilderPanel.panelMenuSection('Media')}}" stepKey="openMediaMenuSection"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('image','Image')}}" stepKey="validateImageIcon"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('video','Video')}}" stepKey="validateVideoIcon"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('banner','Banner')}}" stepKey="validateBannerIcon"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('slider','Slider')}}" stepKey="validateSliderIcon"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('map','Map')}}" stepKey="validateMapIcon"/>
+        <click selector="{{PageBuilderPanel.panelMenuSection('Media')}}" stepKey="closeMediaMenuSection"/>
+        <!-- Validate Add Content Icons -->
+        <comment userInput="Validate add content icons" stepKey="commentValidatePanel4"/>
+        <click selector="{{PageBuilderPanel.panelMenuSection('Add Content')}}" stepKey="openAddContentMenuSection"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('block','Block')}}" stepKey="validateBlockIcon"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('products','Products')}}" stepKey="validateProductsIcon"/>
+    </test>
+    <test name="HeaderFixedInFullScreen">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Panel"/>
+            <title value="Header is fixed in fullscreen"/>
+            <description value="The header should be fixed at top after scrolling down"/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MC-3168"/>
+            <testCaseId value="MC-943"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-panel"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage1">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage2">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage3">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage4">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage5">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <click selector="{{PageBuilderStage.openFullScreen}}" stepKey="enterFullScreen"/>
+        <waitForElementVisible selector="{{PageBuilderStage.exitFullScreen}}" stepKey="waitForExitVisible"/>
+        <scrollTo selector="{{RowOnStage.base('6')}}" stepKey="scrollToBottom"/>
+        <seeElement selector="{{PageBuilderStage.exitFullScreen}}" stepKey="verifyHeader"/>
+    </test>
+    <test name="ValidatePanelStickiness">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Panel"/>
+            <title value="Panel should be sticky to the top"/>
+            <description value="Panel should remain in view after scrolling down"/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MC-943"/>
+            <testCaseId value="MC-3200"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-panel"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage1">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage2">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage3">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage4">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage5">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <scrollTo selector="{{RowOnStage.base('6')}}" stepKey="scrollToBottom1"/>
+        <seeElement selector="{{PageBuilderPanel.panelMenuSection('Layout')}}" stepKey="verifyPanel1"/>
+        <scrollToTopOfPage stepKey="scrollToTopOfPage"/>
+        <click selector="{{PageBuilderStage.openFullScreen}}" stepKey="enterFullScreen"/>
+        <scrollTo selector="{{RowOnStage.base('6')}}" stepKey="scrollToBottom2"/>
+        <seeElement selector="{{PageBuilderPanel.panelMenuSection('Layout')}}" stepKey="verifyPanel2"/>
+    </test>
+</tests>

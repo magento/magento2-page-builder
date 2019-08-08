@@ -6,21 +6,29 @@
 -->
 
 <div class="pagebuilder-content-type pagebuilder-tabs children-min-height" attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
-    <render args="getOptions().template" />
-    <div class="tabs-container" afterRender="function (element) { onContainerRender.call($data, element); }">
-        <ul role="tablist" class="tabs-navigation" each="parent.getChildren()" attr="data.navigation.attributes" ko-style="data.navigation.style" css="data.navigation.css" data-bind="sortableChildren: getSortableOptions()">
+    <render args="getOptions().template" visible="focusedTab() === null" />
+    <div class="tabs-container" afterRender="function (element) { onContainerRender.call(this, element); }">
+        <ul role="tablist" class="tabs-navigation" each="contentType.getChildren()" attr="data.navigation.attributes" ko-style="data.navigation.style" css="data.navigation.css" data-bind="sortableChildren: getSortableOptions()">
             <with args="preview">
-                <li role="tab" class="tab-header" css="{focused: parent.parent.preview.focusedTab() === $index()}" click="function (context, event) { parent.parent.preview.onTabClick($index(), event); }" ko-style="parent.parent.preview.getTabHeaderStyles()">
-                    <a href="#no-tab" class="tab-title focus-options" attr="{ href: '#' + parent.id }">
+                <li role="tab" class="tab-header"
+                    css="{focused: contentType.parentContentType.preview.focusedTab() === $index()}"
+                    ko-style="contentType.parentContentType.preview.getTabHeaderStyles()"
+                    click="function (context, event) { onClick($index(), event); }"
+                    event="{ focusin: function (context, event) { onFocusIn($index(), event); }, focusout: function (context, event) { onFocusOut($index(), event); } }">
+                    <a href="#no-tab"
+                       class="tab-title focus-options"
+                       attr="{ href: '#' + contentType.id }" event="{ dragstart: function(context, event) { event.preventDefault(); }}">
                         <render args="getOptions().template" />
-                    <span class="tab-drag-handle" css="{disabled: parent.parent.children().length <= 1}"></span>
-                        <span class="tab-title tab-name" data-tab-title="true" data-bind="liveEdit: { field: 'tab_name', placeholder: $t('...') }, hasFocusNoScroll: parent.parent.preview.focusedTab() === $index()" event="{ focusin: function () { parent.parent.preview.setFocusedTab($index(), true) }, focusout: function () { window.getSelection().removeAllRanges(); parent.parent.preview.setFocusedTab(null); } }"></span>
+                        <span class="tab-drag-handle" css="{disabled: contentType.parentContentType.children().length <= 1}"></span>
+                        <span class="tab-title tab-name"
+                              data-tab-title="true"
+                              data-bind="liveEdit: { field: 'tab_name', placeholder: $t('...'), selectAll: true }, hasFocusNoScroll: contentType.parentContentType.preview.focusedTab() === $index()"></span>
                     </a>
                 </li>
             </with>
         </ul>
         <div class="tabs-content children-min-height" attr="data.content.attributes" ko-style="data.content.style" css="data.content.css">
-            <render args="previewChildTemplate" />
+            <render args="childTemplate" />
         </div>
     </div>
 </div>

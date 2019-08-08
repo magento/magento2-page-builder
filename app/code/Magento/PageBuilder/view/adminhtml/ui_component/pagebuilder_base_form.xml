@@ -14,19 +14,19 @@
         <namespace>pagebuilder_base_form</namespace>
         <buttons>
             <button name="save" class="Magento\PageBuilder\Block\Adminhtml\ContentType\Edit\SaveButton"/>
-            <button name="reset" class="Magento\PageBuilder\Block\Adminhtml\ContentType\Edit\ResetButton"/>
-            <button name="close" class="Magento\PageBuilder\Block\Adminhtml\ContentType\Edit\CloseButton"/>
+            <button name="close" class="Magento\PageBuilder\Block\Adminhtml\ContentType\Edit\ModalCloseButton"/>
         </buttons>
     </settings>
     <fieldset name="advanced" sortOrder="90">
         <settings>
             <label translate="true">Advanced</label>
             <collapsible>true</collapsible>
+            <opened>true</opened>
         </settings>
-        <field name="text_align" sortOrder="10" formElement="select">
+        <field name="text_align" sortOrder="10" formElement="select" component="Magento_PageBuilder/js/form/element/visual-select">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="default" xsi:type="string">default</item>
+                    <item name="default" xsi:type="string"/>
                 </item>
             </argument>
             <settings>
@@ -145,11 +145,18 @@
             <settings>
                 <dataType>text</dataType>
                 <label translate="true">Border Width</label>
+                <additionalClasses>
+                    <class name="admin__field-small">true</class>
+                </additionalClasses>
                 <addAfter translate="true">px</addAfter>
                 <placeholder translate="true">Default</placeholder>
                 <imports>
                     <link name="setDisabled">ns = ${ $.ns }, index = border:value</link>
                 </imports>
+                <validation>
+                    <rule name="validate-number" xsi:type="boolean">true</rule>
+                    <rule name="greater-than-equals-to" xsi:type="number">0</rule>
+                </validation>
             </settings>
         </field>
         <field name="border_radius" sortOrder="50" formElement="input">
@@ -161,8 +168,15 @@
             <settings>
                 <dataType>text</dataType>
                 <label translate="true">Border Radius</label>
+                <additionalClasses>
+                    <class name="admin__field-small">true</class>
+                </additionalClasses>
                 <addAfter translate="true">px</addAfter>
                 <placeholder translate="true">Default</placeholder>
+                <validation>
+                    <rule name="validate-number" xsi:type="boolean">true</rule>
+                    <rule name="greater-than-equals-to" xsi:type="number">0</rule>
+                </validation>
             </settings>
         </field>
         <field name="css_classes" sortOrder="60" formElement="input">
@@ -170,6 +184,9 @@
                 <dataType>text</dataType>
                 <label translate="true">CSS Classes</label>
                 <notice translate="true">Space separated list of classes.</notice>
+                <validation>
+                    <rule name="validate-css-class" xsi:type="boolean">true</rule>
+                </validation>
             </settings>
         </field>
         <field name="margins_and_padding" sortOrder="70" formElement="input" component="Magento_PageBuilder/js/form/element/margins-and-padding">
@@ -181,6 +198,11 @@
             <settings>
                 <label translate="true">Margins and Padding</label>
                 <placeholder translate="true">Default</placeholder>
+                <validation>
+                    <rule name="validate-number" xsi:type="boolean">true</rule>
+                    <rule name="less-than-equals-to" xsi:type="number">999</rule>
+                    <rule name="greater-than-equals-to" xsi:type="number">-999</rule>
+                </validation>
             </settings>
         </field>
     </fieldset>

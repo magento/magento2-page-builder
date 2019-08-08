@@ -6,8 +6,12 @@
  */
 -->
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
-    <head>
-        <link src="Magento_PageBuilder::js/default.js"/>
-    </head>
+    <body>
+        <referenceContainer name="after.body.start">
+            <block class="Magento\PageBuilder\Block\GoogleMapsApi" name="google.maps.api" template="Magento_PageBuilder::googlemaps.phtml" />
+        </referenceContainer>
+        <referenceBlock name="head.components">
+            <block class="Magento\PageBuilder\Block\WidgetInitializer" name="pagebuilder.widget.initializer" template="Magento_PageBuilder::widget_initializer.phtml" />
+        </referenceBlock>
+    </body>
 </page>
-

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="RowHasParallaxDefaultSettings">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Row"/>
+            <title value="Parallax Background Section - Default Settings"/>
+            <description value="A user should see the default settings for parallax row"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-88247"/>
+            <testCaseId value="MC-2914"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-row"/>
+            <group value="pagebuilder-rowParallax"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeEnableParallaxProperty">
+            <argument name="property" value="PageBuilderRowParallax_Default"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="seeEnabledParallaxDefault">
+            <argument name="property" value="PageBuilderRowParallax_Default"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsDisabled" stepKey="seeParallaxSpeedIsDisabled">
+            <argument name="property" value="PageBuilderRowParallaxSpeed_Default"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeParallaxSpeed">
+            <argument name="property" value="PageBuilderRowParallaxSpeed_Default"/>
+        </actionGroup>
+        <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="enterParallaxEnabled">
+            <argument name="property" value="PageBuilderRowParallax_Default"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsCheckedSlideOutProperty" stepKey="seeParallaxEnabled">
+            <argument name="property" value="PageBuilderRowParallax_Enabled"/>
+        </actionGroup>
+        <moveMouseOver selector="{{RowOnBackend.parallaxSpeedToolTip}}" stepKey="moveMouseOverParallaxSpeedToolTip"/>
+        <waitForElementVisible selector="{{RowOnBackend.parallaxSpeedToolTipContent}}" stepKey="seeParallaxSpeedToolTipContent"/>
+        <see selector="{{RowOnBackend.parallaxSpeedNotice}}" userInput="{{PageBuilderRowParallaxSpeed_Default.notice}}" stepKey="seeParallaxSpeedNotice"/>
+    </test>
+    <test name="RowCanAddParallaxBackground">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Row"/>
+            <title value="Parallax Background Section - Add parallax to background image"/>
+            <description value="A user should be able to apply parallax to a background image"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-66349"/>
+            <testCaseId value="MC-2398"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-row"/>
+            <group value="pagebuilder-rowParallax"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeParallaxEnabledProperty">
+            <argument name="property" value="PageBuilderRowParallax_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeParallaxSpeedProperty">
+            <argument name="property" value="PageBuilderRowParallaxSpeed_2"/>
+        </actionGroup>
+        <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="enterParallaxEnabled">
+            <argument name="property" value="PageBuilderRowParallax_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterParallaxSpeedProperty">
+            <argument name="property" value="PageBuilderRowParallaxSpeed_2"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage3"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <seeElementInDOM selector="{{RowOnStorefront.parallaxClass('1')}}" stepKey="seeParallaxBackgroundSet"/>
+        <seeElementInDOM selector="{{RowOnStorefront.parallaxSpeed('1', PageBuilderRowParallaxSpeed_2.value)}}" stepKey="seeParallaxSpeedSet"/>
+    </test>
+</tests>

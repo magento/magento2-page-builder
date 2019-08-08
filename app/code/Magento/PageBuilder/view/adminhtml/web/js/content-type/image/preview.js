@@ -1,71 +1,75 @@
 /*eslint-disable */
-define(["uiEvents", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/content-type/uploader"], function (_uiEvents, _preview, _uploader) {
-  function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/content-type-menu/hide-show-option", "Magento_PageBuilder/js/uploader", "Magento_PageBuilder/js/content-type/preview"], function (_events, _hideShowOption, _uploader, _preview) {
+  /**
+   * Copyright © Magento, Inc. All rights reserved.
+   * See COPYING.txt for license details.
+   */
+
+  /**
+   * @api
+   */
   var Preview =
   /*#__PURE__*/
-  function (_BasePreview) {
-    _inheritsLoose(Preview, _BasePreview);
+  function (_preview2) {
+    "use strict";
+
+    _inheritsLoose(Preview, _preview2);
 
     function Preview() {
-      var _temp, _this;
-
-      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
-
-      return (_temp = _this = _BasePreview.call.apply(_BasePreview, [this].concat(args)) || this, _this.uploader = void 0, _temp) || _this;
+      return _preview2.apply(this, arguments) || this;
     }
 
     var _proto = Preview.prototype;
 
     /**
+     * Return an array of options
+     *
+     * @returns {OptionsInterface}
+     */
+    _proto.retrieveOptions = function retrieveOptions() {
+      var options = _preview2.prototype.retrieveOptions.call(this);
+
+      options.hideShow = new _hideShowOption({
+        preview: this,
+        icon: _hideShowOption.showIcon,
+        title: _hideShowOption.showText,
+        action: this.onOptionVisibilityToggle,
+        classes: ["hide-show-content-type"],
+        sort: 40
+      });
+      return options;
+    }
+    /**
      * Get registry callback reference to uploader UI component
      *
      * @returns {Uploader}
      */
+    ;
+
     _proto.getUploader = function getUploader() {
-      return this.uploader;
-    };
+      var initialImageValue = this.contentType.dataStore.get(this.config.additional_data.uploaderConfig.dataScope, "");
+      return new _uploader("imageuploader_" + this.contentType.id, this.config.additional_data.uploaderConfig, this.contentType.id, this.contentType.dataStore, initialImageValue);
+    }
     /**
      * @inheritDoc
      */
-
+    ;
 
     _proto.bindEvents = function bindEvents() {
-      var _this2 = this;
+      var _this = this;
 
-      _BasePreview.prototype.bindEvents.call(this);
+      _preview2.prototype.bindEvents.call(this);
 
-      _uiEvents.on(this.parent.id + ":updated", function () {
-        var imageDataStore = _this2.parent.dataStore.get();
+      _events.on(this.config.name + ":" + this.contentType.id + ":updateAfter", function () {
+        var files = _this.contentType.dataStore.get(_this.config.additional_data.uploaderConfig.dataScope);
 
-        var imageObject = imageDataStore.image[0] || {};
+        var imageObject = files ? files[0] : {};
 
-        _uiEvents.trigger("image:assigned:" + _this2.parent.id, imageObject);
+        _events.trigger("image:" + _this.contentType.id + ":assignAfter", imageObject);
       });
-
-      _uiEvents.on("image:block:ready", function () {
-        var imageDataStore = _this2.parent.dataStore.get();
-
-        var initialImageValue = imageDataStore.image || ""; // Create uploader
-
-        _this2.uploader = new _uploader(_this2.parent.id, "imageuploader_" + _this2.parent.id, Object.assign({}, _this2.config.additional_data.uploaderConfig, {
-          value: initialImageValue
-        })); // Register listener when image gets uploaded from uploader UI component
-
-        _this2.uploader.onUploaded(_this2.onImageUploaded.bind(_this2));
-      });
-    };
-    /**
-     * Update image data inside data store
-     *
-     * @param {Array} data - list of each files' data
-     */
-
-
-    _proto.onImageUploaded = function onImageUploaded(data) {
-      this.parent.dataStore.update(data, "image");
     };
 
     return Preview;

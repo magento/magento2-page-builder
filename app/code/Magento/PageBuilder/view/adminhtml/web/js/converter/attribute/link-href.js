@@ -1,12 +1,18 @@
 /*eslint-disable */
-define(["underscore"], function (_underscore) {
+define(["underscore", "Magento_PageBuilder/js/utils/object"], function (_underscore, _object) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
+
+  /**
+   * @api
+   */
   var CreateValueForHref =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     function CreateValueForHref() {
       this.widgetParamsByLinkType = {
         category: {
@@ -40,7 +46,7 @@ define(["underscore"], function (_underscore) {
      */
     _proto.fromDom = function fromDom(value) {
       return value;
-    };
+    }
     /**
      * Convert value to knockout format
      *
@@ -48,10 +54,10 @@ define(["underscore"], function (_underscore) {
      * @param data Object
      * @returns {string}
      */
-
+    ;
 
     _proto.toDom = function toDom(name, data) {
-      var link = data[name];
+      var link = (0, _object.get)(data, name);
       var href = "";
 
       if (!link) {
@@ -62,22 +68,26 @@ define(["underscore"], function (_underscore) {
       var isHrefId = !isNaN(parseInt(link[linkType], 10));
 
       if (isHrefId && link) {
-        href = this.convertToWidget(link[linkType], this.widgetParamsByLinkType[linkType]);
-      } else if (link[linkType]) {
+        href = this.convertToWidget(link[linkType], linkType);
+      } else if (typeof link[linkType] === "string") {
         href = link[linkType];
       }
 
       return href;
-    };
+    }
     /**
      * @param {string} href
-     * @param {object} widgetAttributes
+     * @param {string} linkType
      * @returns {string}
      */
+    ;
 
+    _proto.convertToWidget = function convertToWidget(href, linkType) {
+      if (!href || !this.widgetParamsByLinkType[linkType]) {
+        return href;
+      }
 
-    _proto.convertToWidget = function convertToWidget(href, widgetAttributes) {
-      var attributesString = _underscore.map(widgetAttributes, function (val, key) {
+      var attributesString = _underscore.map(this.widgetParamsByLinkType[linkType], function (val, key) {
         return key + "='" + val.replace(":href", href) + "'";
       }).join(" ");
 

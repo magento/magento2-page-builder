@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">pagebuilder_map_location_form.pagebuilder_map_location_form_data_source</item>
+        </item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+        <item name="label" xsi:type="string" translate="true">Location</item>
+    </argument>
+    <settings>
+        <dataScope>data</dataScope>
+        <deps>
+            <dep>pagebuilder_map_location_form.pagebuilder_map_location_form_data_source</dep>
+        </deps>
+        <namespace>pagebuilder_map_location_form</namespace>
+        <buttons>
+            <button name="save" class="Magento\PageBuilder\Block\Adminhtml\ContentType\Edit\SaveButton"/>
+            <button name="cancel" class="Magento\PageBuilder\Block\Adminhtml\ContentType\Edit\ModalCancelButton"/>
+        </buttons>
+        <selectorPrefix>.block-map-location-form</selectorPrefix>
+    </settings>
+    <dataSource name="pagebuilder_map_location_form_data_source">
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_PageBuilder/js/form/map-location-provider</item>
+            </item>
+        </argument>
+        <dataProvider name="pagebuilder_map_location_form_data_source" class="Magento\PageBuilder\Model\ContentType\DataProvider">
+            <settings>
+                <requestFieldName/>
+                <primaryFieldName/>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <fieldset name="general" sortOrder="10">
+        <settings>
+            <label/>
+        </settings>
+        <field name="position" sortOrder="10" formElement="input" component="Magento_PageBuilder/js/form/element/map">
+            <settings>
+                <label translate="true">Position</label>
+                <notice translate="true">You can move the pin by clicking or dragging it where you want. To alter the zoom please use the controls.</notice>
+            </settings>
+        </field>
+        <field name="location_name" sortOrder="20" formElement="input">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Location Name</label>
+                <dataScope>location_name</dataScope>
+                <validation>
+                    <rule name="required-entry-location-name" xsi:type="boolean">true</rule>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+        </field>
+        <container name="coordinates" component="Magento_Ui/js/form/components/group" sortOrder="30" >
+            <argument name="data" xsi:type="array">
+                <item name="type" xsi:type="string">group</item>
+                <item name="config" xsi:type="array">
+                    <item name="breakLine" xsi:type="boolean">false</item>
+                    <item name="required" xsi:type="boolean">true</item>
+                    <item name="additionalClasses" xsi:type="string">admin__control-grouped</item>
+                    <item name="label" translate="true" xsi:type="string">Coordinates</item>
+                </item>
+            </argument>
+            <field name="position[latitude]" formElement="input">
+                <settings>
+                    <dataScope>position.latitude</dataScope>
+                    <dataType>text</dataType>
+                    <additionalClasses>
+                        <class name="admin__field-small">true</class>
+                    </additionalClasses>
+                    <validation>
+                        <rule name="required-entry-latitude" xsi:type="boolean">true</rule>
+                        <rule name="validate-number" xsi:type="boolean">true</rule>
+                        <rule name="validate-latitude" xsi:type="boolean">true</rule>
+                    </validation>
+                    <placeholder translate="true">Latitude</placeholder>
+                    <label translate="true">Coordinates</label>
+                </settings>
+            </field>
+            <field name="position[longitude]" formElement="input">
+                <settings>
+                    <dataScope>position.longitude</dataScope>
+                    <dataType>text</dataType>
+                    <additionalClasses>
+                        <class name="admin__field-small">true</class>
+                    </additionalClasses>
+                    <validation>
+                        <rule name="required-entry-longitude" xsi:type="boolean">true</rule>
+                        <rule name="validate-number" xsi:type="boolean">true</rule>
+                        <rule name="validate-longitude" xsi:type="boolean">true</rule>
+                    </validation>
+                    <placeholder translate="true">Longitude</placeholder>
+                </settings>
+            </field>
+        </container>
+        <field name="phone" sortOrder="40" formElement="input">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Phone Number</label>
+                <dataScope>phone</dataScope>
+            </settings>
+        </field>
+        <field name="address" sortOrder="50" formElement="input">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Street Address</label>
+                <dataScope>address</dataScope>
+            </settings>
+        </field>
+        <field name="city" sortOrder="60" formElement="input">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">City</label>
+                <dataScope>city</dataScope>
+            </settings>
+        </field>
+        <field name="state" sortOrder="70" formElement="input">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Region/State</label>
+                <dataScope>state</dataScope>
+            </settings>
+        </field>
+        <field name="zipcode" sortOrder="80" formElement="input">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Zip/Postal Code</label>
+                <dataScope>zipcode</dataScope>
+            </settings>
+        </field>
+        <field name="country" component="Magento_Ui/js/form/element/ui-select" sortOrder="90" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filterOptions" xsi:type="boolean">true</item>
+                    <item name="multiple" xsi:type="boolean">false</item>
+                    <item name="showCheckbox" xsi:type="boolean">false</item>
+                    <item name="disableLabel" xsi:type="boolean">true</item>
+                    <item name="isRemoveSelectedIcon" xsi:type="boolean">false</item>
+                    <item name="levelsVisibility" xsi:type="number">1</item>
+                </item>
+            </argument>
+            <settings>
+                <elementTmpl>ui/grid/filters/elements/ui-select</elementTmpl>
+                <label translate="true">Country</label>
+                <dataScope>country</dataScope>
+                <componentType>field</componentType>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="Magento\PageBuilder\Model\Config\Source\Country"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="comment" sortOrder="100" formElement="textarea">
+            <settings>
+                <label translate="true">Comment</label>
+                <dataType>text</dataType>
+                <dataScope>comment</dataScope>
+            </settings>
+        </field>
+    </fieldset>
+</form>

@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="PageBuilderCMSPageVerifyPageBuilderEnableOnCMSPageWhenPageBuilderEnabledAndWYSIWYGEnabled">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="CMS Page"/>
+            <title value="Admin should be able to see PageBuilder on CMS Page after enable PageBuilder and WYSIWYG from Configuration"/>
+            <description value="Admin should be able to see PageBuilder on CMS Page after enable PageBuilder and WYSIWYG from Configuration"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-86314"/>
+            <testCaseId value="MC-2407"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-cms-page"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set cms/wysiwyg/enabled disabled" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <createData entity="_defaultCmsPage" stepKey="createPreReqCMSPage"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG"/>
+            <deleteData createDataKey="createPreReqCMSPage" stepKey="deletePreReqCMSPage"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!--Create CMS Page using PageBuilder-->
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToContentCreatedCMSPage1">
+            <argument name="CMSPage" value="$$createPreReqCMSPage$$"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{PageBuilderPanel.layoutMenuSection}}" stepKey="waitForPageBuilderDisplay"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTextOntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <waitForLoadingMaskToDisappear stepKey="waitForEditPanelSpinner"/>
+        <fillField selector="{{TextOnConfiguration.textArea}}" userInput="Hello CMS Page from PageBuilder" stepKey="addTextToEditor"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <click selector="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" stepKey="saveCMSWithPageBuilderContent"/>
+        <!--Enable WYSIWYG-->
+        <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG"/>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToContentCreatedCMSPage2">
+            <argument name="CMSPage" value="$$createPreReqCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="verifyPageBuilderVisibleOnPage" stepKey="verifyPageBuilderVisibleOnCMSPage"/>
+    </test>
+    <test name="AdminConfigDefaultCMSPageLayoutFromConfigurationSettingTest">
+        <annotations>
+            <stories value="CMS Page"/>
+            <description value="Admin should be able to configure the default layout for CMS Page from System Configuration using Page Builder's full width layouts"/>
+            <useCaseId value="MC-936"/>
+            <testCaseId value="MC-3106"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-cms-page"/>
+        </annotations>
+        <!-- PageBuilder is enabled so check default is full width -->
+        <comment userInput="PageBuilder is enabled so check default is full width" stepKey="commentSeeFullWidth"/>
+        <seeOptionIsSelected selector="{{DefaultLayoutsSection.pageLayout}}" userInput="{{PageBuilderFullWidthLayout.cms}}" stepKey="seeOneColumnSelected"/>
+        <seeOptionIsSelected selector="{{DefaultLayoutsSection.productLayout}}" userInput="{{PageBuilderFullWidthLayout.product}}" stepKey="seeNoLayoutUpdatesSelected1"/>
+        <seeOptionIsSelected selector="{{DefaultLayoutsSection.categoryLayout}}" userInput="{{PageBuilderFullWidthLayout.category}}" stepKey="seeNoLayoutUpdatesSelected2"/>
+    </test>
+    <test name="PageBuilderCMSPageCreateCMSPageFullWidthLayout">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="CMS Page"/>
+            <title value="Create CMS Page with full page layout"/>
+            <description value="Create CMS Page with full page layout"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-936"/>
+            <testCaseId value="MC-3092"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-fullwidth"/>
+            <group value="pagebuilder-cms-page"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <!-- Set background color of row -->
+        <comment userInput="Set background color of row" stepKey="commentSetRowBackgroundColor"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBackgroundColor">
+            <argument name="property" value="PageBuilderBackgroundColor_HSV_Orange"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Add heading to stage -->
+        <comment userInput="Add heading to stage" stepKey="commentAddHeadingToStage"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragHeadingOntoStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage">
+            <argument name="headingText" value="PageBuilderHeadingTextProperty"/>
+        </actionGroup>
+        <!-- Use Full Width layout -->
+        <comment userInput="Set Layout to Page - Full Width" stepKey="commentSetLayout"/>
+        <actionGroup ref="setLayout" stepKey="setFullWidthLayout">
+            <argument name="designSection" value="CmsDesignSection"/>
+            <argument name="layoutOption" value="PageBuilderFullWidthLayout.cms"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Check that description is full width on storefront -->
+        <comment userInput="Check that description is full width on storefront" stepKey="commentSeeDescriptionFullWidth"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="verifyFullWidthLayout" stepKey="verifyFullWidthLayout"/>
+    </test>
+    <test name="PageBuilderCMSPageCreateCMSPageWithInvalidFullWidthLayout">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="CMS Page"/>
+            <title value="Create CMS Page with invalid full page layout"/>
+            <description value="Create CMS Page with invalid full page layout"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-936"/>
+            <testCaseId value="MC-3171"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-fullwidth"/>
+            <group value="pagebuilder-cms-page"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <closeTab stepKey="closeTab"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <!-- Set background color of row -->
+        <comment userInput="Set background color of row" stepKey="commentSetRowBackgroundColor"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBackgroundColor">
+            <argument name="property" value="PageBuilderBackgroundColor_HSV_Orange"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Add heading to stage -->
+        <comment userInput="Add heading to stage" stepKey="commentAddHeadingToStage"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragHeadingOntoStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage">
+            <argument name="headingText" value="PageBuilderHeadingTextProperty"/>
+        </actionGroup>
+        <!-- Use Category - Full Width layout -->
+        <comment userInput="Set Layout to Category - Full Width" stepKey="commentSetLayout"/>
+        <actionGroup ref="setLayout" stepKey="setCategoryFullWidthLayout">
+            <argument name="designSection" value="CmsDesignSection"/>
+            <argument name="layoutOption" value="PageBuilderFullWidthLayout.category"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Check that content is displayed on storefront with the category full width layout -->
+        <comment userInput="Check that content is displayed on storefront with the product full width layout" stepKey="commentSeeContent"/>
+        <openNewTab stepKey="openNewTab"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{HeadingOnStorefront.headingText(PageBuilderHeadingTypeProperty_H2.value, PageBuilderHeadingTextProperty.value, '1')}}" stepKey="waitForStorefrontHeadingText"/>
+        <!-- Use Product - Full Width layout -->
+        <comment userInput="Set Layout to Product - Full Width" stepKey="commentSetLayout2"/>
+        <switchToNextTab stepKey="switchToNextTab"/>
+        <actionGroup ref="setLayout" stepKey="setProductFullWidthLayout">
+            <argument name="designSection" value="CmsDesignSection"/>
+            <argument name="layoutOption" value="PageBuilderFullWidthLayout.product"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
+        <!-- Check that content is displayed on storefront with the product full width layout -->
+        <comment userInput="Check that content is displayed on storefront with the product full width layout" stepKey="commentSeeContent2"/>
+        <switchToNextTab stepKey="switchToNextTab1"/>
+        <reloadPage stepKey="reloadPage"/>
+        <waitForPageLoad stepKey="waitForPageReload"/>
+        <waitForElementVisible selector="{{HeadingOnStorefront.headingText(PageBuilderHeadingTypeProperty_H2.value, PageBuilderHeadingTextProperty.value, '1')}}" stepKey="waitForStorefrontHeadingText2"/>
+    </test>
+</tests>

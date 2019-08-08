@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<entities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:DataGenerator/etc/dataProfileSchema.xsd">
+    <!-- Button Group Appearance -->
+    <entity name="PageBuilderButtonGroupAppearance_Template" type="pagebuilder_button_group_appearance">
+        <data key="name">Appearance</data>
+        <data key="section">appearance_fieldset</data>
+        <data key="fieldName">appearance</data>
+    </entity>
+    <entity name="PageBuilderButtonGroupAppearance_Inline" type="pagebuilder_button_group_appearance" extends="PageBuilderButtonGroupAppearance_Template">
+        <data key="value">inline</data>
+    </entity>
+    <entity name="PageBuilderButtonGroupAppearance_Stacked" type="pagebuilder_button_group_appearance" extends="PageBuilderButtonGroupAppearance_Template">
+        <data key="value">stacked</data>
+    </entity>
+    <!-- Buttons Same Size -->
+    <entity name="PageBuilderButtonGroupSameSize_Template" type="pagebuilder_button_group_same_size">
+        <data key="name">All Buttons are same size</data>
+        <data key="section">appearance_fieldset</data>
+        <data key="fieldName">is_same_width</data>
+    </entity>
+    <entity name="PageBuilderButtonGroupSameSize_Enabled" type="pagebuilder_button_group_same_size" extends="PageBuilderButtonGroupSameSize_Template">
+        <data key="value">true</data>
+    </entity>
+    <entity name="PageBuilderButtonGroupSameSize_Disabled" type="pagebuilder_button_group_same_size" extends="PageBuilderButtonGroupSameSize_Template">
+        <data key="value">false</data>
+    </entity>
+</entities>

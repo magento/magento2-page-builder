@@ -3,17 +3,27 @@
  * See COPYING.txt for license details.
  */
 
+import $ from "jquery";
 import mageUtils from "mageUtils";
+import _ from "underscore";
+import Config from "../../config";
+import {
+    ContentTypeConfigAppearanceElementInterface,
+    DataMappingAttributesInterface,
+    DataMappingStyleInterface,
+} from "../../content-type-config.types";
 import appearanceConfig from "../../content-type/appearance-config";
-import PropertyReaderPool from "../../converter/converter-pool";
 import ConverterPool from "../../converter/converter-pool";
 import converterPoolFactory from "../../converter/converter-pool-factory";
 import MassConverterPool from "../../mass-converter/converter-pool";
 import massConverterPoolFactory from "../../mass-converter/converter-pool-factory";
+import PropertyReaderPool from "../../property/property-reader-pool";
 import propertyReaderPoolFactory from "../../property/property-reader-pool-factory";
-import {fromSnakeToCamelCase} from "../../utils/string";
-import ReadInterface from "../read-interface";
+import {ReadInterface} from "../read-interface";
 
+/**
+ * @api
+ */
 export default class Configurable implements ReadInterface {
 
     /**
@@ -23,8 +33,8 @@ export default class Configurable implements ReadInterface {
      * @returns {Promise<any>}
      */
     public read(element: HTMLElement): Promise<any> {
-        const role = element.getAttribute("data-role");
-        const config = appearanceConfig(role, element.getAttribute("data-appearance")).data_mapping;
+        const role = element.getAttribute(Config.getConfig("dataContentTypeAttributeName"));
+        const config = appearanceConfig(role, element.getAttribute("data-appearance"));
         const componentsPromise: Array<Promise<any>> = [
             propertyReaderPoolFactory(role),
             converterPoolFactory(role),
@@ -36,17 +46,13 @@ export default class Configurable implements ReadInterface {
                 let data = {};
                 for (const elementName of Object.keys(config.elements)) {
                     const elementConfig = config.elements[elementName];
-                    const xpathResult = document.evaluate(
-                        elementConfig.path,
-                        element,
-                        null,
-                        XPathResult.FIRST_ORDERED_NODE_TYPE,
-                        null,
-                    );
-                    const currentElement = xpathResult.singleNodeValue;
+                    const currentElement = this.findElementByName(element, elementName);
+
+                    // If we cannot locate the current element skip trying to read any attributes from it
                     if (currentElement === null || currentElement === undefined) {
                         continue;
                     }
+
                     if (elementConfig.style.length) {
                         data = this.readStyle(
                             elementConfig.style,
@@ -56,6 +62,7 @@ export default class Configurable implements ReadInterface {
                             converterPool,
                         );
                     }
+
                     if (elementConfig.attributes.length) {
                         data = this.readAttributes(
                             elementConfig.attributes,
@@ -65,16 +72,20 @@ export default class Configurable implements ReadInterface {
                             converterPool,
                         );
                     }
+
                     if (undefined !== elementConfig.html.var) {
                         data = this.readHtml(elementConfig, currentElement, data, converterPool);
                     }
+
                     if (undefined !== elementConfig.tag.var) {
                         data = this.readHtmlTag(elementConfig, currentElement, data);
                     }
+
                     if (undefined !== elementConfig.css.var) {
                         data = this.readCss(elementConfig, currentElement, data);
                     }
                 }
+
                 data = this.convertData(config, data, massConverterPool);
                 resolve(data);
             }).catch((error) => {
@@ -84,35 +95,65 @@ export default class Configurable implements ReadInterface {
     }
 
     /**
+     * Find the element for the current content type by it's name, avoiding searching in other content types by
+     * removing any other element which contains it's own data-content-type.
+     *
+     * @param {HTMLElement} element
+     * @param {string} name
+     * @returns {HTMLElement}
+     */
+    private findElementByName(element: HTMLElement, name: string): HTMLElement {
+        // Create a clone of the element to avoid modifying the source
+        const currentElement = $(element).clone();
+        if (currentElement.attr("data-element") === name) {
+            return currentElement[0];
+        }
+
+        // Attempt to find the element in the children of the data-content-type
+        const searchInChildren = currentElement.find(`[data-element="${name}"]`);
+        // Ensure the element is within the current content type
+        if (searchInChildren.length > 0
+            && searchInChildren.closest("[data-content-type]")[0] === currentElement[0]
+        ) {
+            return searchInChildren[0];
+        }
+
+        return null;
+    }
+
+    /**
      * Read attributes for element
      *
-     * @param {object} config
-     * @param {Node} element
+     * @param {DataMappingAttributesInterface[]} config
+     * @param {HTMLElement} element
      * @param {object} data
-     * @param {PropertyReaderPool} propertyReaderPool
-     * @param {ConverterPool} converterPool
-     * @returns {object}
+     * @param {typeof PropertyReaderPool} propertyReaderPool
+     * @param {typeof ConverterPool} converterPool
+     * @returns {any}
      */
     private readAttributes(
-        config: object,
-        element: Node,
+        config: DataMappingAttributesInterface[],
+        element: HTMLElement,
         data: object,
-        propertyReaderPool: PropertyReaderPool,
-        converterPool: ConverterPool,
+        propertyReaderPool: typeof PropertyReaderPool,
+        converterPool: typeof ConverterPool,
     ) {
-        const result = {};
+        const result: {[key: string]: any} = {};
         for (const attributeConfig of config) {
-            if (true === !!attributeConfig.virtual) {
+            if ("write" === attributeConfig.persistence_mode) {
                 continue;
             }
-            let value = !!attributeConfig.complex
-                ? propertyReaderPool.get(attributeConfig.reader).read(element)
-                : element.getAttribute(attributeConfig.name);
+            let value = !!attributeConfig.static
+                ? attributeConfig.value
+                : propertyReaderPool.get(attributeConfig.reader).read(element, attributeConfig.name);
             if (converterPool.get(attributeConfig.converter)) {
                 value = converterPool.get(attributeConfig.converter).fromDom(value);
             }
-            if (data[attributeConfig.var] === "object") {
-                value = mageUtils.extend(value, data[attributeConfig.var]);
+            if ($.type(result[attributeConfig.var]) === "object") {
+                value = mageUtils.extend(
+                    {[attributeConfig.name]: value},
+                    result[attributeConfig.var],
+                );
             }
             result[attributeConfig.var] = value;
         }
@@ -122,32 +163,32 @@ export default class Configurable implements ReadInterface {
     /**
      * Read style properties for element
      *
-     * @param {object} config
-     * @param {Node} element
+     * @param {DataMappingStyleInterface[]} config
+     * @param {HTMLElement} element
      * @param {object} data
-     * @param {PropertyReaderPool} propertyReaderPool
-     * @param {ConverterPool} converterPool
-     * @returns {object}
+     * @param {typeof PropertyReaderPool} propertyReaderPool
+     * @param {typeof ConverterPool} converterPool
+     * @returns {{[p: string]: string}}
      */
     private readStyle(
-        config: object,
-        element,
+        config: DataMappingStyleInterface[],
+        element: HTMLElement,
         data: object,
-        propertyReaderPool: PropertyReaderPool,
-        converterPool: ConverterPool,
+        propertyReaderPool: typeof PropertyReaderPool,
+        converterPool: typeof ConverterPool,
     ) {
-        const result: object = _.extend({}, data);
+        const result: {[key: string]: any} = _.extend({}, data);
         for (const propertyConfig of config) {
-            if (true === !!propertyConfig.virtual) {
+            if ("write" === propertyConfig.persistence_mode) {
                 continue;
             }
-            let value = !!propertyConfig.complex
-                ? propertyReaderPool.get(propertyConfig.reader).read(element)
-                : element.style[fromSnakeToCamelCase(propertyConfig.name)];
+            let value = !!propertyConfig.static
+                ? propertyConfig.value
+                : propertyReaderPool.get(propertyConfig.reader).read(element, propertyConfig.name);
             if (converterPool.get(propertyConfig.converter)) {
                 value = converterPool.get(propertyConfig.converter).fromDom(value);
             }
-            if (typeof result[propertyConfig.var] === "object") {
+            if ($.type(result[propertyConfig.var]) === "object") {
                 value = mageUtils.extend(result[propertyConfig.var], value);
             }
             result[propertyConfig.var] = value;
@@ -159,12 +200,12 @@ export default class Configurable implements ReadInterface {
      * Read element's tag
      *
      * @param {object} config
-     * @param {Node} element
+     * @param {HTMLElement} element
      * @param {object} data
      * @returns {object}
      */
-    private readHtmlTag(config: any, element: Node, data: object) {
-        const result = {};
+    private readHtmlTag(config: any, element: HTMLElement, data: object) {
+        const result: {[key: string]: string} = {};
         result[config.tag.var] = element.nodeName.toLowerCase();
         return _.extend(data, result);
     }
@@ -172,13 +213,13 @@ export default class Configurable implements ReadInterface {
     /**
      * Read element's css
      *
-     * @param {object} config
-     * @param {Node} element
+     * @param {ContentTypeConfigAppearanceElementInterface} config
+     * @param {HTMLElement} element
      * @param {object} data
-     * @returns {object}
+     * @returns {any}
      */
-    private readCss(config: any, element: Node, data: object) {
-        const result = {};
+    private readCss(config: ContentTypeConfigAppearanceElementInterface, element: HTMLElement, data: object) {
+        const result: {[key: string]: string} = {};
         let css: string = element.getAttribute("class") !== null
             ? element.getAttribute("class")
             : "";
@@ -197,13 +238,19 @@ export default class Configurable implements ReadInterface {
     /**
      * Read element's content
      *
-     * @param {object} config
-     * @param {Node} element
+     * @param {ContentTypeConfigAppearanceElementInterface} config
+     * @param {HTMLElement} element
      * @param {object} data
-     * @returns {object}
+     * @param {typeof ConverterPool} converterPool
+     * @returns {any}
      */
-    private readHtml(config: any, element: Node, data: object, converterPool: ConverterPool) {
-        const result = {};
+    private readHtml(
+        config: ContentTypeConfigAppearanceElementInterface,
+        element: HTMLElement,
+        data: object,
+        converterPool: typeof ConverterPool,
+    ) {
+        const result: {[key: string]: string} = {};
         let value = element.innerHTML;
 
         if (converterPool.get(config.html.converter)) {
@@ -217,12 +264,12 @@ export default class Configurable implements ReadInterface {
     /**
      * Convert data after it's read for all elements
      *
-     * @param {object} config
+     * @param config
      * @param {object} data
-     * @param {MassConverterPool} massConverterPool
+     * @param {typeof MassConverterPool} massConverterPool
      * @returns {object}
      */
-    private convertData(config: any, data: object, massConverterPool: MassConverterPool) {
+    private convertData(config: any, data: object, massConverterPool: typeof MassConverterPool) {
         for (const converterConfig of config.converters) {
             if (massConverterPool.get(converterConfig.component)) {
                 data = massConverterPool.get(converterConfig.component).fromDom(

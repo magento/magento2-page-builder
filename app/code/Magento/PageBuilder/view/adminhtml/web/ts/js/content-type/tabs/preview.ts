@@ -6,76 +6,94 @@
 import $ from "jquery";
 import ko from "knockout";
 import $t from "mage/translate";
+import events from "Magento_PageBuilder/js/events";
 import "tabs";
-import events from "uiEvents";
 import _ from "underscore";
-import {PreviewSortableSortUpdateEventParams} from "../../binding/sortable-children";
+import {ActiveOptionsInterface} from "../../binding/active-options.types";
+import {PreviewSortableSortUpdateEventParams, SortableOptionsInterface} from "../../binding/sortable-children.types";
 import Config from "../../config";
-import ContentTypeConfigInterface from "../../content-type-config.d";
+import ContentTypeCollectionInterface from "../../content-type-collection.types";
+import ContentTypeConfigInterface from "../../content-type-config.types";
 import createContentType from "../../content-type-factory";
+import HideShowOption from "../../content-type-menu/hide-show-option";
 import Option from "../../content-type-menu/option";
-import OptionInterface from "../../content-type-menu/option.d";
-import BlockRemovedParamsInterface from "../../content-type-removed-params.d";
-import ContentTypeInterface from "../../content-type.d";
-import {ContentTypeMountEventParamsInterface} from "../content-type-mount-event-params.d";
-import {ContentTypeReadyEventParamsInterface} from "../content-type-ready-event-params.d";
-import {ContentTypeRemovedEventParamsInterface} from "../content-type-removed-event-params.d";
+import {OptionsInterface} from "../../content-type-menu/option.types";
+import ContentTypeInterface from "../../content-type.types";
+import delayUntil from "../../utils/delay-until";
+import deferred, {DeferredInterface} from "../../utils/promise-deferred";
+import {
+    ContentTypeDroppedCreateEventParamsInterface,
+    ContentTypeDuplicateEventParamsInterface,
+    ContentTypeMountEventParamsInterface,
+    ContentTypeRemovedEventParamsInterface,
+    ContentTypeRemovedParamsInterface,
+} from "../content-type-events.types";
 import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
-import {ActiveOptionsInterface} from "./active-options.d";
-import {SortableOptionsInterface} from "./sortable-options.d";
 
+/**
+ * @api
+ */
 export default class Preview extends PreviewCollection {
-    public static focusOperationTime: number;
-    public focusedTab: KnockoutObservable<number> = ko.observable();
+    public focusedTab: KnockoutObservable<number> = ko.observable(null);
+    public activeTab: KnockoutObservable<number> = ko.observable(0);
     private disableInteracting: boolean;
     private element: Element;
+    private ready: boolean;
+    private onContainerRenderDeferred: DeferredInterface = deferred();
+    private mountAfterDeferred: DeferredInterface = deferred();
 
     /**
-     * Assign a debounce and delay to the init of tabs to ensure the DOM has updated
-     *
-     * @type {(() => void) & _.Cancelable}
-     */
-    private buildTabs = _.debounce((activeTabIndex = this.previewData.default_active()) => {
-        if (this.element && this.element.children.length > 0) {
-            try {
-                $(this.element).tabs("destroy");
-            } catch (e) {
-                // We aren't concerned if this fails, tabs throws an Exception when we cannot destroy
-            }
-            $(this.element).tabs({
-                create: (event: Event, ui: JQueryUI.TabsCreateOrLoadUIParams) => {
-                    this.setFocusedTab(activeTabIndex || 0);
-                },
-            });
-        }
-    }, 10);
-
-    /**
-     * @param {ContentTypeInterface} parent
+     * @param {ContentTypeCollectionInterface} contentType
      * @param {ContentTypeConfigInterface} config
      * @param {ObservableUpdater} observableUpdater
      */
     constructor(
-        parent: ContentTypeInterface,
+        contentType: ContentTypeCollectionInterface,
         config: ContentTypeConfigInterface,
         observableUpdater: ObservableUpdater,
     ) {
-        super(parent, config, observableUpdater);
+        super(contentType, config, observableUpdater);
 
-        events.on("tabs:block:ready", (args: ContentTypeReadyEventParamsInterface) => {
-            if (args.id === this.parent.id && this.element) {
-                this.buildTabs();
+        // Wait for the tabs instance to mount and the container to be ready
+        Promise.all([
+            this.onContainerRenderDeferred.promise,
+            this.mountAfterDeferred.promise,
+        ]).then(([element, expectedChildren]) => {
+            // We always create 1 tab when dropping tabs into the instance
+            expectedChildren = expectedChildren || 1;
+            // Wait until all children's DOM elements are present before building the tabs instance
+            delayUntil(
+                () => {
+                    this.element = element as Element;
+                    this.buildTabs();
+                },
+                () => $(element).find(".pagebuilder-tab-item").length === expectedChildren,
+            );
+        });
+
+        // Resolve our deferred when the tabs item mounts with expect children
+        events.on("tabs:mountAfter", (args: ContentTypeMountEventParamsInterface) => {
+            if (args.contentType.id === this.contentType.id && args.expectChildren !== undefined) {
+                this.mountAfterDeferred.resolve(args.expectChildren);
             }
         });
-        events.on("tab-item:block:mount", (args: ContentTypeMountEventParamsInterface) => {
-            if (this.element && args.block.parent.id === this.parent.id) {
+
+        events.on("tab-item:mountAfter", (args: ContentTypeMountEventParamsInterface) => {
+            if (this.element && args.contentType.parentContentType.id === this.contentType.id) {
                 this.refreshTabs();
             }
         });
+        events.on("tab-item:renderAfter", (args: ContentTypeMountEventParamsInterface) => {
+            if (this.element && args.contentType.parentContentType.id === this.contentType.id) {
+                _.defer(() => {
+                    this.refreshTabs();
+                });
+            }
+        });
         // Set the active tab to the new position of the sorted tab
-        events.on("tab-item:block:removed", (args: ContentTypeRemovedEventParamsInterface) => {
-            if (args.parent.id === this.parent.id) {
+        events.on("tab-item:removeAfter", (args: ContentTypeRemovedEventParamsInterface) => {
+            if (args.parentContentType.id === this.contentType.id) {
                 this.refreshTabs();
 
                 // We need to wait for the tabs to refresh before executing the focus
@@ -86,24 +104,41 @@ export default class Preview extends PreviewCollection {
             }
         });
         // Refresh tab contents and set the focus to the new position of the sorted tab
-        events.on("sortableChildren:sortupdate", (args: PreviewSortableSortUpdateEventParams) => {
-            this.refreshTabs(args.newPosition, true);
-            /**
-             * Update the default active tab if its position was affected by the sorting
-             */
-            const defaultActiveTab = +args.instance.preview.previewData.default_active();
-            let newDefaultActiveTab = defaultActiveTab;
-            if (args.originalPosition === defaultActiveTab) {
-                newDefaultActiveTab = args.newPosition;
-            } else if (args.originalPosition < defaultActiveTab && args.newPosition >= defaultActiveTab) {
-                // a tab was moved from the left of the default active tab the right of it, changing its index
-                newDefaultActiveTab--;
-            } else if (args.originalPosition > defaultActiveTab && args.newPosition <= defaultActiveTab) {
-                // a tab was moved from the right of the default active tab the left of it, changing its index
-                newDefaultActiveTab++;
+        events.on("childContentType:sortUpdate", (args: PreviewSortableSortUpdateEventParams) => {
+            if (args.instance.id === this.contentType.id) {
+                this.refreshTabs(args.newPosition, true);
+                /**
+                 * Update the default active tab if its position was affected by the sorting
+                 */
+                const defaultActiveTab = +args.instance.preview.previewData.default_active();
+                let newDefaultActiveTab = defaultActiveTab;
+                if (args.originalPosition === defaultActiveTab) {
+                    newDefaultActiveTab = args.newPosition;
+                } else if (args.originalPosition < defaultActiveTab && args.newPosition >= defaultActiveTab) {
+                    // a tab was moved from the left of the default active tab the right of it, changing its index
+                    newDefaultActiveTab--;
+                } else if (args.originalPosition > defaultActiveTab && args.newPosition <= defaultActiveTab) {
+                    // a tab was moved from the right of the default active tab the left of it, changing its index
+                    newDefaultActiveTab++;
+                }
+                this.updateData("default_active", newDefaultActiveTab.toString());
             }
-            this.updateData("default_active", newDefaultActiveTab);
         });
+
+        // Monitor focus tab to start / stop interaction on the stage, debounce to avoid duplicate calls
+        this.focusedTab.subscribe(_.debounce((index: number) => {
+            if (index !== null) {
+                events.trigger("stage:interactionStart");
+                delayUntil(
+                    () => $($(this.wrapperElement).find(".tab-header")[index]).find("[contenteditable]").focus(),
+                    () => $($(this.wrapperElement).find(".tab-header")[index]).find("[contenteditable]").length > 0,
+                    10,
+                );
+            } else {
+                // We have to force the stop as the event firing is inconsistent for certain operations
+                events.trigger("stage:interactionStop", {force : true});
+            }
+        }, 1));
     }
 
     /**
@@ -114,7 +149,7 @@ export default class Preview extends PreviewCollection {
      * @param {number} activeIndex
      */
     public refreshTabs(focusIndex?: number, forceFocus?: boolean, activeIndex?: number) {
-        if (this.element) {
+        try {
             $(this.element).tabs("refresh");
             if (focusIndex >= 0) {
                 this.setFocusedTab(focusIndex, forceFocus);
@@ -124,12 +159,14 @@ export default class Preview extends PreviewCollection {
             // update sortability of tabs
             const sortableElement = $(this.element).find(".tabs-navigation");
             if (sortableElement.hasClass("ui-sortable")) {
-                if (this.parent.children().length <= 1) {
+                if (this.contentType.children().length <= 1) {
                     sortableElement.sortable("disable");
                 } else {
                     sortableElement.sortable("enable");
                 }
             }
+        } catch (e) {
+            this.buildTabs();
         }
     }
 
@@ -140,7 +177,19 @@ export default class Preview extends PreviewCollection {
      */
     public setActiveTab(index: number) {
         if (index !== null) {
-            $(this.element).tabs("option", "active", index);
+            // Added to prevent mismatched fragment error caused by not yet rendered tab-item
+            index = parseInt(index.toString(), 10);
+            delayUntil(
+                () => {
+                    $(this.element).tabs("option", "active", index);
+                    this.activeTab(index);
+                    events.trigger("contentType:redrawAfter", {
+                        id: this.contentType.id,
+                        contentType: this,
+                    });
+                },
+                () => $(this.element).find(".pagebuilder-tab-item").length >= index + 1,
+            );
         }
     }
 
@@ -156,55 +205,34 @@ export default class Preview extends PreviewCollection {
             this.focusedTab(null);
         }
         this.focusedTab(index);
-
-        if (this.element && index !== null) {
-            if (this.element.getElementsByClassName("tab-name")[index]) {
-                (this.element.getElementsByClassName("tab-name")[index] as HTMLElement).focus();
-            }
-            _.defer(() => {
-                if ($(":focus").hasClass("tab-name") && $(":focus").prop("contenteditable")) {
-                    document.execCommand("selectAll", false, null);
-                }
-            });
-        }
-
-        /**
-         * Record the time the focus operation was completed to ensure the delay doesn't stop interaction when another
-         * interaction has started after.
-         */
-        const focusTime = new Date().getTime();
-        Preview.focusOperationTime = focusTime;
-
-        // Add a 200ms delay after a null set to allow for clicks to be captured
-        _.delay(() => {
-            if (!this.disableInteracting && Preview.focusOperationTime === focusTime) {
-                if (index !== null) {
-                    events.trigger("interaction:start");
-                } else {
-                    events.trigger("interaction:stop");
-                }
-            }
-        }, ((index === null) ? 200 : 0));
     }
 
     /**
      * Return an array of options
      *
-     * @returns {Array<OptionInterface>}
+     * @returns {OptionsInterface}
      */
-    public retrieveOptions(): OptionInterface[] {
+    public retrieveOptions(): OptionsInterface {
         const options = super.retrieveOptions();
-        options.push(
-            new Option(
-                this,
-                "add",
-                "<i class='icon-pagebuilder-add'></i>",
-                $t("Add"),
-                this.addTab,
-                ["add-child"],
-                10,
-            ),
-        );
+
+        options.add = new Option({
+            preview: this,
+            icon: "<i class='icon-pagebuilder-add'></i>",
+            title: $t("Add"),
+            action: this.addTab,
+            classes: ["add-child"],
+            sort: 10,
+        });
+
+        options.hideShow = new HideShowOption({
+            preview: this,
+            icon: HideShowOption.showIcon,
+            title: HideShowOption.showText,
+            action: this.onOptionVisibilityToggle,
+            classes: ["hide-show-content-type"],
+            sort: 40,
+        });
+
         return options;
     }
 
@@ -214,21 +242,21 @@ export default class Preview extends PreviewCollection {
     public addTab() {
         createContentType(
             Config.getContentTypeConfig("tab-item"),
-            this.parent,
-            this.parent.stageId,
+            this.contentType,
+            this.contentType.stageId,
         ).then((tab) => {
-            events.on("tab-item:block:mount", (args: ContentTypeMountEventParamsInterface) => {
+            events.on("tab-item:mountAfter", (args: ContentTypeMountEventParamsInterface) => {
                 if (args.id === tab.id) {
-                    this.setFocusedTab(this.parent.children().length - 1);
-                    events.off(`tab-item:block:mount:${tab.id}`);
+                    this.setFocusedTab(this.contentType.children().length - 1);
+                    events.off(`tab-item:${tab.id}:mountAfter`);
                 }
-            }, `tab-item:block:mount:${tab.id}`);
-            this.parent.addChild(tab, this.parent.children().length);
+            }, `tab-item:${tab.id}:mountAfter`);
+            this.contentType.addChild(tab, this.contentType.children().length);
 
             // Update the default tab title when adding a new tab
-            tab.dataStore.update(
-                $t("Tab") + " " + (this.parent.children.indexOf(tab) + 1),
+            tab.dataStore.set(
                 "tab_name",
+                $t("Tab") + " " + (this.contentType.children.indexOf(tab) + 1),
             );
         });
     }
@@ -240,21 +268,7 @@ export default class Preview extends PreviewCollection {
      */
     public onContainerRender(element: Element) {
         this.element = element;
-        this.buildTabs();
-    }
-
-    /**
-     * Handle clicking on a tab
-     *
-     * @param {number} index
-     * @param {Event} event
-     */
-    public onTabClick(index: number, event: Event) {
-        // The options menu is within the tab, so don't change the focus if we click an item within
-        if ($(event.target).parents(".pagebuilder-options").length > 0) {
-            return;
-        }
-        this.setFocusedTab(index);
+        this.onContainerRenderDeferred.resolve(element);
     }
 
     /**
@@ -315,7 +329,7 @@ export default class Preview extends PreviewCollection {
                 }
 
                 ui.helper.css("width", "");
-                events.trigger("interaction:start");
+                events.trigger("stage:interactionStart");
                 self.disableInteracting = true;
             },
 
@@ -327,7 +341,7 @@ export default class Preview extends PreviewCollection {
              */
             stop(event: Event, ui: JQueryUI.SortableUIParams) {
                 $(this).css("paddingLeft", "");
-                events.trigger("interaction:stop");
+                events.trigger("stage:interactionStop");
                 self.disableInteracting = false;
             },
 
@@ -335,13 +349,12 @@ export default class Preview extends PreviewCollection {
                 /**
                  * Provide custom placeholder element
                  *
-                 * @param {JQuery<Element>} item
-                 * @returns {JQuery<Element>}
+                 * @param {JQuery} item
+                 * @returns {JQuery}
                  */
-                element(item: JQuery<Element>) {
+                element(item: JQuery) {
                     const placeholder = item
                         .clone()
-                        .show()
                         .css({
                             display: "inline-block",
                             opacity: "0.3",
@@ -363,44 +376,43 @@ export default class Preview extends PreviewCollection {
      */
     protected bindEvents() {
         super.bindEvents();
-        // Block being mounted onto container
+        // ContentType being mounted onto container
 
-        events.on("tabs:block:dropped:create", (args: ContentTypeReadyEventParamsInterface) => {
-            if (args.id === this.parent.id && this.parent.children().length === 0) {
+        events.on("tabs:dropAfter", (args: ContentTypeDroppedCreateEventParamsInterface) => {
+            if (args.id === this.contentType.id && this.contentType.children().length === 0) {
                 this.addTab();
             }
         });
-        // Block being removed from container
-        events.on("tab-item:block:removed", (args: BlockRemovedParamsInterface) => {
-            if (args.parent.id === this.parent.id) {
+        // ContentType being removed from container
+        events.on("tab-item:removeAfter", (args: ContentTypeRemovedParamsInterface) => {
+            if (args.parentContentType.id === this.contentType.id) {
                 // Mark the previous tab as active
                 const newIndex = (args.index - 1 >= 0 ? args.index - 1 : 0);
                 this.refreshTabs(newIndex, true);
             }
         });
-        // Capture when a block is duplicated within the container
+        // Capture when a content type is duplicated within the container
         let duplicatedTab: ContentTypeInterface;
         let duplicatedTabIndex: number;
-        events.on("tab-item:block:duplicate", (args: BlockDuplicateEventParams) => {
-            if (this.parent.id === args.duplicateBlock.parent.id) {
-                const tabData = args.duplicateBlock.dataStore.get(args.duplicateBlock.id);
-                args.duplicateBlock.dataStore.update(
-                    tabData.tab_name.toString() + " copy",
+        events.on("tab-item:duplicateAfter", (args: ContentTypeDuplicateEventParamsInterface) => {
+            if (this.contentType.id === args.duplicateContentType.parentContentType.id && args.direct) {
+                const tabData = args.duplicateContentType.dataStore.getState();
+                args.duplicateContentType.dataStore.set(
                     "tab_name",
+                    tabData.tab_name.toString() + " copy",
                 );
-                duplicatedTab = args.duplicateBlock;
+                duplicatedTab = args.duplicateContentType;
                 duplicatedTabIndex = args.index;
             }
-            this.buildTabs(args.index);
         });
-        events.on("tab-item:block:mount", (args: ContentTypeMountEventParamsInterface) => {
+        events.on("tab-item:mountAfter", (args: ContentTypeMountEventParamsInterface) => {
             if (duplicatedTab && args.id === duplicatedTab.id) {
                 this.refreshTabs(duplicatedTabIndex, true);
                 duplicatedTab = duplicatedTabIndex = null;
             }
-            if (this.parent.id === args.block.parent.id) {
+            if (this.contentType.id === args.contentType.parentContentType.id) {
                 this.updateTabNamesInDataStore();
-                args.block.dataStore.subscribe(() => {
+                args.contentType.dataStore.subscribe(() => {
                     this.updateTabNamesInDataStore();
                 });
             }
@@ -412,8 +424,8 @@ export default class Preview extends PreviewCollection {
      */
     private updateTabNamesInDataStore() {
         const activeOptions: ActiveOptionsInterface[] = [];
-        this.parent.children().forEach((tab: ContentTypeInterface, index: number) => {
-            const tabData = tab.dataStore.get();
+        this.contentType.children().forEach((tab: ContentTypeInterface, index: number) => {
+            const tabData = tab.dataStore.getState();
             activeOptions.push({
                 label: tabData.tab_name.toString(),
                 labeltitle: tabData.tab_name.toString(),
@@ -421,14 +433,53 @@ export default class Preview extends PreviewCollection {
             });
         });
 
-        this.parent.dataStore.update(
-            activeOptions,
+        this.contentType.dataStore.set(
             "_default_active_options",
+            activeOptions,
         );
+    }
+
+    /**
+     * Assign a debounce and delay to the init of tabs to ensure the DOM has updated
+     *
+     * @type {(() => void) & _.Cancelable}
+     */
+    private buildTabs(activeTabIndex = (this.activeTab() || this.previewData.default_active()) as number || 0) {
+        this.ready = false;
+        if (this.element && this.element.children.length > 0) {
+            const focusedTab = this.focusedTab();
+            try {
+                $(this.element).tabs("destroy");
+            } catch (e) {
+                // We aren't concerned if this fails, tabs throws an Exception when we cannot destroy
+            }
+            $(this.element).tabs({
+                create: () => {
+                    this.ready = true;
+                    // Ensure focus tab is restored after a rebuild cycle
+                    if (focusedTab !== null) {
+                        this.setFocusedTab(focusedTab, true);
+                    } else {
+                        this.setFocusedTab(null);
+                        if (activeTabIndex) {
+                            this.setActiveTab(activeTabIndex);
+                        }
+                    }
+                },
+                /**
+                 * Trigger redraw event since new content is being displayed
+                 */
+                activate: () => {
+                    events.trigger("contentType:redrawAfter", {
+                        element: this.element,
+                    });
+                },
+            });
+        }
     }
 }
 
-// Resolve issue with jQuery UI tabs blocking events on content editable areas
+// Resolve issue with jQuery UI tabs content typing events on content editable areas
 const originalTabKeyDown = $.ui.tabs.prototype._tabKeydown;
 $.ui.tabs.prototype._tabKeydown = function(event: Event) {
     // If the target is content editable don't handle any events

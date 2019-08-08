@@ -1,12 +1,18 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/utils/image", "Magento_PageBuilder/js/utils/url"], function (_config, _image, _url) {
+define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/utils/image", "Magento_PageBuilder/js/utils/object", "Magento_PageBuilder/js/utils/url"], function (_config, _image, _object, _url) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
+
+  /**
+   * @api
+   */
   var Src =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     function Src() {}
 
     var _proto = Src.prototype;
@@ -23,18 +29,18 @@ define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/utils/image", "
       }
 
       return (0, _image.decodeUrl)(value);
-    };
+    }
     /**
      * Convert value to knockout format
      *
-     * @param name string
-     * @param data Object
+     * @param {string} name
+     * @param {DataObject} data
      * @returns {string}
      */
-
+    ;
 
     _proto.toDom = function toDom(name, data) {
-      var value = data[name];
+      var value = (0, _object.get)(data, name);
 
       if (value[0] === undefined || value[0].url === undefined) {
         return "";

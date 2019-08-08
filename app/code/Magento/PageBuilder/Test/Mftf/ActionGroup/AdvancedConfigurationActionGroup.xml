@@ -1,0 +1,463 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="fillSlideOutPanelFieldMargins">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <waitForElement selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
+        <fillField selector="{{AdvancedForm.advancedMarginTop}}" userInput="{{property.marginTop}}" stepKey="fillMarginTopField"/>
+        <fillField selector="{{AdvancedForm.advancedMarginRight}}" userInput="{{property.marginRight}}" stepKey="fillMarginRightField"/>
+        <fillField selector="{{AdvancedForm.advancedMarginLeft}}" userInput="{{property.marginLeft}}" stepKey="fillMarginLeftField"/>
+        <fillField selector="{{AdvancedForm.advancedMarginBottom}}" userInput="{{property.marginBottom}}" stepKey="fillMarginBottomField"/>
+        <click selector="{{EditPanelForm.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
+    </actionGroup>
+    <actionGroup name="fillSlideOutPanelSingleFieldMarginsOrPadding">
+        <arguments>
+            <argument name="field" type="string"/>
+            <argument name="value" type="string"/>
+        </arguments>
+        <waitForElement selector="{{AdvancedForm.advancedMarginsOrPaddingField(field)}}" stepKey="waitForElement"/>
+        <fillField selector="{{AdvancedForm.advancedMarginsOrPaddingField(field)}}" userInput="{{value}}" stepKey="fillFieldMarginOrPadding"/>
+    </actionGroup>
+    <actionGroup name="validateMarginsOrPaddingError">
+        <arguments>
+            <argument name="property"/>
+            <argument name="errorMessage" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{EditPanelForm.panelSectionError(property.section)}}" stepKey="waitForSectionChangedIcon"/>
+        <seeElement selector="{{EditPanelForm.panelSectionError(property.section)}}" stepKey="seeElementSectionChangedIcon"/>
+        <see userInput="{{errorMessage}}" selector="{{AdvancedForm.advancedMarginAndPaddingErrorMessage}}" stepKey="seeErrorMessage"/>
+    </actionGroup>
+    <actionGroup name="fillSlideOutPanelFieldPadding">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <waitForElement selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
+        <fillField selector="{{AdvancedForm.advancedPaddingTop}}" userInput="{{property.paddingTop}}" stepKey="fillPaddingTopField"/>
+        <fillField selector="{{AdvancedForm.advancedPaddingRight}}" userInput="{{property.paddingRight}}" stepKey="fillPaddingRightField"/>
+        <fillField selector="{{AdvancedForm.advancedPaddingLeft}}" userInput="{{property.paddingLeft}}" stepKey="fillPaddingLeftField"/>
+        <fillField selector="{{AdvancedForm.advancedPaddingBottom}}" userInput="{{property.paddingBottom}}" stepKey="fillPaddingBottomField"/>
+        <click selector="{{EditPanelForm.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
+    </actionGroup>
+    <actionGroup name="fillSlideOutPanelFieldMarginsAndPadding">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
+        <waitForElement time="2" selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
+        <see userInput="{{property.name}}" selector="{{EditPanelForm.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="seePropertyLabel"/>
+        <fillField selector="{{AdvancedForm.advancedMarginTop}}" userInput="{{property.marginTop}}" stepKey="fillMarginTopField"/>
+        <fillField selector="{{AdvancedForm.advancedMarginRight}}" userInput="{{property.marginRight}}" stepKey="fillMarginRightField"/>
+        <fillField selector="{{AdvancedForm.advancedMarginBottom}}" userInput="{{property.marginBottom}}" stepKey="fillMarginBottomField"/>
+        <fillField selector="{{AdvancedForm.advancedMarginLeft}}" userInput="{{property.marginLeft}}" stepKey="fillMarginLeftField"/>
+        <fillField selector="{{AdvancedForm.advancedPaddingTop}}" userInput="{{property.paddingTop}}" stepKey="fillPaddingTopField"/>
+        <fillField selector="{{AdvancedForm.advancedPaddingRight}}" userInput="{{property.paddingRight}}" stepKey="fillPaddingRightField"/>
+        <fillField selector="{{AdvancedForm.advancedPaddingBottom}}" userInput="{{property.paddingBottom}}" stepKey="fillPaddingBottomField"/>
+        <fillField selector="{{AdvancedForm.advancedPaddingLeft}}" userInput="{{property.paddingLeft}}" stepKey="fillPaddingLeftField"/>
+        <click selector="{{EditPanelForm.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
+    </actionGroup>
+    <actionGroup name="clearSlideOutPanelFieldMargins">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <waitForElement selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElement" />
+        <clearField selector="{{AdvancedForm.advancedMarginTop}}" stepKey="clearMarginTopField"/>
+        <clearField selector="{{AdvancedForm.advancedMarginRight}}" stepKey="clearMarginRightField"/>
+        <clearField selector="{{AdvancedForm.advancedMarginLeft}}" stepKey="clearMarginLeftField"/>
+        <clearField selector="{{AdvancedForm.advancedMarginBottom}}" stepKey="clearMarginBottomField"/>
+        <click selector="{{EditPanelForm.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
+    </actionGroup>
+    <actionGroup name="clearSlideOutPanelFieldPadding">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <waitForElement selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElement" />
+        <clearField selector="{{AdvancedForm.advancedPaddingTop}}" stepKey="clearPaddingTopField"/>
+        <clearField selector="{{AdvancedForm.advancedPaddingRight}}" stepKey="clearPaddingRightField"/>
+        <clearField selector="{{AdvancedForm.advancedPaddingLeft}}" stepKey="clearPaddingLeftField"/>
+        <clearField selector="{{AdvancedForm.advancedPaddingBottom}}" stepKey="clearPaddingBottomField"/>
+        <click selector="{{EditPanelForm.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
+    </actionGroup>
+    <actionGroup name="clearSlideOutPanelFieldMarginsAndPadding">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
+        <waitForElement time="2" selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
+        <see userInput="{{property.name}}" selector="{{EditPanelForm.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="seePropertyLabel"/>
+        <clearField selector="{{AdvancedForm.advancedMarginTop}}" stepKey="clearMarginTopField"/>
+        <clearField selector="{{AdvancedForm.advancedMarginRight}}" stepKey="clearMarginRightField"/>
+        <clearField selector="{{AdvancedForm.advancedMarginLeft}}" stepKey="clearMarginLeftField"/>
+        <clearField selector="{{AdvancedForm.advancedMarginBottom}}" stepKey="clearMarginBottomField"/>
+        <clearField selector="{{AdvancedForm.advancedPaddingTop}}" stepKey="clearPaddingTopField"/>
+        <clearField selector="{{AdvancedForm.advancedPaddingRight}}" stepKey="clearPaddingRightField"/>
+        <clearField selector="{{AdvancedForm.advancedPaddingLeft}}" stepKey="clearPaddingLeftField"/>
+        <clearField selector="{{AdvancedForm.advancedPaddingBottom}}" stepKey="clearPaddingBottomField"/>
+        <click selector="{{EditPanelForm.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
+    </actionGroup>
+    <actionGroup name="seeInMarginFieldsSlideOutPanel">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <waitForElement time="2" selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
+        <seeInField selector="{{AdvancedForm.advancedMarginTop}}" userInput="{{property.marginTop}}" stepKey="seeMarginTopField"/>
+        <seeInField selector="{{AdvancedForm.advancedMarginRight}}" userInput="{{property.marginRight}}" stepKey="seeMarginRightField"/>
+        <seeInField selector="{{AdvancedForm.advancedMarginBottom}}" userInput="{{property.marginBottom}}" stepKey="seeMarginBottomField"/>
+        <seeInField selector="{{AdvancedForm.advancedMarginLeft}}" userInput="{{property.marginLeft}}" stepKey="seeMarginLeftField"/>
+    </actionGroup>
+    <actionGroup name="seeInPaddingFieldsSlideOutPanel">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <waitForElement time="2" selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
+        <seeInField selector="{{AdvancedForm.advancedPaddingTop}}" userInput="{{property.paddingTop}}" stepKey="seePaddingTopField"/>
+        <seeInField selector="{{AdvancedForm.advancedPaddingRight}}" userInput="{{property.paddingRight}}" stepKey="seePaddingRightField"/>
+        <seeInField selector="{{AdvancedForm.advancedPaddingBottom}}" userInput="{{property.paddingBottom}}" stepKey="seePaddingBottomField"/>
+        <seeInField selector="{{AdvancedForm.advancedPaddingLeft}}" userInput="{{property.paddingLeft}}" stepKey="seePaddingLeftField"/>
+    </actionGroup>
+    <actionGroup name="seeInMarginsAndPaddingFieldSlideOutPanel">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <waitForElement time="2" selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
+        <seeInField selector="{{AdvancedForm.advancedMarginTop}}" userInput="{{property.marginTop}}" stepKey="fillMarginTopField"/>
+        <seeInField selector="{{AdvancedForm.advancedMarginRight}}" userInput="{{property.marginRight}}" stepKey="fillMarginRightField"/>
+        <seeInField selector="{{AdvancedForm.advancedMarginLeft}}" userInput="{{property.marginLeft}}" stepKey="fillMarginLeftField"/>
+        <seeInField selector="{{AdvancedForm.advancedMarginBottom}}" userInput="{{property.marginBottom}}" stepKey="fillMarginBottomField"/>
+        <seeInField selector="{{AdvancedForm.advancedPaddingTop}}" userInput="{{property.paddingTop}}" stepKey="fillPaddingTopField"/>
+        <seeInField selector="{{AdvancedForm.advancedPaddingRight}}" userInput="{{property.paddingRight}}" stepKey="fillPaddingRightField"/>
+        <seeInField selector="{{AdvancedForm.advancedPaddingLeft}}" userInput="{{property.paddingLeft}}" stepKey="fillPaddingLeftField"/>
+        <seeInField selector="{{AdvancedForm.advancedPaddingBottom}}" userInput="{{property.paddingBottom}}" stepKey="fillPaddingBottomField"/>
+    </actionGroup>
+    <actionGroup name="validateMarginsAndPaddingPlaceholderTextSlideOutPanel">
+        <arguments>
+            <argument name="property" defaultValue="PageBuilderAdvancedMarginsAndPaddingDefaultProperty"/>
+        </arguments>
+        <waitForElement time="2" selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible"/>
+        <seeElement selector="{{AdvancedForm.advancedMarginAndPaddingPlaceholderText('paddingTop', property.placeholderPaddingTop)}}" stepKey="seePaddingTopPlaceholder"/>
+        <seeElement selector="{{AdvancedForm.advancedMarginAndPaddingPlaceholderText('paddingRight', property.placeholderPaddingRight)}}" stepKey="seePaddingRightPlaceholder"/>
+        <seeElement selector="{{AdvancedForm.advancedMarginAndPaddingPlaceholderText('paddingBottom', property.placeholderPaddingBottom)}}" stepKey="seePaddingBottomPlaceholder"/>
+        <seeElement selector="{{AdvancedForm.advancedMarginAndPaddingPlaceholderText('paddingLeft', property.placeholderPaddingLeft)}}" stepKey="seePaddingLeftPlaceholder"/>
+        <seeElement selector="{{AdvancedForm.advancedMarginAndPaddingPlaceholderText('marginTop', property.placeholderMarginTop)}}" stepKey="seeMarginTopPlaceholder"/>
+        <seeElement selector="{{AdvancedForm.advancedMarginAndPaddingPlaceholderText('marginRight', property.placeholderMarginRight)}}" stepKey="seeMarginRightPlaceholder"/>
+        <seeElement selector="{{AdvancedForm.advancedMarginAndPaddingPlaceholderText('marginBottom', property.placeholderMarginBottom)}}" stepKey="seeMarginBottomPlaceholder"/>
+        <seeElement selector="{{AdvancedForm.advancedMarginAndPaddingPlaceholderText('marginLeft', property.placeholderMarginLeft)}}" stepKey="seeMarginLeftPlaceholder"/>
+    </actionGroup>
+    <actionGroup name="validateAdvancedConfigurationNotes">
+        <waitForElementVisible time="10" selector="{{AdvancedForm.cssClassesNote}}" stepKey="waitForElementVisibleCssClassesNote"/>
+        <waitForElementVisible time="10" selector="{{AdvancedForm.marginNote}}" stepKey="waitForElementVisibleMarginNote"/>
+        <waitForElementVisible time="10" selector="{{AdvancedForm.paddingNote}}" stepKey="waitForElementVisiblePaddingNote"/>
+    </actionGroup>
+    <actionGroup name="validateAdvancedStyleWithAlignment">
+        <arguments>
+            <argument name="page" defaultValue=""/>
+            <argument name="alignment" defaultValue="PageBuilderAdvancedAlignmentPropertyDefault"/>
+            <argument name="border" defaultValue="PageBuilderAdvancedBorderPropertyNone"/>
+            <argument name="borderWidth" defaultValue="PageBuilderAdvancedBorderWidthPropertyDefault"/>
+            <argument name="borderRadius" defaultValue="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
+            <argument name="margin" defaultValue="PageBuilderMarginsPropertyDefault"/>
+            <argument name="padding" defaultValue="PageBuilderPaddingPropertyDefault"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForElementVisible"/>
+        <waitForElementVisible selector="{{page.alignment(index, alignment.value)}}" stepKey="waitForAlignmentVisible"/>
+        <waitForElementVisible selector="{{page.border(index, border.value)}}" stepKey="waitForBorderVisible"/>
+        <waitForElementVisible selector="{{page.noBorderColor(index)}}" stepKey="waitForBorderColorVisible"/>
+        <waitForElementVisible selector="{{page.borderWidth(index, borderWidth.value)}}" stepKey="waitForBorderWidthVisible"/>
+        <waitForElementVisible selector="{{page.borderRadius(index, borderRadius.value)}}" stepKey="waitForBorderRadiusVisible"/>
+        <waitForElementVisible selector="{{page.noCssClasses(index)}}" stepKey="waitForCSSClassesVisible"/>
+        <waitForElementVisible selector="{{page.margins(index, margin.value)}}" stepKey="waitForMarginVisible"/>
+        <waitForElementVisible selector="{{page.padding(index, padding.value)}}" stepKey="waitForPaddingVisible"/>
+    </actionGroup>
+    <actionGroup name="validateAdvancedStyleWithNoAlignment">
+        <arguments>
+            <argument name="page" defaultValue=""/>
+            <argument name="border" defaultValue="PageBuilderAdvancedBorderPropertyNone"/>
+            <argument name="borderRadius" defaultValue="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
+            <argument name="borderWidth" defaultValue="PageBuilderAdvancedBorderWidthPropertyDefault"/>
+            <argument name="margin" defaultValue="PageBuilderMarginsPropertyDefault"/>
+            <argument name="padding" defaultValue="PageBuilderPaddingPropertyDefault"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForElementVisible"/>
+        <waitForElementVisible selector="{{page.noAlignment(index)}}" stepKey="waitForAlignmentVisible"/>
+        <waitForElementVisible selector="{{page.border(index, border.value)}}" stepKey="waitForBorderVisible"/>
+        <waitForElementVisible selector="{{page.noBorderColor(index)}}" stepKey="waitForBorderColorVisible"/>
+        <waitForElementVisible selector="{{page.borderWidth(index, borderWidth.value)}}" stepKey="waitForBorderWidthVisible"/>
+        <waitForElementVisible selector="{{page.borderRadius(index, borderRadius.value)}}" stepKey="waitForBorderRadiusVisible"/>
+        <waitForElementVisible selector="{{page.noCssClasses(index)}}" stepKey="waitForCSSClassesVisible"/>
+        <waitForElementVisible selector="{{page.margins(index, margin.value)}}" stepKey="waitForMarginVisible"/>
+        <waitForElementVisible selector="{{page.padding(index, padding.value)}}" stepKey="waitForPaddingVisible"/>
+    </actionGroup>
+    <actionGroup name="validateAdvancedStyleWithNoAlignmentEmptyBorderRadius">
+        <arguments>
+            <argument name="page" defaultValue=""/>
+            <argument name="border" defaultValue="PageBuilderAdvancedBorderPropertyNone"/>
+            <argument name="borderRadius" defaultValue="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
+            <argument name="borderWidth" defaultValue="PageBuilderAdvancedBorderWidthPropertyDefault"/>
+            <argument name="margin" defaultValue="PageBuilderMarginsPropertyDefault"/>
+            <argument name="padding" defaultValue="PageBuilderPaddingPropertyDefault"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForElementVisible"/>
+        <waitForElementVisible selector="{{page.noAlignment(index)}}" stepKey="waitForAlignmentVisible"/>
+        <waitForElementVisible selector="{{page.border(index, border.value)}}" stepKey="waitForBorderVisible"/>
+        <waitForElementVisible selector="{{page.noBorderColor(index)}}" stepKey="waitForBorderColorVisible"/>
+        <waitForElementVisible selector="{{page.borderWidth(index, borderWidth.value)}}" stepKey="waitForBorderWidthVisible"/>
+        <waitForElementVisible selector="{{page.noBorderRadius(index)}}" stepKey="waitForBorderRadiusVisible"/>
+        <waitForElementVisible selector="{{page.noCssClasses(index)}}" stepKey="waitForCSSClassesVisible"/>
+        <waitForElementVisible selector="{{page.margins(index, margin.value)}}" stepKey="waitForMarginVisible"/>
+        <waitForElementVisible selector="{{page.padding(index, padding.value)}}" stepKey="waitForPaddingVisible"/>
+    </actionGroup>
+    <actionGroup name="validateAdvancedStyleWithNoAlignmentNotVisible">
+        <arguments>
+            <argument name="page" defaultValue=""/>
+            <argument name="border" defaultValue="PageBuilderAdvancedBorderPropertyNone"/>
+            <argument name="borderRadius" defaultValue="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
+            <argument name="borderWidth" defaultValue="PageBuilderAdvancedBorderWidthPropertyDefault"/>
+            <argument name="margin" defaultValue="PageBuilderMarginsPropertyDefault"/>
+            <argument name="padding" defaultValue="PageBuilderPaddingPropertyDefault"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElement selector="{{page.base(index)}}" stepKey="waitForElement"/>
+        <dontSeeElement selector="{{page.base(index)}}" stepKey="dontSeeElement"/>
+        <waitForElement selector="{{page.noAlignment(index)}}" stepKey="waitForAlignment"/>
+        <dontSeeElement selector="{{page.noAlignment(index)}}" stepKey="dontSeeAlignment"/>
+        <waitForElement selector="{{page.border(index, border.value)}}" stepKey="waitForBorder"/>
+        <dontSeeElement selector="{{page.border(index, border.value)}}" stepKey="dontSeeBorder"/>
+        <waitForElement selector="{{page.noBorderColor(index)}}" stepKey="waitForBorderColor"/>
+        <dontSeeElement selector="{{page.noBorderColor(index)}}" stepKey="dontSeeBorderColor"/>
+        <waitForElement selector="{{page.borderWidth(index, borderWidth.value)}}" stepKey="waitForBorderWidth"/>
+        <dontSeeElement selector="{{page.borderWidth(index, borderWidth.value)}}" stepKey="dontSeeBorderWidth"/>
+        <waitForElement selector="{{page.borderRadius(index, borderRadius.value)}}" stepKey="waitForBorderRadius"/>
+        <dontSeeElement selector="{{page.borderRadius(index, borderRadius.value)}}" stepKey="dontSeeBorderRadius"/>
+        <waitForElement selector="{{page.noCssClasses(index)}}" stepKey="waitForCSSClasses"/>
+        <dontSeeElement selector="{{page.noCssClasses(index)}}" stepKey="dontSeeCSSClasses"/>
+        <waitForElement selector="{{page.margins(index, margin.value)}}" stepKey="waitForMargin"/>
+        <dontSeeElement selector="{{page.margins(index, margin.value)}}" stepKey="dontSeeMargin"/>
+        <waitForElement selector="{{page.padding(index, padding.value)}}" stepKey="waitForPadding"/>
+        <dontSeeElement selector="{{page.padding(index, padding.value)}}" stepKey="dontSeePadding"/>
+    </actionGroup>
+    <actionGroup name="validateAdvancedStyleWithNoBorder">
+        <arguments>
+            <argument name="page" defaultValue=""/>
+            <argument name="borderWidth" defaultValue="PageBuilderAdvancedBorderWidthPropertyDefault"/>
+            <argument name="borderRadius" defaultValue="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
+            <argument name="margin" defaultValue="PageBuilderMarginsPropertyDefault"/>
+            <argument name="padding" defaultValue="PageBuilderPaddingPropertyDefault"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForElementVisible"/>
+        <waitForElementVisible selector="{{page.noAlignment(index)}}" stepKey="waitForAlignmentVisible"/>
+        <waitForElementVisible selector="{{page.noBorder(index)}}" stepKey="waitForBorderVisible"/>
+        <waitForElementVisible selector="{{page.borderWidth(index, borderWidth.value)}}" stepKey="waitForBorderWidthVisible"/>
+        <waitForElementVisible selector="{{page.borderRadius(index, borderRadius.value)}}" stepKey="waitForBorderRadiusVisible"/>
+        <waitForElementVisible selector="{{page.noCssClasses(index)}}" stepKey="waitForCSSClassesVisible"/>
+        <waitForElementVisible selector="{{page.margins(index, margin.value)}}" stepKey="waitForMarginVisible"/>
+        <waitForElementVisible selector="{{page.padding(index, padding.value)}}" stepKey="waitForPaddingVisible"/>
+    </actionGroup>
+    <actionGroup name="validateAdvancedStyleWithBorderColor">
+        <arguments>
+            <argument name="page" defaultValue=""/>
+            <argument name="border" defaultValue="PageBuilderAdvancedBorderPropertyNone"/>
+            <argument name="borderColor" defaultValue=""/>
+            <argument name="borderWidth" defaultValue="PageBuilderAdvancedBorderWidthPropertyDefault"/>
+            <argument name="borderRadius" defaultValue="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
+            <argument name="margin" defaultValue="PageBuilderMarginsPropertyDefault"/>
+            <argument name="padding" defaultValue="PageBuilderPaddingPropertyDefault"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForElementVisible"/>
+        <waitForElementVisible selector="{{page.noAlignment(index)}}" stepKey="waitForAlignmentVisible"/>
+        <waitForElementVisible selector="{{page.border(index, border.value)}}" stepKey="waitForBorderVisible"/>
+        <waitForElementVisible selector="{{page.borderColor(index, borderColor.rgb)}}" stepKey="waitForBorderColorVisible"/>
+        <waitForElementVisible selector="{{page.borderWidth(index, borderWidth.value)}}" stepKey="waitForBorderWidthVisible"/>
+        <waitForElementVisible selector="{{page.borderRadius(index, borderRadius.value)}}" stepKey="waitForBorderRadiusVisible"/>
+        <waitForElementVisible selector="{{page.noCssClasses(index)}}" stepKey="waitForCSSClassesVisible"/>
+        <waitForElementVisible selector="{{page.margins(index, margin.value)}}" stepKey="waitForMarginVisible"/>
+        <waitForElementVisible selector="{{page.padding(index, padding.value)}}" stepKey="waitForPaddingVisible"/>
+    </actionGroup>
+    <actionGroup name="validateAdvancedStyleWithNoBorderWidth">
+        <arguments>
+            <argument name="page" defaultValue=""/>
+            <argument name="alignment" defaultValue="PageBuilderAdvancedAlignmentPropertyDefault"/>
+            <argument name="border" defaultValue="PageBuilderAdvancedBorderPropertyNone"/>
+            <argument name="borderRadius" defaultValue="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
+            <argument name="margin" defaultValue="PageBuilderMarginsPropertyDefault"/>
+            <argument name="padding" defaultValue="PageBuilderPaddingPropertyDefault"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForElementVisible"/>
+        <waitForElementVisible selector="{{page.noAlignment(index)}}" stepKey="waitForAlignmentVisible"/>
+        <waitForElementVisible selector="{{page.border(index, border.value)}}" stepKey="waitForBorderVisible"/>
+        <waitForElementVisible selector="{{page.noBorderColor(index)}}" stepKey="waitForBorderColorVisible"/>
+        <waitForElementVisible selector="{{page.noBorderWidth(index)}}" stepKey="waitForBorderWidthVisible"/>
+        <waitForElementVisible selector="{{page.borderRadius(index, borderRadius.value)}}" stepKey="waitForBorderRadiusVisible"/>
+        <waitForElementVisible selector="{{page.noCssClasses(index)}}" stepKey="waitForCSSClassesVisible"/>
+        <waitForElementVisible selector="{{page.margins(index, margin.value)}}" stepKey="waitForMarginVisible"/>
+        <waitForElementVisible selector="{{page.padding(index, padding.value)}}" stepKey="waitForPaddingVisible"/>
+    </actionGroup>
+    <actionGroup name="validateAdvancedStyleWithNoBorderRadius">
+        <arguments>
+            <argument name="page" defaultValue=""/>
+            <argument name="border" defaultValue="PageBuilderAdvancedBorderPropertyNone"/>
+            <argument name="borderWidth" defaultValue="PageBuilderAdvancedBorderWidthPropertyDefault"/>
+            <argument name="margin" defaultValue="PageBuilderMarginsPropertyDefault"/>
+            <argument name="padding" defaultValue="PageBuilderPaddingPropertyDefault"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForElementVisible"/>
+        <waitForElementVisible selector="{{page.noAlignment(index)}}" stepKey="waitForAlignmentVisible"/>
+        <waitForElementVisible selector="{{page.border(index, border.value)}}" stepKey="waitForBorderVisible"/>
+        <waitForElementVisible selector="{{page.noBorderColor(index)}}" stepKey="waitForBorderColorVisible"/>
+        <waitForElementVisible selector="{{page.borderWidth(index, borderWidth.value)}}" stepKey="waitForBorderWidthVisible"/>
+        <waitForElementVisible selector="{{page.noBorderRadius(index)}}" stepKey="waitForBorderRadiusVisible"/>
+        <waitForElementVisible selector="{{page.noCssClasses(index)}}" stepKey="waitForCSSClassesVisible"/>
+        <waitForElementVisible selector="{{page.margins(index, margin.value)}}" stepKey="waitForMarginVisible"/>
+        <waitForElementVisible selector="{{page.padding(index, padding.value)}}" stepKey="waitForPaddingVisible"/>
+    </actionGroup>
+    <actionGroup name="validateAdvancedStyleWithCssClasses">
+        <arguments>
+            <argument name="page" defaultValue=""/>
+            <argument name="border" defaultValue="PageBuilderAdvancedBorderPropertyNone"/>
+            <argument name="borderWidth" defaultValue="PageBuilderAdvancedBorderWidthPropertyDefault"/>
+            <argument name="borderRadius" defaultValue="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
+            <argument name="cssClasses" defaultValue=""/>
+            <argument name="margin" defaultValue="PageBuilderMarginsPropertyDefault"/>
+            <argument name="padding" defaultValue="PageBuilderPaddingPropertyDefault"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForElementVisible"/>
+        <waitForElementVisible selector="{{page.noAlignment(index)}}" stepKey="waitForAlignmentVisible"/>
+        <waitForElementVisible selector="{{page.border(index, border.value)}}" stepKey="waitForBorderVisible"/>
+        <waitForElementVisible selector="{{page.noBorderColor(index)}}" stepKey="waitForBorderColorVisible"/>
+        <waitForElementVisible selector="{{page.borderWidth(index, borderWidth.value)}}" stepKey="waitForBorderWidthVisible"/>
+        <waitForElementVisible selector="{{page.borderRadius(index, borderRadius.value)}}" stepKey="waitForBorderRadiusVisible"/>
+        <waitForElementVisible selector="{{page.cssClasses(index, cssClasses.value)}}" stepKey="waitForCSSClassesVisible"/>
+        <waitForElementVisible selector="{{page.margins(index, margin.value)}}" stepKey="waitForMarginVisible"/>
+        <waitForElementVisible selector="{{page.padding(index, padding.value)}}" stepKey="waitForPaddingVisible"/>
+    </actionGroup>
+    <actionGroup name="validateAdvancedStyleWithNoMargins">
+        <arguments>
+            <argument name="page" defaultValue=""/>
+            <argument name="border" defaultValue="PageBuilderAdvancedBorderPropertyNone"/>
+            <argument name="borderWidth" defaultValue="PageBuilderAdvancedBorderWidthPropertyDefault"/>
+            <argument name="borderRadius" defaultValue="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
+            <argument name="padding" defaultValue="PageBuilderPaddingPropertyDefault"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForElementVisible"/>
+        <waitForElementVisible selector="{{page.noAlignment(index)}}" stepKey="waitForAlignmentVisible"/>
+        <waitForElementVisible selector="{{page.border(index, border.value)}}" stepKey="waitForBorderVisible"/>
+        <waitForElementVisible selector="{{page.noBorderColor(index)}}" stepKey="waitForBorderColorVisible"/>
+        <waitForElementVisible selector="{{page.borderWidth(index, borderWidth.value)}}" stepKey="waitForBorderWidthVisible"/>
+        <waitForElementVisible selector="{{page.borderRadius(index, borderRadius.value)}}" stepKey="waitForBorderRadiusVisible"/>
+        <waitForElementVisible selector="{{page.noCssClasses(index)}}" stepKey="waitForCSSClassesVisible"/>
+        <waitForElementVisible selector="{{page.noMargins(index)}}" stepKey="waitForMarginVisible"/>
+        <waitForElementVisible selector="{{page.padding(index, padding.value)}}" stepKey="waitForPaddingVisible"/>
+    </actionGroup>
+    <actionGroup name="validateAdvancedStyleWithNoPadding">
+        <arguments>
+            <argument name="page" defaultValue=""/>
+            <argument name="border" defaultValue="PageBuilderAdvancedBorderPropertyNone"/>
+            <argument name="borderWidth" defaultValue="PageBuilderAdvancedBorderWidthPropertyDefault"/>
+            <argument name="borderRadius" defaultValue="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
+            <argument name="margin" defaultValue="PageBuilderMarginsPropertyDefault"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForElementVisible"/>
+        <waitForElementVisible selector="{{page.noAlignment(index)}}" stepKey="waitForAlignmentVisible"/>
+        <waitForElementVisible selector="{{page.border(index, border.value)}}" stepKey="waitForBorderVisible"/>
+        <waitForElementVisible selector="{{page.noBorderColor(index)}}" stepKey="waitForBorderColorVisible"/>
+        <waitForElementVisible selector="{{page.borderWidth(index, borderWidth.value)}}" stepKey="waitForBorderWidthVisible"/>
+        <waitForElementVisible selector="{{page.borderRadius(index, borderRadius.value)}}" stepKey="waitForBorderRadiusVisible"/>
+        <waitForElementVisible selector="{{page.noCssClasses(index)}}" stepKey="waitForCSSClassesVisible"/>
+        <waitForElementVisible selector="{{page.margins(index, margin.value)}}" stepKey="waitForMarginVisible"/>
+        <waitForElementVisible selector="{{page.noPadding(index)}}" stepKey="waitForPaddingVisible"/>
+    </actionGroup>
+    <actionGroup name="validateAdvancedStyleWithAllUpdated">
+        <arguments>
+            <argument name="page" defaultValue=""/>
+            <argument name="alignment" defaultValue="PageBuilderAdvancedAlignmentPropertyDefault"/>
+            <argument name="border" defaultValue="PageBuilderAdvancedBorderPropertyNone"/>
+            <argument name="borderColor" defaultValue=""/>
+            <argument name="borderWidth" defaultValue="PageBuilderAdvancedBorderWidthPropertyDefault"/>
+            <argument name="borderRadius" defaultValue="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
+            <argument name="cssClasses" defaultValue=""/>
+            <argument name="margin" defaultValue="PageBuilderMarginsPropertyDefault"/>
+            <argument name="padding" defaultValue="PageBuilderPaddingPropertyDefault"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForElementVisible"/>
+        <waitForElementVisible selector="{{page.alignment(index, alignment.value)}}" stepKey="waitForAlignmentVisible"/>
+        <waitForElementVisible selector="{{page.border(index, border.value)}}" stepKey="waitForBorderVisible"/>
+        <waitForElementVisible selector="{{page.borderColor(index, borderColor.rgb)}}" stepKey="waitForBorderColorVisible"/>
+        <waitForElementVisible selector="{{page.borderWidth(index, borderWidth.value)}}" stepKey="waitForBorderWidthVisible"/>
+        <waitForElementVisible selector="{{page.borderRadius(index, borderRadius.value)}}" stepKey="waitForBorderRadiusVisible"/>
+        <waitForElementVisible selector="{{page.cssClasses(index, cssClasses.value)}}" stepKey="waitForCSSClassesVisible"/>
+        <waitForElementVisible selector="{{page.margins(index, margin.value)}}" stepKey="waitForMarginVisible"/>
+        <waitForElementVisible selector="{{page.padding(index, padding.value)}}" stepKey="waitForPaddingVisible"/>
+    </actionGroup>
+    <actionGroup name="validateAdvancedStyleWithAllUpdatedNotVisible">
+        <arguments>
+            <argument name="page" defaultValue=""/>
+            <argument name="alignment" defaultValue="PageBuilderAdvancedAlignmentPropertyDefault"/>
+            <argument name="border" defaultValue="PageBuilderAdvancedBorderPropertyNone"/>
+            <argument name="borderColor" defaultValue=""/>
+            <argument name="borderWidth" defaultValue="PageBuilderAdvancedBorderWidthPropertyDefault"/>
+            <argument name="borderRadius" defaultValue="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
+            <argument name="cssClasses" defaultValue=""/>
+            <argument name="margin" defaultValue="PageBuilderMarginsPropertyDefault"/>
+            <argument name="padding" defaultValue="PageBuilderPaddingPropertyDefault"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElement selector="{{page.base(index)}}" stepKey="waitForElement"/>
+        <dontSeeElement selector="{{page.base(index)}}" stepKey="dontSeeElement"/>
+        <waitForElement selector="{{page.alignment(index, alignment.value)}}" stepKey="waitForAlignment"/>
+        <dontSeeElement selector="{{page.alignment(index, alignment.value)}}" stepKey="dontSeeAlignment"/>
+        <waitForElement selector="{{page.border(index, border.value)}}" stepKey="waitForBorder"/>
+        <dontSeeElement selector="{{page.border(index, border.value)}}" stepKey="dontSeeBorder"/>
+        <waitForElement selector="{{page.borderColor(index, borderColor.rgb)}}" stepKey="waitForBorderColor"/>
+        <dontSeeElement selector="{{page.borderColor(index, borderColor.rgb)}}" stepKey="dontSeeBorderColor"/>
+        <waitForElement selector="{{page.borderWidth(index, borderWidth.value)}}" stepKey="waitForBorderWidth"/>
+        <dontSeeElement selector="{{page.borderWidth(index, borderWidth.value)}}" stepKey="dontSeeBorderWidth"/>
+        <waitForElement selector="{{page.borderRadius(index, borderRadius.value)}}" stepKey="waitForBorderRadius"/>
+        <dontSeeElement selector="{{page.borderRadius(index, borderRadius.value)}}" stepKey="dontSeeBorderRadius"/>
+        <waitForElement selector="{{page.cssClasses(index, cssClasses.value)}}" stepKey="waitForCSSClasses"/>
+        <dontSeeElement selector="{{page.cssClasses(index, cssClasses.value)}}" stepKey="dontSeeCSSClasses"/>
+        <waitForElement selector="{{page.margins(index, margin.value)}}" stepKey="waitForMargin"/>
+        <dontSeeElement selector="{{page.margins(index, margin.value)}}" stepKey="dontSeeMargin"/>
+        <waitForElement selector="{{page.padding(index, padding.value)}}" stepKey="waitForPadding"/>
+        <dontSeeElement selector="{{page.padding(index, padding.value)}}" stepKey="dontSeePadding"/>
+    </actionGroup>
+    <actionGroup name="validateTextAlignment">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <waitForElement selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
+        <seeElement selector="//li[@name='{{property.value}}' and contains(@class,'active')]" stepKey="alignmentIsSelected" />
+    </actionGroup>
+    <actionGroup name="validateAdvancedStyleWithNoConfiguration">
+        <arguments>
+            <argument name="page" defaultValue=""/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForElementVisible"/>
+        <waitForElementVisible selector="{{page.noAlignment(index)}}" stepKey="waitForAlignmentVisible"/>
+        <waitForElementVisible selector="{{page.noBorder(index)}}" stepKey="waitForBorderVisible"/>
+        <waitForElementVisible selector="{{page.noBorderColor(index)}}" stepKey="waitForBorderColorVisible"/>
+        <waitForElementVisible selector="{{page.noBorderWidth(index)}}" stepKey="waitForBorderWidthVisible"/>
+        <waitForElementVisible selector="{{page.noBorderRadius(index)}}" stepKey="waitForBorderRadiusVisible"/>
+        <waitForElementVisible selector="{{page.noCssClasses(index)}}" stepKey="waitForCSSClassesVisible"/>
+        <waitForElementVisible selector="{{page.noMargins(index)}}" stepKey="waitForMarginVisible"/>
+        <waitForElementVisible selector="{{page.noPadding(index)}}" stepKey="waitForPaddingVisible"/>
+    </actionGroup>
+</actionGroups>

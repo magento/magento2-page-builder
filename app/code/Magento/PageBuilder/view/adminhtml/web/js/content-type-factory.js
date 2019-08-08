@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/loader", "uiEvents", "underscore", "Magento_PageBuilder/js/content-type/content-factory", "Magento_PageBuilder/js/content-type/preview-factory"], function (_loader, _uiEvents, _underscore, _contentFactory, _previewFactory) {
+define(["Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/master-factory", "Magento_PageBuilder/js/content-type/preview-factory", "Magento_PageBuilder/js/utils/loader"], function (_events, _underscore, _config, _masterFactory, _previewFactory, _loader) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -9,13 +9,14 @@ define(["Magento_PageBuilder/js/loader", "uiEvents", "underscore", "Magento_Page
    * Create new content type
    *
    * @param {ContentTypeConfigInterface} config
-   * @param {ContentTypeInterface} parent
-   * @param {number} stageId
+   * @param {ContentTypeInterface} parentContentType
+   * @param {string} stageId
    * @param {object} data
    * @param {number} childrenLength
    * @returns {Promise<ContentTypeInterface>}
+   * @api
    */
-  function createContentType(config, parent, stageId, data, childrenLength) {
+  function createContentType(config, parentContentType, stageId, data, childrenLength) {
     if (data === void 0) {
       data = {};
     }
@@ -24,74 +25,102 @@ define(["Magento_PageBuilder/js/loader", "uiEvents", "underscore", "Magento_Page
       childrenLength = 0;
     }
 
-    return new Promise(function (resolve) {
-      (0, _loader)([config.component], function (ContentTypeComponent) {
-        var contentType = new ContentTypeComponent(parent, config, stageId);
-        Promise.all([(0, _previewFactory)(contentType, config), (0, _contentFactory)(contentType, config)]).then(function (resolvedPromises) {
-          var previewComponent = resolvedPromises[0],
-              contentComponent = resolvedPromises[1];
-          contentType.preview = previewComponent;
-          contentType.content = contentComponent;
-          contentType.dataStore.update(prepareData(config, data));
-          resolve(contentType);
-        });
+    return new Promise(function (resolve, reject) {
+      (0, _loader)([config.component], function (contentTypeComponent) {
+        try {
+          var contentType = new contentTypeComponent(parentContentType, config, stageId);
+          var viewFactory = _config.getMode() === "Preview" ? _previewFactory : _masterFactory;
+          viewFactory(contentType, config).then(function (viewComponent) {
+            var viewName = _config.getMode() === "Preview" ? "preview" : "content";
+            contentType[viewName] = viewComponent;
+            contentType.dataStore.setState(prepareData(config, data));
+            resolve(contentType);
+          }).catch(function (error) {
+            reject(error);
+          });
+        } catch (error) {
+          reject("Error within component (" + config.component + ") for " + config.name + ".");
+          console.error(error);
+        }
+      }, function (error) {
+        reject("Unable to load component (" + config.component + ") for " + config.name + ". Please check component exists" + " and content type configuration is correct.");
+        console.error(error);
       });
-    }).then(function (block) {
-      _uiEvents.trigger("block:create", {
-        id: block.id,
-        block: block
+    }).then(function (contentType) {
+      _events.trigger("contentType:createAfter", {
+        id: contentType.id,
+        contentType: contentType
       });
 
-      _uiEvents.trigger(config.name + ":block:create", {
-        id: block.id,
-        block: block
+      _events.trigger(config.name + ":createAfter", {
+        id: contentType.id,
+        contentType: contentType
       });
 
-      fireBlockReadyEvent(block, childrenLength);
-      return block;
+      fireContentTypeReadyEvent(contentType, childrenLength);
+      return contentType;
     }).catch(function (error) {
       console.error(error);
+      return null;
     });
   }
   /**
    * Merge defaults and content type data
    *
-   * @param {Config} config
+   * @param {ContentTypeConfigInterface} config
    * @param {object} data
    * @returns {any}
    */
 
 
   function prepareData(config, data) {
-    var defaults = {};
+    var defaults = prepareDefaults(config.fields || {}); // Set all content types to be displayed by default
 
-    if (config.fields) {
-      _underscore.each(config.fields, function (field, key) {
-        defaults[key] = field.default;
-      });
-    }
-
-    return _underscore.extend(defaults, data);
+    defaults.display = true;
+    return _underscore.extend(defaults, data, {
+      name: config.name
+    });
   }
   /**
-   * A block is ready once all of its children have mounted
+   * Prepare the default values for fields within the form
    *
-   * @param {Block} block
+   * @param {ConfigFieldInterface} fields
+   * @returns {FieldDefaultsInterface}
+   */
+
+
+  function prepareDefaults(fields) {
+    if (_underscore.isEmpty(fields)) {
+      return {};
+    }
+
+    return _underscore.mapObject(fields, function (field) {
+      if (!_underscore.isUndefined(field.default)) {
+        return field.default;
+      } else if (_underscore.isObject(field)) {
+        return prepareDefaults(field);
+      }
+    });
+  }
+  /**
+   * A content type is ready once all of its children have mounted
+   *
+   * @param {ContentTypeInterface | ContentTypeCollectionInterface} contentType
    * @param {number} childrenLength
    */
 
 
-  function fireBlockReadyEvent(block, childrenLength) {
+  function fireContentTypeReadyEvent(contentType, childrenLength) {
     var fire = function fire() {
-      _uiEvents.trigger("block:ready", {
-        id: block.id,
-        block: block
-      });
+      var params = {
+        id: contentType.id,
+        contentType: contentType,
+        expectChildren: childrenLength
+      };
 
-      _uiEvents.trigger(block.config.name + ":block:ready", {
-        id: block.id,
-        block: block
-      });
+      _events.trigger("contentType:mountAfter", params);
+
+      _events.trigger(contentType.config.name + ":mountAfter", params);
     };
 
     if (childrenLength === 0) {
@@ -99,19 +128,24 @@ define(["Magento_PageBuilder/js/loader", "uiEvents", "underscore", "Magento_Page
     } else {
       var mountCounter = 0;
 
-      _uiEvents.on("block:mount", function (args) {
-        if (args.block.parent.id === block.id) {
+      _events.on("contentType:mountAfter", function (args) {
+        if (args.contentType.parentContentType.id === contentType.id) {
           mountCounter++;
 
           if (mountCounter === childrenLength) {
+            mountCounter = 0;
             fire();
 
-            _uiEvents.off("block:mount:" + block.id);
+            _events.off("contentType:" + contentType.id + ":mountAfter");
           }
         }
-      }, "block:mount:" + block.id);
+      }, "contentType:" + contentType.id + ":mountAfter");
     }
   }
+  /**
+   * @api
+   */
+
 
   return createContentType;
 });

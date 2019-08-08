@@ -5,6 +5,9 @@
 
 import PropertyReaderInterface from "./property-reader-interface";
 
+/**
+ * @api
+ */
 export default class Paddings implements PropertyReaderInterface {
     /**
      * Read paddings from element
@@ -12,7 +15,7 @@ export default class Paddings implements PropertyReaderInterface {
      * @param {HTMLElement} element
      * @returns {string | object}
      */
-    public read(element: HTMLElement): string | object {
+    public read(element: HTMLElement): DataObjectPaddings {
         return {
             padding: {
                 left: element.style.paddingLeft,
@@ -22,4 +25,13 @@ export default class Paddings implements PropertyReaderInterface {
             },
         };
     }
+}
+
+export interface DataObjectPaddings {
+    padding?: {
+        left: string;
+        top: string;
+        right: string;
+        bottom: string;
+    };
 }

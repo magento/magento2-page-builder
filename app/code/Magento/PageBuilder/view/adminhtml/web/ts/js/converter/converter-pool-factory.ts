@@ -3,22 +3,25 @@
  * See COPYING.txt for license details.
  */
 
-import loadModule from "Magento_PageBuilder/js/utils/loader";
 import Config from "../config";
+import ContentTypeConfigInterface from "../content-type-config.types";
+import loadModule from "../utils/loader";
 import ConverterPool from "./converter-pool";
 
 /**
  * Create a new instance of converter pool
  */
-export default function create(contentType: string): Promise<> {
-    const config = Config.getContentTypeConfig(contentType);
-    const converters = [];
-    for (const appearanceName: string of Object.keys(config.appearances)) {
-        const dataMapping = config.appearances[appearanceName].data_mapping;
-        if (dataMapping !== undefined && dataMapping.elements !== undefined) {
-            for (const elementName: string of Object.keys(dataMapping.elements)) {
-                if (dataMapping.elements[elementName].style !== undefined) {
-                    for (const propertyConfig of dataMapping.elements[elementName].style) {
+export default function create(contentType: string): Promise<typeof ConverterPool> {
+    const config: ContentTypeConfigInterface = Config.getContentTypeConfig(contentType);
+    const converters: string[] = [];
+    let appearanceName: string;
+    for (appearanceName of Object.keys(config.appearances)) {
+        const appearance = config.appearances[appearanceName];
+        if (appearance !== undefined && appearance.elements !== undefined) {
+            let elementName: string;
+            for (elementName of Object.keys(appearance.elements)) {
+                if (appearance.elements[elementName].style !== undefined) {
+                    for (const propertyConfig of appearance.elements[elementName].style) {
                         if (!!propertyConfig.converter
                             && converters.indexOf(propertyConfig.converter) === -1
                             && !ConverterPool.get(propertyConfig.converter)
@@ -34,8 +37,8 @@ export default function create(contentType: string): Promise<> {
                     }
                 }
 
-                if (dataMapping.elements[elementName].attributes !== undefined) {
-                    for (const attributeConfig of dataMapping.elements[elementName].attributes) {
+                if (appearance.elements[elementName].attributes !== undefined) {
+                    for (const attributeConfig of appearance.elements[elementName].attributes) {
                         if (!!attributeConfig.converter
                             && converters.indexOf(attributeConfig.converter) === -1
                             && !ConverterPool.get(attributeConfig.converter)
@@ -51,8 +54,8 @@ export default function create(contentType: string): Promise<> {
                     }
                 }
 
-                if (dataMapping.elements[elementName].html !== undefined) {
-                    const htmlConfig = dataMapping.elements[elementName].html;
+                if (appearance.elements[elementName].html !== undefined) {
+                    const htmlConfig = appearance.elements[elementName].html;
                     if (!!htmlConfig.converter
                         && converters.indexOf(htmlConfig.converter) === -1
                         && !ConverterPool.get(htmlConfig.converter)
@@ -71,7 +74,7 @@ export default function create(contentType: string): Promise<> {
         }
     }
 
-    return new Promise((resolve: (converterPool: object) => void) => {
+    return new Promise((resolve: (converterPool: typeof ConverterPool) => void) => {
         loadModule(converters, (...loadedConverters: any[]) => {
             for (let i = 0; i < converters.length; i++) {
                 ConverterPool.register(converters[i], new loadedConverters[i]());

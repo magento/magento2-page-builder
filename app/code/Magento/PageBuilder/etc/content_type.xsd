@@ -7,44 +7,36 @@
 -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
     <xs:redefine schemaLocation="urn:magento:framework:Data/etc/argument/types.xsd"/>
-
     <xs:element name="config">
         <xs:complexType>
             <xs:choice maxOccurs="unbounded">
-                <xs:element name="content_types">
+                <xs:element name="type" minOccurs="0" maxOccurs="unbounded">
                     <xs:complexType>
-                        <xs:sequence>
-                            <xs:element name="type" minOccurs="0" maxOccurs="unbounded">
+                        <xs:all>
+                            <xs:element type="xs:string" name="preview_template" minOccurs="0"/>
+                            <xs:element type="xs:string" name="master_template" minOccurs="0"/>
+                            <xs:element type="parents" name="parents" minOccurs="0" maxOccurs="1"/>
+                            <xs:element type="children" name="children" minOccurs="0" maxOccurs="1"/>
+                            <xs:element name="appearances" minOccurs="0" maxOccurs="1">
                                 <xs:complexType>
-                                    <xs:all>
-                                        <xs:element type="xs:string" name="label" minOccurs="0"/>
-                                        <xs:element type="xs:string" name="icon" minOccurs="0"/>
-                                        <xs:element type="xs:string" name="component" minOccurs="0" maxOccurs="1"/>
-                                        <xs:element type="xs:string" name="preview_component" minOccurs="0"/>
-                                        <xs:element type="xs:string" name="content_component" minOccurs="0"/>
-                                        <xs:element type="xs:string" name="preview_template" minOccurs="0"/>
-                                        <xs:element type="xs:string" name="render_template" minOccurs="0"/>
-                                        <xs:element type="xs:string" name="backend_block" minOccurs="0"/>
-                                        <xs:element type="xs:string" name="backend_template" minOccurs="0"/>
-                                        <xs:element type="xs:string" name="form" minOccurs="0"/>
-                                        <xs:element type="xs:string" name="group" minOccurs="0"/>
-                                        <xs:element type="allowed_parents" name="allowed_parents" minOccurs="0" maxOccurs="1"/>
-                                        <xs:element name="appearances" minOccurs="0" maxOccurs="1">
-                                            <xs:complexType>
-                                                <xs:sequence>
-                                                    <xs:element type="appearance" name="appearance" minOccurs="1" maxOccurs="unbounded"/>
-                                                </xs:sequence>
-                                            </xs:complexType>
-                                        </xs:element>
-                                        <xs:element type="additional_data" name="additional_data" minOccurs="0" maxOccurs="1"/>
-                                        <xs:element type="xs:string" name="is_visible" minOccurs="0"/>
-                                    </xs:all>
-                                    <xs:attribute type="xs:string" name="name" use="required"/>
-                                    <xs:attribute type="xs:string" name="translate" use="optional"/>
-                                    <xs:attribute type="xs:byte" name="sortOrder" use="optional"/>
+                                    <xs:sequence>
+                                        <xs:element type="appearance" name="appearance" minOccurs="1" maxOccurs="unbounded"/>
+                                    </xs:sequence>
                                 </xs:complexType>
                             </xs:element>
-                        </xs:sequence>
+                            <xs:element type="additional_data" name="additional_data" minOccurs="0" maxOccurs="1"/>
+                            <xs:element type="xs:string" name="is_system" minOccurs="0"/>
+                        </xs:all>
+                        <xs:attribute type="xs:string" name="name" use="required"/>
+                        <xs:attribute type="xs:string" name="translate" use="optional"/>
+                        <xs:attribute type="xs:byte" name="sortOrder" use="optional"/>
+                        <xs:attribute type="xs:string" name="label" use="optional"/>
+                        <xs:attribute type="xs:string" name="icon" use="optional"/>
+                        <xs:attribute type="xs:string" name="component" use="optional"/>
+                        <xs:attribute type="xs:string" name="preview_component" use="optional"/>
+                        <xs:attribute type="xs:string" name="master_component" use="optional"/>
+                        <xs:attribute type="xs:string" name="form" use="optional"/>
+                        <xs:attribute type="xs:string" name="menu_section" use="optional"/>
                     </xs:complexType>
                 </xs:element>
             </xs:choice>
@@ -61,42 +53,49 @@
                     </xs:simpleContent>
                 </xs:complexType>
             </xs:element>
-            <xs:element type="data_mapping" name="data_mapping" minOccurs="0"/>
-            <xs:element type="xs:string" name="preview_template" minOccurs="0" maxOccurs="1"/>
-            <xs:element type="xs:string" name="render_template" minOccurs="0" maxOccurs="1"/>
-            <xs:element type="xs:string" name="reader" minOccurs="0" maxOccurs="1"/>
-            <xs:element type="readers" name="readers" minOccurs="0" maxOccurs="1"/>
+            <xs:element type="elements" name="elements" minOccurs="0" maxOccurs="1"/>
+            <xs:element type="converters" name="converters" minOccurs="0" maxOccurs="1"/>
             <xs:element type="xs:string" name="form" minOccurs="0" maxOccurs="1"/>
         </xs:choice>
         <xs:attribute type="xs:string" name="name" use="required"/>
-        <xs:attribute type="xs:boolean" name="default"/>
+        <xs:attribute type="xs:boolean" name="default" use="optional"/>
+        <xs:attribute type="xs:string" name="preview_template" use="optional"/>
+        <xs:attribute type="xs:string" name="master_template" use="optional"/>
+        <xs:attribute type="xs:string" name="reader" use="optional"/>
     </xs:complexType>
-    <xs:complexType name="allowed_parents">
+    <xs:complexType name="parents">
         <xs:sequence>
-            <xs:element type="parent" name="parent" minOccurs="1" maxOccurs="unbounded"/>
+            <xs:element type="parent" name="parent" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
+        <xs:attribute type="xs:string" name="default_policy" use="optional"/>
+    </xs:complexType>
+    <xs:complexType name="children">
+        <xs:sequence>
+            <xs:element type="child" name="child" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute type="xs:string" name="default_policy" use="optional"/>
     </xs:complexType>
     <xs:complexType name="parent">
         <xs:attribute type="xs:string" name="name" use="required"/>
+        <xs:attribute type="xs:string" name="policy" use="optional"/>
     </xs:complexType>
-    <xs:complexType name="readers">
-        <xs:sequence>
-            <xs:element type="reader" name="reader" minOccurs="1" maxOccurs="unbounded"/>
-        </xs:sequence>
-    </xs:complexType>
-    <xs:complexType name="reader">
+    <xs:complexType name="child">
         <xs:attribute type="xs:string" name="name" use="required"/>
-        <xs:attribute type="xs:string" name="component" use="optional"/>
-    </xs:complexType>
-    <xs:complexType name="data_mapping">
-        <xs:sequence>
-            <xs:element type="elements" name="elements" minOccurs="0" maxOccurs="1"/>
-            <xs:element type="converters" name="converters" minOccurs="0" maxOccurs="1"/>
-        </xs:sequence>
+        <xs:attribute type="xs:string" name="policy" use="optional"/>
     </xs:complexType>
     <xs:complexType name="elements">
         <xs:sequence>
-            <xs:element type="element" name="element" minOccurs="1" maxOccurs="unbounded"/>
+            <xs:element type="element" name="element" minOccurs="1" maxOccurs="unbounded">
+                <xs:unique name="uniqueNames">
+                    <xs:annotation>
+                        <xs:documentation>
+                            Attribute and Style names must be unique
+                        </xs:documentation>
+                    </xs:annotation>
+                    <xs:selector xpath="attribute|style"/>
+                    <xs:field xpath="@name"/>
+                </xs:unique>
+            </xs:element>
         </xs:sequence>
     </xs:complexType>
     <xs:complexType name="converters">
@@ -121,69 +120,43 @@
         <xs:attribute type="xs:string" name="value" use="optional"/>
     </xs:complexType>
     <xs:complexType name="element">
-        <xs:sequence>
-            <xs:element type="style_properties" name="style_properties" minOccurs="0" maxOccurs="1"/>
-            <xs:element type="attributes" name="attributes" minOccurs="0" maxOccurs="1"/>
+        <xs:choice maxOccurs="unbounded">
+            <xs:element type="style" name="style" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element type="static_style" name="static_style" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element type="attribute" name="attribute" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element type="static_attribute" name="static_attribute" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element type="tag" name="tag" minOccurs="0" maxOccurs="1"/>
             <xs:element type="html" name="html" minOccurs="0" maxOccurs="1"/>
             <xs:element type="css" name="css" minOccurs="0" maxOccurs="1"/>
-        </xs:sequence>
-        <xs:attribute type="xs:string" name="name" use="required"/>
-        <xs:attribute type="xs:string" name="path" use="optional"/>
-    </xs:complexType>
-    <xs:complexType name="style_properties">
-        <xs:choice maxOccurs="unbounded">
-            <xs:element type="property" name="property" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element type="complex_property" name="complex_property" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element type="static_property" name="static_property" minOccurs="0" maxOccurs="unbounded"/>
         </xs:choice>
+        <xs:attribute type="xs:string" name="name" use="required"/>
     </xs:complexType>
     <xs:complexType name="additional_data">
         <xs:choice maxOccurs="unbounded">
-            <xs:element type="argumentType" name="arguments" minOccurs="1" maxOccurs="unbounded"/>
+            <xs:element type="argumentType" name="item" minOccurs="1" maxOccurs="unbounded"/>
         </xs:choice>
     </xs:complexType>
-    <xs:complexType name="property">
+    <xs:complexType name="style">
         <xs:attribute type="xs:string" name="name" use="required"/>
         <xs:attribute type="xs:string" name="source" use="optional"/>
         <xs:attribute type="xs:string" name="converter" use="optional"/>
         <xs:attribute type="xs:string" name="preview_converter" use="optional"/>
-        <xs:attribute type="xs:string" name="virtual" use="optional"/>
-        <xs:attribute type="xs:string" name="persist" use="optional"/>
-    </xs:complexType>
-    <xs:complexType name="complex_property">
-        <xs:attribute type="xs:string" name="name" use="required"/>
+        <xs:attribute type="xs:string" name="persistence_mode" use="optional"/>
+        <xs:attribute type="xs:string" name="storage_key" use="optional"/>
         <xs:attribute type="xs:string" name="reader" use="optional"/>
-        <xs:attribute type="xs:string" name="converter" use="optional"/>
-        <xs:attribute type="xs:string" name="preview_converter" use="optional"/>
-        <xs:attribute type="xs:string" name="virtual" use="optional"/>
     </xs:complexType>
-    <xs:complexType name="static_property">
+    <xs:complexType name="static_style">
         <xs:attribute type="xs:string" name="source" use="required"/>
         <xs:attribute type="xs:string" name="value" use="optional"/>
-    </xs:complexType>
-    <xs:complexType name="attributes">
-        <xs:choice maxOccurs="unbounded">
-            <xs:element type="attribute" name="attribute" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element type="complex_attribute" name="complex_attribute" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element type="static_attribute" name="static_attribute" minOccurs="0" maxOccurs="unbounded"/>
-        </xs:choice>
     </xs:complexType>
     <xs:complexType name="attribute">
         <xs:attribute type="xs:string" name="name" use="required"/>
         <xs:attribute type="xs:string" name="source" use="optional"/>
         <xs:attribute type="xs:string" name="converter" use="optional"/>
         <xs:attribute type="xs:string" name="preview_converter" use="optional"/>
-        <xs:attribute type="xs:string" name="virtual" use="optional"/>
-        <xs:attribute type="xs:boolean" name="persist" use="optional"/>
-    </xs:complexType>
-    <xs:complexType name="complex_attribute">
-        <xs:attribute type="xs:string" name="name" use="required"/>
+        <xs:attribute type="xs:string" name="persistence_mode" use="optional"/>
+        <xs:attribute type="xs:string" name="storage_key" use="optional"/>
         <xs:attribute type="xs:string" name="reader" use="optional"/>
-        <xs:attribute type="xs:string" name="converter" use="optional"/>
-        <xs:attribute type="xs:string" name="preview_converter" use="optional"/>
-        <xs:attribute type="xs:string" name="virtual" use="optional"/>
-        <xs:attribute type="xs:boolean" name="persist" use="optional"/>
     </xs:complexType>
     <xs:complexType name="static_attribute">
         <xs:attribute type="xs:string" name="source" use="required"/>
@@ -199,7 +172,6 @@
             <xs:element type="filter" name="filter" minOccurs="0" maxOccurs="1"/>
         </xs:sequence>
         <xs:attribute type="xs:string" name="name" use="required"/>
-        <xs:attribute type="xs:string" name="converter" use="optional"/>
     </xs:complexType>
     <xs:complexType name="filter">
         <xs:sequence>

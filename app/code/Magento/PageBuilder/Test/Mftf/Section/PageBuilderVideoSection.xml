@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
+    <section name="VideoOnStage">
+        <element name="mainCSS" type="text" selector="[data-content-type=video][data-element=main]"/>
+        <element name="wrapperCSS" type="text" selector="[data-content-type=video] [data-element=wrapper]"/>
+        <!-- Empty Video -->
+        <element name="empty" type="text" selector="(//div[contains(@class,'pagebuilder-video-wrapper')])[{{arg1}}]//iframe" parameterized="true"/>
+        <element name="iframe" type="text" selector="(//div[contains(@class,'pagebuilder-video-wrapper')])[{{arg1}}]//iframe" parameterized="true"/>
+        <element name="icon" type="text" selector="(//div[contains(@class,'pagebuilder-video-wrapper')])[{{arg1}}]//i[contains(@class,'icon-pagebuilder-video')]" parameterized="true"/>
+        <element name="text" type="text" selector="(//div[contains(@class,'pagebuilder-video-wrapper')])[{{arg1}}]//span[.='{{arg2}}']" parameterized="true"/>
+        <!-- General Configuration -->
+        <element name="base" type="text" selector="(//div[contains(@class,'pagebuilder-video-wrapper')])[{{arg1}}]" parameterized="true"/>
+        <element name="hidden" type="text" selector="(//div[contains(@class,'pagebuilder-video-wrapper')])[{{arg1}}]/ancestor::*[contains(@class, 'pagebuilder-content-type-wrapper') and contains(@class, 'pagebuilder-content-type-hidden')]" parameterized="true"/>
+        <element name="notHidden" type="text" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-video')])[{{arg1}}]/parent::*[contains(@class, 'pagebuilder-content-type-wrapper') and not(contains(@class, 'pagebuilder-content-type-hidden'))][1]" parameterized="true"/>
+        <element name="source" type="text" selector="(//div[contains(@class,'pagebuilder-video-wrapper')])[{{arg1}}]//iframe[@src='{{arg2}}']" parameterized="true"/>
+        <element name="width" type="text" selector="(//div[contains(@class,'pagebuilder-video-inner')])[{{arg1}}][contains(@style,'max-width: {{arg2}}px;')]" parameterized="true"/>
+        <element name="noWidth" type="text" selector="(//div[contains(@class,'pagebuilder-video-wrapper')])[{{arg1}}][not(starts-with(@style,'width:')) and not(contains(@style,' width:'))][contains(@class,'pagebuilder-video-wrapper')]" parameterized="true"/>
+        <!-- Advanced Configuration -->
+        <element name="alignment" type="text" selector="(//div[contains(@class,'pagebuilder-video-inner')])[{{arg1}}]/parent::div[contains(@style, 'text-align: {{arg2}};')]" parameterized="true"/>
+        <element name="noAlignment" type="text" selector="(//div[contains(@class,'pagebuilder-video-inner')])[{{arg1}}]/parent::div[not(contains(@style,'text-align:'))]" parameterized="true"/>
+        <element name="border" type="text" selector="(//div[contains(@class,'pagebuilder-video-wrapper')])[{{arg1}}][contains(@style,'border-style: {{arg2}};')]" parameterized="true"/>
+        <element name="borderColor" type="text" selector="(//div[contains(@class,'pagebuilder-video-wrapper')])[{{arg1}}][contains(@style,'border-color: {{arg2}};')]" parameterized="true"/>
+        <element name="noBorderColor" type="text" selector="(//div[contains(@class,'pagebuilder-video-wrapper')])[{{arg1}}][not(contains(@style,'border-color:'))]" parameterized="true"/>
+        <element name="borderWidth" type="text" selector="(//div[contains(@class,'pagebuilder-video-wrapper')])[{{arg1}}][contains(@style,'border-width: {{arg2}}px;')]" parameterized="true"/>
+        <element name="borderRadius" type="text" selector="(//div[contains(@class,'pagebuilder-video-wrapper')])[{{arg1}}][contains(@style,'border-radius: {{arg2}}px;')]" parameterized="true"/>
+        <element name="cssClasses" type="text" selector="(//div[contains(@class,'pagebuilder-video-inner')])[{{arg1}}]/parent::div[contains(@class,'{{arg2}}')]" parameterized="true"/>
+        <element name="noCssClasses" type="text" selector="(//div[contains(@class,'pagebuilder-video-wrapper')])[{{arg1}}]" parameterized="true"/>
+        <element name="margins" type="text" selector="(//div[@data-content-type='video'])[{{arg1}}][contains(@style,'margin: {{arg2}}px;')]" parameterized="true"/>
+        <element name="padding" type="text" selector="(//div[contains(@class,'pagebuilder-video-wrapper')])[{{arg1}}][contains(@style,'padding: {{arg2}}px;')]" parameterized="true"/>
+    </section>
+    <section name="VideoOnStorefront">
+        <element name="mainCSS" type="text" selector="[data-content-type=video][data-element=main]"/>
+        <element name="wrapperCSS" type="text" selector="[data-content-type=video] [data-element=wrapper]"/>
+        <!-- Empty Video -->
+        <element name="empty" type="text" selector="//div[@data-content-type='video'][count(iframe)=0]"/>
+        <!-- General Configuration -->
+        <element name="base" type="text" selector="(//div[@data-content-type='video']//iframe)[{{arg1}}]" parameterized="true"/>
+        <element name="hidden" type="text" selector="(//div[@data-content-type='video'])[{{arg1}}][contains(@style, 'display: none')]" parameterized="true"/>
+        <element name="notHidden" type="text" selector="(//div[@data-content-type='video'])[{{arg1}}][not(contains(@style, 'display: none'))]" parameterized="true"/>
+        <element name="iframe" type="text" selector="(//div[@data-content-type='video']//iframe)[{{arg1}}]" parameterized="true"/>
+        <element name="source" type="text" selector="(//div[@data-content-type='video']//iframe)[{{arg1}}][@src='{{arg2}}']" parameterized="true"/>
+        <element name="width" type="text" selector="(//div[@data-content-type='video'])[{{arg1}}]//div[@data-element='inner'][contains(@style,'max-width: {{arg2}}')]" parameterized="true"/>
+        <element name="noWidth" type="text" selector="(//div[@data-content-type='video']//iframe)[{{arg1}}][not(starts-with(@style,'width:')) and not(contains(@style,' width:'))]" parameterized="true"/>
+        <!-- Advanced Configuration -->
+        <element name="alignment" type="text" selector="(//div[@data-content-type='video'])[{{arg1}}][contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
+        <element name="noAlignment" type="text" selector="(//div[@data-content-type='video'])[{{arg1}}][not(contains(@style,'text-align'))]" parameterized="true"/>
+        <element name="border" type="text" selector="(//div[@data-content-type='video'])[{{arg1}}]//div[@data-element='wrapper'][contains(@style,'border-style: {{arg2}};')]" parameterized="true"/>
+        <element name="borderColor" type="text" selector="(//div[@data-content-type='video'])[{{arg1}}]//div[@data-element='wrapper'][contains(@style,'border-color: {{arg2}};')]" parameterized="true"/>
+        <element name="noBorderColor" type="text" selector="(//div[@data-content-type='video'])[{{arg1}}]//div[@data-element='wrapper'][not(contains(@style,'border-color:'))]" parameterized="true"/>
+        <element name="borderWidth" type="text" selector="(//div[@data-content-type='video'])[{{arg1}}]//div[@data-element='wrapper'][contains(@style,'border-width: {{arg2}}px;')]" parameterized="true"/>
+        <element name="borderRadius" type="text" selector="(//div[@data-content-type='video'])[{{arg1}}]//div[@data-element='wrapper'][contains(@style,'border-radius: {{arg2}}px;')]" parameterized="true"/>
+        <element name="cssClasses" type="text" selector="(//div[@data-content-type='video'])[{{arg1}}][contains(@class,'{{arg2}}')]" parameterized="true"/>
+        <element name="noCssClasses" type="text" selector="(//div[@data-content-type='video'])[{{arg1}}][not(@class)]" parameterized="true"/>
+        <element name="margins" type="text" selector="(//div[@data-content-type='video'])[{{arg1}}][contains(@style,'margin: {{arg2}}px;')]" parameterized="true"/>
+        <element name="padding" type="text" selector="(//div[@data-content-type='video'])[{{arg1}}]//div[@data-element='wrapper'][contains(@style,'padding: {{arg2}}px;')]" parameterized="true"/>
+    </section>
+</sections>

@@ -24,7 +24,7 @@
                 <item name="component" xsi:type="string">Magento_PageBuilder/js/form/provider</item>
             </item>
         </argument>
-        <dataProvider name="pagebuilder_slider_form_data_source" class="Magento\PageBuilder\Model\ContentBlock\DataProvider">
+        <dataProvider name="pagebuilder_slider_form_data_source" class="Magento\PageBuilder\Model\ContentType\DataProvider">
             <settings>
                 <requestFieldName/>
                 <primaryFieldName/>
@@ -40,11 +40,10 @@
             <collapsible>false</collapsible>
             <opened>true</opened>
             <imports>
-                <link name="hideFieldset">${$.name}.appearance:options</link>
                 <link name="hideLabel">${$.name}.appearance:options</link>
             </imports>
         </settings>
-        <field name="appearance" formElement="select" sortOrder="10" component="Magento_PageBuilder/js/form/element/dependent-select">
+        <field name="appearance" formElement="select" sortOrder="10" component="Magento_PageBuilder/js/form/element/dependent-visual-select">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="default" xsi:type="string">default</item>
@@ -69,17 +68,34 @@
                 </select>
             </formElements>
         </field>
+        <field name="min_height" sortOrder="20" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="number">300</item>
+                </item>
+            </argument>
+            <settings>
+                <label translate="true">Minimum Height</label>
+                <additionalClasses>
+                    <class name="admin__field-small">true</class>
+                </additionalClasses>
+                <addAfter translate="true">px</addAfter>
+                <validation>
+                    <rule name="validate-number" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+        </field>
     </fieldset>
     <fieldset name="settings" sortOrder="20">
         <settings>
-            <label translate="true">Settings</label>
+            <label translate="true">Slider Settings</label>
             <collapsible>true</collapsible>
             <opened>true</opened>
         </settings>
         <field name="autoplay" sortOrder="1" formElement="checkbox">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="default" xsi:type="number">0</item>
+                    <item name="default" xsi:type="string">false</item>
                 </item>
             </argument>
             <settings>
@@ -90,8 +106,8 @@
                 <checkbox>
                     <settings>
                         <valueMap>
-                            <map name="false" xsi:type="number">0</map>
-                            <map name="true" xsi:type="number">1</map>
+                            <map name="false" xsi:type="string">false</map>
+                            <map name="true" xsi:type="string">true</map>
                         </valueMap>
                         <prefer>toggle</prefer>
                     </settings>
@@ -107,6 +123,9 @@
             <settings>
                 <dataType>text</dataType>
                 <label translate="true">Autoplay Speed</label>
+                <additionalClasses>
+                    <class name="admin__field-small">true</class>
+                </additionalClasses>
                 <addAfter translate="true">ms</addAfter>
                 <dataScope>autoplay_speed</dataScope>
                 <notice translate="true">Delay in milliseconds between each slide</notice>
@@ -118,7 +137,7 @@
         <field name="fade" sortOrder="20" formElement="checkbox">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="default" xsi:type="number">0</item>
+                    <item name="default" xsi:type="string">false</item>
                 </item>
             </argument>
             <settings>
@@ -129,8 +148,8 @@
                 <checkbox>
                     <settings>
                         <valueMap>
-                            <map name="false" xsi:type="number">0</map>
-                            <map name="true" xsi:type="number">1</map>
+                            <map name="false" xsi:type="string">false</map>
+                            <map name="true" xsi:type="string">true</map>
                         </valueMap>
                         <prefer>toggle</prefer>
                     </settings>
@@ -140,7 +159,7 @@
         <field name="is_infinite" sortOrder="30" formElement="checkbox">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="default" xsi:type="number">0</item>
+                    <item name="default" xsi:type="string">false</item>
                 </item>
             </argument>
             <settings>
@@ -151,8 +170,8 @@
                 <checkbox>
                     <settings>
                         <valueMap>
-                            <map name="false" xsi:type="number">0</map>
-                            <map name="true" xsi:type="number">1</map>
+                            <map name="false" xsi:type="string">false</map>
+                            <map name="true" xsi:type="string">true</map>
                         </valueMap>
                         <prefer>toggle</prefer>
                     </settings>
@@ -162,7 +181,7 @@
         <field name="show_arrows" sortOrder="40" formElement="checkbox">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="default" xsi:type="number">0</item>
+                    <item name="default" xsi:type="string">false</item>
                 </item>
             </argument>
             <settings>
@@ -173,8 +192,8 @@
                 <checkbox>
                     <settings>
                         <valueMap>
-                            <map name="false" xsi:type="number">0</map>
-                            <map name="true" xsi:type="number">1</map>
+                            <map name="false" xsi:type="string">false</map>
+                            <map name="true" xsi:type="string">true</map>
                         </valueMap>
                         <prefer>toggle</prefer>
                     </settings>
@@ -184,7 +203,7 @@
         <field name="show_dots" sortOrder="50" formElement="checkbox">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="default" xsi:type="number">1</item>
+                    <item name="default" xsi:type="string">true</item>
                 </item>
             </argument>
             <settings>
@@ -195,27 +214,13 @@
                 <checkbox>
                     <settings>
                         <valueMap>
-                            <map name="false" xsi:type="number">0</map>
-                            <map name="true" xsi:type="number">1</map>
+                            <map name="false" xsi:type="string">false</map>
+                            <map name="true" xsi:type="string">true</map>
                         </valueMap>
                         <prefer>toggle</prefer>
                     </settings>
                 </checkbox>
             </formElements>
-        </field>
-        <field name="min_height" sortOrder="60" formElement="input">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="default" xsi:type="number">300</item>
-                </item>
-            </argument>
-            <settings>
-                <label translate="true">Minimum Height</label>
-                <addAfter translate="true">px</addAfter>
-                <validation>
-                    <rule name="validate-number" xsi:type="boolean">true</rule>
-                </validation>
-            </settings>
         </field>
     </fieldset>
 </form>

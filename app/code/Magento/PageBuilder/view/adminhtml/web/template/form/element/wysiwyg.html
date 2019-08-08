@@ -5,17 +5,21 @@
  */
 -->
 
-<div visible="visible">
+<div visible="visible" css="{'_disabled': disabled}">
     <button if="wysiwygConfigData()['pagebuilder_button']"
             type="button"
-            class="pagebuilder-edit-button action-default scalable action"
+            class="action-default action"
             ko-disabled="disabled"
             click="pageBuilderEditButtonClick.bind($data)">
         <span translate="pageBuilderEditButtonText" />
     </button>
-    <if args="visiblePageBuilder">
-        <with args="pageBuilder">
-            <render />
-        </with>
+    <if args="isComponentInitialized">
+        <div visible="visiblePageBuilder"
+             class="pagebuilder-wysiwyg-wrapper"
+             css="{'pagebuilder-transition-in': wysiwygConfigData()['pagebuilder_button'], 'trigger-transition': transition, 'pagebuilder-transition-out': transitionOut}">
+            <with args="pageBuilder">
+                <render />
+            </with>
+        </div>
     </if>
 </div>

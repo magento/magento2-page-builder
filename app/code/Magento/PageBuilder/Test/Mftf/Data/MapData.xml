@@ -1,0 +1,865 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<entities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="urn:magento:mftf:DataGenerator/etc/dataProfileSchema.xsd">
+    <!-- Map Grid -->
+    <entity name="PageBuilderMapGrid" type="pagebuilder_map_grid">
+        <data key="col1">Location Name</data>
+        <data key="col2">Phone Number</data>
+        <data key="col3">Street Address</data>
+        <data key="col4">City</data>
+        <data key="col5">Region/State</data>
+        <data key="col6">Zip/Postal Code</data>
+        <data key="col7">Country</data>
+        <data key="col8">Select</data>
+        <data key="emptyMessage">No locations found. Click "Add Location"</data>
+    </entity>
+    <!-- Common Map Data -->
+    <entity name="PageBuilderMapCommonData" type="pagebuilder__map_common_data">
+        <data key="mapErrorTitleStorefront">Oops! Something went wrong.</data>
+        <data key="mapErrorMessageStorefront">This page didn't load Google Maps correctly. See the JavaScript console for technical details.</data>
+        <data key="mapErrorMessageAdmin">You must provide a valid Google Maps API key to use a map.</data>
+    </entity>
+    <!-- Map Position -->
+    <entity name="PageBuilderMapPositionDefaultProperty" type="pagebuilder_map_position_property">
+        <data key="name">Position</data>
+        <data key="section">general</data>
+        <data key="fieldName">position</data>
+        <data key="position">"/{\"latitude\".30.\d+,\"longitude\".-97.\d+}/"</data>
+    </entity>
+    <!-- Location Name -->
+    <entity name="PageBuilderMapLocationName_Default" type="pagebuilder_map_location_name_property">
+        <data key="name">Location Name</data>
+        <data key="section">general</data>
+        <data key="fieldName">location_name</data>
+        <data key="value"/>
+    </entity>
+    <entity name="PageBuilderMapLocationName_TestLocation" type="pagebuilder_map_location_name_property">
+        <data key="name">Location Name</data>
+        <data key="section">general</data>
+        <data key="fieldName">location_name</data>
+        <data key="value">Test Location 1</data>
+    </entity>
+    <entity name="PageBuilderMapLocationName_TestLocationEdit" type="pagebuilder_map_location_name_property">
+        <data key="name">Location Name</data>
+        <data key="section">general</data>
+        <data key="fieldName">location_name</data>
+        <data key="value">Test Location 1 Edit</data>
+    </entity>
+    <entity name="PageBuilderMapLocationName_Empty" type="pagebuilder_map_location_name_property">
+        <data key="name">Location Name</data>
+        <data key="section">general</data>
+        <data key="fieldName">location_name</data>
+        <data key="value"/>
+        <data key="errorMessage">Please enter the location name.</data>
+    </entity>
+    <entity name="PageBuilderMapLocationName_Space" type="pagebuilder_map_location_name_property">
+        <data key="name">Location Name</data>
+        <data key="section">general</data>
+        <data key="fieldName">location_name</data>
+        <data key="value"> </data>
+        <data key="errorMessage">Please enter the location name.</data>
+    </entity>
+    <entity name="PageBuilderMapLocationName_CommonCharacters" type="pagebuilder_map_location_name_property">
+        <data key="name">Location Name</data>
+        <data key="section">general</data>
+        <data key="fieldName">location_name</data>
+        <data key="value">1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ</data>
+    </entity>
+    <entity name="PageBuilderMapLocationName_SpecialCharacters" type="pagebuilder_map_location_name_property">
+        <data key="name">Location Name</data>
+        <data key="section">general</data>
+        <data key="fieldName">location_name</data>
+        <data key="value">./;[]\-=&lt;&gt;?:"{}|_+!@#$%^&amp;*()`~Ω≈ç√∫˜µ≤≥÷åß∂ƒ©˙∆˚¬…æœ∑´®†¥¨ˆøπ“‘¡™£¢∞§¶•ªº–≠¸˛Ç◊ı˜Â¯˘¿ÅÍÎÏ˝ÓÔÒÚÆ☃Œ„´‰ˇÁ¨ˆØ∏”’`⁄€‹›ﬁﬂ‡°·‚—±⅛⅜⅝⅞ЁЂЃЄЅІЇЈЉЊЋЌЍЎЏАБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдежзийклмнопрстуфхцчшщъыьэюя٠١٢٣٤٥٦٧٨٩ヽ</data>
+    </entity>
+    <entity name="PageBuilderMapLocationName_a" type="pagebuilder_map_location_name_property">
+        <data key="name">Location Name</data>
+        <data key="section">general</data>
+        <data key="fieldName">location_name</data>
+        <data key="value">a</data>
+    </entity>
+    <entity name="PageBuilderMapLocationName_B" type="pagebuilder_map_location_name_property">
+        <data key="name">Location Name</data>
+        <data key="section">general</data>
+        <data key="fieldName">location_name</data>
+        <data key="value">B</data>
+    </entity>
+    <entity name="PageBuilderMapLocationName_z" type="pagebuilder_map_location_name_property">
+        <data key="name">Location Name</data>
+        <data key="section">general</data>
+        <data key="fieldName">location_name</data>
+        <data key="value">z</data>
+    </entity>
+    <entity name="PageBuilderMapLocationName_0" type="pagebuilder_map_location_name_property">
+        <data key="name">Location Name</data>
+        <data key="section">general</data>
+        <data key="fieldName">location_name</data>
+        <data key="value">0</data>
+    </entity>
+    <entity name="PageBuilderMapLocationName_HtmlCode" type="pagebuilder_map_location_name_property">
+        <data key="name">Location Name</data>
+        <data key="section">general</data>
+        <data key="fieldName">location_name</data>
+        <data key="value">&#x3C;img src=x onerror=&#x22;throw &#x27;error&#x27;;&#x22; /&#x3E;</data>
+    </entity>
+    <!-- Latitude -->
+    <entity name="PageBuilderMapLatitude_Default" type="pagebuilder_map_latitude_property">
+        <data key="name">Coordinates</data>
+        <data key="section">general</data>
+        <data key="fieldName">position[latitude]</data>
+        <data key="value"/>
+        <data key="placeholderText">Latitude</data>
+    </entity>
+    <entity name="PageBuilderMapLatitude_ClickedPin" type="pagebuilder_map_latitude_property">
+        <data key="name">Coordinates</data>
+        <data key="section">general</data>
+        <data key="fieldName">position[latitude]</data>
+        <data key="value">/30\.\d+/</data>
+    </entity>
+    <entity name="PageBuilderMapLatitude_Positive1" type="pagebuilder_map_latitude_property">
+        <data key="name">Coordinates</data>
+        <data key="section">general</data>
+        <data key="fieldName">position[latitude]</data>
+        <data key="value">1</data>
+    </entity>
+    <entity name="PageBuilderMapLatitude_Positive39_74" type="pagebuilder_map_latitude_property">
+        <data key="name">Coordinates</data>
+        <data key="section">general</data>
+        <data key="fieldName">position[latitude]</data>
+        <data key="value">39.74</data>
+    </entity>
+    <entity name="PageBuilderMapLatitude_Positive40_74" type="pagebuilder_map_latitude_property">
+        <data key="name">Coordinates</data>
+        <data key="section">general</data>
+        <data key="fieldName">position[latitude]</data>
+        <data key="value">40.74</data>
+    </entity>
+    <entity name="PageBuilderMapLatitude_Positive41_74" type="pagebuilder_map_latitude_property">
+        <data key="name">Coordinates</data>
+        <data key="section">general</data>
+        <data key="fieldName">position[latitude]</data>
+        <data key="value">41.74</data>
+    </entity>
+    <entity name="PageBuilderMapLatitude_Positive42_74" type="pagebuilder_map_latitude_property">
+        <data key="name">Coordinates</data>
+        <data key="section">general</data>
+        <data key="fieldName">position[latitude]</data>
+        <data key="value">42.74</data>
+    </entity>
+    <entity name="PageBuilderMapLatitude_Positive43_74" type="pagebuilder_map_latitude_property">
+        <data key="name">Coordinates</data>
+        <data key="section">general</data>
+        <data key="fieldName">position[latitude]</data>
+        <data key="value">43.74</data>
+    </entity>
+    <entity name="PageBuilderMapLatitude_Positive44_74" type="pagebuilder_map_latitude_property">
+        <data key="name">Coordinates</data>
+        <data key="section">general</data>
+        <data key="fieldName">position[latitude]</data>
+        <data key="value">44.74</data>
+    </entity>
+    <entity name="PageBuilderMapLatitude_Positive45_74" type="pagebuilder_map_latitude_property">
+        <data key="name">Coordinates</data>
+        <data key="section">general</data>
+        <data key="fieldName">position[latitude]</data>
+        <data key="value">45.74</data>
+    </entity>
+    <entity name="PageBuilderMapLatitude_Positive46_74" type="pagebuilder_map_latitude_property">
+        <data key="name">Coordinates</data>
+        <data key="section">general</data>
+        <data key="fieldName">position[latitude]</data>
+        <data key="value">46.74</data>
+    </entity>
+    <entity name="PageBuilderMapLatitude_Positive47_74" type="pagebuilder_map_latitude_property">
+        <data key="name">Coordinates</data>
+        <data key="section">general</data>
+        <data key="fieldName">position[latitude]</data>
+        <data key="value">47.74</data>
+    </entity>
+    <entity name="PageBuilderMapLatitude_Positive48_74" type="pagebuilder_map_latitude_property">
+        <data key="name">Coordinates</data>
+        <data key="section">general</data>
+        <data key="fieldName">position[latitude]</data>
+        <data key="value">48.74</data>
+    </entity>
+    <entity name="PageBuilderMapLatitude_Negative74_69" type="pagebuilder_map_latitude_property">
+        <data key="name">Coordinates</data>
+        <data key="section">general</data>
+        <data key="fieldName">position[latitude]</data>
+        <data key="value">-74.69</data>
+    </entity>
+    <entity name="PageBuilderMapLatitude_Negative1" type="pagebuilder_map_latitude_property">
+        <data key="name">Coordinates</data>
+        <data key="section">general</data>
+        <data key="fieldName">position[latitude]</data>
+        <data key="value">-1</data>
+    </entity>
+    <entity name="PageBuilderMapLatitude_0" type="pagebuilder_map_latitude_property">
+        <data key="name">Coordinates</data>
+        <data key="section">general</data>
+        <data key="fieldName">position[latitude]</data>
+        <data key="value">0</data>
+    </entity>
+    <entity name="PageBuilderMapLatitude_Empty" type="pagebuilder_map_latitude_property">
+        <data key="name">Coordinates</data>
+        <data key="section">general</data>
+        <data key="fieldName">position[latitude]</data>
+        <data key="value"/>
+        <data key="errorMessage">Enter latitude</data>
+    </entity>
+    <entity name="PageBuilderMapLatitude_Space" type="pagebuilder_map_latitude_property">
+        <data key="name">Coordinates</data>
+        <data key="section">general</data>
+        <data key="fieldName">position[latitude]</data>
+        <data key="value"> </data>
+        <data key="errorMessage">Enter latitude</data>
+    </entity>
+    <entity name="PageBuilderMapLatitude_NonNumeric" type="pagebuilder_map_latitude_property">
+        <data key="name">Coordinates</data>
+        <data key="section">general</data>
+        <data key="fieldName">position[latitude]</data>
+        <data key="value">a</data>
+        <data key="errorMessage">Please enter a valid number in this field.</data>
+    </entity>
+    <entity name="PageBuilderMapLatitude_NegativeBoundary" type="pagebuilder_map_latitude_property">
+        <data key="name">Coordinates</data>
+        <data key="section">general</data>
+        <data key="fieldName">position[latitude]</data>
+        <data key="value">-85.05000000001</data>
+        <data key="errorMessage">Please enter a number between -85 and 85</data>
+    </entity>
+    <entity name="PageBuilderMapLatitude_PositiveBoundary" type="pagebuilder_map_latitude_property">
+        <data key="name">Coordinates</data>
+        <data key="section">general</data>
+        <data key="fieldName">position[latitude]</data>
+        <data key="value">85.05000000001</data>
+        <data key="errorMessage">Please enter a number between -85 and 85</data>
+    </entity>
+    <!-- Longitude -->
+    <entity name="PageBuilderMapLongitude_Default" type="pagebuilder_map_longitude_property">
+        <data key="name">Coordinates</data>
+        <data key="section">general</data>
+        <data key="fieldName">position[longitude]</data>
+        <data key="value"/>
+        <data key="placeholderText">Longitude</data>
+    </entity>
+    <entity name="PageBuilderMapLongitude_ClickedPin" type="pagebuilder_map_longitude_property">
+        <data key="name">Coordinates</data>
+        <data key="section">general</data>
+        <data key="fieldName">position[longitude]</data>
+        <data key="value">/-97\.\d+/</data>
+    </entity>
+    <entity name="PageBuilderMapLongitude_Positive1" type="pagebuilder_map_longitude_property">
+        <data key="name">Coordinates</data>
+        <data key="section">general</data>
+        <data key="fieldName">position[longitude]</data>
+        <data key="value">1</data>
+    </entity>
+    <entity name="PageBuilderMapLongitude_Positive9_67" type="pagebuilder_map_longitude_property">
+        <data key="name">Coordinates</data>
+        <data key="section">general</data>
+        <data key="fieldName">position[longitude]</data>
+        <data key="value">9.67</data>
+    </entity>
+    <entity name="PageBuilderMapLongitude_Negative1" type="pagebuilder_map_longitude_property">
+        <data key="name">Coordinates</data>
+        <data key="section">general</data>
+        <data key="fieldName">position[longitude]</data>
+        <data key="value">-1</data>
+    </entity>
+    <entity name="PageBuilderMapLongitude_Negative104_99" type="pagebuilder_map_longitude_property">
+        <data key="name">Coordinates</data>
+        <data key="section">general</data>
+        <data key="fieldName">position[longitude]</data>
+        <data key="value">-104.99</data>
+    </entity>
+    <entity name="PageBuilderMapLongitude_Negative105_99" type="pagebuilder_map_longitude_property">
+        <data key="name">Coordinates</data>
+        <data key="section">general</data>
+        <data key="fieldName">position[longitude]</data>
+        <data key="value">-105.99</data>
+    </entity>
+    <entity name="PageBuilderMapLongitude_Negative106_99" type="pagebuilder_map_longitude_property">
+        <data key="name">Coordinates</data>
+        <data key="section">general</data>
+        <data key="fieldName">position[longitude]</data>
+        <data key="value">-106.99</data>
+    </entity>
+    <entity name="PageBuilderMapLongitude_Negative107_99" type="pagebuilder_map_longitude_property">
+        <data key="name">Coordinates</data>
+        <data key="section">general</data>
+        <data key="fieldName">position[longitude]</data>
+        <data key="value">-107.99</data>
+    </entity>
+    <entity name="PageBuilderMapLongitude_Negative108_99" type="pagebuilder_map_longitude_property">
+        <data key="name">Coordinates</data>
+        <data key="section">general</data>
+        <data key="fieldName">position[longitude]</data>
+        <data key="value">-108.99</data>
+    </entity>
+    <entity name="PageBuilderMapLongitude_Negative109_99" type="pagebuilder_map_longitude_property">
+        <data key="name">Coordinates</data>
+        <data key="section">general</data>
+        <data key="fieldName">position[longitude]</data>
+        <data key="value">-109.99</data>
+    </entity>
+    <entity name="PageBuilderMapLongitude_Negative110_99" type="pagebuilder_map_longitude_property">
+        <data key="name">Coordinates</data>
+        <data key="section">general</data>
+        <data key="fieldName">position[longitude]</data>
+        <data key="value">-110.99</data>
+    </entity>
+    <entity name="PageBuilderMapLongitude_Negative111_99" type="pagebuilder_map_longitude_property">
+        <data key="name">Coordinates</data>
+        <data key="section">general</data>
+        <data key="fieldName">position[longitude]</data>
+        <data key="value">-111.99</data>
+    </entity>
+    <entity name="PageBuilderMapLongitude_Negative112_99" type="pagebuilder_map_longitude_property">
+        <data key="name">Coordinates</data>
+        <data key="section">general</data>
+        <data key="fieldName">position[longitude]</data>
+        <data key="value">-112.99</data>
+    </entity>
+    <entity name="PageBuilderMapLongitude_Negative113_99" type="pagebuilder_map_longitude_property">
+        <data key="name">Coordinates</data>
+        <data key="section">general</data>
+        <data key="fieldName">position[longitude]</data>
+        <data key="value">-113.99</data>
+    </entity>
+    <entity name="PageBuilderMapLongitude_0" type="pagebuilder_map_longitude_property">
+        <data key="name">Coordinates</data>
+        <data key="section">general</data>
+        <data key="fieldName">position[longitude]</data>
+        <data key="value">0</data>
+    </entity>
+    <entity name="PageBuilderMapLongitude_NegativeMax" type="pagebuilder_map_longitude_property">
+        <data key="name">Coordinates</data>
+        <data key="section">general</data>
+        <data key="fieldName">position[longitude]</data>
+        <data key="value">-180</data>
+    </entity>
+    <entity name="PageBuilderMapLongitude_Empty" type="pagebuilder_map_longitude_property">
+        <data key="name">Coordinates</data>
+        <data key="section">general</data>
+        <data key="fieldName">position[longitude]</data>
+        <data key="value"/>
+        <data key="errorMessage">Enter longitude</data>
+    </entity>
+    <entity name="PageBuilderMapLongitude_Space" type="pagebuilder_map_longitude_property">
+        <data key="name">Coordinates</data>
+        <data key="section">general</data>
+        <data key="fieldName">position[longitude]</data>
+        <data key="value"> </data>
+        <data key="errorMessage">Enter longitude</data>
+    </entity>
+    <entity name="PageBuilderMapLongitude_NonNumeric" type="pagebuilder_map_longitude_property">
+        <data key="name">Coordinates</data>
+        <data key="section">general</data>
+        <data key="fieldName">position[longitude]</data>
+        <data key="value">a</data>
+        <data key="errorMessage">Please enter a valid number in this field.</data>
+    </entity>
+    <entity name="PageBuilderMapLongitude_NegativeBoundary" type="pagebuilder_map_longitude_property">
+        <data key="name">Coordinates</data>
+        <data key="section">general</data>
+        <data key="fieldName">position[longitude]</data>
+        <data key="value">-180.05000000001</data>
+        <data key="errorMessage">Please enter a number between -180 and 180</data>
+    </entity>
+    <entity name="PageBuilderMapLongitude_PositiveBoundary" type="pagebuilder_map_longitude_property">
+        <data key="name">Coordinates</data>
+        <data key="section">general</data>
+        <data key="fieldName">position[longitude]</data>
+        <data key="value">180.05000000001</data>
+        <data key="errorMessage">Please enter a number between -180 and 180</data>
+    </entity>
+    <!-- Phone Number -->
+    <entity name="PageBuilderMapPhoneNumber_Default" type="pagebuilder_map_phone_number_property">
+        <data key="name">Phone Number</data>
+        <data key="section">general</data>
+        <data key="fieldName">phone</data>
+        <data key="value"/>
+    </entity>
+    <entity name="PageBuilderMapPhoneNumber_TestPhoneNumber" type="pagebuilder_map_phone_number_property">
+        <data key="name">Phone Number</data>
+        <data key="section">general</data>
+        <data key="fieldName">phone</data>
+        <data key="value">(123) 456-7890</data>
+    </entity>
+    <entity name="PageBuilderMapPhoneNumber_TestPhoneNumberEdit" type="pagebuilder_map_phone_number_property">
+        <data key="name">Phone Number</data>
+        <data key="section">general</data>
+        <data key="fieldName">phone</data>
+        <data key="value">(123) 456-7891</data>
+    </entity>
+    <entity name="PageBuilderMapPhoneNumber_CommonCharacters" type="pagebuilder_map_phone_number_property">
+        <data key="name">Phone Number</data>
+        <data key="section">general</data>
+        <data key="fieldName">phone</data>
+        <data key="value">1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ</data>
+    </entity>
+    <entity name="PageBuilderMapPhoneNumber_SpecialCharacters" type="pagebuilder_map_phone_number_property">
+        <data key="name">Phone Number</data>
+        <data key="section">general</data>
+        <data key="fieldName">phone</data>
+        <data key="value">./;[]\-=&lt;&gt;?:"{}|_+!@#$%^&amp;*()`~Ω≈ç√∫˜µ≤≥÷åß∂ƒ©˙∆˚¬…æœ∑´®†¥¨ˆøπ“‘¡™£¢∞§¶•ªº–≠¸˛Ç◊ı˜Â¯˘¿ÅÍÎÏ˝ÓÔÒÚÆ☃Œ„´‰ˇÁ¨ˆØ∏”’`⁄€‹›ﬁﬂ‡°·‚—±⅛⅜⅝⅞ЁЂЃЄЅІЇЈЉЊЋЌЍЎЏАБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдежзийклмнопрстуфхцчшщъыьэюя٠١٢٣٤٥٦٧٨٩ヽ</data>
+    </entity>
+    <entity name="PageBuilderMapPhoneNumber_Empty" type="pagebuilder_map_phone_number_property">
+        <data key="name">Phone Number</data>
+        <data key="section">general</data>
+        <data key="fieldName">phone</data>
+        <data key="value"/>
+    </entity>
+    <entity name="PageBuilderMapPhoneNumber_a" type="pagebuilder_map_phone_number_property">
+        <data key="name">Phone Number</data>
+        <data key="section">general</data>
+        <data key="fieldName">phone</data>
+        <data key="value">a</data>
+    </entity>
+    <entity name="PageBuilderMapPhoneNumber_B" type="pagebuilder_map_phone_number_property">
+        <data key="name">Phone Number</data>
+        <data key="section">general</data>
+        <data key="fieldName">phone</data>
+        <data key="value">B</data>
+    </entity>
+    <entity name="PageBuilderMapPhoneNumber_z" type="pagebuilder_map_phone_number_property">
+        <data key="name">Phone Number</data>
+        <data key="section">general</data>
+        <data key="fieldName">phone</data>
+        <data key="value">z</data>
+    </entity>
+    <entity name="PageBuilderMapPhoneNumber_0" type="pagebuilder_map_phone_number_property">
+        <data key="name">Phone Number</data>
+        <data key="section">general</data>
+        <data key="fieldName">phone</data>
+        <data key="value">0</data>
+    </entity>
+    <entity name="PageBuilderMapPhoneNumber_HtmlCode" type="pagebuilder_map_phone_number_property">
+        <data key="name">Phone Number</data>
+        <data key="section">general</data>
+        <data key="fieldName">phone</data>
+        <data key="value">&#x3C;img src=x onerror=&#x22;throw &#x27;error&#x27;;&#x22; /&#x3E;</data>
+    </entity>
+    <!-- Street Address -->
+    <entity name="PageBuilderMapStreetAddress_Default" type="pagebuilder_map_street_address_property">
+        <data key="name">Street Address</data>
+        <data key="section">general</data>
+        <data key="fieldName">address</data>
+        <data key="value"/>
+    </entity>
+    <entity name="PageBuilderMapStreetAddress_1234FakeDrive" type="pagebuilder_map_street_address_property">
+        <data key="name">Street Address</data>
+        <data key="section">general</data>
+        <data key="fieldName">address</data>
+        <data key="value">1234 Fake Drive</data>
+    </entity>
+    <entity name="PageBuilderMapStreetAddress_1234FakeDriveEdit" type="pagebuilder_map_street_address_property">
+        <data key="name">Street Address</data>
+        <data key="section">general</data>
+        <data key="fieldName">address</data>
+        <data key="value">1234 Fake Drive Edit</data>
+    </entity>
+    <entity name="PageBuilderMapStreetAddress_CommonCharacters" type="pagebuilder_map_street_address_property">
+        <data key="name">Street Address</data>
+        <data key="section">general</data>
+        <data key="fieldName">address</data>
+        <data key="value">1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ</data>
+    </entity>
+    <entity name="PageBuilderMapStreetAddress_SpecialCharacters" type="pagebuilder_map_street_address_property">
+        <data key="name">Street Address</data>
+        <data key="section">general</data>
+        <data key="fieldName">address</data>
+        <data key="value">./;[]\-=&lt;&gt;?:"{}|_+!@#$%^&amp;*()`~Ω≈ç√∫˜µ≤≥÷åß∂ƒ©˙∆˚¬…æœ∑´®†¥¨ˆøπ“‘¡™£¢∞§¶•ªº–≠¸˛Ç◊ı˜Â¯˘¿ÅÍÎÏ˝ÓÔÒÚÆ☃Œ„´‰ˇÁ¨ˆØ∏”’`⁄€‹›ﬁﬂ‡°·‚—±⅛⅜⅝⅞ЁЂЃЄЅІЇЈЉЊЋЌЍЎЏАБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдежзийклмнопрстуфхцчшщъыьэюя٠١٢٣٤٥٦٧٨٩ヽ</data>
+    </entity>
+    <entity name="PageBuilderMapStreetAddress_Empty" type="pagebuilder_map_street_address_property">
+        <data key="name">Street Address</data>
+        <data key="section">general</data>
+        <data key="fieldName">address</data>
+        <data key="value"/>
+    </entity>
+    <entity name="PageBuilderMapStreetAddress_a" type="pagebuilder_map_street_address_property">
+        <data key="name">Street Address</data>
+        <data key="section">general</data>
+        <data key="fieldName">address</data>
+        <data key="value">a</data>
+    </entity>
+    <entity name="PageBuilderMapStreetAddress_B" type="pagebuilder_map_street_address_property">
+        <data key="name">Street Address</data>
+        <data key="section">general</data>
+        <data key="fieldName">address</data>
+        <data key="value">B</data>
+    </entity>
+    <entity name="PageBuilderMapStreetAddress_z" type="pagebuilder_map_street_address_property">
+        <data key="name">Street Address</data>
+        <data key="section">general</data>
+        <data key="fieldName">address</data>
+        <data key="value">z</data>
+    </entity>
+    <entity name="PageBuilderMapStreetAddress_0" type="pagebuilder_map_street_address_property">
+        <data key="name">Street Address</data>
+        <data key="section">general</data>
+        <data key="fieldName">address</data>
+        <data key="value">0</data>
+    </entity>
+    <entity name="PageBuilderMapStreetAddress_HtmlCode" type="pagebuilder_map_street_address_property">
+        <data key="name">Street Address</data>
+        <data key="section">general</data>
+        <data key="fieldName">address</data>
+        <data key="value">&#x3C;img src=x onerror=&#x22;throw &#x27;error&#x27;;&#x22; /&#x3E;</data>
+    </entity>
+    <!-- City -->
+    <entity name="PageBuilderMapCity_Default" type="pagebuilder_map_city_property">
+        <data key="name">City</data>
+        <data key="section">general</data>
+        <data key="fieldName">city</data>
+        <data key="value"/>
+    </entity>
+    <entity name="PageBuilderMapCity_Empty" type="pagebuilder_map_city_property">
+        <data key="name">City</data>
+        <data key="section">general</data>
+        <data key="fieldName">city</data>
+        <data key="value"/>
+    </entity>
+    <entity name="PageBuilderMapCity_FakeCity" type="pagebuilder_map_city_property">
+        <data key="name">City</data>
+        <data key="section">general</data>
+        <data key="fieldName">city</data>
+        <data key="value">Fake City</data>
+    </entity>
+    <entity name="PageBuilderMapCity_FakeCityEdit" type="pagebuilder_map_city_property">
+        <data key="name">City</data>
+        <data key="section">general</data>
+        <data key="fieldName">city</data>
+        <data key="value">Fake City Edit</data>
+    </entity>
+    <entity name="PageBuilderMapCity_CommonCharacters" type="pagebuilder_map_city_property">
+        <data key="name">City</data>
+        <data key="section">general</data>
+        <data key="fieldName">city</data>
+        <data key="value">1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ</data>
+    </entity>
+    <entity name="PageBuilderMapCity_SpecialCharacters" type="pagebuilder_map_city_property">
+        <data key="name">City</data>
+        <data key="section">general</data>
+        <data key="fieldName">city</data>
+        <data key="value">./;[]\-=&lt;&gt;?:"{}|_+!@#$%^&amp;*()`~Ω≈ç√∫˜µ≤≥÷åß∂ƒ©˙∆˚¬…æœ∑´®†¥¨ˆøπ“‘¡™£¢∞§¶•ªº–≠¸˛Ç◊ı˜Â¯˘¿ÅÍÎÏ˝ÓÔÒÚÆ☃Œ„´‰ˇÁ¨ˆØ∏”’`⁄€‹›ﬁﬂ‡°·‚—±⅛⅜⅝⅞ЁЂЃЄЅІЇЈЉЊЋЌЍЎЏАБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдежзийклмнопрстуфхцчшщъыьэюя٠١٢٣٤٥٦٧٨٩ヽ</data>
+    </entity>
+    <entity name="PageBuilderMapCity_a" type="pagebuilder_map_city_property">
+        <data key="name">City</data>
+        <data key="section">general</data>
+        <data key="fieldName">city</data>
+        <data key="value">a</data>
+    </entity>
+    <entity name="PageBuilderMapCity_B" type="pagebuilder_map_city_property">
+        <data key="name">City</data>
+        <data key="section">general</data>
+        <data key="fieldName">city</data>
+        <data key="value">B</data>
+    </entity>
+    <entity name="PageBuilderMapCity_z" type="pagebuilder_map_city_property">
+        <data key="name">City</data>
+        <data key="section">general</data>
+        <data key="fieldName">city</data>
+        <data key="value">z</data>
+    </entity>
+    <entity name="PageBuilderMapCity_0" type="pagebuilder_map_city_property">
+        <data key="name">City</data>
+        <data key="section">general</data>
+        <data key="fieldName">city</data>
+        <data key="value">0</data>
+    </entity>
+    <entity name="PageBuilderMapCity_HtmlCode" type="pagebuilder_map_city_property">
+        <data key="name">City</data>
+        <data key="section">general</data>
+        <data key="fieldName">city</data>
+        <data key="value">&#x3C;img src=x onerror=&#x22;throw &#x27;error&#x27;;&#x22; /&#x3E;</data>
+    </entity>
+    <!-- State -->
+    <entity name="PageBuilderMapState_Default" type="pagebuilder_map_state_property">
+        <data key="name">State</data>
+        <data key="section">general</data>
+        <data key="fieldName">state</data>
+        <data key="value"/>
+        <data key="tooltipValue"/>
+    </entity>
+    <entity name="PageBuilderMapState_Empty" type="pagebuilder_map_state_property">
+        <data key="name">State</data>
+        <data key="section">general</data>
+        <data key="fieldName">state</data>
+        <data key="value"/>
+    </entity>
+    <entity name="PageBuilderMapState_Texas" type="pagebuilder_map_state_property">
+        <data key="name">State</data>
+        <data key="section">general</data>
+        <data key="fieldName">state</data>
+        <data key="value">Texas</data>
+        <data key="tooltipValue">, Texas </data>
+    </entity>
+    <entity name="PageBuilderMapState_Ontario" type="pagebuilder_map_state_property">
+        <data key="name">State</data>
+        <data key="section">general</data>
+        <data key="fieldName">state</data>
+        <data key="value">Ontario</data>
+        <data key="tooltipValue">, Ontario </data>
+    </entity>
+    <entity name="PageBuilderMapState_CommonCharacters" type="pagebuilder_map_state_property">
+        <data key="name">State</data>
+        <data key="section">general</data>
+        <data key="fieldName">state</data>
+        <data key="value">1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ</data>
+        <data key="tooltipValue">1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ </data>
+    </entity>
+    <entity name="PageBuilderMapState_SpecialCharacters" type="pagebuilder_map_state_property">
+        <data key="name">State</data>
+        <data key="section">general</data>
+        <data key="fieldName">state</data>
+        <data key="value">./;[]\-=&lt;&gt;?:"{}|_+!@#$%^&amp;*()`~Ω≈ç√∫˜µ≤≥÷åß∂ƒ©˙∆˚¬…æœ∑´®†¥¨ˆøπ“‘¡™£¢∞§¶•ªº–≠¸˛Ç◊ı˜Â¯˘¿ÅÍÎÏ˝ÓÔÒÚÆ☃Œ„´‰ˇÁ¨ˆØ∏”’`⁄€‹›ﬁﬂ‡°·‚—±⅛⅜⅝⅞ЁЂЃЄЅІЇЈЉЊЋЌЍЎЏАБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдежзийклмнопрстуфхцчшщъыьэюя٠١٢٣٤٥٦٧٨٩ヽ</data>
+        <data key="tooltipValue">./;[]\-=&lt;&gt;?:"{}|_+!@#$%^&amp;*()`~Ω≈ç√∫˜µ≤≥÷åß∂ƒ©˙∆˚¬…æœ∑´®†¥¨ˆøπ“‘¡™£¢∞§¶•ªº–≠¸˛Ç◊ı˜Â¯˘¿ÅÍÎÏ˝ÓÔÒÚÆ☃Œ„´‰ˇÁ¨ˆØ∏”’`⁄€‹›ﬁﬂ‡°·‚—±⅛⅜⅝⅞ЁЂЃЄЅІЇЈЉЊЋЌЍЎЏАБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдежзийклмнопрстуфхцчшщъыьэюя٠١٢٣٤٥٦٧٨٩ヽ </data>
+    </entity>
+    <entity name="PageBuilderMapState_a" type="pagebuilder_map_state_property">
+        <data key="name">State</data>
+        <data key="section">general</data>
+        <data key="fieldName">state</data>
+        <data key="value">a</data>
+    </entity>
+    <entity name="PageBuilderMapState_B" type="pagebuilder_map_state_property">
+        <data key="name">State</data>
+        <data key="section">general</data>
+        <data key="fieldName">state</data>
+        <data key="value">B</data>
+    </entity>
+    <entity name="PageBuilderMapState_z" type="pagebuilder_map_state_property">
+        <data key="name">State</data>
+        <data key="section">general</data>
+        <data key="fieldName">state</data>
+        <data key="value">z</data>
+    </entity>
+    <entity name="PageBuilderMapState_0" type="pagebuilder_map_state_property">
+        <data key="name">State</data>
+        <data key="section">general</data>
+        <data key="fieldName">state</data>
+        <data key="value">0</data>
+    </entity>
+    <entity name="PageBuilderMapState_HtmlCode" type="pagebuilder_map_state_property">
+        <data key="name">State</data>
+        <data key="section">general</data>
+        <data key="fieldName">state</data>
+        <data key="value">&#x3C;img src=x onerror=&#x22;throw &#x27;error&#x27;;&#x22; /&#x3E;</data>
+        <data key="tooltipValue">&#x3C;img src=x onerror=&#x22;throw &#x27;error&#x27;;&#x22; /&#x3E;</data>
+    </entity>
+    <!-- Zip Code -->
+    <entity name="PageBuilderMapZipCode_Default" type="pagebuilder_map_zip_code_property">
+        <data key="name">Zip/Postal Code</data>
+        <data key="section">general</data>
+        <data key="fieldName">zipcode</data>
+        <data key="value"/>
+    </entity>
+    <entity name="PageBuilderMapZipCode_12345_6789" type="pagebuilder_map_zip_code_property">
+        <data key="name">Zip/Postal Code</data>
+        <data key="section">general</data>
+        <data key="fieldName">zipcode</data>
+        <data key="value">12345-6789</data>
+    </entity>
+    <entity name="PageBuilderMapZipCode_98765" type="pagebuilder_map_zip_code_property">
+        <data key="name">Zip/Postal Code</data>
+        <data key="section">general</data>
+        <data key="fieldName">zipcode</data>
+        <data key="value">98765</data>
+    </entity>
+    <entity name="PageBuilderMapZipCode_CommonCharacters" type="pagebuilder_map_zip_code_property">
+        <data key="name">Zip/Postal Code</data>
+        <data key="section">general</data>
+        <data key="fieldName">zipcode</data>
+        <data key="value">1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ</data>
+    </entity>
+    <entity name="PageBuilderMapZipCode_SpecialCharacters" type="pagebuilder_map_zip_code_property">
+        <data key="name">Zip/Postal Code</data>
+        <data key="section">general</data>
+        <data key="fieldName">zipcode</data>
+        <data key="value">./;[]\-=&lt;&gt;?:"{}|_+!@#$%^&amp;*()`~Ω≈ç√∫˜µ≤≥÷åß∂ƒ©˙∆˚¬…æœ∑´®†¥¨ˆøπ“‘¡™£¢∞§¶•ªº–≠¸˛Ç◊ı˜Â¯˘¿ÅÍÎÏ˝ÓÔÒÚÆ☃Œ„´‰ˇÁ¨ˆØ∏”’`⁄€‹›ﬁﬂ‡°·‚—±⅛⅜⅝⅞ЁЂЃЄЅІЇЈЉЊЋЌЍЎЏАБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдежзийклмнопрстуфхцчшщъыьэюя٠١٢٣٤٥٦٧٨٩ヽ</data>
+    </entity>
+    <entity name="PageBuilderMapZipCode_Empty" type="pagebuilder_map_zip_code_property">
+        <data key="name">Zip/Postal Code</data>
+        <data key="section">general</data>
+        <data key="fieldName">zipcode</data>
+        <data key="value"/>
+    </entity>
+    <entity name="PageBuilderMapZipCode_a" type="pagebuilder_map_zip_code_property">
+        <data key="name">Zip/Postal Code</data>
+        <data key="section">general</data>
+        <data key="fieldName">zipcode</data>
+        <data key="value">a</data>
+    </entity>
+    <entity name="PageBuilderMapZipCode_B" type="pagebuilder_map_zip_code_property">
+        <data key="name">Zip/Postal Code</data>
+        <data key="section">general</data>
+        <data key="fieldName">zipcode</data>
+        <data key="value">B</data>
+    </entity>
+    <entity name="PageBuilderMapZipCode_z" type="pagebuilder_map_zip_code_property">
+        <data key="name">Zip/Postal Code</data>
+        <data key="section">general</data>
+        <data key="fieldName">zipcode</data>
+        <data key="value">z</data>
+    </entity>
+    <entity name="PageBuilderMapZipCode_0" type="pagebuilder_map_zip_code_property">
+        <data key="name">Zip/Postal Code</data>
+        <data key="section">general</data>
+        <data key="fieldName">zipcode</data>
+        <data key="value">0</data>
+    </entity>
+    <entity name="PageBuilderMapZipCode_HtmlCode" type="pagebuilder_map_zip_code_property">
+        <data key="name">Zip/Postal Code</data>
+        <data key="section">general</data>
+        <data key="fieldName">zipcode</data>
+        <data key="value">&#x3C;img src=x onerror=&#x22;throw &#x27;error&#x27;;&#x22; /&#x3E;</data>
+    </entity>
+    <!-- Country -->
+    <entity name="PageBuilderMapCountry_Default" type="pagebuilder_map_country_property">
+        <data key="name">Country</data>
+        <data key="section">general</data>
+        <data key="fieldName">country</data>
+        <data key="value">Select...</data>
+        <data key="tooltipValue"/>
+    </entity>
+    <entity name="PageBuilderMapCountry_Empty" type="pagebuilder_map_country_property">
+        <data key="name">Country</data>
+        <data key="section">general</data>
+        <data key="fieldName">country</data>
+        <data key="value"/>
+    </entity>
+    <entity name="PageBuilderMapCountry_USA" type="pagebuilder_map_country_property">
+        <data key="name">Country</data>
+        <data key="section">general</data>
+        <data key="fieldName">country</data>
+        <data key="value">United States</data>
+        <data key="tooltipValue">United States</data>
+    </entity>
+    <entity name="PageBuilderMapCountry_Canada" type="pagebuilder_map_country_property">
+        <data key="name">Country</data>
+        <data key="section">general</data>
+        <data key="fieldName">country</data>
+        <data key="value">Canada</data>
+        <data key="tooltipValue">Canada</data>
+    </entity>
+    <entity name="PageBuilderMapCountry_Afghanistan" type="pagebuilder_map_country_property">
+        <data key="name">Country</data>
+        <data key="section">general</data>
+        <data key="fieldName">country</data>
+        <data key="value">Afghanistan</data>
+    </entity>
+    <entity name="PageBuilderMapCountry_Zimbabwe" type="pagebuilder_map_country_property">
+        <data key="name">Country</data>
+        <data key="section">general</data>
+        <data key="fieldName">country</data>
+        <data key="value">Zimbabwe</data>
+    </entity>
+    <!-- Comment -->
+    <entity name="PageBuilderMapComment_Default" type="pagebuilder_map_comment_property">
+        <data key="name">Comment</data>
+        <data key="section">general</data>
+        <data key="fieldName">comment</data>
+        <data key="value"/>
+    </entity>
+    <entity name="PageBuilderMapComment_TestComment" type="pagebuilder_map_comment_property">
+        <data key="name">Comment</data>
+        <data key="section">general</data>
+        <data key="fieldName">comment</data>
+        <data key="value">This is a test comment.</data>
+    </entity>
+    <entity name="PageBuilderMapComment_TestComment2" type="pagebuilder_map_comment_property">
+        <data key="name">Comment</data>
+        <data key="section">general</data>
+        <data key="fieldName">comment</data>
+        <data key="value">This is another test comment.</data>
+    </entity>
+    <entity name="PageBuilderMapComment_CommonCharacters" type="pagebuilder_map_comment_property">
+        <data key="name">Comment</data>
+        <data key="section">general</data>
+        <data key="fieldName">comment</data>
+        <data key="value">1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ</data>
+    </entity>
+    <entity name="PageBuilderMapComment_SpecialCharacters" type="pagebuilder_map_comment_property">
+        <data key="name">Comment</data>
+        <data key="section">general</data>
+        <data key="fieldName">comment</data>
+        <data key="value">./;[]\-=&lt;&gt;?:"{}|_+!@#$%^&amp;*()`~Ω≈ç√∫˜µ≤≥÷åß∂ƒ©˙∆˚¬…æœ∑´®†¥¨ˆøπ“‘¡™£¢∞§¶•ªº–≠¸˛Ç◊ı˜Â¯˘¿ÅÍÎÏ˝ÓÔÒÚÆ☃Œ„´‰ˇÁ¨ˆØ∏”’`⁄€‹›ﬁﬂ‡°·‚—±⅛⅜⅝⅞ЁЂЃЄЅІЇЈЉЊЋЌЍЎЏАБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдежзийклмнопрстуфхцчшщъыьэюя٠١٢٣٤٥٦٧٨٩ヽ</data>
+    </entity>
+    <entity name="PageBuilderMapComment_Empty" type="pagebuilder_map_comment_property">
+        <data key="name">Comment</data>
+        <data key="section">general</data>
+        <data key="fieldName">comment</data>
+        <data key="value"/>
+    </entity>
+    <entity name="PageBuilderMapComment_HtmlCode" type="pagebuilder_map_comment_property">
+        <data key="name">Comment</data>
+        <data key="section">general</data>
+        <data key="fieldName">comment</data>
+        <data key="value">&#x3C;img src=x onerror=&#x22;throw &#x27;error&#x27;;&#x22; /&#x3E;</data>
+    </entity>
+    <!-- Height -->
+    <entity name="PageBuilderMapHeightDefaultProperty" type="pagebuilder_map_height_property">
+        <data key="name">Height</data>
+        <data key="section">general</data>
+        <data key="fieldName">height</data>
+        <data key="value">300</data>
+    </entity>
+    <entity name="PageBuilderMapHeight_Empty" type="pagebuilder_map_height_property">
+        <data key="name">Height</data>
+        <data key="section">general</data>
+        <data key="fieldName">height</data>
+        <data key="value"/>
+    </entity>
+    <entity name="PageBuilderMapHeightProperty350" type="pagebuilder_map_height_property">
+        <data key="name">Height</data>
+        <data key="section">general</data>
+        <data key="fieldName">height</data>
+        <data key="value">350</data>
+    </entity>
+    <entity name="PageBuilderMapHeightProperty500px" type="pagebuilder_map_height_property">
+        <data key="name">Height</data>
+        <data key="section">general</data>
+        <data key="fieldName">height</data>
+        <data key="value">500</data>
+    </entity>
+    <entity name="PageBuilderMapHeight_Percentage" type="pagebuilder_map_height_property">
+        <data key="name">Height</data>
+        <data key="section">general</data>
+        <data key="fieldName">height</data>
+        <data key="value">50%</data>
+        <data key="errorMessage">Please enter a valid number in this field.</data>
+    </entity>
+    <entity name="PageBuilderMapHeight_NonNumeric" type="pagebuilder_map_height_property">
+        <data key="name">Height</data>
+        <data key="section">general</data>
+        <data key="fieldName">height</data>
+        <data key="value">a</data>
+        <data key="errorMessage">Please enter a valid number in this field.</data>
+    </entity>
+    <!-- Show Controls -->
+    <entity name="PageBuilderMapShowControls_Default" type="pagebuilder_map_show_controls_property">
+        <data key="name">Show Controls</data>
+        <data key="section">general</data>
+        <data key="fieldName">show_controls</data>
+        <data key="value">true</data>
+    </entity>
+    <entity name="PageBuilderMapShowControls_True" type="pagebuilder_map_show_controls_property">
+        <data key="name">Show Controls</data>
+        <data key="section">general</data>
+        <data key="fieldName">show_controls</data>
+        <data key="value">true</data>
+    </entity>
+    <entity name="PageBuilderMapShowControls_False" type="pagebuilder_map_show_controls_property">
+        <data key="name">Show Controls</data>
+        <data key="section">general</data>
+        <data key="fieldName">show_controls</data>
+        <data key="value">false</data>
+    </entity>
+</entities>

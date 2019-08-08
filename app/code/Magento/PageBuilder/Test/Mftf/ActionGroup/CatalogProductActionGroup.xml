@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="openPageBuilderForAttribute">
+        <arguments>
+            <argument name="attributeCode" defaultValue="description" type="string"/>
+            <argument name="section" defaultValue="PageBuilderProductAttribute"/>
+            <argument name="pageBuilderArea" defaultValue="" type="string"/>
+        </arguments>
+        <comment userInput="Opening Page Builder for attribute" stepKey="commentOpeningPageBuilder"/>
+        <waitForElementVisible selector="{{section.PageBuilderBtn(attributeCode)}}" stepKey="waitForPageBuilderButton"/>
+        <click selector="{{section.PageBuilderBtn(attributeCode)}}" stepKey="clickOpenPageBuilder"/>
+        <waitForPageLoad stepKey="waitForPageBuilderToOpen"/>
+        <waitForElementVisible selector="{{pageBuilderArea}}{{PageBuilderPanel.layoutMenuSection}}" stepKey="waiForPageBuilderVisible"/>
+    </actionGroup>
+    <actionGroup name="expandAdminCategorySection">
+        <!-- Move to CE -->
+        <arguments>
+            <argument name="sectionSelector" defaultValue="{{AdminCategoryContentSection.sectionHeader}}" type="string"/>
+            <argument name="sectionDependentSelector" defaultValue="{{AdminCategoryContentSection.uploadButton}}" type="string"/>
+        </arguments>
+        <scrollToTopOfPage stepKey="scrollToTopOfPage"/>
+        <waitForElementVisible time="30" selector="{{sectionSelector}}" stepKey="waitForSection"/>
+        <conditionalClick selector="{{sectionSelector}}" dependentSelector="{{sectionDependentSelector}}" visible="false" stepKey="expandSection"/>
+        <waitForPageLoad time="30" stepKey="waitForSectionToExpand"/>
+    </actionGroup>
+    <actionGroup name="saveCatalogCategory" extends="saveCategoryForm">
+        <!-- Move to CE: Fix CE action group -->
+        <waitForElementVisible selector="{{AdminCategoryMainActionsSection.SaveButton}}" stepKey="waitForSaveCategoryButton" before="saveCategory"/>
+        <waitForPageLoad stepKey="waitForPageLoad" after="saveCategory"/>
+    </actionGroup>
+</actionGroups>

@@ -5,9 +5,20 @@
  */
 -->
 
-<div class="pagebuilder-content-type pagebuilder-entity pagebuilder-button-item no-system-border" event="{ click: onMouseOver, focusout: onMouseOut }">
+<div attr="data.main.attributes"
+     ko-style="data.main.style"
+     css="Object.assign({focused: $parent.parentContentType.preview.focusedButton() === $index()}, data.main.css())"
+     class="pagebuilder-content-type pagebuilder-button-item no-system-border focus-options">
     <render args="getOptions().template" />
-    <a attr="data.link.attributes" ko-style="data.link.style" css="data.link.css">
-        <span data-bind="liveEdit: { field: 'button_text', placeholder: buttonPlaceholder }, hasFocus: $parent.parent.preview.isLiveEditing() === $index()" event="{ focusout: onFocusOut.call($data) }"></span>
+    <a attr="data.link.attributes"
+       ko-style="data.link.style"
+       css="data.link.css"
+       click="function (context, event) { onClick($index(), event); }"
+       event="{ dragstart: function(context, event) { event.preventDefault(); }}">
+        <span class="button-item-drag-handle" css="{disabled: contentType.parentContentType.children().length <= 1}"></span>
+        <span attr="data.link_text.attributes"
+              data-bind="liveEdit: { field: 'button_text', placeholder: buttonPlaceholder, selectAll: true }, hasFocusNoScroll: contentType.parentContentType.preview.focusedButton() === $index()"
+              event="{ focusin: function (context, event) { onFocusIn($index(), event); }, focusout: function (context, event) { onFocusOut($index(), event); } }">
+        </span>
     </a>
 </div>

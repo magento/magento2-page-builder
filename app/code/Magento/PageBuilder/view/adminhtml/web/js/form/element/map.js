@@ -7,8 +7,10 @@
 
 define([
     'Magento_Ui/js/form/element/abstract',
-    'https://maps.googleapis.com/maps/api/js?key=AIzaSyCw10cOO31cpxb2bcwnHPHKtxov8oUbxJw'
-], function (AbstractField) {
+    'Magento_PageBuilder/js/utils/map',
+    'module',
+    'Magento_PageBuilder/js/events'
+], function (AbstractField, GoogleMap, module, events) {
     'use strict';
 
     var google = window.google || {};
@@ -17,7 +19,22 @@ define([
         defaults: {
             elementTmpl: 'Magento_PageBuilder/form/element/map',
             map: false,
-            marker: false
+            marker: false,
+            apiKeyValid: !!module.config().apiKey,
+            apiKeyErrorMessage: module.config().apiKeyErrorMessage
+        },
+
+        /**
+         * Initializes observable properties of instance
+         *
+         * @returns {Abstract} Chainable.
+         */
+        initObservable: function () {
+            this._super();
+
+            this.observe('apiKeyValid');
+
+            return this;
         },
 
         /**
@@ -28,55 +45,63 @@ define([
         renderMap: function (element) {
             // Get the start value and convert the value into an array
             var startValue = this.value(),
-                mapOptions;
+                mapOptions,
+                latitudeLongitude;
+
+            if (!this.apiKeyValid()) {
+                return;
+            }
 
             if (typeof startValue === 'string' && startValue !== '') {
                 startValue = JSON.parse(startValue);
             }
 
             mapOptions = {
-                zoom: 8,
-                center: new google.maps.LatLng(
-                    !isNaN(startValue.lat) && startValue.lat !== '' ? startValue.lat : 30.2672,
-                    !isNaN(startValue.lng) && startValue.lng !== '' ? startValue.lng : -97.7431
-                ),
-                scrollwheel: false,
-                disableDoubleClickZoom: false,
-                mapTypeControl: true,
-                mapTypeControlOptions: {
-                    style: google.maps.MapTypeControlStyle.DEFAULT
-                },
                 navigationControl: true,
                 navigationControlOptions: {
                     style: google.maps.NavigationControlStyle.DEFAULT
                 }
             };
 
-            // Create the map
-            this.map = new google.maps.Map(element, mapOptions);
+            events.on('googleMaps:authFailure', function () {
+                this.apiKeyValid(false);
+            }.bind(this));
 
-            // Add marker if there is a start value
-            if (this.value()) {
-                this.addMarker(startValue.lat, startValue.lng);
+            // Create the map
+            this.mapElement = new GoogleMap(element, [], mapOptions);
+
+            if (!this.mapElement || !this.mapElement.map) {
+                return;
             }
 
-            // After click, add and update both Lat and Lng.
-            google.maps.event.addListener(this.map, 'click', this.onClick.bind(this));
-            google.maps.event.addListener(this.map, 'dblclick', this.onDblClick.bind(this));
+            // Add marker if there is a start value
+            if (startValue.latitude !== '' && startValue.longitude !== '') {
+                latitudeLongitude = new google.maps.LatLng(
+                    parseFloat(startValue.latitude),
+                    parseFloat(startValue.longitude)
+                );
+
+                this.mapElement.map.setCenter(latitudeLongitude);
+                this.addMarker(startValue.latitude, startValue.longitude);
+            }
+
+            // After click, add and update both Latitude and Longitude.
+            google.maps.event.addListener(this.mapElement.map, 'click', this.onClick.bind(this));
+            google.maps.event.addListener(this.mapElement.map, 'dblclick', this.onDblClick.bind(this));
             google.maps.event.trigger(this.marker, 'click');
         },
 
         /**
          * Adds a map marker
          *
-         * @param {String} lat
-         * @param {String} lng
+         * @param {String} latitude
+         * @param {String} longitude
          */
-        addMarker: function (lat, lng) {
+        addMarker: function (latitude, longitude) {
             this.marker = new google.maps.Marker({
                 draggable: true,
-                map: this.map,
-                position: new google.maps.LatLng(lat, lng)
+                map: this.mapElement.map,
+                position: new google.maps.LatLng(latitude, longitude)
             });
             google.maps.event.addListener(this.marker, 'dragend', this.onDragEnd.bind(this));
         },
@@ -113,67 +138,80 @@ define([
          * Callback after an update to map
          */
         onUpdate: function () {
-            this._super();
-            var content = this.value(),
-                latLng;
-
-            if (this.marker && content.lat === '' && content.lng === '') {
-                this.marker.setMap(null);
-                delete this.marker;
+            if (!this.mapElement) {
                 return;
             }
 
-            if (!this.validateCoordinate(content)
-                || !this.map
-                || this.value() === ''
-                || this.value() === this.exportValue()) {
+            this._super();
+            var content = this.value(),
+                latitudeLongitude;
+
+            if (this.marker && content.latitude === '' && content.longitude === '') {
+                this.marker.setMap(null);
+                delete this.marker;
+
+                return;
+            }
+
+            if (!this.validateCoordinate(content) ||
+                this.mapElement &&
+                !this.mapElement.map ||
+                this.value() === '' ||
+                this.value() === this.exportValue()) {
                 return;
             }
 
             if (typeof this.value() === 'string' && this.value() !== '') {
                 content = JSON.parse(this.value());
             }
-
-            latLng = new google.maps.LatLng(parseFloat(content.lat), parseFloat(content.lng));
+            latitudeLongitude = new google.maps.LatLng(parseFloat(content.latitude), parseFloat(content.longitude));
 
             if (!this.marker) {
-                this.addMarker(latLng.lat(),latLng.lng());
+                this.addMarker(latitudeLongitude.lat(), latitudeLongitude.lng());
             }
 
-            this.marker.setPosition(latLng);
-            this.map.setCenter(latLng);
+            this.marker.setPosition(latitudeLongitude);
+            this.mapElement.map.setCenter(latitudeLongitude);
         },
 
-        validateCoordinate: function(coordinates) {
+        /**
+         * Coordinate validation
+         *
+         * @param {Object} coordinates
+         * @return {Boolean}
+         */
+        validateCoordinate: function (coordinates) {
             var valid = true;
-            if( coordinates.lng === ''
-                || coordinates.lat === ''
-                || isNaN(coordinates.lng)
-                || isNaN(coordinates.lat)
-                || parseFloat(coordinates.lng) < -180
-                || parseFloat(coordinates.lng) > 180
-                || parseFloat(coordinates.lat) < -90
-                || parseFloat(coordinates.lat) > 90
+
+            if (coordinates.longitude === '' ||
+                coordinates.latitude === '' ||
+                isNaN(coordinates.longitude) ||
+                isNaN(coordinates.latitude) ||
+                parseFloat(coordinates.longitude) < -180 ||
+                parseFloat(coordinates.longitude) > 180 ||
+                parseFloat(coordinates.latitude) < -90 ||
+                parseFloat(coordinates.latitude) > 90
             ) {
                 valid = false;
             }
+
             return valid;
         },
 
         /**
-         * Returns current lat, lng, and zoom level as a single string
+         * Returns current latitude and longitude as an object
          *
-         * @param {Object} latLng
+         * @param {Object} coordinate
          * @return {Object}
          */
-        exportValue: function (latLng) {
+        exportValue: function (coordinate) {
             var position = this.marker ?
-                this.marker.getPosition() : new google.maps.LatLng(this.map.center.lat(), this.map.center.lng()),
-                curLatLng = latLng ? latLng : position;
+                this.marker.getPosition() : new google.maps.LatLng(this.mapElement.map.center.lat(), this.mapElement.map.center.lng()),
+                currentCoordinate = coordinate ? coordinate : position;
 
             return {
-                lat: curLatLng.lat(),
-                lng: curLatLng.lng(),
+                latitude: currentCoordinate.lat(),
+                longitude: currentCoordinate.lng()
             };
         }
     });

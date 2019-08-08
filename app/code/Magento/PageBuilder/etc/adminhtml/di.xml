@@ -6,7 +6,7 @@
  */
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-    <virtualType name="Magento\PageBuilder\Block\Adminhtml\ContentType\Edit\CloseButton" type="Magento\PageBuilder\Block\Adminhtml\ContentType\Edit\Close">
+    <virtualType name="Magento\PageBuilder\Block\Adminhtml\ContentType\Edit\ModalCloseButton" type="Magento\PageBuilder\Block\Adminhtml\ContentType\Edit\CloseButton">
         <arguments>
             <argument name="targetName" xsi:type="string">ns = pagebuilder_modal_form, index = modal</argument>
         </arguments>
@@ -33,7 +33,7 @@
             <argument name="optionsArray" xsi:type="array">
                 <item name="350" xsi:type="array">
                     <item name="value" xsi:type="string">pagebuilder</item>
-                    <item name="label" xsi:type="string" translate="true">Page Builder</item>
+                    <item name="label" xsi:type="string" translatable="true">Page Builder</item>
                 </item>
             </argument>
         </arguments>
@@ -52,7 +52,9 @@
     <type name="Magento\PageBuilder\Model\Wysiwyg\DefaultConfigProvider">
         <arguments>
             <argument name="additionalSettings" xsi:type="array">
+                <item name="fixed_toolbar_container" xsi:type="string">.pagebuilder-content-type</item>
                 <item name="fontsize_formats" xsi:type="string">10px 12px 14px 16px 18px 20px 24px 26px 28px 32px 34px 36px 38px 40px 42px 48px 52px 56px 64px 72px</item>
+                <item name="lineheight_formats" xsi:type="string">10px 12px 14px 16px 18px 20px 24px 26px 28px 32px 34px 36px 38px 40px 42px 48px 52px 56px 64px 72px</item>
                 <item name="style_formats" xsi:type="array">
                     <item name="paragraph" xsi:type="array">
                         <item name="title" xsi:type="string">Paragraph</item>
@@ -107,7 +109,7 @@
             <argument name="optionsSize" xsi:type="string">small</argument>
             <argument name="optionsData" xsi:type="array">
                 <item name="0" xsi:type="array">
-                    <item name="value" xsi:type="string">default</item>
+                    <item name="value" xsi:type="string"/>
                     <item name="title" xsi:type="string" translate="true">Default</item>
                 </item>
                 <item name="1" xsi:type="array">
@@ -122,6 +124,32 @@
                 </item>
                 <item name="3" xsi:type="array">
                     <item name="value" xsi:type="string">right</item>
+                    <item name="title" xsi:type="string" translate="true">Right</item>
+                    <item name="icon" xsi:type="string">Magento_PageBuilder/css/images/form/element/visual-select/alignment/right.svg</item>
+                </item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Magento\PageBuilder\Model\Source\VideoAlignmentSource" type="Magento\PageBuilder\Model\Source\VisualSelect">
+        <arguments>
+            <argument name="optionsSize" xsi:type="string">small</argument>
+            <argument name="optionsData" xsi:type="array">
+                <item name="0" xsi:type="array">
+                    <item name="value" xsi:type="string"/>
+                    <item name="title" xsi:type="string" translate="true">Default</item>
+                </item>
+                <item name="1" xsi:type="array">
+                    <item name="value" xsi:type="string">flex-start</item>
+                    <item name="title" xsi:type="string" translate="true">Left</item>
+                    <item name="icon" xsi:type="string">Magento_PageBuilder/css/images/form/element/visual-select/alignment/left.svg</item>
+                </item>
+                <item name="2" xsi:type="array">
+                    <item name="value" xsi:type="string">center</item>
+                    <item name="title" xsi:type="string" translate="true">Center</item>
+                    <item name="icon" xsi:type="string">Magento_PageBuilder/css/images/form/element/visual-select/alignment/center.svg</item>
+                </item>
+                <item name="3" xsi:type="array">
+                    <item name="value" xsi:type="string">flex-end</item>
                     <item name="title" xsi:type="string" translate="true">Right</item>
                     <item name="icon" xsi:type="string">Magento_PageBuilder/css/images/form/element/visual-select/alignment/right.svg</item>
                 </item>
@@ -150,24 +178,24 @@
             </argument>
         </arguments>
     </virtualType>
-    <virtualType name="AppearanceSourceAccordion" type="Magento\PageBuilder\Model\Source\VisualSelect">
+    <virtualType name="Magento\PageBuilder\Model\Source\VerticalAlignment" type="Magento\PageBuilder\Model\Source\VisualSelect">
         <arguments>
-            <argument name="optionsSize" xsi:type="string">large</argument>
+            <argument name="optionsSize" xsi:type="string">small</argument>
             <argument name="optionsData" xsi:type="array">
                 <item name="0" xsi:type="array">
-                    <item name="value" xsi:type="string">default</item>
-                    <item name="title" xsi:type="string" translate="true">Default</item>
+                    <item name="value" xsi:type="string">flex-start</item>
+                    <item name="title" xsi:type="string" translate="true">Top</item>
+                    <item name="icon" xsi:type="string">Magento_PageBuilder/css/images/form/element/visual-select/vertical-align/top.svg</item>
                 </item>
-            </argument>
-        </arguments>
-    </virtualType>
-    <virtualType name="AppearanceSourceAnchor" type="Magento\PageBuilder\Model\Source\VisualSelect">
-        <arguments>
-            <argument name="optionsSize" xsi:type="string">large</argument>
-            <argument name="optionsData" xsi:type="array">
-                <item name="0" xsi:type="array">
-                    <item name="value" xsi:type="string">default</item>
-                    <item name="title" xsi:type="string" translate="true">Default</item>
+                <item name="1" xsi:type="array">
+                    <item name="value" xsi:type="string">center</item>
+                    <item name="title" xsi:type="string" translate="true">Center</item>
+                    <item name="icon" xsi:type="string">Magento_PageBuilder/css/images/form/element/visual-select/vertical-align/center.svg</item>
+                </item>
+                <item name="2" xsi:type="array">
+                    <item name="value" xsi:type="string">flex-end</item>
+                    <item name="title" xsi:type="string" translate="true">Bottom</item>
+                    <item name="icon" xsi:type="string">Magento_PageBuilder/css/images/form/element/visual-select/vertical-align/bottom.svg</item>
                 </item>
             </argument>
         </arguments>
@@ -215,8 +243,14 @@
             <argument name="optionsSize" xsi:type="string">large</argument>
             <argument name="optionsData" xsi:type="array">
                 <item name="0" xsi:type="array">
-                    <item name="value" xsi:type="string">default</item>
-                    <item name="title" xsi:type="string" translate="true">Default</item>
+                    <item name="value" xsi:type="string">inline</item>
+                    <item name="title" xsi:type="string" translate="true">Inline</item>
+                    <item name="icon" xsi:type="string">Magento_PageBuilder/css/images/content-type/buttons/appearance/inline.svg</item>
+                </item>
+                <item name="1" xsi:type="array">
+                    <item name="value" xsi:type="string">stacked</item>
+                    <item name="title" xsi:type="string" translate="true">Stacked</item>
+                    <item name="icon" xsi:type="string">Magento_PageBuilder/css/images/content-type/buttons/appearance/stacked.svg</item>
                 </item>
             </argument>
         </arguments>
@@ -315,17 +349,6 @@
             </argument>
         </arguments>
     </virtualType>
-    <virtualType name="AppearanceSourceNewsletter" type="Magento\PageBuilder\Model\Source\VisualSelect">
-        <arguments>
-            <argument name="optionsSize" xsi:type="string">large</argument>
-            <argument name="optionsData" xsi:type="array">
-                <item name="0" xsi:type="array">
-                    <item name="value" xsi:type="string">default</item>
-                    <item name="title" xsi:type="string" translate="true">Default</item>
-                </item>
-            </argument>
-        </arguments>
-    </virtualType>
     <virtualType name="AppearanceSourceProducts" type="Magento\PageBuilder\Model\Source\VisualSelect">
         <arguments>
             <argument name="optionsSize" xsi:type="string">large</argument>
@@ -343,8 +366,21 @@
             <argument name="optionsSize" xsi:type="string">large</argument>
             <argument name="optionsData" xsi:type="array">
                 <item name="0" xsi:type="array">
-                    <item name="value" xsi:type="string">default</item>
-                    <item name="title" xsi:type="string" translate="true">Default</item>
+                    <item name="value" xsi:type="string">contained</item>
+                    <item name="title" xsi:type="string" translate="true">Contained</item>
+                    <item name="icon" xsi:type="string">Magento_PageBuilder/css/images/content-type/row/appearance/contained.svg</item>
+                </item>
+                <item name="1" xsi:type="array">
+                    <item name="value" xsi:type="string">full-width</item>
+                    <item name="title" xsi:type="string" translate="true">Full Width</item>
+                    <item name="icon" xsi:type="string">Magento_PageBuilder/css/images/content-type/row/appearance/full-width.svg</item>
+                    <item name="noticeMessage" xsi:type="string" translate="true">Full width appearance will work only with supported layouts.</item>
+                </item>
+                <item name="2" xsi:type="array">
+                    <item name="value" xsi:type="string">full-bleed</item>
+                    <item name="title" xsi:type="string" translate="true">Full Bleed</item>
+                    <item name="icon" xsi:type="string">Magento_PageBuilder/css/images/content-type/row/appearance/full-bleed.svg</item>
+                    <item name="noticeMessage" xsi:type="string" translate="true">Full bleed appearance will work only with supported layouts.</item>
                 </item>
             </argument>
         </arguments>
@@ -429,6 +465,94 @@
                     <item name="title" xsi:type="string" translate="true">Default</item>
                 </item>
             </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="BackgroundSizeSource" type="Magento\PageBuilder\Model\Source\VisualSelect">
+        <arguments>
+            <argument name="optionsSize" xsi:type="string">small</argument>
+            <argument name="optionsData" xsi:type="array">
+                <item name="0" xsi:type="array">
+                    <item name="value" xsi:type="string">cover</item>
+                    <item name="title" xsi:type="string" translate="true">Cover</item>
+                    <item name="icon" xsi:type="string">Magento_PageBuilder/css/images/form/element/visual-select/background-size/cover.svg</item>
+                </item>
+                <item name="1" xsi:type="array">
+                    <item name="value" xsi:type="string">contain</item>
+                    <item name="title" xsi:type="string" translate="true">Contain</item>
+                    <item name="icon" xsi:type="string">Magento_PageBuilder/css/images/form/element/visual-select/background-size/contain.svg</item>
+                </item>
+                <item name="2" xsi:type="array">
+                    <item name="value" xsi:type="string">auto</item>
+                    <item name="title" xsi:type="string" translate="true">Auto</item>
+                    <item name="icon" xsi:type="string">Magento_PageBuilder/css/images/form/element/visual-select/background-size/auto.svg</item>
+                </item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\PageBuilder\Model\Stage\Config">
+        <arguments>
+            <argument name="data" xsi:type="array">
+                <item name="root_content_type" xsi:type="string">row</item>
+                <item name="html_display_content_type" xsi:type="string">html</item>
+            </argument>
+            <argument name="rootContainerConfig" xsi:type="array">
+                <item name="label" xsi:type="string">Root Container</item>
+                <item name="component" xsi:type="string">Magento_PageBuilder/js/content-type/root-container/content-type-collection</item>
+                <item name="is_system" xsi:type="string">false</item>
+                <item name="appearances" xsi:type="array">
+                    <item name="default" xsi:type="array">
+                        <item name="default" xsi:type="string">true</item>
+                        <item name="reader" xsi:type="string">Magento_PageBuilder/js/master-format/read/configurable</item>
+                        <item name="preview_template" xsi:type="string">Magento_PageBuilder/content-type/preview-collection</item>
+                        <item name="master_template" xsi:type="string">Magento_PageBuilder/content-type/master-collection</item>
+                    </item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\PageBuilder\Model\Wysiwyg\InlineEditingSupportedAdapterList">
+        <arguments>
+            <argument name="wysiwygAdaptersSupportingInlineEditing" xsi:type="array">
+                <item name="mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" xsi:type="boolean">true</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\PageBuilder\Model\Config\ContentType\AdditionalData\Provider\Wysiwyg\Config">
+        <arguments>
+            <argument name="editors" xsi:type="array">
+                <item name="mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" xsi:type="array">
+                    <item name="component" xsi:type="string">Magento_PageBuilder/js/wysiwyg/tinymce4</item>
+                    <item name="component_initializers" xsi:type="array">
+                        <item name="text" xsi:type="string">Magento_PageBuilder/js/content-type/text/wysiwyg/tinymce4/component-initializer</item>
+                        <item name="slide" xsi:type="string">Magento_PageBuilder/js/content-type/slide/wysiwyg/tinymce4/component-initializer</item>
+                        <item name="banner" xsi:type="string">Magento_PageBuilder/js/content-type/banner/wysiwyg/tinymce4/component-initializer</item>
+                    </item>
+                    <item name="config_modifiers" xsi:type="array">
+                        <item name="text" xsi:type="string">Magento_PageBuilder/js/content-type/text/wysiwyg/tinymce4/config-modifier</item>
+                        <item name="slide" xsi:type="string">Magento_PageBuilder/js/content-type/slide/wysiwyg/tinymce4/config-modifier</item>
+                    </item>
+                    <item name="mode" xsi:type="string">inline</item>
+                    <item name="minToolbarWidth" xsi:type="number">360</item>
+                    <item name="parentSelectorsToUnderlay" xsi:type="array">
+                        <item name="0" xsi:type="string">.column-container</item>
+                        <item name="1" xsi:type="string">.row-container</item>
+                    </item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+    <virtualType name="Magento\PageBuilder\Model\Config\ContentType\AdditionalData\Provider\Wysiwyg\BannerConfig" type="Magento\PageBuilder\Model\Config\ContentType\AdditionalData\Provider\Wysiwyg\Config">
+        <arguments>
+            <argument name="editors" xsi:type="array">
+                <item name="mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" xsi:type="array">
+                    <item name="parentSelectorsToUnderlay" xsi:type="null"/>
+                </item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="ImageMaxFileSizeDesktop" type="Magento\PageBuilder\Model\Config\ContentType\AdditionalData\Provider\Uploader\MaxFileSize">
+        <arguments>
+            <argument name="staticFileSize" xsi:type="number">4194304</argument>
         </arguments>
     </virtualType>
 </config>

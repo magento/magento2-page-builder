@@ -1,34 +1,68 @@
 /*eslint-disable */
-define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "uiEvents", "underscore", "Magento_PageBuilder/js/collection", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/data-store", "Magento_PageBuilder/js/master-format/render", "Magento_PageBuilder/js/stage-builder", "Magento_PageBuilder/js/utils/array"], function (_knockout, _translate, _alert, _uiEvents, _underscore, _collection, _contentTypeFactory, _dataStore, _render, _stageBuilder, _array) {
-  function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-  function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
+define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/resource/jquery/ui/jquery.ui.touch-punch", "underscore", "Magento_PageBuilder/js/binding/sortable", "Magento_PageBuilder/js/collection", "Magento_PageBuilder/js/data-store", "Magento_PageBuilder/js/drag-drop/matrix", "Magento_PageBuilder/js/master-format/render", "Magento_PageBuilder/js/stage-builder", "Magento_PageBuilder/js/utils/promise-deferred"], function (_jquery, _knockout, _events, _jqueryUi, _underscore, _sortable, _collection, _dataStore, _matrix, _render, _stageBuilder, _promiseDeferred) {
+  /**
+   * Copyright © Magento, Inc. All rights reserved.
+   * See COPYING.txt for license details.
+   */
   var Stage =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     /**
-     * @param {PageBuilderInterface} parent
+     * Debounce the applyBindings call by 500ms to stop duplicate calls
+     *
+     * @type {(() => void) & _.Cancelable}
      */
-    function Stage(parent) {
-      this.parent = void 0;
-      this.id = void 0;
-      this.config = {
-        name: "stage"
-      };
+
+    /**
+     * @param {PageBuilderInterface} pageBuilder
+     * @param {ContentTypeCollectionInterface} rootContainer
+     */
+    function Stage(pageBuilder, rootContainer) {
+      var _this = this;
+
       this.loading = _knockout.observable(true);
       this.showBorders = _knockout.observable(false);
       this.interacting = _knockout.observable(false);
       this.userSelect = _knockout.observable(true);
-      this.stageLoadingMessage = (0, _translate)("Please hold! we're just retrieving your content...");
+      this.focusChild = _knockout.observable(false);
       this.dataStore = new _dataStore();
+      this.afterRenderDeferred = (0, _promiseDeferred)();
       this.template = "Magento_PageBuilder/content-type/preview";
-      this.render = new _render();
       this.collection = new _collection();
-      this.parent = parent;
-      this.id = parent.id;
-      this.initListeners();
-      (0, _stageBuilder)(this, parent.initialValue).then(this.ready.bind(this));
+      this.applyBindingsDebounce = _underscore.debounce(function () {
+        _this.renderingLock = _jquery.Deferred();
+
+        _this.render.applyBindings(_this.rootContainer).then(function (renderedOutput) {
+          return _events.trigger("stage:" + _this.id + ":masterFormatRenderAfter", {
+            value: renderedOutput
+          });
+        }).then(function () {
+          _this.renderingLock.resolve();
+        }).catch(function (error) {
+          if (error) {
+            console.error(error);
+          }
+        });
+      }, 500);
+      this.pageBuilder = pageBuilder;
+      this.id = pageBuilder.id;
+      this.render = new _render(pageBuilder.id);
+      this.rootContainer = rootContainer;
+      (0, _matrix.generateAllowedParents)(); // Fire an event after the DOM has rendered
+
+      this.afterRenderDeferred.promise.then(function () {
+        _this.render.setupChannel();
+
+        _events.trigger("stage:" + _this.id + ":renderAfter", {
+          stage: _this
+        });
+      }); // Wait for the stage to be built alongside the stage being rendered
+
+      Promise.all([(0, _stageBuilder)(this, this.pageBuilder.initialValue), this.afterRenderDeferred.promise]).then(this.ready.bind(this)).catch(function (error) {
+        console.error(error);
+      });
     }
     /**
      * Get template.
@@ -41,260 +75,102 @@ define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "uiEvents", "
 
     _proto.getTemplate = function getTemplate() {
       return this.template;
-    };
+    }
     /**
      * The stage has been initiated fully and is ready
      */
-
+    ;
 
     _proto.ready = function ready() {
-      _uiEvents.trigger("stage:ready:" + this.id, {
+      _events.trigger("stage:" + this.id + ":readyAfter", {
         stage: this
       });
 
-      this.collection.getChildren().valueHasMutated();
       this.loading(false);
-    };
-    /**
-     * Remove a child from the observable array
-     *
-     * @param child
-     */
+      this.initListeners(); // Ensure we complete an initial save of the data within the stage once we're ready
 
-
-    _proto.removeChild = function removeChild(child) {
-      if (this.collection.getChildren().length === 1) {
-        (0, _alert)({
-          content: (0, _translate)("You are not able to remove the final row from the content."),
-          title: (0, _translate)("Unable to Remove")
-        });
-        return;
-      }
-
-      this.collection.removeChild(child);
-    };
-    /**
-     * Return the children of the current element
-     *
-     * @returns {KnockoutObservableArray<ContentTypeInterface>}
-     */
-
-
-    _proto.getChildren = function getChildren() {
-      return this.collection.getChildren();
-    };
-    /**
-     * Add a child into the observable array
-     *
-     * @param child
-     * @param index
-     */
-
-
-    _proto.addChild = function addChild(child, index) {
-      child.parent = this;
-      this.collection.addChild(child, index);
-    };
-    /**
-     * Set the children observable array into the class
-     *
-     * @param children
-     */
-
-
-    _proto.setChildren = function setChildren(children) {
-      this.collection.setChildren(children);
-    };
-
+      _events.trigger("stage:updateAfter", {
+        stageId: this.id
+      });
+    }
     /**
      * Init listeners
      */
+    ;
+
     _proto.initListeners = function initListeners() {
-      var _this = this;
+      var _this2 = this;
 
       this.collection.getChildren().subscribe(function () {
-        return _uiEvents.trigger("stage:updated", {
-          stageId: _this.id
+        return _events.trigger("stage:updateAfter", {
+          stageId: _this2.id
         });
-      }); // Block dropped from left hand panel
+      }); // ContentType being removed from container
 
-      _uiEvents.on("block:dropped", function (args) {
-        if (args.stageId === _this.id) {
-          _this.onBlockDropped(args);
-        }
-      }); // Block instance being moved between structural elements
-
-
-      _uiEvents.on("block:instanceDropped", function (args) {
-        if (args.stageId === _this.id) {
-          _this.onBlockInstanceDropped(args);
-        }
-      }); // Block being removed from container
-
-
-      _uiEvents.on("block:removed", function (args) {
-        if (args.stageId === _this.id) {
-          _this.onBlockRemoved(args);
-        }
-      }); // Block sorted within the same structural element
-
-
-      _uiEvents.on("block:sorted", function (args) {
-        if (args.stageId === _this.id) {
-          _this.onBlockSorted(args);
-        }
-      }); // Observe sorting actions
-
-
-      _uiEvents.on("block:sortStart", function (args) {
-        if (args.stageId === _this.id) {
-          _this.onSortingStart(args);
-        }
-      });
-
-      _uiEvents.on("block:sortStop", function (args) {
-        if (args.stageId === _this.id) {
-          _this.onSortingStop(args);
+      _events.on("contentType:removeAfter", function (args) {
+        if (args.stageId === _this2.id) {
+          _this2.onContentTypeRemoved(args);
         }
       }); // Any store state changes trigger a stage update event
 
 
       this.dataStore.subscribe(function () {
-        return _uiEvents.trigger("stage:updated", {
-          stageId: _this.id
+        return _events.trigger("stage:updateAfter", {
+          stageId: _this2.id
         });
       }); // Watch for stage update events & manipulations to the store, debounce for 50ms as multiple stage changes
       // can occur concurrently.
 
-      _uiEvents.on("stage:updated", function (args) {
-        if (args.stageId === _this.id) {
-          _underscore.debounce(function () {
-            _this.render.applyBindings(_this.children).then(function (renderedOutput) {
-              return _uiEvents.trigger("stage:renderTree:" + _this.id, {
-                value: renderedOutput
-              });
-            });
-          }, 500).call(_this);
+      _events.on("stage:updateAfter", function (args) {
+        if (args.stageId === _this2.id) {
+          _this2.applyBindingsDebounce();
         }
       });
 
-      _uiEvents.on("interaction:start", function () {
-        return _this.interacting(true);
+      var interactionLevel = 0;
+
+      _events.on("stage:interactionStart", function () {
+        ++interactionLevel;
+
+        _this2.interacting(true);
       });
 
-      _uiEvents.on("interaction:stop", function () {
-        return _this.interacting(false);
+      _events.on("stage:interactionStop", function (args) {
+        var forced = _underscore.isObject(args) && args.force === true;
+        interactionLevel = Math.max(interactionLevel - 1, 0);
+
+        if (interactionLevel === 0 || forced) {
+          _this2.interacting(false);
+
+          if (forced) {
+            interactionLevel = 0;
+          }
+        }
       });
-    };
+
+      _events.on("stage:childFocusStart", function () {
+        return _this2.focusChild(true);
+      });
+
+      _events.on("stage:childFocusStop", function () {
+        return _this2.focusChild(false);
+      });
+    }
     /**
-     * On block removed
+     * On content type removed
      *
-     * @param event
      * @param params
      */
+    ;
 
-
-    _proto.onBlockRemoved = function onBlockRemoved(params) {
-      params.parent.removeChild(params.block);
+    _proto.onContentTypeRemoved = function onContentTypeRemoved(params) {
+      params.parentContentType.removeChild(params.contentType);
     };
-    /**
-     * On instance of an existing block is dropped onto container
-     *
-     * @param {Event} event
-     * @param {BlockInstanceDroppedParams} params
-     */
-
-
-    _proto.onBlockInstanceDropped = function onBlockInstanceDropped(params) {
-      var originalParent = params.blockInstance.parent;
-      params.blockInstance.parent = params.parent;
-      params.parent.parent.addChild(params.blockInstance, params.index);
-
-      _uiEvents.trigger("block:moved", {
-        block: params.blockInstance,
-        index: params.index,
-        newParent: params.parent,
-        originalParent: originalParent
-      });
-    };
-    /**
-     * On block dropped into container
-     *
-     * @param {BlockDroppedParams} params
-     */
-
-
-    _proto.onBlockDropped = function onBlockDropped(params) {
-      var index = params.index || 0;
-      new Promise(function (resolve, reject) {
-        if (params.block) {
-          return (0, _contentTypeFactory)(params.block.config, params.parent, params.stageId).then(function (block) {
-            params.parent.addChild(block, index);
-
-            _uiEvents.trigger("block:dropped:create", {
-              id: block.id,
-              block: block
-            });
-
-            _uiEvents.trigger(params.block.config.name + ":block:dropped:create", {
-              id: block.id,
-              block: block
-            });
-
-            return block;
-          });
-        } else {
-          reject("Parameter block missing from event.");
-        }
-      }).catch(function (error) {
-        console.error(error);
-      });
-    };
-    /**
-     * On block sorted within it's own container
-     *
-     * @param {BlockSortedParams} params
-     */
-
-
-    _proto.onBlockSorted = function onBlockSorted(params) {
-      var originalIndex = _knockout.utils.arrayIndexOf(params.parent.children(), params.block);
-
-      if (originalIndex !== params.index) {
-        (0, _array.moveArrayItem)(params.parent.children, originalIndex, params.index);
-      }
-    };
-    /**
-     * On sorting start
-     *
-     * @param {SortParamsInterface} params
-     */
-
-
-    _proto.onSortingStart = function onSortingStart(params) {
-      this.showBorders(true);
-    };
-    /**
-     * On sorting stop
-     *
-     * @param {SortParamsInterface} params
-     */
-
-
-    _proto.onSortingStop = function onSortingStop(params) {
-      this.showBorders(false);
-    };
-
-    _createClass(Stage, [{
-      key: "children",
-      get: function get() {
-        return this.collection.getChildren();
-      }
-    }]);
 
     return Stage;
   }();
 
+  Stage.rootContainerName = "root-container";
   return Stage;
 });
 //# sourceMappingURL=stage.js.map

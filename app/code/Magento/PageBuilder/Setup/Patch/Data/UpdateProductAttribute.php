@@ -12,10 +12,9 @@ use Magento\Framework\Setup\Patch\DataPatchInterface;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
 
 /**
- * Patch is mechanism, that allows to do atomic upgrade data changes
+ * Update description product attribute to by default enable Page Builder
  */
-class UpdateProductAttribute implements
-    DataPatchInterface
+class UpdateProductAttribute implements DataPatchInterface
 {
     /**
      * @var ModuleDataSetupInterface $moduleDataSetup
@@ -28,6 +27,7 @@ class UpdateProductAttribute implements
     private $eavSetupFactory;
 
     /**
+     * @param \Magento\Eav\Setup\EavSetupFactory $eavSetupFactory
      * @param ModuleDataSetupInterface $moduleDataSetup
      */
     public function __construct(
@@ -39,7 +39,7 @@ class UpdateProductAttribute implements
     }
 
     /**
-     * Do Upgrade
+     * Modify EAV tables to update description attribute page builder enabled value
      *
      * @return void
      */
@@ -59,7 +59,7 @@ class UpdateProductAttribute implements
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getAliases()
     {
@@ -67,10 +67,10 @@ class UpdateProductAttribute implements
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public static function getDependencies()
     {
-        return [MigrateToPageBuilder::class];
+        return [];
     }
 }

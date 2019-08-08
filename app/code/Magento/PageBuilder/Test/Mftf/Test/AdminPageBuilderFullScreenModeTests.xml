@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="PageBuilderFullScreenCoversEntireScreen">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Full-Screen"/>
+            <title value="Verify That Full-Screen Mode Covers Entire Screen"/>
+            <description value="This test is to ensure that the PageBuilder full-screen mode covers the entire screen when opened."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-3329"/>
+            <testCaseId value="MC-13659"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-fullScreen"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <executeJS function="return window.innerHeight;" stepKey="viewportHeight"/>
+        <executeJS function="return window.innerWidth;" stepKey="viewportWidth"/>
+        <actionGroup ref="openPageBuilderFullScreen" stepKey="openPageBuilderFullScreen"/>
+        <executeJS function="return document.querySelector('{{PageBuilderStage.stageWrapperFullScreen}}').getBoundingClientRect().top" stepKey="topPositionOfStageWrapper"/>
+        <executeJS function="return document.querySelector('{{PageBuilderStage.stageWrapperFullScreen}}').getBoundingClientRect().left" stepKey="leftPositionOfStageWrapper"/>
+        <executeJS function="return document.querySelector('{{PageBuilderStage.stageWrapperFullScreen}}').getBoundingClientRect().height" stepKey="heightOfStageWrapper"/>
+        <executeJS function="return document.querySelector('{{PageBuilderStage.stageWrapperFullScreen}}').getBoundingClientRect().width" stepKey="widthOfStageWrapper"/>
+        <assertEquals stepKey="assertTopPosition">
+            <expectedResult type="string">0</expectedResult>
+            <actualResult type="variable">topPositionOfStageWrapper</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertLeftPosition">
+            <expectedResult type="string">0</expectedResult>
+            <actualResult type="variable">leftPositionOfStageWrapper</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertHeight">
+            <expectedResult type="variable">viewportHeight</expectedResult>
+            <actualResult type="variable">heightOfStageWrapper</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertWidth">
+            <expectedResult type="variable">viewportWidth</expectedResult>
+            <actualResult type="variable">widthOfStageWrapper</actualResult>
+        </assertEquals>
+    </test>
+    <test name="PageBuilderFullScreenLeftPanelHeightAndFunctionality">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Full-Screen"/>
+            <title value="Left Panel Is Full-Height and Works In Full-Screen Mode"/>
+            <description value="This test is to ensure that the PageBuilder left panel works and grows to span the full height of the viewport in full-screen mode."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-3329"/>
+            <testCaseId value="MC-13660"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-fullScreen"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <executeJS function="return window.innerHeight;" stepKey="viewportHeight"/>
+        <actionGroup ref="openPageBuilderFullScreen" stepKey="openPageBuilderFullScreen"/>
+        <executeJS function="return document.querySelector('{{PageBuilderPanel.leftPanel}}').getBoundingClientRect().top" stepKey="topPositionOfLeftPanel"/>
+        <executeJS function="return document.querySelector('{{PageBuilderPanel.leftPanel}}').getBoundingClientRect().left" stepKey="leftPositionOfLeftPanel"/>
+        <executeJS function="return document.querySelector('{{PageBuilderPanel.leftPanel}}').getBoundingClientRect().height" stepKey="heightOfLeftPanel"/>
+        <executeJS function="return document.querySelector('{{PageBuilderPanel.leftPanel}}').getBoundingClientRect().width" stepKey="widthOfLeftPanel"/>
+        <assertEquals stepKey="assertTopPosition">
+            <expectedResult type="string">0</expectedResult>
+            <actualResult type="variable">topPositionOfLeftPanel</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertLeftPosition">
+            <expectedResult type="string">0</expectedResult>
+            <actualResult type="variable">leftPositionOfLeftPanel</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertHeight">
+            <expectedResult type="variable">viewportHeight</expectedResult>
+            <actualResult type="variable">heightOfLeftPanel</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertWidth">
+            <expectedResult type="int">150</expectedResult>
+            <actualResult type="variable">widthOfLeftPanel</actualResult>
+        </assertEquals>
+        <seeElement selector='{{PageBuilderPanel.firstSection}}' parameterArray="['class' => 'active']" stepKey="firstSectionOfPanelIsOpen"/>
+        <actionGroup ref="validateMenuSectionsAndContentTypes" stepKey="validateMenuSectionsAndContentTypes"/>
+    </test>
+    <test name="PageBuilderFullScreenCanAddAndEditContentTypes">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Full-Screen"/>
+            <title value="Can Add and Edit Content Types In Full-Screen Mode"/>
+            <description value="This test is to ensure that the user can successfully add and edit content types in full-screen mode."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-3329"/>
+            <testCaseId value="MC-13661"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-buttons"/>
+            <group value="pagebuilder-fullScreen"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderFullScreen" stepKey="openPageBuilderFullScreen"/>
+        <!-- Add and Edit Buttons -->
+        <comment userInput="Add and Edit Buttons" stepKey="commentAddButtons"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragButtonsToRow">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage">
+            <argument name="section" value="ButtonItemOnStage"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="fillButtonTextField">
+            <argument name="property" value="PageBuilderButtonItemText_Common"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettingsFullScreen" stepKey="saveEditFormForButton"/>
+        <!-- Validate Full-Screen Stage -->
+        <comment userInput="Validate Full-Screen Stage" stepKey="commentValidateFullScreenStage"/>
+        <seeElement selector="{{ButtonItemOnStage.buttonItemText('1', PageBuilderButtonItemText_Common.value)}}" stepKey="seeButtonTextStageFullScreen"/>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <seeElement selector="{{ButtonItemOnStage.buttonItemText('1', PageBuilderButtonItemText_Common.value)}}" stepKey="seeButtonTextStage"/>
+        <!-- Save Page -->
+        <comment userInput="Save Page" stepKey="commentSavePage"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
+        <seeElement selector="{{ButtonItemOnStage.buttonItemText('1', PageBuilderButtonItemText_Common.value)}}" stepKey="seeButtonTextStageAfterSave"/>
+        <actionGroup ref="openPageBuilderFullScreen" stepKey="openPageBuilderFullScreenAfterSave"/>
+        <!-- Validate Full-Screen Stage -->
+        <comment userInput="Validate Full-Screen Stage" stepKey="commentValidateFullScreenStageAfterSave"/>
+        <seeElement selector="{{ButtonItemOnStage.buttonItemText('1', PageBuilderButtonItemText_Common.value)}}" stepKey="seeButtonTextStageFullScreenAfterSave"/>
+    </test>
+</tests>

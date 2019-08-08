@@ -1,132 +1,158 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/utils/map", "uiEvents", "Magento_PageBuilder/js/content-type/preview"], function (_map, _uiEvents, _preview) {
-  function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+define(["knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/utils/map", "module", "Magento_PageBuilder/js/content-type-menu/hide-show-option", "Magento_PageBuilder/js/content-type/preview"], function (_knockout, _events, _map, _module, _hideShowOption, _preview) {
+  /**
+   * Copyright © Magento, Inc. All rights reserved.
+   * See COPYING.txt for license details.
+   */
+
+  /**
+   * @api
+   */
   var Preview =
   /*#__PURE__*/
-  function (_BasePreview) {
-    _inheritsLoose(Preview, _BasePreview);
+  function (_preview2) {
+    "use strict";
+
+    _inheritsLoose(Preview, _preview2);
 
     function Preview() {
-      return _BasePreview.apply(this, arguments) || this;
+      var _this;
+
+      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      _this = _preview2.call.apply(_preview2, [this].concat(args)) || this;
+      _this.apiKeyValid = _knockout.observable(!!_module.config().apiKey);
+      _this.apiKeyErrorMessage = _module.config().apiKeyErrorMessage;
+      return _this;
     }
 
     var _proto = Preview.prototype;
 
     /**
+     * Return an array of options
+     *
+     * @returns {OptionsInterface}
+     */
+    _proto.retrieveOptions = function retrieveOptions() {
+      var options = _preview2.prototype.retrieveOptions.call(this);
+
+      options.hideShow = new _hideShowOption({
+        preview: this,
+        icon: _hideShowOption.showIcon,
+        title: _hideShowOption.showText,
+        action: this.onOptionVisibilityToggle,
+        classes: ["hide-show-content-type"],
+        sort: 40
+      });
+      return options;
+    }
+    /**
      * Open edit menu on map content type drop with a delay of 300ms
      */
+    ;
+
     _proto.bindEvents = function bindEvents() {
-      var _this = this;
+      var _this2 = this;
 
-      _BasePreview.prototype.bindEvents.call(this); // When a map is dropped for the first time open the edit panel
+      _preview2.prototype.bindEvents.call(this); // When the map api key fails, empties out the content type and adds the placeholder
 
 
-      _uiEvents.on("map:block:dropped:create", function (args) {
-        if (args.id === _this.parent.id) {
-          setTimeout(function () {
-            _this.edit.open();
-          }, 300);
-        }
+      _events.on("googleMaps:authFailure", function () {
+        _this2.apiKeyValid(false);
       });
-    };
+    }
     /**
      * Renders the map and subscribe to position for updates
      *
      * @param {Element} element
      * @returns {void}
      */
-
+    ;
 
     _proto.renderMap = function renderMap(element) {
-      var _this2 = this;
+      var _this3 = this;
+
+      if (!this.apiKeyValid()) {
+        return;
+      }
 
       this.generateMap(element);
-      this.data.main.attributes.subscribe(function () {
-        _this2.updateMap();
-      });
-    };
+      this.element = element;
+
+      if (this.mapElement && this.mapElement.map) {
+        this.data.main.attributes.subscribe(function () {
+          _this3.updateMap();
+        });
+      }
+    }
     /**
      * Generate maps
      *
      * @param {Element} element
      * @returns {void}
      */
-
+    ;
 
     _proto.generateMap = function generateMap(element) {
-      var position = this.data.main.attributes()["data-position"] || "{}";
+      var currentLocations = this.data.main.attributes()["data-locations"] || "[]";
       var controls = this.data.main.attributes()["data-show-controls"] || "true";
-      var marker = {};
+      var locations = [];
       var options = {
         disableDefaultUI: controls !== "true",
         mapTypeControl: controls === "true"
       };
 
-      if (position !== "{}") {
+      if (currentLocations !== "[]") {
         var mapData = this.getMapData();
-        marker = mapData.marker;
+        locations = mapData.locations;
         options = mapData.options;
       }
 
-      this.map = new _map(element, marker, options);
-    };
+      this.mapElement = new _map(element, locations, options);
+    }
     /**
      * Updates map
      *
      * @returns {void}
      */
-
+    ;
 
     _proto.updateMap = function updateMap() {
-      if (this.data.main.attributes()["data-position"] !== "{}") {
-        var mapData = this.getMapData();
-        this.map.onUpdate(mapData.marker, mapData.options);
-      }
-    };
+      var mapData = this.getMapData();
+      this.mapElement.onUpdate(mapData.locations, mapData.options);
+    }
     /**
-     * Get markers, center coordinates, and zoom from data.position
+     * Get locations, center coordinates, and zoom from data.position
      *
      * @returns {Object}
      */
-
+    ;
 
     _proto.getMapData = function getMapData() {
       var attributes = this.data.main.attributes();
-      var location = attributes["data-location-name"];
-      var position = attributes["data-position"];
-      var address = attributes["data-address"];
-      var city = attributes["data-city"];
-      var comment = attributes["data-comment"];
       var controls = attributes["data-show-controls"];
-      var country = attributes["data-country"];
-      var zipcode = attributes["data-zipcode"];
+      var options = {
+        disableDefaultUI: controls !== "true",
+        mapTypeControl: controls === "true"
+      };
+      var locations = attributes["data-locations"];
 
-      if (position !== "" && typeof position === "string") {
-        position = JSON.parse(position);
+      if (locations !== "" && typeof locations === "string") {
+        locations = JSON.parse(locations);
       }
 
+      locations.forEach(function (location) {
+        location.position.latitude = parseFloat(location.position.latitude);
+        location.position.longitude = parseFloat(location.position.longitude);
+      });
       return {
-        marker: {
-          coordinates: {
-            lat: parseFloat(position.lat),
-            lng: parseFloat(position.lng)
-          },
-          location: location,
-          address: address,
-          city: city,
-          comment: comment,
-          country: country,
-          zipcode: zipcode
-        },
-        options: {
-          center: {
-            lat: parseFloat(position.lat),
-            lng: parseFloat(position.lng)
-          },
-          disableDefaultUI: controls !== "true",
-          mapTypeControl: controls === "true"
-        }
+        locations: locations,
+        options: options
       };
     };
 

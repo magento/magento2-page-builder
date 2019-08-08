@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
+    <section name="ButtonGroupOnStage">
+        <element name="jsButtonGroupSelector" type="text" selector="document.querySelectorAll('.pagebuilder-buttons')[{{arg1}}-1]" parameterized="true"/>
+        <element name="base" type="button" selector="(//div[contains(@class,'pagebuilder-buttons')])[{{arg1}}]" parameterized="true"/>
+        <element name="hidden" type="button" selector="(//div[contains(@class,'pagebuilder-buttons')])[{{arg1}}]/ancestor::*[contains(@class, 'pagebuilder-content-type-wrapper') and contains(@class, 'pagebuilder-content-type-hidden')]" parameterized="true"/>
+        <element name="notHidden" type="button" selector="(//div[contains(@class,'pagebuilder-buttons')])[{{arg1}}]/parent::*[contains(@class, 'pagebuilder-content-type-wrapper') and not(contains(@class, 'pagebuilder-content-type-hidden'))][1]" parameterized="true"/>
+        <element name="appearance" type="button" selector="(//div[contains(@class,'pagebuilder-buttons')])[{{arg1}}]//div[@data-appearance='{{arg2}}']" parameterized="true"/>
+        <element name="sameSizeValue" type="button" selector="(//div[contains(@class,'pagebuilder-buttons')])[{{arg1}}]//div[@data-element='main'][@data-same-width='{{arg2}}']" parameterized="true"/>
+        <element name="addNewButtonItemOption" type="button" selector="(//div[contains(@class,'pagebuilder-buttons')])[{{arg1}}]//a[contains(@title,'Add Button')]" parameterized="true"/>
+        <element name="oldAddNewButtonItem" type="button" selector="//button[contains(text(),'Add Button')]"/>
+        <!-- Advanced Configuration -->
+        <element name="default" type="button" selector="(//div[contains(@class,'pagebuilder-buttons')])[{{arg1}}][@style='border: {{arg2}}; border-radius: {{arg3}}px; margin: {{arg4}}px; padding: {{arg5}}px;']" parameterized="true"/>
+        <element name="alignment" type="text" selector="(//div[contains(@class,'pagebuilder-buttons')])[{{arg1}}]/div[contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
+        <element name="noAlignment" type="text" selector="(//div[contains(@class,'pagebuilder-buttons')])[{{arg1}}]/div[contains(@class, 'buttons-container')][not(contains(@style,'text-align:'))]" parameterized="true"/>
+        <element name="border" type="text" selector="(//div[contains(@class,'pagebuilder-buttons')])[{{arg1}}]/div[contains(@style,'border-style: {{arg2}};')]" parameterized="true"/>
+        <element name="borderColor" type="text" selector="(//div[contains(@class,'pagebuilder-buttons')])[{{arg1}}]/div[contains(@style,'border-color: {{arg2}};')]" parameterized="true"/>
+        <element name="noBorderColor" type="text" selector="(//div[contains(@class,'pagebuilder-buttons')])[{{arg1}}]/div[contains(@class, 'buttons-container')][not(contains(@style,'border-color:'))]" parameterized="true"/>
+        <element name="borderWidth" type="text" selector="(//div[contains(@class,'pagebuilder-buttons')])[{{arg1}}]/div[contains(@style,'border-width: {{arg2}}px;')]" parameterized="true"/>
+        <element name="borderRadius" type="text" selector="(//div[contains(@class,'pagebuilder-buttons')])[{{arg1}}]/div[contains(@style,'border-radius: {{arg2}}px;')]" parameterized="true"/>
+        <element name="cssClasses" type="text" selector="(//div[contains(@class,'pagebuilder-buttons')])[{{arg1}}]/div[contains(@class,'{{arg2}}')]" parameterized="true"/>
+        <element name="noCssClasses" type="text" selector="(//div[contains(@class,'pagebuilder-buttons')])[{{arg1}}]" parameterized="true"/>
+        <element name="margins" type="text" selector="(//div[contains(@class,'pagebuilder-buttons')])[{{arg1}}]/div[contains(@style,'margin: {{arg2}}px;')]" parameterized="true"/>
+        <element name="padding" type="text" selector="(//div[contains(@class,'pagebuilder-buttons')])[{{arg1}}]/div[contains(@style,'padding: {{arg2}}px;')]" parameterized="true"/>
+    </section>
+    <section name="ButtonGroupOnStorefront">
+        <element name="jsButtonGroupSelector" type="text" selector="document.querySelectorAll('div[data-content-type=\'buttons\']')[{{arg1}}-1]" parameterized="true"/>
+        <element name="base" type="button" selector="(//div[@data-content-type='buttons'])[{{arg1}}]" parameterized="true"/>
+        <element name="hidden" type="button" selector="(//div[@data-content-type='buttons'])[{{arg1}}][contains(@style, 'display: none')]" parameterized="true"/>
+        <element name="notHidden" type="button" selector="(//div[@data-content-type='buttons'])[{{arg1}}][not(contains(@style, 'display: none'))]" parameterized="true"/>
+        <element name="appearance" type="button" selector="(//div[@data-content-type='buttons'])[{{arg1}}][@data-appearance='{{arg2}}']" parameterized="true"/>
+        <element name="sameSizeValue" type="button" selector="(//div[@data-content-type='buttons'])[{{arg1}}][@data-same-width='{{arg2}}']" parameterized="true"/>
+        <!-- Advanced Configuration -->
+        <element name="alignment" type="text" selector="(//div[@data-content-type='buttons'])[{{arg1}}][contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
+        <element name="noAlignment" type="text" selector="(//div[@data-content-type='buttons'])[{{arg1}}][not(contains(@style,'text-align:'))]" parameterized="true"/>
+        <element name="border" type="text" selector="(//div[@data-content-type='buttons'])[{{arg1}}][contains(@style,'border-style: {{arg2}};')]" parameterized="true"/>
+        <element name="borderColor" type="text" selector="(//div[@data-content-type='buttons'])[{{arg1}}][contains(@style,'border-color: {{arg2}};')]" parameterized="true"/>
+        <element name="noBorderColor" type="text" selector="(//div[@data-content-type='buttons'])[{{arg1}}][not(contains(@style,'border-color:'))]" parameterized="true"/>
+        <element name="borderWidth" type="text" selector="(//div[@data-content-type='buttons'])[{{arg1}}][contains(@style,'border-width: {{arg2}}px;')]" parameterized="true"/>
+        <element name="borderRadius" type="text" selector="(//div[@data-content-type='buttons'])[{{arg1}}][contains(@style,'border-radius: {{arg2}}px;')]" parameterized="true"/>
+        <element name="cssClasses" type="text" selector="(//div[@data-content-type='buttons'])[{{arg1}}][contains(@class,'{{arg2}}')]" parameterized="true"/>
+        <element name="noCssClasses" type="text" selector="(//div[@data-content-type='buttons'])[{{arg1}}][@class='placeholder-text' or not(@class)]" parameterized="true"/>
+        <element name="margins" type="text" selector="(//div[@data-content-type='buttons'])[{{arg1}}][contains(@style,'margin: {{arg2}}px;')]" parameterized="true"/>
+        <element name="padding" type="text" selector="(//div[@data-content-type='buttons'])[{{arg1}}][contains(@style,'padding: {{arg2}}px;')]" parameterized="true"/>
+    </section>
+    <section name="ButtonItemOnStage">
+        <element name="all" type="button" selector=".pagebuilder-button-item"/>
+        <element name="base" type="button" selector="(//div[contains(@class,'pagebuilder-button-item')])[{{arg1}}]//a[contains(@class,'pagebuilder-button')]" parameterized="true"/>
+        <element name="hidden" type="button" selector="(//div[contains(@class,'pagebuilder-button-item')])[{{arg1}}]//a[contains(@class,'pagebuilder-button')]/ancestor::*[contains(@class, 'pagebuilder-content-type-wrapper') and contains(@class, 'pagebuilder-content-type-hidden')]" parameterized="true"/>
+        <element name="notHidden" type="button" selector="(//div[contains(@class,'pagebuilder-button-item')])[{{arg1}}]//a[contains(@class,'pagebuilder-button')]/ancestor::*[contains(@class, 'pagebuilder-content-type-wrapper') and not(contains(@class, 'pagebuilder-content-type-hidden'))][1]" parameterized="true"/>
+        <element name="emptyButtonItemElement" type="button" selector="(//div[contains(@class,'pagebuilder-button-item')])[{{arg1}}]//a[contains(@class,'pagebuilder-button')]//span[contains(@class,'placeholder-text') and not(text())]" parameterized="true"/>
+        <element name="editableButtonItemElement" type="button" selector="(//div[contains(@class,'pagebuilder-button-item')])[{{arg1}}]//a[contains(@class,'pagebuilder-button')]//span[contains(@contenteditable,'true')]" parameterized="true"/>
+        <element name="jsButtonSelector" type="text" selector="document.querySelectorAll('.pagebuilder-button-item a[data-element=\'link\']')[{{arg1}}-1]" parameterized="true"/>
+        <element name="moveHandle" type="button" selector="(//div[contains(@class,'pagebuilder-button-item')])[{{arg1}}]//span[@class='button-item-drag-handle']" parameterized="true"/>
+        <element name="moveHandleDisabled" type="button" selector="(//div[contains(@class,'pagebuilder-button-item')])[{{arg1}}]//span[contains(@class,'button-item-drag-handle') and contains(@class,'disabled')]" parameterized="true"/>
+        <element name="openOptionsMenu" type="button" selector="(//div[contains(@class,'pagebuilder-button-item')])[{{arg1}}]//a[contains(@class,'pagebuilder-button')]" parameterized="true"/>
+        <element name="optionsMenu" type="button" selector="(//div[contains(@class,'pagebuilder-button-item')])[{{arg1}}]//div[contains(@class,'pagebuilder-options-wrapper')]" parameterized="true"/>
+        <element name="optionsMenuButton" type="button" selector="(//div[contains(@class,'pagebuilder-button-item')])[{{arg1}}]//div[contains(@class,'pagebuilder-options-wrapper')]//a[contains(@class,'{{arg2}}')]" parameterized="true"/>
+        <!-- Content Configuration -->
+        <element name="buttonItemText" type="button" selector="(//div[contains(@class,'pagebuilder-button-item')])[{{arg1}}]//a[contains(@class,'pagebuilder-button')]//span[@data-element='link_text' and contains(.,'{{arg2}}')]" parameterized="true"/>
+        <element name="buttonItemTextByButtonGroup" type="button" selector="((//div[contains(@class,'pagebuilder-buttons')])[{{arg1}}]//div[contains(@class,'pagebuilder-button-item')])[{{arg2}}]//span[@data-element='link_text' and contains(.,'{{arg3}}')]" parameterized="true"/>
+        <element name="buttonItemType" type="button" selector="(//div[contains(@class,'pagebuilder-button-item')])[{{arg1}}]//a[@class='{{arg2}}']" parameterized="true"/>
+        <element name="buttonItemUrl" type="button" selector="(//div[contains(@class,'pagebuilder-button-item')])[{{arg1}}]//a[contains(@class,'pagebuilder-button')][@href='{{arg2}}']" parameterized="true"/>
+        <element name="buttonItemNewTab" type="button" selector="(//div[contains(@class,'pagebuilder-button-item')])[{{arg1}}]//a[contains(@class,'pagebuilder-button')][@target='{{arg2}}']" parameterized="true"/>
+        <!-- Advanced Configuration -->
+        <element name="defaultStyle" type="button" selector="(//div[contains(@class,'pagebuilder-button-item')])[{{arg1}}]//a[contains(@class,'pagebuilder-button')][@style='cursor: text;']" parameterized="true"/>
+        <element name="alignment" type="text" selector="(//div[contains(@class,'pagebuilder-button-item')])[{{arg1}}]//a[contains(@class,'pagebuilder-button')][contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
+        <element name="noAlignment" type="text" selector="(//div[contains(@class,'pagebuilder-button-item')])[{{arg1}}]//a[contains(@class,'pagebuilder-button')][not(contains(@style,'text-align:'))]" parameterized="true"/>
+        <element name="border" type="text" selector="(//div[contains(@class,'pagebuilder-button-item')])[{{arg1}}]//a[contains(@class,'pagebuilder-button')][contains(@style,'border-style: {{arg2}};')]" parameterized="true"/>
+        <element name="noBorder" type="text" selector="(//div[contains(@class,'pagebuilder-button-item')])[{{arg1}}]//a[contains(@class,'pagebuilder-button')][not(contains(@style,'border-style:'))]" parameterized="true"/>
+        <element name="borderColor" type="text" selector="(//div[contains(@class,'pagebuilder-button-item')])[{{arg1}}]//a[contains(@class,'pagebuilder-button')][contains(@style,'border-color: {{arg2}};')]" parameterized="true"/>
+        <element name="noBorderColor" type="text" selector="(//div[contains(@class,'pagebuilder-button-item')])[{{arg1}}]//a[contains(@class,'pagebuilder-button')][not(contains(@style,'border-color:'))]" parameterized="true"/>
+        <element name="borderWidth" type="text" selector="(//div[contains(@class,'pagebuilder-button-item')])[{{arg1}}]//a[contains(@class,'pagebuilder-button')][contains(@style,'border-width: {{arg2}}px;')]" parameterized="true"/>
+        <element name="noBorderWidth" type="text" selector="(//div[contains(@class,'pagebuilder-button-item')])[{{arg1}}]//a[contains(@class,'pagebuilder-button')][not(contains(@style,'border-width:'))]" parameterized="true"/>
+        <element name="borderRadius" type="text" selector="(//div[contains(@class,'pagebuilder-button-item')])[{{arg1}}]//a[contains(@class,'pagebuilder-button')][contains(@style,'border-radius: {{arg2}}px;')]" parameterized="true"/>
+        <element name="noBorderRadius" type="text" selector="(//div[contains(@class,'pagebuilder-button-item')])[{{arg1}}]//a[contains(@class,'pagebuilder-button')][not(contains(@style,'border-radius:'))]" parameterized="true"/>
+        <element name="cssClasses" type="text" selector="(//div[contains(@class,'pagebuilder-button-item')])[{{arg1}}][contains(@class,'{{arg2}}')]//a[contains(@class,'pagebuilder-button')]" parameterized="true"/>
+        <element name="noCssClasses" type="text" selector="(//div[contains(@class,'pagebuilder-button-item')])[{{arg1}}]//a[contains(@class,'pagebuilder-button')]" parameterized="true"/>
+        <element name="margins" type="text" selector="(//div[contains(@class,'pagebuilder-button-item')])[{{arg1}}]//a[contains(@class,'pagebuilder-button')][contains(@style,'margin: {{arg2}}px;')]" parameterized="true"/>
+        <element name="noMargins" type="text" selector="(//div[contains(@class,'pagebuilder-button-item')])[{{arg1}}]//a[contains(@class,'pagebuilder-button')][not(contains(@style,'margin:'))]" parameterized="true"/>
+        <element name="padding" type="text" selector="(//div[contains(@class,'pagebuilder-button-item')])[{{arg1}}]//a[contains(@class,'pagebuilder-button')][contains(@style,'padding: {{arg2}}px;')]" parameterized="true"/>
+        <element name="noPadding" type="text" selector="(//div[contains(@class,'pagebuilder-button-item')])[{{arg1}}]//a[contains(@class,'pagebuilder-button')][not(contains(@style,'padding:'))]" parameterized="true"/>
+    </section>
+    <section name="ButtonItemOnStorefront">
+        <element name="all" type="button" selector="[data-content-type='button-item']"/>
+        <element name="base" type="button" selector="(//div[@data-content-type='button-item'])[{{arg1}}]" parameterized="true"/>
+        <element name="hidden" type="button" selector="(//div[@data-content-type='button-item'])[{{arg1}}][contains(@style, 'display: none')]" parameterized="true"/>
+        <element name="notHidden" type="button" selector="(//div[@data-content-type='button-item'])[{{arg1}}][not(contains(@style, 'display: none'))]" parameterized="true"/>
+        <element name="emptyButtonItemElement" type="button" selector="(//div[@data-content-type='button-item'])[{{arg1}}]//a[@data-element='link']//span[not(text())]" parameterized="true"/>
+        <element name="jsButtonSelector" type="text" selector="document.querySelectorAll('div[data-content-type=\'button-item\'] [data-element=\'link\']')[{{arg1}}-1]" parameterized="true"/>
+        <!-- Content Configuration -->
+        <element name="buttonItemText" type="button" selector="(//div[@data-content-type='button-item'])[{{arg1}}]//span[@data-element='link_text' and contains(.,'{{arg2}}')]" parameterized="true"/>
+        <element name="buttonItemTextByButtonGroup" type="button" selector="((//div[@data-content-type='buttons'])[{{arg1}}]//div[@data-content-type='button-item'])[{{arg2}}]//span[@data-element='link_text' and contains(.,'{{arg3}}')]" parameterized="true"/>
+        <element name="buttonItemType" type="button" selector="(//div[@data-content-type='button-item'])[{{arg1}}]//a[@class='{{arg2}}']" parameterized="true"/>
+        <element name="buttonItemUrl" type="button" selector="(//div[@data-content-type='button-item'])[{{arg1}}]//a[@href='{{arg2}}']" parameterized="true"/>
+        <element name="buttonItemContainsUrl" type="button" selector="(//div[@data-content-type='button-item'])[{{arg1}}]//a[contains(@href,'{{arg2}}')]" parameterized="true"/>
+        <element name="buttonItemNewTab" type="button" selector="(//div[@data-content-type='button-item'])[{{arg1}}]//a[@target='{{arg2}}']" parameterized="true"/>
+        <!-- Advanced Configuration -->
+        <element name="defaultStyle" type="button" selector="(//div[@data-content-type='button-item'])[{{arg1}}]//a[not(@style)]" parameterized="true"/>
+        <element name="alignment" type="text" selector="(//div[@data-content-type='button-item'])[{{arg1}}]//a[contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
+        <element name="noAlignment" type="text" selector="(//div[@data-content-type='button-item'])[{{arg1}}]//a[not(contains(@style,'text-align:'))]" parameterized="true"/>
+        <element name="border" type="text" selector="(//div[@data-content-type='button-item'])[{{arg1}}]//a[contains(@style,'border-style: {{arg2}};')]" parameterized="true"/>
+        <element name="noBorder" type="text" selector="(//div[@data-content-type='button-item'])[{{arg1}}]//a[not(contains(@style,'border-style:'))]" parameterized="true"/>
+        <element name="borderColor" type="text" selector="(//div[@data-content-type='button-item'])[{{arg1}}]//a[contains(@style,'border-color: {{arg2}};')]" parameterized="true"/>
+        <element name="noBorderColor" type="text" selector="(//div[@data-content-type='button-item'])[{{arg1}}]//a[not(contains(@style,'border-color:'))]" parameterized="true"/>
+        <element name="borderWidth" type="text" selector="(//div[@data-content-type='button-item'])[{{arg1}}]//a[contains(@style,'border-width: {{arg2}}px;')]" parameterized="true"/>
+        <element name="noBorderWidth" type="text" selector="(//div[@data-content-type='button-item'])[{{arg1}}]//a[not(contains(@style,'border-width:'))]" parameterized="true"/>
+        <element name="borderRadius" type="text" selector="(//div[@data-content-type='button-item'])[{{arg1}}]//a[contains(@style,'border-radius: {{arg2}}px;')]" parameterized="true"/>
+        <element name="noBorderRadius" type="text" selector="(//div[@data-content-type='button-item'])[{{arg1}}]//a[not(contains(@style,'border-radius:'))]" parameterized="true"/>
+        <element name="cssClasses" type="text" selector="(//div[@data-content-type='button-item'])[{{arg1}}][contains(@class,'{{arg2}}')]//a" parameterized="true"/>
+        <element name="noCssClasses" type="text" selector="(//div[@data-content-type='button-item'])[{{arg1}}]" parameterized="true"/>
+        <element name="margins" type="text" selector="(//div[@data-content-type='button-item'])[{{arg1}}]//a[contains(@style,'margin: {{arg2}}px;')]" parameterized="true"/>
+        <element name="noMargins" type="text" selector="(//div[@data-content-type='button-item'])[{{arg1}}]//a[not(contains(@style,'margin:'))]" parameterized="true"/>
+        <element name="padding" type="text" selector="(//div[@data-content-type='button-item'])[{{arg1}}]//a[contains(@style,'padding: {{arg2}}px;')]" parameterized="true"/>
+        <element name="noPadding" type="text" selector="(//div[@data-content-type='button-item'])[{{arg1}}]//a[not(contains(@style,'padding:'))]" parameterized="true"/>
+    </section>
+    <section name="ButtonItemOnStorefrontEmptyLink">
+        <element name="base" type="button" selector="(//div[@data-content-type='button-item'])[{{arg1}}]" parameterized="true"/>
+        <element name="emptyButtonItemElement" type="button" selector="(//div[@data-content-type='button-item'])[{{arg1}}]//div[@data-element='empty_link'][not(@href) and not(@target)]//span[not(text())]" parameterized="true"/>
+        <element name="jsButtonSelector" type="text" selector="document.querySelectorAll('div[data-content-type=\'button-item\'] [data-element=\'empty_link\']')[{{arg1}}-1]" parameterized="true"/>
+        <!-- Content Configuration -->
+        <element name="buttonItemText" type="button" selector="(//div[@data-content-type='button-item'])[{{arg1}}]//span[@data-element='link_text' and contains(.,'{{arg2}}')]" parameterized="true"/>
+        <element name="buttonItemType" type="button" selector="(//div[@data-content-type='button-item'])[{{arg1}}]//div[@class='{{arg2}}']" parameterized="true"/>
+        <element name="buttonItemUrl" type="button" selector="(//div[@data-content-type='button-item'])[{{arg1}}]//div[@data-element='empty_link'][not(@href) and not(@target)][not(@href='{{arg2}}')]" parameterized="true"/>
+        <element name="buttonItemNewTab" type="button" selector="(//div[@data-content-type='button-item'])[{{arg1}}]//div[@data-element='empty_link'][not(@href) and not(@target)][not(@target='{{arg2}}')]" parameterized="true"/>
+        <!-- Advanced Configuration -->
+        <element name="alignment" type="text" selector="(//div[@data-content-type='button-item'])[{{arg1}}]//div[@data-element='empty_link'][not(@href) and not(@target)][contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
+        <element name="border" type="text" selector="(//div[@data-content-type='button-item'])[{{arg1}}]//div[@data-element='empty_link'][not(@href) and not(@target)][contains(@style,'border-style: {{arg2}};')]" parameterized="true"/>
+        <element name="noBorder" type="text" selector="(//div[@data-content-type='button-item'])[{{arg1}}]//div[@data-element='empty_link'][not(@href) and not(@target)][not(contains(@style,'border-style:'))]" parameterized="true"/>
+        <element name="borderColor" type="text" selector="(//div[@data-content-type='button-item'])[{{arg1}}]//div[@data-element='empty_link'][not(@href) and not(@target)][contains(@style,'border-color: {{arg2}};')]" parameterized="true"/>
+        <element name="noBorderColor" type="text" selector="(//div[@data-content-type='button-item'])[{{arg1}}]//div[@data-element='empty_link'][not(@href) and not(@target)][not(contains(@style,'border-color:'))]" parameterized="true"/>
+        <element name="borderWidth" type="text" selector="(//div[@data-content-type='button-item'])[{{arg1}}]//div[@data-element='empty_link'][not(@href) and not(@target)][contains(@style,'border-width: {{arg2}}px;')]" parameterized="true"/>
+        <element name="noBorderWidth" type="text" selector="(//div[@data-content-type='button-item'])[{{arg1}}]//div[@data-element='empty_link'][not(@href) and not(@target)][not(contains(@style,'border-width:'))]" parameterized="true"/>
+        <element name="borderRadius" type="text" selector="(//div[@data-content-type='button-item'])[{{arg1}}]//div[@data-element='empty_link'][not(@href) and not(@target)][contains(@style,'border-radius: {{arg2}}px;')]" parameterized="true"/>
+        <element name="noBorderRadius" type="text" selector="(//div[@data-content-type='button-item'])[{{arg1}}]//div[@data-element='empty_link'][not(@href) and not(@target)][not(contains(@style,'border-radius:'))]" parameterized="true"/>
+        <element name="cssClasses" type="text" selector="(//div[@data-content-type='button-item'])[{{arg1}}][contains(@class,'{{arg2}}')]//div[@data-element='empty_link'][not(@href) and not(@target)]" parameterized="true"/>
+        <element name="margins" type="text" selector="(//div[@data-content-type='button-item'])[{{arg1}}]//div[@data-element='empty_link'][not(@href) and not(@target)][contains(@style,'margin: {{arg2}}px;')]" parameterized="true"/>
+        <element name="noMargins" type="text" selector="(//div[@data-content-type='button-item'])[{{arg1}}]//div[@data-element='empty_link'][not(@href) and not(@target)][not(contains(@style,'margin:'))]" parameterized="true"/>
+        <element name="padding" type="text" selector="(//div[@data-content-type='button-item'])[{{arg1}}]//div[@data-element='empty_link'][not(@href) and not(@target)][contains(@style,'padding: {{arg2}}px;')]" parameterized="true"/>
+        <element name="noPadding" type="text" selector="(//div[@data-content-type='button-item'])[{{arg1}}]//div[@data-element='empty_link'][not(@href) and not(@target)][not(contains(@style,'padding:'))]" parameterized="true"/>
+    </section>
+</sections>

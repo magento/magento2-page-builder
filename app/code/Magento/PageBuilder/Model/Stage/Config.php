@@ -3,17 +3,30 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
+declare(strict_types=1);
+
 namespace Magento\PageBuilder\Model\Stage;
 
 use Magento\Framework\UrlInterface;
 
+/**
+ * Class Config
+ *
+ * @api
+ */
 class Config
 {
     const DEFAULT_PREVIEW_COMPONENT = 'Magento_PageBuilder/js/content-type/preview';
-    const DEFAULT_CONTENT_COMPONENT = 'Magento_PageBuilder/js/content-type/content';
+    const DEFAULT_MASTER_COMPONENT = 'Magento_PageBuilder/js/content-type/master';
+
+    const XML_PATH_COLUMN_GRID_DEFAULT = 'cms/pagebuilder/column_grid_default';
+    const XML_PATH_COLUMN_GRID_MAX = 'cms/pagebuilder/column_grid_max';
+
+    const ROOT_CONTAINER_NAME = 'root-container';
 
     /**
-     * @var \Magento\PageBuilder\Model\Config\ConfigInterface
+     * @var \Magento\PageBuilder\Model\ConfigInterface
      */
     private $config;
 
@@ -38,25 +51,75 @@ class Config
     private $frontendUrlBuilder;
 
     /**
-     * Constructor
+     * @var \Magento\PageBuilder\Model\Config\ContentType\AdditionalData\Parser
+     */
+    private $additionalDataParser;
+
+    /**
+     * @var \Magento\Framework\App\Config\ScopeConfigInterface
+     */
+    private $scopeConfig;
+
+    /**
+     * @var \Magento\Ui\Block\Wysiwyg\ActiveEditor
+     */
+    private $activeEditor;
+
+    /**
+     * @var \Magento\PageBuilder\Model\Wysiwyg\InlineEditingSupportedAdapterList
+     */
+    private $inlineEditingChecker;
+
+    /**
+     * @var \Magento\PageBuilder\Model\WidgetInitializerConfig
+     */
+    private $widgetInitializerConfig;
+
+    /**
+     * @var array
+     */
+    private $rootContainerConfig;
+
+    /**
+     * Config constructor.
      *
-     * @param \Magento\PageBuilder\Model\Config\ConfigInterface $config
+     * @param \Magento\PageBuilder\Model\ConfigInterface $config
      * @param Config\UiComponentConfig $uiComponentConfig
-     * @param \Magento\Framework\UrlInterface $urlBuilder
+     * @param UrlInterface $urlBuilder
      * @param \Magento\Framework\Url $frontendUrlBuilder
+     * @param \Magento\PageBuilder\Model\Config\ContentType\AdditionalData\Parser $additionalDataParser
+     * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
+     * @param \Magento\Ui\Block\Wysiwyg\ActiveEditor $activeEditor
+     * @param \Magento\PageBuilder\Model\Wysiwyg\InlineEditingSupportedAdapterList $inlineEditingChecker
+     * @param \Magento\PageBuilder\Model\WidgetInitializerConfig $widgetInitializerConfig
+     * @param array $rootContainerConfig
      * @param array $data
+     *
+     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
-        \Magento\PageBuilder\Model\Config\ConfigInterface $config,
+        \Magento\PageBuilder\Model\ConfigInterface $config,
         Config\UiComponentConfig $uiComponentConfig,
         \Magento\Framework\UrlInterface $urlBuilder,
         \Magento\Framework\Url $frontendUrlBuilder,
+        \Magento\PageBuilder\Model\Config\ContentType\AdditionalData\Parser $additionalDataParser,
+        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
+        \Magento\Ui\Block\Wysiwyg\ActiveEditor $activeEditor,
+        \Magento\PageBuilder\Model\Wysiwyg\InlineEditingSupportedAdapterList $inlineEditingChecker,
+        \Magento\PageBuilder\Model\WidgetInitializerConfig $widgetInitializerConfig,
+        array $rootContainerConfig = [],
         array $data = []
     ) {
         $this->config = $config;
         $this->uiComponentConfig = $uiComponentConfig;
         $this->urlBuilder = $urlBuilder;
         $this->frontendUrlBuilder = $frontendUrlBuilder;
+        $this->additionalDataParser = $additionalDataParser;
+        $this->scopeConfig = $scopeConfig;
+        $this->activeEditor = $activeEditor;
+        $this->inlineEditingChecker = $inlineEditingChecker;
+        $this->widgetInitializerConfig = $widgetInitializerConfig;
+        $this->rootContainerConfig = $rootContainerConfig;
         $this->data = $data;
     }
 
@@ -68,26 +131,33 @@ class Config
     public function getConfig()
     {
         return [
-            'groups' => $this->getGroups(),
+            'menu_sections' => $this->getMenuSections(),
             'content_types' => $this->getContentTypes(),
             'stage_config' => $this->data,
             'media_url' => $this->urlBuilder->getBaseUrl(['_type' => UrlInterface::URL_TYPE_MEDIA]),
-            'preview_url' => $this->frontendUrlBuilder->getUrl('pagebuilder/contenttype/preview')
+            'preview_url' => $this->frontendUrlBuilder
+                ->addSessionParam()
+                ->getUrl('pagebuilder/contenttype/preview'),
+            'render_url' => $this->urlBuilder->getUrl('pagebuilder/stage/render'),
+            'column_grid_default' => $this->scopeConfig->getValue(self::XML_PATH_COLUMN_GRID_DEFAULT),
+            'column_grid_max' => $this->scopeConfig->getValue(self::XML_PATH_COLUMN_GRID_MAX),
+            'can_use_inline_editing_on_stage' => $this->isWysiwygProvisionedForEditingOnStage(),
+            'widgets' => $this->widgetInitializerConfig->getConfig(),
         ];
     }
 
     /**
-     * Retrieve the content block groups
+     * Retrieve the content type menu sections
      *
      * @return array
      */
-    private function getGroups()
+    private function getMenuSections()
     {
-        return $this->config->getGroups();
+        return $this->config->getMenuSections();
     }
 
     /**
-     * Build up the content block data
+     * Build up the content type data
      *
      * @return array
      */
@@ -95,55 +165,61 @@ class Config
     {
         $contentTypes = $this->config->getContentTypes();
 
-        $contentBlockData = [];
+        $contentTypeData = [];
         foreach ($contentTypes as $name => $contentType) {
-            $contentBlockData[$name] = $this->flattenContentTypeData(
+            $contentTypeData[$name] = $this->flattenContentTypeData(
                 $name,
                 $contentType
             );
         }
 
-        return $contentBlockData;
+        // The stage requires a root container to house it's children
+        $contentTypeData[self::ROOT_CONTAINER_NAME] = $this->flattenContentTypeData(
+            self::ROOT_CONTAINER_NAME,
+            $this->rootContainerConfig
+        );
+
+        return $contentTypeData;
     }
 
     /**
-     * Flatten the content block data
+     * Flatten the content type
      *
-     * @param $name
-     * @param $contentType
+     * @param string $name
+     * @param array $contentType
      *
      * @return array
-     *
-     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
-    private function flattenContentTypeData($name, $contentType)
+    private function flattenContentTypeData(string $name, array $contentType)
     {
         return [
             'name' => $name,
             'label' => $contentType['label'],
-            'icon' => $contentType['icon'],
-            'form' => $contentType['form'],
-            'contentType' => '',
-            'group' => (isset($contentType['group'])
-                ? $contentType['group'] : 'general'),
-            'fields' => $this->uiComponentConfig->getFields($contentType['form']),
-            'preview_template' => (isset($contentType['preview_template'])
-                ? $contentType['preview_template'] : ''),
-            'render_template' => (isset($contentType['render_template'])
-                ? $contentType['render_template'] : ''),
+            'icon' => isset($contentType['icon']) ? $contentType['icon'] : '',
+            'form' => isset($contentType['form']) ? $contentType['form'] : '',
+            'menu_section' => $contentType['menu_section'] ?? 'general',
+            'fields' => isset($contentType['form']) ? $this->uiComponentConfig->getFields($contentType['form']) : [],
             'component' => $contentType['component'],
-            'preview_component' => (isset($contentType['preview_component'])
-                ? $contentType['preview_component']
-                : self::DEFAULT_PREVIEW_COMPONENT),
-            'content_component' => (isset($contentType['content_component'])
-                ? $contentType['content_component']
-                : self::DEFAULT_CONTENT_COMPONENT),
-            'allowed_parents' => isset($contentType['allowed_parents']) ? $contentType['allowed_parents'] : [],
-            'readers' => isset($contentType['readers']) ? $contentType['readers'] : [],
-            'appearances' => isset($contentType['appearances']) ? $contentType['appearances'] : [],
-            'additional_data' => isset($contentType['additional_data']) ? $contentType['additional_data'] : [],
-            'data_mapping' => isset($contentType['data_mapping']) ? $contentType['data_mapping'] : [],
-            'is_visible' => isset($contentType['is_visible']) && $contentType['is_visible'] === 'false' ? false : true
+            'preview_component' => $contentType['preview_component'] ?? self::DEFAULT_PREVIEW_COMPONENT,
+            'master_component' => $contentType['master_component'] ?? self::DEFAULT_MASTER_COMPONENT,
+            'allowed_parents' => $contentType['allowed_parents'] ?? [],
+            'appearances' => $contentType['appearances'] ?? [],
+            'additional_data' => isset($contentType['additional_data'])
+                ? $this->additionalDataParser->toArray($contentType['additional_data'])
+                : [],
+            'is_system' => isset($contentType['is_system']) && $contentType['is_system'] === 'false' ? false : true
         ];
+    }
+
+    /**
+     * Determine if active editor is configured to support inline editing mode
+     *
+     * @return bool
+     */
+    private function isWysiwygProvisionedForEditingOnStage()
+    {
+        $activeEditorPath = $this->activeEditor->getWysiwygAdapterPath();
+
+        return $this->inlineEditingChecker->isSupported($activeEditorPath);
     }
 }

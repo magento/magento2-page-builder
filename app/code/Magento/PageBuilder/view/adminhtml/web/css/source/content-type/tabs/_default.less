@@ -3,12 +3,16 @@
 //  * See COPYING.txt for license details.
 //  */
 
+@color-gray: #ccc;
+
 //
 //  Default appearance styles
 //  _____________________________________________
 
+div[data-content-type='tabs'],
 .pagebuilder-content-type.pagebuilder-tabs {
     .tabs-navigation {
+        border-bottom: 1px solid rgba(153, 153, 153, .3);
         display: block;
         font-size: 0;
         margin: 0;
@@ -21,13 +25,14 @@
         li.tab-header {
             background: @color-gray-light0;
             border: 1px solid @color-gray80;
-            border-bottom: 0 !important;
             border-bottom-left-radius: 0 !important;
             border-bottom-right-radius: 0 !important;
             display: inline-block;
             margin: 0;
+            max-width: 100%;
+            overflow-wrap: break-word;
             position: relative;
-            z-index: 1;
+            word-wrap: break-word;
 
             a.tab-title {
                 border-right: 0;
@@ -43,6 +48,7 @@
                 white-space: normal;
 
                 span.tab-title {
+                    cursor: text;
                     display: block;
                 }
 
@@ -116,6 +122,15 @@
                 background: @color-white;
                 z-index: 19;
 
+                &:after {
+                    border-bottom: 1px solid @color-white;
+                    bottom: -1px;
+                    content: '';
+                    left: 0;
+                    position: absolute;
+                    width: 100%;
+                }
+
                 a.tab-title {
                     position: relative;
                     transition: all .3s;
@@ -138,14 +153,17 @@
     .tabs-content {
         border: 1px solid transparent;
         position: relative;
-        z-index: 9;
 
         > .element-children {
             min-height: inherit;
             padding: 0;
 
-            > .pagebuilder-content-type-wrapper:not(:first-child) {
-                display: none;
+            > .pagebuilder-content-type-wrapper {
+                display: block;
+
+                ~ .pagebuilder-content-type-wrapper {
+                    display: none;
+                }
             }
         }
     }
@@ -161,9 +179,43 @@
         }
     }
 }
+div[data-content-type='tabs'] {
+    .tabs-navigation {
+        border: none;
+
+        .tab-header:not(:first-child) {
+            margin-left: -1px !important;
+        }
+    }
+    .tabs-content {
+        border: 1px solid @color-gray;
+        border-top: none;
+
+        [data-content-type='tab-item'] &:not(.empty-placeholder) {
+            box-sizing: content-box;
+            min-height: inherit;
+
+            &:not(:first-child) {
+                display: none;
+            }
+
+            > * {
+                min-height: inherit;
+            }
+        }
+    }
+}
 
 .pagebuilder-content-type-wrapper.ui-tabs-panel {
     margin-top: 0;
     min-height: inherit;
     padding: 0;
+}
+
+.pagebuilder-stage.focus-child .pagebuilder-content-type.pagebuilder-tabs .tabs-content {
+    z-index: auto;
+}
+
+.pagebuilder-content-type-hidden .pagebuilder-content-type.pagebuilder-tabs .tabs-navigation li.tab-header.ui-state-active {
+    z-index: 10;
 }

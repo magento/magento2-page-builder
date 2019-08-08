@@ -51,7 +51,7 @@ body {
         margin: 0 0 40px;
 
         .lib-typography(
-            @_color: #333,
+            @_color: @color-gray20,
             @_font-family: false,
             @_font-size: 40px,
             @_font-style: false,
@@ -64,7 +64,7 @@ body {
         margin: 25px 0 20px;
 
         .lib-typography(
-            @_color: #333,
+            @_color: @color-gray20,
             @_font-family: false,
             @_font-size: 26px,
             @_font-style: false,
@@ -77,7 +77,7 @@ body {
         margin: 20px 0 10px;
 
         .lib-typography(
-            @_color: #333,
+            @_color: @color-gray20,
             @_font-family: false,
             @_font-size: 18px,
             @_font-style: false,
@@ -90,7 +90,7 @@ body {
         margin: 20px 0;
 
         .lib-typography(
-            @_color: #333,
+            @_color: @color-gray20,
             @_font-family: false,
             @_font-size: 14px,
             @_font-style: false,
@@ -103,7 +103,7 @@ body {
         margin: 20px 0;
 
         .lib-typography(
-            @_color: #333,
+            @_color: @color-gray20,
             @_font-family: false,
             @_font-size: 12px,
             @_font-style: false,
@@ -116,7 +116,7 @@ body {
         margin: 20px 0;
 
         .lib-typography(
-            @_color: #333,
+            @_color: @color-gray20,
             @_font-family: false,
             @_font-size: 10px,
             @_font-style: false,
@@ -129,7 +129,7 @@ body {
     //  Text
     //
     p {
-        color: #333;
+        color: @color-gray20;
         font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
         font-size: 14px;
         font-style: normal;
@@ -139,9 +139,9 @@ body {
     }
 
     pre {
-        background-color: #f6f6f6;
-        border: @pre__border-width solid #ccc;
-        color: #111;
+        background-color: @color-white-smoke;
+        border: @pre__border-width solid @color-gray80;
+        color: @color-black;
         font-family: @font-family__monospace;
         font-size: @code__font-size;
         font-style: normal;
@@ -152,14 +152,70 @@ body {
     }
 
     .cms-content-important {
-        background-color: #f5f5f5;
-        color: #333;
+        background-color: @color-white-smoke;
+        color: @color-gray20;
         font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
         font-size: 22px;
         font-style: normal;
         font-weight: 300;
         line-height: 1.1;
-        margin: 0 0 35px -20px;
+        margin: 0 0 35px;
         padding: 20px;
+    }
+
+    .magento-placeholder {
+        background: @placeholder-background;
+        box-sizing: initial;
+        color: @color-black;
+        cursor: pointer;
+        display: inline-block;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: normal;
+        height: 20px;
+        margin: 0 5px;
+        outline: 2px solid @placeholder-outline;
+        padding: 2px 4px;
+        vertical-align: bottom;
+        word-break: break-all;
+    }
+
+    .magento-placeholder-error {
+        display: inline-block;
+        height: 20px;
+        margin: 0 5px;
+        outline: 2px solid @placeholder-error-outline;
+        padding: 2px 4px;
+        vertical-align: bottom;
+
+        img {
+            display: none;
+        }
+
+        &:before {
+            background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABWUlEQVR42qVTS07DMBD1pggqcQAQEofINbrNvh977Au04gJtxZYiVZwLJJasAhJJ3LBrI4Xwxm3SKErCz9Koqec9e/xmnhBYdjK5tlo/R8ZsI63XIdGFqK1QSg+5MNY6scbMXobDU5eIpbyKiaZIpLExOX4/cdg6IOoXZP6OlbpDPjtgUks0y4l6An8esbl1iUPghgyA5ZPvnzAo0XphC/IRkyZKKVEnl8GVEK04+LsRY8yb4HJbAVpnLprJmVVqIcLx+DIieqiX2Bl8ITQB93wv0mDQb3pnGxkXLqsiu8WCufd2H5KBfM/Yepv/d0Du+2c/fQJjIilvyyfwhLEgvxHR7itZORFjHs82clcbuRNazwXm/uOvg4RKAoFSbkofVMjJN6MMzG5DNBI5XAVDTeG0XaE0a9JpJviADejM5LrgeT1UMsJmAOC8nLCqnbG3QQ6Y13ciWbTyC+DUOUqNY1A2AAAAAElFTkSuQmCC);
+            background-position-x: 1px;
+            background-position-y: 1px;
+            background-repeat: no-repeat;
+            content: '';
+            display: inline-block;
+            height: inherit;
+            margin-right: 4px;
+            vertical-align: middle;
+            width: 20px;
+        }
+
+        &[data-mce-selected] {
+            outline: 2px solid @placeholder-error-outline-mce;
+        }
+    }
+    
+    .magento-placeholder-error,
+    .magento-placeholder {
+        img {
+            margin-right: 5px;
+            max-height: 20px;
+            vertical-align: middle;
+        }
     }
 }

@@ -5,7 +5,7 @@
 
 define([
     'Magento_Ui/js/form/components/insert-form',
-    'uiEvents',
+    'Magento_PageBuilder/js/events',
     'jquery'
 ], function (Insert, events, $) {
     'use strict';
@@ -26,7 +26,7 @@ define([
         initialize: function () {
             this._super();
 
-            events.on('form:render', function (params) {
+            events.on('form:renderAfter', function (params) {
                 this.render(params);
             }.bind(this));
 
@@ -90,8 +90,8 @@ define([
          * @param {String} value
          */
         onAppearanceChange: function (value) {
-            var namespace = this.availableAppearances[value] && this.availableAppearances[value].form
-                || this.defaultNamespace;
+            var namespace = this.availableAppearances[value] && this.availableAppearances[value].form ||
+                this.defaultNamespace;
 
             if (namespace !== this.previousParams.namespace) {
                 this.render({
@@ -103,6 +103,6 @@ define([
                     defaultNamespace: this.defaultNamespace
                 });
             }
-        },
+        }
     });
 });

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Framework\View\Result\Page">
+        <plugin name="pageLayoutDefaultClass" type="Magento\PageBuilder\Plugin\Result\Page"/>
+    </type>
+    <type name="Magento\Framework\Filter\Template">
+        <plugin name="convertBackgroundImages" type="Magento\PageBuilder\Plugin\Filter\TemplatePlugin"/>
+    </type>
+    <type name="Magento\Email\Model\Template\Filter">
+        <plugin name="escapeCustomVarDirectives" type="Magento\PageBuilder\Plugin\Filter\CustomVarTemplate"/>
+    </type>
+</config>

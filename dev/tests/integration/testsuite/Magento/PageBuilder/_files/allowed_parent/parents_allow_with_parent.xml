@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
+    <type name="parents_allow_with_parent" translate="label" sortOrder="8" label="Type 8" icon="pagebuilder-type-icon" component="Path/to/component" form="pagebuilder_type_form" menu_section="menu_section">
+        <parents default_policy="allow">
+            <parent name="stage" policy="allow"/>
+            <parent name="parents_allow_with_parent" policy="deny"/>
+        </parents>
+    </type>
+</config>

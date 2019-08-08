@@ -17,6 +17,7 @@ const mimeType = "text/magento-directive";
  *
  * @param {string} url
  * @returns {boolean}
+ * @api
  */
 
 function isDirectiveDataUrl(url: string): boolean {
@@ -28,6 +29,7 @@ function isDirectiveDataUrl(url: string): boolean {
  *
  * @param {string} directive
  * @returns {string}
+ * @api
  */
 export function toDataUrl(directive: string): string {
     return "data:" + mimeType + "," + encodeURIComponent(directive);
@@ -38,6 +40,7 @@ export function toDataUrl(directive: string): string {
  *
  * @param {string} url
  * @returns {string}
+ * @api
  */
 export function fromDataUrl(url: string): string {
     if (!isDirectiveDataUrl(url)) {
@@ -51,6 +54,7 @@ export function fromDataUrl(url: string): string {
  *
  * @param {string} str
  * @returns {string}
+ * @api
  */
 export default function decodeAllDataUrlsInString(str: string) {
     return str.replace(
@@ -66,6 +70,7 @@ export default function decodeAllDataUrlsInString(str: string) {
  *
  * @param {Array} image
  * @returns {string}
+ * @api
  */
 export function getImageUrl(image: any[]) {
     const imageUrl = image[0].url;
@@ -78,8 +83,12 @@ export function getImageUrl(image: any[]) {
  *
  * @param {string} html
  * @returns {string}
+ * @api
  */
 export function removeQuotesInMediaDirectives(html: string): string {
+    if (!html) {
+        return "";
+    }
     const mediaDirectiveRegExp = /\{\{\s*media\s+url\s*=\s*(.*?)\s*\}\}/g;
     const urlRegExp = /\{\{\s*media\s+url\s*=\s*(.*)\s*\}\}/;
     const mediaDirectiveMatches = html.match(mediaDirectiveRegExp);
@@ -100,8 +109,12 @@ export function removeQuotesInMediaDirectives(html: string): string {
  *
  * @param {string} html
  * @returns {string}
+ * @api
  */
 export function convertMediaDirectivesToUrls(html: string): string {
+    if (!html) {
+        return "";
+    }
     const mediaDirectiveRegExp = /\{\{\s*media\s+url\s*=\s*"?[^"\s\}]+"?\s*\}\}/g;
     const mediaDirectiveMatches = html.match(mediaDirectiveRegExp);
     if (mediaDirectiveMatches) {

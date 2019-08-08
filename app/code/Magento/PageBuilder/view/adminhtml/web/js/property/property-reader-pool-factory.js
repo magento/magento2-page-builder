@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/utils/loader", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/property/property-reader-pool"], function (_loader, _config, _propertyReaderPool) {
+define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/utils/loader", "Magento_PageBuilder/js/property/property-reader-pool"], function (_config, _loader, _propertyReaderPool) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -12,19 +12,22 @@ define(["Magento_PageBuilder/js/utils/loader", "Magento_PageBuilder/js/config", 
     var config = _config.getContentTypeConfig(contentType);
 
     var propertyReaders = [];
+    var appearanceName;
 
     var _arr = Object.keys(config.appearances);
 
     for (var _i = 0; _i < _arr.length; _i++) {
-      var appearanceName = _arr[_i];
-      var dataMapping = config.appearances[appearanceName].data_mapping;
+      appearanceName = _arr[_i];
+      var appearance = config.appearances[appearanceName];
 
-      if (dataMapping !== undefined && dataMapping.elements !== undefined) {
-        var _arr2 = Object.keys(dataMapping.elements);
+      if (appearance !== undefined && appearance.elements !== undefined) {
+        var elementName = void 0;
+
+        var _arr2 = Object.keys(appearance.elements);
 
         for (var _i2 = 0; _i2 < _arr2.length; _i2++) {
-          var elementName = _arr2[_i2];
-          var element = dataMapping.elements[elementName];
+          elementName = _arr2[_i2];
+          var element = appearance.elements[elementName];
 
           if (element.style !== undefined) {
             for (var _iterator = element.style, _isArray = Array.isArray(_iterator), _i3 = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
@@ -39,10 +42,10 @@ define(["Magento_PageBuilder/js/utils/loader", "Magento_PageBuilder/js/config", 
                 _ref = _i3.value;
               }
 
-              var _propertyConfig = _ref;
+              var propertyConfig = _ref;
 
-              if (!!_propertyConfig.complex && _propertyConfig.reader && propertyReaders.indexOf(_propertyConfig.reader) === -1 && !_propertyReaderPool.get(_propertyConfig.reader)) {
-                propertyReaders.push(_propertyConfig.reader);
+              if (propertyConfig.reader && propertyReaders.indexOf(propertyConfig.reader) === -1 && !_propertyReaderPool.get(propertyConfig.reader)) {
+                propertyReaders.push(propertyConfig.reader);
               }
             }
           }
@@ -60,10 +63,10 @@ define(["Magento_PageBuilder/js/utils/loader", "Magento_PageBuilder/js/config", 
                 _ref2 = _i4.value;
               }
 
-              var _attributeConfig = _ref2;
+              var attributeConfig = _ref2;
 
-              if (!!_attributeConfig.complex && _attributeConfig.reader && propertyReaders.indexOf(_attributeConfig.reader) === -1 && !_propertyReaderPool.get(_attributeConfig.reader)) {
-                propertyReaders.push(_attributeConfig.reader);
+              if (attributeConfig.reader && propertyReaders.indexOf(attributeConfig.reader) === -1 && !_propertyReaderPool.get(attributeConfig.reader)) {
+                propertyReaders.push(attributeConfig.reader);
               }
             }
           }

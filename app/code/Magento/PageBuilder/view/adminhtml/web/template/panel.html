@@ -6,17 +6,18 @@
 -->
 
 <div id="pagebuilder-panel-wrapper" class="pagebuilder-panel-wrapper"
-    css="visible: isVisible, collapsed: isCollapsed">
+    css="visible: isVisible, 'sticky-top': isStickyTop, 'sticky-bottom': isStickyBottom"
+    afterRender="afterRender">
     <div id="pagebuilder-panel" class="pagebuilder-panel">
-        <div class="search-blocks">
-            <label for="search-blocks-input"></label>
+        <div class="search-content-types">
+            <label for="search-content-types-input"></label>
             <a href="" class="close" click="clearSearch" attr="title: searchTitle" visible="searching"></a>
-            <input type="text" id="search-blocks-input" name="search" ko-value="searchValue" event="keyup: search" attr="placeholder: searchPlaceholder"/>
+            <input type="text" id="search-content-types-input" name="search" ko-value="searchValue" event="keyup: search" attr="placeholder: searchPlaceholder" autocomplete="off"/>
         </div>
         <ul id="search-results" visible="searching() && searchResults().length" each="searchResults">
-            <li class="pagebuilder-draggable-block" attr="id: 'block-' + identifier()" data-bind="draggable">
-                <a class="pagebuilder-panel-block">
-                    <span class="block-icon">
+            <li class="pagebuilder-draggable-content-type" attr="id: 'content-type-' + identifier()" data-bind="draggable: Object.assign($parent.getDraggableOptions(), getDraggableOptions())">
+                <a>
+                    <span>
                         <i attr="class: icon"></i>
                     </span>
                     <span translate="label"></span>
@@ -26,19 +27,19 @@
         <div class="search-results-empty" visible="searching() && !searchResults().length">
             <div translate="searchNoResult"></div>
         </div>
-        <ul id="pagebuilder-panel-groups" class="pagebuilder-panel-groups" visible="!searching()" each="groups">
-            <li attr="id: 'group-' + id()" event="click: toggle" css="active: active">
-                <div class="group-title">
+        <ul id="pagebuilder-panel-menu-sections" class="pagebuilder-panel-menu-sections" visible="!searching()" each="menuSections">
+            <li attr="id: 'menu-section-' + id()" css="active: active">
+                <div class="menu-section-title" event="click: toggle">
                     <h4 translate="label"></h4>
                 </div>
-                <div class="pagebuilder-panel-groups-child" css="hidden: hidden">
-                    <div class="pagebuilder-panel-groups-blocks-wrapper">
-                        <ul class="pagebuilder-panel-groups-blocks" each="blocks">
-                            <li class="pagebuilder-draggable-block"
-                                data-bind="draggable: { connectToSortable: getDraggableConfig() }"
-                                attr="id: 'block-' + identifier()">
-                                <a class="pagebuilder-panel-block">
-                                    <span class="block-icon">
+                <div class="pagebuilder-panel-menu-sections-child" css="hidden: hidden">
+                    <div>
+                        <ul class="pagebuilder-panel-menu-sections-content-types" each="contentTypes">
+                            <li class="pagebuilder-draggable-content-type"
+                                data-bind="draggable: Object.assign($parents[1].getDraggableOptions($element), getDraggableOptions($element))"
+                                attr="id: 'content-type-' + identifier()">
+                                <a>
+                                    <span class="content-type-icon">
                                         <i attr="class: icon"></i>
                                     </span>
                                     <span translate="label"></span>
@@ -49,12 +50,5 @@
                 </div>
             </li>
         </ul>
-        <div class="panel-controls">
-            <a class="collapse" click="collapse" data-bind="i18n: 'Collapse'"></a>
-            <a class="full-screen" click="fullScreen" attr="title: fullScreenTitle"></a>
-        </div>
-    </div>
-    <div class="expand" visible="isCollapsed">
-        <a click="collapse"></a>
     </div>
 </div>

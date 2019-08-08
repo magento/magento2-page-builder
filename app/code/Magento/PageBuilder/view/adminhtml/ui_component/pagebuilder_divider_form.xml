@@ -24,7 +24,7 @@
                 <item name="component" xsi:type="string">Magento_PageBuilder/js/form/provider</item>
             </item>
         </argument>
-        <dataProvider name="pagebuilder_divider_form_data_source" class="Magento\PageBuilder\Model\ContentBlock\DataProvider">
+        <dataProvider name="pagebuilder_divider_form_data_source" class="Magento\PageBuilder\Model\ContentType\DataProvider">
             <settings>
                 <requestFieldName/>
                 <primaryFieldName/>
@@ -44,7 +44,7 @@
                 <link name="hideLabel">${$.name}.appearance:options</link>
             </imports>
         </settings>
-        <field name="appearance" formElement="select" sortOrder="10" component="Magento_PageBuilder/js/form/element/dependent-select">
+        <field name="appearance" formElement="select" sortOrder="10" component="Magento_PageBuilder/js/form/element/dependent-visual-select">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="default" xsi:type="string">default</item>
@@ -74,7 +74,7 @@
         <settings>
             <label/>
         </settings>
-        <field name="line_color" sortOrder="10" formElement="input">
+        <field name="line_color" sortOrder="10" formElement="colorPicker">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="default" xsi:type="string">#CECECE</item>
@@ -82,9 +82,24 @@
             </argument>
             <settings>
                 <label translate="true">Line Color</label>
-                <addAfter translate="true">hex code</addAfter>
-                <notice translate="true">Example: #FF5733</notice>
+                <componentType>colorPicker</componentType>
+                <placeholder translate="true">No Color</placeholder>
+                <additionalClasses>
+                    <class name="admin__field-medium">true</class>
+                </additionalClasses>
+                <validation>
+                    <rule name="validate-color" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>text</dataType>
             </settings>
+            <formElements>
+                <colorPicker>
+                    <settings>
+                        <colorPickerMode>full</colorPickerMode>
+                        <colorFormat>hex</colorFormat>
+                    </settings>
+                </colorPicker>
+            </formElements>
         </field>
         <field name="line_thickness" sortOrder="20" formElement="input">
             <argument name="data" xsi:type="array">
@@ -94,6 +109,9 @@
             </argument>
             <settings>
                 <label translate="true">Line Thickness</label>
+                <additionalClasses>
+                    <class name="admin__field-small">true</class>
+                </additionalClasses>
                 <addAfter translate="true">px</addAfter>
                 <validation>
                     <rule name="validate-number" xsi:type="boolean">true</rule>
@@ -108,9 +126,21 @@
             </argument>
             <settings>
                 <label translate="true">Line Width</label>
+                <additionalClasses>
+                    <class name="admin__field-small">true</class>
+                </additionalClasses>
                 <addAfter translate="true">px or %</addAfter>
                 <notice translate="true">Example: 50px or 100%</notice>
             </settings>
+        </field>
+    </fieldset>
+    <fieldset name="advanced">
+        <field name="margins_and_padding">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">{"margin":{"bottom":"0","left":"0","right":"0","top":"0"},"padding":{"bottom":"10","left":"10","right":"10","top":"10"}}</item>
+                </item>
+            </argument>
         </field>
     </fieldset>
 </form>

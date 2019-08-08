@@ -12,7 +12,11 @@ use Magento\PageBuilder\Model\Config\ContentType\AdditionalData\ProviderInterfac
 use Magento\Framework\File\Size;
 
 /**
- * Provides maximum filesize allowed for upload based on php ini settings
+ * Provides maximum file size for uploader
+ *
+ * Will provide the lower of the following two values:
+ * - upload_max_filesize from php.ini config
+ * - staticFileSize argument passed to constructor
  */
 class MaxFileSize implements ProviderInterface
 {
@@ -22,11 +26,20 @@ class MaxFileSize implements ProviderInterface
     private $fileSize;
 
     /**
-     * @param Size $fileSize
+     * @var int
      */
-    public function __construct(Size $fileSize)
-    {
+    private $staticFileSize;
+
+    /**
+     * @param Size $fileSize
+     * @param int $staticFileSize
+     */
+    public function __construct(
+        Size $fileSize,
+        $staticFileSize = null
+    ) {
         $this->fileSize = $fileSize;
+        $this->staticFileSize = $staticFileSize;
     }
 
     /**
@@ -34,6 +47,14 @@ class MaxFileSize implements ProviderInterface
      */
     public function getData(string $itemName) : array
     {
-        return [$itemName => $this->fileSize->getMaxFileSize()];
+        // dynamically set max file size based on the lower of php ini config and static value (if present)
+        $maxFileSize = min(array_filter([
+            $this->staticFileSize ?? 0,
+            $this->fileSize->getMaxFileSize()
+        ]));
+
+        return [
+            $itemName => $maxFileSize
+        ];
     }
 }

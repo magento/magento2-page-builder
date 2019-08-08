@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/utils/loader", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/mass-converter/converter-pool"], function (_loader, _config, _converterPool) {
+define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/utils/loader", "Magento_PageBuilder/js/mass-converter/converter-pool"], function (_config, _loader, _converterPool) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -12,15 +12,16 @@ define(["Magento_PageBuilder/js/utils/loader", "Magento_PageBuilder/js/config", 
     var config = _config.getContentTypeConfig(contentType);
 
     var converters = [];
+    var appearanceName;
 
     var _arr = Object.keys(config.appearances);
 
     for (var _i = 0; _i < _arr.length; _i++) {
-      var appearanceName = _arr[_i];
-      var dataMapping = config.appearances[appearanceName].data_mapping;
+      appearanceName = _arr[_i];
+      var appearance = config.appearances[appearanceName];
 
-      if (undefined !== dataMapping && undefined !== dataMapping.converters) {
-        for (var _iterator = dataMapping.converters, _isArray = Array.isArray(_iterator), _i2 = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
+      if (undefined !== appearance && undefined !== appearance.converters) {
+        for (var _iterator = appearance.converters, _isArray = Array.isArray(_iterator), _i2 = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
           var _ref;
 
           if (_isArray) {
@@ -32,10 +33,10 @@ define(["Magento_PageBuilder/js/utils/loader", "Magento_PageBuilder/js/config", 
             _ref = _i2.value;
           }
 
-          var _converterConfig = _ref;
+          var converterConfig = _ref;
 
-          if (!!_converterConfig.component && !_converterPool.get(_converterConfig.component)) {
-            converters.push(_converterConfig.component);
+          if (!!converterConfig.component && !_converterPool.get(converterConfig.component)) {
+            converters.push(converterConfig.component);
           }
         }
       }

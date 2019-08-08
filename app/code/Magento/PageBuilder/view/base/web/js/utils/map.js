@@ -3,30 +3,66 @@
  * See COPYING.txt for license details.
  */
 
+/**
+ * googleMaps dependency is added within googlemaps.phtml through shim based on API key being set
+ *
+ * @api
+ */
 define([
     'underscore',
-    'https://maps.googleapis.com/maps/api/js?key=AIzaSyCw10cOO31cpxb2bcwnHPHKtxov8oUbxJw'
-], function (_) {
+    'module',
+    'Magento_PageBuilder/js/events'
+], function (_, module, events) {
     'use strict';
 
     var google = window.google || {},
 
         /**
-         * Generates a google map usuable lat and lng object
+         * Generates a google map usuable latitude and longitude object
          *
-         * @param {Object} latLng
+         * @param {Object} position
          * @return {google.maps.LatLng}
          */
-        googleLatLng = function (latLng) {
-            return new google.maps.LatLng(latLng.lat, latLng.lng);
-        };
+        getGoogleLatitudeLongitude = function (position) {
+            return new google.maps.LatLng(position.latitude, position.longitude);
+        },
+        gmAuthFailure = false;
 
-    return function (element, markers, options) {
-        var mapOptions = _.extend({
+    // jscs:disable requireCamelCaseOrUpperCaseIdentifiers
+    /**
+     * Google's error listener for map loader failures
+     */
+    window.gm_authFailure = function () {
+        events.trigger('googleMaps:authFailure');
+        gmAuthFailure = true;
+    };
+    // jscs:enable requireCamelCaseOrUpperCaseIdentifiers
+
+    return function (element, markers, additionalOptions) {
+        var options,
+            style;
+
+        // If we've previously had an API key error, throw the error even again
+        if (gmAuthFailure) {
+            events.trigger('googleMaps:authFailure');
+
+            return;
+        }
+
+        /**
+         * Just in case of a bad JSON that bypassed validation
+         */
+        try {
+            style = module.config().style ? JSON.parse(module.config().style) : [];
+        }
+        catch (error) {
+            style = [];
+        }
+        options = _.extend({
             zoom: 8,
-            center: googleLatLng({
-                lat: 30.2672,
-                lng: -97.7431,
+            center: getGoogleLatitudeLongitude({
+                latitude: 30.2672,
+                longitude: -97.7431
             }),
             scrollwheel: false,
             disableDoubleClickZoom: false,
@@ -35,70 +71,109 @@ define([
             mapTypeControlOptions: {
                 style: google.maps.MapTypeControlStyle.DEFAULT
             },
-        }, options);
+            styles: style
+        }, additionalOptions);
 
         /* Create the map */
-        this.map = new google.maps.Map(element, mapOptions);
+        this.map = new google.maps.Map(element, options);
         this.markers = [];
 
         /**
          * Callback function on map config update
-         * @param {Array} newMarker
+         * @param {Array} newMarkers
          * @param {Object} updateOptions
          */
-        this.onUpdate = function (newMarker, updateOptions) {
+        this.onUpdate = function (newMarkers, updateOptions) {
             this.map.setOptions(updateOptions);
-            this.setMarker(newMarker);
+            this.setMarkers(newMarkers);
         };
 
         /**
          * Sets the markers to selected map
-         * @param {} newMarker
+         * @param {Object} newMarkers
          */
-        this.setMarker = function (newMarker) {
+        this.setMarkers = function (newMarkers) {
+            var activeInfoWindow,
+                latitudeLongitudeBounds = new google.maps.LatLngBounds();
+
             this.markers.forEach(function (marker) {
                 marker.setMap(null);
             }, this);
+
             this.markers = [];
+            this.bounds = [];
 
-            if (newMarker && !_.isEmpty(newMarker)) {
-                var location = newMarker.location || '';
-                var comment = newMarker.comment || '';
-                var address = newMarker.address ? newMarker.address + '<br/>' : '';
-                var city = newMarker.city || '';
-                var country = newMarker.country || '';
-                var zipcode = newMarker.zipcode ? ',' + newMarker.zipcode : '';
+            /**
+             * Creates and set listener for markers
+             */
+            if (newMarkers && newMarkers.length) {
+                newMarkers.forEach(function (newMarker) {
+                    var location = _.escape(newMarker['location_name']) || '',
+                    comment = newMarker.comment ?
+                        '<p>' + _.escape(newMarker.comment).replace(/(?:\r\n|\r|\n)/g, '<br/>') + '</p>'
+                        : '',
+                    phone = newMarker.phone ? '<p>Phone: ' + _.escape(newMarker.phone) + '</p>' : '',
+                    address = newMarker.address ? _.escape(newMarker.address) + '<br/>' : '',
+                    city = _.escape(newMarker.city) || '',
+                    country = newMarker.country ? _.escape(newMarker.country) : '',
+                    state = newMarker.state ? _.escape(newMarker.state) + ' ' : '',
+                    zipCode = newMarker.zipcode ? _.escape(newMarker.zipcode) : '',
+                    cityComma = city !== '' && (zipCode !== '' || state !== '') ? ', ' : '',
+                    lineBreak = city !== '' || zipCode !== '' ? '<br/>' : '',
+                    contentString =
+                        '<div>' +
+                        '<h3><b>' + location + '</b></h3>' +
+                        comment +
+                        phone +
+                        '<p><span>' + address +
+                        city + cityComma + state + zipCode + lineBreak +
+                        country + '</span></p>' +
+                        '</div>',
+                    infowindow = new google.maps.InfoWindow({
+                        content: contentString,
+                        maxWidth: 350
+                    }),
+                    newCreatedMarker = new google.maps.Marker({
+                        map: this.map,
+                        position: getGoogleLatitudeLongitude(newMarker.position),
+                        title: location
+                    });
 
-                var contentString =
-                    '<div>' +
-                    '<h3><b>' + location + '</b></h3>' +
-                    '<p>' + comment + '</p>' +
-                    '<p>' + address +
-                    city + zipcode + '<br/>' +
-                    country + '</p>' +
-                    '</div>';
+                    if (location) {
+                        newCreatedMarker.addListener('click', function () {
+                            if (activeInfoWindow) {
+                                activeInfoWindow.close();
+                            }
 
-                var infowindow = new google.maps.InfoWindow({
-                    content: contentString,
-                    maxWidth: 350
+                            infowindow.open(this.map, newCreatedMarker);
+                            activeInfoWindow = infowindow;
+                        }, this);
+                    }
+
+                    this.markers.push(newCreatedMarker);
+                    this.bounds.push(getGoogleLatitudeLongitude(newMarker.position));
+                }, this);
+            }
+
+            /**
+             * This sets the bounds of the map for multiple locations
+             */
+            if (this.bounds.length > 1) {
+                this.bounds.forEach(function (bound) {
+                    latitudeLongitudeBounds.extend(bound);
                 });
+                this.map.fitBounds(latitudeLongitudeBounds);
+            }
 
-                var newCreatedMarker = new google.maps.Marker({
-                    map: this.map,
-                    position: googleLatLng(newMarker.coordinates),
-                    title: newMarker.location
-                });
-
-                if(newMarker.location) {
-                    newCreatedMarker.addListener('click', function() {
-                        infowindow.open(this.map, newCreatedMarker);
-                    }, this);
-                }
-
-                this.markers.push(newCreatedMarker);
+            /**
+             * Zoom to 8 if there is only a single location
+             */
+            if (this.bounds.length === 1) {
+                this.map.setCenter(this.bounds[0]);
+                this.map.setZoom(8);
             }
         };
 
-        this.setMarker(markers);
+        this.setMarkers(markers);
     };
 });

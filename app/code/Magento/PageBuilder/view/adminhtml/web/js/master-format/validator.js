@@ -6,18 +6,16 @@ define(["Magento_PageBuilder/js/config"], function (_config) {
    */
 
   /**
-   * Validate if content has page builder format
+   * Validate if content has page builder format by checking for any data-content-type attributes
    *
    * @param {string} content
    * @returns {boolean}
    */
-  function Validate(content) {
-    var stageDocument = document.createElement("div");
-    stageDocument.setAttribute(_config.getConfig("dataRoleAttributeName"), "stage");
-    stageDocument.innerHTML = content;
-    return !!stageDocument.querySelector("[" + _config.getConfig("dataRoleAttributeName") + "=\"row\"]");
+  function validate(content) {
+    var stageDocument = new DOMParser().parseFromString(content, "text/html");
+    return !!stageDocument.querySelector("[" + _config.getConfig("dataContentTypeAttributeName") + "]");
   }
 
-  return Validate;
+  return validate;
 });
 //# sourceMappingURL=validator.js.map

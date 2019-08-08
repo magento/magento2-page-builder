@@ -6,47 +6,54 @@
 import $ from "jquery";
 import ko from "knockout";
 import $t from "mage/translate";
+import events from "Magento_PageBuilder/js/events";
 import alertDialog from "Magento_Ui/js/modal/alert";
-import events from "uiEvents";
 import Config from "../../config";
-import ContentTypeConfigInterface from "../../content-type-config.d";
+import ContentTypeCollectionInterface from "../../content-type-collection.types";
+import ContentTypeConfigInterface from "../../content-type-config.types";
 import createContentType from "../../content-type-factory";
 import Option from "../../content-type-menu/option";
-import OptionInterface from "../../content-type-menu/option.d";
-import ContentTypeInterface from "../../content-type.d";
-import {StyleAttributeMapperResult} from "../../master-format/style-attribute-mapper";
-import ColumnGroup from "../column-group/preview";
-import {
-    findShrinkableColumn, getAcceptedColumnWidth, getColumnsWidth,
-    getColumnWidth, getMaxColumns, getSmallestColumnWidth, updateColumnWidth,
-} from "../column-group/resizing";
-import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params.d";
+import {OptionsInterface} from "../../content-type-menu/option.types";
+import ContentTypeInterface from "../../content-type.types";
+import {getDefaultGridSize} from "../column-group/grid-size";
+import ColumnGroupPreview from "../column-group/preview";
+import {ContentTypeMountEventParamsInterface, ContentTypeMoveEventParamsInterface} from "../content-type-events.types";
 import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
+import {updateColumnWidth} from "./resize";
 
+/**
+ * @api
+ */
 export default class Preview extends PreviewCollection {
     public resizing: KnockoutObservable<boolean> = ko.observable(false);
+    public element: JQuery;
 
     /**
-     * @param {ContentTypeInterface} parent
+     * Fields that should not be considered when evaluating whether an object has been configured.
+     *
+     * @see {Preview.isConfigured}
+     * @type {[string]}
+     */
+    protected fieldsToIgnoreOnRemove: string[] = ["width"];
+
+    /**
+     * @param {ContentTypeInterface} contentType
      * @param {ContentTypeConfigInterface} config
      * @param {ObservableUpdater} observableUpdater
      */
     constructor(
-        parent: ContentTypeInterface,
+        contentType: ContentTypeInterface,
         config: ContentTypeConfigInterface,
         observableUpdater: ObservableUpdater,
     ) {
-        super(parent, config, observableUpdater);
-        this.previewData.width.subscribe((newWidth) => {
-            const maxColumns = getMaxColumns();
-            newWidth = parseFloat(newWidth);
-            newWidth = Math.round(newWidth / (100 / maxColumns));
-            const newLabel = `${newWidth}/${maxColumns}`;
-            const column = $t("Column");
-            this.displayLabel(`${column} ${newLabel}`);
-        });
+        super(contentType, config, observableUpdater);
 
+        // Update the width label for the column
+        this.contentType.dataStore.subscribe(this.updateColumnWidthClass.bind(this), "width");
+        this.contentType.dataStore.subscribe(this.updateDisplayLabel.bind(this), "width");
+        this.contentType.dataStore.subscribe(this.triggerChildren.bind(this), "width");
+        this.contentType.parentContentType.dataStore.subscribe(this.updateDisplayLabel.bind(this), "grid_size");
     }
 
     /**
@@ -55,9 +62,15 @@ export default class Preview extends PreviewCollection {
     public bindEvents() {
         super.bindEvents();
 
+        events.on("column:moveAfter", (args: ContentTypeMoveEventParamsInterface) => {
+            if (args.contentType.id === this.contentType.id) {
+                this.updateDisplayLabel();
+            }
+        });
+
         if (Config.getContentTypeConfig("column-group")) {
-            events.on("column:block:mount", (args: ContentTypeMountEventParamsInterface) => {
-                if (args.id === this.parent.id) {
+            events.on("column:dropAfter", (args: ContentTypeMountEventParamsInterface) => {
+                if (args.id === this.contentType.id) {
                     this.createColumnGroup();
                 }
             });
@@ -70,36 +83,30 @@ export default class Preview extends PreviewCollection {
      * @param element
      */
     public initColumn(element: Element) {
-        this.parent.element = $(element);
-        events.trigger("column:initElement", {
-            column: this.parent,
+        this.element = $(element);
+        this.updateColumnWidthClass();
+        events.trigger("column:initializeAfter", {
+            column: this.contentType,
             element: $(element),
-            parent: this.parent.parent,
+            columnGroup: this.contentType.parentContentType,
         });
     }
 
     /**
      * Return an array of options
      *
-     * @returns {Array<OptionInterface>}
+     * @returns {OptionsInterface}
      */
-    public retrieveOptions(): OptionInterface[] {
+    public retrieveOptions(): OptionsInterface {
         const options = super.retrieveOptions();
-        const newOptions = options.filter((option) => {
-            return (option.code !== "move");
+        options.move = new Option({
+            preview: this,
+            icon: "<i class='icon-admin-pagebuilder-handle'></i>",
+            title: $t("Move"),
+            classes: ["move-column"],
+            sort: 10,
         });
-        newOptions.unshift(
-            new Option(
-                this,
-                "move",
-                "<i class='icon-admin-pagebuilder-handle'></i>",
-                $t("Move"),
-                null,
-                ["move-column"],
-                10,
-            ),
-        );
-        return newOptions;
+        return options;
     }
 
     /**
@@ -108,40 +115,57 @@ export default class Preview extends PreviewCollection {
      * @param handle
      */
     public bindResizeHandle(handle: Element) {
-        events.trigger("column:bindResizeHandle", {
-            column: this.parent,
+        events.trigger("column:resizeHandleBindAfter", {
+            column: this.contentType,
             handle: $(handle),
-            parent: this.parent.parent,
+            columnGroup: this.contentType.parentContentType,
         });
     }
 
     /**
      * Wrap the current column in a group if it not in a column-group
      *
-     * @returns {Promise<ContentTypeInterface>}
+     * @returns {Promise<ContentTypeCollectionInterface>}
      */
-    public createColumnGroup(): Promise<ContentTypeInterface> {
-        if (this.parent.parent.config.name !== "column-group") {
-            const index = this.parent.parent.children().indexOf(this.parent);
+    public createColumnGroup(): Promise<ContentTypeCollectionInterface> {
+        if (this.contentType.parentContentType.config.name !== "column-group") {
+            const index = this.contentType.parentContentType.children().indexOf(this.contentType);
             // Remove child instantly to stop content jumping around
-            this.parent.parent.removeChild(this.parent);
+            this.contentType.parentContentType.removeChild(this.contentType);
             // Create a new instance of column group to wrap our columns with
+            const defaultGridSize = getDefaultGridSize();
             return createContentType(
                 Config.getContentTypeConfig("column-group"),
-                this.parent.parent,
-                this.parent.stageId,
-            ).then((columnGroup: ColumnGroup) => {
+                this.contentType.parentContentType,
+                this.contentType.stageId,
+                {grid_size: defaultGridSize},
+            ).then((columnGroup: ContentTypeCollectionInterface) => {
+                const col1Width = (Math.ceil(defaultGridSize / 2) * 100 / defaultGridSize).toFixed(
+                    Math.round(100 / defaultGridSize) !== 100 / defaultGridSize ? 8 : 0,
+                );
                 return Promise.all([
-                    createContentType(this.parent.config, columnGroup, columnGroup.stageId, {width: "50%"}),
-                    createContentType(this.parent.config, columnGroup, columnGroup.stageId, {width: "50%"}),
-                ]).then((columns: [Column, Column]) => {
-                    columnGroup.addChild(columns[0], 0);
-                    columnGroup.addChild(columns[1], 1);
-                    this.parent.parent.addChild(columnGroup, index);
+                    createContentType(
+                        this.contentType.config,
+                        columnGroup,
+                        columnGroup.stageId,
+                        {width: col1Width + "%"},
+                    ),
+                    createContentType(
+                        this.contentType.config,
+                        columnGroup,
+                        columnGroup.stageId,
+                        {width: (100 - parseFloat(col1Width)) + "%"},
+                    ),
+                ]).then(
+                    (columns: [ContentTypeCollectionInterface<Preview>, ContentTypeCollectionInterface<Preview>]) => {
+                        columnGroup.addChild(columns[0], 0);
+                        columnGroup.addChild(columns[1], 1);
+                        this.contentType.parentContentType.addChild(columnGroup, index);
 
-                    this.fireMountEvent(columnGroup, columns[0], columns[1]);
-                    return columnGroup;
-                });
+                        this.fireMountEvent(columnGroup, columns[0], columns[1]);
+                        return columnGroup;
+                    },
+                );
             });
         }
     }
@@ -149,56 +173,71 @@ export default class Preview extends PreviewCollection {
     /**
      * Duplicate a child of the current instance
      *
-     * @param {Column} child
+     * @param {ContentTypeCollectionInterface<Preview>} contentType
      * @param {boolean} autoAppend
-     * @returns {Promise<ContentTypeInterface>|void}
+     * @returns {Promise<ContentTypeCollectionInterface> | void}
      */
-    public clone(child: Column, autoAppend: boolean = true): Promise<ContentTypeInterface> | void {
-        // Are we duplicating from a parent?
-        if ( child.config.name !== "column"
-            || this.parent.parent.children().length === 0
-            || (this.parent.parent.children().length > 0 && getColumnsWidth(this.parent.parent) < 100)
+    public clone(
+        contentType: ContentTypeCollectionInterface<Preview>,
+        autoAppend: boolean = true,
+    ): Promise<ContentTypeCollectionInterface> | void {
+        const resizeUtils = (this.contentType.parentContentType.preview as ColumnGroupPreview).getResizeUtils();
+        // Are we duplicating from a container content type?
+        if ( contentType.config.name !== "column"
+            || this.contentType.parentContentType.children().length === 0
+            || (this.contentType.parentContentType.children().length > 0 && resizeUtils.getColumnsWidth() < 100)
         ) {
-            return super.clone(child, autoAppend);
+            return super.clone(contentType, autoAppend);
         }
 
         // Attempt to split the current column into parts
-        let splitTimes = Math.round(getColumnWidth(child) / getSmallestColumnWidth());
+        const splitTimes = Math.round(resizeUtils.getColumnWidth(contentType) / resizeUtils.getSmallestColumnWidth());
         if (splitTimes > 1) {
-            super.clone(child, autoAppend).then((duplicateBlock: ContentTypeInterface) => {
-                let originalWidth = 0;
-                let duplicateWidth = 0;
+            const splitClone = super.clone(contentType, autoAppend);
+            if (splitClone) {
+                splitClone.then((duplicateContentType: ContentTypeCollectionInterface<Preview>) => {
+                    /**
+                     * Distribute the width across the original & duplicated columns, if the we have an odd number of
+                     * split times apply it to the original.
+                     */
+                    const originalWidth = (Math.floor(splitTimes / 2) + (splitTimes % 2))
+                        * resizeUtils.getSmallestColumnWidth();
+                    const duplicateWidth = Math.floor(splitTimes / 2) * resizeUtils.getSmallestColumnWidth();
 
-                for (let i = 0; i <= splitTimes; i++) {
-                    if (splitTimes > 0) {
-                        originalWidth += getSmallestColumnWidth();
-                        --splitTimes;
-                    }
-                    if (splitTimes > 0) {
-                        duplicateWidth += getSmallestColumnWidth();
-                        --splitTimes;
-                    }
-                }
-                updateColumnWidth(child, getAcceptedColumnWidth(originalWidth.toString()));
-                updateColumnWidth(duplicateBlock, getAcceptedColumnWidth(duplicateWidth.toString()));
+                    updateColumnWidth(
+                        contentType,
+                        resizeUtils.getAcceptedColumnWidth(originalWidth.toString()),
+                    );
+                    updateColumnWidth(
+                        duplicateContentType,
+                        resizeUtils.getAcceptedColumnWidth(duplicateWidth.toString()),
+                    );
 
-                return duplicateBlock;
-            });
+                    return duplicateContentType;
+                });
+            }
         } else {
             // Conduct an outward search on the children to locate a suitable shrinkable column
-            const shrinkableColumn = findShrinkableColumn(child);
+            const shrinkableColumn = resizeUtils.findShrinkableColumn(contentType);
             if (shrinkableColumn) {
-                super.clone(child, autoAppend).then((duplicateBlock: ContentTypeInterface) => {
-                    updateColumnWidth(
-                        shrinkableColumn,
-                        getAcceptedColumnWidth(
-                            (getColumnWidth(shrinkableColumn) - getSmallestColumnWidth()).toString(),
-                        ),
-                    );
-                    updateColumnWidth(duplicateBlock, getSmallestColumnWidth());
+                const shrinkableClone = super.clone(contentType, autoAppend);
+                if (shrinkableClone) {
+                    shrinkableClone.then((duplicateContentType: ContentTypeCollectionInterface<Preview>) => {
+                        updateColumnWidth(
+                            shrinkableColumn,
+                            resizeUtils.getAcceptedColumnWidth(
+                                (resizeUtils.getColumnWidth(shrinkableColumn)
+                                    - resizeUtils.getSmallestColumnWidth()).toString(),
+                            ),
+                        );
+                        updateColumnWidth(
+                            duplicateContentType,
+                            resizeUtils.getSmallestColumnWidth(),
+                        );
 
-                    return duplicateBlock;
-                });
+                        return duplicateContentType;
+                    });
+                }
             } else {
                 // If we aren't able to duplicate inform the user why
                 alertDialog({
@@ -210,47 +249,57 @@ export default class Preview extends PreviewCollection {
     }
 
     /**
-     * Update the style attribute mapper converts images to directives, override it to include the correct URL
-     *
-     * @returns styles
+     * Update the display label for the column
      */
-    protected afterStyleMapped(styles: StyleAttributeMapperResult) {
-        // Extract data values our of observable functions
-        // The style attribute mapper converts images to directives, override it to include the correct URL
-        if (this.previewData.background_image && typeof this.previewData.background_image()[0] === "object") {
-            styles.backgroundImage = "url(" + this.previewData.background_image()[0].url + ")";
+    public updateDisplayLabel() {
+        if (this.contentType.parentContentType.preview instanceof ColumnGroupPreview) {
+            const newWidth = parseFloat(this.contentType.dataStore.get("width").toString());
+            const gridSize = (this.contentType.parentContentType.preview as ColumnGroupPreview).gridSize();
+            const newLabel = `${Math.round(newWidth / (100 / gridSize))}/${gridSize}`;
+            this.displayLabel(`${$t("Column")} ${newLabel}`);
         }
-
-        // If we have left and right margins we need to minus this from the total width
-        if (this.previewData.margins_and_padding && this.previewData.margins_and_padding().margin) {
-            const margins = this.previewData.margins_and_padding().margin;
-            const horizontalMargin = parseInt(margins.left || 0, 10) +
-                parseInt(margins.right || 0, 10);
-            styles.width = "calc(" + styles.width + " - " + horizontalMargin + "px)";
-        }
-
-        // If the right margin is 0, we set it to 1px to overlap the columns to create a single border
-        if (styles.marginRight === "0px") {
-            styles.marginRight = "1px";
-        }
-
-        // If the border is set to default we show no border in the admin preview, as we're unaware of the themes styles
-        if (this.previewData.border && this.previewData.border() === "_default") {
-            styles.border = "none";
-        }
-
-        return styles;
     }
 
     /**
-     * Fire the mount event for blocks
-     *
-     * @param {ContentTypeInterface[]} blocks
+     * Syncs the column-width-* class on the children-wrapper with the current width to the nearest tenth rounded up
      */
-    private fireMountEvent(...blocks: ContentTypeInterface[]) {
-        blocks.forEach((block) => {
-            events.trigger("block:mount", {id: block.id, block});
-            events.trigger(block.config.name + ":block:mount", {id: block.id, block});
+    public updateColumnWidthClass() {
+        // Only update once instantiated
+        if (!this.element) {
+            return;
+        }
+
+        const currentClass = this.element.attr("class").match(/(?:^|\s)(column-width-\d{1,3})(?:$|\s)/);
+
+        if (currentClass !== null) {
+            this.element.removeClass(currentClass[1]);
+        }
+
+        const roundedWidth = Math.ceil(parseFloat(this.contentType.dataStore.get("width").toString()) / 10) * 10;
+
+        this.element.addClass("column-width-" + roundedWidth);
+    }
+
+    /**
+     * Fire the mount event for content types
+     *
+     * @param {ContentTypeInterface[]} contentTypes
+     */
+    private fireMountEvent(...contentTypes: ContentTypeInterface[]) {
+        contentTypes.forEach((contentType) => {
+            events.trigger("contentType:mountAfter", {id: contentType.id, contentType});
+            events.trigger(contentType.config.name + ":mountAfter", {id: contentType.id, contentType});
         });
+    }
+
+    /**
+     * Delegate trigger call on children elements.
+     */
+    private triggerChildren() {
+        if (this.contentType.parentContentType.preview instanceof ColumnGroupPreview) {
+            const newWidth = parseFloat(this.contentType.dataStore.get("width").toString());
+
+            this.delegate("trigger", "columnWidthChangeAfter", { width: newWidth });
+        }
     }
 }

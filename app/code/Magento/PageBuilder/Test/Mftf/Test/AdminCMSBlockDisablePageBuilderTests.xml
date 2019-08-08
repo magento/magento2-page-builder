@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="CheckStaticBlocksTest">
+        <before>
+            <magentoCLI command="config:set cms/pagebuilder/enabled 0" stepKey="disablePageBuilder"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/pagebuilder/enabled 1" stepKey="enablePageBuilder"/>
+        </after>
+    </test>
+    <test name="AdminCreateDuplicatedCmsBlockTest">
+        <before>
+            <magentoCLI command="config:set cms/pagebuilder/enabled 0" stepKey="disablePageBuilder" after="loginGetFromGeneralFile"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/pagebuilder/enabled 1" stepKey="enablePageBuilder" before="logout"/>
+        </after>
+    </test>
+    <test name="AdminAddImageToWYSIWYGBlockTest">
+        <before>
+            <magentoCLI command="config:set cms/pagebuilder/enabled 0" stepKey="disablePageBuilder" after="switchToTinyMCE4"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/pagebuilder/enabled 1" stepKey="enablePageBuilder" after="disableWYSIWYG"/>
+        </after>
+    </test>
+    <test name="AdminAddVariableToWYSIWYGBlockTest">
+        <before>
+            <magentoCLI command="config:set cms/pagebuilder/enabled 0" stepKey="disablePageBuilder" after="switchToTinyMCE4"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/pagebuilder/enabled 1" stepKey="enablePageBuilder" after="disableWYSIWYG"/>
+        </after>
+    </test>
+    <test name="AdminAddWidgetToWYSIWYGBlockTest">
+        <before>
+            <magentoCLI command="config:set cms/pagebuilder/enabled 0" stepKey="disablePageBuilder" after="switchToTinyMCE4"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/pagebuilder/enabled 1" stepKey="enablePageBuilder" after="disableWYSIWYG"/>
+        </after>
+    </test>
+    <test name="AdminAddWidgetToWYSIWYGWithCMSStaticBlockTypeTest">
+        <before>
+            <magentoCLI command="config:set cms/pagebuilder/enabled 0" stepKey="disablePageBuilder" after="switchToTinyMCE4"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/pagebuilder/enabled 1" stepKey="enablePageBuilder" after="disableWYSIWYG"/>
+        </after>
+    </test>
+    <test name="VerifyTinyMCEv4IsNativeWYSIWYGOnBlockTest">
+        <before>
+            <magentoCLI command="config:set cms/pagebuilder/enabled 0" stepKey="disablePageBuilder" after="switchToTinyMCE4"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/pagebuilder/enabled 1" stepKey="enablePageBuilder" after="disableWYSIWYG"/>
+        </after>
+    </test>
+    <test name="PageBuilderCmsBlockDisablePageBuilder">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="CMS Block"/>
+            <title value="Verify PageBuilder does not appear when disabled in CMS Block"/>
+            <description value="This test is intended to ensure that PageBuilder does not appear when disabled for CMS Block."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-3328"/>
+            <testCaseId value="MC-13768"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-disable"/>
+            <group value="pagebuilder-cms-block"/>
+        </annotations>
+        <before>
+            <createData entity="_emptyCmsBlock" stepKey="createPreReqBlock" after="loginAsAdmin"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage">
+                <argument name="CMSBlockPage" value="$$createPreReqBlock$$"/>
+            </actionGroup>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/pagebuilder/enabled 1" stepKey="enablePageBuilder"/>
+            <deleteData createDataKey="createPreReqBlock" stepKey="deleteCreatedProduct"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <seeElement selector="{{PageBuilderStage.stageWrapper}}" stepKey="seeElementPageBuilderStage"/>
+        <dontSeeElementInDOM selector="{{CmsNewBlockBlockBasicFieldsSection.content_textarea}}" stepKey="dontSeeContentAreaInDOM"/>
+        <magentoCLI command="config:set cms/pagebuilder/enabled 0" stepKey="disablePageBuilder"/>
+        <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage">
+            <argument name="CMSBlockPage" value="$$createPreReqBlock$$"/>
+        </actionGroup>
+        <seeElementInDOM selector="{{CmsNewBlockBlockBasicFieldsSection.content_textarea}}" stepKey="seeContentAreaInDOM"/>
+        <dontSeeElementInDOM selector="{{PageBuilderStage.stageWrapper}}" stepKey="dontSeePageBuilderStage"/>
+    </test>
+</tests>

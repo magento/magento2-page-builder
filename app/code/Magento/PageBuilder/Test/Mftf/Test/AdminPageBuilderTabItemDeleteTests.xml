@@ -1,0 +1,470 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="TabsRemoveLastTabByDeletingTabsContentType">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Tabs"/>
+            <title value="Remove Last Tab Only By Deleting Tabs content type"/>
+            <description value="A user should be able to remove tabs content type from a row with confirmation."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-87052"/>
+            <testCaseId value="MC-2635"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-tabs"/>
+            <group value="pagebuilder-tabsDelete"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <comment userInput="Given I have added Tabs container with one Tab to the stage and save" stepKey="AC1"/>
+        <!-- Set the page title, as we'll be saving the page -->
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <fillField selector="{{PageBuilderPanel.searchPanel}}" userInput="tabs" stepKey="fillSearch"/>
+        <see userInput="Tabs" selector="{{PageBuilderPanel.searchResults}}" stepKey="validateSearchResults"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <waitForPageLoad stepKey="waitForTabsToLoad"/>
+        <waitForElementVisible selector="{{TabOnStage.tabContent('1')}}" stepKey="waitForFirstTabContent"/>
+        <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="waitForFirstTabHeader"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <comment userInput="When I view options menu for single Tab" stepKey="AC2"/>
+        <waitForElementVisible time="10" selector="{{TabOnStage.tabHeader('1')}}" stepKey="waitForContentTypeInStageVisible" />
+        <click stepKey="clickTabTitle" selector="{{TabOnStage.tabHeader('1')}}"/>
+        <waitForElementVisible selector="{{TabOnStage.optionsMenuButton('1', 'edit')}}" stepKey="seeTabOptionsEdit"/>
+        <!-- Verify Remove option is disabled -->
+        <comment userInput="User sees that removing last tab from the Tabs content type is disabled" stepKey="AC3"/>
+        <seeElement selector="{{TabOnStage.optionsMenuButtonDisabled('1', 'remove')}}" stepKey="seeTabRemoveOptionDisabled"/>
+        <comment userInput="User remove default state Tabs content type with confirmation." stepKey="AC4"/>
+        <click selector="{{TabsOnStage.tabsContainer}}" stepKey="focusTabsElement"/>
+        <actionGroup ref="removeContentTypeFromStage" stepKey="removeContentTypeFromStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
+        <comment userInput="No Tabs shown on the stage after save nor on the storefront" stepKey="AC5"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <dontSeeElement selector="{{PageBuilderStage.contentTypeInStage(PageBuilderTabsContentType.role)}}" stepKey="dontSeeContentTypeInStage"/>
+        <amOnPage url="{{PageBuilderTabsContentType.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <reloadPage stepKey="reloadPage"/>
+        <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
+        <dontSeeElement selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="noTabsOnStorefront"/>
+    </test>
+    <test name="TabsRemoveSecondTabDefaultState">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Tabs"/>
+            <title value="Remove Individual Default State Second Tab"/>
+            <description value="A user should be able to delete second tab in default state without confirmation modal."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-87052"/>
+            <testCaseId value="MC-2672"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-tabs"/>
+            <group value="pagebuilder-tabsDelete"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <comment userInput="Given I have added Tabs content type to the stage with a second Tab in default state" stepKey="AC1"/>
+        <!-- Set the page title, as we'll be saving the page -->
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+
+        <!-- Add Tabs to Stage -->
+        <comment userInput="Add Tabs to Stage" stepKey="addTabsToStage"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <!-- Validate Tabs default state On Stage -->
+        <waitForPageLoad stepKey="waitForTabsToLoad"/>
+        <waitForElementVisible selector="{{TabOnStage.tabContent('1')}}" stepKey="waitForFirstTabContent"/>
+        <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="waitForFirstTabHeader"/>
+        <click selector="{{TabsOnStage.tabsContainer}}" stepKey="focusTabsElement"/>
+        <!-- Add second tab -->
+        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <comment userInput="When I delete second default state Tab from the stage" stepKey="AC2"/>
+        <!-- Remove second tab -->
+        <actionGroup ref="removeContentTypeFromStageSmallByIndex" stepKey="removeTabFromStage">
+            <argument name="section" value="TabOnStage"/>
+        </actionGroup>
+        <comment userInput="Removal confirmation modal not displayed when removing default state individual Tab" stepKey="AC3"/>
+        <waitForElementNotVisible time="30" selector="{{PageBuilderStage.modal}}" stepKey="dontSeeModalHeader"/>
+        <waitForElementNotVisible time="30" selector="{{PageBuilderStage.modalOk}}" stepKey="dontSeeModalOkHeader"/>
+        <comment userInput="Tabs with single Tab shown on the stage after save and on the storefront" stepKey="AC4"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <dontSeeElement selector="{{TabOnStage.tabHeader('2')}}" stepKey="dontSeeSecondTab"/>
+        <seeElement selector="{{PageBuilderStage.contentTypeInStage(PageBuilderTabsContentType.role)}}" stepKey="seeTabsInStage"/>
+        <amOnPage url="{{PageBuilderTabsContentType.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <reloadPage stepKey="reloadPage"/>
+        <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
+        <dontSeeElement selector="{{TabOnStorefront.tabHeader('2')}}" stepKey="dontSeeSecondTabOnStorefront"/>
+        <seeElement selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeFirstTabOnStorefront"/>
+    </test>
+    <test name="TabsRemoveConfiguredSecondTabWithConfirmation">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Tabs"/>
+            <title value="Remove Individual Configured Second Tab with Confirmation"/>
+            <description value="A user should be able to delete second tab in configured state with confirmation modal."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-87052"/>
+            <testCaseId value="MC-2638"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-tabs"/>
+            <group value="pagebuilder-tabsDelete"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <comment userInput="Given I have added a second Tab on the stage and customized it" stepKey="AC1"/>
+        <!-- Add Tabs to Stage -->
+        <comment userInput="Add Tabs to Stage" stepKey="addTabsToStage"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <!-- Fill tab config-->
+        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel2">
+            <argument name="section" value="TabOnStage"/>
+            <argument name="targetIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSecondTabName">
+            <argument name="property" value="PageBuilderTabNameRandom2"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundPositionCentered">
+            <argument name="property" value="PageBuilderBackgroundPosition_Center"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundAttachment">
+            <argument name="property" value="PageBuilderBackgroundAttachment_Fixed"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBackgroundColor">
+            <argument name="property" value="PageBuilderBackgroundColor_Hex_Grey"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+
+        <comment userInput="User deletes tab with customization from Tabs, user sees warning message" stepKey="AC2"/>
+        <!-- Remove second tab -->
+        <actionGroup ref="removeContentTypeFromStageSmallByIndex" stepKey="removeTabFromStage">
+            <argument name="section" value="TabOnStage"/>
+            <argument name="targetIndex" value="2"/>
+        </actionGroup>
+        <comment userInput="User confirms deleting tab with customization, it disappears from Admin preview" stepKey="AC3"/>
+        <actionGroup ref="confirmRemovalModal" stepKey="confirmRemoval"/>
+        <dontSeeElement selector="{{TabOnStage.tabHeader('2')}}" stepKey="dontSeeSecondTab"/>
+        <seeElement selector="{{TabOnStage.tabHeader('1')}}" stepKey="seeFirstTabOnStage"/>
+    </test>
+    <test name="TabsRemoveSecondTabContainingTextWithConfirmation">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Tabs"/>
+            <title value="Remove Second Tab Containing Content with Confirmation"/>
+            <description value="A user should be able to delete second tab that contains text content type with confirmation modal."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-87052"/>
+            <testCaseId value="MC-2723"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-tabs"/>
+            <group value="pagebuilder-tabsDelete"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <comment userInput="Given I have added Tabs with a second Tab" stepKey="AC1"/>
+        <!-- Set the page title, as we'll be saving the page -->
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <waitForPageLoad stepKey="waitForLoadingMaskToDisappear"/>
+        <waitForElementVisible selector="{{TabOnStage.tabHeader('2')}}" stepKey="confirmSecondTab"/>
+        <click selector="{{TabsOnStage.tabsContainer}}" stepKey="focusOnContentType"/>
+        <comment userInput="Given I have added a Text content type to the second Tab" stepKey="AC2"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection2">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextOntoTab">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderTabContentType"/>
+            <argument name="containerTargetIndex" value="2" />
+        </actionGroup>
+        <actionGroup ref="clickOutsideTextInlineEditing" stepKey="closeLiveEdit"/>
+        <comment userInput="User deletes tab with content from Tabs, user sees warning message" stepKey="AC3"/>
+        <actionGroup ref="removeContentTypeFromStageSmallByIndex" stepKey="removeTabFromStage">
+            <argument name="section" value="TabOnStage"/>
+            <argument name="targetIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="confirmRemovalModal" stepKey="confirmRemoval"/>
+        <comment userInput="User confirms deleting tab with content, it disappears from Admin preview" stepKey="AC4"/>
+        <dontSeeElement selector="{{TabOnStage.tabHeader('2')}}" stepKey="dontSeeSecondTab"/>
+        <comment userInput="Tabs with single Tab shown on the stage after save" stepKey="AC5"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <dontSeeElement selector="{{TabOnStage.tabHeader('2')}}" stepKey="dontSeeSecondTab2"/>
+        <seeElement selector="{{PageBuilderStage.contentTypeInStage(PageBuilderTabsContentType.role)}}" stepKey="seeTabsInStage"/>
+        <comment userInput="User goes to the storefront and sees 2 tabs not being displayed" stepKey="AC6"/>
+        <amOnPage url="{{PageBuilderTabsContentType.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <reloadPage stepKey="reloadPage"/>
+        <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
+        <dontSeeElement selector="{{TabOnStage.tabHeader('2')}}" stepKey="dontSeeSecondTabOnStorefront"/>
+        <seeElement selector="{{TabOnStage.tabHeader('1')}}" stepKey="seeFirstTabOnStorefront"/>
+    </test>
+    <test name="TabsRemoveConfiguredTabsContainerWithConfirmation">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Tabs"/>
+            <title value="Remove Configured Tabs Container with Confirmation"/>
+            <description value="A user should be able to delete a tabs container that has been customized with confirmation modal."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-87052"/>
+            <testCaseId value="MC-2507"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-tabs"/>
+            <group value="pagebuilder-tabsDelete"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <comment userInput="Given I have customized the Edit Tabs container advanced settings" stepKey="AC1"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <click selector="{{TabsOnStage.tabsContainer}}" stepKey="focusTabsElement"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterNavAlignmentCenter">
+            <argument name="property" value="PageBuilderTabsAlignmentCenter"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Verify in Admin Preview-->
+        <waitForElementVisible selector="{{TabsOnStage.tabsNavAligned(PageBuilderTabsAlignmentCenter.value)}}" stepKey="seeTabsNavAlignedCenteredAdmin"/>
+        <comment userInput="When I delete customized Tabs container from the stage" stepKey="AC2"/>
+        <click selector="{{TabsOnStage.tabsContainer}}" stepKey="focusTabsElement2"/>
+        <comment userInput="Removal confirmation modal displayed when removing customized Tabs container" stepKey="AC3"/>
+        <actionGroup ref="removeContentTypeFromStage" stepKey="removeContentTypeFromStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+    </test>
+    <test name="TabsOnDeleteCorrectTabBecomesActiveAndFocused">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Tabs"/>
+            <title value="Remove Third Tab And Second Becomes Active And Focused"/>
+            <description value="A user should be able to delete a tab from tabs and next tab becomes active and focused."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-87052"/>
+            <testCaseId value="MC-2712"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-tabs"/>
+            <group value="pagebuilder-tabsDelete"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <comment userInput="Given I have added Tabs container with 3 Tabs to the stage" stepKey="AC1"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{TabOnStage.tabContent('2')}}" stepKey="waitForNewTabContent2"/>
+        <waitForElementVisible selector="{{TabOnStage.tabHeader('2')}}" stepKey="waitForNewTabHeader2"/>
+        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType2">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{TabOnStage.tabContent('3')}}" stepKey="waitForNewTabContent3"/>
+        <waitForElementVisible selector="{{TabOnStage.tabHeader('3')}}" stepKey="waitForNewTabHeader3"/>
+        <comment userInput="When I delete third Tab from the stage" stepKey="AC2"/>
+        <click stepKey="clickTabHeader3" selector="{{TabOnStage.tabHeader('3')}}"/>
+        <actionGroup ref="removeContentTypeFromStageSmallByIndex" stepKey="removeTabFromStage">
+            <argument name="section" value="TabOnStage"/>
+            <argument name="targetIndex" value="3"/>
+        </actionGroup>
+        <dontSeeElement selector="{{TabOnStage.tabHeader('3')}}" stepKey="dontSeeThirdTabOnStorefront"/>
+        <comment userInput="Second Tab becomes both active and focused" stepKey="AC3"/>
+        <waitForPageLoad stepKey="waitForTabChangeAnimation" />
+        <waitForElementVisible selector="{{TabOnStage.tabHeaderItemActive('2')}}" stepKey="seeTab2Active"/>
+        <assertElementContainsAttribute selector="{{TabOnStage.tabPanel('1')}}" attribute="aria-hidden" expectedValue="true" stepKey="assertTab1Hidden"/>
+        <assertElementContainsAttribute selector="{{TabOnStage.tabPanel('2')}}" attribute="aria-hidden" expectedValue="false" stepKey="assertTab2Visible"/>
+    </test>
+    <test name="TabsDismissedCustomizedTabRemovalConfirmationPersistsSession">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Tabs"/>
+            <title value="Dismissed Customized Tab Removal Confirmation Persists Session"/>
+            <description value="A user should be able to dismiss confirmation modal on Tab and not receive the modal for the rest of the session"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-87052"/>
+            <testCaseId value="MC-2913"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-tabs"/>
+            <group value="pagebuilder-tabsDelete"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <comment userInput="Given I have customized a Tab on the stage and copied it" stepKey="AC1"/>
+        <!-- Set the page title, as we'll be saving the page -->
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <!-- Add Tabs to Stage -->
+        <comment userInput="Add Tabs to Stage" stepKey="addTabsToStage"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel">
+            <argument name="section" value="TabOnStage"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterFirstTabName">
+            <argument name="property" value="PageBuilderTabNameRandom1"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBackgroundColor">
+            <argument name="property" value="PageBuilderBackgroundColor_Hex_Grey"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <waitForPageLoad stepKey="waitForNewTab" time="30"/>
+
+        <actionGroup ref="duplicateSmallContentType" stepKey="duplicateSmallContentType1">
+            <argument name="section" value="TabOnStage"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="duplicateSmallContentType" stepKey="duplicateSmallContentType2">
+            <argument name="section" value="TabOnStage"/>
+            <argument name="targetIndex" value="2"/>
+        </actionGroup>
+        <comment userInput="When I delete customized Tab from the stage and dismiss the warning on confirmation modal" stepKey="AC2"/>
+        <actionGroup ref="removeContentTypeFromStageSmallByIndex" stepKey="removeTabFromStage1">
+            <argument name="section" value="TabOnStage"/>
+            <argument name="targetIndex" value="3"/>
+        </actionGroup>
+        <waitForElementVisible time="10" selector="{{PageBuilderStage.modal}}" stepKey="waitForModalVisible"/>
+        <seeElementInDOM selector="{{PageBuilderStage.modal}}" stepKey="seeModal"/>
+        <seeElementInDOM selector="{{PageBuilderStage.modalOk}}" stepKey="seeModalOk" />
+        <waitForElementVisible selector="{{PageBuilderStage.modalDoNotShowThisAgain}}" stepKey="waitForDoNotShowThisAgain"/>
+        <click selector="{{PageBuilderStage.modalDoNotShowThisAgain}}" stepKey="clickDoNotShowThisAgain"/>
+        <actionGroup ref="confirmRemovalModal" stepKey="confirmRemoval"/>
+        <waitForPageLoad stepKey="waitForRemovalModal" time="30"/>
+        <dontSeeElement selector="{{TabOnStage.tabHeader('3')}}" stepKey="dontSeeThirdTab"/>
+
+        <comment userInput="Deleting another customized Tab from the stage does not show confirmation modal" stepKey="AC3"/>
+        <actionGroup ref="removeContentTypeFromStageSmallByIndex" stepKey="removeTabFromStage2">
+            <argument name="section" value="TabOnStage"/>
+            <argument name="targetIndex" value="2"/>
+        </actionGroup>
+        <dontSee selector="{{PageBuilderStage.modal}}" stepKey="dontSeeModalHeader"/>
+        <dontSee selector="{{PageBuilderStage.modalOk}}" stepKey="dontSeeModalOkHeader" />
+        <dontSeeElement selector="{{TabOnStage.tabHeader('2')}}" stepKey="dontSeeSecondTabOnStage"/>
+
+        <comment userInput="Deleting a customized Heading from the stage does not show confirmation modal in same session" stepKey="AC4"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <seeNumberOfElements selector="{{RowOnStage.allRows}}" userInput="2" stepKey="seeTwoRows"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingOntoNewRow">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetIndex" value="1" />
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
+        </actionGroup>
+
+        <!-- Configure our heading -->
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterHeadingTypePropertyH5">
+            <argument name="property" value="PageBuilderHeadingTypeProperty_H5"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHeadingTitleProperty">
+            <argument name="property" value="PageBuilderHeadingTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsHeading"/>
+
+        <!-- Remove the heading, should not see modal -->
+        <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeHeader">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <dontSee selector="{{PageBuilderStage.modal}}" stepKey="dontSeeModalHeaderAfterHeader"/>
+        <dontSee selector="{{PageBuilderStage.modalOk}}" stepKey="dontSeeModalOkHeaderAfterHeader" />
+        <!-- Validate the items are removed -->
+        <dontSeeElement selector="{{PageBuilderStage.contentTypeInStage(PageBuilderHeadingContentType.role)}}" stepKey="dontSeeHeaderInStage"/>
+    </test>
+</tests>

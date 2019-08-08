@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<entities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:DataGenerator/etc/dataProfileSchema.xsd">
+    <!-- Text -->
+    <entity name="PageBuilderTextProperty" type="pagebuilder_text_property">
+        <data key="name">Text</data>
+        <data key="section">General</data>
+        <data key="fieldName">text</data>
+        <data key="cmsPageLinkName" unique="suffix">cms-page-link-</data>
+        <data key="value">test string</data>
+    </entity>
+    <entity name="PageBuilderTextContentTypeDefault" type="pagebuilder_text_property">
+        <data key="name">Text</data>
+        <data key="section">General</data>
+        <data key="fieldName">text</data>
+        <data key="cmsPageLinkName" unique="suffix">cms-page-link-</data>
+        <data key="value"/>
+    </entity>
+    <entity name="PageBuilderTextContentTypeEmpty" type="pagebuilder_text_property">
+        <data key="name">Text</data>
+        <data key="section">general</data>
+        <data key="fieldName">text</data>
+        <data key="cmsPageLinkName" unique="suffix">cms-page-link-</data>
+        <data key="value"/>
+        <data key="errorMessage">This is a required field.</data>
+    </entity>
+    <!-- Variables -->
+    <entity name="TinyMCEVariableBaseURL" type="pagebuilder_text_variable_property">
+        <data key="variableName">default:web/unsecure/base_url</data>
+        <data key="variableNameEncoded">d2ViL3Vuc2VjdXJlL2Jhc2VfdXJs</data>
+        <data key="editPanelValue">Base URL</data>
+        <data key="stageValue">{{config path=&quot;web/unsecure/base_url&quot;}}</data>
+    </entity>
+    <entity name="TinyMCEVariableStoreName" type="pagebuilder_text_variable_property">
+        <data key="variableName">default:general/store_information/name</data>
+        <data key="storefrontValue">The_Magento_Store_Name_Is_A_Long_Magento_Store_Name_With_No_Spaces</data>
+    </entity>
+    <entity name="TinyMCEVariableCountry" type="pagebuilder_text_variable_property">
+        <data key="variableName">default:general/store_information/country_id</data>
+        <data key="editPanelValue">Country</data>
+        <data key="stageValue">{{config path=&quot;general/store_information/country_id&quot;}}</data>
+    </entity>
+    <entity name="PageBuilderTextArea_VariableBaseURL" type="pagebuilder_text_variable_property">
+        <data key="variableName">default:web/unsecure/base_url</data>
+        <data key="editPanelValue">{{config path="web/unsecure/base_url"}}</data>
+    </entity>
+    <!-- Widgets -->
+    <entity name="TinyMCEWidgetCMSPageLink" type="pagebuilder_text_widget_property">
+        <data key="widgetType">Magento\Cms\Block\Widget\Page\Link</data>
+        <data key="editPanelValue">CMS Page Link</data>
+        <data key="stageValue">{{widget type=&quot;Magento\Cms\Block\Widget\Page\Link&quot; template=&quot;widget/link/link_block.phtml&quot; page_id=</data>
+        <data key="stageValueEncoded">e3t3aWRnZXQgdHlwZT0iTWFnZW50b1xDbXNcQmxvY2tcV2lkZ2V0XFBhZ2VcTGluayIgdGVtcGxhdGU9IndpZGdldC9saW5rL2xpbmtfYmxvY2sucGh0bWwiIHBhZ2VfaWQ9</data>
+    </entity>
+    <entity name="PageBuilderTextArea_WidgetCMSPageLink" type="pagebuilder_text_widget_property">
+        <data key="widgetType">Magento\Cms\Block\Widget\Page\Link</data>
+        <data key="editPanelValue">{{widget type=&quot;Magento\\Cms\\Block\\Widget\\Page\\Link&quot; template=&quot;widget/link/link_block.phtml&quot; page_id=</data>
+    </entity>
+    <entity name="PageBuilderTextArea_WidgetCMSHomepageLink" type="pagebuilder_text_widget_property">
+        <data key="widgetType">Magento\Cms\Block\Widget\Page\Link</data>
+        <data key="editPanelValue">{{widget type="Magento\Cms\Block\Widget\Page\Link" template="widget/link/link_block.phtml" page_id="2" type_name="CMS Page Link"}}</data>
+        <data key="identifier">home</data>
+    </entity>
+    <entity name="PageBuilderVariableWidgetText" type="pagebuilder_text_property">
+        <data key="value">test string</data>
+        <data key="expectedString1">test str</data>
+        <data key="expectedString2">ing</data>
+    </entity>
+</entities>

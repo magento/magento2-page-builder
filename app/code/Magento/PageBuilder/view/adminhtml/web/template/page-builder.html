@@ -5,15 +5,21 @@
  */
 -->
 <div class="pagebuilder-stage-wrapper"
-     css="'stage-full-screen': isFullScreen">
+     css="'stage-full-screen': isFullScreen"
+     ko-style="wrapperStyles">
     <div class="admin__field pagebuilder-header">
-        <i click="toggleFullScreen.bind($data)" css="'icon-pagebuilder-fullscreen': !isFullScreen(), 'icon-pagebuilder-fullscreen-exit': isFullScreen()"></i>
+        <i click="function() { toggleFullScreen($element); }"
+           css="'icon-pagebuilder-fullscreen': !isFullScreen(), 'icon-pagebuilder-fullscreen-exit': isFullScreen()"
+           attr="{title: isFullScreen() ? $t('Close Full Screen') : $t('Open in Full Screen')}">
+        </i>
     </div>
-    <br/>
     <with args="panel">
         <render/>
     </with>
-    <with args="stage">
-        <render/>
-    </with>
+    <if args="isStageReady">
+        <with args="stage">
+            <render/>
+        </with>
+        <iframe width="1" height="1" attr="id: 'render_frame_' + id" sandbox="allow-scripts" style="display: none;"></iframe>
+    </if>
 </div>

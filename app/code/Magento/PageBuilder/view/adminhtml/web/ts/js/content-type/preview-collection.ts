@@ -3,54 +3,87 @@
  * See COPYING.txt for license details.
  */
 
+import ContentTypeCollectionInterface from "../content-type-collection.types";
 import createContentType from "../content-type-factory";
-import ContentTypeInterface from "../content-type.d";
+import ContentTypeInterface from "../content-type.types";
 import Preview from "./preview";
+import {PreviewCollectionInterface} from "./preview-collection.types";
 
-export default class PreviewCollection extends Preview {
+export default class PreviewCollection extends Preview implements PreviewCollectionInterface {
+    public contentType: ContentTypeCollectionInterface;
+
     /**
      * Retrieve the preview child template
      *
      * @returns {string}
      */
-    get previewChildTemplate(): string {
+    get childTemplate(): string {
         return "Magento_PageBuilder/content-type/preview-collection";
     }
 
     /**
-     * Duplicate content type
+     * Duplicate a collection content type
      *
-     * @param {ContentTypeInterface} contentType
+     * @param {ContentTypeCollectionInterface} contentType
      * @param {boolean} autoAppend
-     * @returns {Promise<ContentTypeInterface>}
+     * @param {boolean} direct
+     * @returns {Promise<ContentTypeCollectionInterface> | void}
      */
-    public clone(contentType: ContentTypeInterface, autoAppend: boolean = true): Promise<ContentTypeInterface> {
-        const index = contentType.parent.getChildren().indexOf(contentType) + 1 || null;
+    public clone(
+        contentType: ContentTypeCollectionInterface,
+        autoAppend: boolean = true,
+        direct: boolean = false,
+    ): Promise<ContentTypeCollectionInterface> | void {
+        const index = contentType.parentContentType.getChildren().indexOf(contentType) + 1 || null;
+        const childrenLength = contentType.children ? contentType.children().length : null;
 
         return new Promise((resolve, reject) => {
             createContentType(
                 contentType.config,
-                contentType.parent,
+                contentType.parentContentType,
                 contentType.stageId,
-                contentType.dataStore.get(),
-            ).then((duplicate: ContentTypeInterface) => {
+                contentType.dataStore.getState(),
+                childrenLength,
+            ).then((duplicate: ContentTypeCollectionInterface) => {
                 if (contentType.children && contentType.children().length > 0) {
                     // Duplicate the instances children into the new duplicate
-                    contentType.children().forEach((subChild: ContentTypeInterface) => {
-                        duplicate.preview.clone(subChild, false).then((duplicateSubChild) => {
-                            duplicateSubChild.parent = duplicate;
-                            duplicate.addChild(duplicateSubChild);
-                        });
-                    });
+                    contentType.children().forEach(
+                        (subChild: ContentTypeInterface | ContentTypeCollectionInterface) => {
+                            const subChildClone = (duplicate.preview as Preview).clone(subChild, false);
+                            if (subChildClone) {
+                                subChildClone.then(
+                                    (duplicateSubChild: ContentTypeInterface | ContentTypeCollectionInterface) => {
+                                        duplicateSubChild.parentContentType = duplicate;
+                                        duplicate.addChild(duplicateSubChild);
+                                    },
+                                );
+                            } else {
+                                reject("Unable to duplicate sub child.");
+                            }
+                        },
+                    );
                 }
 
                 if (autoAppend) {
-                    contentType.parent.addChild(duplicate, index);
+                    contentType.parentContentType.addChild(duplicate, index);
                 }
-                this.dispatchContentTypeCloneEvents(contentType, duplicate, index);
+                this.dispatchContentTypeCloneEvents(contentType, duplicate, index, direct);
 
                 resolve(duplicate);
             });
+        });
+    }
+
+    /**
+     * Tries to call specified method of a current content type,
+     * and delegates attempt to its' children.
+     * @param args
+     */
+    public delegate(...args: any[]) {
+        super.delegate(...args);
+
+        this.contentType.getChildren()().forEach((elem: ContentTypeInterface) => {
+            elem.preview.delegate.apply(elem.preview, args);
         });
     }
 
@@ -60,7 +93,7 @@ export default class PreviewCollection extends Preview {
      * @returns {boolean}
      */
     protected isConfigured() {
-        if (this.parent.children().length > 0) {
+        if (this.contentType.children().length > 0) {
             return true;
         }
 

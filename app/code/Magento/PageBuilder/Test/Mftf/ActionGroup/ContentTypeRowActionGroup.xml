@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <!-- Validate Row Parallax Background -->
+    <actionGroup name="validateRowBackgroundAttributesWithAllUpdatedAndParallaxEnabled">
+        <arguments>
+            <argument name="page" defaultValue=""/>
+            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="backgroundColor" defaultValue=""/>
+            <argument name="backgroundImage" defaultValue=""/>
+            <argument name="backgroundPosition" defaultValue="PageBuilderRowBackgroundPosition_Default"/>
+            <argument name="backgroundSize" defaultValue="PageBuilderRowBackgroundSize_Default"/>
+            <argument name="backgroundRepeat" defaultValue="PageBuilderRowBackgroundRepeat_Default"/>
+            <argument name="backgroundAttachment" defaultValue="PageBuilderRowBackgroundAttachment_Default"/>
+        </arguments>
+        <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForRow"/>
+        <waitForElementVisible selector="{{page.backgroundColor(index, backgroundColor.rgb)}}" stepKey="waitForBackgroundColor"/>
+        <waitForElementVisible selector="{{page.parallaxBackgroundImage(index, backgroundImage.fileName, backgroundImage.extension)}}" stepKey="waitForBackgroundImage"/>
+        <waitForElementVisible selector="{{page.backgroundPosition(index, backgroundPosition.styleValue)}}" stepKey="waitForBackgroundPosition"/>
+        <waitForElementVisible selector="{{page.backgroundSize(index, backgroundSize.value)}}" stepKey="waitForBackgroundSize"/>
+        <waitForElementVisible selector="{{page.backgroundRepeat(index, backgroundRepeat.styleValue)}}" stepKey="waitForBackgroundRepeat"/>
+        <waitForElementVisible selector="{{page.backgroundAttachment(index, backgroundAttachment.value)}}" stepKey="waitForBackgroundAttachment"/>
+    </actionGroup>
+    <actionGroup name="validateRowParallaxBackgroundAttributes">
+        <arguments>
+            <argument name="page" defaultValue=""/>
+            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="parallaxStateValue" defaultValue=""/>
+            <argument name="parallaxSpeedValue" defaultValue=""/>
+        </arguments>
+        <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForRow"/>
+        <waitForElementVisible selector="{{page.parallaxState(index, parallaxStateValue.value)}}" stepKey="waitForParallaxBackgroundState"/>
+        <waitForElementVisible selector="{{page.parallaxSpeed(index, parallaxSpeedValue.value)}}" stepKey="waitForParallaxBackgroundSpeed"/>
+    </actionGroup>
+    <actionGroup name="validateBackgroundImageContainerForParallaxRow" extends="validateBackgroundImageContainer">
+        <comment userInput="validateBackgroundImageContainerForParallaxRow" stepKey="comment"/>
+        <executeJS function="return window.getComputedStyle({{section.parallaxJS(index)}}).backgroundImage" stepKey="backgroundImageValue"/>
+    </actionGroup>
+    <actionGroup name="validateContainedRowAppearance">
+        <arguments>
+            <argument name="pageOrStageWidthJS" defaultValue="{{PageBuilderStage.stageWidthJS}}" type="string"/>
+            <argument name="section" defaultValue="RowOnStage"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <comment userInput="Increase window size to see varying widths for rows" stepKey="commentResizeWindow"/>
+        <resizeWindow width="1920" height="1024" stepKey="resizeWindow"/>
+        <executeJS function="return {{pageOrStageWidthJS}}" stepKey="pageOrStageWidth"/>
+        <executeJS function="return {{section.rowWidthJS(index)}}" stepKey="rowWidth"/>
+        <assertGreaterThan stepKey="assertRowWidthGreaterThanZero">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">rowWidth</actualResult>
+        </assertGreaterThan>
+        <assertLessThan stepKey="assertRowWidthLessThanStageOrPageWidth">
+            <expectedResult type="variable">pageOrStageWidth</expectedResult>
+            <actualResult type="variable">rowWidth</actualResult>
+        </assertLessThan>
+        <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
+    </actionGroup>
+    <actionGroup name="validateFullWidthRowAppearance">
+        <arguments>
+            <argument name="pageOrStageWidthJS" defaultValue="{{PageBuilderStage.stageWidthJS}}" type="string"/>
+            <argument name="section" defaultValue="RowOnStage"/>
+            <argument name="rowIndex" defaultValue="1" type="string"/>
+            <argument name="childContentType" defaultValue="PageBuilderDividerContentType"/>
+            <argument name="childContentTypeBorder" defaultValue="PageBuilderAdvancedBorderWidthProperty0"/>
+            <argument name="childContentTypeIndex" defaultValue="1" type="string"/>
+            <argument name="padding" defaultValue="PageBuilderPaddingPropertyRowDefault"/>
+            <argument name="acceptableOffset" defaultValue="2" type="string"/>
+        </arguments>
+        <comment userInput="Increase window size to see varying widths for rows" stepKey="commentResizeWindow"/>
+        <resizeWindow width="1920" height="1024" stepKey="resizeWindow"/>
+        <executeJS function="return {{pageOrStageWidthJS}}" stepKey="pageOrStageWidth"/>
+        <executeJS function="return {{section.rowWidthJS(rowIndex)}}" stepKey="rowWidth"/>
+        <executeJS function="return parseInt({{section.rowChildContentWidthJS(rowIndex, childContentType.role, childContentTypeIndex)}} + {{padding.paddingLeft}} + {{padding.paddingRight}} + ({{childContentTypeBorder.value}}*2))" stepKey="rowChildElementWidth"/>
+        <executeJS function="return Math.abs({$pageOrStageWidth} - {$rowWidth})" stepKey="pageMinusRowWidth"/>
+        <assertGreaterThan stepKey="assertRowWidthGreaterThanZero">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">rowWidth</actualResult>
+        </assertGreaterThan>
+        <assertLessThanOrEqual stepKey="assertRowWidthEqualsStageOrPageWidth">
+            <expectedResult type="int">{{acceptableOffset}}</expectedResult>
+            <actualResult type="variable">pageMinusRowWidth</actualResult>
+        </assertLessThanOrEqual>
+        <assertGreaterThanOrEqual stepKey="assertRowWidthGreaterThanOrEqualToContents">
+            <expectedResult type="variable">rowChildElementWidth</expectedResult>
+            <actualResult type="variable">rowWidth</actualResult>
+        </assertGreaterThanOrEqual>
+        <assertLessThanOrEqual stepKey="assertChildContentMaximumWidth">
+            <expectedResult type="int">1300</expectedResult>
+            <actualResult type="variable">rowChildElementWidth</actualResult>
+        </assertLessThanOrEqual>
+        <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
+    </actionGroup>
+    <actionGroup name="validateFullBleedRowAppearance" extends="validateFullWidthRowAppearance">
+        <executeJS function="return Math.abs({$rowChildElementWidth} - {$rowWidth})" stepKey="rowMinusChildWidth" after="pageMinusRowWidth"/>
+        <assertLessThanOrEqual stepKey="assertRowWidthGreaterThanOrEqualToContents">
+            <expectedResult type="int">{{acceptableOffset}}</expectedResult>
+            <actualResult type="variable">rowMinusChildWidth</actualResult>
+        </assertLessThanOrEqual>
+        <comment userInput="---merging to remove step---" stepKey="assertChildContentMaximumWidth"/>
+    </actionGroup>
+</actionGroups>

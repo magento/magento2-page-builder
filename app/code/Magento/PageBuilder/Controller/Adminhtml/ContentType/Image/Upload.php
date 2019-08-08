@@ -5,12 +5,12 @@
  */
 namespace Magento\PageBuilder\Controller\Adminhtml\ContentType\Image;
 
-use Magento\Framework\Controller\ResultFactory;
+use Magento\Framework\App\Action\HttpPostActionInterface;
 
 /**
  * Class Upload
  */
-class Upload extends \Magento\Backend\App\Action
+class Upload extends \Magento\Backend\App\Action implements HttpPostActionInterface
 {
     const UPLOAD_DIR = 'wysiwyg';
 
@@ -37,6 +37,11 @@ class Upload extends \Magento\Backend\App\Action
     private $storeManager;
 
     /**
+     * @var \Magento\Cms\Helper\Wysiwyg\Images
+     */
+    private $cmsWysiwygImages;
+
+    /**
      * Constructor
      *
      * @param \Magento\Backend\App\Action\Context $context
@@ -44,19 +49,22 @@ class Upload extends \Magento\Backend\App\Action
      * @param \Magento\Store\Model\StoreManagerInterface $storeManager
      * @param \Magento\Framework\File\UploaderFactory $uploaderFactory
      * @param \Magento\Framework\Filesystem\DirectoryList $directoryList
+     * @param \Magento\Cms\Helper\Wysiwyg\Images $cmsWysiwygImages
      */
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Magento\Framework\File\UploaderFactory $uploaderFactory,
-        \Magento\Framework\Filesystem\DirectoryList $directoryList
+        \Magento\Framework\Filesystem\DirectoryList $directoryList,
+        \Magento\Cms\Helper\Wysiwyg\Images $cmsWysiwygImages
     ) {
         parent::__construct($context);
         $this->resultJsonFactory = $resultJsonFactory;
         $this->storeManager = $storeManager;
         $this->uploaderFactory = $uploaderFactory;
         $this->directoryList = $directoryList;
+        $this->cmsWysiwygImages = $cmsWysiwygImages;
     }
 
     /**
@@ -86,9 +94,15 @@ class Upload extends \Magento\Backend\App\Action
         $fileUploader->setAllowRenameFiles(true);
         $fileUploader->setAllowedExtensions(['jpeg','jpg','png','gif']);
         $fileUploader->setAllowCreateFolders(true);
+
         try {
+            if (!$fileUploader->checkMimeType(['image/png', 'image/jpeg', 'image/gif'])) {
+                throw new \Magento\Framework\Exception\LocalizedException(__('File validation failed.'));
+            }
+
             $result = $fileUploader->save($this->getUploadDir());
             $baseUrl = $this->storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
+            $result['id'] = $this->cmsWysiwygImages->idEncode($result['file']);
             $result['url'] = $baseUrl . $this->getFilePath(self::UPLOAD_DIR, $result['file']);
         } catch (\Exception $e) {
             $result = [

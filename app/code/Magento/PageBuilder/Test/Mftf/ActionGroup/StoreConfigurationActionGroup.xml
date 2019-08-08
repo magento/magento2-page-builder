@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="enablePageBuilderSetting">
+        <amOnPage url="{{AdminContentManagementPage.url}}" stepKey="navigateToConfigurationPage" />
+        <waitForPageLoad stepKey="wait1"/>
+        <conditionalClick stepKey="expandWYSIWYGOptions" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true" />
+        <waitForElementVisible selector="{{ContentManagementSection.EnablePageBuilder}}" stepKey="waitForEnablePageBuilder" />
+        <selectOption selector="{{ContentManagementSection.EnablePageBuilder}}" userInput="Yes" stepKey="selectOption1"/>
+        <click selector="{{ContentManagementSection.PageBuilderOptions}}" stepKey="collapsePageBuilderOptions" />
+        <click selector="{{ContentManagementSection.Save}}" stepKey="saveConfig" />
+        <waitForPageLoad stepKey="wait2"/>
+    </actionGroup>
+    <actionGroup name="disablePageBuilderSetting">
+        <!-- Enable first since it's dependent on disable Disclaimer modal showing -->
+        <amOnPage url="{{AdminContentManagementPage.url}}" stepKey="navigateToConfigurationPage1" />
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <conditionalClick stepKey="expandWYSIWYGOptions" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
+        <waitForElementVisible selector="{{ContentManagementSection.EnablePageBuilder}}" stepKey="waitForEnablePageBuilder"/>
+        <selectOption selector="{{ContentManagementSection.EnablePageBuilder}}" userInput="Yes" stepKey="selectOption1"/>
+        <click selector="{{ContentManagementSection.PageBuilderOptions}}" stepKey="collapsePageBuilderOptions"/>
+        <click selector="{{ContentManagementSection.Save}}" stepKey="saveConfig"/>
+        <!-- NOW disable -->
+        <amOnPage url="{{AdminContentManagementPage.url}}" stepKey="navigateToConfigurationPage2" />
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <conditionalClick stepKey="expandPageBuilderTab" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true" />
+        <waitForElementVisible selector="{{ContentManagementSection.EnablePageBuilder}}" stepKey="waitForEnablePageBuilderVisible" />
+        <selectOption selector="{{ContentManagementSection.EnablePageBuilder}}" userInput="No" stepKey="selectNo"/>
+        <waitForElementVisible selector="{{ContentManagementSection.DisclaimerMessage}}" stepKey="waitForPopUpMsg2"/>
+        <waitForElementVisible selector="{{ContentManagementSection.TurnOffBtn}}" stepKey="waitForTurnOffButton"/>
+        <click selector="{{ContentManagementSection.TurnOffBtn}}" stepKey="selectTurnOff" />
+        <waitForElementNotVisible selector="{{ContentManagementSection.DisclaimerMessage}}" stepKey="waitForPopupClose2"/>
+        <seeOptionIsSelected selector="{{ContentManagementSection.EnablePageBuilder}}" userInput="No" stepKey="verifyNoSelected"/>
+        <click selector="{{ContentManagementSection.PageBuilderOptions}}" stepKey="collapseAdvancedContentToolsTab" />
+        <click selector="{{ContentManagementSection.Save}}" stepKey="saveConfig2" />
+        <waitForPageLoad stepKey="waitForPageLoad3"/>
+    </actionGroup>
+    <actionGroup name="applyGoogleMapsAPIKey">
+        <arguments>
+            <argument name="apiKey" defaultValue="{{googleMapsAPIKey.valid}}" type="string"/>
+        </arguments>
+        <comment userInput="applyGoogleMapsAPIKey" stepKey="comment"/>
+        <amOnPage url="{{AdminContentManagementPage.url}}" stepKey="navigateToConfigurationPage"/>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
+        <waitForElementVisible selector="{{ContentManagementSection.GoogleMapsAPIKeyInputField}}" stepKey="waitForGoogleMapsAPIKeyInputField"/>
+        <fillField selector="{{ContentManagementSection.GoogleMapsAPIKeyInputField}}" userInput="{{apiKey}}" stepKey="inputAPIKey"/>
+        <pressKey selector="{{ContentManagementSection.GoogleMapsAPIKeyInputField}}" parameterArray="[\WebDriverKeys::ENTER]" stepKey="pressKey"/>
+        <click selector="{{ContentManagementSection.Save}}" stepKey="saveConfig"/>
+        <waitForPageLoad stepKey="waitForPageLoad3"/>
+    </actionGroup>
+    <actionGroup name="inputGoogleMapsAPIKey">
+        <arguments>
+            <argument name="apiKey" defaultValue="{{googleMapsAPIKey.valid}}" type="string"/>
+        </arguments>
+        <comment userInput="inputGoogleMapsAPIKey" stepKey="comment"/>
+        <waitForElementVisible selector="{{ContentManagementSection.GoogleMapsAPIKeyInputField}}" stepKey="waitForGoogleMapsAPIKeyInputField"/>
+        <fillField selector="{{ContentManagementSection.GoogleMapsAPIKeyInputField}}" userInput="{{apiKey}}" stepKey="inputAPIKey"/>
+        <pressKey selector="{{ContentManagementSection.GoogleMapsAPIKeyInputField}}" parameterArray="[\WebDriverKeys::ENTER]" stepKey="pressKey"/>
+    </actionGroup>
+    <actionGroup name="clickAndValidateGoogleMapsAPIKeyTestKeyButton">
+        <arguments>
+            <argument name="expectedResult" defaultValue="success" type="string"/>
+            <argument name="buttonText" type="string"/>
+        </arguments>
+        <comment userInput="clickAndValidateGoogleMapsAPIKeyTestKeyButton" stepKey="comment"/>
+        <waitForElementVisible selector="{{ContentManagementSection.GoogleMapsAPIKeyTestKeyButton}}" stepKey="waitForTestKeyButtonEnabled"/>
+        <click selector="{{ContentManagementSection.GoogleMapsAPIKeyTestKeyButton}}" stepKey="clickTestKeyButton"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible selector="{{ContentManagementSection.GoogleMapsAPIKeyTestKeyResult}} .icon-admin-pagebuilder-{{expectedResult}}" stepKey="waitForTestKeyButtonResult"/>
+        <see userInput="{{buttonText}}" selector="{{ContentManagementSection.GoogleMapsAPIKeyTestKeyResult}}" stepKey="seeTestKeyButtonText"/>
+    </actionGroup>
+    <actionGroup name="inputGoogleMapsStyle">
+        <arguments>
+            <argument name="style" defaultValue="{{googleMapsStyle.valid}}" type="string"/>
+        </arguments>
+        <comment userInput="inputGoogleMapsStyle" stepKey="comment"/>
+        <waitForElementVisible selector="{{ContentManagementSection.GoogleMapsStyleInputField}}" stepKey="waitForGoogleMapsStyleInputField"/>
+        <fillField selector="{{ContentManagementSection.GoogleMapsStyleInputField}}" userInput="{{style}}" stepKey="inputStyle"/>
+    </actionGroup>
+    <actionGroup name="updateDefaultGridSizeConfig">
+        <arguments>
+            <argument name="gridSize" defaultValue="12" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{ContentManagementSection.ColumnGridDefaultInputField}}" stepKey="waitForDefaultGridSizeInputFieldVisible"/>
+        <fillField selector="{{ContentManagementSection.ColumnGridDefaultInputField}}" userInput="{{gridSize}}" stepKey="enterDefaultGridSize"/>
+    </actionGroup>
+    <actionGroup name="updateMaxGridSizeConfig">
+        <arguments>
+            <argument name="gridSize" defaultValue="16" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{ContentManagementSection.ColumnGridMaxInputField}}" stepKey="waitForMaxGridSizeInputFieldVisible"/>
+        <fillField selector="{{ContentManagementSection.ColumnGridMaxInputField}}" userInput="{{gridSize}}" stepKey="enterMaxGridSize"/>
+    </actionGroup>
+</actionGroups>

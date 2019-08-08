@@ -7,6 +7,8 @@ define(["Magento_PageBuilder/js/utils/extract-alpha-from-rgba"], function (_extr
   var OverlayTransparency =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     function OverlayTransparency() {}
 
     var _proto = OverlayTransparency.prototype;
@@ -23,14 +25,14 @@ define(["Magento_PageBuilder/js/utils/extract-alpha-from-rgba"], function (_extr
     /**
      * Convert value to knockout format
      *
-     * @param name string
-     * @param data Object
+     * @param {string} name
+     * @param {DataObject} data
      * @returns {string | object}
      */
 
 
     _proto.toDom = function toDom(name, data) {
-      return data[name];
+      return data[name].toString();
     };
 
     return OverlayTransparency;

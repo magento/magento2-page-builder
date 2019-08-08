@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="navigateToStoreFront">
+        <arguments>
+            <argument name="contentType"/>
+        </arguments>
+        <amOnPage url="{{contentType.pageNamePrefix}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnStoreFrontPage"/>
+        <waitForPageLoad time="30" stepKey="waitForPageLoad"/>
+    </actionGroup>
+    <actionGroup name="navigateToStoreFrontWithStoreView">
+        <arguments>
+            <argument name="contentType"/>
+            <argument name="storeView"/>
+        </arguments>
+        <amOnPage url="{{storeView.code}}/{{contentType.pageNamePrefix}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnStoreFrontPage"/>
+        <waitForPageLoad time="30" stepKey="waitForPageLoad"/>
+    </actionGroup>
+    <actionGroup name="validateContentTypeInsideContainerStorefront">
+        <arguments>
+            <argument name="contentType"/>
+            <argument name="contentTypeIndex" defaultValue="1" type="string"/>
+            <argument name="containerTargetType"/>
+            <argument name="containerTargetIndex" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible time="30" selector="{{PageBuilderStoreFront.contentTypeInsideContainerStorefront(containerTargetType.role, containerTargetIndex, contentType.role, contentTypeIndex)}}" stepKey="waitForContentTypeStorefront"/>
+    </actionGroup>
+    <actionGroup name="validateContentTypeInsideContainerStorefrontInDOM">
+        <arguments>
+            <argument name="contentType"/>
+            <argument name="contentTypeIndex" defaultValue="1" type="string"/>
+            <argument name="containerTargetType"/>
+            <argument name="containerTargetIndex" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElement time="30" selector="{{PageBuilderStoreFront.contentTypeInsideContainerStorefront(containerTargetType.role, containerTargetIndex, contentType.role, contentTypeIndex)}}" stepKey="waitForContentTypeStorefront"/>
+    </actionGroup>
+    <actionGroup name="verifyCmsPageLinkOnFrontend">
+        <arguments>
+            <argument name="CMSPage"/>
+            <argument name="index"/>
+            <argument name="section"/>
+        </arguments>
+        <scrollTo selector="{{section.base('index')}}" stepKey="waitForButtonElementStorefront"/>
+        <seeElement selector="{{PageBuilderLinkAttributeStoreFront.ExternalURLContainsLink(CMSPage.identifier)}}" stepKey="seePageLinkOnStoreFront"/>
+        <click selector="{{PageBuilderLinkAttributeStoreFront.ExternalURLContainsLink(CMSPage.identifier)}}" stepKey="clickLink"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <see userInput="{{CMSPage.title}}" stepKey="seePageName"/>
+    </actionGroup>
+</actionGroups>

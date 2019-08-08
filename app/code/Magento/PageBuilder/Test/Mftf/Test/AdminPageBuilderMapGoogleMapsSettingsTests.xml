@@ -1,0 +1,612 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="MapInvalidAPIKeyWarningMessage">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Map"/>
+            <title value="Google Maps API Key - Invalid API Key Warning Message"/>
+            <description value="When an invalid Google Maps API key is set, a user should see an invalid key overlay on map on stage and add location form, a warning message on the configuration panel, and a google error on the Storefront."/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MAGETWO-88225"/>
+            <testCaseId value="MC-2741"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="pagebuilder-googleMapsAPIKey"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key {{googleMapsAPIKey.invalidOneCharacter}}" stepKey="setInvalidGoogleMapsAPIKey"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setEmptyGoogleMapsAPIKey"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionMedia">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeIntoStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <actionGroup ref="validateMapErrorMessageStage" stepKey="validateMapErrorMessageOnStage"/>
+        <!-- Validate Edit Form -->
+        <comment userInput="Validate Edit Form" stepKey="commentValidateEditForm"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <waitForElement selector="{{EditMapForm.warningMessage}}" stepKey="waitForWarningMessageElement"/>
+        <dontSeeElement selector="{{EditMapForm.warningMessage}}" stepKey="dontSeeWarningMessage"/>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
+        <actionGroup ref="validateMapErrorMessageAddLocationForm" stepKey="validateMapErrorMessageOnEditPanel"/>
+        <actionGroup ref="closeLocationForm" stepKey="closeLocationForm"/>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanel"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
+        <actionGroup ref="validateMapErrorMessageStage" stepKey="validateMapErrorMessageOnStage2"/>
+        <!-- Validate Edit Form After Save -->
+        <comment userInput="Validate Edit Form After Save" stepKey="commentValidateEditForm2"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <waitForElement selector="{{EditMapForm.warningMessage}}" stepKey="waitForWarningMessageElement2"/>
+        <dontSeeElement selector="{{EditMapForm.warningMessage}}" stepKey="dontSeeWarningMessage2"/>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton2"/>
+        <actionGroup ref="validateMapErrorMessageAddLocationForm" stepKey="validateMapErrorMessageOnEditPanel2"/>
+        <!-- Validate No Message On Storefront After Save -->
+        <comment userInput="Validate No Message On Storefront After Save" stepKey="commentValidateMessageOnStorefrontAfterSave"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="validateEmptyMapStoreFront" stepKey="validateEmptyMapStoreFront"/>
+    </test>
+    <test name="MapEmptyAPIKeyWarningMessage" extends="MapInvalidAPIKeyWarningMessage">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Map"/>
+            <title value="Google Maps API Key - Empty API Key Warning Message"/>
+            <description value="When an empty Google Maps API key is set, a user should see an invalid key overlay on map on stage and add location form, a warning message on the configuration panel, and a google error on the Storefront."/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-5723"/>
+            <testCaseId value="MC-6022"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="pagebuilder-googleMapsAPIKey"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setInvalidGoogleMapsAPIKey"/>
+        </before>
+        <seeElement selector="{{EditMapForm.warningMessage}}" stepKey="dontSeeWarningMessage"/>
+        <seeElement selector="{{EditMapForm.warningMessage}}" stepKey="dontSeeWarningMessage2"/>
+    </test>
+    <test name="MapEmptyAPIKeyWarningMessageLink">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Map"/>
+            <title value="Google Maps API Key - Empty API Key Warning Message Links"/>
+            <description value="Verify that the link in the warning overlays and message on stage, edit form, and location form redirect user correctly when an empty Google Maps API key is set."/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MAGETWO-88225"/>
+            <testCaseId value="MC-2768"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="pagebuilder-googleMapsAPIKey"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setEmptyGoogleMapsAPIKey"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionMedia">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeIntoStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage1"/>
+        <!-- Stage: Validate Warning Message Link -->
+        <comment userInput="Stage: Validate Warning Message Link" stepKey="commentValidateWarningMessageLinkStage"/>
+        <actionGroup ref="validateWarningMessageLink" stepKey="validateWarningMessageLink1">
+            <argument name="section" value="MapOnStage"/>
+        </actionGroup>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!-- Edit Form: Validate Warning Message Link -->
+        <comment userInput="Edit Form: Validate Warning Message Link" stepKey="commentValidateWarningMessageLinkEditForm"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditPanel1">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="validateWarningMessageLink" stepKey="validateWarningMessageLink2">
+            <argument name="section" value="EditMapForm"/>
+        </actionGroup>
+        <!-- Location Form: Validate Warning Message Link -->
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
+        <actionGroup ref="validateWarningMessageLink" stepKey="validateWarningMessageLink3">
+            <argument name="section" value="AddLocationForm"/>
+        </actionGroup>
+    </test>
+    <test name="MapInvalidAPIKeyWarningMessageLink" extends="MapEmptyAPIKeyWarningMessageLink">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Map"/>
+            <title value="Google Maps API Key - Invalid API Key Warning Message (MC-5723)"/>
+            <description value="A user should see an invalid key overlay on map on stage and add location form, a warning message on the configuration panel, and a google error on the Storefront when an invalid Google Maps API key is set."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-5723"/>
+            <testCaseId value="MC-6021"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="pagebuilder-googleMapsAPIKey"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key {{googleMapsAPIKey.invalidOneCharacter}}" stepKey="setEmptyGoogleMapsAPIKey"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setEmptyGoogleMapsAPIKey" before="logout"/>
+        </after>
+        <comment userInput="Edit Form: Validate No Warning Message Link" stepKey="commentValidateWarningMessageLinkEditForm"/>
+        <dontSeeElement selector="{{EditMapForm.warningMessage}}" stepKey="validateWarningMessageLink2"/>
+        <reloadPage stepKey="moveBack2"/>
+    </test>
+    <test name="MapCanAddNewLocationWithInvalidAPIKey">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Map"/>
+            <title value="Google Maps API Key - Can Add New Location With Invalid API Key"/>
+            <description value="A user should be able to add a new location with an invalid API key."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-5723"/>
+            <testCaseId value="MC-2462"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="pagebuilder-googleMapsAPIKey"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key {{googleMapsAPIKey.invalidOneCharacter}}" stepKey="setInvalidGoogleMapsAPIKey"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setEmptyGoogleMapsAPIKey"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionMedia">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeIntoStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <!-- Add Location -->
+        <comment userInput="Add Location" stepKey="commentAddLocation"/>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLatitude">
+            <argument name="property" value="PageBuilderMapLatitude_Positive39_74"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLongitude">
+            <argument name="property" value="PageBuilderMapLongitude_Positive9_67"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName">
+            <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Location Was Saved -->
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditPanel2">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridData">
+            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
+            <argument name="rowIndex" value="1"/>
+        </actionGroup>
+    </test>
+    <test name="MapCanAddNewLocationWithEmptyAPIKey" extends="MapCanAddNewLocationWithInvalidAPIKey">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Map"/>
+            <title value="Google Maps API Key - Can Add New Location With Empty API Key"/>
+            <description value="A user should be able to add a new location with an empty API key."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-5723"/>
+            <testCaseId value="MC-6020"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="pagebuilder-googleMapsAPIKey"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setInvalidGoogleMapsAPIKey"/>
+        </before>
+    </test>
+    <test name="MapCanEditLocationWithInvalidAPIKey">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Map"/>
+            <title value="Google Maps API Key - Can Edit Location With Invalid API Key"/>
+            <description value="A user should be able to edit a location with an invalid API key."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-88132"/>
+            <testCaseId value="MC-2463"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="pagebuilder-googleMapsAPIKey"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key {{googleMapsAPIKey.invalidOneCharacter}}" stepKey="setInvalidGoogleMapsAPIKey"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setEmptyGoogleMapsAPIKey"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Save Page With Map -->
+        <comment userInput="Save Page With Map" stepKey="commentSavePage1"/>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionMedia">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeIntoStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLatitude">
+            <argument name="property" value="PageBuilderMapLatitude_Positive39_74"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLongitude">
+            <argument name="property" value="PageBuilderMapLongitude_Positive9_67"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName">
+            <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Verify Can Still Edit Location -->
+        <comment userInput="Verify Can Still Edit Location" stepKey="commentEdit"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{PageBuilderDataGrid.gridBase}}" stepKey="waitForGrid"/>
+        <waitForElementVisible selector="{{PageBuilderDataGrid.gridRow(PageBuilderMapLocationName_TestLocation.fieldName, PageBuilderMapLocationName_TestLocation.value)}}" stepKey="waitForGridRow"/>
+        <click selector="{{PageBuilderDataGrid.gridRow(PageBuilderMapLocationName_TestLocation.fieldName, PageBuilderMapLocationName_TestLocation.value)}}" stepKey="clickGridRow"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible selector="{{AddLocationForm.form}}" stepKey="waitForForm"/>
+        <see userInput="Add Location" selector="{{AddLocationForm.formTitle}}" stepKey="seeFormTitle"/>
+        <waitForElementVisible selector="{{AddLocationForm.errorContainer('1')}}" stepKey="waitForLocationMapOverlay"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName2">
+            <argument name="property" value="PageBuilderMapLocationName_TestLocationEdit"/>
+        </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm2"/>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridData">
+            <argument name="locationName" value="PageBuilderMapLocationName_TestLocationEdit"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <!-- Save Page -->
+        <comment userInput="Save Page" stepKey="commentSavePage2"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!-- Validate Edit Panel -->
+        <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridData2">
+            <argument name="locationName" value="PageBuilderMapLocationName_TestLocationEdit"/>
+        </actionGroup>
+        <actionGroup ref="clickLocationGridRow" stepKey="clickLocationGridRow2">
+            <argument name="locationName" value="PageBuilderMapLocationName_TestLocationEdit"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateEditPanelField">
+            <argument name="property" value="PageBuilderMapLocationName_TestLocationEdit"/>
+        </actionGroup>
+    </test>
+    <test name="MapCanEditLocationWithEmptyAPIKey" extends="MapCanEditLocationWithInvalidAPIKey">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Map"/>
+            <title value="Google Maps API Key - Can Edit Location With Empty API Key"/>
+            <description value="A user should be able to edit a location with an empty API key."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-5723"/>
+            <testCaseId value="MC-6039"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="pagebuilder-googleMapsAPIKey"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setInvalidGoogleMapsAPIKey"/>
+        </before>
+    </test>
+    <test name="MapCanDeleteLocationWithInvalidAPIKey">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Map"/>
+            <title value="Google Maps API Key - Can Delete Location With Invalid API Key"/>
+            <description value="A user should be able to delete a location with an invalid API key."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-88132"/>
+            <testCaseId value="MC-2439"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="pagebuilder-googleMapsAPIKey"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key {{googleMapsAPIKey.invalidOneCharacter}}" stepKey="setInvalidGoogleMapsAPIKey"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setEmptyGoogleMapsAPIKey"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Save Page With Map -->
+        <comment userInput="Save Page With Map" stepKey="commentSavePage1"/>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionMedia">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeIntoStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLatitude">
+            <argument name="property" value="PageBuilderMapLatitude_Positive39_74"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLongitude">
+            <argument name="property" value="PageBuilderMapLongitude_Positive9_67"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName">
+            <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage1"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage1"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <!-- Verify Can Still Delete Location -->
+        <comment userInput="Verify Can Still Delete Location" stepKey="commentDelete"/>
+        <actionGroup ref="deleteLocationFromGrid" stepKey="deleteLocationFromGrid">
+            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
+        <seeElement selector="{{PageBuilderDataGrid.emptyGridMessage(PageBuilderMapGrid.emptyMessage)}}" stepKey="seeEmptyGrid1"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <!-- Save Page -->
+        <comment userInput="Save Page" stepKey="commentSavePage2"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!-- Validate Edit Panel -->
+        <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <seeElement selector="{{PageBuilderDataGrid.emptyGridMessage(PageBuilderMapGrid.emptyMessage)}}" stepKey="seeEmptyGrid2"/>
+    </test>
+    <test name="MapCanDeleteLocationWithEmptyAPIKey" extends="MapCanDeleteLocationWithInvalidAPIKey">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Map"/>
+            <title value="Google Maps API Key - Can Delete Location With Empty API Key"/>
+            <description value="A user should be able to delete a location with an empty API key."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-5723"/>
+            <testCaseId value="MC-6040"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="pagebuilder-googleMapsAPIKey"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setInvalidGoogleMapsAPIKey"/>
+        </before>
+    </test>
+    <test name="MapDoesNotRenderNewGoogleMapsStyleOnStorefrontUntilPageSaveOrCacheRefresh">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Map"/>
+            <title value="Google Maps Style - Map Does Not Render New Google Maps Style On Storefront Until Page Save Or Cache Refresh"/>
+            <description value="A change to the Google Maps Style should not take affect on the storefront until a page save or a cache refresh"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-89028"/>
+            <testCaseId value="MC-2523"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="pagebuilder-googleMapsStyle"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_style ''" stepKey="setEmptyGoogleMapsStyle"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_style ''" stepKey="setEmptyGoogleMapsStyle"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionMedia">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeIntoStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <!-- Add Location -->
+        <comment userInput="Add Location" stepKey="commentAddLocation"/>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLatitude">
+            <argument name="property" value="PageBuilderMapLatitude_Positive39_74"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLongitude">
+            <argument name="property" value="PageBuilderMapLongitude_Positive9_67"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName">
+            <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <openNewTab stepKey="openNewTab"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront1">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <!--Set Google Maps Style -->
+        <comment userInput="Set Google Maps Style" stepKey="commentSetStyle"/>
+        <actionGroup ref="navigateToAdminContentManagementPage" stepKey="navigateToAdminContentManagementPage"/>
+        <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
+        <actionGroup ref="inputGoogleMapsStyle" stepKey="inputGoogleMapsStyle">
+            <argument name="style" value="{{googleMapsStyle.validShort}}"/>
+        </actionGroup>
+        <actionGroup ref="saveStoreConfiguration" stepKey="saveStoreConfiguration"/>
+        <!-- Storefront: Validate Map Style Unchanged -->
+        <comment userInput="Storefront: Validate Map Style Unchanged" stepKey="commentValidate1"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront2">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <executeJS function="return document.evaluate('//body//script[contains(.,\'Magento_PageBuilder/js/utils/map\')]', document, null, XPathResult.STRING_TYPE, null).stringValue.match(/(?&lt;=style:\s').+(?=')/)" stepKey="mapStyle1"/>
+        <assertEquals stepKey="assertMapStyle1">
+            <actualResult type="variable">$mapStyle1</actualResult>
+            <expectedResult type="string">{{googleMapsStyle.empty}}</expectedResult>
+        </assertEquals>
+        <!-- Save Page -->
+        <comment userInput="Save Page" stepKey="commentSavePage"/>
+        <switchToPreviousTab stepKey="switchToPreviousTab"/>
+        <reloadPage stepKey="reloadPage"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
+        <!-- Storefront: Validate Map Style Changed -->
+        <comment userInput="Storefront: Validate Map Style Changed" stepKey="commentValidate2"/>
+        <switchToNextTab stepKey="switchToNextTab"/>
+        <reloadPage stepKey="reloadPage2"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <executeJS function="return decodeURIComponent(JSON.parse('&quot;' + document.evaluate('//body//script[contains(.,\'Magento_PageBuilder/js/utils/map\')]', document, null, XPathResult.STRING_TYPE, null).stringValue.match(/(?&lt;=style:\s').+(?=')/)[0].replace(/\\&quot;/g, '\\\\&quot;') + '&quot;'))" stepKey="mapStyle2"/>
+        <assertEquals stepKey="assertMapStyle2">
+            <actualResult type="variable">$mapStyle2</actualResult>
+            <expectedResult type="string">{{googleMapsStyle.validShort}}</expectedResult>
+        </assertEquals>
+        <!-- Set Google Maps Style -->
+        <comment userInput="Set Google Maps Style" stepKey="commentSetStyle2"/>
+        <magentoCLI command="config:set cms/pagebuilder/google_maps_style ''" stepKey="setEmptyGoogleMapsStyle"/>
+        <!-- Storefront: Validate Map Style Unchanged -->
+        <comment userInput="Storefront: Validate Map Style Unchanged" stepKey="commentValidate3"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront4">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <executeJS function="return decodeURIComponent(JSON.parse('&quot;' + document.evaluate('//body//script[contains(.,\'Magento_PageBuilder/js/utils/map\')]', document, null, XPathResult.STRING_TYPE, null).stringValue.match(/(?&lt;=style:\s').+(?=')/)[0].replace(/\\&quot;/g, '\\\\&quot;') + '&quot;'))" stepKey="mapStyle3"/>
+        <assertEquals stepKey="assertMapStyle3">
+            <actualResult type="variable">$mapStyle3</actualResult>
+            <expectedResult type="string">{{googleMapsStyle.validShort}}</expectedResult>
+        </assertEquals>
+        <!-- Clean Cache -->
+        <comment userInput="Clean Cache" stepKey="commentCleanCache"/>
+        <magentoCLI command="cache:clean" stepKey="cleanCache"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront5">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <executeJS function="return document.evaluate('//body//script[contains(.,\'Magento_PageBuilder/js/utils/map\')]', document, null, XPathResult.STRING_TYPE, null).stringValue.match(/(?&lt;=style:\s').+(?=')/)" stepKey="mapStyle4"/>
+        <assertEquals stepKey="assertMapStyle4">
+            <actualResult type="variable">$mapStyle4</actualResult>
+            <expectedResult type="string">{{googleMapsStyle.empty}}</expectedResult>
+        </assertEquals>
+    </test>
+    <test name="MapRendersNewGoogleMapsStyleOnStageImmediately">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Map"/>
+            <title value="Google Maps Style - Map Renders New Google Maps Style On Stage Without Cache Refresh"/>
+            <description value="A change to the Google Maps Style should immediately take affect on the stage without a cache refresh"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-89028"/>
+            <testCaseId value="MC-2747"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="pagebuilder-googleMapsStyle"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_style ''" stepKey="setEmptyGoogleMapsStyle"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_style ''" stepKey="setEmptyGoogleMapsStyle"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionMedia">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeIntoStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!--Set Google Maps Style -->
+        <comment userInput="Set Google Maps Style" stepKey="commentSetStyle"/>
+        <openNewTab stepKey="openNewTab"/>
+        <actionGroup ref="navigateToAdminContentManagementPage" stepKey="navigateToAdminContentManagementPage"/>
+        <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
+        <actionGroup ref="inputGoogleMapsStyle" stepKey="inputGoogleMapsStyle">
+            <argument name="style" value="{{googleMapsStyle.validShort}}"/>
+        </actionGroup>
+        <actionGroup ref="saveStoreConfiguration" stepKey="saveStoreConfiguration"/>
+        <!-- Stage: Validate Map Style Changed -->
+        <comment userInput="Stage: Validate Map Style Changed" stepKey="commentValidate1"/>
+        <switchToPreviousTab stepKey="switchToPreviousTab"/>
+        <reloadPage stepKey="reloadPage"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <executeJS function="return decodeURIComponent(JSON.parse('&quot;' + document.evaluate('//body//script[contains(.,\'Magento_PageBuilder/js/utils/map\')]', document, null, XPathResult.STRING_TYPE, null).stringValue.match(/(?&lt;=style:\s').+(?=')/)[0].replace(/\\&quot;/g, '\\\\&quot;') + '&quot;'))" stepKey="mapStyle1"/>
+        <assertEquals stepKey="assertMapStyle1">
+            <actualResult type="variable">$mapStyle1</actualResult>
+            <expectedResult type="string">{{googleMapsStyle.validShort}}</expectedResult>
+        </assertEquals>
+    </test>
+</tests>

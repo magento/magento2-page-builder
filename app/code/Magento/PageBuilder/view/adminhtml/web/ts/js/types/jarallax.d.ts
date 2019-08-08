@@ -67,10 +67,10 @@ interface JarallaxOptions {
     keepImg?: boolean;
 
     /**
-     * Use custom DOM / jQuery element to check if parallax block in viewport.
+     * Use custom DOM / jQuery element to check if parallax content type in viewport.
      * More info here - https://github.com/nk-o/jarallax/issues/13.
      */
-    elementInViewport?: Element | JQuery<Element>;
+    elementInViewport?: Element | JQuery;
 
     /**
      * z-index of parallax container.
@@ -139,30 +139,30 @@ interface JarallaxOptions {
 /**
  * Void callable methods
  *
- * @param {Element | Element[] | NodeListOf<Element> | JQuery<Element>} elements
+ * @param {Element | Element[] | NodeListOf<Element> | JQuery} elements
  * @param {"destroy" | "onResize" | "onScroll"} methodName
  */
 declare function jarallax(
-    elements: Element | Element[] | NodeListOf<Element> | JQuery<Element>,
+    elements: Element | Element[] | NodeListOf<Element> | JQuery,
     methodName: "destroy" | "onResize" | "onScroll",
 ): void;
 
 /**
  * Is visible method
  *
- * @param {Element | Element[] | NodeListOf<Element> | JQuery<Element>} elements
+ * @param {Element | Element[] | NodeListOf<Element> | JQuery} elements
  * @param {"isVisible"} methodName
  * @returns {boolean}
  */
 declare function jarallax(
-    elements: Element | Element[] | NodeListOf<Element> | JQuery<Element>,
+    elements: Element | Element[] | NodeListOf<Element> | JQuery,
     methodName: "isVisible",
 ): boolean;
 
 /**
  * Main invocation of Jarallax
  *
- * @param {Element | Element[] | NodeListOf<Element> | JQuery<Element>} elements
+ * @param {Element | Element[] | NodeListOf<Element> | JQuery} elements
  * @param {JarallaxOptions} userOptions
  */
 declare function jarallax(

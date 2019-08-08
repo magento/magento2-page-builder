@@ -6,8 +6,9 @@
 /**
  * Convert from snake case to camel case
  *
- * @param {string} string
+ * @param {string} currentString
  * @returns {string}
+ * @api
  */
 export function fromSnakeToCamelCase(currentString: string): string {
     const parts: string[] = currentString.split(/[_-]/);

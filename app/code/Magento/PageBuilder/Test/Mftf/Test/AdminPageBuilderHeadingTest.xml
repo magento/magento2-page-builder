@@ -1,0 +1,1544 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="HeadingDefaultState">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Heading"/>
+            <title value="Default State"/>
+            <description value="Tests default state of a Heading content type in the stage and storefront"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-529"/>
+            <testCaseId value="MC-2902"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-heading"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragHeadingIntoStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <!-- Verify Default Heading in Stage -->
+        <seeElement selector="{{HeadingOnStage.headingType(PageBuilderHeadingTypeDefaultProperty.value, '1')}}" stepKey="seeStageHeadingType"/>
+        <comment userInput="Validate Heading Placeholder" stepKey="CommentHeadingPlaceholder"/>
+        <seeElement selector="{{HeadingOnStage.headingPlaceholder(PageBuilderHeadingTypeDefaultProperty.value, 'Edit Heading Text', '1')}}" stepKey="waitForStageHeadingText"/>
+        <grabValueFrom selector="{{HeadingOnStage.headingOnStage(PageBuilderHeadingTypeDefaultProperty.value, '1')}}" stepKey="getHeadingText"/>
+        <assertEmpty actual="getHeadingText" actualType="variable" message="Heading has text: getHeadingText" stepKey="assertGetTextFromHeadingTextAttribute"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!-- Verify Default Heading in Stage After Page Save -->
+        <seeElement selector="{{HeadingOnStage.headingType(PageBuilderHeadingTypeDefaultProperty.value, '1')}}" stepKey="seeStageHeadingType2"/>
+        <seeElement selector="{{HeadingOnStage.headingPlaceholder(PageBuilderHeadingTypeDefaultProperty.value, 'Edit Heading Text', '1')}}" stepKey="waitForStageHeadingText2"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <!-- Verify Default Heading in Storefront -->
+        <waitForElement selector="{{HeadingOnStorefront.headingType(PageBuilderHeadingTypeDefaultProperty.value, '1')}}" stepKey="waitForStorefrontHeadingType"/>
+        <seeElementInDOM selector="{{HeadingOnStorefront.headingNoText(PageBuilderHeadingTypeDefaultProperty.value, '1')}}" stepKey="seeStorefrontNoHeadingTextInDOM"/>
+        <dontSeeElement selector="{{HeadingOnStorefront.headingType(PageBuilderHeadingTypeDefaultProperty.value, '1')}}" stepKey="dontSeeStorefrontHeading"/>
+    </test>
+    <test name="HeadingEditPanelGeneralSectionVisual">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Heading"/>
+            <title value="Edit Panel General Section Visual"/>
+            <description value="Tests the following for each attribute under General Section: 1) field exists, 2) field required or not, 3) field enabled/disabled, 4) field default value, 5) drop-down options count if applicable, 6) placeholder text if applicable"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-529"/>
+            <testCaseId value="MC-2748"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-heading"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragHeadingIntoStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <!-- Heading Type -->
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeHeadingTypeAttribute">
+            <argument name="property" value="PageBuilderHeadingTypeDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="validateHeadingTypeAttributeNotRequired">
+            <argument name="property" value="PageBuilderHeadingTypeDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotDisabled" stepKey="validateHeadingTypeAttributeNotDisabled">
+            <argument name="property" value="PageBuilderHeadingTypeDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeHeadingTypeAttributeValue">
+            <argument name="property" value="PageBuilderHeadingTypeDefaultProperty"/>
+        </actionGroup>
+        <grabMultiple selector="{{EditPanelForm.panelFieldOptions(PageBuilderHeadingTypeDefaultProperty.section, PageBuilderHeadingTypeDefaultProperty.fieldName)}}" userInput="value" stepKey="grabHeadingTypeOptions"/>
+        <assertCount actual="grabHeadingTypeOptions" actualType="variable" expected="6" expectedType="int" stepKey="assertHeadingTypeOptions"/>
+        <!-- Heading Text -->
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeHeadingTextAttribute">
+            <argument name="property" value="PageBuilderHeadingTextDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="validateHeadingTextAttributeNotRequired">
+            <argument name="property" value="PageBuilderHeadingTextDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotDisabled" stepKey="validateHeadingTextAttributeNotDisabled">
+            <argument name="property" value="PageBuilderHeadingTextDefaultProperty"/>
+        </actionGroup>
+        <!-- Refactor in MAGETWO-88795 -->
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderHeadingTextDefaultProperty.section, PageBuilderHeadingTextDefaultProperty.fieldName)}}" stepKey="getTextFromHeadingTextAttribute"/>
+        <assertEmpty actual="getTextFromHeadingTextAttribute" actualType="variable" message="Text field has text: $getTextFromHeadingTextAttribute" stepKey="assertGetTextFromHeadingTextAttribute"/>
+        <!-- Save page and verify fields (because some of them change) -->
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <!-- Heading Type -->
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeHeadingTypeAttributeValue2">
+            <argument name="property" value="PageBuilderHeadingTypeDefaultProperty"/>
+        </actionGroup>
+        <!-- Heading Text -->
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderHeadingTextDefaultProperty.section, PageBuilderHeadingTextDefaultProperty.fieldName)}}" stepKey="getTextFromHeadingTextAttribute2"/>
+        <assertEmpty actual="getTextFromHeadingTextAttribute2" actualType="variable" message="Text field has text: $getTextFromHeadingTextAttribute2" stepKey="assertGetTextFromHeadingTextAttribute2"/>
+    </test>
+    <test name="HeadingValidateAdvancedConfigurationDefaultValues">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Heading"/>
+            <title value="Validate Advanced Configuration Default Values"/>
+            <description value="Validate the default values for every attribute in the Advanced Configuration form and on Stage for Heading."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-529"/>
+            <testCaseId value="MC-2525"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-heading"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragHeadingIntoStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <!-- Validate Default Values -->
+        <comment userInput="Validate Default Values" stepKey="CommentValidateDefaultValues"/>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBorder">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
+        </actionGroup>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getBorderColor"/>
+        <assertEmpty actual="getBorderColor" actualType="variable" message="Text field has text: $getBorderColor" stepKey="assertBorderColor"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderRadius">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
+        </actionGroup>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedCssClassesDefaultProperty.section, PageBuilderAdvancedCssClassesDefaultProperty.fieldName)}}" stepKey="getCssClasses"/>
+        <assertEmpty actual="getCssClasses" actualType="variable" message="Text field was not empty. Had text: $getCssClasses" stepKey="assertCssClasses"/>
+        <grabValueFrom selector="{{AdvancedForm.advancedMarginTop}}" stepKey="getMarginTop"/>
+        <assertEmpty actual="getMarginTop" actualType="variable" message="Text field has text: $getMarginTop" stepKey="assertMarginTop"/>
+        <grabValueFrom selector="{{AdvancedForm.advancedMarginRight}}" stepKey="getMarginRight"/>
+        <assertEmpty actual="getMarginRight" actualType="variable" message="Text field has text: $getMarginRight" stepKey="assertMarginRight"/>
+        <grabValueFrom selector="{{AdvancedForm.advancedMarginLeft}}" stepKey="getMarginLeft"/>
+        <assertEmpty actual="getMarginLeft" actualType="variable" message="Text field has text: $getMarginLeft" stepKey="assertMarginLeft"/>
+        <grabValueFrom selector="{{AdvancedForm.advancedMarginBottom}}" stepKey="getMarginBottom"/>
+        <assertEmpty actual="getMarginBottom" actualType="variable" message="Text field has text: $getMarginBottom" stepKey="assertMarginBottom"/>
+        <grabValueFrom selector="{{AdvancedForm.advancedPaddingTop}}" stepKey="getPaddingTop"/>
+        <assertEmpty actual="getPaddingTop" actualType="variable" message="Text field has text: $getPaddingTop" stepKey="assertPaddingTop"/>
+        <grabValueFrom selector="{{AdvancedForm.advancedPaddingRight}}" stepKey="getPaddingRight"/>
+        <assertEmpty actual="getPaddingRight" actualType="variable" message="Text field has text: $getPaddingRight" stepKey="assertPaddingRight"/>
+        <grabValueFrom selector="{{AdvancedForm.advancedPaddingLeft}}" stepKey="getPaddingLeft"/>
+        <assertEmpty actual="getPaddingLeft" actualType="variable" message="Text field has text: $getPaddingLeft" stepKey="assertPaddingLeft"/>
+        <grabValueFrom selector="{{AdvancedForm.advancedPaddingBottom}}" stepKey="getPaddingBottom"/>
+        <assertEmpty actual="getPaddingBottom" actualType="variable" message="Text field has text: $getPaddingBottom" stepKey="assertPaddingBottom"/>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <actionGroup ref="verifyHeadingDefaultAdvancedConfiguration" stepKey="validateStage">
+            <argument name="page" value="HeadingOnStage"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyNone"/>
+            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
+            <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
+        <actionGroup ref="verifyHeadingDefaultAdvancedConfiguration" stepKey="validateStage2">
+            <argument name="page" value="HeadingOnStage"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyNone"/>
+            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
+            <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <!-- Validate Edit Panel After Save -->
+        <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment2">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBorder2">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
+        </actionGroup>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getBorderColor2"/>
+        <assertEmpty actual="getBorderColor2" actualType="variable" message="Text field has text: $getBorderColor2" stepKey="assertBorderColor2"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth2">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderRadius2">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
+        </actionGroup>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedCssClassesDefaultProperty.section, PageBuilderAdvancedCssClassesDefaultProperty.fieldName)}}" stepKey="getCssClasses2"/>
+        <assertEmpty actual="getCssClasses2" actualType="variable" message="Text field was not empty. Had text: $getCssClasses2" stepKey="assertCssClasses2"/>
+        <grabValueFrom selector="{{AdvancedForm.advancedMarginTop}}" stepKey="getMarginTop2"/>
+        <assertEmpty actual="getMarginTop2" actualType="variable" message="Text field has text: $getMarginTop2" stepKey="assertMarginTop2"/>
+        <grabValueFrom selector="{{AdvancedForm.advancedMarginRight}}" stepKey="getMarginRight2"/>
+        <assertEmpty actual="getMarginRight2" actualType="variable" message="Text field has text: $getMarginRight2" stepKey="assertMarginRight2"/>
+        <grabValueFrom selector="{{AdvancedForm.advancedMarginLeft}}" stepKey="getMarginLeft2"/>
+        <assertEmpty actual="getMarginLeft2" actualType="variable" message="Text field has text: $getMarginLeft2" stepKey="assertMarginLeft2"/>
+        <grabValueFrom selector="{{AdvancedForm.advancedMarginBottom}}" stepKey="getMarginBottom2"/>
+        <assertEmpty actual="getMarginBottom2" actualType="variable" message="Text field has text: $getMarginBottom2" stepKey="assertMarginBottom2"/>
+        <grabValueFrom selector="{{AdvancedForm.advancedPaddingTop}}" stepKey="getPaddingTop2"/>
+        <assertEmpty actual="getPaddingTop2" actualType="variable" message="Text field has text: $getPaddingTop2" stepKey="assertPaddingTop2"/>
+        <grabValueFrom selector="{{AdvancedForm.advancedPaddingRight}}" stepKey="getPaddingRight2"/>
+        <assertEmpty actual="getPaddingRight2" actualType="variable" message="Text field has text: $getPaddingRight2" stepKey="assertPaddingRight2"/>
+        <grabValueFrom selector="{{AdvancedForm.advancedPaddingLeft}}" stepKey="getPaddingLeft2"/>
+        <assertEmpty actual="getPaddingLeft2" actualType="variable" message="Text field has text: $getPaddingLeft2" stepKey="assertPaddingLeft2"/>
+        <grabValueFrom selector="{{AdvancedForm.advancedPaddingBottom}}" stepKey="getPaddingBottom2"/>
+        <assertEmpty actual="getPaddingBottom2" actualType="variable" message="Text field has text: $getPaddingBottom2" stepKey="assertPaddingBottom2"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="verifyHeadingDefaultAdvancedConfigurationNotVisible" stepKey="validateStorefront">
+            <argument name="page" value="HeadingOnStorefront"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyNone"/>
+            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
+            <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+    </test>
+    <test name="HeadingUpdateAdvancedConfigurationValues">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Heading"/>
+            <title value="Update Advanced Configuration Values"/>
+            <description value="Validate that updating every attribute in the Advanced Configuration form for Heading will update the Stage and Storefront correctly."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-529"/>
+            <testCaseId value="MC-2759"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-heading"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <!-- Update Values -->
+        <comment userInput="Update Values" stepKey="commentUpdateValues"/>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAlignmentCenter">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBorder">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBorderColor">
+            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBorderWidth">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBorderRadius">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterCssClasses">
+            <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldMargins" stepKey="enterMargins">
+            <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldPadding" stepKey="enterPadding">
+            <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <actionGroup ref="verifyHeadingAdvancedConfigurationWithAllUpdated" stepKey="validateAllAdvancedStage">
+            <argument name="page" value="HeadingOnStage"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
+            <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_green"/>
+            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty10"/>
+            <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+            <argument name="cssClasses" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
+            <argument name="margin" value="PageBuilderMarginsPropertyUnique"/>
+            <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <!-- Validate Edit Panel -->
+        <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBorder">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderColor">
+            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderRadius">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateCssClasses">
+            <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
+        </actionGroup>
+        <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins">
+            <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
+        </actionGroup>
+        <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding">
+            <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
+        <actionGroup ref="verifyHeadingAdvancedConfigurationWithAllUpdated" stepKey="validateAllAdvancedStage2">
+            <argument name="page" value="HeadingOnStage"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
+            <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_green"/>
+            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty10"/>
+            <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+            <argument name="cssClasses" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
+            <argument name="margin" value="PageBuilderMarginsPropertyUnique"/>
+            <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage3">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <!-- Validate Edit Panel After Save -->
+        <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment2">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBorder2">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderColor2">
+            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth2">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderRadius2">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateCssClasses2">
+            <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
+        </actionGroup>
+        <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins2">
+            <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
+        </actionGroup>
+        <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding2">
+            <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
+        </actionGroup>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="verifyHeadingAdvancedConfigurationWithAllUpdated" stepKey="validateAllAdvancedStorefront">
+            <argument name="page" value="HeadingOnStorefront"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
+            <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_green"/>
+            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty10"/>
+            <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+            <argument name="cssClasses" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
+            <argument name="margin" value="PageBuilderMarginsPropertyUnique"/>
+            <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+    </test>
+    <test name="HeadingVerifyOnHoverOptionMenu">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Heading"/>
+            <title value="Verify On Hover Option Menu"/>
+            <description value="Test verifies that on hover option menu for Heading content type contains all buttons"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-529"/>
+            <testCaseId value="MC-2493"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-heading"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragHeadingIntoStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <waitForElementVisible time="10" selector="{{PageBuilderStage.contentTypeInStage(PageBuilderHeadingContentType.role)}}" stepKey="waitForHeadingInStageVisible" />
+        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStage(PageBuilderHeadingContentType.role)}}" stepKey="onMouseOverHeadingStage"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(PageBuilderHeadingContentType.role)}}" stepKey="waitForOptionsMenu" />
+        <see selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(PageBuilderHeadingContentType.role)}}" userInput="{{PageBuilderHeadingContentType.name}}" stepKey="seeHeadingOptionMenuTitle"/>
+        <seeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeMove(PageBuilderHeadingContentType.role)}}" stepKey="seeHeadingOptionsMove"/>
+        <seeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeEdit(PageBuilderHeadingContentType.role)}}" stepKey="seeHeadingOptionsEdit"/>
+        <seeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeDuplicate(PageBuilderHeadingContentType.role, '1')}}" stepKey="seeHeadingOptionsDuplicate"/>
+        <seeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeRemove(PageBuilderHeadingContentType.role)}}" stepKey="seeHeadingOptionsRemove"/>
+    </test>
+    <test name="HeadingEditText">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Heading"/>
+            <title value="Edit Heading Text"/>
+            <description value="Edit Heading Text field in PageBuilder and view the rendered content type in stage and storefront"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-529"/>
+            <testCaseId value="MC-2844"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-heading"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragHeadingIntoStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHeadingTextProperty">
+            <argument name="property" value="PageBuilderHeadingTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Verify Heading in Stage -->
+        <actionGroup ref="verifyHeadingInStage" stepKey="verifyHeadingInStage"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <!-- Verify Heading in Storefront -->
+        <actionGroup ref="verifyHeadingInStorefront" stepKey="verifyHeadingInStorefront"/>
+    </test>
+    <test name="HeadingEditTypeH1">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Heading"/>
+            <title value="Edit Heading Type - H1"/>
+            <description value="Edit Heading Type field to value H1 in PageBuilder and view the rendered content type in stage and storefront. Validate for each value. Combine all EditHeadingType tests into 1 test once MQE-498 is released (add 6 heading content types when on stage and verify all on stage and storefront)."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-529"/>
+            <testCaseId value="MC-2677"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-heading"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragHeadingIntoStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHeadingTextProperty">
+            <argument name="property" value="PageBuilderHeadingTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterHeadingTypePropertyH1">
+            <argument name="property" value="PageBuilderHeadingTypeProperty_H1"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Verify Heading in Stage -->
+        <actionGroup ref="verifyHeadingInStage" stepKey="verifyHeadingInStage">
+            <argument name="headingType" value="PageBuilderHeadingTypeProperty_H1"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <!-- Verify Heading in Storefront -->
+        <actionGroup ref="verifyHeadingInStorefront" stepKey="verifyHeadingInStorefront">
+            <argument name="headingType" value="PageBuilderHeadingTypeProperty_H1"/>
+        </actionGroup>
+    </test>
+    <test name="HeadingEditTypeH2">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Heading"/>
+            <title value="Edit Heading Type - H2"/>
+            <description value="Edit Heading Type field to value H2 in PageBuilder and view the rendered content type in stage and storefront. Validate for each value. Combine all EditHeadingType tests into 1 test once MQE-498 is released (add 6 heading content types when on stage and verify all on stage and storefront)."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-529"/>
+            <testCaseId value="MC-2732"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-heading"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragHeadingIntoStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHeadingTextProperty">
+            <argument name="property" value="PageBuilderHeadingTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterHeadingTypePropertyH2">
+            <argument name="property" value="PageBuilderHeadingTypeProperty_H2"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Verify Heading in Stage -->
+        <actionGroup ref="verifyHeadingInStage" stepKey="verifyHeadingInStage">
+            <argument name="headingType" value="PageBuilderHeadingTypeProperty_H2"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <!-- Verify Heading in Storefront -->
+        <actionGroup ref="verifyHeadingInStorefront" stepKey="verifyHeadingInStorefront">
+            <argument name="headingType" value="PageBuilderHeadingTypeProperty_H2"/>
+        </actionGroup>
+    </test>
+    <test name="HeadingEditTypeH3">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Heading"/>
+            <title value="Edit Heading Type - H3"/>
+            <description value="Edit Heading Type field to value H3 in PageBuilder and view the rendered content type in stage and storefront. Validate for each value. Combine all EditHeadingType tests into 1 test once MQE-498 is released (add 6 heading content types when on stage and verify all on stage and storefront)."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-529"/>
+            <testCaseId value="MC-2772"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-heading"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragHeadingIntoStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHeadingTextProperty">
+            <argument name="property" value="PageBuilderHeadingTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterHeadingTypePropertyH3">
+            <argument name="property" value="PageBuilderHeadingTypeProperty_H3"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Verify Heading in Stage -->
+        <actionGroup ref="verifyHeadingInStage" stepKey="verifyHeadingInStage">
+            <argument name="headingType" value="PageBuilderHeadingTypeProperty_H3"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <!-- Verify Heading in Storefront -->
+        <actionGroup ref="verifyHeadingInStorefront" stepKey="verifyHeadingInStorefront">
+            <argument name="headingType" value="PageBuilderHeadingTypeProperty_H3"/>
+        </actionGroup>
+    </test>
+    <test name="HeadingEditTypeH4">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Heading"/>
+            <title value="Edit Heading Type - H4"/>
+            <description value="Edit Heading Type field to value H4 in PageBuilder and view the rendered content type in stage and storefront. Validate for each value. Combine all EditHeadingType tests into 1 test once MQE-498 is released (add 6 heading content types when on stage and verify all on stage and storefront)."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-529"/>
+            <testCaseId value="MC-2501"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-heading"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragHeadingIntoStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHeadingTextProperty">
+            <argument name="property" value="PageBuilderHeadingTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterHeadingTypePropertyH4">
+            <argument name="property" value="PageBuilderHeadingTypeProperty_H4"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Verify Heading in Stage -->
+        <actionGroup ref="verifyHeadingInStage" stepKey="verifyHeadingInStage">
+            <argument name="headingType" value="PageBuilderHeadingTypeProperty_H4"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <!-- Verify Heading in Storefront -->
+        <actionGroup ref="verifyHeadingInStorefront" stepKey="verifyHeadingInStorefront">
+            <argument name="headingType" value="PageBuilderHeadingTypeProperty_H4"/>
+        </actionGroup>
+    </test>
+    <test name="HeadingEditTypeH5">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Heading"/>
+            <title value="Edit Heading Type - H5"/>
+            <description value="Edit Heading Type field to value H5 in PageBuilder and view the rendered content type in stage and storefront. Validate for each value. Combine all EditHeadingType tests into 1 test once MQE-498 is released (add 6 heading content types when on stage and verify all on stage and storefront)."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-529"/>
+            <testCaseId value="MC-2744"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-heading"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragHeadingIntoStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHeadingTextProperty">
+            <argument name="property" value="PageBuilderHeadingTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterHeadingTypePropertyH5">
+            <argument name="property" value="PageBuilderHeadingTypeProperty_H5"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Verify Heading in Stage -->
+        <actionGroup ref="verifyHeadingInStage" stepKey="verifyHeadingInStage">
+            <argument name="headingType" value="PageBuilderHeadingTypeProperty_H5"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <!-- Verify Heading in Storefront -->
+        <actionGroup ref="verifyHeadingInStorefront" stepKey="verifyHeadingInStorefront">
+            <argument name="headingType" value="PageBuilderHeadingTypeProperty_H5"/>
+        </actionGroup>
+    </test>
+    <test name="HeadingEditTypeH6">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Heading"/>
+            <title value="Edit Heading Type - H6"/>
+            <description value="Edit Heading Type field to value H6 in PageBuilder and view the rendered content type in stage and storefront. Validate for each value. Combine all EditHeadingType tests into 1 test once MQE-498 is released (add 6 heading content types when on stage and verify all on stage and storefront)."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-529"/>
+            <testCaseId value="MC-2698"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-heading"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragHeadingIntoStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHeadingTextProperty">
+            <argument name="property" value="PageBuilderHeadingTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterHeadingTypePropertyH6">
+            <argument name="property" value="PageBuilderHeadingTypeProperty_H6"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Verify Heading in Stage -->
+        <actionGroup ref="verifyHeadingInStage" stepKey="verifyHeadingInStage">
+            <argument name="headingType" value="PageBuilderHeadingTypeProperty_H6"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <!-- Verify Heading in Storefront -->
+        <actionGroup ref="verifyHeadingInStorefront" stepKey="verifyHeadingInStorefront">
+            <argument name="headingType" value="PageBuilderHeadingTypeProperty_H6"/>
+        </actionGroup>
+    </test>
+    <test name="HeadingVerifyNoRequiredAttributes">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Heading"/>
+            <title value="No Required Attributes"/>
+            <description value="Verify that no attributes are required by clearing all fields and verifying user can save."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-529"/>
+            <testCaseId value="MC-2499"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-heading"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragHeadingIntoStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="clearSlideOutPanelFieldGeneral" stepKey="clearHeadingTextProperty">
+            <argument name="property" value="PageBuilderHeadingTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="clearSlideOutPanelFieldGeneral" stepKey="clearBorderRadiusProperty">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="clearSlideOutPanelFieldGeneral" stepKey="clearCSSClassesProperty">
+            <argument name="property" value="PageBuilderAdvancedCssClassesDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="clearSlideOutPanelFieldMarginsAndPadding" stepKey="clearMarginsAndPaddings">
+            <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Verify Heading in Stage -->
+        <waitForElement selector="{{HeadingOnStage.headingType(PageBuilderHeadingTypeDefaultProperty.value, '1')}}" stepKey="waitForHeading"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <!-- Verify Heading in Storefront -->
+        <waitForElement selector="{{HeadingOnStorefront.headingType(PageBuilderHeadingTypeDefaultProperty.value, '1')}}" stepKey="waitForStorefrontHeading"/>
+    </test>
+    <test name="HeadingDuplicate">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Heading"/>
+            <title value="Duplicate Heading"/>
+            <description value="A user should be able to duplicate a heading content type in a row."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-529"/>
+            <testCaseId value="MC-2919"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-heading"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <!-- Fill All General Fields -->
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHeadingText">
+            <argument name="property" value="PageBuilderHeadingTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterHeadingTypeH3">
+            <argument name="property" value="PageBuilderHeadingTypeProperty_H3"/>
+        </actionGroup>
+        <!-- Fill All Advanced Fields -->
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAlignmentCenter">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterBorder">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDotted"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBorderColor">
+            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBorderWidth">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBorderRadius">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterCSSClasses">
+            <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldMargins" stepKey="enterMargins">
+            <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldPadding" stepKey="enterPadding">
+            <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="hideContentType" stepKey="hideContentType">
+            <argument name="section" value="HeadingOnStage"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <!-- Duplicate and Verify Stage -->
+        <actionGroup ref="duplicateContentType" stepKey="duplicateHeading">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <!-- Validate content type is disabled -->
+        <comment userInput="Validate content type is disabled" stepKey="commentValidateHiddenStage"/>
+        <waitForElementVisible selector="{{HeadingOnStage.hidden('1')}}" stepKey="waitForContentTypeHidden1"/>
+        <waitForElementVisible selector="{{HeadingOnStage.hidden('2')}}" stepKey="waitForContentTypeHidden2"/>
+        <!-- Show duplicated content type -->
+        <comment userInput="Show duplicate content type" stepKey="commentShowContentType"/>
+        <actionGroup ref="showContentType" stepKey="showContentType">
+            <argument name="section" value="HeadingOnStage"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="showContentType" stepKey="showContentType2">
+            <argument name="section" value="HeadingOnStage"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="targetIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="verifyHeadingInStage" stepKey="verifyHeadingInStage">
+            <argument name="index" value="2"/>
+            <argument name="headingType" value="PageBuilderHeadingTypeProperty_H3"/>
+            <argument name="headingText" value="PageBuilderHeadingTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="verifyHeadingAdvancedConfigurationWithAllUpdated" stepKey="verifyHeadingAdvancedInStage">
+            <argument name="page" value="HeadingOnStage"/>
+            <argument name="headingType" value="PageBuilderHeadingTypeProperty_H3"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyDotted"/>
+            <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_green"/>
+            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty10"/>
+            <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+            <argument name="cssClasses" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
+            <argument name="margin" value="PageBuilderMarginsPropertyUnique"/>
+            <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <!-- Verify Edit Panel Values -->
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage2">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeHeadingText">
+            <argument name="property" value="PageBuilderHeadingTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeHeadingTypeH3">
+            <argument name="property" value="PageBuilderHeadingTypeProperty_H3"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAlignmentCenter2">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeBorder">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDotted"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeBorderColor">
+            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeBorderWidth">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeBorderRadius">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeCSSClasses">
+            <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
+        </actionGroup>
+        <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins">
+            <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
+        </actionGroup>
+        <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding">
+            <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanel"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <!-- Verify Storefront -->
+        <!-- Validate content type is enabled in Storefront -->
+        <comment userInput="Validate content type is enabled in Storefront" stepKey="commentValidateShownStorefront"/>
+        <waitForElementVisible selector="{{HeadingOnStorefront.notHidden('1')}}" stepKey="waitForContentTypeShownStorefront1"/>
+        <waitForElementVisible selector="{{HeadingOnStorefront.notHidden('2')}}" stepKey="waitForContentTypeShownStorefront2"/>
+        <actionGroup ref="verifyHeadingInStorefront" stepKey="verifyHeadingInStorefront">
+            <argument name="index" value="2"/>
+            <argument name="headingType" value="PageBuilderHeadingTypeProperty_H3"/>
+            <argument name="headingText" value="PageBuilderHeadingTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="verifyHeadingAdvancedConfigurationWithAllUpdated" stepKey="verifyHeadingAdvancedInStorefront">
+            <argument name="page" value="HeadingOnStorefront"/>
+            <argument name="headingType" value="PageBuilderHeadingTypeProperty_H3"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyDotted"/>
+            <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_green"/>
+            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty10"/>
+            <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+            <argument name="cssClasses" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
+            <argument name="margin" value="PageBuilderMarginsPropertyUnique"/>
+            <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+    </test>
+    <test name="HeadingDelete">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Heading"/>
+            <title value="Delete Heading"/>
+            <description value="A user should be able to delete a heading content type from a row. Verify on Stage amd Storefront"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-529"/>
+            <testCaseId value="MC-2775"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-heading"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <actionGroup ref="removeContentTypeFromStage" stepKey="removeContentTypeFromStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage3"/>
+        <!-- Verify Not In Stage -->
+        <dontSeeElementInDOM selector="{{PageBuilderStage.contentTypeInStageByIndex(PageBuilderHeadingContentType.role, '1')}}" stepKey="dontSeeContentTypeInStage"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <!-- Verify Not In Storefront -->
+        <dontSeeElementInDOM selector="{{HeadingOnStorefront.headingType(PageBuilderHeadingTypeDefaultProperty.value, '1')}}" stepKey="dontSeeContentTypeInStorefront"/>
+    </test>
+    <test name="HeadingCannotAddToStage">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Heading"/>
+            <title value="Cannot add Heading to Stage"/>
+            <description value="If user drags Heading to Stage, it should have no effect"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-515"/>
+            <testCaseId value="MC-3144"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-heading"/>
+            <group value="pagebuilder-cannotAddToStage"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionElements">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="cannotDragContentTypeToTarget" stepKey="dragHeadingIntoStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
+        </actionGroup>
+        <dontSeeElementInDOM selector="{{HeadingOnStage.all}}" stepKey="dontSeeHeading"/>
+    </test>
+    <test name="ValidateShowHideOnHeadingDefaultState">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Heading"/>
+            <title value="Heading is shown by default"/>
+            <description value="Heading is shown by default in stage and storefront"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-965"/>
+            <testCaseId value="MC-3545"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-heading"/>
+            <group value="pagebuilder-hideShow"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <!-- Add Heading to Stage -->
+        <comment userInput="Add Heading to Stage" stepKey="commentAddHeadingToStage"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage">
+            <argument name="index" value="1"/>
+            <argument name="headingText" value="PageBuilderHeadingTextProperty"/>
+            <argument name="headingType" value="PageBuilderHeadingTypeProperty_H2"/>
+            <argument name="headingAlignment" value="PageBuilderHeadingAlignmentProperty_left"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Stage: Validate Default Show/Hide State - Before Save -->
+        <comment userInput="Stage: Validate Default Show/Hide State Before Save" stepKey="CommentValidateDefaultShowHideStateOnStageBeforeSave"/>
+        <seeElement selector="{{HeadingOnStage.notHidden('1')}}" stepKey="seeContentTypeNotHiddenStageBeforeSave"/>
+        <!-- Stage: Validate Default Show/Hide State - After Save -->
+        <comment userInput="Stage: Validate Default Show/Hide State - After Save" stepKey="CommentValidateDefaultShowHideStateOnStageAfterSave"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <seeElement selector="{{HeadingOnStage.notHidden('1')}}" stepKey="seeContentTypeNotHiddenStageAfterSave"/>
+        <!-- Storefront: Validate Default Show/Hide State -->
+        <comment userInput="Storefront: Validate Default Show/Hide State" stepKey="CommentValidateDefaultShowHideStateOnStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <seeElement selector="{{HeadingOnStorefront.notHidden('1')}}" stepKey="seeContentTypeNotHiddenStorefront"/>
+    </test>
+    <test name="ValidateShowHideOnHeading">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Heading"/>
+            <title value="Heading has hide show capabilities"/>
+            <description value="A user is able to hide and show the heading successfully"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-965"/>
+            <testCaseId value="MC-3532"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-heading"/>
+            <group value="pagebuilder-hideShow"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <closeTab stepKey="closeOpenedTab" />
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage">
+            <argument name="index" value="1"/>
+            <argument name="headingText" value="PageBuilderHeadingTextProperty"/>
+            <argument name="headingType" value="PageBuilderHeadingTypeProperty_H2"/>
+            <argument name="headingAlignment" value="PageBuilderHeadingAlignmentProperty_left"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="hideContentType" stepKey="hideContentType">
+            <argument name="section" value="HeadingOnStage"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage1"/>
+        <!-- Validate content type remains disabled after save -->
+        <comment userInput="Validate content type remains disabled after save" stepKey="commentValidateHiddenStage"/>
+        <seeElement selector="{{HeadingOnStage.hidden('1')}}" stepKey="waitForContentTypeHidden" />
+        <!-- Validate store front -->
+        <comment userInput="Validate content type is disabled on storefront" stepKey="commentValidateHiddenStorefront"/>
+        <openNewTab stepKey="openNewTab" />
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <waitForElement selector="{{HeadingOnStorefront.base('1')}}" stepKey="waitForContentTypeNotVisible" />
+        <dontSeeElement selector="{{HeadingOnStorefront.base('1')}}" stepKey="dontSeeContentType" />
+        <seeElementInDOM selector="{{HeadingOnStorefront.hidden('1')}}" stepKey="waitForHiddenElement" />
+        <!-- Set content to visible in admin -->
+        <comment userInput="Set content to visible in admin" stepKey="commentSetContentToVisibleAdmin"/>
+        <switchToNextTab stepKey="switchBackToAdmin" />
+        <reloadPage stepKey="reloadPage" />
+        <waitForPageLoad stepKey="waitForAdminReload" />
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="showContentType" stepKey="showContentType">
+            <argument name="section" value="HeadingOnStage"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage1"/>
+        <!-- Validate Content Is Shown Storefront -->
+        <comment userInput="Validate Content Is Shown Storefront" stepKey="commentValidateContentIsShownStorefront"/>
+        <switchToNextTab stepKey="switchBackToStorefront" />
+        <reloadPage stepKey="reloadStorefront" />
+        <waitForPageLoad stepKey="waitForStorefrontReload" />
+        <dontSeeElementInDOM selector="{{HeadingOnStorefront.hidden('1')}}" stepKey="dontSeeHiddenElement"/>
+        <seeElement selector="{{HeadingOnStorefront.base('1')}}" stepKey="waitForContentTypeVisible" />
+    </test>
+    <test name="HeadingLiveEditToolbarNotCutOffInFullScreenMode">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Heading"/>
+            <title value="Heading live edit toolbar should not overflow viewport bounds (get 'cut off') in full screen mode"/>
+            <description value="As a content creator I want live edit toolbar for heading content type to be always positioned within viewport bounds so that they are accessible to me within the UI"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-5383"/>
+            <testCaseId value="MC-13682"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-heading"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Add Column Content Type -->
+        <comment userInput="Add Column Content Type" stepKey="commentAddColumnContentType"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSectionForColumnContentType">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <!-- Duplicate left column 3 times to create 1/12 column on the left configuration -->
+        <comment userInput="Duplicate left column 3 times to create 1/12 column on the left configuration" stepKey="commentInitialResize"/>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateFirstColumn1Of3">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateFirstColumn2Of3">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateFirstColumn3Of3">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <seeElement selector="{{ColumnOnBackend.displayLabel('1','1/12')}}" stepKey="validateFirstColumnWidth"/>
+        <!-- Add Heading Content Type -->
+        <comment userInput="Add Heading Content Type" stepKey="commentAddInnerContentType"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderInnerContentTypePanelMenuSection">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragInnerContentTypeIntoColumn">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{HeadingOnStage.headingTypeToolbar('1',PageBuilderHeadingTypeProperty_H6.toolbar)}}" stepKey="waitForToolbarVisible"/>
+        <executeJS function="{{HeadingOnStage.headingToolbarViewportPositionBottom('0')}}" stepKey="toolbarBottomPosition"/>
+        <executeJS function="{{HeadingOnStage.headingToolbarViewportPositionTop('0')}}" stepKey="toolbarTopPosition"/>
+        <executeJS function="{{HeadingOnStage.headingContentTypeViewportPositionTop('0')}}" stepKey="inputBoxTopPosition"/>
+        <!-- Assert toolbar did not overflow -->
+        <comment userInput="Assert toolbar did not overflow" stepKey="commentAssertToolbarNotOverflow"/>
+        <assertGreaterThanOrEqual stepKey="assertToolbarTopBoundingClientRectIsNotNegative">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">$toolbarTopPosition</actualResult>
+        </assertGreaterThanOrEqual>
+        <!-- Assert bottom of toolbar is above top of input box -->
+        <comment userInput="Assert bottom of toolbar is above top of input box" stepKey="commentCheckToolbarAboveInputBox"/>
+        <assertLessThanOrEqual stepKey="assertToolbarAboveInputBox">
+            <expectedResult type="variable">$inputBoxTopPosition</expectedResult>
+            <actualResult type="variable">$toolbarBottomPosition</actualResult>
+        </assertLessThanOrEqual>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="unFocusEditor">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Set PageBuilder to full screen -->
+        <comment userInput="Set PageBuilder to full screen" stepKey="commentSetFullScreen"/>
+        <actionGroup ref="openPageBuilderFullScreen" stepKey="openFullScreen"/>
+        <waitForElementVisible selector="{{HeadingOnStage.base('1')}}" stepKey="waitForContentTypeToBeVisible" />
+        <actionGroup ref="clickInsideLiveEditHeading" stepKey="focusOnInnerContentType">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <executeJS function="{{HeadingOnStage.headingToolbarViewportPositionTop('0')}}" stepKey="toolbarTopPositionAfterOverflow"/>
+        <executeJS function="{{HeadingOnStage.headingContentTypeViewportPositionBottom('0')}}" stepKey="inputBoxBottomPositionAfterOverflow"/>
+        <executeJS function="{{HeadingOnStage.headingContentTypeViewportPositionTop('0')}}" stepKey="inputBoxTopPositionAfterOverflow"/>
+        <!-- Assert toolbar did not overflow -->
+        <comment userInput="Assert toolbar did not overflow" stepKey="commentAssertToolbarNotOverflowAfterOverflow"/>
+        <assertGreaterThanOrEqual stepKey="assertToolbarTopBoundingClientRectIsNotNegativeAfterOverflow">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">$inputBoxTopPositionAfterOverflow</actualResult>
+        </assertGreaterThanOrEqual>
+        <!-- Check top of toolbar is below bottom of input box -->
+        <comment userInput="Check top of toolbar is below bottom of input box" stepKey="commentCheckToolbarBelowInputBoxAfterOverflow"/>
+        <assertGreaterThanOrEqual stepKey="assertToolbarAboveInputBoxAfterOverflow">
+            <expectedResult type="variable">$inputBoxBottomPositionAfterOverflow</expectedResult>
+            <actualResult type="variable">$toolbarTopPositionAfterOverflow</actualResult>
+        </assertGreaterThanOrEqual>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="unFocusEditorAfterOverflow">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Exit full screen -->
+        <comment userInput="Exit full screen" stepKey="commentExitFullScreen"/>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitFullScreen"/>
+        <actionGroup ref="clickInsideLiveEditHeading" stepKey="focusOnInnerContentTypeAfterExitFullScreen">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <executeJS function="{{HeadingOnStage.headingToolbarViewportPositionBottom('0')}}" stepKey="toolbarBottomPositionAfterExitFullScreen"/>
+        <executeJS function="{{HeadingOnStage.headingToolbarViewportPositionTop('0')}}" stepKey="toolbarTopPositionAfterExitFullScreen"/>
+        <executeJS function="{{HeadingOnStage.headingContentTypeViewportPositionTop('0')}}" stepKey="inputBoxTopPositionAfterExitFullScreen"/>
+        <!-- Assert toolbar did not overflow after exit full screen-->
+        <comment userInput="Assert toolbar did not overflow after exit full screen" stepKey="commentAssertToolbarNotOverflowAfterExitFullScreen"/>
+        <assertGreaterThanOrEqual stepKey="assertToolbarTopBoundingClientRectIsNotNegativeAfterExitFullScreen">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">$toolbarTopPositionAfterExitFullScreen</actualResult>
+        </assertGreaterThanOrEqual>
+        <!-- Check bottom of toolbar is above top of input box -->
+        <comment userInput="Check bottom of toolbar is above top of input box" stepKey="commentCheckToolbarAboveInputBoxAfterExitFullScreen"/>
+        <assertLessThanOrEqual stepKey="assertToolbarAboveInputBoxAfterExitFullScreen">
+            <expectedResult type="variable">$inputBoxTopPositionAfterExitFullScreen</expectedResult>
+            <actualResult type="variable">$toolbarBottomPositionAfterExitFullScreen</actualResult>
+        </assertLessThanOrEqual>
+    </test>
+    <test name="HeadingOptionsMenuNotOverflowRight">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Heading"/>
+            <title value="Heading options menu should not overflow viewport bounds (get 'cut off') on the right"/>
+            <description value="As a content creator I want heading options menus to be always positioned within viewport bounds so that they are accessible to me within the UI"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-5383"/>
+            <testCaseId value="MC-13716"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-heading"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Add Column Content Type -->
+        <comment userInput="Add Column Content Type" stepKey="commentAddColumnContentType"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSectionForColumnContentType">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <!-- Duplicate right column 2 times to create 1/12 column on the right configuration -->
+        <comment userInput="Duplicate right column 2 times to create 1/12 column on the right configuration" stepKey="commentInitialResize"/>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateLastColumn1Of2">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="targetIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateLastColumn2Of2">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="targetIndex" value="3"/>
+        </actionGroup>
+        <seeElement selector="{{ColumnOnBackend.displayLabel('4','1/12')}}" stepKey="validateLastColumnWidth"/>
+        <!-- Add Heading Content Type -->
+        <comment userInput="Add Heading Content Type" stepKey="commentAddHeadingContentType"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandHeadingPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingContentTypeIntoColumn">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="4"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="unFocusHeadingEditor">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Add Text Content Type -->
+        <comment userInput="Add Text Content Type" stepKey="commentAddTextContentType"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandTextPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragInnerContentTypeIntoColumn">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="4"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusTextEditor">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <!-- Get window width -->
+        <comment userInput="Get window width" stepKey="commentGetWindowWidth"/>
+        <executeJS function="return window.innerWidth" stepKey="getWindowWidth"/>
+        <!-- Assert heading options menu did not overflow -->
+        <comment userInput="Assert heading options menu did not overflow" stepKey="commentAssertHeadingOptionMenuNotOverflow"/>
+        <actionGroup ref="openOptionsMenu" stepKey="openHeadingOptionMenu">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <executeJS function="return document.evaluate(`{{PageBuilderContentTypeOptionsMenu.contentTypeEditByIndex(PageBuilderHeadingContentType.role, '1')}}`, document.body).iterateNext().getBoundingClientRect().right" stepKey="getHeadingOptionMenuBoundingClientRectRight"/>
+        <assertLessThanOrEqual stepKey="assertHeadingOptionMenuNotOverflow">
+            <expectedResult type="variable">$getWindowWidth</expectedResult>
+            <actualResult type="variable">$getHeadingOptionMenuBoundingClientRectRight</actualResult>
+        </assertLessThanOrEqual>
+        <!-- Assert text options menu did not overflow -->
+        <comment userInput="Assert text options menu did not overflow" stepKey="commentAssertTextOptionMenuNotOverflow"/>
+        <actionGroup ref="openOptionsMenu" stepKey="openTextOptionMenu">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <executeJS function="return document.evaluate(`{{PageBuilderContentTypeOptionsMenu.contentTypeEditByIndex(PageBuilderTextContentType.role, '1')}}`, document.body).iterateNext().getBoundingClientRect().right" stepKey="getTextOptionMenuBoundingClientRectRight"/>
+        <assertLessThanOrEqual stepKey="assertTextOptionMenuNotOverflow">
+            <expectedResult type="variable">$getWindowWidth</expectedResult>
+            <actualResult type="variable">$getTextOptionMenuBoundingClientRectRight</actualResult>
+        </assertLessThanOrEqual>
+        <!-- Set PageBuilder to full screen -->
+        <comment userInput="Set PageBuilder to full screen" stepKey="commentSetFullScreen"/>
+        <actionGroup ref="openPageBuilderFullScreen" stepKey="openFullScreen"/>
+        <waitForElementVisible selector="{{HeadingOnStage.base('1')}}" stepKey="waitForContentTypeToBeVisible"/>
+        <!-- Assert heading options menu did not overflow -->
+        <comment userInput="Assert heading options menu did not overflow" stepKey="commentAssertHeadingOptionMenuNotOverflowFullScreen"/>
+        <actionGroup ref="openOptionsMenu" stepKey="openHeadingOptionMenuFullScreen">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <executeJS function="return document.evaluate(`{{PageBuilderContentTypeOptionsMenu.contentTypeEditByIndex(PageBuilderHeadingContentType.role, '1')}}`, document.body).iterateNext().getBoundingClientRect().right" stepKey="getHeadingOptionMenuBoundingClientRectRightFullScreen"/>
+        <assertLessThanOrEqual stepKey="assertHeadingOptionMenuNotOverflowFullScreen">
+            <expectedResult type="variable">$getWindowWidth</expectedResult>
+            <actualResult type="variable">$getHeadingOptionMenuBoundingClientRectRightFullScreen</actualResult>
+        </assertLessThanOrEqual>
+        <!-- Assert text options menu did not overflow -->
+        <comment userInput="Assert text options menu did not overflow" stepKey="commentAssertTextOptionMenuNotOverflowFullScreen"/>
+        <actionGroup ref="openOptionsMenu" stepKey="openTextOptionMenuFullScreen">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <executeJS function="return document.evaluate(`{{PageBuilderContentTypeOptionsMenu.contentTypeEditByIndex(PageBuilderTextContentType.role, '1')}}`, document.body).iterateNext().getBoundingClientRect().right" stepKey="getTextOptionMenuBoundingClientRectRightFullScreen"/>
+        <assertLessThanOrEqual stepKey="assertTextOptionMenuNotOverflowFullScreen">
+            <expectedResult type="variable">$getWindowWidth</expectedResult>
+            <actualResult type="variable">$getTextOptionMenuBoundingClientRectRightFullScreen</actualResult>
+        </assertLessThanOrEqual>
+    </test>
+</tests>

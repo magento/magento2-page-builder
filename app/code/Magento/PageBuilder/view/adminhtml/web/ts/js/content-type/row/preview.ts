@@ -3,21 +3,24 @@
  * See COPYING.txt for license details.
  */
 
+import "jarallax";
 import $ from "jquery";
 import ko from "knockout";
-import $t from "mage/translate";
-import "Magento_PageBuilder/js/resource/jarallax/jarallax.min";
-import events from "uiEvents";
+import events from "Magento_PageBuilder/js/events";
+import ResizeObserver from "Magento_PageBuilder/js/resource/resize-observer/ResizeObserver";
 import _ from "underscore";
-import ContentTypeConfigInterface from "../../content-type-config.d";
-import Option from "../../content-type-menu/option";
-import OptionInterface from "../../content-type-menu/option.d";
-import ContentTypeInterface from "../../content-type.d";
-import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params.d";
-import ContentTypeReadyEventParamsInterface from "../content-type-ready-event-params.d";
+import ContentTypeConfigInterface from "../../content-type-config.types";
+import ConditionalRemoveOption from "../../content-type-menu/conditional-remove-option";
+import HideShowOption from "../../content-type-menu/hide-show-option";
+import {OptionsInterface} from "../../content-type-menu/option.types";
+import ContentTypeInterface from "../../content-type.types";
+import {ContentTypeMountEventParamsInterface, ContentTypeReadyEventParamsInterface} from "../content-type-events.types";
 import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
 
+/**
+ * @api
+ */
 export default class Preview extends PreviewCollection {
     public getChildren: KnockoutComputed<{}>;
     public wrapClass: KnockoutObservable<boolean> = ko.observable(false);
@@ -31,78 +34,90 @@ export default class Preview extends PreviewCollection {
     private buildJarallax = _.debounce(() => {
         // Destroy all instances of the plugin prior
         try {
+            // store/apply correct style after destroying, as jarallax incorrectly overrides it with stale value
+            const style = this.element.getAttribute("data-jarallax-original-styles") ||
+                this.element.getAttribute("style");
             jarallax(this.element, "destroy");
+            this.element.setAttribute("style", style);
         } catch (e) {
             // Failure of destroying is acceptable
         }
-        if (this.element && $(this.element).hasClass("jarallax")) {
+        if (this.element &&
+            $(this.element).hasClass("jarallax") &&
+            (this.contentType.dataStore.get("background_image") as any[]).length
+        ) {
             _.defer(() => {
                 // Build Parallax on elements with the correct class
+                const parallaxSpeed = Number.parseFloat(this.contentType.dataStore.get("parallax_speed") as string);
                 jarallax(
                     this.element,
                     {
-                        imgPosition: this.data.main.style().backgroundPosition || "50% 50%",
-                        imgRepeat: this.data.main.style().backgroundRepeat === "0" ? "no-repeat" : "repeat",
-                        imgSize: this.data.main.style().backgroundSize || "cover",
-                        speed: this.data.main.attributes()["data-parallax-speed"] || 0.5,
+                        imgSrc: (this.contentType.dataStore.get("background_image") as any[])[0].url as string,
+                        imgPosition: this.contentType.dataStore.get("background_position") as string || "50% 50%",
+                        imgRepeat: (
+                            (this
+                                .contentType
+                                .dataStore
+                                .get("background_repeat") as "repeat" | "no-repeat") || "no-repeat"
+                        ),
+                        imgSize: this.contentType.dataStore.get("background_size") as string || "cover",
+                        speed: !isNaN(parallaxSpeed) ? parallaxSpeed : 0.5,
                     },
                 );
+
                 jarallax(this.element, "onResize");
             });
         }
     }, 50);
 
     /**
-     * @param {ContentTypeInterface} parent
+     * @param {ContentTypeInterface} contentType
      * @param {ContentTypeConfigInterface} config
      * @param {ObservableUpdater} observableUpdater
      */
     constructor(
-        parent: ContentTypeInterface,
+        contentType: ContentTypeInterface,
         config: ContentTypeConfigInterface,
         observableUpdater: ObservableUpdater,
     ) {
-        super(parent, config, observableUpdater);
+        super(contentType, config, observableUpdater);
 
-        this.parent.dataStore.subscribe(this.buildJarallax);
-        events.on("row:block:ready", (args: ContentTypeReadyEventParamsInterface) => {
-            if (args.id === this.parent.id) {
+        this.contentType.dataStore.subscribe(this.buildJarallax);
+        events.on("row:mountAfter", (args: ContentTypeReadyEventParamsInterface) => {
+            if (args.id === this.contentType.id) {
                 this.buildJarallax();
             }
         });
-        events.on("block:mount", (args: ContentTypeMountEventParamsInterface) => {
-            if (args.block.parent.id === this.parent.id) {
+        events.on("contentType:mountAfter", (args: ContentTypeMountEventParamsInterface) => {
+            if (args.contentType.parentContentType && args.contentType.parentContentType.id === this.contentType.id) {
                 this.buildJarallax();
             }
         });
     }
 
     /**
-     * Return an array of options
+     * Use the conditional remove to disable the option when the content type has a single child
      *
-     * @returns {Array<Option>}
+     * @returns {OptionsInterface}
      */
-    public retrieveOptions(): OptionInterface[] {
+    public retrieveOptions(): OptionsInterface {
         const options = super.retrieveOptions();
-        const newOptions = options.filter((option) => {
-            return (option.code !== "remove");
+
+        options.remove = new ConditionalRemoveOption({
+            ...options.remove.config,
+            preview: this,
         });
-        const removeClasses = ["remove-structural"];
-        let removeFn = this.onOptionRemove;
-        if (this.parent.parent.children().length < 2) {
-            removeFn = () => { return; };
-            removeClasses.push("disabled");
-        }
-        newOptions.push(new Option(
-            this,
-            "remove",
-            "<i class='icon-admin-pagebuilder-remove'></i>",
-            $t("Remove"),
-            removeFn,
-            removeClasses,
-            100,
-        ));
-        return newOptions;
+
+        options.hideShow = new HideShowOption({
+            preview: this,
+            icon: HideShowOption.showIcon,
+            title: HideShowOption.showText,
+            action: this.onOptionVisibilityToggle,
+            classes: ["hide-show-content-type"],
+            sort: 40,
+        });
+
+        return options;
     }
 
     /**
@@ -112,6 +127,18 @@ export default class Preview extends PreviewCollection {
      */
     public initParallax(element: Element) {
         this.element = element;
-        this.buildJarallax();
+        _.defer(() => {
+            this.buildJarallax();
+        });
+
+        new ResizeObserver(() => {
+            // Observe for resizes of the element and force jarallax to display correctly
+            if ($(this.element).hasClass("jarallax") &&
+                (this.contentType.dataStore.get("background_image") as any[]).length
+            ) {
+                jarallax(this.element, "onResize");
+                jarallax(this.element, "onScroll");
+            }
+        }).observe(this.element);
     }
 }

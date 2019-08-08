@@ -1,5 +1,5 @@
 /*eslint-disable */
-define([], function () {
+define(["Magento_PageBuilder/js/utils/object"], function (_object) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -7,6 +7,8 @@ define([], function () {
   var Src =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     function Src() {}
 
     var _proto = Src.prototype;
@@ -19,7 +21,7 @@ define([], function () {
      */
     _proto.fromDom = function fromDom(value) {
       return value;
-    };
+    }
     /**
      * Convert value to knockout format
      *
@@ -27,10 +29,10 @@ define([], function () {
      * @param data Object
      * @returns {string}
      */
-
+    ;
 
     _proto.toDom = function toDom(name, data) {
-      var value = data[name];
+      var value = (0, _object.get)(data, name);
 
       if (value === undefined) {
         return "";

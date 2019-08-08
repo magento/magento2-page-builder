@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<entities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:DataGenerator/etc/dataProfileSchema.xsd">
+    <entity name="cmsPageArbitraryHtml" type="cms_page">
+        <data key="content">&lt;div class=&quot;my-div&quot;&gt;&lt;/div&gt;</data>
+    </entity>
+    <entity name="cmsPageWithImage" type="cms_page">
+        <data key="content">&lt;img src=&quot;{{media url='wysiwyg/home/home-t-shirts.png'}}&quot;/&gt;</data>
+    </entity>
+    <entity name="cmsPageNonexistentDataContentType" type="cms_page">
+        <data key="content">&lt;div data-content-type=&quot;row&quot;&gt;&lt;div data-content-type=&quot;non-existent-content-type&quot;&gt;&lt;/div&gt;&lt;/div&gt;</data>
+    </entity>
+    <entity name="_cmsPageWithNestedText" type="cms_page">
+        <data key="title" unique="suffix">PageBuilder Nested Text Content Type CMS Page</data>
+        <data key="identifier" unique="suffix">page-builder-nested-text-content-type-</data>
+        <data key="content">&lt;div data-content-type=&quot;row&quot; data-appearance=&quot;&quot; data-element=&quot;main&quot;&gt;&lt;div data-enable-parallax=&quot;&quot; data-parallax-speed=&quot;&quot; data-background-images=&quot;{}&quot; data-element=&quot;inner&quot;&gt;&lt;div data-content-type=&quot;text&quot; data-appearance=&quot;default&quot; data-element=&quot;main&quot;&gt;&lt;div data-content-type=&quot;text&quot; data-appearance=&quot;default&quot; data-element=&quot;main&quot;&gt;test string&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</data>
+    </entity>
+    <entity name="_cmsPageWithBannerNestedText" type="cms_page">
+        <data key="title" unique="suffix">PageBuilder Nested Banner Text Content Type CMS Page</data>
+        <data key="identifier" unique="suffix">page-builder-nested-banner-text-content-type-</data>
+        <data key="content">&lt;div data-content-type=&quot;row&quot; data-appearance=&quot;contained&quot; data-element=&quot;main&quot;&gt;
+            &lt;div data-element=&quot;inner&quot;&gt;
+            &lt;div data-content-type=&quot;banner&quot; data-appearance=&quot;poster&quot; data-element=&quot;main&quot;&gt;
+            &lt;div data-element=&quot;empty_link&quot;&gt;
+            &lt;div class=&quot;pagebuilder-banner-wrapper&quot; data-element=&quot;wrapper&quot;&gt;
+            &lt;div class=&quot;pagebuilder-overlay pagebuilder-poster-overlay&quot; data-element=&quot;overlay&quot;&gt;
+            &lt;div class=&quot;pagebuilder-poster-content&quot;&gt;
+            &lt;div data-element=&quot;content&quot;&gt;
+            &lt;div data-content-type=&quot;text&quot; data-appearance=&quot;default&quot; data-element=&quot;main&quot;&gt;Good Night!&lt;/div&gt;
+            &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;/div&gt;
+        </data>
+    </entity>
+    <entity name="_cmsPageWithSliderNestedText" type="cms_page">
+        <data key="title" unique="suffix">PageBuilder Nested Slider Text Content Type CMS Page</data>
+        <data key="identifier" unique="suffix">page-builder-nested-slider-text-content-type-</data>
+        <data key="content">&lt;div data-content-type=&quot;row&quot; data-appearance=&quot;contained&quot; data-element=&quot;main&quot;&gt;
+            &lt;div data-enable-parallax=&quot;0&quot; data-parallax-speed=&quot;0.5&quot; data-background-images=&quot;{}&quot; data-element=&quot;inner&quot;&gt;
+            &lt;div class=&quot;pagebuilder-slider&quot; data-content-type=&quot;slider&quot; data-appearance=&quot;default&quot; data-autoplay=&quot;false&quot; data-autoplay-speed=&quot;4000&quot; data-fade=&quot;false&quot; data-infinite-loop=&quot;false&quot; data-show-arrows=&quot;false&quot; data-show-dots=&quot;true&quot; data-element=&quot;main&quot;&gt;
+            &lt;div data-content-type=&quot;slide&quot; data-slide-name=&quot;&quot; data-appearance=&quot;poster&quot; data-show-button=&quot;never&quot; data-show-overlay=&quot;never&quot; data-element=&quot;main&quot; style=&quot;margin: 0px;&quot;&gt;
+            &lt;div data-element=&quot;empty_link&quot;&gt;
+            &lt;div class=&quot;pagebuilder-slide-wrapper&quot; data-background-images=&quot;{}&quot; data-element=&quot;wrapper&quot;&gt;
+            &lt;div class=&quot;pagebuilder-overlay pagebuilder-poster-overlay&quot; data-overlay-color=&quot;&quot; data-element=&quot;overlay&quot;&gt;
+            &lt;div class=&quot;pagebuilder-poster-content&quot;&gt;
+            &lt;div data-element=&quot;content&quot;&gt;
+            &lt;div data-content-type=&quot;text&quot; data-appearance=&quot;default&quot; data-element=&quot;main&quot;&gt;Good Morning!&lt;/div&gt;
+            &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;/div&gt;
+        </data>
+    </entity>
+</entities>

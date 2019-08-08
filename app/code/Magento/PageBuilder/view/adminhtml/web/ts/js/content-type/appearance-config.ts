@@ -4,17 +4,22 @@
  */
 
 import Config from "../config";
+import {ContentTypeConfigAppearanceInterface} from "../content-type-config.types";
 
 /**
  * Get config for appearance
  *
  * @param {string} contentType
  * @param {string} appearance
- * @returns {Object}
+ * @returns {ContentTypeConfigAppearanceInterface}
+ * @api
  */
-export default function getAppearanceConfig(contentType: string, appearance: string): object {
+export default function getAppearanceConfig(
+    contentType: string,
+    appearance: string,
+): ContentTypeConfigAppearanceInterface {
     const contentTypeConfig = Config.getContentTypeConfig(contentType);
-    let config = {};
+    let config: ContentTypeConfigAppearanceInterface;
     if (contentTypeConfig.appearances !== undefined) {
         if (!appearance) {
             for (const key in contentTypeConfig.appearances) {

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
+    <section name="PageBuilderStage">
+        <element name="imageSource" type="text" selector="//img[contains(@src,'{{var1}}')]" parameterized="true"/>
+        <element name="openFullScreen" type="button" selector="//i[@class='icon-pagebuilder-fullscreen']"/>
+        <element name="exitFullScreen" type="button" selector=".pagebuilder-header .icon-pagebuilder-fullscreen-exit"/>
+        <element name="stageLoading" type="button" selector="div.pagebuilder-stage-loading"/>
+        <element name="stageWrapper" type="button" selector="//div[@class='pagebuilder-stage-wrapper']"/>
+        <element name="enabled" type="button" selector="//div[not(contains(@class, '_disabled'))]/div[contains(@class, 'pagebuilder-wysiwyg-wrapper')]/div[@class='pagebuilder-stage-wrapper']"/>
+        <element name="disabled" type="button" selector="//div[contains(@class, '_disabled')]/div[contains(@class, 'pagebuilder-wysiwyg-wrapper')]/div[@class='pagebuilder-stage-wrapper']"/>
+        <element name="stageWrapperFullScreen" type="button" selector="div.pagebuilder-stage-wrapper.stage-full-screen"/>
+        <element name="stageWidthJS" type="button" selector="document.querySelector('div[class~=\'root-container-container\']').clientWidth"/>
+        <element name="modal" type="text" selector='aside.modal-popup._show'/>
+        <element name="modalOk" type="button" selector="aside.modal-popup._show button.action-primary.action-accept"/>
+        <element name="modalCancel" type="button" selector="aside.modal-popup._show button.action-secondary.action-dismiss"/>
+        <element name="modalX" type="button" selector="aside.modal-popup._show button.action-close"/>
+        <!-- It's safer to click the label, as Selenium will complain if it's not clicking the exact element -->
+        <element name="modalDoNotShowThisAgain" type="input" selector="aside.modal-popup._show input[name='modal-dnsa'] + label"/>
+        <element name="errorModal" type="button" selector="//div[@class='modal-content']//div[contains(text(), '{{arg1}}')]" parameterized="true"/>
+        <element name="dropZone" type="button" selector='(//div[contains(@class, "{{arg1}}-container")])[{{arg2}}]//div[contains(@class,"pagebuilder-drop-indicator")][{{arg3}}]' parameterized="true"/>
+        <element name="contentTypeTotalInStage" type="button" selector=".pagebuilder-content-type.pagebuilder-{{arg1}}" parameterized="true"/>
+        <element name="contentTypeInStage" type="button" selector='//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")]' parameterized="true"/>
+        <element name="contentTypeInStageByIndex" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]' parameterized="true"/>
+        <element name="contentTypeContainer" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]/descendant::div[contains(@class, "element-children")]' parameterized="true"/>
+        <element name="contentTypeInsideContainerStage" type="button" selector='(//div[contains(@class, "{{arg1}}-container")])[{{arg2}}]//div[contains(@class,"pagebuilder-content-type-wrapper")][{{arg3}}]//div[contains(@class,"pagebuilder-{{arg4}}")][{{arg5}}]' parameterized="true"/>
+        <element name="contentTypePreviewInStage" type="button" selector="div.pagebuilder-{{arg1}}.pagebuilder-content-type" parameterized="true"/>
+        <element name="computedHeightOnStage" type="text" selector="return parseInt(window.getComputedStyle(document.querySelector('.pagebuilder-{{arg1}}:nth-of-type({{arg2}})')).height)" parameterized="true"/>
+        <element name="computedWidthOnStage" type="text" selector="return parseInt(window.getComputedStyle(document.querySelector('.pagebuilder-{{arg1}}:nth-of-type({{arg2}})')).width)" parameterized="true"/>
+        <element name="uploadImageInput" type="button" selector="//div[contains(@class,'pagebuilder-image-uploader-container')]//input[@name='background_image']"/>
+        <element name="onHoverUploadImageButton" type="button" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-{{arg1}}')])[{{arg2}}]//label[text()='Upload Image']" parameterized="true"/>
+        <element name="onHoverSelectFromGalleryButton" type="button" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-{{arg1}}')])[{{arg2}}]//ul[contains(@class,'pagebuilder-options-links')]//label[text()='Select from Gallery']" parameterized="true"/>
+        <element name="inlineWYSIWYGEditor" type="text" selector="(//div[@data-content-type='{{arg1}}'])[{{arg2}}]//div[contains(@class,'inline-wysiwyg')]|(//div[@data-content-type='{{arg1}}' and contains(@class,'inline-wysiwyg')])[{{arg2}}]" parameterized="true"/>
+        <element name="inlineWYSIWYGEditorPanel" type="button" selector="(//div[@data-content-type='{{arg1}}'])[{{arg2}}]//div[contains(@class,'mce-tinymce-inline')]|(//div[@data-content-type='{{arg1}}'])[{{arg2}}][following-sibling::div[contains(@class,'mce-tinymce-inline')]]" parameterized="true"/>
+        <element name="inlineTextAreaEditor" type="button" selector="(//div[@data-content-type='{{arg1}}'])[{{arg2}}]//textarea[@class='inline-wysiwyg-textarea']" parameterized="true"/>
+    </section>
+    <section name="PageBuilderPanel">
+        <element name="leftPanel" type="input" selector='#pagebuilder-panel'/>
+        <element name="searchField" type="input" selector='//*[@id="pagebuilder-panel"]/div[1]/a'/>
+        <element name="clearSearch" type="button" selector='//*[@id="pagebuilder-panel"]/div[1]/a'/>
+        <element name="firstSection" type="button" selector='//*[@id="pagebuilder-panel-menu-sections"]/li[1]' timeout="30"/>
+        <element name="allPanelMenuSections" type="button" selector="#pagebuilder-panel-menu-sections .menu-section-title"/>
+        <element name="allMenuSectionContentTypes" type="button" selector="#pagebuilder-panel-menu-sections #menu-section-{{arg1}} .pagebuilder-draggable-content-type" parameterized="true"/>
+        <element name="panelMenuSection" type="button" selector="//div[@id='pagebuilder-panel']//h4[.='{{arg1}}']" parameterized="true"/>
+        <element name="panelMenuSectionActive" type="button" selector="//div[@id='pagebuilder-panel']//li[@class='active']//h4[.='{{arg1}}']" parameterized="true"/>
+        <element name="layoutMenuSection" type="button" selector='//*[@id="menu-section-layout"]' timeout="10"/>
+        <element name="layoutMenuSectionContentType" type="button" selector='//*[@id="menu-section-layout"]/div/div/ul/li/a/span[2]'/>
+        <element name="elementsMenuSection" type="button" selector='//*[@id="menu-section-elements"]'/>
+        <element name="elementsMenuSectionContentType" type="button" selector='//*[@id="menu-section-elements"]/div/div/ul/li/a/span[2]'/>
+        <element name="mediaMenuSection" type="button" selector='//*[@id="menu-section-media"]'/>
+        <element name="mediaMenuSectionContentType" type="button" selector='//*[@id="menu-section-media"]/div/div/ul/li/a/span[2]'/>
+        <element name="addContentMenuSection" type="button" selector='//*[@id="menu-section-add_content"]'/>
+        <element name="addContentMenuSectionContentType" type="button" selector='//*[@id="menu-section-add_content"]/div/div/ul/li/a/span[2]'/>
+        <element name="searchPanel" type="input" selector='//*[@id="search-content-types-input"]' timeout="30"/>
+        <element name="searchResults" type="text" selector='//*[@id="search-results"]' timeout="30"/>
+        <element name="nothingFound" type="text" selector='//*[@id="pagebuilder-panel"]/div[2]/div' timeout="30"/>
+        <element name="draggableContentTypeInPanel" type="button" selector='//*[text()="{{arg1}}"]/ancestor::*[contains(@class, "ui-draggable")]' parameterized="true"/>
+        <element name="contentTypeInMenuSection" type="button" selector="//ul[@class='pagebuilder-panel-menu-sections']//li[{{arg1}}]//h4[.='{{arg2}}']/../..//ul//li[{{arg3}}]//span[text()='{{arg4}}']" parameterized="true"/>
+        <element name="contentTypeWithIcon" type="button" selector="//ul[@class='pagebuilder-panel-menu-sections']//span[@class='content-type-icon']//i[@class='icon-pagebuilder-{{arg2}}']/../following-sibling::span[text()='{{arg1}}']" parameterized="true"/>
+    </section>
+    <section name="PageBuilderContentTypeOptionsMenu">
+        <element name="contentTypeOptionsMenu" type="button" selector='(//div[contains(@class, "pagebuilder-{{arg1}}")]//div[contains(@class, "pagebuilder-options")])[1]' parameterized="true"/>
+        <element name="contentTypeOptionsMenuByIndex" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]//div[contains(@class,"pagebuilder-options-visible")]' parameterized="true"/>
+        <element name="contentTypeMove" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[1]/div[contains(@class,"pagebuilder-options-visible")]/descendant::*[@class="move-structural"]' parameterized="true"/>
+        <element name="contentTypeMoveByIndex" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]/div[contains(@class,"pagebuilder-options-visible")]/descendant::*[@class="move-structural"]' parameterized="true"/>
+        <element name="contentTypeAddByIndex" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]//div[contains(@class,"pagebuilder-options-visible")]//a[contains(@class,"add-child")]' parameterized="true"/>
+        <element name="contentTypeEdit" type="button" selector="div.pagebuilder-content-type.pagebuilder-{{arg1}} div.pagebuilder-options li.pagebuilder-options-link a.edit-content-type"  parameterized="true"/>
+        <element name="contentTypeEditByIndex" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]//div[contains(@class,"pagebuilder-options-visible")]//descendant::*[@class="edit-content-type"]' parameterized="true"/>
+        <element name="contentTypeHide" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]//div[contains(@class,"pagebuilder-options-visible")]//a[@title="Hide"]'  parameterized="true"/>
+        <element name="contentTypeShow" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]//div[contains(@class,"pagebuilder-options-visible")]//a[@title="Show"]'  parameterized="true"/>
+        <element name="contentTypeDuplicate" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]//div[contains(@class,"pagebuilder-options-visible")]//a[@title="Duplicate"]' parameterized="true"/>
+        <element name="contentTypeRemove" type="button" selector="div.pagebuilder-content-type.pagebuilder-{{arg1}} div.pagebuilder-options li.pagebuilder-options-link a.remove-structural" parameterized="true"/>
+        <element name="contentTypeRemoveByIndex" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]//div[contains(@class,"pagebuilder-options-visible")]//a[@title="Remove"]' parameterized="true"/>
+        <element name="contentTypeRemoveDisabled" type="button" selector='.pagebuilder-options .remove-structural[title="Remove"].disabled'/>
+    </section>
+</sections>
