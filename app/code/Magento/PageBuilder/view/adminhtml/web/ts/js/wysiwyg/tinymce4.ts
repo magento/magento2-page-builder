@@ -56,6 +56,14 @@ export default class Wysiwyg implements WysiwygInterface {
     private fieldName: string;
 
     /**
+     * Create a debounce to save the content into the data store
+     */
+    private saveContentDebounce = _.debounce(
+        this.saveContentFromWysiwygToDataStore.bind(this),
+        500,
+    );
+
+    /**
      * @param {String} contentTypeId The ID in the registry of the content type.
      * @param {String} elementId The ID of the editor element in the DOM.
      * @param {AdditionalDataConfigInterface} config The configuration for the wysiwyg.
@@ -148,8 +156,7 @@ export default class Wysiwyg implements WysiwygInterface {
      * Called for the onChangeContent event
      */
     private onChangeContent() {
-        const saveContent = _.debounce(this.saveContentFromWysiwygToDataStore.bind(this), 100);
-        saveContent();
+        this.saveContentDebounce();
         this.invertInlineEditorToAccommodateOffscreenToolbar();
     }
 
