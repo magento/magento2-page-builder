@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="StorefrontReviewWithProductFullWidthLayoutTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Catalog Product Review"/>
+            <title value="Review should display on product page with 'Product - Full Width' layout"/>
+            <description value="Review should display on product page with 'Product - Full Width' layout"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-18071"/>
+            <testCaseId value="MC-19606"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-layout"/>
+            <group value="pagebuilder-fullwidth"/>
+            <group value="pagebuilder-catalog-product"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultCategory" stepKey="createCategory"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <createData entity="ApiSimpleProduct" stepKey="createProduct">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+            <deleteData createDataKey="createCategory" stepKey="deleteCategory"/>
+            <deleteData createDataKey="createProduct" stepKey="deleteProduct"/>
+        </after>
+        <!-- Find created product in product grid and open edit product -->
+        <actionGroup ref="SearchForProductOnBackendActionGroup" stepKey="findCreatedProductInGrid">
+            <argument name="product" value="$$createProduct$$"/>
+        </actionGroup>
+        <actionGroup ref="OpenEditProductOnBackendActionGroup" stepKey="openEditProduct">
+            <argument name="product" value="$$createProduct$$"/>
+        </actionGroup>
+        <!-- Use Full Width layout -->
+        <comment userInput="Set Layout to Product - Full Width" stepKey="commentSetLayout"/>
+        <actionGroup ref="setLayout" stepKey="setFullWidthLayout">
+            <argument name="designSection" value="ProductDesignSection"/>
+            <argument name="layoutOption" value="PageBuilderFullWidthLayout.product"/>
+        </actionGroup>
+        <click selector="{{AdminProductFormActionSection.saveButton}}" stepKey="saveProduct"/>
+        <waitForPageLoad stepKey="waitForPageLoadSaveProduct"/>
+        <waitForElementVisible selector="{{AdminProductMessagesSection.successMessage}}" stepKey="assertSaveMessageSuccess"/>
+        <!-- Move to frontend and make a user account and login with it -->
+        <actionGroup ref="SignUpNewUserFromStorefrontActionGroup" stepKey="signUpNewUser">
+            <argument name="Customer" value="CustomerEntityOne"/>
+        </actionGroup>
+        <!-- Go to the product view page -->
+        <actionGroup ref="StorefrontOpenProductPageActionGroup" stepKey="openCreatedProductPage">
+            <argument name="productUrl" value="$$createProduct.custom_attributes[url_key]$$"/>
+        </actionGroup>
+        <!-- Click on reviews and add review with current user -->
+        <actionGroup ref="StorefrontAddProductReviewProductFullWidthLayoutActionGroup" stepKey="addReview"/>
+        <!-- Go to "Pending reviews" page and clear filters -->
+        <actionGroup ref="AdminOpenPendingReviewsPageActionGroup" stepKey="openReviewsPage"/>
+        <actionGroup ref="clearFiltersAdminDataGrid" stepKey="clearFilters"/>
+        <!-- Moderate product review: change review status from pending to approved, save -->
+        <actionGroup ref="AdminOpenReviewByUserNicknameActionGroup" stepKey="openCustomerReview"/>
+        <actionGroup ref="AdminChangeReviewStatusActionGroup" stepKey="changeReviewStatus"/>
+        <actionGroup ref="AdminSaveReviewActionGroup" stepKey="saveModeratedReview"/>
+        <!-- Assert that product page has added review -->
+        <actionGroup ref="StorefrontOpenProductPageActionGroup" stepKey="openProductPage">
+            <argument name="productUrl" value="$$createProduct.custom_attributes[url_key]$$"/>
+        </actionGroup>
+        <actionGroup ref="StorefrontAssertReviewAtProductPageActionGroup" stepKey="assertReview">
+            <argument name="rowIndex" value="1"/>
+        </actionGroup>
+    </test>
+</tests>
