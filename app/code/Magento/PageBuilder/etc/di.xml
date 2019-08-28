@@ -214,6 +214,13 @@
             <argument name="attributeField" xsi:type="string">price</argument>
         </arguments>
     </virtualType>
+    <virtualType name="Magento\PageBuilder\Model\Catalog\Sorting\Position" type="Magento\PageBuilder\Model\Catalog\Sorting\SimpleOption">
+        <arguments>
+            <argument name="label" xsi:type="string">Position</argument>
+            <argument name="sortDirection" xsi:type="const">\Magento\Framework\DB\Select::SQL_ASC</argument>
+            <argument name="attributeField" xsi:type="string">position</argument>
+        </arguments>
+    </virtualType>
     <type name="Magento\PageBuilder\Model\Catalog\Sorting">
         <arguments>
             <argument name="sortClasses" xsi:type="array">
@@ -227,6 +234,7 @@
                 <item name="high_stock_first" xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\Stock\Descending</item>
                 <item name="price_high_to_low" xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\Price\HighToLow</item>
                 <item name="price_low_to_high" xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\Price\LowToHigh</item>
+                <item name="position" xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\Position</item>
             </argument>
         </arguments>
     </type>

@@ -9,7 +9,9 @@ declare(strict_types=1);
 namespace Magento\PageBuilder\Plugin\Catalog\Block\Product;
 
 use Magento\PageBuilder\Model\Catalog\Sorting;
+use Magento\Catalog\Model\Category;
 use Magento\CatalogInventory\Helper\Stock;
+use Magento\Catalog\Api\CategoryRepositoryInterface;
 
 /**
  * Catalog Products List widget block plugin
@@ -27,15 +29,23 @@ class ProductsListPlugin
     private $stock;
 
     /**
+     * @var CategoryRepositoryInterface
+     */
+    private $categoryRepository;
+
+    /**
      * @param Sorting $sorting
      * @param Stock $stock
+     * @param CategoryRepositoryInterface $categoryRepository
      */
     public function __construct(
         Sorting $sorting,
-        Stock $stock
+        Stock $stock,
+        CategoryRepositoryInterface $categoryRepository
     ) {
         $this->sorting = $sorting;
         $this->stock = $stock;
+        $this->categoryRepository = $categoryRepository;
     }
 
     /**
@@ -44,17 +54,23 @@ class ProductsListPlugin
      * @param \Magento\CatalogWidget\Block\Product\ProductsList $subject
      * @param \Magento\Catalog\Model\ResourceModel\Product\Collection $result
      * @return \Magento\Catalog\Model\ResourceModel\Product\Collection
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     public function afterCreateCollection(
         \Magento\CatalogWidget\Block\Product\ProductsList $subject,
         \Magento\Catalog\Model\ResourceModel\Product\Collection $result
     ) {
-        $this->stock->addIsInStockFilterToCollection($result);
-        $sortOption = $subject->getData('sort_order');
-        if (isset($sortOption)) {
-            $sortedResult = $this->sorting->applySorting($sortOption, $result);
+        $categoryId =  $subject->getData('category_ids');
+        $sortOption =  $subject->getData('sort_order');
 
-            return $sortedResult;
+        $this->stock->addIsInStockFilterToCollection($result);
+
+        if (!empty($categoryId)) {
+            $result->addCategoryFilter($this->categoryRepository->get($categoryId));
+        }
+
+        if (!empty($sortOption)) {
+            return $this->sorting->applySorting($sortOption, $result);
         } else {
             return $result;
         }
@@ -71,5 +87,23 @@ class ProductsListPlugin
     {
         $cacheKeys[] = $subject->getData('sort_order');
         return $cacheKeys;
+    }
+
+    /**
+     * Add category cache identifier
+     *
+     * @param \Magento\CatalogWidget\Block\Product\ProductsList $subject
+     * @param array $result
+     * @return array
+     */
+    public function afterGetIdentities(\Magento\CatalogWidget\Block\Product\ProductsList $subject, array $result)
+    {
+        $categoryId =  $subject->getData('category_ids');
+        $sortOption =  $subject->getData('sort_order');
+
+        if (!empty($categoryId) && $sortOption === 'position') {
+            $result[] = Category::CACHE_TAG . '_' . $categoryId;
+        }
+        return $result;
     }
 }

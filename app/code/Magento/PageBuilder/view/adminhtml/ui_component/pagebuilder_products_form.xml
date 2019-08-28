@@ -75,8 +75,68 @@
         <settings>
             <label />
         </settings>
-        <htmlContent name="conditions_form" template="Magento_PageBuilder/form/element/widget-conditions">
+        <field name="condition_option" sortOrder="0" formElement="select" component="Magento_PageBuilder/js/form/element/condition-options">
             <settings>
+                <dataType>text</dataType>
+                <label translate="true">Select Products By</label>
+                <elementTmpl>Magento_PageBuilder/form/element/visual-select</elementTmpl>
+                <exports>
+                    <link name="category_idsVisible">${$.parentName}.category_ids:visible</link>
+                    <link name="conditionVisible">${$.parentName}.conditions_form:visible</link>
+                    <link name="value">${$.parentName}.sort_order:filter</link>
+                </exports>
+                <dataScope>condition_option</dataScope>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options>
+                            <option name="0" xsi:type="array">
+                                <item name="size" xsi:type="string">small</item>
+                                <item name="value" xsi:type="string">category_ids</item>
+                                <item name="title" xsi:type="string" translate="true">Category</item>
+                            </option>
+                            <option name="1" xsi:type="array">
+                                <item name="size" xsi:type="string">small</item>
+                                <item name="value" xsi:type="string">condition</item>
+                                <item name="title" xsi:type="string" translate="true">Condition</item>
+                            </option>
+                        </options>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="category_ids" component="Magento_Catalog/js/components/new-category" sortOrder="5" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filterOptions" xsi:type="boolean">true</item>
+                    <item name="multiple" xsi:type="boolean">false</item>
+                    <item name="showCheckbox" xsi:type="boolean">false</item>
+                    <item name="disableLabel" xsi:type="boolean">true</item>
+                    <item name="levelsVisibility" xsi:type="number">1</item>
+                </item>
+            </argument>
+            <settings>
+                <elementTmpl>ui/grid/filters/elements/ui-select</elementTmpl>
+                <label translate="true">Category</label>
+                <dataScope>category_ids</dataScope>
+                <componentType>field</componentType>
+                <visible>false</visible>
+                <listens>
+                    <link name="${ $.namespace }.${ $.namespace }:responseData">setParsed</link>
+                </listens>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="Magento\Catalog\Ui\Component\Product\Form\Categories\Options"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <htmlContent name="conditions_form" sortOrder="5" template="Magento_PageBuilder/form/element/widget-conditions">
+            <settings>
+                <visible>false</visible>
                 <additionalClasses>
                     <class name="admin__field">true</class>
                 </additionalClasses>
@@ -84,12 +144,20 @@
             <block name="conditions_form" class="Magento\PageBuilder\Block\Adminhtml\Form\Element\ProductConditions">
                 <arguments>
                     <argument name="formNamespace" xsi:type="string">pagebuilder_products_form</argument>
-                    <argument name="attribute" xsi:type="string">conditions_encoded</argument>
+                    <argument name="attribute" xsi:type="string">condition_source</argument>
                     <argument name="label" xsi:type="string" translate="true">Condition</argument>
                 </arguments>
             </block>
         </htmlContent>
-        <field name="sort_order" sortOrder="10" formElement="select">
+        <field name="sort_order" sortOrder="10" formElement="select" component="Magento_PageBuilder/js/form/element/select-filtered-options">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">position</item>
+                    <item name="excludeOptions" xsi:type="array">
+                        <item name="condition" xsi:type="string">position</item>
+                    </item>
+                </item>
+            </argument>
             <settings>
                 <dataType>text</dataType>
                 <label translate="true">Sort By</label>

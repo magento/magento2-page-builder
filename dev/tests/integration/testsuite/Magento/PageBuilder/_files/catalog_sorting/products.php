@@ -6,9 +6,29 @@
 
 $objectManager = \Magento\TestFramework\Helper\Bootstrap::getObjectManager();
 
+$category = $objectManager->create(\Magento\Catalog\Model\Category::class);
+$category->isObjectNew(true);
+$category->setId(333)
+    ->setName('pbcategory')
+    ->setParentId(2)
+    ->setPath('1/2/333')
+    ->setLevel(2)
+    ->setAvailableSortBy('name', 'position')
+    ->setDefaultSortBy('name')
+    ->setIsActive(true)
+    ->setPosition(1)
+    ->save();
+
 /* @var $productRepository \Magento\Catalog\Model\ProductRepository */
 $productRepository = $objectManager->create(\Magento\Catalog\Model\ProductRepository::class);
-
+$categoryLinkRepository = $objectManager->create(
+    \Magento\Catalog\Api\CategoryLinkRepositoryInterface::class,
+    [
+        'productRepository' => $productRepository
+    ]
+);
+/** @var $categoryLinkManagement \Magento\Catalog\Api\CategoryLinkManagementInterface */
+$categoryLinkManagement = $objectManager->create(\Magento\Catalog\Api\CategoryLinkManagementInterface::class);
 /** @var $firstProduct \Magento\Catalog\Model\Product */
 $firstProduct = $objectManager->create(\Magento\Catalog\Model\Product::class);
 $firstProduct->setTypeId(\Magento\Catalog\Model\Product\Type::TYPE_SIMPLE)
@@ -48,8 +68,8 @@ $secondProduct->setTypeId(\Magento\Catalog\Model\Product\Type::TYPE_SIMPLE)
     ->setWeight(0)
     ->setStockData(
         [
-            'qty' => 0,
-            'is_in_stock' => false
+            'qty' => 1,
+            'is_in_stock' => true
         ]
     )
     ->setVisibility(\Magento\Catalog\Model\Product\Visibility::VISIBILITY_BOTH)
@@ -104,3 +124,19 @@ $fourthProduct->setTypeId(\Magento\Catalog\Model\Product\Type::TYPE_SIMPLE)
     ->setStatus(\Magento\Catalog\Model\Product\Attribute\Source\Status::STATUS_ENABLED);
 
 $productRepository->save($fourthProduct);
+
+$productPositions = [
+    '1_PB_PRODUCT' => 3,
+    'a_pb_product' => 2,
+    'B_PB_PRODUCT' => 1,
+    'C_PB_PRODUCT' => 4
+];
+
+foreach ($productPositions as $sku => $position) {
+    $productLink = $objectManager->create(\Magento\Catalog\Api\Data\CategoryProductLinkInterface::class)
+        ->setSku($sku)
+        ->setPosition($position)
+        ->setCategoryId(333);
+    $categoryLinkRepository->save($productLink);
+    $categoryLinkManagement->assignProductToCategories($sku, [333]);
+}

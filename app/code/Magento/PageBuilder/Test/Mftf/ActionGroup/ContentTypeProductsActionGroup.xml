@@ -62,6 +62,7 @@
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
         <comment userInput="addConditionToProductConditions" stepKey="comment"/>
+        <click selector="{{ProductsContentTypeForm.conditionsSelectProductsByButton('condition')}}" stepKey="clickSelectProductsByConditionButton"/>
         <waitForElementVisible selector="{{ProductsContentTypeForm.conditionsList}}" stepKey="waitForConditionsToLoad"/>
         <waitForElementVisible selector="{{ProductsContentTypeForm.conditionsListAddButton(index)}}" stepKey="waitForAddConditionButton"/>
         <click selector="{{ProductsContentTypeForm.conditionsListAddButton(index)}}" stepKey="clickAddConditionButton"/>
@@ -77,6 +78,7 @@
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
         <comment userInput="addConditionsCombinationToProductsAndSetAggregateParameters" stepKey="comment"/>
+        <click selector="{{ProductsContentTypeForm.conditionsSelectProductsByButton('condition')}}" stepKey="clickSelectProductsByConditionButton"/>
         <waitForElementVisible selector="{{ProductsContentTypeForm.conditionsList}}" stepKey="waitForConditionsToLoad"/>
         <waitForElementVisible selector="{{ProductsContentTypeForm.conditionsListAddButton(index)}}" stepKey="waitForAddConditionButton"/>
         <click selector="{{ProductsContentTypeForm.conditionsListAddButton(index)}}" stepKey="clickAddConditionButton"/>
