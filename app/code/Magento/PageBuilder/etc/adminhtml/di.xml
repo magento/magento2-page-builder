@@ -6,6 +6,9 @@
  */
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Catalog\Block\Product\ImageFactory">
+        <plugin name="designLoader" type="Magento\PageBuilder\Plugin\DesignLoader" />
+    </type>
     <virtualType name="Magento\PageBuilder\Block\Adminhtml\ContentType\Edit\ModalCloseButton" type="Magento\PageBuilder\Block\Adminhtml\ContentType\Edit\CloseButton">
         <arguments>
             <argument name="targetName" xsi:type="string">ns = pagebuilder_modal_form, index = modal</argument>

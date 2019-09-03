@@ -9,6 +9,7 @@ declare(strict_types=1);
 namespace Magento\PageBuilder\Plugin\Catalog\Block\Product;
 
 use Magento\PageBuilder\Model\Catalog\Sorting;
+use Magento\CatalogInventory\Helper\Stock;
 
 /**
  * Catalog Products List widget block plugin
@@ -21,14 +22,20 @@ class ProductsListPlugin
     private $sorting;
 
     /**
-     * ProductsListPlugin constructor.
-     *
+     * @var Stock
+     */
+    private $stock;
+
+    /**
      * @param Sorting $sorting
+     * @param Stock $stock
      */
     public function __construct(
-        Sorting $sorting
+        Sorting $sorting,
+        Stock $stock
     ) {
         $this->sorting = $sorting;
+        $this->stock = $stock;
     }
 
     /**
@@ -42,7 +49,7 @@ class ProductsListPlugin
         \Magento\CatalogWidget\Block\Product\ProductsList $subject,
         \Magento\Catalog\Model\ResourceModel\Product\Collection $result
     ) {
-
+        $this->stock->addIsInStockFilterToCollection($result);
         $sortOption = $subject->getData('sort_order');
         if (isset($sortOption)) {
             $sortedResult = $this->sorting->applySorting($sortOption, $result);

@@ -9,6 +9,7 @@ declare(strict_types=1);
 namespace Magento\PageBuilder\Model\Stage\Renderer;
 
 use Magento\Framework\Controller\ResultFactory;
+use Magento\PageBuilder\Model\Filter\Template;
 
 /**
  * Renders a block for the stage
@@ -31,20 +32,27 @@ class Block implements \Magento\PageBuilder\Model\Stage\RendererInterface
     private $resultFactory;
 
     /**
-     * Constructor
-     *
+     * @var Template
+     */
+    private $templateFilter;
+
+    /**
      * @param \Magento\PageBuilder\Model\Config $config
      * @param \Magento\Framework\View\Element\BlockFactory $blockFactory
      * @param ResultFactory $resultFactory
+     * @param Template|null $templateFilter
      */
     public function __construct(
         \Magento\PageBuilder\Model\Config $config,
         \Magento\Framework\View\Element\BlockFactory $blockFactory,
-        ResultFactory $resultFactory
+        ResultFactory $resultFactory,
+        Template $templateFilter = null
     ) {
         $this->config = $config;
         $this->blockFactory = $blockFactory;
         $this->resultFactory = $resultFactory;
+        $this->templateFilter = $templateFilter ?? \Magento\Framework\App\ObjectManager::getInstance()
+                ->get(\Magento\PageBuilder\Model\Filter\Template::class);
     }
 
     /**
@@ -77,7 +85,7 @@ class Block implements \Magento\PageBuilder\Model\Stage\RendererInterface
             $pageResult = $this->resultFactory->create(ResultFactory::TYPE_PAGE);
             $pageResult->getLayout()->addBlock($backendBlockInstance);
 
-            $result['content'] = $backendBlockInstance->toHtml();
+            $result['content'] = $this->templateFilter->filter($backendBlockInstance->toHtml());
         }
 
         return $result;
