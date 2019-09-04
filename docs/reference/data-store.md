@@ -13,13 +13,13 @@ Preview.contentType.dataStore;
 
 ## Events
 
-The data store maintains its own event system. It does not use the global events system used by Page Builder. As a result, you need to create an instance of `dataStore` to observe events, as follows:
+The data store maintains its own event system. It does not use the global events system used by Page Builder. As a result, you need to create an instance of `dataStore` and subscribe to its data changes, as follows:
 
 ```js
 var dataStore = self.contentType.dataStore;
 
-dataStore.events.on("state", function (state) {
-    console.log(state);    
+dataStore.subscribe(() => {
+    // handler to update content type
 });
 ```
 
@@ -46,6 +46,12 @@ Set the entire state for the current content type.
 You can use the data store to modify your content type when its data changes. For example, the Page Builder native [Tabs content type](magento2-page-builder/app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/tabs/preview.ts) subscribes to the data store and makes updates to it when a tab-item changes, as follows:
 
 ```typescript
+...
+    args.contentType.dataStore.subscribe(() => {
+        this.updateTabNamesInDataStore();
+    });
+...
+
 /**
 * Update data store with active options
 */
