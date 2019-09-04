@@ -16,49 +16,58 @@
 @import 'slick/_slick.less';
 @import 'content-type/_import.less';
 
-.cms-content-important {
-    background-color: @color-white-smoke;
-    color: @color-gray20;
-    font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-size: 22px;
-    font-style: normal;
-    font-weight: 300;
-    line-height: 1.1;
-    margin: 0 0 35px -20px;
-    padding: 20px;
-}
-
-.pagebuilder-full-width {
-    float: left;
-    width: 100%;
-}
-
-.pagebuilder-content-type {
-    box-sizing: border-box;
-    margin-bottom: 20px;
-}
-
 //
-//  styles for legacy content types
+//  Common
 //  _____________________________________________
 
-.pagebuilder-accordion {
-    .lib-data-accordion();
-}
+& when (@media-common = true) {
+    .cms-content-important {
+        background-color: @color-white-smoke;
+        color: @color-gray20;
+        font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        font-size: 22px;
+        font-style: normal;
+        font-weight: 300;
+        line-height: 1.1;
+        margin: 0 0 35px -20px;
+        padding: 20px;
+    }
 
-//
-//  Responsive Classes
-//  _____________________________________________
+    .pagebuilder-full-width {
+        float: left;
+        width: 100%;
+    }
 
-@media all and (min-width: (@screen__m + 1)) {
-    .pagebuilder-mobile-only {
-        display: none !important;
+    .pagebuilder-content-type {
+        box-sizing: border-box;
+        margin-bottom: 20px;
+    }
+
+    //
+    //  Styles for legacy content types
+    //  ---------------------------------------------
+
+    .pagebuilder-accordion {
+        .lib-data-accordion();
     }
 }
 
-@media all and (max-width: @screen__m) {
+//
+//  Mobile (style-m.css)
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
     .pagebuilder-mobile-hidden {
         display: none !important;
     }
 }
 
+//
+//  Desktop (style-l.css)
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = (@screen__m + 1)) {
+    .pagebuilder-mobile-only {
+        display: none !important;
+    }
+}
