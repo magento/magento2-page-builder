@@ -22,7 +22,7 @@ class PreviewRegistry
      *
      * @return string
      */
-    public function getPreviewArea()
+    public function getPreviewArea() : string
     {
         return \Magento\Framework\App\Area::AREA_FRONTEND;
     }
@@ -42,7 +42,7 @@ class PreviewRegistry
      *
      * @return bool
      */
-    public function getIsPreview()
+    public function isPreview() : bool
     {
         return $this->isPreview;
     }

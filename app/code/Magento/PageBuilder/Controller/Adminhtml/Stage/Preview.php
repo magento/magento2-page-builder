@@ -21,6 +21,8 @@ use Magento\Framework\App\Action\HttpPostActionInterface;
  */
 class Preview extends \Magento\Backend\App\Action implements HttpPostActionInterface
 {
+    const ADMIN_RESOURCE = 'Magento_Backend::content';
+
     /**
      * @var \Magento\PageBuilder\Model\Stage\RendererPool
      */
@@ -66,7 +68,10 @@ class Preview extends \Magento\Backend\App\Action implements HttpPostActionInter
      * @param \Magento\PageBuilder\Model\Stage\RendererPool $rendererPool
      * @param \Magento\Store\Model\App\Emulation $emulation
      * @param \Magento\Framework\App\State $appState
-     * @param \Magento\Theme\Model\View\Design $design
+     * @param \Magento\Framework\View\DesignInterface $design
+     * @param \Magento\Framework\View\Design\Theme\ThemeProviderInterface $themeProvider
+     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
+     * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
      * @param \Magento\PageBuilder\Model\Stage\PreviewRegistry $previewRegistry
      */
     public function __construct(
@@ -95,7 +100,8 @@ class Preview extends \Magento\Backend\App\Action implements HttpPostActionInter
     /**
      * Generates an HTML preview for the stage
      *
-     * @return \Magento\Framework\Controller\ResultInterface
+     * @return \Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\ResultInterface|mixed
+     * @throws \Exception
      */
     public function execute()
     {

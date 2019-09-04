@@ -70,7 +70,7 @@ class DesignLoader
         string $imageId,
         array $attributes = null
     ) {
-        if ($this->previewRegistry->getIsPreview()) {
+        if ($this->previewRegistry->isPreview()) {
             $this->appState->emulateAreaCode(
                 $this->previewRegistry->getPreviewArea(),
                 [$this, 'loadDesignConfig']
