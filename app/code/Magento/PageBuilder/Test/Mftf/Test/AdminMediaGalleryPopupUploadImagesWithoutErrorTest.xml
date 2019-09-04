@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="AdminMediaGalleryPopupUploadImagesWithoutErrorTest">
+        <remove keyForRemoval="addImage"/>
+        <remove keyForRemoval="clickShowHideBtnFirstTime"/>
+        <remove keyForRemoval="clickShowHideBtnSecondTime"/>
+        <remove keyForRemoval="waitForPageLoad"/>
+        <remove keyForRemoval="switchToContentFrame"/>
+        <remove keyForRemoval="clickImage"/>
+        <remove keyForRemoval="switchBack"/>
+        <remove keyForRemoval="addImageSecondTime"/>
+        <remove keyForRemoval="switchToContentFrameSecondTime"/>
+        <remove keyForRemoval="seeImageElement"/>
+        <!--Add image into PageBuilder-->
+        <comment userInput="Add image into PageBuilder" stepKey="addImageIntoPageBuilder"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragImageIntoStage">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <click selector="{{ImageOnStageWithoutImageUploaded.selectFromGalleryBtn}}" stepKey="clickSelectFormGallery"/>
+        <actionGroup ref="AdminAddImageCMSBlock" stepKey="addFirstImageToStage">
+            <argument name="image" value="PageBuilderImageProperty_PNG"/>
+        </actionGroup>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask"/>
+        <seeElement selector="{{ImageOnStageWithoutImageUploaded.imageSource(PageBuilderImageProperty_PNG.fileName)}}" stepKey="seeFirstImageElement"/>
+        <actionGroup ref="goToMediaStorageFromStage" stepKey="goToMediaStorageFromStage" >
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+            <argument name="section" value="ImageOnStageWithoutImageUploaded"/>
+        </actionGroup>
+        <actionGroup ref="AdminAddImageCMSBlock" stepKey="addSecondImageToStage">
+            <argument name="image" value="PageBuilderImageProperty_JPG"/>
+        </actionGroup>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingSecondMask"/>
+        <seeElement selector="{{ImageOnStageWithoutImageUploaded.imageSource(PageBuilderImageProperty_JPG.fileName)}}" stepKey="seeSecondImageElement"/>
+    </test>
+</tests>
