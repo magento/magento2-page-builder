@@ -31,26 +31,26 @@ class DesignLoader
     private $appState;
 
     /**
-     * @var \Magento\PageBuilder\Model\Stage\PreviewRegistry
+     * @var \Magento\PageBuilder\Model\Stage\Preview
      */
-    private $previewRegistry;
+    private $preview;
 
     /**
      * @param \Magento\Framework\View\DesignLoader $designLoader
      * @param \Magento\Framework\Message\ManagerInterface $messageManager
      * @param \Magento\Framework\App\State $appState
-     * @param \Magento\PageBuilder\Model\Stage\PreviewRegistry $previewRegistry
+     * @param \Magento\PageBuilder\Model\Stage\Preview $previewRegistry
      */
     public function __construct(
         \Magento\Framework\View\DesignLoader $designLoader,
         \Magento\Framework\Message\ManagerInterface $messageManager,
         \Magento\Framework\App\State $appState,
-        \Magento\PageBuilder\Model\Stage\PreviewRegistry $previewRegistry
+        \Magento\PageBuilder\Model\Stage\Preview $preview
     ) {
         $this->designLoader = $designLoader;
         $this->messageManager = $messageManager;
         $this->appState = $appState;
-        $this->previewRegistry = $previewRegistry;
+        $this->preview = $preview;
     }
 
     /**
@@ -70,7 +70,7 @@ class DesignLoader
         string $imageId,
         array $attributes = null
     ) {
-        if ($this->previewRegistry->isPreview()) {
+        if ($this->preview->isPreviewMode()) {
             $this->appState->emulateAreaCode(
                 $this->previewRegistry->getPreviewArea(),
                 [$this, 'loadDesignConfig']
