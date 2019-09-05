@@ -44,7 +44,7 @@ Set the entire state for the current content type.
 
 ## Usage
 
-You can use the data store to modify your content type when its data changes. For example, the Page Builder native [Tabs content type](magento2-page-builder/app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/tabs/preview.ts) subscribes to the data store and makes updates to it when a tab-item changes, as show here in typescript:
+You can use the data store to modify your content type when its data changes. For example, the Page Builder native [Tabs content type](magento2-page-builder/app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/tabs/preview.ts) subscribes to the data store and makes updates to it when a tab-item changes, as show here in TypeScript:
 
 ```typescript
 ...
