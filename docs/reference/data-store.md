@@ -26,25 +26,25 @@ dataStore.subscribe(() => {
 
 ## API
 
-#### `get(key: string, defaultValue?: any): any`
+### `get(key: string, defaultValue?: any): any`
 
 Retrieve a single value from the content type's data store based on its key. You can provide an optional default value if no data is present.
 
-#### `getState(): object`
+### `getState(): object`
 
 Get the entire state object for the current content type instance.
 
-#### `set(key: string, value: any): void`
+### `set(key: string, value: any): void`
 
 Set a single piece of data into the content type's data store.
 
-#### `setState(): void`
+### `setState(): void`
 
 Set the entire state for the current content type.
 
 ## Usage
 
-You can use the data store to modify your content type when its data changes. For example, the Page Builder native [Tabs content type](magento2-page-builder/app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/tabs/preview.ts) subscribes to the data store and makes updates to it when a tab-item changes, as show here in TypeScript:
+You can use the data store to modify your content type when its data changes. For example, the Page Builder native Tabs content type (magento2-page-builder/app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/tabs/preview.ts) subscribes to the data store and makes updates to it when a tab-item changes, as show here in TypeScript:
 
 ```typescript
 ...
