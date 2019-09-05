@@ -72,7 +72,7 @@ class DesignLoader
     ) {
         if ($this->preview->isPreviewMode()) {
             $this->appState->emulateAreaCode(
-                $this->previewRegistry->getPreviewArea(),
+                $this->preview->getPreviewArea(),
                 [$this, 'loadDesignConfig']
             );
         }
