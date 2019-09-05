@@ -1,6 +1,7 @@
 # Page Builder data store
 
 ## Summary
+
 The data store is a utility class that stores the user's input data for a content type. When Page Builder creates a content type, either from the master storage format or from a user dragging and dropping a content type, Page Builder also creates a data store instance for that content type. Whenever the user modifies a content type, either by editing it on the stage or from the UI component form, Page Builder updates the data store with the new data. The master format and preview both fetch the data required for their render from the data store.
 
 ## Access
