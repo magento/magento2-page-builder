@@ -83,6 +83,7 @@
                 <exports>
                     <link name="category_idsVisible">${$.parentName}.category_ids:visible</link>
                     <link name="conditionVisible">${$.parentName}.conditions_form:visible</link>
+                    <link name="skuVisible">${$.parentName}.sku:visible</link>
                     <link name="value">${$.parentName}.sort_order:filter</link>
                 </exports>
                 <dataScope>condition_option</dataScope>
@@ -97,6 +98,11 @@
                                 <item name="title" xsi:type="string" translate="true">Category</item>
                             </option>
                             <option name="1" xsi:type="array">
+                                <item name="size" xsi:type="string">small</item>
+                                <item name="value" xsi:type="string">sku</item>
+                                <item name="title" xsi:type="string" translate="true">SKU</item>
+                            </option>
+                            <option name="2" xsi:type="array">
                                 <item name="size" xsi:type="string">small</item>
                                 <item name="value" xsi:type="string">condition</item>
                                 <item name="title" xsi:type="string" translate="true">Condition</item>
@@ -134,6 +140,22 @@
                 </select>
             </formElements>
         </field>
+        <field name="sku" sortOrder="5" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="condition_operator" xsi:type="string">()</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Product SKUs</label>
+                <dataScope>sku</dataScope>
+                <visible>false</visible>
+                <exports>
+                    <link name="condition_operator">${ $.provider }:data.sku-condition_operator</link>
+                </exports>
+            </settings>
+        </field>
         <htmlContent name="conditions_form" sortOrder="5" template="Magento_PageBuilder/form/element/widget-conditions">
             <settings>
                 <visible>false</visible>
@@ -154,7 +176,9 @@
                 <item name="config" xsi:type="array">
                     <item name="default" xsi:type="string">position</item>
                     <item name="excludeOptions" xsi:type="array">
-                        <item name="condition" xsi:type="string">position</item>
+                        <item name="condition" xsi:type="string">position,position_by_sku</item>
+                        <item name="sku" xsi:type="string">position</item>
+                        <item name="category_ids" xsi:type="string">position_by_sku</item>
                     </item>
                 </item>
             </argument>
