@@ -8,7 +8,7 @@ declare(strict_types=1);
 namespace Magento\PageBuilder\Model\Filter;
 
 /**
- * Plugin to the template filter to process any background images added by Page Builder
+ * Specific template filters for Page Builder content
  */
 class Template
 {
