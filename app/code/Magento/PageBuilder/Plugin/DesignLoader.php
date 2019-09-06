@@ -39,7 +39,7 @@ class DesignLoader
      * @param \Magento\Framework\View\DesignLoader $designLoader
      * @param \Magento\Framework\Message\ManagerInterface $messageManager
      * @param \Magento\Framework\App\State $appState
-     * @param \Magento\PageBuilder\Model\Stage\Preview $previewRegistry
+     * @param \Magento\PageBuilder\Model\Stage\Preview $preview
      */
     public function __construct(
         \Magento\Framework\View\DesignLoader $designLoader,
