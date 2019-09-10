@@ -20,6 +20,14 @@ The [Example directory](https://github.com/magento-devdocs/pagebuilder-examples/
 
 - **[PageBuilderExtensionBanner](https://github.com/magento-devdocs/pagebuilder-examples/tree/master/Example/PageBuilderExtensionBanner)** — This Banner extension module shows the basic pattern for customizing existing content types using appearances.
 
+## Additional extension modules
+
+- **[PageBuilderLazyLoading](https://github.com/magento-devdocs/pagebuilder-examples/tree/master/Example/PageBuilderLazyLoading)** — This module shows how to add lazy loading behavior to the Image content type. For this example, we use the [lazysizes](https://github.com/aFarkas/lazysizes) loader. Created by [Bruce Denham](https://magentocommeng.slack.com/messages/DA4LERA9L).
+- **[DeactivatingPageBuilder](https://github.com/magento-devdocs/pagebuilder-examples/tree/master/Example/DeactivatingPageBuilder)** — This example module shows you how to disable Page Builder for a particular page in Magento, specifically Pages, Blocks, and Dynamic Blocks. Created by [Bruce Denham](https://magentocommeng.slack.com/messages/DA4LERA9L).
+- **[PageBuilderExtensionBaseForms](https://github.com/magento-devdocs/pagebuilder-examples/tree/master/Example/PageBuilderExtensionBaseForms)** — This module shows you how to remove fields and fieldsets from Page Builder's built-in forms. Created by [Bruce Denham](https://magentocommeng.slack.com/messages/DA4LERA9L).
+- **[PageBuilderExtensionText](https://github.com/magento-devdocs/pagebuilder-examples/tree/master/Example/PageBuilderExtensionText)** — This module shows you how to customize the Page Builder's Text toolbar, integrate your own theme's typography, and add TinyMCE's `code` plugin to the toolbar so you can view the HTML code directly. Created by [Bruce Denham](https://magentocommeng.slack.com/messages/DA4LERA9L).
+- **[PageBuilderExtensionSlider](https://github.com/magento-devdocs/pagebuilder-examples/tree/master/Example/PageBuilderExtensionSlider)** — This module shows you how to add `centerMode` and `centerPadding` settings from the [slick carousel](https://kenwheeler.github.io/slick/) used by the Slider. Create by [Bruce Denham](https://magentocommeng.slack.com/messages/DA4LERA9L).
+
 ## Example code for how-to topics
 
 **In Progress**. The how-to directories in the repo correspond to the how-to topics in this documentation. Each how-to directory provides the files and code changes featured in the how-to topics.
@@ -28,7 +36,7 @@ For example, the topic [How to add a custom toolbar](../how-to/how-to-add-custom
 
 ## Installation
 
-Assuming you have Page Builder 1.0.0 already installed, you can install the example modules as follows:
+Assuming you have Page Builder already installed, you can install the example modules as follows:
 
 1. Clone the pagebuilder-examples repo:
 
