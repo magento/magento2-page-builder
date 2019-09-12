@@ -1948,9 +1948,6 @@
             <group value="pagebuilder-image"/>
             <group value="pagebuilder-banner"/>
             <group value="pagebuilder-bannerCommon"/>
-            <skip>
-                <issueId value="MC-19863"/>
-            </skip>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -2006,6 +2003,8 @@
         <actionGroup ref="clickSelectFromGallerySlideOut" stepKey="clickSelectFromGallerySlideOut">
             <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
+        <click selector="{{MediaGallerySection.currentSelectedDirectory}}" stepKey="refreshFolder"/>
+        <waitForPageLoad stepKey="waitForRefresh"/>
         <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage3">
             <argument name="Image" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>

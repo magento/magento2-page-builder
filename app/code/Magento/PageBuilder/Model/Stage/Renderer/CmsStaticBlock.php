@@ -9,6 +9,8 @@ declare(strict_types=1);
 namespace Magento\PageBuilder\Model\Stage\Renderer;
 
 use Psr\Log\LoggerInterface;
+use Magento\PageBuilder\Model\Stage\HtmlFilter;
+use Magento\PageBuilder\Model\Filter\Template;
 
 /**
  * Renders a CMS Block for the stage
@@ -33,28 +35,35 @@ class CmsStaticBlock implements \Magento\PageBuilder\Model\Stage\RendererInterfa
     private $loggerInterface;
 
     /**
-     * @var \Magento\PageBuilder\Model\Stage\HtmlFilter
+     * @var HtmlFilter
      */
     private $htmlFilter;
 
     /**
-     * CmsStaticBlock constructor.
-     *
+     * @var Template
+     */
+    private $templateFilter;
+
+    /**
      * @param \Magento\Cms\Model\ResourceModel\Block\CollectionFactory $blockCollectionFactory
      * @param WidgetDirective $widgetDirectiveRenderer
      * @param LoggerInterface $loggerInterface
      * @param \Magento\PageBuilder\Model\Stage\HtmlFilter $htmlFilter
+     * @param \Magento\PageBuilder\Model\Filter\Template|null $templateFilter
      */
     public function __construct(
         \Magento\Cms\Model\ResourceModel\Block\CollectionFactory $blockCollectionFactory,
         WidgetDirective $widgetDirectiveRenderer,
         LoggerInterface $loggerInterface,
-        \Magento\PageBuilder\Model\Stage\HtmlFilter $htmlFilter
+        HtmlFilter $htmlFilter,
+        Template $templateFilter = null
     ) {
         $this->blockCollectionFactory = $blockCollectionFactory;
         $this->widgetDirectiveRenderer = $widgetDirectiveRenderer;
         $this->loggerInterface = $loggerInterface;
         $this->htmlFilter = $htmlFilter;
+        $this->templateFilter = $templateFilter ?? \Magento\Framework\App\ObjectManager::getInstance()
+                ->get(\Magento\PageBuilder\Model\Filter\Template::class);
     }
 
     /**
@@ -96,7 +105,9 @@ class CmsStaticBlock implements \Magento\PageBuilder\Model\Stage\RendererInterfa
 
         if ($block->isActive()) {
             $directiveResult = $this->widgetDirectiveRenderer->render($params);
-            $result['content'] = $this->htmlFilter->filterHtml($directiveResult['content']);
+            $result['content'] = $this->htmlFilter->filterHtml(
+                $this->templateFilter->filter($directiveResult['content'])
+            );
         } else {
             $result['error'] = __('Block disabled');
         }
