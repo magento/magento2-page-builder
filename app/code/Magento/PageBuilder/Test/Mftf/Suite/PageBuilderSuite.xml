@@ -12,12 +12,18 @@
             <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG"/>
             <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="enableTinyMCE4"/>
             <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setEmptyGoogleMapsAPIKey"/>
+            <magentoCLI command="config:set web/default_layouts/default_cms_layout cms-full-width" stepKey="setPageBuilderDefaultCmsLayout"/>
+            <magentoCLI command="config:set web/default_layouts/default_category_layout category-full-width" stepKey="setPageBuilderDefaultCategoryLayout"/>
+            <magentoCLI command="config:set web/default_layouts/default_product_layout product-full-width" stepKey="setPageBuilderDefaultProductLayout"/>
         </before>
         <after>
             <magentoCLI command="config:set cms/pagebuilder/enabled 1" stepKey="enablePageBuilder"/>
             <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="enableTinyMCE4"/>
             <magentoCLI command="config:set cms/wysiwyg/enabled disabled" stepKey="disableWYSIWYG"/>
             <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setEmptyGoogleMapsAPIKey"/>
+            <magentoCLI command="config:set web/default_layouts/default_cms_layout 1column" stepKey="setCoreDefaultCmsLayout"/>
+            <magentoCLI command="config:set web/default_layouts/default_category_layout 1column" stepKey="setCoreDefaultCategoryLayout"/>
+            <magentoCLI command="config:set web/default_layouts/default_product_layout 1column" stepKey="setCoreDefaultProductLayout"/>
         </after>
         <include>
             <group name="pagebuilder"/>
