@@ -9,6 +9,8 @@ The release notes include:
 
 ## 1.1.0
 
+Along with the following additions and fixes, this release also focused on substantial security enhancements.
+
 - {:.new}<!-- MC-15250 -->Added explicit product sorting to the Products content type.
 
 - {:.new}<!-- MC-17823 -->Added buttons for inserting images, widgets, and variables in the HTML content type.
