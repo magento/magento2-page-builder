@@ -9,13 +9,15 @@ The release notes include:
 
 ## 1.1.0
 
-Along with the following additions and fixes, this release also focused on substantial security enhancements.
+This release is compatible Magento Commerce 2.3.3+.
 
 - {:.new}<!-- MC-15250 -->Added explicit product sorting to the Products content type.
 
 - {:.new}<!-- MC-17823 -->Added buttons for inserting images, widgets, and variables in the HTML content type.
 
 - {:.new}<!-- MC-1805 -->Upgraded Page Builder to PHP version 7.3.
+
+- {:.fix}Security enhancements.
 
 - {:.fix}<!-- MC-3880 -->Fixed an issue in which the minimum height & vertical alignment was inconsistent between sections On the edit panel for each content type.
 
@@ -30,12 +32,13 @@ Along with the following additions and fixes, this release also focused on subst
 - {:.fix}<!-- MC-16241 -->Fixed an issue in which the required asterisk symbol was displayed twice on form fields.
 
 ## 1.0.2
+This release is compatible Magento Commerce 2.3.2.1+.
 
-This release focused on substantial security enhancements.
+- {:.new}Security enhancements.
 
 ## 1.0.1
 
-This release focused on substantial security enhancements.
+- {:.new}Ensures compatibility with Magento Commerce 2.3.2.
 
 ## 1.0.0
 
