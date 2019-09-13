@@ -27,17 +27,13 @@ The release notes include:
 
 - {:.fix}<!-- MC-16241 -->Fixed an issue in which the required asterisk symbol was displayed twice on form fields.
 
-- {:.fix}<!-- MC-18799 -->Restricted Page Builder 1.1.0 to Magento 2.3.3+.
-
 ## 1.0.2
 
-- {:.fix}<!-- MC-18723 -->Restricted Page Builder 1.0.2 to Magento 2.3.2.1+.
-
-- {:.fix}<!-- MC-19192 -->Backported Page Builder TinyMCE performance fix from 1.1.0-release.
+This release focused on substantial security enhancements.
 
 ## 1.0.1
 
-- {:.fix}Ensures compatibility with Magento Commerce 2.3.2.
+This release focused on substantial security enhancements.
 
 ## 1.0.0
 
