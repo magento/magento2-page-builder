@@ -1,4 +1,4 @@
-# Release note for Page Builder
+# Release notes for Page Builder
 
 The following updates describe the latest improvements to Page Builder.
 
