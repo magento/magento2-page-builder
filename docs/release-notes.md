@@ -15,13 +15,20 @@ This release is compatible Magento Commerce 2.3.3+.
 
 - {:.new}<!-- MC-17823 -->Added buttons for inserting images, widgets, and variables in the HTML content type.
 
-- {:.new}<!-- MC-1805 -->Upgraded Page Builder to PHP version 7.3.
+- {:.fix}<!-- MC-4137 -->Updated TinyMCE to version 4.9.5. This update fixed several TinyMCE inline editor issues:
+
+  - {:.fix}Variables, images, & image links now get added where the cursor is place.
+  - {:.fix}Tables and table cells can now be center aligned.
+  - {:.fix}Copy/paste now pastes content at the cursor's position.
+  - {:.fix}Links can now be applied to selected text.
+  - {:.fix}Bullets are now properly aligned.
+  - {:.fix}Changes within the inline editor can now be saved without first clicking outside the editor.
+
+- {:.fix}<!-- MC-1805 -->Updated Page Builder to PHP version 7.3.
 
 - {:.fix}Security enhancements.
 
 - {:.fix}<!-- MC-3880 -->Fixed an issue in which the minimum height & vertical alignment was inconsistent between sections On the edit panel for each content type.
-
-- {:.fix}<!-- MC-4137 -->Fixed several TinyMCE inline editor issues. Variables, images, & image links now get added where cursor is placed; tables and table cells can now be center aligned; copy/paste pastes content at the cursor's position; links can now be applied to selected text; bullets are now properly aligned; editor changes are now saved without first clicking outside the editor.
  
 - {:.fix}<!-- MC-14994 -->Fixed an issue in which the toolbar from the Heading content type was positioned incorrectly when first dropped on the stage.
 
