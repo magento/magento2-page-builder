@@ -1,6 +1,6 @@
 # Component status
 
-**Last Updated: March 26, 2019**
+**Last Updated: September 16, 2019**
 
 <style type="text/css" style="display: none">
 .status {
@@ -51,11 +51,9 @@ Issues that are not related to Page Builder beta are not part of this report.
 | Block              | <span class='status green'>Green</span>   |  |
 | Dynamic Block      | <span class='status green'>Green</span>   |  |
 | Products           | <span class='status green'>Green</span>   |  |
-{:style="table-layout:auto"}
 
 ## Migration
 
 | Name                              | Status                                  | Notes                                     |
 | --------------------------------- | --------------------------------------- | ----------------------|
-| Bluefoot to Page Builder          | <span class='status red'>Red</span>     | The renderers provided out of the box are not fully updated with the latest changes to their respective content types.|
-{:style="table-layout:auto"}
+| Bluefoot to Page Builder          | <span class='status green'>Red</span>   |  |
