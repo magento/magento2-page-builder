@@ -56,4 +56,4 @@ Issues that are not related to Page Builder beta are not part of this report.
 
 | Name                              | Status                                  | Notes                                     |
 | --------------------------------- | --------------------------------------- | ----------------------|
-| Bluefoot to Page Builder          | <span class='status green'>Red</span>   |  |
+| Bluefoot to Page Builder          | <span class='status green'>Green</span>   |  |
