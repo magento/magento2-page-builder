@@ -26,7 +26,7 @@ This release is compatible Magento Commerce 2.3.3+.
 
 - {:.fix}<!-- MC-1805 -->Updated Page Builder to PHP version 7.3.
 
-- {:.fix}Security enhancements.
+- {:.fix}Several security enhancements.
 
 - {:.fix}<!-- MC-3880 -->Fixed an issue in which the minimum height & vertical alignment was inconsistent between sections On the edit panel for each content type.
  
