@@ -60,8 +60,8 @@ class ProductsListPlugin
         \Magento\CatalogWidget\Block\Product\ProductsList $subject,
         \Magento\Catalog\Model\ResourceModel\Product\Collection $result
     ) {
-        $categoryId =  $subject->getData('category_ids');
-        $sortOption =  $subject->getData('sort_order');
+        $categoryId = $subject->getData('category_ids');
+        $sortOption = $subject->getData('sort_order');
 
         $this->stock->addIsInStockFilterToCollection($result);
 
@@ -98,8 +98,8 @@ class ProductsListPlugin
      */
     public function afterGetIdentities(\Magento\CatalogWidget\Block\Product\ProductsList $subject, array $result)
     {
-        $categoryId =  $subject->getData('category_ids');
-        $sortOption =  $subject->getData('sort_order');
+        $categoryId = $subject->getData('category_ids');
+        $sortOption = $subject->getData('sort_order');
 
         if (!empty($categoryId) && $sortOption === 'position') {
             $result[] = Category::CACHE_TAG . '_' . $categoryId;
