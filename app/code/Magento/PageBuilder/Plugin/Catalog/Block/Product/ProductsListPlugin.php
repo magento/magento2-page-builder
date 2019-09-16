@@ -12,6 +12,7 @@ use Magento\PageBuilder\Model\Catalog\Sorting;
 use Magento\Catalog\Model\Category;
 use Magento\CatalogInventory\Helper\Stock;
 use Magento\Catalog\Api\CategoryRepositoryInterface;
+use Magento\Framework\Exception\NoSuchEntityException;
 
 /**
  * Catalog Products List widget block plugin
@@ -54,7 +55,6 @@ class ProductsListPlugin
      * @param \Magento\CatalogWidget\Block\Product\ProductsList $subject
      * @param \Magento\Catalog\Model\ResourceModel\Product\Collection $result
      * @return \Magento\Catalog\Model\ResourceModel\Product\Collection
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     public function afterCreateCollection(
         \Magento\CatalogWidget\Block\Product\ProductsList $subject,
@@ -66,7 +66,14 @@ class ProductsListPlugin
         $this->stock->addIsInStockFilterToCollection($result);
 
         if (!empty($categoryId)) {
-            $result->addCategoryFilter($this->categoryRepository->get($categoryId));
+            try {
+                $category = $this->categoryRepository->get($categoryId);
+            } catch (NoSuchEntityException $noEntityException) {
+                $category = null;
+            }
+            if ($category) {
+                $result->addCategoryFilter($category);
+            }
         }
 
         if (!empty($sortOption)) {
