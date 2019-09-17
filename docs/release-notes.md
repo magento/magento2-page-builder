@@ -19,7 +19,7 @@ This release is compatible Magento Commerce 2.3.3+.
 
 - {:.fix}<!-- MC-1805 -->Updated Page Builder to support PHP version 7.3.
 
-- {:.fix}<!-- MC-4137 -->Updated TinyMCE to version 4.9.5. This update fixed several TinyMCE inline editor issues:
+- {:.fix}<!-- MC-4137 -->Updated TinyMCE to version 4.9.5. This update, along with our additional improvements, fixed several TinyMCE inline editor issues:
 
   - {:.fix}Variables, images, & image links now get added where the cursor is place.
   - {:.fix}Tables and table cells can now be center aligned.
