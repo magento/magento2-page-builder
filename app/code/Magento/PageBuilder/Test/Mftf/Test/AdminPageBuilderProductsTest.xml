@@ -1682,7 +1682,7 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsAfterChangingToFalse"/>
         <!-- Validate Stage After Changing to False -->
         <comment userInput="Validate Stage Changing to False" stepKey="commentValidateStageAfterChangingToFalse"/>
-        <seeElement selector="{{ProductsOnStage.emptyProductsPlaceholder('1')}}" stepKey="validateProductCountStageAfterChangingToFalse"/>
+        <see userInput="{{PageBuilderProductsMessage.noProductsFound}}" selector="{{ProductsOnStage.emptyProductsPlaceholder('1')}}" stepKey="validateProductCountStageAfterChangingToFalse"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
         <!-- Validate Storefront 2 -->
         <comment userInput="Validate Storefront 2" stepKey="commentValidateStorefrontAfterChangingToFalse"/>
@@ -1936,12 +1936,12 @@
         </actionGroup>
         <actionGroup ref="validateProductInProducts" stepKey="validateProduct1Stage">
             <argument name="page" value="ProductsOnStage"/>
-            <argument name="product" value="SortProduct1"/>
+            <argument name="product" value="SortProduct2"/>
             <argument name="productIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="validateProductInProducts" stepKey="validateProduct2Stage">
             <argument name="page" value="ProductsOnStage"/>
-            <argument name="product" value="SortProduct2"/>
+            <argument name="product" value="SortProduct1"/>
             <argument name="productIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
@@ -1956,13 +1956,13 @@
         </actionGroup>
         <actionGroup ref="validateProductInProducts" stepKey="validateProduct1Storefront">
             <argument name="page" value="ProductsOnStorefront"/>
-            <argument name="product" value="SortProduct1"/>
+            <argument name="product" value="SortProduct2"/>
             <argument name="productIndex" value="1"/>
             <argument name="isClickable" value="auto"/>
         </actionGroup>
         <actionGroup ref="validateProductInProducts" stepKey="validateProduct2Storefront">
             <argument name="page" value="ProductsOnStorefront"/>
-            <argument name="product" value="SortProduct2"/>
+            <argument name="product" value="SortProduct1"/>
             <argument name="productIndex" value="2"/>
             <argument name="isClickable" value="auto"/>
         </actionGroup>
@@ -1971,8 +1971,8 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Products"/>
-            <title value="Verify Updating Product Position In Category Propogates Change to Page Builder Products Content Type"/>
-            <description value="Ensure products content type can be set to select products by category and sorted by position"/>
+            <title value="Verify Updating Product Position In Category Propagates Change to Page Builder Products Content Type"/>
+            <description value="Ensure updating product positions in categories will propagate position changes to the page builder products content type"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MC-18338"/>
             <testCaseId value="MC-20159"/>
@@ -1989,10 +1989,14 @@
             <argument name="sectionDependentSelector" value="{{AdminCategoryContentSection.productTableRow}}"/>
         </actionGroup>
         <waitForElementVisible selector="{{AdminCategoryProductsGridSection.rowPosition('1')}}" stepKey="waitForPositionFieldForProduct1" after="expandAdminCategorySection"/>
-        <fillField selector="{{AdminCategoryProductsGridSection.rowPosition('1')}}" userInput="1" stepKey="changePositionForProduct1" after="waitForPositionFieldForProduct1"/>
-        <waitForElementVisible selector="{{AdminCategoryProductsGridSection.rowPosition('2')}}" stepKey="waitForPositionFieldForProduct2" after="changePositionForProduct1"/>
-        <fillField selector="{{AdminCategoryProductsGridSection.rowPosition('2')}}" userInput="2" stepKey="changePositionForProduct2" after="waitForPositionFieldForProduct2"/>
-        <actionGroup ref="saveCatalogCategory" stepKey="saveCatalogCategory" after="changePositionForProduct2"/>
+        <pressKey selector="{{AdminCategoryProductsGridSection.rowPosition('1')}}" parameterArray="[\Facebook\WebDriver\WebDriverKeys::BACKSPACE]" stepKey="clearPositionValueForProduct1" after="waitForPositionFieldForProduct1"/>
+        <fillField selector="{{AdminCategoryProductsGridSection.rowPosition('1')}}" userInput="2" stepKey="changePositionForProduct1" after="clearPositionValueForProduct1"/>
+        <pressKey selector="{{AdminCategoryProductsGridSection.rowPosition('1')}}" parameterArray="[\Facebook\WebDriver\WebDriverKeys::ENTER]" stepKey="enterPositionValueForProduct1" after="changePositionForProduct1"/>
+        <waitForElementVisible selector="{{AdminCategoryProductsGridSection.rowPosition('2')}}" stepKey="waitForPositionFieldForProduct2" after="enterPositionValueForProduct1"/>
+        <pressKey selector="{{AdminCategoryProductsGridSection.rowPosition('2')}}" parameterArray="[\Facebook\WebDriver\WebDriverKeys::BACKSPACE]" stepKey="clearPositionValueForProduct2" after="waitForPositionFieldForProduct2"/>
+        <fillField selector="{{AdminCategoryProductsGridSection.rowPosition('2')}}" userInput="1" stepKey="changePositionForProduct2" after="clearPositionValueForProduct2"/>
+        <pressKey selector="{{AdminCategoryProductsGridSection.rowPosition('2')}}" parameterArray="[\Facebook\WebDriver\WebDriverKeys::ENTER]" stepKey="enterPositionValueForProduct2" after="changePositionForProduct2"/>
+        <actionGroup ref="saveCatalogCategory" stepKey="saveCatalogCategory" after="enterPositionValueForProduct2"/>
         <!-- Stage: Validate Sort Order Changed -->
         <comment userInput="Stage: Validate Sort Order Changed" stepKey="commentValidateStage2" after="saveCatalogCategory"/>
         <actionGroup ref="navigateToCMSPage" stepKey="navigateToCMSPage2" after="commentValidateStage2">
@@ -2006,12 +2010,12 @@
         <actionGroup ref="validateProductInProducts" stepKey="validateProduct1Stage2" after="validateProductsCountStage2">
             <argument name="page" value="ProductsOnStage"/>
             <argument name="product" value="SortProduct1"/>
-            <argument name="productIndex" value="2"/>
+            <argument name="productIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="validateProductInProducts" stepKey="validateProduct2Stage2" after="validateProduct1Stage2">
             <argument name="page" value="ProductsOnStage"/>
             <argument name="product" value="SortProduct2"/>
-            <argument name="productIndex" value="1"/>
+            <argument name="productIndex" value="2"/>
         </actionGroup>
         <!-- Storefront: Validate Sort Order Changed -->
         <comment userInput="Storefront: Validate Sort Order Changed" stepKey="commentValidateStorefront2" after="validateProduct2Stage2"/>
@@ -2025,14 +2029,44 @@
         <actionGroup ref="validateProductInProducts" stepKey="validateProduct1Storefront2" after="validateProductCountStorefront2">
             <argument name="page" value="ProductsOnStorefront"/>
             <argument name="product" value="SortProduct1"/>
-            <argument name="productIndex" value="2"/>
+            <argument name="productIndex" value="1"/>
             <argument name="isClickable" value="auto"/>
         </actionGroup>
         <actionGroup ref="validateProductInProducts" stepKey="validateProduct2Storefront2" after="validateProduct1Storefront2">
             <argument name="page" value="ProductsOnStorefront"/>
             <argument name="product" value="SortProduct2"/>
-            <argument name="productIndex" value="1"/>
+            <argument name="productIndex" value="2"/>
             <argument name="isClickable" value="auto"/>
         </actionGroup>
+    </test>
+    <test name="AdminPageBuilderProductsSortByCategoryPositionVerifyEmptyProductsAfterDeletingCategory" extends="AdminPageBuilderProductsSelectByCategoryAndSortByPosition">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Products"/>
+            <title value="Verify Deleting Category Propagates Change to Page Builder Products Content Type"/>
+            <description value="Ensure that deleting a category that a products content type is tied to will cause the products content type to not render any products"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-18338"/>
+            <testCaseId value="MC-20205"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-products"/>
+        </annotations>
+        <after>
+            <remove keyForRemoval="deleteCategory1"/>
+        </after>
+        <!-- Delete Category -->
+        <comment userInput="Delete Category" stepKey="commentDeleteCategory" after="validateProduct2Storefront"/>
+        <deleteData createDataKey="createCategory1" stepKey="deleteCategory1" after="commentDeleteCategory"/>
+        <actionGroup ref="navigateToCMSPage" stepKey="navigateToCMSPage2" after="deleteCategory1">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2" after="navigateToCMSPage2"/>
+        <see userInput="{{PageBuilderProductsMessage.noProductsFound}}" selector="{{ProductsOnStage.emptyProductsPlaceholder('1')}}" stepKey="seeNoProductsMessage" after="switchToPageBuilderStage2"/>
+        <!-- Storefront: Validate Sort Order Changed -->
+        <comment userInput="Storefront: Validate Sort Order Changed" stepKey="commentValidateStorefront2" after="seeNoProductsMessage"/>
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront2" after="commentValidateStorefront2">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <dontSeeElementInDOM selector="{{ProductsOnStorefront.product('1')}}" stepKey="validateNoProductsOnStorefront" after="navigateToCMSPageStorefront2"/>
     </test>
 </tests>
