@@ -54,7 +54,7 @@ define([], function () {
       var attributeIdMatches = href.match(regexp);
 
       if (!attributeIdMatches) {
-        return "";
+        return href;
       }
 
       return attributeIdMatches[1];
