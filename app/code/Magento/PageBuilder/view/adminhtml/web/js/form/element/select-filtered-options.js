@@ -17,7 +17,11 @@ define([
 
         /** @inheritdoc */
         onUpdate: function () {
-            this.transferredValue = null;
+            if (!this.updatedByFilter) {
+                this.transferredValue = null;
+            } else {
+                this.updatedByFilter = false;
+            }
 
             return this._super();
         },
@@ -38,6 +42,7 @@ define([
                 return !excludeOptions || excludedOptionsArray.indexOf(item.value) === -1;
             });
 
+            this.updatedByFilter = true;
             this.setOptions(result);
 
             this.value(this.transferredValue ? this.transferredValue : initialValue);
