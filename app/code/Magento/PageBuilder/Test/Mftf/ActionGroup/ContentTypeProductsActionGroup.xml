@@ -55,6 +55,21 @@
         <grabMultiple selector="{{page.product(index)}}" stepKey="grabProducts"/>
         <assertCount stepKey="assertCount" expected="{{count}}" expectedType="int" actualType="variable" actual="grabProducts"/>
     </actionGroup>
+    <actionGroup name="selectCategoryFromCategoryDropDown">
+        <arguments>
+            <argument name="property" defaultValue="PageBuilderProductsSelectCategoryDropDown"/>
+            <argument name="category" type="string"/>
+        </arguments>
+        <waitForElementVisible time="2" selector="{{EditPanelForm.panelMultiSelectFieldControl(property.section, property.fieldName)}}" stepKey="waitForMultiSelectFieldVisible"/>
+        <click selector="{{EditPanelForm.panelMultiSelectFieldControl(property.section, property.fieldName)}}" stepKey="clickMultiSelectField"/>
+        <waitForElementVisible selector="{{EditPanelForm.panelMultiSelectFieldControlInput(property.section, property.fieldName)}}" stepKey="waitForSearchField"/>
+        <fillField selector="{{EditPanelForm.panelMultiSelectFieldControlInput(property.section, property.fieldName)}}" userInput="{{category}}" stepKey="inputSearchField"/>
+        <waitForElementVisible selector="{{EditPanelForm.panelMultiSelectFieldControlResult(property.section, property.fieldName, category)}}" stepKey="waitForResult"/>
+        <click selector="{{EditPanelForm.panelMultiSelectFieldControlResult(property.section, property.fieldName, category)}}" stepKey="clickResult"/>
+        <click selector="{{EditPanelForm.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
+        <waitForElementNotVisible selector="{{EditPanelForm.panelMultiSelectFieldControlInput(property.section, property.fieldName)}}" stepKey="waitForSearchFieldNotVisible"/>
+        <see selector="{{EditPanelForm.panelMultiSelectFieldControl(property.section, property.fieldName)}}" userInput="{{category}}" stepKey="seeResultInField"/>
+    </actionGroup>
     <actionGroup name="addConditionToProductConditions">
         <arguments>
             <argument name="conditionType" defaultValue="PageBuilderProductsConditionCategory"/>
