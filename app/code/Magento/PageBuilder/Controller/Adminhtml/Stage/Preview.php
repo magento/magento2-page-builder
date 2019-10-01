@@ -13,8 +13,6 @@ use Magento\Framework\App\Action\HttpPostActionInterface;
 
 /**
  * Preview controller to render blocks preview on Stage
- *
- * @api
  */
 class Preview extends \Magento\Backend\App\Action implements HttpPostActionInterface
 {
