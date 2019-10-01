@@ -11,4 +11,33 @@
     <entity name="EditWithPageBuilderButton" type="pagebuilder_button">
         <data key="value">Edit with Page Builder</data>
     </entity>
+    <!-- consider moving to CE -->
+    <entity name="SortProduct1" type="product">
+        <data key="sku" unique="suffix">sortProduct1</data>
+        <data key="type_id">simple</data>
+        <data key="attribute_set_id">4</data>
+        <data key="visibility">4</data>
+        <data key="name" unique="suffix">A Product Name</data>
+        <data key="price">50.00</data>
+        <data key="urlKey" unique="suffix">aproductname</data>
+        <data key="status">1</data>
+        <data key="quantity">5</data>
+        <data key="weight">1</data>
+        <requiredEntity type="product_extension_attribute">EavStockItem</requiredEntity>
+        <requiredEntity type="custom_attribute_array">CustomAttributeCategoryIds</requiredEntity>
+    </entity>
+    <entity name="SortProduct2" type="product">
+        <data key="sku" unique="suffix">sortProduct2</data>
+        <data key="type_id">simple</data>
+        <data key="attribute_set_id">4</data>
+        <data key="visibility">4</data>
+        <data key="name" unique="suffix">B Product Name</data>
+        <data key="price">75.00</data>
+        <data key="urlKey" unique="suffix">bproductname</data>
+        <data key="status">1</data>
+        <data key="quantity">15</data>
+        <data key="weight">1</data>
+        <requiredEntity type="product_extension_attribute">EavStockItem</requiredEntity>
+        <requiredEntity type="custom_attribute_array">CustomAttributeCategoryIds</requiredEntity>
+    </entity>
 </entities>

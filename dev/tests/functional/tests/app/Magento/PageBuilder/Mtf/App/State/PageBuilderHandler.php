@@ -37,6 +37,9 @@ class PageBuilderHandler implements StateHandlerInterface
     public function execute(AbstractState $state)
     {
         $this->configuration->setConfig('cms/pagebuilder/enabled', '0');
+        $this->configuration->setConfig('web/default_layouts/default_product_layout', '1column');
+        $this->configuration->setConfig('web/default_layouts/default_category_layout', '1column');
+        $this->configuration->setConfig('web/default_layouts/default_cms_layout', '1column');
 
         return true;
     }
