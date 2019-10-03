@@ -88,9 +88,13 @@ define(["consoleLogger", "jquery", "knockout", "mage/translate", "Magento_PageBu
       } else {
         this.searching(true);
         this.searchResults(_underscore.map(_underscore.filter(_config.getConfig("content_types"), function (contentType) {
-          var regEx = new RegExp("\\b" + self.searchValue(), "gi");
-          var matches = !!contentType.label.toLowerCase().match(regEx);
-          return matches && contentType.is_system === true;
+          if (contentType.is_system !== true) {
+            return false;
+          }
+
+          var escapedSearchValue = self.searchValue().replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+          var regEx = new RegExp("\\b" + escapedSearchValue, "gi");
+          return regEx.test(contentType.label.toLowerCase());
         }), function (contentType, identifier) {
           // Create a new instance of GroupContentType for each result
           return new _contentType.ContentType(identifier, contentType, _this2.pageBuilder.stage.id);
