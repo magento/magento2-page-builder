@@ -96,7 +96,7 @@ export default class Panel {
                             return false;
                         }
 
-                        const escapedSearchValue = self.searchValue().replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+                        const escapedSearchValue = self.searchValue().replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
                         const regEx = new RegExp("\\b" + escapedSearchValue, "gi");
 
                         return regEx.test(contentType.label.toLowerCase());

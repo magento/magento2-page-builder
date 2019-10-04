@@ -92,7 +92,7 @@ define(["consoleLogger", "jquery", "knockout", "mage/translate", "Magento_PageBu
             return false;
           }
 
-          var escapedSearchValue = self.searchValue().replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+          var escapedSearchValue = self.searchValue().replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
           var regEx = new RegExp("\\b" + escapedSearchValue, "gi");
           return regEx.test(contentType.label.toLowerCase());
         }), function (contentType, identifier) {
