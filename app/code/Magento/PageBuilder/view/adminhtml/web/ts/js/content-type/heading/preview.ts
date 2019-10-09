@@ -12,6 +12,7 @@ import {OptionsInterface} from "../../content-type-menu/option.types";
 import Toolbar, {ContentTypeToolbarPreviewInterface} from "../../content-type-toolbar";
 import {OptionInterface} from "../../content-type-toolbar.types";
 import ContentTypeInterface from "../../content-type.types";
+import deferred, {DeferredInterface} from "../../utils/promise-deferred";
 import {ContentTypeDroppedCreateEventParamsInterface} from "../content-type-events.types";
 import ObservableUpdater from "../observable-updater";
 import BasePreview from "../preview";
@@ -22,6 +23,7 @@ import BasePreview from "../preview";
 export default class Preview extends BasePreview implements ContentTypeToolbarPreviewInterface {
     public toolbar: Toolbar;
     private element: Element;
+    private afterRenderDeferred: DeferredInterface = deferred();
 
     /**
      * @param {ContentTypeInterface} contentType
@@ -61,12 +63,13 @@ export default class Preview extends BasePreview implements ContentTypeToolbarPr
     }
 
     /**
-     * On render init the tabs widget
+     * On render init the heading
      *
      * @param {Element} element
      */
     public afterRender(element: Element): void {
         this.element = element;
+        this.afterRenderDeferred.resolve(element);
     }
 
     public bindEvents() {
@@ -75,9 +78,14 @@ export default class Preview extends BasePreview implements ContentTypeToolbarPr
         // When a heading is dropped for the first time show heading toolbar
         events.on("heading:dropAfter", (args: ContentTypeDroppedCreateEventParamsInterface) => {
             if (args.id === this.contentType.id) {
-                _.delay(() => {
-                    $(this.element).focus();
-                }, 100); // 100 ms delay to allow for heading to render
+                Promise.all([
+                    this.afterRenderDeferred.promise,
+                    this.toolbar.afterRenderDeferred.promise,
+                ]).then(([element]) => {
+                    _.defer(() => {
+                        $(element).focus();
+                    });
+                });
             }
         });
     }

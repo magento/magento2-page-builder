@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="addPageLinkWidgetToHtmlCodeWYSIWYGDisabled" extends="addPageLinkWidgetToTinyMCE">
+        <arguments>
+            <argument name="widget" defaultValue=""/>
+            <argument name="page" defaultValue="" type="string"/>
+        </arguments>
+        <comment userInput="addPageLinkWidgetToHtmlCodeWYSIWYGDisabled" stepKey="commentAddWidget"/>
+        <waitForElementVisible selector="{{HtmlOnConfiguration.insertWidgetButton}}" stepKey="waitForInsertWidget1"/>
+        <click selector="{{HtmlOnConfiguration.insertWidgetButton}}" stepKey="clickAddWidgetBtn"/>
+        <waitForElementVisible selector="{{HtmlOnConfiguration.textarea}}" stepKey="waitForInsertWidgetModalToClose"/>
+        <executeJS function="return document.querySelectorAll('{{HtmlOnConfiguration.textareaCSS}}')[0].value;" stepKey="getValueFromTextarea" after="waitForInsertWidgetModalToClose"/>
+        <assertContains stepKey="assertTextareaContainsValue" after="getValueFromTextarea">
+            <expectedResult type="string">{{widget.editPanelValue}}</expectedResult>
+            <actualResult type="variable">getValueFromTextarea</actualResult>
+        </assertContains>
+    </actionGroup>
+    <actionGroup name="addVariableToHtmlCodeWYSIWYGDisabled">
+        <arguments>
+            <argument name="variable" defaultValue=""/>
+        </arguments>
+        <comment userInput="addVariableToHtmlCodeWYSIWYGDisabled" stepKey="commentAddVariableToHtmlCodeWYSIWYGDisabled"/>
+        <waitForElementVisible selector="{{HtmlOnConfiguration.insertVariableButton}}" stepKey="waitForInsertVariable1"/>
+        <click selector="{{HtmlOnConfiguration.insertVariableButton}}" stepKey="clickInsertVariable1"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible selector="{{VariableSection.Radio(variable.variableName)}}" stepKey="waitForVariable1"/>
+        <checkOption selector="{{VariableSection.Radio(variable.variableName)}}" stepKey="selectVariable"/>
+        <waitForElementVisible selector="{{VariableSection.InsertWidget}}" stepKey="waitForInsertVariable2"/>
+        <click selector="{{VariableSection.InsertWidget}}" stepKey="clickInsertVariable2"/>
+        <waitForElementNotVisible selector="{{VariableSection.InsertWidget}}" stepKey="waitForVariableModalToClose"/>
+        <waitForElementVisible selector="{{HtmlOnConfiguration.textarea}}" stepKey="waitForTextArea"/>
+        <executeJS function="return document.querySelectorAll('{{HtmlOnConfiguration.textareaCSS}}')[0].value;" stepKey="getValueFromTextarea"/>
+        <assertContains stepKey="assertTextareaContainsValue">
+            <expectedResult type="string">{{variable.editPanelValue}}</expectedResult>
+            <actualResult type="variable">getValueFromTextarea</actualResult>
+        </assertContains>
+    </actionGroup>
+    <actionGroup name="clickHtmlInsertImageButton">
+        <comment userInput="clickHtmlInsertImageButton" stepKey="commentClickHtmlInsertImageButton"/>
+        <waitForElementVisible selector="{{HtmlOnConfiguration.insertImageButton}}" stepKey="waitForInsertImageButton"/>
+        <click selector="{{HtmlOnConfiguration.insertImageButton}}" stepKey="clickInsertImageButton"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible selector="{{MediaGallerySection.StorageRootArrow}}" stepKey="waitForStorageRootArrow"/>
+    </actionGroup>
+</actionGroups>

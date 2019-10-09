@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/content-type/master-factory", "Magento_PageBuilder/js/content-type/preview-factory", "Magento_PageBuilder/js/utils/loader"], function (_events, _underscore, _masterFactory, _previewFactory, _loader) {
+define(["Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/master-factory", "Magento_PageBuilder/js/content-type/preview-factory", "Magento_PageBuilder/js/utils/loader"], function (_events, _underscore, _config, _masterFactory, _previewFactory, _loader) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -29,11 +29,10 @@ define(["Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/c
       (0, _loader)([config.component], function (contentTypeComponent) {
         try {
           var contentType = new contentTypeComponent(parentContentType, config, stageId);
-          Promise.all([(0, _previewFactory)(contentType, config), (0, _masterFactory)(contentType, config)]).then(function (_ref) {
-            var previewComponent = _ref[0],
-                masterComponent = _ref[1];
-            contentType.preview = previewComponent;
-            contentType.content = masterComponent;
+          var viewFactory = _config.getMode() === "Preview" ? _previewFactory : _masterFactory;
+          viewFactory(contentType, config).then(function (viewComponent) {
+            var viewName = _config.getMode() === "Preview" ? "preview" : "content";
+            contentType[viewName] = viewComponent;
             contentType.dataStore.setState(prepareData(config, data));
             resolve(contentType);
           }).catch(function (error) {
@@ -91,6 +90,10 @@ define(["Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/c
 
 
   function prepareDefaults(fields) {
+    if (_underscore.isEmpty(fields)) {
+      return {};
+    }
+
     return _underscore.mapObject(fields, function (field) {
       if (!_underscore.isUndefined(field.default)) {
         return field.default;

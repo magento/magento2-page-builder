@@ -9,47 +9,53 @@
     font-weight: normal;
     src: url('@{icons-pagebuilder__font-path}.eot');
     src: url('@{icons-pagebuilder__font-path}.eot?#iefix') format('embedded-opentype'),
-        url('@{icons-pagebuilder__font-path}.woff') format('woff'),
-        url('@{icons-pagebuilder__font-path}.ttf') format('truetype');
+    url('@{icons-pagebuilder__font-path}.woff') format('woff'),
+    url('@{icons-pagebuilder__font-path}.ttf') format('truetype');
 }
 
-.pagebuilder-icon {
-    font-family: @icons-pagebuilder__font-name;
-    -webkit-font-smoothing: antialiased;
-    font-style: normal;
-    font-weight: normal;
-    line-height: 1;
-    speak: none;
-}
+//
+//  Common
+//  _____________________________________________
 
-[class^='pagebuilder-icon-']:before,
-[class*=' pagebuilder-icon-']:before {
-    display: inline-block;
-    font-family: @icons-pagebuilder__font-name;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    font-style: normal;
-    font-weight: normal;
-    line-height: 1;
-    speak: none;
-    text-decoration: inherit;
-    text-rendering: auto;
-    text-transform: none;
-    vertical-align: middle;
-}
+& when (@media-common = true) {
+    .pagebuilder-icon {
+        -webkit-font-smoothing: antialiased;
+        font-family: @icons-pagebuilder__font-name;
+        font-style: normal;
+        font-weight: normal;
+        line-height: 1;
+        speak: none;
+    }
 
-.pagebuilder-icon-down:before {
-    content: @icon-pagebuilder-caret-down__content;
-}
+    [class^='pagebuilder-icon-']:before,
+    [class*=' pagebuilder-icon-']:before {
+        -moz-osx-font-smoothing: grayscale;
+        -webkit-font-smoothing: antialiased;
+        display: inline-block;
+        font-family: @icons-pagebuilder__font-name;
+        font-style: normal;
+        font-weight: normal;
+        line-height: 1;
+        speak: none;
+        text-decoration: inherit;
+        text-rendering: auto;
+        text-transform: none;
+        vertical-align: middle;
+    }
 
-.pagebuilder-icon-next:before {
-    content: @icon-pagebuilder-caret-next__content;
-}
+    .pagebuilder-icon-down:before {
+        content: @icon-pagebuilder-caret-down__content;
+    }
 
-.pagebuilder-icon-prev:before {
-    content: @icon-pagebuilder-caret-prev__content;
-}
+    .pagebuilder-icon-next:before {
+        content: @icon-pagebuilder-caret-next__content;
+    }
 
-.pagebuilder-icon-up:before {
-    content: @icon-pagebuilder-caret-up__content;
+    .pagebuilder-icon-prev:before {
+        content: @icon-pagebuilder-caret-prev__content;
+    }
+
+    .pagebuilder-icon-up:before {
+        content: @icon-pagebuilder-caret-up__content;
+    }
 }

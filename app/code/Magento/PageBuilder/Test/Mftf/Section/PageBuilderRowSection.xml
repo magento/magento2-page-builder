@@ -36,6 +36,8 @@
         <element name="rowChildContentWidthJS" type="text" selector="document.querySelectorAll('[data-content-type=row]')[{{arg1}} - 1].querySelectorAll('[data-content-type={{arg2}}]')[{{arg3}} - 1].clientWidth" parameterized="true"/>
         <element name="appearanceContained" type="text" selector="(//div[@data-content-type='row'])[{{arg1}}][@data-appearance='{{arg2}}']" parameterized="true"/>
         <element name="appearanceFullWidthFullBleed" type="text" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-row')])[{{arg1}}][@data-appearance='{{arg2}}']" parameterized="true"/>
+        <element name="minHeight" type="button" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-row')])[{{arg1}}][contains(@style,'min-height: {{arg2}}px;')]" parameterized="true"/>
+        <element name="verticalAlignContainer" type="button" selector="(//div[contains(@class, 'pagebuilder-row')])[{{arg1}}]//div[contains(@class, 'element-children') and contains(@class, 'row-container')][contains(@style,'justify-content: {{arg2}};')]" parameterized="true"/>
         <!-- Background Configuration -->
         <element name="backgroundColor" type="button" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-row')])[{{arg1}}][contains(@style,'background-color: {{arg2}};')]" parameterized="true"/>
         <element name="noBackgroundColor" type="button" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-row')])[{{arg1}}][not(contains(@style,'background-color:'))]" parameterized="true"/>
@@ -51,9 +53,6 @@
         <element name="parallaxSpeed" type="button" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-row')])[{{arg1}}][@data-parallax-speed='{{arg2}}']" parameterized="true"/>
         <element name="parallaxBackgroundImage" type="button" selector='(//div[contains(@class,"pagebuilder-content-type") and contains(@class,"pagebuilder-row")])[{{arg1}}]/descendant::div[contains(@id,"jarallax-container")]/div[contains(@style,"background-image: url(") and contains(@style,"{{arg2}}") and contains(@style,"{{arg3}}")]' parameterized="true"/>
         <element name="parallaxJS" type="text" selector="(document.querySelectorAll('[data-content-type=row]')[{{arg1}} - 1]).querySelector('[id*=jarallax-container] > div')" parameterized="true"/>
-        <!-- Layout Configuration -->
-        <element name="minHeight" type="button" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-row')])[{{arg1}}][contains(@style,'min-height: {{arg2}}px;')]" parameterized="true"/>
-        <element name="verticalAlignContainer" type="button" selector="(//div[contains(@class, 'pagebuilder-row')])[{{arg1}}]//div[contains(@class, 'element-children') and contains(@class, 'row-container')][contains(@style,'justify-content: {{arg2}};')]" parameterized="true"/>
         <!-- Advanced Configuration -->
         <element name="alignment" type="text" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-row')])[{{arg1}}][contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
         <element name="noAlignment" type="text" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-row')])[{{arg1}}][not(contains(@style,'text-align:'))]" parameterized="true"/>
@@ -92,6 +91,8 @@
         <element name="appearanceContainedCSS" type="text" selector="[data-content-type=row][data-appearance=contained]"/>
         <element name="appearanceFullBleedCSS" type="text" selector="[data-content-type=row][data-appearance=full-bleed]"/>
         <element name="appearanceFullWidthCSS" type="text" selector="[data-content-type=row][data-appearance=full-width]"/>
+        <element name="minHeight" type="button" selector="(//div[@data-content-type='row'])[{{arg1}}]/div[contains(@style, 'min-height: {{arg2}}px;')]" parameterized="true"/>
+        <element name="verticalAlignContainer" type="button" selector="(//div[@data-content-type='row'])[{{arg1}}]/div[contains(@style, 'justify-content: {{arg2}};')]" parameterized="true"/>
         <!-- Background Configuration -->
         <element name="backgroundColor" type="button" selector="(//div[@data-content-type='row'])[{{arg1}}]/div[contains(@style,'background-color: {{arg2}};')]" parameterized="true"/>
         <element name="noBackgroundColor" type="button" selector="(//div[@data-content-type='row'])[{{arg1}}]/div[not(contains(@style,'background-color:'))]" parameterized="true"/>
@@ -107,9 +108,6 @@
         <element name="parallaxSpeed" type="button" selector="(//div[@data-content-type='row'])[{{arg1}}]/div[@data-parallax-speed='{{arg2}}']" parameterized="true"/>
         <element name="parallaxBackgroundImage" type="button" selector='(//div[@data-content-type="row"])[{{arg1}}]/descendant::div[contains(@id,"jarallax-container")]/div[contains(@style,"background-image: url(") and contains(@style,"{{arg2}}") and contains(@style,"{{arg3}}")]' parameterized="true"/>
         <element name="parallaxJS" type="text" selector="(document.querySelectorAll('[data-content-type=row]')[{{arg1}} - 1]).querySelector('[id*=jarallax-container] > div')" parameterized="true"/>
-        <!-- Layout Configuration -->
-        <element name="minHeight" type="button" selector="(//div[@data-content-type='row'])[{{arg1}}]/div[contains(@style, 'min-height: {{arg2}}px;')]" parameterized="true"/>
-        <element name="verticalAlignContainer" type="button" selector="(//div[@data-content-type='row'])[{{arg1}}]/div[contains(@style, 'justify-content: {{arg2}};')]" parameterized="true"/>
         <!-- Advanced Configuration -->
         <element name="alignment" type="text" selector="(//div[@data-content-type='row'])[{{arg1}}]/div[contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
         <element name="noAlignment" type="text" selector="(//div[@data-content-type='row'])[{{arg1}}]/div[not(contains(@style,'text-align:'))]" parameterized="true"/>

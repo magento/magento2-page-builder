@@ -130,8 +130,7 @@ For example:
 
 Page Builder stores data for content types in a simple object called the DataStore: `Magento_PageBuilder/js/data-store`.
 
-The `name` parameter from the [content type configuration](configurations.md) is the name of a parameter in the `DataStore`.
-You can use the `subscribe` method to listen for changes in the DataStore and perform custom actions on the data.
+The `name` parameter from the [content type configuration](configurations.md) (or `storage_key` if specified) is the name of a parameter in the DataStore. You can use the `subscribe` method to listen for changes in the `DataStore` and perform custom actions like updating the UI.
 
 This is how the system binds the data from the DataStore to your elements attribute or style. When you include a new attribute or style, you must specify where it should retrieve its data from the content type. These `name` values normally bind to the field names within UI component forms. The field names are the keys we use to save the data.
 

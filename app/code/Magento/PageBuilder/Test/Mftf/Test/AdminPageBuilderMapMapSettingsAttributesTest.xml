@@ -21,6 +21,9 @@
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapMapSettings"/>
             <group value="pagebuilder-requiresValidMapAPIKey"/>
+            <skip>
+                <issueId value="MTS-657"/>
+            </skip>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -180,7 +183,7 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHeightPercentage">
             <argument name="property" value="PageBuilderMapHeight_Percentage"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelAndValidateFieldError" stepKey="validateErrorPercentage">
+        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSection" stepKey="validateErrorPercentage">
             <argument name="property" value="PageBuilderMapHeight_Percentage"/>
         </actionGroup>
         <!-- Enter Height: NonNumeric -->
@@ -188,7 +191,7 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHeightNonNumeric">
             <argument name="property" value="PageBuilderMapHeight_NonNumeric"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelAndValidateFieldError" stepKey="validateErrorNonNumeric">
+        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSection" stepKey="validateErrorNonNumeric">
             <argument name="property" value="PageBuilderMapHeight_NonNumeric"/>
         </actionGroup>
     </test>
@@ -205,6 +208,9 @@
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapMapSettings"/>
             <group value="pagebuilder-requiresValidMapAPIKey"/>
+            <skip>
+                <issueId value="MTS-657"/>
+            </skip>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>

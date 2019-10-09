@@ -72,11 +72,9 @@
     </fieldset>
     <fieldset name="general" sortOrder="20">
         <settings>
-            <label translate="true">General</label>
-            <collapsible>true</collapsible>
-            <opened>true</opened>
+            <label/>
         </settings>
-        <field name="tab_name" sortOrder="20" formElement="input">
+        <field name="tab_name" sortOrder="10" formElement="input">
             <settings>
                 <label translate="true">Tab Name</label>
                 <validation>
@@ -84,15 +82,7 @@
                 </validation>
             </settings>
         </field>
-    </fieldset>
-    <fieldset name="background" sortOrder="30"/>
-    <fieldset name="layout" sortOrder="40">
-        <settings>
-            <label translate="true">Layout</label>
-            <collapsible>true</collapsible>
-            <opened>true</opened>
-        </settings>
-        <field name="min_height" sortOrder="10" formElement="input">
+        <field name="min_height" sortOrder="20" formElement="input">
             <settings>
                 <label translate="true">Minimum Height</label>
                 <addAfter translate="true">px</addAfter>
@@ -105,7 +95,7 @@
                 </validation>
             </settings>
         </field>
-        <field name="justify_content" sortOrder="20" formElement="select" component="Magento_PageBuilder/js/form/element/visual-select">
+        <field name="justify_content" sortOrder="30" formElement="select" component="Magento_PageBuilder/js/form/element/visual-select">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="default" xsi:type="string">flex-start</item>
@@ -126,6 +116,7 @@
             </formElements>
         </field>
     </fieldset>
+    <fieldset name="background" sortOrder="30"/>
     <fieldset name="advanced">
         <field name="border" sortOrder="20" formElement="select">
             <argument name="data" xsi:type="array">

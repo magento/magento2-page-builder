@@ -33,6 +33,7 @@ export default class PageBuilder implements PageBuilderInterface {
 
     constructor(config: any, initialValue: string) {
         Config.setConfig(config);
+        Config.setMode("Preview");
         this.initialValue = initialValue;
         this.isFullScreen(config.isFullScreen);
         this.config = config;

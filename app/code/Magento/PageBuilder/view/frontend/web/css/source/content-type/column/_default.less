@@ -7,15 +7,17 @@
 //  Default appearance styles
 //  _____________________________________________
 
-.pagebuilder-column {
-    box-sizing: border-box;
+& when (@media-common = true) {
+    .pagebuilder-column {
+        box-sizing: border-box;
+    }
 }
 
 //
-//  Responsive Classes
+//  Mobile (style-m.css)
 //  _____________________________________________
 
-@media only screen and (max-width: @screen__m) {
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
     .pagebuilder-column {
         background-attachment: scroll !important;
         flex-basis: 100%;

@@ -26,7 +26,17 @@
             </settings>
         </dataProvider>
     </dataSource>
-    <fieldset name="appearance_fieldset" sortOrder="10" component="Magento_PageBuilder/js/form/element/dependent-fieldset">
+    <container sortOrder="10" name="google_map_api_key_check" component="Magento_Ui/js/form/components/html" class="Magento\PageBuilder\Component\GoogleMapsApiKeyValidationContainer">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="additionalClasses" xsi:type="string">message message-warning</item>
+                <item name="visible" xsi:type="boolean">false</item>
+                <item name="map_configuration_url" xsi:type="string">adminhtml/system_config/edit/section/cms</item>
+                <item name="content" xsi:type="string" translate="true"><![CDATA[You must provide a valid <a href="%s" target="_blank">Google Maps API key</a> to use a map.]]></item>
+            </item>
+        </argument>
+    </container>
+    <fieldset name="appearance_fieldset" sortOrder="20" component="Magento_PageBuilder/js/form/element/dependent-fieldset">
         <settings>
             <label translate="true">Appearance</label>
             <additionalClasses>
@@ -65,17 +75,7 @@
             </formElements>
         </field>
     </fieldset>
-    <container sortOrder="20" name="google_map_api_key_check" component="Magento_Ui/js/form/components/html" class="Magento\PageBuilder\Component\GoogleMapsApiKeyValidationContainer">
-        <argument name="data" xsi:type="array">
-            <item name="config" xsi:type="array">
-                <item name="additionalClasses" xsi:type="string">message message-warning</item>
-                <item name="visible" xsi:type="boolean">false</item>
-                <item name="map_configuration_url" xsi:type="string">adminhtml/system_config/edit/section/cms</item>
-                <item name="content" xsi:type="string" translate="true"><![CDATA[You must provide a valid <a href="%s" target="_blank">Google Maps API key</a> to use a map.]]></item>
-            </item>
-        </argument>
-    </container>
-    <fieldset name="general" sortOrder="30">
+    <fieldset name="general" sortOrder="20">
         <settings>
             <label/>
             <additionalClasses>
@@ -246,14 +246,7 @@
                 </button>
             </container>
         </dynamicRows>
-    </fieldset>
-    <fieldset name="map_settings" sortOrder="40">
-        <settings>
-            <label translate="true">Map Settings</label>
-            <collapsible>true</collapsible>
-            <opened>true</opened>
-        </settings>
-        <field name="height" sortOrder="10" formElement="input">
+        <field name="height" sortOrder="30" formElement="input">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="source" xsi:type="string">block</item>
@@ -262,7 +255,7 @@
             </argument>
             <settings>
                 <dataType>text</dataType>
-                <label translate="true">Map Height</label>
+                <label translate="true">Height</label>
                 <dataScope>height</dataScope>
                 <additionalClasses>
                     <class name="admin__field-small">true</class>
@@ -273,7 +266,7 @@
                 </validation>
             </settings>
         </field>
-        <field name="show_controls" sortOrder="20" formElement="checkbox">
+        <field name="show_controls" sortOrder="40" formElement="checkbox">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="default" xsi:type="string">true</item>

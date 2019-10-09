@@ -9,6 +9,7 @@
 <sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
     <section name="VideoOnStage">
+        <element name="mainCSS" type="text" selector="[data-content-type=video][data-element=main]"/>
         <element name="wrapperCSS" type="text" selector="[data-content-type=video] [data-element=wrapper]"/>
         <!-- Empty Video -->
         <element name="empty" type="text" selector="(//div[contains(@class,'pagebuilder-video-wrapper')])[{{arg1}}]//iframe" parameterized="true"/>
@@ -36,6 +37,7 @@
         <element name="padding" type="text" selector="(//div[contains(@class,'pagebuilder-video-wrapper')])[{{arg1}}][contains(@style,'padding: {{arg2}}px;')]" parameterized="true"/>
     </section>
     <section name="VideoOnStorefront">
+        <element name="mainCSS" type="text" selector="[data-content-type=video][data-element=main]"/>
         <element name="wrapperCSS" type="text" selector="[data-content-type=video] [data-element=wrapper]"/>
         <!-- Empty Video -->
         <element name="empty" type="text" selector="//div[@data-content-type='video'][count(iframe)=0]"/>

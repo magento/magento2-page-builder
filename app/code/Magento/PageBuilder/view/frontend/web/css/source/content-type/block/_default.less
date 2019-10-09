@@ -7,11 +7,13 @@
 //  Default appearance styles
 //  _____________________________________________
 
-[data-content-type$='block'] {
-    .block {
-        p:last-child {
-            margin-bottom: 1rem;
-            margin-top: 0;
+& when (@media-common = true) {
+    [data-content-type$='block'] {
+        .block {
+            p:last-child {
+                margin-bottom: 1rem;
+                margin-top: 0;
+            }
         }
     }
 }

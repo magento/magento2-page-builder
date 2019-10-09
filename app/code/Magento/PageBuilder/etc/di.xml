@@ -131,6 +131,7 @@
         <arguments>
             <argument name="productCollectionFactory" xsi:type="object">pageBuilderProductCollectionFactory</argument>
         </arguments>
+        <plugin name="pagebuilder_product_list" type="Magento\PageBuilder\Plugin\Catalog\Block\Product\ProductsListPlugin" />
     </type>
     <type name="Magento\Catalog\Helper\Output">
         <arguments>
@@ -142,5 +143,100 @@
     </type>
     <type name="Magento\Framework\Session\SidResolver">
         <plugin name="pagebuilder_preview_sid_resolving" type="Magento\PageBuilder\Plugin\Framework\Session\SidResolver" />
+    </type>
+    <virtualType name="Magento\PageBuilder\Model\Catalog\Sorting\Date\NewestTop" type="Magento\PageBuilder\Model\Catalog\Sorting\SimpleOption">
+        <arguments>
+            <argument name="label" xsi:type="string">Newest products first</argument>
+            <argument name="sortDirection" xsi:type="const">\Magento\Framework\DB\Select::SQL_DESC</argument>
+            <argument name="attributeField" xsi:type="string">entity_id</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Magento\PageBuilder\Model\Catalog\Sorting\Date\OldestTop" type="Magento\PageBuilder\Model\Catalog\Sorting\SimpleOption">
+        <arguments>
+            <argument name="label" xsi:type="string">Oldest products first</argument>
+            <argument name="sortDirection" xsi:type="const">\Magento\Framework\DB\Select::SQL_ASC</argument>
+            <argument name="attributeField" xsi:type="string">entity_id</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Magento\PageBuilder\Model\Catalog\Sorting\Name\Ascending" type="Magento\PageBuilder\Model\Catalog\Sorting\SimpleOption">
+        <arguments>
+            <argument name="label" xsi:type="string">Name: A - Z</argument>
+            <argument name="sortDirection" xsi:type="const">\Magento\Framework\DB\Select::SQL_ASC</argument>
+            <argument name="attributeField" xsi:type="string">name</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Magento\PageBuilder\Model\Catalog\Sorting\Name\Descending" type="Magento\PageBuilder\Model\Catalog\Sorting\SimpleOption">
+        <arguments>
+            <argument name="label" xsi:type="string">Name: Z - A</argument>
+            <argument name="sortDirection" xsi:type="const">\Magento\Framework\DB\Select::SQL_DESC</argument>
+            <argument name="attributeField" xsi:type="string">name</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Magento\PageBuilder\Model\Catalog\Sorting\Sku\Ascending" type="Magento\PageBuilder\Model\Catalog\Sorting\SimpleOption">
+        <arguments>
+            <argument name="label" xsi:type="string">SKU: ascending</argument>
+            <argument name="sortDirection" xsi:type="const">\Magento\Framework\DB\Select::SQL_ASC</argument>
+            <argument name="attributeField" xsi:type="string">sku</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Magento\PageBuilder\Model\Catalog\Sorting\Sku\Descending" type="Magento\PageBuilder\Model\Catalog\Sorting\SimpleOption">
+        <arguments>
+            <argument name="label" xsi:type="string">SKU: descending</argument>
+            <argument name="sortDirection" xsi:type="const">\Magento\Framework\DB\Select::SQL_DESC</argument>
+            <argument name="attributeField" xsi:type="string">sku</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Magento\PageBuilder\Model\Catalog\Sorting\Stock\Ascending" type="Magento\PageBuilder\Model\Catalog\Sorting\SimpleOption">
+        <arguments>
+            <argument name="label" xsi:type="string">Stock: low stock first</argument>
+            <argument name="sortDirection" xsi:type="const">\Magento\Framework\DB\Select::SQL_ASC</argument>
+            <argument name="attributeField" xsi:type="string">quantity_and_stock_status</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Magento\PageBuilder\Model\Catalog\Sorting\Stock\Descending" type="Magento\PageBuilder\Model\Catalog\Sorting\SimpleOption">
+        <arguments>
+            <argument name="label" xsi:type="string">Stock: high stock first</argument>
+            <argument name="sortDirection" xsi:type="const">\Magento\Framework\DB\Select::SQL_DESC</argument>
+            <argument name="attributeField" xsi:type="string">quantity_and_stock_status</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Magento\PageBuilder\Model\Catalog\Sorting\Price\HighToLow" type="Magento\PageBuilder\Model\Catalog\Sorting\SimpleOption">
+        <arguments>
+            <argument name="label" xsi:type="string">Price: high to low</argument>
+            <argument name="sortDirection" xsi:type="const">\Magento\Framework\DB\Select::SQL_DESC</argument>
+            <argument name="attributeField" xsi:type="string">price</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Magento\PageBuilder\Model\Catalog\Sorting\Price\LowToHigh" type="Magento\PageBuilder\Model\Catalog\Sorting\SimpleOption">
+        <arguments>
+            <argument name="label" xsi:type="string">Price: low to high</argument>
+            <argument name="sortDirection" xsi:type="const">\Magento\Framework\DB\Select::SQL_ASC</argument>
+            <argument name="attributeField" xsi:type="string">price</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Magento\PageBuilder\Model\Catalog\Sorting\Position" type="Magento\PageBuilder\Model\Catalog\Sorting\SimpleOption">
+        <arguments>
+            <argument name="label" xsi:type="string">Position</argument>
+            <argument name="sortDirection" xsi:type="const">\Magento\Framework\DB\Select::SQL_ASC</argument>
+            <argument name="secondarySortDirection" xsi:type="const">\Magento\Framework\DB\Select::SQL_DESC</argument>
+            <argument name="attributeField" xsi:type="string">position</argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\PageBuilder\Model\Catalog\Sorting">
+        <arguments>
+            <argument name="sortClasses" xsi:type="array">
+                <item name="position" xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\Position</item>
+                <item name="date_newest_top" xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\Date\NewestTop</item>
+                <item name="date_oldest_top" xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\Date\OldestTop</item>
+                <item name="name_ascending" xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\Name\Ascending</item>
+                <item name="name_descending" xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\Name\Descending</item>
+                <item name="sku_ascending" xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\Sku\Ascending</item>
+                <item name="sku_descending" xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\Sku\Descending</item>
+                <item name="low_stock_first" xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\Stock\Ascending</item>
+                <item name="high_stock_first" xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\Stock\Descending</item>
+                <item name="price_high_to_low" xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\Price\HighToLow</item>
+                <item name="price_low_to_high" xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\Price\LowToHigh</item>
+            </argument>
+        </arguments>
     </type>
 </config>

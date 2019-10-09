@@ -7,6 +7,14 @@
 //  Source -> Inline WYSIWYG
 //  _____________________________________________
 
+._keyfocus {
+    .inline-wysiwyg {
+        &:focus {
+            box-shadow: none;
+        }
+    }
+}
+
 .inline-wysiwyg {
     .magento-placeholder {
         height: auto;
@@ -46,5 +54,20 @@
     }
     &._right-aligned-toolbar ~ div.mce-tinymce-inline {
         left: auto !important;
+    }
+    ul,
+    ol {
+        display: block;
+        margin-block-end: 1em;
+        margin-block-start: 1em;
+        margin-bottom: 2.5rem;
+        margin-inline-end: 0;
+        margin-inline-start: 0;
+        margin-top: 0;
+        padding-inline-start: 40px;
+
+        li {
+            margin: 0 0 1rem;
+        }
     }
 }

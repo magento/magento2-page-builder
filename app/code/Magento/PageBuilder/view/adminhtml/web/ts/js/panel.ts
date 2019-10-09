@@ -92,10 +92,14 @@ export default class Panel {
                 _.filter(
                     Config.getConfig("content_types"),
                     (contentType: ContentTypeConfigInterface) => {
-                        const regEx = new RegExp("\\b" + self.searchValue(), "gi");
-                        const matches = !!contentType.label.toLowerCase().match(regEx);
-                        return matches &&
-                            contentType.is_system === true;
+                        if (contentType.is_system !== true) {
+                            return false;
+                        }
+
+                        const escapedSearchValue = self.searchValue().replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
+                        const regEx = new RegExp("\\b" + escapedSearchValue, "gi");
+
+                        return regEx.test(contentType.label.toLowerCase());
                     },
                 ),
                 (contentType, identifier: string) => {

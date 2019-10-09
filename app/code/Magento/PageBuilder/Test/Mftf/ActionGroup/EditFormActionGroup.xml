@@ -111,6 +111,9 @@
         <click selector="{{EditPanelForm.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
         <waitForElementVisible time="2" selector="{{EditPanelForm.panelSectionError(property.section)}}" stepKey="waitForSectionChangedIcon"/>
     </actionGroup>
+    <actionGroup name="fillSlideOutPanelFieldAndExpectToSeeErrorInFieldsetGeneral" extends="fillSlideOutPanelFieldAndExpectToSeeErrorInFieldset">
+        <remove keyForRemoval="waitForSectionChangedIcon"/>
+    </actionGroup>
     <actionGroup name="fillSlideOutPanelMultiSelectField">
         <arguments>
             <argument name="property"/>
@@ -209,7 +212,6 @@
         </arguments>
         <waitForElement time="2" selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible"/>
         <click selector="{{EditPanelForm.panelFieldControlSwitch(property.fieldName)}}" stepKey="clickProperty"/>
-        <waitForElementVisible selector="{{EditPanelForm.panelSectionChangedIcon(property.section)}}" stepKey="waitForSectionUpdated"/>
     </actionGroup>
     <actionGroup name="clickSlideOutPanelFieldOpenInNewTab">
         <arguments>
@@ -225,7 +227,7 @@
         </arguments>
         <waitForElement time="2" selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible"/>
         <seeElement selector='//li[@name="{{property.value}}"]' stepKey="seeVisualSelect"/>
-        <click selector='//div[@data-index="{{property.section}}" and contains(@class,"_show")]//li[@name="{{property.value}}"]' stepKey="chooseVisualSelectOption"/>
+        <click selector='//div[@data-index="{{property.section}}"]//li[@name="{{property.value}}"]' stepKey="chooseVisualSelectOption"/>
     </actionGroup>
     <actionGroup name="scrollToSlideOutPanelField">
         <arguments>

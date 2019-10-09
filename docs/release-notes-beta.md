@@ -6,7 +6,7 @@
 
 ## Beta 7 - February 14, 2019
 
-Beta 7 has breaking changes due to renaming of several critical variables and parameters in Page Builder's code and configuration. Please refer to the [breaking changes document](https://devdocs.magedevteam.com/ds_pagebuilder/page-builder/breaking-changes.html) for details on how to update your custom content types.
+Beta 7 has breaking changes due to renaming of several critical variables and parameters in Page Builder's code and configuration. Please refer to the breaking changes document for details on how to update your custom content types.
 
 - Resolved: Content type markup within Text content type causes whole stage to become HTML <!--MC-13917-->
 - Resolved: Hard-coded margins on individual Button <!--MC-13925-->
