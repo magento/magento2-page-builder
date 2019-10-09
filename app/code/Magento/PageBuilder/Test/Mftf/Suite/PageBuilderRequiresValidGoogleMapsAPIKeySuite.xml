@@ -6,7 +6,7 @@
   */
 -->
 <suites xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Suite/etc/suiteSchema.xsd">
-    <suite name="PageBuilderWithWYSIWYG">
+    <suite name="PageBuilderRequiresValidGoogleMapsAPIKeySuite">
         <before>
             <magentoCLI command="config:set cms/pagebuilder/enabled 1" stepKey="enablePageBuilder"/>
             <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG"/>
@@ -23,10 +23,7 @@
             <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setEmptyGoogleMapsAPIKey"/>
         </after>
         <include>
-            <group name="pagebuilder"/>
-        </include>
-        <exclude>
             <group name="pagebuilder-requiresValidMapAPIKey"/>
-        </exclude>
+        </include>
     </suite>
 </suites>
