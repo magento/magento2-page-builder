@@ -21,12 +21,12 @@ This release is compatible Magento Commerce 2.3.3+.
 
 -   {:.fix}<!-- MC-4137 -->Updated TinyMCE to version 4.9.5. This update, along with our additional improvements, fixed several TinyMCE inline editor issues:
 
-  -   {:.fix}Variables, images, & image links now get added where the cursor is place.
-  -   {:.fix}Tables and table cells can now be center aligned.
-  -   {:.fix}Copy/paste now pastes content at the cursor's position.
-  -   {:.fix}Links can now be applied to selected text.
-  -   {:.fix}Bullets are now properly aligned.
-  -   {:.fix}Changes within the inline editor can now be saved without first clicking outside the editor.
+    -   {:.fix}Variables, images, & image links now get added where the cursor is place.
+    -   {:.fix}Tables and table cells can now be center aligned.
+    -   {:.fix}Copy/paste now pastes content at the cursor's position.
+    -   {:.fix}Links can now be applied to selected text.
+    -   {:.fix}Bullets are now properly aligned.
+     -   {:.fix}Changes within the inline editor can now be saved without first clicking outside the editor.
 
 -   {:.fix}<!-- MC-3880 -->Fixed an issue in which the minimum height & vertical alignment was inconsistent between sections on the edit panel for each content type.
 
@@ -34,7 +34,7 @@ This release is compatible Magento Commerce 2.3.3+.
 
 -   {:.fix}<!-- MC-15742 -->Fixed hard-coded margins in both Slider and Video content types.
 
--    {:.fix}<!-- MC-16241 -->Fixed an issue in which the required asterisk symbol was displayed twice on form fields.
+-   {:.fix}<!-- MC-16241 -->Fixed an issue in which the required asterisk symbol was displayed twice on form fields.
 
 ## 1.0.2
 
