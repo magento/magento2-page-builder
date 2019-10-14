@@ -26,7 +26,7 @@ This release is compatible Magento Commerce 2.3.3+.
     -   {:.fix}Copy/paste now pastes content at the cursor's position.
     -   {:.fix}Links can now be applied to selected text.
     -   {:.fix}Bullets are now properly aligned.
-     -   {:.fix}Changes within the inline editor can now be saved without first clicking outside the editor.
+    -   {:.fix}Changes within the inline editor can now be saved without first clicking outside the editor.
 
 -   {:.fix}<!-- MC-3880 -->Fixed an issue in which the minimum height & vertical alignment was inconsistent between sections on the edit panel for each content type.
 
