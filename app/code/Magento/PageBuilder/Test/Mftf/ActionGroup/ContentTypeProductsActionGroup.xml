@@ -151,4 +151,11 @@
         <waitForPageLoad stepKey="waitForProductPageToLoad"/>
         <see userInput="You must login or register to add items to your wishlist." stepKey="seeWishListSuccessMessage"/>
     </actionGroup>
+    <actionGroup name="addSkusToSelectProductsBySku">
+        <arguments>
+            <argument name="skus" type="string"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitSkuInputToLoad"/>
+        <fillField selector="{{ProductsContentTypeForm.productsSkusInput}}" userInput="{{skus}}" stepKey="fillSelectProductsBySkuField"/>
+    </actionGroup>
 </actionGroups>
