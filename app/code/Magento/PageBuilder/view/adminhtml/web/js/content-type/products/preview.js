@@ -2,7 +2,7 @@
 
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-menu/hide-show-option", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _knockout, _translate, _config, _hideShowOption, _preview) {
+define(["jquery", "knockout", "mage/translate", "slick", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-menu/hide-show-option", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _knockout, _translate, _slick, _config, _hideShowOption, _preview) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -26,6 +26,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/config",
 
       _this = _preview2.call(this, contentType, config, observableUpdater) || this;
       _this.displayPreview = _knockout.observable(false);
+      _this.sliderReady = false;
       _this.messages = {
         EMPTY: (0, _translate)("Empty Products"),
         NO_RESULTS: (0, _translate)("No products were found matching your condition"),
@@ -56,6 +57,17 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/config",
         sort: 40
       });
       return options;
+    }
+    /**
+     * On afterRender callback.
+     *
+     * @param {Element} element
+     */
+    ;
+
+    _proto.onAfterRender = function onAfterRender(element) {
+      this.element = element;
+      this.initSlider();
     }
     /**
      * @inheritdoc
@@ -99,11 +111,39 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/config",
         } else {
           _this2.data.main.html(response.data.content);
 
+          _this2.initSlider();
+
           _this2.displayPreview(true);
         }
       }).fail(function () {
         _this2.placeholderText(_this2.messages.UNKNOWN_ERROR);
       });
+    };
+
+    _proto.initSlider = function initSlider() {
+      if (!this.sliderReady && this.element && this.appearance() === "carousel") {
+        (0, _jquery)(this.element.children).slick(this.buildSlickConfig());
+        this.sliderReady = true;
+      }
+    }
+    /**
+     * Build the slick config object
+     *
+     * @returns {{autoplay: boolean; infinite: boolean; arrows: boolean; dots: boolean;
+     * centerMode: boolean; slidesToScroll: number, slidesToShow: number}}
+     */
+    ;
+
+    _proto.buildSlickConfig = function buildSlickConfig() {
+      return {
+        slidesToShow: 5,
+        slidesToScroll: 5,
+        centerMode: false,
+        dots: true,
+        arrows: false,
+        autoplay: false,
+        infinite: false
+      };
     };
 
     return Preview;

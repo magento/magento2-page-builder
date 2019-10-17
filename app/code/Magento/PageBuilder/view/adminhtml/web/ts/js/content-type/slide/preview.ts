@@ -19,12 +19,16 @@ import WysiwygInterface from "../../wysiwyg/wysiwyg-interface";
 import {ContentTypeMountEventParamsInterface} from "../content-type-events.types";
 import BasePreview from "../preview";
 import SliderPreview from "../slider/preview";
+import ko from "knockout";
+import {DataObject} from "../../data-store";
 
 /**
  * @api
  */
 export default class Preview extends BasePreview {
     public buttonPlaceholder: string = $t("Edit Button Text");
+
+    public slideName: KnockoutObservable<string> = ko.observable();
     /**
      * Wysiwyg instance
      */
@@ -324,6 +328,13 @@ export default class Preview extends BasePreview {
                 });
             }
         });
+
+        this.contentType.dataStore.subscribe(
+            (data: DataObject) => {
+                console.log(data.slide_name);
+                this.slideName(data.slide_name);
+            },
+        );
     }
 
     /**

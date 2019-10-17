@@ -74,7 +74,9 @@ define(["Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/c
 
 
   function prepareData(config, data) {
-    var defaults = prepareDefaults(config.fields || {}); // Set all content types to be displayed by default
+    var appearance = data.appearance + "-appearance";
+    var fields = config.fields[appearance] || config.fields.default;
+    var defaults = prepareDefaults(fields || {}); // Set all content types to be displayed by default
 
     defaults.display = true;
     return _underscore.extend(defaults, data, {

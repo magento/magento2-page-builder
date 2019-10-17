@@ -6,6 +6,7 @@
 import $ from "jquery";
 import ko from "knockout";
 import $t from "mage/translate";
+import "slick";
 import Config from "../../config";
 import ContentTypeInterface from "../../content-type";
 import ContentTypeConfigInterface from "../../content-type-config.types";
@@ -20,6 +21,8 @@ import BasePreview from "../preview";
 export default class Preview extends BasePreview {
     public displayPreview: KnockoutObservable<boolean> = ko.observable(false);
     public placeholderText: KnockoutObservable<string>;
+    private element: Element;
+    private sliderReady: boolean = false;
     private messages = {
         EMPTY: $t("Empty Products"),
         NO_RESULTS: $t("No products were found matching your condition"),
@@ -57,6 +60,16 @@ export default class Preview extends BasePreview {
         });
 
         return options;
+    }
+
+    /**
+     * On afterRender callback.
+     *
+     * @param {Element} element
+     */
+    public onAfterRender(element: Element): void {
+        this.element = element;
+        this.initSlider();
     }
 
     /**
@@ -98,11 +111,37 @@ export default class Preview extends BasePreview {
                     this.data.main.html(response.data.error);
                 } else {
                     this.data.main.html(response.data.content);
+                    this.initSlider();
                     this.displayPreview(true);
                 }
             })
             .fail(() => {
                 this.placeholderText(this.messages.UNKNOWN_ERROR);
             });
+    }
+
+    protected initSlider(): void {
+        if (!this.sliderReady && this.element && this.appearance() === "carousel") {
+            $(this.element.children).slick(this.buildSlickConfig());
+            this.sliderReady = true;
+        }
+    }
+
+    /**
+     * Build the slick config object
+     *
+     * @returns {{autoplay: boolean; infinite: boolean; arrows: boolean; dots: boolean;
+     * centerMode: boolean; slidesToScroll: number, slidesToShow: number}}
+     */
+    private buildSlickConfig() {
+        return {
+            slidesToShow: 5,
+            slidesToScroll: 5,
+            centerMode: false,
+            dots: true,
+            arrows: false,
+            autoplay: false,
+            infinite: false,
+        };
     }
 }
