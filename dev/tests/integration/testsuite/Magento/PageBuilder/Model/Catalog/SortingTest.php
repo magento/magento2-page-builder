@@ -7,6 +7,7 @@
 namespace Magento\PageBuilder\Model\Catalog;
 
 use Magento\TestFramework\Helper\Bootstrap;
+use Magento\Catalog\Api\CategoryRepositoryInterface;
 
 /**
  * Class SortingTest
@@ -14,26 +15,29 @@ use Magento\TestFramework\Helper\Bootstrap;
 class SortingTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * By default products will be ordered by SKU
-     *
-     * @var array
-     */
-    protected $skus = [
-        '1_PB_PRODUCT',
-        'a_pb_product',
-        'B_PB_PRODUCT',
-        'C_PB_PRODUCT'
-    ];
-
-    /**
      * @var \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory
      */
-    protected $productCollectionFactory;
+    private $productCollectionFactory;
 
     /**
      * @var \Magento\PageBuilder\Model\Catalog\Sorting
      */
-    protected $sortModel;
+    private $sortModel;
+
+    /**
+     * @var CategoryRepositoryInterface
+     */
+    private $categoryRepository;
+
+    /**
+     * @var \Magento\Indexer\Model\Indexer
+     */
+    protected $indexer;
+
+    /**
+     * @var int
+     */
+    private $categoryId = 333;
 
     /**
      * Set up instances and mock objects
@@ -45,22 +49,26 @@ class SortingTest extends \PHPUnit\Framework\TestCase
             \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory::class
         );
         $this->sortModel = $objectManager->create(Sorting::class);
+        $this->categoryRepository = $objectManager->create(
+            CategoryRepositoryInterface::class
+        );
     }
 
     /**
+     * @param array $productSortData
      * @dataProvider productSortDataProvider
      * @magentoDataFixture Magento/PageBuilder/_files/catalog_sorting/products.php
      */
-    public function testSortOptions($productSort)
+    public function testSortOptions(array $productSortData)
     {
-        foreach ($productSort as $rule => $expectedOrder) {
+        foreach ($productSortData as $rule => $expectedOrder) {
             $collection = $this->productCollectionFactory->create();
-            $collection->addAttributeToFilter(
-                \Magento\Catalog\Api\Data\ProductInterface::SKU,
-                [
-                    'in' => $this->skus,
-                ]
-            );
+            $collection->addAttributeToSelect('*');
+            $collection->addCategoriesFilter(['in' => [$this->categoryId]]);
+
+            if ($rule === 'position') {
+                $collection->addCategoryFilter($this->categoryRepository->get($this->categoryId));
+            }
 
             $actualOrder = $this->getSkus(
                 $this->sortModel->applySorting(
@@ -70,8 +78,8 @@ class SortingTest extends \PHPUnit\Framework\TestCase
             );
 
             $this->assertEquals(
-                $actualOrder,
                 $expectedOrder,
+                $actualOrder,
                 $rule . ' does not match expected output.'
             );
         }
@@ -139,11 +147,19 @@ class SortingTest extends \PHPUnit\Framework\TestCase
                         '1_PB_PRODUCT',
                         'a_pb_product',
                         'C_PB_PRODUCT',
+                        'B_PB_PRODUCT'
                     ],
                     'price_low_to_high' => [
+                        'B_PB_PRODUCT',
                         'C_PB_PRODUCT',
                         'a_pb_product',
                         '1_PB_PRODUCT'
+                    ],
+                    'position' => [
+                        'B_PB_PRODUCT',
+                        'a_pb_product',
+                        '1_PB_PRODUCT',
+                        'C_PB_PRODUCT'
                     ]
                 ],
             ]

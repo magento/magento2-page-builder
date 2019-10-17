@@ -5,24 +5,26 @@
 
 //
 //  Contained row appearance styles
-//  _______________________________
+//  _____________________________________________
 
-[data-content-type='row'][data-appearance='contained'] {
-    box-sizing: border-box;
-    margin-left: auto !important;
-    margin-right: auto !important;
-    max-width: @layout__max-width;
-
-    [data-element='inner'] {
+& when (@media-common = true) {
+    [data-content-type='row'][data-appearance='contained'] {
         box-sizing: border-box;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        max-width: @layout__max-width;
+
+        [data-element='inner'] {
+            box-sizing: border-box;
+        }
     }
 }
 
 //
-//  Responsive Classes
+//  Mobile (style-m.css)
 //  _____________________________________________
 
-@media only screen and (max-width: @screen__m) {
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
     [data-content-type='row'][data-appearance='contained'] {
         [data-element='inner'] {
             background-attachment: scroll !important;
