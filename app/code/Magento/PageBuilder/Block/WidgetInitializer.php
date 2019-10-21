@@ -54,4 +54,14 @@ class WidgetInitializer extends Template
     {
         return $this->jsonSerializer->serialize($this->config->getConfig());
     }
+
+    /**
+     * Returns breakpoints for widgets initializer component.
+     *
+     * @return string
+     */
+    public function getBreakpoints() : string
+    {
+        return $this->jsonSerializer->serialize($this->config->getBreakpoints());
+    }
 }

@@ -4,6 +4,7 @@
  */
 
 import $ from "jquery";
+import ko from "knockout";
 import $t from "mage/translate";
 import events from "Magento_PageBuilder/js/events";
 import _ from "underscore";
@@ -11,6 +12,7 @@ import {PreviewSortableSortUpdateEventParams} from "../../binding/sortable-child
 import Config from "../../config";
 import ConditionalRemoveOption from "../../content-type-menu/conditional-remove-option";
 import {OptionsInterface} from "../../content-type-menu/option.types";
+import {DataObject} from "../../data-store";
 import Uploader from "../../uploader";
 import delayUntil from "../../utils/delay-until";
 import nestingLinkDialog from "../../utils/nesting-link-dialog";
@@ -19,8 +21,6 @@ import WysiwygInterface from "../../wysiwyg/wysiwyg-interface";
 import {ContentTypeMountEventParamsInterface} from "../content-type-events.types";
 import BasePreview from "../preview";
 import SliderPreview from "../slider/preview";
-import ko from "knockout";
-import {DataObject} from "../../data-store";
 
 /**
  * @api

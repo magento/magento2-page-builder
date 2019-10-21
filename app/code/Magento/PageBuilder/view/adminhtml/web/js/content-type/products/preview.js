@@ -129,20 +129,22 @@ define(["jquery", "knockout", "mage/translate", "slick", "Magento_PageBuilder/js
     /**
      * Build the slick config object
      *
-     * @returns {{autoplay: boolean; infinite: boolean; arrows: boolean; dots: boolean;
+     * @returns {{autoplay: boolean; autoplay: number; infinite: boolean; arrows: boolean; dots: boolean;
      * centerMode: boolean; slidesToScroll: number, slidesToShow: number}}
      */
     ;
 
     _proto.buildSlickConfig = function buildSlickConfig() {
+      var attributes = this.data.main.attributes();
       return {
         slidesToShow: 5,
-        slidesToScroll: 5,
-        centerMode: false,
-        dots: true,
-        arrows: false,
-        autoplay: false,
-        infinite: false
+        slidesToScroll: attributes["data-slide-all"] === "true" ? 5 : 1,
+        centerMode: attributes["data-center-mode"] === "true",
+        dots: attributes["data-show-dots"] === "true",
+        arrows: attributes["data-show-arrows"] === "true",
+        infinite: attributes["data-infinite-loop"] === "true",
+        autoplay: attributes["data-autoplay"] === "true",
+        autoplaySpeed: parseFloat(attributes["data-autoplay-speed"])
       };
     };
 

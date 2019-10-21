@@ -141,6 +141,7 @@ class Config
             'column_grid_max' => $this->scopeConfig->getValue(self::XML_PATH_COLUMN_GRID_MAX),
             'can_use_inline_editing_on_stage' => $this->isWysiwygProvisionedForEditingOnStage(),
             'widgets' => $this->widgetInitializerConfig->getConfig(),
+            'breakpoints' => $this->widgetInitializerConfig->getBreakpoints()
         ];
     }
 
