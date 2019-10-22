@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <!-- todo add 2 tests that validate appearances (set appearance, save, validate stage & storefront)-->
+    <!-- todo add 2 tests that validate general options under each appearance (set appearance, filter, # prods, save, validate stage, edit to new filter, save, validate stage, etc.)-->
+    <test name="AdminPageBuilderProductsCarouselDoesNotAppearOnFrontendWhenNotConfigured" extends="AdminPageBuilderProductsDoesNotAppearOnFrontendWhenNotConfigured">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Products"/>
+            <title value="Carousel - Empty Products Does Not Appear on Storefront"/>
+            <description value="Validate that when Products dialog is closed without configuring settings that no products show up on the storefront."/>
+            <severity value="MAJOR"/>
+            <useCaseId value="PB-77"/>
+            <testCaseId value="MC-21986"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-products"/>
+            <group value="pagebuilder-productsCarousel"/>
+        </annotations>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanel" after="dragProductsIntoStage">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance" after="openEditPanel">
+            <argument name="property" value="PageBuilderProductsProductCarouselAppearance"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings" after="selectAppearance"/>
+    </test>
+    <test name="AdminPageBuilderProductsCarouselValidateNumberOfProductsField" extends="AdminPageBuilderProductsWithCount">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Products"/>
+            <title value="Carousel - Field Validation and Stage/Storefront Functionality of Number of Products Field"/>
+            <description value="Validate that adding a products count update the Stage and Storefront correctly with the correct number of products. Check error messages for field."/>
+            <severity value="MAJOR"/>
+            <useCaseId value="PB-77"/>
+            <testCaseId value="MC-21987"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-products"/>
+            <group value="pagebuilder-productsCarousel"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
+            <argument name="property" value="PageBuilderProductsProductCarouselAppearance"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateDefaultNumberOfProductsToDisplay">
+            <argument name="property" value="PageBuilderProductsCarouselCountPropertyTwenty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterInvalidMinProductsCount">
+            <argument name="property" value="PageBuilderProductsCarouselInvalidMinCountProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSection" stepKey="validateInvalidMinCount">
+            <argument name="property" value="PageBuilderProductsCarouselInvalidMinCountProperty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterInvalidEmptyProductsCount">
+            <argument name="property" value="PageBuilderProductsCarouselInvalidEmptyCountProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSection" stepKey="validateInvalidEmptyCount">
+            <argument name="property" value="PageBuilderProductsCarouselInvalidEmptyCountProperty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterInvalidMaxProductsCount">
+            <argument name="property" value="PageBuilderProductsCarouselInvalidMaxCountProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSection" stepKey="validateInvalidMaxCount">
+            <argument name="property" value="PageBuilderProductsCarouselInvalidMaxCountProperty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterInvalidTypeProductsCount">
+            <argument name="property" value="PageBuilderProductsCarouselInvalidTypeCountProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSection" stepKey="validateInvalidTypeProductsCount">
+            <argument name="property" value="PageBuilderProductsCarouselInvalidTypeCountProperty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMaxProductsCount">
+            <argument name="property" value="PageBuilderProductsCarouselCountPropertyMax"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterOneProductsCount">
+            <argument name="property" value="PageBuilderProductsCarouselCountPropertyOne"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="count" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProductsStage">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStageAfterSave">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="count" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProductsStageAfterSave">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterFourProductsCount">
+            <argument name="property" value="PageBuilderProductsCarouselCountPropertyFour"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage2">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="count" value="4"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProductsStage2">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage2AfterSave">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="count" value="4"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProductsStage2AfterSave">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+        </actionGroup>
+    </test>
+    <test name="AdminPageBuilderProductsCarouselWrapsInsideTinyColumn" extends="ProductsWrapsInsideTinyColumn">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Products"/>
+            <title value="Carousel - Product Content Type Wraps Inside Tiny Column"/>
+            <description value="Validate that the Products content type wraps in a tiny column"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="PB-77"/>
+            <testCaseId value="MC-21988"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-products"/>
+            <group value="pagebuilder-addToColumn"/>
+            <group value="pagebuilder-productsCarousel"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
+            <argument name="property" value="PageBuilderProductsProductCarouselAppearance"/>
+        </actionGroup>
+    </test>
+    <test name="AdminPageBuilderProductsCarouselCanBeSorted" extends="AdminPageBuilderProductsCanBeSorted">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Products"/>
+            <title value="Carousel - Products Can Be Sorted"/>
+            <description value="Validate that products can be sorted by the sort field within the admin."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="PB-77"/>
+            <testCaseId value="MC-21989"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-products"/>
+            <group value="pagebuilder-productsCarousel"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
+            <argument name="property" value="PageBuilderProductsProductCarouselAppearance"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="count" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProduct1Stage">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="product" value="SortProduct1"/>
+            <argument name="productIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProduct2Stage">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="product" value="SortProduct2"/>
+            <argument name="productIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage1">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="count" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProduct1Stage1">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="product" value="SortProduct1"/>
+            <argument name="productIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProduct2Stage1">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="product" value="SortProduct2"/>
+            <argument name="productIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage2">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="count" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProduct1Stage2">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="product" value="SortProduct1"/>
+            <argument name="productIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProduct2Stage2">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="product" value="SortProduct2"/>
+            <argument name="productIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage3">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="count" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProduct1Stage3">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="product" value="SortProduct1"/>
+            <argument name="productIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProduct2Stage3">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="product" value="SortProduct2"/>
+            <argument name="productIndex" value="2"/>
+        </actionGroup>
+    </test>
+    <test name="AdminPageBuilderProductsCarouselSelectByCategoryAndSortByPosition" extends="AdminPageBuilderProductsSelectByCategoryAndSortByPosition">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Products"/>
+            <title value="Carousel - Select Products By Category and Sort By Position"/>
+            <description value="Ensure products content type can be set to select products by category and sorted by position"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="PB-77"/>
+            <testCaseId value="MC-21990"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-products"/>
+            <group value="pagebuilder-productsCarousel"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
+            <argument name="property" value="PageBuilderProductsProductCarouselAppearance"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterProductsCount">
+            <argument name="property" value="PageBuilderProductsCarouselCountPropertyFour"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="count" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProduct1Stage">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="product" value="SortProduct2"/>
+            <argument name="productIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProduct2Stage">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="product" value="SortProduct1"/>
+            <argument name="productIndex" value="2"/>
+        </actionGroup>
+    </test>
+    <test name="AdminPageBuilderProductsCarouselSortByCategoryPositionVerifyUpdatingPositionInCategoryUpdatesSortOrder" extends="AdminPageBuilderProductsSelectByCategoryAndSortByPosition">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Products"/>
+            <title value="Carousel - Verify Updating Product Position In Category Propagates Change to Page Builder Products Content Type"/>
+            <description value="Ensure updating product positions in categories will propagate position changes to the page builder products content type"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="PB-77"/>
+            <testCaseId value="MC-21991"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-products"/>
+            <group value="pagebuilder-productsCarousel"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
+            <argument name="property" value="PageBuilderProductsProductCarouselAppearance"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterProductsCount">
+            <argument name="property" value="PageBuilderProductsCarouselCountPropertyFour"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="count" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProduct1Stage">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="product" value="SortProduct2"/>
+            <argument name="productIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProduct2Stage">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="product" value="SortProduct1"/>
+            <argument name="productIndex" value="2"/>
+        </actionGroup>
+        <!-- Change Product Position in Category -->
+        <actionGroup ref="navigateToCreatedCategory" stepKey="navigateToCategory1" after="validateProduct2Storefront">
+            <argument name="Category" value="$$createCategory1$$"/>
+        </actionGroup>
+        <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminCategorySection" after="navigateToCategory1">
+            <argument name="sectionSelector" value="{{AdminCategoryBasicFieldSection.productsInCategory}}"/>
+            <argument name="sectionDependentSelector" value="{{AdminCategoryContentSection.productTableRow}}"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{AdminCategoryProductsGridSection.rowPosition('1')}}" stepKey="waitForPositionFieldForProduct1" after="expandAdminCategorySection"/>
+        <pressKey selector="{{AdminCategoryProductsGridSection.rowPosition('1')}}" parameterArray="[\Facebook\WebDriver\WebDriverKeys::BACKSPACE]" stepKey="clearPositionValueForProduct1" after="waitForPositionFieldForProduct1"/>
+        <fillField selector="{{AdminCategoryProductsGridSection.rowPosition('1')}}" userInput="2" stepKey="changePositionForProduct1" after="clearPositionValueForProduct1"/>
+        <pressKey selector="{{AdminCategoryProductsGridSection.rowPosition('1')}}" parameterArray="[\Facebook\WebDriver\WebDriverKeys::ENTER]" stepKey="enterPositionValueForProduct1" after="changePositionForProduct1"/>
+        <waitForElementVisible selector="{{AdminCategoryProductsGridSection.rowPosition('2')}}" stepKey="waitForPositionFieldForProduct2" after="enterPositionValueForProduct1"/>
+        <pressKey selector="{{AdminCategoryProductsGridSection.rowPosition('2')}}" parameterArray="[\Facebook\WebDriver\WebDriverKeys::BACKSPACE]" stepKey="clearPositionValueForProduct2" after="waitForPositionFieldForProduct2"/>
+        <fillField selector="{{AdminCategoryProductsGridSection.rowPosition('2')}}" userInput="1" stepKey="changePositionForProduct2" after="clearPositionValueForProduct2"/>
+        <pressKey selector="{{AdminCategoryProductsGridSection.rowPosition('2')}}" parameterArray="[\Facebook\WebDriver\WebDriverKeys::ENTER]" stepKey="enterPositionValueForProduct2" after="changePositionForProduct2"/>
+        <actionGroup ref="saveCatalogCategory" stepKey="saveCatalogCategory" after="enterPositionValueForProduct2"/>
+        <!-- Stage: Validate Sort Order Changed -->
+        <actionGroup ref="navigateToCMSPage" stepKey="navigateToCMSPage2" after="saveCatalogCategory">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2" after="navigateToCMSPage2"/>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage2" after="switchToPageBuilderStage2">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="count" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProduct1Stage2" after="validateProductsCountStage2">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="product" value="SortProduct1"/>
+            <argument name="productIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProduct2Stage2" after="validateProduct1Stage2">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="product" value="SortProduct2"/>
+            <argument name="productIndex" value="2"/>
+        </actionGroup>
+        <!-- Storefront: Validate Sort Order Changed -->
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront2" after="validateProduct2Stage2">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductCountStorefront2" after="navigateToCMSPageStorefront2">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="count" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProduct1Storefront2" after="validateProductCountStorefront2">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="product" value="SortProduct1"/>
+            <argument name="productIndex" value="1"/>
+            <argument name="isClickable" value="auto"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProduct2Storefront2" after="validateProduct1Storefront2">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="product" value="SortProduct2"/>
+            <argument name="productIndex" value="2"/>
+            <argument name="isClickable" value="auto"/>
+        </actionGroup>
+    </test>
+    <test name="AdminPageBuilderProductsCarouselSortByCategoryPositionVerifyEmptyProductsAfterDeletingCategory" extends="AdminPageBuilderProductsSelectByCategoryAndSortByPosition">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Products"/>
+            <title value="Carousel - Verify Deleting Category Propagates Change to Page Builder Products Content Type"/>
+            <description value="Ensure that deleting a category that a products content type is tied to will cause the products content type to not render any products"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="PB-77"/>
+            <testCaseId value="MC-21992"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-products"/>
+            <group value="pagebuilder-productsCarousel"/>
+        </annotations>
+        <after>
+            <remove keyForRemoval="deleteCategory1"/>
+        </after>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
+            <argument name="property" value="PageBuilderProductsProductCarouselAppearance"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterProductsCount">
+            <argument name="property" value="PageBuilderProductsCarouselCountPropertyFour"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="count" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProduct1Stage">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="product" value="SortProduct2"/>
+            <argument name="productIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProduct2Stage">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="product" value="SortProduct1"/>
+            <argument name="productIndex" value="2"/>
+        </actionGroup>
+        <!-- Delete Category -->
+        <deleteData createDataKey="createCategory1" stepKey="deleteCategory1" after="validateProduct2Storefront"/>
+        <actionGroup ref="navigateToCMSPage" stepKey="navigateToCMSPage2" after="deleteCategory1">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2" after="navigateToCMSPage2"/>
+        <see userInput="{{PageBuilderProductsMessage.noProductsFound}}" selector="{{ProductsCarouselOnStage.emptyProductsPlaceholder('1')}}" stepKey="seeNoProductsMessage" after="switchToPageBuilderStage2"/>
+        <!-- Storefront: Validate Sort Order Changed -->
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront2" after="seeNoProductsMessage">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <dontSeeElementInDOM selector="{{ProductsOnStorefront.product('1')}}" stepKey="validateNoProductsOnStorefront" after="navigateToCMSPageStorefront2"/>
+    </test>
+    <test name="AdminPageBuilderProductsCarouselAllProductsShowWhenSavedWithoutConditions" extends="AdminPageBuilderProductsAllProductsShowWhenSavedWithoutConditions">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Products"/>
+            <title value="Carousel - All products show when conditions are saved blank"/>
+            <description value="Validate that when Products dialog is saved without configuring settings that all products show up without filtering."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="PB-77"/>
+            <testCaseId value="MC-21993"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-products"/>
+            <group value="pagebuilder-productsCarousel"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
+            <argument name="property" value="PageBuilderProductsProductCarouselAppearance"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{ProductsCarouselOnStage.product('1')}}" stepKey="waitForProductsToLoad"/>
+        <grabMultiple selector="{{ProductsCarouselOnStage.product('1')}}" stepKey="grabProducts"/>
+    </test>
+    <test name="ProductsCarouselUpdateAdvancedConfigurationValues" extends="ProductsUpdateAdvancedConfigurationValues">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Products"/>
+            <title value="Carousel - Update Advanced Configuration Values"/>
+            <description value="Validate that updating every attribute in the Advanced Configuration form for Product List will update the Stage and Storefront correctly."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="PB-77"/>
+            <testCaseId value="MC-21995"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-products"/>
+            <group value="pagebuilder-productsCarousel"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
+            <argument name="property" value="PageBuilderProductsProductCarouselAppearance"/>
+        </actionGroup>
+        <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateAllAdvancedStage">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
+            <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_green"/>
+            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty10"/>
+            <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+            <argument name="cssClasses" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
+            <argument name="margin" value="PageBuilderMarginsPropertyUnique"/>
+            <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateAllAdvancedStage2">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
+            <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_green"/>
+            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty10"/>
+            <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+            <argument name="cssClasses" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
+            <argument name="margin" value="PageBuilderMarginsPropertyUnique"/>
+            <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+<!--        <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateAllAdvancedStorefront">-->
+<!--            <argument name="page" value="ProductsOnStorefront"/>-->
+<!--            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>-->
+<!--            <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>-->
+<!--            <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_green"/>-->
+<!--            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty10"/>-->
+<!--            <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusProperty12"/>-->
+<!--            <argument name="cssClasses" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>-->
+<!--            <argument name="margin" value="PageBuilderMarginsPropertyUnique"/>-->
+<!--            <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>-->
+<!--            <argument name="index" value="1"/>-->
+<!--        </actionGroup>-->
+    </test>
+</tests>

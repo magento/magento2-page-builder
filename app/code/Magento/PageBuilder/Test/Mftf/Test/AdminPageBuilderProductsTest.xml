@@ -12,13 +12,14 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Products"/>
-            <title value="No products appear on the storefront when dialog is closed (not saved) without being configured."/>
+            <title value="Grid - Empty Products Does Not Appear on Storefront"/>
             <description value="Validate that when Products dialog is closed without configuring settings that no products show up on the storefront."/>
-            <severity value="CRITICAL"/>
+            <severity value="MAJOR"/>
             <useCaseId value="MAGETWO-71425"/>
             <testCaseId value="MC-1327"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-products"/>
+            <group value="pagebuilder-productsGrid"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -135,13 +136,14 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Products"/>
-            <title value="Save with products count"/>
-            <description value="Validate that adding a products count update the Stage and Storefront correctly with the correct number of products."/>
-            <severity value="CRITICAL"/>
+            <title value="Grid - Field Validation and Stage/Storefront Functionality of Number of Products Field"/>
+            <description value="Validate that adding a products count update the Stage and Storefront correctly with the correct number of products. Check error messages for field."/>
+            <severity value="MAJOR"/>
             <useCaseId value="MAGETWO-71425"/>
             <testCaseId value="MC-4028"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-products"/>
+            <group value="pagebuilder-productsGrid"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -183,11 +185,17 @@
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
         <!-- Add both products from the created category -->
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
+            <argument name="property" value="PageBuilderProductsProductGridAppearance"/>
+        </actionGroup>
         <actionGroup ref="chooseVisualSelectOption" stepKey="chooseSelectProductsBy">
             <argument name="property" value="PageBuilderProductsSelectProductsByCondition"/>
         </actionGroup>
         <actionGroup ref="addConditionToProductConditions" stepKey="addCategory">
             <argument name="conditionInput" value="$$createPreReqCategory.id$$"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateDefaultNumberOfProductsToDisplay">
+            <argument name="property" value="PageBuilderProductsCountPropertyFive"/>
         </actionGroup>
         <!-- Check form field validations -->
         <comment userInput="Check form field validations" stepKey="commentCheckFormFieldValidations"/>
@@ -396,13 +404,14 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Products"/>
-            <title value="All products show when conditions are saved blank"/>
+            <title value="Grid - All products show when conditions are saved blank"/>
             <description value="Validate that when Products dialog is saved without configuring settings that all products show up without filtering."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-71425"/>
             <testCaseId value="MC-4030"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-products"/>
+            <group value="pagebuilder-productsGrid"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -434,6 +443,9 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
+            <argument name="property" value="PageBuilderProductsProductGridAppearance"/>
+        </actionGroup>
         <actionGroup ref="chooseVisualSelectOption" stepKey="chooseSelectProductsBy">
             <argument name="property" value="PageBuilderProductsSelectProductsByCondition"/>
         </actionGroup>
@@ -442,18 +454,23 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-
         <waitForElementVisible selector="{{ProductsOnStage.product('1')}}" stepKey="waitForProductsToLoad"/>
         <grabMultiple selector="{{ProductsOnStage.product('1')}}" stepKey="grabProducts"/>
-        <assertGreaterThanOrEqual expected="2" expectedType="int" actualType="variable" actual="grabProducts" stepKey="assertCountIsAtLeast2" />
-
+        <assertGreaterThanOrEqual stepKey="assertCountIsAtLeast2">
+            <actualResult type="variable">grabProducts</actualResult>
+            <expectedResult type="int">2</expectedResult>
+        </assertGreaterThanOrEqual>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <grabMultiple selector="{{ProductsOnStage.product('1')}}" stepKey="grabStorefrontProducts"/>
-        <assertGreaterThanOrEqual expected="2" expectedType="int" actualType="variable" actual="grabStorefrontProducts" stepKey="assertStorefrontCountIsAtLeast2" />
+        <waitForElementVisible selector="{{ProductsOnStorefront.product('1')}}" stepKey="waitForProductsToLoadStorefront"/>
+        <grabMultiple selector="{{ProductsOnStorefront.product('1')}}" stepKey="grabStorefrontProducts"/>
+        <assertGreaterThanOrEqual stepKey="assertStorefrontCountIsAtLeast2">
+            <actualResult type="variable">grabStorefrontProducts</actualResult>
+            <expectedResult type="int">2</expectedResult>
+        </assertGreaterThanOrEqual>
     </test>
     <test name="ProductsDuplicate">
         <annotations>
@@ -498,6 +515,9 @@
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
+            <argument name="property" value="PageBuilderProductsProductGridAppearance"/>
         </actionGroup>
         <actionGroup ref="chooseVisualSelectOption" stepKey="chooseSelectProductsBy">
             <argument name="property" value="PageBuilderProductsSelectProductsByCondition"/>
@@ -723,13 +743,14 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Products"/>
-            <title value="Update Advanced Configuration Values"/>
+            <title value="Grid - Update Advanced Configuration Values"/>
             <description value="Validate that updating every attribute in the Advanced Configuration form for Product List will update the Stage and Storefront correctly."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-71425"/>
             <testCaseId value="MC-2647"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-products"/>
+            <group value="pagebuilder-productsGrid"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -758,6 +779,9 @@
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
         <!-- Add both products from the created category -->
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
+            <argument name="property" value="PageBuilderProductsProductGridAppearance"/>
+        </actionGroup>
         <actionGroup ref="chooseVisualSelectOption" stepKey="chooseSelectProductsBy">
             <argument name="property" value="PageBuilderProductsSelectProductsByCondition"/>
         </actionGroup>
@@ -1246,15 +1270,16 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Products"/>
-            <title value="Product Content Type wraps inside tiny column"/>
-            <description value="As a Content Manager I want products to be wrapped inside tiny column"/>
-            <severity value="CRITICAL"/>
+            <title value="Grid - Product Content Type Wraps Inside Tiny Column"/>
+            <description value="Validate that the Products content type wraps in a tiny column"/>
+            <severity value="MAJOR"/>
             <useCaseId value="MC-4096"/>
             <testCaseId value="MC-4301"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
             <group value="pagebuilder-products"/>
             <group value="pagebuilder-addToColumn"/>
+            <group value="pagebuilder-productsGrid"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1296,6 +1321,9 @@
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanel">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
+            <argument name="property" value="PageBuilderProductsProductGridAppearance"/>
         </actionGroup>
         <actionGroup ref="chooseVisualSelectOption" stepKey="chooseSelectProductsBy">
             <argument name="property" value="PageBuilderProductsSelectProductsByCondition"/>
@@ -1695,13 +1723,14 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Products"/>
-            <title value="Sort products"/>
-            <description value="Ensure products can be sorted by the sort field within the admin."/>
+            <title value="Grid - Products Can Be Sorted"/>
+            <description value="Validate that products can be sorted by the sort field within the admin."/>
             <severity value="MAJOR"/>
             <useCaseId value="MC-15250"/>
             <testCaseId value="MC-18771"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-products"/>
+            <group value="pagebuilder-productsGrid"/>
         </annotations>
         <before>
             <createData entity="PageBuilderProductsSubCategory" stepKey="createPreReqCategory"/>
@@ -1732,6 +1761,9 @@
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
+            <argument name="property" value="PageBuilderProductsProductGridAppearance"/>
         </actionGroup>
         <actionGroup ref="chooseVisualSelectOption" stepKey="chooseSelectProductsBy">
             <argument name="property" value="PageBuilderProductsSelectProductsByCondition"/>
@@ -1870,13 +1902,14 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Products"/>
-            <title value="Select Products By Category and Sort By Position"/>
+            <title value="Grid - Select Products By Category and Sort By Position"/>
             <description value="Ensure products content type can be set to select products by category and sorted by position"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MC-18338"/>
             <testCaseId value="MC-20153"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-products"/>
+            <group value="pagebuilder-productsGrid"/>
         </annotations>
         <before>
             <createData entity="PageBuilderProductsSubCategory" stepKey="createCategory1"/>
@@ -1914,6 +1947,9 @@
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
+            <argument name="property" value="PageBuilderProductsProductGridAppearance"/>
         </actionGroup>
         <actionGroup ref="chooseVisualSelectOption" stepKey="chooseSelectProductsBy">
             <argument name="property" value="PageBuilderProductsSelectProductsByCategory"/>
@@ -1971,13 +2007,14 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Products"/>
-            <title value="Verify Updating Product Position In Category Propagates Change to Page Builder Products Content Type"/>
+            <title value="Grid - Verify Updating Product Position In Category Propagates Change to Page Builder Products Content Type"/>
             <description value="Ensure updating product positions in categories will propagate position changes to the page builder products content type"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MC-18338"/>
             <testCaseId value="MC-20159"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-products"/>
+            <group value="pagebuilder-productsGrid"/>
         </annotations>
         <!-- Change Product Position in Category -->
         <comment userInput="Change Product Position in Category" stepKey="commentChangeProductPositionInCategory" after="validateProduct2Storefront"/>
@@ -2043,13 +2080,14 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Products"/>
-            <title value="Verify Deleting Category Propagates Change to Page Builder Products Content Type"/>
+            <title value="Grid - Verify Deleting Category Propagates Change to Page Builder Products Content Type"/>
             <description value="Ensure that deleting a category that a products content type is tied to will cause the products content type to not render any products"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MC-18338"/>
             <testCaseId value="MC-20205"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-products"/>
+            <group value="pagebuilder-productsGrid"/>
         </annotations>
         <after>
             <remove keyForRemoval="deleteCategory1"/>
