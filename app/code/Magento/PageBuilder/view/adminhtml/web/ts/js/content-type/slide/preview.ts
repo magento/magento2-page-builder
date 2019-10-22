@@ -331,7 +331,6 @@ export default class Preview extends BasePreview {
 
         this.contentType.dataStore.subscribe(
             (data: DataObject) => {
-                console.log(data.slide_name);
                 this.slideName(data.slide_name);
             },
         );

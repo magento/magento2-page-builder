@@ -70,6 +70,17 @@ define(["jquery", "knockout", "mage/translate", "slick", "Magento_PageBuilder/js
       this.initSlider();
     }
     /**
+     * @inheritDoc
+     */
+    ;
+
+    _proto.onOptionVisibilityToggle = function onOptionVisibilityToggle() {
+      this.element = undefined;
+      this.sliderReady = false;
+
+      _preview2.prototype.onOptionVisibilityToggle.call(this);
+    }
+    /**
      * @inheritdoc
      */
     ;

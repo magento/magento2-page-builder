@@ -317,8 +317,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       });
 
       this.contentType.dataStore.subscribe(function (data) {
-        console.log(data.slide_name);
-
         _this5.slideName(data.slide_name);
       });
     }

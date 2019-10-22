@@ -73,6 +73,15 @@ export default class Preview extends BasePreview {
     }
 
     /**
+     * @inheritDoc
+     */
+    public onOptionVisibilityToggle(): void {
+        this.element = undefined;
+        this.sliderReady = false;
+        super.onOptionVisibilityToggle();
+    }
+
+    /**
      * @inheritdoc
      */
     protected afterObservablesUpdated(): void {
