@@ -7,6 +7,9 @@
 /** @var \Magento\PageBuilder\Block\Adminhtml\Stage\Render $block */
 ?>
 <script src="<?= $block->escapeUrl($block->getRequireJsUrl()); ?>"></script>
+<?php if ($block->getRequireJsMinUrl()) : ?>
+<script src="<?= $block->escapeUrl($block->getRequireJsMinUrl()); ?>"></script>
+<?php endif; ?>
 <script src="<?= $block->escapeUrl($block->getRequireJsConfigUrl()); ?>"></script>
 <script>
     <?php
