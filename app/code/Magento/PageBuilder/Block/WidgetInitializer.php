@@ -47,6 +47,7 @@ class WidgetInitializer extends Template
 
     /**
      * Returns config for widgets initializer component.
+     *
      * @return string
      * @api
      */

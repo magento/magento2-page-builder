@@ -67,7 +67,8 @@ class WidgetInitializerConfig
      *
      * @return array
      */
-    public function getBreakpoints(): array {
+    public function getBreakpoints(): array
+    {
         return $this->viewConfig->getViewConfig()->getVarValue(
             'Magento_PageBuilder',
             'breakpoints'
