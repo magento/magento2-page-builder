@@ -18,6 +18,10 @@
         }
     }
 
+    .slick-arrow {
+        pointer-events: all;
+    }
+
     .slick-dots {
         display: block;
         list-style: none;
@@ -63,6 +67,17 @@
                     background: @color-pagebuilder-darkest-gray;
                 }
             }
+        }
+    }
+
+    &[data-center-mode='true'] {
+        .product-item {
+            opacity: 0.5;
+            transition: all 300ms ease;
+        }
+
+        .slick-current .product-item {
+            opacity: 1;
         }
     }
 }

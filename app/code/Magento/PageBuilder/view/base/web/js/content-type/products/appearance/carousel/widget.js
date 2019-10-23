@@ -37,11 +37,16 @@ define([
                 slideAll: $element.data('slide-all'),
                 autoplay: $element.data('autoplay'),
                 autoplaySpeed: $element.data('autoplay-speed') || 0,
-                infinite: $element.data('infinite-loop'),
                 arrows: $element.data('show-arrows'),
                 dots: $element.data('show-dots'),
                 centerMode: $element.data('center-mode')
             };
+
+        if (slickConfig.centerMode) {
+            slickConfig.centerPadding = $element.data('center-padding');
+        } else {
+            slickConfig.infinite = $element.data('infinite-loop');
+        }
 
         _.each(config.breakpoints, function (breakpoint) {
             mediaCheck({

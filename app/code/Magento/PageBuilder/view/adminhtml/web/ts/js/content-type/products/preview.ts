@@ -150,21 +150,27 @@ export default class Preview extends BasePreview {
      * Build the slick config object
      *
      * @returns {{autoplay: boolean; autoplay: number; infinite: boolean; arrows: boolean; dots: boolean;
-     * centerMode: boolean; slidesToScroll: number, slidesToShow: number}}
+     * centerMode: boolean; slidesToScroll: number; slidesToShow: number;}}
      */
     private buildSlickConfig() {
         const attributes = this.data.main.attributes();
-
-        return {
+        const config: {[key: string]: any} = {
             slidesToShow: 5,
             slidesToScroll: attributes["data-slide-all"] === "true" ? 5 : 1,
             centerMode: attributes["data-center-mode"] === "true",
             dots: attributes["data-show-dots"] === "true",
             arrows: attributes["data-show-arrows"] === "true",
-            infinite: attributes["data-infinite-loop"] === "true",
             autoplay: attributes["data-autoplay"] === "true",
             autoplaySpeed: parseFloat(attributes["data-autoplay-speed"]),
         };
+
+        if (config.centerMode) {
+            config.centerPadding = attributes["data-center-padding"];
+        } else {
+            config.infinite = attributes["data-infinite-loop"] === "true";
+        }
+
+        return config;
     }
 
     /**
