@@ -569,7 +569,6 @@ export default class Preview implements PreviewInterface {
             _.extend({}, this.contentType.dataStore.getState()),
         );
         this.afterObservablesUpdated();
-        events.trigger("previewData:updateAfter", {preview: this});
     }
 
     /**
