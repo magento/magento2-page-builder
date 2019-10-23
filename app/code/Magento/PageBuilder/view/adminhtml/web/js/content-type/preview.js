@@ -569,10 +569,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _proto.updateObservables = function updateObservables() {
       this.observableUpdater.update(this, _underscore.extend({}, this.contentType.dataStore.getState()));
       this.afterObservablesUpdated();
-
-      _events.trigger("previewData:updateAfter", {
-        preview: this
-      });
     }
     /**
      * Update placeholder background visibility base on height and padding

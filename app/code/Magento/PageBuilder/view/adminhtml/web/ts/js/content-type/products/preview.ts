@@ -7,11 +7,13 @@ import $ from "jquery";
 import ko from "knockout";
 import $t from "mage/translate";
 import "slick";
+import _ from "underscore";
 import Config from "../../config";
 import ContentTypeInterface from "../../content-type";
 import ContentTypeConfigInterface from "../../content-type-config.types";
 import HideShowOption from "../../content-type-menu/hide-show-option";
 import {OptionsInterface} from "../../content-type-menu/option.types";
+import {DataObject} from "../../data-store";
 import ObservableUpdater from "../observable-updater";
 import BasePreview from "../preview";
 
@@ -21,14 +23,30 @@ import BasePreview from "../preview";
 export default class Preview extends BasePreview {
     public displayPreview: KnockoutObservable<boolean> = ko.observable(false);
     public placeholderText: KnockoutObservable<string>;
+    public widgetHtml: KnockoutObservable<string> = ko.observable();
     private element: Element;
-    private sliderReady: boolean = false;
     private messages = {
         EMPTY: $t("Empty Products"),
         NO_RESULTS: $t("No products were found matching your condition"),
         LOADING: $t("Loading..."),
         UNKNOWN_ERROR: $t("An unknown error occurred. Please try again."),
     };
+
+    /**
+     * Define keys which when changed should not trigger the slider to be rebuilt
+     *
+     * @type {string[]}
+     */
+    private ignoredKeysForBuild: string[] = [
+        "margins_and_padding",
+        "border",
+        "border_color",
+        "border_radius",
+        "border_width",
+        "css_classes",
+        "text_align",
+    ];
+    private previousData: DataObject;
 
     /**
      * @inheritdoc
@@ -73,66 +91,58 @@ export default class Preview extends BasePreview {
     }
 
     /**
-     * @inheritDoc
-     */
-    public onOptionVisibilityToggle(): void {
-        this.element = undefined;
-        this.sliderReady = false;
-        super.onOptionVisibilityToggle();
-    }
-
-    /**
      * @inheritdoc
      */
     protected afterObservablesUpdated(): void {
         super.afterObservablesUpdated();
-        this.displayPreview(false);
-
         const data = this.contentType.dataStore.getState();
 
-        if ((typeof data.conditions_encoded !== "string") || data.conditions_encoded.length === 0) {
-            this.placeholderText(this.messages.EMPTY);
+        if (this.hasDataChanged(this.previousData, data)) {
+            this.displayPreview(false);
 
-            return;
+            if ((typeof data.conditions_encoded !== "string") || data.conditions_encoded.length === 0) {
+                this.placeholderText(this.messages.EMPTY);
+
+                return;
+            }
+
+            const url = Config.getConfig("preview_url");
+            const requestConfig = {
+                // Prevent caching
+                method: "POST",
+                data: {
+                    role: this.config.name,
+                    directive: this.data.main.html(),
+                },
+            };
+
+            this.placeholderText(this.messages.LOADING);
+
+            $.ajax(url, requestConfig)
+                .done((response) => {
+                    if (typeof response.data !== "object" || !Boolean(response.data.content)) {
+                        this.placeholderText(this.messages.NO_RESULTS);
+
+                        return;
+                    }
+
+                    if (response.data.error) {
+                        this.widgetHtml(response.data.error);
+                    } else {
+                        this.widgetHtml(response.data.content);
+                        this.displayPreview(true);
+                    }
+                })
+                .fail(() => {
+                    this.placeholderText(this.messages.UNKNOWN_ERROR);
+                });
         }
-
-        const url = Config.getConfig("preview_url");
-        const requestConfig = {
-            // Prevent caching
-            method: "POST",
-            data: {
-                role: this.config.name,
-                directive: this.data.main.html(),
-            },
-        };
-
-        this.placeholderText(this.messages.LOADING);
-
-        $.ajax(url, requestConfig)
-            .done((response) => {
-                if (typeof response.data !== "object" || !Boolean(response.data.content)) {
-                    this.placeholderText(this.messages.NO_RESULTS);
-
-                    return;
-                }
-
-                if (response.data.error) {
-                    this.data.main.html(response.data.error);
-                } else {
-                    this.data.main.html(response.data.content);
-                    this.initSlider();
-                    this.displayPreview(true);
-                }
-            })
-            .fail(() => {
-                this.placeholderText(this.messages.UNKNOWN_ERROR);
-            });
+        this.previousData = Object.assign({}, data);
     }
 
     protected initSlider(): void {
-        if (!this.sliderReady && this.element && this.appearance() === "carousel") {
+        if (this.element && this.appearance() === "carousel") {
             $(this.element.children).slick(this.buildSlickConfig());
-            this.sliderReady = true;
         }
     }
 
@@ -155,5 +165,18 @@ export default class Preview extends BasePreview {
             autoplay: attributes["data-autoplay"] === "true",
             autoplaySpeed: parseFloat(attributes["data-autoplay-speed"]),
         };
+    }
+
+    /**
+     * Determine if the data has changed, whilst ignoring certain keys which don't require a rebuild
+     *
+     * @param {DataObject} previousData
+     * @param {DataObject} newData
+     * @returns {boolean}
+     */
+    private hasDataChanged(previousData: DataObject, newData: DataObject) {
+        previousData = _.omit(previousData, this.ignoredKeysForBuild);
+        newData = _.omit(newData, this.ignoredKeysForBuild);
+        return !_.isEqual(previousData, newData);
     }
 }
