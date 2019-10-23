@@ -8,6 +8,8 @@ declare(strict_types=1);
 
 namespace Magento\PageBuilder\Block\Adminhtml\Stage;
 
+use Magento\Framework\App\ObjectManager;
+use Magento\Framework\View\Asset\Minification;
 use Magento\Framework\View\Element\Template;
 use Magento\RequireJs\Model\FileManager;
 use Magento\PageBuilder\Model\Stage\Config;
@@ -34,23 +36,31 @@ class Render extends Template
     private $json;
 
     /**
+     * @var Minification
+     */
+    private $minification;
+
+    /**
      * @param Template\Context $context
      * @param FileManager $fileManager
      * @param Config $config
      * @param Json $json
      * @param array $data
+     * @param Minification $minification
      */
     public function __construct(
         Template\Context $context,
         FileManager $fileManager,
         Config $config,
         Json $json,
-        array $data = []
+        array $data = [],
+        Minification $minification = null
     ) {
         parent::__construct($context, $data);
         $this->fileManager = $fileManager;
         $this->pageBuilderConfig = $config;
         $this->json = $json;
+        $this->minification = $minification ?: ObjectManager::getInstance()->get(Minification::class);
     }
 
     /**
@@ -63,6 +73,20 @@ class Render extends Template
     {
         $asset = $this->_assetRepo->createAsset('requirejs/require.js');
         return $asset->getUrl();
+    }
+
+    /**
+     * Generate the URL to the RequireJS min resolver, if minification enabled.
+     *
+     * @return string|null
+     */
+    public function getRequireJsMinUrl() : ?string
+    {
+        if ($this->minification->isEnabled('js')) {
+            $minResolverAsset = $this->fileManager->createMinResolverAsset();
+            return $minResolverAsset->getUrl();
+        }
+        return null;
     }
 
     /**
