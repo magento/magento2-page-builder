@@ -8,6 +8,111 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="AdminPageBuilderProductsGridValidateAppearance">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Products"/>
+            <title value="Grid - Validate Products Grid Appearance"/>
+            <description value="Validate that setting the Products content type to a Grid appearance renders correctly on the Stage and Storefront."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="PB-77"/>
+            <testCaseId value="MC-22074"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-products"/>
+            <group value="pagebuilder-productsGrid"/>
+        </annotations>
+        <before>
+            <createData entity="PageBuilderProductsSubCategory" stepKey="createCategory"/>
+            <createData entity="_defaultProduct" stepKey="createProduct1">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+            <createData entity="_defaultProduct" stepKey="createProduct2">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+            <createData entity="_defaultProduct" stepKey="createProduct3">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+            <createData entity="_defaultProduct" stepKey="createProduct4">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+            <createData entity="_defaultProduct" stepKey="createProduct5">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+            <createData entity="_defaultProduct" stepKey="createProduct6">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToCMSPage" stepKey="navigateToCMSPage">
+                <argument name="CMSPage" value="$$createCMSPage$$"/>
+            </actionGroup>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createProduct1" stepKey="deleteProduct1"/>
+            <deleteData createDataKey="createProduct2" stepKey="deleteProduct2"/>
+            <deleteData createDataKey="createProduct3" stepKey="deleteProduct3"/>
+            <deleteData createDataKey="createProduct4" stepKey="deleteProduct4"/>
+            <deleteData createDataKey="createProduct5" stepKey="deleteProduct5"/>
+            <deleteData createDataKey="createProduct6" stepKey="deleteProduct6"/>
+            <deleteData createDataKey="createCategory" stepKey="deleteCategory"/>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionAddContent">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragProductsIntoStage">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
+            <argument name="property" value="PageBuilderProductsProductGridAppearance"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="chooseSelectProductsBy">
+            <argument name="property" value="PageBuilderProductsSelectProductsByCategory"/>
+        </actionGroup>
+        <actionGroup ref="selectCategoryFromCategoryDropDown" stepKey="selectCategory">
+            <argument name="category" value="$$createCategory.name$$"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterProductsCount">
+            <argument name="property" value="PageBuilderProductsCountPropertyMax"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductCountStage">
+            <argument name="page" value="ProductsOnStage"/>
+            <argument name="count" value="6"/>
+        </actionGroup>
+        <executeJS function="return document.evaluate(&quot;{{ProductsOnStage.productByIndex('1', '1')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="product1HeightStage"/>
+        <executeJS function="return document.evaluate(&quot;{{ProductsOnStage.productByIndex('1', '1')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().top" stepKey="product1TopPositionStage"/>
+        <executeJS function="return document.evaluate(&quot;{{ProductsOnStage.productByIndex('1', '6')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().top" stepKey="product6TopPositionStage"/>
+        <executeJS function="return Math.abs({$product6TopPositionStage} - {$product1TopPositionStage})" stepKey="verticalDistanceBetweenProductsStage"/>
+        <assertGreaterThanOrEqual stepKey="assertVerticalDistanceBetweenProductsIsGreaterThanIndividualProductHeightStage">
+            <expectedResult type="variable">product1HeightStage</expectedResult>
+            <actualResult type="variable">verticalDistanceBetweenProductsStage</actualResult>
+        </assertGreaterThanOrEqual>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductCountStorefront">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="count" value="6"/>
+        </actionGroup>
+        <executeJS function="return document.evaluate(&quot;{{ProductsOnStorefront.productByIndex('1', '1')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="product1HeightStorefront"/>
+        <executeJS function="return document.evaluate(&quot;{{ProductsOnStorefront.productByIndex('1', '1')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().top" stepKey="product1TopPositionStorefront"/>
+        <executeJS function="return document.evaluate(&quot;{{ProductsOnStorefront.productByIndex('1', '6')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().top" stepKey="product6TopPositionStorefront"/>
+        <executeJS function="return Math.abs({$product6TopPositionStorefront} - {$product1TopPositionStorefront})" stepKey="verticalDistanceBetweenProductsStorefront"/>
+        <assertGreaterThanOrEqual stepKey="assertVerticalDistanceBetweenProductsIsGreaterThanIndividualProductHeightStorefront">
+            <expectedResult type="variable">product1HeightStorefront</expectedResult>
+            <actualResult type="variable">verticalDistanceBetweenProductsStorefront</actualResult>
+        </assertGreaterThanOrEqual>
+    </test>
     <test name="AdminPageBuilderProductsDoesNotAppearOnFrontendWhenNotConfigured">
         <annotations>
             <features value="PageBuilder"/>

@@ -8,8 +8,264 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
-    <!-- todo add 2 tests that validate appearances (set appearance, save, validate stage & storefront)-->
-    <!-- todo add 2 tests that validate general options under each appearance (set appearance, filter, # prods, save, validate stage, edit to new filter, save, validate stage, etc.)-->
+    <test name="AdminPageBuilderProductsCarouselValidateAppearance" extends="AdminPageBuilderProductsGridValidateAppearance">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Products"/>
+            <title value="Carousel - Validate Products Carousel Appearance"/>
+            <description value="Validate that setting the Products content type to a Carousel appearance renders correctly on the Stage and Storefront."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="PB-77"/>
+            <testCaseId value="MC-22073"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-products"/>
+            <group value="pagebuilder-productsCarousel"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
+            <argument name="property" value="PageBuilderProductsProductCarouselAppearance"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterProductsCount">
+            <argument name="property" value="PageBuilderProductsCarouselCountPropertyMax"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductCountStage">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="count" value="6"/>
+        </actionGroup>
+        <seeElement selector="{{ProductsCarouselOnStage.productByIndex('1', '5')}}" stepKey="seeProduct5Stage" after="validateProductCountStage"/>
+        <dontSeeElement selector="{{ProductsCarouselOnStage.productByIndex('1', '6')}}" stepKey="dontSeeProduct6Stage" after="seeProduct5Stage"/>
+        <remove keyForRemoval="product1HeightStage"/>
+        <executeJS function="return document.evaluate(&quot;{{ProductsCarouselOnStage.productByIndex('1', '1')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().top" stepKey="product1TopPositionStage"/>
+        <executeJS function="return document.evaluate(&quot;{{ProductsCarouselOnStage.productByIndex('1', '6')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().top" stepKey="product6TopPositionStage"/>
+        <assertEquals stepKey="assertVerticalDistanceBetweenProductsIsGreaterThanIndividualProductHeightStage">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">verticalDistanceBetweenProductsStage</actualResult>
+        </assertEquals>
+        <seeElement selector="{{ProductsOnStorefront.productByIndex('1', '5')}}" stepKey="seeProduct5Storefront" after="validateProductCountStorefront"/>
+        <dontSeeElement selector="{{ProductsOnStorefront.productByIndex('1', '6')}}" stepKey="dontSeeProduct6Storefront" after="seeProduct5Storefront"/>
+        <remove keyForRemoval="product1HeightStorefront"/>
+        <assertEquals stepKey="assertVerticalDistanceBetweenProductsIsGreaterThanIndividualProductHeightStorefront">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">verticalDistanceBetweenProductsStorefront</actualResult>
+        </assertEquals>
+    </test>
+    <test name="AdminPageBuilderProductsCarouselAndGridAppearanceSettingsPersist">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Products"/>
+            <title value="Carousel - Validate Product Settings Persist Between Grid and Carousel Appearances"/>
+            <description value="Validate that configurations set on the Products content type persist when switching between filters and appearances."/>
+            <severity value="MAJOR"/>
+            <useCaseId value="PB-77"/>
+            <testCaseId value="MC-22072"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-products"/>
+            <group value="pagebuilder-productsGrid"/>
+        </annotations>
+        <before>
+            <createData entity="PageBuilderProductsSubCategory" stepKey="createCategory"/>
+            <createData entity="SortProduct1" stepKey="createProduct1">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+            <createData entity="SortProduct2" stepKey="createProduct2">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToCMSPage" stepKey="navigateToCMSPage">
+                <argument name="CMSPage" value="$$createCMSPage$$"/>
+            </actionGroup>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createProduct1" stepKey="deleteProduct1"/>
+            <deleteData createDataKey="createProduct2" stepKey="deleteProduct2"/>
+            <deleteData createDataKey="createCategory" stepKey="deleteCategory"/>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionAddContent">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragProductsIntoStage">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <!-- Set to Grid, Filter By Category, Sort By Position, Show 4 Products -->
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop1">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance1">
+            <argument name="property" value="PageBuilderProductsProductGridAppearance"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="chooseSelectProductsBy1">
+            <argument name="property" value="PageBuilderProductsSelectProductsByCategory"/>
+        </actionGroup>
+        <actionGroup ref="selectCategoryFromCategoryDropDown" stepKey="selectCategory1">
+            <argument name="category" value="$$createCategory.name$$"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterSortBy1">
+            <argument name="property" value="PageBuilderProductsSortByPosition"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateDefaultNumberOfProductsToDisplay1">
+            <argument name="property" value="PageBuilderProductsCountPropertyFive"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterProductsCount1">
+            <argument name="property" value="PageBuilderProductsCountPropertyFour"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
+        <!-- Validate Stage 1 -->
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductCountStage1">
+            <argument name="page" value="ProductsOnStage"/>
+            <argument name="count" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProduct1Stage1">
+            <argument name="page" value="ProductsOnStage"/>
+            <argument name="product" value="SortProduct1"/>
+            <argument name="productIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProduct2Stage1">
+            <argument name="page" value="ProductsOnStage"/>
+            <argument name="product" value="SortProduct2"/>
+            <argument name="productIndex" value="1"/>
+        </actionGroup>
+        <!-- Remain as Grid, Filter By Condition Category, Sort By Oldest First, Show 2 Products -->
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditPanel2">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAppearancePersists2">
+            <argument name="property" value="PageBuilderProductsProductGridAppearance"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateSelectProductsByPersists2">
+            <argument name="property" value="PageBuilderProductsSelectProductsByCategory"/>
+        </actionGroup>
+        <see selector="{{EditPanelForm.panelMultiSelectFieldControl(PageBuilderProductsSelectCategoryDropDown.section, PageBuilderProductsSelectCategoryDropDown.fieldName)}}" userInput="$$createCategory.name$$" stepKey="seeCategoryNamePersists2"/>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="chooseSelectProductsBy2">
+            <argument name="property" value="PageBuilderProductsSelectProductsByCondition"/>
+        </actionGroup>
+        <actionGroup ref="addConditionToProductConditions" stepKey="addCondition2">
+            <argument name="conditionInput" value="$$createCategory.id$$"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateSortByChangesToNewestFirst2">
+            <argument name="property" value="PageBuilderProductsSortByNewestTop"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterSortBy2">
+            <argument name="property" value="PageBuilderProductsSortByOldestTop"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateNumberOfProductsToDisplayPersists2">
+            <argument name="property" value="PageBuilderProductsCountPropertyFour"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterProductsCount2">
+            <argument name="property" value="PageBuilderProductsCountPropertyTwo"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <!-- Validate Stage 2 -->
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductCountStage2">
+            <argument name="page" value="ProductsOnStage"/>
+            <argument name="count" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProduct1Stage2">
+            <argument name="page" value="ProductsOnStage"/>
+            <argument name="product" value="SortProduct1"/>
+            <argument name="productIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProduct2Stage2">
+            <argument name="page" value="ProductsOnStage"/>
+            <argument name="product" value="SortProduct2"/>
+            <argument name="productIndex" value="2"/>
+        </actionGroup>
+        <!-- Set to Carousel, Remain as Filter By Condition Category, Sort By Newest First, Show 4 Products -->
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditPanel3">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAppearancePersists3">
+            <argument name="property" value="PageBuilderProductsProductGridAppearance"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance3">
+            <argument name="property" value="PageBuilderProductsProductCarouselAppearance"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateSelectProductsByPersists3">
+            <argument name="property" value="PageBuilderProductsSelectProductsByCondition"/>
+        </actionGroup>
+        <grabTextFrom selector="{{ProductsContentTypeForm.conditionsListSavedValue('1','2')}}" stepKey="grabConditionValue3"/>
+        <assertEquals stepKey="assertCategoryConditionValue3">
+            <expectedResult type="string">$$createCategory.id$$</expectedResult>
+            <actualResult type="variable">grabConditionValue3</actualResult>
+        </assertEquals>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateSortByPersists3">
+            <argument name="property" value="PageBuilderProductsSortByOldestTop"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterSortBy3">
+            <argument name="property" value="PageBuilderProductsSortByNewestTop"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateDefaultNumberOfProductsToDisplay3">
+            <argument name="property" value="PageBuilderProductsCarouselCountPropertyTwenty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterProductsCount3">
+            <argument name="property" value="PageBuilderProductsCarouselCountPropertyMax"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
+        <!-- Validate Stage 3 -->
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductCountStage3">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="count" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProduct1Stage3">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="product" value="SortProduct1"/>
+            <argument name="productIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProduct2Stage3">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="product" value="SortProduct2"/>
+            <argument name="productIndex" value="1"/>
+        </actionGroup>
+        <!-- Remain as Carousel, Filter By Category, Sort By Position, Show 4 Products -->
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditPanel4">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAppearancePersists4">
+            <argument name="property" value="PageBuilderProductsProductCarouselAppearance"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateSelectProductsByPersists4">
+            <argument name="property" value="PageBuilderProductsSelectProductsByCondition"/>
+        </actionGroup>
+        <grabTextFrom selector="{{ProductsContentTypeForm.conditionsListSavedValue('1','2')}}" stepKey="grabConditionValue4"/>
+        <assertEquals stepKey="assertCategoryConditionValue4">
+            <expectedResult type="string">$$createCategory.id$$</expectedResult>
+            <actualResult type="variable">grabConditionValue4</actualResult>
+        </assertEquals>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="chooseSelectProductsBy4">
+            <argument name="property" value="PageBuilderProductsSelectProductsByCategory"/>
+        </actionGroup>
+        <see selector="{{EditPanelForm.panelMultiSelectFieldControl(PageBuilderProductsSelectCategoryDropDown.section, PageBuilderProductsSelectCategoryDropDown.fieldName)}}" userInput="$$createCategory.name$$" stepKey="seeCategoryNamePersists4"/>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateSortByChangesToNewestFirst4">
+            <argument name="property" value="PageBuilderProductsSortByNewestTop"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterSortBy4">
+            <argument name="property" value="PageBuilderProductsSortByOldestTop"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateDefaultNumberOfProductsToDisplay4">
+            <argument name="property" value="PageBuilderProductsCarouselCountPropertyMax"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterProductsCount4">
+            <argument name="property" value="PageBuilderProductsCarouselCountPropertyFour"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings4"/>
+        <!-- Validate Stage 4 -->
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductCountStage4">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="count" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProduct1Stage4">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="product" value="SortProduct1"/>
+            <argument name="productIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProduct2Stage4">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="product" value="SortProduct2"/>
+            <argument name="productIndex" value="2"/>
+        </actionGroup>
+    </test>
     <test name="AdminPageBuilderProductsCarouselDoesNotAppearOnFrontendWhenNotConfigured" extends="AdminPageBuilderProductsDoesNotAppearOnFrontendWhenNotConfigured">
         <annotations>
             <features value="PageBuilder"/>
@@ -396,7 +652,7 @@
         <waitForElementVisible selector="{{ProductsCarouselOnStage.product('1')}}" stepKey="waitForProductsToLoad"/>
         <grabMultiple selector="{{ProductsCarouselOnStage.product('1')}}" stepKey="grabProducts"/>
     </test>
-    <test name="ProductsCarouselUpdateAdvancedConfigurationValues" extends="ProductsUpdateAdvancedConfigurationValues">
+    <test name="AdminPageBuilderProductsCarouselUpdateAdvancedConfigurationValues" extends="ProductsUpdateAdvancedConfigurationValues">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Products"/>
