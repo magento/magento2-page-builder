@@ -386,6 +386,12 @@
         <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
             <argument name="property" value="PageBuilderProductsProductCarouselAppearance"/>
         </actionGroup>
+        <executeJS function="return document.querySelectorAll('{{ProductsCarouselOnStage.productImageCSS}}')[0].clientWidth" stepKey="productImageWidth"/>
+        <executeJS function="return document.querySelectorAll('{{ProductsCarouselOnStage.productPriceContainer}}')[0].clientWidth" stepKey="productPriceContainerWidth"/>
+        <executeJS function="return document.querySelectorAll('{{ProductsCarouselOnStage.productActions}}')[0].clientWidth" stepKey="productActionsWidth"/>
+        <executeJS function="return document.querySelectorAll('{{ProductsCarouselOnStage.productImageCSS}}')[0].clientWidth" stepKey="productImageWidthAfterSave"/>
+        <executeJS function="return document.querySelectorAll('{{ProductsCarouselOnStage.productPriceContainer}}')[0].clientWidth" stepKey="productPriceContainerWidthAfterSave"/>
+        <executeJS function="return document.querySelectorAll('{{ProductsCarouselOnStage.productActions}}')[0].clientWidth" stepKey="productActionsWidthAfterSave"/>
     </test>
     <test name="AdminPageBuilderProductsCarouselCanBeSorted" extends="AdminPageBuilderProductsCanBeSorted">
         <annotations>
@@ -692,17 +698,5 @@
             <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
             <argument name="index" value="1"/>
         </actionGroup>
-<!--        <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateAllAdvancedStorefront">-->
-<!--            <argument name="page" value="ProductsOnStorefront"/>-->
-<!--            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>-->
-<!--            <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>-->
-<!--            <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_green"/>-->
-<!--            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty10"/>-->
-<!--            <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusProperty12"/>-->
-<!--            <argument name="cssClasses" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>-->
-<!--            <argument name="margin" value="PageBuilderMarginsPropertyUnique"/>-->
-<!--            <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>-->
-<!--            <argument name="index" value="1"/>-->
-<!--        </actionGroup>-->
     </test>
 </tests>
