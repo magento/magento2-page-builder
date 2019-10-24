@@ -164,10 +164,11 @@ export default class Preview extends BasePreview {
             autoplaySpeed: parseFloat(attributes["data-autoplay-speed"]),
         };
 
+        // This condition was made due to the issue in slick.js settings
         if (config.centerMode) {
             config.centerPadding = attributes["data-center-padding"];
-        } else {
-            config.infinite = attributes["data-infinite-loop"] === "true";
+        } else if (attributes["data-infinite-loop"] === "true") {
+            config.infinite = true;
         }
 
         return config;

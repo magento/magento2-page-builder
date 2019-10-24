@@ -42,9 +42,10 @@ define([
                 centerMode: $element.data('center-mode')
             };
 
+        // This condition was made due to the issue in slick.js settings
         if (slickConfig.centerMode) {
             slickConfig.centerPadding = $element.data('center-padding');
-        } else {
+        } else if ($element.data('infinite-loop')) {
             slickConfig.infinite = $element.data('infinite-loop');
         }
 
