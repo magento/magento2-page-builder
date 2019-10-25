@@ -2076,10 +2076,16 @@
             <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
             <createData entity="_defaultCmsPage" stepKey="createCMSPageB" />
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="SwitchToVersion4ActionGroup" stepKey="switchToTinyMCE4" />
+            <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="switchToTinyMCE4"/>
         </before>
         <after>
             <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
+                <argument name="FolderName" value="{{ImageFolder.name}}"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage">
+                <argument name="Image" value="ImageUpload3"/>
+            </actionGroup>
             <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
             <deleteData createDataKey="createCMSPageB" stepKey="deletePreReqCMSPageB" />
             <actionGroup ref="logout" stepKey="logout"/>
@@ -2249,8 +2255,8 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <closeTab stepKey="closeOpenedTab" />
             <actionGroup ref="logout" stepKey="logout"/>
+            <closeTab stepKey="closeOpenedTab" />
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderTextContentType"/>
