@@ -26,7 +26,7 @@ define([
             $carouselElement.slick('unslick');
         }
 
-        config.slidesToScroll = config.slideAll ? config.slidesToShow : 1;
+        config.slidesToScroll = config.slidesToShow;
         $carouselElement.slick(config);
     }
 
@@ -34,7 +34,6 @@ define([
         var $element = $(element),
             $carouselElement = $($element.children()),
             slickConfig = {
-                slideAll: $element.data('slide-all'),
                 autoplay: $element.data('autoplay'),
                 autoplaySpeed: $element.data('autoplay-speed') || 0,
                 arrows: $element.data('show-arrows'),

@@ -33,6 +33,7 @@ define(["jquery", "knockout", "mage/translate", "slick", "underscore", "Magento_
       _this = _preview2.call(this, contentType, config, observableUpdater) || this;
       _this.displayPreview = _knockout.observable(false);
       _this.widgetHtml = _knockout.observable();
+      _this.slidesToShow = 5;
       _this.messages = {
         EMPTY: (0, _translate)("Empty Products"),
         NO_RESULTS: (0, _translate)("No products were found matching your condition"),
@@ -146,8 +147,8 @@ define(["jquery", "knockout", "mage/translate", "slick", "underscore", "Magento_
     _proto.buildSlickConfig = function buildSlickConfig() {
       var attributes = this.data.main.attributes();
       var config = {
-        slidesToShow: 5,
-        slidesToScroll: attributes["data-slide-all"] === "true" ? 5 : 1,
+        slidesToShow: this.slidesToShow,
+        slidesToScroll: this.slidesToShow,
         centerMode: attributes["data-center-mode"] === "true",
         dots: attributes["data-show-dots"] === "true",
         arrows: attributes["data-show-arrows"] === "true",

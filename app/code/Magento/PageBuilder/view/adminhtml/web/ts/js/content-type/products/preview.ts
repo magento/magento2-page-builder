@@ -24,6 +24,7 @@ export default class Preview extends BasePreview {
     public displayPreview: KnockoutObservable<boolean> = ko.observable(false);
     public placeholderText: KnockoutObservable<string>;
     public widgetHtml: KnockoutObservable<string> = ko.observable();
+    protected slidesToShow: number = 5;
     private element: Element;
     private messages = {
         EMPTY: $t("Empty Products"),
@@ -155,8 +156,8 @@ export default class Preview extends BasePreview {
     private buildSlickConfig() {
         const attributes = this.data.main.attributes();
         const config: {[key: string]: any} = {
-            slidesToShow: 5,
-            slidesToScroll: attributes["data-slide-all"] === "true" ? 5 : 1,
+            slidesToShow: this.slidesToShow,
+            slidesToScroll: this.slidesToShow,
             centerMode: attributes["data-center-mode"] === "true",
             dots: attributes["data-show-dots"] === "true",
             arrows: attributes["data-show-arrows"] === "true",
