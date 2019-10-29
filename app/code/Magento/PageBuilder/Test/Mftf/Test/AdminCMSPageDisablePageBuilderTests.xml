@@ -148,4 +148,20 @@
         <seeElementInDOM selector="{{CmsNewPagePageContentSection.content}}" stepKey="seeContentAreaInDOM"/>
         <dontSeeElementInDOM selector="{{PageBuilderStage.stageWrapper}}" stepKey="dontSeePageBuilderStage"/>
     </test>
+    <test name="CheckOrderOfProdsInWidgetOnCMSPageTest">
+        <before>
+            <magentoCLI command="config:set cms/pagebuilder/enabled 0" stepKey="disablePageBuilder" after="loginAsAdmin"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/pagebuilder/enabled 1" stepKey="enablePageBuilder" after="logoutOfAdmin"/>
+        </after>
+    </test>
+    <test name="AdminMediaGalleryPopupUploadImagesWithoutErrorTest">
+        <before>
+            <magentoCLI command="config:set cms/pagebuilder/enabled 0" stepKey="disablePageBuilder" before="enableWYSIWYGEditor"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/pagebuilder/enabled 1" stepKey="enablePageBuilder" before="disableWYSIWYG"/>
+        </after>
+    </test>
 </tests>
