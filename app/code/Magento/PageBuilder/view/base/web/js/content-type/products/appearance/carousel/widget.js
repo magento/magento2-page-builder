@@ -33,17 +33,17 @@ define([
     return function (config, element) {
         var $element = $(element),
             $carouselElement = $($element.children()),
+            carouselMode = $element.data('carousel-mode'),
             slickConfig = {
                 autoplay: $element.data('autoplay'),
                 autoplaySpeed: $element.data('autoplay-speed') || 0,
                 arrows: $element.data('show-arrows'),
-                dots: $element.data('show-dots'),
-                centerMode: $element.data('center-mode')
+                dots: $element.data('show-dots')
             };
 
-        // This condition was made due to the issue in slick.js settings
-        if (slickConfig.centerMode) {
+        if (carouselMode === 'continuous') {
             slickConfig.centerPadding = $element.data('center-padding');
+            slickConfig.centerMode = true;
         } else if ($element.data('infinite-loop')) {
             slickConfig.infinite = $element.data('infinite-loop');
         }
@@ -54,7 +54,11 @@ define([
 
                 /** @inheritdoc */
                 entry: function () {
-                    slickConfig.slidesToShow = parseFloat(breakpoint.options.products.slidesToShow);
+                    var slidesToShow = breakpoint.options.products[carouselMode] ?
+                        breakpoint.options.products[carouselMode].slidesToShow :
+                        breakpoint.options.products.default.slidesToShow;
+
+                    slickConfig.slidesToShow = parseFloat(slidesToShow);
                     buildSlick($carouselElement, slickConfig);
                 }
             });

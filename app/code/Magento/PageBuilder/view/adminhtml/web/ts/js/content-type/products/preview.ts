@@ -158,16 +158,15 @@ export default class Preview extends BasePreview {
         const config: {[key: string]: any} = {
             slidesToShow: this.slidesToShow,
             slidesToScroll: this.slidesToShow,
-            centerMode: attributes["data-center-mode"] === "true",
             dots: attributes["data-show-dots"] === "true",
             arrows: attributes["data-show-arrows"] === "true",
             autoplay: attributes["data-autoplay"] === "true",
             autoplaySpeed: parseFloat(attributes["data-autoplay-speed"]),
         };
 
-        // This condition was made due to the issue in slick.js settings
-        if (config.centerMode) {
+        if (attributes["data-carousel-mode"] === "continuous") {
             config.centerPadding = attributes["data-center-padding"];
+            config.centerMode = true;
         } else if (attributes["data-infinite-loop"] === "true") {
             config.infinite = true;
         }

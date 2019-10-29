@@ -17,7 +17,9 @@ define([
                         },
                         options: {
                             products: {
-                                slidesToShow: 5
+                                default: {
+                                    slidesToShow: 5
+                                }
                             }
                         }
                     }
@@ -45,24 +47,20 @@ define([
         it('Should call slick on element based on its data', function () {
             spyOn($.fn, 'slick');
 
-            el.setAttribute('data-slide-all', 'true');
             el.setAttribute('data-autoplay', 'false');
             el.setAttribute('data-autoplay-speed', 4000);
             el.setAttribute('data-infinite-loop', 'false');
             el.setAttribute('data-show-arrows', 'false');
             el.setAttribute('data-show-dots', 'true');
-            el.setAttribute('data-center-mode', 'false');
+            el.setAttribute('data-carousel-mode', 'default');
 
             sliderWidgetInitializer(config, el);
 
             expect($.fn.slick).toHaveBeenCalledWith({
-                slideAll: true,
                 autoplay: false,
                 autoplaySpeed: 4000,
-                infinite: false,
                 arrows: false,
                 dots: true,
-                centerMode: false,
                 slidesToShow: 5,
                 slidesToScroll: 5
             });
