@@ -44,7 +44,7 @@ define([
             pairs['parameters[' + attribute + '][1][type]'] = "Magento\\CatalogWidget\\Model\\Rule\\Condition\\Combine";
             pairs['parameters[' + attribute + '][1][value]'] = "1";
             pairs['parameters[' + attribute + '][1--1][attribute]'] = data.condition_option;
-            pairs['parameters[' + attribute + '][1--1][value]'] = data[data.condition_option];
+            pairs['parameters[' + attribute + '][1--1][value]'] = data[data.condition_option].trim();
         }
 
         if (!_.isEmpty(pairs)) {
