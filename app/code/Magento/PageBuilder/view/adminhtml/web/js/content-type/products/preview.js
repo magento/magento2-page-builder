@@ -34,6 +34,8 @@ define(["jquery", "knockout", "mage/translate", "slick", "underscore", "Magento_
       _this.displayPreview = _knockout.observable(false);
       _this.widgetHtml = _knockout.observable();
       _this.slidesToShow = 5;
+      _this.productItemSelector = ".product-item";
+      _this.centerModeClass = "center-mode";
       _this.messages = {
         EMPTY: (0, _translate)("Empty Products"),
         NO_RESULTS: (0, _translate)("No products were found matching your condition"),
@@ -146,6 +148,7 @@ define(["jquery", "knockout", "mage/translate", "slick", "underscore", "Magento_
 
     _proto.buildSlickConfig = function buildSlickConfig() {
       var attributes = this.data.main.attributes();
+      var productCount = (0, _jquery)(this.widgetHtml()).find(this.productItemSelector).length;
       var config = {
         slidesToShow: this.slidesToShow,
         slidesToScroll: this.slidesToShow,
@@ -155,11 +158,13 @@ define(["jquery", "knockout", "mage/translate", "slick", "underscore", "Magento_
         autoplaySpeed: parseFloat(attributes["data-autoplay-speed"])
       };
 
-      if (attributes["data-carousel-mode"] === "continuous") {
+      if (attributes["data-carousel-mode"] === "continuous" && productCount > this.slidesToShow) {
         config.centerPadding = attributes["data-center-padding"];
         config.centerMode = true;
-      } else if (attributes["data-infinite-loop"] === "true") {
-        config.infinite = true;
+        (0, _jquery)(this.element).addClass(this.centerModeClass);
+      } else {
+        config.infinite = attributes["data-infinite-loop"];
+        (0, _jquery)(this.element).removeClass(this.centerModeClass);
       }
 
       return config;

@@ -33,6 +33,8 @@ define([
     return function (config, element) {
         var $element = $(element),
             $carouselElement = $($element.children()),
+            productCount = $(element).find('.product-item').length,
+            centerModeClass = 'center-mode',
             carouselMode = $element.data('carousel-mode'),
             slickConfig = {
                 autoplay: $element.data('autoplay'),
@@ -40,13 +42,6 @@ define([
                 arrows: $element.data('show-arrows'),
                 dots: $element.data('show-dots')
             };
-
-        if (carouselMode === 'continuous') {
-            slickConfig.centerPadding = $element.data('center-padding');
-            slickConfig.centerMode = true;
-        } else if ($element.data('infinite-loop')) {
-            slickConfig.infinite = $element.data('infinite-loop');
-        }
 
         _.each(config.breakpoints, function (breakpoint) {
             mediaCheck({
@@ -59,6 +54,16 @@ define([
                         breakpoint.options.products.default.slidesToShow;
 
                     slickConfig.slidesToShow = parseFloat(slidesToShow);
+
+                    if (carouselMode === 'continuous' && productCount > slickConfig.slidesToShow) {
+                        $element.addClass(centerModeClass);
+                        slickConfig.centerPadding = $element.data('center-padding');
+                        slickConfig.centerMode = true;
+                    } else {
+                        $element.removeClass(centerModeClass);
+                        slickConfig.infinite = $element.data('infinite-loop');
+                    }
+
                     buildSlick($carouselElement, slickConfig);
                 }
             });

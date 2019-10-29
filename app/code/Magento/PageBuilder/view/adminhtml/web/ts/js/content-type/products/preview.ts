@@ -26,6 +26,8 @@ export default class Preview extends BasePreview {
     public widgetHtml: KnockoutObservable<string> = ko.observable();
     protected slidesToShow: number = 5;
     private element: Element;
+    private productItemSelector: string = ".product-item";
+    private centerModeClass: string = "center-mode";
     private messages = {
         EMPTY: $t("Empty Products"),
         NO_RESULTS: $t("No products were found matching your condition"),
@@ -155,6 +157,7 @@ export default class Preview extends BasePreview {
      */
     private buildSlickConfig() {
         const attributes = this.data.main.attributes();
+        const productCount = $(this.widgetHtml()).find(this.productItemSelector).length;
         const config: {[key: string]: any} = {
             slidesToShow: this.slidesToShow,
             slidesToScroll: this.slidesToShow,
@@ -164,11 +167,13 @@ export default class Preview extends BasePreview {
             autoplaySpeed: parseFloat(attributes["data-autoplay-speed"]),
         };
 
-        if (attributes["data-carousel-mode"] === "continuous") {
+        if (attributes["data-carousel-mode"] === "continuous" && productCount > this.slidesToShow) {
             config.centerPadding = attributes["data-center-padding"];
             config.centerMode = true;
-        } else if (attributes["data-infinite-loop"] === "true") {
-            config.infinite = true;
+            $(this.element).addClass(this.centerModeClass);
+        } else {
+            config.infinite = attributes["data-infinite-loop"];
+            $(this.element).removeClass(this.centerModeClass);
         }
 
         return config;

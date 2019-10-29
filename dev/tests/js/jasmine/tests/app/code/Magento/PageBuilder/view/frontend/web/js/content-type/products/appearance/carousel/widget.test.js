@@ -61,6 +61,7 @@ define([
                 autoplaySpeed: 4000,
                 arrows: false,
                 dots: true,
+                infinite: false,
                 slidesToShow: 5,
                 slidesToScroll: 5
             });
