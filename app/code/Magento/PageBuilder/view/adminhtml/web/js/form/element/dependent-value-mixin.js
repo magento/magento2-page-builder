@@ -24,6 +24,14 @@ define([
             } else {
                 this.value(this.previousValue);
             }
+        },
+
+        /** @inheritdoc */
+        setInitialValue: function () {
+            this._super();
+            this.previousValue = this.value();
+
+            return this;
         }
     };
 
