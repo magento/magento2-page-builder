@@ -6,6 +6,7 @@
 import $ from "jquery";
 import ko from "knockout";
 import $t from "mage/translate";
+import events from "Magento_PageBuilder/js/events";
 import "slick";
 import _ from "underscore";
 import Config from "../../config";
@@ -14,6 +15,7 @@ import ContentTypeConfigInterface from "../../content-type-config.types";
 import HideShowOption from "../../content-type-menu/hide-show-option";
 import {OptionsInterface} from "../../content-type-menu/option.types";
 import {DataObject} from "../../data-store";
+import {ContentTypeAfterRenderEventParamsInterface} from "../content-type-events.types";
 import ObservableUpdater from "../observable-updater";
 import BasePreview from "../preview";
 
@@ -23,7 +25,7 @@ import BasePreview from "../preview";
 export default class Preview extends BasePreview {
     public displayPreview: KnockoutObservable<boolean> = ko.observable(false);
     public placeholderText: KnockoutObservable<string>;
-    public widgetHtml: KnockoutObservable<string> = ko.observable();
+    public widgetUnsanitizedHtml: KnockoutObservable<string> = ko.observable();
     private element: Element;
     private messages = {
         EMPTY: $t("Empty Products"),
@@ -58,6 +60,15 @@ export default class Preview extends BasePreview {
     ) {
         super(contentType, config, observableUpdater);
         this.placeholderText = ko.observable(this.messages.EMPTY);
+
+        // Redraw slider after content type gets redrawn
+        events.on("contentType:redrawAfter", (args: ContentTypeAfterRenderEventParamsInterface) => {
+            const $element = $(this.element.children);
+
+            if (args.element && this.element && $element.closest(args.element).length) {
+                $element.slick("setPosition");
+            }
+        });
     }
 
     /**
@@ -127,9 +138,9 @@ export default class Preview extends BasePreview {
                     }
 
                     if (response.data.error) {
-                        this.widgetHtml(response.data.error);
+                        this.widgetUnsanitizedHtml(response.data.error);
                     } else {
-                        this.widgetHtml(response.data.content);
+                        this.widgetUnsanitizedHtml(response.data.content);
                         this.displayPreview(true);
                     }
                 })
