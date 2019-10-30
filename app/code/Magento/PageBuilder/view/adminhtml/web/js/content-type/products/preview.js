@@ -2,7 +2,7 @@
 
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-define(["jquery", "knockout", "mage/translate", "slick", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-menu/hide-show-option", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _knockout, _translate, _slick, _underscore, _config, _hideShowOption, _preview) {
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "slick", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-menu/hide-show-option", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _knockout, _translate, _events, _slick, _underscore, _config, _hideShowOption, _preview) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -32,7 +32,7 @@ define(["jquery", "knockout", "mage/translate", "slick", "underscore", "Magento_
 
       _this = _preview2.call(this, contentType, config, observableUpdater) || this;
       _this.displayPreview = _knockout.observable(false);
-      _this.widgetHtml = _knockout.observable();
+      _this.widgetUnsanitizedHtml = _knockout.observable();
       _this.slidesToShow = 5;
       _this.productItemSelector = ".product-item";
       _this.centerModeClass = "center-mode";
@@ -43,7 +43,16 @@ define(["jquery", "knockout", "mage/translate", "slick", "underscore", "Magento_
         UNKNOWN_ERROR: (0, _translate)("An unknown error occurred. Please try again.")
       };
       _this.ignoredKeysForBuild = ["margins_and_padding", "border", "border_color", "border_radius", "border_width", "css_classes", "text_align"];
-      _this.placeholderText = _knockout.observable(_this.messages.EMPTY);
+      _this.placeholderText = _knockout.observable(_this.messages.EMPTY); // Redraw slider after content type gets redrawn
+
+      _events.on("contentType:redrawAfter", function (args) {
+        var $element = (0, _jquery)(_this.element.children);
+
+        if (args.element && _this.element && $element.closest(args.element).length) {
+          $element.slick("setPosition");
+        }
+      });
+
       return _this;
     }
     /**
@@ -119,9 +128,9 @@ define(["jquery", "knockout", "mage/translate", "slick", "underscore", "Magento_
           }
 
           if (response.data.error) {
-            _this2.widgetHtml(response.data.error);
+            _this2.widgetUnsanitizedHtml(response.data.error);
           } else {
-            _this2.widgetHtml(response.data.content);
+            _this2.widgetUnsanitizedHtml(response.data.content);
 
             _this2.displayPreview(true);
           }
@@ -148,7 +157,7 @@ define(["jquery", "knockout", "mage/translate", "slick", "underscore", "Magento_
 
     _proto.buildSlickConfig = function buildSlickConfig() {
       var attributes = this.data.main.attributes();
-      var productCount = (0, _jquery)(this.widgetHtml()).find(this.productItemSelector).length;
+      var productCount = (0, _jquery)(this.widgetUnsanitizedHtml()).find(this.productItemSelector).length;
       var config = {
         slidesToShow: this.slidesToShow,
         slidesToScroll: this.slidesToShow,
