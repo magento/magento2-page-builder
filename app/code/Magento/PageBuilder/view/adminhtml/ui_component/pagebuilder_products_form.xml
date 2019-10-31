@@ -158,7 +158,7 @@
                 <elementTmpl>Magento_PageBuilder/form/element/input-no-maxlength</elementTmpl>
             </settings>
         </field>
-        <htmlContent name="conditions_form" sortOrder="5" template="Magento_PageBuilder/form/element/widget-conditions">
+        <htmlContent name="conditions_form" sortOrder="5" template="Magento_PageBuilder/form/element/widget-conditions" component="Magento_PageBuilder/js/form/element/html">
             <settings>
                 <visible>false</visible>
                 <additionalClasses>
@@ -197,26 +197,50 @@
                 </select>
             </formElements>
         </field>
-        <field name="products_count" sortOrder="20" formElement="input">
+        <container name="product_count_group" component="Magento_Ui/js/form/components/group" sortOrder="20">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="default" xsi:type="number">5</item>
+                    <item name="breakLine" xsi:type="boolean">false</item>
                 </item>
             </argument>
-            <settings>
-                <dataType>number</dataType>
-                <label translate="true">Number of Products to Display</label>
-                <additionalClasses>
-                    <class name="admin__field-small">true</class>
-                </additionalClasses>
-                <dataScope>products_count</dataScope>
-                <validation>
-                    <rule name="required-entry" xsi:type="boolean">true</rule>
-                    <rule name="validate-number" xsi:type="boolean">true</rule>
-                    <rule name="less-than-equals-to" xsi:type="number">999</rule>
-                    <rule name="greater-than-equals-to" xsi:type="number">1</rule>
-                </validation>
-            </settings>
-        </field>
+            <field name="products_count" sortOrder="10" formElement="input">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="default" xsi:type="number">5</item>
+                    </item>
+                </argument>
+                <settings>
+                    <dataType>number</dataType>
+                    <label translate="true">Number of Products to Display</label>
+                    <additionalClasses>
+                        <class name="admin__field-small">true</class>
+                    </additionalClasses>
+                    <dataScope>products_count</dataScope>
+                    <validation>
+                        <rule name="required-entry" xsi:type="boolean">true</rule>
+                        <rule name="validate-number" xsi:type="boolean">true</rule>
+                        <rule name="less-than-equals-to" xsi:type="number">999</rule>
+                        <rule name="greater-than-equals-to" xsi:type="number">1</rule>
+                    </validation>
+                </settings>
+            </field>
+            <field name="product_totals" sortOrder="20" formElement="input" component="Magento_PageBuilder/js/form/element/product-totals">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="default" xsi:type="string">of ${ $.totalProductCount }</item>
+                    </item>
+                </argument>
+                <settings>
+                    <elementTmpl>ui/form/element/text</elementTmpl>
+                    <dataType>text</dataType>
+                    <imports>
+                        <link name="conditionOption">ns = ${ $.ns }, index = condition_option:value</link>
+                        <link name="conditionValues.category_ids">ns = ${ $.ns }, index = category_ids:value</link>
+                        <link name="conditionValues.sku">ns = ${ $.ns }, index = sku:value</link>
+                        <link name="conditionValues.condition">ns = ${ $.ns }, index = conditions_form:value</link>
+                    </imports>
+                </settings>
+            </field>
+        </container>
     </fieldset>
 </form>
