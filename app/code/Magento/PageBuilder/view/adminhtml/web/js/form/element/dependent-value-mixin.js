@@ -3,14 +3,11 @@
  * See COPYING.txt for license details.
  */
 
-define([
-    'underscore'
-], function (_) {
+define([], function () {
     'use strict';
 
     var setDependentValuesSetting = {
         defaults: {
-            previousValue: false,
             dependentValues: {}
         },
 
@@ -21,17 +18,9 @@ define([
             if (this.dependentValues.hasOwnProperty(value)) {
                 this.previousValue = this.value();
                 this.value(this.dependentValues[value]);
-            } else {
+            } else if (this.hasOwnProperty('previousValue')) {
                 this.value(this.previousValue);
             }
-        },
-
-        /** @inheritdoc */
-        setInitialValue: function () {
-            this._super();
-            this.previousValue = this.value();
-
-            return this;
         }
     };
 
