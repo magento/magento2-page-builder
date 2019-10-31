@@ -172,7 +172,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         config.centerMode = true;
         (0, _jquery)(this.element).addClass(this.centerModeClass);
       } else {
-        config.infinite = attributes["data-infinite-loop"];
+        config.infinite = attributes["data-infinite-loop"] === "true";
         (0, _jquery)(this.element).removeClass(this.centerModeClass);
       }
 

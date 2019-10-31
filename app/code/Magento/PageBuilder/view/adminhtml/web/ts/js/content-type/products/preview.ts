@@ -183,7 +183,7 @@ export default class Preview extends BasePreview {
             config.centerMode = true;
             $(this.element).addClass(this.centerModeClass);
         } else {
-            config.infinite = attributes["data-infinite-loop"];
+            config.infinite = attributes["data-infinite-loop"] === "true";
             $(this.element).removeClass(this.centerModeClass);
         }
 
