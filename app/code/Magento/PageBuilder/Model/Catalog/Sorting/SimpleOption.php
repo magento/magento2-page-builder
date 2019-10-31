@@ -37,14 +37,14 @@ class SimpleOption implements OptionInterface
 
     /**
      * @param string $label
-     * @param string $sortDirection
-     * @param string $attributeField
+     * @param string|null $sortDirection
+     * @param string|null $attributeField
      * @param string|null $secondarySortDirection
      */
     public function __construct(
         string $label,
-        string $sortDirection,
-        string $attributeField,
+        string $sortDirection = null,
+        string $attributeField = null,
         string $secondarySortDirection = null
     ) {
         $this->label = $label;
@@ -59,10 +59,11 @@ class SimpleOption implements OptionInterface
     public function sort(
         \Magento\Catalog\Model\ResourceModel\Product\Collection $collection
     ): \Magento\Catalog\Model\ResourceModel\Product\Collection {
-        $collection->getSelect()->reset(Select::ORDER);
-        $collection->addAttributeToSort($this->attributeField, $this->sortDirection);
-        $collection->addAttributeToSort('entity_id', $this->secondarySortDirection);
-
+        if ($this->attributeField && $this->sortDirection) {
+            $collection->getSelect()->reset(Select::ORDER);
+            $collection->addAttributeToSort($this->attributeField, $this->sortDirection);
+            $collection->addAttributeToSort('entity_id', $this->secondarySortDirection);
+        }
         return $collection;
     }
 

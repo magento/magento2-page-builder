@@ -60,7 +60,8 @@ class ProductsListPlugin
         \Magento\CatalogWidget\Block\Product\ProductsList $subject,
         \Magento\Catalog\Model\ResourceModel\Product\Collection $result
     ) {
-        $categoryId = $subject->getData('category_ids');
+        $conditionOption = $subject->getData('condition_option');
+        $categoryId = $conditionOption === 'category_ids' ? $subject->getData('condition_option_value') : null;
         $sortOption = $subject->getData('sort_order');
 
         $this->stock->addIsInStockFilterToCollection($result);
@@ -93,6 +94,7 @@ class ProductsListPlugin
     public function afterGetCacheKeyInfo(\Magento\CatalogWidget\Block\Product\ProductsList $subject, array $cacheKeys)
     {
         $cacheKeys[] = $subject->getData('sort_order');
+        $cacheKeys[] = $subject->getData('condition_option');
         return $cacheKeys;
     }
 
@@ -105,7 +107,8 @@ class ProductsListPlugin
      */
     public function afterGetIdentities(\Magento\CatalogWidget\Block\Product\ProductsList $subject, array $result)
     {
-        $categoryId = $subject->getData('category_ids');
+        $conditionOption = $subject->getData('condition_option');
+        $categoryId = $conditionOption === 'category_ids' ? $subject->getData('condition_option_value') : null;
         $sortOption = $subject->getData('sort_order');
 
         if (!empty($categoryId) && $sortOption === 'position') {
