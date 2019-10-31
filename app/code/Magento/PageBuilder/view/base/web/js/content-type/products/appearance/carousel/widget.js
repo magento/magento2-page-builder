@@ -8,8 +8,9 @@ define([
     'underscore',
     'matchMedia',
     'Magento_PageBuilder/js/utils/breakpoints',
+    'Magento_PageBuilder/js/events',
     'slick'
-], function ($, _, mediaCheck, breakpointsUtils) {
+], function ($, _, mediaCheck, breakpointsUtils, events) {
     'use strict';
 
     /**
@@ -53,6 +54,13 @@ define([
                     buildSlick($carouselElement, slickConfig);
                 }
             });
+        });
+
+        // Redraw slide after content type gets redrawn
+        events.on('contentType:redrawAfter', function (args) {
+            if ($carouselElement.closest(args.element).length) {
+                $carouselElement.slick('setPosition');
+            }
         });
     };
 });
