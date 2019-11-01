@@ -27,26 +27,370 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterProductsCount">
             <argument name="property" value="PageBuilderProductsCarouselCountPropertyMax"/>
         </actionGroup>
-        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductCountStage">
+        <actionGroup ref="validateProductCountInProductsCarousel" stepKey="validateProductCountStage">
             <argument name="page" value="ProductsCarouselOnStage"/>
-            <argument name="count" value="6"/>
+            <argument name="productCount" value="6"/>
         </actionGroup>
-        <seeElement selector="{{ProductsCarouselOnStage.productByIndex('1', '5')}}" stepKey="seeProduct5Stage" after="validateProductCountStage"/>
-        <dontSeeElement selector="{{ProductsCarouselOnStage.productByIndex('1', '6')}}" stepKey="dontSeeProduct6Stage" after="seeProduct5Stage"/>
-        <remove keyForRemoval="product1HeightStage"/>
-        <executeJS function="return document.evaluate(&quot;{{ProductsCarouselOnStage.productByIndex('1', '1')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().top" stepKey="product1TopPositionStage"/>
-        <executeJS function="return document.evaluate(&quot;{{ProductsCarouselOnStage.productByIndex('1', '6')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().top" stepKey="product6TopPositionStage"/>
-        <assertEquals stepKey="assertVerticalDistanceBetweenProductsIsGreaterThanIndividualProductHeightStage">
-            <expectedResult type="int">0</expectedResult>
-            <actualResult type="variable">verticalDistanceBetweenProductsStage</actualResult>
-        </assertEquals>
-        <seeElement selector="{{ProductsOnStorefront.productByIndex('1', '5')}}" stepKey="seeProduct5Storefront" after="validateProductCountStorefront"/>
-        <dontSeeElement selector="{{ProductsOnStorefront.productByIndex('1', '6')}}" stepKey="dontSeeProduct6Storefront" after="seeProduct5Storefront"/>
-        <remove keyForRemoval="product1HeightStorefront"/>
-        <assertEquals stepKey="assertVerticalDistanceBetweenProductsIsGreaterThanIndividualProductHeightStorefront">
-            <expectedResult type="int">0</expectedResult>
-            <actualResult type="variable">verticalDistanceBetweenProductsStorefront</actualResult>
-        </assertEquals>
+        <actionGroup ref="validateCanSeeProductInProductCarousel" stepKey="seeProduct2Stage" after="validateProductCountStage">
+            <argument name="product" value="$$createProduct2$$"/>
+        </actionGroup>
+        <actionGroup ref="validateCannotSeeProductInProductCarousel" stepKey="dontSeeProduct1Stage" after="seeProduct2Stage">
+            <argument name="product" value="$$createProduct1$$"/>
+        </actionGroup>
+        <actionGroup ref="validateProductsDoNotWrapInCarouselAppearance" stepKey="validateProductsWrapInGridAppearanceStage"/>
+        <actionGroup ref="validateProductsInProductCarouselAreCenteredForOddNumberOfProducts" stepKey="validateProductsAreCenteredStage" after="validateProductsWrapInGridAppearanceStage"/>
+        <actionGroup ref="validateProductCountInProductsCarousel" stepKey="validateProductCountStorefront">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="productCount" value="6"/>
+        </actionGroup>
+        <actionGroup ref="validateCanSeeProductInProductCarousel" stepKey="seeProduct6Storefront" after="validateProductCountStorefront">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="product" value="$$createProduct6$$"/>
+        </actionGroup>
+        <actionGroup ref="validateCannotSeeProductInProductCarousel" stepKey="dontSeeProduct1Storefront" after="seeProduct6Storefront">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="product" value="$$createProduct1$$"/>
+        </actionGroup>
+        <actionGroup ref="validateProductsDoNotWrapInCarouselAppearance" stepKey="validateProductsWrapInGridAppearanceStorefront">
+            <argument name="page" value="ProductsOnStorefront"/>
+        </actionGroup>
+        <actionGroup ref="validateProductsInProductCarouselAreCenteredForOddNumberOfProducts" stepKey="validateProductsAreCenteredStorefront" after="validateProductsWrapInGridAppearanceStorefront">
+            <argument name="page" value="ProductsOnStorefront"/>
+        </actionGroup>
+    </test>
+    <test name="AdminPageBuilderProductsCarouselVerifyCanSlideCarousel">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Products"/>
+            <title value="Carousel - Verify Can Slide Carousel"/>
+            <description value="Validate that user can successfully slide the Products carousel to switch slides."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="PB-173"/>
+            <testCaseId value="MC-22726"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-products"/>
+            <group value="pagebuilder-productsCarousel"/>
+        </annotations>
+        <before>
+            <createData entity="PageBuilderProductsSubCategory" stepKey="createCategory"/>
+            <createData entity="_defaultProduct" stepKey="createProduct6">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+            <createData entity="_defaultProduct" stepKey="createProduct5">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+            <createData entity="_defaultProduct" stepKey="createProduct4">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+            <createData entity="_defaultProduct" stepKey="createProduct3">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+            <createData entity="_defaultProduct" stepKey="createProduct2">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+            <createData entity="_defaultProduct" stepKey="createProduct1">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToCMSPage" stepKey="navigateToCMSPage">
+                <argument name="CMSPage" value="$$createCMSPage$$"/>
+            </actionGroup>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCategory" stepKey="deleteCategory"/>
+            <deleteData createDataKey="createProduct6" stepKey="deleteProduct6"/>
+            <deleteData createDataKey="createProduct5" stepKey="deleteProduct5"/>
+            <deleteData createDataKey="createProduct4" stepKey="deleteProduct4"/>
+            <deleteData createDataKey="createProduct3" stepKey="deleteProduct3"/>
+            <deleteData createDataKey="createProduct2" stepKey="deleteProduct2"/>
+            <deleteData createDataKey="createProduct1" stepKey="deleteProduct1"/>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionAddContent">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragOntoStage">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
+            <argument name="property" value="PageBuilderProductsProductCarouselAppearance"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="chooseSelectProductsBy">
+            <argument name="property" value="PageBuilderProductsSelectProductsByCategory"/>
+        </actionGroup>
+        <actionGroup ref="selectCategoryFromCategoryDropDown" stepKey="selectCategory">
+            <argument name="category" value="$$createCategory.name$$"/>
+        </actionGroup>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="enableShowDots">
+            <argument name="property" value="PageBuilderProductsCarouselSettingsShowDots_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <actionGroup ref="validateCanSeeProductInProductCarousel" stepKey="validateCanSeeProduct1Stage">
+            <argument name="product" value="$$createProduct1$$"/>
+        </actionGroup>
+        <actionGroup ref="validateCannotSeeProductInProductCarousel" stepKey="validateCannotSeeProduct6Stage">
+            <argument name="product" value="$$createProduct6$$"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCarouselNavigationDots" stepKey="validateProductCarouselNavigationDotsStage"/>
+        <!-- Stage: Drag to Second Slide and Validate -->
+        <actionGroup ref="dragProductToSlideProductCarousel" stepKey="dragProductToSlideProductCarouselStage">
+            <argument name="targetProduct" value="$$createProduct5.name$$"/>
+            <argument name="destinationProduct" value="$$createProduct1.name$$"/>
+        </actionGroup>
+        <actionGroup ref="validateCanSeeProductInProductCarousel" stepKey="validateCanSeeProduct6Stage2">
+            <argument name="product" value="$$createProduct6$$"/>
+        </actionGroup>
+        <actionGroup ref="validateCannotSeeProductInProductCarousel" stepKey="validateCannotSeeProduct1Stage2">
+            <argument name="product" value="$$createProduct1$$"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCarouselNavigationDots" stepKey="validateProductCarouselNavigationDotsStage2">
+            <argument name="activeNavigationDot" value="2"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate Storefront -->
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <actionGroup ref="validateCanSeeProductInProductCarousel" stepKey="validateCanSeeProduct1Storefront">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="product" value="$$createProduct1$$"/>
+        </actionGroup>
+        <actionGroup ref="validateCannotSeeProductInProductCarousel" stepKey="validateCannotSeeProduct6Storefront">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="product" value="$$createProduct6$$"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCarouselNavigationDots" stepKey="validateProductCarouselNavigationDotsStorefront">
+            <argument name="page" value="ProductsOnStorefront"/>
+        </actionGroup>
+        <!-- Storefront: Drag to Second Slide and Validate -->
+        <actionGroup ref="dragProductToSlideProductCarousel" stepKey="dragProductToSlideProductCarouselStorefront">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="targetProduct" value="$$createProduct5.name$$"/>
+            <argument name="destinationProduct" value="$$createProduct1.name$$"/>
+        </actionGroup>
+        <actionGroup ref="validateCanSeeProductInProductCarousel" stepKey="validateCanSeeProduct6Storefront2">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="product" value="$$createProduct6$$"/>
+        </actionGroup>
+        <actionGroup ref="validateCannotSeeProductInProductCarousel" stepKey="validateCannotSeeProduct1Storefront2">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="product" value="$$createProduct1$$"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCarouselNavigationDots" stepKey="validateProductCarouselNavigationDotsStorefront2">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="activeNavigationDot" value="2"/>
+        </actionGroup>
+    </test>
+    <test name="AdminPageBuilderProductsCarouselValidateProductsCenteredInAppearanceInDefaultMode">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Products"/>
+            <title value="Carousel - Validate Products Are Centered In Carousel Appearance In Default Mode"/>
+            <description value="Validate that setting the Products content type to a Carousel appearance renders products in the center of the content type when in default mode"/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="PB-173"/>
+            <testCaseId value="MC-22717"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-products"/>
+            <group value="pagebuilder-productsCarousel"/>
+        </annotations>
+        <before>
+            <createData entity="PageBuilderProductsSubCategory" stepKey="createCategory"/>
+            <createData entity="_defaultProduct" stepKey="createProduct1">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+            <createData entity="_defaultProduct" stepKey="createProduct2">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+            <createData entity="_defaultProduct" stepKey="createProduct3">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+            <createData entity="_defaultProduct" stepKey="createProduct4">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+            <createData entity="_defaultProduct" stepKey="createProduct5">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToCMSPage" stepKey="navigateToCMSPage">
+                <argument name="CMSPage" value="$$createCMSPage$$"/>
+            </actionGroup>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createProduct1" stepKey="deleteProduct1"/>
+            <deleteData createDataKey="createProduct2" stepKey="deleteProduct2"/>
+            <deleteData createDataKey="createProduct3" stepKey="deleteProduct3"/>
+            <deleteData createDataKey="createProduct4" stepKey="deleteProduct4"/>
+            <deleteData createDataKey="createProduct5" stepKey="deleteProduct5"/>
+            <deleteData createDataKey="createCategory" stepKey="deleteCategory"/>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionAddContent">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragOntoStage">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
+            <argument name="property" value="PageBuilderProductsProductCarouselAppearance"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="chooseSelectProductsBy">
+            <argument name="property" value="PageBuilderProductsSelectProductsByCategory"/>
+        </actionGroup>
+        <actionGroup ref="selectCategoryFromCategoryDropDown" stepKey="selectCategory">
+            <argument name="category" value="$$createCategory.name$$"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterProductsCount">
+            <argument name="property" value="PageBuilderProductsCarouselCountPropertyOne"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectCarouselMode">
+            <argument name="property" value="PageBuilderProductsCarouselSettingsCarouselMode_Default"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Stage: Validate 1 Product Centered -->
+        <actionGroup ref="validateProductsInProductCarouselAreCenteredForOddNumberOfProducts" stepKey="validateProductsAreCenteredStage1">
+            <argument name="centerProductIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Storefront: Validate 1 Product Centered -->
+        <openNewTab stepKey="openNewTab"/>
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <actionGroup ref="validateProductsInProductCarouselAreCenteredForOddNumberOfProducts" stepKey="validateProductsAreCenteredStorefront1">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="centerProductIndex" value="1"/>
+        </actionGroup>
+        <!-- Edit to 2 Products -->
+        <switchToNextTab stepKey="switchToNextTab"/>
+        <reloadPage stepKey="reloadPage"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditPanel2">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterProductsCount2">
+            <argument name="property" value="PageBuilderProductsCarouselCountPropertyTwo"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <!-- Stage: Validate 2 Products Centered -->
+        <actionGroup ref="validateProductsInProductCarouselAreCenteredForEvenNumberOfProducts" stepKey="validateProductsAreCenteredStage2">
+            <argument name="adjacentLeftOfCenterProductIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
+        <!-- Storefront: Validate 2 Products Centered -->
+        <switchToNextTab stepKey="switchToNextTab2"/>
+        <reloadPage stepKey="reloadPage2"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <actionGroup ref="validateProductsInProductCarouselAreCenteredForEvenNumberOfProducts" stepKey="validateProductsAreCenteredStorefront2">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="adjacentLeftOfCenterProductIndex" value="1"/>
+        </actionGroup>
+        <!-- Edit to 3 Products -->
+        <switchToNextTab stepKey="switchToNextTab3"/>
+        <reloadPage stepKey="reloadPage3"/>
+        <waitForPageLoad stepKey="waitForPageLoad3"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage3"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditPanel3">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterProductsCount3">
+            <argument name="property" value="PageBuilderProductsCarouselCountPropertyThree"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
+        <!-- Stage: Validate 3 Products Centered -->
+        <actionGroup ref="validateProductsInProductCarouselAreCenteredForOddNumberOfProducts" stepKey="validateProductsAreCenteredStage3">
+            <argument name="centerProductIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage3"/>
+        <!-- Storefront: Validate 3 Products Centered -->
+        <switchToNextTab stepKey="switchToNextTab4"/>
+        <reloadPage stepKey="reloadPage4"/>
+        <waitForPageLoad stepKey="waitForPageLoad4"/>
+        <actionGroup ref="validateProductsInProductCarouselAreCenteredForOddNumberOfProducts" stepKey="validateProductsAreCenteredStorefront3">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="centerProductIndex" value="2"/>
+        </actionGroup>
+        <!-- Edit to 4 Products -->
+        <switchToNextTab stepKey="switchToNextTab5"/>
+        <reloadPage stepKey="reloadPage5"/>
+        <waitForPageLoad stepKey="waitForPageLoad5"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage4"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditPanel4">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterProductsCount4">
+            <argument name="property" value="PageBuilderProductsCarouselCountPropertyFour"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings4"/>
+        <!-- Stage: Validate 4 Products Centered -->
+        <actionGroup ref="validateProductsInProductCarouselAreCenteredForEvenNumberOfProducts" stepKey="validateProductsAreCenteredStage4">
+            <argument name="adjacentLeftOfCenterProductIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage4"/>
+        <!-- Storefront: Validate 4 Products Centered -->
+        <switchToNextTab stepKey="switchToNextTab6"/>
+        <reloadPage stepKey="reloadPage6"/>
+        <waitForPageLoad stepKey="waitForPageLoad6"/>
+        <actionGroup ref="validateProductsInProductCarouselAreCenteredForEvenNumberOfProducts" stepKey="validateProductsAreCenteredStorefront4">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="adjacentLeftOfCenterProductIndex" value="2"/>
+        </actionGroup>
+        <!-- Edit to 5 Products -->
+        <switchToNextTab stepKey="switchToNextTab7"/>
+        <reloadPage stepKey="reloadPage7"/>
+        <waitForPageLoad stepKey="waitForPageLoad7"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage5"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditPanel5">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterProductsCount5">
+            <argument name="property" value="PageBuilderProductsCarouselCountPropertyFive"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings5"/>
+        <!-- Stage: Validate 5 Products Centered -->
+        <actionGroup ref="validateProductsInProductCarouselAreCenteredForOddNumberOfProducts" stepKey="validateProductsAreCenteredStage5">
+            <argument name="centerProductIndex" value="3"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage5"/>
+        <!-- Storefront: Validate 5 Products Centered -->
+        <switchToNextTab stepKey="switchToNextTab8"/>
+        <reloadPage stepKey="reloadPage8"/>
+        <waitForPageLoad stepKey="waitForPageLoad8"/>
+        <actionGroup ref="validateProductsInProductCarouselAreCenteredForOddNumberOfProducts" stepKey="validateProductsAreCenteredStorefront5">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="centerProductIndex" value="3"/>
+        </actionGroup>
+    </test>
+    <test name="AdminPageBuilderProductsCarouselValidateProductsCenteredInAppearanceInContinuousMode" extends="AdminPageBuilderProductsCarouselValidateProductsCenteredInAppearanceInDefaultMode">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Products"/>
+            <title value="Carousel - Validate Products Are Centered In Carousel Appearance In Continuous Mode"/>
+            <description value="Validate that setting the Products content type to a Carousel appearance renders products in the center of the content type when in continuous mode"/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="PB-173"/>
+            <testCaseId value="MC-22718"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-products"/>
+            <group value="pagebuilder-productsCarousel"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectCarouselMode">
+            <argument name="property" value="PageBuilderProductsCarouselSettingsCarouselMode_Continuous"/>
+        </actionGroup>
     </test>
     <test name="AdminPageBuilderProductsCarouselAndGridAppearanceSettingsPersist">
         <annotations>
@@ -60,6 +404,7 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-products"/>
             <group value="pagebuilder-productsGrid"/>
+            <group value="pagebuilder-productsCarousel"/>
         </annotations>
         <before>
             <createData entity="PageBuilderProductsSubCategory" stepKey="createCategory"/>
@@ -639,6 +984,140 @@
         </actionGroup>
         <dontSeeElementInDOM selector="{{ProductsOnStorefront.product('1')}}" stepKey="validateNoProductsOnStorefront" after="navigateToCMSPageStorefront2"/>
     </test>
+    <test name="AdminPageBuilderProductsCarouselSelectBySKUAndSortByPosition" extends="AdminPageBuilderProductsSelectBySKUAndSortByPosition">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Products"/>
+            <title value="Carousel - Select Products By SKU and Sort By Position"/>
+            <description value="Ensure products content type can be set to select products by SKU and sorted by position"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="PB-173"/>
+            <testCaseId value="MC-22720"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-products"/>
+            <group value="pagebuilder-productsCarousel"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
+            <argument name="property" value="PageBuilderProductsProductCarouselAppearance"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterProductsCount">
+            <argument name="property" value="PageBuilderProductsCarouselCountPropertyFour"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="count" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProduct1Stage">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="product" value="SortProduct2"/>
+            <argument name="productIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProduct2Stage">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="product" value="SortProduct1"/>
+            <argument name="productIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage2">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="count" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProduct1Stage2">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="product" value="SortProduct1"/>
+            <argument name="productIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProduct2Stage2">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="product" value="SortProduct2"/>
+            <argument name="productIndex" value="2"/>
+        </actionGroup>
+    </test>
+    <test name="AdminPageBuilderProductsCarouselSelectBySKUAndVerifyProductRemovedAfterSKUChange" extends="AdminPageBuilderProductsSelectBySKUAndVerifyProductRemovedAfterSKUChange">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Products"/>
+            <title value="Carousel - Select Products By SKU, change SKU for one product, verify product is removed from products content type"/>
+            <description value="Verify that a product is removed from the product content type if the content type is filtered by 'Select By SKU' and the SKU for a product is changed"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="PB-173"/>
+            <testCaseId value="MC-22721"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-products"/>
+            <group value="pagebuilder-productsCarousel"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
+            <argument name="property" value="PageBuilderProductsProductCarouselAppearance"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterProductsCount">
+            <argument name="property" value="PageBuilderProductsCarouselCountPropertyFour"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="count" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProduct1Stage">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="product" value="SortProduct2"/>
+            <argument name="productIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProduct2Stage">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="product" value="SortProduct1"/>
+            <argument name="productIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage2">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="count" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProduct2Stage2">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="product" value="SortProduct2"/>
+            <argument name="productIndex" value="1"/>
+        </actionGroup>
+    </test>
+    <test name="AdminPageBuilderProductsCarouselSelectBySKUAndVerifyProductRemovedAfterDelete" extends="AdminPageBuilderProductsSelectBySKUAndVerifyProductRemovedAfterDelete">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Products"/>
+            <title value="Carousel - Select Products By SKU, delete one product, verify product is removed from products content type"/>
+            <description value="Verify that a product is removed from the product content type if the content type is filtered by 'Select By SKU' and the product is deleted"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="PB-173"/>
+            <testCaseId value="MC-22722"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-products"/>
+            <group value="pagebuilder-productsCarousel"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
+            <argument name="property" value="PageBuilderProductsProductCarouselAppearance"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterProductsCount">
+            <argument name="property" value="PageBuilderProductsCarouselCountPropertyFour"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="count" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProduct1Stage">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="product" value="SortProduct2"/>
+            <argument name="productIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProduct2Stage">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="product" value="SortProduct1"/>
+            <argument name="productIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage2">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="count" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProduct2Stage2">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="product" value="SortProduct2"/>
+            <argument name="productIndex" value="1"/>
+        </actionGroup>
+    </test>
     <test name="AdminPageBuilderProductsCarouselAllProductsShowWhenSavedWithoutConditions" extends="AdminPageBuilderProductsAllProductsShowWhenSavedWithoutConditions">
         <annotations>
             <features value="PageBuilder"/>
@@ -697,6 +1176,918 @@
             <argument name="margin" value="PageBuilderMarginsPropertyUnique"/>
             <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
             <argument name="index" value="1"/>
+        </actionGroup>
+    </test>
+    <test name="AdminPageBuilderProductsCarouselVerifyProductItemsInteractionsOnStorefront" extends="AdminPageBuilderProductsVerifyProductItemsInteractionsOnStorefront">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Products"/>
+            <title value="Carousel - Verify Product Items Can Be Interacted With On Storefront"/>
+            <description value="Verify that users are able to interact with products on the storefront, including add to cart, add to wish list, etc."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MC-22723"/>
+            <useCaseId value="PB-173"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-products"/>
+            <group value="pagebuilder-productsCarousel"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
+            <argument name="property" value="PageBuilderProductsProductCarouselAppearance"/>
+        </actionGroup>
+    </test>
+    <test name="AdminPageBuilderProductsCarouselSettingsSectionDefaults">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Products"/>
+            <title value="Carousel - Validate Settings Section Default Values"/>
+            <description value="Validate the default values for every attribute in the Carousel Settings form for Products carousel appearance."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="PB-173"/>
+            <testCaseId value="MC-22103"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-products"/>
+            <group value="pagebuilder-productsCarousel"/>
+        </annotations>
+        <before>
+            <createData entity="PageBuilderProductsSubCategory" stepKey="createCategory"/>
+            <createData entity="_defaultProduct" stepKey="createProduct1">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+            <createData entity="_defaultProduct" stepKey="createProduct2">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+            <createData entity="_defaultProduct" stepKey="createProduct3">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+            <createData entity="_defaultProduct" stepKey="createProduct4">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+            <createData entity="_defaultProduct" stepKey="createProduct5">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+            <createData entity="_defaultProduct" stepKey="createProduct6">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToCMSPage" stepKey="navigateToCMSPage">
+                <argument name="CMSPage" value="$$createCMSPage$$"/>
+            </actionGroup>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createProduct1" stepKey="deleteProduct1"/>
+            <deleteData createDataKey="createProduct2" stepKey="deleteProduct2"/>
+            <deleteData createDataKey="createProduct3" stepKey="deleteProduct3"/>
+            <deleteData createDataKey="createProduct4" stepKey="deleteProduct4"/>
+            <deleteData createDataKey="createProduct5" stepKey="deleteProduct5"/>
+            <deleteData createDataKey="createProduct6" stepKey="deleteProduct6"/>
+            <deleteData createDataKey="createCategory" stepKey="deleteCategory"/>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionAddContent">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragOntoStage">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
+            <argument name="property" value="PageBuilderProductsProductCarouselAppearance"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="chooseSelectProductsBy">
+            <argument name="property" value="PageBuilderProductsSelectProductsByCategory"/>
+        </actionGroup>
+        <actionGroup ref="selectCategoryFromCategoryDropDown" stepKey="selectCategory">
+            <argument name="category" value="$$createCategory.name$$"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterProductsCount">
+            <argument name="property" value="PageBuilderProductsCarouselCountPropertyMax"/>
+        </actionGroup>
+        <!-- Validate Default Values -->
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateCarouselMode">
+            <argument name="property" value="PageBuilderProductsCarouselSettingsCarouselMode_Default"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="validateAutoPlay">
+            <argument name="property" value="PageBuilderProductsCarouselSettingsAutoplay_Disabled"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateAutoPlaySpeed">
+            <argument name="property" value="PageBuilderProductsCarouselSettingsAutoplaySpeed_4000"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="validateInfiniteLoop">
+            <argument name="property" value="PageBuilderProductsCarouselSettingsInfiniteLoop_Disabled"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="validateShowArrows">
+            <argument name="property" value="PageBuilderProductsCarouselSettingsShowArrows_Disabled"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsCheckedSlideOutProperty" stepKey="validateShowDots">
+            <argument name="property" value="PageBuilderProductsCarouselSettingsShowDots_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <actionGroup ref="validateProductCarouselSettingsAttributes" stepKey="validateProductCarouselSettingsAttributesStage"/>
+        <actionGroup ref="validateProductCarouselItemOpacity" stepKey="validateProduct1OpacityStage"/>
+        <actionGroup ref="validateProductCarouselItemOpacity" stepKey="validateProduct3OpacityStage">
+            <argument name="productItemIndex" value="3"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCarouselNavigationArrowsAreNotRendered" stepKey="validateProductCarouselNavigationArrowsAreNotRenderedStage"/>
+        <actionGroup ref="validateProductCarouselNavigationDots" stepKey="validateProductCarouselNavigationDotsStage"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate Storefront -->
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCarouselSettingsAttributes" stepKey="validateProductCarouselSettingsAttributesStorefront">
+            <argument name="page" value="ProductsOnStorefront"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCarouselItemOpacity" stepKey="validateProduct1OpacityStorefront">
+            <argument name="page" value="ProductsOnStorefront"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCarouselItemOpacity" stepKey="validateProduct3OpacityStorefront">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="productItemIndex" value="3"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCarouselNavigationArrowsAreNotRendered" stepKey="validateProductCarouselNavigationArrowsAreNotRenderedStorefront">
+            <argument name="page" value="ProductsOnStorefront"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCarouselNavigationDots" stepKey="validateProductCarouselNavigationDotsStorefront">
+            <argument name="page" value="ProductsOnStorefront"/>
+        </actionGroup>
+    </test>
+    <!-- todo: validate default mode -->
+    <!-- todo: validate continuous mode -->
+    <test name="FIXMEAdminPageBuilderProductsCarouselValidateAutoplayInDefaultModeWithNoInfiniteLoop">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Products"/>
+            <title value="Carousel - Validate Autoplay Works in Default Mode with Infinite Loop Disabled"/>
+            <description value="Validate the autoplay feature works for the Products carousel appearance with default carousel mode and infinite loop disabled."/>
+            <severity value="MAJOR"/>
+            <useCaseId value="PB-173"/>
+            <testCaseId value="MC-22104"/>
+            <group value="dh"/>
+<!--            <group value="pagebuilder"/>-->
+            <group value="pagebuilder-products"/>
+            <group value="pagebuilder-productsCarousel"/>
+        </annotations>
+        <before>
+            <createData entity="PageBuilderProductsSubCategory" stepKey="createCategory"/>
+            <createData entity="_defaultProduct" stepKey="createProduct6">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+            <createData entity="_defaultProduct" stepKey="createProduct5">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+            <createData entity="_defaultProduct" stepKey="createProduct4">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+            <createData entity="_defaultProduct" stepKey="createProduct3">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+            <createData entity="_defaultProduct" stepKey="createProduct2">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+            <createData entity="_defaultProduct" stepKey="createProduct1">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToCMSPage" stepKey="navigateToCMSPage">
+                <argument name="CMSPage" value="$$createCMSPage$$"/>
+            </actionGroup>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCategory" stepKey="deleteCategory"/>
+            <deleteData createDataKey="createProduct6" stepKey="deleteProduct6"/>
+            <deleteData createDataKey="createProduct5" stepKey="deleteProduct5"/>
+            <deleteData createDataKey="createProduct4" stepKey="deleteProduct4"/>
+            <deleteData createDataKey="createProduct3" stepKey="deleteProduct3"/>
+            <deleteData createDataKey="createProduct2" stepKey="deleteProduct2"/>
+            <deleteData createDataKey="createProduct1" stepKey="deleteProduct1"/>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionAddContent">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragOntoStage">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
+            <argument name="property" value="PageBuilderProductsProductCarouselAppearance"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="chooseSelectProductsBy">
+            <argument name="property" value="PageBuilderProductsSelectProductsByCategory"/>
+        </actionGroup>
+        <actionGroup ref="selectCategoryFromCategoryDropDown" stepKey="selectCategory">
+            <argument name="category" value="$$createCategory.name$$"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterProductsCount">
+            <argument name="property" value="PageBuilderProductsCarouselCountPropertyMax"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectCarouselMode">
+            <argument name="property" value="PageBuilderProductsCarouselSettingsCarouselMode_Default"/>
+        </actionGroup>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="enableAutoplay">
+            <argument name="property" value="PageBuilderProductsCarouselSettingsAutoplay_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterAutoplaySpeed">
+            <argument name="property" value="PageBuilderProductsCarouselSettingsAutoplaySpeed_10000"/>
+        </actionGroup>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="disableInfiniteLoop">
+            <argument name="property" value="PageBuilderProductsCarouselSettingsInfiniteLoop_Disabled"/>
+        </actionGroup>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="enableShowArrows">
+            <argument name="property" value="PageBuilderProductsCarouselSettingsShowArrows_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="enableShowDots">
+            <argument name="property" value="PageBuilderProductsCarouselSettingsShowDots_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage: Initial -->
+        <actionGroup ref="pauseAutoplayOnProductCarousel" stepKey="pauseAutoplayOnProductCarouselStage1"/>
+        <actionGroup ref="validateProductCarouselSettingsAttributes" stepKey="validateProductCarouselSettingsAttributesStage1">
+            <argument name="carouselMode" value="PageBuilderProductsCarouselSettingsCarouselMode_Default"/>
+            <argument name="autoplay" value="PageBuilderProductsCarouselSettingsAutoplay_Enabled"/>
+            <argument name="autoplaySpeed" value="PageBuilderProductsCarouselSettingsAutoplaySpeed_10000"/>
+            <argument name="infiniteLoop" value="PageBuilderProductsCarouselSettingsInfiniteLoop_Disabled"/>
+            <argument name="showArrows" value="PageBuilderProductsCarouselSettingsShowArrows_Enabled"/>
+            <argument name="showDots" value="PageBuilderProductsCarouselSettingsShowDots_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCarouselNavigationDots" stepKey="validateProductCarouselNavigationDotsStage1"/>
+        <actionGroup ref="validateProductCarouselPreviousNavigationArrowDisabled" stepKey="validateProductCarouselPreviousNavigationArrowDisabledStage1"/>
+        <actionGroup ref="validateProductCarouselNextNavigationArrowEnabled" stepKey="validateProductCarouselNextNavigationArrowEnabledStage1"/>
+        <actionGroup ref="validateCanSeeProductInProductCarousel" stepKey="validateCanSeeProduct1Stage1">
+            <argument name="product" value="$$createProduct1$$"/>
+        </actionGroup>
+        <actionGroup ref="validateCannotSeeProductInProductCarousel" stepKey="validateCannotSeeProduct6Stage1">
+            <argument name="product" value="$$createProduct6$$"/>
+        </actionGroup>
+        <!-- Validate Stage: Verify Autoplay Occurs -->
+        <click selector="{{PageBuilderPanel.leftPanel}}" stepKey="clickLeftPanel2"/>
+        <!-- todo: account for slow env by clicking slide 1 dot then waiting for autoplay. stage & storefront -->
+        <wait time="11" stepKey="waitForAutoplayStage2"/>
+        <actionGroup ref="validateProductCarouselNavigationDots" stepKey="validateProductCarouselNavigationDotsStage2">
+            <argument name="activeNavigationDot" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCarouselPreviousNavigationArrowEnabled" stepKey="validateProductCarouselPreviousNavigationArrowEnabledStage2"/>
+        <actionGroup ref="validateProductCarouselNextNavigationArrowDisabled" stepKey="validateProductCarouselNextNavigationArrowDisabledStage2"/>
+        <actionGroup ref="validateCanSeeProductInProductCarousel" stepKey="validateCanSeeProduct6Stage2">
+            <argument name="product" value="$$createProduct6$$"/>
+        </actionGroup>
+        <actionGroup ref="validateCannotSeeProductInProductCarousel" stepKey="validateCannotSeeProduct1Stage2">
+            <argument name="product" value="$$createProduct1$$"/>
+        </actionGroup>
+        <!-- Validate Stage: Go Back to Slide 1 By Navigation Dot -->
+        <actionGroup ref="pauseAutoplayOnProductCarousel" stepKey="pauseAutoplayOnProductCarouselStage3"/>
+        <actionGroup ref="clickProductCarouselNavigationDot" stepKey="clickFirstNavigationDotStage3">
+            <argument name="navigationDotIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCarouselNavigationDots" stepKey="validateProductCarouselNavigationDotsStage3"/>
+        <actionGroup ref="validateProductCarouselPreviousNavigationArrowDisabled" stepKey="validateProductCarouselPreviousNavigationArrowDisabledStage3"/>
+        <actionGroup ref="validateProductCarouselNextNavigationArrowEnabled" stepKey="validateProductCarouselNextNavigationArrowEnabledStage3"/>
+        <actionGroup ref="validateCanSeeProductInProductCarousel" stepKey="validateCanSeeProduct1Stage3">
+            <argument name="product" value="$$createProduct1$$"/>
+        </actionGroup>
+        <actionGroup ref="validateCannotSeeProductInProductCarousel" stepKey="validateCannotSeeProduct6Stage3">
+            <argument name="product" value="$$createProduct6$$"/>
+        </actionGroup>
+        <!-- Validate Stage:  Verify Autoplay Reoccurs -->
+        <click selector="{{PageBuilderPanel.leftPanel}}" stepKey="clickLeftPanel4"/>
+        <wait time="11" stepKey="waitForAutoplayStage4"/>
+        <actionGroup ref="validateProductCarouselNavigationDots" stepKey="validateProductCarouselNavigationDotsStage4">
+            <argument name="activeNavigationDot" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCarouselPreviousNavigationArrowEnabled" stepKey="validateProductCarouselPreviousNavigationArrowEnabledStage4"/>
+        <actionGroup ref="validateProductCarouselNextNavigationArrowDisabled" stepKey="validateProductCarouselNextNavigationArrowDisabledStage4"/>
+        <actionGroup ref="validateCanSeeProductInProductCarousel" stepKey="validateCanSeeProduct6Stage4">
+            <argument name="product" value="$$createProduct6$$"/>
+        </actionGroup>
+        <actionGroup ref="validateCannotSeeProductInProductCarousel" stepKey="validateCannotSeeProduct1Stage4">
+            <argument name="product" value="$$createProduct1$$"/>
+        </actionGroup>
+        <!-- Validate Stage: Go Back to Slide 1 By Navigation Arrow -->
+        <actionGroup ref="pauseAutoplayOnProductCarousel" stepKey="pauseAutoplayOnProductCarouselStage5"/>
+        <actionGroup ref="clickProductCarouselPreviousNavigationArrow" stepKey="clickPreviousNavigationArrowStage5"/>
+        <actionGroup ref="validateProductCarouselNavigationDots" stepKey="validateProductCarouselNavigationDotsStage5"/>
+        <actionGroup ref="validateProductCarouselPreviousNavigationArrowDisabled" stepKey="validateProductCarouselPreviousNavigationArrowDisabledStage5"/>
+        <actionGroup ref="validateProductCarouselNextNavigationArrowEnabled" stepKey="validateProductCarouselNextNavigationArrowEnabledStage5"/>
+        <actionGroup ref="validateCanSeeProductInProductCarousel" stepKey="validateCanSeeProduct1Stage5">
+            <argument name="product" value="$$createProduct1$$"/>
+        </actionGroup>
+        <actionGroup ref="validateCannotSeeProductInProductCarousel" stepKey="validateCannotSeeProduct6Stage5">
+            <argument name="product" value="$$createProduct6$$"/>
+        </actionGroup>
+        <!-- Validate Stage:  Verify Autoplay Reoccurs Again -->
+        <click selector="{{PageBuilderPanel.leftPanel}}" stepKey="clickLeftPanel6"/>
+        <wait time="11" stepKey="waitForAutoplayStage6"/>
+        <actionGroup ref="validateProductCarouselNavigationDots" stepKey="validateProductCarouselNavigationDotsStage6">
+            <argument name="activeNavigationDot" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCarouselPreviousNavigationArrowEnabled" stepKey="validateProductCarouselPreviousNavigationArrowEnabledStage6"/>
+        <actionGroup ref="validateProductCarouselNextNavigationArrowDisabled" stepKey="validateProductCarouselNextNavigationArrowDisabledStage6"/>
+        <actionGroup ref="validateCanSeeProductInProductCarousel" stepKey="validateCanSeeProduct6Stage6">
+            <argument name="product" value="$$createProduct6$$"/>
+        </actionGroup>
+        <actionGroup ref="validateCannotSeeProductInProductCarousel" stepKey="validateCannotSeeProduct1Stage6">
+            <argument name="product" value="$$createProduct1$$"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate Storefront: Initial -->
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <actionGroup ref="pauseAutoplayOnProductCarousel" stepKey="pauseAutoplayOnProductCarouselStorefront1">
+            <argument name="page" value="ProductsOnStorefront"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCarouselSettingsAttributes" stepKey="validateProductCarouselSettingsAttributesStorefront1">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="carouselMode" value="PageBuilderProductsCarouselSettingsCarouselMode_Default"/>
+            <argument name="autoplay" value="PageBuilderProductsCarouselSettingsAutoplay_Enabled"/>
+            <argument name="autoplaySpeed" value="PageBuilderProductsCarouselSettingsAutoplaySpeed_10000"/>
+            <argument name="infiniteLoop" value="PageBuilderProductsCarouselSettingsInfiniteLoop_Disabled"/>
+            <argument name="showArrows" value="PageBuilderProductsCarouselSettingsShowArrows_Enabled"/>
+            <argument name="showDots" value="PageBuilderProductsCarouselSettingsShowDots_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCarouselNavigationDots" stepKey="validateProductCarouselNavigationDotsStorefront1">
+            <argument name="page" value="ProductsOnStorefront"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCarouselPreviousNavigationArrowDisabled" stepKey="validateProductCarouselPreviousNavigationArrowDisabledStorefront1">
+            <argument name="page" value="ProductsOnStorefront"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCarouselNextNavigationArrowEnabled" stepKey="validateProductCarouselNextNavigationArrowEnabledStorefront1">
+            <argument name="page" value="ProductsOnStorefront"/>
+        </actionGroup>
+        <actionGroup ref="validateCanSeeProductInProductCarousel" stepKey="validateCanSeeProduct1Storefront1">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="product" value="$$createProduct1$$"/>
+        </actionGroup>
+        <actionGroup ref="validateCannotSeeProductInProductCarousel" stepKey="validateCannotSeeProduct6Storefront1">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="product" value="$$createProduct6$$"/>
+        </actionGroup>
+        <!-- Validate Storefront: Verify Autoplay Occurs -->
+        <click selector=".panel.header" stepKey="clickHeader1"/>
+        <wait time="11" stepKey="waitForAutoplayStorefront2"/>
+        <actionGroup ref="validateProductCarouselNavigationDots" stepKey="validateProductCarouselNavigationDotsStorefront2">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="activeNavigationDot" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCarouselPreviousNavigationArrowEnabled" stepKey="validateProductCarouselPreviousNavigationArrowEnabledStorefront2">
+            <argument name="page" value="ProductsOnStorefront"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCarouselNextNavigationArrowDisabled" stepKey="validateProductCarouselNextNavigationArrowDisabledStorefront2">
+            <argument name="page" value="ProductsOnStorefront"/>
+        </actionGroup>
+        <actionGroup ref="validateCanSeeProductInProductCarousel" stepKey="validateCanSeeProduct6Storefront2">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="product" value="$$createProduct6$$"/>
+        </actionGroup>
+        <actionGroup ref="validateCannotSeeProductInProductCarousel" stepKey="validateCannotSeeProduct1Storefront2">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="product" value="$$createProduct1$$"/>
+        </actionGroup>
+        <!-- Validate Storefront: Go Back to Slide 1 By Navigation Dot -->
+        <actionGroup ref="pauseAutoplayOnProductCarousel" stepKey="pauseAutoplayOnProductCarouselStorefront3">
+            <argument name="page" value="ProductsOnStorefront"/>
+        </actionGroup>
+        <actionGroup ref="clickProductCarouselNavigationDot" stepKey="clickFirstNavigationDotStorefront3">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="navigationDotIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCarouselNavigationDots" stepKey="validateProductCarouselNavigationDotsStorefront3">
+            <argument name="page" value="ProductsOnStorefront"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCarouselPreviousNavigationArrowDisabled" stepKey="validateProductCarouselPreviousNavigationArrowDisabledStorefront3">
+            <argument name="page" value="ProductsOnStorefront"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCarouselNextNavigationArrowEnabled" stepKey="validateProductCarouselNextNavigationArrowEnabledStorefront3">
+            <argument name="page" value="ProductsOnStorefront"/>
+        </actionGroup>
+        <actionGroup ref="validateCanSeeProductInProductCarousel" stepKey="validateCanSeeProduct1Storefront3">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="product" value="$$createProduct1$$"/>
+        </actionGroup>
+        <actionGroup ref="validateCannotSeeProductInProductCarousel" stepKey="validateCannotSeeProduct6Storefront3">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="product" value="$$createProduct6$$"/>
+        </actionGroup>
+        <!-- Validate Storefront:  Verify Autoplay Reoccurs -->
+        <click selector=".panel.header" stepKey="clickHeader2"/>
+        <wait time="11" stepKey="waitForAutoplayStorefront4"/>
+        <actionGroup ref="validateProductCarouselNavigationDots" stepKey="validateProductCarouselNavigationDotsStorefront4">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="activeNavigationDot" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCarouselPreviousNavigationArrowEnabled" stepKey="validateProductCarouselPreviousNavigationArrowEnabledStorefront4">
+            <argument name="page" value="ProductsOnStorefront"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCarouselNextNavigationArrowDisabled" stepKey="validateProductCarouselNextNavigationArrowDisabledStorefront4">
+            <argument name="page" value="ProductsOnStorefront"/>
+        </actionGroup>
+        <actionGroup ref="validateCanSeeProductInProductCarousel" stepKey="validateCanSeeProduct6Storefront4">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="product" value="$$createProduct6$$"/>
+        </actionGroup>
+        <actionGroup ref="validateCannotSeeProductInProductCarousel" stepKey="validateCannotSeeProduct1Storefront4">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="product" value="$$createProduct1$$"/>
+        </actionGroup>
+        <!-- Validate Storefront: Go Back to Slide 1 By Navigation Arrow -->
+        <actionGroup ref="pauseAutoplayOnProductCarousel" stepKey="pauseAutoplayOnProductCarouselStorefront5">
+            <argument name="page" value="ProductsOnStorefront"/>
+        </actionGroup>
+        <actionGroup ref="clickProductCarouselPreviousNavigationArrow" stepKey="clickPreviousNavigationArrowStorefront5">
+            <argument name="page" value="ProductsOnStorefront"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCarouselNavigationDots" stepKey="validateProductCarouselNavigationDotsStorefront5">
+            <argument name="page" value="ProductsOnStorefront"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCarouselPreviousNavigationArrowDisabled" stepKey="validateProductCarouselPreviousNavigationArrowDisabledStorefront5">
+            <argument name="page" value="ProductsOnStorefront"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCarouselNextNavigationArrowEnabled" stepKey="validateProductCarouselNextNavigationArrowEnabledStorefront5">
+            <argument name="page" value="ProductsOnStorefront"/>
+        </actionGroup>
+        <actionGroup ref="validateCanSeeProductInProductCarousel" stepKey="validateCanSeeProduct1Storefront5">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="product" value="$$createProduct1$$"/>
+        </actionGroup>
+        <actionGroup ref="validateCannotSeeProductInProductCarousel" stepKey="validateCannotSeeProduct6Storefront5">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="product" value="$$createProduct6$$"/>
+        </actionGroup>
+        <!-- Validate Storefront:  Verify Autoplay Reoccurs Again -->
+        <click selector=".panel.header" stepKey="clickHeader3"/>
+        <wait time="11" stepKey="waitForAutoplayStorefront6"/>
+        <actionGroup ref="validateProductCarouselNavigationDots" stepKey="validateProductCarouselNavigationDotsStorefront6">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="activeNavigationDot" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCarouselPreviousNavigationArrowEnabled" stepKey="validateProductCarouselPreviousNavigationArrowEnabledStorefront6">
+            <argument name="page" value="ProductsOnStorefront"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCarouselNextNavigationArrowDisabled" stepKey="validateProductCarouselNextNavigationArrowDisabledStorefront6">
+            <argument name="page" value="ProductsOnStorefront"/>
+        </actionGroup>
+        <actionGroup ref="validateCanSeeProductInProductCarousel" stepKey="validateCanSeeProduct6Storefront6">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="product" value="$$createProduct6$$"/>
+        </actionGroup>
+        <actionGroup ref="validateCannotSeeProductInProductCarousel" stepKey="validateCannotSeeProduct1Storefront6">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="product" value="$$createProduct1$$"/>
+        </actionGroup>
+    </test>
+    <!-- todo: validate autoplay continuous mode-->
+    <!-- todo: validate autoplay infinite loop-->
+    <!-- todo: validate autoplay speed-->
+    <test name="AdminPageBuilderProductsCarouselSettingsValidateInfiniteLoopArrowsDotsFunction">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Products"/>
+            <title value="Carousel - Validate Infinite Loop, Arrows, and Dots Function"/>
+            <description value="Validate that infinite loop, navigation arrows, and navigation dots function for the Products carousel appearance."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="PB-173"/>
+            <testCaseId value="MC-22724"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-products"/>
+            <group value="pagebuilder-productsCarousel"/>
+        </annotations>
+        <before>
+            <createData entity="PageBuilderProductsSubCategory" stepKey="createCategory"/>
+            <createData entity="_defaultProduct" stepKey="createProduct6">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+            <createData entity="_defaultProduct" stepKey="createProduct5">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+            <createData entity="_defaultProduct" stepKey="createProduct4">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+            <createData entity="_defaultProduct" stepKey="createProduct3">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+            <createData entity="_defaultProduct" stepKey="createProduct2">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+            <createData entity="_defaultProduct" stepKey="createProduct1">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToCMSPage" stepKey="navigateToCMSPage">
+                <argument name="CMSPage" value="$$createCMSPage$$"/>
+            </actionGroup>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCategory" stepKey="deleteCategory"/>
+            <deleteData createDataKey="createProduct6" stepKey="deleteProduct6"/>
+            <deleteData createDataKey="createProduct5" stepKey="deleteProduct5"/>
+            <deleteData createDataKey="createProduct4" stepKey="deleteProduct4"/>
+            <deleteData createDataKey="createProduct3" stepKey="deleteProduct3"/>
+            <deleteData createDataKey="createProduct2" stepKey="deleteProduct2"/>
+            <deleteData createDataKey="createProduct1" stepKey="deleteProduct1"/>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionAddContent">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragOntoStage">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
+            <argument name="property" value="PageBuilderProductsProductCarouselAppearance"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="chooseSelectProductsBy">
+            <argument name="property" value="PageBuilderProductsSelectProductsByCategory"/>
+        </actionGroup>
+        <actionGroup ref="selectCategoryFromCategoryDropDown" stepKey="selectCategory">
+            <argument name="category" value="$$createCategory.name$$"/>
+        </actionGroup>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="enableInfiniteLoop">
+            <argument name="property" value="PageBuilderProductsCarouselSettingsInfiniteLoop_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="enableShowArrows">
+            <argument name="property" value="PageBuilderProductsCarouselSettingsShowArrows_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="enableShowDots">
+            <argument name="property" value="PageBuilderProductsCarouselSettingsShowDots_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <actionGroup ref="validateProductCarouselSettingsAttributes" stepKey="validateProductCarouselSettingsAttributesStage">
+            <argument name="infiniteLoop" value="PageBuilderProductsCarouselSettingsInfiniteLoop_Enabled"/>
+            <argument name="showArrows" value="PageBuilderProductsCarouselSettingsShowArrows_Enabled"/>
+            <argument name="showDots" value="PageBuilderProductsCarouselSettingsShowDots_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCarouselNavigationDots" stepKey="validateProductCarouselNavigationDotsStage1"/>
+        <actionGroup ref="validateProductCarouselNavigationArrowsWorkWithInfiniteLoop" stepKey="validateProductCarouselNavigationArrowsWorkWithInfiniteLoopStage1"/>
+        <actionGroup ref="validateCanSeeProductInProductCarousel" stepKey="validateCanSeeProduct1Stage1">
+            <argument name="product" value="$$createProduct1$$"/>
+        </actionGroup>
+        <actionGroup ref="validateCannotSeeProductInProductCarousel" stepKey="validateCannotSeeProduct6Stage1">
+            <argument name="product" value="$$createProduct6$$"/>
+        </actionGroup>
+        <!-- Stage: Click Navigation Dot 2 -->
+        <actionGroup ref="clickProductCarouselNavigationDot" stepKey="clickSecondNavigationDotStage"/>
+        <actionGroup ref="validateProductCarouselNavigationDots" stepKey="validateProductCarouselNavigationDotsStage2">
+            <argument name="activeNavigationDot" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCarouselNavigationArrowsWorkWithInfiniteLoop" stepKey="validateProductCarouselNavigationArrowsWorkWithInfiniteLoopStage2"/>
+        <actionGroup ref="validateCanSeeProductInProductCarousel" stepKey="validateCanSeeProduct6Stage2">
+            <argument name="product" value="$$createProduct6$$"/>
+        </actionGroup>
+        <actionGroup ref="validateCannotSeeProductInProductCarousel" stepKey="validateCannotSeeProduct1Stage2">
+            <argument name="product" value="$$createProduct1$$"/>
+        </actionGroup>
+        <!-- Stage: Click Navigation Dot 1 -->
+        <actionGroup ref="clickProductCarouselNavigationDot" stepKey="clickFirstNavigationDotStage">
+            <argument name="navigationDotIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCarouselNavigationDots" stepKey="validateProductCarouselNavigationDotsStage3"/>
+        <actionGroup ref="validateProductCarouselNavigationArrowsWorkWithInfiniteLoop" stepKey="validateProductCarouselNavigationArrowsWorkWithInfiniteLoopStage3"/>
+        <actionGroup ref="validateCanSeeProductInProductCarousel" stepKey="validateCanSeeProduct1Stage3">
+            <argument name="product" value="$$createProduct1$$"/>
+        </actionGroup>
+        <actionGroup ref="validateCannotSeeProductInProductCarousel" stepKey="validateCannotSeeProduct6Stage3">
+            <argument name="product" value="$$createProduct6$$"/>
+        </actionGroup>
+        <!-- Stage: Click Previous Product Navigation Arrow -->
+        <actionGroup ref="clickProductCarouselPreviousNavigationArrow" stepKey="clickPreviousNavigationArrowStage"/>
+        <actionGroup ref="validateProductCarouselNavigationDots" stepKey="validateProductCarouselNavigationDotsStage4">
+            <argument name="activeNavigationDot" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCarouselNavigationArrowsWorkWithInfiniteLoop" stepKey="validateProductCarouselNavigationArrowsWorkWithInfiniteLoopStage4"/>
+        <actionGroup ref="validateCanSeeProductInProductCarousel" stepKey="validateCanSeeProduct6Stage4">
+            <argument name="product" value="$$createProduct6$$"/>
+        </actionGroup>
+        <actionGroup ref="validateCannotSeeProductInProductCarousel" stepKey="validateCannotSeeProduct1Stage4">
+            <argument name="product" value="$$createProduct1$$"/>
+        </actionGroup>
+        <!-- Stage: Click Previous Product Navigation Arrow Again -->
+        <actionGroup ref="clickProductCarouselPreviousNavigationArrow" stepKey="clickPreviousNavigationArrowStage2"/>
+        <actionGroup ref="validateProductCarouselNavigationDots" stepKey="validateProductCarouselNavigationDotsStage5"/>
+        <actionGroup ref="validateProductCarouselNavigationArrowsWorkWithInfiniteLoop" stepKey="validateProductCarouselNavigationArrowsWorkWithInfiniteLoopStage5"/>
+        <actionGroup ref="validateCanSeeProductInProductCarousel" stepKey="validateCanSeeProduct1Stage5">
+            <argument name="product" value="$$createProduct1$$"/>
+        </actionGroup>
+        <actionGroup ref="validateCannotSeeProductInProductCarousel" stepKey="validateCannotSeeProduct6Stage5">
+            <argument name="product" value="$$createProduct6$$"/>
+        </actionGroup>
+        <!-- Stage: Click Next Product Navigation Arrow -->
+        <actionGroup ref="clickProductCarouselNextNavigationArrow" stepKey="clickNextNavigationArrowStage"/>
+        <actionGroup ref="validateProductCarouselNavigationDots" stepKey="validateProductCarouselNavigationDotsStage6">
+            <argument name="activeNavigationDot" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCarouselNavigationArrowsWorkWithInfiniteLoop" stepKey="validateProductCarouselNavigationArrowsWorkWithInfiniteLoopStage6"/>
+        <actionGroup ref="validateCanSeeProductInProductCarousel" stepKey="validateCanSeeProduct6Stage6">
+            <argument name="product" value="$$createProduct6$$"/>
+        </actionGroup>
+        <actionGroup ref="validateCannotSeeProductInProductCarousel" stepKey="validateCannotSeeProduct1Stage6">
+            <argument name="product" value="$$createProduct1$$"/>
+        </actionGroup>
+        <!-- Stage: Click Next Product Navigation Arrow Again -->
+        <actionGroup ref="clickProductCarouselNextNavigationArrow" stepKey="clickNextNavigationArrowStage2"/>
+        <actionGroup ref="validateProductCarouselNavigationDots" stepKey="validateProductCarouselNavigationDotsStage7"/>
+        <actionGroup ref="validateProductCarouselNavigationArrowsWorkWithInfiniteLoop" stepKey="validateProductCarouselNavigationArrowsWorkWithInfiniteLoopStage7"/>
+        <actionGroup ref="validateCanSeeProductInProductCarousel" stepKey="validateCanSeeProduct1Stage7">
+            <argument name="product" value="$$createProduct1$$"/>
+        </actionGroup>
+        <actionGroup ref="validateCannotSeeProductInProductCarousel" stepKey="validateCannotSeeProduct6Stage7">
+            <argument name="product" value="$$createProduct6$$"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate Storefront -->
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCarouselSettingsAttributes" stepKey="validateProductCarouselSettingsAttributesStorefront">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="infiniteLoop" value="PageBuilderProductsCarouselSettingsInfiniteLoop_Enabled"/>
+            <argument name="showArrows" value="PageBuilderProductsCarouselSettingsShowArrows_Enabled"/>
+            <argument name="showDots" value="PageBuilderProductsCarouselSettingsShowDots_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCarouselNavigationDots" stepKey="validateProductCarouselNavigationDotsStorefront1">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="activeNavigationDot" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCarouselNavigationArrowsWorkWithInfiniteLoop" stepKey="validateProductCarouselNavigationArrowsWorkWithInfiniteLoopStorefront1">
+            <argument name="page" value="ProductsOnStorefront"/>
+        </actionGroup>
+        <actionGroup ref="validateCanSeeProductInProductCarousel" stepKey="validateCanSeeProduct1Storefront1">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="product" value="$$createProduct1$$"/>
+        </actionGroup>
+        <actionGroup ref="validateCannotSeeProductInProductCarousel" stepKey="validateCannotSeeProduct6Storefront1">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="product" value="$$createProduct6$$"/>
+        </actionGroup>
+        <!-- Storefront: Click Navigation Dot 2 -->
+        <actionGroup ref="clickProductCarouselNavigationDot" stepKey="clickSecondNavigationDotStorefront">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="navigationDotIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCarouselNavigationDots" stepKey="validateProductCarouselNavigationDotsStorefront2">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="activeNavigationDot" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCarouselNavigationArrowsWorkWithInfiniteLoop" stepKey="validateProductCarouselNavigationArrowsWorkWithInfiniteLoopStorefront2">
+            <argument name="page" value="ProductsOnStorefront"/>
+        </actionGroup>
+        <actionGroup ref="validateCanSeeProductInProductCarousel" stepKey="validateCanSeeProduct6Storefront2">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="product" value="$$createProduct6$$"/>
+        </actionGroup>
+        <actionGroup ref="validateCannotSeeProductInProductCarousel" stepKey="validateCannotSeeProduct1Storefront2">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="product" value="$$createProduct1$$"/>
+        </actionGroup>
+        <!-- Storefront: Click Navigation Dot 1 -->
+        <actionGroup ref="clickProductCarouselNavigationDot" stepKey="clickFirstNavigationDotStorefront">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="navigationDotIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCarouselNavigationDots" stepKey="validateProductCarouselNavigationDotsStorefront3">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="activeNavigationDot" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCarouselNavigationArrowsWorkWithInfiniteLoop" stepKey="validateProductCarouselNavigationArrowsWorkWithInfiniteLoopStorefront3">
+            <argument name="page" value="ProductsOnStorefront"/>
+        </actionGroup>
+        <actionGroup ref="validateCanSeeProductInProductCarousel" stepKey="validateCanSeeProduct1Storefront3">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="product" value="$$createProduct1$$"/>
+        </actionGroup>
+        <actionGroup ref="validateCannotSeeProductInProductCarousel" stepKey="validateCannotSeeProduct6Storefront3">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="product" value="$$createProduct6$$"/>
+        </actionGroup>
+        <!-- Storefront: Click Previous Product Navigation Arrow -->
+        <actionGroup ref="clickProductCarouselPreviousNavigationArrow" stepKey="clickPreviousNavigationArrowStorefront">
+            <argument name="page" value="ProductsOnStorefront"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCarouselNavigationDots" stepKey="validateProductCarouselNavigationDotsStorefront4">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="activeNavigationDot" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCarouselNavigationArrowsWorkWithInfiniteLoop" stepKey="validateProductCarouselNavigationArrowsWorkWithInfiniteLoopStorefront4">
+            <argument name="page" value="ProductsOnStorefront"/>
+        </actionGroup>
+        <actionGroup ref="validateCanSeeProductInProductCarousel" stepKey="validateCanSeeProduct6Storefront4">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="product" value="$$createProduct6$$"/>
+        </actionGroup>
+        <actionGroup ref="validateCannotSeeProductInProductCarousel" stepKey="validateCannotSeeProduct1Storefront4">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="product" value="$$createProduct1$$"/>
+        </actionGroup>
+        <!-- Storefront: Click Previous Product Navigation Arrow Again -->
+        <actionGroup ref="clickProductCarouselPreviousNavigationArrow" stepKey="clickPreviousNavigationArrowStorefront2">
+            <argument name="page" value="ProductsOnStorefront"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCarouselNavigationDots" stepKey="validateProductCarouselNavigationDotsStorefront5">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="activeNavigationDot" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCarouselNavigationArrowsWorkWithInfiniteLoop" stepKey="validateProductCarouselNavigationArrowsWorkWithInfiniteLoopStorefront5">
+            <argument name="page" value="ProductsOnStorefront"/>
+        </actionGroup>
+        <actionGroup ref="validateCanSeeProductInProductCarousel" stepKey="validateCanSeeProduct1Storefront5">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="product" value="$$createProduct1$$"/>
+        </actionGroup>
+        <actionGroup ref="validateCannotSeeProductInProductCarousel" stepKey="validateCannotSeeProduct6Storefront5">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="product" value="$$createProduct6$$"/>
+        </actionGroup>
+        <!-- Storefront: Click Next Product Navigation Arrow -->
+        <actionGroup ref="clickProductCarouselNextNavigationArrow" stepKey="clickNextNavigationArrowStorefront">
+            <argument name="page" value="ProductsOnStorefront"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCarouselNavigationDots" stepKey="validateProductCarouselNavigationDotsStorefront6">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="activeNavigationDot" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCarouselNavigationArrowsWorkWithInfiniteLoop" stepKey="validateProductCarouselNavigationArrowsWorkWithInfiniteLoopStorefront6">
+            <argument name="page" value="ProductsOnStorefront"/>
+        </actionGroup>
+        <actionGroup ref="validateCanSeeProductInProductCarousel" stepKey="validateCanSeeProduct6Storefront6">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="product" value="$$createProduct6$$"/>
+        </actionGroup>
+        <actionGroup ref="validateCannotSeeProductInProductCarousel" stepKey="validateCannotSeeProduct1Storefront6">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="product" value="$$createProduct1$$"/>
+        </actionGroup>
+        <!-- Storefront: Click Next Product Navigation Arrow Again -->
+        <actionGroup ref="clickProductCarouselNextNavigationArrow" stepKey="clickNextNavigationArrowStorefront2">
+            <argument name="page" value="ProductsOnStorefront"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCarouselNavigationDots" stepKey="validateProductCarouselNavigationDotsStorefront7">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="activeNavigationDot" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCarouselNavigationArrowsWorkWithInfiniteLoop" stepKey="validateProductCarouselNavigationArrowsWorkWithInfiniteLoopStorefront7">
+            <argument name="page" value="ProductsOnStorefront"/>
+        </actionGroup>
+        <actionGroup ref="validateCanSeeProductInProductCarousel" stepKey="validateCanSeeProduct1Storefront7">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="product" value="$$createProduct1$$"/>
+        </actionGroup>
+        <actionGroup ref="validateCannotSeeProductInProductCarousel" stepKey="validateCannotSeeProduct6Storefront7">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="product" value="$$createProduct6$$"/>
+        </actionGroup>
+    </test>
+    <test name="AdminPageBuilderProductsCarouselSettingsDisableArrowsAndDots">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Products"/>
+            <title value="Carousel - Disable Navigation Arrows and Dots"/>
+            <description value="Validate that user can successfully disable navigation arrows and dots for the Products carousel appearance."/>
+            <severity value="MAJOR"/>
+            <useCaseId value="PB-173"/>
+            <testCaseId value="MC-22725"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-products"/>
+            <group value="pagebuilder-productsCarousel"/>
+        </annotations>
+        <before>
+            <createData entity="PageBuilderProductsSubCategory" stepKey="createCategory"/>
+            <createData entity="_defaultProduct" stepKey="createProduct6">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+            <createData entity="_defaultProduct" stepKey="createProduct5">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+            <createData entity="_defaultProduct" stepKey="createProduct4">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+            <createData entity="_defaultProduct" stepKey="createProduct3">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+            <createData entity="_defaultProduct" stepKey="createProduct2">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+            <createData entity="_defaultProduct" stepKey="createProduct1">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToCMSPage" stepKey="navigateToCMSPage">
+                <argument name="CMSPage" value="$$createCMSPage$$"/>
+            </actionGroup>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCategory" stepKey="deleteCategory"/>
+            <deleteData createDataKey="createProduct6" stepKey="deleteProduct6"/>
+            <deleteData createDataKey="createProduct5" stepKey="deleteProduct5"/>
+            <deleteData createDataKey="createProduct4" stepKey="deleteProduct4"/>
+            <deleteData createDataKey="createProduct3" stepKey="deleteProduct3"/>
+            <deleteData createDataKey="createProduct2" stepKey="deleteProduct2"/>
+            <deleteData createDataKey="createProduct1" stepKey="deleteProduct1"/>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionAddContent">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragOntoStage">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
+            <argument name="property" value="PageBuilderProductsProductCarouselAppearance"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="chooseSelectProductsBy">
+            <argument name="property" value="PageBuilderProductsSelectProductsByCategory"/>
+        </actionGroup>
+        <actionGroup ref="selectCategoryFromCategoryDropDown" stepKey="selectCategory">
+            <argument name="category" value="$$createCategory.name$$"/>
+        </actionGroup>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="enableShowArrows">
+            <argument name="property" value="PageBuilderProductsCarouselSettingsShowArrows_Disabled"/>
+        </actionGroup>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="enableShowDots">
+            <argument name="property" value="PageBuilderProductsCarouselSettingsShowDots_Disabled"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <actionGroup ref="validateProductCarouselSettingsAttributes" stepKey="validateProductCarouselSettingsAttributesStage">
+            <argument name="showDots" value="PageBuilderProductsCarouselSettingsShowDots_Disabled"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCarouselNavigationArrowsAreNotRendered" stepKey="validateProductCarouselNavigationArrowsAreNotRenderedStage"/>
+        <actionGroup ref="validateProductCarouselNavigationDotsAreNotRendered" stepKey="validateProductCarouselNavigationDotsAreNotRenderedStage"/>
+        <actionGroup ref="validateCanSeeProductInProductCarousel" stepKey="validateCanSeeProduct1Stage">
+            <argument name="product" value="$$createProduct1$$"/>
+        </actionGroup>
+        <actionGroup ref="validateCannotSeeProductInProductCarousel" stepKey="validateCannotSeeProduct6Stage">
+            <argument name="product" value="$$createProduct6$$"/>
+        </actionGroup>
+        <!-- Stage: Drag to Second Slide and Validate -->
+        <actionGroup ref="dragProductToSlideProductCarousel" stepKey="dragProductToSlideProductCarouselStage">
+            <argument name="targetProduct" value="$$createProduct5.name$$"/>
+            <argument name="destinationProduct" value="$$createProduct1.name$$"/>
+        </actionGroup>
+        <actionGroup ref="validateCanSeeProductInProductCarousel" stepKey="validateCanSeeProduct6Stage2">
+            <argument name="product" value="$$createProduct6$$"/>
+        </actionGroup>
+        <actionGroup ref="validateCannotSeeProductInProductCarousel" stepKey="validateCannotSeeProduct1Stage2">
+            <argument name="product" value="$$createProduct1$$"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate Storefront -->
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCarouselSettingsAttributes" stepKey="validateProductCarouselSettingsAttributesStorefront">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="showDots" value="PageBuilderProductsCarouselSettingsShowDots_Disabled"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCarouselNavigationArrowsAreNotRendered" stepKey="validateProductCarouselNavigationArrowsAreNotRenderedStorefront">
+            <argument name="page" value="ProductsOnStorefront"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCarouselNavigationDotsAreNotRendered" stepKey="validateProductCarouselNavigationDotsAreNotRenderedStorefront">
+            <argument name="page" value="ProductsOnStorefront"/>
+        </actionGroup>
+        <actionGroup ref="validateCanSeeProductInProductCarousel" stepKey="validateCanSeeProduct1Storefront">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="product" value="$$createProduct1$$"/>
+        </actionGroup>
+        <actionGroup ref="validateCannotSeeProductInProductCarousel" stepKey="validateCannotSeeProduct6Storefront">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="product" value="$$createProduct6$$"/>
+        </actionGroup>
+        <!-- Storefront: Drag to Second Slide and Validate -->
+        <actionGroup ref="dragProductToSlideProductCarousel" stepKey="dragProductToSlideProductCarouselStorefront">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="targetProduct" value="$$createProduct5.name$$"/>
+            <argument name="destinationProduct" value="$$createProduct1.name$$"/>
+        </actionGroup>
+        <actionGroup ref="validateCanSeeProductInProductCarousel" stepKey="validateCanSeeProduct6Storefront2">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="product" value="$$createProduct6$$"/>
+        </actionGroup>
+        <actionGroup ref="validateCannotSeeProductInProductCarousel" stepKey="validateCannotSeeProduct1Storefront2">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="product" value="$$createProduct1$$"/>
         </actionGroup>
     </test>
 </tests>
