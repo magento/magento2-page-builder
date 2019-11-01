@@ -1319,7 +1319,8 @@
     </test>
     <!-- todo: validate default mode -->
     <!-- todo: validate continuous mode -->
-    <test name="FIXMEAdminPageBuilderProductsCarouselValidateAutoplayInDefaultModeWithNoInfiniteLoop">
+    <!-- todo: fix autoplay test below: account for slow env by clicking slide 1 dot then waiting for autoplay. stage & storefront -->
+    <test name="AdminPageBuilderProductsCarouselValidateAutoplayInDefaultModeWithNoInfiniteLoop">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Products"/>
@@ -1432,7 +1433,6 @@
         </actionGroup>
         <!-- Validate Stage: Verify Autoplay Occurs -->
         <click selector="{{PageBuilderPanel.leftPanel}}" stepKey="clickLeftPanel2"/>
-        <!-- todo: account for slow env by clicking slide 1 dot then waiting for autoplay. stage & storefront -->
         <wait time="11" stepKey="waitForAutoplayStage2"/>
         <actionGroup ref="validateProductCarouselNavigationDots" stepKey="validateProductCarouselNavigationDotsStage2">
             <argument name="activeNavigationDot" value="2"/>
