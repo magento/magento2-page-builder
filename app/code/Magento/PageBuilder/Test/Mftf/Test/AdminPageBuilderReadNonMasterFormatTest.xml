@@ -225,6 +225,9 @@
         <click selector="{{MediaGallerySection.Browse}}" stepKey="clickBrowse" />
         <waitForPageLoad stepKey="waitForPageLoad2" />
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear1" />
+        <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="navigateToStorageRootFolder">
+            <argument name="FolderName" value="Storage Root"/>
+        </actionGroup>
         <click selector="{{MediaGallerySection.CreateFolder}}" stepKey="createFolder"/>
         <waitForElementVisible selector="{{MediaGallerySection.FolderName}}" stepKey="waitForPopup" />
         <fillField selector="{{MediaGallerySection.FolderName}}" userInput="{{ImageFolder.name}}" stepKey="fillFolderName" />

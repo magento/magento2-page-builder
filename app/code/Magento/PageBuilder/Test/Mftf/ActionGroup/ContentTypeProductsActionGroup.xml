@@ -60,6 +60,7 @@
             <argument name="property" defaultValue="PageBuilderProductsSelectCategoryDropDown"/>
             <argument name="category" type="string"/>
         </arguments>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForElementVisible time="2" selector="{{EditPanelForm.panelMultiSelectFieldControl(property.section, property.fieldName)}}" stepKey="waitForMultiSelectFieldVisible"/>
         <click selector="{{EditPanelForm.panelMultiSelectFieldControl(property.section, property.fieldName)}}" stepKey="clickMultiSelectField"/>
         <waitForElementVisible selector="{{EditPanelForm.panelMultiSelectFieldControlInput(property.section, property.fieldName)}}" stepKey="waitForSearchField"/>
@@ -69,6 +70,17 @@
         <click selector="{{EditPanelForm.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
         <waitForElementNotVisible selector="{{EditPanelForm.panelMultiSelectFieldControlInput(property.section, property.fieldName)}}" stepKey="waitForSearchFieldNotVisible"/>
         <see selector="{{EditPanelForm.panelMultiSelectFieldControl(property.section, property.fieldName)}}" userInput="{{category}}" stepKey="seeResultInField"/>
+    </actionGroup>
+    <actionGroup name="addSKUsToSelectProductsBySKU">
+        <arguments>
+            <argument name="property" defaultValue="PageBuilderProductsEnterSKUsInput"/>
+            <argument name="SKUs" type="string"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElement time="2" selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible"/>
+        <see userInput="{{property.name}}" selector="{{EditPanelForm.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="seePropertyLabel"/>
+        <fillField selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" userInput="{{SKUs}}" stepKey="fillPropertyField"/>
+        <click selector="{{EditPanelForm.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
     </actionGroup>
     <actionGroup name="addConditionToProductConditions">
         <arguments>
