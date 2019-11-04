@@ -34,7 +34,7 @@
             <actualResult type="variable">verticalDistanceBetweenProducts</actualResult>
         </assertEquals>
     </actionGroup>
-    <actionGroup name="validateCanSeeProductInProductCarousel">
+    <actionGroup name="validateCanSeeProductInDefaultProductCarousel">
         <arguments>
             <argument name="page" defaultValue="ProductsCarouselOnStage"/>
             <argument name="product" defaultValue="_defaultProduct"/>
@@ -43,14 +43,23 @@
         <waitForElementVisible selector="{{page.productNameInCarouselNotClonedBySlick(productGroupIndex, product.name)}}" stepKey="waitForProduct"/>
         <seeElement selector="{{page.productNameInCarouselNotClonedBySlick(productGroupIndex, product.name)}}" stepKey="seeProduct"/>
     </actionGroup>
-    <actionGroup name="validateCannotSeeProductInProductCarousel">
+    <actionGroup name="validateCannotSeeProductInDefaultProductCarousel" extends="validateCanSeeProductInDefaultProductCarousel">
+        <waitForElement selector="{{page.productNameInCarouselNotClonedBySlick(productGroupIndex, product.name)}}" stepKey="waitForProduct"/>
+        <dontSeeElement selector="{{page.productNameInCarouselNotClonedBySlick(productGroupIndex, product.name)}}" stepKey="dontSeeProduct"/>
+    </actionGroup>
+    <actionGroup name="validateCanSeeProductInContinuousProductCarousel">
         <arguments>
             <argument name="page" defaultValue="ProductsCarouselOnStage"/>
             <argument name="product" defaultValue="_defaultProduct"/>
+            <argument name="productItemIndex" defaultValue="1" type="string"/>
             <argument name="productGroupIndex" defaultValue="1" type="string"/>
         </arguments>
-        <waitForElement selector="{{page.productNameInCarouselNotClonedBySlick(productGroupIndex, product.name)}}" stepKey="waitForProduct"/>
-        <dontSeeElement selector="{{page.productNameInCarouselNotClonedBySlick(productGroupIndex, product.name)}}" stepKey="dontSeeProduct"/>
+        <waitForElementVisible selector="{{page.productNameInCarouselBySlickSlideIndex(productGroupIndex, productItemIndex, product.name)}}" stepKey="waitForProduct"/>
+        <seeElement selector="{{page.productNameInCarouselBySlickSlideIndex(productGroupIndex, productItemIndex, product.name)}}" stepKey="seeProduct"/>
+    </actionGroup>
+    <actionGroup name="validateCannotSeeProductInContinuousProductCarousel" extends="validateCanSeeProductInContinuousProductCarousel">
+        <waitForElement selector="{{page.productNameInCarouselBySlickSlideIndex(productGroupIndex, productItemIndex, product.name)}}" stepKey="waitForProduct"/>
+        <dontSeeElement selector="{{page.productNameInCarouselBySlickSlideIndex(productGroupIndex, productItemIndex, product.name)}}" stepKey="seeProduct"/>
     </actionGroup>
     <actionGroup name="validateProductInProducts">
         <arguments>
@@ -336,7 +345,7 @@
         <dontSeeElementInDOM selector="{{page.carouselPreviousProductNavigationArrow(productGroupIndex)}}" stepKey="dontSeePreviousProductNavigationArrow"/>
         <dontSeeElementInDOM selector="{{page.carouselNextProductNavigationArrow(productGroupIndex)}}" stepKey="dontSeeNextProductNavigationArrow"/>
     </actionGroup>
-    <actionGroup name="validateProductCarouselItemOpacity">
+    <actionGroup name="validateProductOpacityInDefaultProductCarousel">
         <arguments>
             <argument name="page" defaultValue="ProductsCarouselOnStage"/>
             <argument name="productGroupIndex" defaultValue="1" type="string"/>
@@ -350,13 +359,9 @@
             <actualResult type="variable">getOpacityOfProductItem</actualResult>
         </assertEquals>
     </actionGroup>
-    <actionGroup name="pauseAutoplayOnProductCarousel">
-        <arguments>
-            <argument name="page" defaultValue="ProductsCarouselOnStage"/>
-            <argument name="productGroupIndex" defaultValue="1" type="string"/>
-            <argument name="productItemToMoveOverByIndex" defaultValue="3" type="string"/>
-        </arguments>
-        <moveMouseOver selector="{{page.productByIndex(productGroupIndex, productItemToMoveOverByIndex)}}" stepKey="mouseOverProduct"/>
+    <actionGroup name="validateProductOpacityInContinuousProductCarousel" extends="validateProductOpacityInDefaultProductCarousel">
+        <waitForElement selector="{{page.productInCarouselBySlickSlideIndex(productGroupIndex, productItemIndex)}}" stepKey="waitForProductItem"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate(&quot;{{page.productInCarouselBySlickSlideIndex(productGroupIndex, productItemIndex)}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue, null).getPropertyValue('opacity')" stepKey="getOpacityOfProductItem"/>
     </actionGroup>
     <actionGroup name="validateProductsInProductCarouselAreCenteredForOddNumberOfProducts">
         <arguments>
