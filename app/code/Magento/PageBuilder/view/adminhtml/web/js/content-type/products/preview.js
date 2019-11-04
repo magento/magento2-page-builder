@@ -26,6 +26,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/config",
 
       _this = _preview2.call(this, contentType, config, observableUpdater) || this;
       _this.displayPreview = _knockout.observable(false);
+      _this.previewElement = _jquery.Deferred();
       _this.messages = {
         EMPTY: (0, _translate)("Empty Products"),
         NO_RESULTS: (0, _translate)("No products were found matching your condition"),
@@ -56,6 +57,17 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/config",
         sort: 40
       });
       return options;
+    }
+    /**
+     * After render of the preview element record the element
+     *
+     * @param element
+     */
+    ;
+
+    _proto.afterRenderPreviewElement = function afterRenderPreviewElement(element) {
+      this.element = element;
+      this.previewElement.resolve(element);
     }
     /**
      * @inheritdoc
@@ -101,6 +113,10 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/config",
 
           _this2.displayPreview(true);
         }
+
+        _this2.previewElement.done(function () {
+          (0, _jquery)(_this2.element).trigger("contentUpdated");
+        });
       }).fail(function () {
         _this2.placeholderText(_this2.messages.UNKNOWN_ERROR);
       });

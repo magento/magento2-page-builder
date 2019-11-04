@@ -20,6 +20,8 @@ import BasePreview from "../preview";
 export default class Preview extends BasePreview {
     public displayPreview: KnockoutObservable<boolean> = ko.observable(false);
     public placeholderText: KnockoutObservable<string>;
+    public previewElement: JQueryDeferred<HTMLElement> = $.Deferred();
+    private element: HTMLElement;
     private messages = {
         EMPTY: $t("Empty Products"),
         NO_RESULTS: $t("No products were found matching your condition"),
@@ -57,6 +59,16 @@ export default class Preview extends BasePreview {
         });
 
         return options;
+    }
+
+    /**
+     * After render of the preview element record the element
+     *
+     * @param element
+     */
+    public afterRenderPreviewElement(element: HTMLElement) {
+        this.element = element;
+        this.previewElement.resolve(element);
     }
 
     /**
@@ -100,6 +112,10 @@ export default class Preview extends BasePreview {
                     this.data.main.html(response.data.content);
                     this.displayPreview(true);
                 }
+
+                this.previewElement.done(() => {
+                    $(this.element).trigger("contentUpdated");
+                });
             })
             .fail(() => {
                 this.placeholderText(this.messages.UNKNOWN_ERROR);
