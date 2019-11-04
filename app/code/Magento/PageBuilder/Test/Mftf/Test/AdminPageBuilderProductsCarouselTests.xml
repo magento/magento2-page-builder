@@ -702,4 +702,29 @@
             <argument name="index" value="1"/>
         </actionGroup>
     </test>
+    <test name="AdminPageBuilderVerifySwatchDisplayedInPreviewCarousel" extends="AdminPageBuilderVerifySwatchDisplayedInPreviewGrid">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Products"/>
+            <title value="Verify products display swatches within the admin for carousel appearance"/>
+            <description value="Verify that a product which has swatches display the swatches within the admin for carousel appearance"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="PB-76"/>
+            <testCaseId value="MC-22765"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-products"/>
+            <group value="pagebuilder-productsCarousel"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance" after="openEditAfterDrop">
+            <argument name="property" value="PageBuilderProductsProductCarouselAppearance"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="count" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage2">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="count" value="1"/>
+        </actionGroup>
+    </test>
 </tests>
