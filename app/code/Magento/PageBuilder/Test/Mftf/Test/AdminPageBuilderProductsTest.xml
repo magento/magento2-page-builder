@@ -2393,4 +2393,85 @@
             <argument name="productIndex" value="1"/>
         </actionGroup>
     </test>
+    <test name="AdminPageBuilderVerifySwatchDisplayedInPreview">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Products"/>
+            <title value="Verify products display swatches within the admin"/>
+            <description value="Verify that a product which has swatches display the swatches within the admin"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="PB-76"/>
+            <testCaseId value="MC-22763"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-products"/>
+        </annotations>
+        <before>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="deleteProductBySku" stepKey="deleteProduct">
+                <argument name="sku" value="{{BaseConfigurableProduct.sku}}"/>
+            </actionGroup>
+            <actionGroup ref="deleteProductAttributeByLabel" stepKey="deleteAttribute">
+                <argument name="ProductAttribute" value="visualSwatchAttribute"/>
+            </actionGroup>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Create a configurable swatch product via the UI -->
+        <comment userInput="Create a configurable swatch product via the UI" stepKey="commentCreateConfigurableProduct" />
+        <amOnPage url="{{AdminProductIndexPage.url}}" stepKey="goToProductIndex"/>
+        <waitForPageLoad stepKey="waitForProductPage"/>
+        <actionGroup ref="goToCreateProductPage" stepKey="goToCreateProductPage">
+            <argument name="product" value="BaseConfigurableProduct"/>
+        </actionGroup>
+        <actionGroup ref="fillMainProductForm" stepKey="fillProductForm">
+            <argument name="product" value="BaseConfigurableProduct"/>
+        </actionGroup>
+        <!-- Add swatch attribute to configurable product -->
+        <comment userInput="Add swatch attribute to configurable product" stepKey="commentAddSwatchesToProduct"/>
+        <actionGroup ref="AddVisualSwatchToProductWithStorefrontConfigActionGroup" stepKey="addSwatchToProduct"/>
+        <click selector="{{AdminProductFormActionSection.saveButton}}" stepKey="saveProduct"/>
+        <!-- Add product to Page Builder Products content type -->
+        <comment userInput="Add product to Page Builder Products content type" stepKey="commentAddProductToPageBuilder"/>
+        <actionGroup ref="navigateToCMSPage" stepKey="navigateToCMSPage">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionAddContent">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragProductsIntoStage">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="chooseSelectProductsBy">
+            <argument name="property" value="PageBuilderProductsSelectProductsBySKU"/>
+        </actionGroup>
+        <actionGroup ref="addSKUsToSelectProductsBySKU" stepKey="addProductsSKUsToInputField">
+            <argument name="SKUs" value="{{BaseConfigurableProduct.sku}}"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage">
+            <argument name="page" value="ProductsOnStage"/>
+            <argument name="count" value="1"/>
+        </actionGroup>
+        <!-- Verify displayed swatches -->
+        <comment userInput="Verify displayed swatches" stepKey="commentVerifySwatches"/>
+        <seeElement selector="{{StorefrontProductInfoMainSection.productSwatch(visualSwatchOption1.default_label)}}" stepKey="assertAddedWidgetS"/>
+        <seeElement selector="{{StorefrontProductInfoMainSection.productSwatch(visualSwatchOption2.default_label)}}" stepKey="assertAddedWidgetM"/>
+        <!-- Save page and verify swatches display on reload -->
+        <comment userInput="Save page and verify swatches display on reload" stepKey="commentSaveAndReload"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage2">
+            <argument name="page" value="ProductsOnStage"/>
+            <argument name="count" value="1"/>
+        </actionGroup>
+        <seeElement selector="{{StorefrontProductInfoMainSection.productSwatch(visualSwatchOption1.default_label)}}" stepKey="assertAddedWidgetS2"/>
+        <seeElement selector="{{StorefrontProductInfoMainSection.productSwatch(visualSwatchOption2.default_label)}}" stepKey="assertAddedWidgetM2"/>
+    </test>
 </tests>
