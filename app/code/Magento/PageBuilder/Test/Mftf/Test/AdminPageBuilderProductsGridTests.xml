@@ -1169,8 +1169,7 @@
         </after>
         <!-- Create a configurable swatch product via the UI -->
         <comment userInput="Create a configurable swatch product via the UI" stepKey="commentCreateConfigurableProduct" />
-        <amOnPage url="{{AdminProductIndexPage.url}}" stepKey="goToProductIndex"/>
-        <waitForPageLoad stepKey="waitForProductPage"/>
+        <actionGroup ref="AdminOpenProductIndexPageActionGroup" stepKey="goToProductIndex" />
         <actionGroup ref="goToCreateProductPage" stepKey="goToCreateProductPage">
             <argument name="product" value="BaseConfigurableProduct"/>
         </actionGroup>
@@ -1180,7 +1179,7 @@
         <!-- Add swatch attribute to configurable product -->
         <comment userInput="Add swatch attribute to configurable product" stepKey="commentAddSwatchesToProduct"/>
         <actionGroup ref="AddVisualSwatchToProductWithStorefrontConfigActionGroup" stepKey="addSwatchToProduct"/>
-        <click selector="{{AdminProductFormActionSection.saveButton}}" stepKey="saveProduct"/>
+        <actionGroup ref="saveProductForm" stepKey="saveProduct"/>
         <!-- Add product to Page Builder Products content type -->
         <comment userInput="Add product to Page Builder Products content type" stepKey="commentAddProductToPageBuilder"/>
         <actionGroup ref="navigateToCMSPage" stepKey="navigateToCMSPage">
@@ -1209,17 +1208,17 @@
         </actionGroup>
         <!-- Verify displayed swatches -->
         <comment userInput="Verify displayed swatches" stepKey="commentVerifySwatches"/>
-        <seeElement selector="{{StorefrontProductInfoMainSection.productSwatch(visualSwatchOption1.default_label)}}" stepKey="assertAddedWidgetS"/>
-        <seeElement selector="{{StorefrontProductInfoMainSection.productSwatch(visualSwatchOption2.default_label)}}" stepKey="assertAddedWidgetM"/>
+        <seeElement selector="{{StorefrontProductInfoMainSection.productSwatch(visualSwatchOption1.default_label)}}" stepKey="assertFirstSwatch"/>
+        <seeElement selector="{{StorefrontProductInfoMainSection.productSwatch(visualSwatchOption2.default_label)}}" stepKey="assertSecondSwatch"/>
         <!-- Save page and verify swatches display on reload -->
         <comment userInput="Save page and verify swatches display on reload" stepKey="commentSaveAndReload"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
-        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage2">
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStageAfterSave"/>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStageAfterSave">
             <argument name="page" value="ProductsOnStage"/>
             <argument name="count" value="1"/>
         </actionGroup>
-        <seeElement selector="{{StorefrontProductInfoMainSection.productSwatch(visualSwatchOption1.default_label)}}" stepKey="assertAddedWidgetS2"/>
-        <seeElement selector="{{StorefrontProductInfoMainSection.productSwatch(visualSwatchOption2.default_label)}}" stepKey="assertAddedWidgetM2"/>
+        <seeElement selector="{{StorefrontProductInfoMainSection.productSwatch(visualSwatchOption1.default_label)}}" stepKey="assertFirstSwatchAfterSave"/>
+        <seeElement selector="{{StorefrontProductInfoMainSection.productSwatch(visualSwatchOption2.default_label)}}" stepKey="assertSecondSwatchAfterSave"/>
     </test>
 </tests>
