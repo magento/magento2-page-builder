@@ -4,7 +4,7 @@ function _extends() { _extends = Object.assign || function (target) { for (var i
 
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-menu/conditional-remove-option", "Magento_PageBuilder/js/uploader", "Magento_PageBuilder/js/utils/delay-until", "Magento_PageBuilder/js/utils/nesting-link-dialog", "Magento_PageBuilder/js/wysiwyg/factory", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _translate, _events, _underscore, _config, _conditionalRemoveOption, _uploader, _delayUntil, _nestingLinkDialog, _factory, _preview) {
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-menu/conditional-remove-option", "Magento_PageBuilder/js/uploader", "Magento_PageBuilder/js/utils/delay-until", "Magento_PageBuilder/js/utils/nesting-link-dialog", "Magento_PageBuilder/js/wysiwyg/factory", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _knockout, _translate, _events, _underscore, _config, _conditionalRemoveOption, _uploader, _delayUntil, _nestingLinkDialog, _factory, _preview) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -29,6 +29,7 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore
 
       _this = _preview2.call.apply(_preview2, [this].concat(args)) || this;
       _this.buttonPlaceholder = (0, _translate)("Edit Button Text");
+      _this.slideName = _knockout.observable();
       _this.slideChanged = true;
       return _this;
     }
@@ -313,6 +314,10 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore
             _this5.slideChanged = true;
           });
         }
+      });
+
+      this.contentType.dataStore.subscribe(function (data) {
+        _this5.slideName(data.slide_name);
       });
     }
     /**

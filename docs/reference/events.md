@@ -385,20 +385,6 @@ events.on(`stage:${this.contentType.stageId}:fullScreenModeChangeAfter`, functio
 [Back to top]
 
 
-### `previewData:updateAfter`
-
-```js
-events.on("previewData:updateAfter", function (params) {});
-```
-
-| Params    | Type      |
-| --------- | --------- |
-| `preview` | `Preview` |
-{:style="table-layout:auto"}
-
-[Back to top]
-
-
 ### `childContentType:sortStart`
 
 ```js

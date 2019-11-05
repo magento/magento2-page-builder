@@ -58,7 +58,9 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
     ;
 
     _proto.onOptionClick = function onOptionClick(option, value) {
-      var defaultValue = this.preview.config.fields[option.key].default;
+      var appearance = this.preview.appearance() + "-appearance";
+      var fields = this.preview.config.fields[appearance] || this.preview.config.fields.default;
+      var defaultValue = fields[option.key].default;
       var currentValue = this.preview.contentType.dataStore.get(option.key);
       this.preview.updateData(option.key, currentValue === value.value ? defaultValue : value.value);
     }
