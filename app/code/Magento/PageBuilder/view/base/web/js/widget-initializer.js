@@ -20,9 +20,12 @@ define([
      *
      * @param {HTMLElement} el
      * @param {Array} data
+     * @param {Object} breakpoints
      */
-    function initializeWidget(el, data) {
+    function initializeWidget(el, data, breakpoints) {
         _.each(data, function (config, component) {
+            config = config || {};
+            config.breakpoints = breakpoints;
             mage.applyFor(el, config, component);
         });
     }
@@ -39,7 +42,7 @@ define([
                     }
 
                     if ($element.length) {
-                        initializeWidget($element, componentConfiguration);
+                        initializeWidget($element, componentConfiguration, data.breakpoints);
                     }
                 }
             );

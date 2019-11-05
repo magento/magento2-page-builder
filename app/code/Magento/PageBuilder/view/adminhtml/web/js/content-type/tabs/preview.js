@@ -92,7 +92,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
            */
 
 
-          var defaultActiveTab = +args.instance.preview.previewData.default_active();
+          var defaultActiveTab = +_this.activeTab();
           var newDefaultActiveTab = defaultActiveTab;
 
           if (args.originalPosition === defaultActiveTab) {
@@ -432,6 +432,10 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           });
         }
       });
+
+      this.contentType.dataStore.subscribe(function (data) {
+        _this4.activeTab(data.default_active);
+      });
     }
     /**
      * Update data store with active options
@@ -461,7 +465,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       var _this5 = this;
 
       if (activeTabIndex === void 0) {
-        activeTabIndex = this.activeTab() || this.previewData.default_active() || 0;
+        activeTabIndex = this.activeTab() || 0;
       }
 
       this.ready = false;

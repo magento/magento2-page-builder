@@ -61,7 +61,10 @@ export default class Toolbar {
      * @param {ValueInterface} value
      */
     public onOptionClick(option: OptionInterface, value: ValueInterface) {
-        const defaultValue: string = this.preview.config.fields[option.key].default as string;
+        const appearance = this.preview.appearance() + "-appearance";
+        const fields = this.preview.config.fields[appearance] ||
+            this.preview.config.fields.default;
+        const defaultValue: string = fields[option.key].default as string;
         const currentValue: string = this.preview.contentType.dataStore.get<string>(option.key);
         this.preview.updateData(option.key, currentValue === value.value ? defaultValue : value.value);
     }

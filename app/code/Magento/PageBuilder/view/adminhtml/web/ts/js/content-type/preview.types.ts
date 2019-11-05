@@ -17,8 +17,5 @@ export interface PreviewInterface {
     placeholderCss: KnockoutObservable<object>;
     isPlaceholderVisible: KnockoutObservable<boolean>;
     isEmpty: KnockoutObservable<boolean>;
-    /**
-     * @deprecated
-     */
-    previewData: {[key: string]: any};
+    appearance: KnockoutObservable<string>;
 }
