@@ -38,7 +38,7 @@ The following table lists the Page Builder events you can bind to and handle wit
 | **Column Events**                                   | **Preview Events**                                       |
 | [column:dragStart](#columndragstart)                | [childContentType:sortstart](#childcontenttypesortstart)                                |
 | [column:dragStop](#columndragstop)                  | [childContentType:sortupdate](#childcontenttypesortupdate)                               |
-| [column:initializeAfter](#columninitializeafter)    | [previewData:updateAfter](#previewdataupdateafter)                                  |
+| [column:initializeAfter](#columninitializeafter)    |                                   |
 |                                                     |                                                          |
 | **Image Events**                                    | **Other Events**                                         |
 | [image:{{preview.contentType.id}}:assignAfter](#imageidassignafter) | [googleMaps:authFailure](#googlemapsauthfailure)                                   |
