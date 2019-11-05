@@ -169,11 +169,11 @@
         </annotations>
         <arguments>
             <argument name="page" defaultValue="" />
-            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="productGroupIndex" defaultValue="1" type="string"/>
             <argument name="productIndex" defaultValue="1" type="string"/>
             <argument name="swatch" defaultValue="" />
         </arguments>
-        <waitForElementVisible selector="{{page.product(index)}}" stepKey="waitForProduct"/>
-        <seeElement selector="{{page.productSwatch(index, productIndex, swatch.default_label)}}" stepKey="assertSwatch"/>
+        <waitForElementVisible selector="{{page.product(productGroupIndex)}}" stepKey="waitForProduct"/>
+        <seeElement selector="{{page.productSwatch(productGroupIndex, productIndex, swatch.default_label)}}" stepKey="assertSwatch"/>
     </actionGroup>
 </actionGroups>
