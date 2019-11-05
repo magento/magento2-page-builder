@@ -163,4 +163,17 @@
         <waitForPageLoad stepKey="waitForProductPageToLoad"/>
         <see userInput="You must login or register to add items to your wishlist." stepKey="seeWishListSuccessMessage"/>
     </actionGroup>
+    <actionGroup name="validateSwatchInProducts">
+        <annotations>
+            <description>Verify a product swatch is displayed within the Product preview within Page Builder.</description>
+        </annotations>
+        <arguments>
+            <argument name="page" defaultValue="" />
+            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="productIndex" defaultValue="1" type="string"/>
+            <argument name="swatch" defaultValue="" />
+        </arguments>
+        <waitForElementVisible selector="{{page.product(index)}}" stepKey="waitForProduct"/>
+        <seeElement selector="{{page.productSwatch(index, productIndex, swatch.default_label)}}" stepKey="assertSwatch"/>
+    </actionGroup>
 </actionGroups>

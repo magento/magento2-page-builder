@@ -708,7 +708,7 @@
             <stories value="Products"/>
             <title value="Verify products display swatches within the admin for carousel appearance"/>
             <description value="Verify that a product which has swatches display the swatches within the admin for carousel appearance"/>
-            <severity value="MAJOR"/>
+            <severity value="AVERAGE"/>
             <useCaseId value="PB-76"/>
             <testCaseId value="MC-22765"/>
             <group value="pagebuilder"/>
@@ -722,9 +722,25 @@
             <argument name="page" value="ProductsCarouselOnStage"/>
             <argument name="count" value="1"/>
         </actionGroup>
+        <actionGroup ref="validateSwatchInProducts" stepKey="assertFirstSwatch">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="swatch" value="visualSwatchOption1"/>
+        </actionGroup>
+        <actionGroup ref="validateSwatchInProducts" stepKey="assertSecondSwatch">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="swatch" value="visualSwatchOption2"/>
+        </actionGroup>
         <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStageAfterSave">
             <argument name="page" value="ProductsCarouselOnStage"/>
             <argument name="count" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateSwatchInProducts" stepKey="assertFirstSwatchAfterSave">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="swatch" value="visualSwatchOption1"/>
+        </actionGroup>
+        <actionGroup ref="validateSwatchInProducts" stepKey="assertSecondSwatchAfterSave">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="swatch" value="visualSwatchOption2"/>
         </actionGroup>
     </test>
 </tests>

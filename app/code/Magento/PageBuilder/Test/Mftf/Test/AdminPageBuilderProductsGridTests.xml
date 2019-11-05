@@ -1146,7 +1146,7 @@
             <stories value="Products"/>
             <title value="Verify products display swatches within the admin for grid appearance"/>
             <description value="Verify that a product which has swatches display the swatches within the admin for grid appearance"/>
-            <severity value="MAJOR"/>
+            <severity value="AVERAGE"/>
             <useCaseId value="PB-76"/>
             <testCaseId value="MC-22763"/>
             <group value="pagebuilder"/>
@@ -1168,7 +1168,6 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <!-- Create a configurable swatch product via the UI -->
-        <comment userInput="Create a configurable swatch product via the UI" stepKey="commentCreateConfigurableProduct" />
         <actionGroup ref="AdminOpenProductIndexPageActionGroup" stepKey="goToProductIndex" />
         <actionGroup ref="goToCreateProductPage" stepKey="goToCreateProductPage">
             <argument name="product" value="BaseConfigurableProduct"/>
@@ -1177,11 +1176,9 @@
             <argument name="product" value="BaseConfigurableProduct"/>
         </actionGroup>
         <!-- Add swatch attribute to configurable product -->
-        <comment userInput="Add swatch attribute to configurable product" stepKey="commentAddSwatchesToProduct"/>
         <actionGroup ref="AddVisualSwatchToProductWithStorefrontConfigActionGroup" stepKey="addSwatchToProduct"/>
         <actionGroup ref="saveProductForm" stepKey="saveProduct"/>
         <!-- Add product to Page Builder Products content type -->
-        <comment userInput="Add product to Page Builder Products content type" stepKey="commentAddProductToPageBuilder"/>
         <actionGroup ref="navigateToCMSPage" stepKey="navigateToCMSPage">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
@@ -1207,18 +1204,28 @@
             <argument name="count" value="1"/>
         </actionGroup>
         <!-- Verify displayed swatches -->
-        <comment userInput="Verify displayed swatches" stepKey="commentVerifySwatches"/>
-        <seeElement selector="{{StorefrontProductInfoMainSection.productSwatch(visualSwatchOption1.default_label)}}" stepKey="assertFirstSwatch"/>
-        <seeElement selector="{{StorefrontProductInfoMainSection.productSwatch(visualSwatchOption2.default_label)}}" stepKey="assertSecondSwatch"/>
+        <actionGroup ref="validateSwatchInProducts" stepKey="assertFirstSwatch">
+            <argument name="page" value="ProductsOnStage"/>
+            <argument name="swatch" value="visualSwatchOption1"/>
+        </actionGroup>
+        <actionGroup ref="validateSwatchInProducts" stepKey="assertSecondSwatch">
+            <argument name="page" value="ProductsOnStage"/>
+            <argument name="swatch" value="visualSwatchOption2"/>
+        </actionGroup>
         <!-- Save page and verify swatches display on reload -->
-        <comment userInput="Save page and verify swatches display on reload" stepKey="commentSaveAndReload"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStageAfterSave"/>
         <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStageAfterSave">
             <argument name="page" value="ProductsOnStage"/>
             <argument name="count" value="1"/>
         </actionGroup>
-        <seeElement selector="{{StorefrontProductInfoMainSection.productSwatch(visualSwatchOption1.default_label)}}" stepKey="assertFirstSwatchAfterSave"/>
-        <seeElement selector="{{StorefrontProductInfoMainSection.productSwatch(visualSwatchOption2.default_label)}}" stepKey="assertSecondSwatchAfterSave"/>
+        <actionGroup ref="validateSwatchInProducts" stepKey="assertFirstSwatchAfterSave">
+            <argument name="page" value="ProductsOnStage"/>
+            <argument name="swatch" value="visualSwatchOption1"/>
+        </actionGroup>
+        <actionGroup ref="validateSwatchInProducts" stepKey="assertSecondSwatchAfterSave">
+            <argument name="page" value="ProductsOnStage"/>
+            <argument name="swatch" value="visualSwatchOption2"/>
+        </actionGroup>
     </test>
 </tests>
