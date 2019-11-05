@@ -37,6 +37,9 @@ define([
             var conditionOperator = data[data.condition_option + '-condition_operator']
                 ? data[data.condition_option + '-condition_operator']
                 : "==";
+            var conditionValue = typeof data[data.condition_option] === 'string'
+                ? data[data.condition_option].trim()
+                : '';
             pairs['parameters[' + attribute + '][1--1][operator]'] = conditionOperator;
             pairs['parameters[' + attribute + '][1--1][type]'] = "Magento\\CatalogWidget\\Model\\Rule\\Condition\\Product";
             pairs['parameters[' + attribute + '][1][aggregator]'] = "all";
@@ -44,7 +47,7 @@ define([
             pairs['parameters[' + attribute + '][1][type]'] = "Magento\\CatalogWidget\\Model\\Rule\\Condition\\Combine";
             pairs['parameters[' + attribute + '][1][value]'] = "1";
             pairs['parameters[' + attribute + '][1--1][attribute]'] = data.condition_option;
-            pairs['parameters[' + attribute + '][1--1][value]'] = data[data.condition_option].trim();
+            pairs['parameters[' + attribute + '][1--1][value]'] = conditionValue;
         }
 
         if (!_.isEmpty(pairs)) {
