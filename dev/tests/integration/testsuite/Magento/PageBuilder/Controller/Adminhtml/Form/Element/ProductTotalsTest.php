@@ -82,35 +82,4 @@ class ProductTotalsTest extends \Magento\TestFramework\TestCase\AbstractBackendC
         ];
 
     }
-
-    /**
-     * Test that targeting a category with assigned products returns the correct count.
-     */
-    public function testCategoryWithMatches()
-    {
-
-    }
-
-    /**
-     * Test SKU matches
-     */
-    public function testSkuWithNoMatches()
-    {
-
-    }
-
-    public function testSkusWithMatches()
-    {
-
-    }
-
-    public function testConditionsWithNoMatches()
-    {
-
-    }
-
-    public function testConditionsWithMatches()
-    {
-
-    }
 }
