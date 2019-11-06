@@ -35,6 +35,9 @@ var config = {
             },
             'Magento_Ui/js/form/form': {
                 'Magento_PageBuilder/js/form/form-mixin': true
+            },
+            'Magento_PageBuilder/js/content-type/row/appearance/default/widget': {
+                'Magento_PageBuilder/js/content-type/row/appearance/default/widget-mixin': true
             }
         }
     }
