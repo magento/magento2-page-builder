@@ -5,6 +5,7 @@
 
 interface WidgetIntializerConfigInterface {
     config: any;
+    breakpoints: any;
 }
 
 declare function WidgetInitializer(data: WidgetIntializerConfigInterface, contextElement?: HTMLElement): void;

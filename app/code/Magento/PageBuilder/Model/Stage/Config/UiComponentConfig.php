@@ -48,7 +48,10 @@ class UiComponentConfig
             $componentConfig,
             function ($item, $key) {
                 // Determine if this item has a formElement key
-                if (isset($item[Converter::DATA_ARGUMENTS_KEY]['data']['config']['formElement'])) {
+                if (isset($item[Converter::DATA_ARGUMENTS_KEY]['data']['config']['formElement'])
+                    && !(isset($item[Converter::DATA_ARGUMENTS_KEY]['data']['config']['componentDisabled'])
+                        && $item[Converter::DATA_ARGUMENTS_KEY]['data']['config']['componentDisabled'] === true)
+                ) {
                     $elementConfig = $item[Converter::DATA_ARGUMENTS_KEY]['data']['config'];
                     // If the field has a dataScope use that for the key instead of the name
                     if (isset($elementConfig['dataScope'])) {

@@ -272,8 +272,13 @@ class Template
                 'background-image' => 'url(' . $images['desktop_image'] . ')',
             ];
         }
-        if (isset($images['mobile_image']) && $this->getMobileMediaQuery()) {
-            $css[$this->getMobileMediaQuery()]['.' . $elementClass] = [
+        if (isset($images['mobile_image']) && $this->getMediaQuery('mobile')) {
+            $css[$this->getMediaQuery('mobile')]['.' . $elementClass] = [
+                'background-image' => 'url(' . $images['mobile_image'] . ')',
+            ];
+        }
+        if (isset($images['mobile_image']) && $this->getMediaQuery('mobile-small')) {
+            $css[$this->getMediaQuery('mobile-small')]['.' . $elementClass] = [
                 'background-image' => 'url(' . $images['mobile_image'] . ')',
             ];
         }
@@ -305,13 +310,14 @@ class Template
     /**
      * Generate the mobile media query from view configuration
      *
+     * @param string $view
      * @return null|string
      */
-    private function getMobileMediaQuery() : ?string
+    private function getMediaQuery(string $view) : ?string
     {
         $breakpoints = $this->viewConfig->getViewConfig()->getVarValue(
             'Magento_PageBuilder',
-            'breakpoints/mobile/conditions'
+            'breakpoints/' . $view . '/conditions'
         );
         if ($breakpoints && count($breakpoints) > 0) {
             $mobileBreakpoint = '@media only screen ';
