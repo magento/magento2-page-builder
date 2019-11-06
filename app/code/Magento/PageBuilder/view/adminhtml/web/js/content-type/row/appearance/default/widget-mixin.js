@@ -1,3 +1,7 @@
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 define(['underscore', 'jquery', 'Magento_PageBuilder/js/events'], function (_, $, events) {
     'use strict';
 
