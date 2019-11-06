@@ -23,11 +23,7 @@ define(['underscore', 'jquery', 'Magento_PageBuilder/js/events'], function (_, $
             // Listen for full screen events and destroy and rebuild jarallax
             events.on('stage:' + stageId + ':fullScreenModeChangeAfter', function () {
                 _.delay(function () {
-                    try {
-                        window.jarallax($element[0], 'destroy');
-                    } catch (e) {
-                        // Failure of destroying is acceptable
-                    }
+                    $element.jarallax('destroy');
                     target(config, element);
                 }, 350);
             });
