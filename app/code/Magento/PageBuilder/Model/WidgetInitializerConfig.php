@@ -8,6 +8,9 @@ declare(strict_types=1);
 
 namespace Magento\PageBuilder\Model;
 
+use Magento\Framework\App\ObjectManager;
+use Magento\Framework\View\ConfigInterface;
+
 /**
  * Container for the configuration related to the widget initializer mechanism
  */
@@ -19,11 +22,20 @@ class WidgetInitializerConfig
     private $config;
 
     /**
-     * @param array $config
+     * @var ConfigInterface
      */
-    public function __construct(array $config)
-    {
+    private $viewConfig;
+
+    /**
+     * @param array $config
+     * @param ConfigInterface|null $viewConfig
+     */
+    public function __construct(
+        array $config,
+        ConfigInterface $viewConfig = null
+    ) {
         $this->config = $config;
+        $this->viewConfig = $viewConfig ?: ObjectManager::getInstance()->get(ConfigInterface::class);
     }
 
     /**
@@ -43,10 +55,23 @@ class WidgetInitializerConfig
                 if (isset($item['appearance'])) {
                     $selector .= sprintf('[data-appearance="%s"]', $item['appearance']);
                 }
-                $componentConfig = isset($item['config']) ? $item['config'] : '{}';
+                $componentConfig = isset($item['config']) ? $item['config'] : false;
                 $resultConfig[$selector][$item['component']] = $componentConfig;
             }
         }
         return $resultConfig;
+    }
+
+    /**
+     * Returns breakpoint for widgets initializer component.
+     *
+     * @return array
+     */
+    public function getBreakpoints(): array
+    {
+        return $this->viewConfig->getViewConfig()->getVarValue(
+            'Magento_PageBuilder',
+            'breakpoints'
+        );
     }
 }

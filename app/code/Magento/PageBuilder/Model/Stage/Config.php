@@ -141,6 +141,7 @@ class Config
             'column_grid_max' => $this->scopeConfig->getValue(self::XML_PATH_COLUMN_GRID_MAX),
             'can_use_inline_editing_on_stage' => $this->isWysiwygProvisionedForEditingOnStage(),
             'widgets' => $this->widgetInitializerConfig->getConfig(),
+            'breakpoints' => $this->widgetInitializerConfig->getBreakpoints()
         ];
     }
 
@@ -190,13 +191,15 @@ class Config
      */
     private function flattenContentTypeData(string $name, array $contentType)
     {
-        return [
+        $result = [
             'name' => $name,
             'label' => $contentType['label'],
             'icon' => isset($contentType['icon']) ? $contentType['icon'] : '',
             'form' => isset($contentType['form']) ? $contentType['form'] : '',
             'menu_section' => $contentType['menu_section'] ?? 'general',
-            'fields' => isset($contentType['form']) ? $this->uiComponentConfig->getFields($contentType['form']) : [],
+            'fields' => isset($contentType['form'])
+                ? ['default' => $this->uiComponentConfig->getFields($contentType['form'])]
+                : [],
             'component' => $contentType['component'],
             'preview_component' => $contentType['preview_component'] ?? self::DEFAULT_PREVIEW_COMPONENT,
             'master_component' => $contentType['master_component'] ?? self::DEFAULT_MASTER_COMPONENT,
@@ -207,6 +210,14 @@ class Config
                 : [],
             'is_system' => isset($contentType['is_system']) && $contentType['is_system'] === 'false' ? false : true
         ];
+
+        foreach ($result['appearances'] as $key => $appearance) {
+            if (isset($appearance['form'])) {
+                $result['fields'][$key . '-appearance'] = $this->uiComponentConfig->getFields($appearance['form']);
+            }
+        }
+
+        return $result;
     }
 
     /**

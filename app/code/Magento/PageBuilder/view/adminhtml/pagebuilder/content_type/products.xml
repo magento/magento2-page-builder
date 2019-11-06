@@ -46,6 +46,42 @@
                     </converter>
                 </converters>
             </appearance>
+            <appearance name="carousel"
+                        preview_template="Magento_PageBuilder/content-type/products/grid/preview"
+                        master_template="Magento_PageBuilder/content-type/products/grid/master"
+                        reader="Magento_PageBuilder/js/master-format/read/configurable">
+                <form>pagebuilder_products_carousel_form</form>
+                <elements>
+                    <element name="main">
+                        <style name="text_align" source="text_align"/>
+                        <style converter="Magento_PageBuilder/js/converter/style/border-style" name="border" source="border_style"/>
+                        <style converter="Magento_PageBuilder/js/converter/style/color" name="border_color" source="border_color"/>
+                        <style converter="Magento_PageBuilder/js/converter/style/border-width" name="border_width" source="border_width"/>
+                        <style converter="Magento_PageBuilder/js/converter/style/remove-px" name="border_radius" source="border_radius"/>
+                        <style name="display" source="display" converter="Magento_PageBuilder/js/converter/style/display" preview_converter="Magento_PageBuilder/js/converter/style/preview/display"/>
+                        <style name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
+                        <style name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
+                        <attribute name="name" source="data-content-type"/>
+                        <attribute name="appearance" source="data-appearance"/>
+                        <attribute name="autoplay" source="data-autoplay"/>
+                        <attribute name="autoplay_speed" source="data-autoplay-speed"/>
+                        <attribute name="is_infinite" source="data-infinite-loop"/>
+                        <attribute name="show_arrows" source="data-show-arrows"/>
+                        <attribute name="show_dots" source="data-show-dots"/>
+                        <attribute name="carousel_mode" source="data-carousel-mode"/>
+                        <static_attribute source="data-center-padding" value="90px"/>
+                        <html name="html" preview_converter="Magento_PageBuilder/js/converter/attribute/preview/store-id"/>
+                        <css name="css_classes"/>
+                    </element>
+                </elements>
+                <converters>
+                    <converter component="Magento_PageBuilder/js/content-type/products/mass-converter/carousel-widget-directive" name="widget_directive">
+                        <config>
+                            <item name="html_variable" value="html"/>
+                        </config>
+                    </converter>
+                </converters>
+            </appearance>
         </appearances>
     </type>
 </config>
