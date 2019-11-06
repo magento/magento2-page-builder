@@ -27,21 +27,21 @@ define([
             $carouselElement.slick('unslick');
         }
 
-        config.slidesToScroll = config.slideAll ? config.slidesToShow : 1;
+        config.slidesToScroll = config.slidesToShow;
         $carouselElement.slick(config);
     }
 
     return function (config, element) {
         var $element = $(element),
             $carouselElement = $($element.children()),
+            productCount = $(element).find('.product-item').length,
+            centerModeClass = 'center-mode',
+            carouselMode = $element.data('carousel-mode'),
             slickConfig = {
-                slideAll: $element.data('slide-all'),
                 autoplay: $element.data('autoplay'),
                 autoplaySpeed: $element.data('autoplay-speed') || 0,
-                infinite: $element.data('infinite-loop'),
                 arrows: $element.data('show-arrows'),
-                dots: $element.data('show-dots'),
-                centerMode: $element.data('center-mode')
+                dots: $element.data('show-dots')
             };
 
         _.each(config.breakpoints, function (breakpoint) {
@@ -50,7 +50,21 @@ define([
 
                 /** @inheritdoc */
                 entry: function () {
-                    slickConfig.slidesToShow = parseFloat(breakpoint.options.products.slidesToShow);
+                    var slidesToShow = breakpoint.options.products[carouselMode] ?
+                        breakpoint.options.products[carouselMode].slidesToShow :
+                        breakpoint.options.products.default.slidesToShow;
+
+                    slickConfig.slidesToShow = parseFloat(slidesToShow);
+
+                    if (carouselMode === 'continuous' && productCount > slickConfig.slidesToShow) {
+                        $element.addClass(centerModeClass);
+                        slickConfig.centerPadding = $element.data('center-padding');
+                        slickConfig.centerMode = true;
+                    } else {
+                        $element.removeClass(centerModeClass);
+                        slickConfig.infinite = $element.data('infinite-loop');
+                    }
+
                     buildSlick($carouselElement, slickConfig);
                 }
             });

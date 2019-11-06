@@ -33,6 +33,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       _this = _preview2.call(this, contentType, config, observableUpdater) || this;
       _this.displayPreview = _knockout.observable(false);
       _this.widgetUnsanitizedHtml = _knockout.observable();
+      _this.slidesToShow = 5;
+      _this.productItemSelector = ".product-item";
+      _this.centerModeClass = "center-mode";
       _this.messages = {
         EMPTY: (0, _translate)("Empty Products"),
         NO_RESULTS: (0, _translate)("No products were found matching your condition"),
@@ -148,22 +151,32 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
      * Build the slick config object
      *
      * @returns {{autoplay: boolean; autoplay: number; infinite: boolean; arrows: boolean; dots: boolean;
-     * centerMode: boolean; slidesToScroll: number, slidesToShow: number}}
+     * centerMode: boolean; slidesToScroll: number; slidesToShow: number;}}
      */
     ;
 
     _proto.buildSlickConfig = function buildSlickConfig() {
       var attributes = this.data.main.attributes();
-      return {
-        slidesToShow: 5,
-        slidesToScroll: attributes["data-slide-all"] === "true" ? 5 : 1,
-        centerMode: attributes["data-center-mode"] === "true",
+      var productCount = (0, _jquery)(this.widgetUnsanitizedHtml()).find(this.productItemSelector).length;
+      var config = {
+        slidesToShow: this.slidesToShow,
+        slidesToScroll: this.slidesToShow,
         dots: attributes["data-show-dots"] === "true",
         arrows: attributes["data-show-arrows"] === "true",
-        infinite: attributes["data-infinite-loop"] === "true",
         autoplay: attributes["data-autoplay"] === "true",
         autoplaySpeed: parseFloat(attributes["data-autoplay-speed"])
       };
+
+      if (attributes["data-carousel-mode"] === "continuous" && productCount > this.slidesToShow) {
+        config.centerPadding = attributes["data-center-padding"];
+        config.centerMode = true;
+        (0, _jquery)(this.element).addClass(this.centerModeClass);
+      } else {
+        config.infinite = attributes["data-infinite-loop"] === "true";
+        (0, _jquery)(this.element).removeClass(this.centerModeClass);
+      }
+
+      return config;
     }
     /**
      * Determine if the data has changed, whilst ignoring certain keys which don't require a rebuild
