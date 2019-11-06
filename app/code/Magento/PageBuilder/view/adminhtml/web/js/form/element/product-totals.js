@@ -3,40 +3,67 @@
  * See COPYING.txt for license details.
  */
 
-define(['Magento_Ui/js/form/element/abstract'], function (Abstract) {
+define([
+    'underscore',
+    'jquery',
+    'ko',
+    'Magento_PageBuilder/js/form/provider/conditions-data-processor',
+    'Magento_Ui/js/form/element/abstract'
+], function (_, $, ko, conditionsDataProcessor, Abstract) {
     'use strict';
 
     return Abstract.extend({
         defaults: {
             conditionOption: '',
-            conditionValues: {},
+            conditionValue: '',
+            formData: {},
             totalProductCount: 0,
-            disabledProductCount: 0,
             listens: {
-                conditionOption: 'updateProductsCount',
-                conditionValues: 'updateProductsCount'
+                conditionOption: 'updateProductTotals',
+                conditionValue: 'updateProductTotals',
+                formData: 'updateProductTotals'
+            },
+            imports: {
+                formData: '${ $.provider }:data'
             },
             links: {
                 value: false
-            }
+            },
+            url: null
         },
 
         /** @inheritdoc */
         initObservable: function () {
             return this._super()
-                .observe('totalProductCount disabledProductCount');
+                .observe('value totalProductCount');
         },
 
         /**
          * Update product count.
          *
          */
-        updateProductsCount: function () {
-            if (!this.conditionOption || !this.conditionValues.hasOwnProperty(this.conditionOption)) {
+        updateProductTotals: _.debounce(function () {
+
+            if (!this.conditionOption || _.isEmpty(this.formData) ||
+                (this.conditionOption === 'sku' && (!this.formData['sku'] || this.formData['sku'] === ''))) {
                 return;
             }
 
-            //perform request here;
-        }
+            _.extend(this.formData, this.conditionValue);
+            conditionsDataProcessor(this.formData, this.conditionOption + '_source');
+
+            $.ajax({
+                url: this.url,
+                method: 'POST',
+                data: {
+                    conditionValue: this.formData['conditions_encoded']
+                }
+            }).done(function (response) {
+                if (response['total']) {
+                    this.totalProductCount = response['total'];
+                    this.value('of ' + this.totalProductCount);
+                }
+            }.bind(this));
+        }, 10),
     });
 });

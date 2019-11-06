@@ -228,6 +228,7 @@
                 <argument name="data" xsi:type="array">
                     <item name="config" xsi:type="array">
                         <item name="default" xsi:type="string">of ${ $.totalProductCount }</item>
+                        <item name="url" xsi:type="url" path="pagebuilder/form/element_producttotals"/>
                     </item>
                 </argument>
                 <settings>
@@ -235,9 +236,9 @@
                     <dataType>text</dataType>
                     <imports>
                         <link name="conditionOption">ns = ${ $.ns }, index = condition_option:value</link>
-                        <link name="conditionValues.category_ids">ns = ${ $.ns }, index = category_ids:value</link>
-                        <link name="conditionValues.sku">ns = ${ $.ns }, index = sku:value</link>
-                        <link name="conditionValues.condition">ns = ${ $.ns }, index = conditions_form:value</link>
+                        <link name="updateProductTotals">ns = ${ $.ns }, index = category_ids:value</link>
+                        <link name="updateProductTotals">ns = ${ $.ns }, index = sku:value</link>
+                        <link name="conditionValue">ns = ${ $.ns }, index = conditions_form:value</link>
                     </imports>
                 </settings>
             </field>
