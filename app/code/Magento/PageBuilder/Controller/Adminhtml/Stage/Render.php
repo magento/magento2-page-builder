@@ -23,7 +23,7 @@ class Render extends \Magento\Backend\App\Action implements HttpGetActionInterfa
     /**
      * @var \Magento\Framework\View\Result\PageFactory
      */
-    protected $pageFactory;
+    private $pageFactory;
 
     /**
      * Render constructor.
