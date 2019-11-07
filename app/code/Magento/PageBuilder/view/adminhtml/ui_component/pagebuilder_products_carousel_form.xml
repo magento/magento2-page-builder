@@ -39,13 +39,6 @@
                 </item>
             </argument>
         </field>
-        <field name="product_count_group" sortOrder="20" formElement="input">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="componentDisabled" xsi:type="boolean">true</item>
-                </item>
-            </argument>
-        </field>
         <htmlContent name="conditions_form" sortOrder="30" template="Magento_PageBuilder/form/element/widget-conditions">
             <block name="conditions_form" class="Magento\PageBuilder\Block\Adminhtml\Form\Element\ProductConditions">
                 <arguments>
@@ -55,12 +48,14 @@
                 </arguments>
             </block>
         </htmlContent>
-        <container name="carousel_product_count_group" component="Magento_Ui/js/form/components/group" sortOrder="80">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="breakLine" xsi:type="boolean">false</item>
-                </item>
-            </argument>
+        <container name="product_count_group" component="Magento_Ui/js/form/components/group" sortOrder="80">
+            <field name="products_count" sortOrder="20" formElement="input">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="componentDisabled" xsi:type="boolean">true</item>
+                    </item>
+                </argument>
+            </field>
             <field name="carousel_products_count" sortOrder="10" formElement="input">
                 <argument name="data" xsi:type="array">
                     <item name="config" xsi:type="array">
@@ -80,24 +75,6 @@
                         <rule name="less-than-equals-to" xsi:type="number">999</rule>
                         <rule name="greater-than-equals-to" xsi:type="number">1</rule>
                     </validation>
-                </settings>
-            </field>
-            <field name="carousel_product_totals" sortOrder="20" formElement="input" component="Magento_PageBuilder/js/form/element/product-totals">
-                <argument name="data" xsi:type="array">
-                    <item name="config" xsi:type="array">
-                        <item name="default" xsi:type="string">of ${ $.totalProductCount } (${ $.totalDisabledProducts } disabled)</item>
-                        <item name="url" xsi:type="url" path="pagebuilder/form/element_producttotals"/>
-                    </item>
-                </argument>
-                <settings>
-                    <elementTmpl>ui/form/element/text</elementTmpl>
-                    <dataType>text</dataType>
-                    <imports>
-                        <link name="conditionOption">ns = ${ $.ns }, index = condition_option:value</link>
-                        <link name="updateProductTotals">ns = ${ $.ns }, index = category_ids:value</link>
-                        <link name="updateProductTotals">ns = ${ $.ns }, index = sku:value</link>
-                        <link name="conditionValue">ns = ${ $.ns }, index = conditions_form:value</link>
-                    </imports>
                 </settings>
             </field>
         </container>

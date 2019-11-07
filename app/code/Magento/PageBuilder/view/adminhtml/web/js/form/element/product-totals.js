@@ -49,6 +49,10 @@ define([
                 return;
             }
 
+            if (this.conditionOption === 'category_ids' && typeof this.formData[this.conditionOption] != "string") {
+                this.formData[this.conditionOption] = '';
+            }
+
             _.extend(this.formData, this.conditionValue);
             conditionsDataProcessor(this.formData, this.conditionOption + '_source');
 
