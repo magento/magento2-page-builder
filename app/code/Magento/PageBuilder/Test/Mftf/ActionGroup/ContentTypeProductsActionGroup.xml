@@ -44,7 +44,7 @@
         <seeElement selector="{{page.productNameInCarouselNotClonedBySlick(productGroupIndex, product.name)}}" stepKey="seeProduct"/>
     </actionGroup>
     <actionGroup name="validateCannotSeeProductInDefaultProductCarousel" extends="validateCanSeeProductInDefaultProductCarousel">
-        <waitForElement selector="{{page.productNameInCarouselNotClonedBySlick(productGroupIndex, product.name)}}" stepKey="waitForProduct"/>
+        <waitForElementNotVisible selector="{{page.productNameInCarouselNotClonedBySlick(productGroupIndex, product.name)}}" stepKey="waitForProduct"/>
         <dontSeeElement selector="{{page.productNameInCarouselNotClonedBySlick(productGroupIndex, product.name)}}" stepKey="seeProduct"/>
     </actionGroup>
     <actionGroup name="validateCanSeeProductInContinuousProductCarousel">
@@ -58,7 +58,7 @@
         <seeElement selector="{{page.productNameInCarouselBySlickSlideIndex(productGroupIndex, productItemIndex, product.name)}}" stepKey="seeProduct"/>
     </actionGroup>
     <actionGroup name="validateCannotSeeProductInContinuousProductCarousel" extends="validateCanSeeProductInContinuousProductCarousel">
-        <waitForElement selector="{{page.productNameInCarouselBySlickSlideIndex(productGroupIndex, productItemIndex, product.name)}}" stepKey="waitForProduct"/>
+        <waitForElementNotVisible selector="{{page.productNameInCarouselBySlickSlideIndex(productGroupIndex, productItemIndex, product.name)}}" stepKey="waitForProduct"/>
         <dontSeeElement selector="{{page.productNameInCarouselBySlickSlideIndex(productGroupIndex, productItemIndex, product.name)}}" stepKey="seeProduct"/>
     </actionGroup>
     <actionGroup name="validateProductInProducts">
