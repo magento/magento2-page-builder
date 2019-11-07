@@ -8,7 +8,7 @@ define([
     'jquery',
     'Magento_PageBuilder/js/form/provider/conditions-data-processor',
     'Magento_Ui/js/form/element/abstract'
-], function (_, $, ko, conditionsDataProcessor, Abstract) {
+], function (_, $, conditionsDataProcessor, Abstract) {
     'use strict';
 
     return Abstract.extend({
