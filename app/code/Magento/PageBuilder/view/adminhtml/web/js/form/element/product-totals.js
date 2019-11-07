@@ -6,7 +6,6 @@
 define([
     'underscore',
     'jquery',
-    'ko',
     'Magento_PageBuilder/js/form/provider/conditions-data-processor',
     'Magento_Ui/js/form/element/abstract'
 ], function (_, $, ko, conditionsDataProcessor, Abstract) {
@@ -18,6 +17,7 @@ define([
             conditionValue: '',
             formData: {},
             totalProductCount: 0,
+            totalDisabledProducts: 0,
             listens: {
                 conditionOption: 'updateProductTotals',
                 conditionValue: 'updateProductTotals',
@@ -35,7 +35,7 @@ define([
         /** @inheritdoc */
         initObservable: function () {
             return this._super()
-                .observe('value totalProductCount');
+                .observe('value totalProductCount totalDisabledProducts');
         },
 
         /**
@@ -59,10 +59,9 @@ define([
                     conditionValue: this.formData['conditions_encoded']
                 }
             }).done(function (response) {
-                if (response['total']) {
-                    this.totalProductCount = response['total'];
-                    this.value('of ' + this.totalProductCount);
-                }
+                this.totalProductCount = response['total'];
+                this.totalDisabledProducts = response['disabled'];
+                this.value('of ' + this.totalProductCount + ' (' + this.totalDisabledProducts + ' disabled)');
             }.bind(this));
         }, 10),
     });

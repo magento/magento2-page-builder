@@ -4,10 +4,20 @@
  * See COPYING.txt for license details.
  */
 
+declare(strict_types=1);
+
 namespace Magento\PageBuilder\Controller\Adminhtml\Form\Element;
 
-class ProductTotals extends \Magento\Backend\App\Action
+use Magento\Catalog\Model\Product\Attribute\Source\Status;
+use Magento\Framework\App\Action\HttpPostActionInterface;
+
+/**
+ * Returns the number of products that match the provided conditions
+ */
+class ProductTotals extends \Magento\Backend\App\Action implements HttpPostActionInterface
 {
+    const ADMIN_RESOURCE = 'Magento_Catalog::products';
+
     /**
      * Product collection factory
      *
@@ -19,13 +29,6 @@ class ProductTotals extends \Magento\Backend\App\Action
      * @var \Magento\Rule\Model\Condition\Sql\Builder
      */
     private $sqlBuilder;
-
-    /**
-     * Catalog product visibility
-     *
-     * @var \Magento\Catalog\Model\Product\Visibility
-     */
-    private $catalogProductVisibility;
 
     /**
      * @var \Magento\CatalogWidget\Model\Rule
@@ -48,9 +51,10 @@ class ProductTotals extends \Magento\Backend\App\Action
     private $jsonFactory;
 
     /**
+     * Constructor.
+     *
      * @param \Magento\Backend\App\Action\Context $context
      * @param \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory $productCollectionFactory
-     * @param \Magento\Catalog\Model\Product\Visibility $catalogProductVisibility
      * @param \Magento\Rule\Model\Condition\Sql\Builder $sqlBuilder
      * @param \Magento\CatalogWidget\Model\Rule $rule
      * @param \Magento\Widget\Helper\Conditions $conditionsHelper
@@ -60,7 +64,6 @@ class ProductTotals extends \Magento\Backend\App\Action
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
         \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory $productCollectionFactory,
-        \Magento\Catalog\Model\Product\Visibility $catalogProductVisibility,
         \Magento\Rule\Model\Condition\Sql\Builder $sqlBuilder,
         \Magento\CatalogWidget\Model\Rule $rule,
         \Magento\Widget\Helper\Conditions $conditionsHelper,
@@ -68,7 +71,6 @@ class ProductTotals extends \Magento\Backend\App\Action
         \Magento\Framework\Controller\Result\JsonFactory $jsonFactory
     ) {
         $this->productCollectionFactory = $productCollectionFactory;
-        $this->catalogProductVisibility = $catalogProductVisibility;
         $this->sqlBuilder = $sqlBuilder;
         $this->rule = $rule;
         $this->conditionsHelper = $conditionsHelper;
@@ -111,7 +113,6 @@ class ProductTotals extends \Magento\Backend\App\Action
     {
         /** @var $collection \Magento\Catalog\Model\ResourceModel\Product\Collection */
         $collection = $this->productCollectionFactory->create();
-        $collection = $collection->setVisibility($this->catalogProductVisibility->getVisibleInCatalogIds());
 
         /** @var \Magento\Rule\Model\Condition\Combine $conditions */
         $conditions = $this->getConditions();
@@ -128,15 +129,24 @@ class ProductTotals extends \Magento\Backend\App\Action
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function execute()
     {
         /** @var \Magento\Catalog\Model\ResourceModel\Product\Collection $collection */
         $collection = $this->createCollection();
+        $totalProducts = $collection->load()->getSize();
+        $disabledProducts = $collection
+            ->addAttributeToFilter('status', Status::STATUS_DISABLED)
+            ->load()
+            ->getSize();
+
         return $this->jsonFactory->create()
-            ->setData([
-                'total' => $collection->getSize()
-            ]);
+            ->setData(
+                [
+                    'total' => $totalProducts,
+                    'disabled' => $disabledProducts
+                ]
+            );
     }
 }

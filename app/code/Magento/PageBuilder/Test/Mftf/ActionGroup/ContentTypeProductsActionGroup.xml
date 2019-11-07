@@ -487,4 +487,12 @@
             <actualResult type="variable">differenceBetweenCenterPositions</actualResult>
         </assertLessThanOrEqual>
     </actionGroup>
+    <actionGroup name="validateProductTotals">
+        <arguments>
+            <argument name="property"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElement time="2" selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible"/>
+        <see selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" userInput="{{property.value}}" stepKey="seeProductTotals"/>
+    </actionGroup>
 </actionGroups>
