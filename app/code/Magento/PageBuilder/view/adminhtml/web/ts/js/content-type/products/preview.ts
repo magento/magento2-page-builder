@@ -27,7 +27,10 @@ export default class Preview extends BasePreview {
     public placeholderText: KnockoutObservable<string>;
     public previewElement: JQueryDeferred<Element> = $.Deferred();
     public widgetUnsanitizedHtml: KnockoutObservable<string> = ko.observable();
+    protected slidesToShow: number = 5;
     private element: Element;
+    private productItemSelector: string = ".product-item";
+    private centerModeClass: string = "center-mode";
     private messages = {
         EMPTY: $t("Empty Products"),
         NO_RESULTS: $t("No products were found matching your condition"),
@@ -167,21 +170,30 @@ export default class Preview extends BasePreview {
      * Build the slick config object
      *
      * @returns {{autoplay: boolean; autoplay: number; infinite: boolean; arrows: boolean; dots: boolean;
-     * centerMode: boolean; slidesToScroll: number, slidesToShow: number}}
+     * centerMode: boolean; slidesToScroll: number; slidesToShow: number;}}
      */
     private buildSlickConfig() {
         const attributes = this.data.main.attributes();
-
-        return {
-            slidesToShow: 5,
-            slidesToScroll: attributes["data-slide-all"] === "true" ? 5 : 1,
-            centerMode: attributes["data-center-mode"] === "true",
+        const productCount = $(this.widgetUnsanitizedHtml()).find(this.productItemSelector).length;
+        const config: {[key: string]: any} = {
+            slidesToShow: this.slidesToShow,
+            slidesToScroll: this.slidesToShow,
             dots: attributes["data-show-dots"] === "true",
             arrows: attributes["data-show-arrows"] === "true",
-            infinite: attributes["data-infinite-loop"] === "true",
             autoplay: attributes["data-autoplay"] === "true",
             autoplaySpeed: parseFloat(attributes["data-autoplay-speed"]),
         };
+
+        if (attributes["data-carousel-mode"] === "continuous" && productCount > this.slidesToShow) {
+            config.centerPadding = attributes["data-center-padding"];
+            config.centerMode = true;
+            $(this.element).addClass(this.centerModeClass);
+        } else {
+            config.infinite = attributes["data-infinite-loop"] === "true";
+            $(this.element).removeClass(this.centerModeClass);
+        }
+
+        return config;
     }
 
     /**
