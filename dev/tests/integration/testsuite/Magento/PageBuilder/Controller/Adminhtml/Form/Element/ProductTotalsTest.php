@@ -65,7 +65,7 @@ class ProductTotalsTest extends \Magento\TestFramework\TestCase\AbstractBackendC
                         'operator' => '==',
                         'type' => \Magento\CatalogWidget\Model\Rule\Condition\Product::class,
                         'attribute' => 'category_ids',
-                        'value' => '2'
+                        'value' => '4'
                     ],
                 ],
                 0,
