@@ -6,9 +6,10 @@
 define([
     'underscore',
     'jquery',
+    'mage/translate',
     'Magento_PageBuilder/js/form/provider/conditions-data-processor',
     'Magento_Ui/js/form/element/abstract'
-], function (_, $, conditionsDataProcessor, Abstract) {
+], function (_, $, $t, conditionsDataProcessor, Abstract) {
     'use strict';
 
     return Abstract.extend({
@@ -29,7 +30,8 @@ define([
             links: {
                 value: false
             },
-            url: null
+            url: null,
+            valuePlaceholder: $t('of %1 (%2 disabled)')
         },
 
         /** @inheritdoc */
@@ -43,7 +45,6 @@ define([
          *
          */
         updateProductTotals: _.debounce(function () {
-
             if (!this.conditionOption || _.isEmpty(this.formData) ||
                 (this.conditionOption === 'sku' && (!this.formData['sku'] || this.formData['sku'] === ''))) {
                 return;
@@ -63,10 +64,17 @@ define([
                     conditionValue: this.formData['conditions_encoded']
                 }
             }).done(function (response) {
-                this.totalProductCount = response['total'];
-                this.totalDisabledProducts = response['disabled'];
-                this.value('of ' + this.totalProductCount + ' (' + this.totalDisabledProducts + ' disabled)');
-            }.bind(this));
+                    this.totalProductCount(response['total']);
+                    this.totalDisabledProducts(response['disabled']);
+                    this.value(
+                        this.valuePlaceholder
+                            .replace('%1', this.totalProductCount())
+                            .replace('%2', this.totalDisabledProducts())
+                    );
+                }.bind(this)
+            ).fail(() => {
+                this.value($t("An unknown error occurred. Please try again."));
+            });
         }, 10),
     });
 });
