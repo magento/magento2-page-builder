@@ -72,7 +72,7 @@ define([
                             .replace('%2', this.totalDisabledProducts())
                     );
                 }.bind(this)
-            ).fail(() => {
+            ).fail(function () {
                 this.value($t("An unknown error occurred. Please try again."));
             });
         }, 10),
