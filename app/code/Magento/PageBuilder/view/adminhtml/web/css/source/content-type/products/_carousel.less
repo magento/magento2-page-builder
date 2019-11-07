@@ -19,6 +19,10 @@
         }
     }
 
+    .rendered-content button.slick-arrow {
+        pointer-events: inherit;
+    }
+
     .slick-dots {
         display: block;
         list-style: none;
@@ -65,5 +69,27 @@
                 }
             }
         }
+    }
+
+    &.center-mode,
+    .center-mode {
+        .product-item {
+            opacity: .5;
+            transition: all 300ms ease;
+
+            &:hover {
+                opacity: 1;
+            }
+        }
+
+        .slick-current .product-item {
+            opacity: 1;
+        }
+    }
+}
+
+.pagebuilder-content-type-hidden [data-content-type='products'][data-appearance='carousel'] {
+    .rendered-content button.slick-arrow {
+        pointer-events: none;
     }
 }
