@@ -63,12 +63,14 @@ class Sorting
      *
      * @param string $sortOption
      * @return Sorting\OptionInterface
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     public function getSortingInstance($sortOption): Sorting\OptionInterface
     {
         if (isset($this->sortInstances[$sortOption])) {
             return $this->sortInstances[$sortOption];
         }
+        throw new Magento\Framework\Exception\NoSuchEntityException(__('Sort Option "%1" not found', $sortOption));
     }
 
     /**
@@ -82,8 +84,12 @@ class Sorting
         string $option,
         \Magento\Catalog\Model\ResourceModel\Product\Collection $collection
     ): \Magento\Catalog\Model\ResourceModel\Product\Collection {
-        $sortBuilder = $this->getSortingInstance($option);
-        $_collection = $sortBuilder->sort($collection);
+        try {
+            $sortBuilder = $this->getSortingInstance($option);
+            $_collection = $sortBuilder->sort($collection);
+        } catch (\Magento\Framework\Exception\NoSuchEntityException $e) {
+            $_collection = $collection;
+        }
 
         if ($_collection->isLoaded()) {
             $_collection->clear();
