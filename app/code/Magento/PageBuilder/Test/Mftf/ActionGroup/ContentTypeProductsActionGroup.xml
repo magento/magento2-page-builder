@@ -124,6 +124,14 @@
             <actualResult type="variable">grabProducts</actualResult>
         </assertCount>
     </actionGroup>
+    <actionGroup name="validateEmptyProductsContainer">
+        <arguments>
+            <argument name="page" defaultValue="ProductsOnStage"/>
+            <argument name="productGroupIndex" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElement selector="{{page.emptyProductsPlaceholder(productGroupIndex)}}" stepKey="waitForEmptyProducts"/>
+        <see userInput="{{PageBuilderProductsMessage.noProductsFound}}" selector="{{page.emptyProductsPlaceholder(productGroupIndex)}}" stepKey="seeEmptyProductsMessage"/>
+    </actionGroup>
     <actionGroup name="selectCategoryFromCategoryDropDown">
         <arguments>
             <argument name="property" defaultValue="PageBuilderProductsSelectCategoryDropDown"/>
