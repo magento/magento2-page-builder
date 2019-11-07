@@ -40,15 +40,11 @@ export default class Preview implements PreviewInterface {
     public data: ObservableObject = {};
     public displayLabel: KnockoutObservable<string> = ko.observable();
     public display: KnockoutObservable<boolean> = ko.observable(true);
+    public appearance: KnockoutObservable<string> = ko.observable();
     public wrapperElement: Element;
     public placeholderCss: KnockoutObservable<object>;
     public isPlaceholderVisible: KnockoutObservable<boolean> = ko.observable(true);
     public isEmpty: KnockoutObservable<boolean> = ko.observable(true);
-
-    /**
-     * @deprecated
-     */
-    public previewData: {[key: string]: any} = {};
 
     /**
      * Fields that should not be considered when evaluating whether an object has been configured.
@@ -85,7 +81,6 @@ export default class Preview implements PreviewInterface {
             "visible": this.isEmpty,
             "empty-placeholder-background": this.isPlaceholderVisible,
         });
-        this.setupDataFields();
         this.bindEvents();
     }
 
@@ -95,8 +90,7 @@ export default class Preview implements PreviewInterface {
      * @returns {string}
      */
     get template(): string {
-        const appearance = this.previewData.appearance ? this.previewData.appearance() as string : undefined;
-        return appearanceConfig(this.config.name, appearance).preview_template;
+        return appearanceConfig(this.config.name, this.appearance()).preview_template;
     }
 
     /**
@@ -148,25 +142,6 @@ export default class Preview implements PreviewInterface {
      */
     public updateData(key: string, value: string) {
         this.contentType.dataStore.set(key, value);
-    }
-
-    /**
-     * Update the data value of a part of our internal Knockout data store
-     *
-     * @param {string} key
-     * @param value
-     * @deprecated
-     */
-    public updateDataValue(key: string, value: any) {
-        if (typeof this.previewData[key] !== "undefined" && ko.isObservable(this.previewData[key])) {
-            this.previewData[key](value);
-        } else {
-            if (_.isArray(value)) {
-                this.previewData[key] = ko.observableArray(value);
-            } else {
-                this.previewData[key] = ko.observable(value);
-            }
-        }
     }
 
     /**
@@ -512,6 +487,7 @@ export default class Preview implements PreviewInterface {
                 this.updatePlaceholderVisibility(data);
                 // Keep a reference to the display state in an observable for adding classes to the wrapper
                 this.display(!!data.display);
+                this.appearance(data.appearance);
             },
         );
         if (this.contentType instanceof ContentTypeCollection) {
@@ -531,37 +507,16 @@ export default class Preview implements PreviewInterface {
     }
 
     /**
-     * Setup fields observables within the data class property
-     *
-     * @deprecated
-     */
-    protected setupDataFields() {
-        // Create an empty observable for all fields
-        if (this.config.fields) {
-            _.keys(this.config.fields).forEach((key: string) => {
-                this.updateDataValue(key, "");
-            });
-        }
-
-        // Subscribe to this content types data in the store
-        this.contentType.dataStore.subscribe(
-            (data: DataObject) => {
-                _.forEach(data, (value, key) => {
-                    this.updateDataValue(key, value);
-                });
-            },
-        );
-    }
-
-    /**
      * Does the current instance have any children or values different from the default for it's type?
      *
      * @returns {boolean}
      */
     protected isConfigured() {
         const data = this.contentType.dataStore.getState();
+        const fields = this.contentType.config.fields[this.appearance() + "-appearance"] ||
+            this.contentType.config.fields.default;
         let hasDataChanges = false;
-        _.each(this.contentType.config.fields, (field, key: string) => {
+        _.each(fields, (field, key: string) => {
             if (this.fieldsToIgnoreOnRemove && this.fieldsToIgnoreOnRemove.includes(key)) {
                 return;
             }
@@ -614,7 +569,6 @@ export default class Preview implements PreviewInterface {
             _.extend({}, this.contentType.dataStore.getState()),
         );
         this.afterObservablesUpdated();
-        events.trigger("previewData:updateAfter", {preview: this});
     }
 
     /**

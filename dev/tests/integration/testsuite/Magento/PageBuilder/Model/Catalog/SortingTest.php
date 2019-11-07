@@ -7,6 +7,8 @@
 namespace Magento\PageBuilder\Model\Catalog;
 
 use Magento\TestFramework\Helper\Bootstrap;
+use Magento\Catalog\Api\CategoryRepositoryInterface;
+use Magento\CatalogWidget\Block\Product\ProductsList;
 
 /**
  * Class SortingTest
@@ -14,26 +16,34 @@ use Magento\TestFramework\Helper\Bootstrap;
 class SortingTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * By default products will be ordered by SKU
-     *
-     * @var array
-     */
-    protected $skus = [
-        '1_PB_PRODUCT',
-        'a_pb_product',
-        'B_PB_PRODUCT',
-        'C_PB_PRODUCT'
-    ];
-
-    /**
      * @var \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory
      */
-    protected $productCollectionFactory;
+    private $productCollectionFactory;
 
     /**
      * @var \Magento\PageBuilder\Model\Catalog\Sorting
      */
-    protected $sortModel;
+    private $sortModel;
+
+    /**
+     * @var CategoryRepositoryInterface
+     */
+    private $categoryRepository;
+
+    /**
+     * @var \Magento\Indexer\Model\Indexer
+     */
+    protected $indexer;
+
+    /**
+     * @var int
+     */
+    private $categoryId = 333;
+
+    /**
+     * @var ProductsList
+     */
+    private $productList;
 
     /**
      * Set up instances and mock objects
@@ -45,22 +55,47 @@ class SortingTest extends \PHPUnit\Framework\TestCase
             \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory::class
         );
         $this->sortModel = $objectManager->create(Sorting::class);
+        $this->categoryRepository = $objectManager->create(
+            CategoryRepositoryInterface::class
+        );
+
+        $this->productList = $objectManager->create(ProductsList::class);
     }
 
     /**
+     * @param array $productSortData
      * @dataProvider productSortDataProvider
      * @magentoDataFixture Magento/PageBuilder/_files/catalog_sorting/products.php
      */
-    public function testSortOptions($productSort)
+    public function testSortOptions(array $productSortData)
     {
-        foreach ($productSort as $rule => $expectedOrder) {
-            $collection = $this->productCollectionFactory->create();
-            $collection->addAttributeToFilter(
-                \Magento\Catalog\Api\Data\ProductInterface::SKU,
+        foreach ($productSortData as $rule => $expectedOrder) {
+
+            $this->productList->setData(
                 [
-                    'in' => $this->skus,
+                    'store_id' => 1,
+                    'conditions_encoded' => '^[
+                        `1`:^[
+                            `aggregator`:`all`,
+                            `new_child`:``,
+                            `type`:`Magento||CatalogWidget||Model||Rule||Condition||Combine`,
+                            `value`:`1`
+                            ^],
+                            `1--1`:^[
+                                `operator`:`()`,
+                                `type`:`Magento||CatalogWidget||Model||Rule||Condition||Product`,
+                                `attribute`:`sku`,
+                                `value`:`B_PB_PRODUCT,a_pb_product,C_PB_PRODUCT,1_PB_PRODUCT`
+                                ^]
+                            ^]'
                 ]
             );
+
+            $collection = $this->productList->createCollection();
+
+            if ($rule === 'position') {
+                $collection->addCategoryFilter($this->categoryRepository->get($this->categoryId));
+            }
 
             $actualOrder = $this->getSkus(
                 $this->sortModel->applySorting(
@@ -70,8 +105,8 @@ class SortingTest extends \PHPUnit\Framework\TestCase
             );
 
             $this->assertEquals(
-                $actualOrder,
                 $expectedOrder,
+                $actualOrder,
                 $rule . ' does not match expected output.'
             );
         }
@@ -139,10 +174,24 @@ class SortingTest extends \PHPUnit\Framework\TestCase
                         '1_PB_PRODUCT',
                         'a_pb_product',
                         'C_PB_PRODUCT',
+                        'B_PB_PRODUCT'
                     ],
                     'price_low_to_high' => [
+                        'B_PB_PRODUCT',
                         'C_PB_PRODUCT',
                         'a_pb_product',
+                        '1_PB_PRODUCT'
+                    ],
+                    'position' => [
+                        'B_PB_PRODUCT',
+                        'a_pb_product',
+                        '1_PB_PRODUCT',
+                        'C_PB_PRODUCT'
+                    ],
+                    'position_by_sku' => [
+                        'B_PB_PRODUCT',
+                        'a_pb_product',
+                        'C_PB_PRODUCT',
                         '1_PB_PRODUCT'
                     ]
                 ],

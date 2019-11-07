@@ -17,6 +17,13 @@
         <waitForElementVisible selector="{{ImageOnStageWithoutImageUploaded.imagePreview}}" stepKey="waitForImagePreview"/>
         <waitForElementVisible selector="{{ImageOnStageWithoutImageUploaded.imageSource(property.fileName)}}" stepKey="waitForImageSource"/>
     </actionGroup>
+    <actionGroup name="AdminAddImageCMSBlock" extends="AdminAddImageToCMSBlockContent">
+        <remove keyForRemoval="clickAddImageButton"/>
+        <remove keyForRemoval="waitForBrowseImage"/>
+        <remove keyForRemoval="clickBrowseImage"/>
+        <remove keyForRemoval="waitForOkButton"/>
+        <remove keyForRemoval="clickOk"/>
+    </actionGroup>
     <actionGroup name="verifyImageOnSlideout">
         <arguments>
             <argument name="property"/>

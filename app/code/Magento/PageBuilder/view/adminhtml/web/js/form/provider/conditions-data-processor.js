@@ -13,7 +13,8 @@ define([
     var serializer = new ConditionsDataNormalizer();
 
     return function (data, attribute) {
-        var pairs = {};
+        var pairs = {},
+            conditions = '';
 
         /*
          * The Condition Rule Tree is not a UI component and doesn't provide good data.
@@ -25,12 +26,33 @@ define([
             if (key.indexOf('parameters[' + attribute + ']') === 0) {
                 // Remove the bad, un-normalized data.
                 delete data[key];
+
                 pairs[key] = element;
             }
         });
 
+        /*
+         * Add pairs in case conditions source is not rules configurator
+         */
+        if (data['condition_option'] !== 'condition') {
+            pairs['parameters[' + attribute + '][1--1][operator]'] = data[data['condition_option'] + '-condition_operator'] ?
+                data[data['condition_option'] + '-condition_operator'] :
+                '==';
+            pairs['parameters[' + attribute + '][1--1][type]'] = 'Magento\\CatalogWidget\\Model\\Rule\\Condition\\Product';
+            pairs['parameters[' + attribute + '][1][aggregator]'] = 'all';
+            pairs['parameters[' + attribute + '][1][new_child]'] = '';
+            pairs['parameters[' + attribute + '][1][type]'] = 'Magento\\CatalogWidget\\Model\\Rule\\Condition\\Combine';
+            pairs['parameters[' + attribute + '][1][value]'] = '1';
+            pairs['parameters[' + attribute + '][1--1][attribute]'] = data['condition_option'];
+            pairs['parameters[' + attribute + '][1--1][value]'] = _.isString(data[data['condition_option']]) ?
+                data[data['condition_option']].trim() :
+                '';
+        }
+
         if (!_.isEmpty(pairs)) {
-            objectUtils.nested(data, attribute, JSON.stringify(serializer.normalize(pairs).parameters[attribute]));
+            conditions = JSON.stringify(serializer.normalize(pairs).parameters[attribute]);
+            data['conditions_encoded'] = conditions;
+            objectUtils.nested(data, attribute, conditions);
         }
     };
 });

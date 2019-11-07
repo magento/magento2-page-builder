@@ -217,7 +217,34 @@
     }
 
     .product-reviews-summary {
-        margin-bottom: 15px;
+        margin-bottom: @indent__s + @indent__xs;
+
+        .reviews-actions {
+            display: inline-block;
+            font-size: @font-size__s;
+            margin-top: 5px;
+            vertical-align: middle;
+
+            a:not(:last-child) {
+                margin-right: 30px;
+            }
+            .action.add {
+                white-space: nowrap;
+            }
+        }
+
+        .rating-summary {
+            .lib-rating-summary(
+                @_icon-font: 'luma-icons',
+                @_icon-font-size: 16px,
+                @_icon-letter-spacing: 2px
+            );
+            .lib-rating-summary-label-hide();
+
+            display: inline-block;
+            margin: 0 4px 0 0;
+            vertical-align: middle;
+        }
     }
 
     .product-item-actions {

@@ -99,6 +99,12 @@
                         <item name="component" xsi:type="string">Magento_PageBuilder/js/content-type/buttons/appearance/inline/widget</item>
                     </item>
                 </item>
+                <item name="products" xsi:type="array">
+                    <item name="default" xsi:type="array">
+                        <item name="component" xsi:type="string">Magento_PageBuilder/js/content-type/products/appearance/carousel/widget</item>
+                        <item name="appearance" xsi:type="string">carousel</item>
+                    </item>
+                </item>
             </argument>
         </arguments>
     </type>
@@ -214,9 +220,24 @@
             <argument name="attributeField" xsi:type="string">price</argument>
         </arguments>
     </virtualType>
+    <virtualType name="Magento\PageBuilder\Model\Catalog\Sorting\Position" type="Magento\PageBuilder\Model\Catalog\Sorting\SimpleOption">
+        <arguments>
+            <argument name="label" xsi:type="string">Position</argument>
+            <argument name="sortDirection" xsi:type="const">\Magento\Framework\DB\Select::SQL_ASC</argument>
+            <argument name="secondarySortDirection" xsi:type="const">\Magento\Framework\DB\Select::SQL_DESC</argument>
+            <argument name="attributeField" xsi:type="string">position</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Magento\PageBuilder\Model\Catalog\Sorting\PositionBySku" type="Magento\PageBuilder\Model\Catalog\Sorting\SimpleOption">
+        <arguments>
+            <argument name="label" xsi:type="string">Position</argument>
+        </arguments>
+    </virtualType>
     <type name="Magento\PageBuilder\Model\Catalog\Sorting">
         <arguments>
             <argument name="sortClasses" xsi:type="array">
+                <item name="position" xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\Position</item>
+                <item name="position_by_sku" xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\PositionBySku</item>
                 <item name="date_newest_top" xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\Date\NewestTop</item>
                 <item name="date_oldest_top" xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\Date\OldestTop</item>
                 <item name="name_ascending" xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\Name\Ascending</item>

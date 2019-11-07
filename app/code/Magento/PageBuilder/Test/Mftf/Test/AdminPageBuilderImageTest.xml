@@ -123,6 +123,31 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
+            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder1">
+                <argument name="FolderName" value="{{PageBuilderImageProperty_JPG.path}}"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage1">
+                <argument name="Image" value="PageBuilderImageProperty_JPG"/>
+            </actionGroup>
+            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder2">
+                <argument name="FolderName" value="{{PageBuilderImageProperty_JPG2.path}}"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage2">
+                <argument name="Image" value="PageBuilderImageProperty_JPG2"/>
+            </actionGroup>
+            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder3">
+                <argument name="FolderName" value="{{ImageFolder.name}}"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage3">
+                <argument name="Image" value="PageBuilderImageProperty_JPG2"/>
+            </actionGroup>
+            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder4">
+                <argument name="FolderName" value="{{PageBuilderMobileImagePropertyGif.path}}"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage4">
+                <argument name="Image" value="PageBuilderMobileImagePropertyGif"/>
+            </actionGroup>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -244,6 +269,13 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
+            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder1">
+                <argument name="FolderName" value="{{PageBuilderImageProperty_StageJPG.path}}"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage1">
+                <argument name="Image" value="PageBuilderImageProperty_StageJPG"/>
+            </actionGroup>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -534,6 +566,13 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
+            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
+                <argument name="FolderName" value="{{PageBuilderImageProperty_JPG.path}}"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage">
+                <argument name="Image" value="PageBuilderImageProperty_JPG"/>
+            </actionGroup>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -842,6 +881,13 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
+            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
+                <argument name="FolderName" value="{{PageBuilderImageProperty_StageJPG.path}}"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage">
+                <argument name="Image" value="PageBuilderImageProperty_StageJPG"/>
+            </actionGroup>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -892,7 +938,6 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <closeTab stepKey="closeOpenedTab" />
             <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
             <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder1">
                 <argument name="FolderName" value="{{PageBuilderImageProperty_StageJPG.path}}"/>
@@ -901,6 +946,7 @@
                 <argument name="Image" value="PageBuilderImageProperty_StageJPG"/>
             </actionGroup>
             <actionGroup ref="logout" stepKey="logout"/>
+            <closeTab stepKey="closeOpenedTab" />
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderImageContentType"/>
@@ -1292,6 +1338,13 @@
         </before>
         <after>
             <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
+            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
+                <argument name="FolderName" value="{{PageBuilderImageProperty_StageJPG.path}}"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage">
+                <argument name="Image" value="PageBuilderImageProperty_StageJPG"/>
+            </actionGroup>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">

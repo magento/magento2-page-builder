@@ -37,6 +37,13 @@
             <deleteData createDataKey="createPreReqProduct" stepKey="deletePreReqProduct"/>
             <deleteData createDataKey="createCMSPageA" stepKey="deletePreReqCmsPageA"/>
             <deleteData createDataKey="createCMSPageB" stepKey="deletePreReqCmsPageB"/>
+            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
+                <argument name="FolderName" value="{{PageBuilderImageProperty_StageJPG.path}}"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage">
+                <argument name="Image" value="PageBuilderImageProperty_StageJPG"/>
+            </actionGroup>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <!--Go to Product Page-->
@@ -557,9 +564,9 @@
             </actionGroup>
         </before>
         <after>
-            <closeTab stepKey="closeTab"/>
             <actionGroup ref="logout" stepKey="logout"/>
             <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCategory"/>
+            <closeTab stepKey="closeTab"/>
         </after>
         <!-- Add PageBuilder description -->
         <comment userInput="Add PageBuilder description" stepKey="commentAddDescription"/>
@@ -796,10 +803,10 @@
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
         </before>
         <after>
-            <closeTab stepKey="closeTab"/>
             <deleteData createDataKey="createPageBuilderAttribute1" stepKey="deleteAttribute1"/>
             <deleteData createDataKey="createPageBuilderAttribute2" stepKey="deleteAttribute2"/>
             <actionGroup ref="logout" stepKey="logout"/>
+            <closeTab stepKey="closeTab"/>
         </after>
         <!-- Update created attributes to enable Page Builder -->
         <comment userInput="Update created attributes to enable Page Builder" stepKey="commentUpdateAttributes"/>

@@ -91,7 +91,9 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_Ui/js/modal/
 
   function getElementData(element, config) {
     // Create an object with all fields for the content type with an empty value
-    var result = createInitialElementData(config.fields);
+    var appearance = element.dataset.appearance + "-appearance";
+    var fields = config.fields[appearance] || config.fields.default;
+    var result = createInitialElementData(fields);
     return new Promise(function (resolve) {
       var role = element.getAttribute(_config.getConfig("dataContentTypeAttributeName"));
 

@@ -4,6 +4,7 @@
  */
 
 import $ from "jquery";
+import ko from "knockout";
 import $t from "mage/translate";
 import events from "Magento_PageBuilder/js/events";
 import _ from "underscore";
@@ -11,6 +12,7 @@ import {PreviewSortableSortUpdateEventParams} from "../../binding/sortable-child
 import Config from "../../config";
 import ConditionalRemoveOption from "../../content-type-menu/conditional-remove-option";
 import {OptionsInterface} from "../../content-type-menu/option.types";
+import {DataObject} from "../../data-store";
 import Uploader from "../../uploader";
 import delayUntil from "../../utils/delay-until";
 import nestingLinkDialog from "../../utils/nesting-link-dialog";
@@ -25,6 +27,8 @@ import SliderPreview from "../slider/preview";
  */
 export default class Preview extends BasePreview {
     public buttonPlaceholder: string = $t("Edit Button Text");
+
+    public slideName: KnockoutObservable<string> = ko.observable();
     /**
      * Wysiwyg instance
      */
@@ -324,6 +328,12 @@ export default class Preview extends BasePreview {
                 });
             }
         });
+
+        this.contentType.dataStore.subscribe(
+            (data: DataObject) => {
+                this.slideName(data.slide_name);
+            },
+        );
     }
 
     /**

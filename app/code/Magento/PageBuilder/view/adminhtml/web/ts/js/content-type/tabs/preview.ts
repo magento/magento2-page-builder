@@ -19,6 +19,7 @@ import HideShowOption from "../../content-type-menu/hide-show-option";
 import Option from "../../content-type-menu/option";
 import {OptionsInterface} from "../../content-type-menu/option.types";
 import ContentTypeInterface from "../../content-type.types";
+import {DataObject} from "../../data-store";
 import delayUntil from "../../utils/delay-until";
 import deferred, {DeferredInterface} from "../../utils/promise-deferred";
 import {
@@ -110,7 +111,7 @@ export default class Preview extends PreviewCollection {
                 /**
                  * Update the default active tab if its position was affected by the sorting
                  */
-                const defaultActiveTab = +args.instance.preview.previewData.default_active();
+                const defaultActiveTab = +this.activeTab();
                 let newDefaultActiveTab = defaultActiveTab;
                 if (args.originalPosition === defaultActiveTab) {
                     newDefaultActiveTab = args.newPosition;
@@ -417,6 +418,12 @@ export default class Preview extends PreviewCollection {
                 });
             }
         });
+
+        this.contentType.dataStore.subscribe(
+            (data: DataObject) => {
+                this.activeTab(data.default_active);
+            },
+        );
     }
 
     /**
@@ -444,7 +451,7 @@ export default class Preview extends PreviewCollection {
      *
      * @type {(() => void) & _.Cancelable}
      */
-    private buildTabs(activeTabIndex = (this.activeTab() || this.previewData.default_active()) as number || 0) {
+    private buildTabs(activeTabIndex = this.activeTab() as number || 0) {
         this.ready = false;
         if (this.element && this.element.children.length > 0) {
             const focusedTab = this.focusedTab();

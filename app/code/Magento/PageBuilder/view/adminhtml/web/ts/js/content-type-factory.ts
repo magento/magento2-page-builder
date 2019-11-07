@@ -91,8 +91,10 @@ export default function createContentType(
  * @param {object} data
  * @returns {any}
  */
-function prepareData(config: ContentTypeConfigInterface, data: {}) {
-    const defaults: FieldDefaultsInterface = prepareDefaults(config.fields || {});
+function prepareData(config: ContentTypeConfigInterface, data: {[key: string]: any}) {
+    const appearance = data.appearance + "-appearance";
+    const fields = config.fields[appearance] || config.fields.default;
+    const defaults: FieldDefaultsInterface = prepareDefaults(fields || {});
 
     // Set all content types to be displayed by default
     defaults.display = true;

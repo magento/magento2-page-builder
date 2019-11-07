@@ -86,6 +86,23 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
       });
     }
     /**
+     * Get option value from observable data.
+     *
+     * @param {string} key
+     * @return {*}
+     */
+    ;
+
+    _proto.getOptionValue = function getOptionValue(key) {
+      if (key === "heading_type") {
+        return this.data.main.heading_type();
+      } else if (key === "text_align") {
+        return this.data.main.style().textAlign;
+      }
+
+      return;
+    }
+    /**
      * Build and return the tool bar options for heading
      *
      * @returns {OptionInterface[]}

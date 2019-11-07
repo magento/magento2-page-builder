@@ -118,7 +118,9 @@ function createElementContentType(
  */
 function getElementData(element: HTMLElement, config: ContentTypeConfigInterface) {
     // Create an object with all fields for the content type with an empty value
-    const result = createInitialElementData(config.fields);
+    const appearance = element.dataset.appearance + "-appearance";
+    const fields = config.fields[appearance] || config.fields.default;
+    const result = createInitialElementData(fields);
 
     return new Promise((resolve: (result: object) => void) => {
         const role = element.getAttribute(Config.getConfig("dataContentTypeAttributeName"));
