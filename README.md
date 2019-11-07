@@ -5,7 +5,7 @@ Use this access to:
 
 - Explore extension points to build custom modules and integrations for 3rd party services, such as Facebook and Instagram.
 - Try out customization options and extend its functionality beyond its default features.
-- Preview to prepare a migration plan from BlueFoot 1.0 to Page Builder.
+- Preview to prepare a migrati7uon plan from BlueFoot 1.0 to Page Builder.
 
 Should you find an issue in Page Builder functionality, please report it on GitHub.
 
