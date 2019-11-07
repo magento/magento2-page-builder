@@ -489,10 +489,10 @@
     </actionGroup>
     <actionGroup name="validateProductTotals">
         <arguments>
-            <argument name="property"/>
+            <argument name="productsTotals" defaultValue="of 1 (0 disabled)" type="string"/>
         </arguments>
         <waitForPageLoad stepKey="waitForPageLoad"/>
-        <waitForElement time="2" selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible"/>
-        <see selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" userInput="{{property.value}}" stepKey="seeProductTotals"/>
+        <waitForElement time="2" selector="{{EditPanelForm.panelFieldControl(PageBuilderProductsTotalProductsProperty.section, PageBuilderProductsTotalProductsProperty.fieldName)}}" stepKey="waitForFieldVisible"/>
+        <see selector="{{EditPanelForm.panelFieldControl(PageBuilderProductsTotalProductsProperty.section, PageBuilderProductsTotalProductsProperty.fieldName)}}" userInput="{{productsTotals}}" stepKey="seeProductTotals"/>
     </actionGroup>
 </actionGroups>
