@@ -1103,140 +1103,157 @@
             <features value="PageBuilder"/>
             <stories value="Products"/>
             <title value="Validate Product Totals"/>
-            <description value="Validate the total number of products shown for the selected conditions in the Advanced Configuration form and on Stage for Product List."/>
-            <severity value="CRITICAL"/>
+            <description value="Validate the total number of products shown edit form and stage for the Products content type"/>
+            <severity value="MAJOR"/>
             <useCaseId value="PB-107"/>
             <testCaseId value="MC-22882"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-products"/>
         </annotations>
         <before>
-            <createData entity="PageBuilderProductsSubCategory" stepKey="createPreReqCategory1"/>
-            <createData entity="PageBuilderProductsSubCategory" stepKey="createPreReqCategory2"/>
-            <createData entity="_defaultProduct" stepKey="createPreReqProduct1">
-                <requiredEntity createDataKey="createPreReqCategory1"/>
+            <createData entity="PageBuilderProductsSubCategory" stepKey="createCategory1"/>
+            <createData entity="PageBuilderProductsSubCategory" stepKey="createCategory2"/>
+            <createData entity="_defaultProduct" stepKey="createCategory1Product1">
+                <requiredEntity createDataKey="createCategory1"/>
             </createData>
-            <createData entity="_defaultProduct" stepKey="createPreReqProduct2">
-                <requiredEntity createDataKey="createPreReqCategory1"/>
+            <createData entity="_defaultProduct" stepKey="createCategory1Product2">
+                <requiredEntity createDataKey="createCategory1"/>
             </createData>
-            <createData entity="_defaultProduct" stepKey="createPreReqProduct3">
-                <requiredEntity createDataKey="createPreReqCategory1"/>
+            <createData entity="_defaultProduct" stepKey="createCategory1Product3">
+                <requiredEntity createDataKey="createCategory1"/>
             </createData>
-            <createData entity="_defaultProduct" stepKey="createPreReqProduct4">
-                <requiredEntity createDataKey="createPreReqCategory2"/>
+            <createData entity="_defaultProduct" stepKey="createCategory2Product">
+                <requiredEntity createDataKey="createCategory2"/>
             </createData>
-            <createData entity="SimpleProductDisabled" stepKey="createPreReqProduct5">
-            </createData>
+            <createData entity="SimpleProductDisabled" stepKey="createDisabledProduct"/>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="navigateToCMSPage" stepKey="navigateToCMSPage">
+                <argument name="CMSPage" value="$$createCMSPage$$"/>
+            </actionGroup>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <deleteData createDataKey="createPreReqProduct1" stepKey="deletePreReqProduct1"/>
-            <deleteData createDataKey="createPreReqProduct2" stepKey="deletePreReqProduct2"/>
-            <deleteData createDataKey="createPreReqProduct3" stepKey="deletePreReqProduct3"/>
-            <deleteData createDataKey="createPreReqProduct4" stepKey="deletePreReqProduct4"/>
-            <deleteData createDataKey="createPreReqProduct5" stepKey="deletePreReqProduct5"/>
-            <deleteData createDataKey="createPreReqCategory1" stepKey="deletePreReqCategory1"/>
-            <deleteData createDataKey="createPreReqCategory2" stepKey="deletePreReqCategory2"/>
+            <deleteData createDataKey="createCategory1" stepKey="deleteCategory1"/>
+            <deleteData createDataKey="createCategory2" stepKey="deleteCategory2"/>
+            <deleteData createDataKey="createCategory1Product1" stepKey="deleteCategory1Product1"/>
+            <deleteData createDataKey="createCategory1Product2" stepKey="deleteCategory1Product2"/>
+            <deleteData createDataKey="createCategory1Product3" stepKey="deleteCategory1Product3"/>
+            <deleteData createDataKey="createCategory2Product" stepKey="deleteCategory2Product"/>
+            <deleteData createDataKey="createDisabledProduct" stepKey="deleteDisabledProduct"/>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentType" value="PageBuilderProductsContentType"/>
-        </actionGroup>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionAddContent">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragProductsIntoStage">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+        <!-- Verify Total Products by Category for Grid Appearance -->
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditPanel1">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <!-- Select Products By Category -->
-        <actionGroup ref="chooseVisualSelectOption" stepKey="selectGridAppearanceForCategory">
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectGridAppearance">
             <argument name="property" value="PageBuilderProductsProductGridAppearance"/>
         </actionGroup>
         <actionGroup ref="chooseVisualSelectOption" stepKey="chooseSelectProductsByCategory">
             <argument name="property" value="PageBuilderProductsSelectProductsByCategory"/>
         </actionGroup>
         <actionGroup ref="selectCategoryFromCategoryDropDown" stepKey="selectCategory">
-            <argument name="category" value="$$createPreReqCategory1.name$$"/>
+            <argument name="category" value="$$createCategory1.name$$"/>
         </actionGroup>
-        <!-- Verify Total Products by Category for Grid Appearance -->
-        <actionGroup ref="validateProductTotals" stepKey="validateTotalProductsForCategoryAndGrid">
-            <argument name="property" value="PageBuilderTotalProductsPropertyThree"/>
+        <actionGroup ref="validateProductTotals" stepKey="validateTotalProductsOnEditPanel1">
+            <argument name="productsTotals" value="of 3 (0 disabled)"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveValidationEditPanelSettings"/>
-        <!-- Validate Stage -->
-        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStageForCategoryAndGrid">
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel1"/>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateTotalProductsOnStage1">
             <argument name="page" value="ProductsOnStage"/>
             <argument name="count" value="3"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterVerifyingStageForCategoryAndGrid">
+        <!-- Verify Total Products by Category for Carousel Appearance -->
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditPanel2">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <!-- Verify Total Products by Category for Carousel Appearance -->
         <actionGroup ref="chooseVisualSelectOption" stepKey="selectCarouselAppearance">
             <argument name="property" value="PageBuilderProductsProductCarouselAppearance"/>
         </actionGroup>
-        <actionGroup ref="validateProductTotals" stepKey="validateTotalProductsForCategoryAndCarousel">
-            <argument name="property" value="PageBuilderTotalProductsPropertyThree"/>
+        <actionGroup ref="validateProductTotals" stepKey="validateTotalProductsOnEditPanel2">
+            <argument name="productsTotals" value="of 3 (0 disabled)"/>
         </actionGroup>
-        <!-- Select Products By Sku -->
-        <actionGroup ref="chooseVisualSelectOption" stepKey="chooseSelectProductsBySku">
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel2"/>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateTotalProductsOnStage2">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="count" value="3"/>
+        </actionGroup>
+        <!-- Verify Total Products by SKU for Carousel Appearance -->
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditPanel3">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="chooseSelectProductsBySKU">
             <argument name="property" value="PageBuilderProductsSelectProductsBySKU"/>
         </actionGroup>
-        <actionGroup ref="addSKUsToSelectProductsBySKU" stepKey="addProductsSKUsToInputField">
-            <argument name="SKUs" value="$$createPreReqProduct5.sku$$,$$createPreReqProduct1.sku$$"/>
+        <actionGroup ref="addSKUsToSelectProductsBySKU" stepKey="addProductsSKUsToInputField3">
+            <argument name="SKUs" value="$$createDisabledProduct.sku$$,$$createCategory1Product1.sku$$"/>
         </actionGroup>
-        <!-- Verify Total Products by Sku for Carousel Appearance -->
-        <actionGroup ref="validateProductTotals" stepKey="validateTotalProductsForSkusAndCarousel">
-            <argument name="property" value="PageBuilderTotalProductsPropertyTwoOneDisabled"/>
+        <actionGroup ref="validateProductTotals" stepKey="validateTotalProductsOnEditPanel3">
+            <argument name="productsTotals" value="of 2 (1 disabled)"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsForSkuAndCarousel"/>
-        <!-- Validate Stage -->
-        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStageForSkuAndCarousel">
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel3"/>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateTotalProductsOnStage3">
             <argument name="page" value="ProductsCarouselOnStage"/>
             <argument name="count" value="1"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterVerifyingStageForSkuAndCarousel">
+        <!-- Verify Total Products by SKU for Grid Appearance -->
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditPanel4">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <!-- Verify Total Products by Sku for Grid Appearance -->
-        <actionGroup ref="chooseVisualSelectOption" stepKey="selectGridAppearanceForSku">
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectGridAppearance2">
             <argument name="property" value="PageBuilderProductsProductGridAppearance"/>
         </actionGroup>
-        <actionGroup ref="validateProductTotals" stepKey="validateTotalProductsForSkuAndGrid">
-            <argument name="property" value="PageBuilderTotalProductsPropertyTwoOneDisabled"/>
+        <actionGroup ref="validateProductTotals" stepKey="validateTotalProductsOnEditPanel4">
+            <argument name="productsTotals" value="of 2 (1 disabled)"/>
         </actionGroup>
-        <!-- Select Products By Condition -->
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel4"/>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateTotalProductsOnStage4">
+            <argument name="page" value="ProductsOnStage"/>
+            <argument name="count" value="1"/>
+        </actionGroup>
+        <!-- Verify Total Products by Condition for Grid Appearance -->
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditPanel5">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
         <actionGroup ref="chooseVisualSelectOption" stepKey="chooseSelectProductsByCondition">
             <argument name="property" value="PageBuilderProductsSelectProductsByCondition"/>
         </actionGroup>
         <actionGroup ref="addConditionToProductConditions" stepKey="addCategoryCondition">
-            <argument name="conditionInput" value="$$createPreReqCategory2.id$$"/>
+            <argument name="conditionInput" value="$$createCategory2.id$$"/>
         </actionGroup>
-        <click selector="{{ProductsContentTypeForm.conditionsListText}}" stepKey="clickOutOfConditionField"/>
-        <!-- Verify Total Products by Condition for Grid Appearance -->
-        <actionGroup ref="validateProductTotals" stepKey="validateTotalProductsForConditionAndGrid">
-            <argument name="property" value="PageBuilderTotalProductsPropertyOne"/>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterSortBy">
+            <argument name="property" value="PageBuilderProductsSortByNewestTop"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveValidationEditPanelSettingsForConditionAndGrid"/>
-        <!-- Validate Stage -->
-        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStageForConditionAndGrid">
+        <actionGroup ref="validateProductTotals" stepKey="validateTotalProductsOnEditPanel5">
+            <argument name="productsTotals" value="of 1 (0 disabled)"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel5"/>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateTotalProductsOnStage5">
             <argument name="page" value="ProductsOnStage"/>
             <argument name="count" value="1"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterVerifyingStageForConditionAndGrid">
+        <!-- Verify Total Products by Condition for Carousel Appearance -->
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditPanel6">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <!-- Verify Total Products by Condition for Carousel Appearance -->
-        <actionGroup ref="chooseVisualSelectOption" stepKey="selectCarouselAppearanceForCondition">
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectCarouselAppearance2">
             <argument name="property" value="PageBuilderProductsProductCarouselAppearance"/>
         </actionGroup>
-        <actionGroup ref="validateProductTotals" stepKey="validateTotalProductsForConditionAndCarousel">
-            <argument name="property" value="PageBuilderTotalProductsPropertyOne"/>
+        <actionGroup ref="validateProductTotals" stepKey="validateTotalProductsOnEditPanel6">
+            <argument name="productsTotals" value="of 1 (0 disabled)"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel6"/>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateTotalProductsOnStage6">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="count" value="1"/>
         </actionGroup>
     </test>
 </tests>
