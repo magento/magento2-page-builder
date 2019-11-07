@@ -700,9 +700,6 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-products"/>
             <group value="pagebuilder-productsCarousel"/>
-            <skip>
-                <issueId value="PB-207"/>
-            </skip>
         </annotations>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanel" after="dragProductsIntoStage">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
@@ -3446,6 +3443,36 @@
         <actionGroup ref="validateCannotSeeProductInDefaultProductCarousel" stepKey="validateCannotSeeProduct1Storefront2">
             <argument name="page" value="ProductsOnStorefront"/>
             <argument name="product" value="$$createProduct1$$"/>
+        </actionGroup>
+    </test>
+    <test name="AdminPageBuilderProductsCarouselValidateCanSaveProductsWithEmptyConditions" extends="AdminPageBuilderProductsGridValidateCanSaveProductsWithEmptyConditions">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Products"/>
+            <title value="Carousel - Validate Can Save Products with Empty Condition"/>
+            <description value="Validate that a user can save a Products content type without any conditions set"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="PB-207"/>
+            <testCaseId value="MC-22881"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-products"/>
+            <group value="pagebuilder-productsCarousel"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
+            <argument name="property" value="PageBuilderProductsProductCarouselAppearance"/>
+        </actionGroup>
+        <actionGroup ref="validateEmptyProductsContainer" stepKey="validateEmptyProductsContainerOnStage">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+        </actionGroup>
+        <actionGroup ref="validateEmptyProductsContainer" stepKey="validateEmptyProductsContainerOnStage2">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterProductsCount3">
+            <argument name="property" value="PageBuilderProductsCarouselCountPropertyMax"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProductOnStage3">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="product" value="_defaultProduct"/>
         </actionGroup>
     </test>
     <test name="AdminPageBuilderVerifySwatchDisplayedInPreviewCarousel" extends="AdminPageBuilderVerifySwatchDisplayedInPreviewGrid">
