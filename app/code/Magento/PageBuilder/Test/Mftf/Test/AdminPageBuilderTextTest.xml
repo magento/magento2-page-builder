@@ -357,7 +357,7 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="SwitchToVersion4ActionGroup" stepKey="switchToTinyMCE4" />
+            <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="switchToTinyMCE4"/>
             <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
             <createData entity="_defaultCmsPage" stepKey="createCMSPageB" />
         </before>
@@ -484,7 +484,7 @@
         <before>
             <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="SwitchToVersion4ActionGroup" stepKey="switchToTinyMCE4"/>
+            <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="switchToTinyMCE4"/>
         </before>
         <after>
             <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage"/>
@@ -525,7 +525,7 @@
         <before>
             <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="SwitchToVersion4ActionGroup" stepKey="switchToTinyMCE4" />
+            <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="switchToTinyMCE4"/>
         </before>
         <after>
             <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
@@ -582,10 +582,8 @@
         <before>
             <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="SwitchToVersion4ActionGroup" stepKey="switchToTinyMCE4" />
-            <actionGroup ref="UseStaticURLForMediaContentInWYSIWYG" stepKey="useStaticURLForMediaContentInWYSIWYG">
-                <argument name="value" value="Yes"/>
-            </actionGroup>
+            <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="switchToTinyMCE4"/>
+            <magentoCLI command="config:set cms/wysiwyg/use_static_urls_in_catalog 1" stepKey="useStaticURLForMediaContentInWYSIWYG"/>
         </before>
         <after>
             <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
@@ -659,7 +657,7 @@
         <before>
             <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="SwitchToVersion4ActionGroup" stepKey="switchToTinyMCE4" />
+            <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="switchToTinyMCE4"/>
         </before>
         <after>
             <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
@@ -725,7 +723,7 @@
             <createData entity="_defaultCmsPage" stepKey="createCMSPageA" />
             <createData entity="_defaultCmsPage" stepKey="createCMSPageB" />
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="SwitchToVersion4ActionGroup" stepKey="switchToTinyMCE4" />
+            <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="switchToTinyMCE4"/>
         </before>
         <after>
             <deleteData createDataKey="createCMSPageA" stepKey="deletePreReqCMSPageA" />
@@ -791,7 +789,7 @@
         <before>
             <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="SwitchToVersion4ActionGroup" stepKey="switchToTinyMCE4" />
+            <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="switchToTinyMCE4"/>
         </before>
         <after>
             <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
@@ -895,7 +893,7 @@
         <before>
             <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="SwitchToVersion4ActionGroup" stepKey="switchToTinyMCE4" />
+            <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="switchToTinyMCE4"/>
         </before>
         <after>
             <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
