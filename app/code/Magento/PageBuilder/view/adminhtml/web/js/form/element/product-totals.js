@@ -74,7 +74,7 @@ define([
                 }.bind(this)
             ).fail(function () {
                 this.value($t("An unknown error occurred. Please try again."));
-            });
+            }.bind(this));
         }, 10),
     });
 });

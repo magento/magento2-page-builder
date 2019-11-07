@@ -135,10 +135,9 @@ class ProductTotals extends \Magento\Backend\App\Action implements HttpPostActio
     {
         /** @var \Magento\Catalog\Model\ResourceModel\Product\Collection $collection */
         $collection = $this->createCollection();
-        $totalProducts = $collection->load()->getSize();
+        $totalProducts = $collection->getSize();
         $disabledProducts = $collection
             ->addAttributeToFilter('status', Status::STATUS_DISABLED)
-            ->load()
             ->getSize();
 
         return $this->jsonFactory->create()
