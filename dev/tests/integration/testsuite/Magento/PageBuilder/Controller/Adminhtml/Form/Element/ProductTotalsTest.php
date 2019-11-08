@@ -52,119 +52,95 @@ class ProductTotalsTest extends \Magento\TestFramework\TestCase\AbstractBackendC
     public function productDataProvider()
     {
         return [
-            // category with no products
-            [
-                [
-                    '1' => [
-                        'aggregator' => 'all',
-                        'new_child' => '',
-                        'type' => \Magento\CatalogWidget\Model\Rule\Condition\Combine::class,
-                        'value' => '1',
+            [ // category with no products
+                ['1' => [
+                    'aggregator' => 'all',
+                    'new_child' => '',
+                    'type' => \Magento\CatalogWidget\Model\Rule\Condition\Combine::class,
+                    'value' => '1',
                     ],
                     '1--1' => [
                         'operator' => '==',
                         'type' => \Magento\CatalogWidget\Model\Rule\Condition\Product::class,
                         'attribute' => 'category_ids',
                         'value' => '4'
-                    ],
-                ],
-                0,
-                0
+                    ]
+                ], 0, 0
             ],
-            // category with 4 products, 1 disabled
-            [
-                [
-                    '1' => [
-                        'aggregator' => 'all',
-                        'new_child' => '',
-                        'type' => \Magento\CatalogWidget\Model\Rule\Condition\Combine::class,
-                        'value' => '1',
+            [ // category with 4 products, 1 disabled
+                ['1' => [
+                    'aggregator' => 'all',
+                    'new_child' => '',
+                    'type' => \Magento\CatalogWidget\Model\Rule\Condition\Combine::class,
+                    'value' => '1',
                     ],
                     '1--1' => [
                         'operator' => '==',
                         'type' => \Magento\CatalogWidget\Model\Rule\Condition\Product::class,
                         'attribute' => 'category_ids',
                         'value' => '3'
-                    ],
-                ],
-                4,
-                1
+                    ]
+                ], 4, 1
             ],
-            // sku with no matches
-            [
-                [
-                    '1' => [
-                        'aggregator' => 'all',
-                        'new_child' => '',
-                        'type' => \Magento\CatalogWidget\Model\Rule\Condition\Combine::class,
-                        'value' => '1',
+            [ // sku with no matches
+                ['1' => [
+                    'aggregator' => 'all',
+                    'new_child' => '',
+                    'type' => \Magento\CatalogWidget\Model\Rule\Condition\Combine::class,
+                    'value' => '1',
                     ],
                     '1--1' => [
                         'operator' => '()',
                         'type' => \Magento\CatalogWidget\Model\Rule\Condition\Product::class,
                         'attribute' => 'sku',
                         'value' => 'shoes'
-                    ],
-                ],
-                0,
-                0
+                    ]
+                ], 0, 0
             ],
-            // sku with 2 matches, 1 disabled
-            [
-                [
-                    '1' => [
-                        'aggregator' => 'all',
-                        'new_child' => '',
-                        'type' => \Magento\CatalogWidget\Model\Rule\Condition\Combine::class,
-                        'value' => '1',
+            [ // sku with 2 matches, 1 disabled
+                ['1' => [
+                    'aggregator' => 'all',
+                    'new_child' => '',
+                    'type' => \Magento\CatalogWidget\Model\Rule\Condition\Combine::class,
+                    'value' => '1',
                     ],
                     '1--1' => [
                         'operator' => '()',
                         'type' => \Magento\CatalogWidget\Model\Rule\Condition\Product::class,
                         'attribute' => 'sku',
                         'value' => 'simple-3, simple-4'
-                    ],
-                ],
-                2,
-                1
+                    ]
+                ], 2, 1
             ],
-            // condition with no matches
-            [
-                [
-                    '1' => [
-                        'aggregator' => 'all',
-                        'new_child' => '',
-                        'type' => \Magento\CatalogWidget\Model\Rule\Condition\Combine::class,
-                        'value' => '1',
+            [ // condition with no matches
+                ['1' => [
+                    'aggregator' => 'all',
+                    'new_child' => '',
+                    'type' => \Magento\CatalogWidget\Model\Rule\Condition\Combine::class,
+                    'value' => '1',
                     ],
                     '1--1' => [
                         'operator' => '>=',
                         'type' => \Magento\CatalogWidget\Model\Rule\Condition\Product::class,
                         'attribute' => 'price',
                         'value' => '10000'
-                    ],
-                ],
-                0,
-                0
+                    ]
+                ], 0, 0
             ],
-            // condition with 3 matches, 1 disabled
-            [
-                [
-                    '1' => [
-                        'aggregator' => 'all',
-                        'new_child' => '',
-                        'type' => \Magento\CatalogWidget\Model\Rule\Condition\Combine::class,
-                        'value' => '1',
+            [ // condition with 3 matches, 1 disabled
+                ['1' => [
+                    'aggregator' => 'all',
+                    'new_child' => '',
+                    'type' => \Magento\CatalogWidget\Model\Rule\Condition\Combine::class,
+                    'value' => '1',
                     ],
                     '1--1' => [
                         'operator' => '<',
                         'type' => \Magento\CatalogWidget\Model\Rule\Condition\Product::class,
                         'attribute' => 'price',
                         'value' => '20'
-                    ],
-                ],
-                3,
-                1
+                    ]
+                ], 3, 1
             ],
         ];
     }
