@@ -51,6 +51,11 @@ class ProductTotals extends \Magento\Backend\App\Action implements HttpPostActio
     private $jsonFactory;
 
     /**
+     * @var \Magento\CatalogInventory\Helper\Stock
+     */
+    private $stockFilter;
+
+    /**
      * Constructor.
      *
      * @param \Magento\Backend\App\Action\Context $context
@@ -68,7 +73,8 @@ class ProductTotals extends \Magento\Backend\App\Action implements HttpPostActio
         \Magento\CatalogWidget\Model\Rule $rule,
         \Magento\Widget\Helper\Conditions $conditionsHelper,
         \Magento\Catalog\Api\CategoryRepositoryInterface $categoryRepository,
-        \Magento\Framework\Controller\Result\JsonFactory $jsonFactory
+        \Magento\Framework\Controller\Result\JsonFactory $jsonFactory,
+        \Magento\CatalogInventory\Helper\Stock $stockFilter
     ) {
         $this->productCollectionFactory = $productCollectionFactory;
         $this->sqlBuilder = $sqlBuilder;
@@ -76,6 +82,7 @@ class ProductTotals extends \Magento\Backend\App\Action implements HttpPostActio
         $this->conditionsHelper = $conditionsHelper;
         $this->categoryRepository = $categoryRepository;
         $this->jsonFactory = $jsonFactory;
+        $this->stockFilter = $stockFilter;
         parent::__construct($context);
     }
 
@@ -135,26 +142,30 @@ class ProductTotals extends \Magento\Backend\App\Action implements HttpPostActio
     {
         /** @var \Magento\Catalog\Model\ResourceModel\Product\Collection $collection */
         $collection = $this->createCollection();
+        $this->stockFilter->addInStockFilterToCollection($collection);
         $collection->getSelect()->joinLeft(
             ['super_link_table' => $collection->getTable('catalog_product_super_link')],
             'super_link_table.product_id = e.entity_id',
             ['product_id']
         )->joinLeft(
             ['link_table' => $collection->getTable('catalog_product_link')],
-            'link_table.linked_product_id = e.entity_id',
+            'link_table.product_id = e.entity_id',
             ['product_id']
-        )->where('link_table.linked_product_id IS NULL AND super_link_table.product_id IS NULL');
+        )->where('link_table.product_id IS NULL OR super_link_table.product_id IS NULL');
 
-        $totalProducts = $collection->getSize();
-        $disabledProducts = $collection
-            ->addAttributeToFilter('status', Status::STATUS_DISABLED)
-            ->getSize();
+        // Clone the collection before we add enabled status filter
+        $disabledProductsCollection = clone $collection;
+        $disabledProductsCollection->addAttributeToFilter('status', Status::STATUS_DISABLED);
+
+        // Only display enabled products in totals count
+        $collection->addAttributeToFilter('status', Status::STATUS_ENABLED);
+        $collection->setVisibility(\Magento\Catalog\Model\Product\Visibility::VISIBILITY_BOTH);
 
         return $this->jsonFactory->create()
             ->setData(
                 [
-                    'total' => $totalProducts,
-                    'disabled' => $disabledProducts
+                    'total' => $collection->getSize(),
+                    'disabled' => $disabledProductsCollection->getSize()
                 ]
             );
     }
