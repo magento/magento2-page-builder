@@ -22,7 +22,6 @@ define([
             listens: {
                 conditionOption: 'updateProductTotals',
                 conditionValue: 'updateProductTotals',
-                formData: 'updateProductTotals'
             },
             imports: {
                 formData: '${ $.provider }:data'
