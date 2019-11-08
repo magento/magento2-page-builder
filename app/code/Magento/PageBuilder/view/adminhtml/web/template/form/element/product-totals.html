@@ -5,7 +5,6 @@
  */
 -->
 <div data-role="spinner"
-     class="admin__data-grid-loading-mask"
      visible="loading"
      if="showSpinner">
     <div class="spinner">
@@ -13,6 +12,7 @@
     </div>
 </div>
 <span class="admin__field-value"
+      visible="!loading()"
       data-bind="
         text: value,
         attr: {
