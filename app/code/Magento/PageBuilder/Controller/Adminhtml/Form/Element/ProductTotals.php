@@ -9,6 +9,7 @@ declare(strict_types=1);
 namespace Magento\PageBuilder\Controller\Adminhtml\Form\Element;
 
 use Magento\Catalog\Model\Product\Attribute\Source\Status;
+use Magento\Catalog\Model\Product\Visibility;
 use Magento\Framework\App\Action\HttpPostActionInterface;
 
 /**
@@ -159,7 +160,7 @@ class ProductTotals extends \Magento\Backend\App\Action implements HttpPostActio
 
         // Only display enabled products in totals count
         $collection->addAttributeToFilter('status', Status::STATUS_ENABLED);
-        $collection->setVisibility(\Magento\Catalog\Model\Product\Visibility::VISIBILITY_BOTH);
+        $collection->setVisibility(Visibility::VISIBILITY_BOTH);
 
         return $this->jsonFactory->create()
             ->setData(
