@@ -14,7 +14,7 @@ Should you find an issue in Page Builder functionality, please report it on GitH
 Please use this link to access the latest Page Builder documentation: https://devdocs.magento.com/page-builder/docs/index.html
 
 ## GitHub installation only
-
+yuk
 **The pre-release version of Page Builder MUST be installed by cloning the GitHub repos as described here.**
 
 Before installing Page Builder, make sure you have:
