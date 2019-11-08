@@ -31,13 +31,15 @@ define([
                 value: false
             },
             url: null,
-            valuePlaceholder: $t('of %1 (%2 disabled)')
+            valuePlaceholder: $t('of %1 (%2 disabled)'),
+            showSpinner: true,
+            loading: false
         },
 
         /** @inheritdoc */
         initObservable: function () {
             return this._super()
-                .observe('value totalProductCount totalDisabledProducts');
+                .observe('value totalProductCount totalDisabledProducts loading');
         },
 
         /**
@@ -45,8 +47,7 @@ define([
          *
          */
         updateProductTotals: _.debounce(function () {
-            if (!this.conditionOption || _.isEmpty(this.formData) ||
-                (this.conditionOption === 'sku' && (!this.formData['sku'] || this.formData['sku'] === ''))) {
+            if (!this.conditionOption || _.isEmpty(this.formData)) {
                 return;
             }
 
@@ -57,6 +58,7 @@ define([
             _.extend(this.formData, this.conditionValue);
             conditionsDataProcessor(this.formData, this.conditionOption + '_source');
 
+            this.loading(true);
             $.ajax({
                 url: this.url,
                 method: 'POST',
@@ -71,9 +73,11 @@ define([
                             .replace('%1', this.totalProductCount())
                             .replace('%2', this.totalDisabledProducts())
                     );
+                    this.loading(false);
                 }.bind(this)
             ).fail(function () {
                 this.value($t('An unknown error occurred. Please try again.'));
+                this.loading(false);
             }.bind(this));
         }, 10),
     });
