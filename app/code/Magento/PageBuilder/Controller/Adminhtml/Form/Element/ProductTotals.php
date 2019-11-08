@@ -134,12 +134,12 @@ class ProductTotals extends \Magento\Backend\App\Action implements HttpPostActio
     public function execute()
     {
         /** @var \Magento\Catalog\Model\ResourceModel\Product\Collection $collection */
-        $collection = $this->createCollection()
-            ->getSelect()->joinLeft(
-                ['link_table' => $collection->getTable('catalog_product_super_link')],
-                'link_table.product_id = e.entity_id',
-                ['product_id']
-            )->where('link_table.product_id IS NULL');
+        $collection = $this->createCollection();
+        $collection->getSelect()->joinLeft(
+            ['link_table' => $collection->getTable('catalog_product_super_link')],
+            'link_table.product_id = e.entity_id',
+            ['product_id']
+        )->where('link_table.product_id IS NULL');
         $totalProducts = $collection->getSize();
         $disabledProducts = $collection
             ->addAttributeToFilter('status', Status::STATUS_DISABLED)
