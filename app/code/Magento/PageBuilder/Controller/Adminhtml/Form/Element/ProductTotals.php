@@ -143,7 +143,6 @@ class ProductTotals extends \Magento\Backend\App\Action implements HttpPostActio
     {
         /** @var \Magento\Catalog\Model\ResourceModel\Product\Collection $collection */
         $collection = $this->createCollection();
-        $this->stockFilter->addInStockFilterToCollection($collection);
         $collection->getSelect()->joinLeft(
             ['super_link_table' => $collection->getTable('catalog_product_super_link')],
             'super_link_table.product_id = e.entity_id',
@@ -161,6 +160,7 @@ class ProductTotals extends \Magento\Backend\App\Action implements HttpPostActio
         // Only display enabled products in totals count
         $collection->addAttributeToFilter('status', Status::STATUS_ENABLED);
         $collection->setVisibility(Visibility::VISIBILITY_BOTH);
+        $this->stockFilter->addIsInStockFilterToCollection($collection);
 
         return $this->jsonFactory->create()
             ->setData(
