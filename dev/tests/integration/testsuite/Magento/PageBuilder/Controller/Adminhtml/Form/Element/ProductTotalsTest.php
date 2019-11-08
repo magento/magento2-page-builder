@@ -67,7 +67,7 @@ class ProductTotalsTest extends \Magento\TestFramework\TestCase\AbstractBackendC
                     ]
                 ], 0, 0
             ],
-            [ // category with 4 products, 1 disabled
+            [ // category with 4 products, 1 disabled, 1 not visible
                 ['1' => [
                     'aggregator' => 'all',
                     'new_child' => '',
@@ -80,7 +80,7 @@ class ProductTotalsTest extends \Magento\TestFramework\TestCase\AbstractBackendC
                         'attribute' => 'category_ids',
                         'value' => '3'
                     ]
-                ], 4, 1
+                ], 2, 1
             ],
             [ // sku with no matches
                 ['1' => [
@@ -97,7 +97,7 @@ class ProductTotalsTest extends \Magento\TestFramework\TestCase\AbstractBackendC
                     ]
                 ], 0, 0
             ],
-            [ // sku with 2 matches, 1 disabled
+            [ // sku with 2 matches, 1 disabled, 1 not visible
                 ['1' => [
                     'aggregator' => 'all',
                     'new_child' => '',
@@ -110,7 +110,7 @@ class ProductTotalsTest extends \Magento\TestFramework\TestCase\AbstractBackendC
                         'attribute' => 'sku',
                         'value' => 'simple-3, simple-4'
                     ]
-                ], 2, 1
+                ], 0, 1
             ],
             [ // condition with no matches
                 ['1' => [
@@ -140,7 +140,7 @@ class ProductTotalsTest extends \Magento\TestFramework\TestCase\AbstractBackendC
                         'attribute' => 'price',
                         'value' => '20'
                     ]
-                ], 3, 1
+                ], 1, 1
             ],
         ];
     }
