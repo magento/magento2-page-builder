@@ -52,7 +52,6 @@ export default class Preview extends PreviewCollection {
                 jarallax(
                     this.element,
                     {
-                        imgSrc: (this.contentType.dataStore.get("background_image") as any[])[0].url as string,
                         imgPosition: this.contentType.dataStore.get("background_position") as string || "50% 50%",
                         imgRepeat: (
                             (this
@@ -92,6 +91,11 @@ export default class Preview extends PreviewCollection {
             if (args.contentType.parentContentType && args.contentType.parentContentType.id === this.contentType.id) {
                 this.buildJarallax();
             }
+        });
+        events.on(`stage:${this.contentType.stageId}:fullScreenModeChangeAfter`, () => {
+            _.delay(() => {
+                this.buildJarallax();
+            }, 350);
         });
     }
 
