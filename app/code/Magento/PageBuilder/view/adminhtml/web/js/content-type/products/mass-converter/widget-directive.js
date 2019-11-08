@@ -61,10 +61,14 @@ define(["Magento_PageBuilder/js/mass-converter/widget-directive-abstract", "Mage
         products_count: data.products_count,
         sort_order: data.sort_order,
         condition_option: data.condition_option,
-        condition_option_value: this.encodeWysiwygCharacters(data[data.condition_option] || ""),
+        condition_option_value: "",
         type_name: "Catalog Products List",
         conditions_encoded: this.encodeWysiwygCharacters(data.conditions_encoded || "")
       };
+
+      if (typeof data[data.condition_option] === "string") {
+        attributes.condition_option_value = this.encodeWysiwygCharacters(data[data.condition_option]);
+      }
 
       if (attributes.conditions_encoded.length === 0) {
         return data;
