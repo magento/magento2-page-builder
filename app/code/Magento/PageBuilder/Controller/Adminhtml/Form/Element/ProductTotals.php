@@ -141,9 +141,9 @@ class ProductTotals extends \Magento\Backend\App\Action implements HttpPostActio
             ['product_id']
         )->joinLeft(
             ['link_table' => $collection->getTable('catalog_product_link')],
-            'link_table.product_id = e.entity_id',
+            'link_table.linked_product_id = e.entity_id',
             ['product_id']
-        )->where('link_table.product_id IS NULL OR super_link_table.product_id IS NULL');
+        )->where('link_table.linked_product_id IS NULL AND super_link_table.product_id IS NULL');
 
         $totalProducts = $collection->getSize();
         $disabledProducts = $collection
