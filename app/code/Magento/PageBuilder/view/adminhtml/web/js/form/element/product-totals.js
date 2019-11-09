@@ -19,9 +19,11 @@ define([
             formData: {},
             totalProductCount: 0,
             totalDisabledProducts: 0,
+            category_ids: '',
             listens: {
                 conditionOption: 'updateProductTotals',
                 conditionValue: 'updateProductTotals',
+                formData: 'updateProductTotals'
             },
             imports: {
                 formData: '${ $.provider }:data'
@@ -46,13 +48,16 @@ define([
          *
          */
         updateProductTotals: _.debounce(function () {
-            if (!this.conditionOption || _.isEmpty(this.formData)) {
+            if (!this.conditionOption || _.isEmpty(this.formData) ||
+                (this.conditionOption === 'category_ids' && this.category_ids === this.formData['category_ids'])) {
                 return;
             }
 
-            if (this.conditionOption === 'category_ids' && typeof this.formData[this.conditionOption] != "string") {
-                this.formData[this.conditionOption] = '';
+            if (this.conditionOption === 'category_ids' && typeof this.formData['category_ids'] != "string") {
+                this.formData['category_ids'] = '';
             }
+
+            this.category_ids = this.conditionOption === 'category_ids' ? this.formData['category_ids'] : '';
 
             _.extend(this.formData, this.conditionValue);
             conditionsDataProcessor(this.formData, this.conditionOption + '_source');
