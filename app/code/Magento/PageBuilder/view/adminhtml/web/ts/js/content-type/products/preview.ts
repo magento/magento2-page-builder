@@ -25,6 +25,7 @@ import BasePreview from "../preview";
 export default class Preview extends BasePreview {
     public displayPreview: KnockoutObservable<boolean> = ko.observable(false);
     public placeholderText: KnockoutObservable<string>;
+    public previewElement: JQueryDeferred<Element> = $.Deferred();
     public widgetUnsanitizedHtml: KnockoutObservable<string> = ko.observable();
     protected slidesToShow: number = 5;
     private element: Element;
@@ -101,6 +102,7 @@ export default class Preview extends BasePreview {
      */
     public onAfterRender(element: Element): void {
         this.element = element;
+        this.previewElement.resolve(element);
         this.initSlider();
     }
 
@@ -146,6 +148,10 @@ export default class Preview extends BasePreview {
                         this.widgetUnsanitizedHtml(response.data.content);
                         this.displayPreview(true);
                     }
+
+                    this.previewElement.done(() => {
+                        $(this.element).trigger("contentUpdated");
+                    });
                 })
                 .fail(() => {
                     this.placeholderText(this.messages.UNKNOWN_ERROR);
