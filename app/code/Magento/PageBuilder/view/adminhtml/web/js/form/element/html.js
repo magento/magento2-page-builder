@@ -37,8 +37,11 @@ define(['Magento_Ui/js/form/components/html', 'jquery'], function (Html, $) {
             }, function (el) {
                 this.elements.push(el);
                 $(el).on('change', this.updateValue.bind(this));
-                $('.rule-param-apply').on('click', function(e) {
-                    $(e.target).closest('.rule-param-apply').prevAll('input.element-value-changer').change();
+                $(el).nextAll('.rule-param-apply').on('click', function() {
+                    $(el).change();
+                });
+                $(el).closest('li').find('.rule-param-remove').on('click', function() {
+                    $(el).val('').change();
                 });
                 this.updateValue(this);
             }.bind(this));

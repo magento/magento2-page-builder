@@ -66,6 +66,7 @@ class ProductTotals extends \Magento\Backend\App\Action implements HttpPostActio
      * @param \Magento\Widget\Helper\Conditions $conditionsHelper
      * @param \Magento\Catalog\Api\CategoryRepositoryInterface $categoryRepository
      * @param \Magento\Framework\Controller\Result\JsonFactory $jsonFactory
+     * @param \Magento\CatalogInventory\Helper\Stock $stockFilter
      */
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
@@ -159,7 +160,7 @@ class ProductTotals extends \Magento\Backend\App\Action implements HttpPostActio
 
         // Only display enabled products in totals count
         $collection->addAttributeToFilter('status', Status::STATUS_ENABLED);
-        $collection->setVisibility(Visibility::VISIBILITY_BOTH);
+        $collection->setVisibility([Visibility::VISIBILITY_BOTH]);
         $this->stockFilter->addIsInStockFilterToCollection($collection);
 
         return $this->jsonFactory->create()
