@@ -21,11 +21,9 @@ define([
             totalDisabledProducts: 0,
             totalNotVisibleProducts: 0,
             totalOutOfStockProducts: 0,
-            category_ids: '',
             listens: {
                 conditionOption: 'updateProductTotals',
                 conditionValue: 'updateProductTotals',
-                category_ids: 'updateProductTotals'
             },
             imports: {
                 formData: '${ $.provider }:data'
@@ -39,7 +37,21 @@ define([
             notVisiblePlaceholder: $t('%1 not visible'),
             outOfStockPlaceholder: $t('%1 out of stock'),
             showSpinner: true,
-            loading: false
+            loading: false,
+            jqXHR: null
+        },
+
+        initialize: function() {
+            $('.cms-page-edit .modals-wrapper').on('modalclosed', function () {
+                this.abortRunningRequest();
+            }.bind(this));
+            return this._super();
+        },
+
+        abortRunningRequest: function() {
+            if (this.jqXHR && this.jqXHR.readyState !== 4) {
+                this.jqXHR.abort();
+            }
         },
 
         /** @inheritdoc */
@@ -49,9 +61,13 @@ define([
                     'totalOutOfStockProducts loading');
         },
 
+        callSuperError: function (jqXHR) {
+            var superError = $.ajaxSettings.error.bind(window, jqXHR);
+            superError();
+        },
+
         /**
          * Update product count.
-         *
          */
         updateProductTotals: _.debounce(function () {
             var totalText,
@@ -61,7 +77,7 @@ define([
                 return;
             }
 
-            if (this.conditionOption === 'category_ids' && typeof this.formData['category_ids'] != 'string') {
+            if (this.conditionOption === 'category_ids' && typeof this.formData['category_ids'] !== 'string') {
                 this.formData['category_ids'] = '';
             }
 
@@ -69,12 +85,18 @@ define([
             conditionsDataProcessor(this.formData, this.conditionOption + '_source');
 
             this.loading(true);
-            $.ajax({
+            this.abortRunningRequest();
+            this.jqXHR = $.ajax({
                 url: this.url,
                 method: 'POST',
                 data: {
                     conditionValue: this.formData['conditions_encoded']
-                }
+                },
+                error: function (jqXHR) {
+                    if (jqXHR.statusText !== 'abort') {
+                        this.callSuperError(jqXHR)
+                    }
+                }.bind(this)
             }).done(function (response) {
                 this.totalProductCount(parseInt(response.total, 10));
                 this.totalDisabledProducts(parseInt(response.disabled, 10));
@@ -102,7 +124,9 @@ define([
                 this.value(totalText);
                 this.loading(false);
             }.bind(this)).fail(function () {
-                this.value($t('An unknown error occurred. Please try again.'));
+                if (this.jqXHR.statusText !== 'abort') {
+                    this.value($t('An unknown error occurred. Please try again.'));
+                }
                 this.loading(false);
             }.bind(this));
         }, 10)

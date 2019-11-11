@@ -231,10 +231,12 @@
                     <dataType>text</dataType>
                     <imports>
                         <link name="conditionOption">ns = ${ $.ns }, index = condition_option:value</link>
-                        <link name="category_ids">ns = ${ $.ns }, index = category_ids:value</link>
-                        <link name="updateProductTotals">ns = ${ $.ns }, index = sku:value</link>
                         <link name="conditionValue">ns = ${ $.ns }, index = conditions_form:value</link>
                     </imports>
+                    <listens>
+                        <link name="${ $.ns }.${ $.ns }.appearance_fieldset.category_ids:value">updateProductTotals</link>
+                        <link name="${ $.ns }.${ $.ns }.appearance_fieldset.sku:value">updateProductTotals</link>
+                    </listens>
                 </settings>
             </field>
         </container>
