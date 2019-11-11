@@ -1,4 +1,5 @@
 /*eslint-disable */
+/* jscs:disable */
 define(["Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/master-factory", "Magento_PageBuilder/js/content-type/preview-factory", "Magento_PageBuilder/js/utils/loader"], function (_events, _underscore, _config, _masterFactory, _previewFactory, _loader) {
   /**
    * Copyright © Magento, Inc. All rights reserved.

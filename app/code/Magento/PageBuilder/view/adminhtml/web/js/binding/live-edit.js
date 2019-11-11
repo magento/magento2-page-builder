@@ -1,4 +1,5 @@
 /*eslint-disable */
+/* jscs:disable */
 define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes", "underscore"], function (_jquery, _knockout, _keyCodes, _underscore) {
   "use strict";
 

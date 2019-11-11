@@ -79,7 +79,10 @@ define([
             if (!this.isComponentInitialized()) {
                 this.loading(true);
                 this.pageBuilder = new PageBuilder(this.wysiwygConfigData(), this.initialValue);
-                events.trigger('pagebuilder:register', {ns: this.ns, instance: this.pageBuilder});
+                events.trigger('pagebuilder:register', {
+                    ns: this.ns,
+                    instance: this.pageBuilder
+                });
                 this.initPageBuilderListeners();
                 this.isComponentInitialized(true);
 
@@ -125,7 +128,9 @@ define([
          * Toggle Page Builder full screen mode
          */
         toggleFullScreen: function () {
-            events.trigger('stage:' + this.pageBuilder.id + ':toggleFullscreen', {animate: false});
+            events.trigger('stage:' + this.pageBuilder.id + ':toggleFullscreen', {
+                animate: false
+            });
         },
 
         /**
@@ -186,12 +191,14 @@ define([
 
                         fullScreenDeferred.resolve();
 
+                        /* eslint-disable max-depth */
                         // If the stage has already rendered once we don't need to wait until animating the stage in
                         if (rendered) {
                             _.defer(function () {
                                 this.transition(true);
                             }.bind(this));
                         }
+                        /* eslint-enable max-depth */
                     }
                 }
             }.bind(this));

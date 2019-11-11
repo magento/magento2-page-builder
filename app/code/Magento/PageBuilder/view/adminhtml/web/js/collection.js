@@ -1,4 +1,5 @@
 /*eslint-disable */
+/* jscs:disable */
 define(["knockout", "Magento_PageBuilder/js/utils/array"], function (_knockout, _array) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
