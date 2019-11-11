@@ -19,9 +19,11 @@ define([
             formData: {},
             totalProductCount: 0,
             totalDisabledProducts: 0,
+            totalNotVisibleProducts: 0,
+            totalOutOfStockProducts: 0,
             listens: {
                 conditionOption: 'updateProductTotals',
-                conditionValue: 'updateProductTotals',
+                conditionValue: 'updateProductTotals'
             },
             imports: {
                 formData: '${ $.provider }:data'
@@ -30,7 +32,10 @@ define([
                 value: false
             },
             url: null,
-            valuePlaceholder: $t('of %1 (%2 disabled)'),
+            valuePlaceholder: $t('of %1 total'),
+            disabledPlaceholder: $t('%1 disabled'),
+            notVisiblePlaceholder: $t('%1 not visible'),
+            outOfStockPlaceholder: $t('%1 out of stock'),
             showSpinner: true,
             loading: false
         },
@@ -38,7 +43,8 @@ define([
         /** @inheritdoc */
         initObservable: function () {
             return this._super()
-                .observe('value totalProductCount totalDisabledProducts loading');
+                .observe('value totalProductCount totalDisabledProducts totalNotVisibleProducts ' +
+                    'totalOutOfStockProducts loading');
         },
 
         /**
@@ -46,11 +52,14 @@ define([
          *
          */
         updateProductTotals: _.debounce(function () {
+            var totalText,
+                negativeTotals = [];
+
             if (!this.conditionOption || _.isEmpty(this.formData)) {
                 return;
             }
 
-            if (this.conditionOption === 'category_ids' && typeof this.formData[this.conditionOption] != "string") {
+            if (this.conditionOption === 'category_ids' && typeof this.formData[this.conditionOption] != 'string') {
                 this.formData[this.conditionOption] = '';
             }
 
@@ -65,19 +74,35 @@ define([
                     conditionValue: this.formData['conditions_encoded']
                 }
             }).done(function (response) {
-                    this.totalProductCount(response['total']);
-                    this.totalDisabledProducts(response['disabled']);
-                    this.value(
-                        this.valuePlaceholder
-                            .replace('%1', this.totalProductCount())
-                            .replace('%2', this.totalDisabledProducts())
-                    );
-                    this.loading(false);
-                }.bind(this)
-            ).fail(function () {
+                this.totalProductCount(parseInt(response.total, 10));
+                this.totalDisabledProducts(parseInt(response.disabled, 10));
+                this.totalNotVisibleProducts(parseInt(response.notVisible, 10));
+                this.totalOutOfStockProducts(parseInt(response.outOfStock, 10));
+                totalText = this.valuePlaceholder
+                    .replace('%1', parseInt(response.total, 10));
+
+                if (parseInt(response.disabled, 10) > 0) {
+                    negativeTotals.push(this.disabledPlaceholder.replace('%1', parseInt(response.disabled, 10)));
+                }
+
+                if (parseInt(response.notVisible, 10) > 0) {
+                    negativeTotals.push(this.notVisiblePlaceholder.replace('%1', parseInt(response.notVisible, 10)));
+                }
+
+                if (parseInt(response.outOfStock, 10) > 0) {
+                    negativeTotals.push(this.outOfStockPlaceholder.replace('%1', parseInt(response.outOfStock, 10)));
+                }
+
+                if (negativeTotals.length > 0) {
+                    totalText += ' (' + negativeTotals.join(', ') + ')';
+                }
+
+                this.value(totalText);
+                this.loading(false);
+            }.bind(this)).fail(function () {
                 this.value($t('An unknown error occurred. Please try again.'));
                 this.loading(false);
             }.bind(this));
-        }, 10),
+        }, 10)
     });
 });

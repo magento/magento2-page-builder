@@ -57,8 +57,6 @@ class ProductTotals extends \Magento\Backend\App\Action implements HttpPostActio
     private $stockFilter;
 
     /**
-     * Constructor.
-     *
      * @param \Magento\Backend\App\Action\Context $context
      * @param \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory $productCollectionFactory
      * @param \Magento\Rule\Model\Condition\Sql\Builder $sqlBuilder
@@ -66,6 +64,7 @@ class ProductTotals extends \Magento\Backend\App\Action implements HttpPostActio
      * @param \Magento\Widget\Helper\Conditions $conditionsHelper
      * @param \Magento\Catalog\Api\CategoryRepositoryInterface $categoryRepository
      * @param \Magento\Framework\Controller\Result\JsonFactory $jsonFactory
+     * @param \Magento\CatalogInventory\Helper\Stock $stockFilter
      */
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
@@ -115,11 +114,12 @@ class ProductTotals extends \Magento\Backend\App\Action implements HttpPostActio
     /**
      * Prepare and return product collection
      *
-     * @return \Magento\Catalog\Model\ResourceModel\Product\Collection
+     * @return Collection
+     * @throws \Magento\Framework\Exception\LocalizedException
      */
     private function createCollection()
     {
-        /** @var $collection \Magento\Catalog\Model\ResourceModel\Product\Collection */
+        /** @var $collection Collection */
         $collection = $this->productCollectionFactory->create();
 
         /** @var \Magento\Rule\Model\Condition\Combine $conditions */
@@ -143,6 +143,8 @@ class ProductTotals extends \Magento\Backend\App\Action implements HttpPostActio
     {
         /** @var \Magento\Catalog\Model\ResourceModel\Product\Collection $collection */
         $collection = $this->createCollection();
+
+        // Exclude any linked products, e.g. simple products assigned to a configurable, bundle or group
         $collection->getSelect()->joinLeft(
             ['super_link_table' => $collection->getTable('catalog_product_super_link')],
             'super_link_table.product_id = e.entity_id',
@@ -153,20 +155,44 @@ class ProductTotals extends \Magento\Backend\App\Action implements HttpPostActio
             ['product_id']
         )->where('link_table.product_id IS NULL OR super_link_table.product_id IS NULL');
 
-        // Clone the collection before we add enabled status filter
-        $disabledProductsCollection = clone $collection;
-        $disabledProductsCollection->addAttributeToFilter('status', Status::STATUS_DISABLED);
+        // Retrieve all disabled products
+        $disabledCollection = clone $collection;
+        $disabledCollection->addAttributeToFilter('status', Status::STATUS_DISABLED);
 
-        // Only display enabled products in totals count
-        $collection->addAttributeToFilter('status', Status::STATUS_ENABLED);
-        $collection->setVisibility(Visibility::VISIBILITY_BOTH);
-        $this->stockFilter->addIsInStockFilterToCollection($collection);
+        // Retrieve all not visible individually products
+        $notVisibleCollection = clone $collection;
+        $notVisibleCollection->addAttributeToFilter(
+            'visibility',
+            [
+                Visibility::VISIBILITY_NOT_VISIBLE,
+                Visibility::VISIBILITY_IN_SEARCH
+            ]
+        );
+
+        // Retrieve in stock products, then subtract them from the total
+        $outOfStockCollection = clone $collection;
+        $this->stockFilter->addIsInStockFilterToCollection($outOfStockCollection);
+        // Remove existing stock_status where condition from query
+        $outOfStockWhere = $outOfStockCollection->getSelect()->getPart(\Magento\Framework\DB\Select::WHERE);
+        $outOfStockWhere = array_filter(
+            $outOfStockWhere,
+            function ($whereCondition) {
+                return !stristr($whereCondition, 'stock_status');
+            }
+        );
+        $outOfStockCollection->getSelect()->setPart(\Magento\Framework\DB\Select::WHERE, $outOfStockWhere);
+        $outOfStockCollection->getSelect()->where(
+            'stock_status_index.stock_status = ?',
+            \Magento\CatalogInventory\Model\Stock\Status::STATUS_OUT_OF_STOCK
+        );
 
         return $this->jsonFactory->create()
             ->setData(
                 [
                     'total' => $collection->getSize(),
-                    'disabled' => $disabledProductsCollection->getSize()
+                    'disabled' => $disabledCollection->getSize(),
+                    'notVisible' => $notVisibleCollection->getSize(),
+                    'outOfStock' => $outOfStockCollection->getSize(),
                 ]
             );
     }
