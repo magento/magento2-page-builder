@@ -21,9 +21,11 @@ define([
             totalDisabledProducts: 0,
             totalNotVisibleProducts: 0,
             totalOutOfStockProducts: 0,
+            category_ids: '',
             listens: {
                 conditionOption: 'updateProductTotals',
-                conditionValue: 'updateProductTotals'
+                conditionValue: 'updateProductTotals',
+                category_ids: 'updateProductTotals'
             },
             imports: {
                 formData: '${ $.provider }:data'
@@ -59,8 +61,8 @@ define([
                 return;
             }
 
-            if (this.conditionOption === 'category_ids' && typeof this.formData[this.conditionOption] != 'string') {
-                this.formData[this.conditionOption] = '';
+            if (this.conditionOption === 'category_ids' && typeof this.formData['category_ids'] != 'string') {
+                this.formData['category_ids'] = '';
             }
 
             _.extend(this.formData, this.conditionValue);

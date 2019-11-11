@@ -32,6 +32,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
       _this = _preview2.call(this, contentType, config, observableUpdater) || this;
       _this.displayPreview = _knockout.observable(false);
+      _this.previewElement = _jquery.Deferred();
       _this.widgetUnsanitizedHtml = _knockout.observable();
       _this.slidesToShow = 5;
       _this.productItemSelector = ".product-item";
@@ -86,6 +87,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
     _proto.onAfterRender = function onAfterRender(element) {
       this.element = element;
+      this.previewElement.resolve(element);
       this.initSlider();
     }
     /**
@@ -134,6 +136,10 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
             _this2.displayPreview(true);
           }
+
+          _this2.previewElement.done(function () {
+            (0, _jquery)(_this2.element).trigger("contentUpdated");
+          });
         }).fail(function () {
           _this2.placeholderText(_this2.messages.UNKNOWN_ERROR);
         });
