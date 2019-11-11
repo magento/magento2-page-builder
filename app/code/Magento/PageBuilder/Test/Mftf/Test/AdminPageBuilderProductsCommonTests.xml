@@ -1113,19 +1113,27 @@
         <before>
             <createData entity="PageBuilderProductsSubCategory" stepKey="createCategory1"/>
             <createData entity="PageBuilderProductsSubCategory" stepKey="createCategory2"/>
-            <createData entity="_defaultProduct" stepKey="createCategory1Product1">
+            <createData entity="_defaultProduct" stepKey="createProduct1">
                 <requiredEntity createDataKey="createCategory1"/>
             </createData>
-            <createData entity="_defaultProduct" stepKey="createCategory1Product2">
+            <createData entity="_defaultProduct" stepKey="createProduct2">
                 <requiredEntity createDataKey="createCategory1"/>
             </createData>
-            <createData entity="_defaultProduct" stepKey="createCategory1Product3">
+            <createData entity="_defaultProduct" stepKey="createProduct3">
+                <requiredEntity createDataKey="createCategory1"/>
+            </createData>
+            <createData entity="SimpleProduct4" stepKey="createOutOfStockProduct">
+                <requiredEntity createDataKey="createCategory1"/>
+            </createData>
+            <createData entity="SimpleProductNotVisibleIndividually2" stepKey="createNotVisibleProduct">
+                <requiredEntity createDataKey="createCategory1"/>
+            </createData>
+            <createData entity="SimpleProductDisabled2" stepKey="createDisabledProduct">
                 <requiredEntity createDataKey="createCategory1"/>
             </createData>
             <createData entity="_defaultProduct" stepKey="createCategory2Product">
                 <requiredEntity createDataKey="createCategory2"/>
             </createData>
-            <createData entity="SimpleProductDisabled" stepKey="createDisabledProduct"/>
             <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="navigateToCMSPage" stepKey="navigateToCMSPage">
@@ -1136,11 +1144,13 @@
         <after>
             <deleteData createDataKey="createCategory1" stepKey="deleteCategory1"/>
             <deleteData createDataKey="createCategory2" stepKey="deleteCategory2"/>
-            <deleteData createDataKey="createCategory1Product1" stepKey="deleteCategory1Product1"/>
-            <deleteData createDataKey="createCategory1Product2" stepKey="deleteCategory1Product2"/>
-            <deleteData createDataKey="createCategory1Product3" stepKey="deleteCategory1Product3"/>
-            <deleteData createDataKey="createCategory2Product" stepKey="deleteCategory2Product"/>
+            <deleteData createDataKey="createProduct1" stepKey="deleteProduct1"/>
+            <deleteData createDataKey="createProduct2" stepKey="deleteProduct2"/>
+            <deleteData createDataKey="createProduct3" stepKey="deleteProduct3"/>
+            <deleteData createDataKey="createOutOfStockProduct" stepKey="deleteOutOfStockProduct"/>
+            <deleteData createDataKey="createNotVisibleProduct" stepKey="deleteNotVisibleProduct"/>
             <deleteData createDataKey="createDisabledProduct" stepKey="deleteDisabledProduct"/>
+            <deleteData createDataKey="createCategory2Product" stepKey="deleteCategory2Product"/>
             <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
@@ -1165,7 +1175,7 @@
             <argument name="category" value="$$createCategory1.name$$"/>
         </actionGroup>
         <actionGroup ref="validateProductTotals" stepKey="validateTotalProductsOnEditPanelAgain1">
-            <argument name="productsTotals" value="of 3 (0 disabled)"/>
+            <argument name="productsTotals" value="of 6 total (1 disabled, 1 not visible, 1 out of stock)"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel1"/>
         <actionGroup ref="validateProductCountInProducts" stepKey="validateTotalProductsOnStage1">
@@ -1180,7 +1190,7 @@
             <argument name="property" value="PageBuilderProductsProductCarouselAppearance"/>
         </actionGroup>
         <actionGroup ref="validateProductTotals" stepKey="validateTotalProductsOnEditPanel2">
-            <argument name="productsTotals" value="of 3 (0 disabled)"/>
+            <argument name="productsTotals" value="of 6 total (1 disabled, 1 not visible, 1 out of stock)"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel2"/>
         <actionGroup ref="validateProductCountInProducts" stepKey="validateTotalProductsOnStage2">
@@ -1196,10 +1206,10 @@
         </actionGroup>
         <actionGroup ref="validateProductTotals" stepKey="validateTotalProductsOnEditPanel3"/>
         <actionGroup ref="addSKUsToSelectProductsBySKU" stepKey="addProductsSKUsToInputField3">
-            <argument name="SKUs" value="$$createDisabledProduct.sku$$,$$createCategory1Product1.sku$$"/>
+            <argument name="SKUs" value="$$createDisabledProduct.sku$$,$$createProduct1.sku$$,$$createOutOfStockProduct.sku$$,$$createNotVisibleProduct.sku$$"/>
         </actionGroup>
         <actionGroup ref="validateProductTotals" stepKey="validateTotalProductsOnEditPanelAgain3">
-            <argument name="productsTotals" value="of 1 (1 disabled)"/>
+            <argument name="productsTotals" value="of 4 total (1 disabled, 1 not visible, 1 out of stock)"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel3"/>
         <actionGroup ref="validateProductCountInProducts" stepKey="validateTotalProductsOnStage3">
@@ -1214,7 +1224,7 @@
             <argument name="property" value="PageBuilderProductsProductGridAppearance"/>
         </actionGroup>
         <actionGroup ref="validateProductTotals" stepKey="validateTotalProductsOnEditPanel4">
-            <argument name="productsTotals" value="of 1 (1 disabled)"/>
+            <argument name="productsTotals" value="of 4 total (1 disabled, 1 not visible, 1 out of stock)"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel4"/>
         <actionGroup ref="validateProductCountInProducts" stepKey="validateTotalProductsOnStage4">
@@ -1235,7 +1245,7 @@
             <argument name="property" value="PageBuilderProductsSortByNewestTop"/>
         </actionGroup>
         <actionGroup ref="validateProductTotals" stepKey="validateTotalProductsOnEditPanel5">
-            <argument name="productsTotals" value="of 1 (0 disabled)"/>
+            <argument name="productsTotals" value="of 1 total"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel5"/>
         <actionGroup ref="validateProductCountInProducts" stepKey="validateTotalProductsOnStage5">
@@ -1250,7 +1260,7 @@
             <argument name="property" value="PageBuilderProductsProductCarouselAppearance"/>
         </actionGroup>
         <actionGroup ref="validateProductTotals" stepKey="validateTotalProductsOnEditPanel6">
-            <argument name="productsTotals" value="of 1 (0 disabled)"/>
+            <argument name="productsTotals" value="of 1 total"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel6"/>
         <actionGroup ref="validateProductCountInProducts" stepKey="validateTotalProductsOnStage6">
