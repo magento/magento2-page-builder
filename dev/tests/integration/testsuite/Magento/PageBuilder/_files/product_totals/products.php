@@ -67,85 +67,96 @@ $category->setId(4)
     ->setDescription('Category 1.1 description.')
     ->save();
 
+if (!function_exists('createTestProduct')) {
+    /**
+     * Create a test product
+     *
+     * @param $name
+     * @param $sku
+     * @param $modifier
+     * @param $objectManager
+     * @param $defaultAttributeSet
+     * @param $categoryLinkManagement
+     * @throws Exception
+     */
+    function createTestProduct($name, $sku, $modifier, $objectManager, $defaultAttributeSet, $categoryLinkManagement)
+    {
+        /** @var $product \Magento\Catalog\Model\Product */
+        $product = $objectManager->create(\Magento\Catalog\Model\Product::class);
+        $product->isObjectNew(true);
+        $product->setTypeId(\Magento\Catalog\Model\Product\Type::TYPE_SIMPLE)
+            ->setAttributeSetId($defaultAttributeSet)
+            ->setStoreId(1)
+            ->setWebsiteIds([1])
+            ->setName($name)
+            ->setSku($sku)
+            ->setPrice(10)
+            ->setWeight(18)
+            ->setQuantityAndStockStatus(['qty' => 10, 'is_in_stock' => 1])
+            ->setVisibility(\Magento\Catalog\Model\Product\Visibility::VISIBILITY_BOTH)
+            ->setStatus(\Magento\Catalog\Model\Product\Attribute\Source\Status::STATUS_ENABLED);
 
-/** @var $product \Magento\Catalog\Model\Product */
-$product = $objectManager->create(\Magento\Catalog\Model\Product::class);
-$product->isObjectNew(true);
-$product->setTypeId(\Magento\Catalog\Model\Product\Type::TYPE_SIMPLE)
-    ->setAttributeSetId($defaultAttributeSet)
-    ->setStoreId(1)
-    ->setWebsiteIds([1])
-    ->setName('Simple Product')
-    ->setSku('simple')
-    ->setPrice(10)
-    ->setWeight(18)
-    ->setQuantityAndStockStatus(['qty' => 10, 'is_in_stock' => 1])
-    ->setVisibility(\Magento\Catalog\Model\Product\Visibility::VISIBILITY_BOTH)
-    ->setStatus(\Magento\Catalog\Model\Product\Attribute\Source\Status::STATUS_ENABLED)
-    ->save();
+        if ($modifier) {
+            $product = $modifier($product);
+        }
 
-$categoryLinkManagement->assignProductToCategories(
-    $product->getSku(),
-    [2, 3]
+        $product->save();
+
+        $categoryLinkManagement->assignProductToCategories(
+            $product->getSku(),
+            [2, 3]
+        );
+    }
+}
+
+// Create simple in stock, visible and enabled product
+createTestProduct(
+    'Simple Product',
+    'simple',
+    false,
+    $objectManager,
+    $defaultAttributeSet,
+    $categoryLinkManagement
 );
 
-$product = $objectManager->create(\Magento\Catalog\Model\Product::class);
-$product->isObjectNew(true);
-$product->setTypeId(\Magento\Catalog\Model\Product\Type::TYPE_SIMPLE)
-    ->setAttributeSetId($defaultAttributeSet)
-    ->setStoreId(1)
-    ->setWebsiteIds([1])
-    ->setName('Simple Product Two')
-    ->setSku('12345') // SKU intentionally contains digits only
-    ->setPrice(45.67)
-    ->setWeight(56)
-    ->setQuantityAndStockStatus(['qty' => 10, 'is_in_stock' => 1])
-    ->setVisibility(\Magento\Catalog\Model\Product\Visibility::VISIBILITY_BOTH)
-    ->setStatus(\Magento\Catalog\Model\Product\Attribute\Source\Status::STATUS_ENABLED)
-    ->save();
-
-$categoryLinkManagement->assignProductToCategories(
-    $product->getSku(),
-    [2, 3]
+// Create same product as above with SKU as numbers
+createTestProduct(
+    'Simple Product Two',
+    '12345',
+    function (\Magento\Catalog\Model\Product $product) {
+        $product->setPrice(45.67);
+        $product->setWeight(56);
+        return $product;
+    },
+    $objectManager,
+    $defaultAttributeSet,
+    $categoryLinkManagement
 );
 
-$product = $objectManager->create(\Magento\Catalog\Model\Product::class);
-$product->isObjectNew(true);
-$product->setTypeId(\Magento\Catalog\Model\Product\Type::TYPE_SIMPLE)
-    ->setAttributeSetId($defaultAttributeSet)
-    ->setStoreId(1)
-    ->setWebsiteIds([1])
-    ->setName('Simple Product Not Visible On Storefront')
-    ->setSku('simple-3')
-    ->setPrice(15)
-    ->setWeight(2)
-    ->setQuantityAndStockStatus(['qty' => 10, 'is_in_stock' => 1])
-    ->setVisibility(\Magento\Catalog\Model\Product\Visibility::VISIBILITY_NOT_VISIBLE)
-    ->setStatus(\Magento\Catalog\Model\Product\Attribute\Source\Status::STATUS_ENABLED)
-    ->save();
-
-$categoryLinkManagement->assignProductToCategories(
-    $product->getSku(),
-    [2, 3]
+// Create a product not visible on store front
+createTestProduct(
+    'Not Visible on Storefront',
+    'not-visible-on-storefront',
+    function (\Magento\Catalog\Model\Product $product) {
+        $product->setPrice(15);
+        $product->setWeight(2);
+        $product->setVisibility(\Magento\Catalog\Model\Product\Visibility::VISIBILITY_NOT_VISIBLE);
+        return $product;
+    },
+    $objectManager,
+    $defaultAttributeSet,
+    $categoryLinkManagement
 );
 
-/** @var $product \Magento\Catalog\Model\Product */
-$product = $objectManager->create(\Magento\Catalog\Model\Product::class);
-$product->isObjectNew(true);
-$product->setTypeId(\Magento\Catalog\Model\Product\Type::TYPE_SIMPLE)
-    ->setAttributeSetId($defaultAttributeSet)
-    ->setStoreId(1)
-    ->setWebsiteIds([1])
-    ->setName('Simple Product Three')
-    ->setSku('simple-4')
-    ->setPrice(10)
-    ->setWeight(18)
-    ->setQuantityAndStockStatus(['qty' => 10, 'is_in_stock' => 1])
-    ->setVisibility(\Magento\Catalog\Model\Product\Visibility::VISIBILITY_BOTH)
-    ->setStatus(\Magento\Catalog\Model\Product\Attribute\Source\Status::STATUS_DISABLED)
-    ->save();
-
-$categoryLinkManagement->assignProductToCategories(
-    $product->getSku(),
-    [2, 3]
+// Create disabled product
+createTestProduct(
+    'Disabled Product',
+    'disabled-product',
+    function (\Magento\Catalog\Model\Product $product) {
+        $product->setStatus(\Magento\Catalog\Model\Product\Attribute\Source\Status::STATUS_DISABLED);
+        return $product;
+    },
+    $objectManager,
+    $defaultAttributeSet,
+    $categoryLinkManagement
 );
