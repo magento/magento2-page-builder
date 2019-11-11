@@ -495,4 +495,17 @@
             <actualResult type="variable">differenceBetweenCenterPositions</actualResult>
         </assertLessThanOrEqual>
     </actionGroup>
+    <actionGroup name="validateSwatchInProducts">
+        <annotations>
+            <description>Verify a product swatch is displayed within the Product preview within Page Builder.</description>
+        </annotations>
+        <arguments>
+            <argument name="page" defaultValue="" />
+            <argument name="productGroupIndex" defaultValue="1" type="string"/>
+            <argument name="productIndex" defaultValue="1" type="string"/>
+            <argument name="swatch" defaultValue="" />
+        </arguments>
+        <waitForElementVisible selector="{{page.product(productGroupIndex)}}" stepKey="waitForProduct"/>
+        <seeElement selector="{{page.productSwatch(productGroupIndex, productIndex, swatch.default_label)}}" stepKey="assertSwatch"/>
+    </actionGroup>
 </actionGroups>
