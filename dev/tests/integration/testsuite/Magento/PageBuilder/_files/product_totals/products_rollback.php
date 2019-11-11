@@ -21,7 +21,8 @@ $productsToDelete = [
     'disabled-product',
     'out-of-stock',
     'disabled-not-visible-product',
-    'disabled-out-of-stock-not-visible'
+    'disabled-out-of-stock-not-visible',
+    'virtual-product'
 ];
 
 foreach ($productsToDelete as $sku) {
@@ -36,7 +37,7 @@ foreach ($productsToDelete as $sku) {
 //Remove categories
 /** @var Magento\Catalog\Model\ResourceModel\Category\Collection $collection */
 $collection = $objectManager->create(\Magento\Catalog\Model\ResourceModel\Category\Collection::class);
-foreach ($collection->addAttributeToFilter('level', ['in' => [2, 3, 4]]) as $category) {
+foreach ($collection->addAttributeToFilter('level', ['in' => [2, 3, 4, 5]]) as $category) {
     /** @var \Magento\Catalog\Model\Category $category */
     $category->delete();
 }

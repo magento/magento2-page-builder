@@ -9,10 +9,12 @@ $defaultAttributeSet = $objectManager->get(Magento\Eav\Model\Config::class)
     ->getEntityType('catalog_product')
     ->getDefaultAttributeSetId();
 
+/* @var \Magento\Catalog\Api\ProductRepositoryInterface $productRepository */
 $productRepository = $objectManager->create(
     \Magento\Catalog\Api\ProductRepositoryInterface::class
 );
 
+/* @var \Magento\Catalog\Api\CategoryLinkRepositoryInterface $categoryLinkRepository */
 $categoryLinkRepository = $objectManager->create(
     \Magento\Catalog\Api\CategoryLinkRepositoryInterface::class,
     [
@@ -67,6 +69,21 @@ $category->setId(4)
     ->setDescription('Category 1.1 description.')
     ->save();
 
+$category = $objectManager->create(\Magento\Catalog\Model\Category::class);
+$category->isObjectNew(true);
+$category->setId(5)
+    ->setName('Configurable Product Category')
+    ->setParentId(3)
+    ->setPath('1/2/3/5')
+    ->setLevel(3)
+    ->setAvailableSortBy('name')
+    ->setDefaultSortBy('name')
+    ->setIsActive(true)
+    ->setIsAnchor(true)
+    ->setPosition(1)
+    ->setDescription('Configurable Product Category')
+    ->save();
+
 if (!function_exists('createTestProduct')) {
     /**
      * Create a test product
@@ -79,8 +96,15 @@ if (!function_exists('createTestProduct')) {
      * @param $categoryLinkManagement
      * @throws Exception
      */
-    function createTestProduct($name, $sku, $modifier, $objectManager, $defaultAttributeSet, $categoryLinkManagement)
-    {
+    function createTestProduct(
+        $name,
+        $sku,
+        $modifier,
+        $objectManager,
+        $defaultAttributeSet,
+        $categoryLinkManagement,
+        $productRepository
+    ) {
         /** @var $product \Magento\Catalog\Model\Product */
         $product = $objectManager->create(\Magento\Catalog\Model\Product::class);
         $product->isObjectNew(true);
@@ -100,7 +124,7 @@ if (!function_exists('createTestProduct')) {
             $product = $modifier($product);
         }
 
-        $product->save();
+        $productRepository->save($product);
 
         $categoryLinkManagement->assignProductToCategories(
             $product->getSku(),
@@ -116,7 +140,8 @@ createTestProduct(
     false,
     $objectManager,
     $defaultAttributeSet,
-    $categoryLinkManagement
+    $categoryLinkManagement,
+    $productRepository
 );
 
 // Create same product as above with SKU as numbers
@@ -130,7 +155,8 @@ createTestProduct(
     },
     $objectManager,
     $defaultAttributeSet,
-    $categoryLinkManagement
+    $categoryLinkManagement,
+    $productRepository
 );
 
 // Create a product not visible on store front
@@ -145,7 +171,8 @@ createTestProduct(
     },
     $objectManager,
     $defaultAttributeSet,
-    $categoryLinkManagement
+    $categoryLinkManagement,
+    $productRepository
 );
 
 // Create disabled product
@@ -158,7 +185,8 @@ createTestProduct(
     },
     $objectManager,
     $defaultAttributeSet,
-    $categoryLinkManagement
+    $categoryLinkManagement,
+    $productRepository
 );
 
 // Create an out of stock product
@@ -178,7 +206,8 @@ createTestProduct(
     },
     $objectManager,
     $defaultAttributeSet,
-    $categoryLinkManagement
+    $categoryLinkManagement,
+    $productRepository
 );
 
 // Create a disabled, not visible product
@@ -194,7 +223,8 @@ createTestProduct(
     },
     $objectManager,
     $defaultAttributeSet,
-    $categoryLinkManagement
+    $categoryLinkManagement,
+    $productRepository
 );
 
 // Create a disabled, out of stock, not visible product
@@ -216,5 +246,22 @@ createTestProduct(
     },
     $objectManager,
     $defaultAttributeSet,
-    $categoryLinkManagement
+    $categoryLinkManagement,
+    $productRepository
+);
+
+// Create a standard virtual product
+createTestProduct(
+    'Virtual Product',
+    'virtual-product',
+    function (\Magento\Catalog\Model\Product $product) {
+        $product->setPrice(150);
+        $product->setWeight(22);
+        $product->setTypeId(\Magento\Catalog\Model\Product\Type::TYPE_VIRTUAL);
+        return $product;
+    },
+    $objectManager,
+    $defaultAttributeSet,
+    $categoryLinkManagement,
+    $productRepository
 );

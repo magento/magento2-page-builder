@@ -30,18 +30,12 @@ class ProductTotalsTest extends \Magento\TestFramework\TestCase\AbstractBackendC
 
     /**
      * @param string condition
-     * @param int $expectedTotal
-     * @param int $expectedDisabled
-     * @param int $expectedNotVisible
-     * @param int $expectedOutOfStock
+     * @param int $expectedTotals
      * @dataProvider productDataProvider
      */
     public function testProductTotals(
         $condition,
-        $expectedTotal,
-        $expectedDisabled,
-        $expectedNotVisible,
-        $expectedOutOfStock
+        $expectedTotals
     ) {
         $this->getRequest()->setMethod(\Magento\Framework\App\Request\Http::METHOD_POST);
         $this->getRequest()->setPostValue(['conditionValue' => json_encode($condition)]);
@@ -49,13 +43,9 @@ class ProductTotalsTest extends \Magento\TestFramework\TestCase\AbstractBackendC
         $this->dispatch('backend/pagebuilder/form/element_producttotals');
         $decoded = $this->serializer->unserialize($this->getResponse()->getBody());
 
-        $this->assertEquals($expectedTotal, $decoded['total'], 'Failed asserting total count matches.');
-        $this->assertEquals($expectedDisabled, $decoded['disabled'], 'Failed asserting disabled count matches.');
-        $this->assertEquals($expectedNotVisible, $decoded['notVisible'], 'Failed asserting not visible count matches.');
         $this->assertEquals(
-            $expectedOutOfStock,
-            $decoded['outOfStock'],
-            'Failed asserting out of stock count matches.'
+            [$decoded['total'], $decoded['disabled'], $decoded['notVisible'], $decoded['outOfStock']],
+            $expectedTotals
         );
     }
 
@@ -78,7 +68,8 @@ class ProductTotalsTest extends \Magento\TestFramework\TestCase\AbstractBackendC
                         'attribute' => 'category_ids',
                         'value' => '4'
                     ]
-                ], 0, 0, 0, 0
+                ],
+                [0, 0, 0, 0]
             ],
             [ // #1 category with 4 products, 3 disabled, 3 not visible
                 ['1' => [
@@ -93,7 +84,8 @@ class ProductTotalsTest extends \Magento\TestFramework\TestCase\AbstractBackendC
                         'attribute' => 'category_ids',
                         'value' => '3'
                     ]
-                ], 7, 3, 3, 1
+                ],
+                [8, 3, 3, 1]
             ],
             [ // #2 sku with no matches
                 ['1' => [
@@ -108,7 +100,8 @@ class ProductTotalsTest extends \Magento\TestFramework\TestCase\AbstractBackendC
                         'attribute' => 'sku',
                         'value' => 'shoes'
                     ]
-                ], 0, 0, 0, 0
+                ],
+                [0, 0, 0, 0]
             ],
             [ // #3 sku with 2 matches, 1 disabled, 1 not visible, 1 out of stock
                 ['1' => [
@@ -123,7 +116,8 @@ class ProductTotalsTest extends \Magento\TestFramework\TestCase\AbstractBackendC
                         'attribute' => 'sku',
                         'value' => 'not-visible-on-storefront, disabled-product, out-of-stock'
                     ]
-                ], 3, 1, 1, 1
+                ],
+                [3, 1, 1, 1]
             ],
             [ // #4 condition with no matches
                 ['1' => [
@@ -138,7 +132,8 @@ class ProductTotalsTest extends \Magento\TestFramework\TestCase\AbstractBackendC
                         'attribute' => 'price',
                         'value' => '10000'
                     ]
-                ], 0, 0, 0, 0
+                ],
+                [0, 0, 0, 0]
             ],
             [ // #5 condition with 3 matches, 1 disabled, 1 not visible
                 ['1' => [
@@ -153,7 +148,24 @@ class ProductTotalsTest extends \Magento\TestFramework\TestCase\AbstractBackendC
                         'attribute' => 'price',
                         'value' => '20'
                     ]
-                ], 3, 1, 1, 0
+                ],
+                [3, 1, 1, 0]
+            ],
+            [ // #6 2 configurable products with multiple children, 1 disabled
+                ['1' => [
+                    'aggregator' => 'all',
+                    'new_child' => '',
+                    'type' => \Magento\CatalogWidget\Model\Rule\Condition\Combine::class,
+                    'value' => '1',
+                ],
+                    '1--1' => [
+                        'operator' => '==',
+                        'type' => \Magento\CatalogWidget\Model\Rule\Condition\Product::class,
+                        'attribute' => 'category_ids',
+                        'value' => '5'
+                    ]
+                ],
+                [2, 1, 0, 0]
             ],
         ];
     }
