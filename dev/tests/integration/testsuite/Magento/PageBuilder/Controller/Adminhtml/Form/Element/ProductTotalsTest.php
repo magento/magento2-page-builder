@@ -151,22 +151,6 @@ class ProductTotalsTest extends \Magento\TestFramework\TestCase\AbstractBackendC
                 ],
                 [3, 1, 1, 0]
             ],
-            [ // #6 2 configurable products with multiple children, 1 disabled
-                ['1' => [
-                    'aggregator' => 'all',
-                    'new_child' => '',
-                    'type' => \Magento\CatalogWidget\Model\Rule\Condition\Combine::class,
-                    'value' => '1',
-                ],
-                    '1--1' => [
-                        'operator' => '==',
-                        'type' => \Magento\CatalogWidget\Model\Rule\Condition\Product::class,
-                        'attribute' => 'category_ids',
-                        'value' => '5'
-                    ]
-                ],
-                [2, 1, 0, 0]
-            ],
         ];
     }
 }

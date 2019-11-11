@@ -69,21 +69,6 @@ $category->setId(4)
     ->setDescription('Category 1.1 description.')
     ->save();
 
-$category = $objectManager->create(\Magento\Catalog\Model\Category::class);
-$category->isObjectNew(true);
-$category->setId(5)
-    ->setName('Configurable Product Category')
-    ->setParentId(3)
-    ->setPath('1/2/3/5')
-    ->setLevel(3)
-    ->setAvailableSortBy('name')
-    ->setDefaultSortBy('name')
-    ->setIsActive(true)
-    ->setIsAnchor(true)
-    ->setPosition(1)
-    ->setDescription('Configurable Product Category')
-    ->save();
-
 if (!function_exists('createTestProduct')) {
     /**
      * Create a test product
