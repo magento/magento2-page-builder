@@ -25,6 +25,7 @@ define([
             listens: {
                 conditionOption: 'updateProductTotals',
                 conditionValue: 'updateProductTotals',
+                '${ $.provider }:data.modalClosed': 'abortRunningRequest'
             },
             imports: {
                 formData: '${ $.provider }:data'
@@ -40,15 +41,6 @@ define([
             showSpinner: true,
             loading: false,
             jqXHR: null
-        },
-
-        /** @inheritdoc */
-        initialize: function () {
-            $('.cms-page-edit .modals-wrapper').on('modalclosed', function () {
-                this.abortRunningRequest();
-            }.bind(this));
-
-            return this._super();
         },
 
         /**
