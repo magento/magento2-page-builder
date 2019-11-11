@@ -4,28 +4,27 @@
  * See COPYING.txt for license details.
  */
 
-declare(strict_types=1);
+namespace Magento\PageBuilder\Model\Catalog;
 
-namespace Magento\PageBuilder\Controller\Adminhtml\Form\Element;
+use Magento\TestFramework\Helper\Bootstrap;
 
 /**
- * @magentoAppArea adminhtml
- * @magentoDataFixture Magento/PageBuilder/_files/product_totals/products.php
+ * Class ProductTotalsTest
  */
-class ProductTotalsTest extends \Magento\TestFramework\TestCase\AbstractBackendController
+class ProductTotalsTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @var \Magento\Framework\Serialize\SerializerInterface
+     * @var ProductTotals
      */
-    private $serializer;
+    private $productTotals;
 
     /**
-     * @inheritdoc
+     * Set up instances and mock objects
      */
     protected function setUp()
     {
-        parent::setUp();
-        $this->serializer = $this->_objectManager->get(\Magento\Framework\Serialize\SerializerInterface::class);
+        $objectManager = Bootstrap::getObjectManager();
+        $this->productTotals = $objectManager->create(ProductTotals::class);
     }
 
     /**
@@ -37,14 +36,8 @@ class ProductTotalsTest extends \Magento\TestFramework\TestCase\AbstractBackendC
         $condition,
         $expectedTotals
     ) {
-        $this->getRequest()->setMethod(\Magento\Framework\App\Request\Http::METHOD_POST);
-        $this->getRequest()->setPostValue(['conditionValue' => json_encode($condition)]);
-
-        $this->dispatch('backend/pagebuilder/form/element_producttotals');
-        $decoded = $this->serializer->unserialize($this->getResponse()->getBody());
-
         $this->assertEquals(
-            [$decoded['total'], $decoded['disabled'], $decoded['notVisible'], $decoded['outOfStock']],
+            array_values($this->productTotals->getProductTotals($condition)),
             $expectedTotals
         );
     }
@@ -61,7 +54,7 @@ class ProductTotalsTest extends \Magento\TestFramework\TestCase\AbstractBackendC
                     'new_child' => '',
                     'type' => \Magento\CatalogWidget\Model\Rule\Condition\Combine::class,
                     'value' => '1',
-                    ],
+                ],
                     '1--1' => [
                         'operator' => '==',
                         'type' => \Magento\CatalogWidget\Model\Rule\Condition\Product::class,
@@ -77,7 +70,7 @@ class ProductTotalsTest extends \Magento\TestFramework\TestCase\AbstractBackendC
                     'new_child' => '',
                     'type' => \Magento\CatalogWidget\Model\Rule\Condition\Combine::class,
                     'value' => '1',
-                    ],
+                ],
                     '1--1' => [
                         'operator' => '==',
                         'type' => \Magento\CatalogWidget\Model\Rule\Condition\Product::class,
@@ -93,7 +86,7 @@ class ProductTotalsTest extends \Magento\TestFramework\TestCase\AbstractBackendC
                     'new_child' => '',
                     'type' => \Magento\CatalogWidget\Model\Rule\Condition\Combine::class,
                     'value' => '1',
-                    ],
+                ],
                     '1--1' => [
                         'operator' => '()',
                         'type' => \Magento\CatalogWidget\Model\Rule\Condition\Product::class,
@@ -109,7 +102,7 @@ class ProductTotalsTest extends \Magento\TestFramework\TestCase\AbstractBackendC
                     'new_child' => '',
                     'type' => \Magento\CatalogWidget\Model\Rule\Condition\Combine::class,
                     'value' => '1',
-                    ],
+                ],
                     '1--1' => [
                         'operator' => '()',
                         'type' => \Magento\CatalogWidget\Model\Rule\Condition\Product::class,
@@ -125,7 +118,7 @@ class ProductTotalsTest extends \Magento\TestFramework\TestCase\AbstractBackendC
                     'new_child' => '',
                     'type' => \Magento\CatalogWidget\Model\Rule\Condition\Combine::class,
                     'value' => '1',
-                    ],
+                ],
                     '1--1' => [
                         'operator' => '>=',
                         'type' => \Magento\CatalogWidget\Model\Rule\Condition\Product::class,
@@ -141,7 +134,7 @@ class ProductTotalsTest extends \Magento\TestFramework\TestCase\AbstractBackendC
                     'new_child' => '',
                     'type' => \Magento\CatalogWidget\Model\Rule\Condition\Combine::class,
                     'value' => '1',
-                    ],
+                ],
                     '1--1' => [
                         'operator' => '<',
                         'type' => \Magento\CatalogWidget\Model\Rule\Condition\Product::class,
