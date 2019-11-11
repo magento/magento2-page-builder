@@ -133,59 +133,72 @@ class ProductTotals extends \Magento\Backend\App\Action implements HttpPostActio
      */
     public function execute()
     {
-        /** @var \Magento\Catalog\Model\ResourceModel\Product\Collection $collection */
-        $collection = $this->createCollection();
+        try {
+            /** @var \Magento\Catalog\Model\ResourceModel\Product\Collection $collection */
+            $collection = $this->createCollection();
 
-        // Exclude any linked products, e.g. simple products assigned to a configurable, bundle or group
-        $collection->getSelect()->joinLeft(
-            ['super_link_table' => $collection->getTable('catalog_product_super_link')],
-            'super_link_table.product_id = e.entity_id',
-            ['product_id']
-        )->joinLeft(
-            ['link_table' => $collection->getTable('catalog_product_link')],
-            'link_table.product_id = e.entity_id',
-            ['product_id']
-        )->where('link_table.product_id IS NULL OR super_link_table.product_id IS NULL');
+            // Exclude any linked products, e.g. simple products assigned to a configurable, bundle or group
+            $collection->getSelect()->joinLeft(
+                ['super_link_table' => $collection->getTable('catalog_product_super_link')],
+                'super_link_table.product_id = e.entity_id',
+                ['product_id']
+            )->joinLeft(
+                ['link_table' => $collection->getTable('catalog_product_link')],
+                'link_table.product_id = e.entity_id',
+                ['product_id']
+            )->where('link_table.product_id IS NULL OR super_link_table.product_id IS NULL');
 
-        // Retrieve all disabled products
-        $disabledCollection = clone $collection;
-        $disabledCollection->addAttributeToFilter('status', Status::STATUS_DISABLED);
+            // Retrieve all disabled products
+            $disabledCollection = clone $collection;
+            $disabledCollection->addAttributeToFilter('status', Status::STATUS_DISABLED);
 
-        // Retrieve all not visible individually products
-        $notVisibleCollection = clone $collection;
-        $notVisibleCollection->addAttributeToFilter(
-            'visibility',
-            [
-                Visibility::VISIBILITY_NOT_VISIBLE,
-                Visibility::VISIBILITY_IN_SEARCH
-            ]
-        );
-
-        // Retrieve in stock products, then subtract them from the total
-        $outOfStockCollection = clone $collection;
-        $this->stockFilter->addIsInStockFilterToCollection($outOfStockCollection);
-        // Remove existing stock_status where condition from query
-        $outOfStockWhere = $outOfStockCollection->getSelect()->getPart(\Magento\Framework\DB\Select::WHERE);
-        $outOfStockWhere = array_filter(
-            $outOfStockWhere,
-            function ($whereCondition) {
-                return !stristr($whereCondition, 'stock_status');
-            }
-        );
-        $outOfStockCollection->getSelect()->setPart(\Magento\Framework\DB\Select::WHERE, $outOfStockWhere);
-        $outOfStockCollection->getSelect()->where(
-            'stock_status_index.stock_status = ?',
-            \Magento\CatalogInventory\Model\Stock\Status::STATUS_OUT_OF_STOCK
-        );
-
-        return $this->jsonFactory->create()
-            ->setData(
+            // Retrieve all not visible individually products
+            $notVisibleCollection = clone $collection;
+            $notVisibleCollection->addAttributeToFilter('status', Status::STATUS_ENABLED);
+            $notVisibleCollection->addAttributeToFilter(
+                'visibility',
                 [
-                    'total' => $collection->getSize(),
-                    'disabled' => $disabledCollection->getSize(),
-                    'notVisible' => $notVisibleCollection->getSize(),
-                    'outOfStock' => $outOfStockCollection->getSize(),
+                    Visibility::VISIBILITY_NOT_VISIBLE,
+                    Visibility::VISIBILITY_IN_SEARCH
                 ]
             );
+
+            // Retrieve in stock products, then subtract them from the total
+            $outOfStockCollection = clone $collection;
+            $this->stockFilter->addIsInStockFilterToCollection($outOfStockCollection);
+            // Remove existing stock_status where condition from query
+            $outOfStockWhere = $outOfStockCollection->getSelect()->getPart(\Magento\Framework\DB\Select::WHERE);
+            $outOfStockWhere = array_filter(
+                $outOfStockWhere,
+                function ($whereCondition) {
+                    return !stristr($whereCondition, 'stock_status');
+                }
+            );
+            $outOfStockCollection->getSelect()->setPart(\Magento\Framework\DB\Select::WHERE, $outOfStockWhere);
+            $outOfStockCollection->getSelect()->where(
+                'stock_status_index.stock_status = ?',
+                \Magento\CatalogInventory\Model\Stock\Status::STATUS_OUT_OF_STOCK
+            );
+
+            return $this->jsonFactory->create()
+                ->setData(
+                    [
+                        'total' => $collection->getSize(),
+                        'disabled' => $disabledCollection->getSize(),
+                        'notVisible' => $notVisibleCollection->getSize(),
+                        'outOfStock' => $outOfStockCollection->getSize(),
+                    ]
+                );
+        } catch (\Exception $e) {
+            return $this->jsonFactory->create()
+                ->setData(
+                    [
+                        'total' => 0,
+                        'disabled' => 0,
+                        'notVisible' => 0,
+                        'outOfStock' => 0,
+                    ]
+                );
+        }
     }
 }

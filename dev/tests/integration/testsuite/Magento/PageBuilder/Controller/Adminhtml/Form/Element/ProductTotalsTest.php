@@ -71,7 +71,7 @@ class ProductTotalsTest extends \Magento\TestFramework\TestCase\AbstractBackendC
                 ],
                 [0, 0, 0, 0]
             ],
-            [ // #1 category with 4 products, 3 disabled, 3 not visible
+            [ // #1 category with 4 products, 3 disabled, 3 not visible (but 2 not visible disabled)
                 ['1' => [
                     'aggregator' => 'all',
                     'new_child' => '',
@@ -85,7 +85,7 @@ class ProductTotalsTest extends \Magento\TestFramework\TestCase\AbstractBackendC
                         'value' => '3'
                     ]
                 ],
-                [8, 3, 3, 1]
+                [8, 3, 1, 1]
             ],
             [ // #2 sku with no matches
                 ['1' => [

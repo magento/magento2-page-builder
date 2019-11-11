@@ -21,6 +21,7 @@ define([
             totalDisabledProducts: 0,
             totalNotVisibleProducts: 0,
             totalOutOfStockProducts: 0,
+            previousConditions: false,
             listens: {
                 conditionOption: 'updateProductTotals',
                 conditionValue: 'updateProductTotals',
@@ -41,14 +42,19 @@ define([
             jqXHR: null
         },
 
-        initialize: function() {
+        /** @inheritdoc */
+        initialize: function () {
             $('.cms-page-edit .modals-wrapper').on('modalclosed', function () {
                 this.abortRunningRequest();
             }.bind(this));
+
             return this._super();
         },
 
-        abortRunningRequest: function() {
+        /**
+         * Abort running Ajax request
+         */
+        abortRunningRequest: function () {
             if (this.jqXHR && this.jqXHR.readyState !== 4) {
                 this.jqXHR.abort();
             }
@@ -61,8 +67,14 @@ define([
                     'totalOutOfStockProducts loading');
         },
 
+        /**
+         * If we haven't aborted the request, continue and display the error
+         *
+         * @param {Object} jqXHR
+         */
         callSuperError: function (jqXHR) {
             var superError = $.ajaxSettings.error.bind(window, jqXHR);
+
             superError();
         },
 
@@ -84,6 +96,12 @@ define([
             _.extend(this.formData, this.conditionValue);
             conditionsDataProcessor(this.formData, this.conditionOption + '_source');
 
+            // Store the previous conditions so we don't update the totals when nothing has changed
+            if (this.previousConditions === this.formData['conditions_encoded']) {
+                return;
+            }
+            this.previousConditions = this.formData['conditions_encoded'];
+
             this.loading(true);
             this.abortRunningRequest();
             this.jqXHR = $.ajax({
@@ -94,7 +112,7 @@ define([
                 },
                 error: function (jqXHR) {
                     if (jqXHR.statusText !== 'abort') {
-                        this.callSuperError(jqXHR)
+                        this.callSuperError(jqXHR);
                     }
                 }.bind(this)
             }).done(function (response) {
