@@ -8,12 +8,16 @@ declare(strict_types=1);
 
 namespace Magento\PageBuilder\Controller\Adminhtml\Form\Element;
 
+use Exception;
+use Magento\Backend\App\Action;
+use Magento\Backend\App\Action\Context;
 use Magento\Framework\App\Action\HttpPostActionInterface;
+use Magento\Framework\Controller\Result\JsonFactory;
 
 /**
  * Returns the number of products that match the provided conditions
  */
-class ProductTotals extends \Magento\Backend\App\Action implements HttpPostActionInterface
+class ProductTotals extends Action implements HttpPostActionInterface
 {
     const ADMIN_RESOURCE = 'Magento_Catalog::products';
 
@@ -23,19 +27,19 @@ class ProductTotals extends \Magento\Backend\App\Action implements HttpPostActio
     private $productTotals;
 
     /**
-     * @var \Magento\Framework\Controller\Result\JsonFactory
+     * @var JsonFactory
      */
     private $jsonFactory;
 
     /**
-     * @param \Magento\Backend\App\Action\Context $context
+     * @param Context $context
      * @param \Magento\PageBuilder\Model\Catalog\ProductTotals $productTotals
-     * @param \Magento\Framework\Controller\Result\JsonFactory $jsonFactory
+     * @param JsonFactory $jsonFactory
      */
     public function __construct(
-        \Magento\Backend\App\Action\Context $context,
+        Context $context,
         \Magento\PageBuilder\Model\Catalog\ProductTotals $productTotals,
-        \Magento\Framework\Controller\Result\JsonFactory $jsonFactory
+        JsonFactory $jsonFactory
     ) {
         $this->jsonFactory = $jsonFactory;
         $this->productTotals = $productTotals;
@@ -57,7 +61,7 @@ class ProductTotals extends \Magento\Backend\App\Action implements HttpPostActio
                 'notVisible' => $totals['notVisible'],
                 'outOfStock' => $totals['outOfStock'],
             ];
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $response = [
                 'total' => 0,
                 'disabled' => 0,
