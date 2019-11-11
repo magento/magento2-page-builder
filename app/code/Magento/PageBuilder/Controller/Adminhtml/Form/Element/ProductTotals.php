@@ -42,11 +42,6 @@ class ProductTotals extends \Magento\Backend\App\Action implements HttpPostActio
     private $conditionsHelper;
 
     /**
-     * @var \Magento\Catalog\Api\\CategoryRepositoryInterface
-     */
-    private $categoryRepository;
-
-    /**
      * @var \Magento\Framework\Controller\Result\JsonFactory
      */
     private $jsonFactory;
@@ -64,7 +59,6 @@ class ProductTotals extends \Magento\Backend\App\Action implements HttpPostActio
      * @param \Magento\Rule\Model\Condition\Sql\Builder $sqlBuilder
      * @param \Magento\CatalogWidget\Model\Rule $rule
      * @param \Magento\Widget\Helper\Conditions $conditionsHelper
-     * @param \Magento\Catalog\Api\CategoryRepositoryInterface $categoryRepository
      * @param \Magento\Framework\Controller\Result\JsonFactory $jsonFactory
      * @param \Magento\CatalogInventory\Helper\Stock $stockFilter
      */
@@ -74,7 +68,6 @@ class ProductTotals extends \Magento\Backend\App\Action implements HttpPostActio
         \Magento\Rule\Model\Condition\Sql\Builder $sqlBuilder,
         \Magento\CatalogWidget\Model\Rule $rule,
         \Magento\Widget\Helper\Conditions $conditionsHelper,
-        \Magento\Catalog\Api\CategoryRepositoryInterface $categoryRepository,
         \Magento\Framework\Controller\Result\JsonFactory $jsonFactory,
         \Magento\CatalogInventory\Helper\Stock $stockFilter
     ) {
@@ -82,7 +75,6 @@ class ProductTotals extends \Magento\Backend\App\Action implements HttpPostActio
         $this->sqlBuilder = $sqlBuilder;
         $this->rule = $rule;
         $this->conditionsHelper = $conditionsHelper;
-        $this->categoryRepository = $categoryRepository;
         $this->jsonFactory = $jsonFactory;
         $this->stockFilter = $stockFilter;
         parent::__construct($context);
