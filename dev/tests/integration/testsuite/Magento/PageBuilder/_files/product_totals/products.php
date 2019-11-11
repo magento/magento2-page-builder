@@ -160,3 +160,61 @@ createTestProduct(
     $defaultAttributeSet,
     $categoryLinkManagement
 );
+
+// Create an out of stock product
+createTestProduct(
+    'Out of Stock Product',
+    'out-of-stock',
+    function (\Magento\Catalog\Model\Product $product) {
+        $product->setPrice(22.50);
+        $product->setWeight(100);
+        $product->setQuantityAndStockStatus(
+            [
+                'qty' => 0,
+                'is_in_stock' => \Magento\CatalogInventory\Model\Stock\Status::STATUS_OUT_OF_STOCK
+            ]
+        );
+        return $product;
+    },
+    $objectManager,
+    $defaultAttributeSet,
+    $categoryLinkManagement
+);
+
+// Create a disabled, not visible product
+createTestProduct(
+    'Disabled & Not Visible Product',
+    'disabled-not-visible-product',
+    function (\Magento\Catalog\Model\Product $product) {
+        $product->setPrice(45);
+        $product->setWeight(2);
+        $product->setVisibility(\Magento\Catalog\Model\Product\Visibility::VISIBILITY_NOT_VISIBLE);
+        $product->setStatus(\Magento\Catalog\Model\Product\Attribute\Source\Status::STATUS_DISABLED);
+        return $product;
+    },
+    $objectManager,
+    $defaultAttributeSet,
+    $categoryLinkManagement
+);
+
+// Create a disabled, out of stock, not visible product
+createTestProduct(
+    'Disabled OOS Not Visible',
+    'disabled-out-of-stock-not-visible',
+    function (\Magento\Catalog\Model\Product $product) {
+        $product->setPrice(150);
+        $product->setWeight(22);
+        $product->setQuantityAndStockStatus(
+            [
+                'qty' => 0,
+                'is_in_stock' => \Magento\CatalogInventory\Model\Stock\Status::STATUS_OUT_OF_STOCK
+            ]
+        );
+        $product->setVisibility(\Magento\Catalog\Model\Product\Visibility::VISIBILITY_NOT_VISIBLE);
+        $product->setStatus(\Magento\Catalog\Model\Product\Attribute\Source\Status::STATUS_DISABLED);
+        return $product;
+    },
+    $objectManager,
+    $defaultAttributeSet,
+    $categoryLinkManagement
+);
