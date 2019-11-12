@@ -1,4 +1,5 @@
 /*eslint-disable */
+/* jscs:disable */
 define(["jquery"], function (_jquery) {
   /**
    * Copyright © Magento, Inc. All rights reserved.

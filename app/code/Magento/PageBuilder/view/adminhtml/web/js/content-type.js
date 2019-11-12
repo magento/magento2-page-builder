@@ -1,4 +1,5 @@
 /*eslint-disable */
+/* jscs:disable */
 define(["Magento_PageBuilder/js/events", "mageUtils", "Magento_PageBuilder/js/data-store"], function (_events, _mageUtils, _dataStore) {
   /**
    * Copyright © Magento, Inc. All rights reserved.

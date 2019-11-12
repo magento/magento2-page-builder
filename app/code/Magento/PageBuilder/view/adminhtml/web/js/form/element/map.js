@@ -206,7 +206,8 @@ define([
          */
         exportValue: function (coordinate) {
             var position = this.marker ?
-                this.marker.getPosition() : new google.maps.LatLng(this.mapElement.map.center.lat(), this.mapElement.map.center.lng()),
+                this.marker.getPosition() :
+                new google.maps.LatLng(this.mapElement.map.center.lat(), this.mapElement.map.center.lng()),
                 currentCoordinate = coordinate ? coordinate : position;
 
             return {

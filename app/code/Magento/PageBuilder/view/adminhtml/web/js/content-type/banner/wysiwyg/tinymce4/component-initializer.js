@@ -1,4 +1,5 @@
 /*eslint-disable */
+/* jscs:disable */
 define(["jquery", "mage/adminhtml/wysiwyg/events"], function (_jquery, _events) {
   /**
    * Copyright © Magento, Inc. All rights reserved.

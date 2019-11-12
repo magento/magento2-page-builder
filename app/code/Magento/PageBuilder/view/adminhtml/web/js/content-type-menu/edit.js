@@ -1,4 +1,5 @@
 /*eslint-disable */
+/* jscs:disable */
 define(["Magento_PageBuilder/js/events", "underscore"], function (_events, _underscore) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
