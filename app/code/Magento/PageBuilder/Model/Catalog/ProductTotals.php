@@ -14,7 +14,6 @@ use Magento\Catalog\Model\ResourceModel\Product\Collection;
 use Magento\Catalog\Model\ResourceModel\Product\CollectionFactory;
 use Magento\CatalogInventory\Helper\Stock;
 use Magento\CatalogWidget\Model\Rule;
-use Magento\Framework\DB\Select;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Rule\Model\Condition\Combine;
 use Magento\Rule\Model\Condition\Sql\Builder;
@@ -123,6 +122,68 @@ class ProductTotals
     }
 
     /**
+     * Retrieve count of all disabled products
+     *
+     * @param Collection $baseCollection
+     * @return int number of disabled products
+     */
+    private function getDisabledCount(Collection $baseCollection): int
+    {
+        /** @var Collection $disabledCollection */
+        $disabledCollection = clone $baseCollection;
+        $disabledCollection->addAttributeToFilter('status', Status::STATUS_DISABLED);
+        return $disabledCollection->getSize();
+    }
+
+    /**
+     * Retrieve count of all not visible individually products
+     *
+     * @param Collection $baseCollection
+     * @return int number of products not visible individually
+     */
+    private function getNotVisibleCount(Collection $baseCollection): int
+    {
+        $notVisibleCollection = clone $baseCollection;
+        $notVisibleCollection->addAttributeToFilter('status', Status::STATUS_ENABLED);
+        $notVisibleCollection->addAttributeToFilter(
+            'visibility',
+            [
+                Visibility::VISIBILITY_NOT_VISIBLE,
+                Visibility::VISIBILITY_IN_SEARCH
+            ]
+        );
+        return $notVisibleCollection->getSize();
+    }
+
+    /**
+     * Retrieve count of all out of stock products
+     *
+     * @param Collection $baseCollection
+     * @return int number of out of stock products
+     * @throws Zend_Db_Select_Exception
+     */
+    private function getOutOfStockCount(Collection $baseCollection): int
+    {
+        // Retrieve in stock products, then subtract them from the total
+        $outOfStockCollection = clone $baseCollection;
+        $this->stockFilter->addIsInStockFilterToCollection($outOfStockCollection);
+        // Remove existing stock_status where condition from query
+        $outOfStockWhere = $outOfStockCollection->getSelect()->getPart('where');
+        $outOfStockWhere = array_filter(
+            $outOfStockWhere,
+            function ($whereCondition) {
+                return !stristr($whereCondition, 'stock_status');
+            }
+        );
+        $outOfStockCollection->getSelect()->setPart('where', $outOfStockWhere);
+        $outOfStockCollection->getSelect()->where(
+            'stock_status_index.stock_status = ?',
+            \Magento\CatalogInventory\Model\Stock\Status::STATUS_OUT_OF_STOCK
+        );
+        return $outOfStockCollection->getSize();
+    }
+
+    /**
      * Retrieve product totals for collection
      *
      * @param string $conditions
@@ -146,43 +207,15 @@ class ProductTotals
             ['product_id']
         )->where('link_table.product_id IS NULL OR super_link_table.product_id IS NULL');
 
-        // Retrieve all disabled products
-        $disabledCollection = clone $collection;
-        $disabledCollection->addAttributeToFilter('status', Status::STATUS_DISABLED);
-
-        // Retrieve all not visible individually products
-        $notVisibleCollection = clone $collection;
-        $notVisibleCollection->addAttributeToFilter('status', Status::STATUS_ENABLED);
-        $notVisibleCollection->addAttributeToFilter(
-            'visibility',
-            [
-                Visibility::VISIBILITY_NOT_VISIBLE,
-                Visibility::VISIBILITY_IN_SEARCH
-            ]
-        );
-
-        // Retrieve in stock products, then subtract them from the total
-        $outOfStockCollection = clone $collection;
-        $this->stockFilter->addIsInStockFilterToCollection($outOfStockCollection);
-        // Remove existing stock_status where condition from query
-        $outOfStockWhere = $outOfStockCollection->getSelect()->getPart(Select::WHERE);
-        $outOfStockWhere = array_filter(
-            $outOfStockWhere,
-            function ($whereCondition) {
-                return !stristr($whereCondition, 'stock_status');
-            }
-        );
-        $outOfStockCollection->getSelect()->setPart(Select::WHERE, $outOfStockWhere);
-        $outOfStockCollection->getSelect()->where(
-            'stock_status_index.stock_status = ?',
-            \Magento\CatalogInventory\Model\Stock\Status::STATUS_OUT_OF_STOCK
-        );
+        $disabledCount = $this->getDisabledCount($collection);
+        $notVisibleCount = $this->getNotVisibleCount($collection);
+        $outOfStockCount = $this->getOutOfStockCount($collection);
 
         return [
             'total' => $collection->getSize(),
-            'disabled' => $disabledCollection->getSize(),
-            'notVisible' => $notVisibleCollection->getSize(),
-            'outOfStock' => $outOfStockCollection->getSize(),
+            'disabled' => $disabledCount,
+            'notVisible' => $notVisibleCount,
+            'outOfStock' => $outOfStockCount,
         ];
     }
 }
