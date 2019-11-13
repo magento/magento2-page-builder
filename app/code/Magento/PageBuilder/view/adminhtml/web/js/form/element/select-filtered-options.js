@@ -52,6 +52,6 @@ define([
             } else {
                 this.transferredValue = null;
             }
-        },
+        }
     });
 });

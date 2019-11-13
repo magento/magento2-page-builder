@@ -11,7 +11,10 @@ define([
 
     return ModalComponent.extend({
         defaults: {
-            titlePrefix: '${ $.options.title }'
+            titlePrefix: '${ $.options.title }',
+            modules: {
+                insertForm: '${ $.insertFormProvider }'
+            }
         },
 
         /** @inheritdoc */
@@ -37,6 +40,19 @@ define([
                 this.closeModal();
             }.bind(this));
 
+        },
+
+        /**
+         * Trigger modalClosed event on external provider
+         *
+         * @returns {any}
+         */
+        closeModal: function () {
+            this.insertForm() &&
+            this.insertForm().externalSource() &&
+            this.insertForm().externalSource().trigger('data.modalClosed');
+
+            return this._super();
         }
     });
 });

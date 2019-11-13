@@ -71,7 +71,7 @@ define([
                 initializedOnce = true;
             }
         },
-        
+
         /**
          * {@inheritDoc}
          */
@@ -79,7 +79,7 @@ define([
             browser.modalLoaded = false;
             this._super(imageUploader, e);
         },
-        
+
         /**
          * {@inheritDoc}
          */
@@ -208,7 +208,9 @@ define([
 
             for (modifierClass in this.elementWidthModifierClasses) {
                 if (!this.elementWidthModifierClasses.hasOwnProperty(modifierClass)) {
+                    // jscs:disable disallowKeywords
                     continue;
+                    // jscs:enable disallowKeywords
                 }
 
                 classConfig = this.elementWidthModifierClasses[modifierClass];

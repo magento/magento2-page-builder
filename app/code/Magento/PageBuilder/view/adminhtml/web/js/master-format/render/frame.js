@@ -1,4 +1,5 @@
 /*eslint-disable */
+/* jscs:disable */
 define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/master-format/filter-html"], function (_jquery, _knockout, _engine, _config, _contentTypeFactory, _directives, _filterHtml) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
