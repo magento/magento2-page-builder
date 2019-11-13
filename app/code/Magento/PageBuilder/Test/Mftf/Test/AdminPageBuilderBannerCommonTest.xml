@@ -2003,6 +2003,8 @@
         <actionGroup ref="clickSelectFromGallerySlideOut" stepKey="clickSelectFromGallerySlideOut">
             <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
+        <click selector="{{MediaGallerySection.currentSelectedDirectory}}" stepKey="refreshFolder"/>
+        <waitForPageLoad stepKey="waitForRefresh"/>
         <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage3">
             <argument name="Image" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>

@@ -9,6 +9,7 @@ declare(strict_types=1);
 namespace Magento\PageBuilder\Model\Stage\Renderer;
 
 use Magento\Store\Model\Store;
+use Magento\PageBuilder\Model\Filter\Template;
 
 /**
  * Renders a widget directive for the stage
@@ -28,17 +29,24 @@ class WidgetDirective implements \Magento\PageBuilder\Model\Stage\RendererInterf
     private $directiveFilter;
 
     /**
-     * Constructor
-     *
+     * @var Template
+     */
+    private $templateFilter;
+
+    /**
      * @param \Magento\Store\Model\StoreManagerInterface $storeManager
      * @param \Magento\Widget\Model\Template\Filter $directiveFilter
+     * @param Template $templateFilter
      */
     public function __construct(
         \Magento\Store\Model\StoreManagerInterface $storeManager,
-        \Magento\Widget\Model\Template\Filter $directiveFilter
+        \Magento\Widget\Model\Template\Filter $directiveFilter,
+        Template $templateFilter = null
     ) {
         $this->storeManager = $storeManager;
         $this->directiveFilter = $directiveFilter;
+        $this->templateFilter = $templateFilter ?? \Magento\Framework\App\ObjectManager::getInstance()
+                ->get(\Magento\PageBuilder\Model\Filter\Template::class);
     }
 
     /**
@@ -61,7 +69,7 @@ class WidgetDirective implements \Magento\PageBuilder\Model\Stage\RendererInterf
         try {
             $result['content'] = $this->directiveFilter
                 ->setStoreId(Store::DEFAULT_STORE_ID)
-                ->filter($params['directive']);
+                ->filter($this->templateFilter->filter($params['directive']));
         } catch (\Exception $e) {
             $result['error'] = __($e->getMessage());
         }
