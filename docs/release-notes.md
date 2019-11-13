@@ -7,9 +7,40 @@ The release notes include:
 - {:.new}New features
 - {:.fix}Fixes and improvements
 
+## 1.2.0
+
+This release is compatible with Magento Commerce 2.3.4 and up. It is not compatible with earlier versions of Magento Commerce.
+
+**Page Builder integration with PWA Studio**
+
+- {:.new}Added Page Builder content rendering to the Venia app in PWA Studio.
+
+**Products content type enhancements**
+
+- {:.new}<!-- PB-77, PB-173, PB-175 --> Added Product carousel. The Products content type now provides an option to display your products in a carousel / slider format, including several options to customize the carousel to your needs.
+- {:.new}<!-- PB-69 -->Added Product SKU sorting. The Products content type now provides an option to sort your products by SKU in the order you add them to a list within the Admin.
+- {:.new}<!-- PB-181 -->Added Product Category sorting. The Products content type now provides an option to sort your products by category _position_, displaying them in same order that they appear within your Magento Catalog.
+- {:.new}<!-- PB-107 -->Added Product selection totals. The Products content type Admin editor now displays the total number of products that match your product selection options.
+
+**Various Fixes**
+
+- {:.fix}<!-- PB-41 -->Fixed searches within UI select components to make only one AJAX request per search term.
+- {:.fix}<!-- PB-76, PB-84-->Updated Product previews in the Admin to match the storefront, including the star rating, color, and size options of the product when relevant.
+- {:.fix}<!-- PB-169 -->Fixed an issue in which Page Builder could not be saved when Magento's Minify JavaScript Files option was enabled.
+- {:.fix}<!-- PB-237 -->Enhanced security.
+- {:.fix}<!-- PB-241 -->Fixed the Admin previews of Products, Blocks, and Dynamic Blocks to render correctly on Magento installations that define different URLs for the Admin and the frontend.
+- {:.fix}<!-- PB-248 -->Updated Page Builder LESS styles to prevent storefront style duplication.
+
+## 1.1.1
+
+This release is compatible with Magento Commerce 2.3.3-p1 and up. It is not compatible with earlier versions of Magento Commerce.
+
+- {:.new}Security enhancements.
+
+
 ## 1.1.0
 
-This release is compatible Magento Commerce 2.3.3+.
+This release is compatible with Magento Commerce 2.3.3 and up. It is not compatible with earlier versions of Magento Commerce.
 
 - {:.new}<!-- MC-15250 -->Added explicit product sorting to the Products content type.
 
@@ -38,21 +69,23 @@ This release is compatible Magento Commerce 2.3.3+.
 
 ## 1.0.3
 
-This release is compatible Magento Commerce 2.3.2-p2+.
+This release is compatible with Magento Commerce 2.3.2-p2 and up. It is not compatible with earlier versions of Magento Commerce.
 
 - {:.new}Security enhancements.
 
 ## 1.0.2
 
-This release is compatible Magento Commerce 2.3.2-p1+.
+This release is compatible with Magento Commerce 2.3.2-p1 and up. It is not compatible with earlier versions of Magento Commerce.
 
 - {:.new}Security enhancements.
 
 ## 1.0.1
 
-- {:.new}Ensures compatibility with Magento Commerce 2.3.2.
+- {:.new}Ensures compatibility with Magento Commerce 2.3.2 and up. It is not compatible with earlier versions of Magento Commerce.
 
 ## 1.0.0
+
+This release is compatible with Magento Commerce 2.3.1 and up. It is not compatible with earlier versions of Magento Commerce.
 
 - {:.new}General availability release!
 
