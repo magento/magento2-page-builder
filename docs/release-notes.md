@@ -24,7 +24,7 @@ This release is part of Magento Commerce 2.3.4.
 
 **Various Fixes**
 
-- {:.fix}<!-- PB-237 -->Enhanced security.
+- {:.fix}<!-- PB-237 -->Security enhancements.
 - {:.fix}<!-- PB-41 -->Fixed searches within UI select components to make only one AJAX request per search term.
 - {:.fix}<!-- PB-76, PB-84-->Updated Product previews in the Admin to match the storefront, including the star rating, color, and size options of the product when relevant.
 - {:.fix}<!-- PB-169 -->Fixed an issue in which Page Builder could not be saved when Magento's JavaScript minification and bundling are enabled.
