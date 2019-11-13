@@ -13,6 +13,8 @@ This release is part of Magento Commerce 2.3.4.
 
 **Page Builder integration with PWA Studio**
 
+Page Builder content can now be viewed within the PWA Studio Venia app. See the Page Builder documentation within [PWA Studio][] for all the information on this new feature.
+
 - {:.new}Added Page Builder content rendering to the Venia app in PWA Studio.
 
 **Products content type enhancements**
@@ -97,3 +99,6 @@ To learn more about Page Builder and Page Builder development:
 
 - For developers: [What is Page Builder?](https://devdocs.magento.com/page-builder/docs/index.html)
 - For end-users: [Page Builder User Guide](https://docs.magento.com/m2/ee/user_guide/cms/page-builder.html)
+
+
+[PWA Studio](https://magento.github.io/pwa-studio/)
