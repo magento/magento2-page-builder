@@ -1,4 +1,5 @@
 /*eslint-disable */
+/* jscs:disable */
 define(["Magento_PageBuilder/js/utils/create-stylesheet", "Magento_PageBuilder/js/drag-drop/matrix"], function (_createStylesheet, _matrix) {
   /**
    * Copyright © Magento, Inc. All rights reserved.

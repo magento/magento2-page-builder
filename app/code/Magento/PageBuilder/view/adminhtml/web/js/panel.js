@@ -1,4 +1,5 @@
 /*eslint-disable */
+/* jscs:disable */
 define(["consoleLogger", "jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/binding/draggable", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/drag-drop/drop-indicators", "Magento_PageBuilder/js/drag-drop/registry", "Magento_PageBuilder/js/panel/menu", "Magento_PageBuilder/js/panel/menu/content-type", "Magento_PageBuilder/js/utils/position-sticky"], function (_consoleLogger, _jquery, _knockout, _translate, _events, _underscore, _draggable, _config, _dropIndicators, _registry, _menu, _contentType, _positionSticky) {
   /**
    * Copyright © Magento, Inc. All rights reserved.

@@ -11,7 +11,7 @@ define([
 
     return Select.extend({
         defaults: {
-            visible: false,
+            visible: false
         },
 
         /**

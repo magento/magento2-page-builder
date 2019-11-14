@@ -1,4 +1,5 @@
 /*eslint-disable */
+/* jscs:disable */
 define(["knockout", "Magento_PageBuilder/js/events"], function (_knockout, _events) {
   /**
    * Copyright © Magento, Inc. All rights reserved.

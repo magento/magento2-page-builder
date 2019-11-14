@@ -14,7 +14,7 @@ define([
         save: function () {
             var data = this.get('data');
 
-            conditionsDataProcessor(data, data.condition_option + '_source');
+            conditionsDataProcessor(data, data['condition_option'] + '_source');
 
             return this._super();
         }

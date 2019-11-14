@@ -1,0 +1,75 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+declare(strict_types=1);
+
+namespace Magento\PageBuilder\Controller\Adminhtml\Form\Element;
+
+use Exception;
+use Magento\Backend\App\Action;
+use Magento\Backend\App\Action\Context;
+use Magento\Framework\App\Action\HttpPostActionInterface;
+use Magento\Framework\Controller\Result\JsonFactory;
+
+/**
+ * Returns the number of products that match the provided conditions
+ */
+class ProductTotals extends Action implements HttpPostActionInterface
+{
+    const ADMIN_RESOURCE = 'Magento_Catalog::products';
+
+    /**
+     * @var \Magento\PageBuilder\Model\Catalog\ProductTotals
+     */
+    private $productTotals;
+
+    /**
+     * @var JsonFactory
+     */
+    private $jsonFactory;
+
+    /**
+     * @param Context $context
+     * @param \Magento\PageBuilder\Model\Catalog\ProductTotals $productTotals
+     * @param JsonFactory $jsonFactory
+     */
+    public function __construct(
+        Context $context,
+        \Magento\PageBuilder\Model\Catalog\ProductTotals $productTotals,
+        JsonFactory $jsonFactory
+    ) {
+        $this->jsonFactory = $jsonFactory;
+        $this->productTotals = $productTotals;
+        parent::__construct($context);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function execute()
+    {
+        $conditions = $this->getRequest()->getParam('conditionValue');
+
+        try {
+            $totals = $this->productTotals->getProductTotals($conditions);
+            $response = [
+                'total' => $totals['total'],
+                'disabled' => $totals['disabled'],
+                'notVisible' => $totals['notVisible'],
+                'outOfStock' => $totals['outOfStock'],
+            ];
+        } catch (Exception $e) {
+            $response = [
+                'total' => 0,
+                'disabled' => 0,
+                'notVisible' => 0,
+                'outOfStock' => 0,
+            ];
+        }
+
+        return $this->jsonFactory->create()->setData($response);
+    }
+}
