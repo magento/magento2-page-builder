@@ -131,10 +131,12 @@
         <arguments>
             <argument name="section" defaultValue="TextOnStage"/>
             <argument name="index" defaultValue="1" type="string"/>
+            <argument name="contentTypeXCoordinate" defaultValue="10" type="string"/>
+            <argument name="contentTypeYCoordinate" defaultValue="null" type="string"/>
         </arguments>
         <comment userInput="focusOnInlineTinyMCEEditor" stepKey="comment"/>
         <waitForElementVisible selector="{{section.tinymce(index)}}" stepKey="waitForEditor"/>
-        <click selector="{{section.tinymce(index)}}" stepKey="clickEditor"/>
+        <clickWithLeftButton selector="{{section.tinymce(index)}}" x="{{contentTypeXCoordinate}}" y="{{contentTypeYCoordinate}}" stepKey="clickEditor"/>
         <waitForPageLoad stepKey="waitForEditorToBeFocused"/>
         <waitForElementVisible selector="{{section.tinymceInFocus(index)}}" stepKey="waitForEditorFocused"/>
     </actionGroup>
@@ -142,10 +144,12 @@
         <arguments>
             <argument name="section" defaultValue="TextOnStage"/>
             <argument name="index" defaultValue="1" type="string"/>
+            <argument name="contentTypeXCoordinate" defaultValue="10" type="string"/>
+            <argument name="contentTypeYCoordinate" defaultValue="null" type="string"/>
         </arguments>
         <comment userInput="focusOnInlineTextAreaEditor" stepKey="comment"/>
         <waitForElementVisible selector="{{section.textArea(index)}}" stepKey="waitForEditor"/>
-        <click selector="{{section.textArea(index)}}" stepKey="clickEditor"/>
+        <clickWithLeftButton selector="{{section.tinymce(index)}}" x="{{contentTypeXCoordinate}}" y="{{contentTypeYCoordinate}}" stepKey="clickEditor"/>
         <waitForPageLoad stepKey="waitForEditorToBeFocused"/>
     </actionGroup>
     <actionGroup name="switchTabAndReloadPage">
