@@ -59,7 +59,6 @@ class SortingTest extends TestCase
         $optionMocks = $this->createOptionMocks($sortClassesMap);
         $model = $this->createTestingModel($optionMocks, $sortClassesMap);
 
-
         $this->assertEquals(
             $optionMocks['position'],
             $model->getSortingInstance('position'),
@@ -95,7 +94,7 @@ class SortingTest extends TestCase
 
         $sortClasses = [];
 
-        foreach($sortClassesMap as $key => $value) {
+        foreach ($sortClassesMap as $key => $value) {
             $sortClasses[$key] = $value['className'];
         }
 
