@@ -1,4 +1,5 @@
 /*eslint-disable */
+/* jscs:disable */
 define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/utils/loader", "Magento_PageBuilder/js/mass-converter/converter-pool"], function (_config, _loader, _converterPool) {
   /**
    * Copyright © Magento, Inc. All rights reserved.

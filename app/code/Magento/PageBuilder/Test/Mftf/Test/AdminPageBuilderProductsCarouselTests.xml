@@ -3399,7 +3399,7 @@
         <!-- Stage: Drag to Second Slide and Validate -->
         <actionGroup ref="dragProductToSlideProductCarousel" stepKey="dragProductToSlideProductCarouselStage">
             <argument name="targetProduct" value="$$createProduct5.name$$"/>
-            <argument name="destinationProduct" value="$$createProduct1.name$$"/>
+            <argument name="destinationProduct" value="$$createProduct2.name$$"/>
         </actionGroup>
         <actionGroup ref="validateCanSeeProductInDefaultProductCarousel" stepKey="validateCanSeeProduct6Stage2">
             <argument name="product" value="$$createProduct6$$"/>
@@ -3473,6 +3473,47 @@
         <actionGroup ref="validateProductInProducts" stepKey="validateProductOnStage3">
             <argument name="page" value="ProductsCarouselOnStage"/>
             <argument name="product" value="_defaultProduct"/>
+        </actionGroup>
+    </test>
+    <test name="AdminPageBuilderVerifySwatchDisplayedInPreviewCarousel" extends="AdminPageBuilderVerifySwatchDisplayedInPreviewGrid">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Products"/>
+            <title value="Verify products display swatches within the admin for carousel appearance"/>
+            <description value="Verify that a product which has swatches display the swatches within the admin for carousel appearance"/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="PB-76"/>
+            <testCaseId value="MC-22765"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-products"/>
+            <group value="pagebuilder-productsCarousel"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance" after="openEditAfterDrop">
+            <argument name="property" value="PageBuilderProductsProductCarouselAppearance"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="count" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateSwatchInProducts" stepKey="assertFirstSwatch">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="swatch" value="visualSwatchOption1"/>
+        </actionGroup>
+        <actionGroup ref="validateSwatchInProducts" stepKey="assertSecondSwatch">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="swatch" value="visualSwatchOption2"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStageAfterSave">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="count" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateSwatchInProducts" stepKey="assertFirstSwatchAfterSave">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="swatch" value="visualSwatchOption1"/>
+        </actionGroup>
+        <actionGroup ref="validateSwatchInProducts" stepKey="assertSecondSwatchAfterSave">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="swatch" value="visualSwatchOption2"/>
         </actionGroup>
     </test>
 </tests>

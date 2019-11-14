@@ -1,4 +1,5 @@
 /*eslint-disable */
+/* jscs:disable */
 define(["jquery", "Magento_PageBuilder/js/utils/loader"], function (_jquery, _loader) {
   /**
    * Copyright © Magento, Inc. All rights reserved.

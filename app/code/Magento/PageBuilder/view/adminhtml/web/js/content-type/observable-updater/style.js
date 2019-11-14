@@ -1,4 +1,5 @@
 /*eslint-disable */
+/* jscs:disable */
 define(["underscore", "Magento_PageBuilder/js/utils/object", "Magento_PageBuilder/js/utils/string"], function (_underscore, _object, _string) {
   /**
    * Copyright © Magento, Inc. All rights reserved.

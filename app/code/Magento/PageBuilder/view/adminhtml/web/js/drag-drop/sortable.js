@@ -1,4 +1,5 @@
 /*eslint-disable */
+/* jscs:disable */
 define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/drag-drop/drop-indicators", "Magento_PageBuilder/js/drag-drop/matrix", "Magento_PageBuilder/js/drag-drop/move-content-type", "Magento_PageBuilder/js/drag-drop/registry"], function (_jquery, _knockout, _events, _contentTypeFactory, _dropIndicators, _matrix, _moveContentType, _registry) {
   /**
    * Copyright © Magento, Inc. All rights reserved.

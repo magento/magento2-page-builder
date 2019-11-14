@@ -1,4 +1,5 @@
 /*eslint-disable */
+/* jscs:disable */
 define(["jquery", "knockout"], function (_jquery, _knockout) {
   "use strict";
 
