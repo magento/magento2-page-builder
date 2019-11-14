@@ -64,11 +64,13 @@ class Sorting
      * @param string $sortOption
      * @return Sorting\OptionInterface
      */
-    public function getSortingInstance($sortOption): Sorting\OptionInterface
+    public function getSortingInstance($sortOption): ?Sorting\OptionInterface
     {
         if (isset($this->sortInstances[$sortOption])) {
             return $this->sortInstances[$sortOption];
         }
+
+        return null;
     }
 
     /**
