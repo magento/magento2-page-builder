@@ -131,8 +131,8 @@
         <arguments>
             <argument name="section" defaultValue="TextOnStage"/>
             <argument name="index" defaultValue="1" type="string"/>
-            <argument name="contentTypeXCoordinate" defaultValue="10" type="string"/>
-            <argument name="contentTypeYCoordinate" defaultValue="10" type="string"/>
+            <argument name="contentTypeXCoordinate" defaultValue="0" type="string"/>
+            <argument name="contentTypeYCoordinate" defaultValue="0" type="string"/>
         </arguments>
         <comment userInput="focusOnInlineTinyMCEEditor" stepKey="comment"/>
         <waitForElementVisible selector="{{section.tinymce(index)}}" stepKey="waitForEditor"/>
@@ -140,12 +140,20 @@
         <waitForPageLoad stepKey="waitForEditorToBeFocused"/>
         <waitForElementVisible selector="{{section.tinymceInFocus(index)}}" stepKey="waitForEditorFocused"/>
     </actionGroup>
+    <actionGroup name="moveCaretToEndTinyMCEEditor">
+        <arguments>
+            <argument name="section" defaultValue="TextOnStage"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{section.tinymce(index)}}" stepKey="waitForEditor"/>
+        <pressKey selector="{{section.tinymce(index)}}" parameterArray="[\Facebook\WebDriver\WebDriverKeys::END]" stepKey="pressEndKey"/>
+    </actionGroup>
     <actionGroup name="focusOnInlineTextAreaEditor">
         <arguments>
             <argument name="section" defaultValue="TextOnStage"/>
             <argument name="index" defaultValue="1" type="string"/>
-            <argument name="contentTypeXCoordinate" defaultValue="10" type="string"/>
-            <argument name="contentTypeYCoordinate" defaultValue="10" type="string"/>
+            <argument name="contentTypeXCoordinate" defaultValue="0" type="string"/>
+            <argument name="contentTypeYCoordinate" defaultValue="0" type="string"/>
         </arguments>
         <comment userInput="focusOnInlineTextAreaEditor" stepKey="comment"/>
         <waitForElementVisible selector="{{section.textArea(index)}}" stepKey="waitForEditor"/>
