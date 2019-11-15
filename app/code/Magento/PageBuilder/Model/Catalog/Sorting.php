@@ -62,7 +62,7 @@ class Sorting
      * Get the instance of the first option which is None
      *
      * @param string $sortOption
-     * @return Sorting\OptionInterface
+     * @return Sorting\OptionInterface|null
      */
     public function getSortingInstance($sortOption): ?Sorting\OptionInterface
     {
