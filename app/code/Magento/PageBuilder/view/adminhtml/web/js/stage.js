@@ -59,9 +59,15 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
         _events.trigger("stage:" + _this.id + ":renderAfter", {
           stage: _this
         });
+      });
+      var build = (0, _stageBuilder)(this, this.pageBuilder.initialValue);
+      build.then(function () {
+        if (_this.rootContainer.children().length > 10) {
+          _this.deferChildrenRendering();
+        }
       }); // Wait for the stage to be built alongside the stage being rendered
 
-      Promise.all([(0, _stageBuilder)(this, this.pageBuilder.initialValue), this.afterRenderDeferred.promise]).then(this.ready.bind(this)).catch(function (error) {
+      Promise.all([build, this.afterRenderDeferred.promise]).then(this.ready.bind(this)).catch(function (error) {
         console.error(error);
       });
     }
@@ -156,6 +162,42 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
       _events.on("stage:childFocusStop", function () {
         return _this2.focusChild(false);
       });
+    }
+    /**
+     * Defer the children rendering if there are a large number of children in the stage
+     */
+    ;
+
+    _proto.deferChildrenRendering = function deferChildrenRendering() {
+      var _this3 = this;
+
+      var originalChildren = this.rootContainer.getChildren()();
+      var chunks = this.chunk(originalChildren, 10); // Remove all children from the root container
+
+      this.rootContainer.setChildren(_knockout.observableArray([])); // Wait for the render of the stage, then immediately input the first 10 items
+
+      this.afterRenderDeferred.promise.then(function () {
+        chunks.forEach(function (children, chunkIndex) {
+          children.forEach(function (child, childIndex) {
+            _underscore.delay(function () {
+              _this3.rootContainer.addChild(child, chunkIndex * 10 + childIndex);
+            }, chunkIndex * 750 + childIndex * 75);
+          });
+        });
+      });
+    }
+    /**
+     * Chunk an array into pieces
+     *
+     * @param arr
+     * @param chunkSize
+     */
+    ;
+
+    _proto.chunk = function chunk(arr, chunkSize) {
+      return arr.reduce(function (prevVal, currVal, currIndx, array) {
+        return !(currIndx % chunkSize) ? prevVal.concat([array.slice(currIndx, currIndx + chunkSize)]) : prevVal;
+      }, []);
     }
     /**
      * On content type removed

@@ -10,6 +10,7 @@ import "Magento_PageBuilder/js/resource/jquery/ui/jquery.ui.touch-punch";
 import _ from "underscore";
 import "./binding/sortable";
 import Collection from "./collection";
+import Config from "./config";
 import ContentTypeCollectionInterface from "./content-type-collection.types";
 import {ContentTypeRemovedParamsInterface} from "./content-type/content-type-events.types";
 import DataStore from "./data-store";
@@ -77,9 +78,16 @@ export default class Stage {
             events.trigger(`stage:${ this.id }:renderAfter`, {stage: this});
         });
 
+        const build = buildStage(this, this.pageBuilder.initialValue);
+        build.then(() => {
+            if (this.rootContainer.children().length > 10) {
+                this.deferChildrenRendering();
+            }
+        });
+
         // Wait for the stage to be built alongside the stage being rendered
         Promise.all([
-            buildStage(this, this.pageBuilder.initialValue),
+            build,
             this.afterRenderDeferred.promise,
         ]).then(this.ready.bind(this)).catch((error) => {
             console.error(error);
@@ -152,6 +160,41 @@ export default class Stage {
         });
         events.on("stage:childFocusStart", () => this.focusChild(true));
         events.on("stage:childFocusStop", () => this.focusChild(false));
+    }
+
+    /**
+     * Defer the children rendering if there are a large number of children in the stage
+     */
+    private deferChildrenRendering(): void {
+        const originalChildren = this.rootContainer.getChildren()();
+        const chunks = this.chunk(originalChildren, 10);
+
+        // Remove all children from the root container
+        this.rootContainer.setChildren(ko.observableArray([]));
+
+        // Wait for the render of the stage, then immediately input the first 10 items
+        this.afterRenderDeferred.promise.then(() => {
+            chunks.forEach((children, chunkIndex) => {
+                children.forEach((child, childIndex) => {
+                    _.delay(() => {
+                        this.rootContainer.addChild(child, ((chunkIndex * 10) + childIndex));
+                    }, (chunkIndex * 750 + (childIndex * 75)));
+                });
+            });
+        });
+    }
+
+    /**
+     * Chunk an array into pieces
+     *
+     * @param arr
+     * @param chunkSize
+     */
+    private chunk<T>(arr: T[], chunkSize: number): [T[]] {
+        return arr.reduce((prevVal: any, currVal: any, currIndx: number, array: T[]) =>
+            !(currIndx % chunkSize) ?
+                prevVal.concat([array.slice(currIndx, currIndx + chunkSize)]) :
+                prevVal, []);
     }
 
     /**
