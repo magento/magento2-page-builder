@@ -15,19 +15,15 @@ define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/utils/loader", 
     var propertyReaders = [];
     var appearanceName;
 
-    var _arr = Object.keys(config.appearances);
-
-    for (var _i = 0; _i < _arr.length; _i++) {
-      appearanceName = _arr[_i];
+    for (var _i = 0, _Object$keys = Object.keys(config.appearances); _i < _Object$keys.length; _i++) {
+      appearanceName = _Object$keys[_i];
       var appearance = config.appearances[appearanceName];
 
       if (appearance !== undefined && appearance.elements !== undefined) {
         var elementName = void 0;
 
-        var _arr2 = Object.keys(appearance.elements);
-
-        for (var _i2 = 0; _i2 < _arr2.length; _i2++) {
-          elementName = _arr2[_i2];
+        for (var _i2 = 0, _Object$keys2 = Object.keys(appearance.elements); _i2 < _Object$keys2.length; _i2++) {
+          elementName = _Object$keys2[_i2];
           var element = appearance.elements[elementName];
 
           if (element.style !== undefined) {
