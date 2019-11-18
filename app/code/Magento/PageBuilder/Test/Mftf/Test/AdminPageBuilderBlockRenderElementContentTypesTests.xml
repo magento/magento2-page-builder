@@ -319,7 +319,15 @@
         <comment userInput="Validate CMS Block Stage" stepKey="commentValidateCMSBlockStage"/>
         <actionGroup ref="assertTextareaContainsValue" stepKey="assertTextareaContainsValueCMSBlockStage">
             <argument name="selector" value="{{TextOnStage.textArea('1')}}"/>
-            <argument name="value" value="{{PageBuilderTextProperty.value}}{{PageBuilderTextArea_VariableBaseURL.editPanelValue}}{{PageBuilderTextArea_WidgetCMSHomepageLink.editPanelValue}}"/>
+            <argument name="value" value="{{PageBuilderTextProperty.value}}"/>
+        </actionGroup>
+        <actionGroup ref="assertTextareaContainsValue" stepKey="assertTextareaContainsValueCMSBlockStage2">
+            <argument name="selector" value="{{TextOnStage.textArea('1')}}"/>
+            <argument name="value" value="{{PageBuilderTextArea_VariableBaseURL.editPanelValue}}"/>
+        </actionGroup>
+        <actionGroup ref="assertTextareaContainsValue" stepKey="assertTextareaContainsValueCMSBlockStage3">
+            <argument name="selector" value="{{TextOnStage.textArea('1')}}"/>
+            <argument name="value" value="{{PageBuilderTextArea_WidgetCMSHomepageLink.editPanelValue}}"/>
         </actionGroup>
         <!-- Add Block to CMS Page -->
         <comment userInput="Add Block to CMS Page" stepKey="commentAddBlockToCMSPage"/>
