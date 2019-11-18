@@ -140,7 +140,7 @@
         <waitForPageLoad stepKey="waitForEditorToBeFocused"/>
         <waitForElementVisible selector="{{section.tinymceInFocus(index)}}" stepKey="waitForEditorFocused"/>
     </actionGroup>
-    <actionGroup name="moveCaretToEndTinyMCEEditor">
+    <actionGroup name="goToEndOfLineTinyMCEEditor">
         <arguments>
             <argument name="section" defaultValue="TextOnStage"/>
             <argument name="index" defaultValue="1" type="string"/>
@@ -157,8 +157,16 @@
         </arguments>
         <comment userInput="focusOnInlineTextAreaEditor" stepKey="comment"/>
         <waitForElementVisible selector="{{section.textArea(index)}}" stepKey="waitForEditor"/>
-        <clickWithLeftButton selector="{{section.tinymce(index)}}" x="{{contentTypeXCoordinate}}" y="{{contentTypeYCoordinate}}" stepKey="clickEditor"/>
+        <clickWithLeftButton selector="{{section.textArea(index)}}" x="{{contentTypeXCoordinate}}" y="{{contentTypeYCoordinate}}" stepKey="clickEditor"/>
         <waitForPageLoad stepKey="waitForEditorToBeFocused"/>
+    </actionGroup>
+    <actionGroup name="goToEndOfLineTextAreaEditor">
+        <arguments>
+            <argument name="section" defaultValue="TextOnStage"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{section.textArea(index)}}" stepKey="waitForEditor"/>
+        <pressKey selector="{{section.textArea(index)}}" parameterArray="[\Facebook\WebDriver\WebDriverKeys::END]" stepKey="pressEndKey"/>
     </actionGroup>
     <actionGroup name="switchTabAndReloadPage">
         <switchToNextTab stepKey="switchToNextTab"/>
