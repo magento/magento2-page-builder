@@ -29,13 +29,16 @@ define(["Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/c
     return new Promise(function (resolve, reject) {
       (0, _loader)([config.component], function (contentTypeComponent) {
         try {
-          var contentType = new contentTypeComponent(parentContentType, config, stageId);
+          var _contentType = new contentTypeComponent(parentContentType, config, stageId);
+
           var viewFactory = _config.getMode() === "Preview" ? _previewFactory : _masterFactory;
-          viewFactory(contentType, config).then(function (viewComponent) {
+          viewFactory(_contentType, config).then(function (viewComponent) {
             var viewName = _config.getMode() === "Preview" ? "preview" : "content";
-            contentType[viewName] = viewComponent;
-            contentType.dataStore.setState(prepareData(config, data));
-            resolve(contentType);
+            _contentType[viewName] = viewComponent;
+
+            _contentType.dataStore.setState(prepareData(config, data));
+
+            resolve(_contentType);
           }).catch(function (error) {
             reject(error);
           });
