@@ -169,13 +169,14 @@ export default class Preview extends BasePreview {
         }
 
         if (this.element && !this.wysiwyg) {
+            const selection = this.saveSelection();
             this.element.removeAttribute("contenteditable");
             _.defer(() => {
                 this.initWysiwyg(true)
                     .then(() => delayUntil(
                         () => {
                             activate();
-                            this.restoreSelection(this.element, this.saveSelection());
+                            this.restoreSelection(this.element, selection);
                         },
                         () => this.element.classList.contains("mce-edit-focus"),
                         10,
@@ -269,6 +270,12 @@ export default class Preview extends BasePreview {
 
         if (focus) {
             wysiwygConfig.adapter.settings.auto_focus = this.element.id;
+            wysiwygConfig.adapter.settings.init_instance_callback = () => {
+                _.defer(() => {
+                    this.element.blur();
+                    this.element.focus();
+                });
+            };
         }
 
         return WysiwygFactory(

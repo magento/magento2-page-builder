@@ -81,8 +81,17 @@ class Config
     private $rootContainerConfig;
 
     /**
+     * @var \Magento\Widget\Model\Widget\Config
+     */
+    private $widgetConfig;
+
+    /**
+     * @var \Magento\Variable\Model\Variable\Config
+     */
+    private $variableConfig;
+
+    /**
      * Config constructor.
-     *
      * @param \Magento\PageBuilder\Model\ConfigInterface $config
      * @param Config\UiComponentConfig $uiComponentConfig
      * @param UrlInterface $urlBuilder
@@ -92,6 +101,8 @@ class Config
      * @param \Magento\Ui\Block\Wysiwyg\ActiveEditor $activeEditor
      * @param \Magento\PageBuilder\Model\Wysiwyg\InlineEditingSupportedAdapterList $inlineEditingChecker
      * @param \Magento\PageBuilder\Model\WidgetInitializerConfig $widgetInitializerConfig
+     * @param \Magento\Widget\Model\Widget\Config|null $widgetConfig
+     * @param \Magento\Variable\Model\Variable\Config|null $variableConfig
      * @param array $rootContainerConfig
      * @param array $data
      *
@@ -107,6 +118,8 @@ class Config
         \Magento\Ui\Block\Wysiwyg\ActiveEditor $activeEditor,
         \Magento\PageBuilder\Model\Wysiwyg\InlineEditingSupportedAdapterList $inlineEditingChecker,
         \Magento\PageBuilder\Model\WidgetInitializerConfig $widgetInitializerConfig,
+        \Magento\Widget\Model\Widget\Config $widgetConfig = null,
+        \Magento\Variable\Model\Variable\Config $variableConfig = null,
         array $rootContainerConfig = [],
         array $data = []
     ) {
@@ -119,6 +132,10 @@ class Config
         $this->activeEditor = $activeEditor;
         $this->inlineEditingChecker = $inlineEditingChecker;
         $this->widgetInitializerConfig = $widgetInitializerConfig;
+        $this->widgetConfig = $widgetConfig ?? \Magento\Framework\App\ObjectManager::getInstance()
+                ->get(\Magento\Widget\Model\Widget\Config::class);
+        $this->variableConfig = $variableConfig ?? \Magento\Framework\App\ObjectManager::getInstance()
+                ->get(\Magento\Variable\Model\Variable\Config::class);
         $this->rootContainerConfig = $rootContainerConfig;
         $this->data = $data;
     }
@@ -141,8 +158,39 @@ class Config
             'column_grid_max' => $this->scopeConfig->getValue(self::XML_PATH_COLUMN_GRID_MAX),
             'can_use_inline_editing_on_stage' => $this->isWysiwygProvisionedForEditingOnStage(),
             'widgets' => $this->widgetInitializerConfig->getConfig(),
-            'breakpoints' => $this->widgetInitializerConfig->getBreakpoints()
+            'breakpoints' => $this->widgetInitializerConfig->getBreakpoints(),
+            'tinymce' => $this->getTinyMceConfig(),
         ];
+    }
+
+    /**
+     * Retrieve the TinyMCE required configuration
+     *
+     * @return array
+     */
+    private function getTinyMceConfig()
+    {
+        $config = [
+            'widgets' => [],
+            'variables' => []
+        ];
+
+        // Retrieve widget configuration
+        $widgetConfig = $this->widgetConfig->getConfig(new \Magento\Framework\DataObject());
+        $options = $widgetConfig->getData('plugins');
+        if (isset($options[0]) && $options[0]['name'] === 'magentowidget') {
+            $config['widgets'] = $options[0]['options'];
+        }
+
+        // Retrieve variable configuration
+        $variableConfig = $this->variableConfig->getWysiwygPluginSettings(new \Magento\Framework\DataObject());
+        if (isset($variableConfig['plugins']) && isset($variableConfig['plugins'][0])
+            && $variableConfig['plugins'][0]['name'] === 'magentovariable'
+        ) {
+            $config['variables'] = $variableConfig['plugins'][0]['options'];
+        }
+
+        return $config;
     }
 
     /**

@@ -3,7 +3,7 @@
 
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-menu/hide-show-option", "Magento_PageBuilder/js/wysiwyg/factory", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _events, _underscore, _config, _hideShowOption, _factory, _preview) {
+define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/content-type-menu/hide-show-option", "Magento_PageBuilder/js/utils/delay-until", "Magento_PageBuilder/js/utils/tinymce", "Magento_PageBuilder/js/wysiwyg/factory", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _events, _underscore, _hideShowOption, _delayUntil, _tinymce, _factory, _preview) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -41,7 +41,7 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
      * @returns {Boolean}
      */
     _proto.isWysiwygSupported = function isWysiwygSupported() {
-      return _config.getConfig("can_use_inline_editing_on_stage");
+      return (0, _tinymce.isWysiwygSupported)();
     }
     /**
      * Return an array of options
@@ -68,17 +68,105 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
      */
     ;
 
-    _proto.initWysiwyg = function initWysiwyg(element) {
+    _proto.afterRenderWysiwyg = function afterRenderWysiwyg(element) {
+      this.element = element;
+      element.id = this.contentType.id + "-editor";
+      /**
+       * afterRenderWysiwyg is called whenever Knockout causes a DOM re-render. This occurs frequently within Slider
+       * due to Slick's inability to perform a refresh with Knockout managing the DOM. Due to this the original
+       * WYSIWYG instance will be detached from this slide and we need to re-initialize on click.
+       */
+
+      this.wysiwyg = null;
+    }
+    /**
+     * Stop event to prevent execution of action when editing textarea.
+     *
+     * @param {Preview} preview
+     * @param {JQueryEventObject} event
+     * @returns {Boolean}
+     */
+    ;
+
+    _proto.stopEvent = function stopEvent(preview, event) {
+      event.stopPropagation();
+      return true;
+    }
+    /**
+     * Init the WYSIWYG
+     *
+     * @param {boolean} focus Should wysiwyg focus after initialization?
+     * @returns Promise
+     */
+    ;
+
+    _proto.initWysiwyg = function initWysiwyg(focus) {
       var _this = this;
 
-      this.element = element;
-      element.innerHTML = this.data.main.html();
-      element.id = this.contentType.id + "-editor";
+      if (focus === void 0) {
+        focus = false;
+      }
+
+      if (this.wysiwyg) {
+        return;
+      }
+
       var wysiwygConfig = this.config.additional_data.wysiwygConfig.wysiwygConfigData;
-      wysiwygConfig.adapter.settings.auto_focus = this.contentType.dropped ? element.id : null;
-      (0, _factory)(this.contentType.id, element.id, this.config.name, wysiwygConfig, this.contentType.dataStore, "content", this.contentType.stageId).then(function (wysiwyg) {
+
+      if (focus) {
+        wysiwygConfig.adapter.settings.auto_focus = this.element.id;
+
+        wysiwygConfig.adapter.settings.init_instance_callback = function () {
+          _underscore.defer(function () {
+            _this.element.blur();
+
+            _this.element.focus();
+          });
+        };
+      }
+
+      return (0, _factory)(this.contentType.id, this.element.id, this.config.name, wysiwygConfig, this.contentType.dataStore, "content", this.contentType.stageId).then(function (wysiwyg) {
         _this.wysiwyg = wysiwyg;
       });
+    }
+    /**
+     * Makes WYSIWYG active
+     *
+     * @param {Preview} preview
+     * @param {JQueryEventObject} event
+     * @returns {Boolean}
+     */
+    ;
+
+    _proto.activateEditor = function activateEditor(preview, event) {
+      var _this2 = this;
+
+      var activate = function activate() {
+        var element = _this2.wysiwyg && _this2.element || _this2.textarea;
+        element.focus();
+      };
+
+      if (this.element && !this.wysiwyg) {
+        var selection = this.saveSelection();
+        this.element.removeAttribute("contenteditable");
+
+        _underscore.defer(function () {
+          _this2.initWysiwyg(true).then(function () {
+            return (0, _delayUntil)(function () {
+              activate();
+
+              _this2.restoreSelection(_this2.element, selection);
+            }, function () {
+              return _this2.element.classList.contains("mce-edit-focus");
+            }, 10);
+          }).catch(function (error) {
+            // If there's an error with init of WYSIWYG editor push into the console to aid support
+            console.error(error);
+          });
+        });
+      } else {
+        activate();
+      }
     }
     /**
      * @param {HTMLTextAreaElement} element
@@ -86,7 +174,7 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
     ;
 
     _proto.initTextarea = function initTextarea(element) {
-      var _this2 = this;
+      var _this3 = this;
 
       this.textarea = element; // set initial value of textarea based on data store
 
@@ -94,9 +182,9 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
       this.adjustTextareaHeightBasedOnScrollHeight(); // Update content in our stage preview textarea after its slideout counterpart gets updated
 
       _events.on("form:" + this.contentType.id + ":saveAfter", function () {
-        _this2.textarea.value = _this2.contentType.dataStore.get("content");
+        _this3.textarea.value = _this3.contentType.dataStore.get("content");
 
-        _this2.adjustTextareaHeightBasedOnScrollHeight();
+        _this3.adjustTextareaHeightBasedOnScrollHeight();
       });
     }
     /**
@@ -157,6 +245,82 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
       }
 
       (0, _jquery)(this.textarea).height(scrollHeight);
+    }
+    /**
+     * Save the current selection to be restored at a later point
+     *
+     * @returns {Selection}
+     */
+    ;
+
+    _proto.saveSelection = function saveSelection() {
+      if (window.getSelection) {
+        var selection = window.getSelection();
+
+        if (selection.getRangeAt && selection.rangeCount) {
+          var range = selection.getRangeAt(0).cloneRange();
+          (0, _jquery)(range.startContainer.parentNode).attr("data-startContainer", "true");
+          (0, _jquery)(range.endContainer.parentNode).attr("data-endContainer", "true");
+          return {
+            startContainer: range.startContainer,
+            startOffset: range.startOffset,
+            endContainer: range.endContainer,
+            endOffset: range.endOffset
+          };
+        }
+      }
+
+      return null;
+    }
+    /**
+     * Restore the original selection
+     *
+     * @param {HTMLElement} element
+     * @param {Selection} selection
+     */
+    ;
+
+    _proto.restoreSelection = function restoreSelection(element, selection) {
+      if (selection && window.getSelection) {
+        // Find the original container that had the selection
+        var startContainerParent = (0, _jquery)(element).find("[data-startContainer]");
+        startContainerParent.removeAttr("data-startContainer");
+
+        var _startContainer = this.findTextNode(startContainerParent, selection.startContainer.nodeValue);
+
+        var endContainerParent = (0, _jquery)(element).find("[data-endContainer]");
+        endContainerParent.removeAttr("data-endContainer");
+        var _endContainer = _startContainer;
+
+        if (selection.endContainer.nodeValue !== selection.startContainer.nodeValue) {
+          _endContainer = this.findTextNode(endContainerParent, selection.endContainer.nodeValue);
+        }
+
+        if (_startContainer && _endContainer) {
+          var newSelection = window.getSelection();
+          newSelection.removeAllRanges();
+          var range = document.createRange();
+          range.setStart(_startContainer, selection.startOffset);
+          range.setEnd(_endContainer, selection.endOffset);
+          newSelection.addRange(range);
+        }
+      }
+    }
+    /**
+     * Find a text node within an existing element
+     *
+     * @param {HTMLElement} element
+     * @param {string} text
+     * @returns {HTMLElement}
+     */
+    ;
+
+    _proto.findTextNode = function findTextNode(element, text) {
+      if (text && text.trim().length > 0) {
+        return element.contents().toArray().find(function (node) {
+          return node.nodeType === Node.TEXT_NODE && text === node.nodeValue;
+        });
+      }
     };
 
     return Preview;

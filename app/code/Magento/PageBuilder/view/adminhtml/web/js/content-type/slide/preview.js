@@ -145,6 +145,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       }
 
       if (this.element && !this.wysiwyg) {
+        var selection = this.saveSelection();
         this.element.removeAttribute("contenteditable");
 
         _underscore.defer(function () {
@@ -152,7 +153,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
             return (0, _delayUntil)(function () {
               activate();
 
-              _this2.restoreSelection(_this2.element, _this2.saveSelection());
+              _this2.restoreSelection(_this2.element, selection);
             }, function () {
               return _this2.element.classList.contains("mce-edit-focus");
             }, 10);
@@ -257,6 +258,14 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
       if (focus) {
         wysiwygConfig.adapter.settings.auto_focus = this.element.id;
+
+        wysiwygConfig.adapter.settings.init_instance_callback = function () {
+          _underscore.defer(function () {
+            _this4.element.blur();
+
+            _this4.element.focus();
+          });
+        };
       }
 
       return (0, _factory)(this.contentType.id, this.element.id, this.config.name, wysiwygConfig, this.contentType.dataStore, "content", this.contentType.stageId).then(function (wysiwyg) {
