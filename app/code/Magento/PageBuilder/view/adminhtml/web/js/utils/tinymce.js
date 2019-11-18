@@ -24,6 +24,9 @@ define(["Magento_PageBuilder/js/config"], function (_config) {
   /**
    * Convert all variables to their HTML preview counterparts
    *
+   * Re-implements logic from lib/web/mage/adminhtml/wysiwyg/tiny_mce/plugins/magentovariable/editor_plugin.js to parse
+   * and replace the variables within the content.
+   *
    * @param content
    */
 
@@ -31,37 +34,28 @@ define(["Magento_PageBuilder/js/config"], function (_config) {
   function convertVariablesToHtmlPreview(content) {
     var config = _config.getConfig("tinymce").variables;
 
-    content = content.gsub(/\{\{config path=\"([^\"]+)\"\}\}/i, function (match) {
-      var path = match[1],
-          magentoVariables,
-          imageHtml;
-      magentoVariables = JSON.parse(config.placeholders);
+    var magentoVariables = JSON.parse(config.placeholders);
+    return content.replace(/\{\{\s?(?:customVar code=|config path=\")([^\}\"]+)[\"]?\s?\}\}/ig, function (match, path) {
+      var placeholder = document.createElement("span");
+      placeholder.id = Base64.idEncode(path);
+      placeholder.classList.add("magento-variable", "magento-placeholder", "mceNonEditable");
 
-      if (magentoVariables[match[1]] && magentoVariables[match[1]].variable_type === "default") {
-        imageHtml = '<span id="%id" class="magento-variable magento-placeholder mceNonEditable">' + "%s</span>";
-        imageHtml = imageHtml.replace("%s", magentoVariables[match[1]].variable_name);
-      } else {
-        imageHtml = '<span id="%id" class="' + "magento-variable magento-placeholder magento-placeholder-error " + "mceNonEditable" + '">' + "Not found" + "</span>";
+      if (magentoVariables[path].variable_type === "custom") {
+        placeholder.classList.add("magento-custom-var");
       }
 
-      return imageHtml.replace("%id", Base64.idEncode(path));
-    });
-    content = content.gsub(/\{\{customVar code=([^\}\"]+)\}\}/i, function (match) {
-      var path = match[1],
-          magentoVariables,
-          imageHtml;
-      magentoVariables = JSON.parse(config.placeholders);
+      var variableType = magentoVariables[path].variable_type;
 
-      if (magentoVariables[match[1]] && magentoVariables[match[1]].variable_type === "custom") {
-        imageHtml = '<span id="%id" class="magento-variable magento-custom-var magento-placeholder ' + 'mceNonEditable">%s</span>';
-        imageHtml = imageHtml.replace("%s", magentoVariables[match[1]].variable_name);
+      if (magentoVariables[path] && (variableType === "default" || variableType === "custom")) {
+        placeholder.textContent = magentoVariables[path].variable_name;
       } else {
-        imageHtml = '<span id="%id" class="' + "magento-variable magento-custom-var magento-placeholder " + "magento-placeholder-error mceNonEditable" + '">' + match[1] + "</span>";
+        // If we're unable to find the placeholder we need to attach an error class
+        placeholder.classList.add("magento-placeholder-error");
+        placeholder.textContent = variableType === "custom" ? path : "Not Found";
       }
 
-      return imageHtml.replace("%id", Base64.idEncode(path));
+      return placeholder.outerHTML;
     });
-    return content;
   }
   /**
    * Convert widgets within content to their HTML counterparts
@@ -71,37 +65,37 @@ define(["Magento_PageBuilder/js/config"], function (_config) {
 
 
   function convertWidgetsToHtmlPreview(content) {
-    console.log(_config.getConfig("tinymce"));
-
     var config = _config.getConfig("tinymce").widgets;
 
-    return content.gsub(/\{\{widget(.*?)\}\}/i, function (match) {
-      var attributes = parseAttributesString(match[1]);
+    return content.replace(/\{\{widget(.*?)\}\}/ig, function (match, widgetBody) {
+      var attributes = parseAttributesString(widgetBody);
       var imageSrc;
-      var imageHtml = "";
 
       if (attributes.type) {
+        var placeholder = document.createElement("span");
+        placeholder.contentEditable = "false";
+        placeholder.classList.add("magento-placeholder", "magento-widget", "mceNonEditable");
         attributes.type = attributes.type.replace(/\\\\/g, "\\");
         imageSrc = config.placeholders[attributes.type];
 
-        if (imageSrc) {
-          imageHtml += '<span class="magento-placeholder magento-widget mceNonEditable" ' + 'contenteditable="false">';
-        } else {
+        if (!imageSrc) {
           imageSrc = config.error_image_url;
-          imageHtml += "<span " + 'class="magento-placeholder magento-placeholder-error magento-widget mceNonEditable" ' + 'contenteditable="false">';
+          placeholder.classList.add("magento-placeholder-error");
         }
 
-        imageHtml += "<img";
-        imageHtml += ' id="' + Base64.idEncode(match[0]) + '"';
-        imageHtml += ' src="' + imageSrc + '"';
-        imageHtml += " />";
+        var image = document.createElement("img");
+        image.id = Base64.idEncode(match);
+        image.src = imageSrc;
+        placeholder.append(image);
+        var widgetType = "";
 
         if (config.types[attributes.type]) {
-          imageHtml += config.types[attributes.type];
+          widgetType += config.types[attributes.type];
         }
 
-        imageHtml += "</span>";
-        return imageHtml;
+        var text = document.createTextNode(widgetType);
+        placeholder.append(text);
+        return placeholder.outerHTML;
       }
     });
   }
