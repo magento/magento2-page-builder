@@ -95,10 +95,8 @@ define(["consoleLogger", "knockout", "Magento_PageBuilder/js/content-type/appear
       var convertedData = this.convertData(data, converters);
       var generatedData = {};
 
-      var _arr = Object.keys(elements);
-
-      for (var _i = 0; _i < _arr.length; _i++) {
-        var elementName = _arr[_i];
+      for (var _i = 0, _Object$keys = Object.keys(elements); _i < _Object$keys.length; _i++) {
+        var elementName = _Object$keys[_i];
         var elementConfig = elements[elementName];
 
         if (this.previousData[elementName] === undefined) {
