@@ -9,13 +9,13 @@ import $t from "mage/translate";
 import events from "Magento_PageBuilder/js/events";
 import _ from "underscore";
 import {PreviewSortableSortUpdateEventParams} from "../../binding/sortable-children.types";
-import Config from "../../config";
 import ConditionalRemoveOption from "../../content-type-menu/conditional-remove-option";
 import {OptionsInterface} from "../../content-type-menu/option.types";
 import {DataObject} from "../../data-store";
 import Uploader from "../../uploader";
 import delayUntil from "../../utils/delay-until";
 import nestingLinkDialog from "../../utils/nesting-link-dialog";
+import {getSelection, isWysiwygSupported, restoreSelection} from "../../utils/tinymce";
 import WysiwygFactory from "../../wysiwyg/factory";
 import WysiwygInterface from "../../wysiwyg/wysiwyg-interface";
 import {ContentTypeMountEventParamsInterface} from "../content-type-events.types";
@@ -163,27 +163,22 @@ export default class Preview extends BasePreview {
             element.focus();
         };
 
-        if (!this.slideChanged) {
-            event.preventDefault();
-            return false;
-        }
-
         if (this.element && !this.wysiwyg) {
-            const selection = this.saveSelection();
+            const selection = getSelection();
             this.element.removeAttribute("contenteditable");
             _.defer(() => {
                 this.initWysiwyg(true)
                     .then(() => delayUntil(
                         () => {
                             activate();
-                            this.restoreSelection(this.element, selection);
+                            restoreSelection(this.element, selection);
                         },
                         () => this.element.classList.contains("mce-edit-focus"),
                         10,
                     )).catch((error) => {
-                        // If there's an error with init of WYSIWYG editor push into the console to aid support
-                        console.error(error);
-                    });
+                    // If there's an error with init of WYSIWYG editor push into the console to aid support
+                    console.error(error);
+                });
             });
         } else {
             activate();
@@ -207,7 +202,7 @@ export default class Preview extends BasePreview {
      * @returns {Boolean}
      */
     public isWysiwygSupported(): boolean {
-        return Config.getConfig("can_use_inline_editing_on_stage");
+        return isWysiwygSupported();
     }
 
     /**
@@ -370,86 +365,4 @@ export default class Preview extends BasePreview {
 
         $(this.textarea).height(scrollHeight);
     }
-
-    /**
-     * Save the current selection to be restored at a later point
-     *
-     * @returns {Selection}
-     */
-    private saveSelection(): Selection {
-        if (window.getSelection) {
-            const selection = window.getSelection();
-            if (selection.getRangeAt && selection.rangeCount) {
-                const range = selection.getRangeAt(0).cloneRange();
-                $(range.startContainer.parentNode).attr("data-startContainer", "true");
-                $(range.endContainer.parentNode).attr("data-endContainer", "true");
-                return {
-                    startContainer: range.startContainer,
-                    startOffset: range.startOffset,
-                    endContainer: range.endContainer,
-                    endOffset: range.endOffset,
-                };
-            }
-        }
-        return null;
-    }
-
-    /**
-     * Restore the original selection
-     *
-     * @param {HTMLElement} element
-     * @param {Selection} selection
-     */
-    private restoreSelection(element: HTMLElement, selection: Selection) {
-        if (selection && window.getSelection) {
-            // Find the original container that had the selection
-            const startContainerParent = $(element).find("[data-startContainer]");
-            startContainerParent.removeAttr("data-startContainer");
-            const startContainer: HTMLElement = this.findTextNode(
-                startContainerParent,
-                selection.startContainer.nodeValue,
-            );
-            const endContainerParent = $(element).find("[data-endContainer]");
-            endContainerParent.removeAttr("data-endContainer");
-            let endContainer: HTMLElement = startContainer;
-            if (selection.endContainer.nodeValue !== selection.startContainer.nodeValue) {
-                endContainer = this.findTextNode(
-                    endContainerParent,
-                    selection.endContainer.nodeValue,
-                );
-            }
-
-            if (startContainer && endContainer) {
-                const newSelection = window.getSelection();
-                newSelection.removeAllRanges();
-
-                const range = document.createRange();
-                range.setStart(startContainer, selection.startOffset);
-                range.setEnd(endContainer, selection.endOffset);
-                newSelection.addRange(range);
-            }
-        }
-    }
-
-    /**
-     * Find a text node within an existing element
-     *
-     * @param {HTMLElement} element
-     * @param {string} text
-     * @returns {HTMLElement}
-     */
-    private findTextNode(element: JQuery, text: string): HTMLElement {
-        if (text && text.trim().length > 0) {
-            return element.contents().toArray().find((node: HTMLElement) => {
-                return node.nodeType === Node.TEXT_NODE && text === node.nodeValue;
-            });
-        }
-    }
-}
-
-interface Selection {
-    startContainer: Node;
-    startOffset: number;
-    endContainer: Node;
-    endOffset: number;
 }

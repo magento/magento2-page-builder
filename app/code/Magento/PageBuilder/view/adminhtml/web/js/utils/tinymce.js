@@ -1,6 +1,6 @@
 /*eslint-disable */
 /* jscs:disable */
-define(["Magento_PageBuilder/js/config"], function (_config) {
+define(["jquery", "Magento_PageBuilder/js/config"], function (_jquery, _config) {
   /**
    * Is the inline WYSIWYG supported?
    */
@@ -35,7 +35,7 @@ define(["Magento_PageBuilder/js/config"], function (_config) {
     var config = _config.getConfig("tinymce").variables;
 
     var magentoVariables = JSON.parse(config.placeholders);
-    return content.replace(/\{\{\s?(?:customVar code=|config path=\")([^\}\"]+)[\"]?\s?\}\}/ig, function (match, path) {
+    return content.replace(/{\{\s?(?:customVar code=|config path=\")([^\}\"]+)[\"]?\s?\}\}/ig, function (match, path) {
       var placeholder = document.createElement("span");
       placeholder.id = Base64.idEncode(path);
       placeholder.classList.add("magento-variable", "magento-placeholder", "mceNonEditable");
@@ -114,13 +114,88 @@ define(["Magento_PageBuilder/js/config"], function (_config) {
     });
     return result;
   }
+  /**
+   * Retrieve the selection of the user
+   */
+
+
+  function getSelection() {
+    if (window.getSelection) {
+      var selection = window.getSelection();
+
+      if (selection.getRangeAt && selection.rangeCount) {
+        var range = selection.getRangeAt(0).cloneRange();
+        (0, _jquery)(range.startContainer.parentNode).attr("data-startContainer", "true");
+        (0, _jquery)(range.endContainer.parentNode).attr("data-endContainer", "true");
+        return {
+          startContainer: range.startContainer,
+          startOffset: range.startOffset,
+          endContainer: range.endContainer,
+          endOffset: range.endOffset
+        };
+      }
+    }
+
+    return null;
+  }
+  /**
+   * Restore the users previous selection
+   *
+   * @param element
+   * @param selection
+   */
+
+
+  function restoreSelection(element, selection) {
+    if (selection && window.getSelection) {
+      // Find the original container that had the selection
+      var startContainerParent = (0, _jquery)(element).find("[data-startContainer]");
+      startContainerParent.removeAttr("data-startContainer");
+
+      var _startContainer = findTextNode(startContainerParent, selection.startContainer.nodeValue);
+
+      var endContainerParent = (0, _jquery)(element).find("[data-endContainer]");
+      endContainerParent.removeAttr("data-endContainer");
+      var _endContainer = _startContainer;
+
+      if (selection.endContainer.nodeValue !== selection.startContainer.nodeValue) {
+        _endContainer = findTextNode(endContainerParent, selection.endContainer.nodeValue);
+      }
+
+      if (_startContainer && _endContainer) {
+        var newSelection = window.getSelection();
+        newSelection.removeAllRanges();
+        var range = document.createRange();
+        range.setStart(_startContainer, selection.startOffset);
+        range.setEnd(_endContainer, selection.endOffset);
+        newSelection.addRange(range);
+      }
+    }
+  }
+  /**
+   * Find a text node within an existing element
+   *
+   * @param element
+   * @param text
+   */
+
+
+  function findTextNode(element, text) {
+    if (text && text.trim().length > 0) {
+      return element.contents().toArray().find(function (node) {
+        return node.nodeType === Node.TEXT_NODE && text === node.nodeValue;
+      });
+    }
+  }
 
   return {
     isWysiwygSupported: isWysiwygSupported,
     encodeContent: encodeContent,
     convertVariablesToHtmlPreview: convertVariablesToHtmlPreview,
     convertWidgetsToHtmlPreview: convertWidgetsToHtmlPreview,
-    parseAttributesString: parseAttributesString
+    parseAttributesString: parseAttributesString,
+    getSelection: getSelection,
+    restoreSelection: restoreSelection
   };
 });
 //# sourceMappingURL=tinymce.js.map

@@ -147,15 +147,14 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
       };
 
       if (this.element && !this.wysiwyg) {
-        var selection = this.saveSelection();
+        var selection = (0, _tinymce.getSelection)();
         this.element.removeAttribute("contenteditable");
 
         _underscore.defer(function () {
           _this2.initWysiwyg(true).then(function () {
             return (0, _delayUntil)(function () {
               activate();
-
-              _this2.restoreSelection(_this2.element, selection);
+              (0, _tinymce.restoreSelection)(_this2.element, selection);
             }, function () {
               return _this2.element.classList.contains("mce-edit-focus");
             }, 10);
@@ -245,82 +244,6 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
       }
 
       (0, _jquery)(this.textarea).height(scrollHeight);
-    }
-    /**
-     * Save the current selection to be restored at a later point
-     *
-     * @returns {Selection}
-     */
-    ;
-
-    _proto.saveSelection = function saveSelection() {
-      if (window.getSelection) {
-        var selection = window.getSelection();
-
-        if (selection.getRangeAt && selection.rangeCount) {
-          var range = selection.getRangeAt(0).cloneRange();
-          (0, _jquery)(range.startContainer.parentNode).attr("data-startContainer", "true");
-          (0, _jquery)(range.endContainer.parentNode).attr("data-endContainer", "true");
-          return {
-            startContainer: range.startContainer,
-            startOffset: range.startOffset,
-            endContainer: range.endContainer,
-            endOffset: range.endOffset
-          };
-        }
-      }
-
-      return null;
-    }
-    /**
-     * Restore the original selection
-     *
-     * @param {HTMLElement} element
-     * @param {Selection} selection
-     */
-    ;
-
-    _proto.restoreSelection = function restoreSelection(element, selection) {
-      if (selection && window.getSelection) {
-        // Find the original container that had the selection
-        var startContainerParent = (0, _jquery)(element).find("[data-startContainer]");
-        startContainerParent.removeAttr("data-startContainer");
-
-        var _startContainer = this.findTextNode(startContainerParent, selection.startContainer.nodeValue);
-
-        var endContainerParent = (0, _jquery)(element).find("[data-endContainer]");
-        endContainerParent.removeAttr("data-endContainer");
-        var _endContainer = _startContainer;
-
-        if (selection.endContainer.nodeValue !== selection.startContainer.nodeValue) {
-          _endContainer = this.findTextNode(endContainerParent, selection.endContainer.nodeValue);
-        }
-
-        if (_startContainer && _endContainer) {
-          var newSelection = window.getSelection();
-          newSelection.removeAllRanges();
-          var range = document.createRange();
-          range.setStart(_startContainer, selection.startOffset);
-          range.setEnd(_endContainer, selection.endOffset);
-          newSelection.addRange(range);
-        }
-      }
-    }
-    /**
-     * Find a text node within an existing element
-     *
-     * @param {HTMLElement} element
-     * @param {string} text
-     * @returns {HTMLElement}
-     */
-    ;
-
-    _proto.findTextNode = function findTextNode(element, text) {
-      if (text && text.trim().length > 0) {
-        return element.contents().toArray().find(function (node) {
-          return node.nodeType === Node.TEXT_NODE && text === node.nodeValue;
-        });
-      }
     };
 
     return Preview;

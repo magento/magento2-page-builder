@@ -1,3 +1,4 @@
+import $ from "jquery";
 import Config from "../config";
 
 /**
@@ -32,7 +33,7 @@ export function convertVariablesToHtmlPreview(content: string) {
     const config = Config.getConfig("tinymce").variables;
     const magentoVariables = JSON.parse(config.placeholders);
 
-    return content.replace(/\{\{\s?(?:customVar code=|config path=\")([^\}\"]+)[\"]?\s?\}\}/ig, (match, path) => {
+    return content.replace(/{\{\s?(?:customVar code=|config path=\")([^\}\"]+)[\"]?\s?\}\}/ig, (match, path) => {
         const placeholder = document.createElement("span");
         placeholder.id = Base64.idEncode(path);
         placeholder.classList.add("magento-variable", "magento-placeholder", "mceNonEditable");
@@ -115,4 +116,83 @@ export function parseAttributesString(attributes: string): { [key: string]: stri
     );
 
     return result;
+}
+
+/**
+ * Retrieve the selection of the user
+ */
+export function getSelection(): Selection {
+    if (window.getSelection) {
+        const selection = window.getSelection();
+        if (selection.getRangeAt && selection.rangeCount) {
+            const range = selection.getRangeAt(0).cloneRange();
+            $(range.startContainer.parentNode).attr("data-startContainer", "true");
+            $(range.endContainer.parentNode).attr("data-endContainer", "true");
+            return {
+                startContainer: range.startContainer,
+                startOffset: range.startOffset,
+                endContainer: range.endContainer,
+                endOffset: range.endOffset,
+            };
+        }
+    }
+    return null;
+}
+
+/**
+ * Restore the users previous selection
+ *
+ * @param element
+ * @param selection
+ */
+export function restoreSelection(element: HTMLElement, selection: Selection) {
+    if (selection && window.getSelection) {
+        // Find the original container that had the selection
+        const startContainerParent = $(element).find("[data-startContainer]");
+        startContainerParent.removeAttr("data-startContainer");
+        const startContainer: HTMLElement = findTextNode(
+            startContainerParent,
+            selection.startContainer.nodeValue,
+        );
+        const endContainerParent = $(element).find("[data-endContainer]");
+        endContainerParent.removeAttr("data-endContainer");
+        let endContainer: HTMLElement = startContainer;
+        if (selection.endContainer.nodeValue !== selection.startContainer.nodeValue) {
+            endContainer = findTextNode(
+                endContainerParent,
+                selection.endContainer.nodeValue,
+            );
+        }
+
+        if (startContainer && endContainer) {
+            const newSelection = window.getSelection();
+            newSelection.removeAllRanges();
+
+            const range = document.createRange();
+            range.setStart(startContainer, selection.startOffset);
+            range.setEnd(endContainer, selection.endOffset);
+            newSelection.addRange(range);
+        }
+    }
+}
+
+/**
+ * Find a text node within an existing element
+ *
+ * @param element
+ * @param text
+ */
+function findTextNode(element: JQuery, text: string): HTMLElement {
+    if (text && text.trim().length > 0) {
+        return element.contents().toArray().find((node: HTMLElement) => {
+            return node.nodeType === Node.TEXT_NODE && text === node.nodeValue;
+        });
+    }
+}
+
+export interface Selection {
+    startContainer: Node;
+    startOffset: number;
+    endContainer: Node;
+    endOffset: number;
 }
