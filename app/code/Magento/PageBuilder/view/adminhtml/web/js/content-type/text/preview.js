@@ -141,11 +141,6 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
     _proto.activateEditor = function activateEditor(preview, event) {
       var _this2 = this;
 
-      var activate = function activate() {
-        var element = _this2.wysiwyg && _this2.element || _this2.textarea;
-        element.focus();
-      };
-
       if (this.element && !this.wysiwyg) {
         var selection = (0, _tinymce.getSelection)();
         this.element.removeAttribute("contenteditable");
@@ -153,7 +148,6 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
         _underscore.defer(function () {
           _this2.initWysiwyg(true).then(function () {
             return (0, _delayUntil)(function () {
-              activate();
               (0, _tinymce.restoreSelection)(_this2.element, selection);
             }, function () {
               return _this2.element.classList.contains("mce-edit-focus");
@@ -163,8 +157,6 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
             console.error(error);
           });
         });
-      } else {
-        activate();
       }
     }
     /**

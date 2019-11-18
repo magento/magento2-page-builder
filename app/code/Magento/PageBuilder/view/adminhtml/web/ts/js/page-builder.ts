@@ -162,6 +162,8 @@ export default class PageBuilder implements PageBuilderInterface {
             });
         }).reduce((array, value) => array.concat(value), []).map((value) => formatPath(value));
 
-        require(previewTemplates);
+        _.defer(() => {
+            require(previewTemplates);
+        });
     }
 }

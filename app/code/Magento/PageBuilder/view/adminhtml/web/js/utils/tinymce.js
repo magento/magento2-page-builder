@@ -109,9 +109,11 @@ define(["jquery", "Magento_PageBuilder/js/config"], function (_jquery, _config) 
   function parseAttributesString(attributes) {
     var result = {};
     attributes.replace(/(\w+)(?:\s*=\s*(?:(?:"((?:\\.|[^"])*)")|(?:'((?:\\.|[^'])*)')|([^>\s]+)))?/g, function (match, key, value) {
+      console.log(match, key, value);
       result[key] = value.replace(/&quote;/g, "\"");
       return "";
     });
+    console.log(result);
     return result;
   }
   /**

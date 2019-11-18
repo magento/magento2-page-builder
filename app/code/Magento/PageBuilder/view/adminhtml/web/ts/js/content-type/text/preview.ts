@@ -132,11 +132,6 @@ export default class Preview extends BasePreview {
      * @returns {Boolean}
      */
     public activateEditor(preview: Preview, event: JQueryEventObject) {
-        const activate = () => {
-            const element = this.wysiwyg && this.element || this.textarea;
-            element.focus();
-        };
-
         if (this.element && !this.wysiwyg) {
             const selection = getSelection();
             this.element.removeAttribute("contenteditable");
@@ -144,7 +139,6 @@ export default class Preview extends BasePreview {
                 this.initWysiwyg(true)
                     .then(() => delayUntil(
                         () => {
-                            activate();
                             restoreSelection(this.element, selection);
                         },
                         () => this.element.classList.contains("mce-edit-focus"),
@@ -154,8 +148,6 @@ export default class Preview extends BasePreview {
                     console.error(error);
                 });
             });
-        } else {
-            activate();
         }
     }
 

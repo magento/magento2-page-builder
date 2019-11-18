@@ -170,7 +170,9 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_Ui/js/li
         return (0, _loader.formatPath)(value);
       });
 
-      require(previewTemplates);
+      _underscore.defer(function () {
+        require(previewTemplates);
+      });
     };
 
     return PageBuilder;
