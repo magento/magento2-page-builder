@@ -181,7 +181,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
           children.forEach(function (child, childIndex) {
             _underscore.delay(function () {
               _this3.rootContainer.addChild(child, chunkIndex * 10 + childIndex);
-            }, chunkIndex * 750 + childIndex * 75);
+            }, chunkIndex * 1000 + childIndex * 100);
           });
         });
       });

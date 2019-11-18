@@ -178,7 +178,7 @@ export default class Stage {
                 children.forEach((child, childIndex) => {
                     _.delay(() => {
                         this.rootContainer.addChild(child, ((chunkIndex * 10) + childIndex));
-                    }, (chunkIndex * 750 + (childIndex * 75)));
+                    }, (chunkIndex * 1000 + (childIndex * 100)));
                 });
             });
         });
