@@ -15,12 +15,12 @@ import {DataObject} from "../../data-store";
 import Uploader from "../../uploader";
 import delayUntil from "../../utils/delay-until";
 import {
-    createBookmark,
+    createBookmark, createDoubleClickEvent,
     findNodeIndex, getNodeByIndex,
     isWysiwygSupported,
     lockImageSize,
     moveToBookmark,
-    unlockImageSize
+    unlockImageSize,
 } from "../../utils/editor";
 import nestingLinkDialog from "../../utils/nesting-link-dialog";
 import WysiwygFactory from "../../wysiwyg/factory";
@@ -222,12 +222,7 @@ export default class Preview extends BasePreview {
             }
 
             if (target) {
-                const dblClickEvent = new MouseEvent("dblclick", {
-                    view: window,
-                    bubbles: true,
-                    cancelable: true,
-                });
-                target.dispatchEvent(dblClickEvent);
+                target.dispatchEvent(createDoubleClickEvent());
             }
         });
     }

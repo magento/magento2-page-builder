@@ -38,7 +38,9 @@ export function convertVariablesToHtmlPreview(content: string) {
     return content.replace(/{\{\s?(?:customVar code=|config path=\")([^\}\"]+)[\"]?\s?\}\}/ig, (match, path) => {
         const placeholder = document.createElement("span");
         placeholder.id = btoa(path).replace(/\+/g, ":").replace(/\//g, "_").replace(/=/g, "-");
-        placeholder.classList.add("magento-variable", "magento-placeholder", "mceNonEditable");
+        placeholder.classList.add("magento-variable");
+        placeholder.classList.add("magento-placeholder");
+        placeholder.classList.add("mceNonEditable");
         if (magentoVariables[path].variable_type === "custom") {
             placeholder.classList.add("magento-custom-var");
         }
@@ -72,7 +74,9 @@ export function convertWidgetsToHtmlPreview(content: string) {
             const placeholder = document.createElement("span");
             placeholder.id = mageUtils.uniqueid();
             placeholder.contentEditable = "false";
-            placeholder.classList.add("magento-placeholder", "magento-widget", "mceNonEditable");
+            placeholder.classList.add("magento-widget");
+            placeholder.classList.add("magento-placeholder");
+            placeholder.classList.add("mceNonEditable");
 
             attributes.type = attributes.type.replace(/\\\\/g, "\\");
             imageSrc = config.placeholders[attributes.type];
@@ -85,7 +89,7 @@ export function convertWidgetsToHtmlPreview(content: string) {
             const image = document.createElement("img");
             image.id = btoa(match).replace(/\+/g, ":").replace(/\//g, "_").replace(/=/g, "-");
             image.src = imageSrc;
-            placeholder.append(image);
+            placeholder.appendChild(image);
 
             let widgetType = "";
             if (config.types[attributes.type]) {
@@ -93,7 +97,7 @@ export function convertWidgetsToHtmlPreview(content: string) {
             }
 
             const text = document.createTextNode(widgetType);
-            placeholder.append(text);
+            placeholder.appendChild(text);
 
             return placeholder.outerHTML;
         }
@@ -127,7 +131,7 @@ export function parseAttributesString(attributes: string): { [key: string]: stri
  * @param element
  */
 export function lockImageSize(element: HTMLElement) {
-    element.querySelectorAll("img").forEach((image) => {
+    [].slice.call(element.querySelectorAll("img")).forEach((image: HTMLImageElement) => {
         image.style.width = `${image.width}px`;
         image.style.height = `${image.height}px`;
     });
@@ -139,7 +143,7 @@ export function lockImageSize(element: HTMLElement) {
  * @param element
  */
 export function unlockImageSize(element: HTMLElement) {
-    element.querySelectorAll("img").forEach((image) => {
+    [].slice.call(element.querySelectorAll("img")).forEach((image: HTMLImageElement) => {
         image.style.width = null;
         image.style.height = null;
     });
@@ -254,6 +258,39 @@ export function findNodeIndex(wrapperElement: HTMLElement, name: string, element
 export function getNodeByIndex(wrapperElement: HTMLElement, name: string, index: number): HTMLElement {
     const selector = name.toLowerCase() + ':not([data-mce-bogus="all"])';
     return $(wrapperElement).find(selector).get(index);
+}
+
+/**
+ * Create a double click event that works in all browsers
+ */
+export function createDoubleClickEvent(): Event {
+    try {
+        return new MouseEvent("dblclick", {
+            view: window,
+            bubbles: true,
+            cancelable: true,
+        });
+    } catch (e) {
+        const dblClickEvent = document.createEvent("MouseEvent");
+        dblClickEvent.initMouseEvent(
+            "dblclick",
+            true,
+            true,
+            window,
+            0,
+            0,
+            0,
+            0,
+            0,
+            false,
+            false,
+            false,
+            false,
+            0,
+            null,
+        );
+        return dblClickEvent;
+    }
 }
 
 /**

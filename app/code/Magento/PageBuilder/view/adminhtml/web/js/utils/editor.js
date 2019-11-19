@@ -38,7 +38,9 @@ define(["jquery", "mageUtils", "Magento_PageBuilder/js/config"], function (_jque
     return content.replace(/{\{\s?(?:customVar code=|config path=\")([^\}\"]+)[\"]?\s?\}\}/ig, function (match, path) {
       var placeholder = document.createElement("span");
       placeholder.id = btoa(path).replace(/\+/g, ":").replace(/\//g, "_").replace(/=/g, "-");
-      placeholder.classList.add("magento-variable", "magento-placeholder", "mceNonEditable");
+      placeholder.classList.add("magento-variable");
+      placeholder.classList.add("magento-placeholder");
+      placeholder.classList.add("mceNonEditable");
 
       if (magentoVariables[path].variable_type === "custom") {
         placeholder.classList.add("magento-custom-var");
@@ -75,7 +77,9 @@ define(["jquery", "mageUtils", "Magento_PageBuilder/js/config"], function (_jque
         var placeholder = document.createElement("span");
         placeholder.id = _mageUtils.uniqueid();
         placeholder.contentEditable = "false";
-        placeholder.classList.add("magento-placeholder", "magento-widget", "mceNonEditable");
+        placeholder.classList.add("magento-widget");
+        placeholder.classList.add("magento-placeholder");
+        placeholder.classList.add("mceNonEditable");
         attributes.type = attributes.type.replace(/\\\\/g, "\\");
         imageSrc = config.placeholders[attributes.type];
 
@@ -87,7 +91,7 @@ define(["jquery", "mageUtils", "Magento_PageBuilder/js/config"], function (_jque
         var image = document.createElement("img");
         image.id = btoa(match).replace(/\+/g, ":").replace(/\//g, "_").replace(/=/g, "-");
         image.src = imageSrc;
-        placeholder.append(image);
+        placeholder.appendChild(image);
         var widgetType = "";
 
         if (config.types[attributes.type]) {
@@ -95,7 +99,7 @@ define(["jquery", "mageUtils", "Magento_PageBuilder/js/config"], function (_jque
         }
 
         var text = document.createTextNode(widgetType);
-        placeholder.append(text);
+        placeholder.appendChild(text);
         return placeholder.outerHTML;
       }
     });
@@ -123,7 +127,7 @@ define(["jquery", "mageUtils", "Magento_PageBuilder/js/config"], function (_jque
 
 
   function lockImageSize(element) {
-    element.querySelectorAll("img").forEach(function (image) {
+    [].slice.call(element.querySelectorAll("img")).forEach(function (image) {
       image.style.width = image.width + "px";
       image.style.height = image.height + "px";
     });
@@ -136,7 +140,7 @@ define(["jquery", "mageUtils", "Magento_PageBuilder/js/config"], function (_jque
 
 
   function unlockImageSize(element) {
-    element.querySelectorAll("img").forEach(function (image) {
+    [].slice.call(element.querySelectorAll("img")).forEach(function (image) {
       image.style.width = null;
       image.style.height = null;
     });
@@ -249,6 +253,24 @@ define(["jquery", "mageUtils", "Magento_PageBuilder/js/config"], function (_jque
     return (0, _jquery)(wrapperElement).find(selector).get(index);
   }
   /**
+   * Create a double click event that works in all browsers
+   */
+
+
+  function createDoubleClickEvent() {
+    try {
+      return new MouseEvent("dblclick", {
+        view: window,
+        bubbles: true,
+        cancelable: true
+      });
+    } catch (e) {
+      var dblClickEvent = document.createEvent("MouseEvent");
+      dblClickEvent.initMouseEvent("dblclick", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+      return dblClickEvent;
+    }
+  }
+  /**
    * Move the end point of a range to handle tables
    *
    * @param range
@@ -308,7 +330,8 @@ define(["jquery", "mageUtils", "Magento_PageBuilder/js/config"], function (_jque
     createBookmark: createBookmark,
     moveToBookmark: moveToBookmark,
     findNodeIndex: findNodeIndex,
-    getNodeByIndex: getNodeByIndex
+    getNodeByIndex: getNodeByIndex,
+    createDoubleClickEvent: createDoubleClickEvent
   };
 });
 //# sourceMappingURL=editor.js.map

@@ -10,7 +10,7 @@ import HideShowOption from "../../content-type-menu/hide-show-option";
 import {OptionsInterface} from "../../content-type-menu/option.types";
 import delayUntil from "../../utils/delay-until";
 import {
-    createBookmark,
+    createBookmark, createDoubleClickEvent,
     findNodeIndex, getNodeByIndex,
     isWysiwygSupported,
     lockImageSize,
@@ -192,12 +192,7 @@ export default class Preview extends BasePreview {
             }
 
             if (target) {
-                const dblClickEvent = new MouseEvent("dblclick", {
-                    view: window,
-                    bubbles: true,
-                    cancelable: true,
-                });
-                target.dispatchEvent(dblClickEvent);
+                target.dispatchEvent(createDoubleClickEvent());
             }
         });
     }

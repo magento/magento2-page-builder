@@ -186,12 +186,7 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
         }
 
         if (target) {
-          var dblClickEvent = new MouseEvent("dblclick", {
-            view: window,
-            bubbles: true,
-            cancelable: true
-          });
-          target.dispatchEvent(dblClickEvent);
+          target.dispatchEvent((0, _editor.createDoubleClickEvent)());
         }
       });
     }
