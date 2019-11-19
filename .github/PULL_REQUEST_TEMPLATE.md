@@ -23,6 +23,7 @@
 <!--- 
 https://github.com/magento/magento2ce/pull/<related_pr>
 -->
+<!-- related pull request placeholder -->
 
 ### Checklist
 - [ ] PR is green on M2 Quality Portal

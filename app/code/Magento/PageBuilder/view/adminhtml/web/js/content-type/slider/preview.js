@@ -1,9 +1,9 @@
 /*eslint-disable */
 /* jscs:disable */
 
-function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
-
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
 define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "slick", "underscore", "Magento_PageBuilder/js/binding/focus", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu/hide-show-option", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/utils/delay-until", "Magento_PageBuilder/js/utils/promise-deferred", "Magento_PageBuilder/js/content-type/preview-collection"], function (_jquery, _knockout, _translate, _events, _slick, _underscore, _focus, _config, _contentTypeFactory, _hideShowOption, _option, _delayUntil, _promiseDeferred, _previewCollection) {
   /**
@@ -45,7 +45,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       _this.ready = false;
       _this.mountAfterDeferred = (0, _promiseDeferred)();
       _this.afterChildrenRenderDeferred = (0, _promiseDeferred)();
-      _this.buildSlickDebounce = _underscore.debounce(_this.buildSlick.bind(_assertThisInitialized(_assertThisInitialized(_this))), 10);
+      _this.buildSlickDebounce = _underscore.debounce(_this.buildSlick.bind(_assertThisInitialized(_this)), 10);
       _this.ignoredKeysForBuild = ["display", "margins_and_padding", "border", "border_color", "border_radius", "border_width", "css_classes", "name", "text_align"];
       Promise.all([_this.afterChildrenRenderDeferred.promise, _this.mountAfterDeferred.promise]).then(function (_ref) {
         var element = _ref[0],

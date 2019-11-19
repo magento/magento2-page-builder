@@ -85,23 +85,23 @@ define([], function () {
       }
 
       if (!hitMin) {
-        var item = items[low];
-        var result = callback(item, low);
+        var _item = items[low];
+        var result = callback(_item, low);
 
         if (!!result) {
-          return item;
+          return _item;
         }
 
         low--;
       }
 
       if (!hitMax) {
-        var _item = items[high];
+        var _item2 = items[high];
 
-        var _result = callback(_item, high);
+        var _result = callback(_item2, high);
 
         if (!!_result) {
-          return _item;
+          return _item2;
         }
 
         high++;

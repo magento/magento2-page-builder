@@ -67,9 +67,11 @@ class WidgetDirective implements \Magento\PageBuilder\Model\Stage\RendererInterf
         }
 
         try {
+            $previousStrictMode = $this->directiveFilter->setStrictMode(true);
             $result['content'] = $this->directiveFilter
                 ->setStoreId(Store::DEFAULT_STORE_ID)
                 ->filter($this->templateFilter->filter($params['directive']));
+            $this->directiveFilter->setStrictMode($previousStrictMode);
         } catch (\Exception $e) {
             $result['error'] = __($e->getMessage());
         }
