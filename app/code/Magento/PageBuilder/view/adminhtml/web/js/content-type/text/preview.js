@@ -142,13 +142,14 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
       var _this2 = this;
 
       if (this.element && !this.wysiwyg) {
-        var selection = (0, _tinymce.getSelection)();
+        var bookmark = (0, _tinymce.createBookmark)(event);
         this.element.removeAttribute("contenteditable");
 
         _underscore.defer(function () {
           _this2.initWysiwyg(true).then(function () {
             return (0, _delayUntil)(function () {
-              (0, _tinymce.restoreSelection)(_this2.element, selection);
+              console.log(bookmark);
+              (0, _tinymce.moveToBookmark)(bookmark);
             }, function () {
               return _this2.element.classList.contains("mce-edit-focus");
             }, 10);

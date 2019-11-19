@@ -1,6 +1,6 @@
 /*eslint-disable */
 /* jscs:disable */
-define(["jquery", "Magento_PageBuilder/js/config"], function (_jquery, _config) {
+define(["jquery", "mageUtils", "Magento_PageBuilder/js/config"], function (_jquery, _mageUtils, _config) {
   /**
    * Is the inline WYSIWYG supported?
    */
@@ -73,6 +73,7 @@ define(["jquery", "Magento_PageBuilder/js/config"], function (_jquery, _config) 
 
       if (attributes.type) {
         var placeholder = document.createElement("span");
+        placeholder.id = _mageUtils.uniqueid();
         placeholder.contentEditable = "false";
         placeholder.classList.add("magento-placeholder", "magento-widget", "mceNonEditable");
         attributes.type = attributes.type.replace(/\\\\/g, "\\");
@@ -109,31 +110,54 @@ define(["jquery", "Magento_PageBuilder/js/config"], function (_jquery, _config) 
   function parseAttributesString(attributes) {
     var result = {};
     attributes.replace(/(\w+)(?:\s*=\s*(?:(?:"((?:\\.|[^"])*)")|(?:'((?:\\.|[^'])*)')|([^>\s]+)))?/g, function (match, key, value) {
-      console.log(match, key, value);
       result[key] = value.replace(/&quote;/g, "\"");
       return "";
     });
-    console.log(result);
     return result;
   }
   /**
-   * Retrieve the selection of the user
+   * Create a bookmark within the content to be restored later
    */
 
 
-  function getSelection() {
+  function createBookmark(event) {
+    var wrapperElement = (0, _jquery)(event.target).parents(".inline-wysiwyg"); // Handle direct clicks onto an IMG
+
+    if (event.target.nodeName === "IMG") {
+      return {
+        name: event.target.nodeName,
+        index: findIndex(wrapperElement[0], event.target.nodeName, event.target)
+      };
+    }
+
     if (window.getSelection) {
       var selection = window.getSelection();
 
+      var _id = _mageUtils.uniqueid();
+
       if (selection.getRangeAt && selection.rangeCount) {
-        var range = selection.getRangeAt(0).cloneRange();
-        (0, _jquery)(range.startContainer.parentNode).attr("data-startContainer", "true");
-        (0, _jquery)(range.endContainer.parentNode).attr("data-endContainer", "true");
+        var range = normalizeTableCellSelection(selection.getRangeAt(0).cloneRange());
+        var node = getNode(wrapperElement[0], range);
+
+        if (node.nodeName === "IMG" || node.nodeName === "SPAN" && node.classList.contains("magento-placeholder")) {
+          return {
+            name: node.nodeName,
+            index: findIndex(wrapperElement[0], node.nodeName, node)
+          };
+        }
+
+        if (!range.collapsed) {
+          range.collapse(false);
+          var endBookmarkNode = createBookmarkSpan(_id + "_end");
+          range.insertNode(endBookmarkNode);
+        }
+
+        var range2 = normalizeTableCellSelection(selection.getRangeAt(0));
+        range2.collapse(true);
+        var startBookmarkNode = createBookmarkSpan(_id + "_start");
+        range2.insertNode(startBookmarkNode);
         return {
-          startContainer: range.startContainer,
-          startOffset: range.startOffset,
-          endContainer: range.endContainer,
-          endOffset: range.endOffset
+          id: _id
         };
       }
     }
@@ -141,53 +165,127 @@ define(["jquery", "Magento_PageBuilder/js/config"], function (_jquery, _config) 
     return null;
   }
   /**
-   * Restore the users previous selection
+   * Move the cursor to our new bookmark
    *
-   * @param element
-   * @param selection
+   * @param bookmark
    */
 
 
-  function restoreSelection(element, selection) {
-    if (selection && window.getSelection) {
-      // Find the original container that had the selection
-      var startContainerParent = (0, _jquery)(element).find("[data-startContainer]");
-      startContainerParent.removeAttr("data-startContainer");
+  function moveToBookmark(bookmark) {
+    tinymce.activeEditor.selection.moveToBookmark(bookmark);
+  }
+  /**
+   * Create a bookmark span for the selection
+   *
+   * @param id
+   */
 
-      var _startContainer = findTextNode(startContainerParent, selection.startContainer.nodeValue);
 
-      var endContainerParent = (0, _jquery)(element).find("[data-endContainer]");
-      endContainerParent.removeAttr("data-endContainer");
-      var _endContainer = _startContainer;
+  function createBookmarkSpan(id) {
+    var bookmark = document.createElement("span");
+    bookmark.setAttribute("data-mce-type", "bookmark");
+    bookmark.id = id;
+    bookmark.style.overflow = "hidden";
+    bookmark.style.lineHeight = "0px";
+    return bookmark;
+  }
+  /**
+   * Find the index of an element within a wrapper
+   *
+   * @param wrapperElement
+   * @param name
+   * @param element
+   */
 
-      if (selection.endContainer.nodeValue !== selection.startContainer.nodeValue) {
-        _endContainer = findTextNode(endContainerParent, selection.endContainer.nodeValue);
-      }
 
-      if (_startContainer && _endContainer) {
-        var newSelection = window.getSelection();
-        newSelection.removeAllRanges();
-        var range = document.createRange();
-        range.setStart(_startContainer, selection.startOffset);
-        range.setEnd(_endContainer, selection.endOffset);
-        newSelection.addRange(range);
+  function findIndex(wrapperElement, name, element) {
+    var selector = name.toLowerCase() + ':not([data-mce-bogus="all"])'; // If there is no ID on the element add a unique ID so we can efficiently find it
+
+    if (!element.id) {
+      element.id = _mageUtils.uniqueid();
+    }
+
+    return (0, _jquery)(wrapperElement).find(selector).toArray().findIndex(function (node) {
+      return node.id === element.id;
+    });
+  }
+
+  function moveEndPoint(rng, start) {
+    var container;
+    var offset;
+    var childNodes;
+    var prefix = start ? "start" : "end";
+    container = rng[prefix + "Container"];
+    offset = rng[prefix + "Offset"];
+
+    if (container.nodeType === Node.ELEMENT_NODE && container.nodeName === "TR") {
+      childNodes = container.childNodes;
+      container = childNodes[Math.min(start ? offset : offset - 1, childNodes.length - 1)];
+
+      if (container) {
+        offset = start ? 0 : container.childNodes.length;
+        rng["set" + (start ? "Start" : "End")](container, offset);
       }
     }
   }
-  /**
-   * Find a text node within an existing element
-   *
-   * @param element
-   * @param text
-   */
 
+  function normalizeTableCellSelection(rng) {
+    moveEndPoint(rng, true);
+    moveEndPoint(rng, false);
+    return rng;
+  }
 
-  function findTextNode(element, text) {
-    if (text && text.trim().length > 0) {
-      return element.contents().toArray().find(function (node) {
-        return node.nodeType === Node.TEXT_NODE && text === node.nodeValue;
-      });
+  function getNode(root, rng) {
+    var elm, startContainer, endContainer, startOffset, endOffset; // Range maybe lost after the editor is made visible again
+
+    if (!rng) {
+      return root;
     }
+
+    startContainer = rng.startContainer;
+    endContainer = rng.endContainer;
+    startOffset = rng.startOffset;
+    endOffset = rng.endOffset;
+    elm = rng.commonAncestorContainer; // Handle selection a image or other control like element such as anchors
+
+    if (!rng.collapsed) {
+      if (startContainer === endContainer) {
+        if (endOffset - startOffset < 2) {
+          if (startContainer.hasChildNodes()) {
+            elm = startContainer.childNodes[startOffset];
+          }
+        }
+      } // If the anchor node is a element instead of a text node then return this element
+      // if (tinymce.isWebKit && sel.anchorNode && sel.anchorNode.nodeType == 1)
+      // return sel.anchorNode.childNodes[sel.anchorOffset];
+      // Handle cases where the selection is immediately wrapped around a node and return that node instead of it's parent.
+      // This happens when you double click an underlined word in FireFox.
+
+
+      if (startContainer.nodeType === 3 && endContainer.nodeType === 3) {
+        if (startContainer.length === startOffset) {
+          startContainer = skipEmptyTextNodes(startContainer.nextSibling, true);
+        } else {
+          startContainer = startContainer.parentNode;
+        }
+
+        if (endOffset === 0) {
+          endContainer = skipEmptyTextNodes(endContainer.previousSibling, false);
+        } else {
+          endContainer = endContainer.parentNode;
+        }
+
+        if (startContainer && startContainer === endContainer) {
+          return startContainer;
+        }
+      }
+    }
+
+    if (elm && elm.nodeType === 3) {
+      return elm.parentNode;
+    }
+
+    return elm;
   }
 
   return {
@@ -196,8 +294,8 @@ define(["jquery", "Magento_PageBuilder/js/config"], function (_jquery, _config) 
     convertVariablesToHtmlPreview: convertVariablesToHtmlPreview,
     convertWidgetsToHtmlPreview: convertWidgetsToHtmlPreview,
     parseAttributesString: parseAttributesString,
-    getSelection: getSelection,
-    restoreSelection: restoreSelection
+    createBookmark: createBookmark,
+    moveToBookmark: moveToBookmark
   };
 });
 //# sourceMappingURL=tinymce.js.map
