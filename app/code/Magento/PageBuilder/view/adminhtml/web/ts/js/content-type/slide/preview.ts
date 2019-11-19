@@ -14,7 +14,14 @@ import {OptionsInterface} from "../../content-type-menu/option.types";
 import {DataObject} from "../../data-store";
 import Uploader from "../../uploader";
 import delayUntil from "../../utils/delay-until";
-import {createBookmark, isWysiwygSupported, lockImageSize, moveToBookmark, unlockImageSize} from "../../utils/editor";
+import {
+    createBookmark,
+    findNodeIndex, getNodeByIndex,
+    isWysiwygSupported,
+    lockImageSize,
+    moveToBookmark,
+    unlockImageSize
+} from "../../utils/editor";
 import nestingLinkDialog from "../../utils/nesting-link-dialog";
 import WysiwygFactory from "../../wysiwyg/factory";
 import WysiwygInterface from "../../wysiwyg/wysiwyg-interface";
@@ -28,7 +35,16 @@ import SliderPreview from "../slider/preview";
 export default class Preview extends BasePreview {
     public buttonPlaceholder: string = $t("Edit Button Text");
 
+    /**
+     * Slide name
+     */
     public slideName: KnockoutObservable<string> = ko.observable();
+
+    /**
+     * Wysiwyg deferred event
+     */
+    private wysiwygDeferred: JQueryDeferred<void> = $.Deferred();
+
     /**
      * Wysiwyg instance
      */
@@ -48,6 +64,11 @@ export default class Preview extends BasePreview {
      * Slide flag
      */
     private slideChanged: boolean = true;
+
+    /**
+     * Have we handled a double click on init?
+     */
+    private handledDoubleClick: boolean = false;
 
     /**
      * @param {HTMLElement} element
@@ -158,7 +179,7 @@ export default class Preview extends BasePreview {
      * @returns {Boolean}
      */
     public activateEditor(preview: Preview, event: JQueryEventObject) {
-        if (this.element && !this.wysiwyg) {
+        if (this.element && !this.wysiwyg && !this.handledDoubleClick) {
             const bookmark = createBookmark(event);
             lockImageSize(this.element);
             this.element.removeAttribute("contenteditable");
@@ -166,6 +187,7 @@ export default class Preview extends BasePreview {
                 this.initWysiwyg(true)
                     .then(() => delayUntil(
                         () => {
+                            this.wysiwygDeferred.resolve();
                             moveToBookmark(bookmark);
                             unlockImageSize(this.element);
                         },
@@ -177,6 +199,37 @@ export default class Preview extends BasePreview {
                 });
             });
         }
+    }
+
+    /**
+     * If a user double clicks prior to initializing TinyMCE, forward the event
+     *
+     * @param preview
+     * @param event
+     */
+    public handleDoubleClick(preview: Preview, event: JQueryEventObject) {
+        if (this.handledDoubleClick) {
+            return;
+        }
+        event.preventDefault();
+        const targetIndex = findNodeIndex(this.element, event.target.tagName, event.target);
+        this.handledDoubleClick = true;
+
+        this.wysiwygDeferred.then(() => {
+            let target = document.getElementById(event.target.id);
+            if (!target) {
+                target = getNodeByIndex(this.element, event.target.tagName, targetIndex);
+            }
+
+            if (target) {
+                const dblClickEvent = new MouseEvent("dblclick", {
+                    view: window,
+                    bubbles: true,
+                    cancelable: true,
+                });
+                target.dispatchEvent(dblClickEvent);
+            }
+        });
     }
 
     /**

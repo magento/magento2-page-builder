@@ -152,7 +152,7 @@ define(["jquery", "mageUtils", "Magento_PageBuilder/js/config"], function (_jque
     if (event.target.nodeName === "IMG") {
       return {
         name: event.target.nodeName,
-        index: findIndex(wrapperElement[0], event.target.nodeName, event.target)
+        index: findNodeIndex(wrapperElement[0], event.target.nodeName, event.target)
       };
     }
 
@@ -168,7 +168,7 @@ define(["jquery", "mageUtils", "Magento_PageBuilder/js/config"], function (_jque
         if (node.nodeName === "IMG" || node.nodeName === "SPAN" && node.classList.contains("magento-placeholder")) {
           return {
             name: node.nodeName,
-            index: findIndex(wrapperElement[0], node.nodeName, node)
+            index: findNodeIndex(wrapperElement[0], node.nodeName, node)
           };
         }
 
@@ -224,7 +224,7 @@ define(["jquery", "mageUtils", "Magento_PageBuilder/js/config"], function (_jque
    */
 
 
-  function findIndex(wrapperElement, name, element) {
+  function findNodeIndex(wrapperElement, name, element) {
     var selector = name.toLowerCase() + ':not([data-mce-bogus="all"])'; // If there is no ID on the element add a unique ID so we can efficiently find it
 
     if (!element.id) {
@@ -234,6 +234,19 @@ define(["jquery", "mageUtils", "Magento_PageBuilder/js/config"], function (_jque
     return (0, _jquery)(wrapperElement).find(selector).toArray().findIndex(function (node) {
       return node.id === element.id;
     });
+  }
+  /**
+   * Get a node by index within a wrapper
+   *
+   * @param wrapperElement
+   * @param name
+   * @param index
+   */
+
+
+  function getNodeByIndex(wrapperElement, name, index) {
+    var selector = name.toLowerCase() + ':not([data-mce-bogus="all"])';
+    return (0, _jquery)(wrapperElement).find(selector).get(index);
   }
   /**
    * Move the end point of a range to handle tables
@@ -293,7 +306,9 @@ define(["jquery", "mageUtils", "Magento_PageBuilder/js/config"], function (_jque
     lockImageSize: lockImageSize,
     unlockImageSize: unlockImageSize,
     createBookmark: createBookmark,
-    moveToBookmark: moveToBookmark
+    moveToBookmark: moveToBookmark,
+    findNodeIndex: findNodeIndex,
+    getNodeByIndex: getNodeByIndex
   };
 });
 //# sourceMappingURL=editor.js.map

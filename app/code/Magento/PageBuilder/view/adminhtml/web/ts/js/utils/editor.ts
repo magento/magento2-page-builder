@@ -155,7 +155,7 @@ export function createBookmark(event: JQueryEventObject): Bookmark {
     if (event.target.nodeName === "IMG") {
         return {
             name: event.target.nodeName,
-            index: findIndex(
+            index: findNodeIndex(
                 wrapperElement[0],
                 event.target.nodeName,
                 event.target,
@@ -175,7 +175,7 @@ export function createBookmark(event: JQueryEventObject): Bookmark {
             ) {
                 return {
                     name: node.nodeName,
-                    index: findIndex(
+                    index: findNodeIndex(
                         wrapperElement[0],
                         node.nodeName,
                         node,
@@ -231,7 +231,7 @@ function createBookmarkSpan(id: string) {
  * @param name
  * @param element
  */
-function findIndex(wrapperElement: HTMLElement, name: string, element: Element) {
+export function findNodeIndex(wrapperElement: HTMLElement, name: string, element: Element) {
     const selector = name.toLowerCase() + ':not([data-mce-bogus="all"])';
 
     // If there is no ID on the element add a unique ID so we can efficiently find it
@@ -242,6 +242,18 @@ function findIndex(wrapperElement: HTMLElement, name: string, element: Element) 
     return $(wrapperElement).find(selector).toArray().findIndex((node) => {
         return node.id === element.id;
     });
+}
+
+/**
+ * Get a node by index within a wrapper
+ *
+ * @param wrapperElement
+ * @param name
+ * @param index
+ */
+export function getNodeByIndex(wrapperElement: HTMLElement, name: string, index: number): HTMLElement {
+    const selector = name.toLowerCase() + ':not([data-mce-bogus="all"])';
+    return $(wrapperElement).find(selector).get(index);
 }
 
 /**

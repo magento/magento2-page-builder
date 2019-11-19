@@ -20,22 +20,19 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
     _inheritsLoose(Preview, _preview2);
 
     function Preview() {
-      return _preview2.apply(this, arguments) || this;
+      var _this;
+
+      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      _this = _preview2.call.apply(_preview2, [this].concat(args)) || this;
+      _this.wysiwygDeferred = _jquery.Deferred();
+      _this.handledDoubleClick = false;
+      return _this;
     }
 
     var _proto = Preview.prototype;
-
-    /**
-     * Wysiwyg instance
-     */
-
-    /**
-     * The element the text content type is bound to
-     */
-
-    /**
-     * The textarea element in disabled mode
-     */
 
     /**
      * @returns {Boolean}
@@ -101,7 +98,7 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
     ;
 
     _proto.initWysiwyg = function initWysiwyg(focus) {
-      var _this = this;
+      var _this2 = this;
 
       if (focus === void 0) {
         focus = false;
@@ -118,15 +115,15 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
 
         wysiwygConfig.adapter.settings.init_instance_callback = function () {
           _underscore.defer(function () {
-            _this.element.blur();
+            _this2.element.blur();
 
-            _this.element.focus();
+            _this2.element.focus();
           });
         };
       }
 
       return (0, _factory)(this.contentType.id, this.element.id, this.config.name, wysiwygConfig, this.contentType.dataStore, "content", this.contentType.stageId).then(function (wysiwyg) {
-        _this.wysiwyg = wysiwyg;
+        _this2.wysiwyg = wysiwyg;
       });
     }
     /**
@@ -139,20 +136,22 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
     ;
 
     _proto.activateEditor = function activateEditor(preview, event) {
-      var _this2 = this;
+      var _this3 = this;
 
-      if (this.element && !this.wysiwyg) {
+      if (this.element && !this.wysiwyg && !this.handledDoubleClick) {
         var bookmark = (0, _editor.createBookmark)(event);
         (0, _editor.lockImageSize)(this.element);
         this.element.removeAttribute("contenteditable");
 
         _underscore.defer(function () {
-          _this2.initWysiwyg(true).then(function () {
+          _this3.initWysiwyg(true).then(function () {
             return (0, _delayUntil)(function () {
+              _this3.wysiwygDeferred.resolve();
+
               (0, _editor.moveToBookmark)(bookmark);
-              (0, _editor.unlockImageSize)(_this2.element);
+              (0, _editor.unlockImageSize)(_this3.element);
             }, function () {
-              return _this2.element.classList.contains("mce-edit-focus");
+              return _this3.element.classList.contains("mce-edit-focus");
             }, 10);
           }).catch(function (error) {
             // If there's an error with init of WYSIWYG editor push into the console to aid support
@@ -162,12 +161,47 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
       }
     }
     /**
+     * If a user double clicks prior to initializing TinyMCE, forward the event
+     *
+     * @param preview
+     * @param event
+     */
+    ;
+
+    _proto.handleDoubleClick = function handleDoubleClick(preview, event) {
+      var _this4 = this;
+
+      if (this.handledDoubleClick) {
+        return;
+      }
+
+      event.preventDefault();
+      var targetIndex = (0, _editor.findNodeIndex)(this.element, event.target.tagName, event.target);
+      this.handledDoubleClick = true;
+      this.wysiwygDeferred.then(function () {
+        var target = document.getElementById(event.target.id);
+
+        if (!target) {
+          target = (0, _editor.getNodeByIndex)(_this4.element, event.target.tagName, targetIndex);
+        }
+
+        if (target) {
+          var dblClickEvent = new MouseEvent("dblclick", {
+            view: window,
+            bubbles: true,
+            cancelable: true
+          });
+          target.dispatchEvent(dblClickEvent);
+        }
+      });
+    }
+    /**
      * @param {HTMLTextAreaElement} element
      */
     ;
 
     _proto.initTextarea = function initTextarea(element) {
-      var _this3 = this;
+      var _this5 = this;
 
       this.textarea = element; // set initial value of textarea based on data store
 
@@ -175,9 +209,9 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
       this.adjustTextareaHeightBasedOnScrollHeight(); // Update content in our stage preview textarea after its slideout counterpart gets updated
 
       _events.on("form:" + this.contentType.id + ":saveAfter", function () {
-        _this3.textarea.value = _this3.contentType.dataStore.get("content");
+        _this5.textarea.value = _this5.contentType.dataStore.get("content");
 
-        _this3.adjustTextareaHeightBasedOnScrollHeight();
+        _this5.adjustTextareaHeightBasedOnScrollHeight();
       });
     }
     /**
