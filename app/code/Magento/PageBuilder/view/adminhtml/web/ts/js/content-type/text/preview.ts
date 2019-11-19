@@ -9,7 +9,7 @@ import _ from "underscore";
 import HideShowOption from "../../content-type-menu/hide-show-option";
 import {OptionsInterface} from "../../content-type-menu/option.types";
 import delayUntil from "../../utils/delay-until";
-import {createBookmark, isWysiwygSupported, moveToBookmark} from "../../utils/tinymce";
+import {createBookmark, isWysiwygSupported, lockImageSize, moveToBookmark, unlockImageSize} from "../../utils/editor";
 import WysiwygFactory from "../../wysiwyg/factory";
 import WysiwygInterface from "../../wysiwyg/wysiwyg-interface";
 import BasePreview from "../preview";
@@ -134,13 +134,14 @@ export default class Preview extends BasePreview {
     public activateEditor(preview: Preview, event: JQueryEventObject) {
         if (this.element && !this.wysiwyg) {
             const bookmark = createBookmark(event);
+            lockImageSize(this.element);
             this.element.removeAttribute("contenteditable");
             _.defer(() => {
                 this.initWysiwyg(true)
                     .then(() => delayUntil(
                         () => {
-                            console.log(bookmark);
                             moveToBookmark(bookmark);
+                            unlockImageSize(this.element);
                         },
                         () => this.element.classList.contains("mce-edit-focus"),
                         10,

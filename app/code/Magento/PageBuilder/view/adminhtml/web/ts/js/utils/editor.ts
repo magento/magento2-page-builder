@@ -1,5 +1,6 @@
 import $ from "jquery";
 import mageUtils from "mageUtils";
+import {Editor} from "tinymce";
 import Config from "../config";
 
 /**
@@ -36,7 +37,7 @@ export function convertVariablesToHtmlPreview(content: string) {
 
     return content.replace(/{\{\s?(?:customVar code=|config path=\")([^\}\"]+)[\"]?\s?\}\}/ig, (match, path) => {
         const placeholder = document.createElement("span");
-        placeholder.id = Base64.idEncode(path);
+        placeholder.id = btoa(path).replace(/\+/g, ":").replace(/\//g, "_").replace(/=/g, "-");
         placeholder.classList.add("magento-variable", "magento-placeholder", "mceNonEditable");
         if (magentoVariables[path].variable_type === "custom") {
             placeholder.classList.add("magento-custom-var");
@@ -82,7 +83,7 @@ export function convertWidgetsToHtmlPreview(content: string) {
             }
 
             const image = document.createElement("img");
-            image.id = Base64.idEncode(match);
+            image.id = btoa(match).replace(/\+/g, ":").replace(/\//g, "_").replace(/=/g, "-");
             image.src = imageSrc;
             placeholder.append(image);
 
@@ -121,6 +122,30 @@ export function parseAttributesString(attributes: string): { [key: string]: stri
 }
 
 /**
+ * Lock all image sizes before initializing TinyMCE to avoid content jumps
+ *
+ * @param element
+ */
+export function lockImageSize(element: HTMLElement) {
+    element.querySelectorAll("img").forEach((image) => {
+        image.style.width = `${image.width}px`;
+        image.style.height = `${image.height}px`;
+    });
+}
+
+/**
+ * Reverse forced image size after TinyMCE is finished initializing
+ *
+ * @param element
+ */
+export function unlockImageSize(element: HTMLElement) {
+    element.querySelectorAll("img").forEach((image) => {
+        image.style.width = null;
+        image.style.height = null;
+    });
+}
+
+/**
  * Create a bookmark within the content to be restored later
  */
 export function createBookmark(event: JQueryEventObject): Bookmark {
@@ -143,8 +168,7 @@ export function createBookmark(event: JQueryEventObject): Bookmark {
         const id = mageUtils.uniqueid();
         if (selection.getRangeAt && selection.rangeCount) {
             const range = normalizeTableCellSelection(selection.getRangeAt(0).cloneRange());
-
-            const node = getNode(wrapperElement[0], range);
+            const node = range.startContainer.parentNode as HTMLElement;
 
             if (node.nodeName === "IMG"
                 || (node.nodeName === "SPAN" && node.classList.contains("magento-placeholder"))
@@ -170,7 +194,7 @@ export function createBookmark(event: JQueryEventObject): Bookmark {
             const startBookmarkNode = createBookmarkSpan(id + "_start");
             range2.insertNode(startBookmarkNode);
 
-            return { id };
+            return {id};
         }
     }
 
@@ -183,7 +207,7 @@ export function createBookmark(event: JQueryEventObject): Bookmark {
  * @param bookmark
  */
 export function moveToBookmark(bookmark: Bookmark) {
-    tinymce.activeEditor.selection.moveToBookmark(bookmark);
+    ((window as any).tinymce.activeEditor as Editor).selection.moveToBookmark(bookmark);
 }
 
 /**
@@ -220,86 +244,50 @@ function findIndex(wrapperElement: HTMLElement, name: string, element: Element) 
     });
 }
 
-function moveEndPoint(rng: Range, start: boolean) {
+/**
+ * Move the end point of a range to handle tables
+ *
+ * @param range
+ * @param start
+ */
+function moveEndPoint(range: Range, start: boolean) {
     let container;
     let offset;
     let childNodes;
-    const prefix = start ? "start" : "end";
 
-    container = rng[prefix + "Container"];
-    offset = rng[prefix + "Offset"];
+    if (start) {
+        container = range.startContainer;
+        offset = range.startOffset;
+    } else {
+        container = range.endContainer;
+        offset = range.endOffset;
+    }
 
     if (container.nodeType === Node.ELEMENT_NODE && container.nodeName === "TR") {
         childNodes = container.childNodes;
         container = childNodes[Math.min(start ? offset : offset - 1, childNodes.length - 1)];
         if (container) {
             offset = start ? 0 : container.childNodes.length;
-            rng["set" + (start ? "Start" : "End")](container, offset);
+
+            if (start) {
+                range.setStart(container, offset);
+            } else {
+                range.setEnd(container, offset);
+            }
         }
     }
 }
 
-function normalizeTableCellSelection(rng: Range): Range {
-    moveEndPoint(rng, true);
-    moveEndPoint(rng, false);
+/**
+ * Normalize the table sell selection within a range to better handle selections being inside of tables
+ *
+ * @param range
+ */
+function normalizeTableCellSelection(range: Range): Range {
+    moveEndPoint(range, true);
+    moveEndPoint(range, false);
 
-    return rng;
-}
-
-function getNode(root: Element, rng: Range): Element {
-    let elm, startContainer, endContainer, startOffset, endOffset;
-
-    // Range maybe lost after the editor is made visible again
-    if (!rng) {
-        return root;
-    }
-
-    startContainer = rng.startContainer;
-    endContainer = rng.endContainer;
-    startOffset = rng.startOffset;
-    endOffset = rng.endOffset;
-    elm = rng.commonAncestorContainer;
-
-    // Handle selection a image or other control like element such as anchors
-    if (!rng.collapsed) {
-        if (startContainer === endContainer) {
-            if (endOffset - startOffset < 2) {
-                if (startContainer.hasChildNodes()) {
-                    elm = startContainer.childNodes[startOffset];
-                }
-            }
-        }
-
-        // If the anchor node is a element instead of a text node then return this element
-        // if (tinymce.isWebKit && sel.anchorNode && sel.anchorNode.nodeType == 1)
-        // return sel.anchorNode.childNodes[sel.anchorOffset];
-
-        // Handle cases where the selection is immediately wrapped around a node and return that node instead of it's parent.
-        // This happens when you double click an underlined word in FireFox.
-        if (startContainer.nodeType === 3 && endContainer.nodeType === 3) {
-            if (startContainer.length === startOffset) {
-                startContainer = skipEmptyTextNodes(startContainer.nextSibling, true);
-            } else {
-                startContainer = startContainer.parentNode;
-            }
-
-            if (endOffset === 0) {
-                endContainer = skipEmptyTextNodes(endContainer.previousSibling, false);
-            } else {
-                endContainer = endContainer.parentNode;
-            }
-
-            if (startContainer && startContainer === endContainer) {
-                return startContainer;
-            }
-        }
-    }
-
-    if (elm && elm.nodeType === 3) {
-        return elm.parentNode;
-    }
-
-    return elm;
+    return range;
 }
 
 interface IdBookmark {

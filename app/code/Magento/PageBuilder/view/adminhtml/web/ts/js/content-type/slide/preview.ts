@@ -14,8 +14,8 @@ import {OptionsInterface} from "../../content-type-menu/option.types";
 import {DataObject} from "../../data-store";
 import Uploader from "../../uploader";
 import delayUntil from "../../utils/delay-until";
+import {createBookmark, isWysiwygSupported, lockImageSize, moveToBookmark, unlockImageSize} from "../../utils/editor";
 import nestingLinkDialog from "../../utils/nesting-link-dialog";
-import {getSelection, isWysiwygSupported, restoreSelection} from "../../utils/tinymce";
 import WysiwygFactory from "../../wysiwyg/factory";
 import WysiwygInterface from "../../wysiwyg/wysiwyg-interface";
 import {ContentTypeMountEventParamsInterface} from "../content-type-events.types";
@@ -158,20 +158,16 @@ export default class Preview extends BasePreview {
      * @returns {Boolean}
      */
     public activateEditor(preview: Preview, event: JQueryEventObject) {
-        const activate = () => {
-            const element = this.wysiwyg && this.element || this.textarea;
-            element.focus();
-        };
-
         if (this.element && !this.wysiwyg) {
-            const selection = getSelection();
+            const bookmark = createBookmark(event);
+            lockImageSize(this.element);
             this.element.removeAttribute("contenteditable");
             _.defer(() => {
                 this.initWysiwyg(true)
                     .then(() => delayUntil(
                         () => {
-                            activate();
-                            restoreSelection(this.element, selection);
+                            moveToBookmark(bookmark);
+                            unlockImageSize(this.element);
                         },
                         () => this.element.classList.contains("mce-edit-focus"),
                         10,
@@ -180,8 +176,6 @@ export default class Preview extends BasePreview {
                     console.error(error);
                 });
             });
-        } else {
-            activate();
         }
     }
 

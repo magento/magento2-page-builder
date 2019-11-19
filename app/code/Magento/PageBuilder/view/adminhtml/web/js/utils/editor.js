@@ -37,7 +37,7 @@ define(["jquery", "mageUtils", "Magento_PageBuilder/js/config"], function (_jque
     var magentoVariables = JSON.parse(config.placeholders);
     return content.replace(/{\{\s?(?:customVar code=|config path=\")([^\}\"]+)[\"]?\s?\}\}/ig, function (match, path) {
       var placeholder = document.createElement("span");
-      placeholder.id = Base64.idEncode(path);
+      placeholder.id = btoa(path).replace(/\+/g, ":").replace(/\//g, "_").replace(/=/g, "-");
       placeholder.classList.add("magento-variable", "magento-placeholder", "mceNonEditable");
 
       if (magentoVariables[path].variable_type === "custom") {
@@ -85,7 +85,7 @@ define(["jquery", "mageUtils", "Magento_PageBuilder/js/config"], function (_jque
         }
 
         var image = document.createElement("img");
-        image.id = Base64.idEncode(match);
+        image.id = btoa(match).replace(/\+/g, ":").replace(/\//g, "_").replace(/=/g, "-");
         image.src = imageSrc;
         placeholder.append(image);
         var widgetType = "";
@@ -116,6 +116,32 @@ define(["jquery", "mageUtils", "Magento_PageBuilder/js/config"], function (_jque
     return result;
   }
   /**
+   * Lock all image sizes before initializing TinyMCE to avoid content jumps
+   *
+   * @param element
+   */
+
+
+  function lockImageSize(element) {
+    element.querySelectorAll("img").forEach(function (image) {
+      image.style.width = image.width + "px";
+      image.style.height = image.height + "px";
+    });
+  }
+  /**
+   * Reverse forced image size after TinyMCE is finished initializing
+   *
+   * @param element
+   */
+
+
+  function unlockImageSize(element) {
+    element.querySelectorAll("img").forEach(function (image) {
+      image.style.width = null;
+      image.style.height = null;
+    });
+  }
+  /**
    * Create a bookmark within the content to be restored later
    */
 
@@ -137,7 +163,7 @@ define(["jquery", "mageUtils", "Magento_PageBuilder/js/config"], function (_jque
 
       if (selection.getRangeAt && selection.rangeCount) {
         var range = normalizeTableCellSelection(selection.getRangeAt(0).cloneRange());
-        var node = getNode(wrapperElement[0], range);
+        var node = range.startContainer.parentNode;
 
         if (node.nodeName === "IMG" || node.nodeName === "SPAN" && node.classList.contains("magento-placeholder")) {
           return {
@@ -172,7 +198,7 @@ define(["jquery", "mageUtils", "Magento_PageBuilder/js/config"], function (_jque
 
 
   function moveToBookmark(bookmark) {
-    tinymce.activeEditor.selection.moveToBookmark(bookmark);
+    window.tinymce.activeEditor.selection.moveToBookmark(bookmark);
   }
   /**
    * Create a bookmark span for the selection
@@ -209,14 +235,26 @@ define(["jquery", "mageUtils", "Magento_PageBuilder/js/config"], function (_jque
       return node.id === element.id;
     });
   }
+  /**
+   * Move the end point of a range to handle tables
+   *
+   * @param range
+   * @param start
+   */
 
-  function moveEndPoint(rng, start) {
+
+  function moveEndPoint(range, start) {
     var container;
     var offset;
     var childNodes;
-    var prefix = start ? "start" : "end";
-    container = rng[prefix + "Container"];
-    offset = rng[prefix + "Offset"];
+
+    if (start) {
+      container = range.startContainer;
+      offset = range.startOffset;
+    } else {
+      container = range.endContainer;
+      offset = range.endOffset;
+    }
 
     if (container.nodeType === Node.ELEMENT_NODE && container.nodeName === "TR") {
       childNodes = container.childNodes;
@@ -224,68 +262,26 @@ define(["jquery", "mageUtils", "Magento_PageBuilder/js/config"], function (_jque
 
       if (container) {
         offset = start ? 0 : container.childNodes.length;
-        rng["set" + (start ? "Start" : "End")](container, offset);
+
+        if (start) {
+          range.setStart(container, offset);
+        } else {
+          range.setEnd(container, offset);
+        }
       }
     }
   }
-
-  function normalizeTableCellSelection(rng) {
-    moveEndPoint(rng, true);
-    moveEndPoint(rng, false);
-    return rng;
-  }
-
-  function getNode(root, rng) {
-    var elm, startContainer, endContainer, startOffset, endOffset; // Range maybe lost after the editor is made visible again
-
-    if (!rng) {
-      return root;
-    }
-
-    startContainer = rng.startContainer;
-    endContainer = rng.endContainer;
-    startOffset = rng.startOffset;
-    endOffset = rng.endOffset;
-    elm = rng.commonAncestorContainer; // Handle selection a image or other control like element such as anchors
-
-    if (!rng.collapsed) {
-      if (startContainer === endContainer) {
-        if (endOffset - startOffset < 2) {
-          if (startContainer.hasChildNodes()) {
-            elm = startContainer.childNodes[startOffset];
-          }
-        }
-      } // If the anchor node is a element instead of a text node then return this element
-      // if (tinymce.isWebKit && sel.anchorNode && sel.anchorNode.nodeType == 1)
-      // return sel.anchorNode.childNodes[sel.anchorOffset];
-      // Handle cases where the selection is immediately wrapped around a node and return that node instead of it's parent.
-      // This happens when you double click an underlined word in FireFox.
+  /**
+   * Normalize the table sell selection within a range to better handle selections being inside of tables
+   *
+   * @param range
+   */
 
 
-      if (startContainer.nodeType === 3 && endContainer.nodeType === 3) {
-        if (startContainer.length === startOffset) {
-          startContainer = skipEmptyTextNodes(startContainer.nextSibling, true);
-        } else {
-          startContainer = startContainer.parentNode;
-        }
-
-        if (endOffset === 0) {
-          endContainer = skipEmptyTextNodes(endContainer.previousSibling, false);
-        } else {
-          endContainer = endContainer.parentNode;
-        }
-
-        if (startContainer && startContainer === endContainer) {
-          return startContainer;
-        }
-      }
-    }
-
-    if (elm && elm.nodeType === 3) {
-      return elm.parentNode;
-    }
-
-    return elm;
+  function normalizeTableCellSelection(range) {
+    moveEndPoint(range, true);
+    moveEndPoint(range, false);
+    return range;
   }
 
   return {
@@ -294,8 +290,10 @@ define(["jquery", "mageUtils", "Magento_PageBuilder/js/config"], function (_jque
     convertVariablesToHtmlPreview: convertVariablesToHtmlPreview,
     convertWidgetsToHtmlPreview: convertWidgetsToHtmlPreview,
     parseAttributesString: parseAttributesString,
+    lockImageSize: lockImageSize,
+    unlockImageSize: unlockImageSize,
     createBookmark: createBookmark,
     moveToBookmark: moveToBookmark
   };
 });
-//# sourceMappingURL=tinymce.js.map
+//# sourceMappingURL=editor.js.map

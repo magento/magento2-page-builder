@@ -3,7 +3,7 @@
 
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/content-type-menu/hide-show-option", "Magento_PageBuilder/js/utils/delay-until", "Magento_PageBuilder/js/utils/tinymce", "Magento_PageBuilder/js/wysiwyg/factory", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _events, _underscore, _hideShowOption, _delayUntil, _tinymce, _factory, _preview) {
+define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/content-type-menu/hide-show-option", "Magento_PageBuilder/js/utils/delay-until", "Magento_PageBuilder/js/utils/editor", "Magento_PageBuilder/js/wysiwyg/factory", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _events, _underscore, _hideShowOption, _delayUntil, _editor, _factory, _preview) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -41,7 +41,7 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
      * @returns {Boolean}
      */
     _proto.isWysiwygSupported = function isWysiwygSupported() {
-      return (0, _tinymce.isWysiwygSupported)();
+      return (0, _editor.isWysiwygSupported)();
     }
     /**
      * Return an array of options
@@ -142,14 +142,15 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
       var _this2 = this;
 
       if (this.element && !this.wysiwyg) {
-        var bookmark = (0, _tinymce.createBookmark)(event);
+        var bookmark = (0, _editor.createBookmark)(event);
+        (0, _editor.lockImageSize)(this.element);
         this.element.removeAttribute("contenteditable");
 
         _underscore.defer(function () {
           _this2.initWysiwyg(true).then(function () {
             return (0, _delayUntil)(function () {
-              console.log(bookmark);
-              (0, _tinymce.moveToBookmark)(bookmark);
+              (0, _editor.moveToBookmark)(bookmark);
+              (0, _editor.unlockImageSize)(_this2.element);
             }, function () {
               return _this2.element.classList.contains("mce-edit-focus");
             }, 10);

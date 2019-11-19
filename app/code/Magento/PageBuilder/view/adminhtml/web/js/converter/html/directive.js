@@ -1,6 +1,6 @@
 /*eslint-disable */
 /* jscs:disable */
-define(["Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/utils/object", "Magento_PageBuilder/js/utils/tinymce"], function (_directives, _object, _tinymce) {
+define(["Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/utils/editor", "Magento_PageBuilder/js/utils/object"], function (_directives, _editor, _object) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -37,7 +37,7 @@ define(["Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/utils
     ;
 
     _proto.toDom = function toDom(name, data) {
-      return (0, _tinymce.encodeContent)((0, _directives.convertMediaDirectivesToUrls)((0, _directives.removeQuotesInMediaDirectives)((0, _object.get)(data, name))));
+      return (0, _editor.encodeContent)((0, _directives.convertMediaDirectivesToUrls)((0, _directives.removeQuotesInMediaDirectives)((0, _object.get)(data, name))));
     };
 
     return Directives;

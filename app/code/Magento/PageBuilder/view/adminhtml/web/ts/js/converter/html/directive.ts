@@ -5,8 +5,8 @@
 
 import {DataObject} from "../../data-store";
 import {convertMediaDirectivesToUrls, removeQuotesInMediaDirectives} from "../../utils/directives";
+import {encodeContent} from "../../utils/editor";
 import {get} from "../../utils/object";
-import {encodeContent} from "../../utils/tinymce";
 import ConverterInterface from "../converter-interface";
 
 /**

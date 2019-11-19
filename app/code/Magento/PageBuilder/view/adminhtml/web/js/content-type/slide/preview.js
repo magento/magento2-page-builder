@@ -5,7 +5,7 @@ function _extends() { _extends = Object.assign || function (target) { for (var i
 
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/content-type-menu/conditional-remove-option", "Magento_PageBuilder/js/uploader", "Magento_PageBuilder/js/utils/delay-until", "Magento_PageBuilder/js/utils/nesting-link-dialog", "Magento_PageBuilder/js/utils/tinymce", "Magento_PageBuilder/js/wysiwyg/factory", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _knockout, _translate, _events, _underscore, _conditionalRemoveOption, _uploader, _delayUntil, _nestingLinkDialog, _tinymce, _factory, _preview) {
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/content-type-menu/conditional-remove-option", "Magento_PageBuilder/js/uploader", "Magento_PageBuilder/js/utils/delay-until", "Magento_PageBuilder/js/utils/editor", "Magento_PageBuilder/js/utils/nesting-link-dialog", "Magento_PageBuilder/js/wysiwyg/factory", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _knockout, _translate, _events, _underscore, _conditionalRemoveOption, _uploader, _delayUntil, _editor, _nestingLinkDialog, _factory, _preview) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -134,20 +134,16 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _proto.activateEditor = function activateEditor(preview, event) {
       var _this2 = this;
 
-      var activate = function activate() {
-        var element = _this2.wysiwyg && _this2.element || _this2.textarea;
-        element.focus();
-      };
-
       if (this.element && !this.wysiwyg) {
-        var selection = (0, _tinymce.getSelection)();
+        var bookmark = (0, _editor.createBookmark)(event);
+        (0, _editor.lockImageSize)(this.element);
         this.element.removeAttribute("contenteditable");
 
         _underscore.defer(function () {
           _this2.initWysiwyg(true).then(function () {
             return (0, _delayUntil)(function () {
-              activate();
-              (0, _tinymce.restoreSelection)(_this2.element, selection);
+              (0, _editor.moveToBookmark)(bookmark);
+              (0, _editor.unlockImageSize)(_this2.element);
             }, function () {
               return _this2.element.classList.contains("mce-edit-focus");
             }, 10);
@@ -156,8 +152,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
             console.error(error);
           });
         });
-      } else {
-        activate();
       }
     }
     /**
@@ -179,7 +173,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     ;
 
     _proto.isWysiwygSupported = function isWysiwygSupported() {
-      return (0, _tinymce.isWysiwygSupported)();
+      return (0, _editor.isWysiwygSupported)();
     }
     /**
      * @param {HTMLTextAreaElement} element
