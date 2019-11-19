@@ -64,6 +64,14 @@ define(["underscore", "Magento_PageBuilder/js/utils/object", "Magento_PageBuilde
       return result;
     }
     /**
+     * Destroys current instance
+     */
+    ;
+
+    _proto.destroy = function destroy() {
+      return;
+    }
+    /**
      * Attach event to updating data in data store to update observables
      */
     ;

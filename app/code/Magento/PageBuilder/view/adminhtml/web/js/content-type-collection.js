@@ -85,6 +85,18 @@ define(["Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/c
       this.collection.removeChild(child);
     }
     /**
+     * Destroys current instance and all children
+     */
+    ;
+
+    _proto.destroy = function destroy() {
+      [].concat(this.getChildren()()).forEach(function (elem) {
+        elem.destroy();
+      });
+
+      _contentType2.prototype.destroy.call(this);
+    }
+    /**
      * Set the children observable array into the class
      *
      * @param {KnockoutObservableArray<ContentTypeInterface>} children

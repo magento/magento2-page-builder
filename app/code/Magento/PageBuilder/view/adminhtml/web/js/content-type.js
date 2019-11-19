@@ -24,8 +24,26 @@ define(["Magento_PageBuilder/js/events", "mageUtils", "Magento_PageBuilder/js/da
       this.stageId = stageId;
       this.bindEvents();
     }
+    /**
+     * Destroys current instance
+     */
+
 
     var _proto = ContentType.prototype;
+
+    _proto.destroy = function destroy() {
+      var params = {
+        contentType: this,
+        index: this.parentContentType.getChildren().indexOf(this),
+        parentContentType: this.parentContentType,
+        stageId: this.stageId
+      };
+      this.preview ? this.preview.destroy() : this.content.destroy();
+
+      _events.trigger("contentType:removeAfter", params);
+
+      _events.trigger(this.config.name + ":removeAfter", params);
+    };
 
     _proto.bindEvents = function bindEvents() {
       var _this = this;

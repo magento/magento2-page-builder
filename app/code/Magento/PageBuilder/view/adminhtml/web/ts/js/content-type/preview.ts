@@ -331,26 +331,13 @@ export default class Preview implements PreviewInterface {
      */
     public onOptionRemove(): void {
         const removeContentType = () => {
-            const dispatchRemoveEvent = () => {
-                const params = {
-                    contentType: this.contentType,
-                    index: (this.contentType.parentContentType as ContentTypeCollectionInterface)
-                        .getChildren()
-                        .indexOf(this.contentType),
-                    parentContentType: this.contentType.parentContentType,
-                    stageId: this.contentType.stageId,
-                };
-                events.trigger("contentType:removeAfter", params);
-                events.trigger(this.contentType.config.name + ":removeAfter", params);
-            };
-
             if (this.wrapperElement) {
                 // Fade out the content type
                 $(this.wrapperElement).fadeOut(350 / 2, () => {
-                    dispatchRemoveEvent();
+                    this.contentType.destroy();
                 });
             } else {
-                dispatchRemoveEvent();
+                this.contentType.destroy();
             }
         };
 
@@ -389,6 +376,13 @@ export default class Preview implements PreviewInterface {
      */
     public getSortableOptions(): JQueryUI.SortableOptions | any {
         return getSortableOptions(this);
+    }
+
+    /**
+     * Destroys current instance
+     */
+    public destroy(): void {
+        return;
     }
 
     /**

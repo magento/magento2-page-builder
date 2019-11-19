@@ -41,6 +41,23 @@ export default class ContentType<P extends Preview = Preview, M extends Master =
         this.bindEvents();
     }
 
+    /**
+     * Destroys current instance
+     */
+    public destroy(): void {
+        const params = {
+            contentType: this,
+            index: (this.parentContentType as ContentTypeCollectionInterface)
+                .getChildren()
+                .indexOf(this),
+            parentContentType: this.parentContentType,
+            stageId: this.stageId,
+        };
+        this.preview ? this.preview.destroy() : this.content.destroy();
+        events.trigger("contentType:removeAfter", params);
+        events.trigger(this.config.name + ":removeAfter", params);
+    }
+
     protected bindEvents() {
         const eventName: string = this.config.name + ":" + this.id + ":updateAfter";
         const paramObj: any = {};

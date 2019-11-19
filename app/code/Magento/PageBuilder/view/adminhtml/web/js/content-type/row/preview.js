@@ -134,6 +134,16 @@ define(["jarallax", "jquery", "knockout", "Magento_PageBuilder/js/events", "Mage
           jarallax(_this2.element, "onScroll");
         }
       }).observe(this.element);
+    }
+    /**
+     * Destroy jarallax instance.
+     */
+    ;
+
+    _proto.destroy = function destroy() {
+      _previewCollection2.prototype.destroy.call(this);
+
+      jarallax(this.element, "destroy");
     };
 
     return Preview;
