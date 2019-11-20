@@ -22,7 +22,6 @@
                          afterRender="afterRenderWysiwyg"
                          contenteditable="true"
                          event="mousedown: stopEvent, click: activateEditor, dblclick: handleDoubleClick">
-                        <div html="data.content.html()"></div>
                     </div>
                     <div if="isWysiwygSupported()" class="placeholder-text" ifnot="data.content.html" translate="'Edit Banner Text'"></div>
                     <textarea ifnot="isWysiwygSupported()" class="inline-wysiwyg-textarea" afterRender="initTextarea" event="{keyup: onTextareaKeyUp, focus: onTextareaFocus, blur: onTextareaBlur, mousedown: stopEvent}" attr="placeholder: $t('Edit Banner Text')"/>

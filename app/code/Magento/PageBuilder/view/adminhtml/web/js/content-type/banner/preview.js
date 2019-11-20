@@ -73,7 +73,9 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore
 
     _proto.afterRenderWysiwyg = function afterRenderWysiwyg(element) {
       this.element = element;
-      element.id = this.contentType.id + "-editor";
+      element.id = this.contentType.id + "-editor"; // Set the innerHTML manually so we don't upset Knockout & TinyMCE
+
+      element.innerHTML = this.data.content.html();
       this.afterRenderDeferred.resolve(element);
       /**
        * afterRenderWysiwyg is called whenever Knockout causes a DOM re-render. This occurs frequently within Slider

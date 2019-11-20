@@ -77,6 +77,9 @@ export default class Preview extends BasePreview {
         this.element = element;
         element.id = this.contentType.id + "-editor";
 
+        // Set the innerHTML manually so we don't upset Knockout & TinyMCE
+        element.innerHTML = this.data.content.html();
+
         /**
          * afterRenderWysiwyg is called whenever Knockout causes a DOM re-render. This occurs frequently within Slider
          * due to Slick's inability to perform a refresh with Knockout managing the DOM. Due to this the original

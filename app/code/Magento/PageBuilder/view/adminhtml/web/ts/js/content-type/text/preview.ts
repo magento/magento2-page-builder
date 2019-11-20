@@ -90,6 +90,9 @@ export default class Preview extends BasePreview {
         this.element = element;
         element.id = this.contentType.id + "-editor";
 
+        // Set the innerHTML manually so we don't upset Knockout & TinyMCE
+        element.innerHTML = this.data.main.html();
+
         this.afterRenderDeferred.resolve(element);
 
         /**

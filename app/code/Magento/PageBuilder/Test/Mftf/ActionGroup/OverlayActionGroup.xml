@@ -161,7 +161,7 @@
         </arguments>
         <!-- Validate bottom edge of overlay -->
         <comment userInput="Validate bottom edge of overlay" stepKey="commentValidateBottomEdgeOfOverlay"/>
-        <executeJS function="return {{page.wrapperJS(index)}}.getBoundingClientRect().top+{{padding.paddingTop}}+120" stepKey="wrapperTopPaddingContent"/>
+        <executeJS function="return {{page.wrapperJS(index)}}.getBoundingClientRect().top+{{padding.paddingTop}}+110" stepKey="wrapperTopPaddingContent"/>
         <executeJS function="return {{page.overlayJS(index)}}.getBoundingClientRect().bottom" stepKey="overlayBottomPosition"/>
         <executeJS function="return Math.round(({$wrapperTopPaddingContent}/{$overlayBottomPosition})*100)/100" stepKey="overlayBottomRatio"/>
         <assertEquals stepKey="assertOverlayBottomRatio">
