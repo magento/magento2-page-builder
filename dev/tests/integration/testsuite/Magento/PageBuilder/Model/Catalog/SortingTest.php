@@ -247,6 +247,7 @@ class SortingTest extends \PHPUnit\Framework\TestCase
                     'low_stock_first' => [
                         'gift-card',
                         'grouped',
+                        'bundle_product',
                         'configurable',
                         'B_PB_PRODUCT',
                         '1_PB_PRODUCT',
@@ -259,7 +260,6 @@ class SortingTest extends \PHPUnit\Framework\TestCase
                         'simple_100000001',
                         'PB_VIRTUAL_PRODUCT',
                         'simple1',
-                        'bundle_product',
                         'simple3',
                         'C_PB_PRODUCT'
                     ],
@@ -267,7 +267,6 @@ class SortingTest extends \PHPUnit\Framework\TestCase
                         'C_PB_PRODUCT',
                         'simple3',
                         'simple1',
-                        'bundle_product',
                         'PB_VIRTUAL_PRODUCT',
                         'simple_100000001',
                         'simple-with-fpt',
@@ -278,9 +277,10 @@ class SortingTest extends \PHPUnit\Framework\TestCase
                         'a_pb_product',
                         '1_PB_PRODUCT',
                         'B_PB_PRODUCT',
-                        'gift-card',
                         'configurable',
-                        'grouped'
+                        'bundle_product',
+                        'grouped',
+                        'gift-card'
                     ],
                     'price_high_to_low' => [
                         'bundle_product',
@@ -289,36 +289,36 @@ class SortingTest extends \PHPUnit\Framework\TestCase
                         'simple_100000001',
                         'simple-with-fpt',
                         'PB_PRODUCT_CPR',
+                        'grouped',
                         'simple_100000002',
                         'a_pb_product',
-                        'downloadable-product-price-on-link',
                         'downloadable-product-price-on-product',
                         'C_PB_PRODUCT',
                         'simple3',
                         'simple1',
-                        'gift-card',
-                        'B_PB_PRODUCT',
                         'configurable',
-                        'grouped'
+                        'downloadable-product-price-on-link',
+                        'gift-card',
+                        'B_PB_PRODUCT'
                     ],
                     'price_low_to_high' => [
                         'B_PB_PRODUCT',
                         'gift-card',
+                        'downloadable-product-price-on-link',
+                        'configurable',
                         'simple1',
                         'simple3',
                         'C_PB_PRODUCT',
                         'downloadable-product-price-on-product',
-                        'downloadable-product-price-on-link',
                         'a_pb_product',
                         'simple_100000002',
+                        'grouped',
                         'PB_PRODUCT_CPR',
                         'simple-with-fpt',
                         'simple_100000001',
                         'PB_VIRTUAL_PRODUCT',
                         '1_PB_PRODUCT',
-                        'bundle_product',
-                        'configurable',
-                        'grouped'
+                        'bundle_product'
                     ],
                     'position' => [
                         'B_PB_PRODUCT',
@@ -336,7 +336,17 @@ class SortingTest extends \PHPUnit\Framework\TestCase
                         '1_PB_PRODUCT',
                         'PB_PRODUCT_CPR',
                         'PB_VIRTUAL_PRODUCT',
-                        'gift-card'
+                        'simple1',
+                        'simple3',
+                        'bundle_product',
+                        'configurable',
+                        'gift-card',
+                        'grouped',
+                        'simple_100000001',
+                        'simple_100000002',
+                        'simple-with-fpt',
+                        'downloadable-product-price-on-product',
+                        'downloadable-product-price-on-link'
                     ]
                 ],
             ]
