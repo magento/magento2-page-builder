@@ -75,7 +75,7 @@ class ProductTotalsTest extends \PHPUnit\Framework\TestCase
                     ]
                 ], [0, 0, 0, 0]
             ],
-            [ // #1 category with 16 products, 3 disabled, 3 not visible (but 2 not visible disabled), 2 out of stock (1 oos disabled
+            [ // #1 category with 16 products, 3 disabled, 3 not visible (2 disabled), 2 out of stock (1 disabled)
                 ['1' => [
                     'aggregator' => 'all',
                     'new_child' => '',

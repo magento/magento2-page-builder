@@ -65,7 +65,9 @@ class SortingTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @param array $productSortData
-     * @dataProvider productSortDataProvider
+     * @dataProvider productSortDataProvider1
+     * @dataProvider productSortDataProvider2
+     * @dataProvider productSortDataProvider3
      * @magentoDataFixture Magento/PageBuilder/_files/catalog_sorting/products.php
      * @magentoDataFixture Magento/PageBuilder/_files/catalog_sorting/bundle_product.php
      * @magentoDataFixture Magento/PageBuilder/_files/catalog_sorting/configurable_products.php
@@ -81,20 +83,26 @@ class SortingTest extends \PHPUnit\Framework\TestCase
             $this->productList->setData(
                 [
                     'store_id' => 1,
-                    'conditions_encoded' => '^[
-                        `1`:^[
-                            `aggregator`:`all`,
-                            `new_child`:``,
-                            `type`:`Magento||CatalogWidget||Model||Rule||Condition||Combine`,
-                            `value`:`1`
-                            ^],
-                            `1--1`:^[
-                                `operator`:`()`,
-                                `type`:`Magento||CatalogWidget||Model||Rule||Condition||Product`,
-                                `attribute`:`sku`,
-                                `value`:`B_PB_PRODUCT,a_pb_product,C_PB_PRODUCT,1_PB_PRODUCT,PB_PRODUCT_CPR,PB_VIRTUAL_PRODUCT,simple_second_website,simple1,simple2,simple3,bundle_product,configurable,simple_11,simple_21,gift-card,grouped,simple_100000001,simple_100000002,simple-with-fpt,downloadable-product-price-on-product,downloadable-product-price-on-link`
-                                ^]
-                            ^]',
+                    'conditions_encoded' => json_encode(
+                        [
+                            '1' => [
+                                'aggregator' => 'all',
+                                'new_child' => '',
+                                'type' => \Magento\CatalogWidget\Model\Rule\Condition\Combine::class,
+                                'value' => 1
+                            ],
+                            '1--1' => [
+                                'operator' => '()',
+                                'type' => \Magento\CatalogWidget\Model\Rule\Condition\Product::class,
+                                'attribute' => 'sku',
+                                'value' => 'B_PB_PRODUCT,a_pb_product,C_PB_PRODUCT,1_PB_PRODUCT,PB_PRODUCT_CPR,' .
+                                    'PB_VIRTUAL_PRODUCT,simple_second_website,simple1,simple2,simple3,bundle_product,' .
+                                    'configurable,simple_11,simple_21,gift-card,grouped,simple_100000001,' .
+                                    'simple_100000002,simple-with-fpt,downloadable-product-price-on-product,' .
+                                    'downloadable-product-price-on-link'
+                            ]
+                        ]
+                    ),
                     'products_count' => 99
                 ]
             );
@@ -125,7 +133,7 @@ class SortingTest extends \PHPUnit\Framework\TestCase
      *
      * @return array
      */
-    public function productSortDataProvider() : array
+    public function productSortDataProvider1() : array
     {
         return [
             [
@@ -206,6 +214,21 @@ class SortingTest extends \PHPUnit\Framework\TestCase
                         'a_pb_product',
                         '1_PB_PRODUCT'
                     ],
+                ],
+            ]
+        ];
+    }
+
+    /**
+     * Provide sorting rule and expected order of SKUs once sort is applied
+     *
+     * @return array
+     */
+    public function productSortDataProvider2() : array
+    {
+        return [
+            [
+                [
                     'sku_ascending' => [
                         '1_PB_PRODUCT',
                         'a_pb_product',
@@ -282,6 +305,21 @@ class SortingTest extends \PHPUnit\Framework\TestCase
                         'grouped',
                         'gift-card'
                     ],
+                ],
+            ]
+        ];
+    }
+
+    /**
+     * Provide sorting rule and expected order of SKUs once sort is applied
+     *
+     * @return array
+     */
+    public function productSortDataProvider3() : array
+    {
+        return [
+            [
+                [
                     'price_high_to_low' => [
                         'bundle_product',
                         '1_PB_PRODUCT',
