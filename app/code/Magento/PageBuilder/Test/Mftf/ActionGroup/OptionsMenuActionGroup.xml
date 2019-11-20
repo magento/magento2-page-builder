@@ -113,6 +113,7 @@
         <waitForElementVisible selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, targetIndex)}}" stepKey="waitForContentTypeInStageVisible"/>
         <moveMouseOver selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, targetIndex)}}" x="{{contentTypeXCoordinate}}" y="{{contentTypeYCoordinate}}" stepKey="onMouseOverContentTypeStage"/>
         <waitForElementVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenuByIndex(contentType.role, targetIndex)}}" stepKey="waitForOptionsMenu"/>
+        <waitForElementVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeDuplicate(contentType.role, targetIndex)}}" stepKey="waitForDuplicate"/>
         <click selector="{{PageBuilderContentTypeOptionsMenu.contentTypeDuplicate(contentType.role, targetIndex)}}" stepKey="clickDuplicateContentType"/>
         <waitForPageLoad time="30" stepKey="waitForAnimation"/>
         <executeJS function="return document.querySelectorAll('{{PageBuilderStage.contentTypeTotalInStage(contentType.role)}}').length" stepKey="resultingContentTypeCount"/>
