@@ -131,22 +131,42 @@
         <arguments>
             <argument name="section" defaultValue="TextOnStage"/>
             <argument name="index" defaultValue="1" type="string"/>
+            <argument name="contentTypeXCoordinate" defaultValue="0" type="string"/>
+            <argument name="contentTypeYCoordinate" defaultValue="0" type="string"/>
         </arguments>
         <comment userInput="focusOnInlineTinyMCEEditor" stepKey="comment"/>
         <waitForElementVisible selector="{{section.tinymce(index)}}" stepKey="waitForEditor"/>
-        <click selector="{{section.tinymce(index)}}" stepKey="clickEditor"/>
+        <clickWithLeftButton selector="{{section.tinymce(index)}}" x="{{contentTypeXCoordinate}}" y="{{contentTypeYCoordinate}}" stepKey="clickEditor"/>
         <waitForPageLoad stepKey="waitForEditorToBeFocused"/>
         <waitForElementVisible selector="{{section.tinymceInFocus(index)}}" stepKey="waitForEditorFocused"/>
+    </actionGroup>
+    <actionGroup name="goToEndOfLineTinyMCEEditor">
+        <arguments>
+            <argument name="section" defaultValue="TextOnStage"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{section.tinymce(index)}}" stepKey="waitForEditor"/>
+        <pressKey selector="{{section.tinymce(index)}}" parameterArray="[\Facebook\WebDriver\WebDriverKeys::END]" stepKey="pressEndKey"/>
     </actionGroup>
     <actionGroup name="focusOnInlineTextAreaEditor">
         <arguments>
             <argument name="section" defaultValue="TextOnStage"/>
             <argument name="index" defaultValue="1" type="string"/>
+            <argument name="contentTypeXCoordinate" defaultValue="0" type="string"/>
+            <argument name="contentTypeYCoordinate" defaultValue="0" type="string"/>
         </arguments>
         <comment userInput="focusOnInlineTextAreaEditor" stepKey="comment"/>
         <waitForElementVisible selector="{{section.textArea(index)}}" stepKey="waitForEditor"/>
-        <click selector="{{section.textArea(index)}}" stepKey="clickEditor"/>
+        <clickWithLeftButton selector="{{section.textArea(index)}}" x="{{contentTypeXCoordinate}}" y="{{contentTypeYCoordinate}}" stepKey="clickEditor"/>
         <waitForPageLoad stepKey="waitForEditorToBeFocused"/>
+    </actionGroup>
+    <actionGroup name="goToEndOfLineTextAreaEditor">
+        <arguments>
+            <argument name="section" defaultValue="TextOnStage"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{section.textArea(index)}}" stepKey="waitForEditor"/>
+        <pressKey selector="{{section.textArea(index)}}" parameterArray="[\Facebook\WebDriver\WebDriverKeys::END]" stepKey="pressEndKey"/>
     </actionGroup>
     <actionGroup name="switchTabAndReloadPage">
         <switchToNextTab stepKey="switchToNextTab"/>
