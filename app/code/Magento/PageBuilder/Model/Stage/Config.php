@@ -102,9 +102,9 @@ class Config
      * @param \Magento\PageBuilder\Model\Wysiwyg\InlineEditingSupportedAdapterList $inlineEditingChecker
      * @param \Magento\PageBuilder\Model\WidgetInitializerConfig $widgetInitializerConfig
      * @param array $rootContainerConfig
+     * @param array $data
      * @param \Magento\Widget\Model\Widget\Config|null $widgetConfig
      * @param \Magento\Variable\Model\Variable\Config|null $variableConfig
-     * @param array $data
      *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
@@ -119,9 +119,9 @@ class Config
         \Magento\PageBuilder\Model\Wysiwyg\InlineEditingSupportedAdapterList $inlineEditingChecker,
         \Magento\PageBuilder\Model\WidgetInitializerConfig $widgetInitializerConfig,
         array $rootContainerConfig = [],
+        array $data = [],
         \Magento\Widget\Model\Widget\Config $widgetConfig = null,
-        \Magento\Variable\Model\Variable\Config $variableConfig = null,
-        array $data = []
+        \Magento\Variable\Model\Variable\Config $variableConfig = null
     ) {
         $this->config = $config;
         $this->uiComponentConfig = $uiComponentConfig;
@@ -132,12 +132,12 @@ class Config
         $this->activeEditor = $activeEditor;
         $this->inlineEditingChecker = $inlineEditingChecker;
         $this->widgetInitializerConfig = $widgetInitializerConfig;
+        $this->rootContainerConfig = $rootContainerConfig;
+        $this->data = $data;
         $this->widgetConfig = $widgetConfig ?? \Magento\Framework\App\ObjectManager::getInstance()
                 ->get(\Magento\Widget\Model\Widget\Config::class);
         $this->variableConfig = $variableConfig ?? \Magento\Framework\App\ObjectManager::getInstance()
                 ->get(\Magento\Variable\Model\Variable\Config::class);
-        $this->rootContainerConfig = $rootContainerConfig;
-        $this->data = $data;
     }
 
     /**
