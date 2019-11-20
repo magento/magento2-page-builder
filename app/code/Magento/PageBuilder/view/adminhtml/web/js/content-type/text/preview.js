@@ -28,6 +28,7 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
 
       _this = _preview2.call.apply(_preview2, [this].concat(args)) || this;
       _this.wysiwygDeferred = _jquery.Deferred();
+      _this.afterRenderDeferred = _jquery.Deferred();
       _this.handledDoubleClick = false;
       return _this;
     }
@@ -68,6 +69,7 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
     _proto.afterRenderWysiwyg = function afterRenderWysiwyg(element) {
       this.element = element;
       element.id = this.contentType.id + "-editor";
+      this.afterRenderDeferred.resolve(element);
       /**
        * afterRenderWysiwyg is called whenever Knockout causes a DOM re-render. This occurs frequently within Slider
        * due to Slick's inability to perform a refresh with Knockout managing the DOM. Due to this the original
@@ -249,6 +251,27 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
       var keys = ["marginBottom", "marginLeft", "marginRight", "marginTop", "paddingBottom", "paddingLeft", "paddingRight", "paddingTop", "textAlign"];
       return _underscore.pick(this.data.main.style(), function (style, key) {
         return keys.indexOf(key) !== -1;
+      });
+    }
+    /**
+     * Bind events
+     */
+    ;
+
+    _proto.bindEvents = function bindEvents() {
+      var _this6 = this;
+
+      _preview2.prototype.bindEvents.call(this); // After drop of new content type open TinyMCE and focus
+
+
+      _events.on("text:dropAfter", function (args) {
+        if (args.id === _this6.contentType.id) {
+          _this6.afterRenderDeferred.then(function () {
+            if (_this6.isWysiwygSupported()) {
+              _this6.initWysiwyg(true);
+            }
+          });
+        }
       });
     }
     /**

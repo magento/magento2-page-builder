@@ -101,9 +101,9 @@ class Config
      * @param \Magento\Ui\Block\Wysiwyg\ActiveEditor $activeEditor
      * @param \Magento\PageBuilder\Model\Wysiwyg\InlineEditingSupportedAdapterList $inlineEditingChecker
      * @param \Magento\PageBuilder\Model\WidgetInitializerConfig $widgetInitializerConfig
+     * @param array $rootContainerConfig
      * @param \Magento\Widget\Model\Widget\Config|null $widgetConfig
      * @param \Magento\Variable\Model\Variable\Config|null $variableConfig
-     * @param array $rootContainerConfig
      * @param array $data
      *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
@@ -118,9 +118,9 @@ class Config
         \Magento\Ui\Block\Wysiwyg\ActiveEditor $activeEditor,
         \Magento\PageBuilder\Model\Wysiwyg\InlineEditingSupportedAdapterList $inlineEditingChecker,
         \Magento\PageBuilder\Model\WidgetInitializerConfig $widgetInitializerConfig,
+        array $rootContainerConfig = [],
         \Magento\Widget\Model\Widget\Config $widgetConfig = null,
         \Magento\Variable\Model\Variable\Config $variableConfig = null,
-        array $rootContainerConfig = [],
         array $data = []
     ) {
         $this->config = $config;

@@ -20,6 +20,7 @@ import {
 import WysiwygFactory from "../../wysiwyg/factory";
 import WysiwygInterface from "../../wysiwyg/wysiwyg-interface";
 import BasePreview from "../preview";
+import {ContentTypeMountEventParamsInterface} from "../content-type-events.types";
 
 /**
  * @api
@@ -39,6 +40,11 @@ export default class Preview extends BasePreview {
      * The element the text content type is bound to
      */
     private element: HTMLElement;
+
+    /**
+     * Deferred called once the render is completed
+     */
+    private afterRenderDeferred: JQueryDeferred<HTMLElement> = $.Deferred();
 
     /**
      * The textarea element in disabled mode
@@ -83,6 +89,8 @@ export default class Preview extends BasePreview {
     public afterRenderWysiwyg(element: HTMLElement) {
         this.element = element;
         element.id = this.contentType.id + "-editor";
+
+        this.afterRenderDeferred.resolve(element);
 
         /**
          * afterRenderWysiwyg is called whenever Knockout causes a DOM re-render. This occurs frequently within Slider
@@ -200,8 +208,7 @@ export default class Preview extends BasePreview {
     /**
      * @param {HTMLTextAreaElement} element
      */
-    public initTextarea(element: HTMLTextAreaElement)
-    {
+    public initTextarea(element: HTMLTextAreaElement) {
         this.textarea = element;
 
         // set initial value of textarea based on data store
@@ -218,8 +225,7 @@ export default class Preview extends BasePreview {
     /**
      * Save current value of textarea in data store
      */
-    public onTextareaKeyUp()
-    {
+    public onTextareaKeyUp() {
         this.adjustTextareaHeightBasedOnScrollHeight();
         this.contentType.dataStore.set("content", this.textarea.value);
     }
@@ -227,8 +233,7 @@ export default class Preview extends BasePreview {
     /**
      * Start stage interaction on textarea blur
      */
-    public onTextareaFocus()
-    {
+    public onTextareaFocus() {
         $(this.textarea).closest(".pagebuilder-content-type").addClass("pagebuilder-toolbar-active");
         events.trigger("stage:interactionStart");
     }
@@ -236,8 +241,7 @@ export default class Preview extends BasePreview {
     /**
      * Stop stage interaction on textarea blur
      */
-    public onTextareaBlur()
-    {
+    public onTextareaBlur() {
         $(this.textarea).closest(".pagebuilder-content-type").removeClass("pagebuilder-toolbar-active");
         events.trigger("stage:interactionStop");
     }
@@ -247,8 +251,7 @@ export default class Preview extends BasePreview {
      *
      * @returns {any}
      */
-    public getPlaceholderStyle()
-    {
+    public getPlaceholderStyle() {
         const keys = [
             "marginBottom",
             "marginLeft",
@@ -266,10 +269,27 @@ export default class Preview extends BasePreview {
     }
 
     /**
+     * Bind events
+     */
+    protected bindEvents() {
+        super.bindEvents();
+
+        // After drop of new content type open TinyMCE and focus
+        events.on("text:dropAfter", (args: ContentTypeMountEventParamsInterface) => {
+            if (args.id === this.contentType.id) {
+                this.afterRenderDeferred.then(() => {
+                    if (this.isWysiwygSupported()) {
+                        this.initWysiwyg(true);
+                    }
+                });
+            }
+        });
+    }
+
+    /**
      * Adjust textarea's height based on scrollHeight
      */
-    private adjustTextareaHeightBasedOnScrollHeight()
-    {
+    private adjustTextareaHeightBasedOnScrollHeight() {
         this.textarea.style.height = "";
         const scrollHeight = this.textarea.scrollHeight;
         const minHeight = parseInt($(this.textarea).css("min-height"), 10);
