@@ -36,27 +36,24 @@ define(["jquery", "mageUtils", "Magento_PageBuilder/js/config"], function (_jque
 
     var magentoVariables = JSON.parse(config.placeholders);
     return content.replace(/{\{\s?(?:customVar code=|config path=\")([^\}\"]+)[\"]?\s?\}\}/ig, function (match, path) {
-      var placeholder = document.createElement("span");
-      placeholder.id = btoa(path).replace(/\+/g, ":").replace(/\//g, "_").replace(/=/g, "-");
-      placeholder.classList.add("magento-variable");
-      placeholder.classList.add("magento-placeholder");
-      placeholder.classList.add("mceNonEditable");
+      var id = btoa(path).replace(/\+/g, ":").replace(/\//g, "_").replace(/=/g, "-");
+      var placeholder = (0, _jquery)("<span />").addClass("magento-variable").addClass("magento-placeholder").addClass("mceNonEditable").prop("id", id).prop("contentEditable", "false");
 
       if (magentoVariables[path].variable_type === "custom") {
-        placeholder.classList.add("magento-custom-var");
+        placeholder.addClass("magento-custom-var");
       }
 
       var variableType = magentoVariables[path].variable_type;
 
       if (magentoVariables[path] && (variableType === "default" || variableType === "custom")) {
-        placeholder.textContent = magentoVariables[path].variable_name;
+        placeholder.text(magentoVariables[path].variable_name);
       } else {
         // If we're unable to find the placeholder we need to attach an error class
-        placeholder.classList.add("magento-placeholder-error");
-        placeholder.textContent = variableType === "custom" ? path : "Not Found";
+        placeholder.addClass("magento-placeholder-error");
+        placeholder.text(variableType === "custom" ? path : "Not Found");
       }
 
-      return placeholder.outerHTML;
+      return placeholder[0].outerHTML;
     });
   }
   /**
@@ -74,33 +71,25 @@ define(["jquery", "mageUtils", "Magento_PageBuilder/js/config"], function (_jque
       var imageSrc;
 
       if (attributes.type) {
-        var placeholder = document.createElement("span");
-        placeholder.id = _mageUtils.uniqueid();
-        placeholder.contentEditable = "false";
-        placeholder.classList.add("magento-widget");
-        placeholder.classList.add("magento-placeholder");
-        placeholder.classList.add("mceNonEditable");
+        var placeholder = (0, _jquery)("<span />").addClass("magento-widget").addClass("magento-placeholder").addClass("mceNonEditable").prop("id", _mageUtils.uniqueid()).prop("contentEditable", "false");
         attributes.type = attributes.type.replace(/\\\\/g, "\\");
         imageSrc = config.placeholders[attributes.type];
 
         if (!imageSrc) {
           imageSrc = config.error_image_url;
-          placeholder.classList.add("magento-placeholder-error");
+          placeholder.addClass("magento-placeholder-error");
         }
 
-        var image = document.createElement("img");
-        image.id = btoa(match).replace(/\+/g, ":").replace(/\//g, "_").replace(/=/g, "-");
-        image.src = imageSrc;
-        placeholder.appendChild(image);
+        var image = (0, _jquery)("<img />").prop("id", btoa(match).replace(/\+/g, ":").replace(/\//g, "_").replace(/=/g, "-")).prop("src", imageSrc);
+        placeholder.append(image);
         var widgetType = "";
 
         if (config.types[attributes.type]) {
           widgetType += config.types[attributes.type];
         }
 
-        var text = document.createTextNode(widgetType);
-        placeholder.appendChild(text);
-        return placeholder.outerHTML;
+        placeholder.append((0, _jquery)(document.createTextNode(widgetType)));
+        return placeholder[0].outerHTML;
       }
     });
   }

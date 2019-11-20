@@ -85,8 +85,8 @@
         <element name="imageOnStage" type="text" selector="(//div[contains(@class,'pagebuilder-banner') and contains(@class,'pagebuilder-content-type')])[{{arg1}}]//img[contains(@src,'{{var1}}')]" parameterized="true"/>
         <element name="imageSourceByIndex" type="text" selector="(//div[@data-content-type='banner'])[{{arg1}}]/div[contains(@style,'{{arg2}}')]" parameterized="true"/>
         <element name="uploadImageInput" type="button" selector="//div[contains(@class,'pagebuilder-image-uploader-container')]//input[@name='background_image']"/>
-        <element name="variablePlaceholder" type="text" selector="(//div[contains(@class,'pagebuilder-banner')])[{{arg}}]//*[contains(@class, 'magento-variable magento-placeholder')]" parameterized="true"/>
-        <element name="widgetPlaceholder" type="text" selector="(//div[contains(@class,'pagebuilder-banner')])[{{arg}}]//*[contains(@class, 'magento-placeholder magento-widget')]" parameterized="true"/>
+        <element name="variablePlaceholder" type="text" selector="(//div[contains(@class,'pagebuilder-banner')])[{{arg}}]//*[contains(@class, 'magento-variable') and contains(@class, 'magento-placeholder')]" parameterized="true"/>
+        <element name="widgetPlaceholder" type="text" selector="(//div[contains(@class,'pagebuilder-banner')])[{{arg}}]//*[contains(@class, 'magento-placeholder') and contains(@class, 'magento-widget')]" parameterized="true"/>
         <element name="tinymce" type="text" selector="(//div[contains(@class,'pagebuilder-banner')])[{{arg}}]//div[contains(@class, 'inline-wysiwyg')]" parameterized="true"/>
         <element name="tinymceInFocus" type="text" selector="(//div[contains(@class,'pagebuilder-banner')])[{{arg}}]//div[contains(@class, 'inline-wysiwyg') and contains(@class, 'mce-edit-focus')]" parameterized="true"/>
         <!-- Appearance Configuration -->
