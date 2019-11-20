@@ -18,8 +18,15 @@
             </scope>
             <div class="pagebuilder-collage-content" event="mousedown: activateEditor">
                 <div class="pagebuilder-banner-text-content">
-                    <div if="isWysiwygSupported()" class="inline-wysiwyg" ko-style="data.content.style" css="data.content.css" attr="data.content.attributes" afterRender="initWysiwyg" event="mousedown: stopEvent">
-                        <div html="data.content.html" />
+                    <div if="isWysiwygSupported()"
+                         class="inline-wysiwyg"
+                         ko-style="data.content.style"
+                         css="data.content.css"
+                         attr="data.content.attributes"
+                         afterRender="afterRenderWysiwyg"
+                         contenteditable="true"
+                         event="mousedown: stopEvent, click: activateEditor, dblclick: handleDoubleClick">
+                        <div html="data.content.html()"></div>
                     </div>
                     <div if="isWysiwygSupported()" class="placeholder-text" ifnot="data.content.html" translate="'Edit Banner Text'"></div>
                     <textarea ifnot="isWysiwygSupported()" class="inline-wysiwyg-textarea" afterRender="initTextarea" event="{keyup: onTextareaKeyUp, focus: onTextareaFocus, blur: onTextareaBlur, mousedown: stopEvent}" attr="placeholder: $t('Edit Banner Text')"/>

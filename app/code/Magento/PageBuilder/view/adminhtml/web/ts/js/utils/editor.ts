@@ -17,7 +17,35 @@ export function isWysiwygSupported() {
  */
 export function encodeContent(content: string) {
     if (isWysiwygSupported()) {
-        return convertVariablesToHtmlPreview(convertWidgetsToHtmlPreview(content));
+        return convertVariablesToHtmlPreview(
+            convertWidgetsToHtmlPreview(
+                removeInvalidPlaceholders(content),
+            ),
+        );
+    }
+
+    return content;
+}
+
+/**
+ * Prior to parsing the content remove and invalid placeholders within the content
+ *
+ * @param content
+ */
+function removeInvalidPlaceholders(content: string) {
+    if (content.indexOf("magento-placeholder") !== -1) {
+        const html = new DOMParser().parseFromString(content, "text/html");
+        const placeholders = html.querySelectorAll("span.magento-placeholder");
+        if (placeholders.length > 0) {
+            [].slice.call(placeholders).forEach((placeholder: HTMLSpanElement) => {
+                // If the invalid placeholder contains a directive, let's insert it back where it belongs
+                if (placeholder.innerText.indexOf("{{") !== -1) {
+                    placeholder.parentNode.insertBefore(document.createTextNode(placeholder.innerText), placeholder);
+                }
+                placeholder.remove();
+            });
+        }
+        return html.body.innerHTML;
     }
 
     return content;
@@ -31,7 +59,7 @@ export function encodeContent(content: string) {
  *
  * @param content
  */
-export function convertVariablesToHtmlPreview(content: string) {
+function convertVariablesToHtmlPreview(content: string) {
     const config = Config.getConfig("tinymce").variables;
     const magentoVariables = JSON.parse(config.placeholders);
 
@@ -67,16 +95,17 @@ export function convertVariablesToHtmlPreview(content: string) {
  *
  * @param content
  */
-export function convertWidgetsToHtmlPreview(content: string) {
+function convertWidgetsToHtmlPreview(content: string) {
     const config = Config.getConfig("tinymce").widgets;
+
     return content.replace(/\{\{widget(.*?)\}\}/ig, (match, widgetBody) => {
         const attributes = parseAttributesString(widgetBody);
         let imageSrc;
 
         if (attributes.type) {
             const placeholder = $("<span />")
-                .addClass("magento-widget")
                 .addClass("magento-placeholder")
+                .addClass("magento-widget")
                 .addClass("mceNonEditable")
                 .prop("id", mageUtils.uniqueid())
                 .prop("contentEditable", "false");
@@ -158,16 +187,25 @@ export function unlockImageSize(element: HTMLElement) {
 export function createBookmark(event: JQueryEventObject): Bookmark {
     const wrapperElement = $(event.target).parents(".inline-wysiwyg");
 
-    // Handle direct clicks onto an IMG
-    if (event.target.nodeName === "IMG") {
+    /**
+     * Create an element bookmark
+     *
+     * @param element
+     */
+    const createElementBookmark = (element: Element) => {
         return {
-            name: event.target.nodeName,
+            name: element.nodeName,
             index: findNodeIndex(
                 wrapperElement[0],
-                event.target.nodeName,
-                event.target,
+                element.nodeName,
+                element,
             ),
         };
+    };
+
+    // Handle direct clicks onto an IMG
+    if (event.target.nodeName === "IMG") {
+        return createElementBookmark(event.target);
     }
 
     if (window.getSelection) {
@@ -175,19 +213,21 @@ export function createBookmark(event: JQueryEventObject): Bookmark {
         const id = mageUtils.uniqueid();
         if (selection.getRangeAt && selection.rangeCount) {
             const range = normalizeTableCellSelection(selection.getRangeAt(0).cloneRange());
-            const node = range.startContainer.parentNode as HTMLElement;
 
-            if (node.nodeName === "IMG"
-                || (node.nodeName === "SPAN" && node.classList.contains("magento-placeholder"))
+            // Determine if the current node is an image or span that we want to select instead of text
+            const currentNode = range.startContainer as HTMLElement;
+            if (currentNode.nodeType === Node.ELEMENT_NODE && (currentNode.nodeName === "IMG"
+                || (currentNode.nodeName === "SPAN" && currentNode.classList.contains("magento-placeholder")))
             ) {
-                return {
-                    name: node.nodeName,
-                    index: findNodeIndex(
-                        wrapperElement[0],
-                        node.nodeName,
-                        node,
-                    ),
-                };
+                return createElementBookmark(currentNode);
+            }
+
+            // Also check if the direct parent is either of these
+            const parentNode = range.startContainer.parentNode as HTMLElement;
+            if (parentNode.nodeName === "IMG"
+                || (parentNode.nodeName === "SPAN" && parentNode.classList.contains("magento-placeholder"))
+            ) {
+                return createElementBookmark(parentNode);
             }
 
             if (!range.collapsed) {

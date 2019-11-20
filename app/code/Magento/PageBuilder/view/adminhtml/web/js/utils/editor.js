@@ -16,7 +16,35 @@ define(["jquery", "mageUtils", "Magento_PageBuilder/js/config"], function (_jque
 
   function encodeContent(content) {
     if (isWysiwygSupported()) {
-      return convertVariablesToHtmlPreview(convertWidgetsToHtmlPreview(content));
+      return convertVariablesToHtmlPreview(convertWidgetsToHtmlPreview(removeInvalidPlaceholders(content)));
+    }
+
+    return content;
+  }
+  /**
+   * Prior to parsing the content remove and invalid placeholders within the content
+   *
+   * @param content
+   */
+
+
+  function removeInvalidPlaceholders(content) {
+    if (content.indexOf("magento-placeholder") !== -1) {
+      var html = new DOMParser().parseFromString(content, "text/html");
+      var placeholders = html.querySelectorAll("span.magento-placeholder");
+
+      if (placeholders.length > 0) {
+        [].slice.call(placeholders).forEach(function (placeholder) {
+          // If the invalid placeholder contains a directive, let's insert it back where it belongs
+          if (placeholder.innerText.indexOf("{{") !== -1) {
+            placeholder.parentNode.insertBefore(document.createTextNode(placeholder.innerText), placeholder);
+          }
+
+          placeholder.remove();
+        });
+      }
+
+      return html.body.innerHTML;
     }
 
     return content;
@@ -71,7 +99,7 @@ define(["jquery", "mageUtils", "Magento_PageBuilder/js/config"], function (_jque
       var imageSrc;
 
       if (attributes.type) {
-        var placeholder = (0, _jquery)("<span />").addClass("magento-widget").addClass("magento-placeholder").addClass("mceNonEditable").prop("id", _mageUtils.uniqueid()).prop("contentEditable", "false");
+        var placeholder = (0, _jquery)("<span />").addClass("magento-placeholder").addClass("magento-widget").addClass("mceNonEditable").prop("id", _mageUtils.uniqueid()).prop("contentEditable", "false");
         attributes.type = attributes.type.replace(/\\\\/g, "\\");
         imageSrc = config.placeholders[attributes.type];
 
@@ -140,13 +168,23 @@ define(["jquery", "mageUtils", "Magento_PageBuilder/js/config"], function (_jque
 
 
   function createBookmark(event) {
-    var wrapperElement = (0, _jquery)(event.target).parents(".inline-wysiwyg"); // Handle direct clicks onto an IMG
+    var wrapperElement = (0, _jquery)(event.target).parents(".inline-wysiwyg");
+    /**
+     * Create an element bookmark
+     *
+     * @param element
+     */
+
+    var createElementBookmark = function createElementBookmark(element) {
+      return {
+        name: element.nodeName,
+        index: findNodeIndex(wrapperElement[0], element.nodeName, element)
+      };
+    }; // Handle direct clicks onto an IMG
+
 
     if (event.target.nodeName === "IMG") {
-      return {
-        name: event.target.nodeName,
-        index: findNodeIndex(wrapperElement[0], event.target.nodeName, event.target)
-      };
+      return createElementBookmark(event.target);
     }
 
     if (window.getSelection) {
@@ -155,14 +193,19 @@ define(["jquery", "mageUtils", "Magento_PageBuilder/js/config"], function (_jque
       var _id = _mageUtils.uniqueid();
 
       if (selection.getRangeAt && selection.rangeCount) {
-        var range = normalizeTableCellSelection(selection.getRangeAt(0).cloneRange());
-        var node = range.startContainer.parentNode;
+        var range = normalizeTableCellSelection(selection.getRangeAt(0).cloneRange()); // Determine if the current node is an image or span that we want to select instead of text
 
-        if (node.nodeName === "IMG" || node.nodeName === "SPAN" && node.classList.contains("magento-placeholder")) {
-          return {
-            name: node.nodeName,
-            index: findNodeIndex(wrapperElement[0], node.nodeName, node)
-          };
+        var currentNode = range.startContainer;
+
+        if (currentNode.nodeType === Node.ELEMENT_NODE && (currentNode.nodeName === "IMG" || currentNode.nodeName === "SPAN" && currentNode.classList.contains("magento-placeholder"))) {
+          return createElementBookmark(currentNode);
+        } // Also check if the direct parent is either of these
+
+
+        var parentNode = range.startContainer.parentNode;
+
+        if (parentNode.nodeName === "IMG" || parentNode.nodeName === "SPAN" && parentNode.classList.contains("magento-placeholder")) {
+          return createElementBookmark(parentNode);
         }
 
         if (!range.collapsed) {
@@ -311,8 +354,6 @@ define(["jquery", "mageUtils", "Magento_PageBuilder/js/config"], function (_jque
   return {
     isWysiwygSupported: isWysiwygSupported,
     encodeContent: encodeContent,
-    convertVariablesToHtmlPreview: convertVariablesToHtmlPreview,
-    convertWidgetsToHtmlPreview: convertWidgetsToHtmlPreview,
     parseAttributesString: parseAttributesString,
     lockImageSize: lockImageSize,
     unlockImageSize: unlockImageSize,

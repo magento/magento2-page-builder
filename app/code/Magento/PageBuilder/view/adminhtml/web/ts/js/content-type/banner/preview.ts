@@ -6,10 +6,19 @@
 import $ from "jquery";
 import $t from "mage/translate";
 import events from "Magento_PageBuilder/js/events";
-import Config from "../../config";
+import _ from "underscore";
 import HideShowOption from "../../content-type-menu/hide-show-option";
 import {OptionsInterface} from "../../content-type-menu/option.types";
 import Uploader from "../../uploader";
+import delayUntil from "../../utils/delay-until";
+import {
+    createBookmark, createDoubleClickEvent,
+    findNodeIndex, getNodeByIndex,
+    isWysiwygSupported,
+    lockImageSize,
+    moveToBookmark,
+    unlockImageSize,
+} from "../../utils/editor";
 import nestingLinkDialog from "../../utils/nesting-link-dialog";
 import WysiwygFactory from "../../wysiwyg/factory";
 import WysiwygInterface from "../../wysiwyg/wysiwyg-interface";
@@ -27,6 +36,11 @@ export default class Preview extends BasePreview {
     private wysiwyg: WysiwygInterface;
 
     /**
+     * Wysiwyg deferred event
+     */
+    private wysiwygDeferred: JQueryDeferred<void> = $.Deferred();
+
+    /**
      * The element the text content type is bound to
      */
     private element: HTMLElement;
@@ -35,6 +49,16 @@ export default class Preview extends BasePreview {
      * The textarea element in disabled mode
      */
     private textarea: HTMLTextAreaElement;
+
+    /**
+     * Deferred called once the render is completed
+     */
+    private afterRenderDeferred: JQueryDeferred<HTMLElement> = $.Deferred();
+
+    /**
+     * Have we handled a double click on init?
+     */
+    private handledDoubleClick: boolean = false;
 
     /**
      * Return an array of options
@@ -76,22 +100,20 @@ export default class Preview extends BasePreview {
     }
 
     /**
-     * Makes WYSIWYG active
-     *
-     * @param {Preview} preview
-     * @param {JQueryEventObject} event
+     * @param {HTMLElement} element
      */
-    public activateEditor(preview: Preview, event: JQueryEventObject) {
-        const element = this.element || this.textarea;
+    public afterRenderWysiwyg(element: HTMLElement) {
+        this.element = element;
+        element.id = this.contentType.id + "-editor";
 
-        if (event.currentTarget !== event.target &&
-            event.target !== element &&
-            !element.contains(event.target)
-        ) {
-            return;
-        }
+        this.afterRenderDeferred.resolve(element);
 
-        element.focus();
+        /**
+         * afterRenderWysiwyg is called whenever Knockout causes a DOM re-render. This occurs frequently within Slider
+         * due to Slick's inability to perform a refresh with Knockout managing the DOM. Due to this the original
+         * WYSIWYG instance will be detached from this slide and we need to re-initialize on click.
+         */
+        this.wysiwyg = null;
     }
 
     /**
@@ -105,6 +127,118 @@ export default class Preview extends BasePreview {
         event.stopPropagation();
 
         return true;
+    }
+
+    /**
+     * Init WYSIWYG on load
+     *
+     * @param element
+     * @deprecated please use activateEditor & initWysiwygFromClick
+     */
+    public initWysiwyg(element: HTMLElement) {
+        this.element = element;
+        element.id = this.contentType.id + "-editor";
+        this.wysiwyg = null;
+
+        return this.initWysiwygFromClick(false);
+    }
+
+    /**
+     * Init the WYSIWYG
+     *
+     * @param {boolean} focus Should wysiwyg focus after initialization?
+     * @returns Promise
+     */
+    public initWysiwygFromClick(focus: boolean = false): Promise<WysiwygInterface> {
+        if (this.wysiwyg) {
+            return Promise.resolve(this.wysiwyg);
+        }
+
+        const wysiwygConfig = this.config.additional_data.wysiwygConfig.wysiwygConfigData;
+
+        if (focus) {
+            wysiwygConfig.adapter.settings.auto_focus = this.element.id;
+            wysiwygConfig.adapter.settings.init_instance_callback = () => {
+                _.defer(() => {
+                    this.element.blur();
+                    this.element.focus();
+                });
+            };
+        }
+
+        wysiwygConfig.adapter.settings.fixed_toolbar_container = "#"
+            + this.contentType.id
+            + " .pagebuilder-banner-text-content";
+
+        return WysiwygFactory(
+            this.contentType.id,
+            this.element.id,
+            this.config.name,
+            wysiwygConfig,
+            this.contentType.dataStore,
+            "message",
+            this.contentType.stageId,
+        ).then((wysiwyg: WysiwygInterface): WysiwygInterface => {
+            this.wysiwyg = wysiwyg;
+            return wysiwyg;
+        });
+    }
+
+    /**
+     * Makes WYSIWYG active
+     *
+     * @param {Preview} preview
+     * @param {JQueryEventObject} event
+     * @returns {Boolean}
+     */
+    public activateEditor(preview: Preview, event: JQueryEventObject) {
+        if (this.element && !this.wysiwyg && !this.handledDoubleClick) {
+            const bookmark = createBookmark(event);
+            console.log(bookmark);
+            lockImageSize(this.element);
+            this.element.removeAttribute("contenteditable");
+            _.defer(() => {
+                this.initWysiwygFromClick(true)
+                    .then(() => delayUntil(
+                        () => {
+                            this.wysiwygDeferred.resolve();
+                            moveToBookmark(bookmark);
+                            unlockImageSize(this.element);
+                        },
+                        () => this.element.classList.contains("mce-edit-focus"),
+                        10,
+                    )).catch((error) => {
+                    // If there's an error with init of WYSIWYG editor push into the console to aid support
+                    console.error(error);
+                });
+            });
+        }
+    }
+
+    /**
+     * If a user double clicks prior to initializing TinyMCE, forward the event
+     *
+     * @param preview
+     * @param event
+     */
+    public handleDoubleClick(preview: Preview, event: JQueryEventObject) {
+        if (this.handledDoubleClick) {
+            return;
+        }
+        event.preventDefault();
+        const targetIndex = findNodeIndex(this.element, event.target.tagName, event.target);
+        this.handledDoubleClick = true;
+
+        this.wysiwygDeferred.then(() => {
+            let target = document.getElementById(event.target.id);
+            if (!target) {
+                target = getNodeByIndex(this.element, event.target.tagName, targetIndex);
+            }
+
+            if (target) {
+                target.dispatchEvent(createDoubleClickEvent());
+            }
+        });
     }
 
     /**
@@ -161,33 +295,7 @@ export default class Preview extends BasePreview {
      * @returns {Boolean}
      */
     public isWysiwygSupported(): boolean {
-        return Config.getConfig("can_use_inline_editing_on_stage");
-    }
-
-    /**
-     * @param {HTMLElement} element
-     */
-    public initWysiwyg(element: HTMLElement) {
-        this.element = element;
-
-        element.id = this.contentType.id + "-editor";
-
-        const config = this.config.additional_data.wysiwygConfig.wysiwygConfigData;
-        config.adapter.settings.fixed_toolbar_container = "#"
-            + this.contentType.id
-            + " .pagebuilder-banner-text-content";
-
-        WysiwygFactory(
-            this.contentType.id,
-            element.id,
-            this.config.name,
-            config,
-            this.contentType.dataStore,
-            "message",
-            this.contentType.stageId,
-        ).then((wysiwyg: WysiwygInterface): void => {
-            this.wysiwyg = wysiwyg;
-        });
+        return isWysiwygSupported();
     }
 
     /**
@@ -215,6 +323,7 @@ export default class Preview extends BasePreview {
     {
         this.adjustTextareaHeightBasedOnScrollHeight();
         this.contentType.dataStore.set("message", this.textarea.value);
+        console.log(this.textarea.value);
     }
 
     /**

@@ -142,7 +142,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         this.element.removeAttribute("contenteditable");
 
         _underscore.defer(function () {
-          _this2.initWysiwyg(true).then(function () {
+          _this2.initWysiwygFromClick(true).then(function () {
             return (0, _delayUntil)(function () {
               _this2.wysiwygDeferred.resolve();
 
@@ -258,6 +258,20 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       _events.trigger("stage:interactionStop");
     }
     /**
+     * Init WYSIWYG on load
+     *
+     * @param element
+     * @deprecated please use activateEditor & initWysiwygFromClick
+     */
+    ;
+
+    _proto.initWysiwyg = function initWysiwyg(element) {
+      this.element = element;
+      element.id = this.contentType.id + "-editor";
+      this.wysiwyg = null;
+      return this.initWysiwygFromClick(true);
+    }
+    /**
      * Init the WYSIWYG
      *
      * @param {boolean} focus Should wysiwyg focus after initialization?
@@ -265,7 +279,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
      */
     ;
 
-    _proto.initWysiwyg = function initWysiwyg(focus) {
+    _proto.initWysiwygFromClick = function initWysiwygFromClick(focus) {
       var _this5 = this;
 
       if (focus === void 0) {
@@ -273,7 +287,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       }
 
       if (this.wysiwyg) {
-        return;
+        return Promise.resolve(this.wysiwyg);
       }
 
       var wysiwygConfig = this.config.additional_data.wysiwygConfig.wysiwygConfigData;
@@ -292,6 +306,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
       return (0, _factory)(this.contentType.id, this.element.id, this.config.name, wysiwygConfig, this.contentType.dataStore, "content", this.contentType.stageId).then(function (wysiwyg) {
         _this5.wysiwyg = wysiwyg;
+        return wysiwyg;
       });
     }
     /**

@@ -19,8 +19,8 @@ import {
 } from "../../utils/editor";
 import WysiwygFactory from "../../wysiwyg/factory";
 import WysiwygInterface from "../../wysiwyg/wysiwyg-interface";
-import BasePreview from "../preview";
 import {ContentTypeMountEventParamsInterface} from "../content-type-events.types";
+import BasePreview from "../preview";
 
 /**
  * @api
@@ -114,14 +114,28 @@ export default class Preview extends BasePreview {
     }
 
     /**
+     * Init WYSIWYG on load
+     *
+     * @param element
+     * @deprecated please use activateEditor & initWysiwygFromClick
+     */
+    public initWysiwyg(element: HTMLElement) {
+        this.element = element;
+        element.id = this.contentType.id + "-editor";
+        this.wysiwyg = null;
+
+        return this.initWysiwygFromClick(true);
+    }
+
+    /**
      * Init the WYSIWYG
      *
      * @param {boolean} focus Should wysiwyg focus after initialization?
      * @returns Promise
      */
-    public initWysiwyg(focus: boolean = false) {
+    public initWysiwygFromClick(focus: boolean = false): Promise<WysiwygInterface> {
         if (this.wysiwyg) {
-            return;
+            return Promise.resolve(this.wysiwyg);
         }
 
         const wysiwygConfig = this.config.additional_data.wysiwygConfig.wysiwygConfigData;
@@ -144,8 +158,9 @@ export default class Preview extends BasePreview {
             this.contentType.dataStore,
             "content",
             this.contentType.stageId,
-        ).then((wysiwyg: WysiwygInterface): void => {
+        ).then((wysiwyg: WysiwygInterface): WysiwygInterface => {
             this.wysiwyg = wysiwyg;
+            return wysiwyg;
         });
     }
 
@@ -162,7 +177,7 @@ export default class Preview extends BasePreview {
             lockImageSize(this.element);
             this.element.removeAttribute("contenteditable");
             _.defer(() => {
-                this.initWysiwyg(true)
+                this.initWysiwygFromClick(true)
                     .then(() => delayUntil(
                         () => {
                             this.wysiwygDeferred.resolve();
@@ -279,7 +294,7 @@ export default class Preview extends BasePreview {
             if (args.id === this.contentType.id) {
                 this.afterRenderDeferred.then(() => {
                     if (this.isWysiwygSupported()) {
-                        this.initWysiwyg(true);
+                        this.initWysiwygFromClick(true);
                     }
                 });
             }

@@ -92,6 +92,20 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
       return true;
     }
     /**
+     * Init WYSIWYG on load
+     *
+     * @param element
+     * @deprecated please use activateEditor & initWysiwygFromClick
+     */
+    ;
+
+    _proto.initWysiwyg = function initWysiwyg(element) {
+      this.element = element;
+      element.id = this.contentType.id + "-editor";
+      this.wysiwyg = null;
+      return this.initWysiwygFromClick(true);
+    }
+    /**
      * Init the WYSIWYG
      *
      * @param {boolean} focus Should wysiwyg focus after initialization?
@@ -99,7 +113,7 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
      */
     ;
 
-    _proto.initWysiwyg = function initWysiwyg(focus) {
+    _proto.initWysiwygFromClick = function initWysiwygFromClick(focus) {
       var _this2 = this;
 
       if (focus === void 0) {
@@ -107,7 +121,7 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
       }
 
       if (this.wysiwyg) {
-        return;
+        return Promise.resolve(this.wysiwyg);
       }
 
       var wysiwygConfig = this.config.additional_data.wysiwygConfig.wysiwygConfigData;
@@ -126,6 +140,7 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
 
       return (0, _factory)(this.contentType.id, this.element.id, this.config.name, wysiwygConfig, this.contentType.dataStore, "content", this.contentType.stageId).then(function (wysiwyg) {
         _this2.wysiwyg = wysiwyg;
+        return wysiwyg;
       });
     }
     /**
@@ -146,7 +161,7 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
         this.element.removeAttribute("contenteditable");
 
         _underscore.defer(function () {
-          _this3.initWysiwyg(true).then(function () {
+          _this3.initWysiwygFromClick(true).then(function () {
             return (0, _delayUntil)(function () {
               _this3.wysiwygDeferred.resolve();
 
@@ -268,7 +283,7 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
         if (args.id === _this6.contentType.id) {
           _this6.afterRenderDeferred.then(function () {
             if (_this6.isWysiwygSupported()) {
-              _this6.initWysiwyg(true);
+              _this6.initWysiwygFromClick(true);
             }
           });
         }
