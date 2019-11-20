@@ -75,8 +75,8 @@ export default class ContentTypeCollection<P extends PreviewCollection = Preview
      * Destroys current instance and all children
      */
     public destroy(): void {
-        [...this.getChildren()()].forEach((elem: ContentTypeInterface) => {
-            elem.destroy();
+        [...this.getChildren()()].forEach((contentType: ContentTypeInterface) => {
+            contentType.destroy();
         });
         super.destroy();
     }
