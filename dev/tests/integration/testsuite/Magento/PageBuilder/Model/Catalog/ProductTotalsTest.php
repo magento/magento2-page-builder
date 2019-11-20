@@ -14,9 +14,6 @@ use Zend_Db_Select_Exception;
 
 /**
  * Class ProductTotalsTest
- *
- * @magentoAppIsolation enabled
- * @magentoDataFixture Magento/PageBuilder/_files/product_totals/products.php
  */
 class ProductTotalsTest extends \PHPUnit\Framework\TestCase
 {
@@ -35,6 +32,12 @@ class ProductTotalsTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
+     * @magentoAppIsolation enabled
+     * @magentoDataFixture Magento/PageBuilder/_files/product_totals/products.php
+     * @magentoDataFixture Magento/PageBuilder/_files/product_totals/configurable_products.php
+     * @magentoDataFixture Magento/PageBuilder/_files/product_totals/bundle_product.php
+     * @magentoDataFixture Magento/GroupedProduct/_files/product_grouped_with_simple_out_of_stock.php
+     * @magentoDataFixture Magento/GiftCard/_files/gift_card.php
      * @param array condition
      * @param int $expectedTotals
      * @dataProvider productDataProvider
@@ -72,7 +75,7 @@ class ProductTotalsTest extends \PHPUnit\Framework\TestCase
                     ]
                 ], [0, 0, 0, 0]
             ],
-            [ // #1 category with 4 products, 3 disabled, 3 not visible (but 2 not visible disabled)
+            [ // #1 category with 16 products, 3 disabled, 3 not visible (but 2 not visible disabled), 2 out of stock (1 oos disabled
                 ['1' => [
                     'aggregator' => 'all',
                     'new_child' => '',
@@ -85,7 +88,7 @@ class ProductTotalsTest extends \PHPUnit\Framework\TestCase
                         'attribute' => 'category_ids',
                         'value' => '3'
                     ]
-                ], [8, 3, 1, 1]
+                ], [12, 3, 1, 1]
             ],
             [ // #2 sku with no matches
                 ['1' => [
@@ -102,7 +105,7 @@ class ProductTotalsTest extends \PHPUnit\Framework\TestCase
                     ]
                 ], [0, 0, 0, 0]
             ],
-            [ // #3 sku with 2 matches, 1 disabled, 1 not visible, 1 out of stock
+            [ // #3 sku with 2 matches, 1 disabled, 3 not visible, 1 out of stock
                 ['1' => [
                     'aggregator' => 'all',
                     'new_child' => '',
@@ -113,9 +116,9 @@ class ProductTotalsTest extends \PHPUnit\Framework\TestCase
                         'operator' => '()',
                         'type' => \Magento\CatalogWidget\Model\Rule\Condition\Product::class,
                         'attribute' => 'sku',
-                        'value' => 'not-visible-on-storefront, disabled-product, out-of-stock'
+                        'value' => 'not-visible-on-storefront, disabled-product, out-of-stock, simple_11, simple_21'
                     ]
-                ], [3, 1, 1, 1]
+                ], [5, 1, 3, 1]
             ],
             [ // #4 condition with no matches
                 ['1' => [
@@ -132,7 +135,7 @@ class ProductTotalsTest extends \PHPUnit\Framework\TestCase
                     ]
                 ], [0, 0, 0, 0]
             ],
-            [ // #5 condition with 3 matches, 1 disabled, 1 not visible
+            [ // #5 condition with 6 matches, 1 disabled, 2 not visible
                 ['1' => [
                     'aggregator' => 'all',
                     'new_child' => '',
@@ -145,7 +148,7 @@ class ProductTotalsTest extends \PHPUnit\Framework\TestCase
                         'attribute' => 'price',
                         'value' => '20'
                     ]
-                ], [3, 1, 1, 0]
+                ], [6, 1, 2, 0]
             ],
         ];
     }

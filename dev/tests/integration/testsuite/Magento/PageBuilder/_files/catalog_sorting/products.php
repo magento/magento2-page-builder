@@ -125,11 +125,135 @@ $fourthProduct->setTypeId(\Magento\Catalog\Model\Product\Type::TYPE_SIMPLE)
 
 $productRepository->save($fourthProduct);
 
+/** @var \Magento\Catalog\Model\Product $productWithCatalogPriceRule */
+$productWithCatalogPriceRule = $objectManager->create(\Magento\Catalog\Model\Product::class);
+$productWithCatalogPriceRule->setTypeId(\Magento\Catalog\Model\Product\Type::TYPE_SIMPLE)
+    ->setId(670)
+    ->setCreatedAt('2018-01-05 01:01:01')
+    ->setUpdatedAt('2018-01-05 01:01:01')
+    ->setAttributeSetId(4)
+    ->setStoreId(1)
+    ->setWebsiteIds([1])
+    ->setName('Page Builder Product with Catalog Price Rule')
+    ->setSku('PB_PRODUCT_CPR')
+    ->setPrice(66)
+    ->setStockData(
+        [
+            'qty' => 66,
+            'is_in_stock' => true
+        ]
+    )
+    ->setVisibility(\Magento\Catalog\Model\Product\Visibility::VISIBILITY_BOTH)
+    ->setStatus(\Magento\Catalog\Model\Product\Attribute\Source\Status::STATUS_ENABLED);
+$productRepository->save($productWithCatalogPriceRule);
+
+/** @var \Magento\Catalog\Model\Product $productWithCatalogPriceRule */
+$virtualProduct = $objectManager->create(\Magento\Catalog\Model\Product::class);
+$virtualProduct->setTypeId(\Magento\Catalog\Model\Product\Type::TYPE_VIRTUAL)
+    ->setId(671)
+    ->setCreatedAt('2018-01-06 01:01:01')
+    ->setUpdatedAt('2018-01-06 01:01:01')
+    ->setAttributeSetId(4)
+    ->setStoreId(1)
+    ->setWebsiteIds([1])
+    ->setName('Page Builder Virtual Product')
+    ->setSku('PB_VIRTUAL_PRODUCT')
+    ->setPrice(88)
+    ->setStockData(
+        [
+            'qty' => 88,
+            'is_in_stock' => true
+        ]
+    )
+    ->setVisibility(\Magento\Catalog\Model\Product\Visibility::VISIBILITY_BOTH)
+    ->setStatus(\Magento\Catalog\Model\Product\Attribute\Source\Status::STATUS_ENABLED);
+$productRepository->save($virtualProduct);
+
+/** @var \Magento\Store\Model\Website $secondWebsite */
+$secondWebsite = $objectManager->create(\Magento\Store\Model\Website::class);
+$secondWebsite->setName('Second Website')
+    ->setCode('second_website')
+    ->save();
+/** @var \Magento\Catalog\Model\Product $productInSecondWebsite */
+$productInSecondWebsite = $objectManager->create(\Magento\Catalog\Model\Product::class);
+$productInSecondWebsite->setTypeId('simple')
+    ->setId(672)
+    ->setCreatedAt('2018-01-07 01:01:01')
+    ->setUpdatedAt('2018-01-07 01:01:01')
+    ->setAttributeSetId(4)
+    ->setStoreId(1)
+    ->setWebsiteIds([$secondWebsite->getId()])
+    ->setName('Simple Product Second Website')
+    ->setSku('simple_second_website')
+    ->setPrice(20)
+    ->setWeight(0)
+    ->setTierPrices()
+    ->setStockData(
+        [
+            'qty' => 25,
+            'is_in_stock' => true
+        ]
+    )
+    ->setVisibility(\Magento\Catalog\Model\Product\Visibility::VISIBILITY_BOTH)
+    ->setStatus(\Magento\Catalog\Model\Product\Attribute\Source\Status::STATUS_ENABLED);
+$productRepository->save($productInSecondWebsite);
+
+/** @var \Magento\Catalog\Model\Product $giftCardProduct */
+$giftCardProduct = $objectManager->create(\Magento\Catalog\Model\Product::class);
+$giftCardProduct->setTypeId(\Magento\GiftCard\Model\Catalog\Product\Type\Giftcard::TYPE_GIFTCARD)
+    ->setId(673)
+    ->setCreatedAt('2019-01-07 01:01:01')
+    ->setUpdatedAt('2019-01-07 01:01:01')
+    ->setAttributeSetId(4)
+    ->setStoreId(1)
+    ->setWebsiteIds([1])
+    ->setName('Gift Card')
+    ->setSku('gift-card')
+    ->setPrice(10)
+    ->setVisibility(\Magento\Catalog\Model\Product\Visibility::VISIBILITY_BOTH)
+    ->setStatus(\Magento\Catalog\Model\Product\Attribute\Source\Status::STATUS_ENABLED)
+    ->setStockData(['use_config_manage_stock' => 0])
+    ->setCanSaveCustomOptions(true)
+    ->setHasOptions(true)
+    ->setGiftcardType(\Magento\GiftCard\Model\Giftcard::TYPE_VIRTUAL)
+    ->setAllowOpenAmount(1)->save();
+$productRepository->save($giftCardProduct);
+
+/** @var \Magento\Catalog\Model\Product $oosProduct */
+$oosProduct = $objectManager->create(\Magento\Catalog\Model\Product::class);
+$oosProduct->setTypeId(\Magento\Catalog\Model\Product\Type::TYPE_SIMPLE)
+    ->setId(674)
+    ->setCreatedAt('2007-01-05 01:01:01')
+    ->setUpdatedAt('2007-01-05 01:01:01')
+    ->setAttributeSetId(4)
+    ->setStoreId(1)
+    ->setWebsiteIds([1])
+    ->setName('OOS Page Builder Product')
+    ->setSku('OOS_PB_PRODUCT')
+    ->setPrice(99)
+    ->setWeight(0)
+    ->setTierPrices()
+    ->setStockData(
+        [
+            'qty' => 0,
+            'is_in_stock' => false
+        ]
+    )
+    ->setVisibility(\Magento\Catalog\Model\Product\Visibility::VISIBILITY_BOTH)
+    ->setStatus(\Magento\Catalog\Model\Product\Attribute\Source\Status::STATUS_ENABLED);
+$productRepository->save($oosProduct);
+
+// assign positions and categories
 $productPositions = [
     '1_PB_PRODUCT' => 3,
     'a_pb_product' => 2,
     'B_PB_PRODUCT' => 1,
-    'C_PB_PRODUCT' => 4
+    'C_PB_PRODUCT' => 4,
+    'PB_PRODUCT_CPR' => 5,
+    'PB_VIRTUAL_PRODUCT' => 6,
+    'simple_second_website' => 7,
+    'gift-card' => 8,
+    'OOS_PB_PRODUCT' => 9
 ];
 
 foreach ($productPositions as $sku => $position) {
@@ -138,5 +262,5 @@ foreach ($productPositions as $sku => $position) {
         ->setPosition($position)
         ->setCategoryId(333);
     $categoryLinkRepository->save($productLink);
-    $categoryLinkManagement->assignProductToCategories($sku, [333]);
+    $categoryLinkManagement->assignProductToCategories($sku, [2, 333]);
 }
