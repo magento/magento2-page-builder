@@ -5,6 +5,7 @@
  */
 
 use Magento\Catalog\Api\CategoryLinkManagementInterface;
+use Magento\Catalog\Api\CategoryLinkRepositoryInterface;
 use Magento\Catalog\Api\Data\CategoryProductLinkInterface;
 use Magento\Catalog\Model\Category;
 use Magento\Catalog\Model\Product;
@@ -15,8 +16,9 @@ use Magento\Catalog\Model\ProductRepository;
 use Magento\GiftCard\Model\Giftcard;
 use Magento\GiftCard\Model\Catalog\Product\Type\Giftcard as GiftcardType;
 use Magento\Store\Model\Website;
+use Magento\TestFramework\Helper\Bootstrap;
 
-$objectManager = \Magento\TestFramework\Helper\Bootstrap::getObjectManager();
+$objectManager = Bootstrap::getObjectManager();
 
 $category = $objectManager->create(Category::class);
 $category->isObjectNew(true);
@@ -34,7 +36,7 @@ $category->setId(333)
 /* @var $productRepository ProductRepository */
 $productRepository = $objectManager->create(ProductRepository::class);
 $categoryLinkRepository = $objectManager->create(
-    \Magento\Catalog\Api\CategoryLinkRepositoryInterface::class,
+    CategoryLinkRepositoryInterface::class,
     [
         'productRepository' => $productRepository
     ]
@@ -44,7 +46,6 @@ $categoryLinkManagement = $objectManager->create(CategoryLinkManagementInterface
 /** @var $firstProduct Product */
 $firstProduct = $objectManager->create(Product::class);
 $firstProduct->setTypeId(Type::TYPE_SIMPLE)
-    ->setId(666)
     ->setCreatedAt('2010-01-01 01:01:01')
     ->setUpdatedAt('2010-01-01 01:01:01')
     ->setAttributeSetId(4)
@@ -68,7 +69,6 @@ $productRepository->save($firstProduct);
 /** @var $secondProduct Product */
 $secondProduct = $objectManager->create(Product::class);
 $secondProduct->setTypeId(Type::TYPE_SIMPLE)
-    ->setId(667)
     ->setCreatedAt('2017-01-01 01:01:01')
     ->setUpdatedAt('2017-01-01 01:01:01')
     ->setAttributeSetId(4)
@@ -92,7 +92,6 @@ $productRepository->save($secondProduct);
 /** @var $thirdProduct Product */
 $thirdProduct = $objectManager->create(Product::class);
 $thirdProduct->setTypeId(Type::TYPE_SIMPLE)
-    ->setId(668)
     ->setCreatedAt('2000-01-01 01:01:01')
     ->setUpdatedAt('2000-01-01 01:01:01')
     ->setAttributeSetId(4)
@@ -116,7 +115,6 @@ $productRepository->save($thirdProduct);
 /** @var $fourthProduct Product */
 $fourthProduct = $objectManager->create(Product::class);
 $fourthProduct->setTypeId(Type::TYPE_SIMPLE)
-    ->setId(669)
     ->setCreatedAt('2017-01-05 01:01:01')
     ->setUpdatedAt('2017-01-05 01:01:01')
     ->setAttributeSetId(4)
@@ -140,7 +138,6 @@ $productRepository->save($fourthProduct);
 /** @var Product $productWithCatalogPriceRule */
 $productWithCatalogPriceRule = $objectManager->create(Product::class);
 $productWithCatalogPriceRule->setTypeId(Type::TYPE_SIMPLE)
-    ->setId(670)
     ->setCreatedAt('2018-01-05 01:01:01')
     ->setUpdatedAt('2018-01-05 01:01:01')
     ->setAttributeSetId(4)
@@ -162,7 +159,6 @@ $productRepository->save($productWithCatalogPriceRule);
 /** @var Product $productWithCatalogPriceRule */
 $virtualProduct = $objectManager->create(Product::class);
 $virtualProduct->setTypeId(Type::TYPE_VIRTUAL)
-    ->setId(671)
     ->setCreatedAt('2018-01-06 01:01:01')
     ->setUpdatedAt('2018-01-06 01:01:01')
     ->setAttributeSetId(4)
@@ -189,7 +185,6 @@ $secondWebsite->setName('Second Website')
 /** @var Product $productInSecondWebsite */
 $productInSecondWebsite = $objectManager->create(Product::class);
 $productInSecondWebsite->setTypeId(Type::TYPE_SIMPLE)
-    ->setId(672)
     ->setCreatedAt('2018-01-07 01:01:01')
     ->setUpdatedAt('2018-01-07 01:01:01')
     ->setAttributeSetId(4)
@@ -213,7 +208,6 @@ $productRepository->save($productInSecondWebsite);
 /** @var Product $giftCardProduct */
 $giftCardProduct = $objectManager->create(Product::class);
 $giftCardProduct->setTypeId(GiftcardType::TYPE_GIFTCARD)
-    ->setId(673)
     ->setCreatedAt('2019-01-07 01:01:01')
     ->setUpdatedAt('2019-01-07 01:01:01')
     ->setAttributeSetId(4)
@@ -234,7 +228,6 @@ $productRepository->save($giftCardProduct);
 /** @var Product $oosProduct */
 $oosProduct = $objectManager->create(Product::class);
 $oosProduct->setTypeId(Type::TYPE_SIMPLE)
-    ->setId(674)
     ->setCreatedAt('2007-01-05 01:01:01')
     ->setUpdatedAt('2007-01-05 01:01:01')
     ->setAttributeSetId(4)
@@ -255,6 +248,47 @@ $oosProduct->setTypeId(Type::TYPE_SIMPLE)
     ->setStatus(Status::STATUS_ENABLED);
 $productRepository->save($oosProduct);
 
+/** @var Product $zeroQuantityProduct */
+$zeroQuantityInStockProduct = $objectManager->create(Product::class);
+$zeroQuantityInStockProduct->setTypeId(Type::TYPE_SIMPLE)
+    ->setAttributeSetId(4)
+    ->setStoreId(1)
+    ->setWebsiteIds([1])
+    ->setName('Zero Quantity In Stock Product')
+    ->setSku('ZERO_QTY_IN_STOCK_PRODUCT')
+    ->setPrice(98)
+    ->setWeight(0)
+    ->setStockData(
+        [
+            'qty' => 0,
+            'is_in_stock' => true
+        ]
+    )
+    ->setVisibility(Visibility::VISIBILITY_BOTH)
+    ->setStatus(Status::STATUS_ENABLED);
+$productRepository->save($zeroQuantityInStockProduct);
+
+/** @var Product $zeroQuantityProduct */
+$specialPriceProduct = $objectManager->create(Product::class);
+$specialPriceProduct->setTypeId(Type::TYPE_SIMPLE)
+    ->setAttributeSetId(4)
+    ->setStoreId(1)
+    ->setWebsiteIds([1])
+    ->setName('Special Price Product')
+    ->setSku('special_price_product')
+    ->setPrice(999)
+    ->setSpecialPrice('1.99')
+    ->setWeight(0)
+    ->setStockData(
+        [
+            'qty' => 1000,
+            'is_in_stock' => true
+        ]
+    )
+    ->setVisibility(Visibility::VISIBILITY_BOTH)
+    ->setStatus(Status::STATUS_ENABLED);
+$productRepository->save($specialPriceProduct);
+
 // assign positions and categories
 $productPositions = [
     '1_PB_PRODUCT' => 3,
@@ -265,7 +299,9 @@ $productPositions = [
     'PB_VIRTUAL_PRODUCT' => 6,
     'simple_second_website' => 7,
     'gift-card' => 8,
-    'OOS_PB_PRODUCT' => 9
+    'OOS_PB_PRODUCT' => 9,
+    'ZERO_QTY_IN_STOCK_PRODUCT' => 10,
+    'special_price_product' => 11
 ];
 
 foreach ($productPositions as $sku => $position) {

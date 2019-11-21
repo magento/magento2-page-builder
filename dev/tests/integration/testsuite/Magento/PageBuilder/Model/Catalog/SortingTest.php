@@ -6,7 +6,10 @@
 
 namespace Magento\PageBuilder\Model\Catalog;
 
+use Magento\Catalog\Model\ResourceModel\Product\Collection;
+use Magento\Catalog\Model\ResourceModel\Product\CollectionFactory;
 use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Indexer\Model\Indexer;
 use Magento\TestFramework\Helper\Bootstrap;
 use Magento\Catalog\Api\CategoryRepositoryInterface;
 use Magento\CatalogWidget\Block\Product\ProductsList;
@@ -17,12 +20,12 @@ use Magento\CatalogWidget\Block\Product\ProductsList;
 class SortingTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @var \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory
+     * @var CollectionFactory
      */
     private $productCollectionFactory;
 
     /**
-     * @var \Magento\PageBuilder\Model\Catalog\Sorting
+     * @var Sorting
      */
     private $sortModel;
 
@@ -32,7 +35,7 @@ class SortingTest extends \PHPUnit\Framework\TestCase
     private $categoryRepository;
 
     /**
-     * @var \Magento\Indexer\Model\Indexer
+     * @var Indexer
      */
     protected $indexer;
 
@@ -53,7 +56,7 @@ class SortingTest extends \PHPUnit\Framework\TestCase
     {
         $objectManager = Bootstrap::getObjectManager();
         $this->productCollectionFactory = $objectManager->create(
-            \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory::class
+            CollectionFactory::class
         );
         $this->sortModel = $objectManager->create(Sorting::class);
         $this->categoryRepository = $objectManager->create(
@@ -99,7 +102,7 @@ class SortingTest extends \PHPUnit\Framework\TestCase
                                     'PB_VIRTUAL_PRODUCT,simple_second_website,simple1,simple2,simple3,bundle_product,' .
                                     'configurable,simple_11,simple_21,gift-card,grouped,simple_100000001,' .
                                     'simple_100000002,simple-with-fpt,downloadable-product-price-on-product,' .
-                                    'downloadable-product-price-on-link'
+                                    'downloadable-product-price-on-link,ZERO_QTY_IN_STOCK_PRODUCT,special_price_product'
                             ]
                         ]
                     ),
@@ -149,6 +152,8 @@ class SortingTest extends \PHPUnit\Framework\TestCase
                         'bundle_product',
                         'simple3',
                         'simple1',
+                        'special_price_product',
+                        'ZERO_QTY_IN_STOCK_PRODUCT',
                         'gift-card',
                         'PB_VIRTUAL_PRODUCT',
                         'PB_PRODUCT_CPR',
@@ -165,6 +170,8 @@ class SortingTest extends \PHPUnit\Framework\TestCase
                         'PB_PRODUCT_CPR',
                         'PB_VIRTUAL_PRODUCT',
                         'gift-card',
+                        'ZERO_QTY_IN_STOCK_PRODUCT',
+                        'special_price_product',
                         'simple1',
                         'simple3',
                         'bundle_product',
@@ -193,9 +200,13 @@ class SortingTest extends \PHPUnit\Framework\TestCase
                         'simple_100000002',
                         'simple1',
                         'simple3',
-                        'simple-with-fpt'
+                        'simple-with-fpt',
+                        'special_price_product',
+                        'ZERO_QTY_IN_STOCK_PRODUCT'
                     ],
                     'name_descending' => [
+                        'ZERO_QTY_IN_STOCK_PRODUCT',
+                        'special_price_product',
                         'simple-with-fpt',
                         'simple3',
                         'simple1',
@@ -246,9 +257,13 @@ class SortingTest extends \PHPUnit\Framework\TestCase
                         'simple1',
                         'simple3',
                         'simple_100000001',
-                        'simple_100000002'
+                        'simple_100000002',
+                        'special_price_product',
+                        'ZERO_QTY_IN_STOCK_PRODUCT'
                     ],
                     'sku_descending' => [
+                        'ZERO_QTY_IN_STOCK_PRODUCT',
+                        'special_price_product',
                         'simple_100000002',
                         'simple_100000001',
                         'simple3',
@@ -269,6 +284,7 @@ class SortingTest extends \PHPUnit\Framework\TestCase
                     ],
                     'low_stock_first' => [
                         'gift-card',
+                        'ZERO_QTY_IN_STOCK_PRODUCT',
                         'bundle_product',
                         'configurable',
                         'grouped',
@@ -284,9 +300,11 @@ class SortingTest extends \PHPUnit\Framework\TestCase
                         'PB_VIRTUAL_PRODUCT',
                         'simple1',
                         'simple3',
-                        'C_PB_PRODUCT'
+                        'C_PB_PRODUCT',
+                        'special_price_product'
                     ],
                     'high_stock_first' => [
+                        'special_price_product',
                         'C_PB_PRODUCT',
                         'simple3',
                         'simple1',
@@ -303,6 +321,7 @@ class SortingTest extends \PHPUnit\Framework\TestCase
                         'grouped',
                         'configurable',
                         'bundle_product',
+                        'ZERO_QTY_IN_STOCK_PRODUCT',
                         'gift-card'
                     ],
                 ],
@@ -323,6 +342,7 @@ class SortingTest extends \PHPUnit\Framework\TestCase
                     'price_high_to_low' => [
                         'bundle_product',
                         '1_PB_PRODUCT',
+                        'ZERO_QTY_IN_STOCK_PRODUCT',
                         'PB_VIRTUAL_PRODUCT',
                         'simple_100000001',
                         'simple-with-fpt',
@@ -335,6 +355,7 @@ class SortingTest extends \PHPUnit\Framework\TestCase
                         'simple3',
                         'simple1',
                         'configurable',
+                        'special_price_product',
                         'downloadable-product-price-on-link',
                         'gift-card',
                         'B_PB_PRODUCT'
@@ -343,6 +364,7 @@ class SortingTest extends \PHPUnit\Framework\TestCase
                         'B_PB_PRODUCT',
                         'gift-card',
                         'downloadable-product-price-on-link',
+                        'special_price_product',
                         'configurable',
                         'simple1',
                         'simple3',
@@ -355,6 +377,7 @@ class SortingTest extends \PHPUnit\Framework\TestCase
                         'simple-with-fpt',
                         'simple_100000001',
                         'PB_VIRTUAL_PRODUCT',
+                        'ZERO_QTY_IN_STOCK_PRODUCT',
                         '1_PB_PRODUCT',
                         'bundle_product'
                     ],
@@ -365,7 +388,9 @@ class SortingTest extends \PHPUnit\Framework\TestCase
                         'C_PB_PRODUCT',
                         'PB_PRODUCT_CPR',
                         'PB_VIRTUAL_PRODUCT',
-                        'gift-card'
+                        'gift-card',
+                        'ZERO_QTY_IN_STOCK_PRODUCT',
+                        'special_price_product'
                     ],
                     'position_by_sku' => [
                         'B_PB_PRODUCT',
@@ -384,7 +409,9 @@ class SortingTest extends \PHPUnit\Framework\TestCase
                         'simple_100000002',
                         'simple-with-fpt',
                         'downloadable-product-price-on-product',
-                        'downloadable-product-price-on-link'
+                        'downloadable-product-price-on-link',
+                        'ZERO_QTY_IN_STOCK_PRODUCT',
+                        'special_price_product',
                     ]
                 ],
             ]
@@ -394,10 +421,10 @@ class SortingTest extends \PHPUnit\Framework\TestCase
     /**
      * Retrieve SKUs from array
      *
-     * @param \Magento\Catalog\Model\ResourceModel\Product\Collection $collection
+     * @param Collection $collection
      * @return array
      */
-    private function getSkus(\Magento\Catalog\Model\ResourceModel\Product\Collection $collection): array
+    private function getSkus(Collection $collection): array
     {
         $skus = [];
         foreach ($collection as $product) {
