@@ -702,6 +702,13 @@
         <comment userInput="Verify variable on stage" stepKey="commentVerifyImageOnStage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <waitForElementVisible selector="{{TextOnStage.text('1', TinyMCEVariableBaseURL.editPanelValue)}}" stepKey="waitForVariabBaseURLleStage2"/>
+        <!--Verify ability to double click on variable prior to focusing TinyMCE-->
+        <doubleClick selector="{{TextOnStage.directive('1', TinyMCEVariableBaseURL.editPanelValue)}}" stepKey="doubleClickOnVariablePlaceholder2"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear2"/>
+        <waitForElementVisible selector="{{VariableSection.Radio(TinyMCEVariableBaseURL.variableName)}}" stepKey="waitForVariableAfterDoubleClick"/>
+        <waitForElementVisible selector="{{VariableSection.CancelBtnEnabled}}" stepKey="waitForCancelButton"/>
+        <click selector="{{VariableSection.CancelBtnEnabled}}" stepKey="clickCancelButton"/>
+        <waitForElementNotVisible selector="{{VariableSection.CancelBtnEnabled}}" stepKey="waitForVariableCancelNotVisible"/>
         <!-- Validate Storefront -->
         <comment userInput="Verify variable  on storefront" stepKey="commentVerifyEmptyBlock"/>
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
@@ -716,7 +723,7 @@
             <severity value="MAJOR"/>
             <useCaseId value="MC-1416"/>
             <testCaseId value="MC-3468"/>
-            <group value="pagebuilder"/>
+<!--            <group value="pagebuilder"/>-->
             <group value="pagebuilder-text"/>
         </annotations>
         <before>
@@ -747,7 +754,7 @@
         <waitForElementVisible selector="{{TextOnStage.text('1', TinyMCEWidgetCMSPageLink.editPanelValue)}}" stepKey="waitForWidgetStage1"/>
         <!--Verify widget edit page-->
         <comment userInput="Verify widget edit page" stepKey="commentVerifyEditWidget"/>
-        <doubleClick  selector="{{TextOnStage.directive('1', TinyMCEWidgetCMSPageLink.editPanelValue)}}" stepKey="doubleClickOnWidgetPlaceholder"/>
+        <doubleClick selector="{{TextOnStage.directive('1', TinyMCEWidgetCMSPageLink.editPanelValue)}}" stepKey="doubleClickOnWidgetPlaceholder"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
         <waitForElementVisible selector="{{WidgetSection.CancelBtnEnabled}}" stepKey="waitForWidgetType"/>
@@ -769,6 +776,13 @@
         <comment userInput="Verify Widget Content Type on stage" stepKey="commentVerifyWidgetOnStage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <waitForElementVisible selector="{{TextOnStage.text('1', TinyMCEWidgetCMSPageLink.editPanelValue)}}" stepKey="waitForWidgetStage2"/>
+        <!--Verify ability to double click on variable prior to focusing TinyMCE-->
+        <doubleClick selector="{{TextOnStage.directive('1', TinyMCEWidgetCMSPageLink.editPanelValue)}}" stepKey="doubleClickOnWidgetPlaceholder2"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear6"/>
+        <waitForElementVisible selector="{{WidgetSection.CancelBtnEnabled}}" stepKey="waitForWidgetType2"/>
+        <click selector="{{WidgetSection.CancelBtnEnabled}}" stepKey="clickInsertWidget3"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear7"/>
         <!-- Validate Storefront -->
         <comment userInput="Verify Widget Content Type on storefront" stepKey="commentVerifyWidgetOnStorefront"/>
         <amOnPage url="$$createCMSPageA.identifier$$" stepKey="amOnPageTestPage"/>
