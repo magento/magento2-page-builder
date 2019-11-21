@@ -43,10 +43,18 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
      * @param {HTMLElement} element
      */
     _proto.afterRenderWysiwyg = function afterRenderWysiwyg(element) {
+      var _this2 = this;
+
       this.element = element;
       element.id = this.contentType.id + "-editor"; // Set the innerHTML manually so we don't upset Knockout & TinyMCE
 
       element.innerHTML = this.data.content.html();
+      this.contentType.dataStore.subscribe(function () {
+        // If we're not focused into TinyMCE inline, update the value when it changes in the data store
+        if (!element.classList.contains("mce-edit-focus")) {
+          element.innerHTML = _this2.data.content.html();
+        }
+      }, "content");
       /**
        * afterRenderWysiwyg is called whenever Knockout causes a DOM re-render. This occurs frequently within Slider
        * due to Slick's inability to perform a refresh with Knockout managing the DOM. Due to this the original
@@ -136,7 +144,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     ;
 
     _proto.activateEditor = function activateEditor(preview, event) {
-      var _this2 = this;
+      var _this3 = this;
 
       if (this.element && !this.wysiwyg && !this.handledDoubleClick) {
         var bookmark = (0, _editor.createBookmark)(event);
@@ -144,14 +152,14 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         this.element.removeAttribute("contenteditable");
 
         _underscore.defer(function () {
-          _this2.initWysiwygFromClick(true).then(function () {
+          _this3.initWysiwygFromClick(true).then(function () {
             return (0, _delayUntil)(function () {
-              _this2.wysiwygDeferred.resolve();
+              _this3.wysiwygDeferred.resolve();
 
               (0, _editor.moveToBookmark)(bookmark);
-              (0, _editor.unlockImageSize)(_this2.element);
+              (0, _editor.unlockImageSize)(_this3.element);
             }, function () {
-              return _this2.element.classList.contains("mce-edit-focus");
+              return _this3.element.classList.contains("mce-edit-focus");
             }, 10);
           }).catch(function (error) {
             // If there's an error with init of WYSIWYG editor push into the console to aid support
@@ -169,7 +177,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     ;
 
     _proto.handleDoubleClick = function handleDoubleClick(preview, event) {
-      var _this3 = this;
+      var _this4 = this;
 
       if (this.handledDoubleClick) {
         return;
@@ -182,7 +190,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         var target = document.getElementById(event.target.id);
 
         if (!target) {
-          target = (0, _editor.getNodeByIndex)(_this3.element, event.target.tagName, targetIndex);
+          target = (0, _editor.getNodeByIndex)(_this4.element, event.target.tagName, targetIndex);
         }
 
         if (target) {
@@ -217,7 +225,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     ;
 
     _proto.initTextarea = function initTextarea(element) {
-      var _this4 = this;
+      var _this5 = this;
 
       this.textarea = element; // set initial value of textarea based on data store
 
@@ -225,9 +233,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       this.adjustTextareaHeightBasedOnScrollHeight(); // Update content in our stage preview textarea after its slideout counterpart gets updated
 
       _events.on("form:" + this.contentType.id + ":saveAfter", function () {
-        _this4.textarea.value = _this4.contentType.dataStore.get("content");
+        _this5.textarea.value = _this5.contentType.dataStore.get("content");
 
-        _this4.adjustTextareaHeightBasedOnScrollHeight();
+        _this5.adjustTextareaHeightBasedOnScrollHeight();
       });
     }
     /**
@@ -282,7 +290,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     ;
 
     _proto.initWysiwygFromClick = function initWysiwygFromClick(focus) {
-      var _this5 = this;
+      var _this6 = this;
 
       if (focus === void 0) {
         focus = false;
@@ -299,15 +307,15 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
         wysiwygConfig.adapter.settings.init_instance_callback = function () {
           _underscore.defer(function () {
-            _this5.element.blur();
+            _this6.element.blur();
 
-            _this5.element.focus();
+            _this6.element.focus();
           });
         };
       }
 
       return (0, _factory)(this.contentType.id, this.element.id, this.config.name, wysiwygConfig, this.contentType.dataStore, "content", this.contentType.stageId).then(function (wysiwyg) {
-        _this5.wysiwyg = wysiwyg;
+        _this6.wysiwyg = wysiwyg;
         return wysiwyg;
       });
     }
@@ -317,56 +325,56 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     ;
 
     _proto.bindEvents = function bindEvents() {
-      var _this6 = this;
+      var _this7 = this;
 
       _preview2.prototype.bindEvents.call(this);
 
       _events.on(this.config.name + ":" + this.contentType.id + ":updateAfter", function () {
-        var dataStore = _this6.contentType.dataStore.getState();
+        var dataStore = _this7.contentType.dataStore.getState();
 
-        var imageObject = dataStore[_this6.config.additional_data.uploaderConfig.dataScope][0] || {};
+        var imageObject = dataStore[_this7.config.additional_data.uploaderConfig.dataScope][0] || {};
 
-        _events.trigger("image:" + _this6.contentType.id + ":assignAfter", imageObject);
+        _events.trigger("image:" + _this7.contentType.id + ":assignAfter", imageObject);
 
-        (0, _nestingLinkDialog)(_this6.contentType.dataStore, _this6.wysiwyg, "content", "link_url");
+        (0, _nestingLinkDialog)(_this7.contentType.dataStore, _this7.wysiwyg, "content", "link_url");
       }); // Remove wysiwyg before assign new instance.
 
 
       _events.on("childContentType:sortUpdate", function (args) {
-        if (args.instance.id === _this6.contentType.parentContentType.id) {
-          _this6.wysiwyg = null;
+        if (args.instance.id === _this7.contentType.parentContentType.id) {
+          _this7.wysiwyg = null;
         }
       });
 
       _events.on(this.config.name + ":mountAfter", function (args) {
-        if (args.id === _this6.contentType.id) {
+        if (args.id === _this7.contentType.id) {
           // Update the display label for the slide
-          var slider = _this6.contentType.parentContentType;
+          var slider = _this7.contentType.parentContentType;
 
-          _this6.displayLabel((0, _translate)("Slide " + (slider.children().indexOf(_this6.contentType) + 1)));
+          _this7.displayLabel((0, _translate)("Slide " + (slider.children().indexOf(_this7.contentType) + 1)));
 
           slider.children.subscribe(function (children) {
-            var index = children.indexOf(_this6.contentType);
+            var index = children.indexOf(_this7.contentType);
 
-            _this6.displayLabel((0, _translate)("Slide " + (slider.children().indexOf(_this6.contentType) + 1)));
+            _this7.displayLabel((0, _translate)("Slide " + (slider.children().indexOf(_this7.contentType) + 1)));
           });
         }
       });
 
       _events.on(this.config.name + ":renderAfter", function (args) {
-        if (args.id === _this6.contentType.id) {
-          var slider = _this6.contentType.parentContentType;
+        if (args.id === _this7.contentType.id) {
+          var slider = _this7.contentType.parentContentType;
           (0, _jquery)(slider.preview.element).on("beforeChange", function () {
-            _this6.slideChanged = false;
+            _this7.slideChanged = false;
           });
           (0, _jquery)(slider.preview.element).on("afterChange", function () {
-            _this6.slideChanged = true;
+            _this7.slideChanged = true;
           });
         }
       });
 
       this.contentType.dataStore.subscribe(function (data) {
-        _this6.slideName(data.slide_name);
+        _this7.slideName(data.slide_name);
       });
     }
     /**

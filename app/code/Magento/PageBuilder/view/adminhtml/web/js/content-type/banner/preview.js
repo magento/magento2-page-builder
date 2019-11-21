@@ -29,7 +29,6 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore
       _this = _preview2.call.apply(_preview2, [this].concat(args)) || this;
       _this.buttonPlaceholder = (0, _translate)("Edit Button Text");
       _this.wysiwygDeferred = _jquery.Deferred();
-      _this.afterRenderDeferred = _jquery.Deferred();
       _this.handledDoubleClick = false;
       return _this;
     }
@@ -72,11 +71,18 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore
     ;
 
     _proto.afterRenderWysiwyg = function afterRenderWysiwyg(element) {
+      var _this2 = this;
+
       this.element = element;
       element.id = this.contentType.id + "-editor"; // Set the innerHTML manually so we don't upset Knockout & TinyMCE
 
       element.innerHTML = this.data.content.html();
-      this.afterRenderDeferred.resolve(element);
+      this.contentType.dataStore.subscribe(function () {
+        // If we're not focused into TinyMCE inline, update the value when it changes in the data store
+        if (!element.classList.contains("mce-edit-focus")) {
+          element.innerHTML = _this2.data.content.html();
+        }
+      }, "message");
       /**
        * afterRenderWysiwyg is called whenever Knockout causes a DOM re-render. This occurs frequently within Slider
        * due to Slick's inability to perform a refresh with Knockout managing the DOM. Due to this the original
@@ -121,7 +127,7 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore
     ;
 
     _proto.initWysiwygFromClick = function initWysiwygFromClick(focus) {
-      var _this2 = this;
+      var _this3 = this;
 
       if (focus === void 0) {
         focus = false;
@@ -138,16 +144,16 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore
 
         wysiwygConfig.adapter.settings.init_instance_callback = function () {
           _underscore.defer(function () {
-            _this2.element.blur();
+            _this3.element.blur();
 
-            _this2.element.focus();
+            _this3.element.focus();
           });
         };
       }
 
       wysiwygConfig.adapter.settings.fixed_toolbar_container = "#" + this.contentType.id + " .pagebuilder-banner-text-content";
       return (0, _factory)(this.contentType.id, this.element.id, this.config.name, wysiwygConfig, this.contentType.dataStore, "message", this.contentType.stageId).then(function (wysiwyg) {
-        _this2.wysiwyg = wysiwyg;
+        _this3.wysiwyg = wysiwyg;
         return wysiwyg;
       });
     }
@@ -161,7 +167,7 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore
     ;
 
     _proto.activateEditor = function activateEditor(preview, event) {
-      var _this3 = this;
+      var _this4 = this;
 
       if (this.element && !this.wysiwyg && !this.handledDoubleClick) {
         var bookmark = (0, _editor.createBookmark)(event);
@@ -170,14 +176,14 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore
         this.element.removeAttribute("contenteditable");
 
         _underscore.defer(function () {
-          _this3.initWysiwygFromClick(true).then(function () {
+          _this4.initWysiwygFromClick(true).then(function () {
             return (0, _delayUntil)(function () {
-              _this3.wysiwygDeferred.resolve();
+              _this4.wysiwygDeferred.resolve();
 
               (0, _editor.moveToBookmark)(bookmark);
-              (0, _editor.unlockImageSize)(_this3.element);
+              (0, _editor.unlockImageSize)(_this4.element);
             }, function () {
-              return _this3.element.classList.contains("mce-edit-focus");
+              return _this4.element.classList.contains("mce-edit-focus");
             }, 10);
           }).catch(function (error) {
             // If there's an error with init of WYSIWYG editor push into the console to aid support
@@ -195,7 +201,7 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore
     ;
 
     _proto.handleDoubleClick = function handleDoubleClick(preview, event) {
-      var _this4 = this;
+      var _this5 = this;
 
       if (this.handledDoubleClick) {
         return;
@@ -208,7 +214,7 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore
         var target = document.getElementById(event.target.id);
 
         if (!target) {
-          target = (0, _editor.getNodeByIndex)(_this4.element, event.target.tagName, targetIndex);
+          target = (0, _editor.getNodeByIndex)(_this5.element, event.target.tagName, targetIndex);
         }
 
         if (target) {
@@ -271,7 +277,7 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore
     ;
 
     _proto.initTextarea = function initTextarea(element) {
-      var _this5 = this;
+      var _this6 = this;
 
       this.textarea = element; // set initial value of textarea based on data store
 
@@ -279,9 +285,9 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore
       this.adjustTextareaHeightBasedOnScrollHeight(); // Update content in our stage preview textarea after its slideout counterpart gets updated
 
       _events.on("form:" + this.contentType.id + ":saveAfter", function () {
-        _this5.textarea.value = _this5.contentType.dataStore.get("message");
+        _this6.textarea.value = _this6.contentType.dataStore.get("message");
 
-        _this5.adjustTextareaHeightBasedOnScrollHeight();
+        _this6.adjustTextareaHeightBasedOnScrollHeight();
       });
     }
     /**
@@ -320,22 +326,22 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore
     ;
 
     _proto.bindEvents = function bindEvents() {
-      var _this6 = this;
+      var _this7 = this;
 
       _preview2.prototype.bindEvents.call(this);
 
       _events.on(this.config.name + ":" + this.contentType.id + ":updateAfter", function () {
-        var dataStore = _this6.contentType.dataStore.getState();
+        var dataStore = _this7.contentType.dataStore.getState();
 
-        var imageObject = dataStore[_this6.config.additional_data.uploaderConfig.dataScope][0] || {}; // Resolves issue when tinyMCE injects a non-breaking space on reinitialization and removes placeholder.
+        var imageObject = dataStore[_this7.config.additional_data.uploaderConfig.dataScope][0] || {}; // Resolves issue when tinyMCE injects a non-breaking space on reinitialization and removes placeholder.
 
         if (dataStore.message === "<div data-bind=\"html: data.content.html\">&nbsp;</div>") {
-          _this6.contentType.dataStore.set("message", "");
+          _this7.contentType.dataStore.set("message", "");
         }
 
-        _events.trigger("image:" + _this6.contentType.id + ":assignAfter", imageObject);
+        _events.trigger("image:" + _this7.contentType.id + ":assignAfter", imageObject);
 
-        (0, _nestingLinkDialog)(_this6.contentType.dataStore, _this6.wysiwyg, "message", "link_url");
+        (0, _nestingLinkDialog)(_this7.contentType.dataStore, _this7.wysiwyg, "message", "link_url");
       });
     }
     /**

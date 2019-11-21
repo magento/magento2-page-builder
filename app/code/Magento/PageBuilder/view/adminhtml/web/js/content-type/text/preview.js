@@ -67,10 +67,18 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
     ;
 
     _proto.afterRenderWysiwyg = function afterRenderWysiwyg(element) {
+      var _this2 = this;
+
       this.element = element;
       element.id = this.contentType.id + "-editor"; // Set the innerHTML manually so we don't upset Knockout & TinyMCE
 
       element.innerHTML = this.data.main.html();
+      this.contentType.dataStore.subscribe(function () {
+        // If we're not focused into TinyMCE inline, update the value when it changes in the data store
+        if (!element.classList.contains("mce-edit-focus")) {
+          element.innerHTML = _this2.data.main.html();
+        }
+      }, "content");
       this.afterRenderDeferred.resolve(element);
       /**
        * afterRenderWysiwyg is called whenever Knockout causes a DOM re-render. This occurs frequently within Slider
@@ -116,7 +124,7 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
     ;
 
     _proto.initWysiwygFromClick = function initWysiwygFromClick(focus) {
-      var _this2 = this;
+      var _this3 = this;
 
       if (focus === void 0) {
         focus = false;
@@ -133,15 +141,15 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
 
         wysiwygConfig.adapter.settings.init_instance_callback = function () {
           _underscore.defer(function () {
-            _this2.element.blur();
+            _this3.element.blur();
 
-            _this2.element.focus();
+            _this3.element.focus();
           });
         };
       }
 
       return (0, _factory)(this.contentType.id, this.element.id, this.config.name, wysiwygConfig, this.contentType.dataStore, "content", this.contentType.stageId).then(function (wysiwyg) {
-        _this2.wysiwyg = wysiwyg;
+        _this3.wysiwyg = wysiwyg;
         return wysiwyg;
       });
     }
@@ -155,7 +163,7 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
     ;
 
     _proto.activateEditor = function activateEditor(preview, event) {
-      var _this3 = this;
+      var _this4 = this;
 
       if (this.element && !this.wysiwyg && !this.handledDoubleClick) {
         var bookmark = (0, _editor.createBookmark)(event);
@@ -163,14 +171,14 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
         this.element.removeAttribute("contenteditable");
 
         _underscore.defer(function () {
-          _this3.initWysiwygFromClick(true).then(function () {
+          _this4.initWysiwygFromClick(true).then(function () {
             return (0, _delayUntil)(function () {
-              _this3.wysiwygDeferred.resolve();
+              _this4.wysiwygDeferred.resolve();
 
               (0, _editor.moveToBookmark)(bookmark);
-              (0, _editor.unlockImageSize)(_this3.element);
+              (0, _editor.unlockImageSize)(_this4.element);
             }, function () {
-              return _this3.element.classList.contains("mce-edit-focus");
+              return _this4.element.classList.contains("mce-edit-focus");
             }, 10);
           }).catch(function (error) {
             // If there's an error with init of WYSIWYG editor push into the console to aid support
@@ -188,7 +196,7 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
     ;
 
     _proto.handleDoubleClick = function handleDoubleClick(preview, event) {
-      var _this4 = this;
+      var _this5 = this;
 
       if (this.handledDoubleClick) {
         return;
@@ -201,7 +209,7 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
         var target = document.getElementById(event.target.id);
 
         if (!target) {
-          target = (0, _editor.getNodeByIndex)(_this4.element, event.target.tagName, targetIndex);
+          target = (0, _editor.getNodeByIndex)(_this5.element, event.target.tagName, targetIndex);
         }
 
         if (target) {
@@ -215,7 +223,7 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
     ;
 
     _proto.initTextarea = function initTextarea(element) {
-      var _this5 = this;
+      var _this6 = this;
 
       this.textarea = element; // set initial value of textarea based on data store
 
@@ -223,9 +231,9 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
       this.adjustTextareaHeightBasedOnScrollHeight(); // Update content in our stage preview textarea after its slideout counterpart gets updated
 
       _events.on("form:" + this.contentType.id + ":saveAfter", function () {
-        _this5.textarea.value = _this5.contentType.dataStore.get("content");
+        _this6.textarea.value = _this6.contentType.dataStore.get("content");
 
-        _this5.adjustTextareaHeightBasedOnScrollHeight();
+        _this6.adjustTextareaHeightBasedOnScrollHeight();
       });
     }
     /**
@@ -276,16 +284,16 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
     ;
 
     _proto.bindEvents = function bindEvents() {
-      var _this6 = this;
+      var _this7 = this;
 
       _preview2.prototype.bindEvents.call(this); // After drop of new content type open TinyMCE and focus
 
 
       _events.on("text:dropAfter", function (args) {
-        if (args.id === _this6.contentType.id) {
-          _this6.afterRenderDeferred.then(function () {
-            if (_this6.isWysiwygSupported()) {
-              _this6.initWysiwygFromClick(true);
+        if (args.id === _this7.contentType.id) {
+          _this7.afterRenderDeferred.then(function () {
+            if (_this7.isWysiwygSupported()) {
+              _this7.initWysiwygFromClick(true);
             }
           });
         }

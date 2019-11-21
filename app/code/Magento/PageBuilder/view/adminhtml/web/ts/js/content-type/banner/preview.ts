@@ -51,11 +51,6 @@ export default class Preview extends BasePreview {
     private textarea: HTMLTextAreaElement;
 
     /**
-     * Deferred called once the render is completed
-     */
-    private afterRenderDeferred: JQueryDeferred<HTMLElement> = $.Deferred();
-
-    /**
      * Have we handled a double click on init?
      */
     private handledDoubleClick: boolean = false;
@@ -108,8 +103,12 @@ export default class Preview extends BasePreview {
 
         // Set the innerHTML manually so we don't upset Knockout & TinyMCE
         element.innerHTML = this.data.content.html();
-
-        this.afterRenderDeferred.resolve(element);
+        this.contentType.dataStore.subscribe(() => {
+            // If we're not focused into TinyMCE inline, update the value when it changes in the data store
+            if (!element.classList.contains("mce-edit-focus")) {
+                element.innerHTML = this.data.content.html();
+            }
+        }, "message");
 
         /**
          * afterRenderWysiwyg is called whenever Knockout causes a DOM re-render. This occurs frequently within Slider
