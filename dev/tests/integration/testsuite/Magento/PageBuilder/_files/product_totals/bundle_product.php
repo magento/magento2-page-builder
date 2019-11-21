@@ -4,21 +4,33 @@
  * See COPYING.txt for license details.
  */
 
+use Magento\Bundle\Api\Data\LinkInterfaceFactory;
+use Magento\Bundle\Api\Data\OptionInterfaceFactory;
+use Magento\Bundle\Model\Product\Price;
+use Magento\Catalog\Api\CategoryLinkManagementInterface;
+use Magento\Catalog\Api\CategoryLinkRepositoryInterface;
+use Magento\Catalog\Api\ProductRepositoryInterface;
+use Magento\Catalog\Model\Product;
+use Magento\Catalog\Model\Product\Attribute\Source\Status;
+use Magento\Catalog\Model\Product\Type;
+use Magento\Catalog\Model\Product\Visibility;
+use Magento\TestFramework\Helper\Bootstrap;
+
 require __DIR__ . '/multiple_products.php';
 
-$objectManager = \Magento\TestFramework\Helper\Bootstrap::getObjectManager();
-$productRepository = $objectManager->create(\Magento\Catalog\Api\ProductRepositoryInterface::class);
+$objectManager = Bootstrap::getObjectManager();
+$productRepository = $objectManager->create(ProductRepositoryInterface::class);
 
-/* @var \Magento\Catalog\Api\CategoryLinkRepositoryInterface $categoryLinkRepository */
+/* @var CategoryLinkRepositoryInterface $categoryLinkRepository */
 $categoryLinkRepository = $objectManager->create(
-    \Magento\Catalog\Api\CategoryLinkRepositoryInterface::class,
+    CategoryLinkRepositoryInterface::class,
     [
         'productRepository' => $productRepository
     ]
 );
 
-/** @var Magento\Catalog\Api\CategoryLinkManagementInterface $linkManagement */
-$categoryLinkManagement = $objectManager->create(\Magento\Catalog\Api\CategoryLinkManagementInterface::class);
+/** @var CategoryLinkManagementInterface $linkManagement */
+$categoryLinkManagement = $objectManager->create(CategoryLinkManagementInterface::class);
 $reflectionClass = new \ReflectionClass(get_class($categoryLinkManagement));
 $properties = [
     'productRepository' => $productRepository,
@@ -32,18 +44,18 @@ foreach ($properties as $key => $value) {
     }
 }
 
-/** @var \Magento\Catalog\Model\Product $bundleProduct */
-$bundleProduct = $objectManager->create(\Magento\Catalog\Model\Product::class);
-$bundleProduct->setTypeId(\Magento\Catalog\Model\Product\Type::TYPE_BUNDLE)
+/** @var Product $bundleProduct */
+$bundleProduct = $objectManager->create(Product::class);
+$bundleProduct->setTypeId(Type::TYPE_BUNDLE)
     ->setAttributeSetId(4)
     ->setWebsiteIds([1])
     ->setName('Bundle Product')
     ->setSku('bundle_product')
-    ->setVisibility(\Magento\Catalog\Model\Product\Visibility::VISIBILITY_BOTH)
-    ->setStatus(\Magento\Catalog\Model\Product\Attribute\Source\Status::STATUS_ENABLED)
+    ->setVisibility(Visibility::VISIBILITY_BOTH)
+    ->setStatus(Status::STATUS_ENABLED)
     ->setStockData(['use_config_manage_stock' => 1, 'qty' => 100, 'is_qty_decimal' => 0, 'is_in_stock' => 1])
     ->setPriceView(0)
-    ->setPriceType(\Magento\Bundle\Model\Product\Price::PRICE_TYPE_FIXED)
+    ->setPriceType(Price::PRICE_TYPE_FIXED)
     ->setPrice(110.0)
     ->setShipmentType(0);
 
@@ -82,12 +94,12 @@ foreach ($optionsData as $optionData) {
     $linksData = $optionData['links'];
     unset($optionData['links']);
 
-    $option = $objectManager->create(\Magento\Bundle\Api\Data\OptionInterfaceFactory::class)
+    $option = $objectManager->create(OptionInterfaceFactory::class)
         ->create(['data' => $optionData])
         ->setSku($bundleProduct->getSku());
 
     foreach ($linksData as $linkData) {
-        $links[] = $objectManager->create(\Magento\Bundle\Api\Data\LinkInterfaceFactory::class)
+        $links[] = $objectManager->create(LinkInterfaceFactory::class)
             ->create(['data' => $linkData]);
     }
 

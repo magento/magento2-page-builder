@@ -3,6 +3,8 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
+use Magento\Catalog\Api\CategoryLinkManagementInterface;
 use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Catalog\Model\Product;
 use Magento\Catalog\Model\Product\Attribute\Source\Status;
@@ -12,18 +14,23 @@ use Magento\Catalog\Setup\CategorySetup;
 use Magento\ConfigurableProduct\Helper\Product\Options\Factory;
 use Magento\ConfigurableProduct\Model\Product\Type\Configurable;
 use Magento\Eav\Api\Data\AttributeOptionInterface;
+use Magento\Framework\App\ObjectManager;
 use Magento\TestFramework\Helper\Bootstrap;
 
 require __DIR__ . '/configurable_attribute.php';
 
+/** @var ObjectManager $objectManager */
+$objectManager = Bootstrap::getObjectManager();
+
 /** @var ProductRepositoryInterface $productRepository */
-$productRepository = Bootstrap::getObjectManager()
-    ->get(ProductRepositoryInterface::class);
-/** @var $categoryLinkManagement \Magento\Catalog\Api\CategoryLinkManagementInterface */
-$categoryLinkManagement = Bootstrap::getObjectManager()->create(\Magento\Catalog\Api\CategoryLinkManagementInterface::class);
+$productRepository = $objectManager->get(ProductRepositoryInterface::class);
+
+/** @var $categoryLinkManagement CategoryLinkManagementInterface */
+$categoryLinkManagement = $objectManager
+    ->create(CategoryLinkManagementInterface::class);
 
 /** @var $installer CategorySetup */
-$installer = Bootstrap::getObjectManager()->create(CategorySetup::class);
+$installer = $objectManager->create(CategorySetup::class);
 
 /* Create simple products per each option value*/
 /** @var AttributeOptionInterface[] $options */
@@ -37,7 +44,7 @@ array_shift($options); //remove the first option which is empty
 
 foreach ($options as $option) {
     /** @var $product Product */
-    $product = Bootstrap::getObjectManager()->create(Product::class);
+    $product = $objectManager->create(Product::class);
     $productId = array_shift($productIds);
     $product->setTypeId(Type::TYPE_SIMPLE)
         ->setAttributeSetId($attributeSetId)
@@ -64,9 +71,9 @@ foreach ($options as $option) {
 }
 
 /** @var $product Product */
-$product = Bootstrap::getObjectManager()->create(Product::class);
+$product = $objectManager->create(Product::class);
 /** @var Factory $optionsFactory */
-$optionsFactory = Bootstrap::getObjectManager()->create(Factory::class);
+$optionsFactory = $objectManager->create(Factory::class);
 $configurableAttributesData = [
     [
         'attribute_id' => $attribute->getId(),

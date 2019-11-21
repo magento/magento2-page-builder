@@ -3,6 +3,8 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
+use Magento\Catalog\Api\Data\ProductLinkInterface;
 use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Catalog\Model\Product;
 use Magento\Catalog\Model\Product\Attribute\Source\Status;
@@ -11,14 +13,14 @@ use Magento\Catalog\Model\Product\Visibility;
 use Magento\GroupedProduct\Model\Product\Type\Grouped;
 use Magento\TestFramework\Helper\Bootstrap;
 
-/** @var ProductRepositoryInterface $productRepository */
-$productRepository = Bootstrap::getObjectManager()
-    ->get(ProductRepositoryInterface::class);
-/** @var $categoryLinkManagement \Magento\Catalog\Api\CategoryLinkManagementInterface */
-$categoryLinkManagement = Bootstrap::getObjectManager()->create(\Magento\Catalog\Api\CategoryLinkManagementInterface::class);
+$objectManager = Bootstrap::getObjectManager();
 
-$productLinkFactory = Bootstrap::getObjectManager()
-    ->get(\Magento\Catalog\Api\Data\ProductLinkInterfaceFactory::class);
+/** @var ProductRepositoryInterface $productRepository */
+$productRepository = $objectManager->get(ProductRepositoryInterface::class);
+/** @var $categoryLinkManagement \Magento\Catalog\Api\CategoryLinkManagementInterface */
+$categoryLinkManagement = $objectManager->create(\Magento\Catalog\Api\CategoryLinkManagementInterface::class);
+
+$productLinkFactory = $objectManager->get(\Magento\Catalog\Api\Data\ProductLinkInterfaceFactory::class);
 $productConfigs = [
     [
         'id' => '100000001',
@@ -34,9 +36,8 @@ $productConfigs = [
 
 foreach ($productConfigs as $productConfig) {
     /** @var $product Product */
-    $product = Bootstrap::getObjectManager()->create(Product::class);
+    $product = $objectManager->create(Product::class);
     $product->setTypeId(Type::TYPE_SIMPLE)
-        ->setId($productConfig['id'])
         ->setWebsiteIds([1])
         ->setAttributeSetId(4)
         ->setName('Simple ' . $productConfig['id'])
@@ -54,10 +55,9 @@ foreach ($productConfigs as $productConfig) {
 }
 
 /** @var $product Product */
-$product = Bootstrap::getObjectManager()->create(Product::class);
+$product = $objectManager->create(Product::class);
 
 $product->setTypeId(Grouped::TYPE_CODE)
-    ->setId('100000003')
     ->setWebsiteIds([1])
     ->setAttributeSetId(4)
     ->setName('Grouped Product')
@@ -67,7 +67,7 @@ $product->setTypeId(Grouped::TYPE_CODE)
     ->setStockData(['use_config_manage_stock' => 1, 'is_in_stock' => 1]);
 
 foreach ($linkedProducts as $linkedProduct) {
-    /** @var \Magento\Catalog\Api\Data\ProductLinkInterface $productLink */
+    /** @var ProductLinkInterface $productLink */
     $productLink = $productLinkFactory->create();
     $productLink->setSku($product->getSku())
         ->setLinkType('associated')

@@ -4,12 +4,22 @@
  * See COPYING.txt for license details.
  */
 
+use Magento\Catalog\Api\CategoryLinkManagementInterface;
+use Magento\Catalog\Api\ProductRepositoryInterface;
+use Magento\Catalog\Model\Product;
+use Magento\Catalog\Model\Product\Attribute\Source\Status;
+use Magento\Catalog\Model\Product\Visibility;
+use Magento\Downloadable\Api\Data\LinkInterfaceFactory;
 use Magento\Downloadable\Api\DomainManagerInterface;
+use Magento\Downloadable\Helper\Download;
+use Magento\Downloadable\Model\Link;
+use Magento\Downloadable\Model\Product\Type;
+use Magento\TestFramework\Helper\Bootstrap;
 
-$objectManager = \Magento\TestFramework\Helper\Bootstrap::getObjectManager();
+$objectManager = Bootstrap::getObjectManager();
 
-/** @var $categoryLinkManagement \Magento\Catalog\Api\CategoryLinkManagementInterface */
-$categoryLinkManagement = $objectManager->create(\Magento\Catalog\Api\CategoryLinkManagementInterface::class);
+/** @var $categoryLinkManagement CategoryLinkManagementInterface */
+$categoryLinkManagement = $objectManager->create(CategoryLinkManagementInterface::class);
 
 /** @var DomainManagerInterface $domainManager */
 $domainManager = $objectManager->get(DomainManagerInterface::class);
@@ -22,17 +32,17 @@ $domainManager->addDomains(
     ]
 );
 
-/** @var \Magento\Catalog\Model\Product $product */
-$product = $objectManager->create(\Magento\Catalog\Model\Product::class);
+/** @var Product $product */
+$product = $objectManager->create(Product::class);
 $product
-    ->setTypeId(\Magento\Downloadable\Model\Product\Type::TYPE_DOWNLOADABLE)
+    ->setTypeId(Type::TYPE_DOWNLOADABLE)
     ->setAttributeSetId(4)
     ->setWebsiteIds([1])
     ->setName('Downloadable Product with product price')
     ->setSku('downloadable-product-price-on-product')
     ->setPrice(41)
-    ->setVisibility(\Magento\Catalog\Model\Product\Visibility::VISIBILITY_BOTH)
-    ->setStatus(\Magento\Catalog\Model\Product\Attribute\Source\Status::STATUS_ENABLED)
+    ->setVisibility(Visibility::VISIBILITY_BOTH)
+    ->setStatus(Status::STATUS_ENABLED)
     ->setLinksPurchasedSeparately(true)
     ->setStockData(
         [
@@ -43,15 +53,14 @@ $product
     );
 
 /**
- * @var \Magento\Downloadable\Api\Data\LinkInterfaceFactory $linkFactory
+ * @var LinkInterfaceFactory $linkFactory
  */
-$linkFactory = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()
-    ->get(\Magento\Downloadable\Api\Data\LinkInterfaceFactory::class);
+$linkFactory = $objectManager->get(LinkInterfaceFactory::class);
 $links = [];
 $linkData = [
     'title' => 'Downloadable Product Link',
-    'type' => \Magento\Downloadable\Helper\Download::LINK_TYPE_URL,
-    'is_shareable' => \Magento\Downloadable\Model\Link::LINK_SHAREABLE_CONFIG,
+    'type' => Download::LINK_TYPE_URL,
+    'is_shareable' => Link::LINK_SHAREABLE_CONFIG,
     'link_url' => 'http://example.com/downloadable.txt',
     'link_id' => 0,
     'is_delete' => null,
@@ -70,8 +79,7 @@ $extension = $product->getExtensionAttributes();
 $extension->setDownloadableProductLinks($links);
 $product->setExtensionAttributes($extension);
 
-$productRepository = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()
-    ->get(\Magento\Catalog\Api\ProductRepositoryInterface::class);
+$productRepository = $objectManager->get(ProductRepositoryInterface::class);
 $productRepository->save($product);
 $categoryLinkManagement->assignProductToCategories(
     $product->getSku(),
@@ -79,16 +87,16 @@ $categoryLinkManagement->assignProductToCategories(
 );
 
 
-$product = $objectManager->create(\Magento\Catalog\Model\Product::class);
+$product = $objectManager->create(Product::class);
 $product
-    ->setTypeId(\Magento\Downloadable\Model\Product\Type::TYPE_DOWNLOADABLE)
+    ->setTypeId(Type::TYPE_DOWNLOADABLE)
     ->setAttributeSetId(4)
     ->setWebsiteIds([1])
     ->setName('Downloadable Product with link price')
     ->setSku('downloadable-product-price-on-link')
     ->setPrice(0)
-    ->setVisibility(\Magento\Catalog\Model\Product\Visibility::VISIBILITY_BOTH)
-    ->setStatus(\Magento\Catalog\Model\Product\Attribute\Source\Status::STATUS_ENABLED)
+    ->setVisibility(Visibility::VISIBILITY_BOTH)
+    ->setStatus(Status::STATUS_ENABLED)
     ->setLinksPurchasedSeparately(true)
     ->setStockData(
         [
@@ -119,8 +127,8 @@ $link->setNumberOfDownloads(0);
 $links[] = $link;
 $extension = $product->getExtensionAttributes();
 $extension->setDownloadableProductLinks($links);
-$product->setExtensionAttributes($extension)->save();
-//$productRepository->save($product);
+$product->setExtensionAttributes($extension);
+$productRepository->save($product);
 $categoryLinkManagement->assignProductToCategories(
     $product->getSku(),
     [2]

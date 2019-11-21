@@ -4,26 +4,29 @@
  * See COPYING.txt for license details.
  */
 
+use Magento\Catalog\Model\ResourceModel\Eav\Attribute;
+use Magento\Catalog\Setup\CategorySetup;
+use Magento\Eav\Model\Config;
 use Magento\TestFramework\Helper\Bootstrap;
 use Magento\Eav\Api\AttributeRepositoryInterface;
 
-$eavConfig = Bootstrap::getObjectManager()->get(\Magento\Eav\Model\Config::class);
+$objectManager = Bootstrap::getObjectManager();
+
+$eavConfig = $objectManager->get(Config::class);
 $attribute = $eavConfig->getAttribute('catalog_product', 'test_configurable');
 
 $eavConfig->clear();
 
-/** @var $installer \Magento\Catalog\Setup\CategorySetup */
-$installer = Bootstrap::getObjectManager()->create(\Magento\Catalog\Setup\CategorySetup::class);
+/** @var $installer CategorySetup */
+$installer = $objectManager->create(CategorySetup::class);
 
 if (!$attribute->getId()) {
 
-    /** @var $attribute \Magento\Catalog\Model\ResourceModel\Eav\Attribute */
-    $attribute = Bootstrap::getObjectManager()->create(
-        \Magento\Catalog\Model\ResourceModel\Eav\Attribute::class
-    );
+    /** @var $attribute Attribute */
+    $attribute = $objectManager->create(Attribute::class);
 
     /** @var AttributeRepositoryInterface $attributeRepository */
-    $attributeRepository = Bootstrap::getObjectManager()->create(AttributeRepositoryInterface::class);
+    $attributeRepository = $objectManager->create(AttributeRepositoryInterface::class);
 
     $attribute->setData(
         [

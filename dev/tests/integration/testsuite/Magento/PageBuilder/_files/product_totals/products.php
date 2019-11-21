@@ -3,27 +3,39 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-$objectManager = \Magento\TestFramework\Helper\Bootstrap::getObjectManager();
 
-$defaultAttributeSet = $objectManager->get(Magento\Eav\Model\Config::class)
+use Magento\Catalog\Api\CategoryLinkManagementInterface;
+use Magento\Catalog\Api\CategoryLinkRepositoryInterface;
+use Magento\Catalog\Api\ProductRepositoryInterface;
+use Magento\Catalog\Model\Category;
+use Magento\Catalog\Model\Product;
+use Magento\Catalog\Model\Product\Attribute\Source\Status;
+use Magento\Catalog\Model\Product\Type;
+use Magento\Catalog\Model\Product\Visibility;
+use Magento\Eav\Model\Config;
+use Magento\TestFramework\Helper\Bootstrap;
+
+$objectManager = Bootstrap::getObjectManager();
+
+$defaultAttributeSet = $objectManager->get(Config::class)
     ->getEntityType('catalog_product')
     ->getDefaultAttributeSetId();
 
-/* @var \Magento\Catalog\Api\ProductRepositoryInterface $productRepository */
+/* @var ProductRepositoryInterface $productRepository */
 $productRepository = $objectManager->create(
-    \Magento\Catalog\Api\ProductRepositoryInterface::class
+    ProductRepositoryInterface::class
 );
 
-/* @var \Magento\Catalog\Api\CategoryLinkRepositoryInterface $categoryLinkRepository */
+/* @var CategoryLinkRepositoryInterface $categoryLinkRepository */
 $categoryLinkRepository = $objectManager->create(
-    \Magento\Catalog\Api\CategoryLinkRepositoryInterface::class,
+    CategoryLinkRepositoryInterface::class,
     [
         'productRepository' => $productRepository
     ]
 );
 
-/** @var Magento\Catalog\Api\CategoryLinkManagementInterface $linkManagement */
-$categoryLinkManagement = $objectManager->create(\Magento\Catalog\Api\CategoryLinkManagementInterface::class);
+/** @var CategoryLinkManagementInterface $linkManagement */
+$categoryLinkManagement = $objectManager->create(CategoryLinkManagementInterface::class);
 $reflectionClass = new \ReflectionClass(get_class($categoryLinkManagement));
 $properties = [
     'productRepository' => $productRepository,
@@ -40,8 +52,8 @@ foreach ($properties as $key => $value) {
 /**
  * After installation system has two categories: root one with ID:1 and Default category with ID:2
  */
-/** @var $category \Magento\Catalog\Model\Category */
-$category = $objectManager->create(\Magento\Catalog\Model\Category::class);
+/** @var $category Category */
+$category = $objectManager->create(Category::class);
 $category->isObjectNew(true);
 $category->setId(3)
     ->setName('Category 1')
@@ -54,7 +66,7 @@ $category->setId(3)
     ->setPosition(1)
     ->save();
 
-$category = $objectManager->create(\Magento\Catalog\Model\Category::class);
+$category = $objectManager->create(Category::class);
 $category->isObjectNew(true);
 $category->setId(4)
     ->setName('Category 1.1')
@@ -79,6 +91,7 @@ if (!function_exists('createTestProduct')) {
      * @param $objectManager
      * @param $defaultAttributeSet
      * @param $categoryLinkManagement
+     * @param $productRepository
      * @throws Exception
      */
     function createTestProduct(
@@ -90,10 +103,10 @@ if (!function_exists('createTestProduct')) {
         $categoryLinkManagement,
         $productRepository
     ) {
-        /** @var $product \Magento\Catalog\Model\Product */
-        $product = $objectManager->create(\Magento\Catalog\Model\Product::class);
+        /** @var $product Product */
+        $product = $objectManager->create(Product::class);
         $product->isObjectNew(true);
-        $product->setTypeId(\Magento\Catalog\Model\Product\Type::TYPE_SIMPLE)
+        $product->setTypeId(Type::TYPE_SIMPLE)
             ->setAttributeSetId($defaultAttributeSet)
             ->setStoreId(1)
             ->setWebsiteIds([1])
@@ -102,8 +115,8 @@ if (!function_exists('createTestProduct')) {
             ->setPrice(10)
             ->setWeight(18)
             ->setQuantityAndStockStatus(['qty' => 10, 'is_in_stock' => 1])
-            ->setVisibility(\Magento\Catalog\Model\Product\Visibility::VISIBILITY_BOTH)
-            ->setStatus(\Magento\Catalog\Model\Product\Attribute\Source\Status::STATUS_ENABLED);
+            ->setVisibility(Visibility::VISIBILITY_BOTH)
+            ->setStatus(Status::STATUS_ENABLED);
 
         if ($modifier) {
             $product = $modifier($product);
@@ -133,7 +146,7 @@ createTestProduct(
 createTestProduct(
     'Simple Product Two',
     '12345',
-    function (\Magento\Catalog\Model\Product $product) {
+    function (Product $product) {
         $product->setPrice(45.67);
         $product->setWeight(56);
         return $product;
@@ -148,10 +161,10 @@ createTestProduct(
 createTestProduct(
     'Not Visible on Storefront',
     'not-visible-on-storefront',
-    function (\Magento\Catalog\Model\Product $product) {
+    function (Product $product) {
         $product->setPrice(15);
         $product->setWeight(2);
-        $product->setVisibility(\Magento\Catalog\Model\Product\Visibility::VISIBILITY_NOT_VISIBLE);
+        $product->setVisibility(Visibility::VISIBILITY_NOT_VISIBLE);
         return $product;
     },
     $objectManager,
@@ -164,8 +177,8 @@ createTestProduct(
 createTestProduct(
     'Disabled Product',
     'disabled-product',
-    function (\Magento\Catalog\Model\Product $product) {
-        $product->setStatus(\Magento\Catalog\Model\Product\Attribute\Source\Status::STATUS_DISABLED);
+    function (Product $product) {
+        $product->setStatus(Status::STATUS_DISABLED);
         return $product;
     },
     $objectManager,
@@ -178,7 +191,7 @@ createTestProduct(
 createTestProduct(
     'Out of Stock Product',
     'out-of-stock',
-    function (\Magento\Catalog\Model\Product $product) {
+    function (Product $product) {
         $product->setPrice(22.50);
         $product->setWeight(100);
         $product->setQuantityAndStockStatus(
@@ -199,11 +212,11 @@ createTestProduct(
 createTestProduct(
     'Disabled & Not Visible Product',
     'disabled-not-visible-product',
-    function (\Magento\Catalog\Model\Product $product) {
+    function (Product $product) {
         $product->setPrice(45);
         $product->setWeight(2);
-        $product->setVisibility(\Magento\Catalog\Model\Product\Visibility::VISIBILITY_NOT_VISIBLE);
-        $product->setStatus(\Magento\Catalog\Model\Product\Attribute\Source\Status::STATUS_DISABLED);
+        $product->setVisibility(Visibility::VISIBILITY_NOT_VISIBLE);
+        $product->setStatus(Status::STATUS_DISABLED);
         return $product;
     },
     $objectManager,
@@ -216,7 +229,7 @@ createTestProduct(
 createTestProduct(
     'Disabled OOS Not Visible',
     'disabled-out-of-stock-not-visible',
-    function (\Magento\Catalog\Model\Product $product) {
+    function (Product $product) {
         $product->setPrice(150);
         $product->setWeight(22);
         $product->setQuantityAndStockStatus(
@@ -225,8 +238,8 @@ createTestProduct(
                 'is_in_stock' => \Magento\CatalogInventory\Model\Stock\Status::STATUS_OUT_OF_STOCK
             ]
         );
-        $product->setVisibility(\Magento\Catalog\Model\Product\Visibility::VISIBILITY_NOT_VISIBLE);
-        $product->setStatus(\Magento\Catalog\Model\Product\Attribute\Source\Status::STATUS_DISABLED);
+        $product->setVisibility(Visibility::VISIBILITY_NOT_VISIBLE);
+        $product->setStatus(Status::STATUS_DISABLED);
         return $product;
     },
     $objectManager,
@@ -239,10 +252,10 @@ createTestProduct(
 createTestProduct(
     'Virtual Product',
     'virtual-product',
-    function (\Magento\Catalog\Model\Product $product) {
+    function (Product $product) {
         $product->setPrice(150);
         $product->setWeight(22);
-        $product->setTypeId(\Magento\Catalog\Model\Product\Type::TYPE_VIRTUAL);
+        $product->setTypeId(Type::TYPE_VIRTUAL);
         return $product;
     },
     $objectManager,

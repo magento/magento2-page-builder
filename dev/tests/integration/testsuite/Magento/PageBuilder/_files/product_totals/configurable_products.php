@@ -3,6 +3,7 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Catalog\Model\Product;
 use Magento\Catalog\Model\Product\Attribute\Source\Status;
@@ -16,12 +17,13 @@ use Magento\TestFramework\Helper\Bootstrap;
 
 require __DIR__ . '/configurable_attribute.php';
 
+$objectManager = Bootstrap::getObjectManager();
+
 /** @var ProductRepositoryInterface $productRepository */
-$productRepository = Bootstrap::getObjectManager()
-    ->get(ProductRepositoryInterface::class);
+$productRepository = $objectManager->get(ProductRepositoryInterface::class);
 
 /** @var $installer CategorySetup */
-$installer = Bootstrap::getObjectManager()->create(CategorySetup::class);
+$installer = $objectManager->create(CategorySetup::class);
 
 /* Create simple products per each option value*/
 /** @var AttributeOptionInterface[] $options */
@@ -35,10 +37,9 @@ array_shift($options); //remove the first option which is empty
 
 foreach ($options as $option) {
     /** @var $product Product */
-    $product = Bootstrap::getObjectManager()->create(Product::class);
+    $product = $objectManager->create(Product::class);
     $productId = array_shift($productIds);
     $product->setTypeId(Type::TYPE_SIMPLE)
-//        ->setId($productId)
         ->setAttributeSetId($attributeSetId)
         ->setWebsiteIds([1])
         ->setName('Configurable Option' . $option->getLabel())
@@ -59,9 +60,9 @@ foreach ($options as $option) {
 }
 
 /** @var $product Product */
-$product = Bootstrap::getObjectManager()->create(Product::class);
+$product = $objectManager->create(Product::class);
 /** @var Factory $optionsFactory */
-$optionsFactory = Bootstrap::getObjectManager()->create(Factory::class);
+$optionsFactory = $objectManager->create(Factory::class);
 $configurableAttributesData = [
     [
         'attribute_id' => $attribute->getId(),
@@ -78,7 +79,6 @@ $extensionConfigurableAttributes->setConfigurableProductLinks($associatedProduct
 $product->setExtensionAttributes($extensionConfigurableAttributes);
 
 $product->setTypeId(Configurable::TYPE_CODE)
-//    ->setId(1)
     ->setAttributeSetId($attributeSetId)
     ->setWebsiteIds([1])
     ->setName('Configurable Product')
