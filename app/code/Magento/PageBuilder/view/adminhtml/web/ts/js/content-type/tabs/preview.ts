@@ -143,6 +143,14 @@ export default class Preview extends PreviewCollection {
     }
 
     /**
+     * Remove focused tab
+     */
+    public destroy(): void {
+        super.destroy();
+        _.defer(() => this.setFocusedTab(null));
+    }
+
+    /**
      * Refresh the tabs instance when new content appears
      *
      * @param {number} focusIndex

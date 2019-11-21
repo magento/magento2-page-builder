@@ -90,8 +90,8 @@ define(["Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/c
     ;
 
     _proto.destroy = function destroy() {
-      [].concat(this.getChildren()()).forEach(function (elem) {
-        elem.destroy();
+      [].concat(this.getChildren()()).forEach(function (contentType) {
+        contentType.destroy();
       });
 
       _contentType2.prototype.destroy.call(this);
