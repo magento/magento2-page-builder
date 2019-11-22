@@ -387,23 +387,21 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         // Find the original container that had the selection
         var startContainerParent = (0, _jquery)(element).find("[data-startContainer]");
         startContainerParent.removeAttr("data-startContainer");
-
-        var _startContainer = this.findTextNode(startContainerParent, selection.startContainer.nodeValue);
-
+        var startContainer = this.findTextNode(startContainerParent, selection.startContainer.nodeValue);
         var endContainerParent = (0, _jquery)(element).find("[data-endContainer]");
         endContainerParent.removeAttr("data-endContainer");
-        var _endContainer = _startContainer;
+        var endContainer = startContainer;
 
         if (selection.endContainer.nodeValue !== selection.startContainer.nodeValue) {
-          _endContainer = this.findTextNode(endContainerParent, selection.endContainer.nodeValue);
+          endContainer = this.findTextNode(endContainerParent, selection.endContainer.nodeValue);
         }
 
-        if (_startContainer && _endContainer) {
+        if (startContainer && endContainer) {
           var newSelection = window.getSelection();
           newSelection.removeAllRanges();
           var range = document.createRange();
-          range.setStart(_startContainer, selection.startOffset);
-          range.setEnd(_endContainer, selection.endOffset);
+          range.setStart(startContainer, selection.startOffset);
+          range.setEnd(endContainer, selection.endOffset);
           newSelection.addRange(range);
         }
       }

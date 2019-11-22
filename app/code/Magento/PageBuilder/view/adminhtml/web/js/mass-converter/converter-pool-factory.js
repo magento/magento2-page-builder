@@ -15,10 +15,8 @@ define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/utils/loader", 
     var converters = [];
     var appearanceName;
 
-    var _arr = Object.keys(config.appearances);
-
-    for (var _i = 0; _i < _arr.length; _i++) {
-      appearanceName = _arr[_i];
+    for (var _i = 0, _Object$keys = Object.keys(config.appearances); _i < _Object$keys.length; _i++) {
+      appearanceName = _Object$keys[_i];
       var appearance = config.appearances[appearanceName];
 
       if (undefined !== appearance && undefined !== appearance.converters) {
