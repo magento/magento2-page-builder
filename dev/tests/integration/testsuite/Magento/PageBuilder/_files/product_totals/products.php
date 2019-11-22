@@ -263,3 +263,23 @@ createTestProduct(
     $categoryLinkManagement,
     $productRepository
 );
+
+// Create a gift card product
+createTestProduct(
+    'Simple Gift Card',
+    'gift-card',
+    function (Product $product) {
+        $product->setPrice(10);
+        $product->setTypeId(\Magento\GiftCard\Model\Catalog\Product\Type\Giftcard::TYPE_GIFTCARD);
+        $product->setStockData(['use_config_manage_stock' => 0]);
+        $product->setCanSaveCustomOptions(true);
+        $product->setHasOptions(true);
+        $product->setAllowOpenAmount(1);
+        $product->setGiftcardType(\Magento\GiftCard\Model\Giftcard::TYPE_VIRTUAL);
+        return $product;
+    },
+    $objectManager,
+    $defaultAttributeSet,
+    $categoryLinkManagement,
+    $productRepository
+);

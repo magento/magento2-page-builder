@@ -37,7 +37,6 @@ class ProductTotalsTest extends \PHPUnit\Framework\TestCase
      * @magentoDataFixture Magento/PageBuilder/_files/product_totals/configurable_products.php
      * @magentoDataFixture Magento/PageBuilder/_files/product_totals/bundle_product.php
      * @magentoDataFixture Magento/GroupedProduct/_files/product_grouped_with_simple_out_of_stock.php
-     * @magentoDataFixture Magento/GiftCard/_files/gift_card.php
      * @param array condition
      * @param int $expectedTotals
      * @dataProvider productDataProvider
@@ -88,7 +87,7 @@ class ProductTotalsTest extends \PHPUnit\Framework\TestCase
                         'attribute' => 'category_ids',
                         'value' => '3'
                     ]
-                ], [12, 3, 1, 1]
+                ], [13, 3, 1, 1]
             ],
             [ // #2 sku with no matches
                 ['1' => [
