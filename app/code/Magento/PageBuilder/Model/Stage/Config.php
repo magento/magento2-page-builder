@@ -12,6 +12,7 @@ use Magento\Framework\UrlInterface;
 
 /**
  * Class Config
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  *
  * @api
  */
