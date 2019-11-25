@@ -79,7 +79,7 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore
       element.innerHTML = this.data.content.html();
       this.contentType.dataStore.subscribe(function () {
         // If we're not focused into TinyMCE inline, update the value when it changes in the data store
-        if (!element.classList.contains("mce-edit-focus")) {
+        if (!element.classList.contains("mce-edit-focus") && _this2.wysiwyg.getAdapter().id !== (0, _editor.getActiveEditor)().id) {
           element.innerHTML = _this2.data.content.html();
         }
       }, "message");
@@ -171,7 +171,6 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore
 
       if (this.element && !this.wysiwyg && !this.handledDoubleClick) {
         var bookmark = (0, _editor.createBookmark)(event);
-        console.log(bookmark);
         (0, _editor.lockImageSize)(this.element);
         this.element.removeAttribute("contenteditable");
 
@@ -298,7 +297,6 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore
     _proto.onTextareaKeyUp = function onTextareaKeyUp() {
       this.adjustTextareaHeightBasedOnScrollHeight();
       this.contentType.dataStore.set("message", this.textarea.value);
-      console.log(this.textarea.value);
     }
     /**
      * Start stage interaction on textarea blur

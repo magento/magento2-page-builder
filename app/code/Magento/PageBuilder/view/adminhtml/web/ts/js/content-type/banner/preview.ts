@@ -13,7 +13,7 @@ import Uploader from "../../uploader";
 import delayUntil from "../../utils/delay-until";
 import {
     createBookmark, createDoubleClickEvent,
-    findNodeIndex, getNodeByIndex,
+    findNodeIndex, getActiveEditor, getNodeByIndex,
     isWysiwygSupported,
     lockImageSize,
     moveToBookmark,
@@ -105,7 +105,9 @@ export default class Preview extends BasePreview {
         element.innerHTML = this.data.content.html();
         this.contentType.dataStore.subscribe(() => {
             // If we're not focused into TinyMCE inline, update the value when it changes in the data store
-            if (!element.classList.contains("mce-edit-focus")) {
+            if (!element.classList.contains("mce-edit-focus")
+                && this.wysiwyg.getAdapter().id !== getActiveEditor().id
+            ) {
                 element.innerHTML = this.data.content.html();
             }
         }, "message");
@@ -196,7 +198,6 @@ export default class Preview extends BasePreview {
     public activateEditor(preview: Preview, event: JQueryEventObject) {
         if (this.element && !this.wysiwyg && !this.handledDoubleClick) {
             const bookmark = createBookmark(event);
-            console.log(bookmark);
             lockImageSize(this.element);
             this.element.removeAttribute("contenteditable");
             _.defer(() => {
@@ -325,7 +326,6 @@ export default class Preview extends BasePreview {
     {
         this.adjustTextareaHeightBasedOnScrollHeight();
         this.contentType.dataStore.set("message", this.textarea.value);
-        console.log(this.textarea.value);
     }
 
     /**

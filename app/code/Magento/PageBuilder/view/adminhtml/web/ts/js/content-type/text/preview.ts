@@ -11,7 +11,7 @@ import {OptionsInterface} from "../../content-type-menu/option.types";
 import delayUntil from "../../utils/delay-until";
 import {
     createBookmark, createDoubleClickEvent,
-    findNodeIndex, getNodeByIndex,
+    findNodeIndex, getActiveEditor, getNodeByIndex,
     isWysiwygSupported,
     lockImageSize,
     moveToBookmark,
@@ -94,7 +94,9 @@ export default class Preview extends BasePreview {
         element.innerHTML = this.data.main.html();
         this.contentType.dataStore.subscribe(() => {
             // If we're not focused into TinyMCE inline, update the value when it changes in the data store
-            if (!element.classList.contains("mce-edit-focus")) {
+            if (!element.classList.contains("mce-edit-focus")
+                && this.wysiwyg.getAdapter().id !== getActiveEditor().id
+            ) {
                 element.innerHTML = this.data.main.html();
             }
         }, "content");

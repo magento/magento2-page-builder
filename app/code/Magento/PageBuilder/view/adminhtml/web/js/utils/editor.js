@@ -237,6 +237,14 @@ define(["jquery", "mageUtils", "Magento_PageBuilder/js/config"], function (_jque
     window.tinymce.activeEditor.selection.moveToBookmark(bookmark);
   }
   /**
+   * Retrieve active editor from TinyMCE
+   */
+
+
+  function getActiveEditor() {
+    return window.tinymce.activeEditor;
+  }
+  /**
    * Create a bookmark span for the selection
    *
    * @param id
@@ -359,6 +367,7 @@ define(["jquery", "mageUtils", "Magento_PageBuilder/js/config"], function (_jque
     unlockImageSize: unlockImageSize,
     createBookmark: createBookmark,
     moveToBookmark: moveToBookmark,
+    getActiveEditor: getActiveEditor,
     findNodeIndex: findNodeIndex,
     getNodeByIndex: getNodeByIndex,
     createDoubleClickEvent: createDoubleClickEvent

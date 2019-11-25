@@ -258,6 +258,13 @@ export function moveToBookmark(bookmark: Bookmark) {
 }
 
 /**
+ * Retrieve active editor from TinyMCE
+ */
+export function getActiveEditor(): Editor {
+    return ((window as any).tinymce.activeEditor as Editor);
+}
+
+/**
  * Create a bookmark span for the selection
  *
  * @param id
