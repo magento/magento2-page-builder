@@ -81,9 +81,7 @@ export default class Preview extends BasePreview {
         element.innerHTML = this.data.content.html();
         this.contentType.dataStore.subscribe(() => {
             // If we're not focused into TinyMCE inline, update the value when it changes in the data store
-            if (!element.classList.contains("mce-edit-focus")
-                && this.wysiwyg.getAdapter().id !== getActiveEditor().id
-            ) {
+            if (!this.wysiwyg || (this.wysiwyg && this.wysiwyg.getAdapter().id !== getActiveEditor().id)) {
                 element.innerHTML = this.data.content.html();
             }
         }, "content");

@@ -51,7 +51,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       element.innerHTML = this.data.content.html();
       this.contentType.dataStore.subscribe(function () {
         // If we're not focused into TinyMCE inline, update the value when it changes in the data store
-        if (!element.classList.contains("mce-edit-focus") && _this2.wysiwyg.getAdapter().id !== (0, _editor.getActiveEditor)().id) {
+        if (!_this2.wysiwyg || _this2.wysiwyg && _this2.wysiwyg.getAdapter().id !== (0, _editor.getActiveEditor)().id) {
           element.innerHTML = _this2.data.content.html();
         }
       }, "content");
