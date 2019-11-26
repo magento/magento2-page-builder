@@ -144,6 +144,7 @@
         <!-- Inline Edit: Add Text -->
         <comment userInput="Inline Edit: Add Text" stepKey="commentInlineEditAddText"/>
         <actionGroup ref="focusOnInlineTinyMCEEditor" stepKey="focusOnInlineTinyMCEEditor"/>
+        <actionGroup ref="goToEndOfLineTinyMCEEditor" stepKey="moveCaretToEnd"/>
         <actionGroup ref="addTextToTinyMCEInline" stepKey="addTextToTinyMCEInline">
             <argument name="section" value="TextOnStage"/>
             <argument name="text" value="{{PageBuilderTextProperty.value}}"/>
@@ -151,12 +152,14 @@
         <!-- Inline Edit: Add Variable -->
         <comment userInput="Inline Edit: Add Variable" stepKey="commentInlineEditAddVariable"/>
         <actionGroup ref="focusOnInlineTinyMCEEditor" stepKey="focusOnInlineTinyMCEEditor2"/>
+        <actionGroup ref="goToEndOfLineTinyMCEEditor" stepKey="moveCaretToEnd2"/>
         <actionGroup ref="addVariableToTinyMCEInline" stepKey="addVariableToTinyMCE">
             <argument name="variable" value="TinyMCEVariableBaseURL"/>
         </actionGroup>
         <!-- Inline Edit: Add Widget -->
         <comment userInput="Inline Edit: Add Widget" stepKey="commentInlineEditAddWidget"/>
         <actionGroup ref="focusOnInlineTinyMCEEditor" stepKey="focusOnInlineTinyMCEEditor3"/>
+        <actionGroup ref="goToEndOfLineTinyMCEEditor" stepKey="moveCaretToEnd3"/>
         <actionGroup ref="addPageLinkWidgetToTinyMCEInline" stepKey="addPageLinkWidgetToTinyMCE">
             <argument name="widget" value="TinyMCEWidgetCMSPageLink"/>
             <argument name="page" value="$$createPreReqCMSPage.identifier$$"/>
@@ -164,6 +167,7 @@
         <!-- Inline Edit: Add Image -->
         <comment userInput="Inline Edit: Add Image" stepKey="commentInlineEditAddImage"/>
         <actionGroup ref="focusOnInlineTinyMCEEditor" stepKey="focusOnInlineTinyMCEEditor4"/>
+        <actionGroup ref="goToEndOfLineTinyMCEEditor" stepKey="moveCaretToEnd4"/>
         <actionGroup ref="clickInsertImageInTinyMCE" stepKey="clickInsertImageInTinyMCE"/>
         <actionGroup ref="clickBrowseBtnOnUploadPopup" stepKey="clickBrowserBtn"/>
         <actionGroup ref="VerifyMediaGalleryStorageActions" stepKey="VerifyMediaGalleryStorageBtn"/>
@@ -315,7 +319,15 @@
         <comment userInput="Validate CMS Block Stage" stepKey="commentValidateCMSBlockStage"/>
         <actionGroup ref="assertTextareaContainsValue" stepKey="assertTextareaContainsValueCMSBlockStage">
             <argument name="selector" value="{{TextOnStage.textArea('1')}}"/>
-            <argument name="value" value="{{PageBuilderTextProperty.value}}{{PageBuilderTextArea_VariableBaseURL.editPanelValue}}{{PageBuilderTextArea_WidgetCMSHomepageLink.editPanelValue}}"/>
+            <argument name="value" value="{{PageBuilderTextProperty.value}}"/>
+        </actionGroup>
+        <actionGroup ref="assertTextareaContainsValue" stepKey="assertTextareaContainsValueCMSBlockStage2">
+            <argument name="selector" value="{{TextOnStage.textArea('1')}}"/>
+            <argument name="value" value="{{PageBuilderTextArea_VariableBaseURL.editPanelValue}}"/>
+        </actionGroup>
+        <actionGroup ref="assertTextareaContainsValue" stepKey="assertTextareaContainsValueCMSBlockStage3">
+            <argument name="selector" value="{{TextOnStage.textArea('1')}}"/>
+            <argument name="value" value="{{PageBuilderTextArea_WidgetCMSHomepageLink.editPanelValue}}"/>
         </actionGroup>
         <!-- Add Block to CMS Page -->
         <comment userInput="Add Block to CMS Page" stepKey="commentAddBlockToCMSPage"/>
