@@ -121,6 +121,7 @@ define([
                         html_variable: 'myhtml'
                     },
                     result = model.toDom(data, config);
+
                 expect(result.myhtml).not.toContain('sort_order');
             });
         });
