@@ -2955,12 +2955,12 @@
         <waitForPageLoad stepKey="waitForUnselect"/>
         <pressKey selector="{{TextOnStage.tinymce('1')}}" parameterArray="[\Facebook\WebDriver\WebDriverKeys::SHIFT, \Facebook\WebDriver\WebDriverKeys::INSERT]" stepKey="pasteAllText"/>
         <waitForPageLoad stepKey="waitForTextPaste"/>
-        <seeNumberOfElements selector="{{TextOnStage.text('1', PageBuilderVariableWidgetText.value)}}" userInput="2" stepKey="seeTwoParagraphs"/>
+        <seeNumberOfElements selector="{{TextOnStage.textWithTag('1', 'p', PageBuilderVariableWidgetText.value)}}" userInput="2" stepKey="seeTwoParagraphs"/>
         <executeJS function="document.execCommand('selectall', null, false);" stepKey="selectAllText2"/>
         <waitForPageLoad stepKey="waitForTextSelect2"/>
         <pressKey selector="{{TextOnStage.tinymce('1')}}" parameterArray="[\Facebook\WebDriver\WebDriverKeys::SHIFT, \Facebook\WebDriver\WebDriverKeys::INSERT]" stepKey="pasteAllText2"/>
         <waitForPageLoad stepKey="waitForTextPaste2"/>
-        <seeNumberOfElements selector="{{TextOnStage.text('1', PageBuilderVariableWidgetText.value)}}" userInput="1" stepKey="seeOnlyOneParagraph"/>
+        <seeNumberOfElements selector="{{TextOnStage.textWithTag('1', 'p', PageBuilderVariableWidgetText.value)}}" userInput="1" stepKey="seeOnlyOneParagraph"/>
     </test>
     <test name="TextAddLinkToTextInlineWYSIWYG">
         <annotations>
@@ -3011,8 +3011,8 @@
             <title value="TinyMCE4 selection is preserved after initiation"/>
             <description value="Verify that a users selection is not lost between select and initiation"/>
             <severity value="MAJOR"/>
-            <useCaseId value=""/>
-            <testCaseId value=""/>
+            <useCaseId value="PB-170"/>
+            <testCaseId value="PB-303"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-text"/>
         </annotations>

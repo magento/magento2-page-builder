@@ -156,8 +156,8 @@ export default class PageBuilder implements PageBuilderInterface {
      * @param config
      */
     private preloadTemplates(config: ConfigInterface): void {
-        const previewTemplates = Object.values(config.content_types).map((contentType) => {
-            return Object.values(contentType.appearances).map((appearance) => {
+        const previewTemplates = _.values(config.content_types).map((contentType) => {
+            return _.values(contentType.appearances).map((appearance) => {
                 return appearance.preview_template;
             });
         }).reduce((array, value) => array.concat(value), []).map((value) => formatPath(value));

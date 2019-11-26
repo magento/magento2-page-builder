@@ -160,8 +160,8 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_Ui/js/li
     ;
 
     _proto.preloadTemplates = function preloadTemplates(config) {
-      var previewTemplates = Object.values(config.content_types).map(function (contentType) {
-        return Object.values(contentType.appearances).map(function (appearance) {
+      var previewTemplates = _underscore.values(config.content_types).map(function (contentType) {
+        return _underscore.values(contentType.appearances).map(function (appearance) {
           return appearance.preview_template;
         });
       }).reduce(function (array, value) {
