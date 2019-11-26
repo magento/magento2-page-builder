@@ -243,4 +243,15 @@
         <waitForPageLoad stepKey="waitForPageLoad1"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="loseFocusFromEditor"/>
     </actionGroup>
+    <actionGroup name="formatTextInlineTinyMCE">
+        <arguments>
+            <!-- Receives pagebuilder_tinymce_format -->
+            <argument name="format" defaultValue="TinyMCEFormatHeading1"/>
+        </arguments>
+        <waitForElementVisible selector="{{WYSIWYGOnPageBuilderInline.formatSelector}}" stepKey="waitForFormatList"/>
+        <click selector="{{WYSIWYGOnPageBuilderInline.formatSelector}}" stepKey="expandFormatList"/>
+        <waitForElementVisible selector="{{WYSIWYGOnPageBuilderInline.formatOption(format.label)}}" stepKey="waitForFormatVisible"/>
+        <click selector="{{WYSIWYGOnPageBuilderInline.formatOption(format.label)}}" stepKey="clickFormat"/>
+        <waitForElementNotVisible selector="{{WYSIWYGOnPageBuilderInline.formatOption(format.label)}}" stepKey="waitForFormatInvisible"/>
+    </actionGroup>
 </actionGroups>
