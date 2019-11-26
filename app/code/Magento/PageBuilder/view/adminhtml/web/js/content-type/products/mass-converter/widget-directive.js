@@ -1,5 +1,7 @@
 /*eslint-disable */
 
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
 define(["Magento_PageBuilder/js/mass-converter/widget-directive-abstract", "Magento_PageBuilder/js/utils/object"], function (_widgetDirectiveAbstract, _object) {
@@ -36,7 +38,7 @@ define(["Magento_PageBuilder/js/mass-converter/widget-directive-abstract", "Mage
 
       data.products_count = attributes.products_count;
       data.sort_order = attributes.sort_order;
-      data.condition_option = attributes.condition_option;
+      data.condition_option = attributes.condition_option || "condition";
       data[data.condition_option] = this.decodeWysiwygCharacters(attributes.condition_option_value || "");
       data.conditions_encoded = this.decodeWysiwygCharacters(attributes.conditions_encoded || "");
       data[data.condition_option + "_source"] = data.conditions_encoded;
@@ -52,19 +54,20 @@ define(["Magento_PageBuilder/js/mass-converter/widget-directive-abstract", "Mage
     ;
 
     _proto.toDom = function toDom(data, config) {
-      var attributes = {
+      var attributes = _extends({
         type: "Magento\\CatalogWidget\\Block\\Product\\ProductsList",
         template: "Magento_CatalogWidget::product/widget/content/grid.phtml",
         anchor_text: "",
         id_path: "",
         show_pager: 0,
         products_count: data.products_count,
-        sort_order: data.sort_order,
         condition_option: data.condition_option,
         condition_option_value: "",
         type_name: "Catalog Products List",
         conditions_encoded: this.encodeWysiwygCharacters(data.conditions_encoded || "")
-      };
+      }, data.sort_order && {
+        sort_order: data.sort_order
+      });
 
       if (typeof data[data.condition_option] === "string") {
         attributes.condition_option_value = this.encodeWysiwygCharacters(data[data.condition_option]);
