@@ -85,12 +85,14 @@ class Sorting
         \Magento\Catalog\Model\ResourceModel\Product\Collection $collection
     ): \Magento\Catalog\Model\ResourceModel\Product\Collection {
         $sortBuilder = $this->getSortingInstance($option);
-        $_collection = $sortBuilder->sort($collection);
-
-        if ($_collection->isLoaded()) {
-            $_collection->clear();
+        if ($sortBuilder) {
+            $collection = $sortBuilder->sort($collection);
         }
 
-        return $_collection;
+        if ($collection->isLoaded()) {
+            $collection->clear();
+        }
+
+        return $collection;
     }
 }
