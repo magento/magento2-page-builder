@@ -36,7 +36,7 @@ define(["Magento_PageBuilder/js/mass-converter/widget-directive-abstract", "Mage
 
       data.products_count = attributes.products_count;
       data.sort_order = attributes.sort_order;
-      data.condition_option = attributes.condition_option;
+      data.condition_option = attributes.condition_option || "condition";
       data[data.condition_option] = this.decodeWysiwygCharacters(attributes.condition_option_value || "");
       data.conditions_encoded = this.decodeWysiwygCharacters(attributes.conditions_encoded || "");
       data[data.condition_option + "_source"] = data.conditions_encoded;
@@ -59,12 +59,15 @@ define(["Magento_PageBuilder/js/mass-converter/widget-directive-abstract", "Mage
         id_path: "",
         show_pager: 0,
         products_count: data.products_count,
-        sort_order: data.sort_order,
         condition_option: data.condition_option,
         condition_option_value: "",
         type_name: "Catalog Products List",
         conditions_encoded: this.encodeWysiwygCharacters(data.conditions_encoded || "")
       };
+
+      if (data.sort_order) {
+        attributes.sort_order = data.sort_order;
+      }
 
       if (typeof data[data.condition_option] === "string") {
         attributes.condition_option_value = this.encodeWysiwygCharacters(data[data.condition_option]);
