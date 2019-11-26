@@ -3013,7 +3013,7 @@
             <severity value="MAJOR"/>
             <useCaseId value=""/>
             <testCaseId value=""/>
-<!--            <group value="pagebuilder"/>-->
+            <group value="pagebuilder"/>
             <group value="pagebuilder-text"/>
         </annotations>
         <before>
@@ -3066,12 +3066,53 @@
                 ->moveToElement($heading, {{TinyMCEPartialHeadingSelection.endX}}, {{TinyMCEPartialHeadingSelection.endY}})
                 ->release()
                 ->perform();
-        }" stepKey="selectTextInTinyMCE"/>
+        }" stepKey="selectHeadingTextInTinyMCE"/>
         <waitForElementVisible selector="{{TextOnStage.tinymceInFocus('1')}}" stepKey="waitForTinyMCEFocus"/>
-        <executeJS function="return window.getSelection().toString()" stepKey="selectionString"/>
+        <executeJS function="return window.getSelection().toString()" stepKey="selectionHeadingString"/>
         <assertEquals stepKey="assertSelectionText">
             <expectedResult type="string">{{TinyMCEPartialHeadingSelection.selection}}</expectedResult>
-            <actualResult type="variable">selectionString</actualResult>
+            <actualResult type="variable">selectionHeadingString</actualResult>
+        </assertEquals>
+        <reloadPage stepKey="reloadPage" />
+        <waitForPageLoad stepKey="waitForReload" />
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <scrollTo selector="{{TextOnStage.tinymce('1')}}" stepKey="scrollToTinyMCE2"/>
+        <!-- Select portion of paragraph text "es stri" -->
+        <executeInSelenium function="function ($webdriver) use ($I) {
+            $text = $webdriver->findElement(\Facebook\WebDriver\WebDriverBy::xpath('//div[contains(@class, \'inline-wysiwyg\')]//p[2]'));
+            $actions = new \Facebook\WebDriver\Interactions\WebDriverActions($webdriver);
+            $actions->moveToElement($text, {{TinyMCEPartialTextSelection.startX}}, {{TinyMCEPartialTextSelection.startY}})
+                ->clickAndHold()
+                ->moveToElement($text, {{TinyMCEPartialTextSelection.endX}}, {{TinyMCEPartialTextSelection.endY}})
+                ->release()
+                ->perform();
+        }" stepKey="selectTextInTinyMCE"/>
+        <waitForElementVisible selector="{{TextOnStage.tinymceInFocus('1')}}" stepKey="waitForTinyMCEFocus2"/>
+        <executeJS function="return window.getSelection().toString()" stepKey="selectionTextString"/>
+        <assertEquals stepKey="assertSelectionText2">
+            <expectedResult type="string">{{TinyMCEPartialTextSelection.selection}}</expectedResult>
+            <actualResult type="variable">selectionTextString</actualResult>
+        </assertEquals>
+        <reloadPage stepKey="reloadPage2" />
+        <waitForPageLoad stepKey="waitForReload2" />
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage3"/>
+        <scrollTo selector="{{TextOnStage.tinymce('1')}}" stepKey="scrollToTinyMCE3"/>
+        <!-- Select from part of the heading, over the variable, to part of the text string -->
+        <executeInSelenium function="function ($webdriver) use ($I) {
+            $heading = $webdriver->findElement(\Facebook\WebDriver\WebDriverBy::xpath('//div[contains(@class, \'inline-wysiwyg\')]//h2'));
+            $text = $webdriver->findElement(\Facebook\WebDriver\WebDriverBy::xpath('//div[contains(@class, \'inline-wysiwyg\')]//p[2]'));
+            $actions = new \Facebook\WebDriver\Interactions\WebDriverActions($webdriver);
+            $actions->moveToElement($heading, {{TinyMCEPartialHeadingSelection.startX}}, {{TinyMCEPartialHeadingSelection.startY}})
+                ->clickAndHold()
+                ->moveToElement($text, {{TinyMCEPartialTextSelection.endX}}, {{TinyMCEPartialTextSelection.endY}})
+                ->release()
+                ->perform();
+        }" stepKey="selectHeadingTextAndVariableTinyMCE"/>
+        <waitForElementVisible selector="{{TextOnStage.tinymceInFocus('1')}}" stepKey="waitForTinyMCEFocus3"/>
+        <executeJS function="return window.getSelection().toString()" stepKey="selectionMultipleString"/>
+        <assertEquals stepKey="assertSelectionText3">
+            <expectedResult type="string">{{TinyMCEHeadingVariableTextSelection.selection}}</expectedResult>
+            <actualResult type="variable">selectionMultipleString</actualResult>
         </assertEquals>
     </test>
 </tests>

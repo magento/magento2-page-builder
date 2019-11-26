@@ -1,5 +1,4 @@
 /*eslint-disable */
-/* jscs:disable */
 define(["jquery", "mageUtils", "Magento_PageBuilder/js/config"], function (_jquery, _mageUtils, _config) {
   /**
    * Is the inline WYSIWYG supported?

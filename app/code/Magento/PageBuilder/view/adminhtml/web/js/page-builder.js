@@ -1,5 +1,4 @@
 /*eslint-disable */
-/* jscs:disable */
 define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_Ui/js/lib/knockout/template/loader", "mageUtils", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/panel", "Magento_PageBuilder/js/stage"], function (_jquery, _knockout, _events, _loader, _mageUtils, _underscore, _config, _contentTypeFactory, _panel, _stage) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
