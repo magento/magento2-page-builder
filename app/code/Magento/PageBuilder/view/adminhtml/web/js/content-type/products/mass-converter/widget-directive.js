@@ -1,7 +1,5 @@
 /*eslint-disable */
 
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
 define(["Magento_PageBuilder/js/mass-converter/widget-directive-abstract", "Magento_PageBuilder/js/utils/object"], function (_widgetDirectiveAbstract, _object) {
@@ -54,7 +52,7 @@ define(["Magento_PageBuilder/js/mass-converter/widget-directive-abstract", "Mage
     ;
 
     _proto.toDom = function toDom(data, config) {
-      var attributes = _extends({
+      var attributes = {
         type: "Magento\\CatalogWidget\\Block\\Product\\ProductsList",
         template: "Magento_CatalogWidget::product/widget/content/grid.phtml",
         anchor_text: "",
@@ -65,9 +63,11 @@ define(["Magento_PageBuilder/js/mass-converter/widget-directive-abstract", "Mage
         condition_option_value: "",
         type_name: "Catalog Products List",
         conditions_encoded: this.encodeWysiwygCharacters(data.conditions_encoded || "")
-      }, data.sort_order && {
-        sort_order: data.sort_order
-      });
+      };
+
+      if (data.sort_order) {
+        attributes.sort_order = data.sort_order;
+      }
 
       if (typeof data[data.condition_option] === "string") {
         attributes.condition_option_value = this.encodeWysiwygCharacters(data[data.condition_option]);
