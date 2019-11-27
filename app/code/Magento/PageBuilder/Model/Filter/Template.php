@@ -94,7 +94,7 @@ class Template
                 // restore any encoded directives
                 $docHtml = preg_replace_callback(
                     '/=\"(%7B%7B[^"]*%7D%7D)\"/m',
-                    function($matches) {
+                    function ($matches) {
                         return urldecode($matches[0]);
                     },
                     $docHtml
