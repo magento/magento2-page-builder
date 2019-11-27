@@ -58,7 +58,7 @@ export default class WidgetDirective extends BaseWidgetDirective {
         } as { [key: string]: any; };
 
         if (data.sort_order) {
-            attributes.sort_order = data.sort_order
+            attributes.sort_order = data.sort_order;
         }
 
         if (typeof data[data.condition_option] === "string") {
