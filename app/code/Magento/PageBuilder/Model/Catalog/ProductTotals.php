@@ -8,6 +8,7 @@ declare(strict_types=1);
 
 namespace Magento\PageBuilder\Model\Catalog;
 
+use Magento\Catalog\Api\CategoryRepositoryInterface;
 use Magento\Catalog\Model\Product\Attribute\Source\Status;
 use Magento\Catalog\Model\Product\Visibility;
 use Magento\Catalog\Model\ResourceModel\Product\Collection;
@@ -15,6 +16,7 @@ use Magento\Catalog\Model\ResourceModel\Product\CollectionFactory;
 use Magento\CatalogInventory\Helper\Stock;
 use Magento\CatalogWidget\Model\Rule;
 use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Rule\Model\Condition\Combine;
 use Magento\Rule\Model\Condition\Sql\Builder;
 use Magento\Widget\Helper\Conditions;
@@ -51,24 +53,32 @@ class ProductTotals
     private $stockFilter;
 
     /**
+     * @var CategoryRepositoryInterface
+     */
+    private $categoryRepository;
+
+    /**
      * @param CollectionFactory $productCollectionFactory
      * @param Builder $sqlBuilder
      * @param Rule $rule
      * @param Conditions $conditionsHelper
      * @param Stock $stockFilter
+     * @param CategoryRepositoryInterface $categoryRepository
      */
     public function __construct(
         CollectionFactory $productCollectionFactory,
         Builder $sqlBuilder,
         Rule $rule,
         Conditions $conditionsHelper,
-        Stock $stockFilter
+        Stock $stockFilter,
+        CategoryRepositoryInterface $categoryRepository
     ) {
         $this->productCollectionFactory = $productCollectionFactory;
         $this->sqlBuilder = $sqlBuilder;
         $this->rule = $rule;
         $this->conditionsHelper = $conditionsHelper;
         $this->stockFilter = $stockFilter;
+        $this->categoryRepository = $categoryRepository;
     }
 
     /**
@@ -84,15 +94,47 @@ class ProductTotals
         }
 
         foreach ($conditions as $key => $condition) {
-            if (!empty($condition['attribute'])
-                && in_array($condition['attribute'], ['special_from_date', 'special_to_date'])
-            ) {
-                $conditions[$key]['value'] = date('Y-m-d H:i:s', strtotime($condition['value']));
+            if (!empty($condition['attribute'])) {
+                if (in_array($condition['attribute'], ['special_from_date', 'special_to_date'])) {
+                    $conditions[$key]['value'] = date('Y-m-d H:i:s', strtotime($condition['value']));
+                }
+
+                if ($condition['attribute'] == 'category_ids') {
+                    $conditions[$key] = $this->updateAnchorCategoryConditions($condition);
+                }
             }
         }
 
         $this->rule->loadPost(['conditions' => $conditions]);
         return $this->rule->getConditions();
+    }
+
+    /**
+     * Update conditions if the category is an anchor category
+     *
+     * @param array $condition
+     * @return array
+     */
+    private function updateAnchorCategoryConditions(array $condition): array
+    {
+        if (array_key_exists('value', $condition)) {
+            $categoryId = $condition['value'];
+
+            try {
+                $category = $this->categoryRepository->get($categoryId);
+            } catch (NoSuchEntityException $e) {
+                return $condition;
+            }
+
+            if ($category->getIsAnchor() && $category->getChildren()) {
+                $children = explode(',', $category->getChildren());
+
+                $condition['operator'] = "()";
+                $condition['value'] = array_merge([$categoryId], $children);
+            }
+        }
+
+        return $condition;
     }
 
     /**
