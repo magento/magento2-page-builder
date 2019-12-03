@@ -24,6 +24,8 @@ use Zend_Db_Select_Exception;
 
 /**
  * Product totals for Products content type
+ *
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class ProductTotals
 {
