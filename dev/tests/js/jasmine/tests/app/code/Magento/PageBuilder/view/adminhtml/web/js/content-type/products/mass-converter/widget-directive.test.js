@@ -69,7 +69,8 @@ define([
             it('Should transform regular properties', function () {
                 var data = {
                         products_count: 123,
-                        conditions_encoded: '[]'
+                        conditions_encoded: '[]',
+                        sort_order: 'date_newest_top'
                     },
                     config = {
                         html_variable: 'myhtml'
@@ -85,6 +86,7 @@ define([
                 expect(result.myhtml).toContain(' id_path=""');
                 expect(result.myhtml).toContain(' show_pager="0"');
                 expect(result.myhtml).toContain(' type_name="Catalog Products List"');
+                expect(result.myhtml).toContain(' sort_order="date_newest_top');
             });
             it('Should encode conditions_encoded', function () {
                 var data = {
@@ -104,6 +106,18 @@ define([
                 expect(result.myhtml).toContain(' id_path=""');
                 expect(result.myhtml).toContain(' show_pager="0"');
                 expect(result.myhtml).toContain(' type_name="Catalog Products List"');
+            });
+            it('Should not add empty sort_order attribute', function () {
+                var data = {
+                        products_count: 123,
+                        conditions_encoded: '[]'
+                    },
+                    config = {
+                        html_variable: 'myhtml'
+                    },
+                    result = model.toDom(data, config);
+
+                expect(result.myhtml).not.toContain('sort_order');
             });
         });
         describe('fromDom', function () {
