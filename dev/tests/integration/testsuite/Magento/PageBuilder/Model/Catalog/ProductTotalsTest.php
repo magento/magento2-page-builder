@@ -147,6 +147,21 @@ class ProductTotalsTest extends \PHPUnit\Framework\TestCase
                     ]
                 ], [3, 1, 1, 0]
             ],
+            [ // #6 empty anchor category with subcategory containing 1 product
+                ['1' => [
+                    'aggregator' => 'all',
+                    'new_child' => '',
+                    'type' => \Magento\CatalogWidget\Model\Rule\Condition\Combine::class,
+                    'value' => '1',
+                ],
+                    '1--1' => [
+                        'operator' => '==',
+                        'type' => \Magento\CatalogWidget\Model\Rule\Condition\Product::class,
+                        'attribute' => 'category_ids',
+                        'value' => '5'
+                    ]
+                ], [1, 0, 0, 0]
+            ],
         ];
     }
 }

@@ -69,6 +69,37 @@ $category->setId(4)
     ->setDescription('Category 1.1 description.')
     ->save();
 
+$category = $objectManager->create(\Magento\Catalog\Model\Category::class);
+$category->isObjectNew(true);
+$category->setId(5)
+    ->setName('Category 2')
+    ->setParentId(2)
+    ->setPath('1/2/5')
+    ->setLevel(2)
+    ->setAvailableSortBy('name')
+    ->setDefaultSortBy('name')
+    ->setIsActive(true)
+    ->setIsAnchor(true)
+    ->setPosition(1)
+    ->setDescription('Category 2 - Empty Anchor')
+    ->save();
+
+
+$category = $objectManager->create(\Magento\Catalog\Model\Category::class);
+$category->isObjectNew(true);
+$category->setId(6)
+    ->setName('Category 2.1')
+    ->setParentId(5)
+    ->setPath('1/2/5/6')
+    ->setLevel(3)
+    ->setAvailableSortBy('name')
+    ->setDefaultSortBy('name')
+    ->setIsActive(true)
+    ->setIsAnchor(true)
+    ->setPosition(1)
+    ->setDescription('Category 2.1 - Anchor category child with 1 product')
+    ->save();
+
 if (!function_exists('createTestProduct')) {
     /**
      * Create a test product
@@ -79,7 +110,8 @@ if (!function_exists('createTestProduct')) {
      * @param $objectManager
      * @param $defaultAttributeSet
      * @param $categoryLinkManagement
-     * @throws Exception
+     * @param $productRepository
+     * @param array $assignToCategories
      */
     function createTestProduct(
         $name,
@@ -88,7 +120,8 @@ if (!function_exists('createTestProduct')) {
         $objectManager,
         $defaultAttributeSet,
         $categoryLinkManagement,
-        $productRepository
+        $productRepository,
+        $assignToCategories = [2 ,3]
     ) {
         /** @var $product \Magento\Catalog\Model\Product */
         $product = $objectManager->create(\Magento\Catalog\Model\Product::class);
@@ -113,7 +146,7 @@ if (!function_exists('createTestProduct')) {
 
         $categoryLinkManagement->assignProductToCategories(
             $product->getSku(),
-            [2, 3]
+            $assignToCategories
         );
     }
 }
@@ -126,7 +159,8 @@ createTestProduct(
     $objectManager,
     $defaultAttributeSet,
     $categoryLinkManagement,
-    $productRepository
+    $productRepository,
+    [2, 3, 6]
 );
 
 // Create same product as above with SKU as numbers

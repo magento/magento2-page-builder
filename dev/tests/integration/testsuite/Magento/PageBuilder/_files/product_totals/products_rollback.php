@@ -37,7 +37,7 @@ foreach ($productsToDelete as $sku) {
 //Remove categories
 /** @var Magento\Catalog\Model\ResourceModel\Category\Collection $collection */
 $collection = $objectManager->create(\Magento\Catalog\Model\ResourceModel\Category\Collection::class);
-foreach ($collection->addAttributeToFilter('level', ['in' => [2, 3, 4, 5]]) as $category) {
+foreach ($collection->addAttributeToFilter('level', ['in' => [2, 3, 4, 5, 6]]) as $category) {
     /** @var \Magento\Catalog\Model\Category $category */
     $category->delete();
 }
