@@ -65,6 +65,15 @@
         <waitForElementVisible selector="{{TinyMCESection.InsertVariableIcon}}" stepKey="waitForInsertVariable1"/>
         <click selector="{{TinyMCESection.InsertVariableIcon}}" stepKey="clickInsertVariable1"/>
     </actionGroup>
+    <actionGroup name="seeVariableTinyMCE">
+        <arguments>
+            <argument name="section" defaultValue="TextOnStage"/>
+            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="variable" defaultValue=""/>
+        </arguments>
+        <waitForElementVisible selector="{{section.text(index, variable.editPanelValue)}}" stepKey="waitForVariable"/>
+        <seeElement selector="{{section.text(index, variable.editPanelValue)}}" stepKey="seeVariableOnStage"/>
+    </actionGroup>
     <actionGroup name="addVariableToTinyMCE3" extends="addVariableToTinyMCE">
         <arguments>
             <argument name="variable" defaultValue=""/>
@@ -253,5 +262,45 @@
         <waitForElementVisible selector="{{WYSIWYGOnPageBuilderInline.formatOption(format.label)}}" stepKey="waitForFormatVisible"/>
         <click selector="{{WYSIWYGOnPageBuilderInline.formatOption(format.label)}}" stepKey="clickFormat"/>
         <waitForElementNotVisible selector="{{WYSIWYGOnPageBuilderInline.formatOption(format.label)}}" stepKey="waitForFormatInvisible"/>
+    </actionGroup>
+    <actionGroup name="waitForTinyMCEFocus">
+        <arguments>
+            <argument name="section" defaultValue="TextOnStage"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{section.tinymceInFocus(index)}}" stepKey="waitForTinyMCEFocus"/>
+    </actionGroup>
+    <actionGroup name="clickDirectiveTinyMCE">
+        <arguments>
+            <argument name="section" defaultValue="TextOnStage"/>
+            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="directive"/>
+        </arguments>
+        <click selector="{{section.directive(index, directive.editPanelValue)}}" stepKey="clickDirective"/>
+    </actionGroup>
+    <actionGroup name="seeDirectiveFocusedTinyMCE">
+        <arguments>
+            <argument name="section" defaultValue="TextOnStage"/>
+            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="directive"/>
+        </arguments>
+        <waitForElementVisible selector="{{section.directiveFocused(index, directive.editPanelValue)}}" stepKey="waitForDirectiveFocused"/>
+        <seeElement selector="{{section.directiveFocused(index, directive.editPanelValue)}}" stepKey="verifyDirectiveIsFocused"/>
+    </actionGroup>
+    <actionGroup name="scrollToTinyMCE">
+        <arguments>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <scrollTo selector="{{TextOnStage.tinymce(index)}}" stepKey="scrollToTinyMCE"/>
+    </actionGroup>
+    <actionGroup name="assertSelectedTextTinyMCE">
+        <arguments>
+            <argument name="expected"/>
+        </arguments>
+        <executeJS function="return window.getSelection().toString()" stepKey="selectionHeadingString"/>
+        <assertEquals stepKey="assertSelectionText">
+            <expectedResult type="string">{{expected.selection}}</expectedResult>
+            <actualResult type="variable">selectionHeadingString</actualResult>
+        </assertEquals>
     </actionGroup>
 </actionGroups>

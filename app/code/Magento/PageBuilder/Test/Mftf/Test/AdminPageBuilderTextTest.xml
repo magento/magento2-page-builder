@@ -2838,16 +2838,22 @@
         <actionGroup ref="unFocusOptionMenu" stepKey="unFocusEditor">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <click selector="{{TextOnStage.directive('1', TinyMCEVariableBaseURL.editPanelValue)}}" stepKey="clickOnWidgetPlaceholder"/>
-        <waitForElementVisible selector="{{TextOnStage.directiveFocused('1', TinyMCEVariableBaseURL.editPanelValue)}}" stepKey="waitForDirectiveFocused"/>
-        <seeElement selector="{{TextOnStage.directiveFocused('1', TinyMCEVariableBaseURL.editPanelValue)}}" stepKey="verifyDirectiveIsFocused"/>
+        <actionGroup ref="clickDirectiveTinyMCE" stepKey="clickDirectiveTinyMCE">
+            <argument name="directive" value="TinyMCEVariableBaseURL" />
+        </actionGroup>
+        <actionGroup ref="seeDirectiveFocusedTinyMCE" stepKey="seeDirectiveFocusedTinyMCE">
+            <argument name="directive" value="TinyMCEVariableBaseURL" />
+        </actionGroup>
         <!-- Save page and verify single clicking on widget will retain selection -->
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        <click selector="{{TextOnStage.directive('1', TinyMCEVariableBaseURL.editPanelValue)}}" stepKey="clickOnWidgetPlaceholder2"/>
-        <waitForElementVisible selector="{{TextOnStage.tinymceInFocus('1')}}" stepKey="waitForTinyMCEFocus"/>
-        <waitForElementVisible selector="{{TextOnStage.directiveFocused('1', TinyMCEVariableBaseURL.editPanelValue)}}" stepKey="waitForDirectiveFocused2"/>
-        <seeElement selector="{{TextOnStage.directiveFocused('1', TinyMCEVariableBaseURL.editPanelValue)}}" stepKey="verifyDirectiveIsFocused2"/>
+        <actionGroup ref="clickDirectiveTinyMCE" stepKey="clickDirectiveTinyMCE2">
+            <argument name="directive" value="TinyMCEVariableBaseURL" />
+        </actionGroup>
+        <actionGroup ref="waitForTinyMCEFocus" stepKey="waitForTinyMCEFocus" />
+        <actionGroup ref="seeDirectiveFocusedTinyMCE" stepKey="seeDirectiveFocusedTinyMCE2">
+            <argument name="directive" value="TinyMCEVariableBaseURL" />
+        </actionGroup>
     </test>
     <test name="TextAddWidgetWithinStringInlineWYSIWYG">
         <annotations>
@@ -2902,16 +2908,22 @@
         <actionGroup ref="unFocusOptionMenu" stepKey="unFocusEditor">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <click selector="{{TextOnStage.directive('1', TinyMCEWidgetCMSPageLink.editPanelValue)}}" stepKey="clickOnWidgetPlaceholder"/>
-        <waitForElementVisible selector="{{TextOnStage.directiveFocused('1', TinyMCEWidgetCMSPageLink.editPanelValue)}}" stepKey="waitForDirectiveFocused"/>
-        <seeElement selector="{{TextOnStage.directiveFocused('1', TinyMCEWidgetCMSPageLink.editPanelValue)}}" stepKey="verifyDirectiveIsFocused"/>
+        <actionGroup ref="clickDirectiveTinyMCE" stepKey="clickDirectiveTinyMCE">
+            <argument name="directive" value="TinyMCEWidgetCMSPageLink" />
+        </actionGroup>
+        <actionGroup ref="seeDirectiveFocusedTinyMCE" stepKey="seeDirectiveFocusedTinyMCE">
+            <argument name="directive" value="TinyMCEWidgetCMSPageLink" />
+        </actionGroup>
         <!-- Save page and verify single clicking on widget will retain selection -->
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        <click selector="{{TextOnStage.directive('1', TinyMCEWidgetCMSPageLink.editPanelValue)}}" stepKey="clickOnWidgetPlaceholder2"/>
-        <waitForElementVisible selector="{{TextOnStage.tinymceInFocus('1')}}" stepKey="waitForTinyMCEFocus"/>
-        <waitForElementVisible selector="{{TextOnStage.directiveFocused('1', TinyMCEWidgetCMSPageLink.editPanelValue)}}" stepKey="waitForDirectiveFocused2"/>
-        <seeElement selector="{{TextOnStage.directiveFocused('1', TinyMCEWidgetCMSPageLink.editPanelValue)}}" stepKey="verifyDirectiveIsFocused2"/>
+        <actionGroup ref="clickDirectiveTinyMCE" stepKey="clickDirectiveTinyMCE2">
+            <argument name="directive" value="TinyMCEWidgetCMSPageLink" />
+        </actionGroup>
+        <actionGroup ref="waitForTinyMCEFocus" stepKey="waitForTinyMCEFocus" />
+        <actionGroup ref="seeDirectiveFocusedTinyMCE" stepKey="seeDirectiveFocusedTinyMCE2">
+            <argument name="directive" value="TinyMCEWidgetCMSPageLink" />
+        </actionGroup>
     </test>
     <test name="TextCopyAndPasteAllTextInlineWYSIWYG">
         <annotations>
@@ -3052,11 +3064,12 @@
         <actionGroup ref="addVariableToTinyMCEInline" stepKey="addVariableToTinyMCE">
             <argument name="variable" value="TinyMCEVariableBaseURL"/>
         </actionGroup>
-        <waitForElementVisible selector="{{TextOnStage.text('1', TinyMCEVariableBaseURL.editPanelValue)}}" stepKey="waitForVariable"/>
-        <seeElement selector="{{TextOnStage.text('1', TinyMCEVariableBaseURL.editPanelValue)}}" stepKey="seeVariableOnStage"/>
+        <actionGroup ref="seeVariableTinyMCE" stepKey="seeVariableTinyMCE">
+            <argument name="variable" value="TinyMCEVariableBaseURL"/>
+        </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        <scrollTo selector="{{TextOnStage.tinymce('1')}}" stepKey="scrollToTinyMCE"/>
+        <actionGroup ref="scrollToTinyMCE" stepKey="scrollToTinyMCE"/>
         <!-- Select portion of Heading "his is a h" -->
         <executeInSelenium function="function ($webdriver) use ($I) {
             $heading = $webdriver->findElement(\Facebook\WebDriver\WebDriverBy::xpath('//div[contains(@class, \'inline-wysiwyg\')]//h2'));
@@ -3068,15 +3081,13 @@
                 ->perform();
         }" stepKey="selectHeadingTextInTinyMCE"/>
         <waitForElementVisible selector="{{TextOnStage.tinymceInFocus('1')}}" stepKey="waitForTinyMCEFocus"/>
-        <executeJS function="return window.getSelection().toString()" stepKey="selectionHeadingString"/>
-        <assertEquals stepKey="assertSelectionText">
-            <expectedResult type="string">{{TinyMCEPartialHeadingSelection.selection}}</expectedResult>
-            <actualResult type="variable">selectionHeadingString</actualResult>
-        </assertEquals>
+        <actionGroup ref="assertSelectedTextTinyMCE" stepKey="assertSelection">
+            <argument name="expected" value="TinyMCEPartialHeadingSelection"/>
+        </actionGroup>
         <reloadPage stepKey="reloadPage" />
         <waitForPageLoad stepKey="waitForReload" />
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
-        <scrollTo selector="{{TextOnStage.tinymce('1')}}" stepKey="scrollToTinyMCE2"/>
+        <actionGroup ref="scrollToTinyMCE" stepKey="scrollToTinyMCE2"/>
         <!-- Select portion of paragraph text "es stri" -->
         <executeInSelenium function="function ($webdriver) use ($I) {
             $text = $webdriver->findElement(\Facebook\WebDriver\WebDriverBy::xpath('//div[contains(@class, \'inline-wysiwyg\')]//p[2]'));
@@ -3088,15 +3099,13 @@
                 ->perform();
         }" stepKey="selectTextInTinyMCE"/>
         <waitForElementVisible selector="{{TextOnStage.tinymceInFocus('1')}}" stepKey="waitForTinyMCEFocus2"/>
-        <executeJS function="return window.getSelection().toString()" stepKey="selectionTextString"/>
-        <assertEquals stepKey="assertSelectionText2">
-            <expectedResult type="string">{{TinyMCEPartialTextSelection.selection}}</expectedResult>
-            <actualResult type="variable">selectionTextString</actualResult>
-        </assertEquals>
+        <actionGroup ref="assertSelectedTextTinyMCE" stepKey="assertSelection2">
+            <argument name="expected" value="TinyMCEPartialTextSelection"/>
+        </actionGroup>
         <reloadPage stepKey="reloadPage2" />
         <waitForPageLoad stepKey="waitForReload2" />
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage3"/>
-        <scrollTo selector="{{TextOnStage.tinymce('1')}}" stepKey="scrollToTinyMCE3"/>
+        <actionGroup ref="scrollToTinyMCE" stepKey="scrollToTinyMCE3"/>
         <!-- Select from part of the heading, over the variable, to part of the text string -->
         <executeInSelenium function="function ($webdriver) use ($I) {
             $heading = $webdriver->findElement(\Facebook\WebDriver\WebDriverBy::xpath('//div[contains(@class, \'inline-wysiwyg\')]//h2'));
@@ -3109,10 +3118,8 @@
                 ->perform();
         }" stepKey="selectHeadingTextAndVariableTinyMCE"/>
         <waitForElementVisible selector="{{TextOnStage.tinymceInFocus('1')}}" stepKey="waitForTinyMCEFocus3"/>
-        <executeJS function="return window.getSelection().toString()" stepKey="selectionMultipleString"/>
-        <assertEquals stepKey="assertSelectionText3">
-            <expectedResult type="string">{{TinyMCEHeadingVariableTextSelection.selection}}</expectedResult>
-            <actualResult type="variable">selectionMultipleString</actualResult>
-        </assertEquals>
+        <actionGroup ref="assertSelectedTextTinyMCE" stepKey="assertSelection3">
+            <argument name="expected" value="TinyMCEHeadingVariableTextSelection"/>
+        </actionGroup>
     </test>
 </tests>
