@@ -84,7 +84,6 @@ $category->setId(5)
     ->setDescription('Category 2 - Empty Anchor')
     ->save();
 
-
 $category = $objectManager->create(\Magento\Catalog\Model\Category::class);
 $category->isObjectNew(true);
 $category->setId(6)
@@ -121,7 +120,7 @@ if (!function_exists('createTestProduct')) {
         $defaultAttributeSet,
         $categoryLinkManagement,
         $productRepository,
-        $assignToCategories = [2 ,3]
+        $assignToCategories = [2, 3]
     ) {
         /** @var $product \Magento\Catalog\Model\Product */
         $product = $objectManager->create(\Magento\Catalog\Model\Product::class);

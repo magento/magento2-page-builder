@@ -53,6 +53,8 @@ class ProductTotalsTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @return array
+     *
+     * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
      */
     public function productDataProvider()
     {
