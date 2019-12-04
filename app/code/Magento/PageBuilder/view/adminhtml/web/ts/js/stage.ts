@@ -10,7 +10,6 @@ import "Magento_PageBuilder/js/resource/jquery/ui/jquery.ui.touch-punch";
 import _ from "underscore";
 import "./binding/sortable";
 import Collection from "./collection";
-import Config from "./config";
 import ContentTypeCollectionInterface from "./content-type-collection.types";
 import {ContentTypeRemovedParamsInterface} from "./content-type/content-type-events.types";
 import DataStore from "./data-store";

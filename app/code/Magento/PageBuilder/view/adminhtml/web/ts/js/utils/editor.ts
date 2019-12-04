@@ -1,4 +1,10 @@
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
 import $ from "jquery";
+import $t from "mage/translate";
 import mageUtils from "mageUtils";
 import {Editor} from "tinymce";
 import Config from "../config";
@@ -83,7 +89,7 @@ function convertVariablesToHtmlPreview(content: string) {
         } else {
             // If we're unable to find the placeholder we need to attach an error class
             placeholder.addClass("magento-placeholder-error");
-            placeholder.text((variableType === "custom" ? path : "Not Found"));
+            placeholder.text((variableType === "custom" ? path : $t("Not Found")));
         }
 
         return placeholder[0].outerHTML;

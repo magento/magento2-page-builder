@@ -1,6 +1,11 @@
 /*eslint-disable */
 /* jscs:disable */
-define(["jquery", "mageUtils", "Magento_PageBuilder/js/config"], function (_jquery, _mageUtils, _config) {
+define(["jquery", "mage/translate", "mageUtils", "Magento_PageBuilder/js/config"], function (_jquery, _translate, _mageUtils, _config) {
+  /**
+   * Copyright © Magento, Inc. All rights reserved.
+   * See COPYING.txt for license details.
+   */
+
   /**
    * Is the inline WYSIWYG supported?
    */
@@ -78,7 +83,7 @@ define(["jquery", "mageUtils", "Magento_PageBuilder/js/config"], function (_jque
       } else {
         // If we're unable to find the placeholder we need to attach an error class
         placeholder.addClass("magento-placeholder-error");
-        placeholder.text(variableType === "custom" ? path : "Not Found");
+        placeholder.text(variableType === "custom" ? path : (0, _translate)("Not Found"));
       }
 
       return placeholder[0].outerHTML;
