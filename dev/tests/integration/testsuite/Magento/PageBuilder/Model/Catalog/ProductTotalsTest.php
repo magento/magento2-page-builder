@@ -70,7 +70,7 @@ class ProductTotalsTest extends \PHPUnit\Framework\TestCase
                         'attribute' => 'category_ids',
                         'value' => '4'
                     ]
-                ], [0, 0, 0, 0]
+                ], [0, 0, 0]
             ],
             [ // #1 category with 4 products, 3 disabled, 3 not visible (but 2 not visible disabled)
                 ['1' => [
@@ -85,7 +85,7 @@ class ProductTotalsTest extends \PHPUnit\Framework\TestCase
                         'attribute' => 'category_ids',
                         'value' => '3'
                     ]
-                ], [8, 3, 1, 1]
+                ], [8, 3, 1]
             ],
             [ // #2 sku with no matches
                 ['1' => [
@@ -100,9 +100,9 @@ class ProductTotalsTest extends \PHPUnit\Framework\TestCase
                         'attribute' => 'sku',
                         'value' => 'shoes'
                     ]
-                ], [0, 0, 0, 0]
+                ], [0, 0, 0]
             ],
-            [ // #3 sku with 2 matches, 1 disabled, 1 not visible, 1 out of stock
+            [ // #3 sku with 2 matches, 1 disabled, 1 not visible
                 ['1' => [
                     'aggregator' => 'all',
                     'new_child' => '',
@@ -115,7 +115,7 @@ class ProductTotalsTest extends \PHPUnit\Framework\TestCase
                         'attribute' => 'sku',
                         'value' => 'not-visible-on-storefront, disabled-product, out-of-stock'
                     ]
-                ], [3, 1, 1, 1]
+                ], [3, 1, 1]
             ],
             [ // #4 condition with no matches
                 ['1' => [
@@ -130,7 +130,7 @@ class ProductTotalsTest extends \PHPUnit\Framework\TestCase
                         'attribute' => 'price',
                         'value' => '10000'
                     ]
-                ], [0, 0, 0, 0]
+                ], [0, 0, 0]
             ],
             [ // #5 condition with 3 matches, 1 disabled, 1 not visible
                 ['1' => [
@@ -145,7 +145,7 @@ class ProductTotalsTest extends \PHPUnit\Framework\TestCase
                         'attribute' => 'price',
                         'value' => '20'
                     ]
-                ], [3, 1, 1, 0]
+                ], [3, 1, 1]
             ],
         ];
     }
