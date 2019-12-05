@@ -313,14 +313,16 @@
             <argument name="index" defaultValue="1" type="string"/>
             <argument name="variable"/>
         </arguments>
+        <waitForElementVisible selector="{{section.directive(index, variable.editPanelValue)}}" stepKey="waitForVariableVisible"/>
         <doubleClick selector="{{section.directive(index, variable.editPanelValue)}}" stepKey="doubleClickOnVariablePlaceholder"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForElementVisible selector="{{VariableSection.CancelBtnEnabled}}" stepKey="waitForCancelButton"/>
         <waitForElementVisible selector="{{VariableSection.Radio(variable.variableName)}}" stepKey="waitForVariableAfterDoubleClick"/>
     </actionGroup>
     <actionGroup name="closeVariablePanelTinyMCE">
         <waitForElementVisible selector="{{VariableSection.CancelBtnEnabled}}" stepKey="waitForCancelButton"/>
         <click selector="{{VariableSection.CancelBtnEnabled}}" stepKey="clickCancelButton"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForElementNotVisible selector="{{VariableSection.CancelBtnEnabled}}" stepKey="waitForVariableCancelNotVisible"/>
     </actionGroup>
     <actionGroup name="doubleClickWidgetTinyMCE">
@@ -329,13 +331,25 @@
             <argument name="index" defaultValue="1" type="string"/>
             <argument name="widget"/>
         </arguments>
+        <waitForElementVisible selector="{{section.directive('1', TinyMCEWidgetCMSPageLink.editPanelValue)}}" stepKey="waitForWidgetVisible"/>
         <doubleClick selector="{{section.directive('1', TinyMCEWidgetCMSPageLink.editPanelValue)}}" stepKey="doubleClickOnWidgetPlaceholder"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
         <waitForElementVisible selector="{{WidgetSection.CancelBtnEnabled}}" stepKey="waitForWidgetType"/>
     </actionGroup>
     <actionGroup name="closeWidgetPanelTinyMCE">
-        <click selector="{{WidgetSection.CancelBtnEnabled}}" stepKey="clickInsertWidget3"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear7"/>
+        <waitForElementVisible selector="{{WidgetSection.CancelBtnEnabled}}" stepKey="waitForCancelButton"/>
+        <click selector="{{WidgetSection.CancelBtnEnabled}}" stepKey="clickInsertWidget"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementNotVisible selector="{{WidgetSection.CancelBtnEnabled}}}" stepKey="waitForCancelButtonNotVisible"/>
+    </actionGroup>
+    <actionGroup name="focusTinyMCE">
+        <arguments>
+            <argument name="section" defaultValue="TextOnStage"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{section.tinymce(index)}}" stepKey="waitForTinyMCE"/>
+        <click selector="{{section.tinymce(index)}}" stepKey="focusOnTextEditorArea"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible selector="{{section.tinymceFocused(index)}}" stepKey="waitForTinyMCEFocus"/>
     </actionGroup>
 </actionGroups>

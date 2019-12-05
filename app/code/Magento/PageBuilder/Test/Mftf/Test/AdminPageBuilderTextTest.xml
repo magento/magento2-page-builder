@@ -2840,7 +2840,7 @@
         <actionGroup ref="seeDirectiveFocusedTinyMCE" stepKey="seeDirectiveFocusedTinyMCE">
             <argument name="labelValue" value="TinyMCEVariableBaseURL.editPanelValue" />
         </actionGroup>
-        <!-- Save page and verify single clicking on widget will retain selection -->
+        <!-- Save page and verify single clicking on variable will retain selection -->
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <actionGroup ref="clickDirectiveTinyMCE" stepKey="clickDirectiveTinyMCE2">
@@ -3019,8 +3019,8 @@
             <title value="TinyMCE4 selection is preserved after initiation"/>
             <description value="Verify that a users selection is not lost between select and initiation"/>
             <severity value="AVERAGE"/>
-            <useCaseId value="MC-29450"/>
-            <testCaseId value="PB-303"/>
+            <useCaseId value="PB-170"/>
+            <testCaseId value="MC-29450"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-text"/>
         </annotations>
@@ -3039,10 +3039,10 @@
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection1">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsOntoStage">
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTextOntoStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <click selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnTextEditorArea"/>
+        <actionGroup ref="focusTinyMCE" stepKey="focusTinyMCE"/>
         <!-- Create new Heading 2 -->
         <actionGroup ref="formatTextTinyMCE" stepKey="formatTextHeading2">
             <argument name="format" value="TinyMCEFormatHeading2"/>
