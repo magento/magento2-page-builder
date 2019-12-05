@@ -11,7 +11,7 @@ namespace Magento\PageBuilder\Model\Stage;
 use Magento\Framework\UrlInterface;
 
 /**
- * Class Config
+ * Provide configuration to the admin JavaScript app
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  *
  * @api
