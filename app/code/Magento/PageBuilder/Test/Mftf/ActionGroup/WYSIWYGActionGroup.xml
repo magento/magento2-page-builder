@@ -334,11 +334,11 @@
         <waitForElementVisible selector="{{section.directive('1', TinyMCEWidgetCMSPageLink.editPanelValue)}}" stepKey="waitForWidgetVisible"/>
         <doubleClick selector="{{section.directive('1', TinyMCEWidgetCMSPageLink.editPanelValue)}}" stepKey="doubleClickOnWidgetPlaceholder"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
-        <waitForElementVisible selector="{{WidgetSection.CancelBtnEnabled}}" stepKey="waitForWidgetType"/>
+        <waitForElementVisible selector="{{WidgetSection.CancelBtnEnabled}}" stepKey="waitForCancelButtonNotVisible"/>
     </actionGroup>
     <actionGroup name="closeWidgetPanelTinyMCE">
         <waitForElementVisible selector="{{WidgetSection.CancelBtnEnabled}}" stepKey="waitForCancelButton"/>
-        <click selector="{{WidgetSection.CancelBtnEnabled}}" stepKey="clickInsertWidget"/>
+        <click selector="{{WidgetSection.CancelBtnEnabled}}" stepKey="clickCancelButton"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForElementNotVisible selector="{{WidgetSection.CancelBtnEnabled}}}" stepKey="waitForCancelButtonNotVisible"/>
     </actionGroup>
