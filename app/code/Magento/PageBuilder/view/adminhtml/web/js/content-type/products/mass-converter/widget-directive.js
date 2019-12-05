@@ -56,10 +56,13 @@ define(["Magento_PageBuilder/js/mass-converter/widget-directive-abstract", "Mage
         id_path: "",
         show_pager: 0,
         products_count: data.products_count,
-        sort_order: data.sort_order,
         type_name: "Catalog Products List",
         conditions_encoded: this.encodeWysiwygCharacters(data.conditions_encoded || "")
       };
+
+      if (data.sort_order) {
+        attributes.sort_order = data.sort_order;
+      }
 
       if (attributes.conditions_encoded.length === 0) {
         return data;
