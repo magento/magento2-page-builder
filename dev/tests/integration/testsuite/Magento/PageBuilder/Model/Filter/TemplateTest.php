@@ -5,7 +5,7 @@
  */
 declare(strict_types=1);
 
-namespace Magento\Pagebuilder\Model\Filter;
+namespace Magento\PageBuilder\Model\Filter;
 
 use Magento\TestFramework\ObjectManager;
 
@@ -41,19 +41,31 @@ class TemplateTest extends \PHPUnit\Framework\TestCase
     {
         $template = <<<TEMPLATE
 <div data-content-type="row" data-appearance="contained" data-element="main">
-	<div data-enable-parallax="0" data-parallax-speed="0.5" data-background-images="{\&quot;desktop_image\&quot;:\&quot;{{media url=jb-decorating.jpg}}\&quot;}" data-element="inner" style="justify-content: flex-start; display: flex; flex-direction: column; background-position: center center; background-size: cover; background-repeat: repeat; background-attachment: scroll; border-style: none; border-width: 1px; border-radius: 0px; min-height: 350px; margin: 0px 0px 10px; padding: 10px;"></div>
+	<div data-enable-parallax="0" data-parallax-speed="0.5" 
+	data-background-images="{\&quot;desktop_image\&quot;:\&quot;{{media url=jb-decorating.jpg}}\&quot;}" 
+	data-element="inner" style="justify-content: flex-start; display: flex; flex-direction: column; 
+	background-position: center center; background-size: cover; background-repeat: repeat; 
+	background-attachment: scroll; border-style: none; border-width: 1px; border-radius: 0px; min-height: 350px;
+	margin: 0px 0px 10px; padding: 10px;"></div>
 </div>
 TEMPLATE;
 
         $template2 = <<<TEMPLATE
 <div data-content-type="row" data-element="main" data-appearance="contained">
-	<div style="background-position: center; border-width: 1px; border-style: none; margin: 0px 0px 10px; padding: 10px; border-radius: 0px; background-repeat: repeat; background-attachment: scroll; display: flex; min-height: 350px; background-size: cover; flex-direction: column; justify-content: flex-start;" data-element="inner" data-background-images='{\"desktop_image\":\"{{media url=jb-decorating.jpg}}\"}' data-parallax-speed="0.5" data-enable-parallax="0"></div>
+	<div style="background-position: center; border-width: 1px; border-style: none; margin: 0px 0px 10px; 
+	padding: 10px; border-radius: 0px; background-repeat: repeat; background-attachment: scroll; display: flex; 
+	min-height: 350px; background-size: cover; flex-direction: column; justify-content: flex-start;" 
+	data-element="inner" data-background-images='{\"desktop_image\":\"{{media url=jb-decorating.jpg}}\"}' 
+	data-parallax-speed="0.5" data-enable-parallax="0"></div>
 </div>
 TEMPLATE;
 
         $template3 = <<<TEMPLATE
 <div data-content-type="row" data-element="main" data-appearance="contained">
-	<div style="background-position: center; border-width: 1px; border-style: none; margin: 0px 0px 10px; padding: 10px; border-radius: 0px; background-repeat: repeat; background-attachment: scroll; display: flex; min-height: 350px; background-size: cover; flex-direction: column; justify-content: flex-start;" data-element="inner" data-background-images='{}' data-parallax-speed="0.5" data-enable-parallax="0"></div>
+	<div style="background-position: center; border-width: 1px; border-style: none; margin: 0px 0px 10px; 
+	padding: 10px; border-radius: 0px; background-repeat: repeat; background-attachment: scroll; display: flex; 
+	min-height: 350px; background-size: cover; flex-direction: column; justify-content: flex-start;" 
+	data-element="inner" data-background-images='{}' data-parallax-speed="0.5" data-enable-parallax="0"></div>
 </div>
 TEMPLATE;
 
