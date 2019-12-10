@@ -12,7 +12,7 @@ namespace Magento\PageBuilder\Plugin\Filter;
  */
 class TemplatePlugin
 {
-    const BACKGROUND_IMAGE_PATTERN = '/data-background-images=\"{[^"]+}\"/si';
+    const BACKGROUND_IMAGE_PATTERN = '/data-background-images=(?:\'|"){.+}(?:\'|")/si';
 
     const HTML_CONTENT_TYPE_PATTERN = '/data-content-type="html"/si';
 
