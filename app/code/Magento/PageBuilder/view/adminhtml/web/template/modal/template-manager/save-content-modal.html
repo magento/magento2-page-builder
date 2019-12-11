@@ -1,0 +1,34 @@
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<form <%= formAttr %>>
+    <fieldset class="admin__fieldset">
+        <div class="admin__field admin__field-wide">
+            <label class="admin__field-label">
+                <span>Preview</span>
+            </label>
+            <div class="admin__field-control template-manager-preview">
+                <%= data.previewPlaceholder %>
+                <div data-role="spinner" class="template-manager-preview-spinner">
+                    <div class="spinner">
+                        <span></span><span></span><span></span><span></span>
+                        <span></span><span></span><span></span><span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="admin__field admin__field-wide">
+            <% if(data.label){ %>
+            <label for="prompt-field-<%- data.id %>" class="admin__field-label">
+                <span><%= data.label %></span>
+            </label>
+            <% } %>
+            <div class="admin__field-control">
+                <input type="text" data-role="promptField" id="prompt-field-<%- data.id %>" class="admin__control-text" <%= inputAttr %>/>
+            </div>
+        </div>
+    </fieldset>
+</form>

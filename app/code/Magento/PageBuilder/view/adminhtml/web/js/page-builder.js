@@ -1,6 +1,6 @@
 /*eslint-disable */
 /* jscs:disable */
-define(["jquery", "knockout", "Magento_PageBuilder/js/events", "mageUtils", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/panel", "Magento_PageBuilder/js/stage"], function (_jquery, _knockout, _events, _mageUtils, _underscore, _config, _contentTypeFactory, _panel, _stage) {
+define(["jquery", "knockout", "Magento_PageBuilder/js/events", "mageUtils", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/panel", "Magento_PageBuilder/js/stage", "Magento_PageBuilder/js/template-manager"], function (_jquery, _knockout, _events, _mageUtils, _underscore, _config, _contentTypeFactory, _panel, _stage, _templateManager) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -49,6 +49,10 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "mageUtils", "und
       var _this2 = this;
 
       _events.on("stage:" + this.id + ":toggleFullscreen", this.toggleFullScreen.bind(this));
+
+      _events.on("stage:" + this.id + ":masterFormatRenderAfter", function (content) {
+        _this2.content = content.value;
+      });
 
       this.isFullScreen.subscribe(function () {
         return _this2.onFullScreenChange();
@@ -150,6 +154,24 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "mageUtils", "und
 
     _proto.getTemplate = function getTemplate() {
       return this.template;
+    }
+    /**
+     * Toggle template manager
+     */
+    ;
+
+    _proto.toggleTemplateManger = function toggleTemplateManger() {
+      _events.trigger("stage:templateManager:open", {
+        stage: this.stage
+      });
+    }
+    /**
+     * Enable saving the current stage as a template
+     */
+    ;
+
+    _proto.saveAsTemplate = function saveAsTemplate() {
+      return (0, _templateManager.saveAsTemplate)(this.stage);
     };
 
     return PageBuilder;

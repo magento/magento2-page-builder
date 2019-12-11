@@ -15,6 +15,7 @@ import PageBuilderInterface from "./page-builder.types";
 import Panel from "./panel";
 import Stage from "./stage";
 import {StageToggleFullScreenParamsInterface} from "./stage-events.types";
+import {saveAsTemplate} from "./template-manager";
 
 export default class PageBuilder implements PageBuilderInterface {
     public template: string = "Magento_PageBuilder/page-builder";
@@ -28,6 +29,7 @@ export default class PageBuilder implements PageBuilderInterface {
     public isFullScreen: KnockoutObservable<boolean> = ko.observable(false);
     public loading: KnockoutObservable<boolean> = ko.observable(true);
     public wrapperStyles: KnockoutObservable<{[key: string]: string}> = ko.observable({});
+    public content: string;
     private previousWrapperStyles: {[key: string]: string} = {};
     private previousPanelHeight: number;
 
@@ -57,6 +59,9 @@ export default class PageBuilder implements PageBuilderInterface {
      */
     public initListeners() {
         events.on(`stage:${ this.id }:toggleFullscreen`, this.toggleFullScreen.bind(this));
+        events.on(`stage:${ this.id }:masterFormatRenderAfter`, (content: {value: string}) => {
+            this.content = content.value;
+        });
         this.isFullScreen.subscribe(() => this.onFullScreenChange());
     }
 
@@ -145,5 +150,21 @@ export default class PageBuilder implements PageBuilderInterface {
      */
     public getTemplate() {
         return this.template;
+    }
+
+    /**
+     * Toggle template manager
+     */
+    public toggleTemplateManger() {
+        events.trigger(`stage:templateManager:open`, {
+            stage: this.stage,
+        });
+    }
+
+    /**
+     * Enable saving the current stage as a template
+     */
+    public saveAsTemplate() {
+        return saveAsTemplate(this.stage);
     }
 }
