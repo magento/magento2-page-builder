@@ -79,7 +79,7 @@
         <before>
             <createData entity="_emptyCmsBlock" stepKey="createPreReqBlock" after="loginAsAdmin"/>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage">
+            <actionGroup ref="NavigateToCreatedCMSBlockPageActionGroup" stepKey="navigateToCreatedCMSBlockPage">
                 <argument name="CMSBlockPage" value="$$createPreReqBlock$$"/>
             </actionGroup>
         </before>
@@ -91,7 +91,7 @@
         <seeElement selector="{{PageBuilderStage.stageWrapper}}" stepKey="seeElementPageBuilderStage"/>
         <dontSeeElementInDOM selector="{{CmsNewBlockBlockBasicFieldsSection.content_textarea}}" stepKey="dontSeeContentAreaInDOM"/>
         <magentoCLI command="config:set cms/pagebuilder/enabled 0" stepKey="disablePageBuilder"/>
-        <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage">
+        <actionGroup ref="NavigateToCreatedCMSBlockPageActionGroup" stepKey="navigateToCreatedCMSBlockPage">
             <argument name="CMSBlockPage" value="$$createPreReqBlock$$"/>
         </actionGroup>
         <seeElementInDOM selector="{{CmsNewBlockBlockBasicFieldsSection.content_textarea}}" stepKey="seeContentAreaInDOM"/>
