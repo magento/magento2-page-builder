@@ -66,7 +66,7 @@
         <actionGroup ref="updateMaxGridSizeConfig" stepKey="enterValidMaxGridSize">
             <argument name="gridSize" value="{{PageBuilderGridSize.gridSize_32}}"/>
         </actionGroup>
-        <actionGroup SaveAndContinueEditCmsPageActionGroup stepKey="saveStoreConfiguration4"/>
+        <actionGroup ref="SaveStoreConfigurationActionGroup" stepKey="saveStoreConfiguration4"/>
         <see selector="{{ContentManagementSection.StoreConfigurationPageSuccessMessage}}" userInput="You saved the configuration." stepKey="seeSuccessMessage2"/>
         <!-- Enter Invalid Default Grid Size Negative -->
         <comment userInput="Enter Invalid Default Grid Size Negative" stepKey="commentNegativeNumber"/>
@@ -111,7 +111,7 @@
         <!-- Restore Default Values for Default and Maximum Grid Size -->
         <comment userInput="Restore Default Values for Default and Maximum Grid Size" stepKey="comment5"/>
         <click selector="{{ContentManagementSection.UseSystem('column_grid_default')}}" stepKey="restoreDefaultGridSize" />
-        <actionGroup SaveAndContinueEditCmsPageActionGroup stepKey="saveStoreConfiguration5"/>
+        <actionGroup ref="SaveStoreConfigurationActionGroup" stepKey="saveStoreConfiguration5"/>
         <!-- Enter Invalid Max Default Grid Size Negative -->
         <comment userInput="Enter Invalid Max Default Grid Size Negative" stepKey="commentNegativeNumberMax"/>
         <actionGroup ref="updateMaxGridSizeConfig" stepKey="enterNegativeMaxGridSize">
@@ -153,7 +153,7 @@
             <argument name="errorMessage" value="{{PageBuilderDefaultColumnGridSize.invalidDigitErrorMessage}}"/>
         </actionGroup>
         <click selector="{{ContentManagementSection.UseSystem('column_grid_max')}}" stepKey="restoreDefaultMaxGridSize" />
-        <actionGroup SaveAndContinueEditCmsPageActionGroup stepKey="saveStoreConfiguration6"/>
+        <actionGroup ref="SaveStoreConfigurationActionGroup" stepKey="saveStoreConfiguration6"/>
         <see selector="{{ContentManagementSection.StoreConfigurationPageSuccessMessage}}" userInput="You saved the configuration." stepKey="seeSuccessMessage3"/>
     </test>
     <test name="StoreConfigurationDefaultColumnGridSizeFieldAppearance">
