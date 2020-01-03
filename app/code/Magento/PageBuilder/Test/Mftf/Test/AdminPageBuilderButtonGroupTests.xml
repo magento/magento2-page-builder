@@ -41,7 +41,7 @@
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <waitForElementVisible selector="{{ButtonGroupOnStage.base('1')}}" stepKey="waitForButtons"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Remove Button Group -->
         <comment userInput="Remove Button Group" stepKey="commentRemoveButtonGroup"/>
@@ -52,7 +52,7 @@
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <dontSeeElementInDOM selector="{{ButtonGroupOnStage.base('1')}}" stepKey="dontSeeButtonsStage"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage2"/>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
@@ -298,7 +298,7 @@
             <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanel"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
@@ -466,7 +466,7 @@
             <argument name="padding" value="PageBuilderPaddingPropertyButtons"/>
             <argument name="index" value="1"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
@@ -603,7 +603,7 @@
             <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
@@ -751,7 +751,7 @@
             <argument name="contentTypeIndex" value="1"/>
             <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate stage after save" stepKey="validateButtonsOnStage"/>
@@ -911,7 +911,7 @@
             <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
@@ -1003,7 +1003,7 @@
         <seeElement selector="{{ButtonGroupOnStage.notHidden('1')}}" stepKey="seeContentTypeNotHiddenStageBeforeSave"/>
         <!-- Stage: Validate Default Show/Hide State - After Save -->
         <comment userInput="Stage: Validate Default Show/Hide State - After Save" stepKey="CommentValidateDefaultShowHideStateOnStageAfterSave"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <seeElement selector="{{ButtonGroupOnStage.notHidden('1')}}" stepKey="seeContentTypeNotHiddenStageAfterSave"/>
         <!-- Storefront: Validate Default Show/Hide State -->
@@ -1060,7 +1060,7 @@
             <argument name="section" value="ButtonGroupOnStage"/>
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage1"/>
         <!-- Validate content type remains disabled after save -->
         <comment userInput="Validate content type remains disabled after save" stepKey="commentValidateHiddenStage"/>
@@ -1094,7 +1094,7 @@
             <argument name="section" value="ButtonGroupOnStage"/>
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage1"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage1"/>
         <!-- Validate Content Is Shown Storefront -->
         <comment userInput="Validate Content Is Shown Storefront" stepKey="commentValidateContentIsShownStorefront"/>
         <switchToNextTab stepKey="switchBackToStorefront" />
@@ -1149,7 +1149,7 @@
         <before>
             <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
+            <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
                 <argument name="CMSPage" value="$$createCMSPage$$"/>
             </actionGroup>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStagePage"/>
@@ -1192,10 +1192,10 @@
             <expectedResult type="variable">yCoordinate1Stage</expectedResult>
             <actualResult type="variable">yCoordinate2Stage</actualResult>
         </assertNotEquals>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsStage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsStage"/>
         <!-- Validate CMS Page Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToProductStorefront">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToProductStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <executeJS function="return {{ButtonItemOnStorefrontEmptyLink.jsButtonSelector('1')}}.getBoundingClientRect().y" stepKey="yCoordinate1Storefront"/>

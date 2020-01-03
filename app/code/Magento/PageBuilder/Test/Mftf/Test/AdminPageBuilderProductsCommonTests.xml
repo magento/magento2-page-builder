@@ -57,7 +57,7 @@
             <argument name="conditionInput" value="$$createPreReqCategory.id$$"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
@@ -149,7 +149,7 @@
 
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
 
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
 
         <!-- Validate Stage After Save -->
@@ -237,7 +237,7 @@
         <waitForElementVisible selector="{{ProductsOnStage.hidden('2')}}" stepKey="waitForContentTypeHidden2"/>
         <!-- Stage: Validate Default Show/Hide State - After Save -->
         <comment userInput="Stage: Validate Default Show/Hide State - After Save" stepKey="CommentValidateDefaultShowHideStateOnStageAfterSave"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <waitForElementVisible selector="{{ProductsOnStage.hidden('1')}}" stepKey="waitForContentTypeHiddenAfterSave1"/>
         <waitForElementVisible selector="{{ProductsOnStage.hidden('2')}}" stepKey="waitForContentTypeHiddenAfterSave2"/>
@@ -254,7 +254,7 @@
         </actionGroup>
         <waitForElementVisible selector="{{ProductsOnStage.notHidden('1')}}" stepKey="waitForContentTypeHiddenReset1"/>
         <waitForElementVisible selector="{{ProductsOnStage.notHidden('2')}}" stepKey="waitForContentTypeHiddenReset2"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPageAfterReset"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPageAfterReset"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
@@ -383,7 +383,7 @@
             <argument name="padding" value="PageBuilderPaddingPropertyDefault"/>
             <argument name="index" value="1"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
@@ -467,7 +467,7 @@
             <createData entity="SimpleProduct4" stepKey="createPreReqProductB">
                 <requiredEntity createDataKey="createPreReqCategory"/>
             </createData>
-            <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSBPage1">
+            <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSBPage1">
                 <argument name="CMSPage" value="$$createdCMSPage$$"/>
             </actionGroup>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
@@ -502,7 +502,7 @@
             <argument name="page" value="ProductsOnStage"/>
             <argument name="count" value="2"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate Storefront: Show Out of Stock -->
         <comment userInput="Validate Storefront: Show Out of Stock" stepKey="commentValidateStorefront1"/>
         <amOnPage url="$$createdCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
@@ -513,7 +513,7 @@
         </actionGroup>
         <magentoCLI command="config:set cataloginventory/options/show_out_of_stock 0" stepKey="dontDisplayOutOfStockProduct"/>
         <actionGroup ref="ClearCacheActionGroup" stepKey="clearMagentoCache"/>
-        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSBPage2">
+        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSBPage2">
             <argument name="CMSPage" value="$$createdCMSPage$$"/>
         </actionGroup>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
@@ -605,7 +605,7 @@
             <argument name="contentTypeIndex" value="1"/>
             <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate stage after save" stepKey="validateProductsOnStage"/>
@@ -687,7 +687,7 @@
         <seeElement selector="{{ProductsOnStage.notHidden('1')}}" stepKey="seeContentTypeNotHiddenStageBeforeSave"/>
         <!-- Stage: Validate Default Show/Hide State - After Save -->
         <comment userInput="Stage: Validate Default Show/Hide State - After Save" stepKey="CommentValidateDefaultShowHideStateOnStageAfterSave"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <seeElement selector="{{ProductsOnStage.notHidden('1')}}" stepKey="seeContentTypeNotHiddenStageAfterSave"/>
         <!-- Storefront: Validate Default Show/Hide State -->
@@ -755,7 +755,7 @@
             <argument name="section" value="ProductsOnStage"/>
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage1"/>
         <!-- Validate content type remains disabled after save -->
         <comment userInput="Validate content type remains disabled after save" stepKey="commentValidateHiddenStage"/>
@@ -779,7 +779,7 @@
             <argument name="section" value="ProductsOnStage"/>
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage1"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage1"/>
         <!-- Validate Content Is Shown Storefront -->
         <comment userInput="Validate Content Is Shown Storefront" stepKey="commentValidateContentIsShownStorefront"/>
         <switchToNextTab stepKey="switchBackToStorefront" />
@@ -820,17 +820,17 @@
             <actionGroup ref="DeleteCustomWebsiteActionGroup" stepKey="deleteWebsite">
                 <argument name="websiteName" value="$createCustomWebsite.website[name]$"/>
             </actionGroup>
-            <actionGroup ref="DeleteCategory" stepKey="deleteCategory">
+            <actionGroup ref="DeleteCategoryActionGroup" stepKey="deleteCategory">
                 <argument name="categoryEntity" value="SimpleSubCategory"/>
             </actionGroup>
-            <actionGroup ref="deleteProductBySku" stepKey="deleteProduct">
+            <actionGroup ref="DeleteProductBySkuActionGroup" stepKey="deleteProduct">
                 <argument name="sku" value="{{SimpleProduct.sku}}"/>
             </actionGroup>
             <actionGroup ref="logout" stepKey="logoutOfAdmin"/>
         </after>
         <!-- Create product and assign to store view -->
         <comment userInput="Create product and assign to store view" stepKey="createProductAndAssignToStoreView"/>
-        <actionGroup ref="FillAdminSimpleProductForm" stepKey="createProduct">
+        <actionGroup ref="FillAdminSimpleProductFormActionGroup" stepKey="createProduct">
             <argument name="category" value="SimpleSubCategory"/>
             <argument name="simpleProduct" value="SimpleProduct"/>
         </actionGroup>
@@ -874,7 +874,7 @@
             <argument name="page" value="ProductsOnStage"/>
             <argument name="product" value="SimpleProduct"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage2"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
@@ -951,7 +951,7 @@
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <dontSeeJsError stepKey="doNotSeeAnyJSErrorsOnStage"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <dontSeeJsError stepKey="doNotSeeAnyJSErrorsOnStageAfterSaving"/>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
@@ -979,7 +979,7 @@
             </createData>
             <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
+            <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
                 <argument name="CMSPage" value="$$createCMSPage$$"/>
             </actionGroup>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
@@ -1031,10 +1031,10 @@
         <actionGroup ref="validateProductInProducts" stepKey="validateProductsStage1">
             <argument name="page" value="ProductsOnStage"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToStorefront">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <seeElement selector="{{ProductsOnStorefront.product('1')}}" stepKey="seeProductStorefront"/>
@@ -1048,7 +1048,7 @@
         </actionGroup>
         <!-- Changing Combination Condition to False -->
         <comment userInput="Changing Combination Condition to False" stepKey="commentChangeCombinationConditionToFalse"/>
-        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage2">
+        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage2">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
@@ -1090,10 +1090,10 @@
         <!-- Validate Stage After Changing to False -->
         <comment userInput="Validate Stage Changing to False" stepKey="commentValidateStageAfterChangingToFalse"/>
         <see userInput="{{PageBuilderProductsMessage.noProductsFound}}" selector="{{ProductsOnStage.emptyProductsPlaceholder('1')}}" stepKey="validateProductCountStageAfterChangingToFalse"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage2"/>
         <!-- Validate Storefront 2 -->
         <comment userInput="Validate Storefront 2" stepKey="commentValidateStorefrontAfterChangingToFalse"/>
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToStorefrontAfterChangingToFalse">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStorefrontAfterChangingToFalse">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <dontSeeElementInDOM selector="{{ProductsOnStorefront.product('1')}}" stepKey="validateProductCountStorefrontAfterChangingToFalse"/>

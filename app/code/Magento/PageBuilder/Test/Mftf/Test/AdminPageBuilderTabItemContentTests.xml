@@ -62,7 +62,7 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Verify Tab Height Adjusts to Content - Depends on MQE-818 -->
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Verify Text in Tab on storefront -->
         <comment userInput="View Tab on storefront" stepKey="viewTabOnStorefront"/>
         <amOnPage url="tabs{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
@@ -122,7 +122,7 @@
             <argument name="block" value="$$createPreReqBlock$$"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Verify Block in Tab on storefront -->
         <comment userInput="View Tab on storefront" stepKey="viewTabOnStorefront"/>
         <amOnPage url="tabs{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
@@ -170,7 +170,7 @@
             <argument name="containerTargetType" value="PageBuilderTabContentType"/>
             <argument name="containerTargetIndex" value="1" />
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Verify Button in Tab on storefront -->
         <comment userInput="View Tab on storefront" stepKey="viewTabOnStorefront"/>
         <amOnPage url="tabs{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
@@ -195,7 +195,7 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
             <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
                 <argument name="FolderName" value="{{PageBuilderImageProperty_StageJPG.path}}"/>
             </actionGroup>
@@ -238,7 +238,7 @@
         <waitForElementVisible selector="{{ImageOnStageWithoutImageUploaded.imageSource('magentoStage')}}" stepKey="waitForImageSource"/>
         <seeElement selector="{{ImageOnStageWithoutImageUploaded.imageSource('magentoStage')}}" stepKey="seeImageSourceOnStage" />
         <seeElement selector="{{ImageOnStageWithoutImageUploaded.imageSourceByIndex('1', PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="seeImageOnStage"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Verify Image in Tab on storefront -->
         <comment userInput="View Tab on storefront" stepKey="viewTabOnStorefront"/>
         <amOnPage url="tabs{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
@@ -300,7 +300,7 @@
             <argument name="property" value="PageBuilderVideoWidth_500"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate stage after save" stepKey="validateProductsInTabsOnStage"/>
@@ -375,7 +375,7 @@
         </actionGroup>
         <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Verify Banner in Tab on storefront -->
         <comment userInput="View Tab on storefront" stepKey="viewTabOnStorefront"/>
         <amOnPage url="tabs{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
@@ -448,7 +448,7 @@
             <argument name="property" value="PageBuilderSlideItemButtonText_Slide1"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Verify Slider in Tab on storefront -->
         <comment userInput="View Tab on storefront" stepKey="viewTabOnStorefront"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
@@ -546,7 +546,7 @@
         <seeElement selector="{{SlideOnBackend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="verifySlide1HasPosterAppearanceOnStage"/>
         <!-- Verify slide looks OK in tab on stage after save -->
         <comment userInput="Verify slide looks OK in tab on stage after save" stepKey="commentVerifySlideAfterSave"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <click selector="{{TabOnStage.tabHeader('2')}}" stepKey="switchToSecondTabOnStageAgainAfterSave"/>
         <waitForPageLoad stepKey="waitForTabSwitch3" />
@@ -616,7 +616,7 @@
             <argument name="containerTargetType" value="PageBuilderTabContentType"/>
             <argument name="containerTargetIndex" value="1" />
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Verify Map in Tab on storefront -->
         <comment userInput="View Tab on storefront" stepKey="viewTabOnStorefront"/>
         <amOnPage url="tabs{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
@@ -683,7 +683,7 @@
             <argument name="property" value="PageBuilderMinHeightProperty_500"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
-        <actionGroup ref="saveCmsPage" stepKey="saveCmsPage"/>
+        <actionGroup ref="SaveCmsPageActionGroup" stepKey="saveCmsPage"/>
         <!-- Verify Column in Tab on storefront -->
         <comment userInput="View Tab on storefront" stepKey="viewTabOnStorefront"/>
         <amOnPage url="tabs{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
@@ -745,7 +745,7 @@
             <argument name="property" value="PageBuilderHeadingTextProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Verify Heading in Tab on storefront -->
         <comment userInput="View Tab on storefront" stepKey="viewTabOnStorefront"/>
         <amOnPage url="tabs{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
@@ -810,7 +810,7 @@
             <argument name="property" value="PageBuilderDividerLineWidth_50"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Verify Divider in Tab on storefront -->
         <comment userInput="View Tab on storefront" stepKey="viewTabOnStorefront"/>
         <amOnPage url="tabs{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
@@ -874,7 +874,7 @@
             <argument name="property" value="PageBuilderHtmlPropertyButton"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Verify Divider in Tab on storefront -->
         <comment userInput="View Tab on storefront" stepKey="viewTabOnStorefront"/>
         <amOnPage url="tabs{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
@@ -1066,7 +1066,7 @@
             <argument name="contentTypeIndex" value="1"/>
             <argument name="containerTargetIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate stage after save" stepKey="validateProductsInTabsOnStage"/>
@@ -1149,7 +1149,7 @@
             <expectedResult type="variable">tabExpectedHeight</expectedResult>
             <actualResult type="variable">tabContentHeightStage</actualResult>
         </assertEquals>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Verify Tab height on storefront -->
         <comment userInput="Verify Tab height on storefront" stepKey="viewTabOnStorefront"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">

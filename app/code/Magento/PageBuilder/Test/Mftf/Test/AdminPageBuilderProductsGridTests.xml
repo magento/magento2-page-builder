@@ -87,9 +87,9 @@
             <argument name="count" value="6"/>
         </actionGroup>
         <actionGroup ref="validateProductsWrapInGridAppearance" stepKey="validateProductsWrapInGridAppearanceStage"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate Storefront -->
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <actionGroup ref="validateProductCountInProducts" stepKey="validateProductCountStorefront">
@@ -140,7 +140,7 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragProductsIntoStage">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
@@ -268,7 +268,7 @@
         <actionGroup ref="validateProductInProducts" stepKey="validateProductsStage">
             <argument name="page" value="ProductsOnStage"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
@@ -317,7 +317,7 @@
         <actionGroup ref="validateProductInProducts" stepKey="validateProductsStage2">
             <argument name="page" value="ProductsOnStage"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage2"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage2AfterSave"/>
@@ -394,7 +394,7 @@
             <argument name="property" value="PageBuilderProductsSelectProductsByCondition"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
@@ -536,7 +536,7 @@
             <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
@@ -689,7 +689,7 @@
             <actualResult type="variable">firstColumnWidth</actualResult>
             <expectedResult type="variable">productActionsWidth</expectedResult>
         </assertGreaterThan>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate stage after save" stepKey="validateProductsOnStage"/>
@@ -814,7 +814,7 @@
             <argument name="product" value="SortProduct2"/>
             <argument name="productIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate stage -->
         <comment userInput="Validate stage" stepKey="commentValidateStage1"/>
@@ -881,7 +881,7 @@
             <argument name="product" value="SortProduct2"/>
             <argument name="productIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage1"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage1"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage3">
             <argument name="page" value="ProductsOnStage"/>
@@ -1003,10 +1003,10 @@
             <argument name="product" value="SortProduct1"/>
             <argument name="productIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <actionGroup ref="validateProductCountInProducts" stepKey="validateProductCountStorefront">
@@ -1041,7 +1041,7 @@
         </annotations>
         <!-- Change Product Position in Category -->
         <comment userInput="Change Product Position in Category" stepKey="commentChangeProductPositionInCategory" after="validateProduct2Storefront"/>
-        <actionGroup ref="navigateToCreatedCategory" stepKey="navigateToCategory1" after="commentChangeProductPositionInCategory">
+        <actionGroup ref="NavigateToCreatedCategoryActionGroup" stepKey="navigateToCategory1" after="commentChangeProductPositionInCategory">
             <argument name="Category" value="$$createCategory1$$"/>
         </actionGroup>
         <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminCategorySection" after="navigateToCategory1">
@@ -1079,7 +1079,7 @@
         </actionGroup>
         <!-- Storefront: Validate Sort Order Changed -->
         <comment userInput="Storefront: Validate Sort Order Changed" stepKey="commentValidateStorefront2" after="validateProduct2Stage2"/>
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront2" after="commentValidateStorefront2">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront2" after="commentValidateStorefront2">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <actionGroup ref="validateProductCountInProducts" stepKey="validateProductCountStorefront2" after="navigateToCMSPageStorefront2">
@@ -1125,7 +1125,7 @@
         <see userInput="{{PageBuilderProductsMessage.noProductsFound}}" selector="{{ProductsOnStage.emptyProductsPlaceholder('1')}}" stepKey="seeNoProductsMessage" after="switchToPageBuilderStage2"/>
         <!-- Storefront: Validate Sort Order Changed -->
         <comment userInput="Storefront: Validate Sort Order Changed" stepKey="commentValidateStorefront2" after="seeNoProductsMessage"/>
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront2" after="commentValidateStorefront2">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront2" after="commentValidateStorefront2">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <dontSeeElementInDOM selector="{{ProductsOnStorefront.product('1')}}" stepKey="validateNoProductsOnStorefront" after="navigateToCMSPageStorefront2"/>
@@ -1205,10 +1205,10 @@
             <argument name="product" value="SortProduct1"/>
             <argument name="productIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate Storefront -->
         <openNewTab stepKey="openTabToValidateStorefront" />
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <actionGroup ref="validateProductCountInProducts" stepKey="validateProductCountStorefront">
@@ -1254,9 +1254,9 @@
             <argument name="product" value="SortProduct2"/>
             <argument name="productIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage2"/>
         <!-- Validate Storefront -->
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront2">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront2">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <actionGroup ref="validateProductCountInProducts" stepKey="validateProductCountStorefront2">
@@ -1308,10 +1308,10 @@
             <deleteData createDataKey="createProduct2" stepKey="deleteProduct2"/>
             <deleteData createDataKey="createPreReqCategory" stepKey="deleteCategory1"/>
             <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
-            <actionGroup ref="deleteProductBySku" stepKey="deleteProduct1">
+            <actionGroup ref="DeleteProductBySkuActionGroup" stepKey="deleteProduct1">
                 <argument name="sku" value="Updated-SKU"/>
             </actionGroup>
-            <actionGroup ref="NavigateToAndResetProductGridToDefaultView" stepKey="resetProductGrid"/>
+            <actionGroup ref="NavigateToAndResetProductGridToDefaultViewActionGroup" stepKey="resetProductGrid"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionAddContent">
@@ -1354,13 +1354,13 @@
             <argument name="product" value="SortProduct1"/>
             <argument name="productIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Update Product 1 SKU -->
-        <actionGroup ref="navigateToCreatedProductEditPage" stepKey="navigateToCreatedProductEditPage">
+        <actionGroup ref="NavigateToCreatedProductEditPageActionGroup" stepKey="navigateToCreatedProductEditPage">
             <argument name="product" value="$$createProduct1$$"/>
         </actionGroup>
         <fillField selector="{{AdminProductFormSection.productSku}}" userInput="Updated-SKU" stepKey="fillProductSKU"/>
-        <actionGroup ref="saveProductForm" stepKey="saveProduct"/>
+        <actionGroup ref="SaveProductFormActionGroup" stepKey="saveProduct"/>
         <!-- Validate Stage After Update -->
         <actionGroup ref="navigateToCMSPage" stepKey="navigateToCMSPage1">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
@@ -1450,7 +1450,7 @@
             <argument name="product" value="SortProduct1"/>
             <argument name="productIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Delete Product 1 and Validate Stage -->
         <deleteData createDataKey="createProduct1" stepKey="deleteProduct1"/>
         <reloadPage stepKey="reloadPage"/>
@@ -1486,7 +1486,7 @@
                 <requiredEntity createDataKey="createCategory"/>
             </createData>
             <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
-            <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
+            <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
                 <argument name="CMSPage" value="$$createCMSPage$$"/>
             </actionGroup>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
@@ -1516,21 +1516,21 @@
             <argument name="category" value="$$createCategory.name$$"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate Storefront -->
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <actionGroup ref="clickProductImageInProductsOnStorefront" stepKey="clickProductImageInProductsCMSPageStorefront">
             <argument name="product" value="$$createProduct.name$$"/>
         </actionGroup>
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront2">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront2">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <actionGroup ref="clickProductNameInProductsOnStorefront" stepKey="clickProductNameInProductsCMSPageStorefront">
             <argument name="product" value="$$createProduct.name$$"/>
         </actionGroup>
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront3">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront3">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <actionGroup ref="clickProductAddToCartInProductsOnStorefront" stepKey="clickProductAddToCartInProductsCMSPageStorefront">
@@ -1638,25 +1638,25 @@
         </before>
         <after>
             <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
-            <actionGroup ref="deleteProductBySku" stepKey="deleteProduct">
+            <actionGroup ref="DeleteProductBySkuActionGroup" stepKey="deleteProduct">
                 <argument name="sku" value="{{BaseConfigurableProduct.sku}}"/>
             </actionGroup>
-            <actionGroup ref="deleteProductAttributeByLabel" stepKey="deleteAttribute">
+            <actionGroup ref="DeleteProductAttributeByLabelActionGroup" stepKey="deleteAttribute">
                 <argument name="ProductAttribute" value="visualSwatchAttribute"/>
             </actionGroup>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <!-- Create a configurable swatch product via the UI -->
         <actionGroup ref="AdminOpenProductIndexPageActionGroup" stepKey="goToProductIndex" />
-        <actionGroup ref="goToCreateProductPage" stepKey="goToCreateProductPage">
+        <actionGroup ref="GoToCreateProductPageActionGroup" stepKey="goToCreateProductPage">
             <argument name="product" value="BaseConfigurableProduct"/>
         </actionGroup>
-        <actionGroup ref="fillMainProductForm" stepKey="fillProductForm">
+        <actionGroup ref="FillMainProductFormActionGroup" stepKey="fillProductForm">
             <argument name="product" value="BaseConfigurableProduct"/>
         </actionGroup>
         <!-- Add swatch attribute to configurable product -->
         <actionGroup ref="AddVisualSwatchToProductWithStorefrontConfigActionGroup" stepKey="addSwatchToProduct"/>
-        <actionGroup ref="saveProductForm" stepKey="saveProduct"/>
+        <actionGroup ref="SaveProductFormActionGroup" stepKey="saveProduct"/>
         <!-- Add product to Page Builder Products content type -->
         <actionGroup ref="navigateToCMSPage" stepKey="navigateToCMSPage">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
@@ -1692,7 +1692,7 @@
             <argument name="swatch" value="visualSwatchOption2"/>
         </actionGroup>
         <!-- Save page and verify swatches display on reload -->
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStageAfterSave"/>
         <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStageAfterSave">
             <argument name="page" value="ProductsOnStage"/>
