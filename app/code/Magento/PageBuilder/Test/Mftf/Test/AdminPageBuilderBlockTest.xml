@@ -28,7 +28,7 @@
             <actionGroup ref="logout" stepKey="logout"/>
             <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage"/>
         </after>
-        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
+        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionAddContent">
@@ -38,12 +38,12 @@
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
         <seeElement selector="{{BlockOnStage.status('1', 'Empty Block')}}" stepKey="seeEmptyBlockPlaceHolder1"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <seeElement selector="{{BlockOnStage.status('1', 'Empty Block')}}" stepKey="seeEmptyBlockPlaceHolder2"/>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <dontSeeElement selector="{{BlockOnStorefront.empty('1')}}" stepKey="dontSeeBlockOnStorefront"/>
@@ -71,7 +71,7 @@
             <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
+        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionAddContent">
@@ -91,13 +91,13 @@
             <argument name="block" value="$$createPreReqBlock$$"/>
             <argument name="index" value="1"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <actionGroup ref="verifyBlockOnStage" stepKey="verifyBlockOnStageAfterSave">
             <argument name="block" value="$$createPreReqBlock$$"/>
             <argument name="index" value="1"/>
         </actionGroup>
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <see userInput="$$createPreReqBlock.content$$" stepKey="seeBlockContentOnCmsStage"/>
@@ -116,17 +116,17 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="DisabledWYSIWYGActionGroup" stepKey="disableWYSIWYG"/>
             <createData entity="_defaultCmsPage" stepKey="createCMSPage"/>
             <createData entity="_defaultBlock" stepKey="createPreReqBlock"/>
         </before>
         <after>
             <deleteData createDataKey="createPreReqBlock" stepKey="deletePreReqBlock"/>
             <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage"/>
-            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="EnabledWYSIWYGActionGroup" stepKey="enableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPageInAdmin">
+        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPageInAdmin">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionAddContent">
@@ -148,16 +148,16 @@
             <argument name="block" value="$$createPreReqBlock$$"/>
             <argument name="index" value="1"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate Storefront -->
         <comment userInput="Validate storefront" stepKey="validateStorefront1"/>
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <see userInput="$$createPreReqBlock.content$$" stepKey="seeBlockContentOnStorefront"/>
         <!-- Update block content in admin -->
         <comment userInput="Update block content in admin" stepKey="commentUpdateBlockContentInAdmin"/>
-        <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCmsBlockInAdmin">
+        <actionGroup ref="NavigateToCreatedCMSBlockPageActionGroup" stepKey="navigateToCreatedCmsBlockInAdmin">
             <argument name="CMSBlockPage" value="$$createPreReqBlock$$"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
@@ -167,10 +167,10 @@
             <argument name="property" value="PageBuilderHtmlPropertyButton"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
-        <actionGroup ref="saveCMSBlock" stepKey="saveCMSBlock"/>
+        <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveCMSBlock"/>
         <!-- Validate Stage after updating block -->
         <comment userInput="Validate stage after updating block" stepKey="validateStage2"/>
-        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPageInAdmin2">
+        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPageInAdmin2">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
@@ -179,7 +179,7 @@
         <actionGroup ref="ClearCacheActionGroup" stepKey="clearMagentoCache"/>
         <!-- Validate Storefront -->
         <comment userInput="Validate storefront after updating block" stepKey="validateStorefront2"/>
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront2">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront2">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <waitForElementVisible selector="{{HtmlOnStorefront.base('1')}}" stepKey="waitForHtmlBaseStorefront"/>
@@ -207,7 +207,7 @@
             <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
+        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionAddContent">
@@ -224,23 +224,23 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <see selector="{{BlockOnStage.base('1')}}" userInput="$$createPreReqBlock.content$$" stepKey="seeBlockContentOnCmsPageStage"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Disable block -->
         <comment userInput="Disable block" stepKey="commentDisableBlock"/>
-        <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage">
+        <actionGroup ref="NavigateToCreatedCMSBlockPageActionGroup" stepKey="navigateToCreatedCMSBlockPage">
             <argument name="CMSBlockPage" value="$$createPreReqBlock$$"/>
         </actionGroup>
         <executeJS function="jQuery(document.evaluate(`{{BlockNewPageBasicFieldsSection.isActive('1')}}`, document.body).iterateNext()).click()" stepKey="disableBlock"/>
-        <actionGroup ref="saveCMSBlock" stepKey="saveCMSBlock"/>
+        <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveCMSBlock"/>
         <!-- Go back to CMS page and assert it shows as disabled on stage -->
         <comment userInput="Go back to CMS page and assert it shows as disabled on stage" stepKey="commentAssertBlockDisabledOnStage"/>
-        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPageAfterDisablingBlock">
+        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPageAfterDisablingBlock">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
         <waitForElementVisible selector="{{BlockOnStage.status('1', 'Block disabled')}}" stepKey="seeDisabledBlockPlaceholder"/>
         <!-- Go to CMS page on storefront and assert disabled block does not exist on page -->
         <comment userInput="Go to CMS page on storefront and assert disabled block does not exist on page" stepKey="commentAssertDisabledBlockMissingOnStorefront"/>
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToStorefront">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <seeElement selector="{{BlockOnStorefront.base('1')}}" stepKey="seeBlockElementOnStorefront"/>
@@ -301,7 +301,7 @@
         <seeElement selector="{{BlockOnStage.hidden('2')}}" stepKey="waitForContentTypeHidden2"/>
         <!-- Stage: Validate Default Show/Hide State - After Save -->
         <comment userInput="Stage: Validate Default Show/Hide State - After Save" stepKey="CommentValidateDefaultShowHideStateOnStageAfterSave"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <seeElement selector="{{BlockOnStage.hidden('1')}}" stepKey="waitForContentTypeHiddenAfterSave1"/>
         <seeElement selector="{{BlockOnStage.hidden('2')}}" stepKey="waitForContentTypeHiddenAfterSave2"/>
@@ -318,7 +318,7 @@
         </actionGroup>
         <waitForElementVisible selector="{{BlockOnStage.notHidden('1')}}" stepKey="waitForContentTypeHiddenReset1"/>
         <waitForElementVisible selector="{{BlockOnStage.notHidden('2')}}" stepKey="waitForContentTypeHiddenReset2"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPageAfterReset"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPageAfterReset"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
@@ -464,7 +464,7 @@
             <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanel"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage1"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage1"/>
         <!--Validate After Save Page-->
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <actionGroup ref="verifyBlockOnStage" stepKey="verifyBlockOnStage3">
@@ -572,7 +572,7 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!--Delete Block-->
         <comment userInput="Delete Block" stepKey="commentRemoveBlock"/>
@@ -582,7 +582,7 @@
         <dontSeeElementInDOM selector="{{PageBuilderStage.contentTypeInStage(PageBuilderBlockContentType.role)}}" stepKey="dontSeeContentTypeInStage1"/>
         <!-- Save Page -->
         <comment userInput="Save Page" stepKey="commentSavePage"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage2"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
@@ -610,7 +610,7 @@
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
             <createData entity="_defaultBlock" stepKey="createPreReqBlock" />
-            <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage1">
+            <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage1">
                 <argument name="CMSPage" value="$$createCMSPage$$"/>
             </actionGroup>
         </before>
@@ -631,9 +631,9 @@
             <argument name="block" value="$createPreReqBlock$"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <deleteData createDataKey="createPreReqBlock" stepKey="deletePreReqBlock"/>
-        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage2">
+        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage2">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionAddContent2">
@@ -714,7 +714,7 @@
             <argument name="padding" value="PageBuilderPaddingPropertyDefault"/>
             <argument name="index" value="1"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
@@ -877,7 +877,7 @@
             <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings2"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
@@ -1016,7 +1016,7 @@
             <argument name="contentTypeIndex" value="1"/>
             <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate stage after save" stepKey="validateBlockOnStage"/>
@@ -1084,7 +1084,7 @@
         <seeElement selector="{{BlockOnStage.notHidden('1')}}" stepKey="seeContentTypeNotHiddenStageBeforeSave"/>
         <!-- Stage: Validate Default Show/Hide State - After Save -->
         <comment userInput="Stage: Validate Default Show/Hide State - After Save" stepKey="CommentValidateDefaultShowHideStateOnStageAfterSave"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <seeElement selector="{{BlockOnStage.notHidden('1')}}" stepKey="seeContentTypeNotHiddenStageAfterSave"/>
         <!-- Storefront: Validate Default Show/Hide State -->
@@ -1138,7 +1138,7 @@
             <argument name="section" value="BlockOnStage"/>
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage1"/>
         <!-- Validate content type remains disabled after save -->
         <comment userInput="Validate content type remains disabled after save" stepKey="commentValidateHiddenStage"/>
@@ -1162,7 +1162,7 @@
             <argument name="section" value="BlockOnStage"/>
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage1"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage1"/>
         <!-- Validate Content Is Shown Storefront -->
         <comment userInput="Validate Content Is Shown Storefront" stepKey="commentValidateContentIsShownStorefront"/>
         <switchToNextTab stepKey="switchBackToStorefront"/>
@@ -1271,7 +1271,7 @@
         </actionGroup>
         <!-- Save Page -->
         <comment userInput="Save Page" stepKey="commentSavePage"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="validateStorefront"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">

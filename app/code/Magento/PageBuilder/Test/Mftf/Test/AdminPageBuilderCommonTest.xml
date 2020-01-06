@@ -732,7 +732,7 @@
         <actionGroup ref="confirmRemovalModal" stepKey="confirmRemoval"/>
 
         <!-- Save the page -->
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsNewPagePageActionsSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
 
@@ -1007,7 +1007,7 @@
             <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
+        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
@@ -1129,7 +1129,7 @@
             <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
+        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
@@ -1226,7 +1226,7 @@
             <actionGroup ref="logout" stepKey="logout"/>
             <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
         </after>
-        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage1">
+        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage1">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
@@ -1248,7 +1248,7 @@
             <argument name="newTab" value="PageBuilderButtonItemOpenInNewTab_False"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage1"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage1"/>
 
         <!--Go to storefront to verify External Link-->
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
@@ -1262,7 +1262,7 @@
         </assertEquals>
 
         <!--Go to admin to edit Secure External Link-->
-        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage2">
+        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage2">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
         <click selector=".placeholder-text" stepKey="clickOnEditButton"/>
@@ -1274,7 +1274,7 @@
             <argument name="newTab" value="PageBuilderButtonItemOpenInNewTab_True"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage2"/>
 
         <!--Go to storefront to verify Secure External Link-->
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage2"/>
@@ -1319,7 +1319,7 @@
             <requiredEntity createDataKey="createCategoryA"/>
         </createData>
 
-        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage1">
+        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage1">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
@@ -1372,7 +1372,7 @@
         </assertEquals>
         <seeElement selector="{{PageBuilderLinkAttributeAdmin.RemoveBtn}}" stepKey="seeXButtonInField2" />
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage1"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage1"/>
 
         <!--Go to storefront to verify Category Link-->
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
@@ -1384,7 +1384,7 @@
         <see userInput="$createSubCategoryY.name$" stepKey="seeCategoryName" />
 
         <deleteData createDataKey="createSubCategoryY" stepKey="deletePreReqSubCategoryY" />
-        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage2">
+        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage2">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
         <click selector=".placeholder-text" stepKey="clickOnEditButton"/>
@@ -1427,7 +1427,7 @@
         <createData entity="_newDefaultProduct" stepKey="createPreReqProduct2">
             <requiredEntity createDataKey="createPreReqCategory"/>
         </createData>
-        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage1">
+        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage1">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
 
@@ -1479,7 +1479,7 @@
         </assertEquals>
         <seeElement selector="{{PageBuilderLinkAttributeAdmin.RemoveBtn}}" stepKey="seeXButtonInField2" />
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage1"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage1"/>
 
         <!--Go to storefront to verify Product Link-->
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
@@ -1491,7 +1491,7 @@
         <see userInput="$createPreReqProduct2.name$" stepKey="seeProductName" />
 
         <deleteData createDataKey="createPreReqProduct2" stepKey="deletePreReqProduct2" />
-        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage2">
+        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage2">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
         <click selector=".placeholder-text" stepKey="clickOnEditButton"/>
@@ -1531,7 +1531,7 @@
         </after>
         <createData entity="_newDefaultCmsPage" stepKey="createCMSPageA" />
         <createData entity="_newDefaultCmsPage" stepKey="createCMSPageB" />
-        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage1">
+        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage1">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
 
@@ -1583,7 +1583,7 @@
         </assertEquals>
         <seeElement selector="{{PageBuilderLinkAttributeAdmin.RemoveBtn}}" stepKey="seeXButtonInField2" />
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage1"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage1"/>
 
         <!--Go to storefront to verify CMS Page Link-->
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
@@ -1596,7 +1596,7 @@
 
         <!--Verify Link when Page get deleted -->
         <deleteData createDataKey="createCMSPageB" stepKey="deleteCreatedCMSPageB" />
-        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage2">
+        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage2">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
         <click selector=".placeholder-text" stepKey="clickOnEditButton"/>
