@@ -1,0 +1,36 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<?php
+// phpcs:disable Magento2.Templates.ThisInTemplate.FoundThis
+
+/**
+ * Category view template
+ *
+ * @var $block \Magento\Catalog\Block\Category\View
+ */
+?>
+<?php if ($description = $block->getCurrentCategory()->getDescription()) :?>
+    <div class="category-description">
+        <?php $descriptionHtml = $this->helper(Magento\Catalog\Helper\Output::class)->categoryAttribute(
+            $block->getCurrentCategory(),
+            $description,
+            'description'
+        );?>
+        <?php if (stripos($description, 'data-appearance="contained"') === false) :?>
+            <div data-content-type="row" data-appearance="contained" data-element="main">
+                <div data-enable-parallax="0" data-parallax-speed="0.5" data-background-images="{}" data-element="inner" style="justify-content: flex-start; display: flex; flex-direction: column; background-position: left top; background-size: cover; background-repeat: no-repeat; background-attachment: scroll; border-style: none; border-width: 1px; border-radius: 0px; margin: 0px 0px 10px; padding: 10px;">
+                    <div data-content-type="html" data-appearance="default" data-element="main" style="border-style: none; border-width: 1px; border-radius: 0px; margin: 0px; padding: 0px;">
+                        <?= /* @noEscape */$descriptionHtml; ?>
+                    </div>
+                </div>
+            </div>
+        <?php else : ?>
+            <?= /* @noEscape */$descriptionHtml; ?>
+    <?php endif; ?>
+    </div>
+<?php endif; ?>
+

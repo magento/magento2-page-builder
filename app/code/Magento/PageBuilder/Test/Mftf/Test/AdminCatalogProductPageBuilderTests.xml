@@ -37,7 +37,7 @@
             <deleteData createDataKey="createPreReqProduct" stepKey="deletePreReqProduct"/>
             <deleteData createDataKey="createCMSPageA" stepKey="deletePreReqCmsPageA"/>
             <deleteData createDataKey="createCMSPageB" stepKey="deletePreReqCmsPageB"/>
-            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
             <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
                 <argument name="FolderName" value="{{PageBuilderImageProperty_StageJPG.path}}"/>
             </actionGroup>
@@ -123,7 +123,7 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <waitForElementVisible time="5" selector="{{PageBuilderStage.exitFullScreen}}" stepKey="waitForExitFullScreen"/>
         <click selector="{{PageBuilderStage.exitFullScreen}}" stepKey="exitPageBuilderFullScreen"/>
-        <actionGroup ref="saveProductForm" stepKey="saveProduct"/>
+        <actionGroup ref="SaveProductFormActionGroup" stepKey="saveProduct"/>
         <!--Go to storefront to verify Product Link-->
         <comment userInput="Verify directives on store front" stepKey="commentVerifyDirectivesOnSlideout"/>
         <amOnPage url="$$createPreReqProduct.name$$.html" stepKey="navigateToProductPage"/>
@@ -193,7 +193,7 @@
             <deleteData createDataKey="myProductAttributeCreation" stepKey="deletePreReqProductAttribute"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="navigateToCreatedProductAttribute" stepKey="navigateToCreatedProductAttribute">
+        <actionGroup ref="NavigateToCreatedProductAttributeActionGroup" stepKey="navigateToCreatedProductAttribute">
             <argument name="ProductAttribute" value="$$myProductAttributeCreation$$"/>
         </actionGroup>
         <selectOption selector="{{AttributePropertiesSection.InputType}}" userInput="Page Builder"  stepKey="selectPageBuilder"/>
@@ -218,7 +218,7 @@
         <fillField selector="{{TextOnConfiguration.textArea}}" userInput="Hello Product Page From PageBuilder" stepKey="addTextToEditor"/>
         <actionGroup ref="saveEditPanelSettingsFullScreen" stepKey="saveEditPanelSettings"/>
         <click selector="{{PageBuilderStage.exitFullScreen}}" stepKey="exitPageBuilderFullScreen"/>
-        <actionGroup ref="fillMainProductForm" stepKey="fillMainProductForm">
+        <actionGroup ref="FillMainProductFormActionGroup" stepKey="fillMainProductForm">
             <argument name="product" value="SimpleProduct"/>
         </actionGroup>
         <click selector="{{AdminProductFormActionSection.saveButton}}" stepKey="saveProduct"/>
@@ -250,7 +250,7 @@
             <deleteData createDataKey="myProductAttributeCreation" stepKey="deletePreReqProductAttribute"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="navigateToCreatedProductAttribute" stepKey="navigateToCreatedProductAttribute">
+        <actionGroup ref="NavigateToCreatedProductAttributeActionGroup" stepKey="navigateToCreatedProductAttribute">
             <argument name="ProductAttribute" value="$$myProductAttributeCreation$$"/>
         </actionGroup>
         <selectOption selector="{{AttributePropertiesSection.InputType}}" userInput="Page Builder"  stepKey="selectPageBuilder"/>
@@ -259,7 +259,7 @@
         <amOnPage url="{{AdminProductCreatePage.url(AddToDefaultSet.attributeSetId, 'simple')}}" stepKey="navigateToNewProduct"/>
         <waitForPageLoad stepKey="waitForPageLoad4"/>
         <seeElement selector="{{PageBuilderProductAttribute.PageBuilderBtn($$myProductAttributeCreation.attribute_code$$)}}" stepKey="seePagebuilderBtn"/>
-        <actionGroup ref="fillMainProductForm" stepKey="fillMainProductForm">
+        <actionGroup ref="FillMainProductFormActionGroup" stepKey="fillMainProductForm">
             <argument name="product" value="SimpleProduct"/>
         </actionGroup>
         <click selector="{{AdminProductFormActionSection.saveButton}}" stepKey="saveProduct"/>
@@ -322,7 +322,7 @@
         <amOnPage url="{{AdminProductCreatePage.url(AddToDefaultSet.attributeSetId, 'simple')}}" stepKey="navigateToNewProduct"/>
         <waitForPageLoad stepKey="waitForPageLoad4"/>
         <seeElement selector="{{PageBuilderProductAttribute.PageBuilderBtn($$myProductAttributeCreation.attribute_code$$)}}" stepKey="seePagebuilderBtn"/>
-        <actionGroup ref="fillMainProductForm" stepKey="fillMainProductForm">
+        <actionGroup ref="FillMainProductFormActionGroup" stepKey="fillMainProductForm">
             <argument name="product" value="SimpleProduct"/>
         </actionGroup>
         <click selector="{{AdminProductFormActionSection.saveButton}}" stepKey="saveProduct"/>
@@ -384,7 +384,7 @@
         <amOnPage url="{{AdminProductCreatePage.url(AddToDefaultSet.attributeSetId, 'simple')}}" stepKey="navigateToNewProduct"/>
         <waitForPageLoad stepKey="waitForPageLoad4"/>
         <seeElement selector="{{ProductAttributeWYSIWYGSection.TinyMCE4($$myProductAttributeCreation.attribute_code$$)}}" stepKey="waitForPageLoad10"/>
-        <actionGroup ref="fillMainProductForm" stepKey="fillMainProductForm">
+        <actionGroup ref="FillMainProductFormActionGroup" stepKey="fillMainProductForm">
             <argument name="product" value="SimpleProduct"/>
         </actionGroup>
         <click selector="{{AdminProductFormActionSection.saveButton}}" stepKey="saveProduct"/>
@@ -460,7 +460,7 @@
         <fillField selector="{{TextOnConfiguration.textArea}}" userInput="Hello Product Page From PageBuilder" stepKey="addTextToEditor"/>
         <actionGroup ref="saveEditPanelSettingsFullScreen" stepKey="saveEditPanelSettings"/>
         <click selector="{{PageBuilderStage.exitFullScreen}}" stepKey="exitPageBuilderFullScreen"/>
-        <actionGroup ref="fillMainProductForm" stepKey="fillMainProductForm">
+        <actionGroup ref="FillMainProductFormActionGroup" stepKey="fillMainProductForm">
             <argument name="product" value="SimpleProduct"/>
         </actionGroup>
         <click selector="{{AdminProductFormActionSection.saveButton}}" stepKey="saveProduct"/>
@@ -485,7 +485,7 @@
         <before>
             <createData entity="_defaultCategory" stepKey="createPreReqCategory"/>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="FillAdminSimpleProductForm" stepKey="fillProductFieldsInAdmin">
+            <actionGroup ref="FillAdminSimpleProductFormActionGroup" stepKey="fillProductFieldsInAdmin">
                 <argument name="category" value="$$createPreReqCategory$$"/>
                 <argument name="simpleProduct" value="_defaultProduct"/>
             </actionGroup>
@@ -528,7 +528,7 @@
         <waitForPageLoad stepKey="waitForPageLoadExitFullScreen"/>
         <!-- Use Full Width layout -->
         <comment userInput="Set Layout to Product - Full Width" stepKey="commentSetLayout"/>
-        <actionGroup ref="setLayout" stepKey="setFullWidthLayout">
+        <actionGroup ref="SetLayoutActionGroup" stepKey="setFullWidthLayout">
             <argument name="designSection" value="ProductDesignSection"/>
             <argument name="layoutOption" value="PageBuilderFullWidthLayout.product"/>
         </actionGroup>
@@ -558,7 +558,7 @@
         <before>
             <createData entity="_defaultCategory" stepKey="createPreReqCategory"/>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="FillAdminSimpleProductForm" stepKey="fillProductFieldsInAdmin">
+            <actionGroup ref="FillAdminSimpleProductFormActionGroup" stepKey="fillProductFieldsInAdmin">
                 <argument name="category" value="$$createPreReqCategory$$"/>
                 <argument name="simpleProduct" value="_defaultProduct"/>
             </actionGroup>
@@ -602,7 +602,7 @@
         <waitForPageLoad stepKey="waitForPageLoadExitFullScreen"/>
         <!-- Set Layout to Category - Full Width -->
         <comment userInput="Set Layout to Category - Full Width" stepKey="commentSetLayout"/>
-        <actionGroup ref="setLayout" stepKey="setCategoryFullWidthLayout">
+        <actionGroup ref="SetLayoutActionGroup" stepKey="setCategoryFullWidthLayout">
             <argument name="designSection" value="ProductDesignSection"/>
             <argument name="layoutOption" value="PageBuilderFullWidthLayout.category"/>
         </actionGroup>
@@ -618,7 +618,7 @@
         <!-- Set Layout to Page - Full Width -->
         <comment userInput="Set Layout to Page - Full Width" stepKey="commentSetLayout2"/>
         <switchToNextTab stepKey="switchToNextTab"/>
-        <actionGroup ref="setLayout" stepKey="setPageFullWidthLayout">
+        <actionGroup ref="SetLayoutActionGroup" stepKey="setPageFullWidthLayout">
             <argument name="designSection" value="ProductDesignSection"/>
             <argument name="layoutOption" value="PageBuilderFullWidthLayout.cms"/>
         </actionGroup>
@@ -660,7 +660,7 @@
         </after>
         <!-- Update created attribute to enable Page Builder -->
         <comment userInput="Update created attribute to enable Page Builder" stepKey="commentUpdateAttribute"/>
-        <actionGroup ref="navigateToCreatedProductAttribute" stepKey="navigateToCreatedProductAttribute">
+        <actionGroup ref="NavigateToCreatedProductAttributeActionGroup" stepKey="navigateToCreatedProductAttribute">
             <argument name="ProductAttribute" value="$$createWysiwygAttribute$$"/>
         </actionGroup>
         <selectOption selector="{{AttributePropertiesSection.InputType}}" userInput="Page Builder" stepKey="selectPageBuilder"/>
@@ -672,7 +672,7 @@
         <waitForPageLoad stepKey="waitForProductPage"/>
         <!-- Fill the remaining product fields accordingly -->
         <comment userInput="Fill the remaining product fields accordingly" stepKey="commentFillProductFields"/>
-        <actionGroup ref="fillMainProductForm" stepKey="fillMainProductForm">
+        <actionGroup ref="FillMainProductFormActionGroup" stepKey="fillMainProductForm">
             <argument name="product" value="SimpleProduct"/>
         </actionGroup>
         <!-- Set background colour of row for custom attribute -->
@@ -763,7 +763,7 @@
         <fillField selector="{{PageBuilderProductAttribute.attributeTextInput($$createTextAttribute.attribute_code$$)}}" userInput="Normal Text Attribute Value" stepKey="fillCustomAttribute"/>
         <!-- Fill the remaining product fields accordingly -->
         <comment userInput="Fill the remaining product fields accordingly" stepKey="commentFillProductFields"/>
-        <actionGroup ref="fillMainProductForm" stepKey="fillMainProductForm">
+        <actionGroup ref="FillMainProductFormActionGroup" stepKey="fillMainProductForm">
             <argument name="product" value="SimpleProduct"/>
         </actionGroup>
         <!-- Save product -->
@@ -810,13 +810,13 @@
         </after>
         <!-- Update created attributes to enable Page Builder -->
         <comment userInput="Update created attributes to enable Page Builder" stepKey="commentUpdateAttributes"/>
-        <actionGroup ref="navigateToCreatedProductAttribute" stepKey="navigateToCreatedProductAttribute">
+        <actionGroup ref="NavigateToCreatedProductAttributeActionGroup" stepKey="navigateToCreatedProductAttribute">
             <argument name="ProductAttribute" value="$$createPageBuilderAttribute1$$"/>
         </actionGroup>
         <selectOption selector="{{AttributePropertiesSection.InputType}}" userInput="Page Builder" stepKey="selectPageBuilder"/>
         <click selector="{{AttributePropertiesSection.Save}}" stepKey="saveAttribute"/>
         <waitForPageLoad stepKey="waitForAttributeSave"/>
-        <actionGroup ref="navigateToCreatedProductAttribute" stepKey="navigateToCreatedProductAttribute1">
+        <actionGroup ref="NavigateToCreatedProductAttributeActionGroup" stepKey="navigateToCreatedProductAttribute1">
             <argument name="ProductAttribute" value="$$createPageBuilderAttribute2$$"/>
         </actionGroup>
         <selectOption selector="{{AttributePropertiesSection.InputType}}" userInput="Page Builder" stepKey="selectPageBuilder1"/>
@@ -828,7 +828,7 @@
         <waitForPageLoad stepKey="waitForProductPage"/>
         <!-- Fill the remaining product fields accordingly -->
         <comment userInput="Fill the remaining product fields accordingly" stepKey="commentFillProductFields"/>
-        <actionGroup ref="fillMainProductForm" stepKey="fillMainProductForm">
+        <actionGroup ref="FillMainProductFormActionGroup" stepKey="fillMainProductForm">
             <argument name="product" value="SimpleProduct"/>
         </actionGroup>
         <!-- Set background colour of row for our first custom attribute -->
@@ -933,14 +933,14 @@
         </after>
         <!-- Update created attribute to enable Page Builder -->
         <comment userInput="Update created attribute to enable Page Builder" stepKey="commentUpdateAttribute"/>
-        <actionGroup ref="navigateToCreatedProductAttribute" stepKey="navigateToCreatedProductAttribute">
+        <actionGroup ref="NavigateToCreatedProductAttributeActionGroup" stepKey="navigateToCreatedProductAttribute">
             <argument name="ProductAttribute" value="$$createPageBuilderAttribute$$"/>
         </actionGroup>
         <waitForElementVisible selector="{{AttributePropertiesSection.InputType}}" stepKey="waitForInputType"/>
         <selectOption selector="{{AttributePropertiesSection.InputType}}" userInput="Page Builder" stepKey="selectPageBuilder"/>
         <click selector="{{AttributePropertiesSection.Save}}" stepKey="saveAttribute"/>
         <waitForPageLoad stepKey="waitForAttributeSave"/>
-        <actionGroup ref="FillAdminSimpleProductForm" stepKey="fillProductFieldsInAdmin">
+        <actionGroup ref="FillAdminSimpleProductFormActionGroup" stepKey="fillProductFieldsInAdmin">
             <argument name="category" value="$$createPreReqCategory$$"/>
             <argument name="simpleProduct" value="_defaultProduct"/>
         </actionGroup>
@@ -988,17 +988,17 @@
         <fillField selector="{{PageBuilderProductAttribute.attributeTextInput($$createTextAttribute.attribute_code$$)}}" userInput="{{PageBuilderTextProperty.value}}" stepKey="fillCustomContentTextarea"/>
         <!-- Add our related product -->
         <comment userInput="Add our related product" stepKey="commentAddRelatedProduct"/>
-        <actionGroup ref="addRelatedProductBySku" stepKey="addRelatedProduct">
+        <actionGroup ref="AddRelatedProductBySkuActionGroup" stepKey="addRelatedProduct">
             <argument name="sku" value="$$relatedSimpleProduct.sku$$"/>
         </actionGroup>
         <!-- Add our up-sell product -->
         <comment userInput="Add our up-sell product" stepKey="commentAddUpSellProduct"/>
-        <actionGroup ref="addUpSellProductBySku" stepKey="addUpSellProduct">
+        <actionGroup ref="AddUpSellProductBySkuActionGroup" stepKey="addUpSellProduct">
             <argument name="sku" value="$$relatedSimpleProduct.sku$$"/>
         </actionGroup>
         <!-- Use Full Width layout -->
         <comment userInput="Set Layout to Product - Full Width" stepKey="commentSetLayout"/>
-        <actionGroup ref="setLayout" stepKey="setFullWidthLayout">
+        <actionGroup ref="SetLayoutActionGroup" stepKey="setFullWidthLayout">
             <argument name="designSection" value="ProductDesignSection"/>
             <argument name="layoutOption" value="PageBuilderFullWidthLayout.product"/>
         </actionGroup>
@@ -1078,16 +1078,16 @@
                 <requiredEntity createDataKey="createPreReqCategory"/>
             </createData>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToCreatedProductEditPage" stepKey="navigateToCreatedProductEditPage">
+            <actionGroup ref="NavigateToCreatedProductEditPageActionGroup" stepKey="navigateToCreatedProductEditPage">
                 <argument name="product" value="$$createProduct$$"/>
             </actionGroup>
-            <actionGroup ref="expandAdminProductSection" stepKey="expandAdminProductSection"/>
+            <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandAdminProductSection"/>
             <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForDescription"/>
         </before>
         <after>
             <deleteData createDataKey="createProduct" stepKey="deleteCreatedProduct"/>
             <deleteData createDataKey="createPreReqCategory" stepKey="deleteCreatedCategory"/>
-            <actionGroup ref="NavigateToAndResetProductGridToDefaultView" stepKey="NavigateToAndResetProductGridToDefaultView"/>
+            <actionGroup ref="NavigateToAndResetProductGridToDefaultViewActionGroup" stepKey="NavigateToAndResetProductGridToDefaultView"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <!-- Drag a new row to the stage -->
@@ -1101,11 +1101,11 @@
         <!-- Save product and verify second row is persisted -->
         <comment userInput="Save product and verify second row is persisted" stepKey="commentSaveProduct"/>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
-        <actionGroup ref="saveProductForm" stepKey="saveProduct"/>
+        <actionGroup ref="SaveProductFormActionGroup" stepKey="saveProduct"/>
         <waitForPageLoad stepKey="waitForPageLoadSaveProduct"/>
         <!-- Re-open Page Builder after save -->
         <comment userInput="Re-open Page Builder after save" stepKey="commentReopenPageBuilder"/>
-        <actionGroup ref="expandAdminProductSection" stepKey="expandAdminProductSection"/>
+        <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandAdminProductSection"/>
         <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForDescription"/>
         <seeNumberOfElements selector="{{RowOnStage.allRows}}" userInput="2" stepKey="seeSavedNumberOfRows2"/>
     </test>
@@ -1130,16 +1130,16 @@
                 <requiredEntity createDataKey="createPreReqCategory"/>
             </createData>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToCreatedProductEditPage" stepKey="navigateToCreatedProductEditPage">
+            <actionGroup ref="NavigateToCreatedProductEditPageActionGroup" stepKey="navigateToCreatedProductEditPage">
                 <argument name="product" value="$$createProduct$$"/>
             </actionGroup>
-            <actionGroup ref="expandAdminProductSection" stepKey="expandAdminProductSection"/>
+            <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandAdminProductSection"/>
             <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForDescription"/>
         </before>
         <after>
             <deleteData createDataKey="createProduct" stepKey="deleteCreatedProduct"/>
             <deleteData createDataKey="createPreReqCategory" stepKey="deleteCreatedCategory"/>
-            <actionGroup ref="NavigateToAndResetProductGridToDefaultView" stepKey="NavigateToAndResetProductGridToDefaultView"/>
+            <actionGroup ref="NavigateToAndResetProductGridToDefaultViewActionGroup" stepKey="NavigateToAndResetProductGridToDefaultView"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <!-- Add 2nd Row -->
@@ -1227,9 +1227,9 @@
         <!-- Save Product -->
         <comment userInput="Save Product" stepKey="commentSaveProduct"/>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
-        <actionGroup ref="saveProductForm" stepKey="saveProduct"/>
+        <actionGroup ref="SaveProductFormActionGroup" stepKey="saveProduct"/>
         <waitForPageLoad stepKey="waitForPageLoadSaveProduct"/>
-        <actionGroup ref="expandAdminProductSection" stepKey="expandAdminProductSection"/>
+        <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandAdminProductSection"/>
         <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForDescription"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
@@ -1244,7 +1244,7 @@
         <seeElement selector="{{SlideOnBackend.backgroundColor('2', PageBuilderBackgroundColor_RGB_Blue.rgb)}}" stepKey="seeBackgroundColorSlide2StageAfterSave"/>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToProductStorefront">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToProductStorefront">
             <argument name="page" value="$$createProduct.name$$.html"/>
         </actionGroup>
         <scrollTo selector="{{StorefrontProductInfoMainSection.productDescription}}" stepKey="scrollToProductDescription"/>
@@ -1282,16 +1282,16 @@
                 <requiredEntity createDataKey="createPreReqCategory"/>
             </createData>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToCreatedProductEditPage" stepKey="navigateToCreatedProductEditPage">
+            <actionGroup ref="NavigateToCreatedProductEditPageActionGroup" stepKey="navigateToCreatedProductEditPage">
                 <argument name="product" value="$$createProduct$$"/>
             </actionGroup>
-            <actionGroup ref="expandAdminProductSection" stepKey="expandAdminProductSection"/>
+            <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandAdminProductSection"/>
             <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForDescription"/>
         </before>
         <after>
             <deleteData createDataKey="createProduct" stepKey="deleteCreatedProduct"/>
             <deleteData createDataKey="createPreReqCategory" stepKey="deleteCreatedCategory"/>
-            <actionGroup ref="NavigateToAndResetProductGridToDefaultView" stepKey="NavigateToAndResetProductGridToDefaultView"/>
+            <actionGroup ref="NavigateToAndResetProductGridToDefaultViewActionGroup" stepKey="NavigateToAndResetProductGridToDefaultView"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragColumnToRow">
@@ -1365,9 +1365,9 @@
         <!-- Save Product -->
         <comment userInput="Save Product" stepKey="commentSaveProduct"/>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
-        <actionGroup ref="saveProductForm" stepKey="saveProduct"/>
+        <actionGroup ref="SaveProductFormActionGroup" stepKey="saveProduct"/>
         <waitForPageLoad stepKey="waitForPageLoadSaveProduct"/>
-        <actionGroup ref="expandAdminProductSection" stepKey="expandAdminProductSection"/>
+        <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandAdminProductSection"/>
         <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForDescription"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
@@ -1385,7 +1385,7 @@
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToProductStorefront">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToProductStorefront">
             <argument name="page" value="$$createProduct.name$$.html"/>
         </actionGroup>
         <scrollTo selector="{{StorefrontProductInfoMainSection.productDescription}}" stepKey="scrollToProductDescription"/>
@@ -1422,16 +1422,16 @@
                 <requiredEntity createDataKey="createPreReqCategory"/>
             </createData>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToCreatedProductEditPage" stepKey="navigateToCreatedProductEditPage">
+            <actionGroup ref="NavigateToCreatedProductEditPageActionGroup" stepKey="navigateToCreatedProductEditPage">
                 <argument name="product" value="$$createProduct$$"/>
             </actionGroup>
-            <actionGroup ref="expandAdminProductSection" stepKey="expandAdminProductSection"/>
+            <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandAdminProductSection"/>
             <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForDescription"/>
         </before>
         <after>
             <deleteData createDataKey="createProduct" stepKey="deleteCreatedProduct"/>
             <deleteData createDataKey="createPreReqCategory" stepKey="deleteCreatedCategory"/>
-            <actionGroup ref="NavigateToAndResetProductGridToDefaultView" stepKey="NavigateToAndResetProductGridToDefaultView"/>
+            <actionGroup ref="NavigateToAndResetProductGridToDefaultViewActionGroup" stepKey="NavigateToAndResetProductGridToDefaultView"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <!-- Edit Row -->
@@ -1449,9 +1449,9 @@
         <!-- Save Product -->
         <comment userInput="Save Product" stepKey="commentSaveProduct"/>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
-        <actionGroup ref="saveProductForm" stepKey="saveProduct"/>
+        <actionGroup ref="SaveProductFormActionGroup" stepKey="saveProduct"/>
         <waitForPageLoad stepKey="waitForPageLoadSaveProduct"/>
-        <actionGroup ref="expandAdminProductSection" stepKey="expandAdminProductSection"/>
+        <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandAdminProductSection"/>
         <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForDescription"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
@@ -1466,7 +1466,7 @@
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToProductStorefront">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToProductStorefront">
             <argument name="page" value="$$createProduct.name$$.html"/>
         </actionGroup>
         <scrollTo selector="{{StorefrontProductInfoMainSection.productDescription}}" stepKey="scrollToProductDescription"/>
@@ -1492,16 +1492,16 @@
                 <requiredEntity createDataKey="createPreReqCategory"/>
             </createData>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToCreatedProductEditPage" stepKey="navigateToCreatedProductEditPage">
+            <actionGroup ref="NavigateToCreatedProductEditPageActionGroup" stepKey="navigateToCreatedProductEditPage">
                 <argument name="product" value="$$createProduct$$"/>
             </actionGroup>
-            <actionGroup ref="expandAdminProductSection" stepKey="expandAdminProductSection"/>
+            <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandAdminProductSection"/>
             <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForDescription"/>
         </before>
         <after>
             <deleteData createDataKey="createProduct" stepKey="deleteCreatedProduct"/>
             <deleteData createDataKey="createPreReqCategory" stepKey="deleteCreatedCategory"/>
-            <actionGroup ref="NavigateToAndResetProductGridToDefaultView" stepKey="NavigateToAndResetProductGridToDefaultView"/>
+            <actionGroup ref="NavigateToAndResetProductGridToDefaultViewActionGroup" stepKey="NavigateToAndResetProductGridToDefaultView"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <!-- Edit Row -->
@@ -1534,9 +1534,9 @@
         <!-- Save Product -->
         <comment userInput="Save Product" stepKey="commentSaveProduct"/>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
-        <actionGroup ref="saveProductForm" stepKey="saveProduct"/>
+        <actionGroup ref="SaveProductFormActionGroup" stepKey="saveProduct"/>
         <waitForPageLoad stepKey="waitForPageLoadSaveProduct"/>
-        <actionGroup ref="expandAdminProductSection" stepKey="expandAdminProductSection"/>
+        <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandAdminProductSection"/>
         <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForDescription"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
@@ -1545,7 +1545,7 @@
         <seeElement selector="{{RowOnStage.backgroundColor('2', PageBuilderBackgroundColor_Hex_Grey.rgb)}}" stepKey="seeBackgroundColorRow2StageAfterSave"/>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToProductStorefront">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToProductStorefront">
             <argument name="page" value="$$createProduct.name$$.html"/>
         </actionGroup>
         <scrollTo selector="{{StorefrontProductInfoMainSection.productDescription}}" stepKey="scrollToProductDescription"/>
@@ -1573,16 +1573,16 @@
                 <requiredEntity createDataKey="createPreReqCategory"/>
             </createData>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToCreatedProductEditPage" stepKey="navigateToCreatedProductEditPage">
+            <actionGroup ref="NavigateToCreatedProductEditPageActionGroup" stepKey="navigateToCreatedProductEditPage">
                 <argument name="product" value="$$createProduct$$"/>
             </actionGroup>
-            <actionGroup ref="expandAdminProductSection" stepKey="expandAdminProductSection"/>
+            <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandAdminProductSection"/>
             <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForDescription"/>
         </before>
         <after>
             <deleteData createDataKey="createProduct" stepKey="deleteCreatedProduct"/>
             <deleteData createDataKey="createPreReqCategory" stepKey="deleteCreatedCategory"/>
-            <actionGroup ref="NavigateToAndResetProductGridToDefaultView" stepKey="NavigateToAndResetProductGridToDefaultView"/>
+            <actionGroup ref="NavigateToAndResetProductGridToDefaultViewActionGroup" stepKey="NavigateToAndResetProductGridToDefaultView"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <!-- Add Divider to Row -->
@@ -1598,9 +1598,9 @@
         <!-- Save Product -->
         <comment userInput="Save Product" stepKey="commentSaveProduct"/>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
-        <actionGroup ref="saveProductForm" stepKey="saveProduct"/>
+        <actionGroup ref="SaveProductFormActionGroup" stepKey="saveProduct"/>
         <waitForPageLoad stepKey="waitForPageLoadSaveProduct"/>
-        <actionGroup ref="expandAdminProductSection" stepKey="expandAdminProductSection"/>
+        <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandAdminProductSection"/>
         <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForDescription"/>
         <!-- Delete Divider -->
         <comment userInput="Delete Divider" stepKey="commentDeleteDivider"/>
@@ -1611,16 +1611,16 @@
         <!-- Save Product After Delete -->
         <comment userInput="Save Product After Delete" stepKey="commentSaveProductAfterDelete"/>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreenAfterDelete"/>
-        <actionGroup ref="saveProductForm" stepKey="saveProductAfterDelete"/>
+        <actionGroup ref="SaveProductFormActionGroup" stepKey="saveProductAfterDelete"/>
         <waitForPageLoad stepKey="waitForPageLoadSaveProductAfterDelete"/>
-        <actionGroup ref="expandAdminProductSection" stepKey="expandAdminProductSectionAfterDelete"/>
+        <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandAdminProductSectionAfterDelete"/>
         <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForDescriptionAfterDelete"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
         <dontSeeElementInDOM selector="{{PageBuilderStage.contentTypeInStageByIndex(PageBuilderDividerContentType.role, '1')}}" stepKey="dontSeeDividerInStageAfterSave"/>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToProductStorefront">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToProductStorefront">
             <argument name="page" value="$$createProduct.name$$.html"/>
         </actionGroup>
         <scrollTo selector="{{StorefrontProductInfoMainSection.productDescription}}" stepKey="scrollToProductDescription"/>
@@ -1646,16 +1646,16 @@
                 <requiredEntity createDataKey="createPreReqCategory"/>
             </createData>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToCreatedProductEditPage" stepKey="navigateToCreatedProductEditPage">
+            <actionGroup ref="NavigateToCreatedProductEditPageActionGroup" stepKey="navigateToCreatedProductEditPage">
                 <argument name="product" value="$$createProduct$$"/>
             </actionGroup>
-            <actionGroup ref="expandAdminProductSection" stepKey="expandAdminProductSection"/>
+            <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandAdminProductSection"/>
             <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForDescription"/>
         </before>
         <after>
             <deleteData createDataKey="createProduct" stepKey="deleteCreatedProduct"/>
             <deleteData createDataKey="createPreReqCategory" stepKey="deleteCreatedCategory"/>
-            <actionGroup ref="NavigateToAndResetProductGridToDefaultView" stepKey="NavigateToAndResetProductGridToDefaultView"/>
+            <actionGroup ref="NavigateToAndResetProductGridToDefaultViewActionGroup" stepKey="NavigateToAndResetProductGridToDefaultView"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <!-- Add Buttons -->
@@ -1677,16 +1677,16 @@
         <!-- Save Product -->
         <comment userInput="Save Product" stepKey="commentSaveProduct"/>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
-        <actionGroup ref="saveProductForm" stepKey="saveProduct"/>
+        <actionGroup ref="SaveProductFormActionGroup" stepKey="saveProduct"/>
         <waitForPageLoad stepKey="waitForPageLoadSaveProduct"/>
-        <actionGroup ref="expandAdminProductSection" stepKey="expandAdminProductSection"/>
+        <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandAdminProductSection"/>
         <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForDescription"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
         <seeNumberOfElements selector="{{ButtonItemOnStage.all}}" userInput="2" stepKey="see2ButtonItemsStageAfterSave"/>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToProductStorefront">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToProductStorefront">
             <argument name="page" value="$$createProduct.name$$.html"/>
         </actionGroup>
         <scrollTo selector="{{StorefrontProductInfoMainSection.productDescription}}" stepKey="scrollToProductDescription"/>
@@ -1712,16 +1712,16 @@
                 <requiredEntity createDataKey="createPreReqCategory"/>
             </createData>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToCreatedProductEditPage" stepKey="navigateToCreatedProductEditPage">
+            <actionGroup ref="NavigateToCreatedProductEditPageActionGroup" stepKey="navigateToCreatedProductEditPage">
                 <argument name="product" value="$$createProduct$$"/>
             </actionGroup>
-            <actionGroup ref="expandAdminProductSection" stepKey="expandAdminProductSection"/>
+            <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandAdminProductSection"/>
             <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForDescription"/>
         </before>
         <after>
             <deleteData createDataKey="createProduct" stepKey="deleteCreatedProduct"/>
             <deleteData createDataKey="createPreReqCategory" stepKey="deleteCreatedCategory"/>
-            <actionGroup ref="NavigateToAndResetProductGridToDefaultView" stepKey="NavigateToAndResetProductGridToDefaultView"/>
+            <actionGroup ref="NavigateToAndResetProductGridToDefaultViewActionGroup" stepKey="NavigateToAndResetProductGridToDefaultView"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <!-- Add Slider -->
@@ -1748,9 +1748,9 @@
         <!-- Save Product -->
         <comment userInput="Save Product" stepKey="commentSaveProduct"/>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
-        <actionGroup ref="saveProductForm" stepKey="saveProduct"/>
+        <actionGroup ref="SaveProductFormActionGroup" stepKey="saveProduct"/>
         <waitForPageLoad stepKey="waitForPageLoadSaveProduct"/>
-        <actionGroup ref="expandAdminProductSection" stepKey="expandAdminProductSection"/>
+        <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandAdminProductSection"/>
         <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForDescription"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
@@ -1765,7 +1765,7 @@
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToProductStorefront">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToProductStorefront">
             <argument name="page" value="$$createProduct.name$$.html"/>
         </actionGroup>
         <scrollTo selector="{{StorefrontProductInfoMainSection.productDescription}}" stepKey="scrollToProductDescription"/>
@@ -1791,16 +1791,16 @@
                 <requiredEntity createDataKey="createPreReqCategory"/>
             </createData>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToCreatedProductEditPage" stepKey="navigateToCreatedProductEditPage">
+            <actionGroup ref="NavigateToCreatedProductEditPageActionGroup" stepKey="navigateToCreatedProductEditPage">
                 <argument name="product" value="$$createProduct$$"/>
             </actionGroup>
-            <actionGroup ref="expandAdminProductSection" stepKey="expandAdminProductSection"/>
+            <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandAdminProductSection"/>
             <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForDescription"/>
         </before>
         <after>
             <deleteData createDataKey="createProduct" stepKey="deleteCreatedProduct"/>
             <deleteData createDataKey="createPreReqCategory" stepKey="deleteCreatedCategory"/>
-            <actionGroup ref="NavigateToAndResetProductGridToDefaultView" stepKey="NavigateToAndResetProductGridToDefaultView"/>
+            <actionGroup ref="NavigateToAndResetProductGridToDefaultViewActionGroup" stepKey="NavigateToAndResetProductGridToDefaultView"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <!-- Add Buttons -->
@@ -1832,9 +1832,9 @@
         <!-- Save Product -->
         <comment userInput="Save Product" stepKey="commentSaveProduct"/>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
-        <actionGroup ref="saveProductForm" stepKey="saveProduct"/>
+        <actionGroup ref="SaveProductFormActionGroup" stepKey="saveProduct"/>
         <waitForPageLoad stepKey="waitForPageLoadSaveProduct"/>
-        <actionGroup ref="expandAdminProductSection" stepKey="expandAdminProductSection"/>
+        <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandAdminProductSection"/>
         <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForDescription"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
@@ -1853,7 +1853,7 @@
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanel"/>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToProductStorefront">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToProductStorefront">
             <argument name="page" value="$$createProduct.name$$.html"/>
         </actionGroup>
         <scrollTo selector="{{StorefrontProductInfoMainSection.productDescription}}" stepKey="scrollToProductDescription"/>
@@ -1881,16 +1881,16 @@
                 <requiredEntity createDataKey="createPreReqCategory"/>
             </createData>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToCreatedProductEditPage" stepKey="navigateToCreatedProductEditPage">
+            <actionGroup ref="NavigateToCreatedProductEditPageActionGroup" stepKey="navigateToCreatedProductEditPage">
                 <argument name="product" value="$$createProduct$$"/>
             </actionGroup>
-            <actionGroup ref="expandAdminProductSection" stepKey="expandAdminProductSection"/>
+            <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandAdminProductSection"/>
             <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForDescription"/>
         </before>
         <after>
             <deleteData createDataKey="createProduct" stepKey="deleteCreatedProduct"/>
             <deleteData createDataKey="createPreReqCategory" stepKey="deleteCreatedCategory"/>
-            <actionGroup ref="NavigateToAndResetProductGridToDefaultView" stepKey="NavigateToAndResetProductGridToDefaultView"/>
+            <actionGroup ref="NavigateToAndResetProductGridToDefaultViewActionGroup" stepKey="NavigateToAndResetProductGridToDefaultView"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <!-- Add Buttons -->
@@ -1911,9 +1911,9 @@
         <!-- Save Product -->
         <comment userInput="Save Product" stepKey="commentSaveProduct"/>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
-        <actionGroup ref="saveProductForm" stepKey="saveProduct"/>
+        <actionGroup ref="SaveProductFormActionGroup" stepKey="saveProduct"/>
         <waitForPageLoad stepKey="waitForPageLoadSaveProduct"/>
-        <actionGroup ref="expandAdminProductSection" stepKey="expandAdminProductSection"/>
+        <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandAdminProductSection"/>
         <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForDescription"/>
         <!-- Delete Button Item -->
         <comment userInput="Delete Button Item" stepKey="commentDeleteButtonItem"/>
@@ -1926,16 +1926,16 @@
         <!-- Save Product After Delete -->
         <comment userInput="Save Product After Delete" stepKey="commentSaveProductAfterDelete"/>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreenAfterDelete"/>
-        <actionGroup ref="saveProductForm" stepKey="saveProductAfterDelete"/>
+        <actionGroup ref="SaveProductFormActionGroup" stepKey="saveProductAfterDelete"/>
         <waitForPageLoad stepKey="waitForPageLoadSaveProductAfterDelete"/>
-        <actionGroup ref="expandAdminProductSection" stepKey="expandAdminProductSectionAfterDelete"/>
+        <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandAdminProductSectionAfterDelete"/>
         <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForDescriptionAfterDelete"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
         <seeNumberOfElements selector="{{ButtonItemOnStage.all}}" userInput="1" stepKey="see1ButtonItemStageAfterSave"/>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToProductStorefront">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToProductStorefront">
             <argument name="page" value="$$createProduct.name$$.html"/>
         </actionGroup>
         <scrollTo selector="{{StorefrontProductInfoMainSection.productDescription}}" stepKey="scrollToProductDescription"/>
@@ -1960,26 +1960,26 @@
             <createData entity="_defaultProduct" before="loginAsAdmin" stepKey="createProduct">
                 <requiredEntity createDataKey="createPreReqCategory"/>
             </createData>
-            <actionGroup ref="navigateToCreatedProductEditPage" stepKey="navigateToAPageWithPageBuilder">
+            <actionGroup ref="NavigateToCreatedProductEditPageActionGroup" stepKey="navigateToAPageWithPageBuilder">
                 <argument name="product" value="$$createProduct$$"/>
             </actionGroup>
-            <actionGroup ref="expandAdminProductSection" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="switchToPageBuilderStage"/>
             <actionGroup ref="openPageBuilderForAttribute" after="switchToPageBuilderStage" stepKey="openPageBuilderForDescription"/>
         </before>
         <after>
             <deleteData createDataKey="createProduct" before="deleteCreatedCategory" stepKey="deleteCreatedProduct"/>
             <deleteData createDataKey="createPreReqCategory" before="NavigateToAndResetProductGridToDefaultView" stepKey="deleteCreatedCategory"/>
-            <actionGroup ref="NavigateToAndResetProductGridToDefaultView" before="logout" stepKey="NavigateToAndResetProductGridToDefaultView"/>
+            <actionGroup ref="NavigateToAndResetProductGridToDefaultViewActionGroup" before="logout" stepKey="NavigateToAndResetProductGridToDefaultView"/>
         </after>
         <comment userInput="---merging to remove step---" stepKey="enterPageTitle"/>
         <actionGroup ref="saveEditPanelSettingsFullScreen" stepKey="saveEditPanelSettings1"/>
         <comment userInput="Save Product" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="switchToPageBuilderStage"/>
-        <actionGroup ref="saveProductForm" after="switchToPageBuilderStage" stepKey="saveProduct"/>
+        <actionGroup ref="SaveProductFormActionGroup" after="switchToPageBuilderStage" stepKey="saveProduct"/>
         <waitForPageLoad after="saveProduct" stepKey="waitForPageLoadSaveProduct"/>
-        <actionGroup ref="expandAdminProductSection" after="waitForPageLoadSaveProduct" stepKey="expandAdminProductSection"/>
+        <actionGroup ref="ExpandAdminProductSectionActionGroup" after="waitForPageLoadSaveProduct" stepKey="expandAdminProductSection"/>
         <actionGroup ref="openPageBuilderForAttribute" after="expandAdminProductSection" stepKey="openPageBuilderForDescription"/>
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStoreFront">
             <argument name="page" value="$$createProduct.name$$.html"/>
         </actionGroup>
         <scrollTo selector="{{StorefrontProductInfoMainSection.productDescription}}" after="navigateToStoreFront" stepKey="scrollToProductDescription"/>
@@ -2003,33 +2003,33 @@
             <createData entity="_defaultProduct" before="loginAsAdmin" stepKey="createProduct">
                 <requiredEntity createDataKey="createPreReqCategory"/>
             </createData>
-            <actionGroup ref="navigateToCreatedProductEditPage" stepKey="navigateToAPageWithPageBuilder">
+            <actionGroup ref="NavigateToCreatedProductEditPageActionGroup" stepKey="navigateToAPageWithPageBuilder">
                 <argument name="product" value="$$createProduct$$"/>
             </actionGroup>
-            <actionGroup ref="expandAdminProductSection" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="switchToPageBuilderStage"/>
             <actionGroup ref="openPageBuilderForAttribute" after="switchToPageBuilderStage" stepKey="openPageBuilderForDescription"/>
         </before>
         <after>
             <deleteData createDataKey="createProduct" before="deleteCreatedCategory" stepKey="deleteCreatedProduct"/>
             <deleteData createDataKey="createPreReqCategory" before="NavigateToAndResetProductGridToDefaultView" stepKey="deleteCreatedCategory"/>
-            <actionGroup ref="NavigateToAndResetProductGridToDefaultView" before="logout" stepKey="NavigateToAndResetProductGridToDefaultView"/>
+            <actionGroup ref="NavigateToAndResetProductGridToDefaultViewActionGroup" before="logout" stepKey="NavigateToAndResetProductGridToDefaultView"/>
         </after>
         <comment userInput="---merging to remove step---" stepKey="enterPageTitle"/>
         <actionGroup ref="saveEditPanelSettingsFullScreen" stepKey="saveEditPanel1Settings"/>
         <actionGroup ref="saveEditPanelSettingsFullScreen" stepKey="saveEditPanel1Settings2"/>
         <comment userInput="Save Product" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="switchToPageBuilderStage1"/>
-        <actionGroup ref="saveProductForm" after="switchToPageBuilderStage1" stepKey="saveProduct"/>
+        <actionGroup ref="SaveProductFormActionGroup" after="switchToPageBuilderStage1" stepKey="saveProduct"/>
         <waitForPageLoad after="saveProduct" stepKey="waitForPageLoadSaveProduct"/>
-        <actionGroup ref="expandAdminProductSection" after="waitForPageLoadSaveProduct" stepKey="expandAdminProductSection"/>
+        <actionGroup ref="ExpandAdminProductSectionActionGroup" after="waitForPageLoadSaveProduct" stepKey="expandAdminProductSection"/>
         <actionGroup ref="openPageBuilderForAttribute" after="expandAdminProductSection" stepKey="openPageBuilderForDescription"/>
         <comment userInput="Save Product" stepKey="saveAndContinueEditCmsPage1"/>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="switchToPageBuilderStage2"/>
-        <actionGroup ref="saveProductForm" after="switchToPageBuilderStage2" stepKey="saveProduct2"/>
+        <actionGroup ref="SaveProductFormActionGroup" after="switchToPageBuilderStage2" stepKey="saveProduct2"/>
         <waitForPageLoad after="saveProduct2" stepKey="waitForPageLoadSaveProduct2"/>
-        <actionGroup ref="expandAdminProductSection" after="waitForPageLoadSaveProduct2" stepKey="expandAdminProductSection2"/>
+        <actionGroup ref="ExpandAdminProductSectionActionGroup" after="waitForPageLoadSaveProduct2" stepKey="expandAdminProductSection2"/>
         <actionGroup ref="openPageBuilderForAttribute" after="expandAdminProductSection2" stepKey="openPageBuilderForDescription2"/>
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStoreFront">
             <argument name="page" value="$$createProduct.name$$.html"/>
         </actionGroup>
         <scrollTo selector="{{StorefrontProductInfoMainSection.productDescription}}" after="navigateToStoreFront" stepKey="scrollToProductDescription"/>
@@ -2053,25 +2053,25 @@
             <createData entity="_defaultProduct" before="loginAsAdmin" stepKey="createProduct">
                 <requiredEntity createDataKey="createPreReqCategory"/>
             </createData>
-            <actionGroup ref="navigateToCreatedProductEditPage" stepKey="navigateToAPageWithPageBuilder">
+            <actionGroup ref="NavigateToCreatedProductEditPageActionGroup" stepKey="navigateToAPageWithPageBuilder">
                 <argument name="product" value="$$createProduct$$"/>
             </actionGroup>
-            <actionGroup ref="expandAdminProductSection" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="switchToPageBuilderStage"/>
             <actionGroup ref="openPageBuilderForAttribute" after="switchToPageBuilderStage" stepKey="openPageBuilderForDescription"/>
         </before>
         <after>
             <deleteData createDataKey="createProduct" before="deleteCreatedCategory" stepKey="deleteCreatedProduct"/>
             <deleteData createDataKey="createPreReqCategory" before="NavigateToAndResetProductGridToDefaultView" stepKey="deleteCreatedCategory"/>
-            <actionGroup ref="NavigateToAndResetProductGridToDefaultView" before="logout" stepKey="NavigateToAndResetProductGridToDefaultView"/>
+            <actionGroup ref="NavigateToAndResetProductGridToDefaultViewActionGroup" before="logout" stepKey="NavigateToAndResetProductGridToDefaultView"/>
         </after>
         <comment userInput="---merging to remove step---" stepKey="enterPageTitle"/>
         <comment userInput="Save Product" stepKey="commentSavePage"/>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="saveProductForm" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="SaveProductFormActionGroup" stepKey="switchToPageBuilderStage"/>
         <waitForPageLoad after="switchToPageBuilderStage" stepKey="waitForPageLoadSaveProduct"/>
-        <actionGroup ref="expandAdminProductSection" after="waitForPageLoadSaveProduct" stepKey="expandAdminProductSection"/>
+        <actionGroup ref="ExpandAdminProductSectionActionGroup" after="waitForPageLoadSaveProduct" stepKey="expandAdminProductSection"/>
         <actionGroup ref="openPageBuilderForAttribute" after="expandAdminProductSection" stepKey="openPageBuilderForDescription"/>
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStoreFront">
             <argument name="page" value="$$createProduct.name$$.html"/>
         </actionGroup>
         <scrollTo selector="{{StorefrontProductInfoMainSection.productDescription}}" after="navigateToStoreFront" stepKey="scrollToProductDescription"/>
@@ -2094,16 +2094,16 @@
             <createData entity="_defaultProduct" before="loginAsAdmin" stepKey="createProduct">
                 <requiredEntity createDataKey="createPreReqCategory"/>
             </createData>
-            <actionGroup ref="navigateToCreatedProductEditPage" stepKey="navigateToAPageWithPageBuilder">
+            <actionGroup ref="NavigateToCreatedProductEditPageActionGroup" stepKey="navigateToAPageWithPageBuilder">
                 <argument name="product" value="$$createProduct$$"/>
             </actionGroup>
-            <actionGroup ref="expandAdminProductSection" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="switchToPageBuilderStage"/>
             <actionGroup ref="openPageBuilderForAttribute" after="switchToPageBuilderStage" stepKey="openPageBuilderForDescription"/>
         </before>
         <after>
             <deleteData createDataKey="createProduct" before="deleteCreatedCategory" stepKey="deleteCreatedProduct"/>
             <deleteData createDataKey="createPreReqCategory" before="NavigateToAndResetProductGridToDefaultView" stepKey="deleteCreatedCategory"/>
-            <actionGroup ref="NavigateToAndResetProductGridToDefaultView" before="logout" stepKey="NavigateToAndResetProductGridToDefaultView"/>
+            <actionGroup ref="NavigateToAndResetProductGridToDefaultViewActionGroup" before="logout" stepKey="NavigateToAndResetProductGridToDefaultView"/>
         </after>
         <comment userInput="---merging to remove step---" stepKey="openPageBuilderFullScreen"/>
     </test>
@@ -2125,16 +2125,16 @@
             <createData entity="_defaultProduct" before="loginAsAdmin" stepKey="createProduct">
                 <requiredEntity createDataKey="createPreReqCategory"/>
             </createData>
-            <actionGroup ref="navigateToCreatedProductEditPage" stepKey="navigateToAPageWithPageBuilder">
+            <actionGroup ref="NavigateToCreatedProductEditPageActionGroup" stepKey="navigateToAPageWithPageBuilder">
                 <argument name="product" value="$$createProduct$$"/>
             </actionGroup>
-            <actionGroup ref="expandAdminProductSection" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="switchToPageBuilderStage"/>
             <actionGroup ref="openPageBuilderForAttribute" after="switchToPageBuilderStage" stepKey="openPageBuilderForDescription"/>
         </before>
         <after>
             <deleteData createDataKey="createProduct" before="deleteCreatedCategory" stepKey="deleteCreatedProduct"/>
             <deleteData createDataKey="createPreReqCategory" before="NavigateToAndResetProductGridToDefaultView" stepKey="deleteCreatedCategory"/>
-            <actionGroup ref="NavigateToAndResetProductGridToDefaultView" before="logout" stepKey="NavigateToAndResetProductGridToDefaultView"/>
+            <actionGroup ref="NavigateToAndResetProductGridToDefaultViewActionGroup" before="logout" stepKey="NavigateToAndResetProductGridToDefaultView"/>
         </after>
         <comment userInput="---merging to remove step---" stepKey="openPageBuilderFullScreen"/>
     </test>
@@ -2163,37 +2163,37 @@
                 <requiredEntity createDataKey="createPreReqCategory"/>
             </createData>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToCreatedProductAttribute" stepKey="navigateToCreatedProductAttribute">
+            <actionGroup ref="NavigateToCreatedProductAttributeActionGroup" stepKey="navigateToCreatedProductAttribute">
                 <argument name="ProductAttribute" value="$$createProductAttribute$$"/>
             </actionGroup>
             <selectOption selector="{{AttributePropertiesSection.InputType}}" userInput="Page Builder" stepKey="selectPageBuilder1"/>
-            <actionGroup ref="saveProductAttribute" stepKey="saveCustomAttribute"/>
-            <actionGroup ref="navigateToCreatedProductAttribute" stepKey="navigateToShortDescriptionProductAttribute">
+            <actionGroup ref="SaveProductAttributeActionGroup" stepKey="saveCustomAttribute"/>
+            <actionGroup ref="NavigateToCreatedProductAttributeActionGroup" stepKey="navigateToShortDescriptionProductAttribute">
                 <argument name="ProductAttribute" value="ProductShortDescription"/>
             </actionGroup>
             <selectOption selector="{{AttributePropertiesSection.InputType}}" userInput="Page Builder" stepKey="selectPageBuilder2"/>
-            <actionGroup ref="saveProductAttribute" stepKey="saveShortDescriptionAttribute"/>
-            <actionGroup ref="navigateToCreatedProductEditPage" stepKey="navigateToCreatedProductEditPage">
+            <actionGroup ref="SaveProductAttributeActionGroup" stepKey="saveShortDescriptionAttribute"/>
+            <actionGroup ref="NavigateToCreatedProductEditPageActionGroup" stepKey="navigateToCreatedProductEditPage">
                 <argument name="product" value="$$createProduct$$"/>
             </actionGroup>
-            <actionGroup ref="setLayout" stepKey="setFullWidthLayout">
+            <actionGroup ref="SetLayoutActionGroup" stepKey="setFullWidthLayout">
                 <argument name="designSection" value="ProductDesignSection"/>
                 <argument name="layoutOption" value="PageBuilderFullWidthLayout.product"/>
             </actionGroup>
-            <actionGroup ref="expandAdminProductSection" stepKey="expandAdminProductSection"/>
+            <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandAdminProductSection"/>
         </before>
         <after>
             <deleteData createDataKey="createProduct" stepKey="deleteCreatedProduct"/>
             <deleteData createDataKey="createPreReqCategory" stepKey="deleteCreatedCategory"/>
             <deleteData createDataKey="createProductAttribute" stepKey="deleteProductAttribute"/>
-            <actionGroup ref="NavigateToAndResetProductGridToDefaultView" stepKey="NavigateToAndResetProductGridToDefaultView"/>
-            <actionGroup ref="navigateToCreatedProductAttribute" stepKey="navigateToShortDescriptionProductAttribute">
+            <actionGroup ref="NavigateToAndResetProductGridToDefaultViewActionGroup" stepKey="NavigateToAndResetProductGridToDefaultView"/>
+            <actionGroup ref="NavigateToCreatedProductAttributeActionGroup" stepKey="navigateToShortDescriptionProductAttribute">
                 <argument name="ProductAttribute" value="ProductShortDescription"/>
             </actionGroup>
             <selectOption selector="{{AttributePropertiesSection.InputType}}" userInput="Text Editor" stepKey="selectPageBuilder"/>
-            <actionGroup ref="confirmChangeInputTypeModal" stepKey="confirmChangeInputTypeModal"/>
-            <actionGroup ref="saveProductAttribute" stepKey="saveShortDescriptionAttribute"/>
-            <actionGroup ref="NavigateToAndResetProductAttributeGridToDefaultView" stepKey="NavigateToAndResetProductAttributeGridToDefaultView"/>
+            <actionGroup ref="ConfirmChangeInputTypeModalActionGroup" stepKey="confirmChangeInputTypeModal"/>
+            <actionGroup ref="SaveProductAttributeActionGroup" stepKey="saveShortDescriptionAttribute"/>
+            <actionGroup ref="NavigateToAndResetProductAttributeGridToDefaultViewActionGroup" stepKey="NavigateToAndResetProductAttributeGridToDefaultView"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <!-- Edit Product Custom Attribute -->
@@ -2301,9 +2301,9 @@
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreenShortDescription"/>
         <!-- Save Product -->
         <comment userInput="Save Product" stepKey="commentSaveProduct"/>
-        <actionGroup ref="saveProductForm" stepKey="saveProduct"/>
+        <actionGroup ref="SaveProductFormActionGroup" stepKey="saveProduct"/>
         <waitForPageLoad stepKey="waitForPageLoadSaveProduct"/>
-        <actionGroup ref="expandAdminProductSection" stepKey="expandAdminProductSection"/>
+        <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandAdminProductSection"/>
         <!-- Validate Product Custom Attribute Stage After Save -->
         <comment userInput="Validate Product Custom Attribute Stage After Save" stepKey="commentValidateProductCustomAttributeStageAfterSave"/>
         <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForCustomAttributeAfterSave">
@@ -2330,7 +2330,7 @@
         </actionGroup>
         <seeElement selector="{{DividerOnStage.color('1', PageBuilderDividerLineColor_FF5733.rgb)}}" stepKey="seeDividerColorStageAfterSave"/>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreenShortDescriptionAfterSave"/>
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStoreFront">
             <argument name="page" value="$$createProduct.name$$.html"/>
         </actionGroup>
         <!-- Validate Storefront: Product Description -->
@@ -2369,16 +2369,16 @@
                 <requiredEntity createDataKey="createPreReqCategory"/>
             </createData>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToCreatedProductEditPage" stepKey="navigateToCreatedProductEditPage">
+            <actionGroup ref="NavigateToCreatedProductEditPageActionGroup" stepKey="navigateToCreatedProductEditPage">
                 <argument name="product" value="$$createProduct$$"/>
             </actionGroup>
-            <actionGroup ref="expandAdminProductSection" stepKey="expandAdminProductSection"/>
+            <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandAdminProductSection"/>
             <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForDescription"/>
         </before>
         <after>
             <deleteData createDataKey="createProduct" stepKey="deleteCreatedProduct"/>
             <deleteData createDataKey="createPreReqCategory" stepKey="deleteCreatedCategory"/>
-            <actionGroup ref="NavigateToAndResetProductGridToDefaultView" stepKey="NavigateToAndResetProductGridToDefaultView"/>
+            <actionGroup ref="NavigateToAndResetProductGridToDefaultViewActionGroup" stepKey="NavigateToAndResetProductGridToDefaultView"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionMedia">
@@ -2403,9 +2403,9 @@
         <!-- Save Product -->
         <comment userInput="Save Product" stepKey="commentSaveProduct"/>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
-        <actionGroup ref="saveProductForm" stepKey="saveProduct"/>
+        <actionGroup ref="SaveProductFormActionGroup" stepKey="saveProduct"/>
         <waitForPageLoad stepKey="waitForPageLoadSaveProduct"/>
-        <actionGroup ref="expandAdminProductSection" stepKey="expandAdminProductSection"/>
+        <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandAdminProductSection"/>
         <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForDescription"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
@@ -2413,7 +2413,7 @@
         <seeElement selector="{{HtmlOnStage.html('1', PageBuilderHtmlPropertyButton.selector)}}" stepKey="seeHtmlOnStageAfterSave"/>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToProductStorefront">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToProductStorefront">
             <argument name="page" value="$$createProduct.name$$.html"/>
         </actionGroup>
         <scrollTo selector="{{StorefrontProductInfoMainSection.productDescription}}" stepKey="scrollToProductDescription"/>
