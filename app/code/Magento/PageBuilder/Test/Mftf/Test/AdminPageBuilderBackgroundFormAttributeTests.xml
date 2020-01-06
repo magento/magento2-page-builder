@@ -58,7 +58,7 @@
         <actionGroup ref="validateBackgroundAttributesWithNoImageOrColor" stepKey="validateStage1">
             <argument name="section" value="BannerOnBackend"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Stage: Check No Background Color After Save -->
         <comment userInput="Stage: Check No Background Color After Save" stepKey="commentStageCheckAfterSave"/>
@@ -130,7 +130,7 @@
             <argument name="section" value="BannerOnBackend"/>
             <argument name="backgroundColor" value="PageBuilderBackgroundColor_Plaintext_Green"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Stage: Check Background Color After Save -->
         <comment userInput="Stage: Check Background Color After Save" stepKey="commentStageCheckAfterSave"/>
@@ -204,7 +204,7 @@
             <argument name="section" value="BannerOnBackend"/>
             <argument name="backgroundColor" value="PageBuilderBackgroundColor_Hex_White"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Stage: Check Background Color After Save -->
         <comment userInput="Stage: Check Background Color After Save" stepKey="commentStageCheckAfterSave"/>
@@ -278,7 +278,7 @@
             <argument name="section" value="BannerOnBackend"/>
             <argument name="backgroundColor" value="PageBuilderBackgroundColor_RGB_Blue"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Stage: Check Background Color After Save -->
         <comment userInput="Stage: Check Background Color After Save" stepKey="commentStageCheckAfterSave"/>
@@ -351,7 +351,7 @@
         <!-- Not using action group due to open issue for inconsistent background color on Stage in DOM before page save: MAGETWO-90694 -->
         <waitForElementVisible selector="{{BannerOnBackend.base('1')}}" stepKey="waitForBanner"/>
         <waitForElementVisible selector="{{BannerOnBackend.backgroundColor('1', PageBuilderBackgroundColor_RGBa_Blue.value)}}" stepKey="waitForBackgroundColor"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Stage: Check Background Color After Save -->
         <comment userInput="Stage: Check Background Color After Save" stepKey="commentStageCheckAfterSave"/>
@@ -424,7 +424,7 @@
             <argument name="section" value="BannerOnBackend"/>
             <argument name="backgroundColor" value="PageBuilderBackgroundColor_HSV_Orange"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Stage: Check Background Color After Save -->
         <comment userInput="Stage: Check Background Color After Save" stepKey="commentStageCheckAfterSave"/>
@@ -498,7 +498,7 @@
             <argument name="section" value="BannerOnBackend"/>
             <argument name="backgroundColor" value="PageBuilderBackgroundColor_HSL_Orange"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Stage: Check Background Color After Save -->
         <comment userInput="Stage: Check Background Color After Save" stepKey="commentStageCheckAfterSave"/>
@@ -615,7 +615,7 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
             <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
                 <argument name="FolderName" value="{{PageBuilderBackgroundImage_JPG.path}}"/>
             </actionGroup>
@@ -648,7 +648,7 @@
             <argument name="section" value="BannerOnBackend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Stage: Check Background Image After Save -->
         <comment userInput="Stage: Check Background Image After Save" stepKey="commentStageCheckAfterSave"/>
@@ -693,7 +693,7 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
             <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
                 <argument name="FolderName" value="Storage Root"/>
             </actionGroup>
@@ -722,10 +722,10 @@
         <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
             <argument name="FolderName" value="Storage Root"/>
         </actionGroup>
-        <actionGroup ref="attachImage" stepKey="SelectImageFromMediaStorage">
+        <actionGroup ref="AttachImageActionGroup" stepKey="SelectImageFromMediaStorage">
             <argument name="Image" value="PageBuilderBackgroundImageRoot_JPG"/>
         </actionGroup>
-        <actionGroup ref="saveImage" stepKey="saveImage"/>
+        <actionGroup ref="SaveImageActionGroup" stepKey="saveImage"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Stage: Check Background Image -->
         <comment userInput="Stage: Check Background Image" stepKey="commentStageCheck"/>
@@ -739,7 +739,7 @@
             <expectedResult type="string">/\/pub\/media\/{{PageBuilderBackgroundImageRoot_JPG.fileName}}(_\d+)?\.{{PageBuilderBackgroundImageRoot_JPG.extension}}/</expectedResult>
             <actualResult type="variable">$backgroundImageValue</actualResult>
         </assertRegExp>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Stage: Check Background Image After Save -->
         <comment userInput="Stage: Check Background Image After Save" stepKey="commentStageCheckAfterSave"/>
@@ -784,7 +784,7 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
             <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
                 <argument name="FolderName" value="{{PageBuilderBackgroundImage_GIF.path}}"/>
             </actionGroup>
@@ -817,7 +817,7 @@
             <argument name="section" value="BannerOnBackend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_GIF"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Stage: Check Background Image After Save -->
         <comment userInput="Stage: Check Background Image After Save" stepKey="commentStageCheckAfterSave"/>
@@ -862,7 +862,7 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
             <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
                 <argument name="FolderName" value="{{PageBuilderBackgroundImage_PNG.path}}"/>
             </actionGroup>
@@ -895,7 +895,7 @@
             <argument name="section" value="BannerOnBackend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_PNG"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Stage: Check Background Image After Save -->
         <comment userInput="Stage: Check Background Image After Save" stepKey="commentStageCheckAfterSave"/>
@@ -940,7 +940,7 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
             <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
                 <argument name="FolderName" value="{{PageBuilderBackgroundImage_SpecialCharacters.path}}"/>
             </actionGroup>
@@ -973,7 +973,7 @@
             <argument name="section" value="BannerOnBackend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_SpecialCharacters"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Stage: Check Background Image After Save -->
         <comment userInput="Stage: Check Background Image After Save" stepKey="commentStageCheckAfterSave"/>
@@ -1018,7 +1018,7 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
             <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
                 <argument name="FolderName" value="{{PageBuilderBackgroundImage_JPG.path}}"/>
             </actionGroup>
@@ -1090,7 +1090,7 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
             <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
                 <argument name="FolderName" value="{{PageBuilderBackgroundImage_JPG.path}}"/>
             </actionGroup>
@@ -1183,7 +1183,7 @@
         </before>
         <after>
             <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
-            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
             <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
                 <argument name="FolderName" value="{{PageBuilderBackgroundMobileImage_JPG.path}}"/>
             </actionGroup>
@@ -1221,7 +1221,7 @@
         <actionGroup ref="validateBackgroundAttributesWithNoImageOrColor" stepKey="validateNoImageStage1">
             <argument name="section" value="BannerOnBackend"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Stage: Check No Mobile Background Image After Save -->
         <comment userInput="Stage: Check No Mobile Background Image After Save" stepKey="commentStageCheckAfterSave"/>
@@ -1267,7 +1267,7 @@
         </before>
         <after>
             <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
-            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
             <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
                 <argument name="FolderName" value="Storage Root"/>
             </actionGroup>
@@ -1296,10 +1296,10 @@
         <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
             <argument name="FolderName" value="Storage Root"/>
         </actionGroup>
-        <actionGroup ref="attachImage" stepKey="SelectImageFromMediaStorage">
+        <actionGroup ref="AttachImageActionGroup" stepKey="SelectImageFromMediaStorage">
             <argument name="Image" value="PageBuilderBackgroundMobileImageRoot_JPG"/>
         </actionGroup>
-        <actionGroup ref="saveImage" stepKey="saveImage"/>
+        <actionGroup ref="SaveImageActionGroup" stepKey="saveImage"/>
         <!-- Fill URL field so it will show on storefront -->
         <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterBannerLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
@@ -1312,7 +1312,7 @@
         <actionGroup ref="validateBackgroundAttributesWithNoImageOrColor" stepKey="validateNoImageStage1">
             <argument name="section" value="BannerOnBackend"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Stage: Check No Mobile Background Image After Save -->
         <comment userInput="Stage: Check No Mobile Background Image After Save" stepKey="commentStageCheckAfterSave"/>
@@ -1358,7 +1358,7 @@
         </before>
         <after>
             <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
-            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
             <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
                 <argument name="FolderName" value="{{PageBuilderBackgroundMobileImage_GIF.path}}"/>
             </actionGroup>
@@ -1396,7 +1396,7 @@
         <actionGroup ref="validateBackgroundAttributesWithNoImageOrColor" stepKey="validateNoImageStage1">
             <argument name="section" value="BannerOnBackend"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Stage: Check No Mobile Background Image After Save -->
         <comment userInput="Stage: Check No Mobile Background Image After Save" stepKey="commentStageCheckAfterSave"/>
@@ -1442,7 +1442,7 @@
         </before>
         <after>
             <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
-            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
             <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
                 <argument name="FolderName" value="{{PageBuilderBackgroundMobileImage_PNG.path}}"/>
             </actionGroup>
@@ -1480,7 +1480,7 @@
         <actionGroup ref="validateBackgroundAttributesWithNoImageOrColor" stepKey="validateNoImageStage1">
             <argument name="section" value="BannerOnBackend"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Stage: Check No Mobile Background Image After Save -->
         <comment userInput="Stage: Check No Mobile Background Image After Save" stepKey="commentStageCheckAfterSave"/>
@@ -1526,7 +1526,7 @@
         </before>
         <after>
             <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
-            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
             <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
                 <argument name="FolderName" value="{{PageBuilderBackgroundMobileImage_SpecialCharacters.path}}"/>
             </actionGroup>
@@ -1564,7 +1564,7 @@
         <actionGroup ref="validateBackgroundAttributesWithNoImageOrColor" stepKey="validateNoImageStage1">
             <argument name="section" value="BannerOnBackend"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Stage: Check No Mobile Background Image After Save -->
         <comment userInput="Stage: Check No Mobile Background Image After Save" stepKey="commentStageCheckAfterSave"/>
@@ -1610,7 +1610,7 @@
         </before>
         <after>
             <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
-            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
             <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
                 <argument name="FolderName" value="{{PageBuilderBackgroundMobileImage_JPG.path}}"/>
             </actionGroup>
@@ -1665,7 +1665,7 @@
         <actionGroup ref="validateBackgroundAttributesWithNoImageOrColor" stepKey="validateNoImageStage1">
             <argument name="section" value="BannerOnBackend"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
@@ -1697,7 +1697,7 @@
         </before>
         <after>
             <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
-            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
             <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
                 <argument name="FolderName" value="{{PageBuilderBackgroundMobileImage_JPG.path}}"/>
             </actionGroup>
@@ -1752,7 +1752,7 @@
         <actionGroup ref="validateBackgroundAttributesWithNoImageOrColor" stepKey="validateNoImageStage1">
             <argument name="section" value="BannerOnBackend"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
@@ -1783,7 +1783,7 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
             <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
                 <argument name="FolderName" value="{{PageBuilderBackgroundImage_JPG.path}}"/>
             </actionGroup>
@@ -1824,7 +1824,7 @@
             <argument name="section" value="BannerOnBackend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Stage: Check Background Position After Save -->
         <comment userInput="Stage: Check Background Position After Save" stepKey="commentStageCheckAfterSave"/>
@@ -1878,7 +1878,7 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
             <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
                 <argument name="FolderName" value="{{PageBuilderBackgroundImage_JPG.path}}"/>
             </actionGroup>
@@ -1919,7 +1919,7 @@
             <argument name="section" value="BannerOnBackend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Stage: Check Background Position After Save -->
         <comment userInput="Stage: Check Background Position After Save" stepKey="commentStageCheckAfterSave"/>
@@ -1973,7 +1973,7 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
             <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
                 <argument name="FolderName" value="{{PageBuilderBackgroundImage_JPG.path}}"/>
             </actionGroup>
@@ -2014,7 +2014,7 @@
             <argument name="section" value="BannerOnBackend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Stage: Check Background Position After Save -->
         <comment userInput="Stage: Check Background Position After Save" stepKey="commentStageCheckAfterSave"/>
@@ -2068,7 +2068,7 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
             <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
                 <argument name="FolderName" value="{{PageBuilderBackgroundImage_JPG.path}}"/>
             </actionGroup>
@@ -2109,7 +2109,7 @@
             <argument name="section" value="BannerOnBackend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Stage: Check Background Position After Save -->
         <comment userInput="Stage: Check Background Position After Save" stepKey="commentStageCheckAfterSave"/>
@@ -2163,7 +2163,7 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
             <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
                 <argument name="FolderName" value="{{PageBuilderBackgroundImage_JPG.path}}"/>
             </actionGroup>
@@ -2204,7 +2204,7 @@
             <argument name="section" value="BannerOnBackend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Stage: Check Background Position After Save -->
         <comment userInput="Stage: Check Background Position After Save" stepKey="commentStageCheckAfterSave"/>
@@ -2258,7 +2258,7 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
             <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
                 <argument name="FolderName" value="{{PageBuilderBackgroundImage_JPG.path}}"/>
             </actionGroup>
@@ -2299,7 +2299,7 @@
             <argument name="section" value="BannerOnBackend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Stage: Check Background Position After Save -->
         <comment userInput="Stage: Check Background Position After Save" stepKey="commentStageCheckAfterSave"/>
@@ -2353,7 +2353,7 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
             <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
                 <argument name="FolderName" value="{{PageBuilderBackgroundImage_JPG.path}}"/>
             </actionGroup>
@@ -2394,7 +2394,7 @@
             <argument name="section" value="BannerOnBackend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Stage: Check Background Position After Save -->
         <comment userInput="Stage: Check Background Position After Save" stepKey="commentStageCheckAfterSave"/>
@@ -2448,7 +2448,7 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
             <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
                 <argument name="FolderName" value="{{PageBuilderBackgroundImage_JPG.path}}"/>
             </actionGroup>
@@ -2489,7 +2489,7 @@
             <argument name="section" value="BannerOnBackend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Stage: Check Background Position After Save -->
         <comment userInput="Stage: Check Background Position After Save" stepKey="commentStageCheckAfterSave"/>
@@ -2543,7 +2543,7 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
             <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
                 <argument name="FolderName" value="{{PageBuilderBackgroundImage_JPG.path}}"/>
             </actionGroup>
@@ -2584,7 +2584,7 @@
             <argument name="section" value="BannerOnBackend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Stage: Check Background Position After Save -->
         <comment userInput="Stage: Check Background Position After Save" stepKey="commentStageCheckAfterSave"/>
@@ -2638,7 +2638,7 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
             <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
                 <argument name="FolderName" value="{{PageBuilderBackgroundImage_JPG.path}}"/>
             </actionGroup>
@@ -2679,7 +2679,7 @@
             <argument name="section" value="BannerOnBackend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Stage: Check Background Repeat After Save -->
         <comment userInput="Stage: Check Background Repeat After Save" stepKey="commentStageCheckAfterSave"/>
@@ -2733,7 +2733,7 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
             <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
                 <argument name="FolderName" value="{{PageBuilderBackgroundImage_JPG.path}}"/>
             </actionGroup>
@@ -2774,7 +2774,7 @@
             <argument name="section" value="BannerOnBackend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Stage: Check Background Repeat After Save -->
         <comment userInput="Stage: Check Background Repeat After Save" stepKey="commentStageCheckAfterSave"/>
@@ -2828,7 +2828,7 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
             <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
                 <argument name="FolderName" value="{{PageBuilderBackgroundImage_JPG.path}}"/>
             </actionGroup>
@@ -2869,7 +2869,7 @@
             <argument name="section" value="BannerOnBackend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Stage: Check Background Size After Save -->
         <comment userInput="Stage: Check Background Size After Save" stepKey="commentStageCheckAfterSave"/>
@@ -2923,7 +2923,7 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
             <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
                 <argument name="FolderName" value="{{PageBuilderBackgroundImage_JPG.path}}"/>
             </actionGroup>
@@ -2964,7 +2964,7 @@
             <argument name="section" value="BannerOnBackend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Stage: Check Background Size After Save -->
         <comment userInput="Stage: Check Background Size After Save" stepKey="commentStageCheckAfterSave"/>
@@ -3018,7 +3018,7 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
             <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
                 <argument name="FolderName" value="{{PageBuilderBackgroundImage_JPG.path}}"/>
             </actionGroup>
@@ -3059,7 +3059,7 @@
             <argument name="section" value="BannerOnBackend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Stage: Check Background Size After Save -->
         <comment userInput="Stage: Check Background Size After Save" stepKey="commentStageCheckAfterSave"/>
@@ -3113,7 +3113,7 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
             <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
                 <argument name="FolderName" value="{{PageBuilderBackgroundImage_JPG.path}}"/>
             </actionGroup>
@@ -3154,7 +3154,7 @@
             <argument name="section" value="BannerOnBackend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Stage: Check Background Attachment After Save -->
         <comment userInput="Stage: Check Background Attachment After Save" stepKey="commentStageCheckAfterSave"/>
@@ -3209,7 +3209,7 @@
         </before>
         <after>
             <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
-            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
             <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
                 <argument name="FolderName" value="{{PageBuilderBackgroundImage_JPG.path}}"/>
             </actionGroup>
@@ -3250,7 +3250,7 @@
             <argument name="section" value="BannerOnBackend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Stage: Check Background Attachment After Save -->
         <comment userInput="Stage: Check Background Attachment After Save" stepKey="commentStageCheckAfterSave"/>

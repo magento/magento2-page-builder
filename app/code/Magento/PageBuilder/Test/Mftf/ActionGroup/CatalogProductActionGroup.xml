@@ -31,7 +31,7 @@
         <conditionalClick selector="{{sectionSelector}}" dependentSelector="{{sectionDependentSelector}}" visible="false" stepKey="expandSection"/>
         <waitForPageLoad time="30" stepKey="waitForSectionToExpand"/>
     </actionGroup>
-    <actionGroup name="saveCatalogCategory" extends="saveCategoryForm">
+    <actionGroup name="saveCatalogCategory" extends="SaveCategoryFormActionGroup">
         <!-- Move to CE: Fix CE action group -->
         <waitForElementVisible selector="{{AdminCategoryMainActionsSection.SaveButton}}" stepKey="waitForSaveCategoryButton" before="saveCategory"/>
         <waitForPageLoad stepKey="waitForPageLoad" after="saveCategory"/>
