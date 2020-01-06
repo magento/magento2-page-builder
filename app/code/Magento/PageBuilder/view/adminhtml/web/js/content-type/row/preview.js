@@ -143,7 +143,9 @@ define(["jarallax", "jquery", "knockout", "Magento_PageBuilder/js/events", "Mage
     _proto.destroy = function destroy() {
       _previewCollection2.prototype.destroy.call(this);
 
-      jarallax(this.element, "destroy");
+      if (this.element) {
+        jarallax(this.element, "destroy");
+      }
     };
 
     return Preview;

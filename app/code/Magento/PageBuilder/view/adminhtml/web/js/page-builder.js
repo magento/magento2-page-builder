@@ -39,11 +39,19 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "mageUtils", "und
       this.initListeners();
     }
     /**
-     * Init listeners.
+     * Destroy rootContainer instance.
      */
 
 
     var _proto = PageBuilder.prototype;
+
+    _proto.destroy = function destroy() {
+      this.stage.rootContainer.destroy();
+    }
+    /**
+     * Init listeners.
+     */
+    ;
 
     _proto.initListeners = function initListeners() {
       var _this2 = this;

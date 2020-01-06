@@ -151,6 +151,9 @@ export default class Preview extends PreviewCollection {
      */
     public destroy(): void {
         super.destroy();
-        jarallax(this.element, "destroy");
+
+        if (this.element) {
+            jarallax(this.element, "destroy");
+        }
     }
 }

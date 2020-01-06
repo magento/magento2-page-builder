@@ -53,6 +53,13 @@ export default class PageBuilder implements PageBuilderInterface {
     }
 
     /**
+     * Destroy rootContainer instance.
+     */
+    public destroy() {
+        this.stage.rootContainer.destroy();
+    }
+
+    /**
      * Init listeners.
      */
     public initListeners() {

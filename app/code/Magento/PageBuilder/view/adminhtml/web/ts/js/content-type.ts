@@ -47,9 +47,9 @@ export default class ContentType<P extends Preview = Preview, M extends Master =
     public destroy(): void {
         const params = {
             contentType: this,
-            index: (this.parentContentType as ContentTypeCollectionInterface)
-                .getChildren()
-                .indexOf(this),
+            index: this.parentContentType ?
+                (this.parentContentType as ContentTypeCollectionInterface).getChildren().indexOf(this) :
+                null,
             parentContentType: this.parentContentType,
             stageId: this.stageId,
         };

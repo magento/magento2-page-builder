@@ -209,6 +209,12 @@ define([
                     this.transition(true);
                 }.bind(this));
             }.bind(this));
+        },
+
+        /** @inheritdoc */
+        destroy: function () {
+            this._super();
+            this.pageBuilder.destroy();
         }
     });
 });

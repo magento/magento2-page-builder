@@ -34,7 +34,7 @@ define(["Magento_PageBuilder/js/events", "mageUtils", "Magento_PageBuilder/js/da
     _proto.destroy = function destroy() {
       var params = {
         contentType: this,
-        index: this.parentContentType.getChildren().indexOf(this),
+        index: this.parentContentType ? this.parentContentType.getChildren().indexOf(this) : null,
         parentContentType: this.parentContentType,
         stageId: this.stageId
       };
