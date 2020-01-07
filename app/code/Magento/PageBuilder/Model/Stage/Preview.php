@@ -43,6 +43,11 @@ class Preview
     private $scopeConfig;
 
     /**
+     * @var bool
+     */
+    private $isPreview = false;
+
+    /**
      * Preview constructor.
      * @param \Magento\Store\Model\App\Emulation $emulation
      * @param \Magento\Framework\App\State $appState
@@ -66,11 +71,6 @@ class Preview
         $this->storeManager = $storeManager;
         $this->scopeConfig = $scopeConfig;
     }
-
-    /**
-     * @var bool
-     */
-    private $isPreview;
 
     /**
      * Retrieve the area in which the preview needs to be ran in

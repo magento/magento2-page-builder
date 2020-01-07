@@ -32,12 +32,12 @@
             <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setEmptyGoogleMapsAPIKey"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="navigateToAdminContentManagementPage" stepKey="navigateToAdminContentManagementPage"/>
+        <actionGroup ref="NavigateToAdminContentManagementPageActionGroup" stepKey="navigateToAdminContentManagementPage"/>
         <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
         <actionGroup ref="inputGoogleMapsAPIKey" stepKey="inputGoogleMapsAPIKey">
             <argument name="apiKey" value="{{googleMapsAPIKey.valid}}"/>
         </actionGroup>
-        <actionGroup ref="saveStoreConfiguration" stepKey="saveStoreConfiguration"/>
+        <actionGroup ref="SaveStoreConfigurationActionGroup" stepKey="saveStoreConfiguration"/>
         <see selector="{{ContentManagementSection.StoreConfigurationPageSuccessMessage}}" userInput="You saved the configuration." stepKey="seeSuccessMessage"/>
         <seeInField selector="{{ContentManagementSection.GoogleMapsAPIKeyInputField}}" userInput="{{googleMapsAPIKey.valid}}" stepKey="seeKeyValid"/>
     </test>
@@ -61,12 +61,12 @@
             <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setEmptyGoogleMapsAPIKey"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="navigateToAdminContentManagementPage" stepKey="navigateToAdminContentManagementPage"/>
+        <actionGroup ref="NavigateToAdminContentManagementPageActionGroup" stepKey="navigateToAdminContentManagementPage"/>
         <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
         <actionGroup ref="inputGoogleMapsAPIKey" stepKey="inputGoogleMapsAPIKey">
             <argument name="apiKey" value="{{googleMapsAPIKey.invalidOneCharacter}}"/>
         </actionGroup>
-        <actionGroup ref="saveStoreConfiguration" stepKey="saveStoreConfiguration"/>
+        <actionGroup ref="SaveStoreConfigurationActionGroup" stepKey="saveStoreConfiguration"/>
         <see selector="{{ContentManagementSection.StoreConfigurationPageSuccessMessage}}" userInput="You saved the configuration." stepKey="seeSuccessMessage"/>
         <seeInField selector="{{ContentManagementSection.GoogleMapsAPIKeyInputField}}" userInput="{{googleMapsAPIKey.invalidOneCharacter}}" stepKey="seeKeyInvalid"/>
     </test>
@@ -90,12 +90,12 @@
             <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setEmptyGoogleMapsAPIKey"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="navigateToAdminContentManagementPage" stepKey="navigateToAdminContentManagementPage"/>
+        <actionGroup ref="NavigateToAdminContentManagementPageActionGroup" stepKey="navigateToAdminContentManagementPage"/>
         <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
         <actionGroup ref="inputGoogleMapsAPIKey" stepKey="inputGoogleMapsAPIKey">
             <argument name="apiKey" value="{{googleMapsAPIKey.empty}}"/>
         </actionGroup>
-        <actionGroup ref="saveStoreConfiguration" stepKey="saveStoreConfiguration"/>
+        <actionGroup ref="SaveStoreConfigurationActionGroup" stepKey="saveStoreConfiguration"/>
         <see selector="{{ContentManagementSection.StoreConfigurationPageSuccessMessage}}" userInput="You saved the configuration." stepKey="seeSuccessMessage"/>
         <seeInField selector="{{ContentManagementSection.GoogleMapsAPIKeyInputField}}" userInput="{{googleMapsAPIKey.empty}}" stepKey="seeKeyEmpty"/>
     </test>
@@ -121,7 +121,7 @@
         </after>
         <!-- Go To AdminContentManagementPage -->
         <comment userInput="Go To AdminContentManagementPage" stepKey="commentGoToPage"/>
-        <actionGroup ref="navigateToAdminContentManagementPage" stepKey="navigateToAdminContentManagementPage"/>
+        <actionGroup ref="NavigateToAdminContentManagementPageActionGroup" stepKey="navigateToAdminContentManagementPage"/>
         <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <!-- Validate Global Scope -->
@@ -166,7 +166,7 @@
         <after>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="navigateToAdminContentManagementPage" stepKey="navigateToAdminContentManagementPage"/>
+        <actionGroup ref="NavigateToAdminContentManagementPageActionGroup" stepKey="navigateToAdminContentManagementPage"/>
         <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
         <actionGroup ref="inputGoogleMapsAPIKey" stepKey="inputGoogleMapsAPIKey">
             <argument name="apiKey" value="{{googleMapsAPIKey.valid}}"/>
@@ -194,7 +194,7 @@
         <after>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="navigateToAdminContentManagementPage" stepKey="navigateToAdminContentManagementPage"/>
+        <actionGroup ref="NavigateToAdminContentManagementPageActionGroup" stepKey="navigateToAdminContentManagementPage"/>
         <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
         <!-- Invalid Key: One Character -->
         <comment userInput="Invalid Key: One Character" stepKey="comment1"/>
@@ -245,7 +245,7 @@
             <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setEmptyGoogleMapsAPIKey"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="navigateToAdminContentManagementPage" stepKey="navigateToAdminContentManagementPage"/>
+        <actionGroup ref="NavigateToAdminContentManagementPageActionGroup" stepKey="navigateToAdminContentManagementPage"/>
         <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
         <actionGroup ref="inputGoogleMapsAPIKey" stepKey="inputGoogleMapsAPIKey">
             <argument name="apiKey" value="{{googleMapsAPIKey.valid}}"/>
@@ -310,7 +310,7 @@
             <argument name="apiKey" value="{{googleMapsAPIKey.valid}}"/>
         </actionGroup>
         <waitForElementVisible selector="{{ContentManagementSection.GoogleMapsAPIKeyTestKeyButton}}:not([disabled])" stepKey="waitForTestKeyButtonEnabled8"/>
-        <actionGroup ref="saveStoreConfiguration" stepKey="saveStoreConfiguration"/>
+        <actionGroup ref="SaveStoreConfigurationActionGroup" stepKey="saveStoreConfiguration"/>
         <see selector="{{ContentManagementSection.StoreConfigurationPageSuccessMessage}}" userInput="You saved the configuration." stepKey="seeSuccessMessage"/>
         <seeInField selector="{{ContentManagementSection.GoogleMapsAPIKeyInputField}}" userInput="{{googleMapsAPIKey.valid}}" stepKey="seeKeyValid"/>
     </test>

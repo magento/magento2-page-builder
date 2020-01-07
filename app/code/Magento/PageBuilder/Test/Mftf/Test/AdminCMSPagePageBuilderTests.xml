@@ -31,7 +31,7 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <!--Create CMS Page using PageBuilder-->
-        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToContentCreatedCMSPage1">
+        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToContentCreatedCMSPage1">
             <argument name="CMSPage" value="$$createPreReqCMSPage$$"/>
         </actionGroup>
         <waitForElementVisible selector="{{PageBuilderPanel.layoutMenuSection}}" stepKey="waitForPageBuilderDisplay"/>
@@ -50,7 +50,7 @@
         <click selector="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" stepKey="saveCMSWithPageBuilderContent"/>
         <!--Enable WYSIWYG-->
         <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG"/>
-        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToContentCreatedCMSPage2">
+        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToContentCreatedCMSPage2">
             <argument name="CMSPage" value="$$createPreReqCMSPage$$"/>
         </actionGroup>
         <actionGroup ref="verifyPageBuilderVisibleOnPage" stepKey="verifyPageBuilderVisibleOnCMSPage"/>
@@ -116,11 +116,11 @@
         </actionGroup>
         <!-- Use Full Width layout -->
         <comment userInput="Set Layout to Page - Full Width" stepKey="commentSetLayout"/>
-        <actionGroup ref="setLayout" stepKey="setFullWidthLayout">
+        <actionGroup ref="SetLayoutActionGroup" stepKey="setFullWidthLayout">
             <argument name="designSection" value="CmsDesignSection"/>
             <argument name="layoutOption" value="PageBuilderFullWidthLayout.cms"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Check that description is full width on storefront -->
         <comment userInput="Check that description is full width on storefront" stepKey="commentSeeDescriptionFullWidth"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
@@ -175,11 +175,11 @@
         </actionGroup>
         <!-- Use Category - Full Width layout -->
         <comment userInput="Set Layout to Category - Full Width" stepKey="commentSetLayout"/>
-        <actionGroup ref="setLayout" stepKey="setCategoryFullWidthLayout">
+        <actionGroup ref="SetLayoutActionGroup" stepKey="setCategoryFullWidthLayout">
             <argument name="designSection" value="CmsDesignSection"/>
             <argument name="layoutOption" value="PageBuilderFullWidthLayout.category"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Check that content is displayed on storefront with the category full width layout -->
         <comment userInput="Check that content is displayed on storefront with the product full width layout" stepKey="commentSeeContent"/>
         <openNewTab stepKey="openNewTab"/>
@@ -190,11 +190,11 @@
         <!-- Use Product - Full Width layout -->
         <comment userInput="Set Layout to Product - Full Width" stepKey="commentSetLayout2"/>
         <switchToNextTab stepKey="switchToNextTab"/>
-        <actionGroup ref="setLayout" stepKey="setProductFullWidthLayout">
+        <actionGroup ref="SetLayoutActionGroup" stepKey="setProductFullWidthLayout">
             <argument name="designSection" value="CmsDesignSection"/>
             <argument name="layoutOption" value="PageBuilderFullWidthLayout.product"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage2"/>
         <!-- Check that content is displayed on storefront with the product full width layout -->
         <comment userInput="Check that content is displayed on storefront with the product full width layout" stepKey="commentSeeContent2"/>
         <switchToNextTab stepKey="switchToNextTab1"/>
