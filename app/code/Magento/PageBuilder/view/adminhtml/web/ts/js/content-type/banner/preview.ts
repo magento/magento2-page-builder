@@ -194,7 +194,7 @@ export default class Preview extends BasePreview {
      * @returns {Boolean}
      */
     public activateEditor(preview: Preview, event: JQueryEventObject) {
-        if (this.element && !this.wysiwyg && !this.handledDoubleClick) {
+        if (this.element && !this.wysiwyg) {
             const bookmark = createBookmark(event);
             lockImageSize(this.element);
             this.element.removeAttribute("contenteditable");
@@ -202,6 +202,8 @@ export default class Preview extends BasePreview {
                 this.initWysiwygFromClick(true)
                     .then(() => delayUntil(
                         () => {
+                            // We no longer need to handle double click once it's initialized
+                            this.handledDoubleClick = true;
                             this.wysiwygDeferred.resolve();
                             moveToBookmark(bookmark);
                             unlockImageSize(this.element);

@@ -146,7 +146,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _proto.activateEditor = function activateEditor(preview, event) {
       var _this3 = this;
 
-      if (this.element && !this.wysiwyg && !this.handledDoubleClick) {
+      if (this.element && !this.wysiwyg) {
         var bookmark = (0, _editor.createBookmark)(event);
         (0, _editor.lockImageSize)(this.element);
         this.element.removeAttribute("contenteditable");
@@ -154,6 +154,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         _underscore.defer(function () {
           _this3.initWysiwygFromClick(true).then(function () {
             return (0, _delayUntil)(function () {
+              // We no longer need to handle double click once it's initialized
+              _this3.handledDoubleClick = true;
+
               _this3.wysiwygDeferred.resolve();
 
               (0, _editor.moveToBookmark)(bookmark);

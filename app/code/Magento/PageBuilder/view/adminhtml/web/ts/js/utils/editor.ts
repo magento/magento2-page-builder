@@ -34,7 +34,7 @@ export function encodeContent(content: string) {
 }
 
 /**
- * Prior to parsing the content remove and invalid placeholders within the content
+ * Prior to parsing the content remove any invalid placeholders within the content
  *
  * @param content
  */
