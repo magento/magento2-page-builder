@@ -30,7 +30,7 @@
         </after>
         <!-- Go To AdminContentManagementPage -->
         <comment userInput="Go To AdminContentManagementPage" stepKey="commentGoToPage"/>
-        <actionGroup ref="navigateToAdminContentManagementPage" stepKey="navigateToAdminContentManagementPage"/>
+        <actionGroup ref="NavigateToAdminContentManagementPageActionGroup" stepKey="navigateToAdminContentManagementPage"/>
         <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <!-- Validate Global Scope -->
@@ -69,14 +69,14 @@
         </after>
         <!-- Go To AdminContentManagementPage -->
         <comment userInput="Go To AdminContentManagementPage" stepKey="commentGoToPage"/>
-        <actionGroup ref="navigateToAdminContentManagementPage" stepKey="navigateToAdminContentManagementPage"/>
+        <actionGroup ref="NavigateToAdminContentManagementPageActionGroup" stepKey="navigateToAdminContentManagementPage"/>
         <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
         <!-- Verify Can Save Empty -->
         <comment userInput="Verify Can Save Empty" stepKey="commentSave"/>
         <actionGroup ref="inputGoogleMapsStyle" stepKey="inputGoogleMapsStyle">
             <argument name="style" value="{{googleMapsStyle.empty}}"/>
         </actionGroup>
-        <actionGroup ref="saveStoreConfiguration" stepKey="saveStoreConfiguration"/>
+        <actionGroup ref="SaveStoreConfigurationActionGroup" stepKey="saveStoreConfiguration"/>
         <see selector="{{ContentManagementSection.StoreConfigurationPageSuccessMessage}}" userInput="You saved the configuration." stepKey="seeSuccessMessage"/>
         <seeInField selector="{{ContentManagementSection.GoogleMapsStyleInputField}}" userInput="{{googleMapsStyle.empty}}" stepKey="seeStyle"/>
     </test>
@@ -102,14 +102,14 @@
         </after>
         <!-- Go To AdminContentManagementPage -->
         <comment userInput="Go To AdminContentManagementPage" stepKey="commentGoToPage"/>
-        <actionGroup ref="navigateToAdminContentManagementPage" stepKey="navigateToAdminContentManagementPage"/>
+        <actionGroup ref="NavigateToAdminContentManagementPageActionGroup" stepKey="navigateToAdminContentManagementPage"/>
         <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
         <!-- Verify Can Save Valid -->
         <comment userInput="Verify Can Save Valid" stepKey="commentSave"/>
         <actionGroup ref="inputGoogleMapsStyle" stepKey="inputGoogleMapsStyle">
             <argument name="style" value="{{googleMapsStyle.validLong}}"/>
         </actionGroup>
-        <actionGroup ref="saveStoreConfiguration" stepKey="saveStoreConfiguration"/>
+        <actionGroup ref="SaveStoreConfigurationActionGroup" stepKey="saveStoreConfiguration"/>
         <see selector="{{ContentManagementSection.StoreConfigurationPageSuccessMessage}}" userInput="You saved the configuration." stepKey="seeSuccessMessage"/>
         <seeInField selector="{{ContentManagementSection.GoogleMapsStyleInputField}}" userInput="{{googleMapsStyle.validLong}}" stepKey="seeStyle"/>
         <!-- Verify Can Save Valid With No Content -->
@@ -117,7 +117,7 @@
         <actionGroup ref="inputGoogleMapsStyle" stepKey="inputGoogleMapsStyle2">
             <argument name="style" value="{{googleMapsStyle.validNoContent}}"/>
         </actionGroup>
-        <actionGroup ref="saveStoreConfiguration" stepKey="saveStoreConfiguration2"/>
+        <actionGroup ref="SaveStoreConfigurationActionGroup" stepKey="saveStoreConfiguration2"/>
         <see selector="{{ContentManagementSection.StoreConfigurationPageSuccessMessage}}" userInput="You saved the configuration." stepKey="seeSuccessMessage2"/>
         <seeInField selector="{{ContentManagementSection.GoogleMapsStyleInputField}}" userInput="{{googleMapsStyle.validNoContent}}" stepKey="seeStyle2"/>
     </test>
@@ -143,14 +143,14 @@
         </after>
         <!-- Go To AdminContentManagementPage -->
         <comment userInput="Go To AdminContentManagementPage" stepKey="commentGoToPage"/>
-        <actionGroup ref="navigateToAdminContentManagementPage" stepKey="navigateToAdminContentManagementPage"/>
+        <actionGroup ref="NavigateToAdminContentManagementPageActionGroup" stepKey="navigateToAdminContentManagementPage"/>
         <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
         <!-- Invalid: One Character -->
         <comment userInput="Invalid: One Character" stepKey="commentInvalid1"/>
         <actionGroup ref="inputGoogleMapsStyle" stepKey="inputGoogleMapsStyle1">
             <argument name="style" value="{{googleMapsStyle.invalidOneCharacter}}"/>
         </actionGroup>
-        <actionGroup ref="saveStoreConfigurationAndValidateFieldError" stepKey="saveStoreConfigurationAndValidateFieldError1">
+        <actionGroup ref="SaveStoreConfigurationAndValidateFieldErrorActionGroup" stepKey="saveStoreConfigurationAndValidateFieldError1">
             <argument name="inputFieldError" value="{{ContentManagementSection.GoogleMapsStyleInputFieldError}}"/>
             <argument name="errorMessageSelector" value="{{ContentManagementSection.GoogleMapsStyleErrorMessage}}"/>
             <argument name="errorMessage" value="{{googleMapsStyle.errorMessage}}"/>
@@ -160,7 +160,7 @@
         <actionGroup ref="inputGoogleMapsStyle" stepKey="inputGoogleMapsStyle2">
             <argument name="style" value="{{googleMapsStyle.invalidMissingBraces}}"/>
         </actionGroup>
-        <actionGroup ref="saveStoreConfigurationAndValidateFieldError" stepKey="saveStoreConfigurationAndValidateFieldError2">
+        <actionGroup ref="SaveStoreConfigurationAndValidateFieldErrorActionGroup" stepKey="saveStoreConfigurationAndValidateFieldError2">
             <argument name="inputFieldError" value="{{ContentManagementSection.GoogleMapsStyleInputFieldError}}"/>
             <argument name="errorMessageSelector" value="{{ContentManagementSection.GoogleMapsStyleErrorMessage}}"/>
             <argument name="errorMessage" value="{{googleMapsStyle.errorMessage}}"/>
@@ -170,7 +170,7 @@
         <actionGroup ref="inputGoogleMapsStyle" stepKey="inputGoogleMapsStyle3">
             <argument name="style" value="{{googleMapsStyle.invalidMMissingComma}}"/>
         </actionGroup>
-        <actionGroup ref="saveStoreConfigurationAndValidateFieldError" stepKey="saveStoreConfigurationAndValidateFieldError3">
+        <actionGroup ref="SaveStoreConfigurationAndValidateFieldErrorActionGroup" stepKey="saveStoreConfigurationAndValidateFieldError3">
             <argument name="inputFieldError" value="{{ContentManagementSection.GoogleMapsStyleInputFieldError}}"/>
             <argument name="errorMessageSelector" value="{{ContentManagementSection.GoogleMapsStyleErrorMessage}}"/>
             <argument name="errorMessage" value="{{googleMapsStyle.errorMessage}}"/>
@@ -180,7 +180,7 @@
         <actionGroup ref="inputGoogleMapsStyle" stepKey="inputGoogleMapsStyle4">
             <argument name="style" value="{{googleMapsStyle.validLong}}"/>
         </actionGroup>
-        <actionGroup ref="saveStoreConfiguration" stepKey="saveStoreConfiguration"/>
+        <actionGroup ref="SaveStoreConfigurationActionGroup" stepKey="saveStoreConfiguration"/>
         <see selector="{{ContentManagementSection.StoreConfigurationPageSuccessMessage}}" userInput="You saved the configuration." stepKey="seeSuccessMessage"/>
         <seeInField selector="{{ContentManagementSection.GoogleMapsStyleInputField}}" userInput="{{googleMapsStyle.validLong}}" stepKey="seeStyle"/>
     </test>

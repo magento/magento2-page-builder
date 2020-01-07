@@ -39,7 +39,7 @@
             <magentoCLI command="config:set cms/wysiwyg/enabled disabled" stepKey="disableWYSIWYG"/>
             <createData entity="_defaultCategory" stepKey="createPreReqCategory"/>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToCreatedCategory" stepKey="navigateToCreatedProductEditPage">
+            <actionGroup ref="NavigateToCreatedCategoryActionGroup" stepKey="navigateToCreatedProductEditPage">
                 <argument name="Category" value="$$createPreReqCategory$$"/>
             </actionGroup>
             <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminCategorySection"/>
@@ -65,7 +65,7 @@
         <actionGroup ref="saveCatalogCategory" stepKey="saveCatalogCategory"/>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToStorefront">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStorefront">
             <argument name="page" value="$$createPreReqCategory.name$$.html"/>
         </actionGroup>
         <see userInput="Hello Category from PageBuilder" stepKey="seePageBuilderContent"/>
@@ -89,7 +89,7 @@
             <createData entity="simpleCmsPage" stepKey="createCMSPageA"/>
             <createData entity="simpleCmsPage" stepKey="createCMSPageB"/>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToCreatedCategory" stepKey="navigateToCreatedProductEditPage">
+            <actionGroup ref="NavigateToCreatedCategoryActionGroup" stepKey="navigateToCreatedProductEditPage">
                 <argument name="Category" value="$$createPreReqCategory$$"/>
             </actionGroup>
             <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminCategorySection"/>
@@ -99,7 +99,7 @@
             <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCategory"/>
             <deleteData createDataKey="createCMSPageA" stepKey="deletePreReqCmsPageA"/>
             <deleteData createDataKey="createCMSPageB" stepKey="deletePreReqCmsPageB"/>
-            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
             <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
                 <argument name="FolderName" value="{{PageBuilderImageProperty_StageJPG.path}}"/>
             </actionGroup>
@@ -174,7 +174,7 @@
         <actionGroup ref="saveCatalogCategory" stepKey="saveCatalogCategory"/>
         <!--Go to storefront to verify Category Link-->
         <comment userInput="Verify directives on category store front" stepKey="commentVerifyDirectivesOnStorefront"/>
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToStorefront">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStorefront">
             <argument name="page" value="$$createPreReqCategory.name$$.html"/>
         </actionGroup>
         <see userInput="US" stepKey="verifyCountryVariableName"/>
@@ -202,7 +202,7 @@
         <before>
             <createData entity="_defaultCategory" stepKey="createPreReqCategory"/>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToCreatedCategory" stepKey="navigateToCreatedCategory">
+            <actionGroup ref="NavigateToCreatedCategoryActionGroup" stepKey="navigateToCreatedCategory">
                 <argument name="Category" value="$$createPreReqCategory$$"/>
             </actionGroup>
         </before>
@@ -238,18 +238,18 @@
         <waitForPageLoad stepKey="waitForPageLoad1"/>
         <click selector="{{MediaGallerySection.StorageRootArrow}}" stepKey="clickStorageRoot"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
-        <actionGroup ref="CreateImageFolder" stepKey="createImageFolder">
+        <actionGroup ref="CreateImageFolderActionGroup" stepKey="createImageFolder">
             <argument name="ImageFolder" value="ImageFolder"/>
         </actionGroup>
-        <actionGroup ref="attachImage" stepKey="SelectImageFromMediaStorage">
+        <actionGroup ref="AttachImageActionGroup" stepKey="SelectImageFromMediaStorage">
             <argument name="Image" value="ImageUpload1"/>
         </actionGroup>
-        <actionGroup ref="saveImage" stepKey="saveImage"/>
+        <actionGroup ref="SaveImageActionGroup" stepKey="saveImage"/>
         <seeElement selector="{{ImageOnConfigurationPanel.imageName(ImageUpload1.value)}}" stepKey="seeImageNameOnPreview3"/>
         <seeElement selector="{{ImageOnConfigurationPanel.imageSource(ImageUpload1.value)}}" stepKey="seeMainImageSource3"/>
         <seeElement selector="{{ImageOnConfigurationPanel.trashBinIcon}}" stepKey="seeTrashBinBtn"/>
         <click selector="{{AdminCategoryMainActionsSection.SaveButton}}" stepKey="saveCategory"/>
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToStorefront">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStorefront">
             <argument name="page" value="$$createPreReqCategory.name$$.html"/>
         </actionGroup>
         <seeElement selector="{{ImageOnConfigurationPanel.imageSource(ImageUpload1.value)}}" stepKey="seeMainImageSource4"/>
@@ -271,7 +271,7 @@
         <before>
             <createData entity="_defaultCategory" stepKey="createPreReqCategory"/>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToCreatedCategory" stepKey="navigateToCreatedProductEditPage">
+            <actionGroup ref="NavigateToCreatedCategoryActionGroup" stepKey="navigateToCreatedProductEditPage">
                 <argument name="Category" value="$$createPreReqCategory$$"/>
             </actionGroup>
             <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminCategorySection"/>
@@ -304,14 +304,14 @@
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
         <!-- Use Full Width layout -->
         <comment userInput="Set Layout to Category - Full Width" stepKey="commentSetLayout"/>
-        <actionGroup ref="setLayout" stepKey="setFullWidthLayout">
+        <actionGroup ref="SetLayoutActionGroup" stepKey="setFullWidthLayout">
             <argument name="designSection" value="CategoryDesignSection"/>
             <argument name="layoutOption" value="PageBuilderFullWidthLayout.category"/>
         </actionGroup>
         <actionGroup ref="saveCatalogCategory" stepKey="saveCatalogCategory"/>
         <!-- Check that description is full width on storefront-->
         <comment userInput="Check that description is full width on storefront" stepKey="commentSeeDescriptionFullWidth"/>
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToStorefront">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStorefront">
             <argument name="page" value="$$createPreReqCategory.name$$.html"/>
         </actionGroup>
         <actionGroup ref="verifyFullWidthLayout" stepKey="verifyFullWidthLayout"/>
@@ -333,7 +333,7 @@
         <before>
             <createData entity="_defaultCategory" stepKey="createPreReqCategory"/>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToCreatedCategory" stepKey="navigateToCreatedProductEditPage">
+            <actionGroup ref="NavigateToCreatedCategoryActionGroup" stepKey="navigateToCreatedProductEditPage">
                 <argument name="Category" value="$$createPreReqCategory$$"/>
             </actionGroup>
             <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminCategorySection"/>
@@ -367,7 +367,7 @@
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
         <!-- Set Layout to Page - Full Width -->
         <comment userInput="Set Layout to Page - Full Width" stepKey="commentSetLayout"/>
-        <actionGroup ref="setLayout" stepKey="setFullWidthLayout">
+        <actionGroup ref="SetLayoutActionGroup" stepKey="setFullWidthLayout">
             <argument name="designSection" value="CategoryDesignSection"/>
             <argument name="layoutOption" value="PageBuilderFullWidthLayout.cms"/>
         </actionGroup>
@@ -375,14 +375,14 @@
         <!-- Check the category's heading is still displayed using the Page full width layout-->
         <comment userInput="Check the category's heading is still displayed using the Page full width layout" stepKey="commentSeeDescriptionFullWidth"/>
         <openNewTab stepKey="openNewTab"/>
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToStorefront">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStorefront">
             <argument name="page" value="$$createPreReqCategory.name$$.html"/>
         </actionGroup>
         <waitForElementVisible selector="{{HeadingOnStorefront.headingText(PageBuilderHeadingTypeProperty_H2.value, PageBuilderHeadingTextProperty.value, '1')}}" stepKey="waitForStorefrontHeadingText"/>
         <!-- Set Layout to Product - Full Width -->
         <comment userInput="Set Layout to Product - Full Width" stepKey="commentSetLayout2"/>
         <switchToNextTab stepKey="switchToNextTab"/>
-        <actionGroup ref="setLayout" stepKey="setFullWidthLayout2">
+        <actionGroup ref="SetLayoutActionGroup" stepKey="setFullWidthLayout2">
             <argument name="designSection" value="CategoryDesignSection"/>
             <argument name="layoutOption" value="PageBuilderFullWidthLayout.product"/>
         </actionGroup>
@@ -411,7 +411,7 @@
         </annotations>
         <before>
             <comment userInput="---merging to remove step---" stepKey="createProduct"/>
-            <actionGroup ref="navigateToCreatedCategory" stepKey="navigateToCreatedProductEditPage">
+            <actionGroup ref="NavigateToCreatedCategoryActionGroup" stepKey="navigateToCreatedProductEditPage">
                 <argument name="Category" value="$$createPreReqCategory$$"/>
             </actionGroup>
             <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminProductSection"/>
@@ -425,7 +425,7 @@
         <actionGroup ref="saveCatalogCategory" stepKey="saveProduct"/>
         <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminProductSection"/>
         <!-- Validate Storefront -->
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToProductStorefront">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToProductStorefront">
             <argument name="page" value="$$createPreReqCategory.name$$.html"/>
         </actionGroup>
         <scrollTo selector="{{StorefrontCategoryMainSection.CatalogDescription}}" stepKey="scrollToProductDescription"/>
@@ -448,7 +448,7 @@
         </annotations>
         <before>
             <comment userInput="---merging to remove step---" stepKey="createProduct"/>
-            <actionGroup ref="navigateToCreatedCategory" stepKey="navigateToCreatedProductEditPage">
+            <actionGroup ref="NavigateToCreatedCategoryActionGroup" stepKey="navigateToCreatedProductEditPage">
                 <argument name="Category" value="$$createPreReqCategory$$"/>
             </actionGroup>
             <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminProductSection"/>
@@ -462,7 +462,7 @@
         <actionGroup ref="saveCatalogCategory" stepKey="saveProduct"/>
         <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminProductSection"/>
         <!-- Validate Storefront -->
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToProductStorefront">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToProductStorefront">
             <argument name="page" value="$$createPreReqCategory.name$$.html"/>
         </actionGroup>
         <scrollTo selector="{{StorefrontCategoryMainSection.CatalogDescription}}" stepKey="scrollToProductDescription"/>
@@ -483,7 +483,7 @@
         </annotations>
         <before>
             <comment userInput="---merging to remove step---" stepKey="createProduct"/>
-            <actionGroup ref="navigateToCreatedCategory" stepKey="navigateToCreatedProductEditPage">
+            <actionGroup ref="NavigateToCreatedCategoryActionGroup" stepKey="navigateToCreatedProductEditPage">
                 <argument name="Category" value="$$createPreReqCategory$$"/>
             </actionGroup>
             <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminProductSection"/>
@@ -497,7 +497,7 @@
         <actionGroup ref="saveCatalogCategory" stepKey="saveProduct"/>
         <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminProductSection"/>
         <!-- Validate Storefront -->
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToProductStorefront">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToProductStorefront">
             <argument name="page" value="$$createPreReqCategory.name$$.html"/>
         </actionGroup>
         <scrollTo selector="{{StorefrontCategoryMainSection.CatalogDescription}}" stepKey="scrollToProductDescription"/>
@@ -518,7 +518,7 @@
         </annotations>
         <before>
             <comment userInput="---merging to remove step---" stepKey="createProduct"/>
-            <actionGroup ref="navigateToCreatedCategory" stepKey="navigateToCreatedProductEditPage">
+            <actionGroup ref="NavigateToCreatedCategoryActionGroup" stepKey="navigateToCreatedProductEditPage">
                 <argument name="Category" value="$$createPreReqCategory$$"/>
             </actionGroup>
             <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminProductSection"/>
@@ -535,7 +535,7 @@
         <actionGroup ref="saveCatalogCategory" stepKey="saveProduct"/>
         <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminProductSection"/>
         <!-- Validate Storefront -->
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToProductStorefront">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToProductStorefront">
             <argument name="page" value="$$createPreReqCategory.name$$.html"/>
         </actionGroup>
         <scrollTo selector="{{StorefrontCategoryMainSection.CatalogDescription}}" stepKey="scrollToProductDescription"/>
@@ -556,7 +556,7 @@
         </annotations>
         <before>
             <comment userInput="---merging to remove step---" stepKey="createProduct"/>
-            <actionGroup ref="navigateToCreatedCategory" stepKey="navigateToCreatedProductEditPage">
+            <actionGroup ref="NavigateToCreatedCategoryActionGroup" stepKey="navigateToCreatedProductEditPage">
                 <argument name="Category" value="$$createPreReqCategory$$"/>
             </actionGroup>
             <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminProductSection"/>
@@ -574,7 +574,7 @@
         <actionGroup ref="saveCatalogCategory" stepKey="saveProductAfterDelete"/>
         <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminProductSectionAfterDelete"/>
         <!-- Validate Storefront -->
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToProductStorefront">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToProductStorefront">
             <argument name="page" value="$$createPreReqCategory.name$$.html"/>
         </actionGroup>
         <scrollTo selector="{{StorefrontCategoryMainSection.CatalogDescription}}" stepKey="scrollToProductDescription"/>
@@ -595,7 +595,7 @@
         </annotations>
         <before>
             <comment userInput="---merging to remove step---" stepKey="createProduct"/>
-            <actionGroup ref="navigateToCreatedCategory" stepKey="navigateToCreatedProductEditPage">
+            <actionGroup ref="NavigateToCreatedCategoryActionGroup" stepKey="navigateToCreatedProductEditPage">
                 <argument name="Category" value="$$createPreReqCategory$$"/>
             </actionGroup>
             <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminProductSection"/>
@@ -609,7 +609,7 @@
         <actionGroup ref="saveCatalogCategory" stepKey="saveProduct"/>
         <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminProductSection"/>
         <!-- Validate Storefront -->
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToProductStorefront">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToProductStorefront">
             <argument name="page" value="$$createPreReqCategory.name$$.html"/>
         </actionGroup>
         <scrollTo selector="{{StorefrontCategoryMainSection.CatalogDescription}}" stepKey="scrollToProductDescription"/>
@@ -630,7 +630,7 @@
         </annotations>
         <before>
             <comment userInput="---merging to remove step---" stepKey="createProduct"/>
-            <actionGroup ref="navigateToCreatedCategory" stepKey="navigateToCreatedProductEditPage">
+            <actionGroup ref="NavigateToCreatedCategoryActionGroup" stepKey="navigateToCreatedProductEditPage">
                 <argument name="Category" value="$$createPreReqCategory$$"/>
             </actionGroup>
             <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminProductSection"/>
@@ -644,7 +644,7 @@
         <actionGroup ref="saveCatalogCategory" stepKey="saveProduct"/>
         <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminProductSection"/>
         <!-- Validate Storefront -->
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToProductStorefront">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToProductStorefront">
             <argument name="page" value="$$createPreReqCategory.name$$.html"/>
         </actionGroup>
         <scrollTo selector="{{StorefrontCategoryMainSection.CatalogDescription}}" stepKey="scrollToProductDescription"/>
@@ -665,7 +665,7 @@
         </annotations>
         <before>
             <comment userInput="---merging to remove step---" stepKey="createProduct"/>
-            <actionGroup ref="navigateToCreatedCategory" stepKey="navigateToCreatedProductEditPage">
+            <actionGroup ref="NavigateToCreatedCategoryActionGroup" stepKey="navigateToCreatedProductEditPage">
                 <argument name="Category" value="$$createPreReqCategory$$"/>
             </actionGroup>
             <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminProductSection"/>
@@ -682,7 +682,7 @@
             <argument name="baseContent" value="{{AdminCategoryMainActionsSection.SaveButton}}"/>
         </actionGroup>
         <!-- Validate Storefront -->
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToProductStorefront">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToProductStorefront">
             <argument name="page" value="$$createPreReqCategory.name$$.html"/>
         </actionGroup>
         <scrollTo selector="{{StorefrontCategoryMainSection.CatalogDescription}}" stepKey="scrollToProductDescription"/>
@@ -703,7 +703,7 @@
         </annotations>
         <before>
             <comment userInput="---merging to remove step---" stepKey="createProduct"/>
-            <actionGroup ref="navigateToCreatedCategory" stepKey="navigateToCreatedProductEditPage">
+            <actionGroup ref="NavigateToCreatedCategoryActionGroup" stepKey="navigateToCreatedProductEditPage">
                 <argument name="Category" value="$$createPreReqCategory$$"/>
             </actionGroup>
             <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminProductSection"/>
@@ -721,7 +721,7 @@
         <actionGroup ref="saveCatalogCategory" stepKey="saveProductAfterDelete"/>
         <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminProductSectionAfterDelete"/>
         <!-- Validate Storefront -->
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToProductStorefront">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToProductStorefront">
             <argument name="page" value="$$createPreReqCategory.name$$.html"/>
         </actionGroup>
         <scrollTo selector="{{StorefrontCategoryMainSection.CatalogDescription}}" stepKey="scrollToProductDescription"/>
@@ -742,7 +742,7 @@
         </annotations>
         <before>
             <createData entity="_defaultCategory" before="loginAsAdmin" stepKey="createPreReqCategory"/>
-            <actionGroup ref="navigateToCreatedCategory" stepKey="navigateToAPageWithPageBuilder">
+            <actionGroup ref="NavigateToCreatedCategoryActionGroup" stepKey="navigateToAPageWithPageBuilder">
                 <argument name="Category" value="$$createPreReqCategory$$"/>
             </actionGroup>
             <actionGroup ref="expandAdminCategorySection" stepKey="switchToPageBuilderStage"/>
@@ -759,7 +759,7 @@
         <actionGroup ref="saveCatalogCategory" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminCategorySection" before="switchToPageBuilderStage"/>
         <actionGroup ref="openPageBuilderForAttribute" stepKey="switchToPageBuilderStage"/>
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStoreFront">
             <argument name="page" value="$$createPreReqCategory.name$$.html"/>
         </actionGroup>
         <scrollTo selector="{{StorefrontCategoryMainSection.CatalogDescription}}" stepKey="scrollToCategoryDescription" after="navigateToStoreFront"/>
@@ -780,7 +780,7 @@
         </annotations>
         <before>
             <createData entity="_defaultCategory" after="loginAsAdmin" stepKey="createPreReqCategory"/>
-            <actionGroup ref="navigateToCreatedCategory" stepKey="navigateToAPageWithPageBuilder">
+            <actionGroup ref="NavigateToCreatedCategoryActionGroup" stepKey="navigateToAPageWithPageBuilder">
                 <argument name="Category" value="$$createPreReqCategory$$"/>
             </actionGroup>
             <actionGroup ref="expandAdminCategorySection" stepKey="switchToPageBuilderStage"/>
@@ -805,7 +805,7 @@
         <actionGroup ref="saveCatalogCategory" stepKey="saveAndContinueEditCmsPage1"/>
         <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminCategorySection2" before="switchToPageBuilderStage2"/>
         <actionGroup ref="openPageBuilderForAttribute" stepKey="switchToPageBuilderStage2"/>
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStoreFront">
             <argument name="page" value="$$createPreReqCategory.name$$.html"/>
         </actionGroup>
         <scrollTo selector="{{StorefrontCategoryMainSection.CatalogDescription}}" stepKey="scrollToCategoryDescription" after="navigateToStoreFront"/>
@@ -826,7 +826,7 @@
         </annotations>
         <before>
             <createData entity="_defaultCategory" after="loginAsAdmin" stepKey="createPreReqCategory"/>
-            <actionGroup ref="navigateToCreatedCategory" stepKey="navigateToAPageWithPageBuilder">
+            <actionGroup ref="NavigateToCreatedCategoryActionGroup" stepKey="navigateToAPageWithPageBuilder">
                 <argument name="Category" value="$$createPreReqCategory$$"/>
             </actionGroup>
             <actionGroup ref="expandAdminCategorySection" stepKey="switchToPageBuilderStage"/>
@@ -842,7 +842,7 @@
         <actionGroup ref="saveCatalogCategory" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminCategorySection" before="switchToPageBuilderStage"/>
         <actionGroup ref="openPageBuilderForAttribute" stepKey="switchToPageBuilderStage"/>
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStoreFront">
             <argument name="page" value="$$createPreReqCategory.name$$.html"/>
         </actionGroup>
         <scrollTo selector="{{StorefrontCategoryMainSection.CatalogDescription}}" stepKey="scrollToCategoryDescription" after="navigateToStoreFront"/>
@@ -862,7 +862,7 @@
         </annotations>
         <before>
             <createData entity="_defaultCategory" before="loginAsAdmin" stepKey="createPreReqCategory"/>
-            <actionGroup ref="navigateToCreatedCategory" stepKey="navigateToAPageWithPageBuilder">
+            <actionGroup ref="NavigateToCreatedCategoryActionGroup" stepKey="navigateToAPageWithPageBuilder">
                 <argument name="Category" value="$$createPreReqCategory$$"/>
             </actionGroup>
             <actionGroup ref="expandAdminCategorySection" stepKey="switchToPageBuilderStage"/>
@@ -888,7 +888,7 @@
         </annotations>
         <before>
             <createData entity="_defaultCategory" before="loginAsAdmin" stepKey="createPreReqCategory"/>
-            <actionGroup ref="navigateToCreatedCategory" stepKey="navigateToAPageWithPageBuilder">
+            <actionGroup ref="NavigateToCreatedCategoryActionGroup" stepKey="navigateToAPageWithPageBuilder">
                 <argument name="Category" value="$$createPreReqCategory$$"/>
             </actionGroup>
             <actionGroup ref="expandAdminCategorySection" stepKey="switchToPageBuilderStage"/>
