@@ -195,7 +195,7 @@ define(["jquery", "mage/translate", "mageUtils", "Magento_PageBuilder/js/config"
     if (window.getSelection) {
       var selection = window.getSelection();
 
-      var _id = _mageUtils.uniqueid();
+      var id = _mageUtils.uniqueid();
 
       if (selection.getRangeAt && selection.rangeCount) {
         var range = normalizeTableCellSelection(selection.getRangeAt(0).cloneRange()); // Determine if the current node is an image or span that we want to select instead of text
@@ -215,16 +215,16 @@ define(["jquery", "mage/translate", "mageUtils", "Magento_PageBuilder/js/config"
 
         if (!range.collapsed) {
           range.collapse(false);
-          var endBookmarkNode = createBookmarkSpan(_id + "_end");
+          var endBookmarkNode = createBookmarkSpan(id + "_end");
           range.insertNode(endBookmarkNode);
         }
 
         var range2 = normalizeTableCellSelection(selection.getRangeAt(0));
         range2.collapse(true);
-        var startBookmarkNode = createBookmarkSpan(_id + "_start");
+        var startBookmarkNode = createBookmarkSpan(id + "_start");
         range2.insertNode(startBookmarkNode);
         return {
-          id: _id
+          id: id
         };
       }
     }
