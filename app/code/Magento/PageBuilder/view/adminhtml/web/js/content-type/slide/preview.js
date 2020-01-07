@@ -166,6 +166,14 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
             console.error(error);
           });
         });
+      } else if (this.element && this.wysiwyg) {
+        var element = this.element || this.textarea;
+
+        if (event.currentTarget !== event.target && event.target !== element && !element.contains(event.target)) {
+          return;
+        }
+
+        element.focus();
       }
     }
     /**

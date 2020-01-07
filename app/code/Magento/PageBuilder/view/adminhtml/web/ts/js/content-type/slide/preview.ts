@@ -207,6 +207,17 @@ export default class Preview extends BasePreview {
                     console.error(error);
                 });
             });
+        } else if (this.element && this.wysiwyg) {
+            const element = this.element || this.textarea;
+
+            if (event.currentTarget !== event.target &&
+                event.target !== element &&
+                !element.contains(event.target)
+            ) {
+                return;
+            }
+
+            element.focus();
         }
     }
 
