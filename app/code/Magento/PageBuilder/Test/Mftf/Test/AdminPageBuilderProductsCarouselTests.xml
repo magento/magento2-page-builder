@@ -153,9 +153,9 @@
         <actionGroup ref="validateProductCarouselNavigationDots" stepKey="validateProductCarouselNavigationDotsStage2">
             <argument name="activeNavigationDot" value="2"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate Storefront -->
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <actionGroup ref="validateCanSeeProductInDefaultProductCarousel" stepKey="validateCanSeeProduct1Storefront">
@@ -264,10 +264,10 @@
         <actionGroup ref="validateProductsInProductCarouselAreCenteredForOddNumberOfProducts" stepKey="validateProductsAreCenteredStage1">
             <argument name="centerProductIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Storefront: Validate 1 Product Centered -->
         <openNewTab stepKey="openNewTab"/>
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <actionGroup ref="validateProductsInProductCarouselAreCenteredForOddNumberOfProducts" stepKey="validateProductsAreCenteredStorefront1">
@@ -288,7 +288,7 @@
         <actionGroup ref="validateProductsInProductCarouselAreCenteredForEvenNumberOfProducts" stepKey="validateProductsAreCenteredStage2">
             <argument name="adjacentLeftOfCenterProductIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage2"/>
         <!-- Storefront: Validate 2 Products Centered -->
         <actionGroup ref="switchTabAndReloadPage" stepKey="switchTabAndReloadPage2"/>
         <actionGroup ref="validateProductsInProductCarouselAreCenteredForEvenNumberOfProducts" stepKey="validateProductsAreCenteredStorefront2">
@@ -309,7 +309,7 @@
         <actionGroup ref="validateProductsInProductCarouselAreCenteredForOddNumberOfProducts" stepKey="validateProductsAreCenteredStage3">
             <argument name="centerProductIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage3"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage3"/>
         <!-- Storefront: Validate 3 Products Centered -->
         <actionGroup ref="switchTabAndReloadPage" stepKey="switchTabAndReloadPage4"/>
         <actionGroup ref="validateProductsInProductCarouselAreCenteredForOddNumberOfProducts" stepKey="validateProductsAreCenteredStorefront3">
@@ -330,7 +330,7 @@
         <actionGroup ref="validateProductsInProductCarouselAreCenteredForEvenNumberOfProducts" stepKey="validateProductsAreCenteredStage4">
             <argument name="adjacentLeftOfCenterProductIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage4"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage4"/>
         <!-- Storefront: Validate 4 Products Centered -->
         <actionGroup ref="switchTabAndReloadPage" stepKey="switchTabAndReloadPage6"/>
         <actionGroup ref="validateProductsInProductCarouselAreCenteredForEvenNumberOfProducts" stepKey="validateProductsAreCenteredStorefront4">
@@ -351,7 +351,7 @@
         <actionGroup ref="validateProductsInProductCarouselAreCenteredForOddNumberOfProducts" stepKey="validateProductsAreCenteredStage5">
             <argument name="centerProductIndex" value="3"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage5"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage5"/>
         <!-- Storefront: Validate 5 Products Centered -->
         <actionGroup ref="switchTabAndReloadPage" stepKey="switchTabAndReloadPage8"/>
         <actionGroup ref="validateProductsInProductCarouselAreCenteredForOddNumberOfProducts" stepKey="validateProductsAreCenteredStorefront5">
@@ -956,7 +956,7 @@
             <argument name="productIndex" value="2"/>
         </actionGroup>
         <!-- Change Product Position in Category -->
-        <actionGroup ref="navigateToCreatedCategory" stepKey="navigateToCategory1" after="validateProduct2Storefront">
+        <actionGroup ref="NavigateToCreatedCategoryActionGroup" stepKey="navigateToCategory1" after="validateProduct2Storefront">
             <argument name="Category" value="$$createCategory1$$"/>
         </actionGroup>
         <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminCategorySection" after="navigateToCategory1">
@@ -992,7 +992,7 @@
             <argument name="productIndex" value="2"/>
         </actionGroup>
         <!-- Storefront: Validate Sort Order Changed -->
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront2" after="validateProduct2Stage2">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront2" after="validateProduct2Stage2">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <actionGroup ref="validateProductCountInProducts" stepKey="validateProductCountStorefront2" after="navigateToCMSPageStorefront2">
@@ -1056,7 +1056,7 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2" after="navigateToCMSPage2"/>
         <see userInput="{{PageBuilderProductsMessage.noProductsFound}}" selector="{{ProductsCarouselOnStage.emptyProductsPlaceholder('1')}}" stepKey="seeNoProductsMessage" after="switchToPageBuilderStage2"/>
         <!-- Storefront: Validate Sort Order Changed -->
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront2" after="seeNoProductsMessage">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront2" after="seeNoProductsMessage">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <dontSeeElementInDOM selector="{{ProductsOnStorefront.product('1')}}" stepKey="validateNoProductsOnStorefront" after="navigateToCMSPageStorefront2"/>
@@ -1365,23 +1365,23 @@
             <argument name="property" value="PageBuilderProductsCarouselSettingsCarouselMode_Continuous"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate Product 1 on Storefront -->
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <actionGroup ref="clickProductImageInContinuousProductsCarouselOnStorefront" stepKey="clickProduct1ImageInProductsCMSPageStorefront">
             <argument name="product" value="$$createProduct1.name$$"/>
             <argument name="productItemIndex" value="0"/>
         </actionGroup>
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront2">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront2">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <actionGroup ref="clickProductNameInContinuousProductsCarouselOnStorefront" stepKey="clickProduct1NameInProductsCMSPageStorefront">
             <argument name="product" value="$$createProduct1.name$$"/>
             <argument name="productItemIndex" value="0"/>
         </actionGroup>
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront3">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront3">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <actionGroup ref="clickProductAddToCartInContinuousProductsCarouselOnStorefront" stepKey="clickProduct1AddToCartInProductsCMSPageStorefront">
@@ -1397,21 +1397,21 @@
             <argument name="productItemIndex" value="0"/>
         </actionGroup>
         <!-- Validate Product 2 on Storefront -->
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront4">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront4">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <actionGroup ref="clickProductImageInContinuousProductsCarouselOnStorefront" stepKey="clickProduct2ImageInProductsCMSPageStorefront">
             <argument name="product" value="$$createProduct2.name$$"/>
             <argument name="productItemIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront5">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront5">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <actionGroup ref="clickProductNameInContinuousProductsCarouselOnStorefront" stepKey="clickProduct2NameInProductsCMSPageStorefront">
             <argument name="product" value="$$createProduct2.name$$"/>
             <argument name="productItemIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront6">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront6">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <actionGroup ref="clickProductAddToCartInContinuousProductsCarouselOnStorefront" stepKey="clickProduct2AddToCartInProductsCMSPageStorefront">
@@ -1427,21 +1427,21 @@
             <argument name="productItemIndex" value="1"/>
         </actionGroup>
         <!-- Validate Product 6 on Storefront -->
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront7">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront7">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <actionGroup ref="clickProductImageInContinuousProductsCarouselOnStorefront" stepKey="clickProduct6ImageInProductsCMSPageStorefront">
             <argument name="product" value="$$createProduct6.name$$"/>
             <argument name="productItemIndex" value="-1"/>
         </actionGroup>
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront8">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront8">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <actionGroup ref="clickProductNameInContinuousProductsCarouselOnStorefront" stepKey="clickProduct6NameInProductsCMSPageStorefront">
             <argument name="product" value="$$createProduct6.name$$"/>
             <argument name="productItemIndex" value="-1"/>
         </actionGroup>
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront9">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront9">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <actionGroup ref="clickProductAddToCartInContinuousProductsCarouselOnStorefront" stepKey="clickProduct6AddToCartInProductsCMSPageStorefront">
@@ -1557,9 +1557,9 @@
         </actionGroup>
         <actionGroup ref="validateProductCarouselNavigationArrowsAreNotRendered" stepKey="validateProductCarouselNavigationArrowsAreNotRenderedStage"/>
         <actionGroup ref="validateProductCarouselNavigationDots" stepKey="validateProductCarouselNavigationDotsStage"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate Storefront -->
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <actionGroup ref="validateProductCarouselSettingsAttributes" stepKey="validateProductCarouselSettingsAttributesStorefront">
@@ -1683,9 +1683,9 @@
         <actionGroup ref="validateCannotSeeProductInDefaultProductCarousel" stepKey="validateCannotSeeProduct1Stage2">
             <argument name="product" value="$$createProduct1$$"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate Storefront -->
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <actionGroup ref="validateProductCarouselSettingsAttributes" stepKey="validateProductCarouselSettingsAttributesStorefront">
@@ -1966,9 +1966,9 @@
             <argument name="opacityOfProductItem" value="1"/>
             <argument name="productItemIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate Storefront -->
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <actionGroup ref="validateProductCarouselSettingsAttributes" stepKey="validateProductCarouselSettingsAttributesStorefront">
@@ -2262,9 +2262,9 @@
             <argument name="opacityOfProductItem" value="1"/>
             <argument name="productItemIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate Storefront -->
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <actionGroup ref="validateProductCarouselSettingsAttributes" stepKey="validateProductCarouselSettingsAttributesStorefront">
@@ -2491,9 +2491,9 @@
         <actionGroup ref="validateCannotSeeProductInDefaultProductCarousel" stepKey="validateCannotSeeProduct1Stage6">
             <argument name="product" value="$$createProduct1$$"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate Storefront: Initial -->
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <actionGroup ref="clickProductCarouselNavigationDot" stepKey="clickNavigationDotToPauseAutoplayStorefront1">
@@ -2889,9 +2889,9 @@
             <argument name="product" value="$$createProduct5$$"/>
             <argument name="productItemIndex" value="4"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate Storefront: Initial -->
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <actionGroup ref="clickProductCarouselNavigationDot" stepKey="clickNavigationDotToPauseAutoplayStorefront1">
@@ -3165,9 +3165,9 @@
         <actionGroup ref="validateCannotSeeProductInDefaultProductCarousel" stepKey="validateCannotSeeProduct6Stage7">
             <argument name="product" value="$$createProduct6$$"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate Storefront -->
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <actionGroup ref="validateProductCarouselSettingsAttributes" stepKey="validateProductCarouselSettingsAttributesStorefront">
@@ -3399,7 +3399,7 @@
         <!-- Stage: Drag to Second Slide and Validate -->
         <actionGroup ref="dragProductToSlideProductCarousel" stepKey="dragProductToSlideProductCarouselStage">
             <argument name="targetProduct" value="$$createProduct5.name$$"/>
-            <argument name="destinationProduct" value="$$createProduct1.name$$"/>
+            <argument name="destinationProduct" value="$$createProduct2.name$$"/>
         </actionGroup>
         <actionGroup ref="validateCanSeeProductInDefaultProductCarousel" stepKey="validateCanSeeProduct6Stage2">
             <argument name="product" value="$$createProduct6$$"/>
@@ -3407,9 +3407,9 @@
         <actionGroup ref="validateCannotSeeProductInDefaultProductCarousel" stepKey="validateCannotSeeProduct1Stage2">
             <argument name="product" value="$$createProduct1$$"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate Storefront -->
-        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCMSPageStorefront">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <actionGroup ref="validateProductCarouselSettingsAttributes" stepKey="validateProductCarouselSettingsAttributesStorefront">
@@ -3473,6 +3473,47 @@
         <actionGroup ref="validateProductInProducts" stepKey="validateProductOnStage3">
             <argument name="page" value="ProductsCarouselOnStage"/>
             <argument name="product" value="_defaultProduct"/>
+        </actionGroup>
+    </test>
+    <test name="AdminPageBuilderVerifySwatchDisplayedInPreviewCarousel" extends="AdminPageBuilderVerifySwatchDisplayedInPreviewGrid">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Products"/>
+            <title value="Verify products display swatches within the admin for carousel appearance"/>
+            <description value="Verify that a product which has swatches display the swatches within the admin for carousel appearance"/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="PB-76"/>
+            <testCaseId value="MC-22765"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-products"/>
+            <group value="pagebuilder-productsCarousel"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance" after="openEditAfterDrop">
+            <argument name="property" value="PageBuilderProductsProductCarouselAppearance"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="count" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateSwatchInProducts" stepKey="assertFirstSwatch">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="swatch" value="visualSwatchOption1"/>
+        </actionGroup>
+        <actionGroup ref="validateSwatchInProducts" stepKey="assertSecondSwatch">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="swatch" value="visualSwatchOption2"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStageAfterSave">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="count" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateSwatchInProducts" stepKey="assertFirstSwatchAfterSave">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="swatch" value="visualSwatchOption1"/>
+        </actionGroup>
+        <actionGroup ref="validateSwatchInProducts" stepKey="assertSecondSwatchAfterSave">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="swatch" value="visualSwatchOption2"/>
         </actionGroup>
     </test>
 </tests>

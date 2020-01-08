@@ -385,7 +385,7 @@
         <seeElement selector="{{ColumnOnBackend.columnChildrenStyle('1', '3', PageBuilderVerticalAlignmentPropertyBottom.style)}}" stepKey="seeFirstColumnVerticalAlignmentBottom"/>
         <!-- Verify Vertical Alignment On Stage - After Save -->
         <comment userInput="Verify vertical alignment on stage after save" stepKey="commentVerifyVerticalAlignmentOnStageAfterSave"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <seeElement selector="{{ColumnOnBackend.columnChildrenStyle('1', '1', PageBuilderVerticalAlignmentPropertyTop.style)}}" stepKey="seeFirstColumnVerticalAlignmentTopAfterSave"/>
         <seeElement selector="{{ColumnOnBackend.columnChildrenStyle('1', '2', PageBuilderVerticalAlignmentPropertyCenter.style)}}" stepKey="seeFirstColumnVerticalAlignmentCenterAfterSave"/>
@@ -503,7 +503,7 @@
         <seeElement selector="{{ColumnOnBackend.columnChildrenStyle('1', '3', PageBuilderVerticalAlignmentPropertyBottom.style)}}" stepKey="seeFirstColumnVerticalAlignmentBottom"/>
         <!-- Verify Vertical Alignment On Stage - After Save -->
         <comment userInput="Verify vertical alignment on stage after save" stepKey="commentVerifyVerticalAlignmentOnStageAfterSave"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <seeElement selector="{{ColumnOnBackend.columnChildrenStyle('1', '1', PageBuilderVerticalAlignmentPropertyTop.style)}}" stepKey="seeFirstColumnVerticalAlignmentTopAfterSave"/>
         <seeElement selector="{{ColumnOnBackend.columnChildrenStyle('1', '2', PageBuilderVerticalAlignmentPropertyCenter.style)}}" stepKey="seeFirstColumnVerticalAlignmentCenterAfterSave"/>
@@ -636,7 +636,7 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
             <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
                 <argument name="FolderName" value="{{PageBuilderBackgroundImage_JPG.path}}"/>
             </actionGroup>
@@ -752,7 +752,7 @@
             <argument name="property" value="PageBuilderMinHeightProperty_500"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
-        <actionGroup ref="saveCmsPage" stepKey="saveCmsPage"/>
+        <actionGroup ref="SaveCmsPageActionGroup" stepKey="saveCmsPage"/>
         <amOnPage url="column{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <waitForPageLoad stepKey="waitForPageLoadStoreFront"/>
         <seeElement selector="{{ColumnOnFrontend.column1Height}}" stepKey="seeColumn1MinHeightApplied"/>
@@ -780,7 +780,7 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
             <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
                 <argument name="FolderName" value="{{PageBuilderBackgroundImage_JPG.path}}"/>
             </actionGroup>
@@ -825,7 +825,7 @@
             <argument name="property" value="PageBuilderBackgroundAttachmentProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForFirstColumnAfterSave">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
@@ -869,7 +869,7 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
             <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
                 <argument name="FolderName" value="{{PageBuilderBackgroundImage_JPG.path}}"/>
             </actionGroup>
@@ -970,7 +970,7 @@
             <argument name="property" value="PageBuilderBackgroundColorProperty_3C3C3C"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <openNewTab stepKey="openNewTab"/>
         <amOnPage url="column{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <waitForPageLoad stepKey="waitForPageLoadStoreFront1"/>
@@ -1001,7 +1001,7 @@
             <argument name="property" value="PageBuilderBackgroundColorProperty_FF5A5F"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsWithoutModifying"/>
-        <actionGroup ref="saveCmsPage" stepKey="saveCmsPage"/>
+        <actionGroup ref="SaveCmsPageActionGroup" stepKey="saveCmsPage"/>
         <switchToNextTab stepKey="switchToNextTab"/>
         <amOnPage url="column{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage2"/>
         <waitForPageLoad stepKey="waitForPageLoadStoreFront2"/>
@@ -1129,7 +1129,7 @@
         <seeElement selector="{{ColumnOnBackend.margins('1', '1', PageBuilderAdvancedMarginsAndPaddingProperty.value)}}" stepKey="seeColumnMarginStyleOnStage"/>
         <seeElement selector="{{ColumnOnBackend.padding('1', '1', PageBuilderAdvancedMarginsAndPaddingProperty.value)}}" stepKey="seeColumnPaddingStyleOnStage"/>
         <seeElement selector="{{ColumnOnBackend.cssClasses('1', '1', PageBuilderAdvancedCssClassesPropertyThreeClasses.value)}}" stepKey="seeColumnClassOnStage"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
@@ -1277,7 +1277,7 @@
         </actionGroup>
         <comment userInput="User sees 3 Heading content blocks displayed in first column on Stage" stepKey="confirmContentTypesOnStage"/>
         <seeNumberOfElements selector="{{HeadingOnStage.allHeadingsInContainer(PageBuilderColumnContentType.role, '1')}}" userInput="3" stepKey="see3HeadingsInFirstColumn"/>
-        <actionGroup ref="saveCmsPage" stepKey="saveCmsPage"/>
+        <actionGroup ref="SaveCmsPageActionGroup" stepKey="saveCmsPage"/>
         <amOnPage url="column{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <seeElement selector="{{ColumnOnFrontend.column1HeightFull}}" stepKey="seeColumn1FullHeightApplied"/>
         <seeElement selector="{{ColumnOnFrontend.column2HeightFull}}" stepKey="seeColumn2FullHeightApplied"/>
@@ -1387,7 +1387,7 @@
         <waitForElementVisible selector="{{HeadingOnStage.hidden('2')}}" stepKey="waitForContentTypeHidden2"/>
         <!-- Stage: Validate Default Show/Hide State - After Save -->
         <comment userInput="Stage: Validate Default Show/Hide State - After Save" stepKey="CommentValidateDefaultShowHideStateOnStageAfterSave"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <waitForElementVisible selector="{{HeadingOnStage.hidden('1')}}" stepKey="waitForContentTypeHiddenAfterSave1"/>
         <waitForElementVisible selector="{{HeadingOnStage.hidden('2')}}" stepKey="waitForContentTypeHiddenAfterSave2"/>
@@ -1404,7 +1404,7 @@
         </actionGroup>
         <waitForElementVisible selector="{{HeadingOnStage.notHidden('1')}}" stepKey="waitForContentTypeHiddenReset1"/>
         <waitForElementVisible selector="{{HeadingOnStage.notHidden('2')}}" stepKey="waitForContentTypeHiddenReset2"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPageAfterReset"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPageAfterReset"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
@@ -1657,7 +1657,7 @@
         <seeElement selector="{{HeadingOnStage.notHidden('1')}}" stepKey="seeContentTypeNotHiddenStageBeforeSave"/>
         <!-- Stage: Validate Default Show/Hide State - After Save -->
         <comment userInput="Stage: Validate Default Show/Hide State - After Save" stepKey="CommentValidateDefaultShowHideStateOnStageAfterSave"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <seeElement selector="{{HeadingOnStage.notHidden('1')}}" stepKey="seeContentTypeNotHiddenStageAfterSave"/>
         <!-- Storefront: Validate Default Show/Hide State -->
@@ -1719,7 +1719,7 @@
             <argument name="section" value="HeadingOnStage"/>
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage1"/>
         <!-- Validate content type remains disabled after save -->
         <comment userInput="Validate content type remains disabled after save" stepKey="commentValidateHiddenStage"/>
@@ -1743,7 +1743,7 @@
             <argument name="section" value="HeadingOnStage"/>
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage1"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage1"/>
         <!-- Validate Content Is Shown Storefront -->
         <comment userInput="Validate Content Is Shown Storefront" stepKey="commentValidateContentIsShownStorefront"/>
         <switchToNextTab stepKey="switchBackToStorefront" />

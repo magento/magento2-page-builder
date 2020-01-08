@@ -1,4 +1,5 @@
 /*eslint-disable */
+/* jscs:disable */
 define(["Magento_PageBuilder/js/utils/string"], function (_string) {
   /**
    * Copyright © Magento, Inc. All rights reserved.

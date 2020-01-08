@@ -17,6 +17,8 @@ use Magento\Framework\Serialize\Serializer\Json;
 
 /**
  * Class Render
+ *
+ * @api
  */
 class Render extends Template
 {

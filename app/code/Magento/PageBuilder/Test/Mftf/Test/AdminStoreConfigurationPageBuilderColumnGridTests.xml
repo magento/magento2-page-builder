@@ -24,7 +24,7 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAdminContentManagementPage" stepKey="navigateToAdminContentManagementPage"/>
+            <actionGroup ref="NavigateToAdminContentManagementPageActionGroup" stepKey="navigateToAdminContentManagementPage"/>
             <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
         </before>
         <after>
@@ -39,7 +39,7 @@
         <actionGroup ref="updateDefaultGridSizeConfig" stepKey="enterInvalidDefaultGridSize">
             <argument name="gridSize" value="{{PageBuilderGridSize.gridSize_50}}"/>
         </actionGroup>
-        <actionGroup ref="saveStoreConfigurationAndValidateFieldError" stepKey="saveStoreConfigurationAndValidateFieldError1">
+        <actionGroup ref="SaveStoreConfigurationAndValidateFieldErrorActionGroup" stepKey="saveStoreConfigurationAndValidateFieldError1">
             <argument name="inputFieldError" value="{{ContentManagementSection.ColumnGridDefaultInputField}}"/>
             <argument name="errorMessageSelector" value="{{ContentManagementSection.ColumnGridDefaultInputFieldError}}"/>
             <argument name="errorMessage" value="{{PageBuilderDefaultColumnGridSize.invalidDefaultGridSizeErrorMessage}}"/>
@@ -49,14 +49,14 @@
         <actionGroup ref="updateDefaultGridSizeConfig" stepKey="enterValidDefaultGridSize">
             <argument name="gridSize" value="{{PageBuilderGridSize.gridSize_6}}"/>
         </actionGroup>
-        <actionGroup ref="saveStoreConfiguration" stepKey="saveStoreConfiguration2"/>
+        <actionGroup ref="SaveStoreConfigurationActionGroup" stepKey="saveStoreConfiguration2"/>
         <see selector="{{ContentManagementSection.StoreConfigurationPageSuccessMessage}}" userInput="You saved the configuration." stepKey="seeSuccessMessage1"/>
         <!-- Enter Invalid Maximum Grid Size -->
         <comment userInput="Enter Invalid Maximum Grid Size" stepKey="comment3"/>
         <actionGroup ref="updateMaxGridSizeConfig" stepKey="enterInvalidMaxGridSize">
             <argument name="gridSize" value="{{PageBuilderGridSize.gridSize_3}}"/>
         </actionGroup>
-        <actionGroup ref="saveStoreConfigurationAndValidateFieldError" stepKey="saveStoreConfigurationAndValidateFieldError2">
+        <actionGroup ref="SaveStoreConfigurationAndValidateFieldErrorActionGroup" stepKey="saveStoreConfigurationAndValidateFieldError2">
             <argument name="inputFieldError" value="{{ContentManagementSection.ColumnGridDefaultInputField}}"/>
             <argument name="errorMessageSelector" value="{{ContentManagementSection.ColumnGridDefaultInputFieldError}}"/>
             <argument name="errorMessage" value="{{PageBuilderDefaultColumnGridSize.invalidDefaultGridSizeErrorMessage}}"/>
@@ -66,14 +66,14 @@
         <actionGroup ref="updateMaxGridSizeConfig" stepKey="enterValidMaxGridSize">
             <argument name="gridSize" value="{{PageBuilderGridSize.gridSize_32}}"/>
         </actionGroup>
-        <actionGroup ref="saveStoreConfiguration" stepKey="saveStoreConfiguration4"/>
+        <actionGroup ref="SaveStoreConfigurationActionGroup" stepKey="saveStoreConfiguration4"/>
         <see selector="{{ContentManagementSection.StoreConfigurationPageSuccessMessage}}" userInput="You saved the configuration." stepKey="seeSuccessMessage2"/>
         <!-- Enter Invalid Default Grid Size Negative -->
         <comment userInput="Enter Invalid Default Grid Size Negative" stepKey="commentNegativeNumber"/>
         <actionGroup ref="updateDefaultGridSizeConfig" stepKey="enterInvalidDefaultGridSizeNegative">
             <argument name="gridSize" value="{{PageBuilderGridSize.gridSizeErrorNegative}}"/>
         </actionGroup>
-        <actionGroup ref="saveStoreConfigurationAndValidateFieldError" stepKey="saveStoreConfigurationAndValidateFieldError3">
+        <actionGroup ref="SaveStoreConfigurationAndValidateFieldErrorActionGroup" stepKey="saveStoreConfigurationAndValidateFieldError3">
             <argument name="inputFieldError" value="{{ContentManagementSection.ColumnGridDefaultInputField}}"/>
             <argument name="errorMessageSelector" value="{{ContentManagementSection.ColumnGridDefaultInputFieldError}}"/>
             <argument name="errorMessage" value="{{PageBuilderDefaultColumnGridSize.invalidDigitErrorMessage}}"/>
@@ -83,7 +83,7 @@
         <actionGroup ref="updateDefaultGridSizeConfig" stepKey="enterInvalidDefaultGridSizeZero">
             <argument name="gridSize" value="{{PageBuilderGridSize.gridSizeErrorZero}}"/>
         </actionGroup>
-        <actionGroup ref="saveStoreConfigurationAndValidateFieldError" stepKey="saveStoreConfigurationAndValidateFieldError4">
+        <actionGroup ref="SaveStoreConfigurationAndValidateFieldErrorActionGroup" stepKey="saveStoreConfigurationAndValidateFieldError4">
             <argument name="inputFieldError" value="{{ContentManagementSection.ColumnGridDefaultInputField}}"/>
             <argument name="errorMessageSelector" value="{{ContentManagementSection.ColumnGridDefaultInputFieldError}}"/>
             <argument name="errorMessage" value="{{PageBuilderDefaultColumnGridSize.greaterThanOneErrorMessage}}"/>
@@ -93,7 +93,7 @@
         <actionGroup ref="updateDefaultGridSizeConfig" stepKey="enterInvalidDefaultGridSizeOne">
             <argument name="gridSize" value="{{PageBuilderGridSize.gridSizeErrorOne}}"/>
         </actionGroup>
-        <actionGroup ref="saveStoreConfigurationAndValidateFieldError" stepKey="saveStoreConfigurationAndValidateFieldErrorOne">
+        <actionGroup ref="SaveStoreConfigurationAndValidateFieldErrorActionGroup" stepKey="saveStoreConfigurationAndValidateFieldErrorOne">
             <argument name="inputFieldError" value="{{ContentManagementSection.ColumnGridDefaultInputField}}"/>
             <argument name="errorMessageSelector" value="{{ContentManagementSection.ColumnGridDefaultInputFieldError}}"/>
             <argument name="errorMessage" value="{{PageBuilderDefaultColumnGridSize.greaterThanOneErrorMessage}}"/>
@@ -103,7 +103,7 @@
         <actionGroup ref="updateDefaultGridSizeConfig" stepKey="enterInvalidDefaultGridSizeFloat">
             <argument name="gridSize" value="{{PageBuilderGridSize.gridSizeErrorFloat}}"/>
         </actionGroup>
-        <actionGroup ref="saveStoreConfigurationAndValidateFieldError" stepKey="saveStoreConfigurationAndValidateFieldError5">
+        <actionGroup ref="SaveStoreConfigurationAndValidateFieldErrorActionGroup" stepKey="saveStoreConfigurationAndValidateFieldError5">
             <argument name="inputFieldError" value="{{ContentManagementSection.ColumnGridDefaultInputField}}"/>
             <argument name="errorMessageSelector" value="{{ContentManagementSection.ColumnGridDefaultInputFieldError}}"/>
             <argument name="errorMessage" value="{{PageBuilderDefaultColumnGridSize.invalidDigitErrorMessage}}"/>
@@ -111,13 +111,13 @@
         <!-- Restore Default Values for Default and Maximum Grid Size -->
         <comment userInput="Restore Default Values for Default and Maximum Grid Size" stepKey="comment5"/>
         <click selector="{{ContentManagementSection.UseSystem('column_grid_default')}}" stepKey="restoreDefaultGridSize" />
-        <actionGroup ref="saveStoreConfiguration" stepKey="saveStoreConfiguration5"/>
+        <actionGroup ref="SaveStoreConfigurationActionGroup" stepKey="saveStoreConfiguration5"/>
         <!-- Enter Invalid Max Default Grid Size Negative -->
         <comment userInput="Enter Invalid Max Default Grid Size Negative" stepKey="commentNegativeNumberMax"/>
         <actionGroup ref="updateMaxGridSizeConfig" stepKey="enterNegativeMaxGridSize">
             <argument name="gridSize" value="{{PageBuilderGridSize.gridSizeErrorNegative}}"/>
         </actionGroup>
-        <actionGroup ref="saveStoreConfigurationAndValidateFieldError" stepKey="saveStoreConfigurationAndValidateFieldError6">
+        <actionGroup ref="SaveStoreConfigurationAndValidateFieldErrorActionGroup" stepKey="saveStoreConfigurationAndValidateFieldError6">
             <argument name="inputFieldError" value="{{ContentManagementSection.ColumnGridMaxInputField}}"/>
             <argument name="errorMessageSelector" value="{{ContentManagementSection.ColumnGridMaxInputFieldError}}"/>
             <argument name="errorMessage" value="{{PageBuilderDefaultColumnGridSize.invalidDigitErrorMessage}}"/>
@@ -127,7 +127,7 @@
         <actionGroup ref="updateMaxGridSizeConfig" stepKey="enterInvalidDefaultGridSizeZeroMax">
             <argument name="gridSize" value="{{PageBuilderGridSize.gridSizeErrorZero}}"/>
         </actionGroup>
-        <actionGroup ref="saveStoreConfigurationAndValidateFieldError" stepKey="saveStoreConfigurationAndValidateFieldError7">
+        <actionGroup ref="SaveStoreConfigurationAndValidateFieldErrorActionGroup" stepKey="saveStoreConfigurationAndValidateFieldError7">
             <argument name="inputFieldError" value="{{ContentManagementSection.ColumnGridMaxInputField}}"/>
             <argument name="errorMessageSelector" value="{{ContentManagementSection.ColumnGridMaxInputFieldError}}"/>
             <argument name="errorMessage" value="{{PageBuilderDefaultColumnGridSize.greaterThanOneErrorMessage}}"/>
@@ -137,7 +137,7 @@
         <actionGroup ref="updateMaxGridSizeConfig" stepKey="enterInvalidMaxGridSizeOne">
             <argument name="gridSize" value="{{PageBuilderGridSize.gridSizeErrorOne}}"/>
         </actionGroup>
-        <actionGroup ref="saveStoreConfigurationAndValidateFieldError" stepKey="saveStoreConfigurationAndValidateFieldErrorMaxOne">
+        <actionGroup ref="SaveStoreConfigurationAndValidateFieldErrorActionGroup" stepKey="saveStoreConfigurationAndValidateFieldErrorMaxOne">
             <argument name="inputFieldError" value="{{ContentManagementSection.ColumnGridMaxInputField}}"/>
             <argument name="errorMessageSelector" value="{{ContentManagementSection.ColumnGridMaxInputFieldError}}"/>
             <argument name="errorMessage" value="{{PageBuilderDefaultColumnGridSize.greaterThanOneErrorMessage}}"/>
@@ -147,13 +147,13 @@
         <actionGroup ref="updateMaxGridSizeConfig" stepKey="enterInvalidDefaultGridSizeFloatMax">
             <argument name="gridSize" value="{{PageBuilderGridSize.gridSizeErrorFloat}}"/>
         </actionGroup>
-        <actionGroup ref="saveStoreConfigurationAndValidateFieldError" stepKey="saveStoreConfigurationAndValidateFieldError8">
+        <actionGroup ref="SaveStoreConfigurationAndValidateFieldErrorActionGroup" stepKey="saveStoreConfigurationAndValidateFieldError8">
             <argument name="inputFieldError" value="{{ContentManagementSection.ColumnGridMaxInputField}}"/>
             <argument name="errorMessageSelector" value="{{ContentManagementSection.ColumnGridMaxInputFieldError}}"/>
             <argument name="errorMessage" value="{{PageBuilderDefaultColumnGridSize.invalidDigitErrorMessage}}"/>
         </actionGroup>
         <click selector="{{ContentManagementSection.UseSystem('column_grid_max')}}" stepKey="restoreDefaultMaxGridSize" />
-        <actionGroup ref="saveStoreConfiguration" stepKey="saveStoreConfiguration6"/>
+        <actionGroup ref="SaveStoreConfigurationActionGroup" stepKey="saveStoreConfiguration6"/>
         <see selector="{{ContentManagementSection.StoreConfigurationPageSuccessMessage}}" userInput="You saved the configuration." stepKey="seeSuccessMessage3"/>
     </test>
     <test name="StoreConfigurationDefaultColumnGridSizeFieldAppearance">
@@ -174,7 +174,7 @@
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <!-- Go To AdminContentManagementPage -->
             <comment userInput="Go To AdminContentManagementPage" stepKey="commentGoToPage"/>
-            <actionGroup ref="navigateToAdminContentManagementPage" stepKey="navigateToAdminContentManagementPage"/>
+            <actionGroup ref="NavigateToAdminContentManagementPageActionGroup" stepKey="navigateToAdminContentManagementPage"/>
             <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
         </before>
         <after>
@@ -206,7 +206,7 @@
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <!-- Go To AdminContentManagementPage -->
             <comment userInput="Go To AdminContentManagementPage" stepKey="commentGoToPage"/>
-            <actionGroup ref="navigateToAdminContentManagementPage" stepKey="navigateToAdminContentManagementPage"/>
+            <actionGroup ref="NavigateToAdminContentManagementPageActionGroup" stepKey="navigateToAdminContentManagementPage"/>
             <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
         </before>
         <after>

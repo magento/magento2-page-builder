@@ -1,4 +1,5 @@
 /*eslint-disable */
+/* jscs:disable */
 define(["jquery", "mageUtils", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/appearance-config", "Magento_PageBuilder/js/converter/converter-pool-factory", "Magento_PageBuilder/js/mass-converter/converter-pool-factory", "Magento_PageBuilder/js/property/property-reader-pool-factory"], function (_jquery, _mageUtils, _underscore, _config, _appearanceConfig, _converterPoolFactory, _converterPoolFactory2, _propertyReaderPoolFactory) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
@@ -36,10 +37,8 @@ define(["jquery", "mageUtils", "underscore", "Magento_PageBuilder/js/config", "M
               massConverterPool = loadedComponents[2];
           var data = {};
 
-          var _arr = Object.keys(config.elements);
-
-          for (var _i = 0; _i < _arr.length; _i++) {
-            var elementName = _arr[_i];
+          for (var _i = 0, _Object$keys = Object.keys(config.elements); _i < _Object$keys.length; _i++) {
+            var elementName = _Object$keys[_i];
             var elementConfig = config.elements[elementName];
 
             var currentElement = _this.findElementByName(element, elementName); // If we cannot locate the current element skip trying to read any attributes from it

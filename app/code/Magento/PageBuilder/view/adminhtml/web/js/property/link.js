@@ -1,4 +1,5 @@
 /*eslint-disable */
+/* jscs:disable */
 define([], function () {
   /**
    * Copyright © Magento, Inc. All rights reserved.

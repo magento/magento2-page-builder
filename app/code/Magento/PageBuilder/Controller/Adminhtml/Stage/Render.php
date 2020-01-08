@@ -7,8 +7,9 @@
 
 namespace Magento\PageBuilder\Controller\Adminhtml\Stage;
 
+use Magento\Backend\App\Action\Context;
 use Magento\Framework\App\Action\HttpGetActionInterface;
-use Magento\RequireJs\Block\Html\Head\Config;
+use Magento\Framework\View\Result\PageFactory;
 
 /**
  * Class Render
@@ -20,30 +21,31 @@ class Render extends \Magento\Backend\App\Action implements HttpGetActionInterfa
     const ADMIN_RESOURCE = 'Magento_Backend::content';
 
     /**
-     * Render the RequireJS and Page Builder render blocks without any additional layout
+     * @var \Magento\Framework\View\Result\PageFactory
+     */
+    private $pageFactory;
+
+    /**
+     * Render constructor.
      *
-     * @return void
+     * @param Context $context
+     * @param PageFactory $pageFactory
+     */
+    public function __construct(
+        Context $context,
+        PageFactory $pageFactory
+    ) {
+        $this->pageFactory = $pageFactory;
+        return parent::__construct($context);
+    }
+
+    /**
+     * Render route
+     *
+     * @return \Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\ResultInterface|mixed
      */
     public function execute()
     {
-        $layout = $this->_view->getLayout();
-        $requireJs = $layout->createBlock(
-            \Magento\Backend\Block\Page\RequireJs::class,
-            'require.js'
-        );
-        $requireJs->setTemplate('Magento_Backend::page/js/require_js.phtml');
-        /* @var \Magento\PageBuilder\Block\Adminhtml\Stage\Render $renderBlock */
-        $renderBlock = $layout->createBlock(
-            \Magento\PageBuilder\Block\Adminhtml\Stage\Render::class,
-            'stage_render'
-        );
-        $renderBlock->setTemplate('Magento_PageBuilder::stage/render.phtml');
-        $babelPolyfill = $layout->createBlock(
-            \Magento\PageBuilder\Block\Adminhtml\Html\Head\BabelPolyfill::class,
-            'pagebuilder.babel.polyfill'
-        );
-        $babelPolyfill->setTemplate('Magento_PageBuilder::html/head/babel_polyfill.phtml');
-        $this->getResponse()->setBody($requireJs->toHtml() . $babelPolyfill->toHtml() . $renderBlock->toHtml());
-        $this->getResponse()->sendResponse();
+        return $this->pageFactory->create();
     }
 }

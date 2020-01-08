@@ -1,4 +1,5 @@
 /*eslint-disable */
+/* jscs:disable */
 
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
@@ -53,7 +54,6 @@ define(["jarallax", "jquery", "knockout", "Magento_PageBuilder/js/events", "Mage
             // Build Parallax on elements with the correct class
             var parallaxSpeed = Number.parseFloat(_this.contentType.dataStore.get("parallax_speed"));
             jarallax(_this.element, {
-              imgSrc: _this.contentType.dataStore.get("background_image")[0].url,
               imgPosition: _this.contentType.dataStore.get("background_position") || "50% 50%",
               imgRepeat: _this.contentType.dataStore.get("background_repeat") || "no-repeat",
               imgSize: _this.contentType.dataStore.get("background_size") || "cover",
@@ -76,6 +76,12 @@ define(["jarallax", "jquery", "knockout", "Magento_PageBuilder/js/events", "Mage
         if (args.contentType.parentContentType && args.contentType.parentContentType.id === _this.contentType.id) {
           _this.buildJarallax();
         }
+      });
+
+      _events.on("stage:" + _this.contentType.stageId + ":fullScreenModeChangeAfter", function () {
+        _underscore.delay(function () {
+          _this.buildJarallax();
+        }, 350);
       });
 
       return _this;

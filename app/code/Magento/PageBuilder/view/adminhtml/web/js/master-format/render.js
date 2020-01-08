@@ -1,4 +1,5 @@
 /*eslint-disable */
+/* jscs:disable */
 define(["jquery", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/master-format/render/serialize"], function (_jquery, _config, _serialize) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
