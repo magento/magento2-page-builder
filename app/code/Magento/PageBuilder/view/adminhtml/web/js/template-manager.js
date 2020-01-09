@@ -96,8 +96,10 @@ define(["html2canvas", "jquery", "mage/translate", "Magento_PageBuilder/js/modal
     var stageElement = document.querySelector("#" + stage.id);
     var scrollY = window.scrollY;
 
-    var deferred = _jquery.Deferred();
+    var deferred = _jquery.Deferred(); // Resolve issues with Parallax
 
+
+    var parallaxRestore = disableParallax(stageElement);
     stageElement.classList.add("capture");
     stageElement.classList.add("interacting");
     window.scrollTo({
@@ -114,8 +116,49 @@ define(["html2canvas", "jquery", "mage/translate", "Magento_PageBuilder/js/modal
       });
       stageElement.classList.remove("capture");
       stageElement.classList.remove("interacting");
+      restoreParallax(parallaxRestore);
     });
     return deferred;
+  }
+  /**
+   * Disable the parallax elements in the stage
+   *
+   * @param {Element} stageElement
+   */
+
+
+  function disableParallax(stageElement) {
+    var rowsToReset = [];
+    var parallaxRows = stageElement.querySelectorAll("[data-jarallax-original-styles]");
+    parallaxRows.forEach(function (row) {
+      var originalStyles = row.getAttribute("data-jarallax-original-styles");
+      var jarallaxStyle = row.style.cssText;
+      row.style.cssText = originalStyles;
+      var jarallaxContainer = row.querySelector('div[id*="jarallax-container"]');
+      jarallaxContainer.style.display = "none";
+      rowsToReset.push({
+        element: row,
+        styles: jarallaxStyle,
+        container: jarallaxContainer
+      });
+    });
+    return rowsToReset;
+  }
+  /**
+   * Restore parallax on modified nodes
+   * 
+   * @param rows
+   */
+
+
+  function restoreParallax(rows) {
+    rows.forEach(function (_ref) {
+      var element = _ref.element,
+          styles = _ref.styles,
+          container = _ref.container;
+      element.style.cssText = styles;
+      container.style.display = "";
+    });
   }
 
   return {

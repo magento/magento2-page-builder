@@ -105,6 +105,9 @@ function createCapture(stage: Stage) {
     const scrollY = window.scrollY;
     const deferred = $.Deferred();
 
+    // Resolve issues with Parallax
+    const parallaxRestore = disableParallax(stageElement);
+
     stageElement.classList.add("capture");
     stageElement.classList.add("interacting");
     window.scrollTo({
@@ -128,9 +131,52 @@ function createCapture(stage: Stage) {
 
         stageElement.classList.remove("capture");
         stageElement.classList.remove("interacting");
+        restoreParallax(parallaxRestore);
     });
 
     return deferred;
+}
+
+/**
+ * Disable the parallax elements in the stage
+ *
+ * @param {Element} stageElement
+ */
+function disableParallax(stageElement: Element): ResetRowInterface[] {
+    const rowsToReset: ResetRowInterface[] = [];
+    const parallaxRows = stageElement.querySelectorAll("[data-jarallax-original-styles]");
+    parallaxRows.forEach((row: HTMLElement) => {
+        const originalStyles = row.getAttribute("data-jarallax-original-styles");
+        const jarallaxStyle = row.style.cssText;
+        row.style.cssText = originalStyles;
+        const jarallaxContainer = row.querySelector('div[id*="jarallax-container"]') as HTMLElement;
+        jarallaxContainer.style.display = "none";
+        rowsToReset.push({
+            element: row,
+            styles: jarallaxStyle,
+            container: jarallaxContainer,
+        });
+    });
+
+    return rowsToReset;
+}
+
+/**
+ * Restore parallax on modified nodes
+ * 
+ * @param rows
+ */
+function restoreParallax(rows: ResetRowInterface[]) {
+    rows.forEach(({element, styles, container}) => {
+        element.style.cssText = styles;
+        container.style.display = "";
+    });
+}
+
+interface ResetRowInterface {
+    element: HTMLElement;
+    styles: string;
+    container: HTMLElement;
 }
 
 interface TemplateSaveDataInterface {
