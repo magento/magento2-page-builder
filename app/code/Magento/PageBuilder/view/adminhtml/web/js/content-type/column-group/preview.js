@@ -84,7 +84,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       }, "grid_size");
 
       _events.on("contentType:removeAfter", function (args) {
-        if (args.parentContentType.id === _this.contentType.id) {
+        if (args.parentContentType && args.parentContentType.id === _this.contentType.id) {
           _underscore.defer(function () {
             _this.spreadWidth(args.index);
           });

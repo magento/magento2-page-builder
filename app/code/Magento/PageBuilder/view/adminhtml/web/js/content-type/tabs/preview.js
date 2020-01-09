@@ -72,7 +72,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
 
       _events.on("tab-item:removeAfter", function (args) {
-        if (args.parentContentType.id === _this.contentType.id) {
+        if (args.parentContentType && args.parentContentType.id === _this.contentType.id) {
           _this.refreshTabs(); // We need to wait for the tabs to refresh before executing the focus
 
 
@@ -411,7 +411,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
 
       _events.on("tab-item:removeAfter", function (args) {
-        if (args.parentContentType.id === _this5.contentType.id) {
+        if (args.parentContentType && args.parentContentType.id === _this5.contentType.id) {
           // Mark the previous tab as active
           var newIndex = args.index - 1 >= 0 ? args.index - 1 : 0;
 

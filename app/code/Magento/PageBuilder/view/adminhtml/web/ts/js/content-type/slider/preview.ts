@@ -46,6 +46,7 @@ export default class Preview extends PreviewCollection {
     private navigationElement: HTMLElement;
     private ready: boolean = false;
     private childSubscribe: KnockoutSubscription;
+    private focusedSlideSubscriber: KnockoutSubscription;
     private contentTypeHeightReset: boolean;
     private mountAfterDeferred: DeferredInterface = deferred();
     private afterChildrenRenderDeferred: DeferredInterface = deferred();
@@ -114,7 +115,7 @@ export default class Preview extends PreviewCollection {
                     });
 
                     // Set the stage to interacting when a slide is focused
-                    this.focusedSlide.subscribe((value: number) => {
+                    this.focusedSlideSubscriber = this.focusedSlide.subscribe((value: number) => {
                         if (value !== null) {
                             events.trigger("stage:interactionStart");
                         } else {
@@ -335,6 +336,15 @@ export default class Preview extends PreviewCollection {
     }
 
     /**
+     * @inheritdoc
+     */
+    public destroy(): void {
+        super.destroy();
+        this.setFocusedSlide(null);
+        this.focusedSlideSubscriber.dispose();
+    }
+
+    /**
      * Bind events
      */
     protected bindEvents() {
@@ -360,7 +370,7 @@ export default class Preview extends PreviewCollection {
         // we need to force update the content of the slider due to KO rendering issues
         let newItemIndex: number;
         events.on("slide:removeAfter", (args: ContentTypeRemovedEventParamsInterface) => {
-            if (args.contentType.parentContentType.id === this.contentType.id) {
+            if (args.parentContentType && args.parentContentType.id === this.contentType.id) {
                 // Mark the previous slide as active
                 newItemIndex = (args.index - 1 >= 0 ? args.index - 1 : 0);
 
