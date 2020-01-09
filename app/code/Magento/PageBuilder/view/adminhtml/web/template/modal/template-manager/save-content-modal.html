@@ -11,8 +11,8 @@
                 <span>Preview</span>
             </label>
             <div class="admin__field-control template-manager-preview">
-                <%= data.previewPlaceholder %>
-                <div data-role="spinner" class="template-manager-preview-spinner">
+                <div data-role="preview-image" class="template-manager-preview-image" style="display: none;"></div>
+                <div data-role="preview-image-spinner" class="template-manager-preview-spinner">
                     <div class="spinner">
                         <span></span><span></span><span></span><span></span>
                         <span></span><span></span><span></span><span></span>
@@ -20,7 +20,7 @@
                 </div>
             </div>
         </div>
-        <div class="admin__field admin__field-wide">
+        <div class="admin__field admin__field-wide _required">
             <% if(data.label){ %>
             <label for="prompt-field-<%- data.id %>" class="admin__field-label">
                 <span><%= data.label %></span>
@@ -30,5 +30,27 @@
                 <input type="text" data-role="promptField" id="prompt-field-<%- data.id %>" class="admin__control-text" <%= inputAttr %>/>
             </div>
         </div>
+        <% if(data.templateTypes){ %>
+        <div class="admin__field admin__field-wide">
+            <% if(data.typeLabel){ %>
+            <label for="prompt-field-<%- data.id %>-created-for" class="admin__field-label">
+                <span><%= data.typeLabel %></span>
+            </label>
+            <% } %>
+            <div class="admin__field-control">
+                <div class="admin__field-control">
+                    <select name="created_for" data-role="createdForField" id="prompt-field-<%- data.id %>-created-for" class="admin__control-select admin__control-created-for">
+                        <option value="">Any</option>
+                        <% _.each(data.templateTypes, function(value, key){ %>
+                            <option value="<%= key %>"><%= value %></option>
+                        <% }) %>
+                    </select>
+                </div>
+                <div class="admin__field-note" id="notice-created-for">
+                    <span><%= data.createdForNote %></span>
+                </div>
+            </div>
+        </div>
+        <% } %>
     </fieldset>
 </form>

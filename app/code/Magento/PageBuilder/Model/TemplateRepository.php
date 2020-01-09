@@ -106,7 +106,7 @@ class TemplateRepository implements TemplateRepositoryInterface
     /**
      * @inheritdoc
      */
-    public function getList(SearchCriteriaInterface $criteria) : TemplateSearchResultsInterface
+    public function getList(SearchCriteriaInterface $criteria)
     {
         $collection = $this->templateCollectionFactory->create();
 

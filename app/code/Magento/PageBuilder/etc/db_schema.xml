@@ -14,8 +14,9 @@
     <table name="pagebuilder_template" resource="default" comment="Page Builder Templates">
         <column xsi:type="int" name="template_id" identity="true" comment="Template ID Auto Increment" />
         <column xsi:type="varchar" name="name" length="1024" nullable="false" comment="Template Name" />
-        <column xsi:type="varchar" name="preview_image" nullable="true" length="255" comment="Template Preview Image"/>
+        <column xsi:type="varchar" name="preview_image" nullable="true" length="1024" comment="Template Preview Image"/>
         <column xsi:type="text" name="template" nullable="false" comment="Master Format HTML"/>
+        <column xsi:type="varchar" name="created_for" length="255" nullable="true" comment="Created For" />
         <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP"
                 comment="Creation Time"/>
         <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false" default="CURRENT_TIMESTAMP"
@@ -23,7 +24,7 @@
         <constraint xsi:type="primary" referenceId="PRIMARY">
             <column name="template_id" />
         </constraint>
-        <index referenceId="TEMPLATE_MANAGER_NAME" indexType="fulltext">
+        <index referenceId="TEMPLATE_NAME_FULLTEXT" indexType="fulltext">
             <column name="name"/>
         </index>
     </table>

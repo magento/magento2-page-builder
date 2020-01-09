@@ -39,7 +39,7 @@ interface TemplateRepositoryInterface
      * @return TemplateSearchResultsInterface
      * @throws LocalizedException
      */
-    public function getList(SearchCriteriaInterface $searchCriteria) : TemplateSearchResultsInterface;
+    public function getList(SearchCriteriaInterface $searchCriteria);
 
     /**
      * Delete Template

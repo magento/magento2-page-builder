@@ -21,6 +21,8 @@ interface TemplateInterface extends ExtensibleDataInterface
 
     const KEY_TEMPLATE = 'template';
 
+    const KEY_CREATED_FOR = 'created_for';
+
     const KEY_CREATED_AT = 'created_at';
 
     const KEY_UPDATED_AT = 'updated_at';
@@ -84,6 +86,21 @@ interface TemplateInterface extends ExtensibleDataInterface
      * @return TemplateInterface
      */
     public function setTemplate(string $template) : TemplateInterface;
+
+    /**
+     * Retrieve created for value
+     *
+     * @return string
+     */
+    public function getCreatedFor() : string;
+
+    /**
+     * Set the created for value
+     *
+     * @param string $createdFor
+     * @return TemplateInterface
+     */
+    public function setCreatedFor(string $createdFor) : TemplateInterface;
 
     /**
      * Retrieve the updated at date

@@ -6,8 +6,8 @@
 import html2canvas from "html2canvas";
 import $ from "jquery";
 import $t from "mage/translate";
+import templateManagerSave from "Magento_PageBuilder/js/modal/template-manager-save";
 import alertDialog from "Magento_Ui/js/modal/alert";
-import uiPrompt from "Magento_Ui/js/modal/prompt";
 import promptContentTmpl from "text!Magento_PageBuilder/template/modal/template-manager/save-content-modal.html";
 import Config from "./config";
 import Stage from "./stage";
@@ -18,23 +18,17 @@ import Stage from "./stage";
  * @param stage
  */
 export function saveAsTemplate(stage: Stage) {
-    const elementId = "preview-" + stage.id;
-
     const capture = createCapture(stage);
-    capture.then((imageSrc: string) => {
-        $("#" + elementId).show().append(`<img src="${imageSrc}" alt="Stage Preview" />`);
-        $(".template-manager-preview-spinner").hide();
-    });
-
-    uiPrompt({
+    const prompt = templateManagerSave({
         title: $t("Save Content as Template"),
-        previewPlaceholder: '<div id="' + elementId + '" class="template-manager-preview-image" ' +
-            'style="display: none;"></div>',
+        promptContentTmpl,
+        templateTypes: Config.getConfig("stage_config").template_types,
+        createdForNote: $t("Created for is to help with filtering templates, this does not restrict where this template can be used."),
+        typeLabel: $t("Created For"),
         label: $t("Template Name"),
         validation: true,
         modalClass: "template-manager-save",
         validationRules: ["required-entry"],
-        promptContentTmpl,
         attributesForm: {
             novalidate: "novalidate",
             action: "",
@@ -46,34 +40,58 @@ export function saveAsTemplate(stage: Stage) {
         },
         actions: {
             /**
+             * Handle confirmation of the prompt
+             *
              * @param {String} name
+             * @param {String} createdFor
              * @this {actions}
              */
-            confirm: (name: string) => {
-                capture.then((imageSrc: string) => {
-                    $.ajax({
-                        url: Config.getConfig("template_save_url"),
-                        data: {
-                            name,
-                            template: stage.pageBuilder.content,
-                            previewImage: imageSrc,
-                        },
-                        method: "POST",
-                        dataType: "json",
-                    }).done(() => {
-                        alertDialog({
-                            content: $t("The current page has been successfully saved as a template."),
-                            title: $t("Template Saved"),
-                        });
-                    }).fail((error: string) => {
-                        alertDialog({
-                            content: $t("An issue occurred while attempting to save the template, please try again.") + "\n" + error,
-                            title: $t("Template Save Error"),
+            confirm(name: string, createdFor: string) {
+                return new Promise((resolve, reject) => {
+                    capture.then((imageSrc: string) => {
+                        $.ajax({
+                            url: Config.getConfig("template_save_url"),
+                            data: {
+                                name,
+                                template: stage.pageBuilder.content,
+                                previewImage: imageSrc,
+                                createdFor,
+                            },
+                            method: "POST",
+                            dataType: "json",
+                        }).done((data: TemplateSaveDataInterface) => {
+                            if (data.status === "ok") {
+                                alertDialog({
+                                    content: $t("The current contents of Page Builder has been successfully saved as a template."),
+                                    title: $t("Template Saved"),
+                                });
+                                resolve();
+                            } else if (data.status === "error") {
+                                alertDialog({
+                                    content: data.message || $t("An issue occurred while attempting to save " +
+                                        "the template, please try again."),
+                                    title: $t("An error occurred"),
+                                });
+                                reject();
+                            }
+                        }).fail(() => {
+                            alertDialog({
+                                content: $t("An issue occurred while attempting to save the template, " +
+                                    "please try again."),
+                                title: $t("Template Save Error"),
+                            });
+                            reject();
                         });
                     });
                 });
             },
         },
+    });
+
+    // Update the UI with the preview image once available
+    capture.then((imageSrc: string) => {
+        // @ts-ignore
+        prompt.templateManagerSave("setPreviewImage", imageSrc);
     });
 }
 
@@ -99,7 +117,7 @@ function createCapture(stage: Stage) {
             scale: 1,
             useCORS: true,
         },
-    ).then((canvas) => {
+    ).then((canvas: HTMLCanvasElement) => {
         const imageSrc = canvas.toDataURL("image/jpeg", 0.85);
 
         deferred.resolve(imageSrc);
@@ -113,4 +131,10 @@ function createCapture(stage: Stage) {
     });
 
     return deferred;
+}
+
+interface TemplateSaveDataInterface {
+    status: "ok" | "error";
+    message: string;
+    data: object;
 }

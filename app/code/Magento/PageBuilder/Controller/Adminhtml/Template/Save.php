@@ -10,6 +10,7 @@ namespace Magento\PageBuilder\Controller\Adminhtml\Template;
 
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
+use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\App\Action\HttpPostActionInterface;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Exception\LocalizedException;
@@ -21,6 +22,7 @@ use Psr\Log\LoggerInterface;
 use Magento\Framework\Api\ImageContentValidator;
 use Magento\Framework\Api\ImageContent;
 use Magento\Framework\Api\ImageContentFactory;
+use Magento\Framework\Api\FilterBuilder;
 
 /**
  * Save a template within template manager
@@ -45,6 +47,11 @@ class Save extends Action implements HttpPostActionInterface
     private $templateRepository;
 
     /**
+     * @var SearchCriteriaBuilder
+     */
+    private $searchCriteriaBuilder;
+
+    /**
      * @var Filesystem
      */
     private $filesystem;
@@ -64,6 +71,7 @@ class Save extends Action implements HttpPostActionInterface
      * @param LoggerInterface $logger
      * @param TemplateFactory $templateFactory
      * @param TemplateRepositoryInterface $templateRepository
+     * @param SearchCriteriaBuilder $searchCriteriaBuilder
      * @param Filesystem $filesystem
      * @param ImageContentValidator $imageContentValidator
      * @param ImageContentFactory $imageContentFactory
@@ -73,6 +81,7 @@ class Save extends Action implements HttpPostActionInterface
         LoggerInterface $logger,
         TemplateFactory $templateFactory,
         TemplateRepositoryInterface $templateRepository,
+        SearchCriteriaBuilder $searchCriteriaBuilder,
         Filesystem $filesystem,
         ImageContentValidator $imageContentValidator,
         ImageContentFactory $imageContentFactory
@@ -82,6 +91,7 @@ class Save extends Action implements HttpPostActionInterface
         $this->logger = $logger;
         $this->templateFactory = $templateFactory;
         $this->templateRepository = $templateRepository;
+        $this->searchCriteriaBuilder = $searchCriteriaBuilder;
         $this->filesystem = $filesystem;
         $this->imageContentValidator = $imageContentValidator;
         $this->imageContentFactory = $imageContentFactory;
@@ -96,9 +106,47 @@ class Save extends Action implements HttpPostActionInterface
     {
         $request = $this->getRequest();
 
+        // If we're missing required data return an error
+        if (!$request->getParam(TemplateInterface::KEY_NAME)
+            || !$request->getParam(TemplateInterface::KEY_TEMPLATE)
+        ) {
+            return $this->resultFactory->create(ResultFactory::TYPE_JSON)->setData(
+                [
+                    'status' => 'error',
+                    'message' => __('A required field is missing.')
+                ]
+            );
+        }
+
+        // Verify a template of the same name does not already exist
+        try {
+            $searchCriteria = $this->searchCriteriaBuilder
+                ->addFilter(TemplateInterface::KEY_NAME, $request->getParam(TemplateInterface::KEY_NAME))
+                ->create();
+            $results = $this->templateRepository->getList($searchCriteria);
+            if ($results->getTotalCount() > 0) {
+                return $this->resultFactory->create(ResultFactory::TYPE_JSON)->setData(
+                    [
+                        'status' => 'error',
+                        'message' => __('A template with this name already exists.')
+                    ]
+                );
+            }
+        } catch (LocalizedException $e) {
+            return $this->resultFactory->create(ResultFactory::TYPE_JSON)->setData(
+                [
+                    'status' => 'error',
+                    'message' => $e->getMessage()
+                ]
+            );
+        }
+
         $template = $this->templateFactory->create();
         $template->setName($request->getParam(TemplateInterface::KEY_NAME));
         $template->setTemplate($request->getParam(TemplateInterface::KEY_TEMPLATE));
+        if ($request->getParam('createdFor')) {
+            $template->setCreatedFor($request->getParam('createdFor'));
+        }
 
         // If an upload image is provided let's create the image
         if ($request->getParam('previewImage')) {

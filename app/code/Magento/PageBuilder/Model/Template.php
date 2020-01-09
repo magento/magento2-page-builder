@@ -80,6 +80,22 @@ class Template extends AbstractModel implements TemplateInterface
     /**
      * @inheritDoc
      */
+    public function getCreatedFor() : string
+    {
+        return $this->getData(TemplateInterface::KEY_CREATED_FOR);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setCreatedFor(string $createdFor) : TemplateInterface
+    {
+        return $this->setData(TemplateInterface::KEY_CREATED_FOR, $createdFor);
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function getUpdatedAt() : string
     {
         return $this->getData(TemplateInterface::KEY_UPDATED_AT);

@@ -1,6 +1,6 @@
 /*eslint-disable */
 /* jscs:disable */
-define(["html2canvas", "jquery", "mage/translate", "Magento_Ui/js/modal/alert", "Magento_Ui/js/modal/prompt", "text!Magento_PageBuilder/template/modal/template-manager/save-content-modal.html", "Magento_PageBuilder/js/config"], function (_html2canvas, _jquery, _translate, _alert, _prompt, _saveContentModal, _config) {
+define(["html2canvas", "jquery", "mage/translate", "Magento_PageBuilder/js/modal/template-manager-save", "Magento_Ui/js/modal/alert", "text!Magento_PageBuilder/template/modal/template-manager/save-content-modal.html", "Magento_PageBuilder/js/config"], function (_html2canvas, _jquery, _translate, _templateManagerSave, _alert, _saveContentModal, _config) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -12,20 +12,17 @@ define(["html2canvas", "jquery", "mage/translate", "Magento_Ui/js/modal/alert", 
    * @param stage
    */
   function saveAsTemplate(stage) {
-    var elementId = "preview-" + stage.id;
     var capture = createCapture(stage);
-    capture.then(function (imageSrc) {
-      (0, _jquery)("#" + elementId).show().append("<img src=\"" + imageSrc + "\" alt=\"Stage Preview\" />");
-      (0, _jquery)(".template-manager-preview-spinner").hide();
-    });
-    (0, _prompt)({
+    var prompt = (0, _templateManagerSave)({
       title: (0, _translate)("Save Content as Template"),
-      previewPlaceholder: '<div id="' + elementId + '" class="template-manager-preview-image" ' + 'style="display: none;"></div>',
+      promptContentTmpl: _saveContentModal,
+      templateTypes: _config.getConfig("stage_config").template_types,
+      createdForNote: (0, _translate)("Created for is to help with filtering templates, this does not restrict where this template can be used."),
+      typeLabel: (0, _translate)("Created For"),
       label: (0, _translate)("Template Name"),
       validation: true,
       modalClass: "template-manager-save",
       validationRules: ["required-entry"],
-      promptContentTmpl: _saveContentModal,
       attributesForm: {
         novalidate: "novalidate",
         action: ""
@@ -37,34 +34,55 @@ define(["html2canvas", "jquery", "mage/translate", "Magento_Ui/js/modal/alert", 
       },
       actions: {
         /**
+         * Handle confirmation of the prompt
+         *
          * @param {String} name
+         * @param {String} createdFor
          * @this {actions}
          */
-        confirm: function confirm(name) {
-          capture.then(function (imageSrc) {
-            _jquery.ajax({
-              url: _config.getConfig("template_save_url"),
-              data: {
-                name: name,
-                template: stage.pageBuilder.content,
-                previewImage: imageSrc
-              },
-              method: "POST",
-              dataType: "json"
-            }).done(function () {
-              (0, _alert)({
-                content: (0, _translate)("The current page has been successfully saved as a template."),
-                title: (0, _translate)("Template Saved")
-              });
-            }).fail(function (error) {
-              (0, _alert)({
-                content: (0, _translate)("An issue occurred while attempting to save the template, please try again.") + "\n" + error,
-                title: (0, _translate)("Template Save Error")
+        confirm: function confirm(name, createdFor) {
+          return new Promise(function (resolve, reject) {
+            capture.then(function (imageSrc) {
+              _jquery.ajax({
+                url: _config.getConfig("template_save_url"),
+                data: {
+                  name: name,
+                  template: stage.pageBuilder.content,
+                  previewImage: imageSrc,
+                  createdFor: createdFor
+                },
+                method: "POST",
+                dataType: "json"
+              }).done(function (data) {
+                if (data.status === "ok") {
+                  (0, _alert)({
+                    content: (0, _translate)("The current contents of Page Builder has been successfully saved as a template."),
+                    title: (0, _translate)("Template Saved")
+                  });
+                  resolve();
+                } else if (data.status === "error") {
+                  (0, _alert)({
+                    content: data.message || (0, _translate)("An issue occurred while attempting to save " + "the template, please try again."),
+                    title: (0, _translate)("An error occurred")
+                  });
+                  reject();
+                }
+              }).fail(function () {
+                (0, _alert)({
+                  content: (0, _translate)("An issue occurred while attempting to save the template, " + "please try again."),
+                  title: (0, _translate)("Template Save Error")
+                });
+                reject();
               });
             });
           });
         }
       }
+    }); // Update the UI with the preview image once available
+
+    capture.then(function (imageSrc) {
+      // @ts-ignore
+      prompt.templateManagerSave("setPreviewImage", imageSrc);
     });
   }
   /**
