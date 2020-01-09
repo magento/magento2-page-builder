@@ -340,8 +340,9 @@ export default class Preview extends PreviewCollection {
      */
     public destroy(): void {
         super.destroy();
-        this.setFocusedSlide(null);
-        this.focusedSlideSubscriber.dispose();
+        if (this.focusedSlideSubscriber) {
+            this.focusedSlideSubscriber.dispose();
+        }
     }
 
     /**
@@ -559,8 +560,10 @@ export default class Preview extends PreviewCollection {
      */
     private onColumnResize(params: any) {
         setTimeout(() => {
-            $(this.element).slick("setPosition");
-            this.checkWidth();
+            if (this.element) {
+                $(this.element).slick("setPosition");
+                this.checkWidth();
+            }
         }, 250);
     }
 

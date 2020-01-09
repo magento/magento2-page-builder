@@ -332,8 +332,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _proto.destroy = function destroy() {
       _previewCollection2.prototype.destroy.call(this);
 
-      this.setFocusedSlide(null);
-      this.focusedSlideSubscriber.dispose();
+      if (this.focusedSlideSubscriber) {
+        this.focusedSlideSubscriber.dispose();
+      }
     }
     /**
      * Bind events
@@ -565,9 +566,11 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       var _this6 = this;
 
       setTimeout(function () {
-        (0, _jquery)(_this6.element).slick("setPosition");
+        if (_this6.element) {
+          (0, _jquery)(_this6.element).slick("setPosition");
 
-        _this6.checkWidth();
+          _this6.checkWidth();
+        }
       }, 250);
     }
     /**
