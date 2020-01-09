@@ -60,7 +60,7 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <seeElement selector='{{PageBuilderPanel.firstSection}}' parameterArray="['class' => 'active']" stepKey="firstSectionOfPanelIsOpen"/>
-        <actionGroup ref="validateMenuSectionsAndContentTypes" stepKey="validateMenuSectionsAndContentTypes"/>
+        <actionGroup ref="ValidateMenuSectionsAndContentTypesActionGroup" stepKey="validateMenuSectionsAndContentTypes"/>
     </test>
     <test name="SearchOneCharInPanel">
         <annotations>
@@ -213,7 +213,7 @@
         <comment userInput="Use Clear Search button to show all content types on Pagebuilder panel" stepKey="commentClearSearch"/>
         <click selector="{{PageBuilderPanel.clearSearch}}" stepKey="clickClearSearch"/>
         <dontSee userInput="i" selector="{{PageBuilderPanel.searchPanel}}" stepKey="validateInputClearedAfterClickClear"/>
-        <actionGroup ref="validateMenuSectionsAndContentTypes" stepKey="validateMenuSectionsAndContentTypesAfterClickClear"/>
+        <actionGroup ref="ValidateMenuSectionsAndContentTypesActionGroup" stepKey="validateMenuSectionsAndContentTypesAfterClickClear"/>
         <actionGroup ref="closePageBuilderPanelMenuSections" stepKey="closePageBuilderPanelMenuSections"/>
         <fillField selector="{{PageBuilderPanel.searchPanel}}" userInput="r" stepKey="fillSearchFieldr"/>
         <see userInput="Row" selector="{{PageBuilderPanel.searchResults}}" stepKey="validateRowAppears"/>
@@ -222,7 +222,7 @@
         <pressKey selector="{{PageBuilderPanel.searchPanel}}" parameterArray="[\WebDriverKeys::BACKSPACE]" stepKey="enterSearchInput"/>
         <dontSee userInput="r" selector="{{PageBuilderPanel.searchPanel}}" stepKey="validateInputClearedAfterRemoveCharacters"/>
         <scrollTo selector="{{CmsNewPagePageActionsSection.contentSectionName}}" stepKey="scrollToTopOfStage"/>
-        <actionGroup ref="validateMenuSectionsAndContentTypes" stepKey="validateMenuSectionsAndContentTypesAfterClearField"/>
+        <actionGroup ref="ValidateMenuSectionsAndContentTypesActionGroup" stepKey="validateMenuSectionsAndContentTypesAfterClearField"/>
     </test>
     <test name="SearchContentTypeAndAddToStage">
         <annotations>
