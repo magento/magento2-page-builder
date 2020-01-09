@@ -46,9 +46,6 @@ define([
                 $('body').trigger('processStart');
 
                 stageBuilder(this.stage, template).then(function () {
-                    // Remove selection from grid
-                    registry.get('pagebuilder_stage_template_grid.pagebuilder_stage_template_grid.columns.ids')
-                        .select(null);
                     $('body').trigger('processStop');
                     this.closeModal();
                 }.bind(this));

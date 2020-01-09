@@ -163,7 +163,7 @@ function disableParallax(stageElement: Element): ResetRowInterface[] {
 
 /**
  * Restore parallax on modified nodes
- * 
+ *
  * @param rows
  */
 function restoreParallax(rows: ResetRowInterface[]) {

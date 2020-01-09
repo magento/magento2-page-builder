@@ -146,7 +146,7 @@ define(["html2canvas", "jquery", "mage/translate", "Magento_PageBuilder/js/modal
   }
   /**
    * Restore parallax on modified nodes
-   * 
+   *
    * @param rows
    */
 
