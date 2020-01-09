@@ -400,6 +400,13 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       _events.on("slide:createAfter", function (args) {
         if (_this4.element && _this4.ready && args.contentType.parentContentType.id === _this4.contentType.id) {
           _this4.forceContainerHeight();
+
+          _underscore.defer(function () {
+            (0, _jquery)(_this4.element).css({
+              height: "",
+              overflow: ""
+            });
+          });
         }
       }); // ContentType being mounted onto container
 

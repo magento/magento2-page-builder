@@ -397,6 +397,12 @@ export default class Preview extends PreviewCollection {
         events.on("slide:createAfter", (args: ContentTypeCreateEventParamsInterface) => {
             if (this.element && this.ready && args.contentType.parentContentType.id === this.contentType.id) {
                 this.forceContainerHeight();
+                _.defer(() => {
+                    $(this.element).css({
+                        height: "",
+                        overflow: "",
+                    });
+                });
             }
         });
 
