@@ -31,20 +31,26 @@ class ClearModalDismissedCookie implements ObserverInterface
     private $logger;
 
     /**
-     * ClearModalDismissedCookie constructor.
-     *
+     * @var array
+     */
+    private $cookieNames;
+
+    /**
      * @param CookieManagerInterface $cookieManager
      * @param CookieMetadataFactory $cookieMetadataFactory
      * @param LoggerInterface $logger
+     * @param array $cookieNames
      */
     public function __construct(
         CookieManagerInterface $cookieManager,
         CookieMetadataFactory $cookieMetadataFactory,
-        LoggerInterface $logger
+        LoggerInterface $logger,
+        $cookieNames = []
     ) {
         $this->cookieManager = $cookieManager;
         $this->cookieMetadataFactory = $cookieMetadataFactory;
         $this->logger = $logger;
+        $this->cookieNames = $cookieNames;
     }
 
     /**
@@ -57,18 +63,21 @@ class ClearModalDismissedCookie implements ObserverInterface
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
         try {
-            $cookieName = "pagebuilder_modal_dismissed";
-            if ($this->cookieManager->getCookie($cookieName)) {
-                $this->cookieManager->deleteCookie(
-                    $cookieName,
-                    $this->cookieMetadataFactory->createCookieMetadata(
-                        [
-                            "path" => "/",
-                            "secure" => false,
-                            "http_only" => false
-                        ]
-                    )
-                );
+            if (count($this->cookieNames) > 0) {
+                foreach ($this->cookieNames as $cookieName) {
+                    if ($this->cookieManager->getCookie($cookieName)) {
+                        $this->cookieManager->deleteCookie(
+                            $cookieName,
+                            $this->cookieMetadataFactory->createCookieMetadata(
+                                [
+                                    "path" => "/",
+                                    "secure" => false,
+                                    "http_only" => false
+                                ]
+                            )
+                        );
+                    }
+                }
             }
         } catch (\Exception $e) {
             $this->logger->error($e);
