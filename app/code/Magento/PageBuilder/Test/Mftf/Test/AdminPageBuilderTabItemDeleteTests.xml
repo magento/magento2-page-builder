@@ -42,7 +42,7 @@
         <waitForPageLoad stepKey="waitForTabsToLoad"/>
         <waitForElementVisible selector="{{TabOnStage.tabContent('1')}}" stepKey="waitForFirstTabContent"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="waitForFirstTabHeader"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <comment userInput="When I view options menu for single Tab" stepKey="AC2"/>
         <waitForElementVisible time="10" selector="{{TabOnStage.tabHeader('1')}}" stepKey="waitForContentTypeInStageVisible" />
@@ -56,7 +56,7 @@
         <actionGroup ref="removeContentTypeFromStage" stepKey="removeContentTypeFromStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage2"/>
         <comment userInput="No Tabs shown on the stage after save nor on the storefront" stepKey="AC5"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <dontSeeElement selector="{{PageBuilderStage.contentTypeInStage(PageBuilderTabsContentType.role)}}" stepKey="dontSeeContentTypeInStage"/>
@@ -118,7 +118,7 @@
         <waitForElementNotVisible time="30" selector="{{PageBuilderStage.modal}}" stepKey="dontSeeModalHeader"/>
         <waitForElementNotVisible time="30" selector="{{PageBuilderStage.modalOk}}" stepKey="dontSeeModalOkHeader"/>
         <comment userInput="Tabs with single Tab shown on the stage after save and on the storefront" stepKey="AC4"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <dontSeeElement selector="{{TabOnStage.tabHeader('2')}}" stepKey="dontSeeSecondTab"/>
         <seeElement selector="{{PageBuilderStage.contentTypeInStage(PageBuilderTabsContentType.role)}}" stepKey="seeTabsInStage"/>
@@ -248,7 +248,7 @@
         <comment userInput="User confirms deleting tab with content, it disappears from Admin preview" stepKey="AC4"/>
         <dontSeeElement selector="{{TabOnStage.tabHeader('2')}}" stepKey="dontSeeSecondTab"/>
         <comment userInput="Tabs with single Tab shown on the stage after save" stepKey="AC5"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <dontSeeElement selector="{{TabOnStage.tabHeader('2')}}" stepKey="dontSeeSecondTab2"/>
         <seeElement selector="{{PageBuilderStage.contentTypeInStage(PageBuilderTabsContentType.role)}}" stepKey="seeTabsInStage"/>
