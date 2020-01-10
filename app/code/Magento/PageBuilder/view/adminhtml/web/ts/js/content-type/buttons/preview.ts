@@ -50,7 +50,7 @@ export default class Preview extends PreviewCollection {
         super(contentType, config, observableUpdater);
 
         // Keeps track of number of button item to disable sortable if there is only 1.
-        this.contentType.children.subscribe((args) => {
+        this.contentType.children.subscribe(() => {
             const sortableElement = $(this.wrapperElement).find(".buttons-container");
             if (!sortableElement.data("sortable")) {
                 return;
