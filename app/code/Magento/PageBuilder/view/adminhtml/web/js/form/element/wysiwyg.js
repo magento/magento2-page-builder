@@ -213,8 +213,8 @@ define([
 
         /** @inheritdoc */
         destroy: function () {
+            this.pageBuilder && this.pageBuilder.destroy();
             this._super();
-            this.pageBuilder.destroy();
         }
     });
 });
