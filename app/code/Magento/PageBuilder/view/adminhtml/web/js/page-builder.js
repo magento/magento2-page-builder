@@ -1,6 +1,6 @@
 /*eslint-disable */
 /* jscs:disable */
-define(["jquery", "knockout", "Magento_PageBuilder/js/events", "mageUtils", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/panel", "Magento_PageBuilder/js/stage", "Magento_PageBuilder/js/template-manager"], function (_jquery, _knockout, _events, _mageUtils, _underscore, _config, _contentTypeFactory, _panel, _stage, _templateManager) {
+define(["jquery", "knockout", "Magento_PageBuilder/js/events", "mageUtils", "underscore", "Magento_PageBuilder/js/acl", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/panel", "Magento_PageBuilder/js/stage", "Magento_PageBuilder/js/template-manager", "Magento_Ui/js/modal/alert", "mage/translate"], function (_jquery, _knockout, _events, _mageUtils, _underscore, _acl, _config, _contentTypeFactory, _panel, _stage, _templateManager, _alert, _translate) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -28,7 +28,9 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "mageUtils", "und
 
       this.initialValue = initialValue;
       this.isFullScreen(config.isFullScreen);
-      this.config = config; // Create the required root container for the stage
+      this.config = config;
+      this.isAllowedTemplateApply = (0, _acl.isAllowed)(_acl.resources.TEMPLATE_APPLY);
+      this.isAllowedTemplateSave = (0, _acl.isAllowed)(_acl.resources.TEMPLATE_SAVE); // Create the required root container for the stage
 
       (0, _contentTypeFactory)(_config.getContentTypeConfig(_stage.rootContainerName), null, this.id).then(function (rootContainer) {
         _this.stage = new _stage(_this, rootContainer);
@@ -161,6 +163,14 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "mageUtils", "und
     ;
 
     _proto.toggleTemplateManger = function toggleTemplateManger() {
+      if (!(0, _acl.isAllowed)(_acl.resources.TEMPLATE_APPLY)) {
+        (0, _alert)({
+          content: (0, _translate)("You do not have permission to apply templates."),
+          title: (0, _translate)("Permission Error")
+        });
+        return false;
+      }
+
       _events.trigger("stage:templateManager:open", {
         stage: this.stage
       });

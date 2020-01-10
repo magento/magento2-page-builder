@@ -18,11 +18,11 @@ use Magento\Backend\Model\View\Result\Redirect;
 use Psr\Log\LoggerInterface;
 
 /**
- * Save a template within template manager
+ * Delete a template within template manager
  */
 class Delete extends Action implements HttpGetActionInterface
 {
-    const ADMIN_RESOURCE = 'Magento_Backend::content';
+    const ADMIN_RESOURCE = 'Magento_PageBuilder::template_delete';
 
     /**
      * @var LoggerInterface

@@ -9,6 +9,7 @@ import $t from "mage/translate";
 import templateManagerSave from "Magento_PageBuilder/js/modal/template-manager-save";
 import alertDialog from "Magento_Ui/js/modal/alert";
 import promptContentTmpl from "text!Magento_PageBuilder/template/modal/template-manager/save-content-modal.html";
+import {isAllowed, resources} from "./acl";
 import Config from "./config";
 import Stage from "./stage";
 
@@ -18,6 +19,14 @@ import Stage from "./stage";
  * @param stage
  */
 export function saveAsTemplate(stage: Stage) {
+    if (!isAllowed(resources.TEMPLATE_SAVE)) {
+        alertDialog({
+            content: $t("You do not have permission to save new templates."),
+            title: $t("Permission Error"),
+        });
+        return false;
+    }
+
     const capture = createCapture(stage);
     const prompt = templateManagerSave({
         title: $t("Save Content as Template"),

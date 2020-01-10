@@ -14,11 +14,11 @@ use Magento\Framework\View\Result\PageFactory;
 use Magento\Backend\App\Action;
 
 /**
- * Index action.
+ * Display template grid
  */
 class Index extends Action implements HttpGetActionInterface
 {
-    const ADMIN_RESOURCE = 'Magento_Backend::content';
+    const ADMIN_RESOURCE = 'Magento_PageBuilder::templates';
 
     /**
      * @var PageFactory

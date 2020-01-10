@@ -8,7 +8,9 @@ declare(strict_types=1);
 
 namespace Magento\PageBuilder\Model\Stage;
 
+use Magento\Framework\App\ObjectManager;
 use Magento\Framework\UrlInterface;
+use Magento\Framework\AuthorizationInterface;
 
 /**
  * Class Config
@@ -24,6 +26,10 @@ class Config
     const XML_PATH_COLUMN_GRID_MAX = 'cms/pagebuilder/column_grid_max';
 
     const ROOT_CONTAINER_NAME = 'root-container';
+
+    const TEMPLATE_DELETE_RESOURCE = 'Magento_PageBuilder::template_delete';
+    const TEMPLATE_SAVE_RESOURCE = 'Magento_PageBuilder::template_save';
+    const TEMPLATE_APPLY_RESOURCE = 'Magento_PageBuilder::template_apply';
 
     /**
      * @var \Magento\PageBuilder\Model\ConfigInterface
@@ -81,8 +87,11 @@ class Config
     private $rootContainerConfig;
 
     /**
-     * Config constructor.
-     *
+     * @var AuthorizationInterface
+     */
+    private $authorization;
+
+    /**
      * @param \Magento\PageBuilder\Model\ConfigInterface $config
      * @param Config\UiComponentConfig $uiComponentConfig
      * @param UrlInterface $urlBuilder
@@ -94,6 +103,7 @@ class Config
      * @param \Magento\PageBuilder\Model\WidgetInitializerConfig $widgetInitializerConfig
      * @param array $rootContainerConfig
      * @param array $data
+     * @param AuthorizationInterface|null $authorization
      *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
@@ -108,7 +118,8 @@ class Config
         \Magento\PageBuilder\Model\Wysiwyg\InlineEditingSupportedAdapterList $inlineEditingChecker,
         \Magento\PageBuilder\Model\WidgetInitializerConfig $widgetInitializerConfig,
         array $rootContainerConfig = [],
-        array $data = []
+        array $data = [],
+        AuthorizationInterface $authorization = null
     ) {
         $this->config = $config;
         $this->uiComponentConfig = $uiComponentConfig;
@@ -121,6 +132,7 @@ class Config
         $this->widgetInitializerConfig = $widgetInitializerConfig;
         $this->rootContainerConfig = $rootContainerConfig;
         $this->data = $data;
+        $this->authorization = $authorization ?: ObjectManager::getInstance()->get(AuthorizationInterface::class);
     }
 
     /**
@@ -142,7 +154,21 @@ class Config
             'column_grid_max' => $this->scopeConfig->getValue(self::XML_PATH_COLUMN_GRID_MAX),
             'can_use_inline_editing_on_stage' => $this->isWysiwygProvisionedForEditingOnStage(),
             'widgets' => $this->widgetInitializerConfig->getConfig(),
-            'breakpoints' => $this->widgetInitializerConfig->getBreakpoints()
+            'breakpoints' => $this->widgetInitializerConfig->getBreakpoints(),
+            'acl' => $this->getAcl()
+        ];
+    }
+
+    /**
+     * Retrieve ACL values for Page Builder
+     *
+     * @return array
+     */
+    private function getAcl()
+    {
+        return [
+            'template_save' => $this->authorization->isAllowed(self::TEMPLATE_SAVE_RESOURCE),
+            'template_apply' => $this->authorization->isAllowed(self::TEMPLATE_APPLY_RESOURCE)
         ];
     }
 

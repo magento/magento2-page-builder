@@ -8,6 +8,7 @@ import ko from "knockout";
 import events from "Magento_PageBuilder/js/events";
 import utils from "mageUtils";
 import _ from "underscore";
+import {isAllowed, resources} from "./acl";
 import Config from "./config";
 import ContentTypeCollectionInterface from "./content-type-collection";
 import createContentType from "./content-type-factory";
@@ -16,6 +17,8 @@ import Panel from "./panel";
 import Stage from "./stage";
 import {StageToggleFullScreenParamsInterface} from "./stage-events.types";
 import {saveAsTemplate} from "./template-manager";
+import alertDialog from "Magento_Ui/js/modal/alert";
+import $t from "mage/translate";
 
 export default class PageBuilder implements PageBuilderInterface {
     public template: string = "Magento_PageBuilder/page-builder";
@@ -30,6 +33,8 @@ export default class PageBuilder implements PageBuilderInterface {
     public loading: KnockoutObservable<boolean> = ko.observable(true);
     public wrapperStyles: KnockoutObservable<{[key: string]: string}> = ko.observable({});
     public content: string;
+    public isAllowedTemplateSave: boolean;
+    public isAllowedTemplateApply: boolean;
     private previousWrapperStyles: {[key: string]: string} = {};
     private previousPanelHeight: number;
 
@@ -39,6 +44,9 @@ export default class PageBuilder implements PageBuilderInterface {
         this.initialValue = initialValue;
         this.isFullScreen(config.isFullScreen);
         this.config = config;
+
+        this.isAllowedTemplateApply = isAllowed(resources.TEMPLATE_APPLY);
+        this.isAllowedTemplateSave = isAllowed(resources.TEMPLATE_SAVE);
 
         // Create the required root container for the stage
         createContentType(
@@ -156,6 +164,14 @@ export default class PageBuilder implements PageBuilderInterface {
      * Toggle template manager
      */
     public toggleTemplateManger() {
+        if (!isAllowed(resources.TEMPLATE_APPLY)) {
+            alertDialog({
+                content: $t("You do not have permission to apply templates."),
+                title: $t("Permission Error"),
+            });
+            return false;
+        }
+
         events.trigger(`stage:templateManager:open`, {
             stage: this.stage,
         });

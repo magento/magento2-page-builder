@@ -1,6 +1,6 @@
 /*eslint-disable */
 /* jscs:disable */
-define(["html2canvas", "jquery", "mage/translate", "Magento_PageBuilder/js/modal/template-manager-save", "Magento_Ui/js/modal/alert", "text!Magento_PageBuilder/template/modal/template-manager/save-content-modal.html", "Magento_PageBuilder/js/config"], function (_html2canvas, _jquery, _translate, _templateManagerSave, _alert, _saveContentModal, _config) {
+define(["html2canvas", "jquery", "mage/translate", "Magento_PageBuilder/js/modal/template-manager-save", "Magento_Ui/js/modal/alert", "text!Magento_PageBuilder/template/modal/template-manager/save-content-modal.html", "Magento_PageBuilder/js/acl", "Magento_PageBuilder/js/config"], function (_html2canvas, _jquery, _translate, _templateManagerSave, _alert, _saveContentModal, _acl, _config) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -12,6 +12,14 @@ define(["html2canvas", "jquery", "mage/translate", "Magento_PageBuilder/js/modal
    * @param stage
    */
   function saveAsTemplate(stage) {
+    if (!(0, _acl.isAllowed)(_acl.resources.TEMPLATE_SAVE)) {
+      (0, _alert)({
+        content: (0, _translate)("You do not have permission to save new templates."),
+        title: (0, _translate)("Permission Error")
+      });
+      return false;
+    }
+
     var capture = createCapture(stage);
     var prompt = (0, _templateManagerSave)({
       title: (0, _translate)("Save Content as Template"),

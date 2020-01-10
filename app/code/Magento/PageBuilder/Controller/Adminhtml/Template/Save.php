@@ -22,14 +22,13 @@ use Psr\Log\LoggerInterface;
 use Magento\Framework\Api\ImageContentValidator;
 use Magento\Framework\Api\ImageContent;
 use Magento\Framework\Api\ImageContentFactory;
-use Magento\Framework\Api\FilterBuilder;
 
 /**
  * Save a template within template manager
  */
 class Save extends Action implements HttpPostActionInterface
 {
-    const ADMIN_RESOURCE = 'Magento_Backend::content';
+    const ADMIN_RESOURCE = 'Magento_PageBuilder::template_save';
 
     /**
      * @var LoggerInterface
