@@ -37,7 +37,7 @@ define([
 
             confirm({
                 title: $t('Apply Template'),
-                content: $t('Are you sure you want to apply this template?'),
+                content: $t('Are you sure you want to apply this template? This will overwrite any existing content.'),
                 buttons: [{
                     text: $t('Cancel'),
                     class: 'action-secondary action-dismiss action-pagebuilder-cancel',
