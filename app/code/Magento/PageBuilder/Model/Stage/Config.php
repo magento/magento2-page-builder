@@ -152,7 +152,7 @@ class Config
             'menu_sections' => $this->getMenuSections(),
             'content_types' => $this->getContentTypes(),
             'stage_config' => $this->data,
-            'media_url' => $this->urlBuilder->getBaseUrl(['_type' => UrlInterface::URL_TYPE_MEDIA]),
+            'media_url' => $this->frontendUrlBuilder->getBaseUrl(['_type' => UrlInterface::URL_TYPE_MEDIA]),
             'preview_url' => $this->urlBuilder->getUrl('pagebuilder/stage/preview'),
             'render_url' => $this->urlBuilder->getUrl('pagebuilder/stage/render'),
             'column_grid_default' => $this->scopeConfig->getValue(self::XML_PATH_COLUMN_GRID_DEFAULT),
