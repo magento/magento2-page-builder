@@ -13,6 +13,11 @@ use Magento\Framework\Stdlib\Cookie\CookieMetadataFactory;
 use Psr\Log\LoggerInterface;
 use Magento\Framework\Event\ObserverInterface;
 
+/**
+ * Clear cookies from dismissible modals on login
+ *
+ * @SuppressWarnings(PHPMD.CookieAndSessionMisuse)
+ */
 class ClearModalDismissedCookie implements ObserverInterface
 {
     /**

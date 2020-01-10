@@ -9,6 +9,7 @@ import $t from "mage/translate";
 import templateManagerSave from "Magento_PageBuilder/js/modal/template-manager-save";
 import alertDialog from "Magento_Ui/js/modal/alert";
 import promptContentTmpl from "text!Magento_PageBuilder/template/modal/template-manager/save-content-modal.html";
+import registry from "uiRegistry";
 import {isAllowed, resources} from "./acl";
 import Config from "./config";
 import Stage from "./stage";
@@ -32,7 +33,7 @@ export function saveAsTemplate(stage: Stage) {
         title: $t("Save Content as Template"),
         promptContentTmpl,
         templateTypes: Config.getConfig("stage_config").template_types,
-        createdForNote: $t("Created for is to help with filtering templates, this does not restrict where this template can be used."),
+        createdForNote: $t("Created For is to help with filtering templates. This does not restrict where this template can be used."),
         typeLabel: $t("Created For"),
         label: $t("Template Name"),
         validation: true,
@@ -74,6 +75,7 @@ export function saveAsTemplate(stage: Stage) {
                                     content: $t("The current contents of Page Builder has been successfully saved as a template."),
                                     title: $t("Template Saved"),
                                 });
+                                refreshGrid();
                                 resolve();
                             } else if (data.status === "error") {
                                 alertDialog({
@@ -102,6 +104,19 @@ export function saveAsTemplate(stage: Stage) {
         // @ts-ignore
         prompt.templateManagerSave("setPreviewImage", imageSrc);
     });
+}
+
+/**
+ * Refresh the grid if it exists
+ */
+function refreshGrid() {
+    const templateStageGrid = registry
+        .get("pagebuilder_stage_template_grid.pagebuilder_stage_template_grid_data_source");
+
+    if (templateStageGrid) {
+        templateStageGrid.storage().clearRequests();
+        templateStageGrid.reload();
+    }
 }
 
 /**

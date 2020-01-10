@@ -13,7 +13,7 @@ use Magento\Framework\UrlInterface;
 use Magento\Framework\AuthorizationInterface;
 
 /**
- * Class Config
+ * Configuration for Page Builder stage
  *
  * @api
  */
@@ -50,11 +50,6 @@ class Config
      * @var UrlInterface
      */
     private $urlBuilder;
-
-    /**
-     * @var \Magento\Framework\Url
-     */
-    private $frontendUrlBuilder;
 
     /**
      * @var \Magento\PageBuilder\Model\Config\ContentType\AdditionalData\Parser
@@ -111,7 +106,6 @@ class Config
         \Magento\PageBuilder\Model\ConfigInterface $config,
         Config\UiComponentConfig $uiComponentConfig,
         \Magento\Framework\UrlInterface $urlBuilder,
-        \Magento\Framework\Url $frontendUrlBuilder,
         \Magento\PageBuilder\Model\Config\ContentType\AdditionalData\Parser $additionalDataParser,
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         \Magento\Ui\Block\Wysiwyg\ActiveEditor $activeEditor,
@@ -124,7 +118,6 @@ class Config
         $this->config = $config;
         $this->uiComponentConfig = $uiComponentConfig;
         $this->urlBuilder = $urlBuilder;
-        $this->frontendUrlBuilder = $frontendUrlBuilder;
         $this->additionalDataParser = $additionalDataParser;
         $this->scopeConfig = $scopeConfig;
         $this->activeEditor = $activeEditor;

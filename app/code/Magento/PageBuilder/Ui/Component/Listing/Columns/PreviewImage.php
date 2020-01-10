@@ -14,7 +14,7 @@ use Magento\Ui\Component\Listing\Columns\Column;
 use Magento\Framework\UrlInterface;
 
 /**
- * Class PreviewImage
+ * Display Template preview image within grid
  */
 class PreviewImage extends Column
 {
@@ -75,7 +75,7 @@ class PreviewImage extends Column
      *
      * @return null|string
      */
-    protected function getAlt($row)
+    private function getAlt($row)
     {
         $altField = $this->getData('config/altField') ?: self::ALT_FIELD;
         return $row[$altField] ?? null;

@@ -1,6 +1,6 @@
 /*eslint-disable */
 /* jscs:disable */
-define(["html2canvas", "jquery", "mage/translate", "Magento_PageBuilder/js/modal/template-manager-save", "Magento_Ui/js/modal/alert", "text!Magento_PageBuilder/template/modal/template-manager/save-content-modal.html", "Magento_PageBuilder/js/acl", "Magento_PageBuilder/js/config"], function (_html2canvas, _jquery, _translate, _templateManagerSave, _alert, _saveContentModal, _acl, _config) {
+define(["html2canvas", "jquery", "mage/translate", "Magento_PageBuilder/js/modal/template-manager-save", "Magento_Ui/js/modal/alert", "text!Magento_PageBuilder/template/modal/template-manager/save-content-modal.html", "uiRegistry", "Magento_PageBuilder/js/acl", "Magento_PageBuilder/js/config"], function (_html2canvas, _jquery, _translate, _templateManagerSave, _alert, _saveContentModal, _uiRegistry, _acl, _config) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -25,7 +25,7 @@ define(["html2canvas", "jquery", "mage/translate", "Magento_PageBuilder/js/modal
       title: (0, _translate)("Save Content as Template"),
       promptContentTmpl: _saveContentModal,
       templateTypes: _config.getConfig("stage_config").template_types,
-      createdForNote: (0, _translate)("Created for is to help with filtering templates, this does not restrict where this template can be used."),
+      createdForNote: (0, _translate)("Created For is to help with filtering templates. This does not restrict where this template can be used."),
       typeLabel: (0, _translate)("Created For"),
       label: (0, _translate)("Template Name"),
       validation: true,
@@ -67,6 +67,7 @@ define(["html2canvas", "jquery", "mage/translate", "Magento_PageBuilder/js/modal
                     content: (0, _translate)("The current contents of Page Builder has been successfully saved as a template."),
                     title: (0, _translate)("Template Saved")
                   });
+                  refreshGrid();
                   resolve();
                 } else if (data.status === "error") {
                   (0, _alert)({
@@ -92,6 +93,19 @@ define(["html2canvas", "jquery", "mage/translate", "Magento_PageBuilder/js/modal
       // @ts-ignore
       prompt.templateManagerSave("setPreviewImage", imageSrc);
     });
+  }
+  /**
+   * Refresh the grid if it exists
+   */
+
+
+  function refreshGrid() {
+    var templateStageGrid = _uiRegistry.get("pagebuilder_stage_template_grid.pagebuilder_stage_template_grid_data_source");
+
+    if (templateStageGrid) {
+      templateStageGrid.storage().clearRequests();
+      templateStageGrid.reload();
+    }
   }
   /**
    * Create a capture of the stage

@@ -8,7 +8,7 @@
 //  Replace box-shadow with borders when capturing a screenshot for template manager
 //  ______________________________________________________________________
 
-.pagebuilder-stage.capture .pagebuilder-canvas  {
+.pagebuilder-stage.capture .pagebuilder-canvas {
     padding: 10px;
 
     .pagebuilder-content-type {
@@ -16,7 +16,7 @@
         box-shadow: none !important;
 
         &.type-container {
-            border: 1px solid #e0e0e0 !important;
+            border: 1px solid @color-pagebuilder-lighter-gray !important;
             box-shadow: none !important;
         }
 
@@ -25,13 +25,13 @@
 
             &:before {
                 &:extend(.pagebuilder-icon all);
-                content: @icon-pagebuilder-video__content;
                 color: @color-gray65-lighten;
+                content: @icon-pagebuilder-video__content;
                 display: block;
                 font-size: 80px;
+                left: 50%;
                 position: absolute;
                 top: 50%;
-                left: 50%;
                 transform: translate(-50%, -50%);
             }
 
@@ -51,7 +51,7 @@
 
     .template-manager-preview-spinner,
     .template-manager-preview-image {
-        background: #f8f8f8;
+        background: @color-white-fog;
         font-size: 0;
         height: 300px;
         overflow: hidden;
@@ -74,9 +74,9 @@
 
 .preview-image-preview {
     .preview-image-preview-image {
-        border: 1px solid #d6d6d6;
-        padding: .5rem;
+        border: 1px solid @color-gray84;
         margin-top: .5rem;
+        padding: .5rem;
     }
 }
 
@@ -92,8 +92,8 @@
         font-size: 0;
 
         img {
-            background: white;
-            border: 1px solid #d6d6d6;
+            background: @color-white;
+            border: 1px solid @color-gray84;
             cursor: pointer;
             max-height: 150px;
             object-fit: cover;
@@ -102,7 +102,7 @@
             width: 100%;
 
             &:hover {
-                border-color: #b9b9b9;
+                border-color: @color-brownie-vanilla;
             }
         }
     }
@@ -116,4 +116,13 @@
 
 .preview-image-preview-image-block {
     padding-bottom: 3rem;
+}
+
+.modal-slide.pagebuilder_stage_template_pagebuilder_stage_template_modal .admin__action-multiselect-crumb .action-close {
+    &:extend(.admin__action-multiselect-crumb .action-close all);
+    padding: 0;
+
+    &:before {
+        font-size: inherit;
+    }
 }

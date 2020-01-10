@@ -8,9 +8,8 @@ define([
     'Magento_Ui/js/modal/modal-component',
     'Magento_PageBuilder/js/events',
     'underscore',
-    'Magento_PageBuilder/js/stage-builder',
-    'uiRegistry'
-], function ($, ModalComponent, events, _, stageBuilder, registry) {
+    'Magento_PageBuilder/js/stage-builder'
+], function ($, ModalComponent, events, _, stageBuilder) {
     'use strict';
 
     return ModalComponent.extend({

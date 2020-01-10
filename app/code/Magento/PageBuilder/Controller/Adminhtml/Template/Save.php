@@ -10,8 +10,12 @@ namespace Magento\PageBuilder\Controller\Adminhtml\Template;
 
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
+use Magento\Framework\Api\ImageContent;
+use Magento\Framework\Api\ImageContentFactory;
+use Magento\Framework\Api\ImageContentValidator;
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\App\Action\HttpPostActionInterface;
+use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Filesystem;
@@ -19,12 +23,11 @@ use Magento\PageBuilder\Api\Data\TemplateInterface;
 use Magento\PageBuilder\Api\TemplateRepositoryInterface;
 use Magento\PageBuilder\Model\TemplateFactory;
 use Psr\Log\LoggerInterface;
-use Magento\Framework\Api\ImageContentValidator;
-use Magento\Framework\Api\ImageContent;
-use Magento\Framework\Api\ImageContentFactory;
 
 /**
  * Save a template within template manager
+ *
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class Save extends Action implements HttpPostActionInterface
 {
@@ -105,37 +108,13 @@ class Save extends Action implements HttpPostActionInterface
     {
         $request = $this->getRequest();
 
-        // If we're missing required data return an error
-        if (!$request->getParam(TemplateInterface::KEY_NAME)
-            || !$request->getParam(TemplateInterface::KEY_TEMPLATE)
-        ) {
-            return $this->resultFactory->create(ResultFactory::TYPE_JSON)->setData(
-                [
-                    'status' => 'error',
-                    'message' => __('A required field is missing.')
-                ]
-            );
-        }
-
-        // Verify a template of the same name does not already exist
         try {
-            $searchCriteria = $this->searchCriteriaBuilder
-                ->addFilter(TemplateInterface::KEY_NAME, $request->getParam(TemplateInterface::KEY_NAME))
-                ->create();
-            $results = $this->templateRepository->getList($searchCriteria);
-            if ($results->getTotalCount() > 0) {
-                return $this->resultFactory->create(ResultFactory::TYPE_JSON)->setData(
-                    [
-                        'status' => 'error',
-                        'message' => __('A template with this name already exists.')
-                    ]
-                );
-            }
+            $this->validate($request);
         } catch (LocalizedException $e) {
             return $this->resultFactory->create(ResultFactory::TYPE_JSON)->setData(
                 [
                     'status' => 'error',
-                    'message' => $e->getMessage()
+                    'message' => $e
                 ]
             );
         }
@@ -150,42 +129,9 @@ class Save extends Action implements HttpPostActionInterface
         // If an upload image is provided let's create the image
         if ($request->getParam('previewImage')) {
             try {
-                $mediaDir = $this->filesystem
-                    ->getDirectoryWrite(\Magento\Framework\App\Filesystem\DirectoryList::MEDIA);
-                $fileName = str_replace(
-                    ' ',
-                    '-',
-                    strtolower($request->getParam(TemplateInterface::KEY_NAME))
-                ) . uniqid() . '.jpg';
-                $filePath = 'template-manager' . DIRECTORY_SEPARATOR . $fileName;
-
-                // Prepare the image data
-                $imgData = str_replace(' ', '+', $request->getParam('previewImage'));
-                $imgData = substr($imgData, strpos($imgData, ",") + 1);
-                // phpcs:ignore
-                $decodedImage = base64_decode($imgData);
-
-                $imageProperties = getimagesizefromstring($decodedImage);
-                if (!$imageProperties) {
-                    throw new LocalizedException(__('Unable to get properties from image.'));
-                }
-
-                /* @var ImageContent $imageContent */
-                $imageContent = $this->imageContentFactory->create();
-                $imageContent->setBase64EncodedData($imgData);
-                $imageContent->setName($fileName);
-                $imageContent->setType($imageProperties['mime']);
-
-                if ($this->imageContentValidator->isValid($imageContent)) {
-                    // Write the file to the directory
-                    $mediaDir->writeFile(
-                        $filePath,
-                        $decodedImage
-                    );
-
-                    // Store the preview image within the new entity
-                    $template->setPreviewImage($filePath);
-                }
+                $filePath = $this->storePreviewImage($request);
+                // Store the preview image within the new entity
+                $template->setPreviewImage($filePath);
             } catch (\Exception $e) {
                 $this->logger->critical($e);
 
@@ -200,29 +146,99 @@ class Save extends Action implements HttpPostActionInterface
 
         try {
             $this->templateRepository->save($template);
-        } catch (LocalizedException $e) {
-            return $this->resultFactory->create(ResultFactory::TYPE_JSON)->setData(
-                [
-                    'status' => 'error',
-                    'message' => $e->getMessage()
-                ]
-            );
-        } catch (\Exception $e) {
-            $this->logger->critical($e);
 
-            return $this->resultFactory->create(ResultFactory::TYPE_JSON)->setData(
-                [
-                    'status' => 'error'
-                ]
-            );
-        }
-
-        return $this->resultFactory->create(ResultFactory::TYPE_JSON)->setData(
-            [
+            $result = [
                 'status' => 'ok',
                 'message' => __('Template was successfully saved.'),
                 'data' => $template->toArray()
-            ]
-        );
+            ];
+        } catch (LocalizedException $e) {
+            $result = [
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ];
+        } catch (\Exception $e) {
+            $this->logger->critical($e);
+
+            $result = [
+                'status' => 'error'
+            ];
+        }
+
+        return $this->resultFactory->create(ResultFactory::TYPE_JSON)->setData($result);
+    }
+
+    /**
+     * Validate the request to ensure the template is valid and should be saved
+     *
+     * @param RequestInterface $request
+     * @throws LocalizedException
+     */
+    private function validate(RequestInterface $request)
+    {
+        // If we're missing required data return an error
+        if (!$request->getParam(TemplateInterface::KEY_NAME)
+            || !$request->getParam(TemplateInterface::KEY_TEMPLATE)
+        ) {
+            throw new LocalizedException(__('A required field is missing.'));
+        }
+
+        // Verify a template of the same name does not already exist
+        $searchCriteria = $this->searchCriteriaBuilder
+            ->addFilter(TemplateInterface::KEY_NAME, $request->getParam(TemplateInterface::KEY_NAME))
+            ->create();
+        $results = $this->templateRepository->getList($searchCriteria);
+        if ($results->getTotalCount() > 0) {
+            throw new LocalizedException(__('A template with this name already exists.'));
+        }
+    }
+
+    /**
+     * Handle storing the preview image
+     *
+     * @param RequestInterface $request
+     * @return string
+     * @throws LocalizedException
+     * @throws \Magento\Framework\Exception\FileSystemException
+     * @throws \Magento\Framework\Exception\InputException
+     */
+    private function storePreviewImage(RequestInterface $request)
+    {
+        $mediaDir = $this->filesystem
+            ->getDirectoryWrite(\Magento\Framework\App\Filesystem\DirectoryList::MEDIA);
+        $fileName = str_replace(
+            ' ',
+            '-',
+            strtolower($request->getParam(TemplateInterface::KEY_NAME))
+        ) . uniqid() . '.jpg';
+        $filePath = 'template-manager' . DIRECTORY_SEPARATOR . $fileName;
+
+        // Prepare the image data
+        $imgData = str_replace(' ', '+', $request->getParam('previewImage'));
+        $imgData = substr($imgData, strpos($imgData, ",") + 1);
+        // phpcs:ignore
+        $decodedImage = base64_decode($imgData);
+
+        $imageProperties = getimagesizefromstring($decodedImage);
+        if (!$imageProperties) {
+            throw new LocalizedException(__('Unable to get properties from image.'));
+        }
+
+        /* @var ImageContent $imageContent */
+        $imageContent = $this->imageContentFactory->create();
+        $imageContent->setBase64EncodedData($imgData);
+        $imageContent->setName($fileName);
+        $imageContent->setType($imageProperties['mime']);
+
+        if ($this->imageContentValidator->isValid($imageContent)) {
+            // Write the file to the directory
+            $mediaDir->writeFile(
+                $filePath,
+                $decodedImage
+            );
+
+            // Store the preview image within the new entity
+            return $filePath;
+        }
     }
 }

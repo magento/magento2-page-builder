@@ -88,7 +88,7 @@ interface TemplateInterface extends ExtensibleDataInterface
     public function setTemplate(string $template) : TemplateInterface;
 
     /**
-     * Retrieve created for value
+     * Retrieve created for value, created for is a user provided field with entity names as values such as Page
      *
      * @return string
      */
@@ -131,4 +131,22 @@ interface TemplateInterface extends ExtensibleDataInterface
      * @return TemplateInterface
      */
     public function setCreatedAt(string $createdAt) : TemplateInterface;
+
+
+    /**
+     * Retrieve existing extension attributes object or create a new one
+     *
+     * @return TemplateExtensionInterface|null
+     */
+    public function getExtensionAttributes();
+
+    /**
+     * Set an extension attributes object
+     *
+     * @param TemplateExtensionInterface $extensionAttributes
+     * @return $this
+     */
+    public function setExtensionAttributes(
+        TemplateExtensionInterface $extensionAttributes
+    );
 }

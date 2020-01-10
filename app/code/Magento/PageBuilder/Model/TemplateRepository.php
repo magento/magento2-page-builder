@@ -22,7 +22,7 @@ use Magento\PageBuilder\Model\ResourceModel\Template as ResourceTemplate;
 use Magento\PageBuilder\Model\ResourceModel\Template\CollectionFactory as TemplateCollectionFactory;
 
 /**
- * Template Repository
+ * Repository for Page Builder Templates
  */
 class TemplateRepository implements TemplateRepositoryInterface
 {

@@ -8,14 +8,15 @@ declare(strict_types=1);
 
 namespace Magento\PageBuilder\Model;
 
-use Magento\Framework\Model\AbstractModel;
+use Magento\Framework\Model\AbstractExtensibleModel;
+use Magento\PageBuilder\Api\Data\TemplateExtensionInterface;
 use Magento\PageBuilder\Api\Data\TemplateInterface;
 use Magento\PageBuilder\Model\ResourceModel\Template as ResourceTemplate;
 
 /**
  * Page Builder stored template for usage in Template Manager
  */
-class Template extends AbstractModel implements TemplateInterface
+class Template extends AbstractExtensibleModel implements TemplateInterface
 {
     protected $_eventPrefix = 'pagebuilder_template';
 
@@ -123,5 +124,22 @@ class Template extends AbstractModel implements TemplateInterface
     public function setCreatedAt(string $createdAt) : TemplateInterface
     {
         return $this->setData(TemplateInterface::KEY_CREATED_AT, $createdAt);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getExtensionAttributes()
+    {
+        return $this->_getExtensionAttributes();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setExtensionAttributes(
+        TemplateExtensionInterface $extensionAttributes
+    ) {
+        return $this->_setExtensionAttributes($extensionAttributes);
     }
 }

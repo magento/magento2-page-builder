@@ -19,7 +19,7 @@ class TemplateTypes implements OptionSourceInterface
     /**
      * @var Config
      */
-    protected $config;
+    private $config;
 
     /**
      * @param Config $config

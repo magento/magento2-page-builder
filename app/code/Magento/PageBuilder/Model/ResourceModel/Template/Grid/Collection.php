@@ -43,6 +43,7 @@ class Collection extends TemplateCollection implements SearchResultInterface
      * @param string $model
      * @param AdapterInterface|string|null $connection
      * @param AbstractDb|null $resource
+     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
         EntityFactoryInterface $entityFactory,
