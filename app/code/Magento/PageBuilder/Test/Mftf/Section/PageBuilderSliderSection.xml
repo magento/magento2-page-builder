@@ -148,7 +148,7 @@
         <element name="widgetPlaceholder" type="text" selector="(//div[contains(@class,'pagebuilder-slide')])[{{arg}}]//*[contains(@class, 'magento-placeholder magento-widget')]" parameterized="true"/>
         <element name="tinymce" type="text" selector="(//div[contains(@class,'pagebuilder-slide')])[{{arg}}]//div[contains(@class, 'inline-wysiwyg')]" parameterized="true"/>
         <element name="tinymceInFocus" type="text" selector="(//div[contains(@class,'pagebuilder-slide')])[{{arg}}]//div[contains(@class, 'inline-wysiwyg') and contains(@class, 'mce-edit-focus')]" parameterized="true"/>
-        <element name="slideOverflowPropertyJS" type="button" selector="return window.getComputedStyle(document.querySelectorAll('[data-content-type=slide] div.mce-tinymce-inline')[{{arg}}]).overflow" parameterized="true"/>
+        <element name="slideOverflowPropertyJS" type="button" selector="return window.getComputedStyle(document.querySelectorAll('[data-content-type=slide] div.mce-tinymce-inline')[{{slideIndex}}]).overflow" parameterized="true"/>
         <!-- Appearance Configuration -->
         <element name="appearance" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}][@data-appearance='{{arg2}}']" parameterized="true"/>
         <element name="slideName" type="button" selector="(//div[@data-content-type='slide'])[{{arg1}}][@data-slide-name='{{arg2}}']" parameterized="true"/>
