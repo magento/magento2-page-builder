@@ -136,17 +136,17 @@ interface TemplateInterface extends ExtensibleDataInterface
     /**
      * Retrieve existing extension attributes object or create a new one
      *
-     * @return TemplateExtensionInterface|null
+     * @return \Magento\PageBuilder\Api\Data\TemplateExtensionInterface|null
      */
     public function getExtensionAttributes();
 
     /**
      * Set an extension attributes object
      *
-     * @param TemplateExtensionInterface $extensionAttributes
+     * @param \Magento\PageBuilder\Api\Data\TemplateExtensionInterface $extensionAttributes
      * @return $this
      */
     public function setExtensionAttributes(
-        TemplateExtensionInterface $extensionAttributes
+        \Magento\PageBuilder\Api\Data\TemplateExtensionInterface $extensionAttributes
     );
 }
