@@ -127,7 +127,7 @@ class Template extends AbstractExtensibleModel implements TemplateInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getExtensionAttributes()
     {
@@ -135,7 +135,7 @@ class Template extends AbstractExtensibleModel implements TemplateInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function setExtensionAttributes(
         TemplateExtensionInterface $extensionAttributes

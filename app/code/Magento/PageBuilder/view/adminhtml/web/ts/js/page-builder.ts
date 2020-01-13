@@ -5,8 +5,10 @@
 
 import $ from "jquery";
 import ko from "knockout";
+import $t from "mage/translate";
 import events from "Magento_PageBuilder/js/events";
 import { formatPath } from "Magento_Ui/js/lib/knockout/template/loader";
+import alertDialog from "Magento_Ui/js/modal/alert";
 import utils from "mageUtils";
 import _ from "underscore";
 import {isAllowed, resources} from "./acl";
@@ -19,8 +21,6 @@ import Panel from "./panel";
 import Stage from "./stage";
 import {StageToggleFullScreenParamsInterface} from "./stage-events.types";
 import {saveAsTemplate} from "./template-manager";
-import alertDialog from "Magento_Ui/js/modal/alert";
-import $t from "mage/translate";
 
 export default class PageBuilder implements PageBuilderInterface {
     public template: string = "Magento_PageBuilder/page-builder";

@@ -96,7 +96,8 @@ class TemplateManagerActions extends Column
                             ),
                             'confirm' => [
                                 'title' => __('Delete %1?', $templateName),
-                                'message' => __('Are you sure you want to permanently delete template %1?', $templateName),
+                                'message' =>
+                                    __('Are you sure you want to permanently delete template %1?', $templateName),
                                 '__disableTmpl' => true,
                             ],
                             '__disableTmpl' => true,

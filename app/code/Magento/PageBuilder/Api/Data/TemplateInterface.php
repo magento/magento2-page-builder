@@ -132,7 +132,6 @@ interface TemplateInterface extends ExtensibleDataInterface
      */
     public function setCreatedAt(string $createdAt) : TemplateInterface;
 
-
     /**
      * Retrieve existing extension attributes object or create a new one
      *

@@ -9,7 +9,7 @@ namespace Magento\PageBuilder\Api\Data;
 use Magento\Framework\Api\ExtensionAttributesInterface;
 
 /**
- * Template extension interface
+ * Extension interface for templates
  */
 interface TemplateExtensionInterface extends ExtensionAttributesInterface
 {

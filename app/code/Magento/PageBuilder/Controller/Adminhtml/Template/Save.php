@@ -202,7 +202,7 @@ class Save extends Action implements HttpPostActionInterface
      * @throws \Magento\Framework\Exception\FileSystemException
      * @throws \Magento\Framework\Exception\InputException
      */
-    private function storePreviewImage(RequestInterface $request)
+    private function storePreviewImage(RequestInterface $request) : string
     {
         $mediaDir = $this->filesystem
             ->getDirectoryWrite(\Magento\Framework\App\Filesystem\DirectoryList::MEDIA);
