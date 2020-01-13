@@ -6,22 +6,35 @@
 import $ from "jquery";
 import events from "Magento_PageBuilder/js/events";
 import _ from "underscore";
-import Config from "../../config";
 import HideShowOption from "../../content-type-menu/hide-show-option";
 import {OptionsInterface} from "../../content-type-menu/option.types";
+import delayUntil from "../../utils/delay-until";
+import {
+    createBookmark, createDoubleClickEvent,
+    findNodeIndex, getActiveEditor, getNodeByIndex,
+    isWysiwygSupported,
+    lockImageSize,
+    moveToBookmark,
+    unlockImageSize,
+} from "../../utils/editor";
 import WysiwygFactory from "../../wysiwyg/factory";
 import WysiwygInterface from "../../wysiwyg/wysiwyg-interface";
+import {ContentTypeMountEventParamsInterface} from "../content-type-events.types";
 import BasePreview from "../preview";
 
 /**
  * @api
  */
 export default class Preview extends BasePreview {
-
     /**
      * Wysiwyg instance
      */
     private wysiwyg: WysiwygInterface;
+
+    /**
+     * Wysiwyg deferred event
+     */
+    private wysiwygDeferred: JQueryDeferred<void> = $.Deferred();
 
     /**
      * The element the text content type is bound to
@@ -29,15 +42,25 @@ export default class Preview extends BasePreview {
     private element: HTMLElement;
 
     /**
+     * Deferred called once the render is completed
+     */
+    private afterRenderDeferred: JQueryDeferred<HTMLElement> = $.Deferred();
+
+    /**
      * The textarea element in disabled mode
      */
     private textarea: HTMLTextAreaElement;
 
     /**
+     * Have we handled a double click on init?
+     */
+    private handledDoubleClick: boolean = false;
+
+    /**
      * @returns {Boolean}
      */
     public isWysiwygSupported(): boolean {
-        return Config.getConfig("can_use_inline_editing_on_stage");
+        return isWysiwygSupported();
     }
 
     /**
@@ -63,33 +86,155 @@ export default class Preview extends BasePreview {
     /**
      * @param {HTMLElement} element
      */
-    public initWysiwyg(element: HTMLElement) {
+    public afterRenderWysiwyg(element: HTMLElement) {
         this.element = element;
-        element.innerHTML = this.data.main.html();
-
         element.id = this.contentType.id + "-editor";
 
-        const wysiwygConfig = this.config.additional_data.wysiwygConfig.wysiwygConfigData;
-        wysiwygConfig.adapter.settings.auto_focus = this.contentType.dropped ? element.id : null;
+        // Set the innerHTML manually so we don't upset Knockout & TinyMCE
+        element.innerHTML = this.data.main.html();
+        this.contentType.dataStore.subscribe(() => {
+            // If we're not focused into TinyMCE inline, update the value when it changes in the data store
+            if (!this.wysiwyg || (this.wysiwyg && this.wysiwyg.getAdapter().id !== getActiveEditor().id)) {
+                element.innerHTML = this.data.main.html();
+            }
+        }, "content");
 
-        WysiwygFactory(
+        this.afterRenderDeferred.resolve(element);
+
+        /**
+         * afterRenderWysiwyg is called whenever Knockout causes a DOM re-render. This occurs frequently within Slider
+         * due to Slick's inability to perform a refresh with Knockout managing the DOM. Due to this the original
+         * WYSIWYG instance will be detached from this slide and we need to re-initialize on click.
+         */
+        this.wysiwyg = null;
+    }
+
+    /**
+     * Stop event to prevent execution of action when editing textarea.
+     *
+     * @param {Preview} preview
+     * @param {JQueryEventObject} event
+     * @returns {Boolean}
+     */
+    public stopEvent(preview: Preview, event: JQueryEventObject) {
+        event.stopPropagation();
+
+        return true;
+    }
+
+    /**
+     * Init WYSIWYG on load
+     *
+     * @param element
+     * @deprecated please use activateEditor & initWysiwygFromClick
+     */
+    public initWysiwyg(element: HTMLElement) {
+        this.element = element;
+        element.id = this.contentType.id + "-editor";
+        this.wysiwyg = null;
+
+        return this.initWysiwygFromClick(true);
+    }
+
+    /**
+     * Init the WYSIWYG
+     *
+     * @param {boolean} focus Should wysiwyg focus after initialization?
+     * @returns Promise
+     */
+    public initWysiwygFromClick(focus: boolean = false): Promise<WysiwygInterface> {
+        if (this.wysiwyg) {
+            return Promise.resolve(this.wysiwyg);
+        }
+
+        const wysiwygConfig = this.config.additional_data.wysiwygConfig.wysiwygConfigData;
+
+        if (focus) {
+            wysiwygConfig.adapter.settings.auto_focus = this.element.id;
+            wysiwygConfig.adapter.settings.init_instance_callback = () => {
+                _.defer(() => {
+                    this.element.blur();
+                    this.element.focus();
+                });
+            };
+        }
+
+        return WysiwygFactory(
             this.contentType.id,
-            element.id,
+            this.element.id,
             this.config.name,
             wysiwygConfig,
             this.contentType.dataStore,
             "content",
             this.contentType.stageId,
-        ).then((wysiwyg: WysiwygInterface): void => {
+        ).then((wysiwyg: WysiwygInterface): WysiwygInterface => {
             this.wysiwyg = wysiwyg;
+            return wysiwyg;
+        });
+    }
+
+    /**
+     * Makes WYSIWYG active
+     *
+     * @param {Preview} preview
+     * @param {JQueryEventObject} event
+     * @returns {Boolean}
+     */
+    public activateEditor(preview: Preview, event: JQueryEventObject) {
+        if (this.element && !this.wysiwyg) {
+            const bookmark = createBookmark(event);
+            lockImageSize(this.element);
+            this.element.removeAttribute("contenteditable");
+            _.defer(() => {
+                this.initWysiwygFromClick(true)
+                    .then(() => delayUntil(
+                        () => {
+                            // We no longer need to handle double click once it's initialized
+                            this.handledDoubleClick = true;
+                            this.wysiwygDeferred.resolve();
+                            moveToBookmark(bookmark);
+                            unlockImageSize(this.element);
+                        },
+                        () => this.element.classList.contains("mce-edit-focus"),
+                        10,
+                    )).catch((error) => {
+                    // If there's an error with init of WYSIWYG editor push into the console to aid support
+                    console.error(error);
+                });
+            });
+        }
+    }
+
+    /**
+     * If a user double clicks prior to initializing TinyMCE, forward the event
+     *
+     * @param preview
+     * @param event
+     */
+    public handleDoubleClick(preview: Preview, event: JQueryEventObject) {
+        if (this.handledDoubleClick) {
+            return;
+        }
+        event.preventDefault();
+        const targetIndex = findNodeIndex(this.element, event.target.tagName, event.target);
+        this.handledDoubleClick = true;
+
+        this.wysiwygDeferred.then(() => {
+            let target = document.getElementById(event.target.id);
+            if (!target) {
+                target = getNodeByIndex(this.element, event.target.tagName, targetIndex);
+            }
+
+            if (target) {
+                target.dispatchEvent(createDoubleClickEvent());
+            }
         });
     }
 
     /**
      * @param {HTMLTextAreaElement} element
      */
-    public initTextarea(element: HTMLTextAreaElement)
-    {
+    public initTextarea(element: HTMLTextAreaElement) {
         this.textarea = element;
 
         // set initial value of textarea based on data store
@@ -106,8 +251,7 @@ export default class Preview extends BasePreview {
     /**
      * Save current value of textarea in data store
      */
-    public onTextareaKeyUp()
-    {
+    public onTextareaKeyUp() {
         this.adjustTextareaHeightBasedOnScrollHeight();
         this.contentType.dataStore.set("content", this.textarea.value);
     }
@@ -115,8 +259,7 @@ export default class Preview extends BasePreview {
     /**
      * Start stage interaction on textarea blur
      */
-    public onTextareaFocus()
-    {
+    public onTextareaFocus() {
         $(this.textarea).closest(".pagebuilder-content-type").addClass("pagebuilder-toolbar-active");
         events.trigger("stage:interactionStart");
     }
@@ -124,8 +267,7 @@ export default class Preview extends BasePreview {
     /**
      * Stop stage interaction on textarea blur
      */
-    public onTextareaBlur()
-    {
+    public onTextareaBlur() {
         $(this.textarea).closest(".pagebuilder-content-type").removeClass("pagebuilder-toolbar-active");
         events.trigger("stage:interactionStop");
     }
@@ -135,8 +277,7 @@ export default class Preview extends BasePreview {
      *
      * @returns {any}
      */
-    public getPlaceholderStyle()
-    {
+    public getPlaceholderStyle() {
         const keys = [
             "marginBottom",
             "marginLeft",
@@ -154,10 +295,27 @@ export default class Preview extends BasePreview {
     }
 
     /**
+     * Bind events
+     */
+    protected bindEvents() {
+        super.bindEvents();
+
+        // After drop of new content type open TinyMCE and focus
+        events.on("text:dropAfter", (args: ContentTypeMountEventParamsInterface) => {
+            if (args.id === this.contentType.id) {
+                this.afterRenderDeferred.then(() => {
+                    if (this.isWysiwygSupported()) {
+                        this.initWysiwygFromClick(true);
+                    }
+                });
+            }
+        });
+    }
+
+    /**
      * Adjust textarea's height based on scrollHeight
      */
-    private adjustTextareaHeightBasedOnScrollHeight()
-    {
+    private adjustTextareaHeightBasedOnScrollHeight() {
         this.textarea.style.height = "";
         const scrollHeight = this.textarea.scrollHeight;
         const minHeight = parseInt($(this.textarea).css("min-height"), 10);

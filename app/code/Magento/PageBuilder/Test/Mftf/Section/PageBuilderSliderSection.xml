@@ -144,8 +144,8 @@
         <element name="optionsMenuButtonDisabled" type="button" selector="(//div[contains(@class,'navigation-dot')])[{{arg1}}]//li[contains(@class,'pagebuilder-options-link')]//a[contains(@class,'{{arg2}}') and contains(@class,'disabled')]" parameterized="true"/>
         <element name="optionsMenuTitle" type="button" selector="(//div[contains(@class,'navigation-dot')])[{{arg1}}]//li[contains(@class,'pagebuilder-options-link')]//div[contains(@class,'option-title')]" parameterized="true"/>
         <element name="uploadImageInput" type="button" selector="//div[contains(@class,'pagebuilder-image-uploader-container')]//input[@name='background_image']"/>
-        <element name="variablePlaceholder" type="text" selector="(//div[contains(@class,'pagebuilder-slide')])[{{arg}}]//*[contains(@class, 'magento-variable magento-placeholder')]" parameterized="true"/>
-        <element name="widgetPlaceholder" type="text" selector="(//div[contains(@class,'pagebuilder-slide')])[{{arg}}]//*[contains(@class, 'magento-placeholder magento-widget')]" parameterized="true"/>
+        <element name="variablePlaceholder" type="text" selector="(//div[contains(@class,'pagebuilder-slide')])[{{arg}}]//*[contains(@class, 'magento-variable') and contains(@class, 'magento-placeholder')]" parameterized="true"/>
+        <element name="widgetPlaceholder" type="text" selector="(//div[contains(@class,'pagebuilder-slide')])[{{arg}}]//*[contains(@class, 'magento-placeholder') and contains(@class, 'magento-widget')]" parameterized="true"/>
         <element name="tinymce" type="text" selector="(//div[contains(@class,'pagebuilder-slide')])[{{arg}}]//div[contains(@class, 'inline-wysiwyg')]" parameterized="true"/>
         <element name="tinymceInFocus" type="text" selector="(//div[contains(@class,'pagebuilder-slide')])[{{arg}}]//div[contains(@class, 'inline-wysiwyg') and contains(@class, 'mce-edit-focus')]" parameterized="true"/>
         <element name="slideOverflowPropertyJS" type="button" selector="return window.getComputedStyle(document.querySelectorAll('[data-content-type=slide] div.mce-tinymce-inline')[{{slideIndex}}]).overflow" parameterized="true"/>
