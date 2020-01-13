@@ -9,12 +9,19 @@ import $t from "mage/translate";
 import events from "Magento_PageBuilder/js/events";
 import _ from "underscore";
 import {PreviewSortableSortUpdateEventParams} from "../../binding/sortable-children.types";
-import Config from "../../config";
 import ConditionalRemoveOption from "../../content-type-menu/conditional-remove-option";
 import {OptionsInterface} from "../../content-type-menu/option.types";
 import {DataObject} from "../../data-store";
 import Uploader from "../../uploader";
 import delayUntil from "../../utils/delay-until";
+import {
+    createBookmark, createDoubleClickEvent,
+    findNodeIndex, getActiveEditor, getNodeByIndex,
+    isWysiwygSupported,
+    lockImageSize,
+    moveToBookmark,
+    unlockImageSize,
+} from "../../utils/editor";
 import nestingLinkDialog from "../../utils/nesting-link-dialog";
 import WysiwygFactory from "../../wysiwyg/factory";
 import WysiwygInterface from "../../wysiwyg/wysiwyg-interface";
@@ -28,7 +35,16 @@ import SliderPreview from "../slider/preview";
 export default class Preview extends BasePreview {
     public buttonPlaceholder: string = $t("Edit Button Text");
 
+    /**
+     * Slide name
+     */
     public slideName: KnockoutObservable<string> = ko.observable();
+
+    /**
+     * Wysiwyg deferred event
+     */
+    private wysiwygDeferred: JQueryDeferred<void> = $.Deferred();
+
     /**
      * Wysiwyg instance
      */
@@ -50,11 +66,25 @@ export default class Preview extends BasePreview {
     private slideChanged: boolean = true;
 
     /**
+     * Have we handled a double click on init?
+     */
+    private handledDoubleClick: boolean = false;
+
+    /**
      * @param {HTMLElement} element
      */
     public afterRenderWysiwyg(element: HTMLElement) {
         this.element = element;
         element.id = this.contentType.id + "-editor";
+
+        // Set the innerHTML manually so we don't upset Knockout & TinyMCE
+        element.innerHTML = this.data.content.html();
+        this.contentType.dataStore.subscribe(() => {
+            // If we're not focused into TinyMCE inline, update the value when it changes in the data store
+            if (!this.wysiwyg || (this.wysiwyg && this.wysiwyg.getAdapter().id !== getActiveEditor().id)) {
+                element.innerHTML = this.data.content.html();
+            }
+        }, "content");
 
         /**
          * afterRenderWysiwyg is called whenever Knockout causes a DOM re-render. This occurs frequently within Slider
@@ -158,35 +188,65 @@ export default class Preview extends BasePreview {
      * @returns {Boolean}
      */
     public activateEditor(preview: Preview, event: JQueryEventObject) {
-        const activate = () => {
-            const element = this.wysiwyg && this.element || this.textarea;
-            element.focus();
-        };
-
-        if (!this.slideChanged) {
-            event.preventDefault();
-            return false;
-        }
-
         if (this.element && !this.wysiwyg) {
+            const bookmark = createBookmark(event);
+            lockImageSize(this.element);
             this.element.removeAttribute("contenteditable");
             _.defer(() => {
-                this.initWysiwyg(true)
+                this.initWysiwygFromClick(true)
                     .then(() => delayUntil(
                         () => {
-                            activate();
-                            this.restoreSelection(this.element, this.saveSelection());
+                            // We no longer need to handle double click once it's initialized
+                            this.handledDoubleClick = true;
+                            this.wysiwygDeferred.resolve();
+                            moveToBookmark(bookmark);
+                            unlockImageSize(this.element);
                         },
                         () => this.element.classList.contains("mce-edit-focus"),
                         10,
                     )).catch((error) => {
-                        // If there's an error with init of WYSIWYG editor push into the console to aid support
-                        console.error(error);
-                    });
+                    // If there's an error with init of WYSIWYG editor push into the console to aid support
+                    console.error(error);
+                });
             });
-        } else {
-            activate();
+        } else if (this.element && this.wysiwyg) {
+            const element = this.element || this.textarea;
+
+            if (event.currentTarget !== event.target &&
+                event.target !== element &&
+                !element.contains(event.target)
+            ) {
+                return;
+            }
+
+            element.focus();
         }
+    }
+
+    /**
+     * If a user double clicks prior to initializing TinyMCE, forward the event
+     *
+     * @param preview
+     * @param event
+     */
+    public handleDoubleClick(preview: Preview, event: JQueryEventObject) {
+        if (this.handledDoubleClick) {
+            return;
+        }
+        event.preventDefault();
+        const targetIndex = findNodeIndex(this.element, event.target.tagName, event.target);
+        this.handledDoubleClick = true;
+
+        this.wysiwygDeferred.then(() => {
+            let target = document.getElementById(event.target.id);
+            if (!target) {
+                target = getNodeByIndex(this.element, event.target.tagName, targetIndex);
+            }
+
+            if (target) {
+                target.dispatchEvent(createDoubleClickEvent());
+            }
+        });
     }
 
     /**
@@ -206,7 +266,7 @@ export default class Preview extends BasePreview {
      * @returns {Boolean}
      */
     public isWysiwygSupported(): boolean {
-        return Config.getConfig("can_use_inline_editing_on_stage");
+        return isWysiwygSupported();
     }
 
     /**
@@ -255,20 +315,40 @@ export default class Preview extends BasePreview {
     }
 
     /**
+     * Init WYSIWYG on load
+     *
+     * @param element
+     * @deprecated please use activateEditor & initWysiwygFromClick
+     */
+    public initWysiwyg(element: HTMLElement) {
+        this.element = element;
+        element.id = this.contentType.id + "-editor";
+        this.wysiwyg = null;
+
+        return this.initWysiwygFromClick(true);
+    }
+
+    /**
      * Init the WYSIWYG
      *
      * @param {boolean} focus Should wysiwyg focus after initialization?
      * @returns Promise
      */
-    public initWysiwyg(focus: boolean = false) {
+    public initWysiwygFromClick(focus: boolean = false): Promise<WysiwygInterface> {
         if (this.wysiwyg) {
-            return;
+            return Promise.resolve(this.wysiwyg);
         }
 
         const wysiwygConfig = this.config.additional_data.wysiwygConfig.wysiwygConfigData;
 
         if (focus) {
             wysiwygConfig.adapter.settings.auto_focus = this.element.id;
+            wysiwygConfig.adapter.settings.init_instance_callback = () => {
+                _.defer(() => {
+                    this.element.blur();
+                    this.element.focus();
+                });
+            };
         }
 
         return WysiwygFactory(
@@ -279,8 +359,9 @@ export default class Preview extends BasePreview {
             this.contentType.dataStore,
             "content",
             this.contentType.stageId,
-        ).then((wysiwyg: WysiwygInterface): void => {
+        ).then((wysiwyg: WysiwygInterface): WysiwygInterface => {
             this.wysiwyg = wysiwyg;
+            return wysiwyg;
         });
     }
 
@@ -363,86 +444,4 @@ export default class Preview extends BasePreview {
 
         $(this.textarea).height(scrollHeight);
     }
-
-    /**
-     * Save the current selection to be restored at a later point
-     *
-     * @returns {Selection}
-     */
-    private saveSelection(): Selection {
-        if (window.getSelection) {
-            const selection = window.getSelection();
-            if (selection.getRangeAt && selection.rangeCount) {
-                const range = selection.getRangeAt(0).cloneRange();
-                $(range.startContainer.parentNode).attr("data-startContainer", "true");
-                $(range.endContainer.parentNode).attr("data-endContainer", "true");
-                return {
-                    startContainer: range.startContainer,
-                    startOffset: range.startOffset,
-                    endContainer: range.endContainer,
-                    endOffset: range.endOffset,
-                };
-            }
-        }
-        return null;
-    }
-
-    /**
-     * Restore the original selection
-     *
-     * @param {HTMLElement} element
-     * @param {Selection} selection
-     */
-    private restoreSelection(element: HTMLElement, selection: Selection) {
-        if (selection && window.getSelection) {
-            // Find the original container that had the selection
-            const startContainerParent = $(element).find("[data-startContainer]");
-            startContainerParent.removeAttr("data-startContainer");
-            const startContainer: HTMLElement = this.findTextNode(
-                startContainerParent,
-                selection.startContainer.nodeValue,
-            );
-            const endContainerParent = $(element).find("[data-endContainer]");
-            endContainerParent.removeAttr("data-endContainer");
-            let endContainer: HTMLElement = startContainer;
-            if (selection.endContainer.nodeValue !== selection.startContainer.nodeValue) {
-                endContainer = this.findTextNode(
-                    endContainerParent,
-                    selection.endContainer.nodeValue,
-                );
-            }
-
-            if (startContainer && endContainer) {
-                const newSelection = window.getSelection();
-                newSelection.removeAllRanges();
-
-                const range = document.createRange();
-                range.setStart(startContainer, selection.startOffset);
-                range.setEnd(endContainer, selection.endOffset);
-                newSelection.addRange(range);
-            }
-        }
-    }
-
-    /**
-     * Find a text node within an existing element
-     *
-     * @param {HTMLElement} element
-     * @param {string} text
-     * @returns {HTMLElement}
-     */
-    private findTextNode(element: JQuery, text: string): HTMLElement {
-        if (text && text.trim().length > 0) {
-            return element.contents().toArray().find((node: HTMLElement) => {
-                return node.nodeType === Node.TEXT_NODE && text === node.nodeValue;
-            });
-        }
-    }
-}
-
-interface Selection {
-    startContainer: Node;
-    startOffset: number;
-    endContainer: Node;
-    endOffset: number;
 }
