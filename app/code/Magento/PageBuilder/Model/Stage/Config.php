@@ -13,7 +13,8 @@ use Magento\Framework\UrlInterface;
 use Magento\Framework\AuthorizationInterface;
 
 /**
- * Configuration for Page Builder stage
+ * Provide configuration to the admin JavaScript app
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  *
  * @api
  */
@@ -52,6 +53,11 @@ class Config
     private $urlBuilder;
 
     /**
+     * @var \Magento\Framework\Url
+     */
+    private $frontendUrlBuilder;
+
+    /**
      * @var \Magento\PageBuilder\Model\Config\ContentType\AdditionalData\Parser
      */
     private $additionalDataParser;
@@ -82,6 +88,16 @@ class Config
     private $rootContainerConfig;
 
     /**
+     * @var \Magento\Widget\Model\Widget\Config
+     */
+    private $widgetConfig;
+
+    /**
+     * @var \Magento\Variable\Model\Variable\Config
+     */
+    private $variableConfig;
+
+    /**
      * @var AuthorizationInterface
      */
     private $authorization;
@@ -98,6 +114,8 @@ class Config
      * @param \Magento\PageBuilder\Model\WidgetInitializerConfig $widgetInitializerConfig
      * @param array $rootContainerConfig
      * @param array $data
+     * @param \Magento\Widget\Model\Widget\Config|null $widgetConfig
+     * @param \Magento\Variable\Model\Variable\Config|null $variableConfig
      * @param AuthorizationInterface|null $authorization
      *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
@@ -106,6 +124,7 @@ class Config
         \Magento\PageBuilder\Model\ConfigInterface $config,
         Config\UiComponentConfig $uiComponentConfig,
         \Magento\Framework\UrlInterface $urlBuilder,
+        \Magento\Framework\Url $frontendUrlBuilder,
         \Magento\PageBuilder\Model\Config\ContentType\AdditionalData\Parser $additionalDataParser,
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         \Magento\Ui\Block\Wysiwyg\ActiveEditor $activeEditor,
@@ -113,11 +132,14 @@ class Config
         \Magento\PageBuilder\Model\WidgetInitializerConfig $widgetInitializerConfig,
         array $rootContainerConfig = [],
         array $data = [],
+        \Magento\Widget\Model\Widget\Config $widgetConfig = null,
+        \Magento\Variable\Model\Variable\Config $variableConfig = null,
         AuthorizationInterface $authorization = null
     ) {
         $this->config = $config;
         $this->uiComponentConfig = $uiComponentConfig;
         $this->urlBuilder = $urlBuilder;
+        $this->frontendUrlBuilder = $frontendUrlBuilder;
         $this->additionalDataParser = $additionalDataParser;
         $this->scopeConfig = $scopeConfig;
         $this->activeEditor = $activeEditor;
@@ -125,6 +147,10 @@ class Config
         $this->widgetInitializerConfig = $widgetInitializerConfig;
         $this->rootContainerConfig = $rootContainerConfig;
         $this->data = $data;
+        $this->widgetConfig = $widgetConfig ?? \Magento\Framework\App\ObjectManager::getInstance()
+                ->get(\Magento\Widget\Model\Widget\Config::class);
+        $this->variableConfig = $variableConfig ?? \Magento\Framework\App\ObjectManager::getInstance()
+                ->get(\Magento\Variable\Model\Variable\Config::class);
         $this->authorization = $authorization ?: ObjectManager::getInstance()->get(AuthorizationInterface::class);
     }
 
@@ -139,7 +165,7 @@ class Config
             'menu_sections' => $this->getMenuSections(),
             'content_types' => $this->getContentTypes(),
             'stage_config' => $this->data,
-            'media_url' => $this->urlBuilder->getBaseUrl(['_type' => UrlInterface::URL_TYPE_MEDIA]),
+            'media_url' => $this->frontendUrlBuilder->getBaseUrl(['_type' => UrlInterface::URL_TYPE_MEDIA]),
             'preview_url' => $this->urlBuilder->getUrl('pagebuilder/stage/preview'),
             'render_url' => $this->urlBuilder->getUrl('pagebuilder/stage/render'),
             'template_save_url' => $this->urlBuilder->getUrl('pagebuilder/template/save'),
@@ -148,6 +174,7 @@ class Config
             'can_use_inline_editing_on_stage' => $this->isWysiwygProvisionedForEditingOnStage(),
             'widgets' => $this->widgetInitializerConfig->getConfig(),
             'breakpoints' => $this->widgetInitializerConfig->getBreakpoints(),
+            'tinymce' => $this->getTinyMceConfig(),
             'acl' => $this->getAcl()
         ];
     }
@@ -163,6 +190,36 @@ class Config
             'template_save' => $this->authorization->isAllowed(self::TEMPLATE_SAVE_RESOURCE),
             'template_apply' => $this->authorization->isAllowed(self::TEMPLATE_APPLY_RESOURCE)
         ];
+    }
+
+    /**
+     * Retrieve the TinyMCE required configuration
+     *
+     * @return array
+     */
+    private function getTinyMceConfig()
+    {
+        $config = [
+            'widgets' => [],
+            'variables' => []
+        ];
+
+        // Retrieve widget configuration
+        $widgetConfig = $this->widgetConfig->getConfig(new \Magento\Framework\DataObject());
+        $options = $widgetConfig->getData('plugins');
+        if (isset($options[0]) && $options[0]['name'] === 'magentowidget') {
+            $config['widgets'] = $options[0]['options'];
+        }
+
+        // Retrieve variable configuration
+        $variableConfig = $this->variableConfig->getWysiwygPluginSettings(new \Magento\Framework\DataObject());
+        if (isset($variableConfig['plugins']) && isset($variableConfig['plugins'][0])
+            && $variableConfig['plugins'][0]['name'] === 'magentovariable'
+        ) {
+            $config['variables'] = $variableConfig['plugins'][0]['options'];
+        }
+
+        return $config;
     }
 
     /**

@@ -6,10 +6,12 @@
 import $ from "jquery";
 import ko from "knockout";
 import events from "Magento_PageBuilder/js/events";
+import { formatPath } from "Magento_Ui/js/lib/knockout/template/loader";
 import utils from "mageUtils";
 import _ from "underscore";
 import {isAllowed, resources} from "./acl";
 import Config from "./config";
+import ConfigInterface from "./config.types";
 import ContentTypeCollectionInterface from "./content-type-collection";
 import createContentType from "./content-type-factory";
 import PageBuilderInterface from "./page-builder.types";
@@ -41,6 +43,7 @@ export default class PageBuilder implements PageBuilderInterface {
     constructor(config: any, initialValue: string) {
         Config.setConfig(config);
         Config.setMode("Preview");
+        this.preloadTemplates(config);
         this.initialValue = initialValue;
         this.isFullScreen(config.isFullScreen);
         this.config = config;
@@ -182,5 +185,22 @@ export default class PageBuilder implements PageBuilderInterface {
      */
     public saveAsTemplate() {
         return saveAsTemplate(this.stage);
+    }
+
+    /**
+     * Preload all templates into the window to reduce calls later in the app
+     *
+     * @param config
+     */
+    private preloadTemplates(config: ConfigInterface): void {
+        const previewTemplates = _.values(config.content_types).map((contentType) => {
+            return _.values(contentType.appearances).map((appearance) => {
+                return appearance.preview_template;
+            });
+        }).reduce((array, value) => array.concat(value), []).map((value) => formatPath(value));
+
+        _.defer(() => {
+            require(previewTemplates);
+        });
     }
 }
