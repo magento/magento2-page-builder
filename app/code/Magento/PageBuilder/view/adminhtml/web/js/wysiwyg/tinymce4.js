@@ -1,4 +1,5 @@
 /*eslint-disable */
+/* jscs:disable */
 define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_mce/setup", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/utils/check-stage-full-screen"], function (_jquery, _events, _setup, _events2, _underscore, _checkStageFullScreen) {
   /**
    * Copyright © Magento, Inc. All rights reserved.

@@ -1,10 +1,13 @@
 /*eslint-disable */
-
-function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+/* jscs:disable */
 
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
 define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/drag-drop/move-content-type", "Magento_PageBuilder/js/drag-drop/registry", "Magento_PageBuilder/js/drag-drop/sortable", "Magento_PageBuilder/js/utils/check-stage-full-screen", "Magento_PageBuilder/js/utils/create-stylesheet", "Magento_PageBuilder/js/content-type/column/resize", "Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageBuilder/js/content-type/column-group/drag-and-drop", "Magento_PageBuilder/js/content-type/column-group/factory", "Magento_PageBuilder/js/content-type/column-group/grid-size", "Magento_PageBuilder/js/content-type/column-group/registry"], function (_jquery, _knockout, _translate, _events, _underscore, _config, _moveContentType, _registry, _sortable, _checkStageFullScreen, _createStylesheet, _resize, _previewCollection, _dragAndDrop, _factory, _gridSize, _registry2) {
+  function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
+
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -103,7 +106,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         }
       });
 
-      _this.contentType.children.subscribe(_underscore.debounce(_this.removeIfEmpty.bind(_assertThisInitialized(_assertThisInitialized(_this))), 50));
+      _this.contentType.children.subscribe(_underscore.debounce(_this.removeIfEmpty.bind(_assertThisInitialized(_this)), 50));
 
       return _this;
     }
@@ -699,33 +702,30 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         var resizeColumnWidth = this.resizeColumnInstance.preview.element.outerWidth();
         var resizeHandlePosition = resizeColumnLeft + resizeColumnWidth;
         var direction = currentPos >= resizeHandlePosition ? "right" : "left";
-
-        var _adjustedColumn;
-
-        var _modifyColumnInPair; // We need to know if we're modifying the left or right column in the pair
-
+        var adjustedColumn;
+        var modifyColumnInPair; // We need to know if we're modifying the left or right column in the pair
 
         var usedHistory; // Was the adjusted column pulled from history?
         // Determine which column in the group should be adjusted for this action
 
         var _this$resizeUtils$det = this.resizeUtils.determineAdjustedColumn(currentPos, this.resizeColumnInstance, this.resizeHistory);
 
-        _adjustedColumn = _this$resizeUtils$det[0];
-        _modifyColumnInPair = _this$resizeUtils$det[1];
+        adjustedColumn = _this$resizeUtils$det[0];
+        modifyColumnInPair = _this$resizeUtils$det[1];
         usedHistory = _this$resizeUtils$det[2];
         // Calculate the ghost width based on mouse position and bounds of allowed sizes
-        var ghostWidth = this.resizeUtils.calculateGhostWidth(groupPosition, currentPos, this.resizeColumnInstance, _modifyColumnInPair, this.resizeMaxGhostWidth);
+        var ghostWidth = this.resizeUtils.calculateGhostWidth(groupPosition, currentPos, this.resizeColumnInstance, modifyColumnInPair, this.resizeMaxGhostWidth);
         this.resizeGhost.width(ghostWidth - 15 + "px").addClass("active");
 
-        if (_adjustedColumn && this.resizeColumnWidths) {
+        if (adjustedColumn && this.resizeColumnWidths) {
           newColumnWidth = this.resizeColumnWidths.find(function (val) {
-            return (0, _resize.comparator)(currentPos, val.position, 35) && val.forColumn === _modifyColumnInPair;
+            return (0, _resize.comparator)(currentPos, val.position, 35) && val.forColumn === modifyColumnInPair;
           });
 
           if (newColumnWidth) {
             var mainColumn = this.resizeColumnInstance; // If we're using the left data set, we're actually resizing the right column of the group
 
-            if (_modifyColumnInPair === "right") {
+            if (modifyColumnInPair === "right") {
               mainColumn = (0, _resize.getAdjacentColumn)(this.resizeColumnInstance, "+1");
             } // Ensure we aren't resizing multiple times, also validate the last resize isn't the same as the
             // one being performed now. This occurs as we re-calculate the column positions on resize, we have
@@ -738,16 +738,16 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
               // affected
               if (usedHistory && this.resizeLastColumnInPair === "right" && direction === "right" && newColumnWidth.forColumn === "left") {
                 var originalMainColumn = mainColumn;
-                mainColumn = _adjustedColumn;
-                _adjustedColumn = (0, _resize.getAdjacentColumn)(originalMainColumn, "+1");
+                mainColumn = adjustedColumn;
+                adjustedColumn = (0, _resize.getAdjacentColumn)(originalMainColumn, "+1");
               }
 
-              this.recordResizeHistory(usedHistory, direction, _adjustedColumn, _modifyColumnInPair);
+              this.recordResizeHistory(usedHistory, direction, adjustedColumn, modifyColumnInPair);
               this.resizeLastPosition = newColumnWidth.position;
-              this.resizeLastColumnInPair = _modifyColumnInPair; // Ensure the adjusted column is marked as resizing to animate correctly
+              this.resizeLastColumnInPair = modifyColumnInPair; // Ensure the adjusted column is marked as resizing to animate correctly
 
-              this.setColumnsAsResizing(mainColumn, _adjustedColumn);
-              this.onColumnResize(mainColumn, newColumnWidth.width, _adjustedColumn); // Wait for the render cycle to finish from the above resize before re-calculating
+              this.setColumnsAsResizing(mainColumn, adjustedColumn);
+              this.onColumnResize(mainColumn, newColumnWidth.width, adjustedColumn); // Wait for the render cycle to finish from the above resize before re-calculating
 
               _underscore.defer(function () {
                 // If we do a resize, re-calculate the column widths
@@ -953,10 +953,21 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       for (var _i = totalChildColumns; _i > 0; _i--) {
         var potentialWidth = Math.floor(formattedAvailableWidth / _i);
 
-        for (var _i2 = 0; _i2 < allowedColumnWidths.length; _i2++) {
-          var _width = allowedColumnWidths[_i2];
+        for (var _iterator = allowedColumnWidths, _isArray = Array.isArray(_iterator), _i2 = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
+          var _ref2;
 
-          if (potentialWidth === Math.floor(_width)) {
+          if (_isArray) {
+            if (_i2 >= _iterator.length) break;
+            _ref2 = _iterator[_i2++];
+          } else {
+            _i2 = _iterator.next();
+            if (_i2.done) break;
+            _ref2 = _i2.value;
+          }
+
+          var width = _ref2;
+
+          if (potentialWidth === Math.floor(width)) {
             spreadAcross = _i;
             spreadAmount = formattedAvailableWidth / _i;
             break;

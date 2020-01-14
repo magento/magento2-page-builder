@@ -23,7 +23,7 @@ define([
         initObservable: function () {
             this._super();
 
-            this.options().forEach(function(option) {
+            this.options().forEach(function (option) {
                 this.observe(option.value + 'Visible');
             }.bind(this));
 
@@ -45,7 +45,7 @@ define([
          */
         showRelatedElement: function (value) {
             this[value + 'Visible'](true);
-            this.options().forEach(function(option) {
+            this.options().forEach(function (option) {
                 if (value !== option.value) {
                     this[option.value + 'Visible'](false);
                 }

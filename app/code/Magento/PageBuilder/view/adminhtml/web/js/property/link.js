@@ -1,4 +1,5 @@
 /*eslint-disable */
+/* jscs:disable */
 define([], function () {
   /**
    * Copyright © Magento, Inc. All rights reserved.
@@ -54,7 +55,7 @@ define([], function () {
       var attributeIdMatches = href.match(regexp);
 
       if (!attributeIdMatches) {
-        return "";
+        return href;
       }
 
       return attributeIdMatches[1];

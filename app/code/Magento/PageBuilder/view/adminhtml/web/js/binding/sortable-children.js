@@ -1,4 +1,5 @@
 /*eslint-disable */
+/* jscs:disable */
 define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/drag-drop/move-content-type", "Magento_PageBuilder/js/utils/array"], function (_jquery, _knockout, _events, _moveContentType, _array) {
   "use strict";
 

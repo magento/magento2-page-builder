@@ -1,4 +1,5 @@
 /*eslint-disable */
+/* jscs:disable */
 define(["Magento_PageBuilder/js/utils/object"], function (_object) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
@@ -25,10 +26,8 @@ define(["Magento_PageBuilder/js/utils/object"], function (_object) {
       });
     }
 
-    var _arr = Object.keys(previousData);
-
-    for (var _i = 0; _i < _arr.length; _i++) {
-      var className = _arr[_i];
+    for (var _i = 0, _Object$keys = Object.keys(previousData); _i < _Object$keys.length; _i++) {
+      var className = _Object$keys[_i];
 
       if (!(className in newClasses)) {
         newClasses[className] = false;

@@ -1,5 +1,6 @@
 /*eslint-disable */
-define(["jquery", "knockout", "Magento_PageBuilder/js/events", "mageUtils", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/panel", "Magento_PageBuilder/js/stage"], function (_jquery, _knockout, _events, _mageUtils, _underscore, _config, _contentTypeFactory, _panel, _stage) {
+/* jscs:disable */
+define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_Ui/js/lib/knockout/template/loader", "mageUtils", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/panel", "Magento_PageBuilder/js/stage"], function (_jquery, _knockout, _events, _loader, _mageUtils, _underscore, _config, _contentTypeFactory, _panel, _stage) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -25,6 +26,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "mageUtils", "und
 
       _config.setMode("Preview");
 
+      this.preloadTemplates(config);
       this.initialValue = initialValue;
       this.isFullScreen(config.isFullScreen);
       this.config = config; // Create the required root container for the stage
@@ -149,6 +151,28 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "mageUtils", "und
 
     _proto.getTemplate = function getTemplate() {
       return this.template;
+    }
+    /**
+     * Preload all templates into the window to reduce calls later in the app
+     *
+     * @param config
+     */
+    ;
+
+    _proto.preloadTemplates = function preloadTemplates(config) {
+      var previewTemplates = _underscore.values(config.content_types).map(function (contentType) {
+        return _underscore.values(contentType.appearances).map(function (appearance) {
+          return appearance.preview_template;
+        });
+      }).reduce(function (array, value) {
+        return array.concat(value);
+      }, []).map(function (value) {
+        return (0, _loader.formatPath)(value);
+      });
+
+      _underscore.defer(function () {
+        require(previewTemplates);
+      });
     };
 
     return PageBuilder;
