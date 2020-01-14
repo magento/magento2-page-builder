@@ -160,6 +160,8 @@ export default class Stage {
      * @param params
      */
     private onContentTypeRemoved(params: ContentTypeRemovedParamsInterface): void {
-        params.parentContentType.removeChild(params.contentType);
+        if (params.parentContentType) {
+            params.parentContentType.removeChild(params.contentType);
+        }
     }
 }

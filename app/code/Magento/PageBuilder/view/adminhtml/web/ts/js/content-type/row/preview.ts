@@ -145,4 +145,15 @@ export default class Preview extends PreviewCollection {
             }
         }).observe(this.element);
     }
+
+    /**
+     * Destroy jarallax instance.
+     */
+    public destroy(): void {
+        super.destroy();
+
+        if (this.element) {
+            jarallax(this.element, "destroy");
+        }
+    }
 }
