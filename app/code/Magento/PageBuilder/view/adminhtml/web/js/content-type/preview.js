@@ -317,26 +317,13 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       var _this4 = this;
 
       var removeContentType = function removeContentType() {
-        var dispatchRemoveEvent = function dispatchRemoveEvent() {
-          var params = {
-            contentType: _this4.contentType,
-            index: _this4.contentType.parentContentType.getChildren().indexOf(_this4.contentType),
-            parentContentType: _this4.contentType.parentContentType,
-            stageId: _this4.contentType.stageId
-          };
-
-          _events.trigger("contentType:removeAfter", params);
-
-          _events.trigger(_this4.contentType.config.name + ":removeAfter", params);
-        };
-
         if (_this4.wrapperElement) {
           // Fade out the content type
           (0, _jquery)(_this4.wrapperElement).fadeOut(350 / 2, function () {
-            dispatchRemoveEvent();
+            _this4.contentType.destroy();
           });
         } else {
-          dispatchRemoveEvent();
+          _this4.contentType.destroy();
         }
       };
 
@@ -378,6 +365,14 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
     _proto.getSortableOptions = function getSortableOptions() {
       return (0, _sortable2.getSortableOptions)(this);
+    }
+    /**
+     * Destroys current instance
+     */
+    ;
+
+    _proto.destroy = function destroy() {
+      return;
     }
     /**
      * Get the CSS classes for the children element, as we dynamically create this class name it can't sit in the DOM

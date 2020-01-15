@@ -18,4 +18,9 @@ export interface PreviewInterface {
     isPlaceholderVisible: KnockoutObservable<boolean>;
     isEmpty: KnockoutObservable<boolean>;
     appearance: KnockoutObservable<string>;
+
+    /**
+     * Destroys current instance
+     */
+    destroy(): void;
 }

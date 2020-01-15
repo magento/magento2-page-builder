@@ -165,7 +165,9 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
     ;
 
     _proto.onContentTypeRemoved = function onContentTypeRemoved(params) {
-      params.parentContentType.removeChild(params.contentType);
+      if (params.parentContentType) {
+        params.parentContentType.removeChild(params.contentType);
+      }
     };
 
     return Stage;
