@@ -94,7 +94,7 @@ export default class Preview extends PreviewCollection {
         });
         // Set the active tab to the new position of the sorted tab
         events.on("tab-item:removeAfter", (args: ContentTypeRemovedEventParamsInterface) => {
-            if (args.parentContentType.id === this.contentType.id) {
+            if (args.parentContentType && args.parentContentType.id === this.contentType.id) {
                 this.refreshTabs();
 
                 // We need to wait for the tabs to refresh before executing the focus
@@ -140,6 +140,14 @@ export default class Preview extends PreviewCollection {
                 events.trigger("stage:interactionStop", {force : true});
             }
         }, 1));
+    }
+
+    /**
+     * Remove focused tab
+     */
+    public destroy(): void {
+        super.destroy();
+        _.defer(() => this.setFocusedTab(null));
     }
 
     /**
@@ -386,7 +394,7 @@ export default class Preview extends PreviewCollection {
         });
         // ContentType being removed from container
         events.on("tab-item:removeAfter", (args: ContentTypeRemovedParamsInterface) => {
-            if (args.parentContentType.id === this.contentType.id) {
+            if (args.parentContentType && args.parentContentType.id === this.contentType.id) {
                 // Mark the previous tab as active
                 const newIndex = (args.index - 1 >= 0 ? args.index - 1 : 0);
                 this.refreshTabs(newIndex, true);
