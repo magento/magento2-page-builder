@@ -173,4 +173,9 @@
         <reloadPage stepKey="reloadPage"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
     </actionGroup>
+    <actionGroup name="verifyEmptyStage">
+        <waitForPageLoad stepKey="waitForStageLoad"/>
+        <seeElement selector="{{RowOnStage.empty('1')}}" stepKey="seeEmptyRow"/>
+        <seeNumberOfElements userInput="1" selector="{{RowOnStage.allRows}}" stepKey="seeOnlyOneRow"/>
+    </actionGroup>
 </actionGroups>
