@@ -254,4 +254,22 @@
     <type name="Magento\Framework\Filter\Template">
         <plugin name="convertBackgroundImages" type="Magento\PageBuilder\Plugin\Filter\TemplatePlugin"/>
     </type>
+    <type name="Magento\PageBuilder\Model\UpgradableEntitiesPool">
+        <arguments>
+            <argument name="entities" xsi:type="array">
+                <item name="cms_block" xsi:type="array">
+                    <item name="identifier" xsi:type="string">block_id</item>
+                    <item name="fields" xsi:type="array">
+                        <item name="content" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+                <item name="cms_page" xsi:type="array">
+                    <item name="identifier" xsi:type="string">page_id</item>
+                    <item name="fields" xsi:type="array">
+                        <item name="content" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
 </config>
