@@ -78,7 +78,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           }); // Set the stage to interacting when a slide is focused
 
 
-          _this.focusedSlide.subscribe(function (value) {
+          _this.focusedSlideSubscriber = _this.focusedSlide.subscribe(function (value) {
             if (value !== null) {
               _events.trigger("stage:interactionStart");
             } else {
@@ -325,6 +325,18 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       this.setFocusedSlide(index);
     }
     /**
+     * @inheritdoc
+     */
+    ;
+
+    _proto.destroy = function destroy() {
+      _previewCollection2.prototype.destroy.call(this);
+
+      if (this.focusedSlideSubscriber) {
+        this.focusedSlideSubscriber.dispose();
+      }
+    }
+    /**
      * Bind events
      */
     ;
@@ -358,7 +370,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       var newItemIndex;
 
       _events.on("slide:removeAfter", function (args) {
-        if (args.contentType.parentContentType.id === _this4.contentType.id) {
+        if (args.parentContentType && args.parentContentType.id === _this4.contentType.id) {
           // Mark the previous slide as active
           newItemIndex = args.index - 1 >= 0 ? args.index - 1 : 0;
 
@@ -400,6 +412,13 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       _events.on("slide:createAfter", function (args) {
         if (_this4.element && _this4.ready && args.contentType.parentContentType.id === _this4.contentType.id) {
           _this4.forceContainerHeight();
+
+          _underscore.defer(function () {
+            (0, _jquery)(_this4.element).css({
+              height: "",
+              overflow: ""
+            });
+          });
         }
       }); // ContentType being mounted onto container
 
@@ -554,9 +573,11 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       var _this6 = this;
 
       setTimeout(function () {
-        (0, _jquery)(_this6.element).slick("setPosition");
+        if (_this6.element) {
+          (0, _jquery)(_this6.element).slick("setPosition");
 
-        _this6.checkWidth();
+          _this6.checkWidth();
+        }
       }, 250);
     }
     /**

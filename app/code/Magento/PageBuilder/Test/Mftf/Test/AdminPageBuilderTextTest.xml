@@ -702,6 +702,11 @@
         <comment userInput="Verify variable on stage" stepKey="commentVerifyImageOnStage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <waitForElementVisible selector="{{TextOnStage.text('1', TinyMCEVariableBaseURL.editPanelValue)}}" stepKey="waitForVariabBaseURLleStage2"/>
+        <!--Verify ability to double click on variable prior to focusing TinyMCE-->
+        <actionGroup ref="doubleClickVariableTinyMCE" stepKey="doubleClickVariable">
+            <argument name="variable" value="TinyMCEVariableBaseURL"/>
+        </actionGroup>
+        <actionGroup ref="closeVariablePanelTinyMCE" stepKey="closeVariablePanel" />
         <!-- Validate Storefront -->
         <comment userInput="Verify variable  on storefront" stepKey="commentVerifyEmptyBlock"/>
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
@@ -747,7 +752,7 @@
         <waitForElementVisible selector="{{TextOnStage.text('1', TinyMCEWidgetCMSPageLink.editPanelValue)}}" stepKey="waitForWidgetStage1"/>
         <!--Verify widget edit page-->
         <comment userInput="Verify widget edit page" stepKey="commentVerifyEditWidget"/>
-        <doubleClick  selector="{{TextOnStage.directive('1', TinyMCEWidgetCMSPageLink.editPanelValue)}}" stepKey="doubleClickOnWidgetPlaceholder"/>
+        <doubleClick selector="{{TextOnStage.directive('1', TinyMCEWidgetCMSPageLink.editPanelValue)}}" stepKey="doubleClickOnWidgetPlaceholder"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
         <waitForElementVisible selector="{{WidgetSection.CancelBtnEnabled}}" stepKey="waitForWidgetType"/>
@@ -769,6 +774,11 @@
         <comment userInput="Verify Widget Content Type on stage" stepKey="commentVerifyWidgetOnStage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <waitForElementVisible selector="{{TextOnStage.text('1', TinyMCEWidgetCMSPageLink.editPanelValue)}}" stepKey="waitForWidgetStage2"/>
+        <!--Verify ability to double click on widget prior to focusing TinyMCE-->
+        <actionGroup ref="doubleClickWidgetTinyMCE" stepKey="doubleClickWidget">
+            <argument name="widget" value="TinyMCEWidgetCMSPageLink.editPanelValue"/>
+        </actionGroup>
+        <actionGroup ref="closeWidgetPanelTinyMCE" stepKey="closeWidgetPanelTinyMCE"/>
         <!-- Validate Storefront -->
         <comment userInput="Verify Widget Content Type on storefront" stepKey="commentVerifyWidgetOnStorefront"/>
         <amOnPage url="$$createCMSPageA.identifier$$" stepKey="amOnPageTestPage"/>
@@ -1585,12 +1595,12 @@
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage1"/>
-        <waitForElementVisible selector="{{TextOnStage.text('1', PageBuilderTextContentTypeDefault.value)}}" stepKey="waitForTextStage"/>
+        <waitForElementVisible selector="{{TextOnStage.base('1')}}" stepKey="waitForTextStage"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
-        <waitForElementVisible selector="{{TextOnStage.text('1', PageBuilderTextContentTypeDefault.value)}}" stepKey="waitForTextStage2"/>
+        <waitForElementVisible selector="{{TextOnStage.base('1')}}" stepKey="waitForTextStage2"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
@@ -2820,6 +2830,26 @@
         <dontSeeElement selector="{{TextOnStage.text('1', PageBuilderVariableWidgetText.value)}}" stepKey="dontSeeOriginalTextOnStage"/>
         <seeElement selector="{{TextOnStage.text('1', PageBuilderVariableWidgetText.expectedString1)}}" stepKey="seeExpectedString" />
         <seeElement selector="{{TextOnStage.text('1', PageBuilderVariableWidgetText.expectedString2)}}" stepKey="seeExpectedString1" />
+        <!-- Verify clicking the variable focuses the directive -->
+        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusEditor">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="clickDirectiveTinyMCE" stepKey="clickDirectiveTinyMCE">
+            <argument name="labelValue" value="TinyMCEVariableBaseURL.editPanelValue" />
+        </actionGroup>
+        <actionGroup ref="seeDirectiveFocusedTinyMCE" stepKey="seeDirectiveFocusedTinyMCE">
+            <argument name="labelValue" value="TinyMCEVariableBaseURL.editPanelValue" />
+        </actionGroup>
+        <!-- Save page and verify single clicking on variable will retain selection -->
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="clickDirectiveTinyMCE" stepKey="clickDirectiveTinyMCE2">
+            <argument name="labelValue" value="TinyMCEVariableBaseURL.editPanelValue" />
+        </actionGroup>
+        <actionGroup ref="waitForTinyMCEInFocus" stepKey="waitForTinyMCEInFocus" />
+        <actionGroup ref="seeDirectiveFocusedTinyMCE" stepKey="seeDirectiveFocusedTinyMCE2">
+            <argument name="labelValue" value="TinyMCEVariableBaseURL.editPanelValue" />
+        </actionGroup>
     </test>
     <test name="TextAddWidgetWithinStringInlineWYSIWYG">
         <annotations>
@@ -2870,6 +2900,26 @@
         <dontSeeElement selector="{{TextOnStage.text('1', PageBuilderVariableWidgetText.value)}}" stepKey="dontSeeOriginalTextOnStage"/>
         <seeElement selector="{{TextOnStage.text('1', PageBuilderVariableWidgetText.expectedString1)}}" stepKey="seeExpectedString" />
         <seeElement selector="{{TextOnStage.text('1', PageBuilderVariableWidgetText.expectedString2)}}" stepKey="seeExpectedString1" />
+        <!-- Verify clicking the widget focuses the directive -->
+        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusEditor">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="clickDirectiveTinyMCE" stepKey="clickDirectiveTinyMCE">
+            <argument name="labelValue" value="TinyMCEWidgetCMSPageLink.editPanelValue" />
+        </actionGroup>
+        <actionGroup ref="seeDirectiveFocusedTinyMCE" stepKey="seeDirectiveFocusedTinyMCE">
+            <argument name="labelValue" value="TinyMCEWidgetCMSPageLink.editPanelValue" />
+        </actionGroup>
+        <!-- Save page and verify single clicking on widget will retain selection -->
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="clickDirectiveTinyMCE" stepKey="clickDirectiveTinyMCE2">
+            <argument name="labelValue" value="TinyMCEWidgetCMSPageLink.editPanelValue" />
+        </actionGroup>
+        <actionGroup ref="waitForTinyMCEInFocus" stepKey="waitForTinyMCEInFocus" />
+        <actionGroup ref="seeDirectiveFocusedTinyMCE" stepKey="seeDirectiveFocusedTinyMCE2">
+            <argument name="labelValue" value="TinyMCEWidgetCMSPageLink.editPanelValue" />
+        </actionGroup>
     </test>
     <test name="TextCopyAndPasteAllTextInlineWYSIWYG">
         <annotations>
@@ -2913,12 +2963,12 @@
         <waitForPageLoad stepKey="waitForUnselect"/>
         <pressKey selector="{{TextOnStage.tinymce('1')}}" parameterArray="[\Facebook\WebDriver\WebDriverKeys::SHIFT, \Facebook\WebDriver\WebDriverKeys::INSERT]" stepKey="pasteAllText"/>
         <waitForPageLoad stepKey="waitForTextPaste"/>
-        <seeNumberOfElements selector="{{TextOnStage.text('1', PageBuilderVariableWidgetText.value)}}" userInput="2" stepKey="seeTwoParagraphs"/>
+        <seeNumberOfElements selector="{{TextOnStage.textWithTag('1', 'p', PageBuilderVariableWidgetText.value)}}" userInput="2" stepKey="seeTwoParagraphs"/>
         <executeJS function="document.execCommand('selectall', null, false);" stepKey="selectAllText2"/>
         <waitForPageLoad stepKey="waitForTextSelect2"/>
         <pressKey selector="{{TextOnStage.tinymce('1')}}" parameterArray="[\Facebook\WebDriver\WebDriverKeys::SHIFT, \Facebook\WebDriver\WebDriverKeys::INSERT]" stepKey="pasteAllText2"/>
         <waitForPageLoad stepKey="waitForTextPaste2"/>
-        <seeNumberOfElements selector="{{TextOnStage.text('1', PageBuilderVariableWidgetText.value)}}" userInput="1" stepKey="seeOnlyOneParagraph"/>
+        <seeNumberOfElements selector="{{TextOnStage.textWithTag('1', 'p', PageBuilderVariableWidgetText.value)}}" userInput="1" stepKey="seeOnlyOneParagraph"/>
     </test>
     <test name="TextAddLinkToTextInlineWYSIWYG">
         <annotations>
@@ -2961,5 +3011,111 @@
             <argument name="wysiwygArea" value="{{WYSIWYGOnPageBuilderInline.inlineCss}}"/>
         </actionGroup>
         <seeElement selector="{{TextOnStage.textAnchorText('1', PageBuilderTextProperty.value)}}" stepKey="seeAnchorInWysiwyg"/>
+    </test>
+    <test name="TextVerifySelectionInlineWYSIWYG">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Text"/>
+            <title value="TinyMCE4 selection is preserved after initiation"/>
+            <description value="Verify that a users selection is not lost between select and initiation"/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="PB-170"/>
+            <testCaseId value="MC-29450"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-text"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
+            <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="switchToTinyMCE4"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage1">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection1">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTextOntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="focusTinyMCE" stepKey="focusTinyMCE"/>
+        <!-- Create new Heading 2 -->
+        <actionGroup ref="formatTextTinyMCE" stepKey="formatTextHeading2">
+            <argument name="format" value="TinyMCEFormatHeading2"/>
+        </actionGroup>
+        <pressKey selector="{{TextOnStage.tinymce('1')}}" userInput="{{PageBuilderTextHeadingProperty.value}}" stepKey="addHeadingText"/>
+        <waitForElementVisible selector="{{TextOnStage.textWithTag('1', TinyMCEFormatHeading2.tagName, PageBuilderTextHeadingProperty.value)}}" stepKey="waitForHeadingVisible"/>
+        <seeElement selector="{{TextOnStage.textWithTag('1', TinyMCEFormatHeading2.tagName, PageBuilderTextHeadingProperty.value)}}" stepKey="seeHeadingElement"/>
+        <!-- Add basic text -->
+        <pressKey selector="{{TextOnStage.tinymce('1')}}" parameterArray="[\Facebook\WebDriver\WebDriverKeys::ENTER]" stepKey="goToNewLine"/>
+        <pressKey selector="{{TextOnStage.tinymce('1')}}" userInput="{{PageBuilderTextProperty.value}}" stepKey="addParagraphText"/>
+        <waitForElementVisible selector="{{TextOnStage.text('1', PageBuilderTextProperty.value)}}" stepKey="waitForText"/>
+        <seeElement selector="{{TextOnStage.text('1', PageBuilderTextProperty.value)}}" stepKey="seeText"/>
+        <!-- Add a variable on the previous line -->
+        <pressKey selector="{{TextOnStage.tinymce('1')}}" parameterArray="[\Facebook\WebDriver\WebDriverKeys::HOME, \Facebook\WebDriver\WebDriverKeys::ENTER, \Facebook\WebDriver\WebDriverKeys::ARROW_UP]" stepKey="goToPreviousLine"/>
+        <actionGroup ref="addVariableToTinyMCEInline" stepKey="addVariableToTinyMCE">
+            <argument name="variable" value="TinyMCEVariableBaseURL"/>
+        </actionGroup>
+        <actionGroup ref="seeVariableTinyMCE" stepKey="seeVariableTinyMCE">
+            <argument name="labelValue" value="TinyMCEVariableBaseURL.editPanelValue"/>
+        </actionGroup>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="scrollToTinyMCE" stepKey="scrollToTinyMCE"/>
+        <!-- Select portion of Heading "his is a h" -->
+        <executeInSelenium function="function ($webdriver) use ($I) {
+            $heading = $webdriver->findElement(\Facebook\WebDriver\WebDriverBy::xpath('//div[contains(@class, \'inline-wysiwyg\')]//h2'));
+            $actions = new \Facebook\WebDriver\Interactions\WebDriverActions($webdriver);
+            $actions->moveToElement($heading, {{TinyMCEPartialHeadingSelection.startX}}, {{TinyMCEPartialHeadingSelection.startY}})
+                ->clickAndHold()
+                ->moveToElement($heading, {{TinyMCEPartialHeadingSelection.endX}}, {{TinyMCEPartialHeadingSelection.endY}})
+                ->release()
+                ->perform();
+        }" stepKey="selectHeadingTextInTinyMCE"/>
+        <actionGroup ref="waitForTinyMCEInFocus" stepKey="waitForTinyMCEInFocus" />
+        <actionGroup ref="assertSelectedText" stepKey="assertSelection">
+            <argument name="expectedSelectedText" value="TinyMCEPartialHeadingSelection"/>
+        </actionGroup>
+        <reloadPage stepKey="reloadPage" />
+        <waitForPageLoad stepKey="waitForReload" />
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <actionGroup ref="scrollToTinyMCE" stepKey="scrollToTinyMCE2"/>
+        <!-- Select portion of paragraph text "es stri" -->
+        <executeInSelenium function="function ($webdriver) use ($I) {
+            $text = $webdriver->findElement(\Facebook\WebDriver\WebDriverBy::xpath('//div[contains(@class, \'inline-wysiwyg\')]//p[2]'));
+            $actions = new \Facebook\WebDriver\Interactions\WebDriverActions($webdriver);
+            $actions->moveToElement($text, {{TinyMCEPartialTextSelection.startX}}, {{TinyMCEPartialTextSelection.startY}})
+                ->clickAndHold()
+                ->moveToElement($text, {{TinyMCEPartialTextSelection.endX}}, {{TinyMCEPartialTextSelection.endY}})
+                ->release()
+                ->perform();
+        }" stepKey="selectTextInTinyMCE"/>
+        <actionGroup ref="waitForTinyMCEInFocus" stepKey="waitForTinyMCEInFocus2" />
+        <actionGroup ref="assertSelectedText" stepKey="assertSelection2">
+            <argument name="expectedSelectedText" value="TinyMCEPartialTextSelection"/>
+        </actionGroup>
+        <reloadPage stepKey="reloadPage2" />
+        <waitForPageLoad stepKey="waitForReload2" />
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage3"/>
+        <actionGroup ref="scrollToTinyMCE" stepKey="scrollToTinyMCE3"/>
+        <!-- Select from part of the heading, over the variable, to part of the text string -->
+        <executeInSelenium function="function ($webdriver) use ($I) {
+            $heading = $webdriver->findElement(\Facebook\WebDriver\WebDriverBy::xpath('//div[contains(@class, \'inline-wysiwyg\')]//h2'));
+            $text = $webdriver->findElement(\Facebook\WebDriver\WebDriverBy::xpath('//div[contains(@class, \'inline-wysiwyg\')]//p[2]'));
+            $actions = new \Facebook\WebDriver\Interactions\WebDriverActions($webdriver);
+            $actions->moveToElement($heading, {{TinyMCEPartialHeadingSelection.startX}}, {{TinyMCEPartialHeadingSelection.startY}})
+                ->clickAndHold()
+                ->moveToElement($text, {{TinyMCEPartialTextSelection.endX}}, {{TinyMCEPartialTextSelection.endY}})
+                ->release()
+                ->perform();
+        }" stepKey="selectHeadingTextAndVariableTinyMCE"/>
+        <actionGroup ref="waitForTinyMCEInFocus" stepKey="waitForTinyMCEInFocus3" />
+        <actionGroup ref="assertSelectedText" stepKey="assertSelection3">
+            <argument name="expectedSelectedText" value="TinyMCEHeadingVariableTextSelection"/>
+        </actionGroup>
     </test>
 </tests>
