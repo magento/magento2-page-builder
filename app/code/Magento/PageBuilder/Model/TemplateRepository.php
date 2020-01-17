@@ -8,14 +8,13 @@ declare(strict_types=1);
 
 namespace Magento\PageBuilder\Model;
 
-use Magento\Framework\Api\ExtensibleDataObjectConverter;
+use Magento\Framework\Filesystem;
 use Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface;
 use Magento\Framework\Api\SearchCriteriaInterface;
 use Magento\Framework\Exception\CouldNotDeleteException;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\PageBuilder\Api\Data\TemplateInterface;
-use Magento\PageBuilder\Api\Data\TemplateSearchResultsInterface;
 use Magento\PageBuilder\Api\Data\TemplateSearchResultsInterfaceFactory;
 use Magento\PageBuilder\Api\TemplateRepositoryInterface;
 use Magento\PageBuilder\Model\ResourceModel\Template as ResourceTemplate;
@@ -52,24 +51,32 @@ class TemplateRepository implements TemplateRepositoryInterface
     private $collectionProcessor;
 
     /**
+     * @var Filesystem
+     */
+    private $filesystem;
+
+    /**
      * @param ResourceTemplate $resource
      * @param TemplateFactory $templateFactory
      * @param TemplateCollectionFactory $templateCollectionFactory
      * @param TemplateSearchResultsInterfaceFactory $searchResultsFactory
      * @param CollectionProcessorInterface $collectionProcessor
+     * @param Filesystem $filesystem
      */
     public function __construct(
         ResourceTemplate $resource,
         TemplateFactory $templateFactory,
         TemplateCollectionFactory $templateCollectionFactory,
         TemplateSearchResultsInterfaceFactory $searchResultsFactory,
-        CollectionProcessorInterface $collectionProcessor
+        CollectionProcessorInterface $collectionProcessor,
+        Filesystem $filesystem
     ) {
         $this->resource = $resource;
         $this->templateFactory = $templateFactory;
         $this->templateCollectionFactory = $templateCollectionFactory;
         $this->searchResultsFactory = $searchResultsFactory;
         $this->collectionProcessor = $collectionProcessor;
+        $this->filesystem = $filesystem;
     }
 
     /**
@@ -131,10 +138,19 @@ class TemplateRepository implements TemplateRepositoryInterface
      */
     public function delete(TemplateInterface $template) : bool
     {
+        $mediaDir = $this->filesystem
+            ->getDirectoryWrite(\Magento\Framework\App\Filesystem\DirectoryList::MEDIA);
+
         try {
+            $previewImage = $template->getPreviewImage();
             $templateModel = $this->templateFactory->create();
             $this->resource->load($templateModel, $template->getTemplateId());
             $this->resource->delete($templateModel);
+
+            // Remove the preview image from the media directory
+            if ($mediaDir->isExist($previewImage)) {
+                $mediaDir->delete($previewImage);
+            }
         } catch (\Exception $exception) {
             throw new CouldNotDeleteException(
                 __('Could not delete the Template: %1', $exception->getMessage())

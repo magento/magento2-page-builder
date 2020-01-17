@@ -35,6 +35,8 @@ define([
             var self = this,
                 superCall = this._super.bind(this);
 
+            self.lastSelected(null);
+
             confirm({
                 title: $t('Apply Template'),
                 content: $t('Are you sure you want to apply this template? This will overwrite any existing content.'),

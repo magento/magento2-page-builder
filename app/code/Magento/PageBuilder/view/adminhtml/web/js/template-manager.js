@@ -1,6 +1,6 @@
 /*eslint-disable */
 /* jscs:disable */
-define(["html2canvas", "jquery", "mage/translate", "Magento_PageBuilder/js/modal/template-manager-save", "Magento_Ui/js/modal/alert", "text!Magento_PageBuilder/template/modal/template-manager/save-content-modal.html", "uiRegistry", "Magento_PageBuilder/js/acl", "Magento_PageBuilder/js/config"], function (_html2canvas, _jquery, _translate, _templateManagerSave, _alert, _saveContentModal, _uiRegistry, _acl, _config) {
+define(["html2canvas", "jquery", "mage/translate", "Magento_PageBuilder/js/modal/confirm-alert", "Magento_PageBuilder/js/modal/template-manager-save", "text!Magento_PageBuilder/template/modal/template-manager/save-content-modal.html", "uiRegistry", "Magento_PageBuilder/js/acl", "Magento_PageBuilder/js/config"], function (_html2canvas, _jquery, _translate, _confirmAlert, _templateManagerSave, _saveContentModal, _uiRegistry, _acl, _config) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -13,7 +13,7 @@ define(["html2canvas", "jquery", "mage/translate", "Magento_PageBuilder/js/modal
    */
   function saveAsTemplate(stage) {
     if (!(0, _acl.isAllowed)(_acl.resources.TEMPLATE_SAVE)) {
-      (0, _alert)({
+      (0, _confirmAlert)({
         content: (0, _translate)("You do not have permission to save new templates."),
         title: (0, _translate)("Permission Error")
       });
@@ -63,21 +63,21 @@ define(["html2canvas", "jquery", "mage/translate", "Magento_PageBuilder/js/modal
                 dataType: "json"
               }).done(function (data) {
                 if (data.status === "ok") {
-                  (0, _alert)({
+                  (0, _confirmAlert)({
                     content: (0, _translate)("The current contents of Page Builder has been successfully saved as a template."),
                     title: (0, _translate)("Template Saved")
                   });
                   refreshGrid();
                   resolve();
                 } else if (data.status === "error") {
-                  (0, _alert)({
+                  (0, _confirmAlert)({
                     content: data.message || (0, _translate)("An issue occurred while attempting to save " + "the template, please try again."),
                     title: (0, _translate)("An error occurred")
                   });
                   reject();
                 }
               }).fail(function () {
-                (0, _alert)({
+                (0, _confirmAlert)({
                   content: (0, _translate)("An issue occurred while attempting to save the template, " + "please try again."),
                   title: (0, _translate)("Template Save Error")
                 });

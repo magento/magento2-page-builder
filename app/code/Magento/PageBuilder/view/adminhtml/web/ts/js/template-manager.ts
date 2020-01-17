@@ -6,8 +6,8 @@
 import html2canvas from "html2canvas";
 import $ from "jquery";
 import $t from "mage/translate";
+import alertDialog from "Magento_PageBuilder/js/modal/confirm-alert";
 import templateManagerSave from "Magento_PageBuilder/js/modal/template-manager-save";
-import alertDialog from "Magento_Ui/js/modal/alert";
 import promptContentTmpl from "text!Magento_PageBuilder/template/modal/template-manager/save-content-modal.html";
 import registry from "uiRegistry";
 import {isAllowed, resources} from "./acl";

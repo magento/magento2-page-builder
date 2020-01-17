@@ -521,6 +521,7 @@
                 <item name="root_content_type" xsi:type="string">row</item>
                 <item name="html_display_content_type" xsi:type="string">html</item>
                 <item name="template_types" xsi:type="array">
+                    <item name="any" xsi:type="string">Any</item>
                     <item name="cms_page" xsi:type="string">Page</item>
                     <item name="catalog_product" xsi:type="string">Product</item>
                     <item name="catalog_category" xsi:type="string">Category</item>
@@ -596,4 +597,11 @@
             <argument name="staticFileSize" xsi:type="number">4194304</argument>
         </arguments>
     </virtualType>
+    <type name="Magento\PageBuilder\Ui\Component\Template\DataProvider">
+        <arguments>
+            <argument name="additionalFilterPool" xsi:type="array">
+                <item name="fulltext" xsi:type="object">Magento\PageBuilder\Ui\Component\Template\FulltextFilter</item>
+            </argument>
+        </arguments>
+    </type>
 </config>

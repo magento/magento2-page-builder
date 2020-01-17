@@ -114,13 +114,13 @@ class Save extends Action implements HttpPostActionInterface
             return $this->resultFactory->create(ResultFactory::TYPE_JSON)->setData(
                 [
                     'status' => 'error',
-                    'message' => $e
+                    'message' => $e->getMessage()
                 ]
             );
         }
 
         $template = $this->templateFactory->create();
-        $template->setName($request->getParam(TemplateInterface::KEY_NAME));
+        $template->setName(trim($request->getParam(TemplateInterface::KEY_NAME)));
         $template->setTemplate($request->getParam(TemplateInterface::KEY_TEMPLATE));
         if ($request->getParam('createdFor')) {
             $template->setCreatedFor($request->getParam('createdFor'));
@@ -206,12 +206,12 @@ class Save extends Action implements HttpPostActionInterface
     {
         $mediaDir = $this->filesystem
             ->getDirectoryWrite(\Magento\Framework\App\Filesystem\DirectoryList::MEDIA);
-        $fileName = str_replace(
+        $fileName = preg_replace("/[^A-Za-z0-9]/", '', str_replace(
             ' ',
             '-',
             strtolower($request->getParam(TemplateInterface::KEY_NAME))
-        ) . uniqid() . '.jpg';
-        $filePath = 'template-manager' . DIRECTORY_SEPARATOR . $fileName;
+        )) . uniqid() . '.jpg';
+        $filePath = '.template-manager' . DIRECTORY_SEPARATOR . $fileName;
 
         // Prepare the image data
         $imgData = str_replace(' ', '+', $request->getParam('previewImage'));

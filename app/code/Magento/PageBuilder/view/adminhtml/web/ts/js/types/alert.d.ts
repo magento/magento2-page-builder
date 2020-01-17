@@ -6,11 +6,18 @@
 interface AlertConfigInterface {
     content: string;
     title: string;
+    actions?: {
+        always: (event: JQueryEventObject) => void;
+    };
 }
 
 declare function Alert(config: AlertConfigInterface): void;
 
 declare module "Magento_Ui/js/modal/alert" {
+    export = Alert;
+}
+
+declare module "Magento_PageBuilder/js/modal/confirm-alert" {
     export = Alert;
 }
 
