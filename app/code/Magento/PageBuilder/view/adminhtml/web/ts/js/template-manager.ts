@@ -126,37 +126,47 @@ function refreshGrid() {
  * @param stage
  */
 function createCapture(stage: Stage) {
-    const stageElement = document.querySelector("#" + stage.id);
     const scrollY = window.scrollY;
+    const stageElement = document.querySelector("#" + stage.id) as HTMLElement;
     const deferred = $.Deferred();
 
     // Resolve issues with Parallax
     const parallaxRestore = disableParallax(stageElement);
 
+    stageElement.style.height = $(stageElement).outerHeight(false) + "px";
     stageElement.classList.add("capture");
     stageElement.classList.add("interacting");
-    window.scrollTo({
-        top: 0,
-    });
 
-    html2canvas(
-        document.querySelector("#" + stage.id + " .pagebuilder-canvas"),
-        {
-            scale: 1,
-            useCORS: true,
-        },
-    ).then((canvas: HTMLCanvasElement) => {
-        const imageSrc = canvas.toDataURL("image/jpeg", 0.85);
-
-        deferred.resolve(imageSrc);
-
+    if (stage.pageBuilder.isFullScreen()) {
         window.scrollTo({
-            top: scrollY,
+            top: 0,
         });
+    }
 
-        stageElement.classList.remove("capture");
-        stageElement.classList.remove("interacting");
-        restoreParallax(parallaxRestore);
+    _.defer(() => {
+        html2canvas(
+            document.querySelector("#" + stage.id + " .pagebuilder-canvas"),
+            {
+                scale: 1,
+                useCORS: true,
+                scrollY: (window.pageYOffset * -1),
+            },
+        ).then((canvas: HTMLCanvasElement) => {
+            const imageSrc = canvas.toDataURL("image/jpeg", 0.85);
+
+            deferred.resolve(imageSrc);
+
+            if (stage.pageBuilder.isFullScreen()) {
+                window.scrollTo({
+                    top: scrollY,
+                });
+            }
+
+            stageElement.style.height = null;
+            stageElement.classList.remove("capture");
+            stageElement.classList.remove("interacting");
+            restoreParallax(parallaxRestore);
+        });
     });
 
     return deferred;

@@ -115,31 +115,45 @@ define(["html2canvas", "jquery", "mage/translate", "Magento_PageBuilder/js/modal
 
 
   function createCapture(stage) {
-    var stageElement = document.querySelector("#" + stage.id);
     var scrollY = window.scrollY;
+    var stageElement = document.querySelector("#" + stage.id);
 
     var deferred = _jquery.Deferred(); // Resolve issues with Parallax
 
 
     var parallaxRestore = disableParallax(stageElement);
+    stageElement.style.height = (0, _jquery)(stageElement).outerHeight(false) + "px";
     stageElement.classList.add("capture");
     stageElement.classList.add("interacting");
-    window.scrollTo({
-      top: 0
-    });
-    (0, _html2canvas)(document.querySelector("#" + stage.id + " .pagebuilder-canvas"), {
-      scale: 1,
-      useCORS: true
-    }).then(function (canvas) {
-      var imageSrc = canvas.toDataURL("image/jpeg", 0.85);
-      deferred.resolve(imageSrc);
+
+    if (stage.pageBuilder.isFullScreen()) {
       window.scrollTo({
-        top: scrollY
+        top: 0
       });
-      stageElement.classList.remove("capture");
-      stageElement.classList.remove("interacting");
-      restoreParallax(parallaxRestore);
+    }
+
+    _underscore.defer(function () {
+      (0, _html2canvas)(document.querySelector("#" + stage.id + " .pagebuilder-canvas"), {
+        scale: 1,
+        useCORS: true,
+        scrollY: window.pageYOffset * -1
+      }).then(function (canvas) {
+        var imageSrc = canvas.toDataURL("image/jpeg", 0.85);
+        deferred.resolve(imageSrc);
+
+        if (stage.pageBuilder.isFullScreen()) {
+          window.scrollTo({
+            top: scrollY
+          });
+        }
+
+        stageElement.style.height = null;
+        stageElement.classList.remove("capture");
+        stageElement.classList.remove("interacting");
+        restoreParallax(parallaxRestore);
+      });
     });
+
     return deferred;
   }
   /**
