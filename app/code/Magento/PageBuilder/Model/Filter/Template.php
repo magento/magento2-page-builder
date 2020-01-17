@@ -91,6 +91,15 @@ class Template
             if (!empty($matches)) {
                 $docHtml = $matches[1];
 
+                // restore any encoded directives
+                $docHtml = preg_replace_callback(
+                    '/=\"(%7B%7B[^"]*%7D%7D)\"/m',
+                    function ($matches) {
+                        return urldecode($matches[0]);
+                    },
+                    $docHtml
+                );
+
                 if (isset($uniqueNodeNameToDecodedOuterHtmlMap)) {
                     foreach ($uniqueNodeNameToDecodedOuterHtmlMap as $uniqueNodeName => $decodedOuterHtml) {
                         $docHtml = str_replace(
