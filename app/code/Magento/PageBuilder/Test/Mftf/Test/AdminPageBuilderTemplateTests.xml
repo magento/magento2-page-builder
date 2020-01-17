@@ -38,12 +38,15 @@
         </before>
         <after>
             <deleteData createDataKey="createCMSPage" stepKey="deleteCreatedCategory"/>
+            <actionGroup ref="navigateToPageBuilderTemplatesGridPage" stepKey="navigateToPageBuilderTemplatesGridPage"/>
+            <actionGroup ref="filterPageBuilderTemplateGrid" stepKey="filterPageBuilderTemplateGrid"/>
+            <actionGroup ref="deletePageBuilderTemplate" stepKey="deletePageBuilderTemplate"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <!-- Save Template -->
-        <actionGroup ref="openSaveTemplateModal" stepKey="openSaveTemplateModal"/>
-        <actionGroup ref="fillSaveTemplateForm" stepKey="fillSaveTemplateForm"/>
-        <actionGroup ref="saveTemplate" stepKey="saveTemplate"/>
+        <actionGroup ref="openPageBuilderSaveTemplateModal" stepKey="openPageBuilderSaveTemplateModal"/>
+        <actionGroup ref="fillPageBuilderSaveTemplateForm" stepKey="fillPageBuilderSaveTemplateForm"/>
+        <actionGroup ref="savePageBuilderTemplate" stepKey="savePageBuilderTemplate"/>
         <!-- Go to CMS Page -->
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
@@ -52,9 +55,10 @@
         <!-- Validate Stage Empty -->
         <actionGroup ref="verifyEmptyStage" stepKey="verifyEmptyStage"/>
         <!-- Apply Template -->
-        <actionGroup ref="openApplyTemplateSlideOut" stepKey="openApplyTemplateSlideOut"/>
-        <actionGroup ref="clickApplyTemplateFromSlideOut" stepKey="clickApplyTemplateFromSlideOut"/>
-        <actionGroup ref="confirmApplyTemplateFromSlideOut" stepKey="confirmApplyTemplateFromSlideOut"/>
+        <actionGroup ref="openPageBuilderApplyTemplateSlideOut" stepKey="openPageBuilderApplyTemplateSlideOut"/>
+        <actionGroup ref="filterPageBuilderTemplateGrid" stepKey="filterPageBuilderTemplateGrid"/>
+        <actionGroup ref="clickApplyFromPageBuilderApplyTemplateSlideOut" stepKey="clickApplyFromPageBuilderApplyTemplateSlideOut"/>
+        <actionGroup ref="confirmApplyFromPageBuilderApplyTemplateSlideOut" stepKey="confirmApplyFromPageBuilderApplyTemplateSlideOut"/>
         <!-- Validate Stage -->
         <seeElement selector="{{ButtonItemOnStage.emptyButtonItemElement('1')}}" stepKey="seeEmptyButton"/>
     </test>

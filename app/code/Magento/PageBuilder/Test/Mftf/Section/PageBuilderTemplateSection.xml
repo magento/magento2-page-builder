@@ -32,7 +32,6 @@
         <element name="activeSlideOut" type="text" selector="//aside[contains(@class,'pagebuilder_stage_template_pagebuilder_stage_template_modal') and contains(@class,'_show')]"/>
         <element name="title" type="text" selector="//aside[contains(@class,'pagebuilder_stage_template_pagebuilder_stage_template_modal')]//header//h1"/>
         <element name="closeButton" type="text" selector="//aside[contains(@class,'pagebuilder_stage_template_pagebuilder_stage_template_modal')]//header//button[contains(@class,'action-close')]//span[.='Close']"/>
-<!--         todo: filter stuff -->
     </section>
     <section name="PageBuilderApplyTemplateGrid">
 <!--        <element name="emptyGridMessage" type="text" parameterized="true" selector="//table[@data-role='grid']//td[@class='pagebuilder-empty-dynamic-row' and @align='center' and .='{{arg1}}']"/>-->
@@ -45,5 +44,32 @@
         <element name="paginationTotalPages" type="text" parameterized="true" selector="//div[@class='admin__data-grid-pager']//label[@class='admin__control-support-text' and .='of {{total}}']"/>
         <element name="allRows" type="text" selector="//table[@data-role='grid']//tbody//tr"/>
         <element name="applyButton" type="button" parameterized="true" selector="//tr//div[text()='{{textInRow}}']/parent::td/parent::tr//button[text()='Apply']"/>
+    </section>
+    <section name="PageBuilderTemplatePageGrid">
+        <element name="pageTitle" type="text" selector="//header[contains(@class,'page-header')]//h1"/>
+        <!--        <element name="emptyGridMessage" type="text" parameterized="true" selector="//table[@data-role='grid']//td[@class='pagebuilder-empty-dynamic-row' and @align='center' and .='{{arg1}}']"/>-->
+        <element name="base" type="text" selector="//table[@data-role='grid']"/>
+        <element name="columnHeader" type="text" parameterized="true" selector="//table[@data-role='grid']//thead//th[{{columnIndex}}]//span[.='{{columnName}}']"/>
+        <element name="pagination" type="text" selector=".admin__data-grid-pager"/>
+        <element name="paginationLeftButton" type="button" selector=".admin__data-grid-pager button.action-previous"/>
+        <element name="paginationRightButton" type="button" selector=".admin__data-grid-pager button.action-next"/>
+        <element name="paginationPage" type="input" selector=".admin__data-grid-pager input.admin__control-text"/>
+        <element name="paginationTotalPages" type="text" parameterized="true" selector="//div[@class='admin__data-grid-pager']//label[@class='admin__control-support-text' and .='of {{total}}']"/>
+        <element name="allRows" type="text" selector="//table[@data-role='grid']//tbody//tr"/>
+        <element name="deleteButton" type="button" parameterized="true" selector="//tr//div[text()='{{textInRow}}']/parent::td/parent::tr//a[text()='Delete']"/>
+    </section>
+    <section name="PageBuilderDeleteTemplateConfirmationModal">
+        <element name="modal" type="text" selector="//aside[contains(@class,'confirm')]"/>
+        <element name="title" type="text" selector="//aside[contains(@class,'confirm')]//header//h1"/>
+        <element name="closeButton" type="button" selector="//aside[contains(@class,'confirm')]//header//button[contains(@class,'action-close')]//span[.='Close']"/>
+        <element name="message" type="text" selector="//aside[contains(@class,'confirm')]//*[@data-role='content']//*"/>
+        <element name="okButton" type="button" selector="//aside[contains(@class,'confirm')]//footer//button//span[.='OK']"/>
+        <element name="cancelButton" type="button" selector="//aside[contains(@class,'confirm')]//footer//button//span[.='Cancel']"/>
+    </section>
+    <section name="PageBuilderTemplateGridFilter">
+        <element name="clearFilters" type="button" selector="//*[contains(@class,'admin__data-grid-header')]//button[@data-action='grid-filter-reset' and text()='Clear all']"/>
+        <element name="filters" type="button" selector="//*[contains(@class,'admin__data-grid-header')]//button[@data-action='grid-filter-expand' and text()='Filters']"/>
+        <element name="applyFilters" type="button" selector="//*[contains(@class,'admin__data-grid-header')]//button[@data-action='grid-filter-apply']//span[text()='Apply Filters']"/>
+        <element name="templateName" type="text" selector="//*[contains(@class,'admin__data-grid-header')]//input[@name='name']"/>
     </section>
 </sections>
