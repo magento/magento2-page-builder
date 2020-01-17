@@ -41,7 +41,8 @@ define([
          */
         applySelected: function (template) {
             if (template) {
-                this.stage.rootContainer.children([]);
+                // Destroy the old content in the stage
+                this.stage.pageBuilder.destroy();
                 $('body').trigger('processStart');
 
                 stageBuilder(this.stage, template).then(function () {

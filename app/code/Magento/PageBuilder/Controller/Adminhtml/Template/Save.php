@@ -23,6 +23,7 @@ use Magento\PageBuilder\Api\Data\TemplateInterface;
 use Magento\PageBuilder\Api\TemplateRepositoryInterface;
 use Magento\PageBuilder\Model\TemplateFactory;
 use Psr\Log\LoggerInterface;
+use \Magento\MediaStorage\Helper\File\Storage\Database;
 
 /**
  * Save a template within template manager
@@ -69,6 +70,11 @@ class Save extends Action implements HttpPostActionInterface
     private $imageContentFactory;
 
     /**
+     * @var Database
+     */
+    private $mediaStorage;
+
+    /**
      * @param Context $context
      * @param LoggerInterface $logger
      * @param TemplateFactory $templateFactory
@@ -77,6 +83,7 @@ class Save extends Action implements HttpPostActionInterface
      * @param Filesystem $filesystem
      * @param ImageContentValidator $imageContentValidator
      * @param ImageContentFactory $imageContentFactory
+     * @param Database $mediaStorage
      */
     public function __construct(
         Context $context,
@@ -86,7 +93,8 @@ class Save extends Action implements HttpPostActionInterface
         SearchCriteriaBuilder $searchCriteriaBuilder,
         Filesystem $filesystem,
         ImageContentValidator $imageContentValidator,
-        ImageContentFactory $imageContentFactory
+        ImageContentFactory $imageContentFactory,
+        Database $mediaStorage
     ) {
         parent::__construct($context);
 
@@ -97,6 +105,7 @@ class Save extends Action implements HttpPostActionInterface
         $this->filesystem = $filesystem;
         $this->imageContentValidator = $imageContentValidator;
         $this->imageContentFactory = $imageContentFactory;
+        $this->mediaStorage = $mediaStorage;
     }
 
     /**
@@ -236,6 +245,13 @@ class Save extends Action implements HttpPostActionInterface
                 $filePath,
                 $decodedImage
             );
+
+            // If the media storage is set to DB also save the file into the DB
+            if ($this->mediaStorage->checkDbUsage()) {
+                $this->mediaStorage->saveFile(
+                    $filePath
+                );
+            }
 
             // Store the preview image within the new entity
             return $filePath;

@@ -1,6 +1,6 @@
 /*eslint-disable */
 /* jscs:disable */
-define(["html2canvas", "jquery", "mage/translate", "Magento_PageBuilder/js/modal/confirm-alert", "Magento_PageBuilder/js/modal/template-manager-save", "text!Magento_PageBuilder/template/modal/template-manager/save-content-modal.html", "uiRegistry", "Magento_PageBuilder/js/acl", "Magento_PageBuilder/js/config"], function (_html2canvas, _jquery, _translate, _confirmAlert, _templateManagerSave, _saveContentModal, _uiRegistry, _acl, _config) {
+define(["html2canvas", "jquery", "mage/translate", "Magento_PageBuilder/js/modal/confirm-alert", "Magento_PageBuilder/js/modal/template-manager-save", "text!Magento_PageBuilder/template/modal/template-manager/save-content-modal.html", "uiRegistry", "underscore", "Magento_PageBuilder/js/acl", "Magento_PageBuilder/js/config"], function (_html2canvas, _jquery, _translate, _confirmAlert, _templateManagerSave, _saveContentModal, _uiRegistry, _underscore, _acl, _config) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -152,7 +152,8 @@ define(["html2canvas", "jquery", "mage/translate", "Magento_PageBuilder/js/modal
   function disableParallax(stageElement) {
     var rowsToReset = [];
     var parallaxRows = stageElement.querySelectorAll("[data-jarallax-original-styles]");
-    parallaxRows.forEach(function (row) {
+
+    _underscore.each(parallaxRows, function (row) {
       var originalStyles = row.getAttribute("data-jarallax-original-styles");
       var jarallaxStyle = row.style.cssText;
       row.style.cssText = originalStyles;
@@ -164,6 +165,7 @@ define(["html2canvas", "jquery", "mage/translate", "Magento_PageBuilder/js/modal
         container: jarallaxContainer
       });
     });
+
     return rowsToReset;
   }
   /**
@@ -174,7 +176,7 @@ define(["html2canvas", "jquery", "mage/translate", "Magento_PageBuilder/js/modal
 
 
   function restoreParallax(rows) {
-    rows.forEach(function (_ref) {
+    _underscore.each(rows, function (_ref) {
       var element = _ref.element,
           styles = _ref.styles,
           container = _ref.container;

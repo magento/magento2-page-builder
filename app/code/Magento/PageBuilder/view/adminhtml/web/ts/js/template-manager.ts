@@ -10,6 +10,7 @@ import alertDialog from "Magento_PageBuilder/js/modal/confirm-alert";
 import templateManagerSave from "Magento_PageBuilder/js/modal/template-manager-save";
 import promptContentTmpl from "text!Magento_PageBuilder/template/modal/template-manager/save-content-modal.html";
 import registry from "uiRegistry";
+import _ from "underscore";
 import {isAllowed, resources} from "./acl";
 import Config from "./config";
 import Stage from "./stage";
@@ -169,7 +170,7 @@ function createCapture(stage: Stage) {
 function disableParallax(stageElement: Element): ResetRowInterface[] {
     const rowsToReset: ResetRowInterface[] = [];
     const parallaxRows = stageElement.querySelectorAll("[data-jarallax-original-styles]");
-    parallaxRows.forEach((row: HTMLElement) => {
+    _.each(parallaxRows, (row: HTMLElement) => {
         const originalStyles = row.getAttribute("data-jarallax-original-styles");
         const jarallaxStyle = row.style.cssText;
         row.style.cssText = originalStyles;
@@ -191,7 +192,7 @@ function disableParallax(stageElement: Element): ResetRowInterface[] {
  * @param rows
  */
 function restoreParallax(rows: ResetRowInterface[]) {
-    rows.forEach(({element, styles, container}) => {
+    _.each(rows, ({element, styles, container}) => {
         element.style.cssText = styles;
         container.style.display = "";
     });
