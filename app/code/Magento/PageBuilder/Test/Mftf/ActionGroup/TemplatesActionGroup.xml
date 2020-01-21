@@ -16,6 +16,17 @@
         <see userInput="Save Content as Template" selector="{{PageBuilderSaveTemplateModal.title}}" stepKey="seeTitle"/>
         <waitForPageLoad stepKey="waitForPreviewLoad"/>
     </actionGroup>
+    <actionGroup name="closePageBuilderSaveTemplateModal">
+        <arguments>
+            <argument name="baseContent" defaultValue="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" type="string"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForModalLoad"/>
+        <waitForElementVisible selector="{{PageBuilderSaveTemplateModal.closeButton}}" stepKey="waitForCloseButton"/>
+        <click selector="{{PageBuilderSaveTemplateModal.closeButton}}" stepKey="clickCloseButton"/>
+        <waitForPageLoad stepKey="waitForModalClose"/>
+        <waitForElementNotVisible time="5" selector="{{PageBuilderSaveTemplateModal.activeModal}}" stepKey="waitForModalNotVisible"/>
+        <waitForElementVisible time="10" selector="{{baseContent}}" stepKey="waitForContentUnderModalVisible"/>
+    </actionGroup>
     <actionGroup name="fillPageBuilderSaveTemplateForm">
         <arguments>
             <argument name="templateName" defaultValue="{{PageBuilderTemplateNameRandom.name}}" type="string"/>
@@ -27,31 +38,12 @@
         <waitForElement selector="{{PageBuilderSaveTemplateModal.createdForSelect}}" stepKey="waitForCreatedFor"/>
         <selectOption userInput="{{createdFor}}" selector="{{PageBuilderSaveTemplateModal.createdForSelect}}" stepKey="selectCreatedFor"/>
     </actionGroup>
-    <actionGroup name="validatePageBuilderSaveTemplateModal">
-        <waitForPageLoad stepKey="waitForModalLoad"/>
-        <see userInput="Save Content as Template" selector="{{PageBuilderSaveTemplateModal.title}}" stepKey="seeTitle"/>
-        <seeElement selector="{{PageBuilderSaveTemplateModal.closeButton}}" stepKey="seeCloseButton"/>
-        <seeElement selector="{{PageBuilderSaveTemplateModal.previewImage}}" stepKey="seePreview"/>
-<!--        todo: validate preview image not error -->
-        <seeElement selector="{{PageBuilderSaveTemplateModal.templateNameInput}}" stepKey="seeTemplateNameInput"/>
-        <seeElement selector="{{PageBuilderSaveTemplateModal.createdForSelect}}" stepKey="seeCreatedForSelect"/>
-        <see userInput="Created For is to help with filtering templates. This does not restrict where this template can be used." selector="{{PageBuilderSaveTemplateModal.createdForHelperText}}" stepKey="seeCreatedForHelperText"/>
-        <seeElement selector="{{PageBuilderSaveTemplateModal.saveButton}}" stepKey="seeSaveButton"/>
-        <seeElement selector="{{PageBuilderSaveTemplateModal.cancelButton}}" stepKey="seeCancelButton"/>
-    </actionGroup>
     <actionGroup name="clickSaveOnPageBuilderSaveTemplateModal">
         <waitForPageLoad stepKey="waitForModalLoad"/>
         <waitForElement selector="{{PageBuilderSaveTemplateModal.saveButton}}" stepKey="waitForSaveButton"/>
         <click selector="{{PageBuilderSaveTemplateModal.saveButton}}" stepKey="clickSaveButton"/>
         <waitForPageLoad stepKey="waitForModalClose"/>
         <waitForElementVisible selector="{{PageBuilderSaveTemplateConfirmationModal.modal}}" stepKey="waitForConfirmationModal"/>
-    </actionGroup>
-    <actionGroup name="validatePageBuilderSaveTemplateConfirmationModal">
-        <waitForPageLoad stepKey="waitForModalLoad"/>
-        <seeElement selector="{{PageBuilderSaveTemplateConfirmationModal.title}}" stepKey="seeTitle"/>
-        <seeElement selector="{{PageBuilderSaveTemplateConfirmationModal.closeButton}}" stepKey="seeCloseButton"/>
-        <seeElement selector="{{PageBuilderSaveTemplateConfirmationModal.message}}" stepKey="seeMessage"/>
-        <seeElement selector="{{PageBuilderSaveTemplateConfirmationModal.okButton}}" stepKey="seeOKButton"/>
     </actionGroup>
     <actionGroup name="savePageBuilderTemplate">
         <arguments>
@@ -67,16 +59,33 @@
         <waitForElementNotVisible time="5" selector="{{PageBuilderSaveTemplateConfirmationModal.modal}}" stepKey="waitForModalNotVisible"/>
         <waitForElementVisible time="10" selector="{{baseContent}}" stepKey="waitForContentUnderModalVisible"/>
     </actionGroup>
-    <actionGroup name="closePageBuilderSaveTemplateModal">
-        <arguments>
-            <argument name="baseContent" defaultValue="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" type="string"/>
-        </arguments>
+    <actionGroup name="validatePageBuilderSaveTemplateModal">
         <waitForPageLoad stepKey="waitForModalLoad"/>
-        <waitForElementVisible selector="{{PageBuilderSaveTemplateModal.closeButton}}" stepKey="waitForCloseButton"/>
-        <click selector="{{PageBuilderSaveTemplateModal.closeButton}}" stepKey="clickCloseButton"/>
-        <waitForPageLoad stepKey="waitForModalClose"/>
-        <waitForElementNotVisible time="5" selector="{{PageBuilderSaveTemplateModal.activeModal}}" stepKey="waitForModalNotVisible"/>
-        <waitForElementVisible time="10" selector="{{baseContent}}" stepKey="waitForContentUnderModalVisible"/>
+        <see userInput="Save Content as Template" selector="{{PageBuilderSaveTemplateModal.title}}" stepKey="seeTitle"/>
+        <seeElement selector="{{PageBuilderSaveTemplateModal.closeButton}}" stepKey="seeCloseButton"/>
+        <seeElement selector="{{PageBuilderSaveTemplateModal.previewImage}}" stepKey="seePreview"/>
+        <executeJS function="return document.evaluate(&quot;{{PageBuilderSaveTemplateModal.previewImage}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.naturalHeight" stepKey="screenshotNaturalHeight"/>
+        <executeJS function="return document.evaluate(&quot;{{PageBuilderSaveTemplateModal.previewImage}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.naturalWidth" stepKey="screenshotNaturalWidth"/>
+        <assertGreaterThan stepKey="assertNaturalHeightGreaterThanZero">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">screenshotNaturalHeight</actualResult>
+        </assertGreaterThan>
+        <assertGreaterThan stepKey="assertNaturalWidthGreaterThanZero">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">screenshotNaturalWidth</actualResult>
+        </assertGreaterThan>
+        <seeElement selector="{{PageBuilderSaveTemplateModal.templateNameInput}}" stepKey="seeTemplateNameInput"/>
+        <seeElement selector="{{PageBuilderSaveTemplateModal.createdForSelect}}" stepKey="seeCreatedForSelect"/>
+        <see userInput="Created For is to help with filtering templates. This does not restrict where this template can be used." selector="{{PageBuilderSaveTemplateModal.createdForHelperText}}" stepKey="seeCreatedForHelperText"/>
+        <seeElement selector="{{PageBuilderSaveTemplateModal.saveButton}}" stepKey="seeSaveButton"/>
+        <seeElement selector="{{PageBuilderSaveTemplateModal.cancelButton}}" stepKey="seeCancelButton"/>
+    </actionGroup>
+    <actionGroup name="validatePageBuilderSaveTemplateConfirmationModal">
+        <waitForPageLoad stepKey="waitForModalLoad"/>
+        <seeElement selector="{{PageBuilderSaveTemplateConfirmationModal.title}}" stepKey="seeTitle"/>
+        <seeElement selector="{{PageBuilderSaveTemplateConfirmationModal.closeButton}}" stepKey="seeCloseButton"/>
+        <seeElement selector="{{PageBuilderSaveTemplateConfirmationModal.message}}" stepKey="seeMessage"/>
+        <seeElement selector="{{PageBuilderSaveTemplateConfirmationModal.okButton}}" stepKey="seeOKButton"/>
     </actionGroup>
     <actionGroup name="openPageBuilderApplyTemplateSlideOut">
         <waitForElementVisible selector="{{PageBuilderStage.applyTemplateButton}}" stepKey="waitForApplyTemplateButton"/>
@@ -85,6 +94,17 @@
         <waitForElementVisible selector="{{PageBuilderApplyTemplateSlideOut.activeSlideOut}}" stepKey="waitForSlideOut"/>
         <see userInput="Apply Template" selector="{{PageBuilderApplyTemplateSlideOut.title}}" stepKey="seeTitle"/>
         <waitForPageLoad stepKey="waitForSlideOutForm"/>
+    </actionGroup>
+    <actionGroup name="closePageBuilderApplyTemplateSlideOut">
+        <arguments>
+            <argument name="baseContent" defaultValue="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" type="string"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForSlideOutLoad"/>
+        <waitForElementVisible selector="{{PageBuilderApplyTemplateSlideOut.closeButton}}" stepKey="waitForCloseButton"/>
+        <click selector="{{PageBuilderApplyTemplateSlideOut.closeButton}}" stepKey="clickCloseButton"/>
+        <waitForPageLoad stepKey="waitForSlideOutClose"/>
+        <waitForElementNotVisible time="5" selector="{{PageBuilderApplyTemplateSlideOut.slideOut}}" stepKey="waitForSlideOutNotVisible"/>
+        <waitForElementVisible time="10" selector="{{baseContent}}" stepKey="waitForContentUnderSlideOutVisible"/>
     </actionGroup>
     <actionGroup name="clickApplyFromPageBuilderApplyTemplateSlideOut">
         <arguments>
@@ -102,16 +122,10 @@
         <waitForElementNotVisible time="5" selector="{{PageBuilderApplyTemplateSlideOut.slideOut}}" stepKey="waitForSlideOutNotVisible" after="waitForPageLoad2"/>
         <waitForElementVisible time="10" selector="{{baseContent}}" stepKey="waitForContentUnderSlideOutVisible" after="waitForSlideOutNotVisible"/>
     </actionGroup>
-    <actionGroup name="closePageBuilderApplyTemplateSlideOut">
-        <arguments>
-            <argument name="baseContent" defaultValue="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" type="string"/>
-        </arguments>
-        <waitForPageLoad stepKey="waitForSlideOutLoad"/>
-        <waitForElementVisible selector="{{PageBuilderApplyTemplateSlideOut.closeButton}}" stepKey="waitForCloseButton"/>
-        <click selector="{{PageBuilderApplyTemplateSlideOut.closeButton}}" stepKey="clickCloseButton"/>
-        <waitForPageLoad stepKey="waitForSlideOutClose"/>
-        <waitForElementNotVisible time="5" selector="{{PageBuilderApplyTemplateSlideOut.slideOut}}" stepKey="waitForSlideOutNotVisible"/>
-        <waitForElementVisible time="10" selector="{{baseContent}}" stepKey="waitForContentUnderSlideOutVisible"/>
+    <actionGroup name="verifyNoPageBuilderSaveOrApplyTemplateButtons">
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <dontSeeElementInDOM selector="{{PageBuilderStage.saveAsTemplateButton}}" stepKey="dontSeeSaveAsTemplateButton"/>
+        <dontSeeElementInDOM selector="{{PageBuilderStage.applyTemplateButton}}" stepKey="dontSeeApplyTemplateButton"/>
     </actionGroup>
     <actionGroup name="navigateToPageBuilderTemplatesGridPage">
         <amOnPage url="{{PageBuilderTemplatesGridPage.url}}" stepKey="goToPageBuilderTemplatesGridPage"/>
@@ -119,19 +133,18 @@
         <waitForElementVisible selector="{{PageBuilderTemplatePageGrid.pageTitle}}" stepKey="waitForPageTitle"/>
         <see userInput="Templates" selector="{{PageBuilderTemplatePageGrid.pageTitle}}" stepKey="seePageTitle"/>
     </actionGroup>
-    <actionGroup name="deletePageBuilderTemplate">
-        <arguments>
-            <argument name="templateIdentifier" defaultValue="{{PageBuilderTemplateNameRandom.name}}" type="string"/>
-        </arguments>
+    <actionGroup name="verifyCannotNavigateToPageBuilderTemplatesGridPage">
+        <amOnPage url="{{PageBuilderTemplatesGridPage.url}}" stepKey="goToPageBuilderTemplatesGridPage"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
-        <waitForElementVisible selector="{{PageBuilderTemplatePageGrid.deleteButton(templateIdentifier)}}" stepKey="waitForDeleteButton"/>
-        <click selector="{{PageBuilderTemplatePageGrid.deleteButton(templateIdentifier)}}" stepKey="clickDeleteButton"/>
-        <waitForPageLoad stepKey="waitForConfirmationModalLoad"/>
-        <waitForElementVisible selector="{{PageBuilderDeleteTemplateConfirmationModal.modal}}" stepKey="waitForConfirmationModalVisible"/>
-        <waitForElementVisible selector="{{PageBuilderDeleteTemplateConfirmationModal.okButton}}" stepKey="waitForConfirmationModalOKButton"/>
-        <click selector="{{PageBuilderDeleteTemplateConfirmationModal.okButton}}" stepKey="clickConfirmationModalOKButton"/>
-        <waitForPageLoad stepKey="waitForDelete"/>
-        <see userInput="Template successfully deleted." stepKey="seeSuccessMessage"/>
+        <waitForElementVisible selector="{{PageBuilderTemplatePageGrid.pageTitle}}" stepKey="waitForPageTitle"/>
+        <see userInput="Magento Admin" selector="{{PageBuilderTemplatePageGrid.pageTitle}}" stepKey="seePageTitle"/>
+        <see selector="{{AdminHeaderSection.pageHeading}}" userInput="Sorry, you need permissions to view this content." stepKey="seeErrorMessage"/>
+        <waitForElementVisible selector="{{AdminMenuSection.content}}" stepKey="waitForContent"/>
+        <click selector="{{AdminMenuSection.content}}" stepKey="clickContent"/>
+        <waitForPageLoad stepKey="waitForMenu"/>
+        <seeElement selector="{{AdminMenuSection.menuItem('magento-backend-content-elements')}}" stepKey="seeElementsSection"/>
+        <see userInput="Pages" selector="{{AdminMenuSection.menuItem('magento-backend-content-elements')}}" stepKey="seeTemplates"/>
+        <dontSee userInput="Templates" selector="{{AdminMenuSection.menuItem('magento-backend-content-elements')}}" stepKey="dontSeeTemplates"/>
     </actionGroup>
     <actionGroup name="filterPageBuilderTemplateGrid">
         <arguments>
@@ -153,6 +166,66 @@
         <waitForPageLoad stepKey="waitForClearFilters"/>
         <dontSeeElement selector="{{PageBuilderTemplateGridFilter.clearFilters}}" stepKey="dontSeeClearFilters"/>
     </actionGroup>
+    <actionGroup name="validatePageBuilderTemplateDataInGrid">
+        <arguments>
+            <argument name="section" defaultValue="PageBuilderTemplatePageGrid"/>
+            <argument name="templateName" defaultValue="{{PageBuilderTemplateNameRandom.name}}" type="string"/>
+            <argument name="createdFor" defaultValue="{{PageBuilderTemplateCreatedFor.any}}" type="string"/>
+            <argument name="createdDate" defaultValue="" type="string"/>
+            <argument name="rowIndex" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForGridLoad"/>
+        <grabTextFrom selector="{{section.templateId(rowIndex)}}" stepKey="grabTemplateId"/>
+        <assertGreaterThan stepKey="assertGreaterThanZero">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">grabTemplateId</actualResult>
+        </assertGreaterThan>
+        <seeElement selector="{{section.image(rowIndex)}}" stepKey="seeImage"/>
+        <executeJS function="return document.evaluate(&quot;{{section.image(rowIndex)}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.naturalHeight" stepKey="screenshotNaturalHeight"/>
+        <executeJS function="return document.evaluate(&quot;{{section.image(rowIndex)}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.naturalWidth" stepKey="screenshotNaturalWidth"/>
+        <assertGreaterThan stepKey="assertNaturalHeightGreaterThanZero">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">screenshotNaturalHeight</actualResult>
+        </assertGreaterThan>
+        <assertGreaterThan stepKey="assertNaturalWidthGreaterThanZero">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">screenshotNaturalWidth</actualResult>
+        </assertGreaterThan>
+        <see userInput="{{templateName}}" selector="{{section.templateName(rowIndex)}}" stepKey="seeTemplateName"/>
+<!--        <see userInput="{{createdFor}}" selector="{{section.createdFor(rowIndex)}}" stepKey="seeCreatedFor"/>-->
+<!--        <see userInput="{{createdDate}}" selector="{{section.createdDate(rowIndex)}}" stepKey="seeCreatedDate"/>-->
+    </actionGroup>
+    <actionGroup name="validatePageBuilderTemplateEmptyGrid">
+        <arguments>
+            <argument name="section" defaultValue="PageBuilderTemplatePageGrid"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForGridLoad"/>
+        <waitForElementVisible selector="{{section.emptyGrid}}" stepKey="waitForEmptyGrid"/>
+        <see userInput="We couldn't find any records." selector="{{section.emptyGrid}}" stepKey="seeEmptyGridMessage"/>
+    </actionGroup>
+    <actionGroup name="deletePageBuilderTemplate">
+        <arguments>
+            <argument name="templateIdentifier" defaultValue="{{PageBuilderTemplateNameRandom.name}}" type="string"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible selector="{{PageBuilderTemplatePageGrid.deleteButton(templateIdentifier)}}" stepKey="waitForDeleteButton"/>
+        <click selector="{{PageBuilderTemplatePageGrid.deleteButton(templateIdentifier)}}" stepKey="clickDeleteButton"/>
+        <waitForPageLoad stepKey="waitForConfirmationModalLoad"/>
+        <waitForElementVisible selector="{{PageBuilderDeleteTemplateConfirmationModal.modal}}" stepKey="waitForConfirmationModalVisible"/>
+        <waitForElementVisible selector="{{PageBuilderDeleteTemplateConfirmationModal.okButton}}" stepKey="waitForConfirmationModalOKButton"/>
+        <click selector="{{PageBuilderDeleteTemplateConfirmationModal.okButton}}" stepKey="clickConfirmationModalOKButton"/>
+        <waitForPageLoad stepKey="waitForDelete"/>
+        <see userInput="Template successfully deleted." stepKey="seeSuccessMessage"/>
+    </actionGroup>
+    <actionGroup name="verifyNoPageBuilderDeleteTemplateButton">
+        <arguments>
+            <argument name="templateIdentifier" defaultValue="{{PageBuilderTemplateNameRandom.name}}" type="string"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible selector="{{PageBuilderTemplatePageGrid.templateName('1')}}" stepKey="waitForTemplateName"/>
+        <see userInput="{{templateIdentifier}}" selector="{{PageBuilderTemplatePageGrid.templateName('1')}}" stepKey="seeTemplateName"/>
+        <dontSeeElementInDOM selector="{{PageBuilderTemplatePageGrid.deleteButton(templateIdentifier)}}" stepKey="dontSeeDeleteTemplateButton"/>
+    </actionGroup>
     <!--    todo: search by keyword in grid-->
-<!--    todo: actiongroup descriptions-->
+    <!--    todo: actiongroup descriptions-->
 </actionGroups>
