@@ -174,8 +174,12 @@
         <waitForPageLoad stepKey="waitForPageLoad"/>
     </actionGroup>
     <actionGroup name="verifyEmptyStage">
+        <arguments>
+            <argument name="rowIndex" defaultValue="1" type="string"/>
+            <argument name="pageBuilderArea" defaultValue="" type="string"/>
+        </arguments>
         <waitForPageLoad stepKey="waitForStageLoad"/>
-        <seeElement selector="{{RowOnStage.empty('1')}}" stepKey="seeEmptyRow"/>
-        <seeNumberOfElements userInput="1" selector="{{RowOnStage.allRows}}" stepKey="seeOnlyOneRow"/>
+        <seeElement selector="{{RowOnStage.empty(rowIndex)}}" stepKey="seeEmptyRow"/>
+        <seeNumberOfElements userInput="1" selector="{{pageBuilderArea}}{{RowOnStage.allRows}}" stepKey="seeOnlyOneRow"/>
     </actionGroup>
 </actionGroups>

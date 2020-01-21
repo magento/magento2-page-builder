@@ -9,8 +9,11 @@
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
     <actionGroup name="openPageBuilderSaveTemplateModal">
-        <waitForElementVisible selector="{{PageBuilderStage.saveAsTemplateButton}}" stepKey="waitForSaveAsTemplateButton"/>
-        <click selector="{{PageBuilderStage.saveAsTemplateButton}}" stepKey="clickSaveAsTemplateButton"/>
+        <arguments>
+            <argument name="pageBuilderArea" defaultValue="" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{pageBuilderArea}}{{PageBuilderStage.saveAsTemplateButton}}" stepKey="waitForSaveAsTemplateButton"/>
+        <click selector="{{pageBuilderArea}}{{PageBuilderStage.saveAsTemplateButton}}" stepKey="clickSaveAsTemplateButton"/>
         <waitForPageLoad stepKey="waitForModalLoad"/>
         <waitForElementVisible selector="{{PageBuilderSaveTemplateModal.activeModal}}" stepKey="waitForModalVisible"/>
         <see userInput="Save Content as Template" selector="{{PageBuilderSaveTemplateModal.title}}" stepKey="seeTitle"/>
@@ -88,11 +91,15 @@
         <seeElement selector="{{PageBuilderSaveTemplateConfirmationModal.okButton}}" stepKey="seeOKButton"/>
     </actionGroup>
     <actionGroup name="openPageBuilderApplyTemplateSlideOut">
-        <waitForElementVisible selector="{{PageBuilderStage.applyTemplateButton}}" stepKey="waitForApplyTemplateButton"/>
-        <click selector="{{PageBuilderStage.applyTemplateButton}}" stepKey="clickApplyTemplateButton"/>
+        <arguments>
+            <argument name="title" defaultValue="Apply Template" type="string"/>
+            <argument name="pageBuilderArea" defaultValue="" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{pageBuilderArea}}{{PageBuilderStage.applyTemplateButton}}" stepKey="waitForApplyTemplateButton"/>
+        <click selector="{{pageBuilderArea}}{{PageBuilderStage.applyTemplateButton}}" stepKey="clickApplyTemplateButton"/>
         <waitForPageLoad stepKey="waitForSlideOutLoad"/>
         <waitForElementVisible selector="{{PageBuilderApplyTemplateSlideOut.activeSlideOut}}" stepKey="waitForSlideOut"/>
-        <see userInput="Apply Template" selector="{{PageBuilderApplyTemplateSlideOut.title}}" stepKey="seeTitle"/>
+        <see userInput="{{title}}" selector="{{PageBuilderApplyTemplateSlideOut.title}}" stepKey="seeTitle"/>
         <waitForPageLoad stepKey="waitForSlideOutForm"/>
     </actionGroup>
     <actionGroup name="closePageBuilderApplyTemplateSlideOut">
@@ -123,9 +130,12 @@
         <waitForElementVisible time="10" selector="{{baseContent}}" stepKey="waitForContentUnderSlideOutVisible" after="waitForSlideOutNotVisible"/>
     </actionGroup>
     <actionGroup name="verifyNoPageBuilderSaveOrApplyTemplateButtons">
+        <arguments>
+            <argument name="pageBuilderArea" defaultValue="" type="string"/>
+        </arguments>
         <waitForPageLoad stepKey="waitForPageLoad"/>
-        <dontSeeElementInDOM selector="{{PageBuilderStage.saveAsTemplateButton}}" stepKey="dontSeeSaveAsTemplateButton"/>
-        <dontSeeElementInDOM selector="{{PageBuilderStage.applyTemplateButton}}" stepKey="dontSeeApplyTemplateButton"/>
+        <dontSeeElementInDOM selector="{{pageBuilderArea}}{{PageBuilderStage.saveAsTemplateButton}}" stepKey="dontSeeSaveAsTemplateButton"/>
+        <dontSeeElementInDOM selector="{{pageBuilderArea}}{{PageBuilderStage.applyTemplateButton}}" stepKey="dontSeeApplyTemplateButton"/>
     </actionGroup>
     <actionGroup name="navigateToPageBuilderTemplatesGridPage">
         <amOnPage url="{{PageBuilderTemplatesGridPage.url}}" stepKey="goToPageBuilderTemplatesGridPage"/>
@@ -192,8 +202,8 @@
             <actualResult type="variable">screenshotNaturalWidth</actualResult>
         </assertGreaterThan>
         <see userInput="{{templateName}}" selector="{{section.templateName(rowIndex)}}" stepKey="seeTemplateName"/>
-<!--        <see userInput="{{createdFor}}" selector="{{section.createdFor(rowIndex)}}" stepKey="seeCreatedFor"/>-->
-<!--        <see userInput="{{createdDate}}" selector="{{section.createdDate(rowIndex)}}" stepKey="seeCreatedDate"/>-->
+        <see userInput="{{createdFor}}" selector="{{section.createdFor(rowIndex)}}" stepKey="seeCreatedFor"/>
+        <see userInput="{{createdDate}}" selector="{{section.createdDate(rowIndex)}}" stepKey="seeCreatedDate"/>
     </actionGroup>
     <actionGroup name="validatePageBuilderTemplateEmptyGrid">
         <arguments>
