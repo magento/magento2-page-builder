@@ -8,11 +8,9 @@
  */
 define([
     'jquery',
-    'underscore',
     'jquery-ui-modules/widget',
-    'Magento_Ui/js/modal/alert',
-    'mage/translate'
-], function ($, _) {
+    'Magento_Ui/js/modal/alert'
+], function ($) {
     'use strict';
 
     $.widget('mage.confirmAlert', $.mage.alert, {

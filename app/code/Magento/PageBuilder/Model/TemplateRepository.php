@@ -8,12 +8,12 @@ declare(strict_types=1);
 
 namespace Magento\PageBuilder\Model;
 
-use Magento\Framework\Filesystem;
 use Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface;
 use Magento\Framework\Api\SearchCriteriaInterface;
 use Magento\Framework\Exception\CouldNotDeleteException;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\Filesystem;
 use Magento\PageBuilder\Api\Data\TemplateInterface;
 use Magento\PageBuilder\Api\Data\TemplateSearchResultsInterfaceFactory;
 use Magento\PageBuilder\Api\TemplateRepositoryInterface;
