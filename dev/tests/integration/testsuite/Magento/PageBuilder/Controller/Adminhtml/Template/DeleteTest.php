@@ -15,7 +15,7 @@ use Magento\TestFramework\Helper\Bootstrap;
 use Magento\TestFramework\ObjectManager;
 
 /**
- * Perform tests upon Template save controller
+ * Perform tests upon Template delete controller
  *
  * @magentoAppArea adminhtml
  */
