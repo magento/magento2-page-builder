@@ -67,7 +67,8 @@ class DeleteTest extends \Magento\TestFramework\TestCase\AbstractBackendControll
             $this->searchCriteriaBuilder->addFilter('name', 'Test Template')->create()
         );
         $this->assertEquals(1, $findTemplate->getTotalCount());
-        $templateId = $findTemplate->getItems()[0]->getId();
+        $items = $findTemplate->getItems();
+        $templateId = reset($items)->getId();
 
         $this->getRequest()->setPostValue(['template_id' => $templateId])->setMethod(HttpRequest::METHOD_GET);
         $this->deleteController->execute();
