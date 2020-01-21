@@ -129,6 +129,6 @@ class Preview
      */
     public function isPreviewMode() : bool
     {
-        return $this->isPreview;
+        return (bool) $this->isPreview;
     }
 }
