@@ -8,13 +8,13 @@ declare(strict_types=1);
 
 namespace Magento\PageBuilder\Ui\Component\Listing\Columns;
 
+use Magento\Framework\AuthorizationInterface;
 use Magento\Framework\Escaper;
 use Magento\Framework\UrlInterface;
 use Magento\Framework\View\Element\UiComponent\ContextInterface;
 use Magento\Framework\View\Element\UiComponentFactory;
-use Magento\Ui\Component\Listing\Columns\Column;
-use Magento\Framework\AuthorizationInterface;
 use Magento\PageBuilder\Model\Stage\Config;
+use Magento\Ui\Component\Listing\Columns\Column;
 
 /**
  * Provide actions to the action column in Templates grid
@@ -78,7 +78,6 @@ class TemplateManagerActions extends Column
      */
     public function prepareDataSource(array $dataSource)
     {
-
         if (isset($dataSource['data']['items'])) {
             foreach ($dataSource['data']['items'] as & $item) {
                 $name = $this->getData('name');
@@ -96,10 +95,10 @@ class TemplateManagerActions extends Column
                             ),
                             'confirm' => [
                                 'title' => __('Delete %1?', $templateName),
-                                'message' =>
-                                    __('Are you sure you want to permanently delete template %1?', $templateName),
+                                'message' => __('Are you sure you want to permanently delete template %1?', $templateName),
                                 '__disableTmpl' => true,
                             ],
+                            'post' => true,
                             '__disableTmpl' => true,
                         ];
                     }

@@ -10,7 +10,7 @@ namespace Magento\PageBuilder\Controller\Adminhtml\Template;
 
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
-use Magento\Framework\App\Action\HttpGetActionInterface;
+use Magento\Framework\App\Action\HttpPostActionInterface;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\PageBuilder\Api\Data\TemplateInterface;
 use Magento\PageBuilder\Api\TemplateRepositoryInterface;
@@ -20,7 +20,7 @@ use Psr\Log\LoggerInterface;
 /**
  * Delete a template within template manager
  */
-class Delete extends Action implements HttpGetActionInterface
+class Delete extends Action implements HttpPostActionInterface
 {
     const ADMIN_RESOURCE = 'Magento_PageBuilder::template_delete';
 

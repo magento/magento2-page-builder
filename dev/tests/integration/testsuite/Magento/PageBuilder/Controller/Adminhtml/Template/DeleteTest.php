@@ -70,7 +70,7 @@ class DeleteTest extends \Magento\TestFramework\TestCase\AbstractBackendControll
         $items = $findTemplate->getItems();
         $templateId = reset($items)->getId();
 
-        $this->getRequest()->setPostValue(['template_id' => $templateId])->setMethod(HttpRequest::METHOD_GET);
+        $this->getRequest()->setPostValue(['template_id' => $templateId])->setMethod(HttpRequest::METHOD_POST);
         $this->deleteController->execute();
 
         $this->expectExceptionMessage('Template with id "' . $templateId . '" does not exist.');
