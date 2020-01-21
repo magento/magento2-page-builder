@@ -38,7 +38,8 @@
         <!-- Save Template -->
         <actionGroup ref="openPageBuilderSaveTemplateModal" stepKey="openPageBuilderSaveTemplateModal"/>
         <actionGroup ref="fillPageBuilderSaveTemplateForm" stepKey="fillPageBuilderSaveTemplateForm"/>
-        <generateDate date="now" format="M d, Y g:i A" stepKey="today"/>
+        <generateDate date="now" format="M d, Y g:i" stepKey="today"/>
+        <generateDate date="now" format="A" stepKey="todayAMorPM"/>
         <actionGroup ref="savePageBuilderTemplate" stepKey="savePageBuilderTemplate"/>
         <!-- Verify Info on Apply Template Slide Out -->
         <actionGroup ref="openPageBuilderApplyTemplateSlideOut" stepKey="openPageBuilderApplyTemplateSlideOut"/>
@@ -48,6 +49,7 @@
             <argument name="templateName" value="{{PageBuilderTemplateNameRandom.name}}"/>
             <argument name="createdFor" value="{{PageBuilderTemplateCreatedFor.any}}"/>
             <argument name="createdDate" value="{$today}"/>
+            <argument name="createdDateAMorPM" value="{$todayAMorPM}"/>
         </actionGroup>
         <!-- Verify Info on Template Grid Page -->
         <actionGroup ref="navigateToPageBuilderTemplatesGridPage" stepKey="navigateToPageBuilderTemplatesGridPage"/>
@@ -57,6 +59,7 @@
             <argument name="templateName" value="{{PageBuilderTemplateNameRandom.name}}"/>
             <argument name="createdFor" value="{{PageBuilderTemplateCreatedFor.any}}"/>
             <argument name="createdDate" value="{$today}"/>
+            <argument name="createdDateAMorPM" value="{$todayAMorPM}"/>
         </actionGroup>
     </test>
     <test name="PageBuilderDeleteTemplate">
@@ -218,7 +221,8 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <actionGroup ref="openPageBuilderSaveTemplateModal" stepKey="openPageBuilderSaveTemplateModal"/>
         <actionGroup ref="fillPageBuilderSaveTemplateForm" stepKey="fillPageBuilderSaveTemplateForm"/>
-        <generateDate date="now" format="M d, Y g:i A" stepKey="today"/>
+        <generateDate date="now" format="M d, Y g:i" stepKey="today"/>
+        <generateDate date="now" format="A" stepKey="todayAMorPM"/>
         <actionGroup ref="savePageBuilderTemplate" stepKey="savePageBuilderTemplate"/>
         <!-- Verify Info on Template Grid Page -->
         <actionGroup ref="navigateToPageBuilderTemplatesGridPage" stepKey="navigateToPageBuilderTemplatesGridPage"/>
@@ -228,6 +232,7 @@
             <argument name="templateName" value="{{PageBuilderTemplateNameRandom.name}}"/>
             <argument name="createdFor" value="{{PageBuilderTemplateCreatedFor.any}}"/>
             <argument name="createdDate" value="{$today}"/>
+            <argument name="createdDateAMorPM" value="{$todayAMorPM}"/>
         </actionGroup>
         <actionGroup ref="logout" stepKey="logout"/>
         <!-- Change User Role -->
@@ -464,4 +469,191 @@
         <!-- Verify Unsuccessful Navigation to Templates Page -->
         <actionGroup ref="verifyCannotNavigateToPageBuilderTemplatesGridPage" stepKey="verifyCannotNavigateToPageBuilderTemplatesGridPage"/>
     </test>
+    <test name="PageBuilderApplyTemplateMultipleTimes">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Templates"/>
+            <title value="Apply Page Builder Template Multiple Times"/>
+            <description value="Verify that user can apply a Page Builder template multiple times"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="PB-341"/>
+            <testCaseId value="MC-30616"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-templates"/>
+        </annotations>
+        <before>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
+                <argument name="CMSPage" value="$$createCMSPage$$"/>
+            </actionGroup>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+                <argument name="contentType" value="PageBuilderButtonsContentType"/>
+            </actionGroup>
+            <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+                <argument name="contentType" value="PageBuilderButtonsContentType"/>
+            </actionGroup>
+            <seeElement selector="{{ButtonItemOnStage.emptyButtonItemElement('1')}}" stepKey="seeEmptyButton"/>
+            <actionGroup ref="openPageBuilderSaveTemplateModal" stepKey="openPageBuilderSaveTemplateModal"/>
+            <actionGroup ref="fillPageBuilderSaveTemplateForm" stepKey="fillPageBuilderSaveTemplateForm"/>
+            <actionGroup ref="savePageBuilderTemplate" stepKey="savePageBuilderTemplate"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="navigateToPageBuilderTemplatesGridPage" stepKey="navigateToPageBuilderTemplatesGridPage"/>
+            <actionGroup ref="filterPageBuilderTemplateGrid" stepKey="filterPageBuilderTemplateGrid"/>
+            <actionGroup ref="deletePageBuilderTemplate" stepKey="deletePageBuilderTemplate"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Go to CMS Page -->
+        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Stage Empty -->
+        <actionGroup ref="verifyEmptyStage" stepKey="verifyEmptyStage"/>
+        <!-- Apply Template -->
+        <actionGroup ref="openPageBuilderApplyTemplateSlideOut" stepKey="openPageBuilderApplyTemplateSlideOut"/>
+        <actionGroup ref="filterPageBuilderTemplateGrid" stepKey="filterPageBuilderTemplateGrid"/>
+        <actionGroup ref="clickApplyFromPageBuilderApplyTemplateSlideOut" stepKey="clickApplyFromPageBuilderApplyTemplateSlideOut"/>
+        <actionGroup ref="confirmApplyFromPageBuilderApplyTemplateSlideOut" stepKey="confirmApplyFromPageBuilderApplyTemplateSlideOut"/>
+        <!-- Validate Stage -->
+        <seeElement selector="{{ButtonItemOnStage.emptyButtonItemElement('1')}}" stepKey="seeEmptyButton"/>
+        <!-- Delete Button Group -->
+        <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeButtonFromStage">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="confirmRemovalModal" stepKey="confirmRemovalModal"/>
+        <actionGroup ref="verifyEmptyStage" stepKey="verifyEmptyStage2"/>
+        <!-- Apply Template Again -->
+        <actionGroup ref="openPageBuilderApplyTemplateSlideOut" stepKey="openPageBuilderApplyTemplateSlideOut2"/>
+        <actionGroup ref="filterPageBuilderTemplateGrid" stepKey="filterPageBuilderTemplateGrid2"/>
+        <actionGroup ref="clickApplyFromPageBuilderApplyTemplateSlideOut" stepKey="clickApplyFromPageBuilderApplyTemplateSlideOut2"/>
+        <actionGroup ref="confirmApplyFromPageBuilderApplyTemplateSlideOut" stepKey="confirmApplyFromPageBuilderApplyTemplateSlideOut2"/>
+        <!-- Validate Stage Again -->
+        <seeElement selector="{{ButtonItemOnStage.emptyButtonItemElement('1')}}" stepKey="seeEmptyButton2"/>
+    </test>
+    <test name="PageBuilderVerifySaveContentAsTemplateModalAndApplyTemplateSlideOut">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Templates"/>
+            <title value="Verify Save Content as Template Modal and Apply Template Slide Out"/>
+            <description value="Verify the functionality and content of the Save Content as Template modal and the Apply Template slide out."/>
+            <severity value="MAJOR"/>
+            <useCaseId value="PB-341"/>
+            <testCaseId value="MC-30619"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-templates"/>
+        </annotations>
+        <before>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
+                <argument name="CMSPage" value="$$createCMSPage$$"/>
+            </actionGroup>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="navigateToPageBuilderTemplatesGridPage" stepKey="navigateToPageBuilderTemplatesGridPage"/>
+            <actionGroup ref="filterPageBuilderTemplateGrid" stepKey="filterPageBuilderTemplateGrid"/>
+            <actionGroup ref="deletePageBuilderTemplate" stepKey="deletePageBuilderTemplate"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Open and Close Save Template Modal -->
+        <actionGroup ref="openPageBuilderSaveTemplateModal" stepKey="openPageBuilderSaveTemplateModal"/>
+        <actionGroup ref="closePageBuilderSaveTemplateModal" stepKey="closePageBuilderSaveTemplateModal"/>
+        <!-- Validate Save Template Modal -->
+        <actionGroup ref="openPageBuilderSaveTemplateModal" stepKey="openPageBuilderSaveTemplateModal2"/>
+        <actionGroup ref="validatePageBuilderSaveTemplateModal" stepKey="validatePageBuilderSaveTemplateModal"/>
+        <actionGroup ref="fillPageBuilderSaveTemplateForm" stepKey="fillPageBuilderSaveTemplateForm"/>
+        <actionGroup ref="clickSaveOnPageBuilderSaveTemplateModal" stepKey="clickSaveOnPageBuilderSaveTemplateModal"/>
+        <generateDate date="now" format="M d, Y g:i" stepKey="today"/>
+        <generateDate date="now" format="A" stepKey="todayAMorPM"/>
+        <!-- Validate Save Template Confirmation Modal -->
+        <actionGroup ref="validatePageBuilderSaveTemplateConfirmationModal" stepKey="validatePageBuilderSaveTemplateConfirmationModal"/>
+        <actionGroup ref="clickCloseOnPageBuilderSaveTemplateConfirmationModal" stepKey="clickCloseOnPageBuilderSaveTemplateConfirmationModal"/>
+        <!-- Validate Apply Template Slide Out -->
+        <actionGroup ref="openPageBuilderApplyTemplateSlideOut" stepKey="openPageBuilderApplyTemplateSlideOut"/>
+        <actionGroup ref="filterPageBuilderTemplateGrid" stepKey="filterPageBuilderTemplateGrid"/>
+        <actionGroup ref="validatePageBuilderTemplateDataInGrid" stepKey="validatePageBuilderTemplateDataInGrid1">
+            <argument name="section" value="PageBuilderApplyTemplateGrid"/>
+            <argument name="templateName" value="{{PageBuilderTemplateNameRandom.name}}"/>
+            <argument name="createdFor" value="{{PageBuilderTemplateCreatedFor.any}}"/>
+            <argument name="createdDate" value="{$today}"/>
+            <argument name="createdDateAMorPM" value="{$todayAMorPM}"/>
+        </actionGroup>
+        <actionGroup ref="closePageBuilderApplyTemplateSlideOut" stepKey="closePageBuilderApplyTemplateSlideOut"/>
+        <!-- Verify Empty Stage -->
+        <actionGroup ref="verifyEmptyStage" stepKey="verifyEmptyStage"/>
+        <!-- Reopen Apply Template and Cancel Apply Confirm -->
+        <actionGroup ref="openPageBuilderApplyTemplateSlideOut" stepKey="openPageBuilderApplyTemplateSlideOut2"/>
+        <actionGroup ref="filterPageBuilderTemplateGrid" stepKey="filterPageBuilderTemplateGrid2"/>
+        <actionGroup ref="clickApplyFromPageBuilderApplyTemplateSlideOut" stepKey="clickApplyFromPageBuilderApplyTemplateSlideOut2"/>
+        <actionGroup ref="closeConfirmModal" stepKey="closeConfirmModal"/>
+        <actionGroup ref="closePageBuilderApplyTemplateSlideOut" stepKey="closePageBuilderApplyTemplateSlideOut2"/>
+        <!-- Verify Empty Stage -->
+        <actionGroup ref="verifyEmptyStage" stepKey="verifyEmptyStage2"/>
+    </test>
+    <test name="PageBuilderMustSavePageForApplyTemplateToSave">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Templates"/>
+            <title value="Verify Must Save Page for Apply Template to Save"/>
+            <description value="Verify that applying a template will not save to the page content unless the page is saved."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="PB-341"/>
+            <testCaseId value="MC-30621"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-templates"/>
+        </annotations>
+        <before>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
+                <argument name="CMSPage" value="$$createCMSPage$$"/>
+            </actionGroup>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+                <argument name="contentType" value="PageBuilderButtonsContentType"/>
+            </actionGroup>
+            <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+                <argument name="contentType" value="PageBuilderButtonsContentType"/>
+            </actionGroup>
+            <seeElement selector="{{ButtonItemOnStage.emptyButtonItemElement('1')}}" stepKey="seeEmptyButton"/>
+            <actionGroup ref="openPageBuilderSaveTemplateModal" stepKey="openPageBuilderSaveTemplateModal"/>
+            <actionGroup ref="fillPageBuilderSaveTemplateForm" stepKey="fillPageBuilderSaveTemplateForm"/>
+            <actionGroup ref="savePageBuilderTemplate" stepKey="savePageBuilderTemplate"/>
+            <!-- Go to CMS Page -->
+            <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage2">
+                <argument name="CMSPage" value="$$createCMSPage$$"/>
+            </actionGroup>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="navigateToPageBuilderTemplatesGridPage" stepKey="navigateToPageBuilderTemplatesGridPage"/>
+            <actionGroup ref="filterPageBuilderTemplateGrid" stepKey="filterPageBuilderTemplateGrid"/>
+            <actionGroup ref="deletePageBuilderTemplate" stepKey="deletePageBuilderTemplate"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Apply Template -->
+        <actionGroup ref="openPageBuilderApplyTemplateSlideOut" stepKey="openPageBuilderApplyTemplateSlideOut"/>
+        <actionGroup ref="filterPageBuilderTemplateGrid" stepKey="filterPageBuilderTemplateGrid"/>
+        <actionGroup ref="clickApplyFromPageBuilderApplyTemplateSlideOut" stepKey="clickApplyFromPageBuilderApplyTemplateSlideOut2"/>
+        <actionGroup ref="confirmApplyFromPageBuilderApplyTemplateSlideOut" stepKey="confirmApplyFromPageBuilderApplyTemplateSlideOut2"/>
+        <!-- Validate Stage -->
+        <seeElement selector="{{ButtonItemOnStage.emptyButtonItemElement('1')}}" stepKey="seeEmptyButton"/>
+        <!-- Go to CMS Page Again -->
+        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Verify Empty Stage -->
+        <actionGroup ref="verifyEmptyStage" stepKey="verifyEmptyStage"/>
+    </test>
+    <!--todo: can create for each create for option & assert total create for options-->
+    <!--todo: can sort, filter grids-->
+    <!--todo: can apply template created on cms page but for category to cms block-->
 </tests>

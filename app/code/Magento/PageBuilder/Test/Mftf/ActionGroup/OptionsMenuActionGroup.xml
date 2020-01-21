@@ -214,6 +214,14 @@
         <waitForElementNotVisible time="1" selector="{{PageBuilderStage.modalOk}}" stepKey="waitForModalHide" />
         <waitForPageLoad stepKey="waitForPageLoad2"/>
     </actionGroup>
+    <actionGroup name="closeConfirmModal">
+        <waitForElementVisible time="10" selector="{{PageBuilderStage.modal}}" stepKey="waitForModal"/>
+        <seeElement selector="{{PageBuilderStage.modal}}" stepKey="seeRemovalModal"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderStage.modalCancel}}" stepKey="waitForModalCancel"/>
+        <click selector="{{PageBuilderStage.modalCancel}}" stepKey="clickCloseModal"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <waitForElementNotVisible time="1" selector="{{PageBuilderStage.modal}}" stepKey="waitForModalHide"/>
+    </actionGroup>
     <actionGroup name="validateOnHoverOptionMenu">
         <arguments>
             <argument name="contentType"/>

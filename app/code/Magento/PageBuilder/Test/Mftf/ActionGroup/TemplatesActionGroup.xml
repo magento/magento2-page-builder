@@ -48,6 +48,17 @@
         <waitForPageLoad stepKey="waitForModalClose"/>
         <waitForElementVisible selector="{{PageBuilderSaveTemplateConfirmationModal.modal}}" stepKey="waitForConfirmationModal"/>
     </actionGroup>
+    <actionGroup name="clickCloseOnPageBuilderSaveTemplateConfirmationModal">
+        <arguments>
+            <argument name="baseContent" defaultValue="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" type="string"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForModal"/>
+        <waitForElementVisible selector="{{PageBuilderSaveTemplateConfirmationModal.closeButton}}" stepKey="waitForCloseButton"/>
+        <click selector="{{PageBuilderSaveTemplateConfirmationModal.closeButton}}" stepKey="clickCloseButton"/>
+        <waitForPageLoad stepKey="waitForModalGone"/>
+        <waitForElementNotVisible time="5" selector="{{PageBuilderSaveTemplateConfirmationModal.modal}}" stepKey="waitForModalNotVisible"/>
+        <waitForElementVisible time="10" selector="{{baseContent}}" stepKey="waitForContentUnderModalVisible"/>
+    </actionGroup>
     <actionGroup name="savePageBuilderTemplate">
         <arguments>
             <argument name="baseContent" defaultValue="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" type="string"/>
@@ -171,17 +182,13 @@
         <waitForPageLoad stepKey="waitForFilterOnGrid"/>
         <waitForElementVisible selector="{{PageBuilderTemplateGridFilter.clearFilters}}" stepKey="waitForClearFilters2"/>
     </actionGroup>
-    <actionGroup name="clearFiltersPageBuilderTemplateGrid">
-        <conditionalClick selector="{{PageBuilderTemplateGridFilter.clearFilters}}" dependentSelector="{{PageBuilderTemplateGridFilter.clearFilters}}" visible="true" stepKey="clickClearFilters"/>
-        <waitForPageLoad stepKey="waitForClearFilters"/>
-        <dontSeeElement selector="{{PageBuilderTemplateGridFilter.clearFilters}}" stepKey="dontSeeClearFilters"/>
-    </actionGroup>
     <actionGroup name="validatePageBuilderTemplateDataInGrid">
         <arguments>
             <argument name="section" defaultValue="PageBuilderTemplatePageGrid"/>
             <argument name="templateName" defaultValue="{{PageBuilderTemplateNameRandom.name}}" type="string"/>
             <argument name="createdFor" defaultValue="{{PageBuilderTemplateCreatedFor.any}}" type="string"/>
             <argument name="createdDate" defaultValue="" type="string"/>
+            <argument name="createdDateAMorPM" defaultValue="" type="string"/>
             <argument name="rowIndex" defaultValue="1" type="string"/>
         </arguments>
         <waitForPageLoad stepKey="waitForGridLoad"/>
@@ -204,6 +211,7 @@
         <see userInput="{{templateName}}" selector="{{section.templateName(rowIndex)}}" stepKey="seeTemplateName"/>
         <see userInput="{{createdFor}}" selector="{{section.createdFor(rowIndex)}}" stepKey="seeCreatedFor"/>
         <see userInput="{{createdDate}}" selector="{{section.createdDate(rowIndex)}}" stepKey="seeCreatedDate"/>
+        <see userInput="{{createdDateAMorPM}}" selector="{{section.createdDate(rowIndex)}}" stepKey="seeCreatedDateAMorPM"/>
     </actionGroup>
     <actionGroup name="validatePageBuilderTemplateEmptyGrid">
         <arguments>
@@ -236,6 +244,11 @@
         <see userInput="{{templateIdentifier}}" selector="{{PageBuilderTemplatePageGrid.templateName('1')}}" stepKey="seeTemplateName"/>
         <dontSeeElementInDOM selector="{{PageBuilderTemplatePageGrid.deleteButton(templateIdentifier)}}" stepKey="dontSeeDeleteTemplateButton"/>
     </actionGroup>
-    <!--    todo: search by keyword in grid-->
+    <!--    todo: not used yet-->
+    <actionGroup name="clearFiltersPageBuilderTemplateGrid">
+        <conditionalClick selector="{{PageBuilderTemplateGridFilter.clearFilters}}" dependentSelector="{{PageBuilderTemplateGridFilter.clearFilters}}" visible="true" stepKey="clickClearFilters"/>
+        <waitForPageLoad stepKey="waitForClearFilters"/>
+        <dontSeeElement selector="{{PageBuilderTemplateGridFilter.clearFilters}}" stepKey="dontSeeClearFilters"/>
+    </actionGroup>
     <!--    todo: actiongroup descriptions-->
 </actionGroups>
