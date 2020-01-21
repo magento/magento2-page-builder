@@ -124,7 +124,7 @@ class TemplateRepository implements TemplateRepositoryInterface
 
         $items = [];
         foreach ($collection as $model) {
-            $items[] = $model->getDataModel();
+            $items[] = $model;
         }
 
         $searchResults->setItems($items);

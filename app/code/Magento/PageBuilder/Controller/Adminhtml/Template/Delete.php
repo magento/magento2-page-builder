@@ -51,7 +51,7 @@ class Delete extends Action implements HttpGetActionInterface
     }
 
     /**
-     * Save a template to the database
+     * Delete a template from the database
      *
      * @return \Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\ResultInterface
      */

@@ -23,7 +23,7 @@ use Magento\PageBuilder\Api\Data\TemplateInterface;
 use Magento\PageBuilder\Api\TemplateRepositoryInterface;
 use Magento\PageBuilder\Model\TemplateFactory;
 use Psr\Log\LoggerInterface;
-use \Magento\MediaStorage\Helper\File\Storage\Database;
+use Magento\MediaStorage\Helper\File\Storage\Database;
 
 /**
  * Save a template within template manager
