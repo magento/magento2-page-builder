@@ -22,6 +22,8 @@ use Magento\PageBuilder\Model\ResourceModel\Template\CollectionFactory as Templa
 
 /**
  * Repository for Page Builder Templates
+ *
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class TemplateRepository implements TemplateRepositoryInterface
 {

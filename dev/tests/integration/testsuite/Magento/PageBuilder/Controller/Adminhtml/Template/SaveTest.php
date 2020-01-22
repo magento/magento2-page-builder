@@ -121,7 +121,7 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
             'name' => 'Automated Template',
             'template' => '<div data-content-type="row"></div>',
             'createdFor' => 'any',
-            // phpcs:disable Magento2.Files.LineLength.MaxExceeded
+            // phpcs:disable Generic.Files.LineLength
             'previewImage' => 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8QEBEQCgwSExIQEw8QEBD/2wBDAQMDAwQDBAgEBAgQCwkLEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBD/wAARCAAZABkDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAn/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AJVAAAAAAAA//9k='
         ];
         $this->getRequest()->setPostValue($post)->setMethod(HttpRequest::METHOD_POST);
