@@ -56,9 +56,9 @@ class Index extends Action implements HttpGetActionInterface
     }
 
     /**
-     * Index action
+     * Load the Manage Templates page
      *
-     * @return \Magento\Backend\Model\View\Result\Page
+     * @return \Magento\Framework\Controller\AbstractResult
      */
     public function execute()
     {
@@ -70,7 +70,7 @@ class Index extends Action implements HttpGetActionInterface
         $resultPage = $this->resultPageFactory->create();
         $resultPage->setActiveMenu('Magento_PageBuilder::templates');
         $resultPage->addBreadcrumb(__('CMS'), __('CMS'));
-        $resultPage->addBreadcrumb(__('Manage Templates'), __('Manage Templates'));
+        $resultPage->addBreadcrumb(__('Templates'), __('Templates'));
         $resultPage->getConfig()->getTitle()->prepend(__('Templates'));
 
         return $resultPage;

@@ -5,8 +5,9 @@
 
 define([
     'Magento_Ui/js/modal/modal-component',
-    'Magento_PageBuilder/js/events'
-], function (ModalComponent, events) {
+    'Magento_PageBuilder/js/events',
+    'jquery'
+], function (ModalComponent, events, $) {
     'use strict';
 
     return ModalComponent.extend({
@@ -28,6 +29,21 @@ define([
             }.bind(this));
 
             return this;
+        },
+
+        /**
+         * Set the title only for the current modal
+         *
+         * @param {String} title
+         */
+        setTitle: function (title) {
+            if (this.title !== title) {
+                this.title = title;
+            }
+
+            if (this.modal) {
+                this.modal.parents('[role="dialog"]').find($(this.modal).modal('option').modalTitle).text(title);
+            }
         },
 
         /**
