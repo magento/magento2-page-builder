@@ -19,11 +19,11 @@ use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Filesystem;
+use Magento\MediaStorage\Helper\File\Storage\Database;
 use Magento\PageBuilder\Api\Data\TemplateInterface;
 use Magento\PageBuilder\Api\TemplateRepositoryInterface;
 use Magento\PageBuilder\Model\TemplateFactory;
 use Psr\Log\LoggerInterface;
-use Magento\MediaStorage\Helper\File\Storage\Database;
 
 /**
  * Save a template within template manager
@@ -186,7 +186,7 @@ class Save extends Action implements HttpPostActionInterface
     private function validate(RequestInterface $request)
     {
         // If we're missing required data return an error
-        if (!$request->getParam(TemplateInterface::KEY_NAME)
+        if (trim($request->getParam(TemplateInterface::KEY_NAME, "")) === ""
             || !$request->getParam(TemplateInterface::KEY_TEMPLATE)
         ) {
             throw new LocalizedException(__('A required field is missing.'));
