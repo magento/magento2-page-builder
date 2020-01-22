@@ -185,16 +185,15 @@ class Save extends Action implements HttpPostActionInterface
      */
     private function validate(RequestInterface $request)
     {
+        $name = trim($request->getParam(TemplateInterface::KEY_NAME, ""));
         // If we're missing required data return an error
-        if (trim($request->getParam(TemplateInterface::KEY_NAME, "")) === ""
-            || !$request->getParam(TemplateInterface::KEY_TEMPLATE)
-        ) {
+        if ($name === "" || !$request->getParam(TemplateInterface::KEY_TEMPLATE)) {
             throw new LocalizedException(__('A required field is missing.'));
         }
 
         // Verify a template of the same name does not already exist
         $searchCriteria = $this->searchCriteriaBuilder
-            ->addFilter(TemplateInterface::KEY_NAME, $request->getParam(TemplateInterface::KEY_NAME))
+            ->addFilter(TemplateInterface::KEY_NAME, $name)
             ->create();
         $results = $this->templateRepository->getList($searchCriteria);
         if ($results->getTotalCount() > 0) {

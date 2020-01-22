@@ -8,6 +8,7 @@ declare(strict_types=1);
 
 namespace Magento\PageBuilder\Ui\Component\Template;
 
+use Magento\Cms\Ui\Component\AddFilterInterface;
 use Magento\Framework\Api\Filter;
 use Magento\Framework\Api\FilterBuilder;
 use Magento\Framework\Api\Search\SearchCriteriaBuilder;
