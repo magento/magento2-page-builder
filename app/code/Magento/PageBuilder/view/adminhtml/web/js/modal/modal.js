@@ -32,21 +32,6 @@ define([
         },
 
         /**
-         * Set the title only for the current modal
-         *
-         * @param {String} title
-         */
-        setTitle: function (title) {
-            if (this.title !== title) {
-                this.title = title;
-            }
-
-            if (this.modal) {
-                this.modal.parents('[role="dialog"]').find($(this.modal).modal('option').modalTitle).text(title);
-            }
-        },
-
-        /**
          * Listen for from save.
          *
          * @param {String} id
