@@ -5,9 +5,8 @@
 
 define([
     'Magento_Ui/js/modal/modal-component',
-    'Magento_PageBuilder/js/events',
-    'jquery'
-], function (ModalComponent, events, $) {
+    'Magento_PageBuilder/js/events'
+], function (ModalComponent, events) {
     'use strict';
 
     return ModalComponent.extend({
