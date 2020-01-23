@@ -215,6 +215,9 @@
         <waitForPageLoad stepKey="waitForPageLoad2"/>
     </actionGroup>
     <actionGroup name="closeConfirmModal">
+        <annotations>
+            <description>Closes the confirmation modal on the Page Builder stage.</description>
+        </annotations>
         <waitForElementVisible time="10" selector="{{PageBuilderStage.modal}}" stepKey="waitForModal"/>
         <seeElement selector="{{PageBuilderStage.modal}}" stepKey="seeRemovalModal"/>
         <waitForElementVisible time="10" selector="{{PageBuilderStage.modalCancel}}" stepKey="waitForModalCancel"/>
