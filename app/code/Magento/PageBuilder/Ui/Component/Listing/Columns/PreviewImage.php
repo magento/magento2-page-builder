@@ -58,7 +58,7 @@ class PreviewImage extends Column
             foreach ($dataSource['data']['items'] as & $item) {
                 $previewImage = $item[$fieldName];
                 $imageSrc = $this->urlBuilder->getBaseUrl(['_type' => UrlInterface::URL_TYPE_MEDIA]) . $previewImage;
-                $item[$fieldName . '_src'] = $imageSrc;
+                $item[$fieldName . '_src'] = str_replace('.jpg', '-thumb.jpg', $imageSrc);
                 $item[$fieldName . '_alt'] = $this->getAlt($item);
                 $item[$fieldName . '_link'] = null;
                 $item[$fieldName . '_orig_src'] = $imageSrc;

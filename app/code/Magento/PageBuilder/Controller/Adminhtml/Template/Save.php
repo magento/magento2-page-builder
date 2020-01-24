@@ -24,6 +24,7 @@ use Magento\PageBuilder\Api\Data\TemplateInterface;
 use Magento\PageBuilder\Api\TemplateRepositoryInterface;
 use Magento\PageBuilder\Model\TemplateFactory;
 use Psr\Log\LoggerInterface;
+use Magento\Framework\Image\AdapterFactory;
 
 /**
  * Save a template within template manager
@@ -75,6 +76,11 @@ class Save extends Action implements HttpPostActionInterface
     private $mediaStorage;
 
     /**
+     * @var AdapterFactory
+     */
+    private $imageAdapterFactory;
+
+    /**
      * @param Context $context
      * @param LoggerInterface $logger
      * @param TemplateFactory $templateFactory
@@ -84,6 +90,7 @@ class Save extends Action implements HttpPostActionInterface
      * @param ImageContentValidator $imageContentValidator
      * @param ImageContentFactory $imageContentFactory
      * @param Database $mediaStorage
+     * @param AdapterFactory $imageAdapterFactory
      */
     public function __construct(
         Context $context,
@@ -94,7 +101,8 @@ class Save extends Action implements HttpPostActionInterface
         Filesystem $filesystem,
         ImageContentValidator $imageContentValidator,
         ImageContentFactory $imageContentFactory,
-        Database $mediaStorage
+        Database $mediaStorage,
+        AdapterFactory $imageAdapterFactory
     ) {
         parent::__construct($context);
 
@@ -106,6 +114,7 @@ class Save extends Action implements HttpPostActionInterface
         $this->imageContentValidator = $imageContentValidator;
         $this->imageContentFactory = $imageContentFactory;
         $this->mediaStorage = $mediaStorage;
+        $this->imageAdapterFactory = $imageAdapterFactory;
     }
 
     /**
@@ -142,6 +151,8 @@ class Save extends Action implements HttpPostActionInterface
                 // Store the preview image within the new entity
                 $template->setPreviewImage($filePath);
             } catch (\Exception $e) {
+                echo $e->getMessage();
+                exit;
                 $this->logger->critical($e);
 
                 return $this->resultFactory->create(ResultFactory::TYPE_JSON)->setData(
@@ -251,6 +262,13 @@ class Save extends Action implements HttpPostActionInterface
                     $filePath
                 );
             }
+
+            // Generate a thumbnail, called -thumb next to the image for usage in the grid
+            $absolutePath = $mediaDir->getAbsolutePath() . $filePath;
+            $imageFactory = $this->imageAdapterFactory->create();
+            $imageFactory->open($absolutePath);
+            $imageFactory->resize(350);
+            $imageFactory->save(str_replace('.jpg', '-thumb.jpg', $absolutePath));
 
             // Store the preview image within the new entity
             return $filePath;

@@ -65,6 +65,18 @@ class Template extends AbstractExtensibleModel implements TemplateInterface
     /**
      * @inheritDoc
      */
+    public function getPreviewThumbnailImage() : string
+    {
+        return str_replace(
+            '.jpg',
+            '-thumb.jpg',
+            $this->getData(TemplateInterface::KEY_PREVIEW_IMAGE)
+        );
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function getTemplate() : string
     {
         return $this->getData(TemplateInterface::KEY_TEMPLATE);

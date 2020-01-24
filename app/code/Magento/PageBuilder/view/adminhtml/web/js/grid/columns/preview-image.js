@@ -36,6 +36,16 @@ define([
         },
 
         /**
+         * Retrieve the original images src to be displayed at full size in the modal
+         *
+         * @param {Object} row
+         * @returns {*}
+         */
+        getOrigSrc: function (row) {
+            return row[this.index + '_orig_src'];
+        },
+
+        /**
          * Get alternative text data per row.
          *
          * @param {Object} row
@@ -63,7 +73,7 @@ define([
             var modalHtml = mageTemplate(
                 thumbnailPreviewTemplate,
                 {
-                    src: this.getSrc(row),
+                    src: this.getOrigSrc(row),
                     alt: this.getAlt(row)
                 }
             ),

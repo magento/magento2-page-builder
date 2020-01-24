@@ -73,6 +73,13 @@ interface TemplateInterface extends ExtensibleDataInterface
     public function setPreviewImage(string $path) : TemplateInterface;
 
     /**
+     * Get the thumbnail image for the preview
+     *
+     * @return string
+     */
+    public function getPreviewThumbnailImage() : string;
+
+    /**
      * Retrieve template value
      *
      * @return string

@@ -146,6 +146,9 @@ class TemplateRepository implements TemplateRepositoryInterface
             if ($mediaDir->isExist($previewImage)) {
                 $mediaDir->delete($previewImage);
             }
+            if ($mediaDir->isExist($templateModel->getPreviewThumbnailImage())) {
+                $mediaDir->delete($templateModel->getPreviewThumbnailImage());
+            }
         } catch (\Exception $exception) {
             throw new CouldNotDeleteException(
                 __('Could not delete the Template: %1', $exception->getMessage())

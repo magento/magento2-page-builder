@@ -8,14 +8,16 @@ declare(strict_types=1);
 
 namespace Magento\PageBuilder\Controller\Adminhtml\Template;
 
+use Magento\Framework\App\Request\Http as HttpRequest;
+use Magento\Framework\Filesystem;
+use Magento\Framework\Filesystem\Directory\Write;
+use Magento\Framework\Image\Adapter\Gd2;
+use Magento\Framework\Image\AdapterFactory;
+use Magento\Framework\Serialize\Serializer\Json;
+use Magento\MediaStorage\Helper\File\Storage\Database;
 use Magento\PageBuilder\Api\TemplateRepositoryInterface;
 use Magento\TestFramework\Helper\Bootstrap;
 use Magento\TestFramework\ObjectManager;
-use Magento\Framework\App\Request\Http as HttpRequest;
-use Magento\Framework\Serialize\Serializer\Json;
-use Magento\MediaStorage\Helper\File\Storage\Database;
-use Magento\Framework\Filesystem;
-use Magento\Framework\Filesystem\Directory\Write;
 
 /**
  * Perform tests upon Template save controller
@@ -60,6 +62,16 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
     private $serializer;
 
     /**
+     * @var Gd2|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $imageAdapter;
+
+    /**
+     * @var AdapterFactory|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $imageAdapterFactory;
+
+    /**
      * @inheritDoc
      */
     protected function setUp()
@@ -69,7 +81,7 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
         $this->templateRepository = $this->objectManager->get(TemplateRepositoryInterface::class);
 
         $this->directoryWrite = $this->getMockBuilder(Write::class)
-            ->setMethods(['writeFile'])
+            ->setMethods(['writeFile', 'getAbsolutePath'])
             ->disableOriginalConstructor()
             ->getMock();
         $this->filesystem = $this->getMockBuilder(Filesystem::class)
@@ -82,11 +94,22 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
             ->disableOriginalConstructor()
             ->getMock();
 
+        $this->imageAdapter = $this->getMockBuilder(Gd2::class)
+            ->setMethods(['open', 'resize', 'save'])
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->imageAdapterFactory = $this->getMockBuilder(AdapterFactory::class)
+            ->setMethods(['create'])
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $this->saveController = $this->objectManager->create(
             \Magento\PageBuilder\Controller\Adminhtml\Template\Save::class,
             [
                 'filesystem' => $this->filesystem,
-                'mediaStorage' => $this->mediaStorage
+                'mediaStorage' => $this->mediaStorage,
+                'imageAdapterFactory' => $this->imageAdapterFactory
             ]
         );
 
@@ -111,6 +134,16 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
             ->with(
                 $this->stringContains('.template-manager/automatedtemplate'),
                 $this->anything()
+            );
+
+        $this->imageAdapterFactory->expects($this->once())
+            ->method('create')
+            ->willReturn($this->imageAdapter);
+
+        $this->imageAdapter->expects($this->once())
+            ->method('save')
+            ->with(
+                $this->stringContains('-thumb.jpg')
             );
 
         $this->filesystem->expects($this->once())
