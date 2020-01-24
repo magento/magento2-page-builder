@@ -489,7 +489,9 @@
         <actionGroup ref="logout" stepKey="logout"/>
         <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
         <!-- Verify Unsuccessful Navigation to Templates Page -->
-        <actionGroup ref="verifyCannotNavigateToPageBuilderTemplatesGridPage" stepKey="verifyCannotNavigateToPageBuilderTemplatesGridPage"/>
+        <actionGroup ref="verifyCannotNavigateToPageBuilderTemplatesGridPage" stepKey="verifyCannotNavigateToPageBuilderTemplatesGridPage">
+            <argument name="pageHeading" value="404 Error"/>
+        </actionGroup>
     </test>
     <test name="PageBuilderApplyTemplateMultipleTimes">
         <annotations>
@@ -674,6 +676,17 @@
         <actionGroup ref="validateTotalRecordsFoundInPageBuilderTemplateGrid" stepKey="validateTotalRecordsFoundInPageBuilderTemplateGrid">
             <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
             <argument name="total" value="1"/>
+        </actionGroup>
+        <!-- Validate Preview Image -->
+        <actionGroup ref="openPageBuilderTemplatePreviewImageModal" stepKey="openPageBuilderTemplatePreviewImageModal">
+            <argument name="templateName" value="{{PageBuilderTemplateName_EdgeCases.noLeadingSpace}}"/>
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+        </actionGroup>
+        <actionGroup ref="validatePageBuilderTemplatePreviewImageModal" stepKey="validatePageBuilderTemplatePreviewImageModal">
+            <argument name="templateName" value="{{PageBuilderTemplateName_EdgeCases.noLeadingSpace}}"/>
+        </actionGroup>
+        <actionGroup ref="closePageBuilderTemplatePreviewImageModal" stepKey="closePageBuilderTemplatePreviewImageModal">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
         </actionGroup>
         <actionGroup ref="closePageBuilderApplyTemplateSlideOut" stepKey="closePageBuilderApplyTemplateSlideOut"/>
         <!-- Create 0 Template Name -->
@@ -1073,6 +1086,18 @@
             <expectedResult type="variable">templateNameOnPageOne</expectedResult>
             <actualResult type="variable">templateNameOnPageOneAgain</actualResult>
         </assertEquals>
+        <!-- Validate Preview Image -->
+        <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid7"/>
+        <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGrid7">
+            <argument name="keyword" value="{{PageBuilderTemplateName_Sorting.aaa}}"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderTemplatePreviewImageModal" stepKey="openPageBuilderTemplatePreviewImageModal">
+            <argument name="templateName" value="{{PageBuilderTemplateName_Sorting.aaa}}"/>
+        </actionGroup>
+        <actionGroup ref="validatePageBuilderTemplatePreviewImageModal" stepKey="validatePageBuilderTemplatePreviewImageModal">
+            <argument name="templateName" value="{{PageBuilderTemplateName_Sorting.aaa}}"/>
+        </actionGroup>
+        <actionGroup ref="closePageBuilderTemplatePreviewImageModal" stepKey="closePageBuilderTemplatePreviewImageModal"/>
     </test>
     <test name="PageBuilderApplyTemplateGridFunctionality" extends="PageBuilderTemplateGridPageGridFunctionality">
         <annotations>
@@ -1257,6 +1282,24 @@
             <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
         </actionGroup>
         <grabTextFrom selector="{{PageBuilderApplyTemplatesGrid.templateName('1')}}" stepKey="templateNameOnPageOneAgain"/>
+        <!-- Validate Preview Image -->
+        <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid7">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+        </actionGroup>
+        <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGrid7">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="keyword" value="{{PageBuilderTemplateName_Sorting.aaa}}"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderTemplatePreviewImageModal" stepKey="openPageBuilderTemplatePreviewImageModal">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="templateName" value="{{PageBuilderTemplateName_Sorting.aaa}}"/>
+        </actionGroup>
+        <actionGroup ref="validatePageBuilderTemplatePreviewImageModal" stepKey="validatePageBuilderTemplatePreviewImageModal">
+            <argument name="templateName" value="{{PageBuilderTemplateName_Sorting.aaa}}"/>
+        </actionGroup>
+        <actionGroup ref="closePageBuilderTemplatePreviewImageModal" stepKey="closePageBuilderTemplatePreviewImageModal">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+        </actionGroup>
     </test>
     <test name="PageBuilderCreateTemplateOnCMSBlockForPageAndApplyTemplateToCatalogCategory">
         <annotations>

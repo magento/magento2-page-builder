@@ -75,6 +75,7 @@
         <element name="nextPageButton" type="button" selector="[data-bind*=pagebuilder_template_grid] .admin__data-grid-pager button.action-next"/>
         <element name="columnHeader" type="text" parameterized="true" selector="//*[contains(@data-bind,'pagebuilder_template_grid')]//table[@data-role='grid']//thead//span[.='{{columnName}}']"/>
         <!-- Grid -->
+        <element name="grid" type="text" selector="//*[contains(@data-bind,'pagebuilder_template_grid')]//table[@data-role='grid']//tbody"/>
         <element name="emptyGrid" type="text" selector="//*[contains(@data-bind,'pagebuilder_template_grid')]//table[@data-role='grid']//tbody//td"/>
         <element name="allRows" type="text" selector="//*[contains(@data-bind,'pagebuilder_template_grid')]//table[@data-role='grid']//tbody//tr"/>
         <element name="templateId" type="text" parameterized="true" selector="//*[contains(@data-bind,'pagebuilder_template_grid')]//table[@data-role='grid']//tbody//tr[{{rowIndex}}]//td[1]"/>
@@ -107,6 +108,7 @@
         <element name="nextPageButton" type="button" selector=".pagebuilder_stage_template_pagebuilder_stage_template_modal_pagebuilder_stage_template_grid .admin__data-grid-pager button.action-next"/>
         <element name="columnHeader" type="text" parameterized="true" selector="//*[contains(@class,'pagebuilder_stage_template_pagebuilder_stage_template_modal_pagebuilder_stage_template_grid')]//table[@data-role='grid']//thead//span[.='{{columnName}}']"/>
         <!-- Grid -->
+        <element name="grid" type="text" selector="//*[contains(@class,'pagebuilder_stage_template_pagebuilder_stage_template_modal_pagebuilder_stage_template_grid')]//table[@data-role='grid']//tbody"/>
         <element name="emptyGrid" type="text" selector="//*[contains(@class,'pagebuilder_stage_template_pagebuilder_stage_template_modal_pagebuilder_stage_template_grid')]//table[@data-role='grid']//tbody//td"/>
         <element name="allRows" type="text" selector="//*[contains(@class,'pagebuilder_stage_template_pagebuilder_stage_template_modal_pagebuilder_stage_template_grid')]//table[@data-role='grid']//tbody//tr"/>
         <element name="templateId" type="text" parameterized="true" selector="//*[contains(@class,'pagebuilder_stage_template_pagebuilder_stage_template_modal_pagebuilder_stage_template_grid')]//table[@data-role='grid']//tbody//tr[{{rowIndex}}]//td[1]"/>
@@ -115,5 +117,11 @@
         <element name="createdFor" type="text" parameterized="true" selector="//*[contains(@class,'pagebuilder_stage_template_pagebuilder_stage_template_modal_pagebuilder_stage_template_grid')]//table[@data-role='grid']//tbody//tr[{{rowIndex}}]//td[4]"/>
         <element name="createdDate" type="text" parameterized="true" selector="//*[contains(@class,'pagebuilder_stage_template_pagebuilder_stage_template_modal_pagebuilder_stage_template_grid')]//table[@data-role='grid']//tbody//tr[{{rowIndex}}]//td[5]"/>
         <element name="applyButton" type="button" parameterized="true" selector="//*[contains(@class,'pagebuilder_stage_template_pagebuilder_stage_template_modal_pagebuilder_stage_template_grid')]//tr//div[text()='{{textInRow}}']/parent::td/parent::tr//button[text()='Apply']"/>
+    </section>
+    <section name="PageBuilderPreviewImageModal">
+        <element name="activeModal" type="text" selector="//aside[contains(@class,'_image-box') and contains(@class,'_show')]"/>
+        <element name="title" type="text" selector="//aside[contains(@class,'_image-box') and contains(@class,'_show')]//header//h1"/>
+        <element name="closeButton" type="button" selector="//aside[contains(@class,'_image-box') and contains(@class,'_show')]//header//button[contains(@class,'action-close')]"/>
+        <element name="image" type="text" selector="//aside[contains(@class,'_image-box') and contains(@class,'_show')]//*[@data-role='content']//img[contains(@class,'preview-image')]"/>
     </section>
 </sections>

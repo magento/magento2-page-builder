@@ -252,11 +252,14 @@
         <annotations>
             <description>Verifies that you cannot navigates to the Page Builder Templates grid page via direct url nor via the left nav menu.</description>
         </annotations>
+        <arguments>
+            <argument name="pageHeading" defaultValue="Sorry, you need permissions to view this content." type="string"/>
+        </arguments>
         <amOnPage url="{{PageBuilderTemplatesGridPage.url}}" stepKey="goToPageBuilderTemplatesGridPage"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForElementVisible selector="{{PageBuilderTemplatesPage.pageTitle}}" stepKey="waitForPageTitle"/>
         <see userInput="Magento Admin" selector="{{PageBuilderTemplatesPage.pageTitle}}" stepKey="seePageTitle"/>
-        <see selector="{{AdminHeaderSection.pageHeading}}" userInput="Sorry, you need permissions to view this content." stepKey="seeErrorHeading"/>
+        <see selector="{{AdminHeaderSection.pageHeading}}" userInput="{{pageHeading}}" stepKey="seeErrorHeading"/>
         <waitForElementVisible selector="{{AdminMenuSection.content}}" stepKey="waitForContent"/>
         <click selector="{{AdminMenuSection.content}}" stepKey="clickContent"/>
         <waitForPageLoad stepKey="waitForMenu"/>
@@ -303,7 +306,7 @@
         <click selector="{{section.filters}}" stepKey="openFilters"/>
         <waitForElementVisible selector="{{section.templateIdFromFilter}}" stepKey="waitForTemplateIdFilter"/>
         <fillField selector="{{section.templateIdFromFilter}}" userInput="{{templateIdFrom}}" stepKey="fillTemplateIdFromFilter"/>
-        <fillField selector="{{section.templateIdFromFilter}}" userInput="{{templateIdTo}}" stepKey="fillTemplateIdToFilter"/>
+        <fillField selector="{{section.templateIdToFilter}}" userInput="{{templateIdTo}}" stepKey="fillTemplateIdToFilter"/>
         <waitForElementVisible selector="{{section.applyFilters}}" stepKey="waitForApplyFilters"/>
         <click selector="{{section.applyFilters}}" stepKey="clickApplyFilters"/>
         <waitForPageLoad stepKey="waitForFilterOnGrid"/>
@@ -527,5 +530,57 @@
         <waitForElementVisible selector="{{section.previousPageButton}}" stepKey="waitForPreviousPageButton"/>
         <click selector="{{section.previousPageButton}}" stepKey="clickPreviousPageButton"/>
         <waitForPageLoad stepKey="waitForPreviousPage"/>
+    </actionGroup>
+    <actionGroup name="openPageBuilderTemplatePreviewImageModal">
+        <annotations>
+            <description>Opens the template preview image modal from the template grid.</description>
+        </annotations>
+        <arguments>
+            <argument name="templateName" defaultValue="{{PageBuilderTemplateNameRandom.name}}" type="string"/>
+            <argument name="section" defaultValue="PageBuilderTemplatesPageGrid"/>
+            <argument name="rowIndex" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{section.image(rowIndex)}}" stepKey="waitForPreviewImageInGrid"/>
+        <click selector="{{section.image(rowIndex)}}" stepKey="clickPreviewImageInGrid"/>
+        <waitForPageLoad stepKey="waitForModalLoad"/>
+        <waitForElementVisible selector="{{PageBuilderPreviewImageModal.activeModal}}" stepKey="waitForModalVisible"/>
+        <see userInput="{{templateName}}" selector="{{PageBuilderPreviewImageModal.title}}" stepKey="seeTitle"/>
+        <waitForPageLoad stepKey="waitForPreviewLoad"/>
+    </actionGroup>
+    <actionGroup name="closePageBuilderTemplatePreviewImageModal">
+        <annotations>
+            <description>Closes the template preview image modal.</description>
+        </annotations>
+        <arguments>
+            <argument name="section" defaultValue="PageBuilderTemplatesPageGrid"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForModalLoad"/>
+        <waitForElementVisible selector="{{PageBuilderPreviewImageModal.closeButton}}" stepKey="waitForCloseButton"/>
+        <click selector="{{PageBuilderPreviewImageModal.closeButton}}" stepKey="clickCloseButton"/>
+        <waitForPageLoad stepKey="waitForModalClose"/>
+        <waitForElementNotVisible time="5" selector="{{PageBuilderPreviewImageModal.activeModal}}" stepKey="waitForModalNotVisible"/>
+        <waitForElementVisible time="10" selector="{{section.grid}}" stepKey="waitForTemplateGridVisible"/>
+    </actionGroup>
+    <actionGroup name="validatePageBuilderTemplatePreviewImageModal">
+        <annotations>
+            <description>Validate all buttons and the image on the template image preview modal.</description>
+        </annotations>
+        <arguments>
+            <argument name="templateName" defaultValue="{{PageBuilderTemplateNameRandom.name}}" type="string"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForModalLoad"/>
+        <waitForElementVisible selector="{{PageBuilderPreviewImageModal.image}}" stepKey="waitForImageLoad"/>
+        <see userInput="{{templateName}}" selector="{{PageBuilderPreviewImageModal.title}}" stepKey="seeTitle"/>
+        <seeElement selector="{{PageBuilderPreviewImageModal.closeButton}}" stepKey="seeCloseButton"/>
+        <executeJS function="return document.evaluate(&quot;{{PageBuilderPreviewImageModal.image}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.naturalHeight" stepKey="screenshotNaturalHeight"/>
+        <executeJS function="return document.evaluate(&quot;{{PageBuilderPreviewImageModal.image}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.naturalWidth" stepKey="screenshotNaturalWidth"/>
+        <assertGreaterThan stepKey="assertNaturalHeightGreaterThanZero">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">screenshotNaturalHeight</actualResult>
+        </assertGreaterThan>
+        <assertGreaterThan stepKey="assertNaturalWidthGreaterThanZero">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">screenshotNaturalWidth</actualResult>
+        </assertGreaterThan>
     </actionGroup>
 </actionGroups>
