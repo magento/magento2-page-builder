@@ -182,6 +182,7 @@
             <argument name="pageBuilderArea" defaultValue="" type="string"/>
         </arguments>
         <waitForPageLoad stepKey="waitForStageLoad"/>
+        <waitForElementVisible selector="{{RowOnStage.empty(rowIndex)}}" stepKey="waitForEmptyRow"/>
         <seeElement selector="{{RowOnStage.empty(rowIndex)}}" stepKey="seeEmptyRow"/>
         <seeNumberOfElements userInput="1" selector="{{pageBuilderArea}}{{RowOnStage.allRows}}" stepKey="seeOnlyOneRow"/>
     </actionGroup>

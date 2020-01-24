@@ -218,12 +218,12 @@
         <annotations>
             <description>Closes the confirmation modal on the Page Builder stage.</description>
         </annotations>
-        <waitForElementVisible time="10" selector="{{PageBuilderStage.modal}}" stepKey="waitForModal"/>
-        <seeElement selector="{{PageBuilderStage.modal}}" stepKey="seeRemovalModal"/>
-        <waitForElementVisible time="10" selector="{{PageBuilderStage.modalCancel}}" stepKey="waitForModalCancel"/>
-        <click selector="{{PageBuilderStage.modalCancel}}" stepKey="clickCloseModal"/>
-        <waitForPageLoad stepKey="waitForPageLoad2"/>
-        <waitForElementNotVisible time="1" selector="{{PageBuilderStage.modal}}" stepKey="waitForModalHide"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderStage.modal}}" stepKey="waitForModalVisible"/>
+        <seeElement selector="{{PageBuilderStage.modal}}" stepKey="seeModal"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderStage.modalCancel}}" stepKey="waitForModalCancelButton"/>
+        <click selector="{{PageBuilderStage.modalCancel}}" stepKey="clickCancelButton"/>
+        <waitForPageLoad stepKey="waitForModalClose"/>
+        <waitForElementNotVisible time="1" selector="{{PageBuilderStage.modal}}" stepKey="waitForModalNotVisible"/>
     </actionGroup>
     <actionGroup name="validateOnHoverOptionMenu">
         <arguments>
