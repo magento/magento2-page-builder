@@ -151,8 +151,6 @@ class Save extends Action implements HttpPostActionInterface
                 // Store the preview image within the new entity
                 $template->setPreviewImage($filePath);
             } catch (\Exception $e) {
-                echo $e->getMessage();
-                exit;
                 $this->logger->critical($e);
 
                 return $this->resultFactory->create(ResultFactory::TYPE_JSON)->setData(
