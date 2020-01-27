@@ -29,7 +29,7 @@ class Collection extends TemplateCollection implements SearchResultInterface
     /**
      * @var AggregationInterface
      */
-    protected $aggregations;
+    private $aggregations;
 
     /**
      * @param EntityFactoryInterface $entityFactory

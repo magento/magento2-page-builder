@@ -91,6 +91,7 @@ class Save extends Action implements HttpPostActionInterface
      * @param ImageContentFactory $imageContentFactory
      * @param Database $mediaStorage
      * @param AdapterFactory $imageAdapterFactory
+     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
         Context $context,
@@ -254,19 +255,16 @@ class Save extends Action implements HttpPostActionInterface
                 $decodedImage
             );
 
-            // If the media storage is set to DB also save the file into the DB
-            if ($this->mediaStorage->checkDbUsage()) {
-                $this->mediaStorage->saveFile(
-                    $filePath
-                );
-            }
-
             // Generate a thumbnail, called -thumb next to the image for usage in the grid
             $absolutePath = $mediaDir->getAbsolutePath() . $filePath;
+            $thumbPath = str_replace('.jpg', '-thumb.jpg', $filePath);
+            $thumbAbsolutePath = $mediaDir->getAbsolutePath() . $thumbPath;
             $imageFactory = $this->imageAdapterFactory->create();
             $imageFactory->open($absolutePath);
             $imageFactory->resize(350);
-            $imageFactory->save(str_replace('.jpg', '-thumb.jpg', $absolutePath));
+            $imageFactory->save($thumbAbsolutePath);
+            $this->mediaStorage->saveFile($filePath);
+            $this->mediaStorage->saveFile($thumbPath);
 
             // Store the preview image within the new entity
             return $filePath;
