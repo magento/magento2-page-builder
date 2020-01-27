@@ -12,7 +12,7 @@
      event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false"
      afterRender="initParallax">
     <render args="getOptions().template"/>
-    <div class="element-children content-type-container" each="contentType.getChildren()" ko-style="Object.assign(data.container.style(), data.inner.style())" css="getChildrenCss()" attr="{id: contentType.id + '-children'}" data-bind="sortable: getSortableOptions()" afterRender="function (element) { if (typeof afterChildrenRender === 'function') { afterChildrenRender(element); } }">
+    <div class="element-children content-type-container" each="contentType.getChildren()" ko-style="Object.assign({}, data.container.style(), data.inner.style())" css="getChildrenCss()" attr="{id: contentType.id + '-children'}" data-bind="sortable: getSortableOptions()" afterRender="function (element) { if (typeof afterChildrenRender === 'function') { afterChildrenRender(element); } }">
         <if args="$parent.isContainer()">
             <div class="pagebuilder-drop-indicator"></div>
         </if>
