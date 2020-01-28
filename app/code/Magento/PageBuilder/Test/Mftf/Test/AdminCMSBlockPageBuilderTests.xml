@@ -22,34 +22,34 @@
         </annotations>
         <before>
             <magentoCLI command="config:set cms/wysiwyg/enabled disabled" stepKey="disableWYSIWYG"/>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
             <createData entity="_defaultBlock" stepKey="createPreReqBlock"/>
         </before>
         <after>
             <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG"/>
             <deleteData createDataKey="createPreReqBlock" stepKey="deletePreReqBlock"/>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
         </after>
         <!--Create CMS Block using PageBuilder-->
         <actionGroup ref="NavigateToCreatedCMSBlockPageActionGroup" stepKey="navigateToCreatedCMSBlockPage1">
             <argument name="CMSBlockPage" value="$$createPreReqBlock$$"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragTextOntoStage">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragTextOntoStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <fillField selector="{{TextOnConfiguration.textArea}}" userInput="Hello CMS Block from PageBuilder" stepKey="addTextToEditor"/>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveCMSBlock"/>
         <actionGroup ref="NavigateToCreatedCMSBlockPageActionGroup" stepKey="navigateToContentCreatedCMSBlockPage2">
             <argument name="CMSBlockPage" value="$$createPreReqBlock$$"/>
         </actionGroup>
-        <actionGroup ref="verifyPageBuilderVisibleOnPage" stepKey="seePageBuilderOnPage"/>
+        <actionGroup ref="verifyPageBuilderVisibleOnPageActionGroup" stepKey="seePageBuilderOnPage"/>
     </test>
     <test name="PageBuilderCmsBlockAddAndEditRowColumnSlide" extends="PageBuilderCatalogProductAddAndEditRowColumnSlide">
         <annotations>
@@ -81,7 +81,7 @@
         <after>
             <deleteData createDataKey="createPreReqBlock" stepKey="deleteCreatedProduct"/>
             <deleteData createDataKey="createCMSPage" stepKey="deleteCreatedCategory"/>
-            <comment userInput="---merging to remove step---" stepKey="NavigateToAndResetProductGridToDefaultView"/>
+            <comment userInput="---merging to remove step---" stepKey="navigateToAndResetProductGridToDefaultView"/>
         </after>
         <comment userInput="---merging to remove step---" stepKey="exitPageBuilderFullScreen"/>
         <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveProduct"/>
@@ -92,20 +92,20 @@
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage" after="commentGoToCMSPage">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage" after="navigateToCreatedCMSPage"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionAddContent" after="switchToPageBuilderStage">
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage" after="navigateToCreatedCMSPage"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionAddContent" after="switchToPageBuilderStage">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage" after="expandMenuSectionAddContent">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragBlockIntoStage" after="expandMenuSectionAddContent">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop" after="dragBlockIntoStage">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditAfterDrop" after="dragBlockIntoStage">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid" after="openEditAfterDrop">
+        <actionGroup ref="searchBlockInGridActionGroup" stepKey="searchBlockInGrid" after="openEditAfterDrop">
             <argument name="block" value="$$createPreReqBlock$$"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings" after="searchBlockInGrid"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings" after="searchBlockInGrid"/>
         <!-- Validate CMS Page Stage -->
         <comment userInput="Validate CMS Page Stage" stepKey="commentValidateCMSPageStage" after="saveEditPanelSettings"/>
         <seeNumberOfElements selector="{{RowOnStorefront.allRows}}" userInput="3" stepKey="see3RowsCMSPageStage" after="commentValidateCMSPageStage"/>
@@ -153,7 +153,7 @@
         <after>
             <deleteData createDataKey="createPreReqBlock" stepKey="deleteCreatedProduct"/>
             <deleteData createDataKey="createCMSPage" stepKey="deleteCreatedCategory"/>
-            <comment userInput="---merging to remove step---" stepKey="NavigateToAndResetProductGridToDefaultView"/>
+            <comment userInput="---merging to remove step---" stepKey="navigateToAndResetProductGridToDefaultView"/>
         </after>
         <comment userInput="---merging to remove step---" stepKey="exitPageBuilderFullScreen"/>
         <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveProduct"/>
@@ -164,20 +164,20 @@
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage" after="commentGoToCMSPage">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage" after="navigateToCreatedCMSPage"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionAddContent" after="switchToPageBuilderStage">
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage" after="navigateToCreatedCMSPage"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionAddContent" after="switchToPageBuilderStage">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage" after="expandMenuSectionAddContent">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragBlockIntoStage" after="expandMenuSectionAddContent">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop" after="dragBlockIntoStage">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditAfterDrop" after="dragBlockIntoStage">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid" after="openEditAfterDrop">
+        <actionGroup ref="searchBlockInGridActionGroup" stepKey="searchBlockInGrid" after="openEditAfterDrop">
             <argument name="block" value="$$createPreReqBlock$$"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings" after="searchBlockInGrid"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings" after="searchBlockInGrid"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage" after="saveEditPanelSettings"/>
         <!-- Validate CMS Page Storefront -->
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToProductStorefront">
@@ -214,7 +214,7 @@
         <after>
             <deleteData createDataKey="createPreReqBlock" stepKey="deleteCreatedProduct"/>
             <deleteData createDataKey="createCMSPage" stepKey="deleteCreatedCategory"/>
-            <comment userInput="---merging to remove step---" stepKey="NavigateToAndResetProductGridToDefaultView"/>
+            <comment userInput="---merging to remove step---" stepKey="navigateToAndResetProductGridToDefaultView"/>
         </after>
         <comment userInput="---merging to remove step---" stepKey="exitPageBuilderFullScreen"/>
         <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveProduct"/>
@@ -225,20 +225,20 @@
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage" after="commentGoToCMSPage">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage" after="navigateToCreatedCMSPage"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionAddContent" after="switchToPageBuilderStage">
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage" after="navigateToCreatedCMSPage"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionAddContent" after="switchToPageBuilderStage">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage" after="expandMenuSectionAddContent">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragBlockIntoStage" after="expandMenuSectionAddContent">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop" after="dragBlockIntoStage">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditAfterDrop" after="dragBlockIntoStage">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid" after="openEditAfterDrop">
+        <actionGroup ref="searchBlockInGridActionGroup" stepKey="searchBlockInGrid" after="openEditAfterDrop">
             <argument name="block" value="$$createPreReqBlock$$"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings" after="searchBlockInGrid"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings" after="searchBlockInGrid"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage" after="saveEditPanelSettings"/>
         <!-- Validate CMS Page Storefront -->
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToProductStorefront">
@@ -275,7 +275,7 @@
         <after>
             <deleteData createDataKey="createPreReqBlock" stepKey="deleteCreatedProduct"/>
             <deleteData createDataKey="createCMSPage" stepKey="deleteCreatedCategory"/>
-            <comment userInput="---merging to remove step---" stepKey="NavigateToAndResetProductGridToDefaultView"/>
+            <comment userInput="---merging to remove step---" stepKey="navigateToAndResetProductGridToDefaultView"/>
         </after>
         <comment userInput="---merging to remove step---" stepKey="exitPageBuilderFullScreen"/>
         <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveProduct"/>
@@ -286,20 +286,20 @@
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage" after="commentGoToCMSPage">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage" after="navigateToCreatedCMSPage"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionAddContent" after="switchToPageBuilderStage">
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage" after="navigateToCreatedCMSPage"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionAddContent" after="switchToPageBuilderStage">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage" after="expandMenuSectionAddContent">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragBlockIntoStage" after="expandMenuSectionAddContent">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop" after="dragBlockIntoStage">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditAfterDrop" after="dragBlockIntoStage">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid" after="openEditAfterDrop">
+        <actionGroup ref="searchBlockInGridActionGroup" stepKey="searchBlockInGrid" after="openEditAfterDrop">
             <argument name="block" value="$$createPreReqBlock$$"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings" after="searchBlockInGrid"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings" after="searchBlockInGrid"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage" after="saveEditPanelSettings"/>
         <!-- Validate CMS Page Storefront -->
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToProductStorefront">
@@ -338,7 +338,7 @@
         <after>
             <deleteData createDataKey="createPreReqBlock" stepKey="deleteCreatedProduct"/>
             <deleteData createDataKey="createCMSPage" stepKey="deleteCreatedCategory"/>
-            <comment userInput="---merging to remove step---" stepKey="NavigateToAndResetProductGridToDefaultView"/>
+            <comment userInput="---merging to remove step---" stepKey="navigateToAndResetProductGridToDefaultView"/>
         </after>
         <comment userInput="---merging to remove step---" stepKey="exitPageBuilderFullScreen"/>
         <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveProduct"/>
@@ -353,20 +353,20 @@
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage" after="commentGoToCMSPage">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage" after="navigateToCreatedCMSPage"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionAddContent" after="switchToPageBuilderStage">
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage" after="navigateToCreatedCMSPage"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionAddContent" after="switchToPageBuilderStage">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage" after="expandMenuSectionAddContent">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragBlockIntoStage" after="expandMenuSectionAddContent">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop" after="dragBlockIntoStage">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditAfterDrop" after="dragBlockIntoStage">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid" after="openEditAfterDrop">
+        <actionGroup ref="searchBlockInGridActionGroup" stepKey="searchBlockInGrid" after="openEditAfterDrop">
             <argument name="block" value="$$createPreReqBlock$$"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings" after="searchBlockInGrid"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings" after="searchBlockInGrid"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage" after="saveEditPanelSettings"/>
         <!-- Validate CMS Page Storefront -->
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToProductStorefront">
@@ -402,7 +402,7 @@
         <after>
             <deleteData createDataKey="createPreReqBlock" stepKey="deleteCreatedProduct"/>
             <deleteData createDataKey="createCMSPage" stepKey="deleteCreatedCategory"/>
-            <comment userInput="---merging to remove step---" stepKey="NavigateToAndResetProductGridToDefaultView"/>
+            <comment userInput="---merging to remove step---" stepKey="navigateToAndResetProductGridToDefaultView"/>
         </after>
         <comment userInput="---merging to remove step---" stepKey="exitPageBuilderFullScreen"/>
         <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveProduct"/>
@@ -413,20 +413,20 @@
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage" after="commentGoToCMSPage">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage" after="navigateToCreatedCMSPage"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionAddContent" after="switchToPageBuilderStage">
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage" after="navigateToCreatedCMSPage"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionAddContent" after="switchToPageBuilderStage">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage" after="expandMenuSectionAddContent">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragBlockIntoStage" after="expandMenuSectionAddContent">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop" after="dragBlockIntoStage">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditAfterDrop" after="dragBlockIntoStage">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid" after="openEditAfterDrop">
+        <actionGroup ref="searchBlockInGridActionGroup" stepKey="searchBlockInGrid" after="openEditAfterDrop">
             <argument name="block" value="$$createPreReqBlock$$"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings" after="searchBlockInGrid"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings" after="searchBlockInGrid"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage" after="saveEditPanelSettings"/>
         <!-- Validate CMS Page Storefront -->
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToProductStorefront">
@@ -462,7 +462,7 @@
         <after>
             <deleteData createDataKey="createPreReqBlock" stepKey="deleteCreatedProduct"/>
             <deleteData createDataKey="createCMSPage" stepKey="deleteCreatedCategory"/>
-            <comment userInput="---merging to remove step---" stepKey="NavigateToAndResetProductGridToDefaultView"/>
+            <comment userInput="---merging to remove step---" stepKey="navigateToAndResetProductGridToDefaultView"/>
         </after>
         <comment userInput="---merging to remove step---" stepKey="exitPageBuilderFullScreen"/>
         <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveProduct"/>
@@ -473,20 +473,20 @@
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage" after="commentGoToCMSPage">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage" after="navigateToCreatedCMSPage"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionAddContent" after="switchToPageBuilderStage">
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage" after="navigateToCreatedCMSPage"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionAddContent" after="switchToPageBuilderStage">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage" after="expandMenuSectionAddContent">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragBlockIntoStage" after="expandMenuSectionAddContent">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop" after="dragBlockIntoStage">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditAfterDrop" after="dragBlockIntoStage">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid" after="openEditAfterDrop">
+        <actionGroup ref="searchBlockInGridActionGroup" stepKey="searchBlockInGrid" after="openEditAfterDrop">
             <argument name="block" value="$$createPreReqBlock$$"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings" after="searchBlockInGrid"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings" after="searchBlockInGrid"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage" after="saveEditPanelSettings"/>
         <!-- Validate CMS Page Storefront -->
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToProductStorefront">
@@ -522,7 +522,7 @@
         <after>
             <deleteData createDataKey="createPreReqBlock" stepKey="deleteCreatedProduct"/>
             <deleteData createDataKey="createCMSPage" stepKey="deleteCreatedCategory"/>
-            <comment userInput="---merging to remove step---" stepKey="NavigateToAndResetProductGridToDefaultView"/>
+            <comment userInput="---merging to remove step---" stepKey="navigateToAndResetProductGridToDefaultView"/>
         </after>
         <comment userInput="---merging to remove step---" stepKey="exitPageBuilderFullScreen"/>
         <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveProduct"/>
@@ -533,20 +533,20 @@
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage" after="commentGoToCMSPage">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage" after="navigateToCreatedCMSPage"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionAddContent" after="switchToPageBuilderStage">
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage" after="navigateToCreatedCMSPage"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionAddContent" after="switchToPageBuilderStage">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage" after="expandMenuSectionAddContent">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragBlockIntoStage" after="expandMenuSectionAddContent">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop" after="dragBlockIntoStage">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditAfterDrop" after="dragBlockIntoStage">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid" after="openEditAfterDrop">
+        <actionGroup ref="searchBlockInGridActionGroup" stepKey="searchBlockInGrid" after="openEditAfterDrop">
             <argument name="block" value="$$createPreReqBlock$$"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings" after="searchBlockInGrid"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings" after="searchBlockInGrid"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage" after="saveEditPanelSettings"/>
         <!-- Validate CMS Page Storefront -->
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToProductStorefront">
@@ -582,7 +582,7 @@
         <after>
             <deleteData createDataKey="createPreReqBlock" stepKey="deleteCreatedProduct"/>
             <deleteData createDataKey="createCMSPage" stepKey="deleteCreatedCategory"/>
-            <comment userInput="---merging to remove step---" stepKey="NavigateToAndResetProductGridToDefaultView"/>
+            <comment userInput="---merging to remove step---" stepKey="navigateToAndResetProductGridToDefaultView"/>
         </after>
         <comment userInput="---merging to remove step---" stepKey="exitPageBuilderFullScreen"/>
         <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveProduct"/>
@@ -597,20 +597,20 @@
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage" after="commentGoToCMSPage">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage" after="navigateToCreatedCMSPage"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionAddContent" after="switchToPageBuilderStage">
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage" after="navigateToCreatedCMSPage"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionAddContent" after="switchToPageBuilderStage">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage" after="expandMenuSectionAddContent">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragBlockIntoStage" after="expandMenuSectionAddContent">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop" after="dragBlockIntoStage">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditAfterDrop" after="dragBlockIntoStage">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid" after="openEditAfterDrop">
+        <actionGroup ref="searchBlockInGridActionGroup" stepKey="searchBlockInGrid" after="openEditAfterDrop">
             <argument name="block" value="$$createPreReqBlock$$"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings" after="searchBlockInGrid"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings" after="searchBlockInGrid"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage" after="saveEditPanelSettings"/>
         <!-- Validate CMS Page Storefront -->
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToProductStorefront">
@@ -652,20 +652,20 @@
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage" after="commentGoToCMSPage">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStageAfterBlock" after="navigateToCreatedCMSPage"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionAddContent" after="switchToPageBuilderStageAfterBlock">
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStageAfterBlock" after="navigateToCreatedCMSPage"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionAddContent" after="switchToPageBuilderStageAfterBlock">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage" after="expandMenuSectionAddContent">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragBlockIntoStage" after="expandMenuSectionAddContent">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop" after="dragBlockIntoStage">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditAfterDrop" after="dragBlockIntoStage">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid" after="openEditAfterDrop">
+        <actionGroup ref="searchBlockInGridActionGroup" stepKey="searchBlockInGrid" after="openEditAfterDrop">
             <argument name="block" value="$$createPreReqBlock$$"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsAfterBlock" after="searchBlockInGrid"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettingsAfterBlock" after="searchBlockInGrid"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPageAfterBlock" after="saveEditPanelSettingsAfterBlock"/>
         <!-- Validate CMS Page Storefront -->
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStoreFront">
@@ -708,20 +708,20 @@
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage" after="commentGoToCMSPage">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStageAfterBlock" after="navigateToCreatedCMSPage"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionAddContent" after="switchToPageBuilderStageAfterBlock">
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStageAfterBlock" after="navigateToCreatedCMSPage"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionAddContent" after="switchToPageBuilderStageAfterBlock">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage" after="expandMenuSectionAddContent">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragBlockIntoStage" after="expandMenuSectionAddContent">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop" after="dragBlockIntoStage">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditAfterDrop" after="dragBlockIntoStage">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid" after="openEditAfterDrop">
+        <actionGroup ref="searchBlockInGridActionGroup" stepKey="searchBlockInGrid" after="openEditAfterDrop">
             <argument name="block" value="$$createPreReqBlock$$"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsAfterBlock" after="searchBlockInGrid"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettingsAfterBlock" after="searchBlockInGrid"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPageAfterBlock" after="saveEditPanelSettingsAfterBlock"/>
         <!-- Validate CMS Page Storefront -->
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStoreFront">
@@ -762,20 +762,20 @@
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage" after="commentGoToCMSPage">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStageAfterBlock" after="navigateToCreatedCMSPage"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionAddContent" after="switchToPageBuilderStageAfterBlock">
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStageAfterBlock" after="navigateToCreatedCMSPage"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionAddContent" after="switchToPageBuilderStageAfterBlock">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage" after="expandMenuSectionAddContent">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragBlockIntoStage" after="expandMenuSectionAddContent">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop" after="dragBlockIntoStage">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditAfterDrop" after="dragBlockIntoStage">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid" after="openEditAfterDrop">
+        <actionGroup ref="searchBlockInGridActionGroup" stepKey="searchBlockInGrid" after="openEditAfterDrop">
             <argument name="block" value="$$createPreReqBlock$$"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsAfterBlock" after="searchBlockInGrid"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettingsAfterBlock" after="searchBlockInGrid"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPageAfterBlock" after="saveEditPanelSettingsAfterBlock"/>
         <!-- Validate CMS Page Storefront -->
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStoreFront">

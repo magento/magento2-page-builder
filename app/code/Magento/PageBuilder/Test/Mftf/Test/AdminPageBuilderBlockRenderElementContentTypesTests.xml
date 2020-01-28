@@ -25,25 +25,25 @@
         <before>
             <createData entity="_defaultBlock" stepKey="createPreReqBlock" />
             <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
         </before>
         <after>
             <deleteData createDataKey="createPreReqBlock" stepKey="deletePreReqBlock" />
             <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
         </after>
         <actionGroup ref="NavigateToCreatedCMSBlockPageActionGroup" stepKey="navigateToCreatedCmsBlock">
             <argument name="CMSBlockPage" value="$$createPreReqBlock$$"/>
         </actionGroup>
         <!-- Update block with text -->
         <comment userInput="Update block with text" stepKey="commentUpdateBlockWithText"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionForText1">
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionForText1">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragTextOntoBlockStage">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragTextOntoBlockStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <actionGroup ref="inlineEditWYSIWYGFromStage" stepKey="inlineEditBlockText">
+        <actionGroup ref="inlineEditWYSIWYGFromStageActionGroup" stepKey="inlineEditBlockText">
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="content" value="{{PageBuilderTextProperty.value}}"/>
         </actionGroup>
@@ -53,33 +53,33 @@
         </actionGroup>
         <!-- Add text to page -->
         <comment userInput="Add text to page" stepKey="addTextToPage"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionForText2">
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionForText2">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragTextOntoPageStage">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragTextOntoPageStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <actionGroup ref="inlineEditWYSIWYGFromStage" stepKey="inlineEdit">
+        <actionGroup ref="inlineEditWYSIWYGFromStageActionGroup" stepKey="inlineEdit">
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="content" value="{{PageBuilderTextProperty.value}}"/>
         </actionGroup>
         <!-- Add block to page -->
         <comment userInput="Add block to page" stepKey="addBlockToPage"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionForBlock">
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionForBlock">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockOntoStage">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragBlockOntoStage">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditAfterDrop">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
+        <actionGroup ref="searchBlockInGridActionGroup" stepKey="searchBlockInGrid">
             <argument name="block" value="$$createPreReqBlock$$"/>
         </actionGroup>
         <waitForElementVisible selector="{{BlockOnForm.title('$$createPreReqBlock.title$$')}}" stepKey="waitToSeeBlockTitle"/>
         <seeElement selector="{{BlockOnForm.title('$$createPreReqBlock.title$$')}}" stepKey="seeBlockTitleOnForm"/>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings2"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!--Get storefront information-->
         <comment userInput="Get storefront information" stepKey="commentGetStorefrontInformation"/>
@@ -115,7 +115,7 @@
             <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
             <createData entity="_emptyCmsBlock" stepKey="createCMSBlock"/>
             <createData entity="_defaultCmsPage" stepKey="createPreReqCMSPage"/>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
             <actionGroup ref="NavigateToCreatedCMSBlockPageActionGroup" stepKey="navigateToCreatedCMSBlockPage1">
                 <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
             </actionGroup>
@@ -125,54 +125,54 @@
             <deleteData createDataKey="createPreReqCMSPage" stepKey="deleteCMSPageB"/>
             <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
             <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
-            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
+            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="navigateToFolder">
                 <argument name="FolderName" value="{{ImageFolder.name}}"/>
             </actionGroup>
-            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage">
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="deleteImageFromStorage">
                 <argument name="Image" value="ImageUpload3"/>
             </actionGroup>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
         </after>
         <!-- Add Text -->
         <comment userInput="Add Text" stepKey="commentAddText"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragTextIntoStage">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragTextIntoStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <!-- Inline Edit: Add Text -->
         <comment userInput="Inline Edit: Add Text" stepKey="commentInlineEditAddText"/>
-        <actionGroup ref="focusOnInlineTinyMCEEditor" stepKey="focusOnInlineTinyMCEEditor"/>
-        <actionGroup ref="goToEndOfLineTinyMCEEditor" stepKey="moveCaretToEnd"/>
-        <actionGroup ref="addTextToTinyMCEInline" stepKey="addTextToTinyMCEInline">
+        <actionGroup ref="focusOnInlineTinyMCEEditorActionGroup" stepKey="focusOnInlineTinyMCEEditor"/>
+        <actionGroup ref="goToEndOfLineTinyMCEEditorActionGroup" stepKey="moveCaretToEnd"/>
+        <actionGroup ref="addTextToTinyMCEInlineActionGroup" stepKey="addTextToTinyMCEInline">
             <argument name="section" value="TextOnStage"/>
             <argument name="text" value="{{PageBuilderTextProperty.value}}"/>
         </actionGroup>
         <!-- Inline Edit: Add Variable -->
         <comment userInput="Inline Edit: Add Variable" stepKey="commentInlineEditAddVariable"/>
-        <actionGroup ref="focusOnInlineTinyMCEEditor" stepKey="focusOnInlineTinyMCEEditor2"/>
-        <actionGroup ref="goToEndOfLineTinyMCEEditor" stepKey="moveCaretToEnd2"/>
-        <actionGroup ref="addVariableToTinyMCEInline" stepKey="addVariableToTinyMCE">
+        <actionGroup ref="focusOnInlineTinyMCEEditorActionGroup" stepKey="focusOnInlineTinyMCEEditor2"/>
+        <actionGroup ref="goToEndOfLineTinyMCEEditorActionGroup" stepKey="moveCaretToEnd2"/>
+        <actionGroup ref="addVariableToTinyMCEInlineActionGroup" stepKey="addVariableToTinyMCE">
             <argument name="variable" value="TinyMCEVariableBaseURL"/>
         </actionGroup>
         <!-- Inline Edit: Add Widget -->
         <comment userInput="Inline Edit: Add Widget" stepKey="commentInlineEditAddWidget"/>
-        <actionGroup ref="focusOnInlineTinyMCEEditor" stepKey="focusOnInlineTinyMCEEditor3"/>
-        <actionGroup ref="goToEndOfLineTinyMCEEditor" stepKey="moveCaretToEnd3"/>
-        <actionGroup ref="addPageLinkWidgetToTinyMCEInline" stepKey="addPageLinkWidgetToTinyMCE">
+        <actionGroup ref="focusOnInlineTinyMCEEditorActionGroup" stepKey="focusOnInlineTinyMCEEditor3"/>
+        <actionGroup ref="goToEndOfLineTinyMCEEditorActionGroup" stepKey="moveCaretToEnd3"/>
+        <actionGroup ref="addPageLinkWidgetToTinyMCEInlineActionGroup" stepKey="addPageLinkWidgetToTinyMCE">
             <argument name="widget" value="TinyMCEWidgetCMSPageLink"/>
             <argument name="page" value="$$createPreReqCMSPage.identifier$$"/>
         </actionGroup>
         <!-- Inline Edit: Add Image -->
         <comment userInput="Inline Edit: Add Image" stepKey="commentInlineEditAddImage"/>
-        <actionGroup ref="focusOnInlineTinyMCEEditor" stepKey="focusOnInlineTinyMCEEditor4"/>
-        <actionGroup ref="goToEndOfLineTinyMCEEditor" stepKey="moveCaretToEnd4"/>
-        <actionGroup ref="clickInsertImageInTinyMCE" stepKey="clickInsertImageInTinyMCE"/>
+        <actionGroup ref="focusOnInlineTinyMCEEditorActionGroup" stepKey="focusOnInlineTinyMCEEditor4"/>
+        <actionGroup ref="goToEndOfLineTinyMCEEditorActionGroup" stepKey="moveCaretToEnd4"/>
+        <actionGroup ref="clickInsertImageInTinyMCEActionGroup" stepKey="clickInsertImageInTinyMCE"/>
         <actionGroup ref="ClickBrowseBtnOnUploadPopupActionGroup" stepKey="clickBrowserBtn"/>
-        <actionGroup ref="VerifyMediaGalleryStorageActionsActionGroup" stepKey="VerifyMediaGalleryStorageBtn"/>
-        <actionGroup ref="clickMediaGalleryStorageRootArrow" stepKey="clickMediaGalleryStorageRootArrow"/>
-        <actionGroup ref="CreateImageFolderActionGroup" stepKey="CreateImageFolder">
+        <actionGroup ref="VerifyMediaGalleryStorageActionsActionGroup" stepKey="verifyMediaGalleryStorageBtn"/>
+        <actionGroup ref="clickMediaGalleryStorageRootArrowActionGroup" stepKey="clickMediaGalleryStorageRootArrow"/>
+        <actionGroup ref="CreateImageFolderActionGroup" stepKey="createImageFolder">
             <argument name="ImageFolder" value="ImageFolder"/>
         </actionGroup>
         <actionGroup ref="AttachImageActionGroup" stepKey="attachImage">
@@ -194,19 +194,19 @@
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPanelAddContentMenuSection">
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPanelAddContentMenuSection">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragBlockIntoStage">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDropBlock">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditAfterDropBlock">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
+        <actionGroup ref="searchBlockInGridActionGroup" stepKey="searchBlockInGrid">
             <argument name="block" value="$$createCMSBlock$$"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsBlock"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettingsBlock"/>
         <!-- Validate CMS Page Stage -->
         <comment userInput="Validate CMS Page Stage" stepKey="commentValidateCMSPageStage"/>
         <seeElement selector="{{TextOnStorefront.text('1', PageBuilderTextProperty.value)}}" stepKey="seeTextCMSPageStage"/>
@@ -274,7 +274,7 @@
             <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
             <createData entity="_emptyCmsBlock" stepKey="createCMSBlock"/>
             <createData entity="_defaultCmsPage" stepKey="createPreReqCMSPage"/>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
             <actionGroup ref="NavigateToCreatedCMSBlockPageActionGroup" stepKey="navigateToCreatedCMSBlockPage1">
                 <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
             </actionGroup>
@@ -284,48 +284,48 @@
             <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock"/>
             <deleteData createDataKey="createPreReqCMSPage" stepKey="deleteCMSPageB"/>
             <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
         </after>
         <!-- Add Text -->
         <comment userInput="Add Text" stepKey="commentAddText"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragTextIntoStage">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragTextIntoStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <!-- Inline Edit: Add Text -->
         <comment userInput="Inline Edit: Add Text" stepKey="commentInlineEditAddText"/>
-        <actionGroup ref="focusOnInlineTextAreaEditor" stepKey="focusOnInlineTextAreaEditor"/>
-        <actionGroup ref="addTextToTinyMCEInlineWYSIWYGDisabled" stepKey="addTextToTinyMCEInline">
+        <actionGroup ref="focusOnInlineTextAreaEditorActionGroup" stepKey="focusOnInlineTextAreaEditor"/>
+        <actionGroup ref="addTextToTinyMCEInlineWYSIWYGDisabledActionGroup" stepKey="addTextToTinyMCEInline">
             <argument name="section" value="TextOnStage"/>
             <argument name="text" value="{{PageBuilderTextProperty.value}}"/>
         </actionGroup>
         <!-- Inline Edit: Add Variable -->
-        <actionGroup ref="focusOnInlineTextAreaEditor" stepKey="focusOnInlineTextAreaEditor2"/>
-        <actionGroup ref="addTextToTinyMCEInlineWYSIWYGDisabled" stepKey="addVariableToTinyMCE">
+        <actionGroup ref="focusOnInlineTextAreaEditorActionGroup" stepKey="focusOnInlineTextAreaEditor2"/>
+        <actionGroup ref="addTextToTinyMCEInlineWYSIWYGDisabledActionGroup" stepKey="addVariableToTinyMCE">
             <argument name="section" value="TextOnStage"/>
             <argument name="text" value="{{PageBuilderTextArea_VariableBaseURL.editPanelValue}}"/>
         </actionGroup>
         <!-- Inline Edit: Add Widget -->
         <comment userInput="Inline Edit: Add Widget" stepKey="commentInlineEditAddWidget"/>
-        <actionGroup ref="focusOnInlineTextAreaEditor" stepKey="focusOnInlineTextAreaEditor3"/>
-        <actionGroup ref="addTextToTinyMCEInlineWYSIWYGDisabled" stepKey="addPageLinkWidgetToTinyMCE">
+        <actionGroup ref="focusOnInlineTextAreaEditorActionGroup" stepKey="focusOnInlineTextAreaEditor3"/>
+        <actionGroup ref="addTextToTinyMCEInlineWYSIWYGDisabledActionGroup" stepKey="addPageLinkWidgetToTinyMCE">
             <argument name="section" value="TextOnStage"/>
             <argument name="text" value="{{PageBuilderTextArea_WidgetCMSHomepageLink.editPanelValue}}"/>
         </actionGroup>
         <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveCMSBlock"/>
         <!-- Validate CMS Block Stage -->
         <comment userInput="Validate CMS Block Stage" stepKey="commentValidateCMSBlockStage"/>
-        <actionGroup ref="assertTextareaContainsValue" stepKey="assertTextareaContainsValueCMSBlockStage">
+        <actionGroup ref="assertTextareaContainsValueActionGroup" stepKey="assertTextareaContainsValueCMSBlockStage">
             <argument name="selector" value="{{TextOnStage.textArea('1')}}"/>
             <argument name="value" value="{{PageBuilderTextProperty.value}}"/>
         </actionGroup>
-        <actionGroup ref="assertTextareaContainsValue" stepKey="assertTextareaContainsValueCMSBlockStage2">
+        <actionGroup ref="assertTextareaContainsValueActionGroup" stepKey="assertTextareaContainsValueCMSBlockStage2">
             <argument name="selector" value="{{TextOnStage.textArea('1')}}"/>
             <argument name="value" value="{{PageBuilderTextArea_VariableBaseURL.editPanelValue}}"/>
         </actionGroup>
-        <actionGroup ref="assertTextareaContainsValue" stepKey="assertTextareaContainsValueCMSBlockStage3">
+        <actionGroup ref="assertTextareaContainsValueActionGroup" stepKey="assertTextareaContainsValueCMSBlockStage3">
             <argument name="selector" value="{{TextOnStage.textArea('1')}}"/>
             <argument name="value" value="{{PageBuilderTextArea_WidgetCMSHomepageLink.editPanelValue}}"/>
         </actionGroup>
@@ -334,19 +334,19 @@
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPanelAddContentMenuSection">
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPanelAddContentMenuSection">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragBlockIntoStage">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDropBlock">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditAfterDropBlock">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
+        <actionGroup ref="searchBlockInGridActionGroup" stepKey="searchBlockInGrid">
             <argument name="block" value="$$createCMSBlock$$"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsBlock"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettingsBlock"/>
         <!-- Validate CMS Page Stage -->
         <comment userInput="Validate CMS Page Stage" stepKey="commentValidateCMSPageStage"/>
         <seeElement selector="{{TextOnStorefront.textAreaText('1', PageBuilderTextProperty.value)}}" stepKey="seeTextCMSPageStage"/>
@@ -384,7 +384,7 @@
         <before>
             <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
             <createData entity="_emptyCmsBlock" stepKey="createCMSBlock"/>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
             <actionGroup ref="NavigateToCreatedCMSBlockPageActionGroup" stepKey="navigateToCreatedCMSBlockPage1">
                 <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
             </actionGroup>
@@ -392,31 +392,31 @@
         <after>
             <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock"/>
             <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
         </after>
         <!-- Add Heading -->
         <comment userInput="Add Heading" stepKey="commentAddHeading"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragHeadingIntoStage">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragHeadingIntoStage">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
-        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+        <actionGroup ref="clickOutsideLiveEditHeadingActionGroup" stepKey="clickOutsideLiveEditHeading">
             <argument name="index" value="1"/>
         </actionGroup>
         <!-- Edit Heading -->
         <comment userInput="Edit Heading" stepKey="commentEditHeading"/>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuHeading">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuHeading">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="setHeadingText">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="setHeadingText">
             <argument name="property" value="PageBuilderHeadingTextProperty"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="setHeadingTypeH1">
+        <actionGroup ref="selectSlideOutPanelFieldGeneralActionGroup" stepKey="setHeadingTypeH1">
             <argument name="property" value="PageBuilderHeadingTypeProperty_H1"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsHeading"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettingsHeading"/>
         <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveCMSBlock"/>
         <!-- Validate CMS Block Stage -->
         <comment userInput="Validate CMS Block Stage" stepKey="commentValidateCMSBlockStage"/>
@@ -427,19 +427,19 @@
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPanelAddContentMenuSection">
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPanelAddContentMenuSection">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragBlockIntoStage">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDropBlock">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditAfterDropBlock">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
+        <actionGroup ref="searchBlockInGridActionGroup" stepKey="searchBlockInGrid">
             <argument name="block" value="$$createCMSBlock$$"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsBlock"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettingsBlock"/>
         <!-- Validate CMS Page Stage -->
         <comment userInput="Validate CMS Page Stage" stepKey="commentValidateCMSPageStage"/>
         <seeElement selector="{{HeadingOnStorefront.headingType(PageBuilderHeadingTypeProperty_H1.value, '1')}}" stepKey="seeHeadingStyleCMSPageStage"/>
@@ -471,7 +471,7 @@
         <before>
             <createData entity="_emptyCmsBlock" stepKey="createPreReqBlock"/>
             <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
             <actionGroup ref="NavigateToCreatedCMSBlockPageActionGroup" stepKey="navigateToCreatedCMSBlock">
                 <argument name="CMSBlockPage" value="$$createPreReqBlock$$"/>
             </actionGroup>
@@ -479,32 +479,32 @@
         <after>
             <deleteData createDataKey="createPreReqBlock" stepKey="deletePreReqBlock"/>
             <deleteData createDataKey="createCMSPage" stepKey="deleteCreatedCategory"/>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
         </after>
         <!-- Change row appearance to full-width -->
         <comment userInput="Change row appearance to full-width" stepKey="commentChangeRowAppearanceBlock"/>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openRowEditMenuOnStageBlock">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openRowEditMenuOnStageBlock">
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceRowBlock">
+        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAppearanceRowBlock">
             <argument name="property" value="PageBuilderRowAppearance_FullWidth"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsRowBlock"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettingsRowBlock"/>
         <!-- Add button groups to block -->
         <comment userInput="Add button groups to block" stepKey="commentAddButtonGroupsToBlock"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSectionBlock">
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSectionBlock">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStageBlock">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragContentTypeToStageBlock">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusOptionMenuBlock">
+        <actionGroup ref="unFocusOptionMenuActionGroup" stepKey="unFocusOptionMenuBlock">
             <argument name="contentType" value="PageBuilderButtonItemContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage2Block">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragContentTypeToStage2Block">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusOptionMenu2Block">
+        <actionGroup ref="unFocusOptionMenuActionGroup" stepKey="unFocusOptionMenu2Block">
             <argument name="contentType" value="PageBuilderButtonItemContentType"/>
         </actionGroup>
         <!-- Validate Block -->
@@ -521,20 +521,20 @@
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStagePage"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionAddContentPage">
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStagePage"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionAddContentPage">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStagePage">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragBlockIntoStagePage">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDropPage">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditAfterDropPage">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGridPage">
+        <actionGroup ref="searchBlockInGridActionGroup" stepKey="searchBlockInGridPage">
             <argument name="block" value="$$createPreReqBlock$$"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsPage"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettingsPage"/>
         <!-- Validate Page -->
         <comment userInput="Validate Page" stepKey="commentValidatePage"/>
         <executeJS function="return {{ButtonItemOnStorefrontEmptyLink.jsButtonSelector('1')}}.getBoundingClientRect().y" stepKey="yCoordinate1Page"/>
@@ -573,7 +573,7 @@
         <before>
             <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
             <createData entity="_emptyCmsBlock" stepKey="createCMSBlock"/>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
             <actionGroup ref="NavigateToCreatedCMSBlockPageActionGroup" stepKey="navigateToCreatedCMSBlockPage1">
                 <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
             </actionGroup>
@@ -581,56 +581,56 @@
         <after>
             <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock"/>
             <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
         </after>
         <!-- Add Buttons -->
         <comment userInput="Add Buttons" stepKey="commentAddButtons"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsIntoStage">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragButtonsIntoStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusOptionMenu">
+        <actionGroup ref="unFocusOptionMenuActionGroup" stepKey="unFocusOptionMenu">
             <argument name="contentType" value="PageBuilderButtonItemContentType"/>
         </actionGroup>
         <!-- Edit Button Group -->
         <comment userInput="Edit Button Group" stepKey="commentEditButtonGroup"/>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuButtons">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuButtons">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="setAppearanceOption">
+        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="setAppearanceOption">
             <argument name="property" value="PageBuilderButtonGroupAppearance_Inline"/>
         </actionGroup>
-        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="setSameSizeOption">
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneralActionGroup" stepKey="setSameSizeOption">
             <argument name="property" value="PageBuilderButtonGroupSameSize_Disabled"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsButtons"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettingsButtons"/>
         <!-- Edit Button Item -->
         <comment userInput="Edit Button Item" stepKey="commentEditButtonItem"/>
-        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStageButtonItem">
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditMenuOnStageButtonItem">
             <argument name="section" value="ButtonItemOnStage"/>
             <argument name="targetIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="fillButtonTextField">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="fillButtonTextField">
             <argument name="property" value="PageBuilderButtonItemText_First"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="fillButtonType">
+        <actionGroup ref="selectSlideOutPanelFieldGeneralActionGroup" stepKey="fillButtonType">
             <argument name="property" value="PageBuilderButtonItemType_Secondary"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="fillButtonLinkField">
+        <actionGroup ref="fillSlideOutPanelLinkUrlFieldActionGroup" stepKey="fillButtonLinkField">
             <argument name="property" value="PageBuilderButtonItemLink_NotSecure"/>
             <argument name="selection" value="{{ExternalLink.url}}"/>
             <argument name="newTab" value="PageBuilderButtonItemOpenInNewTab_False"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsButtonItem"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettingsButtonItem"/>
         <!-- Add 2nd Button Item -->
         <comment userInput="Add 2nd Button Item" stepKey="commentAddButtonItem"/>
-        <actionGroup ref="duplicateSmallContentType" stepKey="duplicateSmallContentType">
+        <actionGroup ref="duplicateSmallContentTypeActionGroup" stepKey="duplicateSmallContentType">
             <argument name="section" value="ButtonItemOnStage"/>
             <argument name="targetIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton2">
+        <actionGroup ref="inlineEditButtonActionGroup" stepKey="inlineEditButton2">
             <argument name="text" value="PageBuilderButtonItemText_OneCharacter"/>
             <argument name="index" value="2"/>
         </actionGroup>
@@ -638,7 +638,7 @@
         <!-- Validate CMS Block Stage -->
         <comment userInput="Validate CMS Block Stage" stepKey="commentValidateCMSBlockStage"/>
         <seeNumberOfElements selector="{{ButtonItemOnStage.all}}" userInput="2" stepKey="see2ButtonsCMSBlockStage"/>
-        <actionGroup ref="validateButtonItemContent" stepKey="validateButton1CMSBlockStage">
+        <actionGroup ref="validateButtonItemContentActionGroup" stepKey="validateButton1CMSBlockStage">
             <argument name="page" value="ButtonItemOnStage"/>
             <argument name="text" value="PageBuilderButtonItemText_First"/>
             <argument name="type" value="PageBuilderButtonItemType_Secondary"/>
@@ -646,7 +646,7 @@
             <argument name="newTab" value="PageBuilderButtonItemOpenInNewTab_False"/>
             <argument name="index" value="1"/>
         </actionGroup>
-        <actionGroup ref="validateButtonItemContent" stepKey="validateButton2CMSBlockStage">
+        <actionGroup ref="validateButtonItemContentActionGroup" stepKey="validateButton2CMSBlockStage">
             <argument name="page" value="ButtonItemOnStage"/>
             <argument name="text" value="PageBuilderButtonItemText_OneCharacter"/>
             <argument name="type" value="PageBuilderButtonItemType_Secondary"/>
@@ -654,11 +654,11 @@
             <argument name="newTab" value="PageBuilderButtonItemOpenInNewTab_False"/>
             <argument name="index" value="2"/>
         </actionGroup>
-        <actionGroup ref="validateButtonGroupInlineAppearance" stepKey="validateButtonGroupAppearanceCMSBlockStage">
+        <actionGroup ref="validateButtonGroupInlineAppearanceActionGroup" stepKey="validateButtonGroupAppearanceCMSBlockStage">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
         </actionGroup>
-        <actionGroup ref="validateButtonItemsDifferentSizes" stepKey="validateButtonsSizesCMSBlockStage">
+        <actionGroup ref="validateButtonItemsDifferentSizesActionGroup" stepKey="validateButtonsSizesCMSBlockStage">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
         </actionGroup>
@@ -667,23 +667,23 @@
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPanelAddContentMenuSection">
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPanelAddContentMenuSection">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragBlockIntoStage">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDropBlock">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditAfterDropBlock">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
+        <actionGroup ref="searchBlockInGridActionGroup" stepKey="searchBlockInGrid">
             <argument name="block" value="$$createCMSBlock$$"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsBlock"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettingsBlock"/>
         <!-- Validate CMS Page Stage -->
         <comment userInput="Validate CMS Page Stage" stepKey="commentValidateCMSPageStage"/>
         <seeNumberOfElements selector="{{ButtonItemOnStorefront.all}}" userInput="2" stepKey="see2ButtonsCMSPageStage"/>
-        <actionGroup ref="validateButtonItemContent" stepKey="validateButton1CMSPageStage">
+        <actionGroup ref="validateButtonItemContentActionGroup" stepKey="validateButton1CMSPageStage">
             <argument name="page" value="ButtonItemOnStorefront"/>
             <argument name="text" value="PageBuilderButtonItemText_First"/>
             <argument name="type" value="PageBuilderButtonItemType_Secondary"/>
@@ -691,7 +691,7 @@
             <argument name="newTab" value="PageBuilderButtonItemOpenInNewTab_False"/>
             <argument name="index" value="1"/>
         </actionGroup>
-        <actionGroup ref="validateButtonItemContent" stepKey="validateButton2CMSPageStage">
+        <actionGroup ref="validateButtonItemContentActionGroup" stepKey="validateButton2CMSPageStage">
             <argument name="page" value="ButtonItemOnStorefront"/>
             <argument name="text" value="PageBuilderButtonItemText_OneCharacter"/>
             <argument name="type" value="PageBuilderButtonItemType_Secondary"/>
@@ -699,11 +699,11 @@
             <argument name="newTab" value="PageBuilderButtonItemOpenInNewTab_False"/>
             <argument name="index" value="2"/>
         </actionGroup>
-        <actionGroup ref="validateButtonGroupInlineAppearance" stepKey="validateButtonGroupAppearanceCMSPageStage">
+        <actionGroup ref="validateButtonGroupInlineAppearanceActionGroup" stepKey="validateButtonGroupAppearanceCMSPageStage">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
         </actionGroup>
-        <actionGroup ref="validateButtonItemsDifferentSizes" stepKey="validateButtonsSizesCMSPageStage">
+        <actionGroup ref="validateButtonItemsDifferentSizesActionGroup" stepKey="validateButtonsSizesCMSPageStage">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
         </actionGroup>
@@ -714,7 +714,7 @@
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <seeNumberOfElements selector="{{ButtonItemOnStorefront.all}}" userInput="2" stepKey="see2ButtonsCMSPageStorefront"/>
-        <actionGroup ref="validateButtonItemContent" stepKey="validateButton1CMSPageStorefront">
+        <actionGroup ref="validateButtonItemContentActionGroup" stepKey="validateButton1CMSPageStorefront">
             <argument name="page" value="ButtonItemOnStorefront"/>
             <argument name="text" value="PageBuilderButtonItemText_First"/>
             <argument name="type" value="PageBuilderButtonItemType_Secondary"/>
@@ -722,7 +722,7 @@
             <argument name="newTab" value="PageBuilderButtonItemOpenInNewTab_False"/>
             <argument name="index" value="1"/>
         </actionGroup>
-        <actionGroup ref="validateButtonItemContent" stepKey="validateButton2CMSPageStorefront">
+        <actionGroup ref="validateButtonItemContentActionGroup" stepKey="validateButton2CMSPageStorefront">
             <argument name="page" value="ButtonItemOnStorefront"/>
             <argument name="text" value="PageBuilderButtonItemText_OneCharacter"/>
             <argument name="type" value="PageBuilderButtonItemType_Secondary"/>
@@ -730,11 +730,11 @@
             <argument name="newTab" value="PageBuilderButtonItemOpenInNewTab_False"/>
             <argument name="index" value="2"/>
         </actionGroup>
-        <actionGroup ref="validateButtonGroupInlineAppearance" stepKey="validateButtonGroupAppearanceCMSPageStorefront">
+        <actionGroup ref="validateButtonGroupInlineAppearanceActionGroup" stepKey="validateButtonGroupAppearanceCMSPageStorefront">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
         </actionGroup>
-        <actionGroup ref="validateButtonItemsDifferentSizes" stepKey="validateButtonsSizesCMSPageStorefront">
+        <actionGroup ref="validateButtonItemsDifferentSizesActionGroup" stepKey="validateButtonsSizesCMSPageStorefront">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
         </actionGroup>
@@ -756,18 +756,18 @@
             <group value="pagebuilder-block-content"/>
             <group value="pagebuilder-buttons"/>
         </annotations>
-        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="setSameSizeOption">
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneralActionGroup" stepKey="setSameSizeOption">
             <argument name="property" value="PageBuilderButtonGroupSameSize_Enabled"/>
         </actionGroup>
-        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSizesCMSBlockStage">
+        <actionGroup ref="validateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSizesCMSBlockStage">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
         </actionGroup>
-        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSizesCMSPageStage">
+        <actionGroup ref="validateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSizesCMSPageStage">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
         </actionGroup>
-        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSizesCMSPageStorefront">
+        <actionGroup ref="validateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSizesCMSPageStorefront">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
         </actionGroup>
@@ -786,18 +786,18 @@
             <group value="pagebuilder-block-content"/>
             <group value="pagebuilder-buttons"/>
         </annotations>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="setAppearanceOption">
+        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="setAppearanceOption">
             <argument name="property" value="PageBuilderButtonGroupAppearance_Stacked"/>
         </actionGroup>
-        <actionGroup ref="validateButtonGroupStackedAppearance" stepKey="validateButtonGroupAppearanceCMSBlockStage">
+        <actionGroup ref="validateButtonGroupStackedAppearanceActionGroup" stepKey="validateButtonGroupAppearanceCMSBlockStage">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
         </actionGroup>
-        <actionGroup ref="validateButtonGroupStackedAppearance" stepKey="validateButtonGroupAppearanceCMSPageStage">
+        <actionGroup ref="validateButtonGroupStackedAppearanceActionGroup" stepKey="validateButtonGroupAppearanceCMSPageStage">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
         </actionGroup>
-        <actionGroup ref="validateButtonGroupStackedAppearance" stepKey="validateButtonGroupAppearanceCMSPageStorefront">
+        <actionGroup ref="validateButtonGroupStackedAppearanceActionGroup" stepKey="validateButtonGroupAppearanceCMSPageStorefront">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
         </actionGroup>
@@ -816,33 +816,33 @@
             <group value="pagebuilder-block-content"/>
             <group value="pagebuilder-buttons"/>
         </annotations>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="setAppearanceOption">
+        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="setAppearanceOption">
             <argument name="property" value="PageBuilderButtonGroupAppearance_Stacked"/>
         </actionGroup>
-        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="setSameSizeOption">
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneralActionGroup" stepKey="setSameSizeOption">
             <argument name="property" value="PageBuilderButtonGroupSameSize_Enabled"/>
         </actionGroup>
-        <actionGroup ref="validateButtonGroupStackedAppearance" stepKey="validateButtonGroupAppearanceCMSBlockStage">
+        <actionGroup ref="validateButtonGroupStackedAppearanceActionGroup" stepKey="validateButtonGroupAppearanceCMSBlockStage">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
         </actionGroup>
-        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSizesCMSBlockStage">
+        <actionGroup ref="validateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSizesCMSBlockStage">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
         </actionGroup>
-        <actionGroup ref="validateButtonGroupStackedAppearance" stepKey="validateButtonGroupAppearanceCMSPageStage">
+        <actionGroup ref="validateButtonGroupStackedAppearanceActionGroup" stepKey="validateButtonGroupAppearanceCMSPageStage">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
         </actionGroup>
-        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSizesCMSPageStage">
+        <actionGroup ref="validateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSizesCMSPageStage">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
         </actionGroup>
-        <actionGroup ref="validateButtonGroupStackedAppearance" stepKey="validateButtonGroupAppearanceCMSPageStorefront">
+        <actionGroup ref="validateButtonGroupStackedAppearanceActionGroup" stepKey="validateButtonGroupAppearanceCMSPageStorefront">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
         </actionGroup>
-        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSizesCMSPageStorefront">
+        <actionGroup ref="validateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSizesCMSPageStorefront">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
         </actionGroup>
@@ -864,7 +864,7 @@
         <before>
             <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
             <createData entity="_emptyCmsBlock" stepKey="createCMSBlock"/>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
             <actionGroup ref="NavigateToCreatedCMSBlockPageActionGroup" stepKey="navigateToCreatedCMSBlockPage1">
                 <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
             </actionGroup>
@@ -872,38 +872,38 @@
         <after>
             <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock"/>
             <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
         </after>
         <!-- Add Divider -->
         <comment userInput="Add Divider" stepKey="commentAddDivider"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderDividerContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragDividerIntoStage">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragDividerIntoStage">
             <argument name="contentType" value="PageBuilderDividerContentType"/>
         </actionGroup>
         <!-- Edit Divider -->
         <comment userInput="Edit Divider" stepKey="commentEditDivider"/>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuDivider">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuDivider">
             <argument name="contentType" value="PageBuilderDividerContentType"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="setDividerLineColor">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="setDividerLineColor">
             <argument name="property" value="PageBuilderDividerLineColor_Yellow"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="setDividerLineThickness">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="setDividerLineThickness">
             <argument name="property" value="PageBuilderDividerLineThickness_10"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="setDividerLineWidth">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="setDividerLineWidth">
             <argument name="property" value="PageBuilderDividerLineWidth_50"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsDivider"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettingsDivider"/>
         <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveCMSBlock"/>
         <!-- Validate CMS Block Stage -->
         <comment userInput="Validate CMS Block Stage" stepKey="commentValidateCMSBlockStage"/>
         <seeElement selector="{{DividerOnStage.color('1', PageBuilderDividerLineColor_Yellow.rgb)}}" stepKey="seeDividerColorCMSBlockStage"/>
         <seeElement selector="{{DividerOnStage.thickness('1', PageBuilderDividerLineThickness_10.value)}}" stepKey="seeDividerThicknessCMSBlockStage"/>
         <seeElement selector="{{DividerOnStage.width('1', PageBuilderDividerLineWidth_50.value)}}" stepKey="seeDividerWidthCMSBlockStage"/>
-        <actionGroup ref="validateDividerWidthPercentage" stepKey="validateDividerWidthCMSBlockStage">
+        <actionGroup ref="validateDividerWidthPercentageActionGroup" stepKey="validateDividerWidthCMSBlockStage">
             <argument name="page" value="DividerOnStage"/>
             <argument name="dividerWidth" value="PageBuilderDividerLineWidth_50"/>
         </actionGroup>
@@ -912,25 +912,25 @@
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPanelAddContentMenuSection">
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPanelAddContentMenuSection">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragBlockIntoStage">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDropBlock">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditAfterDropBlock">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
+        <actionGroup ref="searchBlockInGridActionGroup" stepKey="searchBlockInGrid">
             <argument name="block" value="$$createCMSBlock$$"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsBlock"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettingsBlock"/>
         <!-- Validate CMS Page Stage -->
         <comment userInput="Validate CMS Page Stage" stepKey="commentValidateCMSPageStage"/>
         <seeElement selector="{{DividerOnStorefront.color('1', PageBuilderDividerLineColor_Yellow.rgb)}}" stepKey="seeDividerColorCMSPageStage"/>
         <seeElement selector="{{DividerOnStorefront.thickness('1', PageBuilderDividerLineThickness_10.value)}}" stepKey="seeDividerThicknessCMSPageStage"/>
         <seeElement selector="{{DividerOnStorefront.width('1', PageBuilderDividerLineWidth_50.value)}}" stepKey="seeDividerWidthCMSPageStage"/>
-        <actionGroup ref="validateDividerWidthPercentage" stepKey="validateDividerWidthCMSPageStage">
+        <actionGroup ref="validateDividerWidthPercentageActionGroup" stepKey="validateDividerWidthCMSPageStage">
             <argument name="page" value="DividerOnStorefront"/>
             <argument name="dividerWidth" value="PageBuilderDividerLineWidth_50"/>
             <argument name="expectedOffset" value="{{PageBuilderDividerLineThickness_10.value}}*2"/>
@@ -944,7 +944,7 @@
         <seeElement selector="{{DividerOnStorefront.color('1', PageBuilderDividerLineColor_Yellow.rgb)}}" stepKey="seeDividerColorCMSPageStorefront"/>
         <seeElement selector="{{DividerOnStorefront.thickness('1', PageBuilderDividerLineThickness_10.value)}}" stepKey="seeDividerThicknessCMSPageStorefront"/>
         <seeElement selector="{{DividerOnStorefront.width('1', PageBuilderDividerLineWidth_50.value)}}" stepKey="seeDividerWidthCMSPageStorefront"/>
-        <actionGroup ref="validateDividerWidthPercentage" stepKey="validateDividerWidthCMSPageStorefront">
+        <actionGroup ref="validateDividerWidthPercentageActionGroup" stepKey="validateDividerWidthCMSPageStorefront">
             <argument name="page" value="DividerOnStorefront"/>
             <argument name="dividerWidth" value="PageBuilderDividerLineWidth_50"/>
         </actionGroup>
@@ -966,7 +966,7 @@
         <before>
             <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
             <createData entity="_emptyCmsBlock" stepKey="createCMSBlock"/>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
             <actionGroup ref="NavigateToCreatedCMSBlockPageActionGroup" stepKey="navigateToCreatedCMSBlockPage1">
                 <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
             </actionGroup>
@@ -975,53 +975,53 @@
             <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock"/>
             <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
             <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
-            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder2">
+            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="navigateToFolder2">
                 <argument name="FolderName" value="{{ImageFolder.name}}"/>
             </actionGroup>
-            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage2">
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="deleteImageFromStorage2">
                 <argument name="Image" value="ImageUpload3"/>
             </actionGroup>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
         </after>
         <!-- Add HTML -->
         <comment userInput="Add HTML" stepKey="commentAddHTML"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderHtmlContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragHTMLIntoStage">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragHTMLIntoStage">
             <argument name="contentType" value="PageBuilderHtmlContentType"/>
         </actionGroup>
         <!-- Edit HTML -->
         <comment userInput="Edit HTML" stepKey="commentEditHTML"/>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuHtml">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuHtml">
             <argument name="contentType" value="PageBuilderHtmlContentType"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelTextArea" stepKey="enterHtmlContent">
+        <actionGroup ref="fillSlideOutPanelTextAreaActionGroup" stepKey="enterHtmlContent">
             <argument name="property" value="PageBuilderHtmlPropertyButton"/>
         </actionGroup>
         <!-- Add media directives -->
         <comment userInput="Add media directives" stepKey="commentAddMediaDirectives"/>
-        <actionGroup ref="addPageLinkWidgetToHtmlCodeWYSIWYGDisabled" stepKey="addPageLinkWidgetToHtmlCodeWYSIWYGDisabled">
+        <actionGroup ref="addPageLinkWidgetToHtmlCodeWYSIWYGDisabledActionGroup" stepKey="addPageLinkWidgetToHtmlCodeWYSIWYGDisabled">
             <argument name="widget" value="PageBuilderTextArea_WidgetCMSPageLink"/>
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
-        <actionGroup ref="clickHtmlInsertImageButton" stepKey="clickInsertImageInHtmlCode"/>
-        <actionGroup ref="clickMediaGalleryStorageRootArrow" stepKey="clickMediaGalleryStorageRootArrow"/>
-        <actionGroup ref="CreateImageFolderActionGroup" stepKey="CreateImageFolder">
+        <actionGroup ref="clickHtmlInsertImageButtonActionGroup" stepKey="clickInsertImageInHtmlCode"/>
+        <actionGroup ref="clickMediaGalleryStorageRootArrowActionGroup" stepKey="clickMediaGalleryStorageRootArrow"/>
+        <actionGroup ref="CreateImageFolderActionGroup" stepKey="createImageFolder">
             <argument name="ImageFolder" value="ImageFolder"/>
         </actionGroup>
         <actionGroup ref="AttachImageActionGroup" stepKey="attachImage1">
             <argument name="Image" value="ImageUpload3"/>
         </actionGroup>
         <actionGroup ref="SaveImageActionGroup" stepKey="insertImage"/>
-        <actionGroup ref="assertTextareaContainsValue" stepKey="assertImageInTextareaValueBeforeSave">
+        <actionGroup ref="assertTextareaContainsValueActionGroup" stepKey="assertImageInTextareaValueBeforeSave">
             <argument name="value" value="{{ImageUpload3.value}}"/>
             <argument name="selector" value="{{HtmlOnConfiguration.textarea}}"/>
         </actionGroup>
-        <actionGroup ref="addVariableToHtmlCodeWYSIWYGDisabled" stepKey="addVariableToHtmlCodeWYSIWYGDisabled">
+        <actionGroup ref="addVariableToHtmlCodeWYSIWYGDisabledActionGroup" stepKey="addVariableToHtmlCodeWYSIWYGDisabled">
             <argument name="variable" value="PageBuilderTextArea_VariableBaseURL"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsHtml"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettingsHtml"/>
         <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveCMSBlock"/>
         <!-- Validate CMS Block Stage After Save -->
         <comment userInput="Validate CMS Block Stage After Save" stepKey="commentValidateCMSBlockStageAfterSave"/>
@@ -1045,19 +1045,19 @@
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPanelAddContentMenuSection">
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPanelAddContentMenuSection">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragBlockIntoStage">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDropBlock">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditAfterDropBlock">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
+        <actionGroup ref="searchBlockInGridActionGroup" stepKey="searchBlockInGrid">
             <argument name="block" value="$$createCMSBlock$$"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsBlock"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettingsBlock"/>
         <!-- Validate CMS Page Stage -->
         <comment userInput="Validate CMS Page Stage" stepKey="commentValidateCMSPageStage"/>
         <seeElement selector="{{HtmlOnStorefront.base('1')}}" stepKey="seeHtmlBaseCMSPageStage"/>

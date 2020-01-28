@@ -42,11 +42,11 @@
                 <requiredEntity createDataKey="createCategory"/>
             </createData>
             <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToCMSPage" stepKey="navigateToCMSPage">
+            <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToCMSPageActionGroup" stepKey="navigateToCMSPage">
                 <argument name="CMSPage" value="$$createCMSPage$$"/>
             </actionGroup>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <deleteData createDataKey="createProduct1" stepKey="deleteProduct1"/>
@@ -57,46 +57,46 @@
             <deleteData createDataKey="createProduct6" stepKey="deleteProduct6"/>
             <deleteData createDataKey="createCategory" stepKey="deleteCategory"/>
             <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionAddContent">
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionAddContent">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragProductsIntoStage">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragProductsIntoStage">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditAfterDrop">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
+        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="selectAppearance">
             <argument name="property" value="PageBuilderProductsProductGridAppearance"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="chooseSelectProductsBy">
+        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="chooseSelectProductsBy">
             <argument name="property" value="PageBuilderProductsSelectProductsByCategory"/>
         </actionGroup>
-        <actionGroup ref="selectCategoryFromCategoryDropDown" stepKey="selectCategory">
+        <actionGroup ref="selectCategoryFromCategoryDropDownActionGroup" stepKey="selectCategory">
             <argument name="category" value="$$createCategory.name$$"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterProductsCount">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterProductsCount">
             <argument name="property" value="PageBuilderProductsCountPropertyMax"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
-        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductCountStage">
+        <actionGroup ref="validateProductCountInProductsActionGroup" stepKey="validateProductCountStage">
             <argument name="page" value="ProductsOnStage"/>
             <argument name="count" value="6"/>
         </actionGroup>
-        <actionGroup ref="validateProductsWrapInGridAppearance" stepKey="validateProductsWrapInGridAppearanceStage"/>
+        <actionGroup ref="validateProductsWrapInGridAppearanceActionGroup" stepKey="validateProductsWrapInGridAppearanceStage"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate Storefront -->
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
-        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductCountStorefront">
+        <actionGroup ref="validateProductCountInProductsActionGroup" stepKey="validateProductCountStorefront">
             <argument name="page" value="ProductsOnStorefront"/>
             <argument name="count" value="6"/>
         </actionGroup>
-        <actionGroup ref="validateProductsWrapInGridAppearance" stepKey="validateProductsWrapInGridAppearanceStorefront">
+        <actionGroup ref="validateProductsWrapInGridAppearanceActionGroup" stepKey="validateProductsWrapInGridAppearanceStorefront">
             <argument name="page" value="ProductsOnStorefront"/>
         </actionGroup>
     </test>
@@ -114,7 +114,7 @@
             <group value="pagebuilder-productsGrid"/>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
             <createData entity="PageBuilderProductsSubCategory" stepKey="createPreReqCategory"/>
             <createData entity="_defaultProduct" stepKey="createPreReqProduct1">
                 <requiredEntity createDataKey="createPreReqCategory"/>
@@ -122,27 +122,27 @@
             <createData entity="_defaultProduct" stepKey="createPreReqProduct2">
                 <requiredEntity createDataKey="createPreReqCategory"/>
             </createData>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <deleteData createDataKey="createPreReqProduct1" stepKey="deletePreReqProduct1"/>
             <deleteData createDataKey="createPreReqProduct2" stepKey="deletePreReqProduct2"/>
             <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCategory"/>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionAddContent">
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionAddContent">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragProductsIntoStage">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragProductsIntoStage">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
         <!-- Validate Storefront -->
@@ -167,7 +167,7 @@
             <group value="pagebuilder-productsGrid"/>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
             <createData entity="PageBuilderProductsSubCategory" stepKey="createPreReqCategory"/>
             <createData entity="_defaultProduct" stepKey="createPreReqProduct1">
                 <requiredEntity createDataKey="createPreReqCategory"/>
@@ -181,8 +181,8 @@
             <createData entity="_defaultProduct" stepKey="createPreReqProduct4">
                 <requiredEntity createDataKey="createPreReqCategory"/>
             </createData>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <deleteData createDataKey="createPreReqProduct1" stepKey="deletePreReqProduct1"/>
@@ -190,106 +190,106 @@
             <deleteData createDataKey="createPreReqProduct3" stepKey="deletePreReqProduct3"/>
             <deleteData createDataKey="createPreReqProduct4" stepKey="deletePreReqProduct4"/>
             <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCategory"/>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
             <closeTab stepKey="closeTab"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionAddContent">
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionAddContent">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragProductsIntoStage">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragProductsIntoStage">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditAfterDrop">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
         <!-- Add both products from the created category -->
-        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
+        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="selectAppearance">
             <argument name="property" value="PageBuilderProductsProductGridAppearance"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="chooseSelectProductsBy">
+        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="chooseSelectProductsBy">
             <argument name="property" value="PageBuilderProductsSelectProductsByCondition"/>
         </actionGroup>
-        <actionGroup ref="addConditionToProductConditions" stepKey="addCategory">
+        <actionGroup ref="addConditionToProductConditionsActionGroup" stepKey="addCategory">
             <argument name="conditionInput" value="$$createPreReqCategory.id$$"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateDefaultNumberOfProductsToDisplay">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateDefaultNumberOfProductsToDisplay">
             <argument name="property" value="PageBuilderProductsCountPropertyFive"/>
         </actionGroup>
         <!-- Check form field validations -->
         <comment userInput="Check form field validations" stepKey="commentCheckFormFieldValidations"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterInvalidMinProductsCount">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterInvalidMinProductsCount">
             <argument name="property" value="PageBuilderProductsInvalidMinCountProperty"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSection" stepKey="validateInvalidMinCount">
+        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSectionActionGroup" stepKey="validateInvalidMinCount">
             <argument name="property" value="PageBuilderProductsInvalidMinCountProperty"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterInvalidEmptyProductsCount">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterInvalidEmptyProductsCount">
             <argument name="property" value="PageBuilderProductsInvalidEmptyCountProperty"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSection" stepKey="validateInvalidEmptyCount">
+        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSectionActionGroup" stepKey="validateInvalidEmptyCount">
             <argument name="property" value="PageBuilderProductsInvalidEmptyCountProperty"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterInvalidMaxProductsCount">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterInvalidMaxProductsCount">
             <argument name="property" value="PageBuilderProductsInvalidMaxCountProperty"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSection" stepKey="validateInvalidMaxCount">
+        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSectionActionGroup" stepKey="validateInvalidMaxCount">
             <argument name="property" value="PageBuilderProductsInvalidMaxCountProperty"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterInvalidTypeProductsCount">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterInvalidTypeProductsCount">
             <argument name="property" value="PageBuilderProductsInvalidTypeCountProperty"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSection" stepKey="validateInvalidTypeProductsCount">
+        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSectionActionGroup" stepKey="validateInvalidTypeProductsCount">
             <argument name="property" value="PageBuilderProductsInvalidTypeCountProperty"/>
         </actionGroup>
         <!-- Validate 999 max is valid -->
         <comment userInput="Validate 999 max is valid" stepKey="commentValidateMax"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMaxProductsCount">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterMaxProductsCount">
             <argument name="property" value="PageBuilderProductsCountPropertyMax"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveValidationEditPanelSettings"/>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveValidationEditPanelSettings"/>
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
         <!-- Only one of them should be showing -->
         <comment userInput="Set only one of them should be showing" stepKey="commentSetOnlyOneShouldBeShowing"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterOneProductsCount">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterOneProductsCount">
             <argument name="property" value="PageBuilderProductsCountPropertyOne"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage">
+        <actionGroup ref="validateProductCountInProductsActionGroup" stepKey="validateProductsCountStage">
             <argument name="page" value="ProductsOnStage"/>
             <argument name="count" value="1"/>
         </actionGroup>
-        <actionGroup ref="validateProductInProducts" stepKey="validateProductsStage">
+        <actionGroup ref="validateProductInProductsActionGroup" stepKey="validateProductsStage">
             <argument name="page" value="ProductsOnStage"/>
         </actionGroup>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
-        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStageAfterSave">
+        <actionGroup ref="validateProductCountInProductsActionGroup" stepKey="validateProductsCountStageAfterSave">
             <argument name="page" value="ProductsOnStage"/>
             <argument name="count" value="1"/>
         </actionGroup>
-        <actionGroup ref="validateProductInProducts" stepKey="validateProductsStageAfterSave">
+        <actionGroup ref="validateProductInProductsActionGroup" stepKey="validateProductsStageAfterSave">
             <argument name="page" value="ProductsOnStage"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <openNewTab stepKey="openNewTab"/>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductCountStorefront">
+        <actionGroup ref="validateProductCountInProductsActionGroup" stepKey="validateProductCountStorefront">
             <argument name="page" value="ProductsOnStorefront"/>
             <argument name="count" value="1"/>
         </actionGroup>
-        <actionGroup ref="validateProductInProducts" stepKey="validateProductsStorefront">
+        <actionGroup ref="validateProductInProductsActionGroup" stepKey="validateProductsStorefront">
             <argument name="page" value="ProductsOnStorefront"/>
             <argument name="isClickable" value="auto"/>
         </actionGroup>
@@ -298,34 +298,34 @@
         <switchToNextTab stepKey="switchToNextTab"/>
         <reloadPage stepKey="reloadPage"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage3"/>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage3"/>
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
         <!-- Four products should be showing -->
         <comment userInput="Four products should be showing" stepKey="commentFourProductsShouldBeShowing"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterFourProductsCount">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterFourProductsCount">
             <argument name="property" value="PageBuilderProductsCountPropertyFour"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings2"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage2"/>
-        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage2">
+        <actionGroup ref="validateProductCountInProductsActionGroup" stepKey="validateProductsCountStage2">
             <argument name="page" value="ProductsOnStage"/>
             <argument name="count" value="4"/>
         </actionGroup>
-        <actionGroup ref="validateProductInProducts" stepKey="validateProductsStage2">
+        <actionGroup ref="validateProductInProductsActionGroup" stepKey="validateProductsStage2">
             <argument name="page" value="ProductsOnStage"/>
         </actionGroup>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage2"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage2"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage2AfterSave"/>
-        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage2AfterSave">
+        <actionGroup ref="validateProductCountInProductsActionGroup" stepKey="validateProductsCountStage2AfterSave">
             <argument name="page" value="ProductsOnStage"/>
             <argument name="count" value="4"/>
         </actionGroup>
-        <actionGroup ref="validateProductInProducts" stepKey="validateProductsStage2AfterSave">
+        <actionGroup ref="validateProductInProductsActionGroup" stepKey="validateProductsStage2AfterSave">
             <argument name="page" value="ProductsOnStage"/>
         </actionGroup>
         <!-- Switch Back To Frontend -->
@@ -335,11 +335,11 @@
         <waitForPageLoad stepKey="waitForPageLoad2"/>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront2"/>
-        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductCountStorefront2">
+        <actionGroup ref="validateProductCountInProductsActionGroup" stepKey="validateProductCountStorefront2">
             <argument name="page" value="ProductsOnStorefront"/>
             <argument name="count" value="4"/>
         </actionGroup>
-        <actionGroup ref="validateProductInProducts" stepKey="validateProductsStorefront2">
+        <actionGroup ref="validateProductInProductsActionGroup" stepKey="validateProductsStorefront2">
             <argument name="page" value="ProductsOnStorefront"/>
             <argument name="isClickable" value="auto"/>
         </actionGroup>
@@ -358,7 +358,7 @@
             <group value="pagebuilder-productsGrid"/>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
             <createData entity="PageBuilderProductsSubCategory" stepKey="createPreReqCategory"/>
             <createData entity="_defaultProduct" stepKey="createPreReqProduct1">
                 <requiredEntity createDataKey="createPreReqCategory"/>
@@ -366,36 +366,36 @@
             <createData entity="_defaultProduct" stepKey="createPreReqProduct2">
                 <requiredEntity createDataKey="createPreReqCategory"/>
             </createData>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <deleteData createDataKey="createPreReqProduct1" stepKey="deletePreReqProduct1"/>
             <deleteData createDataKey="createPreReqProduct2" stepKey="deletePreReqProduct2"/>
             <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCategory"/>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionAddContent">
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionAddContent">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragProductsIntoStage">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragProductsIntoStage">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditAfterDrop">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
+        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="selectAppearance">
             <argument name="property" value="PageBuilderProductsProductGridAppearance"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="chooseSelectProductsBy">
+        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="chooseSelectProductsBy">
             <argument name="property" value="PageBuilderProductsSelectProductsByCondition"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <waitForElementVisible selector="{{ProductsOnStage.product('1')}}" stepKey="waitForProductsToLoad"/>
@@ -404,7 +404,7 @@
             <actualResult type="variable">grabProducts</actualResult>
             <expectedResult type="int">2</expectedResult>
         </assertGreaterThanOrEqual>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
         <!-- Validate Storefront -->
@@ -430,71 +430,71 @@
             <group value="pagebuilder-productsGrid"/>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
             <createData entity="PageBuilderProductsSubCategory" stepKey="createPreReqCategory"/>
             <createData entity="_defaultProduct" stepKey="createPreReqProduct">
                 <requiredEntity createDataKey="createPreReqCategory"/>
             </createData>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <deleteData createDataKey="createPreReqProduct" stepKey="deletePreReqProduct"/>
             <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCategory"/>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditAfterDrop">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
         <!-- Add both products from the created category -->
-        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
+        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="selectAppearance">
             <argument name="property" value="PageBuilderProductsProductGridAppearance"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="chooseSelectProductsBy">
+        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="chooseSelectProductsBy">
             <argument name="property" value="PageBuilderProductsSelectProductsByCondition"/>
         </actionGroup>
-        <actionGroup ref="addConditionToProductConditions" stepKey="addCategory">
+        <actionGroup ref="addConditionToProductConditionsActionGroup" stepKey="addCategory">
             <argument name="conditionInput" value="$$createPreReqCategory.id$$"/>
         </actionGroup>
         <!-- Update Values -->
         <comment userInput="Update Values" stepKey="commentUpdateValues"/>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAlignment">
+        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAlignment">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBorder">
+        <actionGroup ref="selectSlideOutPanelFieldActionGroup" stepKey="enterBorder">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBorderColor">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBorderColor">
             <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBorderWidth">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBorderWidth">
             <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBorderRadius">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBorderRadius">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterCssClasses">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterCssClasses">
             <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldMargins" stepKey="enterMargins">
+        <actionGroup ref="fillSlideOutPanelFieldMarginsActionGroup" stepKey="enterMargins">
             <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldPadding" stepKey="enterPadding">
+        <actionGroup ref="fillSlideOutPanelFieldPaddingActionGroup" stepKey="enterPadding">
             <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateAllAdvancedStage">
+        <actionGroup ref="validateAdvancedStyleWithAllUpdatedActionGroup" stepKey="validateAllAdvancedStage">
             <argument name="page" value="ProductsOnStage"/>
             <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
@@ -506,41 +506,41 @@
             <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
             <argument name="index" value="1"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
-        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
+        <actionGroup ref="seeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateAlignment">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBorder">
+        <actionGroup ref="seeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateBorder">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderColor">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderColor">
             <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderWidth">
             <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderRadius">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderRadius">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateCssClasses">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateCssClasses">
             <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
         </actionGroup>
-        <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins">
+        <actionGroup ref="seeInMarginFieldsSlideOutPanelActionGroup" stepKey="validateMargins">
             <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
         </actionGroup>
-        <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding">
+        <actionGroup ref="seeInPaddingFieldsSlideOutPanelActionGroup" stepKey="validatePadding">
             <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
-        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <actionGroup ref="closeEditPanelSettingsActionGroup" stepKey="closeEditPanelSettings"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
-        <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateAllAdvancedStage2">
+        <actionGroup ref="validateAdvancedStyleWithAllUpdatedActionGroup" stepKey="validateAllAdvancedStage2">
             <argument name="page" value="ProductsOnStage"/>
             <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
@@ -552,41 +552,41 @@
             <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
             <argument name="index" value="1"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage3">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage3">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
-        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment2">
+        <actionGroup ref="seeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateAlignment2">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBorder2">
+        <actionGroup ref="seeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateBorder2">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderColor2">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderColor2">
             <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth2">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderWidth2">
             <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderRadius2">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderRadius2">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateCssClasses2">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateCssClasses2">
             <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
         </actionGroup>
-        <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins2">
+        <actionGroup ref="seeInMarginFieldsSlideOutPanelActionGroup" stepKey="validateMargins2">
             <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
         </actionGroup>
-        <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding2">
+        <actionGroup ref="seeInPaddingFieldsSlideOutPanelActionGroup" stepKey="validatePadding2">
             <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateAllAdvancedStorefront">
+        <actionGroup ref="validateAdvancedStyleWithAllUpdatedActionGroup" stepKey="validateAllAdvancedStorefront">
             <argument name="page" value="ProductsOnStorefront"/>
             <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
@@ -615,28 +615,28 @@
             <group value="pagebuilder-productsGrid"/>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
             <createData entity="PageBuilderProductsSubCategory" stepKey="createPreReqCategory"/>
             <createData entity="_defaultProduct" stepKey="createPreReqProduct1">
                 <requiredEntity createDataKey="createPreReqCategory"/>
             </createData>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <deleteData createDataKey="createPreReqProduct1" stepKey="deletePreReqProduct1"/>
             <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCategory"/>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <!-- Drag new column onto column group to make 1/12 column -->
         <comment userInput="Drag new column onto column group to make 1/12 column" stepKey="commentDragNewColumnToGroupMakeFirstColumnSmall"/>
-        <actionGroup ref="dragContentTypeToContainer" stepKey="dragColumnIntoFirstColumnGroup">
+        <actionGroup ref="dragContentTypeToContainerActionGroup" stepKey="dragColumnIntoFirstColumnGroup">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="contentTypeIndex" value="3"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
@@ -644,27 +644,27 @@
         </actionGroup>
         <!-- Add Products to Stage -->
         <comment userInput="Add Products to Stage" stepKey="addProductsToStage"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionAddContent">
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionAddContent">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToContainer" stepKey="dragProductsOntoColumn">
+        <actionGroup ref="dragContentTypeToContainerActionGroup" stepKey="dragProductsOntoColumn">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="1" />
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanel">
+        <actionGroup ref="openPageBuilderEditPanelByIndexActionGroup" stepKey="openEditPanel">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
+        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="selectAppearance">
             <argument name="property" value="PageBuilderProductsProductGridAppearance"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="chooseSelectProductsBy">
+        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="chooseSelectProductsBy">
             <argument name="property" value="PageBuilderProductsSelectProductsByCondition"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="User sees Products displayed in column on Stage" stepKey="confirmProductsOnStage"/>
-        <actionGroup ref="validateContentTypeInsideContainerStage" stepKey="checkContentTypeInContainerStage">
+        <actionGroup ref="validateContentTypeInsideContainerStageActionGroup" stepKey="checkContentTypeInContainerStage">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="contentTypeIndex" value="1"/>
@@ -690,10 +690,10 @@
             <expectedResult type="variable">productActionsWidth</expectedResult>
         </assertGreaterThan>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage2"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate stage after save" stepKey="validateProductsOnStage"/>
-        <actionGroup ref="validateContentTypeInsideContainerStage" stepKey="checkContentTypeInContainerStage2">
+        <actionGroup ref="validateContentTypeInsideContainerStageActionGroup" stepKey="checkContentTypeInContainerStage2">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="contentTypeIndex" value="1"/>
@@ -720,7 +720,7 @@
         </assertGreaterThan>
         <!-- Validate Storefront -->
         <comment userInput="View Products inside column on storefront" stepKey="viewProductsOnStorefront"/>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
         <!-- Validating products is smaller than column Storefront -->
@@ -763,71 +763,71 @@
             <createData entity="SortProduct2" stepKey="createPreReqProduct2">
                 <requiredEntity createDataKey="createPreReqCategory"/>
             </createData>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <deleteData createDataKey="createPreReqProduct1" stepKey="deletePreReqProduct1"/>
             <deleteData createDataKey="createPreReqProduct2" stepKey="deletePreReqProduct2"/>
             <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCategory"/>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionAddContent">
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionAddContent">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragProductsIntoStage">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragProductsIntoStage">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditAfterDrop">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
+        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="selectAppearance">
             <argument name="property" value="PageBuilderProductsProductGridAppearance"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="chooseSelectProductsBy">
+        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="chooseSelectProductsBy">
             <argument name="property" value="PageBuilderProductsSelectProductsByCondition"/>
         </actionGroup>
-        <actionGroup ref="addConditionToProductConditions" stepKey="addCategory">
+        <actionGroup ref="addConditionToProductConditionsActionGroup" stepKey="addCategory">
             <argument name="conditionInput" value="$$createPreReqCategory.id$$"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterDefaultSortBy">
+        <actionGroup ref="selectSlideOutPanelFieldGeneralActionGroup" stepKey="enterDefaultSortBy">
             <argument name="property" value="PageBuilderProductsSortByNewestTop"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <!-- Validate stage -->
         <comment userInput="Validate stage" stepKey="commentValidateStage"/>
-        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage">
+        <actionGroup ref="validateProductCountInProductsActionGroup" stepKey="validateProductsCountStage">
             <argument name="page" value="ProductsOnStage"/>
             <argument name="count" value="2"/>
         </actionGroup>
-        <actionGroup ref="validateProductInProducts" stepKey="validateProduct1Stage">
+        <actionGroup ref="validateProductInProductsActionGroup" stepKey="validateProduct1Stage">
             <argument name="page" value="ProductsOnStage"/>
             <argument name="product" value="SortProduct1"/>
             <argument name="productIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="validateProductInProducts" stepKey="validateProduct2Stage">
+        <actionGroup ref="validateProductInProductsActionGroup" stepKey="validateProduct2Stage">
             <argument name="page" value="ProductsOnStage"/>
             <argument name="product" value="SortProduct2"/>
             <argument name="productIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <!-- Validate stage -->
         <comment userInput="Validate stage" stepKey="commentValidateStage1"/>
-        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage1">
+        <actionGroup ref="validateProductCountInProductsActionGroup" stepKey="validateProductsCountStage1">
             <argument name="page" value="ProductsOnStage"/>
             <argument name="count" value="2"/>
         </actionGroup>
-        <actionGroup ref="validateProductInProducts" stepKey="validateProduct1Stage1">
+        <actionGroup ref="validateProductInProductsActionGroup" stepKey="validateProduct1Stage1">
             <argument name="page" value="ProductsOnStage"/>
             <argument name="product" value="SortProduct1"/>
             <argument name="productIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="validateProductInProducts" stepKey="validateProduct2Stage1">
+        <actionGroup ref="validateProductInProductsActionGroup" stepKey="validateProduct2Stage1">
             <argument name="page" value="ProductsOnStage"/>
             <argument name="product" value="SortProduct2"/>
             <argument name="productIndex" value="1"/>
@@ -835,20 +835,20 @@
         <!-- Validate default order on store front -->
         <comment userInput="Validate default order on store front" stepKey="commentValidateDefaultOrder"/>
         <openNewTab stepKey="openTabToValidateStorefront" />
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductCountStorefront">
+        <actionGroup ref="validateProductCountInProductsActionGroup" stepKey="validateProductCountStorefront">
             <argument name="page" value="ProductsOnStorefront"/>
             <argument name="count" value="2"/>
         </actionGroup>
-        <actionGroup ref="validateProductInProducts" stepKey="validateProduct1Storefront">
+        <actionGroup ref="validateProductInProductsActionGroup" stepKey="validateProduct1Storefront">
             <argument name="page" value="ProductsOnStorefront"/>
             <argument name="product" value="SortProduct1"/>
             <argument name="productIndex" value="2"/>
             <argument name="isClickable" value="auto"/>
         </actionGroup>
-        <actionGroup ref="validateProductInProducts" stepKey="validateProduct2Storefront">
+        <actionGroup ref="validateProductInProductsActionGroup" stepKey="validateProduct2Storefront">
             <argument name="page" value="ProductsOnStorefront"/>
             <argument name="product" value="SortProduct2"/>
             <argument name="productIndex" value="1"/>
@@ -857,42 +857,42 @@
         <closeTab stepKey="closeStorefrontTab" />
         <reloadPage stepKey="reloadPage" />
         <waitForPageLoad stepKey="waitForReload" />
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage1"/>
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage1"/>
         <!-- Update sort by -->
         <comment userInput="Update sort by" stepKey="commentUpdateSortBy"/>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditForSortBy">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditForSortBy">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterSortBy">
+        <actionGroup ref="selectSlideOutPanelFieldGeneralActionGroup" stepKey="enterSortBy">
             <argument name="property" value="PageBuilderProductsSortByOldestTop"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
-        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage2">
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings1"/>
+        <actionGroup ref="validateProductCountInProductsActionGroup" stepKey="validateProductsCountStage2">
             <argument name="page" value="ProductsOnStage"/>
             <argument name="count" value="2"/>
         </actionGroup>
-        <actionGroup ref="validateProductInProducts" stepKey="validateProduct1Stage2">
+        <actionGroup ref="validateProductInProductsActionGroup" stepKey="validateProduct1Stage2">
             <argument name="page" value="ProductsOnStage"/>
             <argument name="product" value="SortProduct1"/>
             <argument name="productIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="validateProductInProducts" stepKey="validateProduct2Stage2">
+        <actionGroup ref="validateProductInProductsActionGroup" stepKey="validateProduct2Stage2">
             <argument name="page" value="ProductsOnStage"/>
             <argument name="product" value="SortProduct2"/>
             <argument name="productIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage1"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
-        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage3">
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage2"/>
+        <actionGroup ref="validateProductCountInProductsActionGroup" stepKey="validateProductsCountStage3">
             <argument name="page" value="ProductsOnStage"/>
             <argument name="count" value="2"/>
         </actionGroup>
-        <actionGroup ref="validateProductInProducts" stepKey="validateProduct1Stage3">
+        <actionGroup ref="validateProductInProductsActionGroup" stepKey="validateProduct1Stage3">
             <argument name="page" value="ProductsOnStage"/>
             <argument name="product" value="SortProduct1"/>
             <argument name="productIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="validateProductInProducts" stepKey="validateProduct2Stage3">
+        <actionGroup ref="validateProductInProductsActionGroup" stepKey="validateProduct2Stage3">
             <argument name="page" value="ProductsOnStage"/>
             <argument name="product" value="SortProduct2"/>
             <argument name="productIndex" value="2"/>
@@ -900,20 +900,20 @@
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <openNewTab stepKey="openTabToValidateStorefront1" />
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront1">
+        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront1">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductCountStorefront1">
+        <actionGroup ref="validateProductCountInProductsActionGroup" stepKey="validateProductCountStorefront1">
             <argument name="page" value="ProductsOnStorefront"/>
             <argument name="count" value="2"/>
         </actionGroup>
-        <actionGroup ref="validateProductInProducts" stepKey="validateProduct1Storefront1">
+        <actionGroup ref="validateProductInProductsActionGroup" stepKey="validateProduct1Storefront1">
             <argument name="page" value="ProductsOnStorefront"/>
             <argument name="product" value="SortProduct1"/>
             <argument name="productIndex" value="1"/>
             <argument name="isClickable" value="auto"/>
         </actionGroup>
-        <actionGroup ref="validateProductInProducts" stepKey="validateProduct2Storefront1">
+        <actionGroup ref="validateProductInProductsActionGroup" stepKey="validateProduct2Storefront1">
             <argument name="page" value="ProductsOnStorefront"/>
             <argument name="product" value="SortProduct2"/>
             <argument name="productIndex" value="2"/>
@@ -947,11 +947,11 @@
                 <requiredEntity createDataKey="createCategory2"/>
             </createData>
             <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToCMSPage" stepKey="navigateToCMSPage">
+            <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToCMSPageActionGroup" stepKey="navigateToCMSPage">
                 <argument name="CMSPage" value="$$createCMSPage$$"/>
             </actionGroup>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <deleteData createDataKey="createProduct1" stepKey="deleteProduct1"/>
@@ -960,45 +960,45 @@
             <deleteData createDataKey="createCategory1" stepKey="deleteCategory1"/>
             <deleteData createDataKey="createCategory2" stepKey="deleteCategory2"/>
             <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionAddContent">
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionAddContent">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragProductsIntoStage">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragProductsIntoStage">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditAfterDrop">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
+        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="selectAppearance">
             <argument name="property" value="PageBuilderProductsProductGridAppearance"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="chooseSelectProductsBy">
+        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="chooseSelectProductsBy">
             <argument name="property" value="PageBuilderProductsSelectProductsByCategory"/>
         </actionGroup>
-        <actionGroup ref="selectCategoryFromCategoryDropDown" stepKey="selectCategory">
+        <actionGroup ref="selectCategoryFromCategoryDropDownActionGroup" stepKey="selectCategory">
             <argument name="category" value="$$createCategory1.name$$"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterSortBy">
+        <actionGroup ref="selectSlideOutPanelFieldGeneralActionGroup" stepKey="enterSortBy">
             <argument name="property" value="PageBuilderProductsSortByPosition"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterProductsCount">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterProductsCount">
             <argument name="property" value="PageBuilderProductsCountPropertyFour"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage">
+        <actionGroup ref="validateProductCountInProductsActionGroup" stepKey="validateProductsCountStage">
             <argument name="page" value="ProductsOnStage"/>
             <argument name="count" value="2"/>
         </actionGroup>
-        <actionGroup ref="validateProductInProducts" stepKey="validateProduct1Stage">
+        <actionGroup ref="validateProductInProductsActionGroup" stepKey="validateProduct1Stage">
             <argument name="page" value="ProductsOnStage"/>
             <argument name="product" value="SortProduct2"/>
             <argument name="productIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="validateProductInProducts" stepKey="validateProduct2Stage">
+        <actionGroup ref="validateProductInProductsActionGroup" stepKey="validateProduct2Stage">
             <argument name="page" value="ProductsOnStage"/>
             <argument name="product" value="SortProduct1"/>
             <argument name="productIndex" value="2"/>
@@ -1009,17 +1009,17 @@
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
-        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductCountStorefront">
+        <actionGroup ref="validateProductCountInProductsActionGroup" stepKey="validateProductCountStorefront">
             <argument name="page" value="ProductsOnStorefront"/>
             <argument name="count" value="2"/>
         </actionGroup>
-        <actionGroup ref="validateProductInProducts" stepKey="validateProduct1Storefront">
+        <actionGroup ref="validateProductInProductsActionGroup" stepKey="validateProduct1Storefront">
             <argument name="page" value="ProductsOnStorefront"/>
             <argument name="product" value="SortProduct2"/>
             <argument name="productIndex" value="1"/>
             <argument name="isClickable" value="auto"/>
         </actionGroup>
-        <actionGroup ref="validateProductInProducts" stepKey="validateProduct2Storefront">
+        <actionGroup ref="validateProductInProductsActionGroup" stepKey="validateProduct2Storefront">
             <argument name="page" value="ProductsOnStorefront"/>
             <argument name="product" value="SortProduct1"/>
             <argument name="productIndex" value="2"/>
@@ -1044,7 +1044,7 @@
         <actionGroup ref="NavigateToCreatedCategoryActionGroup" stepKey="navigateToCategory1" after="commentChangeProductPositionInCategory">
             <argument name="Category" value="$$createCategory1$$"/>
         </actionGroup>
-        <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminCategorySection" after="navigateToCategory1">
+        <actionGroup ref="expandAdminCategorySectionActionGroup" stepKey="expandAdminCategorySection" after="navigateToCategory1">
             <argument name="sectionSelector" value="{{AdminCategoryBasicFieldSection.productsInCategory}}"/>
             <argument name="sectionDependentSelector" value="{{AdminCategoryContentSection.productTableRow}}"/>
         </actionGroup>
@@ -1056,23 +1056,23 @@
         <pressKey selector="{{AdminCategoryProductsGridSection.rowPosition('2')}}" parameterArray="[\Facebook\WebDriver\WebDriverKeys::BACKSPACE]" stepKey="clearPositionValueForProduct2" after="waitForPositionFieldForProduct2"/>
         <fillField selector="{{AdminCategoryProductsGridSection.rowPosition('2')}}" userInput="1" stepKey="changePositionForProduct2" after="clearPositionValueForProduct2"/>
         <pressKey selector="{{AdminCategoryProductsGridSection.rowPosition('2')}}" parameterArray="[\Facebook\WebDriver\WebDriverKeys::ENTER]" stepKey="enterPositionValueForProduct2" after="changePositionForProduct2"/>
-        <actionGroup ref="saveCatalogCategory" stepKey="saveCatalogCategory" after="enterPositionValueForProduct2"/>
+        <actionGroup ref="saveCatalogCategoryActionGroup" stepKey="saveCatalogCategory" after="enterPositionValueForProduct2"/>
         <!-- Stage: Validate Sort Order Changed -->
         <comment userInput="Stage: Validate Sort Order Changed" stepKey="commentValidateStage2" after="saveCatalogCategory"/>
-        <actionGroup ref="navigateToCMSPage" stepKey="navigateToCMSPage2" after="commentValidateStage2">
+        <actionGroup ref="navigateToCMSPageActionGroup" stepKey="navigateToCMSPage2" after="commentValidateStage2">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2" after="navigateToCMSPage2"/>
-        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage2" after="switchToPageBuilderStage2">
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage2" after="navigateToCMSPage2"/>
+        <actionGroup ref="validateProductCountInProductsActionGroup" stepKey="validateProductsCountStage2" after="switchToPageBuilderStage2">
             <argument name="page" value="ProductsOnStage"/>
             <argument name="count" value="2"/>
         </actionGroup>
-        <actionGroup ref="validateProductInProducts" stepKey="validateProduct1Stage2" after="validateProductsCountStage2">
+        <actionGroup ref="validateProductInProductsActionGroup" stepKey="validateProduct1Stage2" after="validateProductsCountStage2">
             <argument name="page" value="ProductsOnStage"/>
             <argument name="product" value="SortProduct1"/>
             <argument name="productIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="validateProductInProducts" stepKey="validateProduct2Stage2" after="validateProduct1Stage2">
+        <actionGroup ref="validateProductInProductsActionGroup" stepKey="validateProduct2Stage2" after="validateProduct1Stage2">
             <argument name="page" value="ProductsOnStage"/>
             <argument name="product" value="SortProduct2"/>
             <argument name="productIndex" value="2"/>
@@ -1082,17 +1082,17 @@
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront2" after="commentValidateStorefront2">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
-        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductCountStorefront2" after="navigateToCMSPageStorefront2">
+        <actionGroup ref="validateProductCountInProductsActionGroup" stepKey="validateProductCountStorefront2" after="navigateToCMSPageStorefront2">
             <argument name="page" value="ProductsOnStorefront"/>
             <argument name="count" value="2"/>
         </actionGroup>
-        <actionGroup ref="validateProductInProducts" stepKey="validateProduct1Storefront2" after="validateProductCountStorefront2">
+        <actionGroup ref="validateProductInProductsActionGroup" stepKey="validateProduct1Storefront2" after="validateProductCountStorefront2">
             <argument name="page" value="ProductsOnStorefront"/>
             <argument name="product" value="SortProduct1"/>
             <argument name="productIndex" value="1"/>
             <argument name="isClickable" value="auto"/>
         </actionGroup>
-        <actionGroup ref="validateProductInProducts" stepKey="validateProduct2Storefront2" after="validateProduct1Storefront2">
+        <actionGroup ref="validateProductInProductsActionGroup" stepKey="validateProduct2Storefront2" after="validateProduct1Storefront2">
             <argument name="page" value="ProductsOnStorefront"/>
             <argument name="product" value="SortProduct2"/>
             <argument name="productIndex" value="2"/>
@@ -1118,10 +1118,10 @@
         <!-- Delete Category -->
         <comment userInput="Delete Category" stepKey="commentDeleteCategory" after="validateProduct2Storefront"/>
         <deleteData createDataKey="createCategory1" stepKey="deleteCategory1" after="commentDeleteCategory"/>
-        <actionGroup ref="navigateToCMSPage" stepKey="navigateToCMSPage2" after="deleteCategory1">
+        <actionGroup ref="navigateToCMSPageActionGroup" stepKey="navigateToCMSPage2" after="deleteCategory1">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2" after="navigateToCMSPage2"/>
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage2" after="navigateToCMSPage2"/>
         <see userInput="{{PageBuilderProductsMessage.noProductsFound}}" selector="{{ProductsOnStage.emptyProductsPlaceholder('1')}}" stepKey="seeNoProductsMessage" after="switchToPageBuilderStage2"/>
         <!-- Storefront: Validate Sort Order Changed -->
         <comment userInput="Storefront: Validate Sort Order Changed" stepKey="commentValidateStorefront2" after="seeNoProductsMessage"/>
@@ -1152,55 +1152,55 @@
                 <requiredEntity createDataKey="createPreReqCategory"/>
             </createData>
             <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToCMSPage" stepKey="navigateToCMSPage">
+            <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToCMSPageActionGroup" stepKey="navigateToCMSPage">
                 <argument name="CMSPage" value="$$createCMSPage$$"/>
             </actionGroup>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <deleteData createDataKey="createProduct1" stepKey="deleteProduct1"/>
             <deleteData createDataKey="createProduct2" stepKey="deleteProduct2"/>
             <deleteData createDataKey="createPreReqCategory" stepKey="deleteCategory1"/>
             <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionAddContent">
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionAddContent">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragProductsIntoStage">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragProductsIntoStage">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditAfterDrop">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
+        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="selectAppearance">
             <argument name="property" value="PageBuilderProductsProductGridAppearance"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="chooseSelectProductsBy">
+        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="chooseSelectProductsBy">
             <argument name="property" value="PageBuilderProductsSelectProductsBySKU"/>
         </actionGroup>
-        <actionGroup ref="addSKUsToSelectProductsBySKU" stepKey="addProductsSKUsToInputField">
+        <actionGroup ref="addSKUsToSelectProductsBySKUActionGroup" stepKey="addProductsSKUsToInputField">
             <argument name="SKUs" value="$$createProduct2.sku$$,$$createProduct1.sku$$"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterSortBy">
+        <actionGroup ref="selectSlideOutPanelFieldGeneralActionGroup" stepKey="enterSortBy">
             <argument name="property" value="PageBuilderProductsSortBySKUPosition"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterProductsCount">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterProductsCount">
             <argument name="property" value="PageBuilderProductsCountPropertyFour"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
-        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage">
+        <actionGroup ref="validateProductCountInProductsActionGroup" stepKey="validateProductsCountStage">
             <argument name="page" value="ProductsOnStage"/>
             <argument name="count" value="2"/>
         </actionGroup>
-        <actionGroup ref="validateProductInProducts" stepKey="validateProduct1Stage">
+        <actionGroup ref="validateProductInProductsActionGroup" stepKey="validateProduct1Stage">
             <argument name="page" value="ProductsOnStage"/>
             <argument name="product" value="SortProduct2"/>
             <argument name="productIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="validateProductInProducts" stepKey="validateProduct2Stage">
+        <actionGroup ref="validateProductInProductsActionGroup" stepKey="validateProduct2Stage">
             <argument name="page" value="ProductsOnStage"/>
             <argument name="product" value="SortProduct1"/>
             <argument name="productIndex" value="2"/>
@@ -1211,17 +1211,17 @@
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
-        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductCountStorefront">
+        <actionGroup ref="validateProductCountInProductsActionGroup" stepKey="validateProductCountStorefront">
             <argument name="page" value="ProductsOnStorefront"/>
             <argument name="count" value="2"/>
         </actionGroup>
-        <actionGroup ref="validateProductInProducts" stepKey="validateProduct1Storefront">
+        <actionGroup ref="validateProductInProductsActionGroup" stepKey="validateProduct1Storefront">
             <argument name="page" value="ProductsOnStorefront"/>
             <argument name="product" value="SortProduct2"/>
             <argument name="productIndex" value="1"/>
             <argument name="isClickable" value="auto"/>
         </actionGroup>
-        <actionGroup ref="validateProductInProducts" stepKey="validateProduct2Storefront">
+        <actionGroup ref="validateProductInProductsActionGroup" stepKey="validateProduct2Storefront">
             <argument name="page" value="ProductsOnStorefront"/>
             <argument name="product" value="SortProduct1"/>
             <argument name="productIndex" value="2"/>
@@ -1230,26 +1230,26 @@
         <closeTab stepKey="closeStorefrontTab"/>
         <reloadPage stepKey="reloadPage"/>
         <waitForPageLoad stepKey="waitForReload"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage1"/>
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage1"/>
         <!-- Change position of product SKUs -->
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditChangeSKUsPositions">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditChangeSKUsPositions">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="addSKUsToSelectProductsBySKU" stepKey="changeProductsSKUsInInputField2">
+        <actionGroup ref="addSKUsToSelectProductsBySKUActionGroup" stepKey="changeProductsSKUsInInputField2">
             <argument name="SKUs" value="$$createProduct1.sku$$, $$createProduct2.sku$$"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings2"/>
         <!-- Validate Stage -->
-        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage2">
+        <actionGroup ref="validateProductCountInProductsActionGroup" stepKey="validateProductsCountStage2">
             <argument name="page" value="ProductsOnStage"/>
             <argument name="count" value="2"/>
         </actionGroup>
-        <actionGroup ref="validateProductInProducts" stepKey="validateProduct1Stage2">
+        <actionGroup ref="validateProductInProductsActionGroup" stepKey="validateProduct1Stage2">
             <argument name="page" value="ProductsOnStage"/>
             <argument name="product" value="SortProduct1"/>
             <argument name="productIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="validateProductInProducts" stepKey="validateProduct2Stage2">
+        <actionGroup ref="validateProductInProductsActionGroup" stepKey="validateProduct2Stage2">
             <argument name="page" value="ProductsOnStage"/>
             <argument name="product" value="SortProduct2"/>
             <argument name="productIndex" value="2"/>
@@ -1259,17 +1259,17 @@
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront2">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
-        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductCountStorefront2">
+        <actionGroup ref="validateProductCountInProductsActionGroup" stepKey="validateProductCountStorefront2">
             <argument name="page" value="ProductsOnStorefront"/>
             <argument name="count" value="2"/>
         </actionGroup>
-        <actionGroup ref="validateProductInProducts" stepKey="validateProduct1Storefront2">
+        <actionGroup ref="validateProductInProductsActionGroup" stepKey="validateProduct1Storefront2">
             <argument name="page" value="ProductsOnStorefront"/>
             <argument name="product" value="SortProduct1"/>
             <argument name="productIndex" value="1"/>
             <argument name="isClickable" value="auto"/>
         </actionGroup>
-        <actionGroup ref="validateProductInProducts" stepKey="validateProduct2Storefront2">
+        <actionGroup ref="validateProductInProductsActionGroup" stepKey="validateProduct2Storefront2">
             <argument name="page" value="ProductsOnStorefront"/>
             <argument name="product" value="SortProduct2"/>
             <argument name="productIndex" value="2"/>
@@ -1298,11 +1298,11 @@
                 <requiredEntity createDataKey="createPreReqCategory"/>
             </createData>
             <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToCMSPage" stepKey="navigateToCMSPage">
+            <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToCMSPageActionGroup" stepKey="navigateToCMSPage">
                 <argument name="CMSPage" value="$$createCMSPage$$"/>
             </actionGroup>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <deleteData createDataKey="createProduct2" stepKey="deleteProduct2"/>
@@ -1312,44 +1312,44 @@
                 <argument name="sku" value="Updated-SKU"/>
             </actionGroup>
             <actionGroup ref="NavigateToAndResetProductGridToDefaultViewActionGroup" stepKey="resetProductGrid"/>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionAddContent">
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionAddContent">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragProductsIntoStage">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragProductsIntoStage">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditAfterDrop">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
+        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="selectAppearance">
             <argument name="property" value="PageBuilderProductsProductGridAppearance"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="chooseSelectProductsBy">
+        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="chooseSelectProductsBy">
             <argument name="property" value="PageBuilderProductsSelectProductsBySKU"/>
         </actionGroup>
-        <actionGroup ref="addSKUsToSelectProductsBySKU" stepKey="addProductsSKUsToInputField">
+        <actionGroup ref="addSKUsToSelectProductsBySKUActionGroup" stepKey="addProductsSKUsToInputField">
             <argument name="SKUs" value="$$createProduct2.sku$$,$$createProduct1.sku$$"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterSortBy">
+        <actionGroup ref="selectSlideOutPanelFieldGeneralActionGroup" stepKey="enterSortBy">
             <argument name="property" value="PageBuilderProductsSortBySKUPosition"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterProductsCount">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterProductsCount">
             <argument name="property" value="PageBuilderProductsCountPropertyFour"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
-        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage">
+        <actionGroup ref="validateProductCountInProductsActionGroup" stepKey="validateProductsCountStage">
             <argument name="page" value="ProductsOnStage"/>
             <argument name="count" value="2"/>
         </actionGroup>
-        <actionGroup ref="validateProductInProducts" stepKey="validateProduct1Stage">
+        <actionGroup ref="validateProductInProductsActionGroup" stepKey="validateProduct1Stage">
             <argument name="page" value="ProductsOnStage"/>
             <argument name="product" value="SortProduct2"/>
             <argument name="productIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="validateProductInProducts" stepKey="validateProduct2Stage">
+        <actionGroup ref="validateProductInProductsActionGroup" stepKey="validateProduct2Stage">
             <argument name="page" value="ProductsOnStage"/>
             <argument name="product" value="SortProduct1"/>
             <argument name="productIndex" value="2"/>
@@ -1362,15 +1362,15 @@
         <fillField selector="{{AdminProductFormSection.productSku}}" userInput="Updated-SKU" stepKey="fillProductSKU"/>
         <actionGroup ref="SaveProductFormActionGroup" stepKey="saveProduct"/>
         <!-- Validate Stage After Update -->
-        <actionGroup ref="navigateToCMSPage" stepKey="navigateToCMSPage1">
+        <actionGroup ref="navigateToCMSPageActionGroup" stepKey="navigateToCMSPage1">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage1"/>
-        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage2">
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage1"/>
+        <actionGroup ref="validateProductCountInProductsActionGroup" stepKey="validateProductsCountStage2">
             <argument name="page" value="ProductsOnStage"/>
             <argument name="count" value="1"/>
         </actionGroup>
-        <actionGroup ref="validateProductInProducts" stepKey="validateProduct2Stage2">
+        <actionGroup ref="validateProductInProductsActionGroup" stepKey="validateProduct2Stage2">
             <argument name="page" value="ProductsOnStage"/>
             <argument name="product" value="SortProduct2"/>
             <argument name="productIndex" value="1"/>
@@ -1398,54 +1398,54 @@
                 <requiredEntity createDataKey="createPreReqCategory"/>
             </createData>
             <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToCMSPage" stepKey="navigateToCMSPage">
+            <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToCMSPageActionGroup" stepKey="navigateToCMSPage">
                 <argument name="CMSPage" value="$$createCMSPage$$"/>
             </actionGroup>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <deleteData createDataKey="createProduct2" stepKey="deleteProduct2"/>
             <deleteData createDataKey="createPreReqCategory" stepKey="deleteCategory1"/>
             <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionAddContent">
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionAddContent">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragProductsIntoStage">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragProductsIntoStage">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditAfterDrop">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
+        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="selectAppearance">
             <argument name="property" value="PageBuilderProductsProductGridAppearance"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="chooseSelectProductsBy">
+        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="chooseSelectProductsBy">
             <argument name="property" value="PageBuilderProductsSelectProductsBySKU"/>
         </actionGroup>
-        <actionGroup ref="addSKUsToSelectProductsBySKU" stepKey="addProductsSKUsToInputField">
+        <actionGroup ref="addSKUsToSelectProductsBySKUActionGroup" stepKey="addProductsSKUsToInputField">
             <argument name="SKUs" value="$$createProduct2.sku$$,$$createProduct1.sku$$"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterSortBy">
+        <actionGroup ref="selectSlideOutPanelFieldGeneralActionGroup" stepKey="enterSortBy">
             <argument name="property" value="PageBuilderProductsSortBySKUPosition"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterProductsCount">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterProductsCount">
             <argument name="property" value="PageBuilderProductsCountPropertyFour"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
-        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage">
+        <actionGroup ref="validateProductCountInProductsActionGroup" stepKey="validateProductsCountStage">
             <argument name="page" value="ProductsOnStage"/>
             <argument name="count" value="2"/>
         </actionGroup>
-        <actionGroup ref="validateProductInProducts" stepKey="validateProduct1Stage">
+        <actionGroup ref="validateProductInProductsActionGroup" stepKey="validateProduct1Stage">
             <argument name="page" value="ProductsOnStage"/>
             <argument name="product" value="SortProduct2"/>
             <argument name="productIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="validateProductInProducts" stepKey="validateProduct2Stage">
+        <actionGroup ref="validateProductInProductsActionGroup" stepKey="validateProduct2Stage">
             <argument name="page" value="ProductsOnStage"/>
             <argument name="product" value="SortProduct1"/>
             <argument name="productIndex" value="2"/>
@@ -1455,12 +1455,12 @@
         <deleteData createDataKey="createProduct1" stepKey="deleteProduct1"/>
         <reloadPage stepKey="reloadPage"/>
         <waitForPageLoad stepKey="waitForReload"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage1"/>
-        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage2">
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage1"/>
+        <actionGroup ref="validateProductCountInProductsActionGroup" stepKey="validateProductsCountStage2">
             <argument name="page" value="ProductsOnStage"/>
             <argument name="count" value="1"/>
         </actionGroup>
-        <actionGroup ref="validateProductInProducts" stepKey="validateProduct2Stage2">
+        <actionGroup ref="validateProductInProductsActionGroup" stepKey="validateProduct2Stage2">
             <argument name="page" value="ProductsOnStage"/>
             <argument name="product" value="SortProduct2"/>
             <argument name="productIndex" value="1"/>
@@ -1480,7 +1480,7 @@
             <group value="pagebuilder-productsGrid"/>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
             <createData entity="_defaultCategory" stepKey="createCategory"/>
             <createData entity="_defaultProduct" stepKey="createProduct">
                 <requiredEntity createDataKey="createCategory"/>
@@ -1489,57 +1489,57 @@
             <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
                 <argument name="CMSPage" value="$$createCMSPage$$"/>
             </actionGroup>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <deleteData createDataKey="createCategory" stepKey="deleteCreatedCategory"/>
             <deleteData createDataKey="createProduct" stepKey="deleteCreatedProduct"/>
             <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionAddContent">
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionAddContent">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragOntoStage">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragOntoStage">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditAfterDrop">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
+        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="selectAppearance">
             <argument name="property" value="PageBuilderProductsProductGridAppearance"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="chooseSelectProductsBy">
+        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="chooseSelectProductsBy">
             <argument name="property" value="PageBuilderProductsSelectProductsByCategory"/>
         </actionGroup>
-        <actionGroup ref="selectCategoryFromCategoryDropDown" stepKey="selectCategory">
+        <actionGroup ref="selectCategoryFromCategoryDropDownActionGroup" stepKey="selectCategory">
             <argument name="category" value="$$createCategory.name$$"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate Storefront -->
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
-        <actionGroup ref="clickProductImageInProductsOnStorefront" stepKey="clickProductImageInProductsCMSPageStorefront">
+        <actionGroup ref="clickProductImageInProductsOnStorefrontActionGroup" stepKey="clickProductImageInProductsCMSPageStorefront">
             <argument name="product" value="$$createProduct.name$$"/>
         </actionGroup>
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront2">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
-        <actionGroup ref="clickProductNameInProductsOnStorefront" stepKey="clickProductNameInProductsCMSPageStorefront">
+        <actionGroup ref="clickProductNameInProductsOnStorefrontActionGroup" stepKey="clickProductNameInProductsCMSPageStorefront">
             <argument name="product" value="$$createProduct.name$$"/>
         </actionGroup>
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront3">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
-        <actionGroup ref="clickProductAddToCartInProductsOnStorefront" stepKey="clickProductAddToCartInProductsCMSPageStorefront">
+        <actionGroup ref="clickProductAddToCartInProductsOnStorefrontActionGroup" stepKey="clickProductAddToCartInProductsCMSPageStorefront">
             <argument name="product" value="$$createProduct.name$$"/>
         </actionGroup>
-        <actionGroup ref="clickProductAddToCompareInProductsOnStorefront" stepKey="clickProductAddToCompareInProductsCMSPageStorefront">
+        <actionGroup ref="clickProductAddToCompareInProductsOnStorefrontActionGroup" stepKey="clickProductAddToCompareInProductsCMSPageStorefront">
             <argument name="product" value="$$createProduct.name$$"/>
         </actionGroup>
-        <actionGroup ref="clickProductAddToWishListInProductsOnStorefront" stepKey="clickProductAddToWishListInProductsCMSPageStorefront">
+        <actionGroup ref="clickProductAddToWishListInProductsOnStorefrontActionGroup" stepKey="clickProductAddToWishListInProductsCMSPageStorefront">
             <argument name="product" value="$$createProduct.name$$"/>
         </actionGroup>
     </test>
@@ -1562,60 +1562,60 @@
                 <requiredEntity createDataKey="createCategory"/>
             </createData>
             <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToCMSPage" stepKey="navigateToCMSPage">
+            <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToCMSPageActionGroup" stepKey="navigateToCMSPage">
                 <argument name="CMSPage" value="$$createCMSPage$$"/>
             </actionGroup>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <deleteData createDataKey="createProduct" stepKey="deleteProduct"/>
             <deleteData createDataKey="createCategory" stepKey="deleteCategory"/>
             <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionAddContent">
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionAddContent">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragProductsIntoStage">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragProductsIntoStage">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
         <!-- Validate: Empty Category Condition -->
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditPanel">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditPanel">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
+        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="selectAppearance">
             <argument name="property" value="PageBuilderProductsProductGridAppearance"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="chooseSelectProductsBy">
+        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="chooseSelectProductsBy">
             <argument name="property" value="PageBuilderProductsSelectProductsByCategory"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <actionGroup ref="validateEmptyProductsContainer" stepKey="validateEmptyProductsContainerOnStage"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="validateEmptyProductsContainerActionGroup" stepKey="validateEmptyProductsContainerOnStage"/>
         <!-- Validate: Empty SKU Condition -->
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditPanel2">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditPanel2">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="chooseSelectProductsBy2">
+        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="chooseSelectProductsBy2">
             <argument name="property" value="PageBuilderProductsSelectProductsBySKU"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
-        <actionGroup ref="validateEmptyProductsContainer" stepKey="validateEmptyProductsContainerOnStage2"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings2"/>
+        <actionGroup ref="validateEmptyProductsContainerActionGroup" stepKey="validateEmptyProductsContainerOnStage2"/>
         <!-- Validate: Empty Conditions -->
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditPanel3">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditPanel3">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="chooseSelectProductsBy3">
+        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="chooseSelectProductsBy3">
             <argument name="property" value="PageBuilderProductsSelectProductsByCondition"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterSortBy3">
+        <actionGroup ref="selectSlideOutPanelFieldGeneralActionGroup" stepKey="enterSortBy3">
             <argument name="property" value="PageBuilderProductsSortByNewestTop"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterProductsCount3">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterProductsCount3">
             <argument name="property" value="PageBuilderProductsCountPropertyMax"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
-        <actionGroup ref="validateProductInProducts" stepKey="validateProductOnStage3">
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings3"/>
+        <actionGroup ref="validateProductInProductsActionGroup" stepKey="validateProductOnStage3">
             <argument name="product" value="_defaultProduct"/>
         </actionGroup>
     </test>
@@ -1634,7 +1634,7 @@
         </annotations>
         <before>
             <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
         </before>
         <after>
             <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
@@ -1644,7 +1644,7 @@
             <actionGroup ref="DeleteProductAttributeByLabelActionGroup" stepKey="deleteAttribute">
                 <argument name="ProductAttribute" value="visualSwatchAttribute"/>
             </actionGroup>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
         </after>
         <!-- Create a configurable swatch product via the UI -->
         <actionGroup ref="AdminOpenProductIndexPageActionGroup" stepKey="goToProductIndex" />
@@ -1658,51 +1658,51 @@
         <actionGroup ref="AddVisualSwatchToProductWithStorefrontConfigActionGroup" stepKey="addSwatchToProduct"/>
         <actionGroup ref="SaveProductFormActionGroup" stepKey="saveProduct"/>
         <!-- Add product to Page Builder Products content type -->
-        <actionGroup ref="navigateToCMSPage" stepKey="navigateToCMSPage">
+        <actionGroup ref="navigateToCMSPageActionGroup" stepKey="navigateToCMSPage">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionAddContent">
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionAddContent">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragProductsIntoStage">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragProductsIntoStage">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditAfterDrop">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="chooseSelectProductsBy">
+        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="chooseSelectProductsBy">
             <argument name="property" value="PageBuilderProductsSelectProductsBySKU"/>
         </actionGroup>
-        <actionGroup ref="addSKUsToSelectProductsBySKU" stepKey="addProductsSKUsToInputField">
+        <actionGroup ref="addSKUsToSelectProductsBySKUActionGroup" stepKey="addProductsSKUsToInputField">
             <argument name="SKUs" value="{{BaseConfigurableProduct.sku}}"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage">
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="validateProductCountInProductsActionGroup" stepKey="validateProductsCountStage">
             <argument name="page" value="ProductsOnStage"/>
             <argument name="count" value="1"/>
         </actionGroup>
         <!-- Verify displayed swatches -->
-        <actionGroup ref="validateSwatchInProducts" stepKey="assertFirstSwatch">
+        <actionGroup ref="validateSwatchInProductsActionGroup" stepKey="assertFirstSwatch">
             <argument name="page" value="ProductsOnStage"/>
             <argument name="swatch" value="visualSwatchOption1"/>
         </actionGroup>
-        <actionGroup ref="validateSwatchInProducts" stepKey="assertSecondSwatch">
+        <actionGroup ref="validateSwatchInProductsActionGroup" stepKey="assertSecondSwatch">
             <argument name="page" value="ProductsOnStage"/>
             <argument name="swatch" value="visualSwatchOption2"/>
         </actionGroup>
         <!-- Save page and verify swatches display on reload -->
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStageAfterSave"/>
-        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStageAfterSave">
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStageAfterSave"/>
+        <actionGroup ref="validateProductCountInProductsActionGroup" stepKey="validateProductsCountStageAfterSave">
             <argument name="page" value="ProductsOnStage"/>
             <argument name="count" value="1"/>
         </actionGroup>
-        <actionGroup ref="validateSwatchInProducts" stepKey="assertFirstSwatchAfterSave">
+        <actionGroup ref="validateSwatchInProductsActionGroup" stepKey="assertFirstSwatchAfterSave">
             <argument name="page" value="ProductsOnStage"/>
             <argument name="swatch" value="visualSwatchOption1"/>
         </actionGroup>
-        <actionGroup ref="validateSwatchInProducts" stepKey="assertSecondSwatchAfterSave">
+        <actionGroup ref="validateSwatchInProductsActionGroup" stepKey="assertSecondSwatchAfterSave">
             <argument name="page" value="ProductsOnStage"/>
             <argument name="swatch" value="visualSwatchOption2"/>
         </actionGroup>

@@ -22,10 +22,10 @@
             <group value="pagebuilder-googleMapsStyle"/>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
         </before>
         <after>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
             <closeTab stepKey="closeTab"/>
         </after>
         <!-- Go To AdminContentManagementPage -->
@@ -62,10 +62,10 @@
             <group value="pagebuilder-googleMapsStyle"/>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
         </before>
         <after>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
         </after>
         <!-- Go To AdminContentManagementPage -->
         <comment userInput="Go To AdminContentManagementPage" stepKey="commentGoToPage"/>
@@ -73,7 +73,7 @@
         <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
         <!-- Verify Can Save Empty -->
         <comment userInput="Verify Can Save Empty" stepKey="commentSave"/>
-        <actionGroup ref="inputGoogleMapsStyle" stepKey="inputGoogleMapsStyle">
+        <actionGroup ref="inputGoogleMapsStyleActionGroup" stepKey="inputGoogleMapsStyle">
             <argument name="style" value="{{googleMapsStyle.empty}}"/>
         </actionGroup>
         <actionGroup ref="SaveStoreConfigurationActionGroup" stepKey="saveStoreConfiguration"/>
@@ -94,11 +94,11 @@
             <group value="pagebuilder-googleMapsStyle"/>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
         </before>
         <after>
             <magentoCLI command="config:set cms/pagebuilder/google_maps_style ''" stepKey="setEmptyGoogleMapsStyle"/>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
         </after>
         <!-- Go To AdminContentManagementPage -->
         <comment userInput="Go To AdminContentManagementPage" stepKey="commentGoToPage"/>
@@ -106,7 +106,7 @@
         <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
         <!-- Verify Can Save Valid -->
         <comment userInput="Verify Can Save Valid" stepKey="commentSave"/>
-        <actionGroup ref="inputGoogleMapsStyle" stepKey="inputGoogleMapsStyle">
+        <actionGroup ref="inputGoogleMapsStyleActionGroup" stepKey="inputGoogleMapsStyle">
             <argument name="style" value="{{googleMapsStyle.validLong}}"/>
         </actionGroup>
         <actionGroup ref="SaveStoreConfigurationActionGroup" stepKey="saveStoreConfiguration"/>
@@ -114,7 +114,7 @@
         <seeInField selector="{{ContentManagementSection.GoogleMapsStyleInputField}}" userInput="{{googleMapsStyle.validLong}}" stepKey="seeStyle"/>
         <!-- Verify Can Save Valid With No Content -->
         <comment userInput="Verify Can Save Valid With No Content" stepKey="commentSave2"/>
-        <actionGroup ref="inputGoogleMapsStyle" stepKey="inputGoogleMapsStyle2">
+        <actionGroup ref="inputGoogleMapsStyleActionGroup" stepKey="inputGoogleMapsStyle2">
             <argument name="style" value="{{googleMapsStyle.validNoContent}}"/>
         </actionGroup>
         <actionGroup ref="SaveStoreConfigurationActionGroup" stepKey="saveStoreConfiguration2"/>
@@ -135,11 +135,11 @@
             <group value="pagebuilder-googleMapsStyle"/>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
         </before>
         <after>
             <magentoCLI command="config:set cms/pagebuilder/google_maps_style ''" stepKey="setEmptyGoogleMapsStyle"/>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
         </after>
         <!-- Go To AdminContentManagementPage -->
         <comment userInput="Go To AdminContentManagementPage" stepKey="commentGoToPage"/>
@@ -147,7 +147,7 @@
         <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
         <!-- Invalid: One Character -->
         <comment userInput="Invalid: One Character" stepKey="commentInvalid1"/>
-        <actionGroup ref="inputGoogleMapsStyle" stepKey="inputGoogleMapsStyle1">
+        <actionGroup ref="inputGoogleMapsStyleActionGroup" stepKey="inputGoogleMapsStyle1">
             <argument name="style" value="{{googleMapsStyle.invalidOneCharacter}}"/>
         </actionGroup>
         <actionGroup ref="SaveStoreConfigurationAndValidateFieldErrorActionGroup" stepKey="saveStoreConfigurationAndValidateFieldError1">
@@ -157,7 +157,7 @@
         </actionGroup>
         <!-- Invalid: Missing Braces -->
         <comment userInput="Invalid: Missing Braces" stepKey="commentInvalid2"/>
-        <actionGroup ref="inputGoogleMapsStyle" stepKey="inputGoogleMapsStyle2">
+        <actionGroup ref="inputGoogleMapsStyleActionGroup" stepKey="inputGoogleMapsStyle2">
             <argument name="style" value="{{googleMapsStyle.invalidMissingBraces}}"/>
         </actionGroup>
         <actionGroup ref="SaveStoreConfigurationAndValidateFieldErrorActionGroup" stepKey="saveStoreConfigurationAndValidateFieldError2">
@@ -167,7 +167,7 @@
         </actionGroup>
         <!-- Invalid: Missing Comma -->
         <comment userInput="Invalid: Missing Comma" stepKey="commentInvalid3"/>
-        <actionGroup ref="inputGoogleMapsStyle" stepKey="inputGoogleMapsStyle3">
+        <actionGroup ref="inputGoogleMapsStyleActionGroup" stepKey="inputGoogleMapsStyle3">
             <argument name="style" value="{{googleMapsStyle.invalidMMissingComma}}"/>
         </actionGroup>
         <actionGroup ref="SaveStoreConfigurationAndValidateFieldErrorActionGroup" stepKey="saveStoreConfigurationAndValidateFieldError3">
@@ -177,7 +177,7 @@
         </actionGroup>
         <!-- Verify Can Save Valid -->
         <comment userInput="Verify Can Save Valid" stepKey="commentValid"/>
-        <actionGroup ref="inputGoogleMapsStyle" stepKey="inputGoogleMapsStyle4">
+        <actionGroup ref="inputGoogleMapsStyleActionGroup" stepKey="inputGoogleMapsStyle4">
             <argument name="style" value="{{googleMapsStyle.validLong}}"/>
         </actionGroup>
         <actionGroup ref="SaveStoreConfigurationActionGroup" stepKey="saveStoreConfiguration"/>

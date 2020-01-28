@@ -8,7 +8,7 @@
 
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
-    <actionGroup name="RestoreLayoutSetting">
+    <actionGroup name="RestoreLayoutSettingActionGroup">
         <!-- Remove the existing layout update entries, as they can be merged in the wrong order -->
         <remove keyForRemoval="selectOneColumn"/>
         <remove keyForRemoval="selectNoLayoutUpdates1"/>
@@ -18,7 +18,7 @@
         <selectOption selector="{{DefaultLayoutsSection.categoryLayout}}" userInput="{{PageBuilderFullWidthLayout.category}}" stepKey="selectCategoryFullWidth" after="expandDefaultLayouts"/>
         <selectOption selector="{{DefaultLayoutsSection.productLayout}}" userInput="{{PageBuilderFullWidthLayout.product}}" stepKey="selectProductFullWidth" after="expandDefaultLayouts"/>
     </actionGroup>
-    <actionGroup name="validateLayoutStylesNoHeight">
+    <actionGroup name="validateLayoutStylesNoHeightActionGroup">
         <arguments>
             <argument name="page"/>
             <argument name="index" defaultValue="1" type="string"/>
@@ -29,7 +29,7 @@
         <seeElement selector="{{page.containerStyle(index, verticalAlignContainer.style)}}" stepKey="seeVerticalAlignmentStyle"/>
     </actionGroup>
     <!-- Validate All Layout Styles -->
-    <actionGroup name="validateLayoutStylesWithAllUpdated">
+    <actionGroup name="validateLayoutStylesWithAllUpdatedActionGroup">
         <arguments>
             <argument name="page"/>
             <argument name="index" defaultValue="1" type="string"/>
@@ -41,7 +41,7 @@
         <waitForElementVisible selector="{{page.verticalAlignContainer(index, verticalAlignContainer.value)}}" stepKey="waitForVerticalAlignContainer"/>
     </actionGroup>
     <!-- Validate Min Height -->
-    <actionGroup name="validateContentTypeHeightEqualToMinHeight">
+    <actionGroup name="validateContentTypeHeightEqualToMinHeightActionGroup">
         <arguments>
             <argument name="content" type="string"/>
             <argument name="index" defaultValue="1" type="string"/>
@@ -57,7 +57,7 @@
             <actualResult type="variable">contentTypeHeightDifference</actualResult>
         </assertLessThanOrEqual>
     </actionGroup>
-    <actionGroup name="validateContentTypeHeightGreaterThanMinHeight">
+    <actionGroup name="validateContentTypeHeightGreaterThanMinHeightActionGroup">
         <arguments>
             <argument name="content" type="string"/>
             <argument name="index" defaultValue="1" type="string"/>
@@ -72,7 +72,7 @@
         </assertGreaterThan>
     </actionGroup>
     <!-- Validate Max Width -->
-    <actionGroup name="validateContentTypeWidthEqualToMaxWidth">
+    <actionGroup name="validateContentTypeWidthEqualToMaxWidthActionGroup">
         <arguments>
             <argument name="content" type="string"/>
             <argument name="index" defaultValue="1" type="string"/>

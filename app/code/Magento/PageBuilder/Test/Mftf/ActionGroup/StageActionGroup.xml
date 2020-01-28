@@ -8,20 +8,20 @@
 
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
-    <actionGroup name="openPageBuilderFullScreen">
+    <actionGroup name="openPageBuilderFullScreenActionGroup">
         <waitForElementVisible selector="{{PageBuilderStage.openFullScreen}}" stepKey="waitForFullScreenButton"/>
         <click selector="{{PageBuilderStage.openFullScreen}}" stepKey="clickFullScreenButton"/>
         <waitForPageLoad stepKey="waitForFullScreenAnimation"/>
         <seeElement selector="{{PageBuilderStage.stageWrapperFullScreen}}" stepKey="seeStageFullScreen"/>
         <seeElement selector="{{PageBuilderStage.exitFullScreen}}" stepKey="seeExitFullScreenButton"/>
     </actionGroup>
-    <actionGroup name="exitPageBuilderFullScreen">
+    <actionGroup name="exitPageBuilderFullScreenActionGroup">
         <waitForElementVisible selector="{{PageBuilderStage.exitFullScreen}}" stepKey="waitForExitPageBuilderFullScreenButton"/>
         <click selector="{{PageBuilderStage.exitFullScreen}}" stepKey="exitPageBuilderFullScreen"/>
         <waitForPageLoad stepKey="waitForExitFullScreen"/>
         <dontSeeElementInDOM selector="{{PageBuilderStage.exitFullScreen}}" stepKey="dontSeeExitPageBuilderFullScreenButton"/>
     </actionGroup>
-    <actionGroup name="validateContentTypeHeightOnStage">
+    <actionGroup name="validateContentTypeHeightOnStageActionGroup">
         <arguments>
             <argument name="contentType"/>
             <argument name="index" defaultValue="1" type="string"/>
@@ -36,7 +36,7 @@
             <actualResult type="variable">expectedContentTypeHeightWithPadding</actualResult>
         </assertEquals>
     </actionGroup>
-    <actionGroup name="validateContentTypeHeightOnStageWithoutPadding">
+    <actionGroup name="validateContentTypeHeightOnStageWithoutPaddingActionGroup">
         <arguments>
             <argument name="contentType"/>
             <argument name="index" defaultValue="1" type="string"/>
@@ -49,7 +49,7 @@
             <actualResult type="variable">expectedContentTypeHeightWithPadding</actualResult>
         </assertEquals>
     </actionGroup>
-    <actionGroup name="validateContentTypeInsideContainerStage">
+    <actionGroup name="validateContentTypeInsideContainerStageActionGroup">
         <arguments>
             <argument name="contentType"/>
             <argument name="contentTypeIndex" defaultValue="1" type="string"/>
@@ -59,7 +59,7 @@
         </arguments>
         <waitForElementVisible time="30" selector="{{PageBuilderStage.contentTypeInsideContainerStage(containerTargetType.role, containerTargetIndex, positionInContainer, contentType.role, contentTypeIndex)}}" stepKey="waitForContentTypeStage"/>
     </actionGroup>
-    <actionGroup name="validateContentTypeNotInsideContainerStage">
+    <actionGroup name="validateContentTypeNotInsideContainerStageActionGroup">
         <arguments>
             <argument name="contentType"/>
             <argument name="contentTypeIndex" defaultValue="1" type="string"/>
@@ -70,7 +70,7 @@
         <waitForElementVisible time="30" selector="{{PageBuilderStage.contentTypeInStageByIndex(containerTargetType.role, containerTargetIndex)}}" stepKey="waitForContentTypeStage"/>
         <dontSeeElementInDOM selector="{{PageBuilderStage.contentTypeInsideContainerStage(containerTargetType.role, containerTargetIndex, positionInContainer, contentType.role, contentTypeIndex)}}" stepKey="dontSeeContentTypeInContainer"/>
     </actionGroup>
-    <actionGroup name="goToMediaStorageFromStage">
+    <actionGroup name="goToMediaStorageFromStageActionGroup">
         <arguments>
             <argument name="contentType"/>
             <argument name="index" defaultValue="1" type="string"/>
@@ -83,7 +83,7 @@
         <click selector="{{PageBuilderStage.onHoverSelectFromGalleryButton(contentType.role, index)}}" stepKey="clickSelectFromGalleryBtn1" />
         <waitForPageLoad stepKey="waitForPageLoad"/>
     </actionGroup>
-    <actionGroup name="verifySelectFromGalleryButtonWorks">
+    <actionGroup name="verifySelectFromGalleryButtonWorksActionGroup">
         <arguments>
             <argument name="contentType"/>
             <argument name="index" defaultValue="1" type="string"/>
@@ -103,7 +103,7 @@
         <click selector="{{MediaGallerySection.CancelBtn}}" stepKey="clickCancelButton"/>
         <waitForPageLoad stepKey="waitForPageLoad2"/>
     </actionGroup>
-    <actionGroup name="uploadImageToContentTypeFromStage">
+    <actionGroup name="uploadImageToContentTypeFromStageActionGroup">
         <arguments>
             <argument name="property"/>
             <argument name="section" defaultValue="PageBuilderStage"/>
@@ -113,7 +113,7 @@
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
         <waitForElementVisible selector="{{section.imageSourceByIndex(index, property.fileName)}}" stepKey="waitForMainImageSource1"/>
     </actionGroup>
-    <actionGroup name="verifyUploadImageButtons">
+    <actionGroup name="verifyUploadImageButtonsActionGroup">
         <arguments>
             <argument name="contentType"/>
             <argument name="section" defaultValue="PageBuilderStage"/>
@@ -127,7 +127,7 @@
         <seeElement selector="{{section.onHoverUploadImageButton(contentType.role, index)}}" stepKey="seeUploadImageButton" />
         <seeElement selector="{{section.onHoverSelectFromGalleryButton(contentType.role, index)}}" stepKey="seeSelectFromGalleryButton"/>
     </actionGroup>
-    <actionGroup name="focusOnInlineTinyMCEEditor">
+    <actionGroup name="focusOnInlineTinyMCEEditorActionGroup">
         <arguments>
             <argument name="section" defaultValue="TextOnStage"/>
             <argument name="index" defaultValue="1" type="string"/>
@@ -140,7 +140,7 @@
         <waitForPageLoad stepKey="waitForEditorToBeFocused"/>
         <waitForElementVisible selector="{{section.tinymceInFocus(index)}}" stepKey="waitForEditorFocused"/>
     </actionGroup>
-    <actionGroup name="goToEndOfLineTinyMCEEditor">
+    <actionGroup name="goToEndOfLineTinyMCEEditorActionGroup">
         <arguments>
             <argument name="section" defaultValue="TextOnStage"/>
             <argument name="index" defaultValue="1" type="string"/>
@@ -148,7 +148,7 @@
         <waitForElementVisible selector="{{section.tinymce(index)}}" stepKey="waitForEditor"/>
         <pressKey selector="{{section.tinymce(index)}}" parameterArray="[\Facebook\WebDriver\WebDriverKeys::END]" stepKey="pressEndKey"/>
     </actionGroup>
-    <actionGroup name="focusOnInlineTextAreaEditor">
+    <actionGroup name="focusOnInlineTextAreaEditorActionGroup">
         <arguments>
             <argument name="section" defaultValue="TextOnStage"/>
             <argument name="index" defaultValue="1" type="string"/>
@@ -160,7 +160,7 @@
         <clickWithLeftButton selector="{{section.textArea(index)}}" x="{{contentTypeXCoordinate}}" y="{{contentTypeYCoordinate}}" stepKey="clickEditor"/>
         <waitForPageLoad stepKey="waitForEditorToBeFocused"/>
     </actionGroup>
-    <actionGroup name="goToEndOfLineTextAreaEditor">
+    <actionGroup name="goToEndOfLineTextAreaEditorActionGroup">
         <arguments>
             <argument name="section" defaultValue="TextOnStage"/>
             <argument name="index" defaultValue="1" type="string"/>
@@ -168,7 +168,7 @@
         <waitForElementVisible selector="{{section.textArea(index)}}" stepKey="waitForEditor"/>
         <pressKey selector="{{section.textArea(index)}}" parameterArray="[\Facebook\WebDriver\WebDriverKeys::END]" stepKey="pressEndKey"/>
     </actionGroup>
-    <actionGroup name="switchTabAndReloadPage">
+    <actionGroup name="switchTabAndReloadPageActionGroup">
         <switchToNextTab stepKey="switchToNextTab"/>
         <reloadPage stepKey="reloadPage"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>

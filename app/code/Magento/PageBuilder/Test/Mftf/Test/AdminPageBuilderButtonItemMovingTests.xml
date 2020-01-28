@@ -25,81 +25,81 @@
             </skip>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Select Inline Appearance -->
-        <comment userInput="Select Inline Appearance" stepKey="CommentSelectInlineAppearance"/>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage1">
+        <comment userInput="Select Inline Appearance" stepKey="commentSelectInlineAppearance"/>
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage1">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearance">
+        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAppearance">
             <argument name="property" value="PageBuilderButtonGroupAppearance_Inline"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings1"/>
         <!-- Add Enough Buttons To Wrap -->
         <comment userInput="Add Enough Buttons To Wrap" stepKey="commentAddEnoughButtonsToWrap"/>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton1">
+        <actionGroup ref="inlineEditButtonActionGroup" stepKey="inlineEditButton1">
             <argument name="text" value="PageBuilderButtonItemText_First"/>
             <argument name="index" value="1"/>
         </actionGroup>
-        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType2">
+        <actionGroup ref="addChildContentTypeFromOptionMenuActionGroup" stepKey="addChildContentType2">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton2">
+        <actionGroup ref="inlineEditButtonActionGroup" stepKey="inlineEditButton2">
             <argument name="text" value="PageBuilderButtonItemText_Common"/>
             <argument name="index" value="2"/>
         </actionGroup>
-        <actionGroup ref="duplicateSmallContentType" stepKey="duplicateSmallContentType">
+        <actionGroup ref="duplicateSmallContentTypeActionGroup" stepKey="duplicateSmallContentType">
             <argument name="section" value="ButtonItemOnStage"/>
             <argument name="targetIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="duplicateSmallContentType" stepKey="duplicateSmallContentType2">
+        <actionGroup ref="duplicateSmallContentTypeActionGroup" stepKey="duplicateSmallContentType2">
             <argument name="section" value="ButtonItemOnStage"/>
             <argument name="targetIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="duplicateSmallContentType" stepKey="duplicateSmallContentType3">
+        <actionGroup ref="duplicateSmallContentTypeActionGroup" stepKey="duplicateSmallContentType3">
             <argument name="section" value="ButtonItemOnStage"/>
             <argument name="targetIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="duplicateSmallContentType" stepKey="duplicateSmallContentType4">
+        <actionGroup ref="duplicateSmallContentTypeActionGroup" stepKey="duplicateSmallContentType4">
             <argument name="section" value="ButtonItemOnStage"/>
             <argument name="targetIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="duplicateSmallContentType" stepKey="duplicateSmallContentType5">
+        <actionGroup ref="duplicateSmallContentTypeActionGroup" stepKey="duplicateSmallContentType5">
             <argument name="section" value="ButtonItemOnStage"/>
             <argument name="targetIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="duplicateSmallContentType" stepKey="duplicateSmallContentType6">
+        <actionGroup ref="duplicateSmallContentTypeActionGroup" stepKey="duplicateSmallContentType6">
             <argument name="section" value="ButtonItemOnStage"/>
             <argument name="targetIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="duplicateSmallContentType" stepKey="duplicateSmallContentType7">
+        <actionGroup ref="duplicateSmallContentTypeActionGroup" stepKey="duplicateSmallContentType7">
             <argument name="section" value="ButtonItemOnStage"/>
             <argument name="targetIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="duplicateSmallContentType" stepKey="duplicateSmallContentType8">
+        <actionGroup ref="duplicateSmallContentTypeActionGroup" stepKey="duplicateSmallContentType8">
             <argument name="section" value="ButtonItemOnStage"/>
             <argument name="targetIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton10">
+        <actionGroup ref="inlineEditButtonActionGroup" stepKey="inlineEditButton10">
             <argument name="text" value="PageBuilderButtonItemText_Last"/>
             <argument name="index" value="10"/>
         </actionGroup>
-        <actionGroup ref="moveButton" stepKey="moveButton">
+        <actionGroup ref="moveButtonActionGroup" stepKey="moveButton">
             <argument name="buttonIndexToMove" value="1"/>
             <argument name="buttonIndexToMoveTo" value="10"/>
         </actionGroup>
@@ -108,32 +108,32 @@
         <seeElement selector="{{ButtonItemOnStage.buttonItemText('1', PageBuilderButtonItemText_Common.value)}}" stepKey="seeButton1Stage"/>
         <seeElement selector="{{ButtonItemOnStage.buttonItemText('9', PageBuilderButtonItemText_First.value)}}" stepKey="seeButton2Stage"/>
         <seeElement selector="{{ButtonItemOnStage.buttonItemText('10', PageBuilderButtonItemText_Last.value)}}" stepKey="seeButton3Stage"/>
-        <actionGroup ref="validateButtonGroupInlineAppearance" stepKey="seeAppearanceOnStage">
+        <actionGroup ref="validateButtonGroupInlineAppearanceActionGroup" stepKey="seeAppearanceOnStage">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
         </actionGroup>
-        <actionGroup ref="validateButtonGroupInlineAppearanceWraps" stepKey="seeAppearanceWrapsOnStage">
+        <actionGroup ref="validateButtonGroupInlineAppearanceWrapsActionGroup" stepKey="seeAppearanceWrapsOnStage">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
             <argument name="secondButtonIndex" value="10"/>
         </actionGroup>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
         <seeElement selector="{{ButtonItemOnStage.buttonItemText('1', PageBuilderButtonItemText_Common.value)}}" stepKey="seeButton1Stage2"/>
         <seeElement selector="{{ButtonItemOnStage.buttonItemText('9', PageBuilderButtonItemText_First.value)}}" stepKey="seeButton2Stage2"/>
         <seeElement selector="{{ButtonItemOnStage.buttonItemText('10', PageBuilderButtonItemText_Last.value)}}" stepKey="seeButton3Stage2"/>
-        <actionGroup ref="validateButtonGroupInlineAppearance" stepKey="seeAppearanceOnStage2">
+        <actionGroup ref="validateButtonGroupInlineAppearanceActionGroup" stepKey="seeAppearanceOnStage2">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
         </actionGroup>
-        <actionGroup ref="validateButtonGroupInlineAppearanceWraps" stepKey="seeAppearanceWrapsOnStage2">
+        <actionGroup ref="validateButtonGroupInlineAppearanceWrapsActionGroup" stepKey="seeAppearanceWrapsOnStage2">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
             <argument name="secondButtonIndex" value="10"/>
         </actionGroup>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Validate Storefront -->
@@ -141,11 +141,11 @@
         <seeElement selector="{{ButtonItemOnStorefront.buttonItemText('1', PageBuilderButtonItemText_Common.value)}}" stepKey="seeButton1Storefront"/>
         <seeElement selector="{{ButtonItemOnStorefront.buttonItemText('9', PageBuilderButtonItemText_First.value)}}" stepKey="seeButton2Storefront"/>
         <seeElement selector="{{ButtonItemOnStorefront.buttonItemText('10', PageBuilderButtonItemText_Last.value)}}" stepKey="seeButton3Storefront"/>
-        <actionGroup ref="validateButtonGroupInlineAppearance" stepKey="seeAppearanceOnStorefront">
+        <actionGroup ref="validateButtonGroupInlineAppearanceActionGroup" stepKey="seeAppearanceOnStorefront">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
-        <actionGroup ref="validateButtonGroupInlineAppearanceWraps" stepKey="seeAppearanceWrapsOnStorefront">
+        <actionGroup ref="validateButtonGroupInlineAppearanceWrapsActionGroup" stepKey="seeAppearanceWrapsOnStorefront">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
             <argument name="secondButtonIndex" value="10"/>
@@ -165,53 +165,53 @@
             <group value="pagebuilder-moveButtons"/>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusOptionMenu">
+        <actionGroup ref="unFocusOptionMenuActionGroup" stepKey="unFocusOptionMenu">
             <argument name="contentType" value="PageBuilderButtonItemContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage1">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage1">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Select Stacked Appearance -->
-        <comment userInput="Select Stacked Appearance" stepKey="CommentSelectStackedAppearance"/>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearance">
+        <comment userInput="Select Stacked Appearance" stepKey="commentSelectStackedAppearance"/>
+        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAppearance">
             <argument name="property" value="PageBuilderButtonGroupAppearance_Stacked"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton1">
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings1"/>
+        <actionGroup ref="inlineEditButtonActionGroup" stepKey="inlineEditButton1">
             <argument name="text" value="PageBuilderButtonItemText_First"/>
             <argument name="index" value="1"/>
         </actionGroup>
-        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType2">
+        <actionGroup ref="addChildContentTypeFromOptionMenuActionGroup" stepKey="addChildContentType2">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton2">
+        <actionGroup ref="inlineEditButtonActionGroup" stepKey="inlineEditButton2">
             <argument name="text" value="PageBuilderButtonItemText_Second"/>
             <argument name="index" value="2"/>
         </actionGroup>
-        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType3">
+        <actionGroup ref="addChildContentTypeFromOptionMenuActionGroup" stepKey="addChildContentType3">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton3">
+        <actionGroup ref="inlineEditButtonActionGroup" stepKey="inlineEditButton3">
             <argument name="text" value="PageBuilderButtonItemText_Third"/>
             <argument name="index" value="3"/>
         </actionGroup>
-        <actionGroup ref="moveButton" stepKey="moveButton">
+        <actionGroup ref="moveButtonActionGroup" stepKey="moveButton">
             <argument name="buttonIndexToMove" value="1"/>
             <argument name="buttonIndexToMoveTo" value="3"/>
         </actionGroup>
@@ -220,34 +220,34 @@
         <seeElement selector="{{ButtonItemOnStage.buttonItemText('1', PageBuilderButtonItemText_Second.value)}}" stepKey="seeButton1Stage"/>
         <seeElement selector="{{ButtonItemOnStage.buttonItemText('2', PageBuilderButtonItemText_First.value)}}" stepKey="seeButton2Stage"/>
         <seeElement selector="{{ButtonItemOnStage.buttonItemText('3', PageBuilderButtonItemText_Third.value)}}" stepKey="seeButton3Stage"/>
-        <actionGroup ref="validateButtonGroupStackedAppearance" stepKey="seeAppearanceOnStageFirstButtons">
+        <actionGroup ref="validateButtonGroupStackedAppearanceActionGroup" stepKey="seeAppearanceOnStageFirstButtons">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
         </actionGroup>
-        <actionGroup ref="validateButtonGroupStackedAppearance" stepKey="seeAppearanceOnStageSecondButtons">
+        <actionGroup ref="validateButtonGroupStackedAppearanceActionGroup" stepKey="seeAppearanceOnStageSecondButtons">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
             <argument name="firstButtonIndex" value="2"/>
             <argument name="secondButtonIndex" value="3"/>
         </actionGroup>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
         <seeElement selector="{{ButtonItemOnStage.buttonItemText('1', PageBuilderButtonItemText_Second.value)}}" stepKey="seeButton1Stage1"/>
         <seeElement selector="{{ButtonItemOnStage.buttonItemText('2', PageBuilderButtonItemText_First.value)}}" stepKey="seeButton2Stage2"/>
         <seeElement selector="{{ButtonItemOnStage.buttonItemText('3', PageBuilderButtonItemText_Third.value)}}" stepKey="seeButton3Stage3"/>
-        <actionGroup ref="validateButtonGroupStackedAppearance" stepKey="seeAppearanceOnStageFirstButtons2">
+        <actionGroup ref="validateButtonGroupStackedAppearanceActionGroup" stepKey="seeAppearanceOnStageFirstButtons2">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
         </actionGroup>
-        <actionGroup ref="validateButtonGroupStackedAppearance" stepKey="seeAppearanceOnStageSecondButtons2">
+        <actionGroup ref="validateButtonGroupStackedAppearanceActionGroup" stepKey="seeAppearanceOnStageSecondButtons2">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
             <argument name="firstButtonIndex" value="2"/>
             <argument name="secondButtonIndex" value="3"/>
         </actionGroup>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Validate Storefront -->
@@ -255,11 +255,11 @@
         <seeElement selector="{{ButtonItemOnStorefront.buttonItemText('1', PageBuilderButtonItemText_Second.value)}}" stepKey="seeButton1Storefront"/>
         <seeElement selector="{{ButtonItemOnStorefront.buttonItemText('2', PageBuilderButtonItemText_First.value)}}" stepKey="seeButton2Storefront"/>
         <seeElement selector="{{ButtonItemOnStorefront.buttonItemText('3', PageBuilderButtonItemText_Third.value)}}" stepKey="seeButton3Storefront"/>
-        <actionGroup ref="validateButtonGroupStackedAppearance" stepKey="seeAppearanceOnStorefrontFirstButtons">
+        <actionGroup ref="validateButtonGroupStackedAppearanceActionGroup" stepKey="seeAppearanceOnStorefrontFirstButtons">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
-        <actionGroup ref="validateButtonGroupStackedAppearance" stepKey="seeAppearanceOnStorefrontSecondButtons">
+        <actionGroup ref="validateButtonGroupStackedAppearanceActionGroup" stepKey="seeAppearanceOnStorefrontSecondButtons">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
             <argument name="firstButtonIndex" value="2"/>
@@ -283,56 +283,56 @@
             </skip>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsOntoStage">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragButtonsOntoStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Select Inline Appearance -->
-        <comment userInput="Select Inline Appearance" stepKey="CommentSelectInlineAppearance"/>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage1">
+        <comment userInput="Select Inline Appearance" stepKey="commentSelectInlineAppearance"/>
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage1">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearance">
+        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAppearance">
             <argument name="property" value="PageBuilderButtonGroupAppearance_Inline"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings1"/>
         <!-- Add 2nd Button -->
         <comment userInput="Add 2nd Button" stepKey="commentAddButton"/>
-        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType">
+        <actionGroup ref="addChildContentTypeFromOptionMenuActionGroup" stepKey="addChildContentType">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Add 3rd Button -->
         <comment userInput="Add 3rd Button" stepKey="commentAddButton2"/>
-        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType2">
+        <actionGroup ref="addChildContentTypeFromOptionMenuActionGroup" stepKey="addChildContentType2">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Edit 1st button -->
         <comment userInput="Edit 1st Button" stepKey="commentEditButton1"/>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton1">
+        <actionGroup ref="inlineEditButtonActionGroup" stepKey="inlineEditButton1">
             <argument name="text" value="PageBuilderButtonItemText_First"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <!-- Edit 2nd Button -->
         <comment userInput="Edit 2nd Button" stepKey="commentEditButton2"/>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton2">
+        <actionGroup ref="inlineEditButtonActionGroup" stepKey="inlineEditButton2">
             <argument name="text" value="PageBuilderButtonItemText_Second"/>
             <argument name="index" value="2"/>
         </actionGroup>
         <!-- Edit 3rd Button -->
         <comment userInput="Edit 3rd Button" stepKey="commentEditButton3"/>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton3">
+        <actionGroup ref="inlineEditButtonActionGroup" stepKey="inlineEditButton3">
             <argument name="text" value="PageBuilderButtonItemText_Third"/>
             <argument name="index" value="3"/>
         </actionGroup>
@@ -343,7 +343,7 @@
         <seeElement selector="{{ButtonItemOnStage.buttonItemText('3', PageBuilderButtonItemText_Third.value)}}" stepKey="seeButton3Stage1"/>
         <!-- Move Button -->
         <comment userInput="Move Button" stepKey="commentMoveButton"/>
-        <actionGroup ref="moveButton" stepKey="moveButton">
+        <actionGroup ref="moveButtonActionGroup" stepKey="moveButton">
             <argument name="buttonIndexToMove" value="1"/>
             <argument name="buttonIndexToMoveTo" value="3"/>
         </actionGroup>
@@ -354,7 +354,7 @@
         <seeElement selector="{{ButtonItemOnStage.buttonItemText('3', PageBuilderButtonItemText_Third.value)}}" stepKey="seeButton3Stage2"/>
         <!-- Save Page -->
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <!-- Stage: Validate Changed Button Order After Save -->
         <comment userInput="Stage: Validate Changed Button Order After Save" stepKey="commentValidateStage3"/>
         <seeElement selector="{{ButtonItemOnStage.buttonItemText('1', PageBuilderButtonItemText_Second.value)}}" stepKey="seeButton1Stage3"/>
@@ -362,7 +362,7 @@
         <seeElement selector="{{ButtonItemOnStage.buttonItemText('3', PageBuilderButtonItemText_Third.value)}}" stepKey="seeButton3Stage3"/>
         <!-- Storefront: Validate Changed Button Order -->
         <comment userInput="Storefront: Validate Changed Button Order" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <seeElement selector="{{ButtonItemOnStorefront.buttonItemText('1', PageBuilderButtonItemText_Second.value)}}" stepKey="seeButton1Storefront"/>
@@ -383,47 +383,47 @@
             <group value="pagebuilder-moveButtons"/>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsOntoStage">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragButtonsOntoStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Add 2nd Button Group -->
         <comment userInput="Add 2nd Button Group" stepKey="commentAddButtonGroup2"/>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsOntoStage2">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragButtonsOntoStage2">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Add 2nd Button To 1st Group -->
         <comment userInput="Add 2nd Button To 1st Group" stepKey="commentAddButton"/>
-        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType">
+        <actionGroup ref="addChildContentTypeFromOptionMenuActionGroup" stepKey="addChildContentType">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Edit 1st button -->
         <comment userInput="Edit 1st Button" stepKey="commentEditButton1"/>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton1">
+        <actionGroup ref="inlineEditButtonActionGroup" stepKey="inlineEditButton1">
             <argument name="text" value="PageBuilderButtonItemText_First"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <!-- Edit 2nd Button -->
         <comment userInput="Edit 2nd Button" stepKey="commentEditButton2"/>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton2">
+        <actionGroup ref="inlineEditButtonActionGroup" stepKey="inlineEditButton2">
             <argument name="text" value="PageBuilderButtonItemText_Second"/>
             <argument name="index" value="2"/>
         </actionGroup>
         <!-- Edit 3rd Button -->
         <comment userInput="Edit 3rd Button" stepKey="commentEditButton3"/>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton3">
+        <actionGroup ref="inlineEditButtonActionGroup" stepKey="inlineEditButton3">
             <argument name="text" value="PageBuilderButtonItemText_Third"/>
             <argument name="index" value="3"/>
         </actionGroup>
@@ -434,7 +434,7 @@
         <seeElement selector="{{ButtonItemOnStage.buttonItemTextByButtonGroup('2', '1', PageBuilderButtonItemText_Third.value)}}" stepKey="seeButton3Stage"/>
         <!-- Attempt To Move 1st Button To 2nd Button Group -->
         <comment userInput="Attempt To Move 1st Button To 2nd Button Group" stepKey="commentMoveButton"/>
-        <actionGroup ref="moveButton" stepKey="moveButton">
+        <actionGroup ref="moveButtonActionGroup" stepKey="moveButton">
             <argument name="buttonIndexToMove" value="1"/>
             <argument name="buttonIndexToMoveTo" value="3"/>
         </actionGroup>
@@ -445,7 +445,7 @@
         <seeElement selector="{{ButtonItemOnStage.buttonItemTextByButtonGroup('2', '1', PageBuilderButtonItemText_Third.value)}}" stepKey="seeButton3Stage2"/>
         <!-- Save Page -->
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <!-- Stage: Validate Button Order Unchanged After Save -->
         <comment userInput="Stage: Validate Button Order Unchanged After Save" stepKey="commentValidateStage3"/>
         <seeElement selector="{{ButtonItemOnStage.buttonItemTextByButtonGroup('1', '1', PageBuilderButtonItemText_First.value)}}" stepKey="seeButton1Stage3"/>
@@ -453,7 +453,7 @@
         <seeElement selector="{{ButtonItemOnStage.buttonItemTextByButtonGroup('2', '1', PageBuilderButtonItemText_Third.value)}}" stepKey="seeButton3Stage3"/>
         <!-- Storefront: Validate Button Order Unchanged -->
         <comment userInput="Storefront: Validate Button Order Unchanged" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <seeElement selector="{{ButtonItemOnStorefront.buttonItemTextByButtonGroup('1', '1', PageBuilderButtonItemText_First.value)}}" stepKey="seeButton1Storefront"/>
@@ -474,46 +474,46 @@
             <group value="pagebuilder-moveButtons"/>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsOntoStage">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragButtonsOntoStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusOptionMenu">
+        <actionGroup ref="unFocusOptionMenuActionGroup" stepKey="unFocusOptionMenu">
             <argument name="contentType" value="PageBuilderButtonItemContentType"/>
         </actionGroup>
         <!-- Select Inline Appearance -->
-        <comment userInput="Select Inline Appearance" stepKey="CommentSelectInlineAppearance"/>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage1">
+        <comment userInput="Select Inline Appearance" stepKey="commentSelectInlineAppearance"/>
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage1">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearance">
+        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAppearance">
             <argument name="property" value="PageBuilderButtonGroupAppearance_Inline"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
-        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType">
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings1"/>
+        <actionGroup ref="addChildContentTypeFromOptionMenuActionGroup" stepKey="addChildContentType">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Edit 1st button -->
         <comment userInput="Edit 1st Button" stepKey="commentEditButton1"/>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton1">
+        <actionGroup ref="inlineEditButtonActionGroup" stepKey="inlineEditButton1">
             <argument name="text" value="PageBuilderButtonItemText_200Characters"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <!-- Edit 2nd Button -->
         <comment userInput="Edit 2nd Button" stepKey="commentEditButton2"/>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton2">
+        <actionGroup ref="inlineEditButtonActionGroup" stepKey="inlineEditButton2">
             <argument name="text" value="PageBuilderButtonItemText_Second"/>
             <argument name="index" value="2"/>
         </actionGroup>
@@ -523,7 +523,7 @@
         <seeElement selector="{{ButtonItemOnStage.buttonItemText('2', PageBuilderButtonItemText_Second.value)}}" stepKey="seeButton2Stage1"/>
         <!-- Move Button -->
         <comment userInput="Move Button" stepKey="commentMoveButton"/>
-        <actionGroup ref="moveButton" stepKey="moveButton">
+        <actionGroup ref="moveButtonActionGroup" stepKey="moveButton">
             <argument name="buttonIndexToMove" value="2"/>
             <argument name="buttonIndexToMoveTo" value="1"/>
             <argument name="y" value="-1000"/>
@@ -534,14 +534,14 @@
         <seeElement selector="{{ButtonItemOnStage.buttonItemText('2', PageBuilderButtonItemText_200Characters.value)}}" stepKey="seeButton2Stage2"/>
         <!-- Save Page -->
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <!-- Stage: Validate Changed Button Order After Save -->
         <comment userInput="Stage: Validate Changed Button Order After Save" stepKey="commentValidateStage3"/>
         <seeElement selector="{{ButtonItemOnStage.buttonItemText('1', PageBuilderButtonItemText_Second.value)}}" stepKey="seeButton1Stage3"/>
         <seeElement selector="{{ButtonItemOnStage.buttonItemText('2', PageBuilderButtonItemText_200Characters.value)}}" stepKey="seeButton2Stage3"/>
         <!-- Storefront: Validate Changed Button Order -->
         <comment userInput="Storefront: Validate Changed Button Order" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <seeElement selector="{{ButtonItemOnStorefront.buttonItemText('1', PageBuilderButtonItemText_Second.value)}}" stepKey="seeButton1Storefront"/>
@@ -564,43 +564,43 @@
             </skip>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsOntoStage1">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragButtonsOntoStage1">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType">
+        <actionGroup ref="addChildContentTypeFromOptionMenuActionGroup" stepKey="addChildContentType">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType2">
+        <actionGroup ref="addChildContentTypeFromOptionMenuActionGroup" stepKey="addChildContentType2">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Edit 1st button -->
         <comment userInput="Edit 1st Button" stepKey="commentEditButton1"/>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton1">
+        <actionGroup ref="inlineEditButtonActionGroup" stepKey="inlineEditButton1">
             <argument name="text" value="PageBuilderButtonItemText_First"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <!-- Edit 2nd Button -->
         <comment userInput="Edit 2nd Button" stepKey="commentEditButton2"/>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton2">
+        <actionGroup ref="inlineEditButtonActionGroup" stepKey="inlineEditButton2">
             <argument name="text" value="PageBuilderButtonItemText_Second"/>
             <argument name="index" value="2"/>
         </actionGroup>
         <!-- Edit 3rd Button -->
         <comment userInput="Edit 3rd Button" stepKey="commentEditButton3"/>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton3">
+        <actionGroup ref="inlineEditButtonActionGroup" stepKey="inlineEditButton3">
             <argument name="text" value="PageBuilderButtonItemText_Third"/>
             <argument name="index" value="3"/>
         </actionGroup>
@@ -612,17 +612,17 @@
         <seeNumberOfElements selector="{{ButtonItemOnStage.all}}" userInput="3" stepKey="seeTotalButtonsStage1"/>
         <!-- Move Button -->
         <comment userInput="Move Button" stepKey="commentMoveButton"/>
-        <actionGroup ref="moveButton" stepKey="moveButton">
+        <actionGroup ref="moveButtonActionGroup" stepKey="moveButton">
             <argument name="buttonIndexToMove" value="1"/>
             <argument name="buttonIndexToMoveTo" value="3"/>
         </actionGroup>
         <!-- Delete Button After Move -->
         <comment userInput="Delete Button After Move" stepKey="commentDeleteButton1"/>
-        <actionGroup ref="removeContentTypeFromStageSmallByIndex" stepKey="removeButtonFromStage">
+        <actionGroup ref="removeContentTypeFromStageSmallByIndexActionGroup" stepKey="removeButtonFromStage">
             <argument name="section" value="ButtonItemOnStage"/>
             <argument name="targetIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="confirmRemovalModal" stepKey="confirmRemovalModal1"/>
+        <actionGroup ref="confirmRemovalModalActionGroup" stepKey="confirmRemovalModal1"/>
         <!-- Stage: Validate After Delete -->
         <comment userInput="Stage: Validate After Delete" stepKey="commentValidateStage2"/>
         <seeElement selector="{{ButtonItemOnStage.buttonItemText('1', PageBuilderButtonItemText_Second.value)}}" stepKey="seeButton1Stage2"/>
@@ -630,7 +630,7 @@
         <seeNumberOfElements selector="{{ButtonItemOnStage.all}}" userInput="2" stepKey="seeTotalButtonsStage2"/>
         <!-- Attempt To Move Button To Row -->
         <comment userInput="Attempt To Move Button To Row" stepKey="commentMoveButton1"/>
-        <actionGroup ref="dragContentTypeToDropZone" stepKey="dragContentTypeToStage2">
+        <actionGroup ref="dragContentTypeToDropZoneActionGroup" stepKey="dragContentTypeToStage2">
             <argument name="contentType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
             <argument name="containerTargetIndex" value="1"/>
@@ -643,25 +643,25 @@
         <waitForPageLoad stepKey="waitForPageLoad2"/>
         <!-- Delete Button After Attempted Move To Row -->
         <comment userInput="Delete Button After Attempted Move To Row" stepKey="commentDeleteButton2"/>
-        <actionGroup ref="removeContentTypeFromStageSmallByIndex" stepKey="removeButtonFromStage2">
+        <actionGroup ref="removeContentTypeFromStageSmallByIndexActionGroup" stepKey="removeButtonFromStage2">
             <argument name="section" value="ButtonItemOnStage"/>
             <argument name="targetIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="confirmRemovalModal" stepKey="confirmRemovalModal2"/>
+        <actionGroup ref="confirmRemovalModalActionGroup" stepKey="confirmRemovalModal2"/>
         <!-- Stage: Validate After Delete 2 -->
         <comment userInput="Stage: Validate After Delete 2" stepKey="commentValidateStage3"/>
         <seeElement selector="{{ButtonItemOnStage.buttonItemText('1', PageBuilderButtonItemText_Third.value)}}" stepKey="seeButton1Stage3"/>
         <seeNumberOfElements selector="{{ButtonItemOnStage.all}}" userInput="1" stepKey="seeTotalButtonsStage3"/>
         <!-- Save Page -->
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <!-- Stage: Validate After Save -->
         <comment userInput="Stage: Validate After Save" stepKey="commentValidateStage4"/>
         <seeElement selector="{{ButtonItemOnStage.buttonItemText('1', PageBuilderButtonItemText_Third.value)}}" stepKey="seeButton1Stage4"/>
         <seeNumberOfElements selector="{{ButtonItemOnStage.all}}" userInput="1" stepKey="seeTotalButtonsStage4"/>
         <!-- Storefront: Validate Buttons -->
         <comment userInput="Storefront: Validate Buttons" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <seeElement selector="{{ButtonItemOnStorefront.buttonItemText('1', PageBuilderButtonItemText_Third.value)}}" stepKey="seeButton1Storefront"/>
@@ -681,37 +681,37 @@
             <group value="pagebuilder-moveButtons"/>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsOntoStage1">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragButtonsOntoStage1">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusOptionMenu">
+        <actionGroup ref="unFocusOptionMenuActionGroup" stepKey="unFocusOptionMenu">
             <argument name="contentType" value="PageBuilderButtonItemContentType"/>
         </actionGroup>
-        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType">
+        <actionGroup ref="addChildContentTypeFromOptionMenuActionGroup" stepKey="addChildContentType">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Edit 1st button -->
         <comment userInput="Edit 1st Button" stepKey="commentEditButton1"/>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton1">
+        <actionGroup ref="inlineEditButtonActionGroup" stepKey="inlineEditButton1">
             <argument name="text" value="PageBuilderButtonItemText_First"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <!-- Edit 2nd Button -->
         <comment userInput="Edit 2nd Button" stepKey="commentEditButton2"/>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton2">
+        <actionGroup ref="inlineEditButtonActionGroup" stepKey="inlineEditButton2">
             <argument name="text" value="PageBuilderButtonItemText_Second"/>
             <argument name="index" value="2"/>
         </actionGroup>
@@ -721,7 +721,7 @@
         <seeElement selector="{{ButtonItemOnStage.buttonItemTextByButtonGroup('1', '2', PageBuilderButtonItemText_Second.value)}}" stepKey="seeButton2Stage"/>
         <!-- Attempt To Move Button To Row -->
         <comment userInput="Attempt To Move Button To Row" stepKey="commentMoveButton1"/>
-        <actionGroup ref="dragContentTypeToDropZone" stepKey="dragContentTypeToStage2">
+        <actionGroup ref="dragContentTypeToDropZoneActionGroup" stepKey="dragContentTypeToStage2">
             <argument name="contentType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
             <argument name="containerTargetIndex" value="1"/>
@@ -738,10 +738,10 @@
         <seeElement selector="{{ButtonItemOnStage.buttonItemTextByButtonGroup('1', '2', PageBuilderButtonItemText_Second.value)}}" stepKey="seeButton2Stage2"/>
         <!-- Attempt To Move Button To Column -->
         <comment userInput="Attempt To Move Button To Column" stepKey="commentMoveButton2"/>
-        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusOptionMenu1">
+        <actionGroup ref="unFocusOptionMenuActionGroup" stepKey="unFocusOptionMenu1">
             <argument name="contentType" value="PageBuilderButtonItemContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage3">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragContentTypeToStage3">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <click selector="{{ButtonItemOnStage.openOptionsMenu('2')}}" stepKey="clickButton2"/>
@@ -754,10 +754,10 @@
         <seeElement selector="{{ButtonItemOnStage.buttonItemTextByButtonGroup('1', '2', PageBuilderButtonItemText_Second.value)}}" stepKey="seeButton2Stage3"/>
         <!-- Attempt To Move Button To Tab -->
         <comment userInput="Attempt To Move Button To Tab" stepKey="commentMoveButton3"/>
-        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusOptionMenu2">
+        <actionGroup ref="unFocusOptionMenuActionGroup" stepKey="unFocusOptionMenu2">
             <argument name="contentType" value="PageBuilderButtonItemContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage4">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragContentTypeToStage4">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <click selector="{{ButtonItemOnStage.openOptionsMenu('2')}}" stepKey="clickButton3"/>

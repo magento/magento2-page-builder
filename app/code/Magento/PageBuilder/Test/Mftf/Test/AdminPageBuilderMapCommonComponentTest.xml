@@ -27,26 +27,26 @@
         </annotations>
         <before>
             <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key {{googleMapsAPIKey.valid}}" stepKey="setValidGoogleMapsAPIKey"/>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setEmptyGoogleMapsAPIKey"/>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionMedia">
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionMedia">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <!-- Add Map -->
         <comment userInput="Add Map" stepKey="commentAddMap"/>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeIntoStage">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragContentTypeIntoStage">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditAfterDrop">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <!-- Validate Edit Panel: Empty Locations Grid -->
@@ -54,129 +54,129 @@
         <waitForElementVisible selector="{{PageBuilderDataGrid.emptyGridMessage(PageBuilderMapGrid.emptyMessage)}}" stepKey="waitForEmptyGrid"/>
         <!-- Validate Edit Panel: Map Settings Section -->
         <comment userInput="Validate Edit Panel: Map Settings Section" stepKey="commentValidateEditPanelMapSettingsSection"/>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeHeightAttributeValue">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="seeHeightAttributeValue">
             <argument name="property" value="PageBuilderMapHeightDefaultProperty"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeShowControlsValue">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="seeShowControlsValue">
             <argument name="property" value="PageBuilderMapShowControls_Default"/>
         </actionGroup>
         <!-- Validate Edit Panel: Add Location Form -->
         <comment userInput="Validate Edit Panel: Add Location Form" stepKey="commentValidateEditPanelAddLocationForm"/>
-        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton1"/>
-        <actionGroup ref="validateSlideOutPanelField" stepKey="seePositionAttribute">
+        <actionGroup ref="clickAddLocationButtonActionGroup" stepKey="clickAddLocationButton1"/>
+        <actionGroup ref="validateSlideOutPanelFieldActionGroup" stepKey="seePositionAttribute">
             <argument name="property" value="PageBuilderMapPositionDefaultProperty"/>
         </actionGroup>
         <seeElement selector="{{AddLocationForm.base}}" stepKey="seeMap"/>
-        <actionGroup ref="validateMapHelperText" stepKey="validateMapHelperText"/>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeLocationNameValue">
+        <actionGroup ref="validateMapHelperTextActionGroup" stepKey="validateMapHelperText"/>
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="seeLocationNameValue">
             <argument name="property" value="PageBuilderMapLocationName_Default"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeLatitudeValue">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="seeLatitudeValue">
             <argument name="property" value="PageBuilderMapLatitude_Default"/>
         </actionGroup>
-        <actionGroup ref="validateSlideOutPanelFieldPlaceholderText" stepKey="seeLatitudePlaceholder">
+        <actionGroup ref="validateSlideOutPanelFieldPlaceholderTextActionGroup" stepKey="seeLatitudePlaceholder">
             <argument name="property" value="PageBuilderMapLatitude_Default"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeLongitudeValue">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="seeLongitudeValue">
             <argument name="property" value="PageBuilderMapLongitude_Default"/>
         </actionGroup>
-        <actionGroup ref="validateSlideOutPanelFieldPlaceholderText" stepKey="seeLongitudePlaceholder">
+        <actionGroup ref="validateSlideOutPanelFieldPlaceholderTextActionGroup" stepKey="seeLongitudePlaceholder">
             <argument name="property" value="PageBuilderMapLongitude_Default"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seePhoneNumberValue">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="seePhoneNumberValue">
             <argument name="property" value="PageBuilderMapPhoneNumber_Default"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeStreetAddressValue">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="seeStreetAddressValue">
             <argument name="property" value="PageBuilderMapStreetAddress_Default"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeCityValue">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="seeCityValue">
             <argument name="property" value="PageBuilderMapCity_Default"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeStateValue">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="seeStateValue">
             <argument name="property" value="PageBuilderMapState_Default"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeZipCodeValue">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="seeZipCodeValue">
             <argument name="property" value="PageBuilderMapZipCode_Default"/>
         </actionGroup>
-        <actionGroup ref="seeInSlideOutMultiSelectField" stepKey="seeCountryValue">
+        <actionGroup ref="seeInSlideOutMultiSelectFieldActionGroup" stepKey="seeCountryValue">
             <argument name="property" value="PageBuilderMapCountry_Default"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeCommentValue">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="seeCommentValue">
             <argument name="property" value="PageBuilderMapComment_Default"/>
         </actionGroup>
-        <actionGroup ref="closeLocationForm" stepKey="closeLocationForm"/>
-        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanel"/>
+        <actionGroup ref="closeLocationFormActionGroup" stepKey="closeLocationForm"/>
+        <actionGroup ref="closeEditPanelSettingsActionGroup" stepKey="closeEditPanel"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <actionGroup ref="validateMapSettings" stepKey="validateMapStage">
+        <actionGroup ref="validateMapSettingsActionGroup" stepKey="validateMapStage">
             <argument name="page" value="MapOnStage"/>
             <argument name="height" value="PageBuilderMapHeightDefaultProperty"/>
             <argument name="showControls" value="PageBuilderMapShowControls_Default"/>
         </actionGroup>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage2"/>
         <!-- Validate Stage 2 -->
         <comment userInput="Validate Stage 2" stepKey="commentValidateStage2"/>
-        <actionGroup ref="validateMapSettings" stepKey="validateMapStage2">
+        <actionGroup ref="validateMapSettingsActionGroup" stepKey="validateMapStage2">
             <argument name="page" value="MapOnStage"/>
             <argument name="height" value="PageBuilderMapHeightDefaultProperty"/>
             <argument name="showControls" value="PageBuilderMapShowControls_Default"/>
         </actionGroup>
         <!-- Validate Edit Panel: Map Settings Section 2 -->
         <comment userInput="Validate Edit Panel: Map Settings Section 2" stepKey="commentValidateEditPanelMapSettingsSection2"/>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeHeightAttributeValue2">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="seeHeightAttributeValue2">
             <argument name="property" value="PageBuilderMapHeightDefaultProperty"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeShowControlsValue2">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="seeShowControlsValue2">
             <argument name="property" value="PageBuilderMapShowControls_Default"/>
         </actionGroup>
         <!-- Validate Edit Panel: Add Location Form 2 -->
         <comment userInput="Validate Edit Panel: Add Location Form 2" stepKey="commentValidateEditPanelAddLocationForm2"/>
-        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton2"/>
-        <actionGroup ref="validateSlideOutPanelField" stepKey="seePositionAttribute2">
+        <actionGroup ref="clickAddLocationButtonActionGroup" stepKey="clickAddLocationButton2"/>
+        <actionGroup ref="validateSlideOutPanelFieldActionGroup" stepKey="seePositionAttribute2">
             <argument name="property" value="PageBuilderMapPositionDefaultProperty"/>
         </actionGroup>
         <seeElement selector="{{AddLocationForm.base}}" stepKey="seeMap2WithError"/>
-        <actionGroup ref="validateMapHelperText" stepKey="validateMapHelperText2"/>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeLocationNameValue2">
+        <actionGroup ref="validateMapHelperTextActionGroup" stepKey="validateMapHelperText2"/>
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="seeLocationNameValue2">
             <argument name="property" value="PageBuilderMapLocationName_Default"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeLatitudeValue2">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="seeLatitudeValue2">
             <argument name="property" value="PageBuilderMapLatitude_Default"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeLongitudeValue2">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="seeLongitudeValue2">
             <argument name="property" value="PageBuilderMapLongitude_Default"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seePhoneNumberValue2">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="seePhoneNumberValue2">
             <argument name="property" value="PageBuilderMapPhoneNumber_Default"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeStreetAddressValue2">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="seeStreetAddressValue2">
             <argument name="property" value="PageBuilderMapStreetAddress_Default"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeCityValue2">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="seeCityValue2">
             <argument name="property" value="PageBuilderMapCity_Default"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeStateValue2">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="seeStateValue2">
             <argument name="property" value="PageBuilderMapState_Default"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeZipCodeValue2">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="seeZipCodeValue2">
             <argument name="property" value="PageBuilderMapZipCode_Default"/>
         </actionGroup>
-        <actionGroup ref="seeInSlideOutMultiSelectField" stepKey="seeCountryValue2">
+        <actionGroup ref="seeInSlideOutMultiSelectFieldActionGroup" stepKey="seeCountryValue2">
             <argument name="property" value="PageBuilderMapCountry_Default"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeCommentValue2">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="seeCommentValue2">
             <argument name="property" value="PageBuilderMapComment_Default"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="validateEmptyMapStoreFront" stepKey="validateEmptyMapStoreFront"/>
+        <actionGroup ref="validateEmptyMapStoreFrontActionGroup" stepKey="validateEmptyMapStoreFront"/>
     </test>
     <test name="MapVerifyOnHoverOptionMenu">
         <annotations>
@@ -192,23 +192,23 @@
             <group value="pagebuilder-mapCommon"/>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionMedia">
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionMedia">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeIntoStage">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragContentTypeIntoStage">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="validateOnHoverOptionMenu" stepKey="validateOnHoverOptionMenu">
+        <actionGroup ref="validateOnHoverOptionMenuActionGroup" stepKey="validateOnHoverOptionMenu">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
     </test>
@@ -227,56 +227,56 @@
         </annotations>
         <before>
             <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key {{googleMapsAPIKey.invalidOneCharacter}}" stepKey="setInvalidGoogleMapsAPIKey"/>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setEmptyGoogleMapsAPIKey"/>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionMedia">
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionMedia">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeIntoStage">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragContentTypeIntoStage">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditAfterDrop">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <!-- Validate Default Values -->
-        <comment userInput="Validate Default Values" stepKey="CommentValidateDefaultValues"/>
-        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignmentField">
+        <comment userInput="Validate Default Values" stepKey="commentValidateDefaultValues"/>
+        <actionGroup ref="seeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateAlignmentField">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBorder">
+        <actionGroup ref="seeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateBorder">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderColor">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderColor">
             <argument name="property" value="PageBuilderAdvancedBorderColorProperty_Empty"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderWidth">
             <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderRadius">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderRadius">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateCssClasses">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateCssClasses">
             <argument name="property" value="PageBuilderAdvancedCssClassesProperty_Empty"/>
         </actionGroup>
-        <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins">
+        <actionGroup ref="seeInMarginFieldsSlideOutPanelActionGroup" stepKey="validateMargins">
             <argument name="property" value="PageBuilderMarginsPropertyDefault"/>
         </actionGroup>
-        <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding">
+        <actionGroup ref="seeInPaddingFieldsSlideOutPanelActionGroup" stepKey="validatePadding">
             <argument name="property" value="PageBuilderPaddingPropertyDefault"/>
         </actionGroup>
-        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <actionGroup ref="closeEditPanelSettingsActionGroup" stepKey="closeEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <actionGroup ref="validateAdvancedStyleWithNoAlignmentMapWithErrorOverlay" stepKey="validateStage">
+        <actionGroup ref="validateAdvancedStyleWithNoAlignmentMapWithErrorOverlayActionGroup" stepKey="validateStage">
             <argument name="page" value="MapOnStage"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyNone"/>
             <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
@@ -286,10 +286,10 @@
             <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
-        <actionGroup ref="validateAdvancedStyleWithNoAlignmentMapWithErrorOverlay" stepKey="validateStage2">
+        <actionGroup ref="validateAdvancedStyleWithNoAlignmentMapWithErrorOverlayActionGroup" stepKey="validateStage2">
             <argument name="page" value="MapOnStage"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyNone"/>
             <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
@@ -298,41 +298,41 @@
             <argument name="padding" value="PageBuilderPaddingPropertyDefault"/>
             <argument name="index" value="1"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
-        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment2">
+        <actionGroup ref="seeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateAlignment2">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBorder2">
+        <actionGroup ref="seeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateBorder2">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderColor2">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderColor2">
             <argument name="property" value="PageBuilderAdvancedBorderColorProperty_Empty"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth2">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderWidth2">
             <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderRadius2">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderRadius2">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateCssClasses2">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateCssClasses2">
             <argument name="property" value="PageBuilderAdvancedCssClassesProperty_Empty"/>
         </actionGroup>
-        <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins2">
+        <actionGroup ref="seeInMarginFieldsSlideOutPanelActionGroup" stepKey="validateMargins2">
             <argument name="property" value="PageBuilderMarginsPropertyDefault"/>
         </actionGroup>
-        <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding2">
+        <actionGroup ref="seeInPaddingFieldsSlideOutPanelActionGroup" stepKey="validatePadding2">
             <argument name="property" value="PageBuilderPaddingPropertyDefault"/>
         </actionGroup>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="validateAdvancedStyleWithNoAlignmentNotVisible" stepKey="validateStorefront">
+        <actionGroup ref="validateAdvancedStyleWithNoAlignmentNotVisibleActionGroup" stepKey="validateStorefront">
             <argument name="page" value="MapOnStorefront"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyNone"/>
             <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
@@ -357,69 +357,69 @@
         </annotations>
         <before>
             <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key {{googleMapsAPIKey.invalidOneCharacter}}" stepKey="setInvalidGoogleMapsAPIKey"/>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setEmptyGoogleMapsAPIKey"/>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeIntoStage">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragContentTypeIntoStage">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditAfterDrop">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <!-- Add Location -->
         <comment userInput="Add Location" stepKey="commentAddLocation"/>
-        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton1"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLatitude">
+        <actionGroup ref="clickAddLocationButtonActionGroup" stepKey="clickAddLocationButton1"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLatitude">
             <argument name="property" value="PageBuilderMapLatitude_Positive39_74"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLongitude">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLongitude">
             <argument name="property" value="PageBuilderMapLongitude_Positive9_67"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLocationName">
             <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
         </actionGroup>
-        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
+        <actionGroup ref="saveLocationFormActionGroup" stepKey="saveLocationForm"/>
         <!-- Update Values -->
         <comment userInput="Update Values" stepKey="commentUpdateValues"/>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAlignmentCenter">
+        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAlignmentCenter">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBorder">
+        <actionGroup ref="selectSlideOutPanelFieldActionGroup" stepKey="enterBorder">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBorderColor">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBorderColor">
             <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBorderWidth">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBorderWidth">
             <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBorderRadius">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBorderRadius">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterCssClasses">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterCssClasses">
             <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldMargins" stepKey="enterMargins">
+        <actionGroup ref="fillSlideOutPanelFieldMarginsActionGroup" stepKey="enterMargins">
             <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldPadding" stepKey="enterPadding">
+        <actionGroup ref="fillSlideOutPanelFieldPaddingActionGroup" stepKey="enterPadding">
             <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <actionGroup ref="validateAdvancedStyleWithAllUpdatedMapWithErrorOverlay" stepKey="validateAllAdvancedStage">
+        <actionGroup ref="validateAdvancedStyleWithAllUpdatedMapWithErrorOverlayActionGroup" stepKey="validateAllAdvancedStage">
             <argument name="page" value="MapOnStage"/>
             <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
@@ -431,41 +431,41 @@
             <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
             <argument name="index" value="1"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
-        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
+        <actionGroup ref="seeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateAlignment">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBorder">
+        <actionGroup ref="seeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateBorder">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderColor">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderColor">
             <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderWidth">
             <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderRadius">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderRadius">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateCssClasses">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateCssClasses">
             <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
         </actionGroup>
-        <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins">
+        <actionGroup ref="seeInMarginFieldsSlideOutPanelActionGroup" stepKey="validateMargins">
             <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
         </actionGroup>
-        <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding">
+        <actionGroup ref="seeInPaddingFieldsSlideOutPanelActionGroup" stepKey="validatePadding">
             <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
-        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <actionGroup ref="closeEditPanelSettingsActionGroup" stepKey="closeEditPanelSettings"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
-        <actionGroup ref="validateAdvancedStyleWithAllUpdatedMapWithErrorOverlay" stepKey="validateAllAdvancedStage2">
+        <actionGroup ref="validateAdvancedStyleWithAllUpdatedMapWithErrorOverlayActionGroup" stepKey="validateAllAdvancedStage2">
             <argument name="page" value="MapOnStage"/>
             <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
@@ -477,41 +477,41 @@
             <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
             <argument name="index" value="1"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage3">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage3">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
-        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment2">
+        <actionGroup ref="seeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateAlignment2">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBorder2">
+        <actionGroup ref="seeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateBorder2">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderColor2">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderColor2">
             <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth2">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderWidth2">
             <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderRadius2">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderRadius2">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateCssClasses2">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateCssClasses2">
             <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
         </actionGroup>
-        <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins2">
+        <actionGroup ref="seeInMarginFieldsSlideOutPanelActionGroup" stepKey="validateMargins2">
             <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
         </actionGroup>
-        <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding2">
+        <actionGroup ref="seeInPaddingFieldsSlideOutPanelActionGroup" stepKey="validatePadding2">
             <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateAllAdvancedStorefront">
+        <actionGroup ref="validateAdvancedStyleWithAllUpdatedActionGroup" stepKey="validateAllAdvancedStorefront">
             <argument name="page" value="MapOnStorefront"/>
             <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
@@ -542,97 +542,97 @@
             </skip>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setEmptyGoogleMapsAPIKey"/>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionMedia">
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionMedia">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeIntoStage">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragContentTypeIntoStage">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditAfterDrop">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <!-- Add Location 1 -->
         <comment userInput="Add Location 1" stepKey="commentAddLocation1"/>
-        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton1"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLatitude">
+        <actionGroup ref="clickAddLocationButtonActionGroup" stepKey="clickAddLocationButton1"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLatitude">
             <argument name="property" value="PageBuilderMapLatitude_Positive39_74"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLongitude">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLongitude">
             <argument name="property" value="PageBuilderMapLongitude_Positive9_67"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLocationName">
             <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterPhoneNumber">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterPhoneNumber">
             <argument name="property" value="PageBuilderMapPhoneNumber_TestPhoneNumber"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterStreetAddress">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterStreetAddress">
             <argument name="property" value="PageBuilderMapStreetAddress_1234FakeDrive"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterCity">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterCity">
             <argument name="property" value="PageBuilderMapCity_FakeCity"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterState">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterState">
             <argument name="property" value="PageBuilderMapState_Texas"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterZip">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterZip">
             <argument name="property" value="PageBuilderMapZipCode_12345_6789"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelMultiSelectField" stepKey="enterCountry">
+        <actionGroup ref="fillSlideOutPanelMultiSelectFieldActionGroup" stepKey="enterCountry">
             <argument name="property" value="PageBuilderMapCountry_USA"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterComment">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterComment">
             <argument name="property" value="PageBuilderMapComment_TestComment"/>
         </actionGroup>
-        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
+        <actionGroup ref="saveLocationFormActionGroup" stepKey="saveLocationForm"/>
         <!-- Add 2nd Location -->
         <comment userInput="Add 2nd Location" stepKey="commentAddLocation2"/>
-        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton2"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLatitude2">
+        <actionGroup ref="clickAddLocationButtonActionGroup" stepKey="clickAddLocationButton2"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLatitude2">
             <argument name="property" value="PageBuilderMapLatitude_Positive40_74"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLongitude2">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLongitude2">
             <argument name="property" value="PageBuilderMapLongitude_Negative104_99"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName2">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLocationName2">
             <argument name="property" value="PageBuilderMapLocationName_TestLocationEdit"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterPhoneNumber2">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterPhoneNumber2">
             <argument name="property" value="PageBuilderMapPhoneNumber_TestPhoneNumberEdit"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterStreetAddress2">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterStreetAddress2">
             <argument name="property" value="PageBuilderMapStreetAddress_1234FakeDriveEdit"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterCity2">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterCity2">
             <argument name="property" value="PageBuilderMapCity_FakeCityEdit"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterState2">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterState2">
             <argument name="property" value="PageBuilderMapState_Ontario"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterZip2">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterZip2">
             <argument name="property" value="PageBuilderMapZipCode_98765"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelMultiSelectField" stepKey="enterCountry2">
+        <actionGroup ref="fillSlideOutPanelMultiSelectFieldActionGroup" stepKey="enterCountry2">
             <argument name="property" value="PageBuilderMapCountry_Canada"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterComment2">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterComment2">
             <argument name="property" value="PageBuilderMapComment_TestComment2"/>
         </actionGroup>
-        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm2"/>
+        <actionGroup ref="saveLocationFormActionGroup" stepKey="saveLocationForm2"/>
         <!-- Validate Locations Grid -->
         <comment userInput="Validate Locations Grid" stepKey="commentValidateLocationsGrid1"/>
-        <actionGroup ref="validateLocationGridData" stepKey="validateLocation1GridData1">
+        <actionGroup ref="validateLocationGridDataActionGroup" stepKey="validateLocation1GridData1">
             <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
             <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_TestPhoneNumber"/>
             <argument name="address" value="PageBuilderMapStreetAddress_1234FakeDrive"/>
@@ -642,7 +642,7 @@
             <argument name="country" value="PageBuilderMapCountry_USA"/>
             <argument name="rowIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="validateLocationGridData" stepKey="validateLocation2GridData1">
+        <actionGroup ref="validateLocationGridDataActionGroup" stepKey="validateLocation2GridData1">
             <argument name="locationName" value="PageBuilderMapLocationName_TestLocationEdit"/>
             <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_TestPhoneNumberEdit"/>
             <argument name="address" value="PageBuilderMapStreetAddress_1234FakeDriveEdit"/>
@@ -654,52 +654,52 @@
         </actionGroup>
         <!-- Update Map Settings Section -->
         <comment userInput="Update Map Settings Section" stepKey="commentUpdateMapSettingsSection"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMapHeight">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterMapHeight">
             <argument name="property" value="PageBuilderMapHeightProperty350"/>
         </actionGroup>
-        <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="disableMapShowControls">
+        <actionGroup ref="clickSlideOutPanelFieldGeneralActionGroup" stepKey="disableMapShowControls">
             <argument name="property" value="PageBuilderMapShowControls_False"/>
         </actionGroup>
         <!-- Update Advanced Section -->
         <comment userInput="Update Advanced Section" stepKey="commentUpdateAdvancedSection"/>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAlignmentCenter">
+        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAlignmentCenter">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBorder">
+        <actionGroup ref="selectSlideOutPanelFieldActionGroup" stepKey="enterBorder">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBorderColor">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBorderColor">
             <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBorderWidth">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBorderWidth">
             <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBorderRadius">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBorderRadius">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterCssClasses">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterCssClasses">
             <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldMargins" stepKey="enterMargins">
+        <actionGroup ref="fillSlideOutPanelFieldMarginsActionGroup" stepKey="enterMargins">
             <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldPadding" stepKey="enterPadding">
+        <actionGroup ref="fillSlideOutPanelFieldPaddingActionGroup" stepKey="enterPadding">
             <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <!-- Save Page and Set Valid API Key -->
         <comment userInput="Save Page and Set Valid API Key" stepKey="commentSavePageAndSetKey"/>
         <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key {{googleMapsAPIKey.valid}}" stepKey="setValidGoogleMapsAPIKey"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
-        <actionGroup ref="validateMapSettings" stepKey="validateMapStage2">
+        <actionGroup ref="validateMapSettingsActionGroup" stepKey="validateMapStage2">
             <argument name="page" value="MapOnStage"/>
             <argument name="height" value="PageBuilderMapHeightProperty350"/>
             <argument name="showControls" value="PageBuilderMapShowControls_False"/>
         </actionGroup>
-        <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateAllAdvancedStage2">
+        <actionGroup ref="validateAdvancedStyleWithAllUpdatedActionGroup" stepKey="validateAllAdvancedStage2">
             <argument name="page" value="MapOnStage"/>
             <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
@@ -710,16 +710,16 @@
             <argument name="margin" value="PageBuilderMarginsPropertyUnique"/>
             <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
-        <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateContentTypeHeight">
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeightActionGroup" stepKey="validateContentTypeHeight">
             <argument name="content" value="{{MapOnStage.mainCSS}}"/>
             <argument name="height" value="PageBuilderMapHeightProperty350"/>
         </actionGroup>
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel"/>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="validateLocationGridData" stepKey="validateLocation1GridData2">
+        <actionGroup ref="validateLocationGridDataActionGroup" stepKey="validateLocation1GridData2">
             <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
             <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_TestPhoneNumber"/>
             <argument name="address" value="PageBuilderMapStreetAddress_1234FakeDrive"/>
@@ -729,7 +729,7 @@
             <argument name="country" value="PageBuilderMapCountry_USA"/>
             <argument name="rowIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="validateLocationGridData" stepKey="validateLocation2GridData2">
+        <actionGroup ref="validateLocationGridDataActionGroup" stepKey="validateLocation2GridData2">
             <argument name="locationName" value="PageBuilderMapLocationName_TestLocationEdit"/>
             <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_TestPhoneNumberEdit"/>
             <argument name="address" value="PageBuilderMapStreetAddress_1234FakeDriveEdit"/>
@@ -741,121 +741,121 @@
         </actionGroup>
         <!-- Validate Location 1 Form -->
         <comment userInput="Validate Location 1 Form" stepKey="commentValidateLocationForm1"/>
-        <actionGroup ref="clickLocationGridRow" stepKey="clickLocationGridRow1">
+        <actionGroup ref="clickLocationGridRowActionGroup" stepKey="clickLocationGridRow1">
             <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateLocationName1">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateLocationName1">
             <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateLatitude">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateLatitude">
             <argument name="property" value="PageBuilderMapLatitude_Positive39_74"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateLongitude">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateLongitude">
             <argument name="property" value="PageBuilderMapLongitude_Positive9_67"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validatePhoneNumber1">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validatePhoneNumber1">
             <argument name="property" value="PageBuilderMapPhoneNumber_TestPhoneNumber"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateStreetAddress1">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateStreetAddress1">
             <argument name="property" value="PageBuilderMapStreetAddress_1234FakeDrive"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateCity1">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateCity1">
             <argument name="property" value="PageBuilderMapCity_FakeCity"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateState1">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateState1">
             <argument name="property" value="PageBuilderMapState_Texas"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateZip1">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateZip1">
             <argument name="property" value="PageBuilderMapZipCode_12345_6789"/>
         </actionGroup>
-        <actionGroup ref="seeInSlideOutMultiSelectField" stepKey="validateCountry1">
+        <actionGroup ref="seeInSlideOutMultiSelectFieldActionGroup" stepKey="validateCountry1">
             <argument name="property" value="PageBuilderMapCountry_USA"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateComment1">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateComment1">
             <argument name="property" value="PageBuilderMapComment_TestComment"/>
         </actionGroup>
-        <actionGroup ref="closeLocationForm" stepKey="closeLocationForm1"/>
+        <actionGroup ref="closeLocationFormActionGroup" stepKey="closeLocationForm1"/>
         <!-- Validate Location 2 Form -->
         <comment userInput="Validate Location 2 Form" stepKey="commentValidateLocationForm2"/>
-        <actionGroup ref="clickLocationGridRow" stepKey="clickLocationGridRow2">
+        <actionGroup ref="clickLocationGridRowActionGroup" stepKey="clickLocationGridRow2">
             <argument name="locationName" value="PageBuilderMapLocationName_TestLocationEdit"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateLocationName2">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateLocationName2">
             <argument name="property" value="PageBuilderMapLocationName_TestLocationEdit"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateLatitude2">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateLatitude2">
             <argument name="property" value="PageBuilderMapLatitude_Positive40_74"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateLongitude2">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateLongitude2">
             <argument name="property" value="PageBuilderMapLongitude_Negative104_99"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validatePhoneNumber2">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validatePhoneNumber2">
             <argument name="property" value="PageBuilderMapPhoneNumber_TestPhoneNumberEdit"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateStreetAddress2">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateStreetAddress2">
             <argument name="property" value="PageBuilderMapStreetAddress_1234FakeDriveEdit"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateCity2">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateCity2">
             <argument name="property" value="PageBuilderMapCity_FakeCityEdit"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateState2">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateState2">
             <argument name="property" value="PageBuilderMapState_Ontario"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateZip2">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateZip2">
             <argument name="property" value="PageBuilderMapZipCode_98765"/>
         </actionGroup>
-        <actionGroup ref="seeInSlideOutMultiSelectField" stepKey="validateCountry2">
+        <actionGroup ref="seeInSlideOutMultiSelectFieldActionGroup" stepKey="validateCountry2">
             <argument name="property" value="PageBuilderMapCountry_Canada"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateComment2">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateComment2">
             <argument name="property" value="PageBuilderMapComment_TestComment2"/>
         </actionGroup>
-        <actionGroup ref="closeLocationForm" stepKey="closeLocationForm2"/>
+        <actionGroup ref="closeLocationFormActionGroup" stepKey="closeLocationForm2"/>
         <!-- Edit Panel: Verify Map Settings Section -->
         <comment userInput="Edit Panel: Verify Map Settings Section" stepKey="commentVerifyMapSettingsSection"/>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateHeight">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateHeight">
             <argument name="property" value="PageBuilderMapHeightProperty350"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="validateShowControls">
+        <actionGroup ref="seeOptionIsNotCheckedSlideOutPropertyActionGroup" stepKey="validateShowControls">
             <argument name="property" value="PageBuilderMapShowControls_Default"/>
         </actionGroup>
         <!-- Edit Panel: Verify Advanced Section -->
         <comment userInput="Edit Panel: Verify Advanced Section" stepKey="commentVerifyAdvancedSection"/>
-        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
+        <actionGroup ref="seeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateAlignment">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBorder">
+        <actionGroup ref="seeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateBorder">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderColor">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderColor">
             <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderWidth">
             <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderRadius">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderRadius">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateCssClasses">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateCssClasses">
             <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
         </actionGroup>
-        <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins">
+        <actionGroup ref="seeInMarginFieldsSlideOutPanelActionGroup" stepKey="validateMargins">
             <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
         </actionGroup>
-        <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding">
+        <actionGroup ref="seeInPaddingFieldsSlideOutPanelActionGroup" stepKey="validatePadding">
             <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="validateMapSettings" stepKey="validateMapStoreFront">
+        <actionGroup ref="validateMapSettingsActionGroup" stepKey="validateMapStoreFront">
             <argument name="page" value="MapOnStorefront"/>
             <argument name="height" value="PageBuilderMapHeightProperty350"/>
             <argument name="showControls" value="PageBuilderMapShowControls_False"/>
         </actionGroup>
-        <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateAllAdvancedStorefront">
+        <actionGroup ref="validateAdvancedStyleWithAllUpdatedActionGroup" stepKey="validateAllAdvancedStorefront">
             <argument name="page" value="MapOnStorefront"/>
             <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
@@ -866,7 +866,7 @@
             <argument name="margin" value="PageBuilderMarginsPropertyUnique"/>
             <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
-        <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateContentTypeHeightStorefront">
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeightActionGroup" stepKey="validateContentTypeHeightStorefront">
             <argument name="content" value="{{MapOnStorefront.baseCSS}}"/>
             <argument name="height" value="PageBuilderMapHeightProperty350"/>
         </actionGroup>
@@ -886,143 +886,143 @@
         </annotations>
         <before>
             <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key {{googleMapsAPIKey.invalidOneCharacter}}" stepKey="setInvalidGoogleMapsAPIKey"/>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setEmptyGoogleMapsAPIKey"/>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionMedia">
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionMedia">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeIntoStage">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragContentTypeIntoStage">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditAfterDrop">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <!-- Add Location 1 -->
         <comment userInput="Add Location 1" stepKey="commentAddLocation1"/>
-        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton1"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLatitude">
+        <actionGroup ref="clickAddLocationButtonActionGroup" stepKey="clickAddLocationButton1"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLatitude">
             <argument name="property" value="PageBuilderMapLatitude_Positive39_74"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLongitude">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLongitude">
             <argument name="property" value="PageBuilderMapLongitude_Positive9_67"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLocationName">
             <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterPhoneNumber">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterPhoneNumber">
             <argument name="property" value="PageBuilderMapPhoneNumber_TestPhoneNumber"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterStreetAddress">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterStreetAddress">
             <argument name="property" value="PageBuilderMapStreetAddress_1234FakeDrive"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterCity">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterCity">
             <argument name="property" value="PageBuilderMapCity_FakeCity"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterState">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterState">
             <argument name="property" value="PageBuilderMapState_Texas"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterZip">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterZip">
             <argument name="property" value="PageBuilderMapZipCode_12345_6789"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelMultiSelectField" stepKey="enterCountry">
+        <actionGroup ref="fillSlideOutPanelMultiSelectFieldActionGroup" stepKey="enterCountry">
             <argument name="property" value="PageBuilderMapCountry_USA"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterComment">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterComment">
             <argument name="property" value="PageBuilderMapComment_TestComment"/>
         </actionGroup>
-        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
+        <actionGroup ref="saveLocationFormActionGroup" stepKey="saveLocationForm"/>
         <!-- Add 2nd Location -->
         <comment userInput="Add 2nd Location" stepKey="commentAddLocation2"/>
-        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton2"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLatitude2">
+        <actionGroup ref="clickAddLocationButtonActionGroup" stepKey="clickAddLocationButton2"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLatitude2">
             <argument name="property" value="PageBuilderMapLatitude_Positive40_74"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLongitude2">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLongitude2">
             <argument name="property" value="PageBuilderMapLongitude_Negative104_99"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName2">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLocationName2">
             <argument name="property" value="PageBuilderMapLocationName_TestLocationEdit"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterPhoneNumber2">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterPhoneNumber2">
             <argument name="property" value="PageBuilderMapPhoneNumber_TestPhoneNumberEdit"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterStreetAddress2">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterStreetAddress2">
             <argument name="property" value="PageBuilderMapStreetAddress_1234FakeDriveEdit"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterCity2">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterCity2">
             <argument name="property" value="PageBuilderMapCity_FakeCityEdit"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterState2">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterState2">
             <argument name="property" value="PageBuilderMapState_Ontario"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterZip2">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterZip2">
             <argument name="property" value="PageBuilderMapZipCode_98765"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelMultiSelectField" stepKey="enterCountry2">
+        <actionGroup ref="fillSlideOutPanelMultiSelectFieldActionGroup" stepKey="enterCountry2">
             <argument name="property" value="PageBuilderMapCountry_Canada"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterComment2">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterComment2">
             <argument name="property" value="PageBuilderMapComment_TestComment2"/>
         </actionGroup>
-        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm2"/>
+        <actionGroup ref="saveLocationFormActionGroup" stepKey="saveLocationForm2"/>
         <!-- Update Map Settings Section -->
         <comment userInput="Update Map Settings Section" stepKey="commentUpdateMapSettingsSection"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMapHeight">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterMapHeight">
             <argument name="property" value="PageBuilderMapHeightProperty350"/>
         </actionGroup>
-        <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="disableMapShowControls">
+        <actionGroup ref="clickSlideOutPanelFieldGeneralActionGroup" stepKey="disableMapShowControls">
             <argument name="property" value="PageBuilderMapShowControls_False"/>
         </actionGroup>
         <!-- Update Advanced Section -->
         <comment userInput="Update Advanced Section" stepKey="commentUpdateAdvancedSection"/>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAlignmentCenter">
+        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAlignmentCenter">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBorder">
+        <actionGroup ref="selectSlideOutPanelFieldActionGroup" stepKey="enterBorder">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBorderColor">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBorderColor">
             <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBorderWidth">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBorderWidth">
             <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBorderRadius">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBorderRadius">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterCssClasses">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterCssClasses">
             <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldMargins" stepKey="enterMargins">
+        <actionGroup ref="fillSlideOutPanelFieldMarginsActionGroup" stepKey="enterMargins">
             <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldPadding" stepKey="enterPadding">
+        <actionGroup ref="fillSlideOutPanelFieldPaddingActionGroup" stepKey="enterPadding">
             <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <!-- Duplicate and Verify Stage -->
         <comment userInput="Duplicate and Verify Stage" stepKey="commentDuplicateAndVerifyStage"/>
-        <actionGroup ref="duplicateContentType" stepKey="duplicateContentType">
+        <actionGroup ref="duplicateContentTypeActionGroup" stepKey="duplicateContentType">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <!-- Validate Duplicate On Stage -->
         <comment userInput="Validate Duplicate On Stage" stepKey="commentValidateStage1"/>
-        <actionGroup ref="validateMapSettingsWithErrorOverlay" stepKey="validateMapStage1">
+        <actionGroup ref="validateMapSettingsWithErrorOverlayActionGroup" stepKey="validateMapStage1">
             <argument name="page" value="MapOnStage"/>
             <argument name="height" value="PageBuilderMapHeightProperty350"/>
             <argument name="showControls" value="PageBuilderMapShowControls_False"/>
             <argument name="index" value="2"/>
         </actionGroup>
-        <actionGroup ref="validateAdvancedStyleWithAllUpdatedMapWithErrorOverlay" stepKey="validateAllAdvancedStage1">
+        <actionGroup ref="validateAdvancedStyleWithAllUpdatedMapWithErrorOverlayActionGroup" stepKey="validateAllAdvancedStage1">
             <argument name="page" value="MapOnStage"/>
             <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
@@ -1036,11 +1036,11 @@
         </actionGroup>
         <!-- Verify Duplicate On Edit Panel -->
         <comment userInput="Verify Duplicate On Edit Panel" stepKey="commentVerifyEditPanel"/>
-        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage2">
+        <actionGroup ref="openPageBuilderEditPanelByIndexActionGroup" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderMapContentType"/>
             <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="validateLocationGridData" stepKey="validateLocation1GridData">
+        <actionGroup ref="validateLocationGridDataActionGroup" stepKey="validateLocation1GridData">
             <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
             <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_TestPhoneNumber"/>
             <argument name="address" value="PageBuilderMapStreetAddress_1234FakeDrive"/>
@@ -1050,7 +1050,7 @@
             <argument name="country" value="PageBuilderMapCountry_USA"/>
             <argument name="rowIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="validateLocationGridData" stepKey="validateLocation2GridData">
+        <actionGroup ref="validateLocationGridDataActionGroup" stepKey="validateLocation2GridData">
             <argument name="locationName" value="PageBuilderMapLocationName_TestLocationEdit"/>
             <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_TestPhoneNumberEdit"/>
             <argument name="address" value="PageBuilderMapStreetAddress_1234FakeDriveEdit"/>
@@ -1062,124 +1062,124 @@
         </actionGroup>
         <!-- Verify Duplicate Location 1 Form -->
         <comment userInput="Verify Duplicate Location 1 Form" stepKey="commentVerifyLocation1Form1"/>
-        <actionGroup ref="clickLocationGridRow" stepKey="clickLocation1GridRow1">
+        <actionGroup ref="clickLocationGridRowActionGroup" stepKey="clickLocation1GridRow1">
             <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateLocationName">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateLocationName">
             <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateLatitude">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateLatitude">
             <argument name="property" value="PageBuilderMapLatitude_Positive39_74"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateLongitude">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateLongitude">
             <argument name="property" value="PageBuilderMapLongitude_Positive9_67"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validatePhoneNumber">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validatePhoneNumber">
             <argument name="property" value="PageBuilderMapPhoneNumber_TestPhoneNumber"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateStreetAddress">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateStreetAddress">
             <argument name="property" value="PageBuilderMapStreetAddress_1234FakeDrive"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateCity">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateCity">
             <argument name="property" value="PageBuilderMapCity_FakeCity"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateState">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateState">
             <argument name="property" value="PageBuilderMapState_Texas"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateZip">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateZip">
             <argument name="property" value="PageBuilderMapZipCode_12345_6789"/>
         </actionGroup>
-        <actionGroup ref="seeInSlideOutMultiSelectField" stepKey="validateCountry">
+        <actionGroup ref="seeInSlideOutMultiSelectFieldActionGroup" stepKey="validateCountry">
             <argument name="property" value="PageBuilderMapCountry_USA"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateComment">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateComment">
             <argument name="property" value="PageBuilderMapComment_TestComment"/>
         </actionGroup>
-        <actionGroup ref="closeLocationForm" stepKey="closeLocationForm"/>
+        <actionGroup ref="closeLocationFormActionGroup" stepKey="closeLocationForm"/>
         <!-- Validate Location 2 Form -->
         <comment userInput="Validate Location 2 Form" stepKey="commentValidateLocation2Form1"/>
-        <actionGroup ref="clickLocationGridRow" stepKey="clickLocationGridRow2">
+        <actionGroup ref="clickLocationGridRowActionGroup" stepKey="clickLocationGridRow2">
             <argument name="locationName" value="PageBuilderMapLocationName_TestLocationEdit"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateLocationName2">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateLocationName2">
             <argument name="property" value="PageBuilderMapLocationName_TestLocationEdit"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateLatitude2">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateLatitude2">
             <argument name="property" value="PageBuilderMapLatitude_Positive40_74"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateLongitude2">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateLongitude2">
             <argument name="property" value="PageBuilderMapLongitude_Negative104_99"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validatePhoneNumber2">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validatePhoneNumber2">
             <argument name="property" value="PageBuilderMapPhoneNumber_TestPhoneNumberEdit"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateStreetAddress2">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateStreetAddress2">
             <argument name="property" value="PageBuilderMapStreetAddress_1234FakeDriveEdit"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateCity2">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateCity2">
             <argument name="property" value="PageBuilderMapCity_FakeCityEdit"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateState2">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateState2">
             <argument name="property" value="PageBuilderMapState_Ontario"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateZip2">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateZip2">
             <argument name="property" value="PageBuilderMapZipCode_98765"/>
         </actionGroup>
-        <actionGroup ref="seeInSlideOutMultiSelectField" stepKey="validateCountry2">
+        <actionGroup ref="seeInSlideOutMultiSelectFieldActionGroup" stepKey="validateCountry2">
             <argument name="property" value="PageBuilderMapCountry_Canada"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateComment2">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateComment2">
             <argument name="property" value="PageBuilderMapComment_TestComment2"/>
         </actionGroup>
-        <actionGroup ref="closeLocationForm" stepKey="closeLocationForm2"/>
+        <actionGroup ref="closeLocationFormActionGroup" stepKey="closeLocationForm2"/>
         <!-- Edit Panel: Verify Map Settings Section -->
         <comment userInput="Edit Panel: Verify Map Settings Section" stepKey="commentVerifyMapSettingsSection"/>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateHeight">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateHeight">
             <argument name="property" value="PageBuilderMapHeightProperty350"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="validateShowControls">
+        <actionGroup ref="seeOptionIsNotCheckedSlideOutPropertyActionGroup" stepKey="validateShowControls">
             <argument name="property" value="PageBuilderMapShowControls_Default"/>
         </actionGroup>
         <!-- Edit Panel: Verify Advanced Section -->
         <comment userInput="Edit Panel: Verify Advanced Section" stepKey="commentVerifyAdvancedSection"/>
-        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
+        <actionGroup ref="seeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateAlignment">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBorder">
+        <actionGroup ref="seeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateBorder">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderColor">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderColor">
             <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderWidth">
             <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderRadius">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderRadius">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateCssClasses">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateCssClasses">
             <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
         </actionGroup>
-        <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins">
+        <actionGroup ref="seeInMarginFieldsSlideOutPanelActionGroup" stepKey="validateMargins">
             <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
         </actionGroup>
-        <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding">
+        <actionGroup ref="seeInPaddingFieldsSlideOutPanelActionGroup" stepKey="validatePadding">
             <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
-        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanel"/>
+        <actionGroup ref="closeEditPanelSettingsActionGroup" stepKey="closeEditPanel"/>
         <!-- Save Page -->
         <comment userInput="Save Page" stepKey="commentSavePage"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <!-- Verify Duplicate On Stage After Save -->
         <comment userInput="Verify Duplicate On Stage After Save" stepKey="commentVerifyStageAfterSave"/>
-        <actionGroup ref="validateMapSettingsWithErrorOverlay" stepKey="validateMapStage2">
+        <actionGroup ref="validateMapSettingsWithErrorOverlayActionGroup" stepKey="validateMapStage2">
             <argument name="page" value="MapOnStage"/>
             <argument name="height" value="PageBuilderMapHeightProperty350"/>
             <argument name="showControls" value="PageBuilderMapShowControls_False"/>
             <argument name="index" value="2"/>
         </actionGroup>
-        <actionGroup ref="validateAdvancedStyleWithAllUpdatedMapWithErrorOverlay" stepKey="validateAllAdvancedStage2">
+        <actionGroup ref="validateAdvancedStyleWithAllUpdatedMapWithErrorOverlayActionGroup" stepKey="validateAllAdvancedStage2">
             <argument name="page" value="MapOnStage"/>
             <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
@@ -1193,11 +1193,11 @@
         </actionGroup>
         <!-- Verify Duplicate On Edit Panel After Save -->
         <comment userInput="Verify Duplicate On Edit Panel After Save" stepKey="commentVerifyEditPanelAfterSave"/>
-        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage3">
+        <actionGroup ref="openPageBuilderEditPanelByIndexActionGroup" stepKey="openEditMenuOnStage3">
             <argument name="contentType" value="PageBuilderMapContentType"/>
             <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="validateLocationGridData" stepKey="validateLocation1GridData2">
+        <actionGroup ref="validateLocationGridDataActionGroup" stepKey="validateLocation1GridData2">
             <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
             <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_TestPhoneNumber"/>
             <argument name="address" value="PageBuilderMapStreetAddress_1234FakeDrive"/>
@@ -1207,7 +1207,7 @@
             <argument name="country" value="PageBuilderMapCountry_USA"/>
             <argument name="rowIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="validateLocationGridData" stepKey="validateLocation2GridData2">
+        <actionGroup ref="validateLocationGridDataActionGroup" stepKey="validateLocation2GridData2">
             <argument name="locationName" value="PageBuilderMapLocationName_TestLocationEdit"/>
             <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_TestPhoneNumberEdit"/>
             <argument name="address" value="PageBuilderMapStreetAddress_1234FakeDriveEdit"/>
@@ -1219,122 +1219,122 @@
         </actionGroup>
         <!-- Verify Duplicate Location 1 Form After Save -->
         <comment userInput="Verify Duplicate Location 1 Form After Save" stepKey="commentVerifyLocation1Form2"/>
-        <actionGroup ref="clickLocationGridRow" stepKey="clickLocationGridRow3">
+        <actionGroup ref="clickLocationGridRowActionGroup" stepKey="clickLocationGridRow3">
             <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateLocationName3">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateLocationName3">
             <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateLatitude3">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateLatitude3">
             <argument name="property" value="PageBuilderMapLatitude_Positive39_74"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateLongitude3">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateLongitude3">
             <argument name="property" value="PageBuilderMapLongitude_Positive9_67"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validatePhoneNumber3">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validatePhoneNumber3">
             <argument name="property" value="PageBuilderMapPhoneNumber_TestPhoneNumber"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateStreetAddress3">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateStreetAddress3">
             <argument name="property" value="PageBuilderMapStreetAddress_1234FakeDrive"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateCity3">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateCity3">
             <argument name="property" value="PageBuilderMapCity_FakeCity"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateState3">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateState3">
             <argument name="property" value="PageBuilderMapState_Texas"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateZip3">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateZip3">
             <argument name="property" value="PageBuilderMapZipCode_12345_6789"/>
         </actionGroup>
-        <actionGroup ref="seeInSlideOutMultiSelectField" stepKey="validateCountry3">
+        <actionGroup ref="seeInSlideOutMultiSelectFieldActionGroup" stepKey="validateCountry3">
             <argument name="property" value="PageBuilderMapCountry_USA"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateComment3">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateComment3">
             <argument name="property" value="PageBuilderMapComment_TestComment"/>
         </actionGroup>
-        <actionGroup ref="closeLocationForm" stepKey="closeAddLocationForm3"/>
+        <actionGroup ref="closeLocationFormActionGroup" stepKey="closeAddLocationForm3"/>
         <!-- Validate Location 2 Form After Save -->
         <comment userInput="Validate Location 2 Form After Save" stepKey="commentValidateLocation2Form2"/>
-        <actionGroup ref="clickLocationGridRow" stepKey="clickLocationGridRow4">
+        <actionGroup ref="clickLocationGridRowActionGroup" stepKey="clickLocationGridRow4">
             <argument name="locationName" value="PageBuilderMapLocationName_TestLocationEdit"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateLocationName4">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateLocationName4">
             <argument name="property" value="PageBuilderMapLocationName_TestLocationEdit"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateLatitude4">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateLatitude4">
             <argument name="property" value="PageBuilderMapLatitude_Positive40_74"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateLongitude4">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateLongitude4">
             <argument name="property" value="PageBuilderMapLongitude_Negative104_99"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validatePhoneNumber4">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validatePhoneNumber4">
             <argument name="property" value="PageBuilderMapPhoneNumber_TestPhoneNumberEdit"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateStreetAddress4">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateStreetAddress4">
             <argument name="property" value="PageBuilderMapStreetAddress_1234FakeDriveEdit"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateCity4">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateCity4">
             <argument name="property" value="PageBuilderMapCity_FakeCityEdit"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateState4">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateState4">
             <argument name="property" value="PageBuilderMapState_Ontario"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateZip4">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateZip4">
             <argument name="property" value="PageBuilderMapZipCode_98765"/>
         </actionGroup>
-        <actionGroup ref="seeInSlideOutMultiSelectField" stepKey="validateCountry4">
+        <actionGroup ref="seeInSlideOutMultiSelectFieldActionGroup" stepKey="validateCountry4">
             <argument name="property" value="PageBuilderMapCountry_Canada"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateComment4">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateComment4">
             <argument name="property" value="PageBuilderMapComment_TestComment2"/>
         </actionGroup>
-        <actionGroup ref="closeLocationForm" stepKey="closeLocationForm4"/>
+        <actionGroup ref="closeLocationFormActionGroup" stepKey="closeLocationForm4"/>
         <!-- Edit Panel: Verify Map Settings Section After Save -->
         <comment userInput="Edit Panel: Verify Map Settings Section After Save" stepKey="commentVerifyMapSettingsSectionAfterSave"/>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateHeight2">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateHeight2">
             <argument name="property" value="PageBuilderMapHeightProperty350"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="validateShowControls2">
+        <actionGroup ref="seeOptionIsNotCheckedSlideOutPropertyActionGroup" stepKey="validateShowControls2">
             <argument name="property" value="PageBuilderMapShowControls_Default"/>
         </actionGroup>
         <!-- Edit Panel: Verify Advanced Section After Save -->
         <comment userInput="Edit Panel: Verify Advanced Section After Save" stepKey="commentVerifyAdvancedSectionAfterSave"/>
-        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment2">
+        <actionGroup ref="seeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateAlignment2">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBorder2">
+        <actionGroup ref="seeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateBorder2">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderColor2">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderColor2">
             <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth2">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderWidth2">
             <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderRadius2">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderRadius2">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateCssClasses2">
+        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateCssClasses2">
             <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
         </actionGroup>
-        <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins2">
+        <actionGroup ref="seeInMarginFieldsSlideOutPanelActionGroup" stepKey="validateMargins2">
             <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
         </actionGroup>
-        <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding2">
+        <actionGroup ref="seeInPaddingFieldsSlideOutPanelActionGroup" stepKey="validatePadding2">
             <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
         <!-- Validate Duplicate On Storefront -->
         <comment userInput="Validate Duplicate On Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="validateMapSettings" stepKey="validateMapStoreFront">
+        <actionGroup ref="validateMapSettingsActionGroup" stepKey="validateMapStoreFront">
             <argument name="page" value="MapOnStorefront"/>
             <argument name="height" value="PageBuilderMapHeightProperty350"/>
             <argument name="showControls" value="PageBuilderMapShowControls_False"/>
             <argument name="index" value="2"/>
         </actionGroup>
-        <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateAllAdvancedStorefront">
+        <actionGroup ref="validateAdvancedStyleWithAllUpdatedActionGroup" stepKey="validateAllAdvancedStorefront">
             <argument name="page" value="MapOnStorefront"/>
             <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
@@ -1361,29 +1361,29 @@
             <group value="pagebuilder-mapCommon"/>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <!-- Add Map and Save Page -->
         <comment userInput="Add Map and Save Page" stepKey="commentAddMap"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionMedia">
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionMedia">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeIntoStage">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragContentTypeIntoStage">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <!-- Delete Map -->
         <comment userInput="Delete Map" stepKey="commentDeleteMap"/>
-        <actionGroup ref="removeContentTypeFromStage" stepKey="removeContentTypeFromStage">
+        <actionGroup ref="removeContentTypeFromStageActionGroup" stepKey="removeContentTypeFromStage">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <!-- Validate Stage -->
@@ -1392,13 +1392,13 @@
         <!-- Save Page -->
         <comment userInput="Save Page" stepKey="commentSavePage"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage2"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage2"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
         <dontSeeElementInDOM selector="{{PageBuilderStage.contentTypeInStageByIndex(PageBuilderMapContentType.role, '1')}}" stepKey="dontSeeContentTypeInStage2"/>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <dontSeeElementInDOM selector="{{MapOnStorefront.base('1')}}" stepKey="dontSeeContentTypeInStorefront"/>
@@ -1418,17 +1418,17 @@
             <group value="pagebuilder-cannotAddToStage"/>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionMedia">
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionMedia">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="cannotDragContentTypeToTarget" stepKey="dragMapIntoStage">
+        <actionGroup ref="cannotDragContentTypeToTargetActionGroup" stepKey="dragMapIntoStage">
             <argument name="contentType" value="PageBuilderMapContentType"/>
             <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
         </actionGroup>
@@ -1448,59 +1448,59 @@
             <group value="pagebuilder-map"/>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <!-- Add Map to Stage -->
         <comment userInput="Add Map to Stage" stepKey="addMapToStage"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionMedia">
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionMedia">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToContainer" stepKey="dragMapOntoColumn">
+        <actionGroup ref="dragContentTypeToContainerActionGroup" stepKey="dragMapOntoColumn">
             <argument name="contentType" value="PageBuilderMapContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="2" />
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditAfterDrop">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <!-- Update Edit Panel -->
         <comment userInput="Update Edit Panel" stepKey="commentEdit"/>
-        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLatitude">
+        <actionGroup ref="clickAddLocationButtonActionGroup" stepKey="clickAddLocationButton"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLatitude">
             <argument name="property" value="PageBuilderMapLatitude_Positive39_74"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLongitude">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLongitude">
             <argument name="property" value="PageBuilderMapLongitude_Positive9_67"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLocationName">
             <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
         </actionGroup>
-        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="saveLocationFormActionGroup" stepKey="saveLocationForm"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="User sees map displayed in column on Stage" stepKey="confirmMapOnStage"/>
-        <actionGroup ref="validateContentTypeInsideContainerStage" stepKey="checkContentTypeInContainerStage">
+        <actionGroup ref="validateContentTypeInsideContainerStageActionGroup" stepKey="checkContentTypeInContainerStage">
             <argument name="contentType" value="PageBuilderMapContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="contentTypeIndex" value="1"/>
             <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage2"/>
         <!-- Validate Stage After Save -->
         <comment userInput="User sees map displayed in column on Stage" stepKey="confirmMapOnStage2"/>
-        <actionGroup ref="validateContentTypeInsideContainerStage" stepKey="checkContentTypeInContainerStage2">
+        <actionGroup ref="validateContentTypeInsideContainerStageActionGroup" stepKey="checkContentTypeInContainerStage2">
             <argument name="contentType" value="PageBuilderMapContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="contentTypeIndex" value="1"/>
@@ -1508,10 +1508,10 @@
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="View Map inside column on storefront" stepKey="viewMapOnStorefront"/>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="validateContentTypeInsideContainerStorefront" stepKey="checkContentTypeInContainerStorefront">
+        <actionGroup ref="validateContentTypeInsideContainerStorefrontActionGroup" stepKey="checkContentTypeInContainerStorefront">
             <argument name="contentType" value="PageBuilderMapContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="contentTypeIndex" value="1"/>
@@ -1532,72 +1532,72 @@
             <group value="pagebuilder-column"/>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <!-- Add Heading to Stage -->
         <comment userInput="Add Heading to Stage" stepKey="commentAddHeadingToStage"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingToColumn">
+        <actionGroup ref="dragContentTypeToContainerActionGroup" stepKey="dragHeadingToColumn">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="2" />
         </actionGroup>
-        <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage">
+        <actionGroup ref="enterHeadingOnStageActionGroup" stepKey="enterHeadingOnStage">
             <argument name="headingText" value="PageBuilderHeadingTextProperty"/>
         </actionGroup>
-        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+        <actionGroup ref="clickOutsideLiveEditHeadingActionGroup" stepKey="clickOutsideLiveEditHeading">
             <argument name="index" value="1"/>
         </actionGroup>
         <!-- Add Map to Stage -->
         <comment userInput="Add Map to Stage" stepKey="commentAddMapToStage"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionMedia">
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionMedia">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToContainer" stepKey="dragMapToColumn">
+        <actionGroup ref="dragContentTypeToContainerActionGroup" stepKey="dragMapToColumn">
             <argument name="contentType" value="PageBuilderMapContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="2" />
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditAfterDrop">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <!-- Update Edit Panel -->
         <comment userInput="Update Edit Panel" stepKey="commentEdit"/>
-        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLatitude">
+        <actionGroup ref="clickAddLocationButtonActionGroup" stepKey="clickAddLocationButton"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLatitude">
             <argument name="property" value="PageBuilderMapLatitude_Positive39_74"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLongitude">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLongitude">
             <argument name="property" value="PageBuilderMapLongitude_Positive9_67"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLocationName">
             <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
         </actionGroup>
-        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="saveLocationFormActionGroup" stepKey="saveLocationForm"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <actionGroup ref="validateContentTypeInsideContainerStage" stepKey="validateHeadingStage">
+        <actionGroup ref="validateContentTypeInsideContainerStageActionGroup" stepKey="validateHeadingStage">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="positionInContainer" value="1"/>
             <argument name="contentTypeIndex" value="1"/>
             <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="validateContentTypeInsideContainerStage" stepKey="validateMapStage">
+        <actionGroup ref="validateContentTypeInsideContainerStageActionGroup" stepKey="validateMapStage">
             <argument name="contentType" value="PageBuilderMapContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="positionInContainer" value="2"/>
@@ -1606,19 +1606,19 @@
         </actionGroup>
         <!-- Move Map -->
         <comment userInput="Move Map" stepKey="commentMoveMap"/>
-        <actionGroup ref="moveContentTypeToContainer" stepKey="moveMapToLeftColumn">
+        <actionGroup ref="moveContentTypeToContainerActionGroup" stepKey="moveMapToLeftColumn">
             <argument name="contentType" value="PageBuilderMapContentType"/>
             <argument name="contentTypeIndex" value="1"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="validateContentTypeInsideContainerStage" stepKey="validateHeadingStage2">
+        <actionGroup ref="validateContentTypeInsideContainerStageActionGroup" stepKey="validateHeadingStage2">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="contentTypeIndex" value="1"/>
             <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="validateContentTypeInsideContainerStage" stepKey="validateMapStage2">
+        <actionGroup ref="validateContentTypeInsideContainerStageActionGroup" stepKey="validateMapStage2">
             <argument name="contentType" value="PageBuilderMapContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="contentTypeIndex" value="1"/>
@@ -1629,16 +1629,16 @@
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="validateStorefront"/>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="validateContentTypeInsideContainerStorefront" stepKey="validateHeadingStorefront">
+        <actionGroup ref="validateContentTypeInsideContainerStorefrontActionGroup" stepKey="validateHeadingStorefront">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="contentTypeIndex" value="1"/>
             <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="validateContentTypeInsideContainerStorefront" stepKey="validateMapStorefront">
+        <actionGroup ref="validateContentTypeInsideContainerStorefrontActionGroup" stepKey="validateMapStorefront">
             <argument name="contentType" value="PageBuilderMapContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="contentTypeIndex" value="1"/>

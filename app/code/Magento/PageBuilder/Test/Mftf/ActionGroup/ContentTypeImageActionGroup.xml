@@ -7,7 +7,7 @@
 -->
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
-    <actionGroup name="addImageToStage">
+    <actionGroup name="addImageToStageActionGroup">
         <arguments>
             <argument name="property"/>
         </arguments>
@@ -17,14 +17,14 @@
         <waitForElementVisible selector="{{ImageOnStageWithoutImageUploaded.imagePreview}}" stepKey="waitForImagePreview"/>
         <waitForElementVisible selector="{{ImageOnStageWithoutImageUploaded.imageSource(property.fileName)}}" stepKey="waitForImageSource"/>
     </actionGroup>
-    <actionGroup name="AdminAddImageCMSBlock" extends="AdminAddImageToCMSBlockContent">
+    <actionGroup name="AdminAddImageCMSBlockActionGroup" extends="AdminAddImageToCMSBlockContentActionGroup">
         <remove keyForRemoval="clickAddImageButton"/>
         <remove keyForRemoval="waitForBrowseImage"/>
         <remove keyForRemoval="clickBrowseImage"/>
         <remove keyForRemoval="waitForOkButton"/>
         <remove keyForRemoval="clickOk"/>
     </actionGroup>
-    <actionGroup name="verifyImageOnSlideout">
+    <actionGroup name="verifyImageOnSlideoutActionGroup">
         <arguments>
             <argument name="property"/>
         </arguments>
@@ -32,7 +32,7 @@
         <waitForElementVisible selector="{{ImageOnConfigurationPanel.imageName(property.value)}}" stepKey="seeImageNameOnPreview"/>
         <waitForElementVisible selector="{{ImageOnConfigurationPanel.imageSource(property.fileName)}}" stepKey="seeMainImageSource"/>
     </actionGroup>
-    <actionGroup name="validateImage">
+    <actionGroup name="validateImageActionGroup">
         <arguments>
             <argument name="section"/>
             <argument name="image"/>

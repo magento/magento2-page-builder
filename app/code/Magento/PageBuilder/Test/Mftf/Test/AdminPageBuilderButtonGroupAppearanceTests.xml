@@ -22,92 +22,92 @@
             <group value="pagebuilder-buttonGroup"/>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Add Button 1 Text -->
         <comment userInput="Add Button 1 Text" stepKey="commentButton1Text"/>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton1">
+        <actionGroup ref="inlineEditButtonActionGroup" stepKey="inlineEditButton1">
             <argument name="text" value="PageBuilderButtonItemText_First"/>
             <argument name="index" value="1"/>
         </actionGroup>
-        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType">
+        <actionGroup ref="addChildContentTypeFromOptionMenuActionGroup" stepKey="addChildContentType">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Add Button 2 Text -->
         <comment userInput="Add Button 2 Text" stepKey="commentButton2Text"/>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton2">
+        <actionGroup ref="inlineEditButtonActionGroup" stepKey="inlineEditButton2">
             <argument name="text" value="PageBuilderButtonItemText_Second"/>
             <argument name="index" value="2"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage1">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage1">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Validate Edit Panel -->
-        <comment userInput="Validate Edit Panel" stepKey="CommentValidateEditPanel"/>
-        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateInlineAppearance">
+        <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
+        <actionGroup ref="seeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateInlineAppearance">
             <argument name="property" value="PageBuilderButtonGroupAppearance_Inline"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="validateButtonSameSize">
+        <actionGroup ref="seeOptionIsNotCheckedSlideOutPropertyActionGroup" stepKey="validateButtonSameSize">
             <argument name="property" value="PageBuilderButtonGroupSameSize_Disabled"/>
         </actionGroup>
-        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <actionGroup ref="closeEditPanelSettingsActionGroup" stepKey="closeEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <actionGroup ref="validateButtonGroupInlineAppearance" stepKey="seeAppearanceOnStage">
+        <actionGroup ref="validateButtonGroupInlineAppearanceActionGroup" stepKey="seeAppearanceOnStage">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
         </actionGroup>
-        <actionGroup ref="validateButtonItemsDifferentSizes" stepKey="validateButtonsDifferentSizesStage">
+        <actionGroup ref="validateButtonItemsDifferentSizesActionGroup" stepKey="validateButtonsDifferentSizesStage">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
         </actionGroup>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
-        <actionGroup ref="validateButtonGroupInlineAppearance" stepKey="seeAppearanceOnStage2">
+        <actionGroup ref="validateButtonGroupInlineAppearanceActionGroup" stepKey="seeAppearanceOnStage2">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
         </actionGroup>
-        <actionGroup ref="validateButtonItemsDifferentSizes" stepKey="validateButtonsDifferentSizesStage2">
+        <actionGroup ref="validateButtonItemsDifferentSizesActionGroup" stepKey="validateButtonsDifferentSizesStage2">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
-        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateInlineAppearance2">
+        <actionGroup ref="seeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateInlineAppearance2">
             <argument name="property" value="PageBuilderButtonGroupAppearance_Inline"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="validateButtonSameSize2">
+        <actionGroup ref="seeOptionIsNotCheckedSlideOutPropertyActionGroup" stepKey="validateButtonSameSize2">
             <argument name="property" value="PageBuilderButtonGroupSameSize_Disabled"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="validateButtonGroupInlineAppearance" stepKey="seeAppearanceOnStorefront">
+        <actionGroup ref="validateButtonGroupInlineAppearanceActionGroup" stepKey="seeAppearanceOnStorefront">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
-        <actionGroup ref="validateButtonItemsDifferentSizes" stepKey="validateButtonsDifferentSizesStorefront">
+        <actionGroup ref="validateButtonItemsDifferentSizesActionGroup" stepKey="validateButtonsDifferentSizesStorefront">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
@@ -126,142 +126,142 @@
             <group value="pagebuilder-buttonGroup"/>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Add Enough Buttons To Wrap -->
         <comment userInput="Add Enough Buttons To Wrap" stepKey="commentAddEnoughButtonsToWrap"/>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton1">
+        <actionGroup ref="inlineEditButtonActionGroup" stepKey="inlineEditButton1">
             <argument name="text" value="PageBuilderButtonItemText_First"/>
             <argument name="index" value="1"/>
         </actionGroup>
-        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType2">
+        <actionGroup ref="addChildContentTypeFromOptionMenuActionGroup" stepKey="addChildContentType2">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton2">
+        <actionGroup ref="inlineEditButtonActionGroup" stepKey="inlineEditButton2">
             <argument name="text" value="PageBuilderButtonItemText_Common"/>
             <argument name="index" value="2"/>
         </actionGroup>
-        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType3">
+        <actionGroup ref="addChildContentTypeFromOptionMenuActionGroup" stepKey="addChildContentType3">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton3">
+        <actionGroup ref="inlineEditButtonActionGroup" stepKey="inlineEditButton3">
             <argument name="text" value="PageBuilderButtonItemText_Common"/>
             <argument name="index" value="3"/>
         </actionGroup>
-        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType4">
+        <actionGroup ref="addChildContentTypeFromOptionMenuActionGroup" stepKey="addChildContentType4">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton4">
+        <actionGroup ref="inlineEditButtonActionGroup" stepKey="inlineEditButton4">
             <argument name="text" value="PageBuilderButtonItemText_Common"/>
             <argument name="index" value="4"/>
         </actionGroup>
-        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType5">
+        <actionGroup ref="addChildContentTypeFromOptionMenuActionGroup" stepKey="addChildContentType5">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton5">
+        <actionGroup ref="inlineEditButtonActionGroup" stepKey="inlineEditButton5">
             <argument name="text" value="PageBuilderButtonItemText_Common"/>
             <argument name="index" value="5"/>
         </actionGroup>
-        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType6">
+        <actionGroup ref="addChildContentTypeFromOptionMenuActionGroup" stepKey="addChildContentType6">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton6">
+        <actionGroup ref="inlineEditButtonActionGroup" stepKey="inlineEditButton6">
             <argument name="text" value="PageBuilderButtonItemText_Common"/>
             <argument name="index" value="6"/>
         </actionGroup>
-        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType7">
+        <actionGroup ref="addChildContentTypeFromOptionMenuActionGroup" stepKey="addChildContentType7">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton7">
+        <actionGroup ref="inlineEditButtonActionGroup" stepKey="inlineEditButton7">
             <argument name="text" value="PageBuilderButtonItemText_Common"/>
             <argument name="index" value="7"/>
         </actionGroup>
-        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType8">
+        <actionGroup ref="addChildContentTypeFromOptionMenuActionGroup" stepKey="addChildContentType8">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton8">
+        <actionGroup ref="inlineEditButtonActionGroup" stepKey="inlineEditButton8">
             <argument name="text" value="PageBuilderButtonItemText_Common"/>
             <argument name="index" value="8"/>
         </actionGroup>
-        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType9">
+        <actionGroup ref="addChildContentTypeFromOptionMenuActionGroup" stepKey="addChildContentType9">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton9">
+        <actionGroup ref="inlineEditButtonActionGroup" stepKey="inlineEditButton9">
             <argument name="text" value="PageBuilderButtonItemText_Common"/>
             <argument name="index" value="9"/>
         </actionGroup>
-        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType10">
+        <actionGroup ref="addChildContentTypeFromOptionMenuActionGroup" stepKey="addChildContentType10">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton10">
+        <actionGroup ref="inlineEditButtonActionGroup" stepKey="inlineEditButton10">
             <argument name="text" value="PageBuilderButtonItemText_Last"/>
             <argument name="index" value="10"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage1">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage1">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Select Inline Appearance -->
-        <comment userInput="Select Inline Appearances" stepKey="CommentSelectInlineAppearance"/>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearance">
+        <comment userInput="Select Inline Appearances" stepKey="commentSelectInlineAppearance"/>
+        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAppearance">
             <argument name="property" value="PageBuilderButtonGroupAppearance_Inline"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings1"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <actionGroup ref="validateButtonGroupInlineAppearance" stepKey="seeAppearanceOnStage">
+        <actionGroup ref="validateButtonGroupInlineAppearanceActionGroup" stepKey="seeAppearanceOnStage">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
         </actionGroup>
-        <actionGroup ref="validateButtonGroupInlineAppearanceWraps" stepKey="seeAppearanceWrapsOnStage">
+        <actionGroup ref="validateButtonGroupInlineAppearanceWrapsActionGroup" stepKey="seeAppearanceWrapsOnStage">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
             <argument name="secondButtonIndex" value="10"/>
         </actionGroup>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
-        <actionGroup ref="validateButtonGroupInlineAppearance" stepKey="seeAppearanceOnStage2">
+        <actionGroup ref="validateButtonGroupInlineAppearanceActionGroup" stepKey="seeAppearanceOnStage2">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
         </actionGroup>
-        <actionGroup ref="validateButtonGroupInlineAppearanceWraps" stepKey="seeAppearanceWrapsOnStage2">
+        <actionGroup ref="validateButtonGroupInlineAppearanceWrapsActionGroup" stepKey="seeAppearanceWrapsOnStage2">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
             <argument name="secondButtonIndex" value="10"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
-        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateInlineAppearance2">
+        <actionGroup ref="seeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateInlineAppearance2">
             <argument name="property" value="PageBuilderButtonGroupAppearance_Inline"/>
         </actionGroup>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="validateButtonGroupInlineAppearance" stepKey="seeAppearanceOnStorefront">
+        <actionGroup ref="validateButtonGroupInlineAppearanceActionGroup" stepKey="seeAppearanceOnStorefront">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
-        <actionGroup ref="validateButtonGroupInlineAppearanceWraps" stepKey="seeAppearanceWrapsOnStorefront">
+        <actionGroup ref="validateButtonGroupInlineAppearanceWrapsActionGroup" stepKey="seeAppearanceWrapsOnStorefront">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
             <argument name="secondButtonIndex" value="10"/>
@@ -281,62 +281,62 @@
             <group value="pagebuilder-buttonGroup"/>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType">
+        <actionGroup ref="addChildContentTypeFromOptionMenuActionGroup" stepKey="addChildContentType">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage1">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage1">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Select Stacked Appearance -->
-        <comment userInput="Select Stacked Appearances" stepKey="CommentSelectStackedAppearance"/>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearance">
+        <comment userInput="Select Stacked Appearances" stepKey="commentSelectStackedAppearance"/>
+        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAppearance">
             <argument name="property" value="PageBuilderButtonGroupAppearance_Stacked"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings1"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <actionGroup ref="validateButtonGroupStackedAppearance" stepKey="seeAppearanceOnStage">
+        <actionGroup ref="validateButtonGroupStackedAppearanceActionGroup" stepKey="seeAppearanceOnStage">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
         </actionGroup>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
-        <actionGroup ref="validateButtonGroupStackedAppearance" stepKey="seeAppearanceOnStage2">
+        <actionGroup ref="validateButtonGroupStackedAppearanceActionGroup" stepKey="seeAppearanceOnStage2">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
-        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateStackedAppearance2">
+        <actionGroup ref="seeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateStackedAppearance2">
             <argument name="property" value="PageBuilderButtonGroupAppearance_Stacked"/>
         </actionGroup>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="validateButtonGroupStackedAppearance" stepKey="seeAppearanceOnStorefront">
+        <actionGroup ref="validateButtonGroupStackedAppearanceActionGroup" stepKey="seeAppearanceOnStorefront">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
@@ -355,57 +355,57 @@
             <group value="pagebuilder-buttonGroup"/>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusOptionMenu">
+        <actionGroup ref="unFocusOptionMenuActionGroup" stepKey="unFocusOptionMenu">
             <argument name="contentType" value="PageBuilderButtonItemContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage1">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage1">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Select Inline Appearance -->
-        <comment userInput="Select Inline Appearance" stepKey="CommentSelectInlineAppearance"/>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearance">
+        <comment userInput="Select Inline Appearance" stepKey="commentSelectInlineAppearance"/>
+        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAppearance">
             <argument name="property" value="PageBuilderButtonGroupAppearance_Inline"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
-        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType">
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings1"/>
+        <actionGroup ref="addChildContentTypeFromOptionMenuActionGroup" stepKey="addChildContentType">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <actionGroup ref="validateButtonGroupInlineAppearance" stepKey="seeAppearanceOnStage">
+        <actionGroup ref="validateButtonGroupInlineAppearanceActionGroup" stepKey="seeAppearanceOnStage">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
         </actionGroup>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
-        <actionGroup ref="validateButtonGroupInlineAppearance" stepKey="seeAppearanceOnStage2">
+        <actionGroup ref="validateButtonGroupInlineAppearanceActionGroup" stepKey="seeAppearanceOnStage2">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
         </actionGroup>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="validateButtonGroupInlineAppearance" stepKey="seeAppearanceOnStorefront">
+        <actionGroup ref="validateButtonGroupInlineAppearanceActionGroup" stepKey="seeAppearanceOnStorefront">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
@@ -424,57 +424,57 @@
             <group value="pagebuilder-buttonGroup"/>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusOptionMenu">
+        <actionGroup ref="unFocusOptionMenuActionGroup" stepKey="unFocusOptionMenu">
             <argument name="contentType" value="PageBuilderButtonItemContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage1">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage1">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Select Stacked Appearance -->
-        <comment userInput="Select Stacked Appearance" stepKey="CommentSelectStackedAppearance"/>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearance">
+        <comment userInput="Select Stacked Appearance" stepKey="commentSelectStackedAppearance"/>
+        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAppearance">
             <argument name="property" value="PageBuilderButtonGroupAppearance_Stacked"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
-        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType">
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings1"/>
+        <actionGroup ref="addChildContentTypeFromOptionMenuActionGroup" stepKey="addChildContentType">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <actionGroup ref="validateButtonGroupStackedAppearance" stepKey="seeAppearanceOnStage">
+        <actionGroup ref="validateButtonGroupStackedAppearanceActionGroup" stepKey="seeAppearanceOnStage">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
         </actionGroup>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
-        <actionGroup ref="validateButtonGroupStackedAppearance" stepKey="seeAppearanceOnStage2">
+        <actionGroup ref="validateButtonGroupStackedAppearanceActionGroup" stepKey="seeAppearanceOnStage2">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
         </actionGroup>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="validateButtonGroupStackedAppearance" stepKey="seeAppearanceOnStorefront">
+        <actionGroup ref="validateButtonGroupStackedAppearanceActionGroup" stepKey="seeAppearanceOnStorefront">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
@@ -493,58 +493,58 @@
             <group value="pagebuilder-buttonGroup"/>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
             <createData entity="_defaultCmsPage" stepKey="createPreReqCMSPage" />
         </before>
         <after>
             <deleteData createDataKey="createPreReqCMSPage" stepKey="deletePreReqCMSPage" />
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
             <closeTab stepKey="closeTab"/>
         </after>
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToContentCreatedCMSPage">
             <argument name="CMSPage" value="$$createPreReqCMSPage$$"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton1">
+        <actionGroup ref="inlineEditButtonActionGroup" stepKey="inlineEditButton1">
             <argument name="text" value="PageBuilderButtonItemText_First"/>
             <argument name="index" value="1"/>
         </actionGroup>
-        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType2">
+        <actionGroup ref="addChildContentTypeFromOptionMenuActionGroup" stepKey="addChildContentType2">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton2">
+        <actionGroup ref="inlineEditButtonActionGroup" stepKey="inlineEditButton2">
             <argument name="text" value="PageBuilderButtonItemText_Second"/>
             <argument name="index" value="2"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Select Stacked Appearance -->
-        <comment userInput="Select Stacked Appearance" stepKey="CommentSelectStackedAppearance"/>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearance">
+        <comment userInput="Select Stacked Appearance" stepKey="commentSelectStackedAppearance"/>
+        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAppearance">
             <argument name="property" value="PageBuilderButtonGroupAppearance_Stacked"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings2"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('1', PageBuilderButtonItemText_First.value)}}" stepKey="waitForButton1Stage"/>
         <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('2', PageBuilderButtonItemText_Second.value)}}" stepKey="waitForButton2Stage"/>
-        <actionGroup ref="validateButtonGroupStackedAppearance" stepKey="seeAppearanceOnStage">
+        <actionGroup ref="validateButtonGroupStackedAppearanceActionGroup" stepKey="seeAppearanceOnStage">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
         </actionGroup>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
         <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('1', PageBuilderButtonItemText_First.value)}}" stepKey="waitForButton1Stage2"/>
         <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('2', PageBuilderButtonItemText_Second.value)}}" stepKey="waitForButton2Stage2"/>
-        <actionGroup ref="validateButtonGroupStackedAppearance" stepKey="seeAppearanceOnStage2">
+        <actionGroup ref="validateButtonGroupStackedAppearanceActionGroup" stepKey="seeAppearanceOnStage2">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
         </actionGroup>
@@ -554,38 +554,38 @@
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemText('1', PageBuilderButtonItemText_First.value)}}" stepKey="waitForButton1Storefront"/>
         <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemText('2', PageBuilderButtonItemText_Second.value)}}" stepKey="waitForButton2Storefront"/>
-        <actionGroup ref="validateButtonGroupStackedAppearance" stepKey="seeAppearanceOnStorefront">
+        <actionGroup ref="validateButtonGroupStackedAppearanceActionGroup" stepKey="seeAppearanceOnStorefront">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
         <switchToPreviousTab stepKey="switchToPreviousTab"/>
         <reloadPage stepKey="reloadPage"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage3">
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage2"/>
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage3">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Select Inline Appearance -->
-        <comment userInput="Select Inline Appearance" stepKey="CommentSelectInlineAppearance2"/>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="enterInlineAppearance2">
+        <comment userInput="Select Inline Appearance" stepKey="commentSelectInlineAppearance2"/>
+        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterInlineAppearance2">
             <argument name="property" value="PageBuilderButtonGroupAppearance_Inline"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings3"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage3"/>
         <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('1', PageBuilderButtonItemText_First.value)}}" stepKey="waitForButton1Stage3"/>
         <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('2', PageBuilderButtonItemText_Second.value)}}" stepKey="waitForButton2Stage3"/>
-        <actionGroup ref="validateButtonGroupInlineAppearance" stepKey="seeAppearanceOnStage3">
+        <actionGroup ref="validateButtonGroupInlineAppearanceActionGroup" stepKey="seeAppearanceOnStage3">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
         </actionGroup>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage2"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage3"/>
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage3"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage4"/>
         <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('1', PageBuilderButtonItemText_First.value)}}" stepKey="waitForButton1Stage4"/>
         <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('2', PageBuilderButtonItemText_Second.value)}}" stepKey="waitForButton2Stage4"/>
-        <actionGroup ref="validateButtonGroupInlineAppearance" stepKey="seeAppearanceOnStage4">
+        <actionGroup ref="validateButtonGroupInlineAppearanceActionGroup" stepKey="seeAppearanceOnStage4">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
         </actionGroup>
@@ -596,7 +596,7 @@
         <waitForPageLoad stepKey="waitForPageLoad2"/>
         <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemText('1', PageBuilderButtonItemText_First.value)}}" stepKey="waitForButton1Storefront2"/>
         <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemText('2', PageBuilderButtonItemText_Second.value)}}" stepKey="waitForButton2Storefront2"/>
-        <actionGroup ref="validateButtonGroupInlineAppearance" stepKey="seeAppearanceOnStorefront2">
+        <actionGroup ref="validateButtonGroupInlineAppearanceActionGroup" stepKey="seeAppearanceOnStorefront2">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
@@ -615,75 +615,75 @@
             <group value="pagebuilder-buttonGroup"/>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusOptionMenu">
+        <actionGroup ref="unFocusOptionMenuActionGroup" stepKey="unFocusOptionMenu">
             <argument name="contentType" value="PageBuilderButtonItemContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage1">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage1">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Select Inline Appearance -->
-        <comment userInput="Select Inline Appearance" stepKey="CommentSelectInlineAppearance"/>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearance">
+        <comment userInput="Select Inline Appearance" stepKey="commentSelectInlineAppearance"/>
+        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAppearance">
             <argument name="property" value="PageBuilderButtonGroupAppearance_Inline"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings1"/>
         <!-- Add Enough Buttons To Wrap -->
         <comment userInput="Add Enough Buttons To Wrap" stepKey="commentAddEnoughButtonsToWrap"/>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton1">
+        <actionGroup ref="inlineEditButtonActionGroup" stepKey="inlineEditButton1">
             <argument name="text" value="PageBuilderButtonItemText_First"/>
             <argument name="index" value="1"/>
         </actionGroup>
-        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType2">
+        <actionGroup ref="addChildContentTypeFromOptionMenuActionGroup" stepKey="addChildContentType2">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton2">
+        <actionGroup ref="inlineEditButtonActionGroup" stepKey="inlineEditButton2">
             <argument name="text" value="PageBuilderButtonItemText_Common"/>
             <argument name="index" value="2"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage2">
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditMenuOnStage2">
             <argument name="section" value="ButtonItemOnStage"/>
             <argument name="targetIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="fillButton1TextField">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="fillButton1TextField">
             <argument name="property" value="PageBuilderButtonItemText_200Characters"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings2"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <actionGroup ref="validateButtonGroupInlineAppearanceWraps" stepKey="seeAppearanceWrapsOnStage">
+        <actionGroup ref="validateButtonGroupInlineAppearanceWrapsActionGroup" stepKey="seeAppearanceWrapsOnStage">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
         </actionGroup>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
-        <actionGroup ref="validateButtonGroupInlineAppearanceWraps" stepKey="seeAppearanceWrapsOnStage2">
+        <actionGroup ref="validateButtonGroupInlineAppearanceWrapsActionGroup" stepKey="seeAppearanceWrapsOnStage2">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
         </actionGroup>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="validateButtonGroupInlineAppearanceWraps" stepKey="seeAppearanceWrapsOnStorefront">
+        <actionGroup ref="validateButtonGroupInlineAppearanceWrapsActionGroup" stepKey="seeAppearanceWrapsOnStorefront">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
@@ -702,87 +702,87 @@
             <group value="pagebuilder-buttonGroup"/>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Add Button Group -->
         <comment userInput="Add Button Group" stepKey="commentAddButtonGroup"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton1">
+        <actionGroup ref="inlineEditButtonActionGroup" stepKey="inlineEditButton1">
             <argument name="text" value="PageBuilderButtonItemText_First"/>
         </actionGroup>
-        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType">
+        <actionGroup ref="addChildContentTypeFromOptionMenuActionGroup" stepKey="addChildContentType">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton2">
+        <actionGroup ref="inlineEditButtonActionGroup" stepKey="inlineEditButton2">
             <argument name="text" value="PageBuilderButtonItemText_Second"/>
             <argument name="index" value="2"/>
         </actionGroup>
-        <actionGroup ref="validateButtonItemsDifferentSizes" stepKey="validateButtonsDifferentSizesStage">
+        <actionGroup ref="validateButtonItemsDifferentSizesActionGroup" stepKey="validateButtonsDifferentSizesStage">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
         </actionGroup>
         <!-- Update Edit Panel -->
         <comment userInput="Update Edit Panel" stepKey="commentUpdateEditPanel"/>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage1">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage1">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearance">
+        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAppearance">
             <argument name="property" value="PageBuilderButtonGroupAppearance_Inline"/>
         </actionGroup>
-        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="setSameSize">
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneralActionGroup" stepKey="setSameSize">
             <argument name="property" value="PageBuilderButtonGroupSameSize_Enabled"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStage">
+        <actionGroup ref="validateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSameSizeStage">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
         </actionGroup>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsCheckedSlideOutProperty" stepKey="validateButtonSameSize">
+        <actionGroup ref="seeOptionIsCheckedSlideOutPropertyActionGroup" stepKey="validateButtonSameSize">
             <argument name="property" value="PageBuilderButtonGroupSameSize_Enabled"/>
         </actionGroup>
-        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <actionGroup ref="closeEditPanelSettingsActionGroup" stepKey="closeEditPanelSettings"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
-        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStage2">
+        <actionGroup ref="validateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSameSizeStage2">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
         </actionGroup>
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage3">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage3">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsCheckedSlideOutProperty" stepKey="validateButtonSameSize2">
+        <actionGroup ref="seeOptionIsCheckedSlideOutPropertyActionGroup" stepKey="validateButtonSameSize2">
             <argument name="property" value="PageBuilderButtonGroupSameSize_Enabled"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefront">
+        <actionGroup ref="validateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSameSizeStorefront">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
@@ -800,7 +800,7 @@
             <group value="pagebuilder-buttons"/>
             <group value="pagebuilder-buttonGroup"/>
         </annotations>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearance">
+        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAppearance">
             <argument name="property" value="PageBuilderButtonGroupAppearance_Stacked"/>
         </actionGroup>
     </test>
@@ -818,93 +818,93 @@
             <group value="pagebuilder-buttonGroup"/>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Add Button Group -->
         <comment userInput="Add Button Group" stepKey="commentAddButtonGroup"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton1">
+        <actionGroup ref="inlineEditButtonActionGroup" stepKey="inlineEditButton1">
             <argument name="text" value="PageBuilderButtonItemText_First"/>
         </actionGroup>
-        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType">
+        <actionGroup ref="addChildContentTypeFromOptionMenuActionGroup" stepKey="addChildContentType">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton2">
+        <actionGroup ref="inlineEditButtonActionGroup" stepKey="inlineEditButton2">
             <argument name="text" value="PageBuilderButtonItemText_Second"/>
             <argument name="index" value="2"/>
         </actionGroup>
-        <actionGroup ref="validateButtonItemsDifferentSizes" stepKey="validateButtonsDifferentSizesStage">
+        <actionGroup ref="validateButtonItemsDifferentSizesActionGroup" stepKey="validateButtonsDifferentSizesStage">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
         </actionGroup>
         <!-- Update Edit Panel -->
         <comment userInput="Update Edit Panel" stepKey="commentUpdateEditPanel"/>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage1">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage1">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearance">
+        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAppearance">
             <argument name="property" value="PageBuilderButtonGroupAppearance_Inline"/>
         </actionGroup>
-        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="setSameSize">
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneralActionGroup" stepKey="setSameSize">
             <argument name="property" value="PageBuilderButtonGroupSameSize_Enabled"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStage">
+        <actionGroup ref="validateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSameSizeStage">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
         </actionGroup>
         <!-- Disable Same Size -->
         <comment userInput="Disable Same Size" stepKey="commentDisableSameSize"/>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="setSameSize2">
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneralActionGroup" stepKey="setSameSize2">
             <argument name="property" value="PageBuilderButtonGroupSameSize_Disabled"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings2"/>
         <!-- Validate Stage After Disable -->
         <comment userInput="Validate Stage After Disable" stepKey="commentValidateStage2"/>
-        <actionGroup ref="validateButtonItemsDifferentSizes" stepKey="validateButtonsDifferentSizesStage2">
+        <actionGroup ref="validateButtonItemsDifferentSizesActionGroup" stepKey="validateButtonsDifferentSizesStage2">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
         </actionGroup>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage3"/>
-        <actionGroup ref="validateButtonItemsDifferentSizes" stepKey="validateButtonsDifferentSizesStage3">
+        <actionGroup ref="validateButtonItemsDifferentSizesActionGroup" stepKey="validateButtonsDifferentSizesStage3">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
         </actionGroup>
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage3">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage3">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="validateButtonSameSize2">
+        <actionGroup ref="seeOptionIsNotCheckedSlideOutPropertyActionGroup" stepKey="validateButtonSameSize2">
             <argument name="property" value="PageBuilderButtonGroupSameSize_Disabled"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="validateButtonItemsDifferentSizes" stepKey="validateButtonsDifferentSizesStorefront">
+        <actionGroup ref="validateButtonItemsDifferentSizesActionGroup" stepKey="validateButtonsDifferentSizesStorefront">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
@@ -923,14 +923,14 @@
             <group value="pagebuilder-buttonGroup"/>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearance">
+        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAppearance">
             <argument name="property" value="PageBuilderButtonGroupAppearance_Stacked"/>
         </actionGroup>
     </test>
@@ -948,49 +948,49 @@
             <group value="pagebuilder-buttonGroup"/>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
             <closeTab stepKey="closeTab"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Add Button Group -->
         <comment userInput="Add Button Group" stepKey="commentAddButtonGroup"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton1">
+        <actionGroup ref="inlineEditButtonActionGroup" stepKey="inlineEditButton1">
             <argument name="text" value="PageBuilderButtonItemText_ThreeCharacters"/>
         </actionGroup>
-        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType">
+        <actionGroup ref="addChildContentTypeFromOptionMenuActionGroup" stepKey="addChildContentType">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton2">
+        <actionGroup ref="inlineEditButtonActionGroup" stepKey="inlineEditButton2">
             <argument name="text" value="PageBuilderButtonItemText_FourCharacters"/>
             <argument name="index" value="2"/>
         </actionGroup>
         <!-- Update Edit Panel -->
         <comment userInput="Update Edit Panel" stepKey="commentUpdateEditPanel"/>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage1">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage1">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="setSameSize">
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneralActionGroup" stepKey="setSameSize">
             <argument name="property" value="PageBuilderButtonGroupSameSize_Enabled"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage: Initial -->
         <comment userInput="Validate Stage: Initial" stepKey="commentValidateStage"/>
-        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStage">
+        <actionGroup ref="validateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSameSizeStage">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
         </actionGroup>
@@ -998,10 +998,10 @@
         <!-- Validate Storefront: Initial -->
         <comment userInput="Validate Storefront: Initial" stepKey="commentValidateStorefront"/>
         <openNewTab stepKey="openNewTab"/>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefront">
+        <actionGroup ref="validateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSameSizeStorefront">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
@@ -1011,14 +1011,14 @@
         <switchToPreviousTab stepKey="switchToPreviousTab"/>
         <reloadPage stepKey="reloadPage"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton3">
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage2"/>
+        <actionGroup ref="inlineEditButtonActionGroup" stepKey="inlineEditButton3">
             <argument name="text" value="PageBuilderButtonItemText_FiveCharacters"/>
             <argument name="index" value="2"/>
         </actionGroup>
         <!-- Validate Stage: Make Largest Button Larger -->
         <comment userInput="Validate Stage: Make Largest Button Larger" stepKey="commentValidateStage2"/>
-        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStage2">
+        <actionGroup ref="validateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSameSizeStage2">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
         </actionGroup>
@@ -1033,7 +1033,7 @@
         <switchToNextTab stepKey="switchToNextTab"/>
         <reloadPage stepKey="reloadPage2"/>
         <waitForPageLoad stepKey="waitForPageLoad2"/>
-        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefront2">
+        <actionGroup ref="validateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSameSizeStorefront2">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
@@ -1047,14 +1047,14 @@
         <switchToPreviousTab stepKey="switchToPreviousTab2"/>
         <reloadPage stepKey="reloadPage3"/>
         <waitForPageLoad stepKey="waitForPageLoad3"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage3"/>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton4">
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage3"/>
+        <actionGroup ref="inlineEditButtonActionGroup" stepKey="inlineEditButton4">
             <argument name="text" value="PageBuilderButtonItemText_TwoCharacters"/>
             <argument name="index" value="2"/>
         </actionGroup>
         <!-- Validate Stage: Make Largest Button Smallest -->
         <comment userInput="Validate Stage: Make Largest Button Smallest" stepKey="commentValidateStage3"/>
-        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStage3">
+        <actionGroup ref="validateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSameSizeStage3">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
         </actionGroup>
@@ -1069,7 +1069,7 @@
         <switchToNextTab stepKey="switchToNextTab2"/>
         <reloadPage stepKey="reloadPage4"/>
         <waitForPageLoad stepKey="waitForPageLoad4"/>
-        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefront3">
+        <actionGroup ref="validateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSameSizeStorefront3">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
@@ -1083,14 +1083,14 @@
         <switchToPreviousTab stepKey="switchToPreviousTab3"/>
         <reloadPage stepKey="reloadPage5"/>
         <waitForPageLoad stepKey="waitForPageLoad5"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage4"/>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton5">
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage4"/>
+        <actionGroup ref="inlineEditButtonActionGroup" stepKey="inlineEditButton5">
             <argument name="text" value="PageBuilderButtonItemText_OneCharacter"/>
             <argument name="index" value="2"/>
         </actionGroup>
         <!-- Validate Stage: Make Smallest Button Smaller -->
         <comment userInput="Validate Stage: Make Smallest Button Smaller" stepKey="commentValidateStage4"/>
-        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStage4">
+        <actionGroup ref="validateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSameSizeStage4">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
         </actionGroup>
@@ -1105,7 +1105,7 @@
         <switchToNextTab stepKey="switchToNextTab3"/>
         <reloadPage stepKey="reloadPage6"/>
         <waitForPageLoad stepKey="waitForPageLoad6"/>
-        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefront4">
+        <actionGroup ref="validateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSameSizeStorefront4">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
@@ -1119,14 +1119,14 @@
         <switchToPreviousTab stepKey="switchToPreviousTab4"/>
         <reloadPage stepKey="reloadPage7"/>
         <waitForPageLoad stepKey="waitForPageLoad7"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage5"/>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton6">
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage5"/>
+        <actionGroup ref="inlineEditButtonActionGroup" stepKey="inlineEditButton6">
             <argument name="text" value="PageBuilderButtonItemText_FourCharacters"/>
             <argument name="index" value="2"/>
         </actionGroup>
         <!-- Validate Stage: Make Smallest Button Largest -->
         <comment userInput="Validate Stage: Make Smallest Button Largest" stepKey="commentValidateStage5"/>
-        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStage5">
+        <actionGroup ref="validateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSameSizeStage5">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
         </actionGroup>
@@ -1141,7 +1141,7 @@
         <switchToNextTab stepKey="switchToNextTab4"/>
         <reloadPage stepKey="reloadPage8"/>
         <waitForPageLoad stepKey="waitForPageLoad8"/>
-        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefront5">
+        <actionGroup ref="validateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSameSizeStorefront5">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
@@ -1165,49 +1165,49 @@
             <group value="pagebuilder-buttonGroup"/>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
             <closeTab stepKey="closeTab"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Add Button Group -->
         <comment userInput="Add Button Group" stepKey="commentAddButtonGroup"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton1">
+        <actionGroup ref="inlineEditButtonActionGroup" stepKey="inlineEditButton1">
             <argument name="text" value="PageBuilderButtonItemText_OneCharacter"/>
         </actionGroup>
-        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType">
+        <actionGroup ref="addChildContentTypeFromOptionMenuActionGroup" stepKey="addChildContentType">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton2">
+        <actionGroup ref="inlineEditButtonActionGroup" stepKey="inlineEditButton2">
             <argument name="text" value="PageBuilderButtonItemText_TwoCharacters"/>
             <argument name="index" value="2"/>
         </actionGroup>
         <!-- Update Edit Panel -->
         <comment userInput="Update Edit Panel" stepKey="commentUpdateEditPanel"/>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage1">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage1">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="setSameSize">
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneralActionGroup" stepKey="setSameSize">
             <argument name="property" value="PageBuilderButtonGroupSameSize_Enabled"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage: Initial -->
         <comment userInput="Validate Stage: Initial" stepKey="commentValidateStage"/>
-        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStage">
+        <actionGroup ref="validateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSameSizeStage">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
         </actionGroup>
@@ -1215,10 +1215,10 @@
         <!-- Validate Storefront: Initial -->
         <comment userInput="Validate Storefront: Initial" stepKey="commentValidateStorefront"/>
         <openNewTab stepKey="openNewTab"/>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefront">
+        <actionGroup ref="validateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSameSizeStorefront">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
@@ -1228,21 +1228,21 @@
         <switchToPreviousTab stepKey="switchToPreviousTab"/>
         <reloadPage stepKey="reloadPage"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
-        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType2">
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage2"/>
+        <actionGroup ref="addChildContentTypeFromOptionMenuActionGroup" stepKey="addChildContentType2">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton3">
+        <actionGroup ref="inlineEditButtonActionGroup" stepKey="inlineEditButton3">
             <argument name="text" value="PageBuilderButtonItemText_ThreeCharacters"/>
             <argument name="index" value="3"/>
         </actionGroup>
         <!-- Validate Stage: New Longest Button -->
         <comment userInput="Validate Stage: New Longest Button" stepKey="commentValidateStage2"/>
-        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStage2">
+        <actionGroup ref="validateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSameSizeStage2">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
         </actionGroup>
-        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStage3">
+        <actionGroup ref="validateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSameSizeStage3">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
             <argument name="secondButtonIndex" value="3"/>
@@ -1258,11 +1258,11 @@
         <switchToNextTab stepKey="switchToNextTab"/>
         <reloadPage stepKey="reloadPage2"/>
         <waitForPageLoad stepKey="waitForPageLoad2"/>
-        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefront2">
+        <actionGroup ref="validateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSameSizeStorefront2">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
-        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefront3">
+        <actionGroup ref="validateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSameSizeStorefront3">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
             <argument name="secondButtonIndex" value="3"/>
@@ -1287,49 +1287,49 @@
             <group value="pagebuilder-buttonGroup"/>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
             <closeTab stepKey="closeTab"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Add Button Group -->
         <comment userInput="Add Button Group" stepKey="commentAddButtonGroup"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton1">
+        <actionGroup ref="inlineEditButtonActionGroup" stepKey="inlineEditButton1">
             <argument name="text" value="PageBuilderButtonItemText_TwoCharacters"/>
         </actionGroup>
-        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType">
+        <actionGroup ref="addChildContentTypeFromOptionMenuActionGroup" stepKey="addChildContentType">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton2">
+        <actionGroup ref="inlineEditButtonActionGroup" stepKey="inlineEditButton2">
             <argument name="text" value="PageBuilderButtonItemText_OneCharacter"/>
             <argument name="index" value="2"/>
         </actionGroup>
         <!-- Update Edit Panel -->
         <comment userInput="Update Edit Panel" stepKey="commentUpdateEditPanel"/>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage1">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage1">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="setSameSize">
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneralActionGroup" stepKey="setSameSize">
             <argument name="property" value="PageBuilderButtonGroupSameSize_Enabled"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage: Initial -->
         <comment userInput="Validate Stage: Initial" stepKey="commentValidateStage"/>
-        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStage">
+        <actionGroup ref="validateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSameSizeStage">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
         </actionGroup>
@@ -1337,10 +1337,10 @@
         <!-- Validate Storefront: Initial -->
         <comment userInput="Validate Storefront: Initial" stepKey="commentValidateStorefront"/>
         <openNewTab stepKey="openNewTab"/>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefront">
+        <actionGroup ref="validateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSameSizeStorefront">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
@@ -1350,18 +1350,18 @@
         <switchToPreviousTab stepKey="switchToPreviousTab"/>
         <reloadPage stepKey="reloadPage"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
-        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage">
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage2"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditMenuOnStage">
             <argument name="section" value="ButtonItemOnStage"/>
             <argument name="targetIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelField" stepKey="enterBorderWidth">
+        <actionGroup ref="fillSlideOutPanelFieldActionGroup" stepKey="enterBorderWidth">
             <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings2"/>
         <!-- Validate Stage: Updated Border Width -->
         <comment userInput="Validate Stage: Updated Border Width" stepKey="commentValidateStage2"/>
-        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStage2">
+        <actionGroup ref="validateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSameSizeStage2">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
         </actionGroup>
@@ -1376,7 +1376,7 @@
         <switchToNextTab stepKey="switchToNextTab"/>
         <reloadPage stepKey="reloadPage2"/>
         <waitForPageLoad stepKey="waitForPageLoad2"/>
-        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefront2">
+        <actionGroup ref="validateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSameSizeStorefront2">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
@@ -1390,16 +1390,16 @@
         <switchToPreviousTab stepKey="switchToPreviousTab2"/>
         <reloadPage stepKey="reloadPage3"/>
         <waitForPageLoad stepKey="waitForPageLoad3"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage3"/>
-        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage2">
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage3"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditMenuOnStage2">
             <argument name="section" value="ButtonItemOnStage"/>
             <argument name="targetIndex" value="1"/>
         </actionGroup>
         <fillField selector="{{AdvancedForm.advancedPaddingLeft}}" userInput="{{PageBuilderPaddingProperty40.paddingLeft}}" stepKey="enterLeftPadding"/>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings3"/>
         <!-- Validate Stage: Updated Padding Left -->
         <comment userInput="Validate Stage: Updated Padding Left" stepKey="commentValidateStage3"/>
-        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStage3">
+        <actionGroup ref="validateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSameSizeStage3">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
         </actionGroup>
@@ -1414,7 +1414,7 @@
         <switchToNextTab stepKey="switchToNextTab2"/>
         <reloadPage stepKey="reloadPage4"/>
         <waitForPageLoad stepKey="waitForPageLoad4"/>
-        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefront3">
+        <actionGroup ref="validateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSameSizeStorefront3">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
@@ -1428,16 +1428,16 @@
         <switchToPreviousTab stepKey="switchToPreviousTab3"/>
         <reloadPage stepKey="reloadPage5"/>
         <waitForPageLoad stepKey="waitForPageLoad5"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage4"/>
-        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage3">
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage4"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditMenuOnStage3">
             <argument name="section" value="ButtonItemOnStage"/>
             <argument name="targetIndex" value="1"/>
         </actionGroup>
         <fillField selector="{{AdvancedForm.advancedPaddingRight}}" userInput="{{PageBuilderPaddingProperty40.paddingRight}}" stepKey="enterRightPadding"/>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings4"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings4"/>
         <!-- Validate Stage: Updated Padding Right -->
         <comment userInput="Validate Stage: Updated Padding Right" stepKey="commentValidateStage4"/>
-        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStage4">
+        <actionGroup ref="validateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSameSizeStage4">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
         </actionGroup>
@@ -1452,7 +1452,7 @@
         <switchToNextTab stepKey="switchToNextTab3"/>
         <reloadPage stepKey="reloadPage6"/>
         <waitForPageLoad stepKey="waitForPageLoad6"/>
-        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefront4">
+        <actionGroup ref="validateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSameSizeStorefront4">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
@@ -1476,53 +1476,53 @@
             <group value="pagebuilder-buttonGroup"/>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Add Button Group -->
         <comment userInput="Add Button Group" stepKey="commentAddButtonGroup"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton1">
+        <actionGroup ref="inlineEditButtonActionGroup" stepKey="inlineEditButton1">
             <argument name="text" value="PageBuilderButtonItemText_First"/>
         </actionGroup>
-        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType">
+        <actionGroup ref="addChildContentTypeFromOptionMenuActionGroup" stepKey="addChildContentType">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Update Edit Panel -->
         <comment userInput="Update Edit Panel" stepKey="commentUpdateEditPanel"/>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage1">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage1">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="setSameSize">
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneralActionGroup" stepKey="setSameSize">
             <argument name="property" value="PageBuilderButtonGroupSameSize_Enabled"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage: Initial -->
         <comment userInput="Validate Stage: Initial" stepKey="commentValidateStage"/>
-        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStage">
+        <actionGroup ref="validateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSameSizeStage">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
         </actionGroup>
         <!-- Validate Storefront: Initial -->
         <comment userInput="Validate Storefront: Initial" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefront">
+        <actionGroup ref="validateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSameSizeStorefront">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
@@ -1541,16 +1541,16 @@
             <group value="pagebuilder-buttonGroup"/>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
         </after>
         <!-- Add New Smaller Button -->
         <comment userInput="Add New Smaller Button" stepKey="commentAddNewButton"/>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton3">
+        <actionGroup ref="inlineEditButtonActionGroup" stepKey="inlineEditButton3">
             <argument name="text" value="PageBuilderButtonItemText_OneCharacter"/>
             <argument name="index" value="3"/>
         </actionGroup>
@@ -1581,7 +1581,7 @@
             <group value="pagebuilder-buttonGroup"/>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
             <createData entity="_defaultCmsPage" stepKey="createPreReqCMSPage" />
             <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToContentCreatedCMSPage">
                 <argument name="CMSPage" value="$$createPreReqCMSPage$$"/>
@@ -1589,97 +1589,97 @@
         </before>
         <after>
             <deleteData createDataKey="createPreReqCMSPage" stepKey="deletePreReqCMSPage" />
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
         </after>
         <!-- Add Button Group -->
         <comment userInput="Add Button Group" stepKey="commentAddButtons"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Edit Button Items -->
         <comment userInput="Edit Button Items" stepKey="commentEditButtonItems"/>
-        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType2">
+        <actionGroup ref="addChildContentTypeFromOptionMenuActionGroup" stepKey="addChildContentType2">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton1">
+        <actionGroup ref="inlineEditButtonActionGroup" stepKey="inlineEditButton1">
             <argument name="text" value="PageBuilderButtonItemText_First"/>
             <argument name="index" value="1"/>
         </actionGroup>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton2">
+        <actionGroup ref="inlineEditButtonActionGroup" stepKey="inlineEditButton2">
             <argument name="text" value="PageBuilderButtonItemText_Second"/>
             <argument name="index" value="2"/>
         </actionGroup>
         <!-- Enable Same Size -->
         <comment userInput="Enable Same Size" stepKey="commentEditPanel1"/>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage1">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage1">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="enableSameSize">
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneralActionGroup" stepKey="enableSameSize">
             <argument name="property" value="PageBuilderButtonGroupSameSize_Enabled"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings1"/>
         <!-- Validate Stage: Inline -->
         <comment userInput="Validate Stage: Inline" stepKey="commentValidateStage1"/>
-        <actionGroup ref="validateButtonGroupInlineAppearance" stepKey="seeAppearanceOnStage1">
+        <actionGroup ref="validateButtonGroupInlineAppearanceActionGroup" stepKey="seeAppearanceOnStage1">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
         </actionGroup>
-        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStage1">
+        <actionGroup ref="validateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSameSizeStage1">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
         </actionGroup>
         <!-- Edit Appearance: Stacked -->
         <comment userInput="Edit Appearance: Stacked" stepKey="commentEditPanel2"/>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearance">
+        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAppearance">
             <argument name="property" value="PageBuilderButtonGroupAppearance_Stacked"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings2"/>
         <!-- Validate Stage: Stacked -->
         <comment userInput="Validate Stage: Stacked" stepKey="commentValidateStage2"/>
-        <actionGroup ref="validateButtonGroupStackedAppearance" stepKey="seeAppearanceOnStage2">
+        <actionGroup ref="validateButtonGroupStackedAppearanceActionGroup" stepKey="seeAppearanceOnStage2">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
         </actionGroup>
-        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStage2">
+        <actionGroup ref="validateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSameSizeStage2">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
         </actionGroup>
         <!-- Save Page -->
         <comment userInput="Save Page" stepKey="commentSave"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save: Stacked -->
         <comment userInput="Validate Stage After Save: Stacked" stepKey="commentValidateStage3"/>
-        <actionGroup ref="validateButtonGroupStackedAppearance" stepKey="seeAppearanceOnStage3">
+        <actionGroup ref="validateButtonGroupStackedAppearanceActionGroup" stepKey="seeAppearanceOnStage3">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
         </actionGroup>
-        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStage3">
+        <actionGroup ref="validateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSameSizeStage3">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
         </actionGroup>
         <!-- Edit Appearance: Inline -->
         <comment userInput="Edit Appearance: Inline" stepKey="commentEditPanel3"/>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage3">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage3">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearance2">
+        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAppearance2">
             <argument name="property" value="PageBuilderButtonGroupAppearance_Inline"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings3"/>
         <!-- Validate Stage After Save: Inline -->
         <comment userInput="Validate Stage After Save: Inline" stepKey="commentValidateStage4"/>
-        <actionGroup ref="validateButtonGroupInlineAppearance" stepKey="seeAppearanceOnStage4">
+        <actionGroup ref="validateButtonGroupInlineAppearanceActionGroup" stepKey="seeAppearanceOnStage4">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
         </actionGroup>
-        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStage4">
+        <actionGroup ref="validateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSameSizeStage4">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
         </actionGroup>
@@ -1700,7 +1700,7 @@
             <group value="pagebuilder-columnResize"/>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
             <createData entity="_defaultCmsPage" stepKey="createCMSPage"/>
             <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToContentCreatedCMSPage">
                 <argument name="CMSPage" value="$$createCMSPage$$"/>
@@ -1709,60 +1709,60 @@
         <after>
             <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
             <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
             <closeTab stepKey="closeTab"/>
         </after>
         <!-- Add Button Group To Column -->
         <comment userInput="Add Button Group To Column" stepKey="commentAddButtons"/>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToContainer" stepKey="dragButtonsOntoColumn">
+        <actionGroup ref="dragContentTypeToContainerActionGroup" stepKey="dragButtonsOntoColumn">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="1" />
         </actionGroup>
-        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusOptionMenu">
+        <actionGroup ref="unFocusOptionMenuActionGroup" stepKey="unFocusOptionMenu">
             <argument name="contentType" value="PageBuilderButtonItemContentType"/>
         </actionGroup>
         <!-- Enable Same Size -->
         <comment userInput="Enable Same Size" stepKey="commentEditPanel1"/>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="enableSameSize">
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneralActionGroup" stepKey="enableSameSize">
             <argument name="property" value="PageBuilderButtonGroupSameSize_Enabled"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <!-- Edit Button 1 -->
         <comment userInput="Edit Button 1" stepKey="commentEditButton1"/>
-        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage1">
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditMenuOnStage1">
             <argument name="section" value="ButtonItemOnStage"/>
             <argument name="targetIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="fillButtonText1">
+        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="fillButtonText1">
             <argument name="property" value="PageBuilderButtonItemText_First"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="fillButtonType1">
+        <actionGroup ref="selectSlideOutPanelFieldGeneralActionGroup" stepKey="fillButtonType1">
             <argument name="property" value="PageBuilderButtonItemType_Primary"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings1"/>
         <!-- Edit Button 2 -->
         <comment userInput="Edit Button 2" stepKey="commentEditButton2"/>
-        <actionGroup ref="duplicateSmallContentType" stepKey="duplicateButton2">
+        <actionGroup ref="duplicateSmallContentTypeActionGroup" stepKey="duplicateButton2">
             <argument name="section" value="ButtonItemOnStage"/>
             <argument name="targetIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton2">
+        <actionGroup ref="inlineEditButtonActionGroup" stepKey="inlineEditButton2">
             <argument name="text" value="PageBuilderButtonItemText_CommonCharacters"/>
             <argument name="index" value="2"/>
         </actionGroup>
         <!-- Validate Stage: Initial -->
         <comment userInput="Validate Stage: Initial" stepKey="commentValidateStage1"/>
-        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStage1">
+        <actionGroup ref="validateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSameSizeStage1">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
         </actionGroup>
@@ -1778,7 +1778,7 @@
         <openNewTab stepKey="openNewTab1"/>
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="goToStorefront1"/>
         <waitForPageLoad  stepKey="waitForPageLoad1"/>
-        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefront1">
+        <actionGroup ref="validateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSameSizeStorefront1">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
@@ -1791,7 +1791,7 @@
         <!-- Validate Storefront Mobile: Initial -->
         <comment userInput="Validate Storefront Mobile: Initial" stepKey="commentValidateStorefrontMobile1"/>
         <resizeWindow width="375" height="667" stepKey="resizeWindowToMobile1"/>
-        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefrontMobile1">
+        <actionGroup ref="validateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSameSizeStorefrontMobile1">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
@@ -1807,7 +1807,7 @@
         <switchToPreviousTab stepKey="switchToPreviousTab"/>
         <reloadPage stepKey="reloadPage"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <executeJS function="return document.querySelector('{{ColumnOnBackend.columnResizeGridLine('1')}}').clientWidth" stepKey="guideWidth"/>
         <dragAndDrop selector1="{{ColumnOnBackend.columnX('1')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('11')}}" x="$guideWidth" stepKey="dragColumn1"/>
         <waitForPageLoad stepKey="waitForDragAndDrop"/>
@@ -1821,7 +1821,7 @@
         </assertEquals>
         <!-- Validate Stage: Large Column -->
         <comment userInput="Validate Stage: Large Column" stepKey="commentValidateStage2"/>
-        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStage2">
+        <actionGroup ref="validateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSameSizeStage2">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
         </actionGroup>
@@ -1836,7 +1836,7 @@
         <switchToNextTab stepKey="switchToNextTab2"/>
         <reloadPage stepKey="reloadPage2"/>
         <waitForPageLoad stepKey="waitForPageLoad2"/>
-        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefront2">
+        <actionGroup ref="validateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSameSizeStorefront2">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
@@ -1849,7 +1849,7 @@
         <!-- Validate Storefront Mobile: Large Column -->
         <comment userInput="Validate Storefront Mobile: Large Column" stepKey="commentValidateStorefrontMobile2"/>
         <resizeWindow width="375" height="667" stepKey="resizeWindowToMobile2"/>
-        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefrontMobile2">
+        <actionGroup ref="validateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSameSizeStorefrontMobile2">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
@@ -1865,8 +1865,8 @@
         <switchToPreviousTab stepKey="switchToPreviousTab2"/>
         <reloadPage stepKey="reloadPage3"/>
         <waitForPageLoad stepKey="waitForPageLoad3"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
-        <actionGroup ref="moveContentTypeToContainer" stepKey="moveButtonsToRightColumn">
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage2"/>
+        <actionGroup ref="moveContentTypeToContainerActionGroup" stepKey="moveButtonsToRightColumn">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
             <argument name="contentTypeIndex" value="1"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
@@ -1874,7 +1874,7 @@
         </actionGroup>
         <!-- Validate Stage: Small Column -->
         <comment userInput="Validate Stage: Small Column" stepKey="commentValidateStage3"/>
-        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStage3">
+        <actionGroup ref="validateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSameSizeStage3">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
         </actionGroup>
@@ -1889,7 +1889,7 @@
         <switchToNextTab stepKey="switchToNextTab3"/>
         <reloadPage stepKey="reloadPage4"/>
         <waitForPageLoad stepKey="waitForPageLoad4"/>
-        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefront3">
+        <actionGroup ref="validateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSameSizeStorefront3">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
@@ -1902,7 +1902,7 @@
         <!-- Validate Storefront Mobile: Small Column -->
         <comment userInput="Validate Storefront Mobile: Small Column" stepKey="commentValidateStorefrontMobile3"/>
         <resizeWindow width="375" height="667" stepKey="resizeWindowToMobile3"/>
-        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefrontMobile3">
+        <actionGroup ref="validateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSameSizeStorefrontMobile3">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
@@ -1929,7 +1929,7 @@
             <group value="pagebuilder-column"/>
             <group value="pagebuilder-columnResize"/>
         </annotations>
-        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="fillButtonType1">
+        <actionGroup ref="selectSlideOutPanelFieldGeneralActionGroup" stepKey="fillButtonType1">
             <argument name="property" value="PageBuilderButtonItemType_Secondary"/>
         </actionGroup>
     </test>
@@ -1948,7 +1948,7 @@
             <group value="pagebuilder-column"/>
             <group value="pagebuilder-columnResize"/>
         </annotations>
-        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="fillButtonType1">
+        <actionGroup ref="selectSlideOutPanelFieldGeneralActionGroup" stepKey="fillButtonType1">
             <argument name="property" value="PageBuilderButtonItemType_Link"/>
         </actionGroup>
     </test>
@@ -1967,7 +1967,7 @@
             <group value="pagebuilder-tabs-content"/>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
             <createData entity="_defaultCmsPage" stepKey="createCMSPage"/>
             <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToContentCreatedCMSPage">
                 <argument name="CMSPage" value="$$createCMSPage$$"/>
@@ -1976,49 +1976,49 @@
         <after>
             <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
             <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
         </after>
         <!-- Add Button Group To Tab -->
         <comment userInput="Add Button Group To Tab" stepKey="commentAddButtonGroup"/>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToContainer" stepKey="dragButtonsToTab">
+        <actionGroup ref="dragContentTypeToContainerActionGroup" stepKey="dragButtonsToTab">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
             <argument name="containerTargetType" value="PageBuilderTabContentType"/>
             <argument name="containerTargetIndex" value="1" />
         </actionGroup>
-        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusOptionMenu">
+        <actionGroup ref="unFocusOptionMenuActionGroup" stepKey="unFocusOptionMenu">
             <argument name="contentType" value="PageBuilderButtonItemContentType"/>
         </actionGroup>
         <!-- Enable Same Size -->
         <comment userInput="Enable Same Size" stepKey="commentEditPanel1"/>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="enableSameSize">
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneralActionGroup" stepKey="enableSameSize">
             <argument name="property" value="PageBuilderButtonGroupSameSize_Enabled"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <!-- Edit Buttons -->
         <comment userInput="Edit Buttons" stepKey="commentEditButtons"/>
-        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType1">
+        <actionGroup ref="addChildContentTypeFromOptionMenuActionGroup" stepKey="addChildContentType1">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton1">
+        <actionGroup ref="inlineEditButtonActionGroup" stepKey="inlineEditButton1">
             <argument name="text" value="PageBuilderButtonItemText_First"/>
             <argument name="index" value="1"/>
         </actionGroup>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton2">
+        <actionGroup ref="inlineEditButtonActionGroup" stepKey="inlineEditButton2">
             <argument name="text" value="PageBuilderButtonItemText_CommonCharacters"/>
             <argument name="index" value="2"/>
         </actionGroup>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage: Initial" stepKey="commentValidateStage1"/>
-        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStage1">
+        <actionGroup ref="validateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSameSizeStage1">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
         </actionGroup>
@@ -2033,7 +2033,7 @@
         <comment userInput="Validate Storefront: Initial" stepKey="commentValidateStorefront1"/>
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="goToStorefront1"/>
         <waitForPageLoad  stepKey="waitForPageLoad1"/>
-        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefront1">
+        <actionGroup ref="validateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSameSizeStorefront1">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
@@ -2046,7 +2046,7 @@
         <!-- Validate Storefront Mobile -->
         <comment userInput="Validate Storefront Mobile: Initial" stepKey="commentValidateStorefrontMobile1"/>
         <resizeWindow width="375" height="667" stepKey="resizeWindowToMobile1"/>
-        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefrontMobile1">
+        <actionGroup ref="validateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSameSizeStorefrontMobile1">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
@@ -2073,7 +2073,7 @@
             <group value="pagebuilder-tabs-content"/>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
             <createData entity="_defaultCmsPage" stepKey="createCMSPage"/>
             <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToContentCreatedCMSPage">
                 <argument name="CMSPage" value="$$createCMSPage$$"/>
@@ -2081,53 +2081,53 @@
         </before>
         <after>
             <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
         </after>
         <!-- Add Button Group To Tab -->
         <comment userInput="Add Button Group To Tab" stepKey="commentAddButtonGroup"/>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToContainer" stepKey="dragButtonsToTab">
+        <actionGroup ref="dragContentTypeToContainerActionGroup" stepKey="dragButtonsToTab">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
             <argument name="containerTargetType" value="PageBuilderTabContentType"/>
             <argument name="containerTargetIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusOptionMenu">
+        <actionGroup ref="unFocusOptionMenuActionGroup" stepKey="unFocusOptionMenu">
             <argument name="contentType" value="PageBuilderButtonItemContentType"/>
         </actionGroup>
         <!-- Enable Same Size -->
         <comment userInput="Enable Same Size" stepKey="commentEditPanel1"/>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="enableSameSize">
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneralActionGroup" stepKey="enableSameSize">
             <argument name="property" value="PageBuilderButtonGroupSameSize_Enabled"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <!-- Edit Buttons -->
         <comment userInput="Edit Buttons" stepKey="commentEditButtons"/>
-        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType1">
+        <actionGroup ref="addChildContentTypeFromOptionMenuActionGroup" stepKey="addChildContentType1">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton1">
+        <actionGroup ref="inlineEditButtonActionGroup" stepKey="inlineEditButton1">
             <argument name="text" value="PageBuilderButtonItemText_First"/>
             <argument name="index" value="1"/>
         </actionGroup>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton2">
+        <actionGroup ref="inlineEditButtonActionGroup" stepKey="inlineEditButton2">
             <argument name="text" value="PageBuilderButtonItemText_CommonCharacters"/>
             <argument name="index" value="2"/>
         </actionGroup>
         <!-- Duplicate Tab -->
-        <actionGroup ref="duplicateSmallContentType" stepKey="duplicateSmallContentType">
+        <actionGroup ref="duplicateSmallContentTypeActionGroup" stepKey="duplicateSmallContentType">
             <argument name="section" value="TabOnStage"/>
         </actionGroup>
         <!-- Validate Tab 2 Buttons On Stage -->
         <comment userInput="Validate Stage: Tab 2 Buttons" stepKey="commentValidateStage1"/>
-        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStage1">
+        <actionGroup ref="validateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSameSizeStage1">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
             <argument name="buttonGroupIndex" value="2"/>
@@ -2138,15 +2138,15 @@
         <comment userInput="Validate Stage: Tab 1 Buttons" stepKey="commentValidateStage2"/>
         <click selector="{{TabOnStage.tabHeader('1')}}" stepKey="clickActiveTab2"/>
         <waitForElementVisible time="30" selector="{{TabOnStage.tabHeaderItemActive('1')}}" stepKey="seeNewTabActive2"/>
-        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStage2">
+        <actionGroup ref="validateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSameSizeStage2">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
         </actionGroup>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage1"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Tab 1 Buttons On Stage After Save -->
         <comment userInput="Validate Stage After Save: Tab 1 Buttons" stepKey="commentValidateStage3"/>
-        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStage3">
+        <actionGroup ref="validateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSameSizeStage3">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
         </actionGroup>
@@ -2154,7 +2154,7 @@
         <comment userInput="Validate Stage After Save: Tab 2 Buttons" stepKey="commentValidateStage4"/>
         <click selector="{{TabOnStage.tabHeader('2')}}" stepKey="clickActiveTab3"/>
         <waitForElementVisible time="30" selector="{{TabOnStage.tabHeaderItemActive('2')}}" stepKey="seeNewTabActive3"/>
-        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStage4">
+        <actionGroup ref="validateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSameSizeStage4">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
             <argument name="buttonGroupIndex" value="2"/>
@@ -2165,13 +2165,13 @@
         <comment userInput="Validate Storefront: Initial" stepKey="commentValidateStorefront1"/>
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="goToStorefront1"/>
         <waitForPageLoad  stepKey="waitForPageLoad1"/>
-        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefront1">
+        <actionGroup ref="validateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSameSizeStorefront1">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
         <click selector="{{TabOnStorefront.tabHeader('2')}}" stepKey="clickActiveTabStorefront"/>
         <waitForElementVisible time="30" selector="{{TabOnStorefront.tabHeaderItemActive('2')}}" stepKey="seeNewTabActiveStorefront"/>
-        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefront2">
+        <actionGroup ref="validateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSameSizeStorefront2">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
             <argument name="buttonGroupIndex" value="2"/>

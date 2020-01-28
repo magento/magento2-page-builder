@@ -8,7 +8,7 @@
 
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
-    <actionGroup name="openPageBuilderEditPanel">
+    <actionGroup name="openPageBuilderEditPanelActionGroup">
         <arguments>
             <argument name="contentType"/>
             <argument name="offsetXCoordinate" defaultValue="10" type="string"/>
@@ -24,7 +24,7 @@
         <see userInput="Edit {{contentType.name}}" selector="{{EditPanelForm.editFormTitle}}" stepKey="seeContentTypeNameInEditFormTitle"/>
         <waitForLoadingMaskToDisappear stepKey="waitForAnimation2"/>
     </actionGroup>
-    <actionGroup name="openPageBuilderEditPanelByIndex">
+    <actionGroup name="openPageBuilderEditPanelByIndexActionGroup">
         <arguments>
             <argument name="contentType"/>
             <argument name="contentTypeIndex" defaultValue="1" type="string"/>
@@ -42,7 +42,7 @@
         <see userInput="Edit {{contentType.name}}" selector="{{EditPanelForm.editFormTitle}}" stepKey="seeContentTypeNameInEditFormTitle"/>
         <waitForPageLoad stepKey="waitForAnimation2" time="30"/>
     </actionGroup>
-    <actionGroup name="openOptionsMenu">
+    <actionGroup name="openOptionsMenuActionGroup">
         <arguments>
             <argument name="contentType"/>
             <argument name="contentTypeIndex" defaultValue="1" type="string"/>
@@ -55,7 +55,7 @@
         <waitForElementVisible time="10" selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenuByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForOptions"/>
         <waitForElementVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeEditByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForEditButton"/>
     </actionGroup>
-    <actionGroup name="openPageBuilderEditPanelSmallByIndex">
+    <actionGroup name="openPageBuilderEditPanelSmallByIndexActionGroup">
         <arguments>
             <argument name="section"/>
             <argument name="targetIndex" defaultValue="1" type="string"/>
@@ -69,7 +69,7 @@
         <waitForPageLoad time="30" stepKey="waitForPageLoad2"/>
         <waitForElementVisible time="5" selector="{{EditPanelForm.editForm}}" stepKey="waitForEditForm"/>
     </actionGroup>
-    <actionGroup name="openPageBuilderOptionsMenuSmallByIndex">
+    <actionGroup name="openPageBuilderOptionsMenuSmallByIndexActionGroup">
         <arguments>
             <argument name="section"/>
             <argument name="targetIndex" defaultValue="1" type="string"/>
@@ -79,7 +79,7 @@
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForElementVisible time="10" selector="{{section.optionsMenu(targetIndex)}}" stepKey="waitForOptionsMenu"/>
     </actionGroup>
-    <actionGroup name="addChildContentTypeFromOptionMenu">
+    <actionGroup name="addChildContentTypeFromOptionMenuActionGroup">
         <arguments>
             <argument name="contentType"/>
             <argument name="index" defaultValue="1" type="string"/>
@@ -101,7 +101,7 @@
         <click selector="{{pageBuilderArea}}{{PageBuilderPanel.searchPanel}}" stepKey="clickOutsideLiveEdit"/>
         <waitForPageLoad stepKey="waitForAnimation2"/>
     </actionGroup>
-    <actionGroup name="duplicateContentType">
+    <actionGroup name="duplicateContentTypeActionGroup">
         <arguments>
             <argument name="contentType"/>
             <argument name="targetIndex" defaultValue="1" type="string"/>
@@ -122,7 +122,7 @@
             <expectedResult type="variable">$expectedContentTypeCount</expectedResult>
         </assertEquals>
     </actionGroup>
-    <actionGroup name="duplicateSmallContentType">
+    <actionGroup name="duplicateSmallContentTypeActionGroup">
         <arguments>
             <argument name="section"/>
             <argument name="targetIndex" defaultValue="1" type="string"/>
@@ -141,7 +141,7 @@
             <expectedResult type="variable">$expectedContentTypeCount</expectedResult>
         </assertEquals>
     </actionGroup>
-    <actionGroup name="removeEmptyContentTypeFromStage">
+    <actionGroup name="removeEmptyContentTypeFromStageActionGroup">
         <!-- Remove a content type which is in it's default state -->
         <arguments>
             <argument name="contentType"/>
@@ -155,7 +155,7 @@
         <click selector="{{PageBuilderContentTypeOptionsMenu.contentTypeRemove(contentType.role)}}" stepKey="clickRemoveContentType"/>
         <waitForPageLoad stepKey="waitForRemoveAnimation"/>
     </actionGroup>
-    <actionGroup name="removeContentTypeFromStage">
+    <actionGroup name="removeContentTypeFromStageActionGroup">
         <!-- Remove a content type which has been configured with data or has children -->
         <arguments>
             <argument name="contentType"/>
@@ -176,7 +176,7 @@
         <waitForElementVisible time="30" selector="{{RowOnStage.base('1')}}" stepKey="waitForPageBuilderRow"/>
         <!-- Follow with confirmRemovalModal actionGroup -->
     </actionGroup>
-    <actionGroup name="removeContentTypeFromStageByIndex">
+    <actionGroup name="removeContentTypeFromStageByIndexActionGroup">
         <arguments>
             <argument name="contentType"/>
             <argument name="contentTypeNumber" defaultValue="2" type="string"/>
@@ -192,7 +192,7 @@
         <waitForPageLoad time="30" stepKey="waitForRemoveAnimation"/>
         <!-- Follow with confirmRemovalModal actionGroup -->
     </actionGroup>
-    <actionGroup name="removeContentTypeFromStageSmallByIndex">
+    <actionGroup name="removeContentTypeFromStageSmallByIndexActionGroup">
         <arguments>
             <argument name="section"/>
             <argument name="targetIndex" defaultValue="1" type="string"/>
@@ -205,7 +205,7 @@
         <click selector="{{section.optionsMenuButton(targetIndex, 'remove')}}" stepKey="clickRemoveButton"/>
         <waitForPageLoad stepKey="waitForPageLoad2"/>
     </actionGroup>
-    <actionGroup name="confirmRemovalModal">
+    <actionGroup name="confirmRemovalModalActionGroup">
         <waitForElementVisible time="10" selector="{{PageBuilderStage.modal}}" stepKey="waitForModal"/>
         <seeElement selector="{{PageBuilderStage.modal}}" stepKey="seeRemovalModal"/>
         <waitForElementVisible time="10" selector="{{PageBuilderStage.modalOk}}" stepKey="waitForModalOk" />
@@ -214,7 +214,7 @@
         <waitForElementNotVisible time="1" selector="{{PageBuilderStage.modalOk}}" stepKey="waitForModalHide" />
         <waitForPageLoad stepKey="waitForPageLoad2"/>
     </actionGroup>
-    <actionGroup name="validateOnHoverOptionMenu">
+    <actionGroup name="validateOnHoverOptionMenuActionGroup">
         <arguments>
             <argument name="contentType"/>
         </arguments>
@@ -227,7 +227,7 @@
         <waitForElementVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeRemove(contentType.role)}}" stepKey="seeOptionsRemove"/>
         <see selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(contentType.role)}}" userInput="{{contentType.name}}" stepKey="seeOptionMenuTitle"/>
     </actionGroup>
-    <actionGroup name="validateOnHoverNoOptionMenu">
+    <actionGroup name="validateOnHoverNoOptionMenuActionGroup">
         <arguments>
             <argument name="contentType"/>
         </arguments>
@@ -238,7 +238,7 @@
         <waitForElementNotVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(contentType.role)}}" stepKey="waitForOptionsMenu" />
         <dontSee selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(contentType.role)}}" userInput="{{contentType.name}}" stepKey="seeOptionMenuTitle"/>
     </actionGroup>
-    <actionGroup name="hideContentType">
+    <actionGroup name="hideContentTypeActionGroup">
         <arguments>
             <argument name="section"/>
             <argument name="contentType"/>
@@ -257,7 +257,7 @@
         <waitForElementVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeShow(contentType.role, targetIndex)}}" stepKey="waitForShowOptionVisible" />
         <seeElement selector="{{section.hidden(targetIndex)}}" stepKey="waitForContentTypeHidden" />
     </actionGroup>
-    <actionGroup name="hideSmallContentType">
+    <actionGroup name="hideSmallContentTypeActionGroup">
         <arguments>
             <argument name="section"/>
             <argument name="contentType"/>
@@ -277,7 +277,7 @@
         <waitForElementVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeShow(contentType.role, targetIndex)}}" stepKey="waitForShowOptionVisible" />
         <seeElement selector="{{section.hidden(targetIndex)}}" stepKey="waitForContentTypeHidden" />
     </actionGroup>
-    <actionGroup name="showContentType">
+    <actionGroup name="showContentTypeActionGroup">
         <arguments>
             <argument name="section"/>
             <argument name="contentType"/>
@@ -296,7 +296,7 @@
         <waitForElementVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeHide(contentType.role, targetIndex)}}" stepKey="waitForHideOptionVisible" />
         <dontSeeElementInDOM selector="{{section.hidden(targetIndex)}}" stepKey="dontSeeDomContentTypeHidden" />
     </actionGroup>
-    <actionGroup name="showSmallContentType">
+    <actionGroup name="showSmallContentTypeActionGroup">
         <arguments>
             <argument name="section"/>
             <argument name="contentType"/>
@@ -316,7 +316,7 @@
         <waitForElementVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeHide(contentType.role, targetIndex)}}" stepKey="waitForHideOptionVisible" />
         <dontSeeElementInDOM selector="{{section.hidden(targetIndex)}}" stepKey="dontSeeDomContentTypeHidden" />
     </actionGroup>
-    <actionGroup name="unFocusOptionMenu">
+    <actionGroup name="unFocusOptionMenuActionGroup">
         <arguments>
             <argument name="contentType"/>
         </arguments>

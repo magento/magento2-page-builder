@@ -38,7 +38,7 @@
         </annotations>
         <before>
             <createData entity="_defaultCategory" stepKey="createCategory"/>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
             <actionGroup ref="NavigateToCreatedCategoryActionGroup" stepKey="navigateToCreatedCategory">
                 <argument name="Category" value="$$createCategory$$"/>
             </actionGroup>
@@ -47,7 +47,7 @@
         <after>
             <magentoCLI command="config:set cms/pagebuilder/enabled 1" stepKey="enablePageBuilder"/>
             <deleteData createDataKey="createCategory" stepKey="deleteCreatedCategory"/>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
         </after>
         <seeElement selector="{{PageBuilderProductAttribute.PageBuilderBtn('description')}}" stepKey="seePageBuilderButton"/>
         <dontSeeElementInDOM selector="{{CategoryContentSection.descriptionTextArea}}" stepKey="dontSeeDescriptionAreaInDOM"/>

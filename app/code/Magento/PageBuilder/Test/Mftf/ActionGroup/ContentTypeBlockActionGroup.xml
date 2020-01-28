@@ -8,7 +8,7 @@
 
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
-    <actionGroup name="searchBlockInGrid">
+    <actionGroup name="searchBlockInGridActionGroup">
         <arguments>
             <argument name="block" defaultValue=""/>
         </arguments>
@@ -25,7 +25,7 @@
         <waitForPageLoad stepKey="waitForPageLoad3"/>
         <waitForElementVisible selector="{{BlockOnForm.title(block.title)}}" stepKey="waitToSeeBlockTitle"/>
     </actionGroup>
-    <actionGroup name="verifyBlockOnStage">
+    <actionGroup name="verifyBlockOnStageActionGroup">
         <arguments>
             <argument name="block"/>
             <argument name="index" defaultValue="1" type="string"/>
@@ -36,7 +36,7 @@
         <seeElement selector="{{BlockOnStage.title(index,block.title)}}" stepKey="seeOptionMenuTitle"/>
         <see selector="{{BlockOnStage.content(index)}}" userInput="{{block.content}}" stepKey="seeBlockContentOnStage"/>
     </actionGroup>
-    <actionGroup name="verifyVerticalAlignmentBottomInBlock">
+    <actionGroup name="verifyVerticalAlignmentBottomInBlockActionGroup">
         <arguments>
             <argument name="block" defaultValue="BlockOnStorefront"/>
             <argument name="container"/>
@@ -59,7 +59,7 @@
             <actualResult type="variable">bottomPositionDifference</actualResult>
         </assertLessThanOrEqual>
     </actionGroup>
-    <actionGroup name="verifyVerticalAlignmentCenterInBlock">
+    <actionGroup name="verifyVerticalAlignmentCenterInBlockActionGroup">
         <arguments>
             <argument name="block" defaultValue="BlockOnStorefront"/>
             <argument name="container"/>
@@ -74,7 +74,7 @@
             <actualResult type="variable">contentCenter</actualResult>
         </assertEquals>
     </actionGroup>
-    <actionGroup name="verifyAlignmentRightInBlock">
+    <actionGroup name="verifyAlignmentRightInBlockActionGroup">
         <arguments>
             <argument name="block" defaultValue="BlockOnStorefront"/>
             <argument name="container" type="string"/>

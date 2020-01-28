@@ -8,14 +8,14 @@
 
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
-    <actionGroup name="navigateToStoreFront">
+    <actionGroup name="navigateToStoreFrontActionGroup">
         <arguments>
             <argument name="contentType"/>
         </arguments>
         <amOnPage url="{{contentType.pageNamePrefix}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnStoreFrontPage"/>
         <waitForPageLoad time="30" stepKey="waitForPageLoad"/>
     </actionGroup>
-    <actionGroup name="navigateToStoreFrontWithStoreView">
+    <actionGroup name="navigateToStoreFrontWithStoreViewActionGroup">
         <arguments>
             <argument name="contentType"/>
             <argument name="storeView"/>
@@ -23,7 +23,7 @@
         <amOnPage url="{{storeView.code}}/{{contentType.pageNamePrefix}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnStoreFrontPage"/>
         <waitForPageLoad time="30" stepKey="waitForPageLoad"/>
     </actionGroup>
-    <actionGroup name="validateContentTypeInsideContainerStorefront">
+    <actionGroup name="validateContentTypeInsideContainerStorefrontActionGroup">
         <arguments>
             <argument name="contentType"/>
             <argument name="contentTypeIndex" defaultValue="1" type="string"/>
@@ -32,7 +32,7 @@
         </arguments>
         <waitForElementVisible time="30" selector="{{PageBuilderStoreFront.contentTypeInsideContainerStorefront(containerTargetType.role, containerTargetIndex, contentType.role, contentTypeIndex)}}" stepKey="waitForContentTypeStorefront"/>
     </actionGroup>
-    <actionGroup name="validateContentTypeInsideContainerStorefrontInDOM">
+    <actionGroup name="validateContentTypeInsideContainerStorefrontInDOMActionGroup">
         <arguments>
             <argument name="contentType"/>
             <argument name="contentTypeIndex" defaultValue="1" type="string"/>
@@ -41,7 +41,7 @@
         </arguments>
         <waitForElement time="30" selector="{{PageBuilderStoreFront.contentTypeInsideContainerStorefront(containerTargetType.role, containerTargetIndex, contentType.role, contentTypeIndex)}}" stepKey="waitForContentTypeStorefront"/>
     </actionGroup>
-    <actionGroup name="verifyCmsPageLinkOnFrontend">
+    <actionGroup name="verifyCmsPageLinkOnFrontendActionGroup">
         <arguments>
             <argument name="CMSPage"/>
             <argument name="index"/>

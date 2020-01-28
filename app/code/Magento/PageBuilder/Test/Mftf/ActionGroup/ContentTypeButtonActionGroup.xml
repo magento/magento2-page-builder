@@ -8,7 +8,7 @@
 
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
-    <actionGroup name="validateButtonItemContent">
+    <actionGroup name="validateButtonItemContentActionGroup">
         <arguments>
             <argument name="page"/>
             <argument name="text" defaultValue="PageBuilderButtonItemText_Empty"/>
@@ -24,7 +24,7 @@
         <waitForElementVisible selector="{{page.buttonItemUrl(index, url.value)}}" stepKey="waitForButtonUrl"/>
         <waitForElementVisible selector="{{page.buttonItemNewTab(index, newTab.stageValue)}}" stepKey="waitForButtonNewTab"/>
     </actionGroup>
-    <actionGroup name="inlineEditButton">
+    <actionGroup name="inlineEditButtonActionGroup">
         <arguments>
             <argument name="text"/>
             <argument name="index" defaultValue="1" type="string"/>
@@ -39,7 +39,7 @@
         <click selector="{{pageBuilderArea}}{{PageBuilderPanel.searchPanel}}" stepKey="unFocusLiveEdit"/>
         <waitForPageLoad stepKey="waitForUnFocus"/>
     </actionGroup>
-    <actionGroup name="moveButton">
+    <actionGroup name="moveButtonActionGroup">
         <arguments>
             <argument name="x" defaultValue="null" type="string"/>
             <argument name="y" defaultValue="null" type="string"/>
@@ -56,7 +56,7 @@
         <waitForPageLoad stepKey="waitForPageLoad2"/>
         <waitForElementVisible selector="{{ButtonItemOnStage.base(buttonIndexToMove)}}" stepKey="waitForButton2"/>
     </actionGroup>
-    <actionGroup name="validateButtonGroupInlineAppearance">
+    <actionGroup name="validateButtonGroupInlineAppearanceActionGroup">
         <arguments>
             <argument name="buttonGroupPage"/>
             <argument name="buttonItemPage"/>
@@ -82,7 +82,7 @@
             <actualResult type="variable">yCoordinate2</actualResult>
         </assertEquals>
     </actionGroup>
-    <actionGroup name="validateButtonGroupInlineAppearanceWraps">
+    <actionGroup name="validateButtonGroupInlineAppearanceWrapsActionGroup">
         <arguments>
             <argument name="buttonGroupPage"/>
             <argument name="buttonItemPage"/>
@@ -108,7 +108,7 @@
             <actualResult type="variable">yCoordinate2</actualResult>
         </assertGreaterThan>
     </actionGroup>
-    <actionGroup name="validateButtonGroupStackedAppearance">
+    <actionGroup name="validateButtonGroupStackedAppearanceActionGroup">
         <arguments>
             <argument name="buttonGroupPage"/>
             <argument name="buttonItemPage"/>
@@ -134,7 +134,7 @@
             <actualResult type="variable">yCoordinate2</actualResult>
         </assertGreaterThan>
     </actionGroup>
-    <actionGroup name="validateButtonItemsSameSize">
+    <actionGroup name="validateButtonItemsSameSizeActionGroup">
         <arguments>
             <argument name="buttonGroupPage"/>
             <argument name="buttonItemPage"/>
@@ -159,7 +159,7 @@
             <expectedResult type="variable">button2Width</expectedResult>
         </assertEquals>
     </actionGroup>
-    <actionGroup name="validateButtonItemsDifferentSizes" extends="validateButtonItemsSameSize">
+    <actionGroup name="validateButtonItemsDifferentSizesActionGroup" extends="validateButtonItemsSameSizeActionGroup">
         <comment userInput="validateButtonItemsDifferentSizes" stepKey="comment"/>
         <seeElement selector="{{buttonGroupPage.sameSizeValue(buttonGroupIndex, PageBuilderButtonGroupSameSize_Disabled.value)}}" stepKey="seeButtonSameSizeValue"/>
         <assertNotEquals stepKey="assertButtonWidthSize">
@@ -167,7 +167,7 @@
             <expectedResult type="variable">button2Width</expectedResult>
         </assertNotEquals>
     </actionGroup>
-    <actionGroup name="validateButtonItemsDefaultMargin">
+    <actionGroup name="validateButtonItemsDefaultMarginActionGroup">
         <arguments>
             <argument name="buttonItemPage"/>
             <argument name="buttonIndex" defaultValue="1" type="string"/>

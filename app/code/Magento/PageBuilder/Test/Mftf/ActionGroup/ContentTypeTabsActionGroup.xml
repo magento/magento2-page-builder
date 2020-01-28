@@ -8,7 +8,7 @@
 
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
-    <actionGroup name="switchTabs">
+    <actionGroup name="switchTabsActionGroup">
         <arguments>
             <argument name="section"/>
             <argument name="from" defaultValue="1" type="string"/>
@@ -20,7 +20,7 @@
         <assertElementContainsAttribute selector="{{section.tabPanel(from)}}" attribute="aria-hidden" expectedValue="true" stepKey="assertOldTabHidden"/>
         <assertElementContainsAttribute selector="{{section.tabPanel(to)}}" attribute="aria-hidden" expectedValue="false" stepKey="assertNewTabVisible"/>
     </actionGroup>
-    <actionGroup name="inlineEditTabItemName">
+    <actionGroup name="inlineEditTabItemNameActionGroup">
         <arguments>
             <argument name="tabName" defaultValue="{{PageBuilderTabNameRandom1.value}}" type="string"/>
             <argument name="index" defaultValue="1" type="string"/>
@@ -33,7 +33,7 @@
         <click selector="{{pageBuilderArea}}{{PageBuilderPanel.searchPanel}}" stepKey="unFocusLiveEdit"/>
         <waitForPageLoad stepKey="waitForUnFocus"/>
     </actionGroup>
-    <actionGroup name="moveTabItem">
+    <actionGroup name="moveTabItemActionGroup">
         <arguments>
             <argument name="x" defaultValue="null" type="string"/>
             <argument name="y" defaultValue="null" type="string"/>
@@ -51,7 +51,7 @@
         <waitForPageLoad stepKey="waitForPageLoad2"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader(tabItemIndexToMove)}}" stepKey="waitForTabItem2"/>
     </actionGroup>
-    <actionGroup name="validateTabHeadersAlignedCenter">
+    <actionGroup name="validateTabHeadersAlignedCenterActionGroup">
         <arguments>
             <argument name="tabGroupSection" defaultValue="TabsOnStage"/>
             <argument name="tabItemSection" defaultValue="TabOnStage"/>

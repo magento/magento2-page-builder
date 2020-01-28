@@ -8,7 +8,7 @@
 
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
-    <actionGroup name="validateBackgroundAttributesWithNoImageOrColor">
+    <actionGroup name="validateBackgroundAttributesWithNoImageOrColorActionGroup">
         <arguments>
             <argument name="section"/>
             <argument name="backgroundPosition" defaultValue="PageBuilderBackgroundPosition_Default"/>
@@ -26,7 +26,7 @@
         <waitForElementVisible selector="{{section.backgroundRepeat(index, backgroundRepeat.styleValue)}}" stepKey="waitForBackgroundRepeat"/>
         <waitForElementVisible selector="{{section.backgroundAttachment(index, backgroundAttachment.value)}}" stepKey="waitForBackgroundAttachment"/>
     </actionGroup>
-    <actionGroup name="validateBackgroundAttributesWithNoColor">
+    <actionGroup name="validateBackgroundAttributesWithNoColorActionGroup">
         <arguments>
             <argument name="section"/>
             <argument name="backgroundImage"/>
@@ -45,7 +45,7 @@
         <waitForElementVisible selector="{{section.backgroundRepeat(index, backgroundRepeat.styleValue)}}" stepKey="waitForBackgroundRepeat"/>
         <waitForElementVisible selector="{{section.backgroundAttachment(index, backgroundAttachment.value)}}" stepKey="waitForBackgroundAttachment"/>
     </actionGroup>
-    <actionGroup name="validateBackgroundAttributesWithNoImage">
+    <actionGroup name="validateBackgroundAttributesWithNoImageActionGroup">
         <arguments>
             <argument name="section"/>
             <argument name="backgroundColor"/>
@@ -63,7 +63,7 @@
         <waitForElementVisible selector="{{section.backgroundRepeat(index, backgroundRepeat.styleValue)}}" stepKey="waitForBackgroundRepeat"/>
         <waitForElementVisible selector="{{section.backgroundAttachment(index, backgroundAttachment.value)}}" stepKey="waitForBackgroundAttachment"/>
     </actionGroup>
-    <actionGroup name="validateBackgroundAttributes">
+    <actionGroup name="validateBackgroundAttributesActionGroup">
         <arguments>
             <argument name="section"/>
             <argument name="backgroundImage"/>
@@ -83,7 +83,7 @@
         <waitForElementVisible selector="{{section.backgroundRepeat(index, backgroundRepeat.styleValue)}}" stepKey="waitForBackgroundRepeat"/>
         <waitForElementVisible selector="{{section.backgroundAttachment(index, backgroundAttachment.value)}}" stepKey="waitForBackgroundAttachment"/>
     </actionGroup>
-    <actionGroup name="validateMobileBackgroundAttributesWithNoImageOrColor">
+    <actionGroup name="validateMobileBackgroundAttributesWithNoImageOrColorActionGroup">
         <arguments>
             <argument name="section"/>
             <argument name="mobileBackgroundPosition" defaultValue="PageBuilderBackgroundPosition_Default"/>
@@ -101,7 +101,7 @@
         <waitForElementVisible selector="{{section.mobileBackgroundRepeat(index, mobileBackgroundRepeat.styleValue)}}" stepKey="waitForBackgroundRepeat"/>
         <waitForElementVisible selector="{{section.mobileBackgroundAttachment(index, mobileBackgroundAttachment.value)}}" stepKey="waitForBackgroundAttachment"/>
     </actionGroup>
-    <actionGroup name="validateMobileBackgroundAttributes">
+    <actionGroup name="validateMobileBackgroundAttributesActionGroup">
         <arguments>
             <argument name="section"/>
             <argument name="mobileBackgroundColor"/>
@@ -119,7 +119,7 @@
         <waitForElementVisible selector="{{section.mobileBackgroundRepeat(index, mobileBackgroundRepeat.styleValue)}}" stepKey="waitForBackgroundRepeat"/>
         <waitForElementVisible selector="{{section.mobileBackgroundAttachment(index, mobileBackgroundAttachment.value)}}" stepKey="waitForBackgroundAttachment"/>
     </actionGroup>
-    <actionGroup name="validateBackgroundImage">
+    <actionGroup name="validateBackgroundImageActionGroup">
         <arguments>
             <argument name="section"/>
             <argument name="backgroundImage"/>
@@ -138,7 +138,7 @@
             <actualResult type="variable">$backgroundImageValue</actualResult>
         </assertRegExp>
     </actionGroup>
-    <actionGroup name="validateBackgroundMobileImage">
+    <actionGroup name="validateBackgroundMobileImageActionGroup">
         <arguments>
             <argument name="section"/>
             <argument name="backgroundMobileImage"/>
@@ -161,7 +161,7 @@
         <waitForElementVisible selector="{{section.backgroundMobileImage(index, backgroundMobileImage.fileName)}}" stepKey="waitForBackgroundMobileImageVisible"/>
         <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
     </actionGroup>
-    <actionGroup name="validateNoBackgroundImage">
+    <actionGroup name="validateNoBackgroundImageActionGroup">
         <arguments>
             <argument name="section"/>
             <argument name="index" defaultValue="1" type="string"/>
@@ -175,7 +175,7 @@
             <actualResult type="variable">$backgroundImageValue</actualResult>
         </assertEquals>
     </actionGroup>
-    <actionGroup name="validateBackgroundImageContainer">
+    <actionGroup name="validateBackgroundImageContainerActionGroup">
         <arguments>
             <argument name="section"/>
             <argument name="backgroundImage"/>

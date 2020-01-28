@@ -8,7 +8,7 @@
 
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
-    <actionGroup name="closeEditPanelSettings">
+    <actionGroup name="closeEditPanelSettingsActionGroup">
         <arguments>
             <argument name="baseContent" defaultValue="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" type="string"/>
         </arguments>
@@ -19,7 +19,7 @@
         <waitForElementNotVisible time="5" selector="{{EditPanelForm.editForm}}" stepKey="waitForEditFormNotVisible"/>
         <waitForElementVisible time="10" selector="{{baseContent}}" stepKey="waitForCmsPageSaveButton"/>
     </actionGroup>
-    <actionGroup name="saveEditPanelSettings">
+    <actionGroup name="saveEditPanelSettingsActionGroup">
         <arguments>
             <argument name="baseContent" defaultValue="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" type="string"/>
         </arguments>
@@ -30,7 +30,7 @@
         <waitForElementNotVisible time="5" selector="{{EditPanelForm.editForm}}" stepKey="waitForEditFormNotVisible"/>
         <waitForElementVisible time="10" selector="{{baseContent}}" stepKey="waitForCmsPageSaveButton"/>
     </actionGroup>
-    <actionGroup name="saveEditPanelAndValidateFieldError">
+    <actionGroup name="saveEditPanelAndValidateFieldErrorActionGroup">
         <arguments>
             <argument name="property"/>
         </arguments>
@@ -41,7 +41,7 @@
         <waitForElementVisible selector="{{EditPanelForm.panelFieldValidationErrorMessage(property.section, property.fieldName, property.errorMessage)}}" stepKey="waitForErrorMessage"/>
         <waitForElementVisible selector="{{EditPanelForm.panelSectionError(property.section)}}" stepKey="waitForSectionError"/>
     </actionGroup>
-    <actionGroup name="saveEditPanelAndValidateFieldErrorGeneralSection">
+    <actionGroup name="saveEditPanelAndValidateFieldErrorGeneralSectionActionGroup">
         <arguments>
             <argument name="form" defaultValue="EditPanelForm"/>
             <argument name="property"/>
@@ -52,14 +52,14 @@
         <waitForElementVisible selector="{{EditPanelForm.panelFieldValidationError(property.section, property.fieldName)}}" stepKey="waitForErrorField"/>
         <waitForElementVisible selector="{{EditPanelForm.panelFieldValidationErrorMessage(property.section, property.fieldName, property.errorMessage)}}" stepKey="waitForErrorMessage"/>
     </actionGroup>
-    <actionGroup name="saveEditPanelSettingsFullScreen">
+    <actionGroup name="saveEditPanelSettingsFullScreenActionGroup">
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForElementVisible time="5" selector="{{EditPanelForm.editFormSave}}" stepKey="waitForColumnSaveButton" />
         <click selector="{{EditPanelForm.editFormSave}}" stepKey="clickSaveColumn"/>
         <waitForPageLoad stepKey="waitForSavePanelClose"/>
         <waitForElementNotVisible time="5" selector="{{EditPanelForm.editForm}}" stepKey="waitForEditFormNotVisible" />
     </actionGroup>
-    <actionGroup name="expandConfigurationSection">
+    <actionGroup name="expandConfigurationSectionActionGroup">
         <arguments>
             <argument name="section" defaultValue="AdvancedForm"/>
         </arguments>
@@ -68,7 +68,7 @@
         <conditionalClick selector="{{EditPanelForm.editPanelSectionName(section.dataIndex)}}" dependentSelector="{{EditPanelForm.editPanelSectionExpanded(section.dataIndex)}}" visible="false" stepKey="expandSection"/>
         <waitForElementVisible selector="{{EditPanelForm.editPanelSectionExpanded(section.dataIndex)}}" stepKey="waitForSectionExpanded"/>
     </actionGroup>
-    <actionGroup name="fillSlideOutPanelField">
+    <actionGroup name="fillSlideOutPanelFieldActionGroup">
         <arguments>
             <argument name="property"/>
         </arguments>
@@ -80,7 +80,7 @@
         <waitForPageLoad time="30" stepKey="waitForSectionChange"/>
         <waitForElementVisible time="2" selector="{{EditPanelForm.panelSectionChangedIcon(property.section)}}" stepKey="waitForSectionChangedIcon"/>
     </actionGroup>
-    <actionGroup name="fillSlideOutPanelFieldGeneral">
+    <actionGroup name="fillSlideOutPanelFieldGeneralActionGroup">
         <!-- This action group does not assert against the section changed icon since this doesn't exist for General sections -->
         <arguments>
             <argument name="property"/>
@@ -91,7 +91,7 @@
         <fillField selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" userInput="{{property.value}}" stepKey="fillPropertyField"/>
         <click selector="{{EditPanelForm.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
     </actionGroup>
-    <actionGroup name="fillSlideOutPanelTextArea">
+    <actionGroup name="fillSlideOutPanelTextAreaActionGroup">
         <!-- This action group does not assert against the section changed icon since this doesn't exist for General sections -->
         <arguments>
             <argument name="property"/>
@@ -100,7 +100,7 @@
         <waitForElement time="2" selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible"/>
         <fillField selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" userInput="{{property.value}}" stepKey="fillPropertyField"/>
     </actionGroup>
-    <actionGroup name="fillSlideOutPanelFieldAndExpectToSeeErrorInFieldset">
+    <actionGroup name="fillSlideOutPanelFieldAndExpectToSeeErrorInFieldsetActionGroup">
         <arguments>
             <argument name="property"/>
         </arguments>
@@ -111,10 +111,10 @@
         <click selector="{{EditPanelForm.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
         <waitForElementVisible time="2" selector="{{EditPanelForm.panelSectionError(property.section)}}" stepKey="waitForSectionChangedIcon"/>
     </actionGroup>
-    <actionGroup name="fillSlideOutPanelFieldAndExpectToSeeErrorInFieldsetGeneral" extends="fillSlideOutPanelFieldAndExpectToSeeErrorInFieldset">
+    <actionGroup name="fillSlideOutPanelFieldAndExpectToSeeErrorInFieldsetGeneralActionGroup" extends="fillSlideOutPanelFieldAndExpectToSeeErrorInFieldsetActionGroup">
         <remove keyForRemoval="waitForSectionChangedIcon"/>
     </actionGroup>
-    <actionGroup name="fillSlideOutPanelMultiSelectField">
+    <actionGroup name="fillSlideOutPanelMultiSelectFieldActionGroup">
         <arguments>
             <argument name="property"/>
         </arguments>
@@ -128,7 +128,7 @@
         <waitForElementNotVisible selector="{{EditPanelForm.panelMultiSelectFieldControlInput(property.section, property.fieldName)}}" stepKey="waitForSearchFieldNotVisible"/>
         <see selector="{{EditPanelForm.panelMultiSelectFieldControl(property.section, property.fieldName)}}" userInput="{{property.value}}" stepKey="seeResultInField"/>
     </actionGroup>
-    <actionGroup name="fillSlideOutPanelLinkUrlField">
+    <actionGroup name="fillSlideOutPanelLinkUrlFieldActionGroup">
         <arguments>
             <argument name="property"/>
             <argument name="selection" type="string"/>
@@ -142,7 +142,7 @@
         <waitForElementVisible selector="{{EditPanelForm.panelFieldControlCheckboxState(newTab.fieldName, newTab.value)}}" stepKey="waitForNewTabStateChange"/>
         <click selector="{{EditPanelForm.panelFieldLabel((property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
     </actionGroup>
-    <actionGroup name="fillOutUrlInput">
+    <actionGroup name="fillOutUrlInputActionGroup">
         <arguments>
             <argument name="fieldName"/>
             <argument name="linkName"/>
@@ -169,7 +169,7 @@
             <actualResult type="variable">textFromDropDown1</actualResult>
         </assertEquals>
     </actionGroup>
-    <actionGroup name="clearSlideOutPanelFieldGeneral">
+    <actionGroup name="clearSlideOutPanelFieldGeneralActionGroup">
         <arguments>
             <argument name="property"/>
         </arguments>
@@ -179,7 +179,7 @@
         <clearField selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="clearPropertyField"/>
         <click selector="{{EditPanelForm.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
     </actionGroup>
-    <actionGroup name="selectSlideOutPanelField">
+    <actionGroup name="selectSlideOutPanelFieldActionGroup">
         <arguments>
             <argument name="property"/>
         </arguments>
@@ -188,7 +188,7 @@
         <click selector="{{EditPanelForm.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
         <waitForElementVisible time="2" selector="{{EditPanelForm.panelSectionChangedIcon(property.section)}}" stepKey="waitForSectionChangedIcon"/>
     </actionGroup>
-    <actionGroup name="selectSlideOutPanelFieldGeneral">
+    <actionGroup name="selectSlideOutPanelFieldGeneralActionGroup">
         <arguments>
             <argument name="property"/>
         </arguments>
@@ -198,7 +198,7 @@
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <click selector="{{EditPanelForm.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
     </actionGroup>
-    <actionGroup name="conditionalClickSlideOutPanelFieldGeneral">
+    <actionGroup name="conditionalClickSlideOutPanelFieldGeneralActionGroup">
         <arguments>
             <argument name="property"/>
         </arguments>
@@ -206,14 +206,14 @@
         <conditionalClick selector="{{EditPanelForm.panelFieldControlSwitch(property.fieldName)}}" dependentSelector="{{EditPanelForm.panelFieldControlCheckboxState(property.fieldName, property.value)}}" visible="false" stepKey="conditionalClickAttribute"/>
         <waitForElementVisible selector="{{EditPanelForm.panelFieldControlCheckboxState(property.fieldName, property.value)}}" stepKey="waitForAttributeStateChange"/>
     </actionGroup>
-    <actionGroup name="clickSlideOutPanelFieldGeneral">
+    <actionGroup name="clickSlideOutPanelFieldGeneralActionGroup">
         <arguments>
             <argument name="property"/>
         </arguments>
         <waitForElement time="2" selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible"/>
         <click selector="{{EditPanelForm.panelFieldControlSwitch(property.fieldName)}}" stepKey="clickProperty"/>
     </actionGroup>
-    <actionGroup name="clickSlideOutPanelFieldOpenInNewTab">
+    <actionGroup name="clickSlideOutPanelFieldOpenInNewTabActionGroup">
         <arguments>
             <argument name="property"/>
         </arguments>
@@ -221,7 +221,7 @@
         <click selector="{{EditPanelForm.panelFieldControlSwitch(property.fieldName)}}" stepKey="clickProperty"/>
         <waitForElementVisible selector="{{EditPanelForm.panelSectionChangedIcon(property.section)}}" stepKey="waitForSectionUpdated"/>
     </actionGroup>
-    <actionGroup name="chooseVisualSelectOption">
+    <actionGroup name="chooseVisualSelectOptionActionGroup">
         <arguments>
             <argument name="property"/>
         </arguments>
@@ -230,14 +230,14 @@
         <click selector='//div[@data-index="{{property.section}}"]//li[@name="{{property.value}}"]' stepKey="chooseVisualSelectOption"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
     </actionGroup>
-    <actionGroup name="scrollToSlideOutPanelField">
+    <actionGroup name="scrollToSlideOutPanelFieldActionGroup">
         <arguments>
             <argument name="property"/>
         </arguments>
         <scrollTo selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="scrollToField"/>
         <waitForElementVisible time="10" selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForScroll"/>
     </actionGroup>
-    <actionGroup name="seeInFieldSlideOutProperty">
+    <actionGroup name="seeInFieldSlideOutPropertyActionGroup">
         <arguments>
             <argument name="property"/>
         </arguments>
@@ -245,7 +245,7 @@
         <see userInput="{{property.name}}" selector="{{EditPanelForm.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="seePropertyLabel"/>
         <seeInField selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" userInput="{{property.value}}" stepKey="seeInFieldProperty"/>
     </actionGroup>
-    <actionGroup name="seeInFieldSlideOutPropertyAlternate">
+    <actionGroup name="seeInFieldSlideOutPropertyAlternateActionGroup">
         <!-- Use when value in field changes after saving -->
         <arguments>
             <argument name="property"/>
@@ -254,7 +254,7 @@
         <see userInput="{{property.name}}" selector="{{EditPanelForm.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="seePropertyLabel"/>
         <seeInField selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" userInput="{{property.editPanelValue}}" stepKey="seeInFieldProperty"/>
     </actionGroup>
-    <actionGroup name="seeInFieldWithoutLabelSlideOutProperty">
+    <actionGroup name="seeInFieldWithoutLabelSlideOutPropertyActionGroup">
         <arguments>
             <argument name="property"/>
         </arguments>
@@ -262,7 +262,7 @@
         <dontSeeElement selector="{{EditPanelForm.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="dontSeePropertyLabel"/>
         <seeInField selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" userInput="{{property.value}}" stepKey="seeInFieldProperty"/>
     </actionGroup>
-    <actionGroup name="seeInFieldSlideOutIsZeroProperty">
+    <actionGroup name="seeInFieldSlideOutIsZeroPropertyActionGroup">
         <!-- must have this instead of using seeInFieldSlideOutProperty w/ argument of 0 because of MFTF bug -->
         <arguments>
             <argument name="property"/>
@@ -270,7 +270,7 @@
         <waitForElement time="2" selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible"/>
         <seeInField selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" userInput="0" stepKey="seeInFieldProperty"/>
     </actionGroup>
-    <actionGroup name="seeInSlideOutMultiSelectField">
+    <actionGroup name="seeInSlideOutMultiSelectFieldActionGroup">
         <arguments>
             <argument name="property"/>
         </arguments>
@@ -278,42 +278,42 @@
         <see userInput="{{property.name}}" selector="{{EditPanelForm.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="seePropertyLabel"/>
         <see selector="{{EditPanelForm.panelMultiSelectFieldControl(property.section, property.fieldName)}}" userInput="{{property.value}}" stepKey="seeInFieldProperty"/>
     </actionGroup>
-    <actionGroup name="seeOptionIsSelectedSlideOutProperty">
+    <actionGroup name="seeOptionIsSelectedSlideOutPropertyActionGroup">
         <arguments>
             <argument name="property"/>
         </arguments>
         <waitForElement time="2" selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible"/>
         <seeInField selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" userInput="{{property.value}}" stepKey="seeOptionIsSelectedProperty"/>
     </actionGroup>
-    <actionGroup name="seeOptionIsCheckedSlideOutProperty">
+    <actionGroup name="seeOptionIsCheckedSlideOutPropertyActionGroup">
         <arguments>
             <argument name="property"/>
         </arguments>
         <waitForElement time="2" selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible"/>
         <seeCheckboxIsChecked selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="seeOptionIsCheckedProperty"/>
     </actionGroup>
-    <actionGroup name="seeOptionIsNotCheckedSlideOutProperty">
+    <actionGroup name="seeOptionIsNotCheckedSlideOutPropertyActionGroup">
         <arguments>
             <argument name="property"/>
         </arguments>
         <waitForElement time="2" selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible"/>
         <dontSeeCheckboxIsChecked selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="dontSeeOptionIsCheckedProperty"/>
     </actionGroup>
-    <actionGroup name="seeSlideOutPanelFieldOpenInNewTab">
+    <actionGroup name="seeSlideOutPanelFieldOpenInNewTabActionGroup">
         <arguments>
             <argument name="property"/>
         </arguments>
         <waitForElement time="2" selector="{{EditPanelForm.panelFieldControlSwitch(property.fieldName)}}" stepKey="waitForElementVisible"/>
         <seeCheckboxIsChecked selector="{{EditPanelForm.panelFieldControlCheckbox(property.fieldName)}}" stepKey="clickProperty"/>
     </actionGroup>
-    <actionGroup name="seeSlideOutPanelFieldNotOpenInNewTab">
+    <actionGroup name="seeSlideOutPanelFieldNotOpenInNewTabActionGroup">
         <arguments>
             <argument name="property"/>
         </arguments>
         <waitForElement time="2" selector="{{EditPanelForm.panelFieldControlSwitch(property.fieldName)}}" stepKey="waitForElementVisible"/>
         <dontSeeCheckboxIsChecked selector="{{EditPanelForm.panelFieldControlCheckbox(property.fieldName)}}" stepKey="clickProperty"/>
     </actionGroup>
-    <actionGroup name="validateSlideOutPanelField">
+    <actionGroup name="validateSlideOutPanelFieldActionGroup">
         <arguments>
             <argument name="property"/>
         </arguments>
@@ -321,7 +321,7 @@
         <see userInput="{{property.name}}" selector="{{EditPanelForm.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="seePropertyLabel"/>
         <seeElementInDOM selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="seePropertyControl"/>
     </actionGroup>
-    <actionGroup name="validateSlideOutPanelLinkUrlField">
+    <actionGroup name="validateSlideOutPanelLinkUrlFieldActionGroup">
         <arguments>
             <argument name="property"/>
             <argument name="selection" type="string"/>
@@ -333,73 +333,73 @@
         <seeInField selector="{{PageBuilderLinkAttributeAdmin.LinkInput(property.fieldName)}}" userInput="{{property.value}}" stepKey="seeInField"/>
         <waitForElementVisible time="10" selector="{{EditPanelForm.panelFieldControlCheckboxState(newTab.fieldName, newTab.value)}}" stepKey="waitForNewTab"/>
     </actionGroup>
-    <actionGroup name="validateSlideOutPanelFieldIsDisabled">
+    <actionGroup name="validateSlideOutPanelFieldIsDisabledActionGroup">
         <arguments>
             <argument name="property"/>
         </arguments>
         <waitForElement time="2" selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible"/>
         <seeElement selector="{{EditPanelForm.panelFieldDisabled(property.section, property.fieldName)}}" stepKey="seePropertyControl"/>
     </actionGroup>
-    <actionGroup name="validateSlideOutPanelFieldIsNotDisabled">
+    <actionGroup name="validateSlideOutPanelFieldIsNotDisabledActionGroup">
         <arguments>
             <argument name="property"/>
         </arguments>
         <waitForElement time="2" selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible"/>
         <seeElement selector="{{EditPanelForm.panelFieldNotDisabled(property.section, property.fieldName)}}" stepKey="seePropertyControl"/>
     </actionGroup>
-    <actionGroup name="validateSlideOutPanelFieldIsRequired">
+    <actionGroup name="validateSlideOutPanelFieldIsRequiredActionGroup">
         <arguments>
             <argument name="property"/>
         </arguments>
         <waitForElement time="2" selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible"/>
         <seeElement selector='{{EditPanelForm.panelFieldRequired(property.section, property.fieldName)}}' stepKey="seePropertyIsRequired"/>
     </actionGroup>
-    <actionGroup name="validateSlideOutPanelFieldIsNotRequired">
+    <actionGroup name="validateSlideOutPanelFieldIsNotRequiredActionGroup">
         <arguments>
             <argument name="property"/>
         </arguments>
         <waitForElement time="2" selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible"/>
         <dontSeeElement selector='{{EditPanelForm.panelFieldRequired(property.section, property.fieldName)}}' stepKey="seePropertyIsNotRequired"/>
     </actionGroup>
-    <actionGroup name="validateSlideOutPanelFieldPlaceholderText">
+    <actionGroup name="validateSlideOutPanelFieldPlaceholderTextActionGroup">
         <arguments>
             <argument name="property"/>
         </arguments>
         <waitForElement time="2" selector="{{EditPanelForm.panelFieldPlaceholderText(property.section, property.fieldName, property.placeholderText)}}" stepKey="waitForElement"/>
     </actionGroup>
-    <actionGroup name="validateSlideOutPanelFieldNoPlaceholderText">
+    <actionGroup name="validateSlideOutPanelFieldNoPlaceholderTextActionGroup">
         <arguments>
             <argument name="property"/>
         </arguments>
         <waitForElement selector="{{EditPanelForm.panelFieldNoPlaceholderText(property.section, property.fieldName)}}" stepKey="waitForElement"/>
     </actionGroup>
-    <actionGroup name="validateSlideOutPanelFieldAfterLabelText">
+    <actionGroup name="validateSlideOutPanelFieldAfterLabelTextActionGroup">
         <arguments>
             <argument name="property"/>
         </arguments>
         <waitForElementVisible time="2" selector="{{EditPanelForm.panelFieldAfterLabelText(property.fieldName, property.afterLabelText)}}" stepKey="waitForElementVisible"/>
     </actionGroup>
-    <actionGroup name="validateSlideOutPanelFieldNoAfterLabelText">
+    <actionGroup name="validateSlideOutPanelFieldNoAfterLabelTextActionGroup">
         <arguments>
             <argument name="property"/>
         </arguments>
         <dontSeeElementInDOM selector="{{EditPanelForm.panelFieldNoAfterLabelText(property.fieldName)}}" stepKey="dontSeeElementInDOM"/>
     </actionGroup>
-    <actionGroup name="validateSlideOutPanelFieldNotPresent">
+    <actionGroup name="validateSlideOutPanelFieldNotPresentActionGroup">
         <arguments>
             <argument name="property"/>
         </arguments>
         <waitForPageLoad time="30" stepKey="waitForStageToLoad"/>
         <dontSee selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="dontSeeField"/>
     </actionGroup>
-    <actionGroup name="validateAlignmentFieldIsNotDisabled">
+    <actionGroup name="validateAlignmentFieldIsNotDisabledActionGroup">
         <arguments>
             <argument name="property"/>
         </arguments>
         <waitForElement time="2" selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible"/>
         <dontSeeElement selector='//div[@data-index="{{property.section}}"]/descendant::div[@name="{{property.value}}" and contains(@class, "_disabled")]' stepKey="seeAlignmentNotDisabled"/>
     </actionGroup>
-    <actionGroup name="validateVisualSelects">
+    <actionGroup name="validateVisualSelectsActionGroup">
         <arguments>
             <argument name="property1" defaultValue=""/>
             <argument name="property2" defaultValue=""/>
@@ -412,7 +412,7 @@
         <seeElement selector="{{VisualSelectComponent.firstSelection(property3.value)}}" stepKey="seeThirdSelection"/>
         <seeElement selector="{{VisualSelectComponent.firstSelection(property4.value)}}" stepKey="seeFourthSelection"/>
     </actionGroup>
-    <actionGroup name="validateVerticalAlignmentVisualSelects">
+    <actionGroup name="validateVerticalAlignmentVisualSelectsActionGroup">
         <arguments>
             <argument name="property1" defaultValue=""/>
             <argument name="property2" defaultValue=""/>

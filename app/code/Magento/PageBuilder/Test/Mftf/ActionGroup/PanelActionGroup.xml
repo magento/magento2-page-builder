@@ -8,7 +8,7 @@
 
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
-    <actionGroup name="expandPageBuilderPanelMenuSection">
+    <actionGroup name="expandPageBuilderPanelMenuSectionActionGroup">
         <arguments>
             <argument name="contentType"/>
             <argument name="pageBuilderArea" defaultValue="" type="string"/>
@@ -17,12 +17,12 @@
         <conditionalClick selector="{{pageBuilderArea}}{{PageBuilderPanel.panelMenuSection(contentType.section)}}" dependentSelector="{{pageBuilderArea}}{{PageBuilderPanel.panelMenuSectionActive(contentType.section)}}" visible="false" stepKey="expandContentTypeMenuSection"/>
         <waitForElementVisible selector="{{pageBuilderArea}}{{PageBuilderPanel.panelMenuSectionActive(contentType.section)}}" stepKey="waitForMenuSectionExpanded"/>
     </actionGroup>
-    <actionGroup name="closePageBuilderPanelMenuSections">
+    <actionGroup name="closePageBuilderPanelMenuSectionsActionGroup">
         <click selector="{{PageBuilderPanel.elementsMenuSection}}" stepKey="clickElementsMenuSection"/>
         <click selector="{{PageBuilderPanel.mediaMenuSection}}" stepKey="clickMediaMenuSection"/>
         <click selector="{{PageBuilderPanel.addContentMenuSection}}" stepKey="clickAddContentMenuSection"/>
     </actionGroup>
-    <actionGroup name="validateMenuSectionsAndContentTypes">
+    <actionGroup name="validateMenuSectionsAndContentTypesActionGroup">
         <seeNumberOfElements selector="{{PageBuilderPanel.allPanelMenuSections}}" userInput="4" stepKey="seeNumberOfMenuSections"/>
         <seeNumberOfElements selector="{{PageBuilderPanel.allMenuSectionContentTypes('layout')}}" userInput="3" stepKey="seeNumberOfLayoutMenuSectionContentTypes"/>
         <see userInput="Layout" selector="{{PageBuilderPanel.layoutMenuSection}}" stepKey="seeLayoutMenuSection"/>
