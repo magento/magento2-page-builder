@@ -123,11 +123,6 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
      */
     public function testSaveAction()
     {
-        // Disable DB media usage
-        $this->mediaStorage->expects($this->once())
-            ->method('checkDbUsage')
-            ->willReturn(false);
-
         // Verify that the system attempts to write the file with the current name
         $this->directoryWrite->expects($this->once())
             ->method('writeFile')
