@@ -19,6 +19,7 @@ use Magento\PageBuilder\Api\Data\TemplateSearchResultsInterfaceFactory;
 use Magento\PageBuilder\Api\TemplateRepositoryInterface;
 use Magento\PageBuilder\Model\ResourceModel\Template as ResourceTemplate;
 use Magento\PageBuilder\Model\ResourceModel\Template\CollectionFactory as TemplateCollectionFactory;
+use Magento\MediaStorage\Helper\File\Storage\Database;
 
 /**
  * Repository for Page Builder Templates
@@ -58,12 +59,18 @@ class TemplateRepository implements TemplateRepositoryInterface
     private $filesystem;
 
     /**
+     * @var Database
+     */
+    private $mediaStorage;
+
+    /**
      * @param ResourceTemplate $resource
      * @param TemplateFactory $templateFactory
      * @param TemplateCollectionFactory $templateCollectionFactory
      * @param TemplateSearchResultsInterfaceFactory $searchResultsFactory
      * @param CollectionProcessorInterface $collectionProcessor
      * @param Filesystem $filesystem
+     * @param Database $mediaStorage
      */
     public function __construct(
         ResourceTemplate $resource,
@@ -71,7 +78,8 @@ class TemplateRepository implements TemplateRepositoryInterface
         TemplateCollectionFactory $templateCollectionFactory,
         TemplateSearchResultsInterfaceFactory $searchResultsFactory,
         CollectionProcessorInterface $collectionProcessor,
-        Filesystem $filesystem
+        Filesystem $filesystem,
+        Database $mediaStorage
     ) {
         $this->resource = $resource;
         $this->templateFactory = $templateFactory;
@@ -79,6 +87,7 @@ class TemplateRepository implements TemplateRepositoryInterface
         $this->searchResultsFactory = $searchResultsFactory;
         $this->collectionProcessor = $collectionProcessor;
         $this->filesystem = $filesystem;
+        $this->mediaStorage = $mediaStorage;
     }
 
     /**
@@ -137,18 +146,21 @@ class TemplateRepository implements TemplateRepositoryInterface
             ->getDirectoryWrite(\Magento\Framework\App\Filesystem\DirectoryList::MEDIA);
 
         try {
-            $previewImage = $template->getPreviewImage();
             $templateModel = $this->templateFactory->create();
             $this->resource->load($templateModel, $template->getTemplateId());
             $this->resource->delete($templateModel);
+            $previewImage = $template->getPreviewImage();
+            $previewThumbImage = $templateModel->getPreviewThumbnailImage();
 
             // Remove the preview image from the media directory
             if ($mediaDir->isExist($previewImage)) {
                 $mediaDir->delete($previewImage);
             }
-            if ($mediaDir->isExist($templateModel->getPreviewThumbnailImage())) {
-                $mediaDir->delete($templateModel->getPreviewThumbnailImage());
+            if ($mediaDir->isExist($previewThumbImage)) {
+                $mediaDir->delete($previewThumbImage);
             }
+            $this->mediaStorage->deleteFile($previewImage);
+            $this->mediaStorage->deleteFile($previewThumbImage);
         } catch (\Exception $exception) {
             throw new CouldNotDeleteException(
                 __('Could not delete the Template: %1', $exception->getMessage())
