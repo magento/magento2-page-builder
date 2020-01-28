@@ -8,7 +8,7 @@
 
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
-    <actionGroup name="dragContentTypeToStageActionGroup">
+    <actionGroup name="DragContentTypeToStageActionGroup">
         <arguments>
             <argument name="contentType"/>
             <argument name="containerTargetType" defaultValue="PageBuilderRowContentType"/>
@@ -20,7 +20,7 @@
         <dontSeeJsError stepKey="doNotSeeJSErrorInConsole"/>
         <waitForElementVisible time="10" selector="{{PageBuilderStage.contentTypeInStage(contentType.role)}}" stepKey="waitForContentTypeInStage" />
     </actionGroup>
-    <actionGroup name="dragContentTypeToStageByIndexActionGroup">
+    <actionGroup name="DragContentTypeToStageByIndexActionGroup">
         <arguments>
             <argument name="contentType"/>
             <argument name="contentTypeNumber" defaultValue="1" type="string"/>
@@ -33,7 +33,7 @@
         <dontSeeJsError stepKey="doNotSeeJSErrorInConsole"/>
         <waitForElementVisible time="10" selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, contentTypeNumber)}}" stepKey="waitForContentTypeInStage" />
     </actionGroup>
-    <actionGroup name="dragContentTypeToContainerActionGroup">
+    <actionGroup name="DragContentTypeToContainerActionGroup">
         <arguments>
             <argument name="contentType"/>
             <argument name="contentTypeIndex" defaultValue="1" type="string"/>
@@ -51,7 +51,7 @@
         <waitForElementVisible time="10" selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForContentTypeInStage" />
         <waitForPageLoad stepKey="waitForToolbarsToLoad" time="30"/>
     </actionGroup>
-    <actionGroup name="dragContentTypeToHiddenContainerActionGroup">
+    <actionGroup name="DragContentTypeToHiddenContainerActionGroup">
         <arguments>
             <argument name="contentType"/>
             <argument name="contentTypeIndex" defaultValue="1" type="string"/>
@@ -69,7 +69,7 @@
         <dontSeeElementInDOM selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" stepKey="dontSeeElementInContainer" />
     </actionGroup>
     <!-- Test to ensure a content block doesn't receive drop events -->
-    <actionGroup name="dragContentTypeToContentTypeActionGroup">
+    <actionGroup name="DragContentTypeToContentTypeActionGroup">
         <arguments>
             <argument name="contentType"/>
             <argument name="contentTypeIndex" defaultValue="1" type="string"/>
@@ -83,7 +83,7 @@
         <dontSeeJsError stepKey="doNotSeeJSErrorInConsole"/>
         <waitForElementVisible time="30" selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForContentTypeInStage"/>
     </actionGroup>
-    <actionGroup name="dragContentTypeToDropZoneActionGroup">
+    <actionGroup name="DragContentTypeToDropZoneActionGroup">
         <arguments>
             <argument name="contentType"/>
             <argument name="contentTypeIndex" defaultValue="1" type="string"/>
@@ -101,7 +101,7 @@
         <dontSeeJsError stepKey="doNotSeeJSErrorInConsole"/>
         <waitForElementVisible time="30" selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForContentTypeInStage"/>
     </actionGroup>
-    <actionGroup name="cannotDragContentTypeToTargetActionGroup">
+    <actionGroup name="CannotDragContentTypeToTargetActionGroup">
         <arguments>
             <argument name="contentType"/>
             <argument name="contentTypeIndex" defaultValue="1" type="string"/>
@@ -118,7 +118,7 @@
         <dontSeeJsError stepKey="doNotSeeJSErrorInConsole"/>
         <dontSeeElementInDOM selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" stepKey="dontSeeElement"/>
     </actionGroup>
-    <actionGroup name="moveContentTypeToContainerActionGroup">
+    <actionGroup name="MoveContentTypeToContainerActionGroup">
         <arguments>
             <argument name="contentType"/>
             <argument name="contentTypeIndex" defaultValue="1" type="string"/>
@@ -140,14 +140,14 @@
         <dontSeeJsError stepKey="doNotSeeJSErrorInConsole"/>
         <waitForElementVisible time="30" selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForContentTypeInStage"/>
     </actionGroup>
-    <actionGroup name="cannotMoveContentTypeToContainerActionGroup" extends="moveContentTypeToContainerActionGroup">
+    <actionGroup name="CannotMoveContentTypeToContainerActionGroup" extends="moveContentTypeToContainerActionGroup">
         <arguments>
             <argument name="positionInContainer" defaultValue="1" type="string"/>
         </arguments>
         <comment userInput="cannotMoveContentTypeToContainer" stepKey="comment"/>
         <dontSeeElementInDOM selector="{{PageBuilderStage.contentTypeInsideContainerStage(containerTargetType.role, containerTargetIndex, positionInContainer, contentType.role, contentTypeIndex)}}" stepKey="dontSeeContentTypeInContainer" after="waitForContentTypeInStage"/>
     </actionGroup>
-    <actionGroup name="dragContentTypeNextToExistingContentTypeActionGroup">
+    <actionGroup name="DragContentTypeNextToExistingContentTypeActionGroup">
         <arguments>
             <argument name="contentType" defaultValue=""/>
             <argument name="existingContentType" defaultValue=""/>

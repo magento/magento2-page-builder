@@ -18,7 +18,7 @@
         <selectOption selector="{{DefaultLayoutsSection.categoryLayout}}" userInput="{{PageBuilderFullWidthLayout.category}}" stepKey="selectCategoryFullWidth" after="expandDefaultLayouts"/>
         <selectOption selector="{{DefaultLayoutsSection.productLayout}}" userInput="{{PageBuilderFullWidthLayout.product}}" stepKey="selectProductFullWidth" after="expandDefaultLayouts"/>
     </actionGroup>
-    <actionGroup name="validateLayoutStylesNoHeightActionGroup">
+    <actionGroup name="ValidateLayoutStylesNoHeightActionGroup">
         <arguments>
             <argument name="page"/>
             <argument name="index" defaultValue="1" type="string"/>
@@ -29,7 +29,7 @@
         <seeElement selector="{{page.containerStyle(index, verticalAlignContainer.style)}}" stepKey="seeVerticalAlignmentStyle"/>
     </actionGroup>
     <!-- Validate All Layout Styles -->
-    <actionGroup name="validateLayoutStylesWithAllUpdatedActionGroup">
+    <actionGroup name="ValidateLayoutStylesWithAllUpdatedActionGroup">
         <arguments>
             <argument name="page"/>
             <argument name="index" defaultValue="1" type="string"/>
@@ -41,7 +41,7 @@
         <waitForElementVisible selector="{{page.verticalAlignContainer(index, verticalAlignContainer.value)}}" stepKey="waitForVerticalAlignContainer"/>
     </actionGroup>
     <!-- Validate Min Height -->
-    <actionGroup name="validateContentTypeHeightEqualToMinHeightActionGroup">
+    <actionGroup name="ValidateContentTypeHeightEqualToMinHeightActionGroup">
         <arguments>
             <argument name="content" type="string"/>
             <argument name="index" defaultValue="1" type="string"/>
@@ -57,7 +57,7 @@
             <actualResult type="variable">contentTypeHeightDifference</actualResult>
         </assertLessThanOrEqual>
     </actionGroup>
-    <actionGroup name="validateContentTypeHeightGreaterThanMinHeightActionGroup">
+    <actionGroup name="ValidateContentTypeHeightGreaterThanMinHeightActionGroup">
         <arguments>
             <argument name="content" type="string"/>
             <argument name="index" defaultValue="1" type="string"/>
@@ -72,7 +72,7 @@
         </assertGreaterThan>
     </actionGroup>
     <!-- Validate Max Width -->
-    <actionGroup name="validateContentTypeWidthEqualToMaxWidthActionGroup">
+    <actionGroup name="ValidateContentTypeWidthEqualToMaxWidthActionGroup">
         <arguments>
             <argument name="content" type="string"/>
             <argument name="index" defaultValue="1" type="string"/>

@@ -8,7 +8,7 @@
 
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
-    <actionGroup name="validateProductsWrapInGridAppearanceActionGroup">
+    <actionGroup name="ValidateProductsWrapInGridAppearanceActionGroup">
         <arguments>
             <argument name="page" defaultValue="ProductsOnStage"/>
             <argument name="productGroupIndex" defaultValue="1" type="string"/>
@@ -24,7 +24,7 @@
             <actualResult type="variable">verticalDistanceBetweenProducts</actualResult>
         </assertGreaterThanOrEqual>
     </actionGroup>
-    <actionGroup name="validateProductsDoNotWrapInCarouselAppearanceActionGroup" extends="validateProductsWrapInGridAppearanceActionGroup">
+    <actionGroup name="ValidateProductsDoNotWrapInCarouselAppearanceActionGroup" extends="validateProductsWrapInGridAppearanceActionGroup">
         <arguments>
             <argument name="page" defaultValue="ProductsCarouselOnStage"/>
         </arguments>
@@ -34,7 +34,7 @@
             <actualResult type="variable">verticalDistanceBetweenProducts</actualResult>
         </assertEquals>
     </actionGroup>
-    <actionGroup name="validateCanSeeProductInDefaultProductCarouselActionGroup">
+    <actionGroup name="ValidateCanSeeProductInDefaultProductCarouselActionGroup">
         <arguments>
             <argument name="page" defaultValue="ProductsCarouselOnStage"/>
             <argument name="product" defaultValue="_defaultProduct"/>
@@ -43,11 +43,11 @@
         <waitForElementVisible selector="{{page.productNameInCarouselNotClonedBySlick(productGroupIndex, product.name)}}" stepKey="waitForProduct"/>
         <seeElement selector="{{page.productNameInCarouselNotClonedBySlick(productGroupIndex, product.name)}}" stepKey="seeProduct"/>
     </actionGroup>
-    <actionGroup name="validateCannotSeeProductInDefaultProductCarouselActionGroup" extends="validateCanSeeProductInDefaultProductCarouselActionGroup">
+    <actionGroup name="ValidateCannotSeeProductInDefaultProductCarouselActionGroup" extends="validateCanSeeProductInDefaultProductCarouselActionGroup">
         <waitForElementNotVisible selector="{{page.productNameInCarouselNotClonedBySlick(productGroupIndex, product.name)}}" stepKey="waitForProduct"/>
         <dontSeeElement selector="{{page.productNameInCarouselNotClonedBySlick(productGroupIndex, product.name)}}" stepKey="seeProduct"/>
     </actionGroup>
-    <actionGroup name="validateCanSeeProductInContinuousProductCarouselActionGroup">
+    <actionGroup name="ValidateCanSeeProductInContinuousProductCarouselActionGroup">
         <arguments>
             <argument name="page" defaultValue="ProductsCarouselOnStage"/>
             <argument name="product" defaultValue="_defaultProduct"/>
@@ -57,11 +57,11 @@
         <waitForElementVisible selector="{{page.productNameInCarouselBySlickSlideIndex(productGroupIndex, productItemIndex, product.name)}}" stepKey="waitForProduct"/>
         <seeElement selector="{{page.productNameInCarouselBySlickSlideIndex(productGroupIndex, productItemIndex, product.name)}}" stepKey="seeProduct"/>
     </actionGroup>
-    <actionGroup name="validateCannotSeeProductInContinuousProductCarouselActionGroup" extends="validateCanSeeProductInContinuousProductCarouselActionGroup">
+    <actionGroup name="ValidateCannotSeeProductInContinuousProductCarouselActionGroup" extends="validateCanSeeProductInContinuousProductCarouselActionGroup">
         <waitForElementNotVisible selector="{{page.productNameInCarouselBySlickSlideIndex(productGroupIndex, productItemIndex, product.name)}}" stepKey="waitForProduct"/>
         <dontSeeElement selector="{{page.productNameInCarouselBySlickSlideIndex(productGroupIndex, productItemIndex, product.name)}}" stepKey="seeProduct"/>
     </actionGroup>
-    <actionGroup name="validateProductInProductsActionGroup">
+    <actionGroup name="ValidateProductInProductsActionGroup">
         <arguments>
             <argument name="page" defaultValue="ProductsOnStage"/>
             <argument name="productsIndex" defaultValue="1" type="string"/>
@@ -98,7 +98,7 @@
             <actualResult type="variable">getAddToComparePointerEvents</actualResult>
         </assertEquals>
     </actionGroup>
-    <actionGroup name="validateProductCountInProductsActionGroup">
+    <actionGroup name="ValidateProductCountInProductsActionGroup">
         <arguments>
             <argument name="page" defaultValue=""/>
             <argument name="index" defaultValue="1" type="string"/>
@@ -111,7 +111,7 @@
             <actualResult type="variable">grabProducts</actualResult>
         </assertCount>
     </actionGroup>
-    <actionGroup name="validateProductCountInProductsCarouselActionGroup">
+    <actionGroup name="ValidateProductCountInProductsCarouselActionGroup">
         <arguments>
             <argument name="page" defaultValue="ProductsCarouselOnStage"/>
             <argument name="productGroupIndex" defaultValue="1" type="string"/>
@@ -124,7 +124,7 @@
             <actualResult type="variable">grabProducts</actualResult>
         </assertCount>
     </actionGroup>
-    <actionGroup name="validateEmptyProductsContainerActionGroup">
+    <actionGroup name="ValidateEmptyProductsContainerActionGroup">
         <arguments>
             <argument name="page" defaultValue="ProductsOnStage"/>
             <argument name="productGroupIndex" defaultValue="1" type="string"/>
@@ -132,7 +132,7 @@
         <waitForElement selector="{{page.emptyProductsPlaceholder(productGroupIndex)}}" stepKey="waitForEmptyProducts"/>
         <see userInput="{{PageBuilderProductsMessage.noProductsFound}}" selector="{{page.emptyProductsPlaceholder(productGroupIndex)}}" stepKey="seeEmptyProductsMessage"/>
     </actionGroup>
-    <actionGroup name="selectCategoryFromCategoryDropDownActionGroup">
+    <actionGroup name="SelectCategoryFromCategoryDropDownActionGroup">
         <arguments>
             <argument name="property" defaultValue="PageBuilderProductsSelectCategoryDropDown"/>
             <argument name="category" type="string"/>
@@ -148,14 +148,14 @@
         <waitForElementNotVisible selector="{{EditPanelForm.panelMultiSelectFieldControlInput(property.section, property.fieldName)}}" stepKey="waitForSearchFieldNotVisible"/>
         <see selector="{{EditPanelForm.panelMultiSelectFieldControl(property.section, property.fieldName)}}" userInput="{{category}}" stepKey="seeResultInField"/>
     </actionGroup>
-    <actionGroup name="seeCategoriesInCategorySelectorActionGroup">
+    <actionGroup name="SeeCategoriesInCategorySelectorActionGroup">
         <arguments>
             <argument name="categories" defaultValue="" type="string"/>
         </arguments>
         <waitForElement selector="{{EditPanelForm.panelMultiSelectFieldControl(PageBuilderProductsSelectCategoryDropDown.section, PageBuilderProductsSelectCategoryDropDown.fieldName)}}" stepKey="waitForCategoriesField"/>
         <see selector="{{EditPanelForm.panelMultiSelectFieldControl(PageBuilderProductsSelectCategoryDropDown.section, PageBuilderProductsSelectCategoryDropDown.fieldName)}}" userInput="{{categories}}" stepKey="seeCategoriesInField"/>
     </actionGroup>
-    <actionGroup name="addSKUsToSelectProductsBySKUActionGroup">
+    <actionGroup name="AddSKUsToSelectProductsBySKUActionGroup">
         <arguments>
             <argument name="property" defaultValue="PageBuilderProductsEnterSKUsInput"/>
             <argument name="SKUs" type="string"/>
@@ -166,14 +166,14 @@
         <fillField selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" userInput="{{SKUs}}" stepKey="fillPropertyField"/>
         <click selector="{{EditPanelForm.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
     </actionGroup>
-    <actionGroup name="seeSKUsInSKUInputFieldActionGroup">
+    <actionGroup name="SeeSKUsInSKUInputFieldActionGroup">
         <arguments>
             <argument name="SKUs" defaultValue="" type="string"/>
         </arguments>
         <waitForElement selector="{{EditPanelForm.panelFieldControl(PageBuilderProductsEnterSKUsInput.section, PageBuilderProductsEnterSKUsInput.fieldName)}}" stepKey="waitForSKUsField"/>
         <seeInField selector="{{EditPanelForm.panelFieldControl(PageBuilderProductsEnterSKUsInput.section, PageBuilderProductsEnterSKUsInput.fieldName)}}" userInput="{{SKUs}}" stepKey="seeSKUsInField"/>
     </actionGroup>
-    <actionGroup name="addConditionToProductConditionsActionGroup">
+    <actionGroup name="AddConditionToProductConditionsActionGroup">
         <arguments>
             <argument name="conditionType" defaultValue="PageBuilderProductsConditionCategory"/>
             <argument name="conditionInput" defaultValue="1" type="string"/>
@@ -188,7 +188,7 @@
         <click selector="{{ProductsContentTypeForm.conditionsListConditionPlaceholder}}" stepKey="revealCategoryInput"/>
         <fillField selector="{{ProductsContentTypeForm.conditionsListConditionInput}}" userInput="{{conditionInput}}" stepKey="fillCategoryField"/>
     </actionGroup>
-    <actionGroup name="addConditionsCombinationToProductsAndSetAggregateParametersActionGroup">
+    <actionGroup name="AddConditionsCombinationToProductsAndSetAggregateParametersActionGroup">
         <arguments>
             <argument name="aggregatorType" defaultValue="all" type="string"/>
             <argument name="booleanValueForAggregator" defaultValue="1" type="string"/>
@@ -209,7 +209,7 @@
         <waitForPageLoad stepKey="waitForAggregateTypeBooleanToLoad"/>
         <click selector="{{ProductsContentTypeForm.conditionsListText}}" stepKey="clearOptions2"/>
     </actionGroup>
-    <actionGroup name="assertValueInConditionsFilterActionGroup">
+    <actionGroup name="AssertValueInConditionsFilterActionGroup">
         <arguments>
             <argument name="indexOfCondition" defaultValue="1" type="string"/>
             <argument name="indexOfConditionParameter" defaultValue="2" type="string"/>
@@ -222,7 +222,7 @@
             <actualResult type="variable">grabConditionValue</actualResult>
         </assertEquals>
     </actionGroup>
-    <actionGroup name="clickProductImageInProductsOnStorefrontActionGroup">
+    <actionGroup name="ClickProductImageInProductsOnStorefrontActionGroup">
         <arguments>
             <argument name="product" type="string"/>
         </arguments>
@@ -231,7 +231,7 @@
         <waitForPageLoad stepKey="waitForProductPageToLoad"/>
         <see selector="{{StorefrontProductInfoMainSection.productName}}" userInput="{{product}}" stepKey="seeProductName"/>
     </actionGroup>
-    <actionGroup name="clickProductImageInContinuousProductsCarouselOnStorefrontActionGroup">
+    <actionGroup name="ClickProductImageInContinuousProductsCarouselOnStorefrontActionGroup">
         <arguments>
             <argument name="product" type="string"/>
             <argument name="productItemIndex" defaultValue="1" type="string"/>
@@ -242,7 +242,7 @@
         <waitForPageLoad stepKey="waitForProductPageToLoad"/>
         <see selector="{{StorefrontProductInfoMainSection.productName}}" userInput="{{product}}" stepKey="seeProductName"/>
     </actionGroup>
-    <actionGroup name="clickProductNameInProductsOnStorefrontActionGroup">
+    <actionGroup name="ClickProductNameInProductsOnStorefrontActionGroup">
         <arguments>
             <argument name="product" type="string"/>
         </arguments>
@@ -251,7 +251,7 @@
         <waitForPageLoad stepKey="waitForProductPageToLoad"/>
         <see selector="{{StorefrontProductInfoMainSection.productName}}" userInput="{{product}}" stepKey="seeProductName"/>
     </actionGroup>
-    <actionGroup name="clickProductNameInContinuousProductsCarouselOnStorefrontActionGroup">
+    <actionGroup name="ClickProductNameInContinuousProductsCarouselOnStorefrontActionGroup">
         <arguments>
             <argument name="product" type="string"/>
             <argument name="productItemIndex" defaultValue="1" type="string"/>
@@ -262,7 +262,7 @@
         <waitForPageLoad stepKey="waitForProductPageToLoad"/>
         <see selector="{{StorefrontProductInfoMainSection.productName}}" userInput="{{product}}" stepKey="seeProductName"/>
     </actionGroup>
-    <actionGroup name="clickProductAddToCartInProductsOnStorefrontActionGroup">
+    <actionGroup name="ClickProductAddToCartInProductsOnStorefrontActionGroup">
         <arguments>
             <argument name="product" type="string"/>
         </arguments>
@@ -272,7 +272,7 @@
         <waitForPageLoad stepKey="waitForProductPageToLoad"/>
         <see userInput="You added {{product}} to your shopping cart." stepKey="seeAddToCartSuccessMessage"/>
     </actionGroup>
-    <actionGroup name="clickProductAddToCartInContinuousProductsCarouselOnStorefrontActionGroup">
+    <actionGroup name="ClickProductAddToCartInContinuousProductsCarouselOnStorefrontActionGroup">
         <arguments>
             <argument name="product" type="string"/>
             <argument name="productItemIndex" defaultValue="1" type="string"/>
@@ -284,7 +284,7 @@
         <waitForPageLoad stepKey="waitForProductPageToLoad"/>
         <see userInput="You added {{product}} to your shopping cart." stepKey="seeAddToCartSuccessMessage"/>
     </actionGroup>
-    <actionGroup name="clickProductAddToCompareInProductsOnStorefrontActionGroup">
+    <actionGroup name="ClickProductAddToCompareInProductsOnStorefrontActionGroup">
         <arguments>
             <argument name="product" type="string"/>
         </arguments>
@@ -294,7 +294,7 @@
         <waitForPageLoad stepKey="waitForProductPageToLoad"/>
         <see userInput="You added product {{product}} to the comparison list." stepKey="seeComparisonListSuccessMessage"/>
     </actionGroup>
-    <actionGroup name="clickProductAddToCompareInContinuousProductsCarouselOnStorefrontActionGroup">
+    <actionGroup name="ClickProductAddToCompareInContinuousProductsCarouselOnStorefrontActionGroup">
         <arguments>
             <argument name="product" type="string"/>
             <argument name="productItemIndex" defaultValue="1" type="string"/>
@@ -306,7 +306,7 @@
         <waitForPageLoad stepKey="waitForProductPageToLoad"/>
         <see userInput="You added product {{product}} to the comparison list." stepKey="seeComparisonListSuccessMessage"/>
     </actionGroup>
-    <actionGroup name="clickProductAddToWishListInProductsOnStorefrontActionGroup">
+    <actionGroup name="ClickProductAddToWishListInProductsOnStorefrontActionGroup">
         <arguments>
             <argument name="product" type="string"/>
         </arguments>
@@ -316,7 +316,7 @@
         <waitForPageLoad stepKey="waitForProductPageToLoad"/>
         <see userInput="You must login or register to add items to your wishlist." stepKey="seeWishListSuccessMessage"/>
     </actionGroup>
-    <actionGroup name="clickProductAddToWishListInContinuousProductsCarouselOnStorefrontActionGroup">
+    <actionGroup name="ClickProductAddToWishListInContinuousProductsCarouselOnStorefrontActionGroup">
         <arguments>
             <argument name="product" type="string"/>
             <argument name="productItemIndex" defaultValue="1" type="string"/>
@@ -328,7 +328,7 @@
         <waitForPageLoad stepKey="waitForProductPageToLoad"/>
         <see userInput="You must login or register to add items to your wishlist." stepKey="seeWishListSuccessMessage"/>
     </actionGroup>
-    <actionGroup name="clickProductCarouselNavigationDotActionGroup">
+    <actionGroup name="ClickProductCarouselNavigationDotActionGroup">
         <arguments>
             <argument name="page" defaultValue="ProductsCarouselOnStage"/>
             <argument name="productGroupIndex" defaultValue="1" type="string"/>
@@ -339,7 +339,7 @@
         <waitForPageLoad stepKey="waitForCarouselNavigation"/>
         <seeElement selector="{{page.carouselActiveProductNavigationDotByIndex(productGroupIndex, navigationDotIndex)}}" stepKey="seeClickedNavigationDotIsActive"/>
     </actionGroup>
-    <actionGroup name="clickProductCarouselPreviousNavigationArrowActionGroup">
+    <actionGroup name="ClickProductCarouselPreviousNavigationArrowActionGroup">
         <arguments>
             <argument name="page" defaultValue="ProductsCarouselOnStage"/>
             <argument name="productGroupIndex" defaultValue="1" type="string"/>
@@ -348,11 +348,11 @@
         <click selector="{{page.carouselPreviousProductNavigationArrow(productGroupIndex)}}" stepKey="clickPreviousNavigationArrow"/>
         <waitForPageLoad stepKey="waitForCarouselNavigation"/>
     </actionGroup>
-    <actionGroup name="clickProductCarouselNextNavigationArrowActionGroup" extends="clickProductCarouselPreviousNavigationArrowActionGroup">
+    <actionGroup name="ClickProductCarouselNextNavigationArrowActionGroup" extends="clickProductCarouselPreviousNavigationArrowActionGroup">
         <waitForElementVisible selector="{{page.carouselNextProductNavigationArrow(productGroupIndex)}}" stepKey="waitForPreviousNavigationArrow"/>
         <click selector="{{page.carouselNextProductNavigationArrow(productGroupIndex)}}" stepKey="clickPreviousNavigationArrow"/>
     </actionGroup>
-    <actionGroup name="dragProductToSlideProductCarouselActionGroup">
+    <actionGroup name="DragProductToSlideProductCarouselActionGroup">
         <arguments>
             <argument name="page" defaultValue="ProductsCarouselOnStage"/>
             <argument name="targetProduct" defaultValue="_defaultProduct.name" type="string"/>
@@ -364,7 +364,7 @@
         <dragAndDrop selector1="{{page.productNameInCarouselNotClonedBySlick(productGroupIndex, targetProduct)}}" selector2="{{page.productNameInCarouselNotClonedBySlick(productGroupIndex, destinationProduct)}}" stepKey="dragTargetProductToDestinationProduct"/>
         <waitForPageLoad stepKey="waitForSlidesToScroll"/>
     </actionGroup>
-    <actionGroup name="validateProductCarouselSettingsAttributesActionGroup">
+    <actionGroup name="ValidateProductCarouselSettingsAttributesActionGroup">
         <arguments>
             <argument name="page" defaultValue="ProductsCarouselOnStage"/>
             <argument name="productGroupIndex" defaultValue="1" type="string"/>
@@ -382,7 +382,7 @@
         <seeElement selector="{{page.showArrows(productGroupIndex, showArrows.value)}}" stepKey="seeShowArrows"/>
         <seeElement selector="{{page.showDots(productGroupIndex, showDots.value)}}" stepKey="seeShowDots"/>
     </actionGroup>
-    <actionGroup name="validateProductCarouselNavigationArrowsWorkWithInfiniteLoopActionGroup">
+    <actionGroup name="ValidateProductCarouselNavigationArrowsWorkWithInfiniteLoopActionGroup">
         <arguments>
             <argument name="page" defaultValue="ProductsCarouselOnStage"/>
             <argument name="productGroupIndex" defaultValue="1" type="string"/>
@@ -392,7 +392,7 @@
         <seeElement selector="{{page.carouselNextProductNavigationArrow(productGroupIndex)}}" stepKey="seeNextProductNavigationArrow"/>
         <dontSeeElement selector="{{page.carouselNextProductNavigationArrowDisabled(productGroupIndex)}}" stepKey="dontSeeNextProductNavigationArrowDisabled"/>
     </actionGroup>
-    <actionGroup name="validateProductCarouselPreviousNavigationArrowEnabledActionGroup">
+    <actionGroup name="ValidateProductCarouselPreviousNavigationArrowEnabledActionGroup">
         <arguments>
             <argument name="page" defaultValue="ProductsCarouselOnStage"/>
             <argument name="productGroupIndex" defaultValue="1" type="string"/>
@@ -400,10 +400,10 @@
         <seeElement selector="{{page.carouselPreviousProductNavigationArrow(productGroupIndex)}}" stepKey="seePreviousProductNavigationArrow"/>
         <dontSeeElement selector="{{page.carouselPreviousProductNavigationArrowDisabled(productGroupIndex)}}" stepKey="dontSeePreviousProductNavigationArrowDisabled"/>
     </actionGroup>
-    <actionGroup name="validateProductCarouselPreviousNavigationArrowDisabledActionGroup" extends="validateProductCarouselPreviousNavigationArrowEnabledActionGroup">
+    <actionGroup name="ValidateProductCarouselPreviousNavigationArrowDisabledActionGroup" extends="validateProductCarouselPreviousNavigationArrowEnabledActionGroup">
         <seeElement selector="{{page.carouselPreviousProductNavigationArrowDisabled(productGroupIndex)}}" stepKey="dontSeePreviousProductNavigationArrowDisabled"/>
     </actionGroup>
-    <actionGroup name="validateProductCarouselNextNavigationArrowEnabledActionGroup">
+    <actionGroup name="ValidateProductCarouselNextNavigationArrowEnabledActionGroup">
         <arguments>
             <argument name="page" defaultValue="ProductsCarouselOnStage"/>
             <argument name="productGroupIndex" defaultValue="1" type="string"/>
@@ -411,10 +411,10 @@
         <seeElement selector="{{page.carouselNextProductNavigationArrow(productGroupIndex)}}" stepKey="seeNextProductNavigationArrow"/>
         <dontSeeElement selector="{{page.carouselNextProductNavigationArrowDisabled(productGroupIndex)}}" stepKey="dontSeeNextProductNavigationArrowDisabled"/>
     </actionGroup>
-    <actionGroup name="validateProductCarouselNextNavigationArrowDisabledActionGroup" extends="validateProductCarouselPreviousNavigationArrowEnabledActionGroup">
+    <actionGroup name="ValidateProductCarouselNextNavigationArrowDisabledActionGroup" extends="validateProductCarouselPreviousNavigationArrowEnabledActionGroup">
         <seeElement selector="{{page.carouselNextProductNavigationArrowDisabled(productGroupIndex)}}" stepKey="dontSeeNextProductNavigationArrowDisabled"/>
     </actionGroup>
-    <actionGroup name="validateProductCarouselNavigationDotsActionGroup">
+    <actionGroup name="ValidateProductCarouselNavigationDotsActionGroup">
         <arguments>
             <argument name="page" defaultValue="ProductsCarouselOnStage"/>
             <argument name="productGroupIndex" defaultValue="1" type="string"/>
@@ -426,14 +426,14 @@
         <seeNumberOfElements selector="{{page.carouselActiveProductNavigationDot(productGroupIndex)}}" userInput="1" stepKey="seeOneActiveNavigationDot"/>
         <seeElement selector="{{page.carouselActiveProductNavigationDotByIndex(productGroupIndex, activeNavigationDot)}}" stepKey="seeActiveNavigationDot"/>
     </actionGroup>
-    <actionGroup name="validateProductCarouselNavigationDotsAreNotRenderedActionGroup">
+    <actionGroup name="ValidateProductCarouselNavigationDotsAreNotRenderedActionGroup">
         <arguments>
             <argument name="page" defaultValue="ProductsCarouselOnStage"/>
             <argument name="productGroupIndex" defaultValue="1" type="string"/>
         </arguments>
         <dontSeeElementInDOM selector="{{page.carouselNavigationDotsArea(productGroupIndex)}}" stepKey="dontSeeNavigationDots"/>
     </actionGroup>
-    <actionGroup name="validateProductCarouselNavigationArrowsAreNotRenderedActionGroup">
+    <actionGroup name="ValidateProductCarouselNavigationArrowsAreNotRenderedActionGroup">
         <arguments>
             <argument name="page" defaultValue="ProductsCarouselOnStage"/>
             <argument name="productGroupIndex" defaultValue="1" type="string"/>
@@ -441,7 +441,7 @@
         <dontSeeElementInDOM selector="{{page.carouselPreviousProductNavigationArrow(productGroupIndex)}}" stepKey="dontSeePreviousProductNavigationArrow"/>
         <dontSeeElementInDOM selector="{{page.carouselNextProductNavigationArrow(productGroupIndex)}}" stepKey="dontSeeNextProductNavigationArrow"/>
     </actionGroup>
-    <actionGroup name="validateProductOpacityInDefaultProductCarouselActionGroup">
+    <actionGroup name="ValidateProductOpacityInDefaultProductCarouselActionGroup">
         <arguments>
             <argument name="page" defaultValue="ProductsCarouselOnStage"/>
             <argument name="productGroupIndex" defaultValue="1" type="string"/>
@@ -455,11 +455,11 @@
             <actualResult type="variable">getOpacityOfProductItem</actualResult>
         </assertEquals>
     </actionGroup>
-    <actionGroup name="validateProductOpacityInContinuousProductCarouselActionGroup" extends="validateProductOpacityInDefaultProductCarouselActionGroup">
+    <actionGroup name="ValidateProductOpacityInContinuousProductCarouselActionGroup" extends="validateProductOpacityInDefaultProductCarouselActionGroup">
         <waitForElement selector="{{page.productInCarouselBySlickSlideIndex(productGroupIndex, productItemIndex)}}" stepKey="waitForProductItem"/>
         <executeJS function="return window.getComputedStyle(document.evaluate(&quot;{{page.productInCarouselBySlickSlideIndex(productGroupIndex, productItemIndex)}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue, null).getPropertyValue('opacity')" stepKey="getOpacityOfProductItem"/>
     </actionGroup>
-    <actionGroup name="validateProductsInProductCarouselAreCenteredForOddNumberOfProductsActionGroup">
+    <actionGroup name="ValidateProductsInProductCarouselAreCenteredForOddNumberOfProductsActionGroup">
         <arguments>
             <argument name="page" defaultValue="ProductsCarouselOnStage"/>
             <argument name="productGroupIndex" defaultValue="1" type="string"/>
@@ -478,7 +478,7 @@
             <actualResult type="variable">differenceBetweenCenterPositions</actualResult>
         </assertLessThanOrEqual>
     </actionGroup>
-    <actionGroup name="validateProductsInProductCarouselAreCenteredForEvenNumberOfProductsActionGroup">
+    <actionGroup name="ValidateProductsInProductCarouselAreCenteredForEvenNumberOfProductsActionGroup">
         <arguments>
             <argument name="page" defaultValue="ProductsCarouselOnStage"/>
             <argument name="productGroupIndex" defaultValue="1" type="string"/>
@@ -495,7 +495,7 @@
             <actualResult type="variable">differenceBetweenCenterPositions</actualResult>
         </assertLessThanOrEqual>
     </actionGroup>
-    <actionGroup name="validateProductTotalsActionGroup">
+    <actionGroup name="ValidateProductTotalsActionGroup">
         <arguments>
             <argument name="productsTotals" defaultValue="of 0 total" type="string"/>
         </arguments>
@@ -503,7 +503,7 @@
         <waitForElement time="2" selector="{{EditPanelForm.panelFieldControl(PageBuilderProductsTotalProductsProperty.section, PageBuilderProductsTotalProductsProperty.fieldName)}}" stepKey="waitForFieldVisible"/>
         <see selector="{{EditPanelForm.panelFieldControl(PageBuilderProductsTotalProductsProperty.section, PageBuilderProductsTotalProductsProperty.fieldName)}}" userInput="{{productsTotals}}" stepKey="seeProductTotals"/>
     </actionGroup>
-    <actionGroup name="validateSwatchInProductsActionGroup">
+    <actionGroup name="ValidateSwatchInProductsActionGroup">
         <annotations>
             <description>Verify a product swatch is displayed within the Product preview within Page Builder.</description>
         </annotations>

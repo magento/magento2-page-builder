@@ -8,7 +8,7 @@
 
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
-    <actionGroup name="validateButtonItemContentActionGroup">
+    <actionGroup name="ValidateButtonItemContentActionGroup">
         <arguments>
             <argument name="page"/>
             <argument name="text" defaultValue="PageBuilderButtonItemText_Empty"/>
@@ -24,7 +24,7 @@
         <waitForElementVisible selector="{{page.buttonItemUrl(index, url.value)}}" stepKey="waitForButtonUrl"/>
         <waitForElementVisible selector="{{page.buttonItemNewTab(index, newTab.stageValue)}}" stepKey="waitForButtonNewTab"/>
     </actionGroup>
-    <actionGroup name="inlineEditButtonActionGroup">
+    <actionGroup name="InlineEditButtonActionGroup">
         <arguments>
             <argument name="text"/>
             <argument name="index" defaultValue="1" type="string"/>
@@ -39,7 +39,7 @@
         <click selector="{{pageBuilderArea}}{{PageBuilderPanel.searchPanel}}" stepKey="unFocusLiveEdit"/>
         <waitForPageLoad stepKey="waitForUnFocus"/>
     </actionGroup>
-    <actionGroup name="moveButtonActionGroup">
+    <actionGroup name="MoveButtonActionGroup">
         <arguments>
             <argument name="x" defaultValue="null" type="string"/>
             <argument name="y" defaultValue="null" type="string"/>
@@ -56,7 +56,7 @@
         <waitForPageLoad stepKey="waitForPageLoad2"/>
         <waitForElementVisible selector="{{ButtonItemOnStage.base(buttonIndexToMove)}}" stepKey="waitForButton2"/>
     </actionGroup>
-    <actionGroup name="validateButtonGroupInlineAppearanceActionGroup">
+    <actionGroup name="ValidateButtonGroupInlineAppearanceActionGroup">
         <arguments>
             <argument name="buttonGroupPage"/>
             <argument name="buttonItemPage"/>
@@ -82,7 +82,7 @@
             <actualResult type="variable">yCoordinate2</actualResult>
         </assertEquals>
     </actionGroup>
-    <actionGroup name="validateButtonGroupInlineAppearanceWrapsActionGroup">
+    <actionGroup name="ValidateButtonGroupInlineAppearanceWrapsActionGroup">
         <arguments>
             <argument name="buttonGroupPage"/>
             <argument name="buttonItemPage"/>
@@ -108,7 +108,7 @@
             <actualResult type="variable">yCoordinate2</actualResult>
         </assertGreaterThan>
     </actionGroup>
-    <actionGroup name="validateButtonGroupStackedAppearanceActionGroup">
+    <actionGroup name="ValidateButtonGroupStackedAppearanceActionGroup">
         <arguments>
             <argument name="buttonGroupPage"/>
             <argument name="buttonItemPage"/>
@@ -134,7 +134,7 @@
             <actualResult type="variable">yCoordinate2</actualResult>
         </assertGreaterThan>
     </actionGroup>
-    <actionGroup name="validateButtonItemsSameSizeActionGroup">
+    <actionGroup name="ValidateButtonItemsSameSizeActionGroup">
         <arguments>
             <argument name="buttonGroupPage"/>
             <argument name="buttonItemPage"/>
@@ -159,7 +159,7 @@
             <expectedResult type="variable">button2Width</expectedResult>
         </assertEquals>
     </actionGroup>
-    <actionGroup name="validateButtonItemsDifferentSizesActionGroup" extends="validateButtonItemsSameSizeActionGroup">
+    <actionGroup name="ValidateButtonItemsDifferentSizesActionGroup" extends="validateButtonItemsSameSizeActionGroup">
         <comment userInput="validateButtonItemsDifferentSizes" stepKey="comment"/>
         <seeElement selector="{{buttonGroupPage.sameSizeValue(buttonGroupIndex, PageBuilderButtonGroupSameSize_Disabled.value)}}" stepKey="seeButtonSameSizeValue"/>
         <assertNotEquals stepKey="assertButtonWidthSize">
@@ -167,7 +167,7 @@
             <expectedResult type="variable">button2Width</expectedResult>
         </assertNotEquals>
     </actionGroup>
-    <actionGroup name="validateButtonItemsDefaultMarginActionGroup">
+    <actionGroup name="ValidateButtonItemsDefaultMarginActionGroup">
         <arguments>
             <argument name="buttonItemPage"/>
             <argument name="buttonIndex" defaultValue="1" type="string"/>

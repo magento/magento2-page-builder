@@ -22,15 +22,15 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
         <executeJS function="return window.innerHeight;" stepKey="viewportHeight"/>
         <executeJS function="return window.innerWidth;" stepKey="viewportWidth"/>
-        <actionGroup ref="openPageBuilderFullScreenActionGroup" stepKey="openPageBuilderFullScreen"/>
+        <actionGroup ref="OpenPageBuilderFullScreenActionGroup" stepKey="openPageBuilderFullScreen"/>
         <executeJS function="return document.querySelector('{{PageBuilderStage.stageWrapperFullScreen}}').getBoundingClientRect().top" stepKey="topPositionOfStageWrapper"/>
         <executeJS function="return document.querySelector('{{PageBuilderStage.stageWrapperFullScreen}}').getBoundingClientRect().left" stepKey="leftPositionOfStageWrapper"/>
         <executeJS function="return document.querySelector('{{PageBuilderStage.stageWrapperFullScreen}}').getBoundingClientRect().height" stepKey="heightOfStageWrapper"/>
@@ -66,14 +66,14 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
         <executeJS function="return window.innerHeight;" stepKey="viewportHeight"/>
-        <actionGroup ref="openPageBuilderFullScreenActionGroup" stepKey="openPageBuilderFullScreen"/>
+        <actionGroup ref="OpenPageBuilderFullScreenActionGroup" stepKey="openPageBuilderFullScreen"/>
         <executeJS function="return document.querySelector('{{PageBuilderPanel.leftPanel}}').getBoundingClientRect().top" stepKey="topPositionOfLeftPanel"/>
         <executeJS function="return document.querySelector('{{PageBuilderPanel.leftPanel}}').getBoundingClientRect().left" stepKey="leftPositionOfLeftPanel"/>
         <executeJS function="return document.querySelector('{{PageBuilderPanel.leftPanel}}').getBoundingClientRect().height" stepKey="heightOfLeftPanel"/>
@@ -112,47 +112,47 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderFullScreenActionGroup" stepKey="openPageBuilderFullScreen"/>
+        <actionGroup ref="OpenPageBuilderFullScreenActionGroup" stepKey="openPageBuilderFullScreen"/>
         <!-- Add and Edit Buttons -->
         <comment userInput="Add and Edit Buttons" stepKey="commentAddButtons"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToContainerActionGroup" stepKey="dragButtonsToRow">
+        <actionGroup ref="DragContentTypeToContainerActionGroup" stepKey="dragButtonsToRow">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditMenuOnStage">
+        <actionGroup ref="OpenPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditMenuOnStage">
             <argument name="section" value="ButtonItemOnStage"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="fillButtonTextField">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="fillButtonTextField">
             <argument name="property" value="PageBuilderButtonItemText_Common"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsFullScreenActionGroup" stepKey="saveEditFormForButton"/>
+        <actionGroup ref="SaveEditPanelSettingsFullScreenActionGroup" stepKey="saveEditFormForButton"/>
         <!-- Validate Full-Screen Stage -->
         <comment userInput="Validate Full-Screen Stage" stepKey="commentValidateFullScreenStage"/>
         <seeElement selector="{{ButtonItemOnStage.buttonItemText('1', PageBuilderButtonItemText_Common.value)}}" stepKey="seeButtonTextStageFullScreen"/>
-        <actionGroup ref="exitPageBuilderFullScreenActionGroup" stepKey="exitPageBuilderFullScreen"/>
+        <actionGroup ref="ExitPageBuilderFullScreenActionGroup" stepKey="exitPageBuilderFullScreen"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <seeElement selector="{{ButtonItemOnStage.buttonItemText('1', PageBuilderButtonItemText_Common.value)}}" stepKey="seeButtonTextStage"/>
         <!-- Save Page -->
         <comment userInput="Save Page" stepKey="commentSavePage"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
         <seeElement selector="{{ButtonItemOnStage.buttonItemText('1', PageBuilderButtonItemText_Common.value)}}" stepKey="seeButtonTextStageAfterSave"/>
-        <actionGroup ref="openPageBuilderFullScreenActionGroup" stepKey="openPageBuilderFullScreenAfterSave"/>
+        <actionGroup ref="OpenPageBuilderFullScreenActionGroup" stepKey="openPageBuilderFullScreenAfterSave"/>
         <!-- Validate Full-Screen Stage -->
         <comment userInput="Validate Full-Screen Stage" stepKey="commentValidateFullScreenStageAfterSave"/>
         <seeElement selector="{{ButtonItemOnStage.buttonItemText('1', PageBuilderButtonItemText_Common.value)}}" stepKey="seeButtonTextStageFullScreenAfterSave"/>

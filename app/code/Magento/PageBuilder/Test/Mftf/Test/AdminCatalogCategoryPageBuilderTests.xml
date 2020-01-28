@@ -42,27 +42,27 @@
             <actionGroup ref="NavigateToCreatedCategoryActionGroup" stepKey="navigateToCreatedProductEditPage">
                 <argument name="Category" value="$$createPreReqCategory$$"/>
             </actionGroup>
-            <actionGroup ref="expandAdminCategorySectionActionGroup" stepKey="expandAdminCategorySection"/>
+            <actionGroup ref="ExpandAdminCategorySectionActionGroup" stepKey="expandAdminCategorySection"/>
         </before>
         <after>
             <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG"/>
             <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCategory"/>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="openPageBuilderForAttributeActionGroup" stepKey="enablePageBuilderOnCatalog"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="OpenPageBuilderForAttributeActionGroup" stepKey="enablePageBuilderOnCatalog"/>
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragTextOntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragTextOntoStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <fillField selector="{{TextOnConfiguration.textArea}}" userInput="Hello Category from PageBuilder" stepKey="addTextToEditor"/>
-        <actionGroup ref="saveEditPanelSettingsFullScreenActionGroup" stepKey="saveEditPanel"/>
-        <actionGroup ref="exitPageBuilderFullScreenActionGroup" stepKey="exitPageBuilderFullScreen"/>
-        <actionGroup ref="saveCatalogCategoryActionGroup" stepKey="saveCatalogCategory"/>
+        <actionGroup ref="SaveEditPanelSettingsFullScreenActionGroup" stepKey="saveEditPanel"/>
+        <actionGroup ref="ExitPageBuilderFullScreenActionGroup" stepKey="exitPageBuilderFullScreen"/>
+        <actionGroup ref="SaveCatalogCategoryActionGroup" stepKey="saveCatalogCategory"/>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStorefront">
@@ -92,7 +92,7 @@
             <actionGroup ref="NavigateToCreatedCategoryActionGroup" stepKey="navigateToCreatedProductEditPage">
                 <argument name="Category" value="$$createPreReqCategory$$"/>
             </actionGroup>
-            <actionGroup ref="expandAdminCategorySectionActionGroup" stepKey="expandAdminCategorySection"/>
+            <actionGroup ref="ExpandAdminCategorySectionActionGroup" stepKey="expandAdminCategorySection"/>
         </before>
         <after>
             <magentoCLI command="config:set general/store_information/country_id none" stepKey="setBackToDefaultValue"/>
@@ -106,51 +106,51 @@
             <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="deleteImageFromStorage">
                 <argument name="Image" value="PageBuilderImageProperty_StageJPG"/>
             </actionGroup>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="openPageBuilderForAttributeActionGroup" stepKey="enablePageBuilderOnCatalog"/>
+        <actionGroup ref="OpenPageBuilderForAttributeActionGroup" stepKey="enablePageBuilderOnCatalog"/>
         <!--Add button to PageBuilder-->
         <comment userInput="Add button to PageBuilder" stepKey="addButtonToPageBuilder"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSectionElements">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSectionElements">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragButtonIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragButtonIntoStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditMenuOnStage1">
+        <actionGroup ref="OpenPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditMenuOnStage1">
             <argument name="section" value="ButtonItemOnStage"/>
             <argument name="targetIndex" value="1"/>
         </actionGroup>
         <!--Choose cms page link type-->
         <comment userInput="Choose cms page link type" stepKey="commentChooseCmsPageLinkType"/>
-        <actionGroup ref="fillOutUrlInputActionGroup" stepKey="choosePageLink">
+        <actionGroup ref="FillOutUrlInputActionGroup" stepKey="choosePageLink">
             <argument name="fieldName" value="button_link"/>
             <argument name="linkName" value="ExternalLink.page"/>
             <argument name="searchString" value="ExternalLinkSearch.page"/>
             <argument name="searchResult" value="$$createCMSPageA.title$$"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsFullScreenActionGroup" stepKey="saveEditPanelSettings1"/>
+        <actionGroup ref="SaveEditPanelSettingsFullScreenActionGroup" stepKey="saveEditPanelSettings1"/>
         <!--Add image to PageBuilder-->
         <comment userInput="Add image to PageBuilder" stepKey="addImageToPageBuilder"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderImageContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragImageIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragImageIntoStage">
             <argument name="contentType" value="PageBuilderImageContentType"/>
         </actionGroup>
-        <actionGroup ref="addImageToStageActionGroup" stepKey="addImageToStage">
+        <actionGroup ref="AddImageToStageActionGroup" stepKey="addImageToStage">
             <argument name="property" value="PageBuilderImageProperty_StageJPG"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragTextOntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragTextOntoStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <actionGroup ref="clickOutsideTextInlineEditingActionGroup" stepKey="closeLiveEdit"/>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
+        <actionGroup ref="ClickOutsideTextInlineEditingActionGroup" stepKey="closeLiveEdit"/>
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <!--Add variable to PageBuilder-->
         <comment userInput="Add variable to PageBuilder" stepKey="addVariableToPageBuilder"/>
-        <actionGroup ref="addVariableToTinyMCEActionGroup" stepKey="addVariableToTinyMCE">
+        <actionGroup ref="AddVariableToTinyMCEActionGroup" stepKey="addVariableToTinyMCE">
             <argument name="variable" value="TinyMCEVariableCountry"/>
         </actionGroup>
         <!--Switch to iFrame 1-->
@@ -160,7 +160,7 @@
         <switchToIFrame stepKey="exitIFrame1"/>
         <!--Add widget to PageBuilder-->
         <comment userInput="Add widget to PageBuilder" stepKey="addWidgetToPageBuilder"/>
-        <actionGroup ref="addPageLinkWidgetToTinyMCEActionGroup" stepKey="addPageLinkWidgetToTinyMCE">
+        <actionGroup ref="AddPageLinkWidgetToTinyMCEActionGroup" stepKey="addPageLinkWidgetToTinyMCE">
             <argument name="widget" value="TinyMCEWidgetCMSPageLink"/>
             <argument name="page" value="$$createCMSPageB.identifier$$"/>
         </actionGroup>
@@ -169,9 +169,9 @@
         <switchToIFrame selector="{{TextOnConfiguration.tinyMCEIFrame}}" stepKey="switchToIFrame"/>
         <waitForElementVisible selector="{{TextOnConfiguration.tinyMCEWidget(TinyMCEWidgetCMSPageLink.editPanelValue, '1')}}" stepKey="waitForWidget"/>
         <switchToIFrame stepKey="exitIFrame"/>
-        <actionGroup ref="saveEditPanelSettingsFullScreenActionGroup" stepKey="saveEditPanel"/>
-        <actionGroup ref="exitPageBuilderFullScreenActionGroup" stepKey="exitPageBuilderFullScreen"/>
-        <actionGroup ref="saveCatalogCategoryActionGroup" stepKey="saveCatalogCategory"/>
+        <actionGroup ref="SaveEditPanelSettingsFullScreenActionGroup" stepKey="saveEditPanel"/>
+        <actionGroup ref="ExitPageBuilderFullScreenActionGroup" stepKey="exitPageBuilderFullScreen"/>
+        <actionGroup ref="SaveCatalogCategoryActionGroup" stepKey="saveCatalogCategory"/>
         <!--Go to storefront to verify Category Link-->
         <comment userInput="Verify directives on category store front" stepKey="commentVerifyDirectivesOnStorefront"/>
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStorefront">
@@ -180,7 +180,7 @@
         <see userInput="US" stepKey="verifyCountryVariableName"/>
         <see userInput="$$createCMSPageB.title$$" stepKey="verifyWidget"/>
         <waitForElementVisible selector="{{ImageOnStorefront.imageSourceByIndex('1', PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="seeImage2SourceOnStorefront"/>
-        <actionGroup ref="verifyCmsPageLinkOnFrontendActionGroup" stepKey="checkButtonOnStoreFront">
+        <actionGroup ref="VerifyCmsPageLinkOnFrontendActionGroup" stepKey="checkButtonOnStoreFront">
             <argument name="CMSPage" value="$$createCMSPageA$$"/>
             <argument name="index" value="1"/>
             <argument name="section" value="ButtonItemOnStorefront"/>
@@ -208,7 +208,7 @@
         </before>
         <after>
             <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCatalog"/>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
         <click selector="{{AdminProductFormSection.contentTab}}" stepKey="clickContentTab"/>
         <waitForText userInput="Category Image" stepKey="waitForText"/>
@@ -274,47 +274,47 @@
             <actionGroup ref="NavigateToCreatedCategoryActionGroup" stepKey="navigateToCreatedProductEditPage">
                 <argument name="Category" value="$$createPreReqCategory$$"/>
             </actionGroup>
-            <actionGroup ref="expandAdminCategorySectionActionGroup" stepKey="expandAdminCategorySection"/>
+            <actionGroup ref="ExpandAdminCategorySectionActionGroup" stepKey="expandAdminCategorySection"/>
         </before>
         <after>
             <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCategory"/>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="openPageBuilderForAttributeActionGroup" stepKey="enablePageBuilderOnCatalog"/>
+        <actionGroup ref="OpenPageBuilderForAttributeActionGroup" stepKey="enablePageBuilderOnCatalog"/>
         <!-- Set background color of row -->
         <comment userInput="Set background color of row" stepKey="commentSetRowBackgroundColor"/>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBackgroundColor">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBackgroundColor">
             <argument name="property" value="PageBuilderBackgroundColor_HSV_Orange"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsFullScreenActionGroup" stepKey="saveEditPanelSettings"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="SaveEditPanelSettingsFullScreenActionGroup" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragHeadingOntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragHeadingOntoStage">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <!-- Add heading to stage -->
         <comment userInput="Add heading to stage" stepKey="commentAddHeadingToStage"/>
-        <actionGroup ref="enterHeadingOnStageActionGroup" stepKey="enterHeadingOnStage">
+        <actionGroup ref="EnterHeadingOnStageActionGroup" stepKey="enterHeadingOnStage">
             <argument name="headingText" value="PageBuilderHeadingTextProperty"/>
         </actionGroup>
-        <actionGroup ref="exitPageBuilderFullScreenActionGroup" stepKey="exitPageBuilderFullScreen"/>
+        <actionGroup ref="ExitPageBuilderFullScreenActionGroup" stepKey="exitPageBuilderFullScreen"/>
         <!-- Use Full Width layout -->
         <comment userInput="Set Layout to Category - Full Width" stepKey="commentSetLayout"/>
         <actionGroup ref="SetLayoutActionGroup" stepKey="setFullWidthLayout">
             <argument name="designSection" value="CategoryDesignSection"/>
             <argument name="layoutOption" value="PageBuilderFullWidthLayout.category"/>
         </actionGroup>
-        <actionGroup ref="saveCatalogCategoryActionGroup" stepKey="saveCatalogCategory"/>
+        <actionGroup ref="SaveCatalogCategoryActionGroup" stepKey="saveCatalogCategory"/>
         <!-- Check that description is full width on storefront-->
         <comment userInput="Check that description is full width on storefront" stepKey="commentSeeDescriptionFullWidth"/>
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStorefront">
             <argument name="page" value="$$createPreReqCategory.name$$.html"/>
         </actionGroup>
-        <actionGroup ref="verifyFullWidthLayoutActionGroup" stepKey="verifyFullWidthLayout"/>
+        <actionGroup ref="VerifyFullWidthLayoutActionGroup" stepKey="verifyFullWidthLayout"/>
     </test>
     <test name="PageBuilderCatalogCategoryCreateCategoryWithPageBuilderDescriptionAndInvalidPageLayout">
         <annotations>
@@ -336,42 +336,42 @@
             <actionGroup ref="NavigateToCreatedCategoryActionGroup" stepKey="navigateToCreatedProductEditPage">
                 <argument name="Category" value="$$createPreReqCategory$$"/>
             </actionGroup>
-            <actionGroup ref="expandAdminCategorySectionActionGroup" stepKey="expandAdminCategorySection"/>
+            <actionGroup ref="ExpandAdminCategorySectionActionGroup" stepKey="expandAdminCategorySection"/>
         </before>
         <after>
             <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCategory"/>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
             <closeTab stepKey="closeTab"/>
         </after>
-        <actionGroup ref="openPageBuilderForAttributeActionGroup" stepKey="enablePageBuilderOnCatalog"/>
+        <actionGroup ref="OpenPageBuilderForAttributeActionGroup" stepKey="enablePageBuilderOnCatalog"/>
         <!-- Set background color of row -->
         <comment userInput="Set background color of row" stepKey="commentSetRowBackgroundColor"/>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBackgroundColor">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBackgroundColor">
             <argument name="property" value="PageBuilderBackgroundColor_HSV_Orange"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsFullScreenActionGroup" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="SaveEditPanelSettingsFullScreenActionGroup" stepKey="saveEditPanelSettings"/>
         <!-- Add heading to stage -->
         <comment userInput="Add heading to stage" stepKey="commentAddHeadingToStage"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragHeadingOntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragHeadingOntoStage">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
-        <actionGroup ref="enterHeadingOnStageActionGroup" stepKey="enterHeadingOnStage">
+        <actionGroup ref="EnterHeadingOnStageActionGroup" stepKey="enterHeadingOnStage">
             <argument name="headingText" value="PageBuilderHeadingTextProperty"/>
         </actionGroup>
-        <actionGroup ref="exitPageBuilderFullScreenActionGroup" stepKey="exitPageBuilderFullScreen"/>
+        <actionGroup ref="ExitPageBuilderFullScreenActionGroup" stepKey="exitPageBuilderFullScreen"/>
         <!-- Set Layout to Page - Full Width -->
         <comment userInput="Set Layout to Page - Full Width" stepKey="commentSetLayout"/>
         <actionGroup ref="SetLayoutActionGroup" stepKey="setFullWidthLayout">
             <argument name="designSection" value="CategoryDesignSection"/>
             <argument name="layoutOption" value="PageBuilderFullWidthLayout.cms"/>
         </actionGroup>
-        <actionGroup ref="saveCatalogCategoryActionGroup" stepKey="saveCatalogCategory"/>
+        <actionGroup ref="SaveCatalogCategoryActionGroup" stepKey="saveCatalogCategory"/>
         <!-- Check the category's heading is still displayed using the Page full width layout-->
         <comment userInput="Check the category's heading is still displayed using the Page full width layout" stepKey="commentSeeDescriptionFullWidth"/>
         <openNewTab stepKey="openNewTab"/>
@@ -386,7 +386,7 @@
             <argument name="designSection" value="CategoryDesignSection"/>
             <argument name="layoutOption" value="PageBuilderFullWidthLayout.product"/>
         </actionGroup>
-        <actionGroup ref="saveCatalogCategoryActionGroup" stepKey="saveCatalogCategory2"/>
+        <actionGroup ref="SaveCatalogCategoryActionGroup" stepKey="saveCatalogCategory2"/>
         <!-- Check the category heading is still displayed on store front with product full width layout -->
         <comment userInput="Check the category heading is still displayed on store front with product full width layout" stepKey="commentSeeDescriptionFullWidth2"/>
         <switchToNextTab stepKey="switchToNextTab2"/>
@@ -414,7 +414,7 @@
             <actionGroup ref="NavigateToCreatedCategoryActionGroup" stepKey="navigateToCreatedProductEditPage">
                 <argument name="Category" value="$$createPreReqCategory$$"/>
             </actionGroup>
-            <actionGroup ref="expandAdminCategorySectionActionGroup" stepKey="expandAdminProductSection"/>
+            <actionGroup ref="ExpandAdminCategorySectionActionGroup" stepKey="expandAdminProductSection"/>
         </before>
         <after>
             <comment userInput="---merging to remove step---" stepKey="deleteCreatedProduct"/>
@@ -422,8 +422,8 @@
         </after>
         <!-- Save Category -->
         <comment userInput="Save Category" stepKey="commentSaveProduct"/>
-        <actionGroup ref="saveCatalogCategoryActionGroup" stepKey="saveProduct"/>
-        <actionGroup ref="expandAdminCategorySectionActionGroup" stepKey="expandAdminProductSection"/>
+        <actionGroup ref="SaveCatalogCategoryActionGroup" stepKey="saveProduct"/>
+        <actionGroup ref="ExpandAdminCategorySectionActionGroup" stepKey="expandAdminProductSection"/>
         <!-- Validate Storefront -->
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToProductStorefront">
             <argument name="page" value="$$createPreReqCategory.name$$.html"/>
@@ -451,7 +451,7 @@
             <actionGroup ref="NavigateToCreatedCategoryActionGroup" stepKey="navigateToCreatedProductEditPage">
                 <argument name="Category" value="$$createPreReqCategory$$"/>
             </actionGroup>
-            <actionGroup ref="expandAdminCategorySectionActionGroup" stepKey="expandAdminProductSection"/>
+            <actionGroup ref="ExpandAdminCategorySectionActionGroup" stepKey="expandAdminProductSection"/>
         </before>
         <after>
             <comment userInput="---merging to remove step---" stepKey="deleteCreatedProduct"/>
@@ -459,8 +459,8 @@
         </after>
         <!-- Save Category -->
         <comment userInput="Save Category" stepKey="commentSaveProduct"/>
-        <actionGroup ref="saveCatalogCategoryActionGroup" stepKey="saveProduct"/>
-        <actionGroup ref="expandAdminCategorySectionActionGroup" stepKey="expandAdminProductSection"/>
+        <actionGroup ref="SaveCatalogCategoryActionGroup" stepKey="saveProduct"/>
+        <actionGroup ref="ExpandAdminCategorySectionActionGroup" stepKey="expandAdminProductSection"/>
         <!-- Validate Storefront -->
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToProductStorefront">
             <argument name="page" value="$$createPreReqCategory.name$$.html"/>
@@ -486,7 +486,7 @@
             <actionGroup ref="NavigateToCreatedCategoryActionGroup" stepKey="navigateToCreatedProductEditPage">
                 <argument name="Category" value="$$createPreReqCategory$$"/>
             </actionGroup>
-            <actionGroup ref="expandAdminCategorySectionActionGroup" stepKey="expandAdminProductSection"/>
+            <actionGroup ref="ExpandAdminCategorySectionActionGroup" stepKey="expandAdminProductSection"/>
         </before>
         <after>
             <comment userInput="---merging to remove step---" stepKey="deleteCreatedProduct"/>
@@ -494,8 +494,8 @@
         </after>
         <!-- Save Category -->
         <comment userInput="Save Category" stepKey="commentSaveProduct"/>
-        <actionGroup ref="saveCatalogCategoryActionGroup" stepKey="saveProduct"/>
-        <actionGroup ref="expandAdminCategorySectionActionGroup" stepKey="expandAdminProductSection"/>
+        <actionGroup ref="SaveCatalogCategoryActionGroup" stepKey="saveProduct"/>
+        <actionGroup ref="ExpandAdminCategorySectionActionGroup" stepKey="expandAdminProductSection"/>
         <!-- Validate Storefront -->
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToProductStorefront">
             <argument name="page" value="$$createPreReqCategory.name$$.html"/>
@@ -521,19 +521,19 @@
             <actionGroup ref="NavigateToCreatedCategoryActionGroup" stepKey="navigateToCreatedProductEditPage">
                 <argument name="Category" value="$$createPreReqCategory$$"/>
             </actionGroup>
-            <actionGroup ref="expandAdminCategorySectionActionGroup" stepKey="expandAdminProductSection"/>
+            <actionGroup ref="ExpandAdminCategorySectionActionGroup" stepKey="expandAdminProductSection"/>
         </before>
         <after>
             <comment userInput="---merging to remove step---" stepKey="deleteCreatedProduct"/>
             <comment userInput="---merging to remove step---" stepKey="navigateToAndResetProductGridToDefaultView"/>
         </after>
-        <actionGroup ref="closeEditPanelSettingsActionGroup" stepKey="closeEditPanel">
+        <actionGroup ref="CloseEditPanelSettingsActionGroup" stepKey="closeEditPanel">
             <argument name="baseContent" value="{{AdminCategoryMainActionsSection.SaveButton}}"/>
         </actionGroup>
         <!-- Save Category -->
         <comment userInput="Save Category" stepKey="commentSaveProduct"/>
-        <actionGroup ref="saveCatalogCategoryActionGroup" stepKey="saveProduct"/>
-        <actionGroup ref="expandAdminCategorySectionActionGroup" stepKey="expandAdminProductSection"/>
+        <actionGroup ref="SaveCatalogCategoryActionGroup" stepKey="saveProduct"/>
+        <actionGroup ref="ExpandAdminCategorySectionActionGroup" stepKey="expandAdminProductSection"/>
         <!-- Validate Storefront -->
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToProductStorefront">
             <argument name="page" value="$$createPreReqCategory.name$$.html"/>
@@ -559,7 +559,7 @@
             <actionGroup ref="NavigateToCreatedCategoryActionGroup" stepKey="navigateToCreatedProductEditPage">
                 <argument name="Category" value="$$createPreReqCategory$$"/>
             </actionGroup>
-            <actionGroup ref="expandAdminCategorySectionActionGroup" stepKey="expandAdminProductSection"/>
+            <actionGroup ref="ExpandAdminCategorySectionActionGroup" stepKey="expandAdminProductSection"/>
         </before>
         <after>
             <comment userInput="---merging to remove step---" stepKey="deleteCreatedProduct"/>
@@ -567,12 +567,12 @@
         </after>
         <!-- Save Category -->
         <comment userInput="Save Category" stepKey="commentSaveProduct"/>
-        <actionGroup ref="saveCatalogCategoryActionGroup" stepKey="saveProduct"/>
-        <actionGroup ref="expandAdminCategorySectionActionGroup" stepKey="expandAdminProductSection"/>
+        <actionGroup ref="SaveCatalogCategoryActionGroup" stepKey="saveProduct"/>
+        <actionGroup ref="ExpandAdminCategorySectionActionGroup" stepKey="expandAdminProductSection"/>
         <!-- Save Category After Delete -->
         <comment userInput="Save Category After Delete" stepKey="commentSaveProductAfterDelete"/>
-        <actionGroup ref="saveCatalogCategoryActionGroup" stepKey="saveProductAfterDelete"/>
-        <actionGroup ref="expandAdminCategorySectionActionGroup" stepKey="expandAdminProductSectionAfterDelete"/>
+        <actionGroup ref="SaveCatalogCategoryActionGroup" stepKey="saveProductAfterDelete"/>
+        <actionGroup ref="ExpandAdminCategorySectionActionGroup" stepKey="expandAdminProductSectionAfterDelete"/>
         <!-- Validate Storefront -->
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToProductStorefront">
             <argument name="page" value="$$createPreReqCategory.name$$.html"/>
@@ -598,7 +598,7 @@
             <actionGroup ref="NavigateToCreatedCategoryActionGroup" stepKey="navigateToCreatedProductEditPage">
                 <argument name="Category" value="$$createPreReqCategory$$"/>
             </actionGroup>
-            <actionGroup ref="expandAdminCategorySectionActionGroup" stepKey="expandAdminProductSection"/>
+            <actionGroup ref="ExpandAdminCategorySectionActionGroup" stepKey="expandAdminProductSection"/>
         </before>
         <after>
             <comment userInput="---merging to remove step---" stepKey="deleteCreatedProduct"/>
@@ -606,8 +606,8 @@
         </after>
         <!-- Save Category -->
         <comment userInput="Save Category" stepKey="commentSaveProduct"/>
-        <actionGroup ref="saveCatalogCategoryActionGroup" stepKey="saveProduct"/>
-        <actionGroup ref="expandAdminCategorySectionActionGroup" stepKey="expandAdminProductSection"/>
+        <actionGroup ref="SaveCatalogCategoryActionGroup" stepKey="saveProduct"/>
+        <actionGroup ref="ExpandAdminCategorySectionActionGroup" stepKey="expandAdminProductSection"/>
         <!-- Validate Storefront -->
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToProductStorefront">
             <argument name="page" value="$$createPreReqCategory.name$$.html"/>
@@ -633,7 +633,7 @@
             <actionGroup ref="NavigateToCreatedCategoryActionGroup" stepKey="navigateToCreatedProductEditPage">
                 <argument name="Category" value="$$createPreReqCategory$$"/>
             </actionGroup>
-            <actionGroup ref="expandAdminCategorySectionActionGroup" stepKey="expandAdminProductSection"/>
+            <actionGroup ref="ExpandAdminCategorySectionActionGroup" stepKey="expandAdminProductSection"/>
         </before>
         <after>
             <comment userInput="---merging to remove step---" stepKey="deleteCreatedProduct"/>
@@ -641,8 +641,8 @@
         </after>
         <!-- Save Category -->
         <comment userInput="Save Category" stepKey="commentSaveProduct"/>
-        <actionGroup ref="saveCatalogCategoryActionGroup" stepKey="saveProduct"/>
-        <actionGroup ref="expandAdminCategorySectionActionGroup" stepKey="expandAdminProductSection"/>
+        <actionGroup ref="SaveCatalogCategoryActionGroup" stepKey="saveProduct"/>
+        <actionGroup ref="ExpandAdminCategorySectionActionGroup" stepKey="expandAdminProductSection"/>
         <!-- Validate Storefront -->
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToProductStorefront">
             <argument name="page" value="$$createPreReqCategory.name$$.html"/>
@@ -668,7 +668,7 @@
             <actionGroup ref="NavigateToCreatedCategoryActionGroup" stepKey="navigateToCreatedProductEditPage">
                 <argument name="Category" value="$$createPreReqCategory$$"/>
             </actionGroup>
-            <actionGroup ref="expandAdminCategorySectionActionGroup" stepKey="expandAdminProductSection"/>
+            <actionGroup ref="ExpandAdminCategorySectionActionGroup" stepKey="expandAdminProductSection"/>
         </before>
         <after>
             <comment userInput="---merging to remove step---" stepKey="deleteCreatedProduct"/>
@@ -676,9 +676,9 @@
         </after>
         <!-- Save Category -->
         <comment userInput="Save Category" stepKey="commentSaveProduct"/>
-        <actionGroup ref="saveCatalogCategoryActionGroup" stepKey="saveProduct"/>
-        <actionGroup ref="expandAdminCategorySectionActionGroup" stepKey="expandAdminProductSection"/>
-        <actionGroup ref="closeEditPanelSettingsActionGroup" stepKey="closeEditPanel">
+        <actionGroup ref="SaveCatalogCategoryActionGroup" stepKey="saveProduct"/>
+        <actionGroup ref="ExpandAdminCategorySectionActionGroup" stepKey="expandAdminProductSection"/>
+        <actionGroup ref="CloseEditPanelSettingsActionGroup" stepKey="closeEditPanel">
             <argument name="baseContent" value="{{AdminCategoryMainActionsSection.SaveButton}}"/>
         </actionGroup>
         <!-- Validate Storefront -->
@@ -706,7 +706,7 @@
             <actionGroup ref="NavigateToCreatedCategoryActionGroup" stepKey="navigateToCreatedProductEditPage">
                 <argument name="Category" value="$$createPreReqCategory$$"/>
             </actionGroup>
-            <actionGroup ref="expandAdminCategorySectionActionGroup" stepKey="expandAdminProductSection"/>
+            <actionGroup ref="ExpandAdminCategorySectionActionGroup" stepKey="expandAdminProductSection"/>
         </before>
         <after>
             <comment userInput="---merging to remove step---" stepKey="deleteCreatedProduct"/>
@@ -714,12 +714,12 @@
         </after>
         <!-- Save Category -->
         <comment userInput="Save Category" stepKey="commentSaveProduct"/>
-        <actionGroup ref="saveCatalogCategoryActionGroup" stepKey="saveProduct"/>
-        <actionGroup ref="expandAdminCategorySectionActionGroup" stepKey="expandAdminProductSection"/>
+        <actionGroup ref="SaveCatalogCategoryActionGroup" stepKey="saveProduct"/>
+        <actionGroup ref="ExpandAdminCategorySectionActionGroup" stepKey="expandAdminProductSection"/>
         <!-- Save Category After Delete -->
         <comment userInput="Save Category After Delete" stepKey="commentSaveProductAfterDelete"/>
-        <actionGroup ref="saveCatalogCategoryActionGroup" stepKey="saveProductAfterDelete"/>
-        <actionGroup ref="expandAdminCategorySectionActionGroup" stepKey="expandAdminProductSectionAfterDelete"/>
+        <actionGroup ref="SaveCatalogCategoryActionGroup" stepKey="saveProductAfterDelete"/>
+        <actionGroup ref="ExpandAdminCategorySectionActionGroup" stepKey="expandAdminProductSectionAfterDelete"/>
         <!-- Validate Storefront -->
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToProductStorefront">
             <argument name="page" value="$$createPreReqCategory.name$$.html"/>
@@ -745,20 +745,20 @@
             <actionGroup ref="NavigateToCreatedCategoryActionGroup" stepKey="navigateToAPageWithPageBuilder">
                 <argument name="Category" value="$$createPreReqCategory$$"/>
             </actionGroup>
-            <actionGroup ref="expandAdminCategorySectionActionGroup" stepKey="switchToPageBuilderStage"/>
-            <actionGroup ref="openPageBuilderForAttributeActionGroup" after="switchToPageBuilderStage" stepKey="openPageBuilderForDescription"/>
+            <actionGroup ref="ExpandAdminCategorySectionActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="OpenPageBuilderForAttributeActionGroup" after="switchToPageBuilderStage" stepKey="openPageBuilderForDescription"/>
         </before>
         <after>
             <deleteData createDataKey="createPreReqCategory" before="logout" stepKey="deleteCreatedCategory"/>
         </after>
         <comment userInput="---merging to remove step---" stepKey="enterPageTitle"/>
-        <actionGroup ref="saveEditPanelSettingsFullScreenActionGroup" stepKey="saveEditPanelSettings1"/>
+        <actionGroup ref="SaveEditPanelSettingsFullScreenActionGroup" stepKey="saveEditPanelSettings1"/>
         <!-- Save Category -->
         <comment userInput="Save Category" stepKey="commentSaveCategory" before="exitPageBuilderFullScreen"/>
-        <actionGroup ref="exitPageBuilderFullScreenActionGroup" stepKey="exitPageBuilderFullScreen" before="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="saveCatalogCategoryActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="expandAdminCategorySectionActionGroup" stepKey="expandAdminCategorySection" before="switchToPageBuilderStage"/>
-        <actionGroup ref="openPageBuilderForAttributeActionGroup" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="ExitPageBuilderFullScreenActionGroup" stepKey="exitPageBuilderFullScreen" before="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveCatalogCategoryActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="ExpandAdminCategorySectionActionGroup" stepKey="expandAdminCategorySection" before="switchToPageBuilderStage"/>
+        <actionGroup ref="OpenPageBuilderForAttributeActionGroup" stepKey="switchToPageBuilderStage"/>
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStoreFront">
             <argument name="page" value="$$createPreReqCategory.name$$.html"/>
         </actionGroup>
@@ -783,28 +783,28 @@
             <actionGroup ref="NavigateToCreatedCategoryActionGroup" stepKey="navigateToAPageWithPageBuilder">
                 <argument name="Category" value="$$createPreReqCategory$$"/>
             </actionGroup>
-            <actionGroup ref="expandAdminCategorySectionActionGroup" stepKey="switchToPageBuilderStage"/>
-            <actionGroup ref="openPageBuilderForAttributeActionGroup" after="switchToPageBuilderStage" stepKey="openPageBuilderForDescription"/>
+            <actionGroup ref="ExpandAdminCategorySectionActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="OpenPageBuilderForAttributeActionGroup" after="switchToPageBuilderStage" stepKey="openPageBuilderForDescription"/>
         </before>
         <after>
             <deleteData createDataKey="createPreReqCategory" before="logout" stepKey="deleteCreatedCategory"/>
         </after>
         <comment userInput="---merging to remove step---" stepKey="enterPageTitle"/>
-        <actionGroup ref="saveEditPanelSettingsFullScreenActionGroup" stepKey="saveEditPanel1Settings"/>
-        <actionGroup ref="saveEditPanelSettingsFullScreenActionGroup" stepKey="saveEditPanel1Settings2"/>
-        <actionGroup ref="saveEditPanelSettingsFullScreenActionGroup" stepKey="saveEditPanel1Settings3"/>
+        <actionGroup ref="SaveEditPanelSettingsFullScreenActionGroup" stepKey="saveEditPanel1Settings"/>
+        <actionGroup ref="SaveEditPanelSettingsFullScreenActionGroup" stepKey="saveEditPanel1Settings2"/>
+        <actionGroup ref="SaveEditPanelSettingsFullScreenActionGroup" stepKey="saveEditPanel1Settings3"/>
         <!-- Save Category -->
         <comment userInput="Save Category" stepKey="commentSaveCategory" before="exitPageBuilderFullScreen"/>
-        <actionGroup ref="exitPageBuilderFullScreenActionGroup" stepKey="exitPageBuilderFullScreen" before="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="saveCatalogCategoryActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="expandAdminCategorySectionActionGroup" stepKey="expandAdminCategorySection" before="switchToPageBuilderStage1"/>
-        <actionGroup ref="openPageBuilderForAttributeActionGroup" stepKey="switchToPageBuilderStage1"/>
+        <actionGroup ref="ExitPageBuilderFullScreenActionGroup" stepKey="exitPageBuilderFullScreen" before="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveCatalogCategoryActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="ExpandAdminCategorySectionActionGroup" stepKey="expandAdminCategorySection" before="switchToPageBuilderStage1"/>
+        <actionGroup ref="OpenPageBuilderForAttributeActionGroup" stepKey="switchToPageBuilderStage1"/>
         <!-- Save Category After Sorting -->
         <comment userInput="Save Category After Sorting" stepKey="commentSaveCategory2" before="exitPageBuilderFullScreen2"/>
-        <actionGroup ref="exitPageBuilderFullScreenActionGroup" stepKey="exitPageBuilderFullScreen2" before="saveAndContinueEditCmsPage1"/>
-        <actionGroup ref="saveCatalogCategoryActionGroup" stepKey="saveAndContinueEditCmsPage1"/>
-        <actionGroup ref="expandAdminCategorySectionActionGroup" stepKey="expandAdminCategorySection2" before="switchToPageBuilderStage2"/>
-        <actionGroup ref="openPageBuilderForAttributeActionGroup" stepKey="switchToPageBuilderStage2"/>
+        <actionGroup ref="ExitPageBuilderFullScreenActionGroup" stepKey="exitPageBuilderFullScreen2" before="saveAndContinueEditCmsPage1"/>
+        <actionGroup ref="SaveCatalogCategoryActionGroup" stepKey="saveAndContinueEditCmsPage1"/>
+        <actionGroup ref="ExpandAdminCategorySectionActionGroup" stepKey="expandAdminCategorySection2" before="switchToPageBuilderStage2"/>
+        <actionGroup ref="OpenPageBuilderForAttributeActionGroup" stepKey="switchToPageBuilderStage2"/>
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStoreFront">
             <argument name="page" value="$$createPreReqCategory.name$$.html"/>
         </actionGroup>
@@ -829,8 +829,8 @@
             <actionGroup ref="NavigateToCreatedCategoryActionGroup" stepKey="navigateToAPageWithPageBuilder">
                 <argument name="Category" value="$$createPreReqCategory$$"/>
             </actionGroup>
-            <actionGroup ref="expandAdminCategorySectionActionGroup" stepKey="switchToPageBuilderStage"/>
-            <actionGroup ref="openPageBuilderForAttributeActionGroup" after="switchToPageBuilderStage" stepKey="openPageBuilderForDescription"/>
+            <actionGroup ref="ExpandAdminCategorySectionActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="OpenPageBuilderForAttributeActionGroup" after="switchToPageBuilderStage" stepKey="openPageBuilderForDescription"/>
         </before>
         <after>
             <deleteData createDataKey="createPreReqCategory" before="logout" stepKey="deleteCreatedCategory"/>
@@ -838,10 +838,10 @@
         <comment userInput="---merging to remove step---" stepKey="enterPageTitle"/>
         <!-- Save Category -->
         <comment userInput="Save Category" stepKey="commentSavePage"/>
-        <actionGroup ref="exitPageBuilderFullScreenActionGroup" stepKey="exitPageBuilderFullScreen" before="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="saveCatalogCategoryActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="expandAdminCategorySectionActionGroup" stepKey="expandAdminCategorySection" before="switchToPageBuilderStage"/>
-        <actionGroup ref="openPageBuilderForAttributeActionGroup" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="ExitPageBuilderFullScreenActionGroup" stepKey="exitPageBuilderFullScreen" before="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="SaveCatalogCategoryActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="ExpandAdminCategorySectionActionGroup" stepKey="expandAdminCategorySection" before="switchToPageBuilderStage"/>
+        <actionGroup ref="OpenPageBuilderForAttributeActionGroup" stepKey="switchToPageBuilderStage"/>
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStoreFront">
             <argument name="page" value="$$createPreReqCategory.name$$.html"/>
         </actionGroup>
@@ -865,8 +865,8 @@
             <actionGroup ref="NavigateToCreatedCategoryActionGroup" stepKey="navigateToAPageWithPageBuilder">
                 <argument name="Category" value="$$createPreReqCategory$$"/>
             </actionGroup>
-            <actionGroup ref="expandAdminCategorySectionActionGroup" stepKey="switchToPageBuilderStage"/>
-            <actionGroup ref="openPageBuilderForAttributeActionGroup" after="switchToPageBuilderStage" stepKey="openPageBuilderForDescription"/>
+            <actionGroup ref="ExpandAdminCategorySectionActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="OpenPageBuilderForAttributeActionGroup" after="switchToPageBuilderStage" stepKey="openPageBuilderForDescription"/>
         </before>
         <after>
             <deleteData createDataKey="createPreReqCategory" before="logout" stepKey="deleteCreatedCategory"/>
@@ -891,8 +891,8 @@
             <actionGroup ref="NavigateToCreatedCategoryActionGroup" stepKey="navigateToAPageWithPageBuilder">
                 <argument name="Category" value="$$createPreReqCategory$$"/>
             </actionGroup>
-            <actionGroup ref="expandAdminCategorySectionActionGroup" stepKey="switchToPageBuilderStage"/>
-            <actionGroup ref="openPageBuilderForAttributeActionGroup" after="switchToPageBuilderStage" stepKey="openPageBuilderForDescription"/>
+            <actionGroup ref="ExpandAdminCategorySectionActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="OpenPageBuilderForAttributeActionGroup" after="switchToPageBuilderStage" stepKey="openPageBuilderForDescription"/>
         </before>
         <after>
             <deleteData createDataKey="createPreReqCategory" before="logout" stepKey="deleteCreatedCategory"/>

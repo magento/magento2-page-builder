@@ -8,7 +8,7 @@
 
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
-    <actionGroup name="addTextToTinyMCEActionGroup">
+    <actionGroup name="AddTextToTinyMCEActionGroup">
         <arguments>
             <argument name="property" defaultValue=""/>
             <argument name="section" defaultValue="TextOnConfiguration"/>
@@ -22,7 +22,7 @@
         <waitForElementVisible selector="{{section.textInIFrame(property.value)}}" stepKey="waitForTextVisible"/>
         <switchToIFrame stepKey="exitIFrame"/>
     </actionGroup>
-    <actionGroup name="addTextToTinyMCEInlineActionGroup">
+    <actionGroup name="AddTextToTinyMCEInlineActionGroup">
         <arguments>
             <argument name="section"/>
             <argument name="text" defaultValue="{{PageBuilderTextProperty.value}}" type="string"/>
@@ -36,7 +36,7 @@
         <click selector="{{pageBuilderArea}}{{PageBuilderPanel.searchPanel}}" stepKey="loseFocusFromEditor"/>
         <waitForPageLoad stepKey="waitForUnFocus"/>
     </actionGroup>
-    <actionGroup name="addTextToTinyMCEInlineWYSIWYGDisabledActionGroup" extends="addTextToTinyMCEInlineActionGroup">
+    <actionGroup name="AddTextToTinyMCEInlineWYSIWYGDisabledActionGroup" extends="addTextToTinyMCEInlineActionGroup">
         <comment userInput="addTextToTinyMCEInlineWYSIWYGDisabled" stepKey="comment"/>
         <waitForElementVisible selector="{{section.textArea(index)}}" stepKey="waitForEditorFocused"/>
         <pressKey selector="{{section.textArea(index)}}" userInput="{{text}}" stepKey="enterText"/>
@@ -44,10 +44,10 @@
         <click selector="{{pageBuilderArea}}{{PageBuilderPanel.searchPanel}}" stepKey="loseFocusFromEditor"/>
         <waitForPageLoad stepKey="waitForUnFocus"/>
     </actionGroup>
-    <actionGroup name="replaceTextToTinyMCEActionGroup" extends="addTextToTinyMCEActionGroup">
+    <actionGroup name="ReplaceTextToTinyMCEActionGroup" extends="addTextToTinyMCEActionGroup">
         <executeJS function="tinymce.activeEditor.setContent('{{property.value}}')" stepKey="addTextToWYSIWYG"/>
     </actionGroup>
-    <actionGroup name="addVariableToTinyMCEActionGroup">
+    <actionGroup name="AddVariableToTinyMCEActionGroup">
         <arguments>
             <argument name="variable" defaultValue=""/>
         </arguments>
@@ -61,11 +61,11 @@
         <click selector="{{VariableSection.InsertWidget}}" stepKey="clickInsertVariable2"/>
         <waitForElementNotVisible selector="{{VariableSection.InsertWidget}}" stepKey="waitForVariableModalToClose"/>
     </actionGroup>
-    <actionGroup name="addVariableToTinyMCEInlineActionGroup" extends="addVariableToTinyMCEActionGroup">
+    <actionGroup name="AddVariableToTinyMCEInlineActionGroup" extends="addVariableToTinyMCEActionGroup">
         <waitForElementVisible selector="{{TinyMCESection.InsertVariableIcon}}" stepKey="waitForInsertVariable1"/>
         <click selector="{{TinyMCESection.InsertVariableIcon}}" stepKey="clickInsertVariable1"/>
     </actionGroup>
-    <actionGroup name="addVariableToTinyMCE3ActionGroup" extends="addVariableToTinyMCEActionGroup">
+    <actionGroup name="AddVariableToTinyMCE3ActionGroup" extends="addVariableToTinyMCEActionGroup">
         <arguments>
             <argument name="variable" defaultValue=""/>
         </arguments>
@@ -74,7 +74,7 @@
         <click selector="{{TextOnConfiguration.tinyMCE3VariableBtn}}" stepKey="clickInsertVariable1"/>
         <waitForElementVisible selector="{{TextOnConfiguration.tinyMCE3VariableBtn}}" stepKey="waitForVariableModalToClose"/>
     </actionGroup>
-    <actionGroup name="addPageLinkVariableWYSIWYGDisabledActionGroup">
+    <actionGroup name="AddPageLinkVariableWYSIWYGDisabledActionGroup">
         <arguments>
             <argument name="variable" defaultValue=""/>
         </arguments>
@@ -90,7 +90,7 @@
         <executeJS function="return document.getElementById('{{TextOnConfiguration.textAreaId}}').value;" stepKey="getText"/>
         <assertContains actual="getText" actualType="variable" expected="{{variable.editPanelValue}}" expectedType="string" stepKey="assertValue"/>
     </actionGroup>
-    <actionGroup name="addPageLinkWidgetToTinyMCEActionGroup">
+    <actionGroup name="AddPageLinkWidgetToTinyMCEActionGroup">
         <arguments>
             <argument name="widget" defaultValue=""/>
             <argument name="page" defaultValue="" type="string"/>
@@ -119,11 +119,11 @@
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear5"/>
         <waitForElementNotVisible selector="{{WidgetSection.InsertWidget}}" stepKey="waitForInsertWidgetModalToClose"/>
     </actionGroup>
-    <actionGroup name="addPageLinkWidgetToTinyMCEInlineActionGroup" extends="addPageLinkWidgetToTinyMCEActionGroup">
+    <actionGroup name="AddPageLinkWidgetToTinyMCEInlineActionGroup" extends="addPageLinkWidgetToTinyMCEActionGroup">
         <waitForElementVisible selector="{{TinyMCESection.InsertWidgetIcon}}" stepKey="waitForInsertWidget1"/>
         <click selector="{{TinyMCESection.InsertWidgetIcon}}" stepKey="clickAddWidgetBtn"/>
     </actionGroup>
-    <actionGroup name="addPageLinkWidgetToTinyMCE3ActionGroup" extends="addPageLinkWidgetToTinyMCEActionGroup">
+    <actionGroup name="AddPageLinkWidgetToTinyMCE3ActionGroup" extends="addPageLinkWidgetToTinyMCEActionGroup">
         <arguments>
             <argument name="widget" defaultValue=""/>
             <argument name="page" defaultValue="" type="string"/>
@@ -133,7 +133,7 @@
         <click selector="{{TextOnConfiguration.tinyMCE3WidgetBtn}}" stepKey="clickAddWidgetBtn"/>
         <waitForElementVisible selector="{{TextOnConfiguration.tinyMCE3WidgetBtn}}" stepKey="waitForInsertWidgetModalToClose"/>
     </actionGroup>
-    <actionGroup name="addPageLinkWidgetWYSIWYGDisabledActionGroup" extends="addPageLinkWidgetToTinyMCEActionGroup">
+    <actionGroup name="AddPageLinkWidgetWYSIWYGDisabledActionGroup" extends="addPageLinkWidgetToTinyMCEActionGroup">
         <arguments>
             <argument name="widget" defaultValue=""/>
             <argument name="page" defaultValue="" type="string"/>
@@ -145,7 +145,7 @@
         <executeJS function="return document.getElementById('{{TextOnConfiguration.textAreaId}}').value;" stepKey="getText"/>
         <assertContains actual="getText" actualType="variable" expected="{{widget.editPanelValue}}" expectedType="string" stepKey="assertValue"/>
     </actionGroup>
-    <actionGroup name="validateTextInTinyMCEActionGroup">
+    <actionGroup name="ValidateTextInTinyMCEActionGroup">
         <arguments>
             <argument name="property" defaultValue=""/>
             <argument name="section" defaultValue="TextOnConfiguration"/>
@@ -156,7 +156,7 @@
         <see selector="body" userInput="{{property.value}}" stepKey="seeText"/>
         <switchToIFrame stepKey="exitIFrame"/>
     </actionGroup>
-    <actionGroup name="insertLinkInWYSIWYGActionGroup">
+    <actionGroup name="InsertLinkInWYSIWYGActionGroup">
         <arguments>
             <argument name="section" defaultValue="TinyMCESection"/>
             <argument name="url" type="string"/>
@@ -176,7 +176,7 @@
         <waitForPageLoad stepKey="waitForPageLoad2"/>
         <waitForElementNotVisible selector="{{WYSIWYGInsertLinkModal.modal}}" stepKey="waitForInsertLinkModalGone"/>
     </actionGroup>
-    <actionGroup name="insertLinkInWYSIWYGExistingTextActionGroup">
+    <actionGroup name="InsertLinkInWYSIWYGExistingTextActionGroup">
         <arguments>
             <argument name="section" defaultValue="TinyMCESection"/>
             <argument name="url" type="string"/>
@@ -194,7 +194,7 @@
         <waitForPageLoad stepKey="waitForPageLoad2"/>
         <waitForElementNotVisible selector="{{WYSIWYGInsertLinkModal.modal}}" stepKey="waitForInsertLinkModalGone"/>
     </actionGroup>
-    <actionGroup name="assertTextareaContainsValueActionGroup">
+    <actionGroup name="AssertTextareaContainsValueActionGroup">
         <arguments>
             <argument name="selector" type="string"/>
             <argument name="value" type="string"/>
@@ -205,7 +205,7 @@
             <actualResult type="variable">textareaValue</actualResult>
         </assertContains>
     </actionGroup>
-    <actionGroup name="clickInsertImageInTinyMCEActionGroup">
+    <actionGroup name="ClickInsertImageInTinyMCEActionGroup">
         <!-- This goes in CE repo -->
         <comment userInput="clickInsertImageInTinyMCE" stepKey="comment"/>
         <waitForElementVisible selector="{{TinyMCESection.InsertImageIcon}}" stepKey="waitForInsertImageIcon"/>
@@ -213,13 +213,13 @@
         <waitForPageLoad stepKey="waitForPageLoad" />
         <waitForElementVisible selector="{{MediaGallerySection.Browse}}" stepKey="waitForBrowseImagesButton"/>
     </actionGroup>
-    <actionGroup name="clickMediaGalleryStorageRootArrowActionGroup">
+    <actionGroup name="ClickMediaGalleryStorageRootArrowActionGroup">
         <!-- This goes in CE repo -->
         <click selector="{{MediaGallerySection.StorageRootArrow}}" stepKey="clickStorageRootArrow"/>
         <waitForPageLoad stepKey="waitForPageLoad2"/>
         <waitForElement selector="{{MediaGallerySection.StorageRootArrowClicked}}" stepKey="waitForStorageRootArrowClicked"/>
     </actionGroup>
-    <actionGroup name="inlineEditWYSIWYGFromStageActionGroup">
+    <actionGroup name="InlineEditWYSIWYGFromStageActionGroup">
         <arguments>
             <argument name="contentType"/>
             <argument name="content" type="string"/>
@@ -231,7 +231,7 @@
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="loseFocusFromEditor"/>
     </actionGroup>
-    <actionGroup name="inlineEditTextAreaFromStageActionGroup">
+    <actionGroup name="InlineEditTextAreaFromStageActionGroup">
         <arguments>
             <argument name="contentType"/>
             <argument name="content" type="string"/>

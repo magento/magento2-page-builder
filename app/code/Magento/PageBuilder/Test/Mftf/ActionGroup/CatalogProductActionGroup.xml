@@ -8,7 +8,7 @@
 
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
-    <actionGroup name="openPageBuilderForAttributeActionGroup">
+    <actionGroup name="OpenPageBuilderForAttributeActionGroup">
         <arguments>
             <argument name="attributeCode" defaultValue="description" type="string"/>
             <argument name="section" defaultValue="PageBuilderProductAttribute"/>
@@ -20,7 +20,7 @@
         <waitForPageLoad stepKey="waitForPageBuilderToOpen"/>
         <waitForElementVisible selector="{{pageBuilderArea}}{{PageBuilderPanel.layoutMenuSection}}" stepKey="waiForPageBuilderVisible"/>
     </actionGroup>
-    <actionGroup name="expandAdminCategorySectionActionGroup">
+    <actionGroup name="ExpandAdminCategorySectionActionGroup">
         <!-- Move to CE -->
         <arguments>
             <argument name="sectionSelector" defaultValue="{{AdminCategoryContentSection.sectionHeader}}" type="string"/>
@@ -31,7 +31,7 @@
         <conditionalClick selector="{{sectionSelector}}" dependentSelector="{{sectionDependentSelector}}" visible="false" stepKey="expandSection"/>
         <waitForPageLoad time="30" stepKey="waitForSectionToExpand"/>
     </actionGroup>
-    <actionGroup name="saveCatalogCategoryActionGroup" extends="SaveCategoryFormActionGroup">
+    <actionGroup name="SaveCatalogCategoryActionGroup" extends="SaveCategoryFormActionGroup">
         <!-- Move to CE: Fix CE action group -->
         <waitForElementVisible selector="{{AdminCategoryMainActionsSection.SaveButton}}" stepKey="waitForSaveCategoryButton" before="saveCategory"/>
         <waitForPageLoad stepKey="waitForPageLoad" after="saveCategory"/>

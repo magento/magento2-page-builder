@@ -9,7 +9,7 @@
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
     <!-- Validate Row Parallax Background -->
-    <actionGroup name="validateRowBackgroundAttributesWithAllUpdatedAndParallaxEnabledActionGroup">
+    <actionGroup name="ValidateRowBackgroundAttributesWithAllUpdatedAndParallaxEnabledActionGroup">
         <arguments>
             <argument name="page" defaultValue=""/>
             <argument name="index" defaultValue="1" type="string"/>
@@ -28,7 +28,7 @@
         <waitForElementVisible selector="{{page.backgroundRepeat(index, backgroundRepeat.styleValue)}}" stepKey="waitForBackgroundRepeat"/>
         <waitForElementVisible selector="{{page.backgroundAttachment(index, backgroundAttachment.value)}}" stepKey="waitForBackgroundAttachment"/>
     </actionGroup>
-    <actionGroup name="validateRowParallaxBackgroundAttributesActionGroup">
+    <actionGroup name="ValidateRowParallaxBackgroundAttributesActionGroup">
         <arguments>
             <argument name="page" defaultValue=""/>
             <argument name="index" defaultValue="1" type="string"/>
@@ -39,11 +39,11 @@
         <waitForElementVisible selector="{{page.parallaxState(index, parallaxStateValue.value)}}" stepKey="waitForParallaxBackgroundState"/>
         <waitForElementVisible selector="{{page.parallaxSpeed(index, parallaxSpeedValue.value)}}" stepKey="waitForParallaxBackgroundSpeed"/>
     </actionGroup>
-    <actionGroup name="validateBackgroundImageContainerForParallaxRowActionGroup" extends="validateBackgroundImageContainerActionGroup">
+    <actionGroup name="ValidateBackgroundImageContainerForParallaxRowActionGroup" extends="validateBackgroundImageContainerActionGroup">
         <comment userInput="validateBackgroundImageContainerForParallaxRow" stepKey="comment"/>
         <executeJS function="return window.getComputedStyle({{section.parallaxJS(index)}}).backgroundImage" stepKey="backgroundImageValue"/>
     </actionGroup>
-    <actionGroup name="validateContainedRowAppearanceActionGroup">
+    <actionGroup name="ValidateContainedRowAppearanceActionGroup">
         <arguments>
             <argument name="pageOrStageWidthJS" defaultValue="{{PageBuilderStage.stageWidthJS}}" type="string"/>
             <argument name="section" defaultValue="RowOnStage"/>
@@ -63,7 +63,7 @@
         </assertLessThan>
         <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
     </actionGroup>
-    <actionGroup name="validateFullWidthRowAppearanceActionGroup">
+    <actionGroup name="ValidateFullWidthRowAppearanceActionGroup">
         <arguments>
             <argument name="pageOrStageWidthJS" defaultValue="{{PageBuilderStage.stageWidthJS}}" type="string"/>
             <argument name="section" defaultValue="RowOnStage"/>
@@ -98,7 +98,7 @@
         </assertLessThanOrEqual>
         <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
     </actionGroup>
-    <actionGroup name="validateFullBleedRowAppearanceActionGroup" extends="validateFullWidthRowAppearanceActionGroup">
+    <actionGroup name="ValidateFullBleedRowAppearanceActionGroup" extends="validateFullWidthRowAppearanceActionGroup">
         <executeJS function="return Math.abs({$rowChildElementWidth} - {$rowWidth})" stepKey="rowMinusChildWidth" after="pageMinusRowWidth"/>
         <assertLessThanOrEqual stepKey="assertRowWidthGreaterThanOrEqualToContents">
             <expectedResult type="int">{{acceptableOffset}}</expectedResult>

@@ -28,32 +28,32 @@
         <after>
             <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG"/>
             <deleteData createDataKey="createPreReqCMSPage" stepKey="deletePreReqCMSPage"/>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
         <!--Create CMS Page using PageBuilder-->
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToContentCreatedCMSPage1">
             <argument name="CMSPage" value="$$createPreReqCMSPage$$"/>
         </actionGroup>
         <waitForElementVisible selector="{{PageBuilderPanel.layoutMenuSection}}" stepKey="waitForPageBuilderDisplay"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragTextOntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragTextOntoStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <waitForLoadingMaskToDisappear stepKey="waitForEditPanelSpinner"/>
         <fillField selector="{{TextOnConfiguration.textArea}}" userInput="Hello CMS Page from PageBuilder" stepKey="addTextToEditor"/>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <click selector="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" stepKey="saveCMSWithPageBuilderContent"/>
         <!--Enable WYSIWYG-->
         <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG"/>
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToContentCreatedCMSPage2">
             <argument name="CMSPage" value="$$createPreReqCMSPage$$"/>
         </actionGroup>
-        <actionGroup ref="verifyPageBuilderVisibleOnPageActionGroup" stepKey="verifyPageBuilderVisibleOnCMSPage"/>
+        <actionGroup ref="VerifyPageBuilderVisibleOnPageActionGroup" stepKey="verifyPageBuilderVisibleOnCMSPage"/>
     </test>
     <test name="AdminConfigDefaultCMSPageLayoutFromConfigurationSettingTest">
         <annotations>
@@ -85,33 +85,33 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <!-- Set background color of row -->
         <comment userInput="Set background color of row" stepKey="commentSetRowBackgroundColor"/>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBackgroundColor">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBackgroundColor">
             <argument name="property" value="PageBuilderBackgroundColor_HSV_Orange"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <!-- Add heading to stage -->
         <comment userInput="Add heading to stage" stepKey="commentAddHeadingToStage"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragHeadingOntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragHeadingOntoStage">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
-        <actionGroup ref="enterHeadingOnStageActionGroup" stepKey="enterHeadingOnStage">
+        <actionGroup ref="EnterHeadingOnStageActionGroup" stepKey="enterHeadingOnStage">
             <argument name="headingText" value="PageBuilderHeadingTextProperty"/>
         </actionGroup>
         <!-- Use Full Width layout -->
@@ -123,10 +123,10 @@
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Check that description is full width on storefront -->
         <comment userInput="Check that description is full width on storefront" stepKey="commentSeeDescriptionFullWidth"/>
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="verifyFullWidthLayoutActionGroup" stepKey="verifyFullWidthLayout"/>
+        <actionGroup ref="VerifyFullWidthLayoutActionGroup" stepKey="verifyFullWidthLayout"/>
     </test>
     <test name="PageBuilderCMSPageCreateCMSPageWithInvalidFullWidthLayout">
         <annotations>
@@ -143,34 +143,34 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
             <closeTab stepKey="closeTab"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <!-- Set background color of row -->
         <comment userInput="Set background color of row" stepKey="commentSetRowBackgroundColor"/>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBackgroundColor">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBackgroundColor">
             <argument name="property" value="PageBuilderBackgroundColor_HSV_Orange"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <!-- Add heading to stage -->
         <comment userInput="Add heading to stage" stepKey="commentAddHeadingToStage"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragHeadingOntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragHeadingOntoStage">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
-        <actionGroup ref="enterHeadingOnStageActionGroup" stepKey="enterHeadingOnStage">
+        <actionGroup ref="EnterHeadingOnStageActionGroup" stepKey="enterHeadingOnStage">
             <argument name="headingText" value="PageBuilderHeadingTextProperty"/>
         </actionGroup>
         <!-- Use Category - Full Width layout -->
@@ -183,7 +183,7 @@
         <!-- Check that content is displayed on storefront with the category full width layout -->
         <comment userInput="Check that content is displayed on storefront with the product full width layout" stepKey="commentSeeContent"/>
         <openNewTab stepKey="openNewTab"/>
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <waitForElementVisible selector="{{HeadingOnStorefront.headingText(PageBuilderHeadingTypeProperty_H2.value, PageBuilderHeadingTextProperty.value, '1')}}" stepKey="waitForStorefrontHeadingText"/>

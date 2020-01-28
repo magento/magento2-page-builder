@@ -23,27 +23,27 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
         <comment userInput="Given I have added Tabs container with one Tab to the stage and save" stepKey="aC1"/>
         <!-- Set the page title, as we'll be saving the page -->
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle1">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle1">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <fillField selector="{{PageBuilderPanel.searchPanel}}" userInput="tabs" stepKey="fillSearch"/>
         <see userInput="Tabs" selector="{{PageBuilderPanel.searchResults}}" stepKey="validateSearchResults"/>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragContentTypeToStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <waitForPageLoad stepKey="waitForTabsToLoad"/>
         <waitForElementVisible selector="{{TabOnStage.tabContent('1')}}" stepKey="waitForFirstTabContent"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="waitForFirstTabHeader"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <comment userInput="When I view options menu for single Tab" stepKey="aC2"/>
         <waitForElementVisible time="10" selector="{{TabOnStage.tabHeader('1')}}" stepKey="waitForContentTypeInStageVisible" />
         <click stepKey="clickTabTitle" selector="{{TabOnStage.tabHeader('1')}}"/>
@@ -53,12 +53,12 @@
         <seeElement selector="{{TabOnStage.optionsMenuButtonDisabled('1', 'remove')}}" stepKey="seeTabRemoveOptionDisabled"/>
         <comment userInput="User remove default state Tabs content type with confirmation." stepKey="aC4"/>
         <click selector="{{TabsOnStage.tabsContainer}}" stepKey="focusTabsElement"/>
-        <actionGroup ref="removeContentTypeFromStageActionGroup" stepKey="removeContentTypeFromStage">
+        <actionGroup ref="RemoveContentTypeFromStageActionGroup" stepKey="removeContentTypeFromStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage2"/>
         <comment userInput="No Tabs shown on the stage after save nor on the storefront" stepKey="aC5"/>
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage2"/>
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage2"/>
         <dontSeeElement selector="{{PageBuilderStage.contentTypeInStage(PageBuilderTabsContentType.role)}}" stepKey="dontSeeContentTypeInStage"/>
         <amOnPage url="{{PageBuilderTabsContentType.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <reloadPage stepKey="reloadPage"/>
@@ -80,24 +80,24 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
         <comment userInput="Given I have added Tabs content type to the stage with a second Tab in default state" stepKey="aC1"/>
         <!-- Set the page title, as we'll be saving the page -->
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle1">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle1">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
 
         <!-- Add Tabs to Stage -->
         <comment userInput="Add Tabs to Stage" stepKey="addTabsToStage"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragTabsIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragTabsIntoStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Validate Tabs default state On Stage -->
@@ -106,12 +106,12 @@
         <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="waitForFirstTabHeader"/>
         <click selector="{{TabsOnStage.tabsContainer}}" stepKey="focusTabsElement"/>
         <!-- Add second tab -->
-        <actionGroup ref="addChildContentTypeFromOptionMenuActionGroup" stepKey="addChildContentType">
+        <actionGroup ref="AddChildContentTypeFromOptionMenuActionGroup" stepKey="addChildContentType">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <comment userInput="When I delete second default state Tab from the stage" stepKey="aC2"/>
         <!-- Remove second tab -->
-        <actionGroup ref="removeContentTypeFromStageSmallByIndexActionGroup" stepKey="removeTabFromStage">
+        <actionGroup ref="RemoveContentTypeFromStageSmallByIndexActionGroup" stepKey="removeTabFromStage">
             <argument name="section" value="TabOnStage"/>
         </actionGroup>
         <comment userInput="Removal confirmation modal not displayed when removing default state individual Tab" stepKey="aC3"/>
@@ -119,7 +119,7 @@
         <waitForElementNotVisible time="30" selector="{{PageBuilderStage.modalOk}}" stepKey="dontSeeModalOkHeader"/>
         <comment userInput="Tabs with single Tab shown on the stage after save and on the storefront" stepKey="aC4"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage2"/>
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage2"/>
         <dontSeeElement selector="{{TabOnStage.tabHeader('2')}}" stepKey="dontSeeSecondTab"/>
         <seeElement selector="{{PageBuilderStage.contentTypeInStage(PageBuilderTabsContentType.role)}}" stepKey="seeTabsInStage"/>
         <amOnPage url="{{PageBuilderTabsContentType.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
@@ -143,51 +143,51 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
         <comment userInput="Given I have added a second Tab on the stage and customized it" stepKey="aC1"/>
         <!-- Add Tabs to Stage -->
         <comment userInput="Add Tabs to Stage" stepKey="addTabsToStage"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragTabsIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragTabsIntoStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Fill tab config-->
-        <actionGroup ref="addChildContentTypeFromOptionMenuActionGroup" stepKey="addChildContentType">
+        <actionGroup ref="AddChildContentTypeFromOptionMenuActionGroup" stepKey="addChildContentType">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditPanel2">
+        <actionGroup ref="OpenPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditPanel2">
             <argument name="section" value="TabOnStage"/>
             <argument name="targetIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterSecondTabName">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterSecondTabName">
             <argument name="property" value="PageBuilderTabNameRandom2"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelFieldActionGroup" stepKey="selectBackgroundPositionCentered">
+        <actionGroup ref="SelectSlideOutPanelFieldActionGroup" stepKey="selectBackgroundPositionCentered">
             <argument name="property" value="PageBuilderBackgroundPosition_Center"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelFieldActionGroup" stepKey="selectBackgroundAttachment">
+        <actionGroup ref="SelectSlideOutPanelFieldActionGroup" stepKey="selectBackgroundAttachment">
             <argument name="property" value="PageBuilderBackgroundAttachment_Fixed"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBackgroundColor">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBackgroundColor">
             <argument name="property" value="PageBuilderBackgroundColor_Hex_Grey"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
 
         <comment userInput="User deletes tab with customization from Tabs, user sees warning message" stepKey="aC2"/>
         <!-- Remove second tab -->
-        <actionGroup ref="removeContentTypeFromStageSmallByIndexActionGroup" stepKey="removeTabFromStage">
+        <actionGroup ref="RemoveContentTypeFromStageSmallByIndexActionGroup" stepKey="removeTabFromStage">
             <argument name="section" value="TabOnStage"/>
             <argument name="targetIndex" value="2"/>
         </actionGroup>
         <comment userInput="User confirms deleting tab with customization, it disappears from Admin preview" stepKey="aC3"/>
-        <actionGroup ref="confirmRemovalModalActionGroup" stepKey="confirmRemoval"/>
+        <actionGroup ref="ConfirmRemovalModalActionGroup" stepKey="confirmRemoval"/>
         <dontSeeElement selector="{{TabOnStage.tabHeader('2')}}" stepKey="dontSeeSecondTab"/>
         <seeElement selector="{{TabOnStage.tabHeader('1')}}" stepKey="seeFirstTabOnStage"/>
     </test>
@@ -206,50 +206,50 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
         <comment userInput="Given I have added Tabs with a second Tab" stepKey="aC1"/>
         <!-- Set the page title, as we'll be saving the page -->
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle1">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle1">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragTabsIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragTabsIntoStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
-        <actionGroup ref="addChildContentTypeFromOptionMenuActionGroup" stepKey="addChildContentType">
+        <actionGroup ref="AddChildContentTypeFromOptionMenuActionGroup" stepKey="addChildContentType">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <waitForPageLoad stepKey="waitForLoadingMaskToDisappear"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('2')}}" stepKey="confirmSecondTab"/>
         <click selector="{{TabsOnStage.tabsContainer}}" stepKey="focusOnContentType"/>
         <comment userInput="Given I have added a Text content type to the second Tab" stepKey="aC2"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection2">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection2">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToContainerActionGroup" stepKey="dragTextOntoTab">
+        <actionGroup ref="DragContentTypeToContainerActionGroup" stepKey="dragTextOntoTab">
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="containerTargetType" value="PageBuilderTabContentType"/>
             <argument name="containerTargetIndex" value="2" />
         </actionGroup>
-        <actionGroup ref="clickOutsideTextInlineEditingActionGroup" stepKey="closeLiveEdit"/>
+        <actionGroup ref="ClickOutsideTextInlineEditingActionGroup" stepKey="closeLiveEdit"/>
         <comment userInput="User deletes tab with content from Tabs, user sees warning message" stepKey="aC3"/>
-        <actionGroup ref="removeContentTypeFromStageSmallByIndexActionGroup" stepKey="removeTabFromStage">
+        <actionGroup ref="RemoveContentTypeFromStageSmallByIndexActionGroup" stepKey="removeTabFromStage">
             <argument name="section" value="TabOnStage"/>
             <argument name="targetIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="confirmRemovalModalActionGroup" stepKey="confirmRemoval"/>
+        <actionGroup ref="ConfirmRemovalModalActionGroup" stepKey="confirmRemoval"/>
         <comment userInput="User confirms deleting tab with content, it disappears from Admin preview" stepKey="aC4"/>
         <dontSeeElement selector="{{TabOnStage.tabHeader('2')}}" stepKey="dontSeeSecondTab"/>
         <comment userInput="Tabs with single Tab shown on the stage after save" stepKey="aC5"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage2"/>
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage2"/>
         <dontSeeElement selector="{{TabOnStage.tabHeader('2')}}" stepKey="dontSeeSecondTab2"/>
         <seeElement selector="{{PageBuilderStage.contentTypeInStage(PageBuilderTabsContentType.role)}}" stepKey="seeTabsInStage"/>
         <comment userInput="User goes to the storefront and sees 2 tabs not being displayed" stepKey="aC6"/>
@@ -274,33 +274,33 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
         <comment userInput="Given I have customized the Edit Tabs container advanced settings" stepKey="aC1"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragTabsIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragTabsIntoStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <click selector="{{TabsOnStage.tabsContainer}}" stepKey="focusTabsElement"/>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterNavAlignmentCenter">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterNavAlignmentCenter">
             <argument name="property" value="PageBuilderTabsAlignmentCenter"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <!-- Verify in Admin Preview-->
         <waitForElementVisible selector="{{TabsOnStage.tabsNavAligned(PageBuilderTabsAlignmentCenter.value)}}" stepKey="seeTabsNavAlignedCenteredAdmin"/>
         <comment userInput="When I delete customized Tabs container from the stage" stepKey="aC2"/>
         <click selector="{{TabsOnStage.tabsContainer}}" stepKey="focusTabsElement2"/>
         <comment userInput="Removal confirmation modal displayed when removing customized Tabs container" stepKey="aC3"/>
-        <actionGroup ref="removeContentTypeFromStageActionGroup" stepKey="removeContentTypeFromStage">
+        <actionGroup ref="RemoveContentTypeFromStageActionGroup" stepKey="removeContentTypeFromStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
     </test>
@@ -319,32 +319,32 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
         <comment userInput="Given I have added Tabs container with 3 Tabs to the stage" stepKey="aC1"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragTabsIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragTabsIntoStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
-        <actionGroup ref="addChildContentTypeFromOptionMenuActionGroup" stepKey="addChildContentType">
+        <actionGroup ref="AddChildContentTypeFromOptionMenuActionGroup" stepKey="addChildContentType">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <waitForElementVisible selector="{{TabOnStage.tabContent('2')}}" stepKey="waitForNewTabContent2"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('2')}}" stepKey="waitForNewTabHeader2"/>
-        <actionGroup ref="addChildContentTypeFromOptionMenuActionGroup" stepKey="addChildContentType2">
+        <actionGroup ref="AddChildContentTypeFromOptionMenuActionGroup" stepKey="addChildContentType2">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <waitForElementVisible selector="{{TabOnStage.tabContent('3')}}" stepKey="waitForNewTabContent3"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('3')}}" stepKey="waitForNewTabHeader3"/>
         <comment userInput="When I delete third Tab from the stage" stepKey="aC2"/>
         <click stepKey="clickTabHeader3" selector="{{TabOnStage.tabHeader('3')}}"/>
-        <actionGroup ref="removeContentTypeFromStageSmallByIndexActionGroup" stepKey="removeTabFromStage">
+        <actionGroup ref="RemoveContentTypeFromStageSmallByIndexActionGroup" stepKey="removeTabFromStage">
             <argument name="section" value="TabOnStage"/>
             <argument name="targetIndex" value="3"/>
         </actionGroup>
@@ -370,44 +370,44 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
         <comment userInput="Given I have customized a Tab on the stage and copied it" stepKey="aC1"/>
         <!-- Set the page title, as we'll be saving the page -->
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle1">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle1">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
         <comment userInput="Add Tabs to Stage" stepKey="addTabsToStage"/>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragTabsIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragTabsIntoStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditPanel">
+        <actionGroup ref="OpenPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditPanel">
             <argument name="section" value="TabOnStage"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterFirstTabName">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterFirstTabName">
             <argument name="property" value="PageBuilderTabNameRandom1"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBackgroundColor">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBackgroundColor">
             <argument name="property" value="PageBuilderBackgroundColor_Hex_Grey"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <waitForPageLoad stepKey="waitForNewTab" time="30"/>
 
-        <actionGroup ref="duplicateSmallContentTypeActionGroup" stepKey="duplicateSmallContentType1">
+        <actionGroup ref="DuplicateSmallContentTypeActionGroup" stepKey="duplicateSmallContentType1">
             <argument name="section" value="TabOnStage"/>
             <argument name="targetIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="duplicateSmallContentTypeActionGroup" stepKey="duplicateSmallContentType2">
+        <actionGroup ref="DuplicateSmallContentTypeActionGroup" stepKey="duplicateSmallContentType2">
             <argument name="section" value="TabOnStage"/>
             <argument name="targetIndex" value="2"/>
         </actionGroup>
         <comment userInput="When I delete customized Tab from the stage and dismiss the warning on confirmation modal" stepKey="aC2"/>
-        <actionGroup ref="removeContentTypeFromStageSmallByIndexActionGroup" stepKey="removeTabFromStage1">
+        <actionGroup ref="RemoveContentTypeFromStageSmallByIndexActionGroup" stepKey="removeTabFromStage1">
             <argument name="section" value="TabOnStage"/>
             <argument name="targetIndex" value="3"/>
         </actionGroup>
@@ -416,12 +416,12 @@
         <seeElementInDOM selector="{{PageBuilderStage.modalOk}}" stepKey="seeModalOk" />
         <waitForElementVisible selector="{{PageBuilderStage.modalDoNotShowThisAgain}}" stepKey="waitForDoNotShowThisAgain"/>
         <click selector="{{PageBuilderStage.modalDoNotShowThisAgain}}" stepKey="clickDoNotShowThisAgain"/>
-        <actionGroup ref="confirmRemovalModalActionGroup" stepKey="confirmRemoval"/>
+        <actionGroup ref="ConfirmRemovalModalActionGroup" stepKey="confirmRemoval"/>
         <waitForPageLoad stepKey="waitForRemovalModal" time="30"/>
         <dontSeeElement selector="{{TabOnStage.tabHeader('3')}}" stepKey="dontSeeThirdTab"/>
 
         <comment userInput="Deleting another customized Tab from the stage does not show confirmation modal" stepKey="aC3"/>
-        <actionGroup ref="removeContentTypeFromStageSmallByIndexActionGroup" stepKey="removeTabFromStage2">
+        <actionGroup ref="RemoveContentTypeFromStageSmallByIndexActionGroup" stepKey="removeTabFromStage2">
             <argument name="section" value="TabOnStage"/>
             <argument name="targetIndex" value="2"/>
         </actionGroup>
@@ -430,36 +430,36 @@
         <dontSeeElement selector="{{TabOnStage.tabHeader('2')}}" stepKey="dontSeeSecondTabOnStage"/>
 
         <comment userInput="Deleting a customized Heading from the stage does not show confirmation modal in same session" stepKey="aC4"/>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragRowIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragRowIntoStage">
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <seeNumberOfElements selector="{{RowOnStage.allRows}}" userInput="2" stepKey="seeTwoRows"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToContainerActionGroup" stepKey="dragHeadingOntoNewRow">
+        <actionGroup ref="DragContentTypeToContainerActionGroup" stepKey="dragHeadingOntoNewRow">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="1" />
         </actionGroup>
-        <actionGroup ref="clickOutsideLiveEditHeadingActionGroup" stepKey="clickOutsideLiveEditHeading">
+        <actionGroup ref="ClickOutsideLiveEditHeadingActionGroup" stepKey="clickOutsideLiveEditHeading">
             <argument name="index" value="1"/>
         </actionGroup>
 
         <!-- Configure our heading -->
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelFieldGeneralActionGroup" stepKey="enterHeadingTypePropertyH5">
+        <actionGroup ref="SelectSlideOutPanelFieldGeneralActionGroup" stepKey="enterHeadingTypePropertyH5">
             <argument name="property" value="PageBuilderHeadingTypeProperty_H5"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterHeadingTitleProperty">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterHeadingTitleProperty">
             <argument name="property" value="PageBuilderHeadingTextProperty"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettingsHeading"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettingsHeading"/>
 
         <!-- Remove the heading, should not see modal -->
-        <actionGroup ref="removeEmptyContentTypeFromStageActionGroup" stepKey="removeHeader">
+        <actionGroup ref="RemoveEmptyContentTypeFromStageActionGroup" stepKey="removeHeader">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <dontSee selector="{{PageBuilderStage.modal}}" stepKey="dontSeeModalHeaderAfterHeader"/>

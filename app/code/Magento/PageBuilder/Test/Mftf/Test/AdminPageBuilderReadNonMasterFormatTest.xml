@@ -29,7 +29,7 @@
         <after>
             <magentoCLI command="config:set cms/pagebuilder/enabled 1" stepKey="enablePageBuilder"/>
             <deleteData createDataKey="createPreReqCMSPage" stepKey="deleteCreatePreReqCMSPage"/>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToContentCreatedCMSPage1">
             <argument name="CMSPage" value="$$createPreReqCMSPage$$"/>
@@ -40,7 +40,7 @@
         <waitForElementVisible time="1" selector="{{CmsNewPagePageActionsSection.content}}" stepKey="waitForContentField" />
         <fillField selector="{{CmsNewPagePageActionsSection.content}}" userInput="{{simpleCmsPage.content}}" stepKey="enterContent"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="enablePageBuilderSettingActionGroup" stepKey="enablePageBuilder"/>
+        <actionGroup ref="EnablePageBuilderSettingActionGroup" stepKey="enablePageBuilder"/>
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToContentCreatedCMSPage2">
             <argument name="CMSPage" value="$$createPreReqCMSPage$$"/>
         </actionGroup>
@@ -71,7 +71,7 @@
         <after>
             <magentoCLI command="config:set cms/pagebuilder/enabled 1" stepKey="enablePageBuilder"/>
             <deleteData createDataKey="createPreReqCMSPage" stepKey="deleteCreatePreReqCMSPage"/>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToContentCreatedCMSPage1">
             <argument name="CMSPage" value="$$createPreReqCMSPage$$"/>
@@ -82,13 +82,13 @@
         <waitForElementVisible time="1" selector="{{CmsNewPagePageActionsSection.content}}" stepKey="waitForContentField" />
         <fillField selector="{{CmsNewPagePageActionsSection.content}}" userInput="{{cmsPageArbitraryHtml.content}}" stepKey="enterContent"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="enablePageBuilderSettingActionGroup" stepKey="enablePageBuilder"/>
+        <actionGroup ref="EnablePageBuilderSettingActionGroup" stepKey="enablePageBuilder"/>
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToContentCreatedCMSPage2">
             <argument name="CMSPage" value="$$createPreReqCMSPage$$"/>
         </actionGroup>
         <waitForElement time="5" selector="{{CmsNewPagePageContentSection.header}}" stepKey="waitForElement" />
         <waitForElementVisible time="5" selector="{{CmsNewPagePageContentSection.header}}" stepKey="waitForHeaderVisible" />
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <waitForElementVisible time="1" selector="{{PageBuilderStage.contentTypeInStage('html')}}" stepKey="waitForContentTypeInStage" />
         <seeElement selector="{{PageBuilderStage.contentTypeInStage('html')}}" stepKey="seeContentTypeInStage"/>
         <seeElementInDOM selector="{{HtmlOnBackendArbitraryHtml.content}}" stepKey="assertHtmlContent"/>
@@ -114,7 +114,7 @@
         <after>
             <magentoCLI command="config:set cms/pagebuilder/enabled 1" stepKey="enablePageBuilder"/>
             <deleteData createDataKey="createPreReqCMSPage" stepKey="deleteCreatePreReqCMSPage"/>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToContentCreatedCMSPage1">
             <argument name="CMSPage" value="$$createPreReqCMSPage$$"/>
@@ -126,7 +126,7 @@
         <waitForElementVisible time="1" selector="{{CmsNewPagePageActionsSection.content}}" stepKey="waitForContentField" />
         <fillField selector="{{CmsNewPagePageActionsSection.content}}" userInput="{{cmsPageNonexistentDataContentType.content}}" stepKey="enterContent"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="enablePageBuilderSettingActionGroup" stepKey="enablePageBuilder"/>
+        <actionGroup ref="EnablePageBuilderSettingActionGroup" stepKey="enablePageBuilder"/>
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToContentCreatedCMSPage2">
             <argument name="CMSPage" value="$$createPreReqCMSPage$$"/>
         </actionGroup>
@@ -158,7 +158,7 @@
         <after>
             <magentoCLI command="config:set cms/pagebuilder/enabled 1" stepKey="enablePageBuilder"/>
             <deleteData createDataKey="createPreReqCMSPage" stepKey="deleteCreatePreReqCMSPage"/>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToContentCreatedCMSPage1">
             <argument name="CMSPage" value="$$createPreReqCMSPage$$"/>
@@ -169,12 +169,12 @@
         <waitForElementVisible time="1" selector="{{CmsNewPagePageActionsSection.content}}" stepKey="waitForContentField" />
         <fillField selector="{{CmsNewPagePageActionsSection.content}}" userInput="{{cmsPageWithImage.content}}" stepKey="enterContent"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="enablePageBuilderSettingActionGroup" stepKey="enablePageBuilder"/>
+        <actionGroup ref="EnablePageBuilderSettingActionGroup" stepKey="enablePageBuilder"/>
         <actionGroup ref="ClearCacheActionGroup" stepKey="clearMagentoCache"/>
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToContentCreatedCMSPage2">
             <argument name="CMSPage" value="$$createPreReqCMSPage$$"/>
         </actionGroup>
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <waitForElementVisible time="1" selector="{{PageBuilderStage.contentTypeInStage('html')}}" stepKey="waitForContentTypeInStage" />
         <seeElement selector="{{PageBuilderStage.contentTypeInStage('html')}}" stepKey="seeContentTypeInStage"/>
         <seeElementInDOM selector="{{HtmlOnBackendWithImage.content}}" stepKey="assertHtmlContent"/>
@@ -211,7 +211,7 @@
             <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="deleteImageFromStorage">
                 <argument name="Image" value="ImageUpload"/>
             </actionGroup>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToContentCreatedCMSPage1">
             <argument name="CMSPage" value="$$createPreReqCMSPage$$"/>
@@ -253,13 +253,13 @@
         <click selector="{{MediaGallerySection.OkBtn}}" stepKey="clickOkBtn" />
         <waitForPageLoad stepKey="waitForPageLoad5"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="enablePageBuilderSettingActionGroup" stepKey="enablePageBuilder"/>
+        <actionGroup ref="EnablePageBuilderSettingActionGroup" stepKey="enablePageBuilder"/>
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToContentCreatedCMSPage2">
             <argument name="CMSPage" value="$$createPreReqCMSPage$$"/>
         </actionGroup>
         <waitForElement time="5" selector="{{CmsNewPagePageContentSection.header}}" stepKey="waitForElement" />
         <waitForElementVisible time="5" selector="{{CmsNewPagePageContentSection.header}}" stepKey="waitForHeaderVisible" />
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <waitForElementVisible time="1" selector="{{PageBuilderStage.contentTypeInStage('html')}}" stepKey="waitForContentTypeInStage" />
         <seeElement selector="{{PageBuilderStage.contentTypeInStage('html')}}" stepKey="seeContentTypeInStage"/>
         <dontSeeElementInDOM selector="{{HtmlOnBackendMediaDirective.content}}" stepKey="assertHtmlContent"/>

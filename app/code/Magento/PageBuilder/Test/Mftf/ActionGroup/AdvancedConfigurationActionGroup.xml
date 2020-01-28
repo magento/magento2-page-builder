@@ -8,7 +8,7 @@
 
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
-    <actionGroup name="fillSlideOutPanelFieldMarginsActionGroup">
+    <actionGroup name="FillSlideOutPanelFieldMarginsActionGroup">
         <arguments>
             <argument name="property" defaultValue=""/>
         </arguments>
@@ -19,7 +19,7 @@
         <fillField selector="{{AdvancedForm.advancedMarginBottom}}" userInput="{{property.marginBottom}}" stepKey="fillMarginBottomField"/>
         <click selector="{{EditPanelForm.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
     </actionGroup>
-    <actionGroup name="fillSlideOutPanelSingleFieldMarginsOrPaddingActionGroup">
+    <actionGroup name="FillSlideOutPanelSingleFieldMarginsOrPaddingActionGroup">
         <arguments>
             <argument name="field" type="string"/>
             <argument name="value" type="string"/>
@@ -27,7 +27,7 @@
         <waitForElement selector="{{AdvancedForm.advancedMarginsOrPaddingField(field)}}" stepKey="waitForElement"/>
         <fillField selector="{{AdvancedForm.advancedMarginsOrPaddingField(field)}}" userInput="{{value}}" stepKey="fillFieldMarginOrPadding"/>
     </actionGroup>
-    <actionGroup name="validateMarginsOrPaddingErrorActionGroup">
+    <actionGroup name="ValidateMarginsOrPaddingErrorActionGroup">
         <arguments>
             <argument name="property"/>
             <argument name="errorMessage" type="string"/>
@@ -36,7 +36,7 @@
         <seeElement selector="{{EditPanelForm.panelSectionError(property.section)}}" stepKey="seeElementSectionChangedIcon"/>
         <see userInput="{{errorMessage}}" selector="{{AdvancedForm.advancedMarginAndPaddingErrorMessage}}" stepKey="seeErrorMessage"/>
     </actionGroup>
-    <actionGroup name="fillSlideOutPanelFieldPaddingActionGroup">
+    <actionGroup name="FillSlideOutPanelFieldPaddingActionGroup">
         <arguments>
             <argument name="property" defaultValue=""/>
         </arguments>
@@ -47,7 +47,7 @@
         <fillField selector="{{AdvancedForm.advancedPaddingBottom}}" userInput="{{property.paddingBottom}}" stepKey="fillPaddingBottomField"/>
         <click selector="{{EditPanelForm.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
     </actionGroup>
-    <actionGroup name="fillSlideOutPanelFieldMarginsAndPaddingActionGroup">
+    <actionGroup name="FillSlideOutPanelFieldMarginsAndPaddingActionGroup">
         <arguments>
             <argument name="property" defaultValue=""/>
         </arguments>
@@ -64,7 +64,7 @@
         <fillField selector="{{AdvancedForm.advancedPaddingLeft}}" userInput="{{property.paddingLeft}}" stepKey="fillPaddingLeftField"/>
         <click selector="{{EditPanelForm.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
     </actionGroup>
-    <actionGroup name="clearSlideOutPanelFieldMarginsActionGroup">
+    <actionGroup name="ClearSlideOutPanelFieldMarginsActionGroup">
         <arguments>
             <argument name="property" defaultValue=""/>
         </arguments>
@@ -75,7 +75,7 @@
         <clearField selector="{{AdvancedForm.advancedMarginBottom}}" stepKey="clearMarginBottomField"/>
         <click selector="{{EditPanelForm.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
     </actionGroup>
-    <actionGroup name="clearSlideOutPanelFieldPaddingActionGroup">
+    <actionGroup name="ClearSlideOutPanelFieldPaddingActionGroup">
         <arguments>
             <argument name="property" defaultValue=""/>
         </arguments>
@@ -86,7 +86,7 @@
         <clearField selector="{{AdvancedForm.advancedPaddingBottom}}" stepKey="clearPaddingBottomField"/>
         <click selector="{{EditPanelForm.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
     </actionGroup>
-    <actionGroup name="clearSlideOutPanelFieldMarginsAndPaddingActionGroup">
+    <actionGroup name="ClearSlideOutPanelFieldMarginsAndPaddingActionGroup">
         <arguments>
             <argument name="property" defaultValue=""/>
         </arguments>
@@ -103,7 +103,7 @@
         <clearField selector="{{AdvancedForm.advancedPaddingBottom}}" stepKey="clearPaddingBottomField"/>
         <click selector="{{EditPanelForm.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
     </actionGroup>
-    <actionGroup name="seeInMarginFieldsSlideOutPanelActionGroup">
+    <actionGroup name="SeeInMarginFieldsSlideOutPanelActionGroup">
         <arguments>
             <argument name="property" defaultValue=""/>
         </arguments>
@@ -113,7 +113,7 @@
         <seeInField selector="{{AdvancedForm.advancedMarginBottom}}" userInput="{{property.marginBottom}}" stepKey="seeMarginBottomField"/>
         <seeInField selector="{{AdvancedForm.advancedMarginLeft}}" userInput="{{property.marginLeft}}" stepKey="seeMarginLeftField"/>
     </actionGroup>
-    <actionGroup name="seeInPaddingFieldsSlideOutPanelActionGroup">
+    <actionGroup name="SeeInPaddingFieldsSlideOutPanelActionGroup">
         <arguments>
             <argument name="property" defaultValue=""/>
         </arguments>
@@ -123,7 +123,7 @@
         <seeInField selector="{{AdvancedForm.advancedPaddingBottom}}" userInput="{{property.paddingBottom}}" stepKey="seePaddingBottomField"/>
         <seeInField selector="{{AdvancedForm.advancedPaddingLeft}}" userInput="{{property.paddingLeft}}" stepKey="seePaddingLeftField"/>
     </actionGroup>
-    <actionGroup name="seeInMarginsAndPaddingFieldSlideOutPanelActionGroup">
+    <actionGroup name="SeeInMarginsAndPaddingFieldSlideOutPanelActionGroup">
         <arguments>
             <argument name="property" defaultValue=""/>
         </arguments>
@@ -137,7 +137,7 @@
         <seeInField selector="{{AdvancedForm.advancedPaddingLeft}}" userInput="{{property.paddingLeft}}" stepKey="fillPaddingLeftField"/>
         <seeInField selector="{{AdvancedForm.advancedPaddingBottom}}" userInput="{{property.paddingBottom}}" stepKey="fillPaddingBottomField"/>
     </actionGroup>
-    <actionGroup name="validateMarginsAndPaddingPlaceholderTextSlideOutPanelActionGroup">
+    <actionGroup name="ValidateMarginsAndPaddingPlaceholderTextSlideOutPanelActionGroup">
         <arguments>
             <argument name="property" defaultValue="PageBuilderAdvancedMarginsAndPaddingDefaultProperty"/>
         </arguments>
@@ -151,12 +151,12 @@
         <seeElement selector="{{AdvancedForm.advancedMarginAndPaddingPlaceholderText('marginBottom', property.placeholderMarginBottom)}}" stepKey="seeMarginBottomPlaceholder"/>
         <seeElement selector="{{AdvancedForm.advancedMarginAndPaddingPlaceholderText('marginLeft', property.placeholderMarginLeft)}}" stepKey="seeMarginLeftPlaceholder"/>
     </actionGroup>
-    <actionGroup name="validateAdvancedConfigurationNotesActionGroup">
+    <actionGroup name="ValidateAdvancedConfigurationNotesActionGroup">
         <waitForElementVisible time="10" selector="{{AdvancedForm.cssClassesNote}}" stepKey="waitForElementVisibleCssClassesNote"/>
         <waitForElementVisible time="10" selector="{{AdvancedForm.marginNote}}" stepKey="waitForElementVisibleMarginNote"/>
         <waitForElementVisible time="10" selector="{{AdvancedForm.paddingNote}}" stepKey="waitForElementVisiblePaddingNote"/>
     </actionGroup>
-    <actionGroup name="validateAdvancedStyleWithAlignmentActionGroup">
+    <actionGroup name="ValidateAdvancedStyleWithAlignmentActionGroup">
         <arguments>
             <argument name="page" defaultValue=""/>
             <argument name="alignment" defaultValue="PageBuilderAdvancedAlignmentPropertyDefault"/>
@@ -177,7 +177,7 @@
         <waitForElementVisible selector="{{page.margins(index, margin.value)}}" stepKey="waitForMarginVisible"/>
         <waitForElementVisible selector="{{page.padding(index, padding.value)}}" stepKey="waitForPaddingVisible"/>
     </actionGroup>
-    <actionGroup name="validateAdvancedStyleWithNoAlignmentActionGroup">
+    <actionGroup name="ValidateAdvancedStyleWithNoAlignmentActionGroup">
         <arguments>
             <argument name="page" defaultValue=""/>
             <argument name="border" defaultValue="PageBuilderAdvancedBorderPropertyNone"/>
@@ -197,7 +197,7 @@
         <waitForElementVisible selector="{{page.margins(index, margin.value)}}" stepKey="waitForMarginVisible"/>
         <waitForElementVisible selector="{{page.padding(index, padding.value)}}" stepKey="waitForPaddingVisible"/>
     </actionGroup>
-    <actionGroup name="validateAdvancedStyleWithNoAlignmentEmptyBorderRadiusActionGroup">
+    <actionGroup name="ValidateAdvancedStyleWithNoAlignmentEmptyBorderRadiusActionGroup">
         <arguments>
             <argument name="page" defaultValue=""/>
             <argument name="border" defaultValue="PageBuilderAdvancedBorderPropertyNone"/>
@@ -217,7 +217,7 @@
         <waitForElementVisible selector="{{page.margins(index, margin.value)}}" stepKey="waitForMarginVisible"/>
         <waitForElementVisible selector="{{page.padding(index, padding.value)}}" stepKey="waitForPaddingVisible"/>
     </actionGroup>
-    <actionGroup name="validateAdvancedStyleWithNoAlignmentNotVisibleActionGroup">
+    <actionGroup name="ValidateAdvancedStyleWithNoAlignmentNotVisibleActionGroup">
         <arguments>
             <argument name="page" defaultValue=""/>
             <argument name="border" defaultValue="PageBuilderAdvancedBorderPropertyNone"/>
@@ -246,7 +246,7 @@
         <waitForElement selector="{{page.padding(index, padding.value)}}" stepKey="waitForPadding"/>
         <dontSeeElement selector="{{page.padding(index, padding.value)}}" stepKey="dontSeePadding"/>
     </actionGroup>
-    <actionGroup name="validateAdvancedStyleWithNoBorderActionGroup">
+    <actionGroup name="ValidateAdvancedStyleWithNoBorderActionGroup">
         <arguments>
             <argument name="page" defaultValue=""/>
             <argument name="borderWidth" defaultValue="PageBuilderAdvancedBorderWidthPropertyDefault"/>
@@ -264,7 +264,7 @@
         <waitForElementVisible selector="{{page.margins(index, margin.value)}}" stepKey="waitForMarginVisible"/>
         <waitForElementVisible selector="{{page.padding(index, padding.value)}}" stepKey="waitForPaddingVisible"/>
     </actionGroup>
-    <actionGroup name="validateAdvancedStyleWithBorderColorActionGroup">
+    <actionGroup name="ValidateAdvancedStyleWithBorderColorActionGroup">
         <arguments>
             <argument name="page" defaultValue=""/>
             <argument name="border" defaultValue="PageBuilderAdvancedBorderPropertyNone"/>
@@ -285,7 +285,7 @@
         <waitForElementVisible selector="{{page.margins(index, margin.value)}}" stepKey="waitForMarginVisible"/>
         <waitForElementVisible selector="{{page.padding(index, padding.value)}}" stepKey="waitForPaddingVisible"/>
     </actionGroup>
-    <actionGroup name="validateAdvancedStyleWithNoBorderWidthActionGroup">
+    <actionGroup name="ValidateAdvancedStyleWithNoBorderWidthActionGroup">
         <arguments>
             <argument name="page" defaultValue=""/>
             <argument name="alignment" defaultValue="PageBuilderAdvancedAlignmentPropertyDefault"/>
@@ -305,7 +305,7 @@
         <waitForElementVisible selector="{{page.margins(index, margin.value)}}" stepKey="waitForMarginVisible"/>
         <waitForElementVisible selector="{{page.padding(index, padding.value)}}" stepKey="waitForPaddingVisible"/>
     </actionGroup>
-    <actionGroup name="validateAdvancedStyleWithNoBorderRadiusActionGroup">
+    <actionGroup name="ValidateAdvancedStyleWithNoBorderRadiusActionGroup">
         <arguments>
             <argument name="page" defaultValue=""/>
             <argument name="border" defaultValue="PageBuilderAdvancedBorderPropertyNone"/>
@@ -324,7 +324,7 @@
         <waitForElementVisible selector="{{page.margins(index, margin.value)}}" stepKey="waitForMarginVisible"/>
         <waitForElementVisible selector="{{page.padding(index, padding.value)}}" stepKey="waitForPaddingVisible"/>
     </actionGroup>
-    <actionGroup name="validateAdvancedStyleWithCssClassesActionGroup">
+    <actionGroup name="ValidateAdvancedStyleWithCssClassesActionGroup">
         <arguments>
             <argument name="page" defaultValue=""/>
             <argument name="border" defaultValue="PageBuilderAdvancedBorderPropertyNone"/>
@@ -345,7 +345,7 @@
         <waitForElementVisible selector="{{page.margins(index, margin.value)}}" stepKey="waitForMarginVisible"/>
         <waitForElementVisible selector="{{page.padding(index, padding.value)}}" stepKey="waitForPaddingVisible"/>
     </actionGroup>
-    <actionGroup name="validateAdvancedStyleWithNoMarginsActionGroup">
+    <actionGroup name="ValidateAdvancedStyleWithNoMarginsActionGroup">
         <arguments>
             <argument name="page" defaultValue=""/>
             <argument name="border" defaultValue="PageBuilderAdvancedBorderPropertyNone"/>
@@ -364,7 +364,7 @@
         <waitForElementVisible selector="{{page.noMargins(index)}}" stepKey="waitForMarginVisible"/>
         <waitForElementVisible selector="{{page.padding(index, padding.value)}}" stepKey="waitForPaddingVisible"/>
     </actionGroup>
-    <actionGroup name="validateAdvancedStyleWithNoPaddingActionGroup">
+    <actionGroup name="ValidateAdvancedStyleWithNoPaddingActionGroup">
         <arguments>
             <argument name="page" defaultValue=""/>
             <argument name="border" defaultValue="PageBuilderAdvancedBorderPropertyNone"/>
@@ -383,7 +383,7 @@
         <waitForElementVisible selector="{{page.margins(index, margin.value)}}" stepKey="waitForMarginVisible"/>
         <waitForElementVisible selector="{{page.noPadding(index)}}" stepKey="waitForPaddingVisible"/>
     </actionGroup>
-    <actionGroup name="validateAdvancedStyleWithAllUpdatedActionGroup">
+    <actionGroup name="ValidateAdvancedStyleWithAllUpdatedActionGroup">
         <arguments>
             <argument name="page" defaultValue=""/>
             <argument name="alignment" defaultValue="PageBuilderAdvancedAlignmentPropertyDefault"/>
@@ -406,7 +406,7 @@
         <waitForElementVisible selector="{{page.margins(index, margin.value)}}" stepKey="waitForMarginVisible"/>
         <waitForElementVisible selector="{{page.padding(index, padding.value)}}" stepKey="waitForPaddingVisible"/>
     </actionGroup>
-    <actionGroup name="validateAdvancedStyleWithAllUpdatedNotVisibleActionGroup">
+    <actionGroup name="ValidateAdvancedStyleWithAllUpdatedNotVisibleActionGroup">
         <arguments>
             <argument name="page" defaultValue=""/>
             <argument name="alignment" defaultValue="PageBuilderAdvancedAlignmentPropertyDefault"/>
@@ -438,14 +438,14 @@
         <waitForElement selector="{{page.padding(index, padding.value)}}" stepKey="waitForPadding"/>
         <dontSeeElement selector="{{page.padding(index, padding.value)}}" stepKey="dontSeePadding"/>
     </actionGroup>
-    <actionGroup name="validateTextAlignmentActionGroup">
+    <actionGroup name="ValidateTextAlignmentActionGroup">
         <arguments>
             <argument name="property" defaultValue=""/>
         </arguments>
         <waitForElement selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
         <seeElement selector="//li[@name='{{property.value}}' and contains(@class,'active')]" stepKey="alignmentIsSelected" />
     </actionGroup>
-    <actionGroup name="validateAdvancedStyleWithNoConfigurationActionGroup">
+    <actionGroup name="ValidateAdvancedStyleWithNoConfigurationActionGroup">
         <arguments>
             <argument name="page" defaultValue=""/>
             <argument name="index" defaultValue="1" type="string"/>

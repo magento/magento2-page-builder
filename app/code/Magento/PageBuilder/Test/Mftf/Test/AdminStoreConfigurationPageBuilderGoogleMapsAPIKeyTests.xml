@@ -30,11 +30,11 @@
         </before>
         <after>
             <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setEmptyGoogleMapsAPIKey"/>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
         <actionGroup ref="NavigateToAdminContentManagementPageActionGroup" stepKey="navigateToAdminContentManagementPage"/>
         <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
-        <actionGroup ref="inputGoogleMapsAPIKeyActionGroup" stepKey="inputGoogleMapsAPIKey">
+        <actionGroup ref="InputGoogleMapsAPIKeyActionGroup" stepKey="inputGoogleMapsAPIKey">
             <argument name="apiKey" value="{{googleMapsAPIKey.valid}}"/>
         </actionGroup>
         <actionGroup ref="SaveStoreConfigurationActionGroup" stepKey="saveStoreConfiguration"/>
@@ -59,11 +59,11 @@
         </before>
         <after>
             <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setEmptyGoogleMapsAPIKey"/>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
         <actionGroup ref="NavigateToAdminContentManagementPageActionGroup" stepKey="navigateToAdminContentManagementPage"/>
         <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
-        <actionGroup ref="inputGoogleMapsAPIKeyActionGroup" stepKey="inputGoogleMapsAPIKey">
+        <actionGroup ref="InputGoogleMapsAPIKeyActionGroup" stepKey="inputGoogleMapsAPIKey">
             <argument name="apiKey" value="{{googleMapsAPIKey.invalidOneCharacter}}"/>
         </actionGroup>
         <actionGroup ref="SaveStoreConfigurationActionGroup" stepKey="saveStoreConfiguration"/>
@@ -88,11 +88,11 @@
         </before>
         <after>
             <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setEmptyGoogleMapsAPIKey"/>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
         <actionGroup ref="NavigateToAdminContentManagementPageActionGroup" stepKey="navigateToAdminContentManagementPage"/>
         <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
-        <actionGroup ref="inputGoogleMapsAPIKeyActionGroup" stepKey="inputGoogleMapsAPIKey">
+        <actionGroup ref="InputGoogleMapsAPIKeyActionGroup" stepKey="inputGoogleMapsAPIKey">
             <argument name="apiKey" value="{{googleMapsAPIKey.empty}}"/>
         </actionGroup>
         <actionGroup ref="SaveStoreConfigurationActionGroup" stepKey="saveStoreConfiguration"/>
@@ -116,7 +116,7 @@
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
             <closeTab stepKey="closeTab"/>
         </after>
         <!-- Go To AdminContentManagementPage -->
@@ -164,14 +164,14 @@
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
         <actionGroup ref="NavigateToAdminContentManagementPageActionGroup" stepKey="navigateToAdminContentManagementPage"/>
         <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
-        <actionGroup ref="inputGoogleMapsAPIKeyActionGroup" stepKey="inputGoogleMapsAPIKey">
+        <actionGroup ref="InputGoogleMapsAPIKeyActionGroup" stepKey="inputGoogleMapsAPIKey">
             <argument name="apiKey" value="{{googleMapsAPIKey.valid}}"/>
         </actionGroup>
-        <actionGroup ref="clickAndValidateGoogleMapsAPIKeyTestKeyButtonActionGroup" stepKey="clickAndValidateGoogleMapsAPIKeyTestKeyButton">
+        <actionGroup ref="ClickAndValidateGoogleMapsAPIKeyTestKeyButtonActionGroup" stepKey="clickAndValidateGoogleMapsAPIKeyTestKeyButton">
             <argument name="buttonText" value="{{googleMapsAPIKey.validKeyButtonText}}"/>
         </actionGroup>
     </test>
@@ -192,31 +192,31 @@
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
         <actionGroup ref="NavigateToAdminContentManagementPageActionGroup" stepKey="navigateToAdminContentManagementPage"/>
         <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
         <!-- Invalid Key: One Character -->
         <comment userInput="Invalid Key: One Character" stepKey="comment1"/>
-        <actionGroup ref="inputGoogleMapsAPIKeyActionGroup" stepKey="inputGoogleMapsAPIKey1">
+        <actionGroup ref="InputGoogleMapsAPIKeyActionGroup" stepKey="inputGoogleMapsAPIKey1">
             <argument name="apiKey" value="{{googleMapsAPIKey.invalidOneCharacter}}"/>
         </actionGroup>
-        <actionGroup ref="clickAndValidateGoogleMapsAPIKeyTestKeyButtonActionGroup" stepKey="clickAndValidateGoogleMapsAPIKeyTestKeyButton1">
+        <actionGroup ref="ClickAndValidateGoogleMapsAPIKeyTestKeyButtonActionGroup" stepKey="clickAndValidateGoogleMapsAPIKeyTestKeyButton1">
             <argument name="expectedResult" value="error"/>
             <argument name="buttonText" value="{{googleMapsAPIKey.invalidKeyButtonText}}"/>
         </actionGroup>
         <!-- Invalid Key: One Character Off Of Valid -->
         <comment userInput="Invalid Key: One Character Off Of Valid" stepKey="comment2"/>
-        <actionGroup ref="inputGoogleMapsAPIKeyActionGroup" stepKey="inputGoogleMapsAPIKey2">
+        <actionGroup ref="InputGoogleMapsAPIKeyActionGroup" stepKey="inputGoogleMapsAPIKey2">
             <argument name="apiKey" value="{{googleMapsAPIKey.invalidOneCharacterOffOfValid}}"/>
         </actionGroup>
-        <actionGroup ref="clickAndValidateGoogleMapsAPIKeyTestKeyButtonActionGroup" stepKey="clickAndValidateGoogleMapsAPIKeyTestKeyButton2">
+        <actionGroup ref="ClickAndValidateGoogleMapsAPIKeyTestKeyButtonActionGroup" stepKey="clickAndValidateGoogleMapsAPIKeyTestKeyButton2">
             <argument name="expectedResult" value="error"/>
             <argument name="buttonText" value="{{googleMapsAPIKey.invalidKeyButtonText}}"/>
         </actionGroup>
         <!-- Invalid Key: Empty -->
         <comment userInput="Invalid Key: Empty" stepKey="comment3"/>
-        <actionGroup ref="inputGoogleMapsAPIKeyActionGroup" stepKey="inputGoogleMapsAPIKey3">
+        <actionGroup ref="InputGoogleMapsAPIKeyActionGroup" stepKey="inputGoogleMapsAPIKey3">
             <argument name="apiKey" value="{{googleMapsAPIKey.empty}}"/>
         </actionGroup>
         <waitForElementVisible selector="{{ContentManagementSection.GoogleMapsAPIKeyTestKeyButton}}[disabled='disabled']" stepKey="waitForTestKeyButtonDisabled"/>
@@ -243,70 +243,70 @@
         </before>
         <after>
             <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setEmptyGoogleMapsAPIKey"/>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
         <actionGroup ref="NavigateToAdminContentManagementPageActionGroup" stepKey="navigateToAdminContentManagementPage"/>
         <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
-        <actionGroup ref="inputGoogleMapsAPIKeyActionGroup" stepKey="inputGoogleMapsAPIKey">
+        <actionGroup ref="InputGoogleMapsAPIKeyActionGroup" stepKey="inputGoogleMapsAPIKey">
             <argument name="apiKey" value="{{googleMapsAPIKey.valid}}"/>
         </actionGroup>
         <!-- Valid To Valid -->
         <comment userInput="Valid To Valid" stepKey="comment1"/>
-        <actionGroup ref="inputGoogleMapsAPIKeyActionGroup" stepKey="inputGoogleMapsAPIKey1">
+        <actionGroup ref="InputGoogleMapsAPIKeyActionGroup" stepKey="inputGoogleMapsAPIKey1">
             <argument name="apiKey" value="{{googleMapsAPIKey.valid}}"/>
         </actionGroup>
-        <actionGroup ref="clickAndValidateGoogleMapsAPIKeyTestKeyButtonActionGroup" stepKey="clickAndValidateGoogleMapsAPIKeyTestKeyButton1">
+        <actionGroup ref="ClickAndValidateGoogleMapsAPIKeyTestKeyButtonActionGroup" stepKey="clickAndValidateGoogleMapsAPIKeyTestKeyButton1">
             <argument name="buttonText" value="{{googleMapsAPIKey.validKeyButtonText}}"/>
         </actionGroup>
         <!-- Valid To Invalid -->
         <comment userInput="Valid To Invalid" stepKey="comment2"/>
-        <actionGroup ref="inputGoogleMapsAPIKeyActionGroup" stepKey="inputGoogleMapsAPIKey2">
+        <actionGroup ref="InputGoogleMapsAPIKeyActionGroup" stepKey="inputGoogleMapsAPIKey2">
             <argument name="apiKey" value="{{googleMapsAPIKey.invalidOneCharacter}}"/>
         </actionGroup>
         <waitForElementVisible selector="{{ContentManagementSection.GoogleMapsAPIKeyTestKeyButton}}:not([disabled])" stepKey="waitForTestKeyButtonEnabled2"/>
-        <actionGroup ref="clickAndValidateGoogleMapsAPIKeyTestKeyButtonActionGroup" stepKey="clickAndValidateGoogleMapsAPIKeyTestKeyButton2">
+        <actionGroup ref="ClickAndValidateGoogleMapsAPIKeyTestKeyButtonActionGroup" stepKey="clickAndValidateGoogleMapsAPIKeyTestKeyButton2">
             <argument name="expectedResult" value="error"/>
             <argument name="buttonText" value="{{googleMapsAPIKey.invalidKeyButtonText}}"/>
         </actionGroup>
         <!-- Invalid To Invalid -->
         <comment userInput="Invalid To Invalid" stepKey="comment3"/>
-        <actionGroup ref="inputGoogleMapsAPIKeyActionGroup" stepKey="inputGoogleMapsAPIKey3">
+        <actionGroup ref="InputGoogleMapsAPIKeyActionGroup" stepKey="inputGoogleMapsAPIKey3">
             <argument name="apiKey" value="{{googleMapsAPIKey.invalidOneCharacter}}"/>
         </actionGroup>
-        <actionGroup ref="clickAndValidateGoogleMapsAPIKeyTestKeyButtonActionGroup" stepKey="clickAndValidateGoogleMapsAPIKeyTestKeyButton3">
+        <actionGroup ref="ClickAndValidateGoogleMapsAPIKeyTestKeyButtonActionGroup" stepKey="clickAndValidateGoogleMapsAPIKeyTestKeyButton3">
             <argument name="expectedResult" value="error"/>
             <argument name="buttonText" value="{{googleMapsAPIKey.invalidKeyButtonText}}"/>
         </actionGroup>
         <!-- Invalid To Empty -->
         <comment userInput="Invalid To Empty" stepKey="comment4"/>
-        <actionGroup ref="inputGoogleMapsAPIKeyActionGroup" stepKey="inputGoogleMapsAPIKey4">
+        <actionGroup ref="InputGoogleMapsAPIKeyActionGroup" stepKey="inputGoogleMapsAPIKey4">
             <argument name="apiKey" value="{{googleMapsAPIKey.empty}}"/>
         </actionGroup>
         <waitForElementVisible selector="{{ContentManagementSection.GoogleMapsAPIKeyTestKeyButton}}[disabled='disabled']" stepKey="waitForTestKeyButtonDisabled4"/>
         <!-- Empty To Invalid -->
         <comment userInput="Empty To Invalid" stepKey="comment5"/>
-        <actionGroup ref="inputGoogleMapsAPIKeyActionGroup" stepKey="inputGoogleMapsAPIKey5">
+        <actionGroup ref="InputGoogleMapsAPIKeyActionGroup" stepKey="inputGoogleMapsAPIKey5">
             <argument name="apiKey" value="{{googleMapsAPIKey.invalidOneCharacter}}"/>
         </actionGroup>
         <waitForElementVisible selector="{{ContentManagementSection.GoogleMapsAPIKeyTestKeyButton}}:not([disabled])" stepKey="waitForTestKeyButtonEnabled5"/>
         <!-- Invalid To Valid -->
         <comment userInput="Invalid To Valid" stepKey="comment6"/>
-        <actionGroup ref="inputGoogleMapsAPIKeyActionGroup" stepKey="inputGoogleMapsAPIKey6">
+        <actionGroup ref="InputGoogleMapsAPIKeyActionGroup" stepKey="inputGoogleMapsAPIKey6">
             <argument name="apiKey" value="{{googleMapsAPIKey.valid}}"/>
         </actionGroup>
         <waitForElementVisible selector="{{ContentManagementSection.GoogleMapsAPIKeyTestKeyButton}}:not([disabled])" stepKey="waitForTestKeyButtonEnabled6"/>
-        <actionGroup ref="clickAndValidateGoogleMapsAPIKeyTestKeyButtonActionGroup" stepKey="clickAndValidateGoogleMapsAPIKeyTestKeyButton6">
+        <actionGroup ref="ClickAndValidateGoogleMapsAPIKeyTestKeyButtonActionGroup" stepKey="clickAndValidateGoogleMapsAPIKeyTestKeyButton6">
             <argument name="buttonText" value="{{googleMapsAPIKey.validKeyButtonText}}"/>
         </actionGroup>
         <!-- Valid To Empty -->
         <comment userInput="Valid To Empty" stepKey="comment7"/>
-        <actionGroup ref="inputGoogleMapsAPIKeyActionGroup" stepKey="inputGoogleMapsAPIKey7">
+        <actionGroup ref="InputGoogleMapsAPIKeyActionGroup" stepKey="inputGoogleMapsAPIKey7">
             <argument name="apiKey" value="{{googleMapsAPIKey.empty}}"/>
         </actionGroup>
         <waitForElementVisible selector="{{ContentManagementSection.GoogleMapsAPIKeyTestKeyButton}}[disabled='disabled']" stepKey="waitForTestKeyButtonDisabled7"/>
         <!-- Empty To Valid -->
         <comment userInput="Empty To Valid" stepKey="comment8"/>
-        <actionGroup ref="inputGoogleMapsAPIKeyActionGroup" stepKey="inputGoogleMapsAPIKey8">
+        <actionGroup ref="InputGoogleMapsAPIKeyActionGroup" stepKey="inputGoogleMapsAPIKey8">
             <argument name="apiKey" value="{{googleMapsAPIKey.valid}}"/>
         </actionGroup>
         <waitForElementVisible selector="{{ContentManagementSection.GoogleMapsAPIKeyTestKeyButton}}:not([disabled])" stepKey="waitForTestKeyButtonEnabled8"/>

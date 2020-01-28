@@ -23,51 +23,51 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <!-- Add Slider -->
         <comment userInput="Add Slider" stepKey="commentAddSlider"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragOntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragOntoStage">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusSlide"/>
-        <actionGroup ref="openPageBuilderEditPanelByIndexActionGroup" stepKey="openEditPanel">
+        <actionGroup ref="OpenPageBuilderEditPanelByIndexActionGroup" stepKey="openEditPanel">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <!-- Validate Default Values -->
         <comment userInput="Validate Default Values" stepKey="commentValidateDefaultValues"/>
-        <actionGroup ref="seeOptionIsNotCheckedSlideOutPropertyActionGroup" stepKey="validateAutoPlay">
+        <actionGroup ref="SeeOptionIsNotCheckedSlideOutPropertyActionGroup" stepKey="validateAutoPlay">
             <argument name="property" value="PageBuilderSliderAutoPlay_Disabled"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateAutoPlaySpeed">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateAutoPlaySpeed">
             <argument name="property" value="PageBuilderSliderAutoPlaySpeed_Default"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsNotCheckedSlideOutPropertyActionGroup" stepKey="validateFade">
+        <actionGroup ref="SeeOptionIsNotCheckedSlideOutPropertyActionGroup" stepKey="validateFade">
             <argument name="property" value="PageBuilderSliderFade_Disabled"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsNotCheckedSlideOutPropertyActionGroup" stepKey="validateInfiniteLoop">
+        <actionGroup ref="SeeOptionIsNotCheckedSlideOutPropertyActionGroup" stepKey="validateInfiniteLoop">
             <argument name="property" value="PageBuilderSliderInfiniteLoop_Disabled"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsNotCheckedSlideOutPropertyActionGroup" stepKey="validateShowArrows">
+        <actionGroup ref="SeeOptionIsNotCheckedSlideOutPropertyActionGroup" stepKey="validateShowArrows">
             <argument name="property" value="PageBuilderSliderShowArrows_Disabled"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsCheckedSlideOutPropertyActionGroup" stepKey="validateShowDots">
+        <actionGroup ref="SeeOptionIsCheckedSlideOutPropertyActionGroup" stepKey="validateShowDots">
             <argument name="property" value="PageBuilderSliderShowDots_Enabled"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateMinHeight">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateMinHeight">
             <argument name="property" value="PageBuilderSliderMinHeight_Default"/>
         </actionGroup>
-        <actionGroup ref="closeEditPanelSettingsActionGroup" stepKey="closeEditPanel2"/>
+        <actionGroup ref="CloseEditPanelSettingsActionGroup" stepKey="closeEditPanel2"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <seeElement selector="{{SliderOnStage.autoPlay('1', PageBuilderSliderAutoPlay_Disabled.value)}}" stepKey="seeAutoPlayStage"/>
@@ -78,7 +78,7 @@
         <seeElement selector="{{SliderOnStage.showDots('1', PageBuilderSliderShowDots_Enabled.value)}}" stepKey="seeDotsStage"/>
         <seeElement selector="{{SliderOnStage.minHeight('1', PageBuilderSliderMinHeight_Default.value)}}" stepKey="seeMinHeightStage"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
         <seeElement selector="{{SliderOnStage.autoPlay('1', PageBuilderSliderAutoPlay_Disabled.value)}}" stepKey="seeAutoPlayStage2"/>
@@ -90,7 +90,7 @@
         <seeElement selector="{{SliderOnStage.minHeight('1', PageBuilderSliderMinHeight_Default.value)}}" stepKey="seeMinHeightStage2"/>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <seeElement selector="{{SliderOnFrontend.autoPlay('1', PageBuilderSliderAutoPlay_Disabled.value)}}" stepKey="seeAutoPlayStorefront"/>
@@ -116,53 +116,53 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragSliderIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragSliderIntoStage">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusSlide"/>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSectionActionGroup" stepKey="expandConfigurationSection"/>
+        <actionGroup ref="ExpandConfigurationSectionActionGroup" stepKey="expandConfigurationSection"/>
         <!-- Validate Default Values -->
         <comment userInput="Validate Default Values" stepKey="commentValidateDefaultValues"/>
-        <actionGroup ref="seeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateAlignment">
+        <actionGroup ref="SeeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateAlignment">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateBorder">
+        <actionGroup ref="SeeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateBorder">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderColor">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderColor">
             <argument name="property" value="PageBuilderAdvancedBorderColorDefaultProperty"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderWidth">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderWidth">
             <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderRadius">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderRadius">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateCssClasses">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateCssClasses">
             <argument name="property" value="PageBuilderAdvancedCssClassesDefaultProperty"/>
         </actionGroup>
-        <actionGroup ref="seeInMarginFieldsSlideOutPanelActionGroup" stepKey="validateMargins">
+        <actionGroup ref="SeeInMarginFieldsSlideOutPanelActionGroup" stepKey="validateMargins">
             <argument name="property" value="PageBuilderMarginsPropertyDefault"/>
         </actionGroup>
-        <actionGroup ref="seeInPaddingFieldsSlideOutPanelActionGroup" stepKey="validatePadding">
+        <actionGroup ref="SeeInPaddingFieldsSlideOutPanelActionGroup" stepKey="validatePadding">
             <argument name="property" value="PageBuilderPaddingPropertyDefault"/>
         </actionGroup>
-        <actionGroup ref="closeEditPanelSettingsActionGroup" stepKey="closeEditPanelSettings2"/>
+        <actionGroup ref="CloseEditPanelSettingsActionGroup" stepKey="closeEditPanelSettings2"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <seeElement selector="{{SliderOnStage.noAlignment('1')}}" stepKey="seeAlignmentStage"/>
@@ -173,7 +173,7 @@
         <seeElement selector="{{SliderOnStage.margins('1', PageBuilderMarginsPropertyDefault.value)}}" stepKey="seeMarginsStage"/>
         <seeElement selector="{{SliderOnStage.padding('1', PageBuilderPaddingPropertyDefault.value)}}" stepKey="seePaddingStage"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
         <seeElement selector="{{SliderOnStage.noAlignment('1')}}" stepKey="seeAlignmentStage2"/>
@@ -186,37 +186,37 @@
         <seeElement selector="{{SliderOnStage.padding('1', PageBuilderPaddingPropertyDefault.value)}}" stepKey="seePaddingStage2"/>
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage2">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSectionActionGroup" stepKey="expandConfigurationSection2"/>
-        <actionGroup ref="seeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateAlignment2">
+        <actionGroup ref="ExpandConfigurationSectionActionGroup" stepKey="expandConfigurationSection2"/>
+        <actionGroup ref="SeeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateAlignment2">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateBorder2">
+        <actionGroup ref="SeeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateBorder2">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderColor2">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderColor2">
             <argument name="property" value="PageBuilderAdvancedBorderColorDefaultProperty"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderWidth2">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderWidth2">
             <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderRadius2">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderRadius2">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateCssClasses2">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateCssClasses2">
             <argument name="property" value="PageBuilderSliderAdvancedCssClasses_Default"/>
         </actionGroup>
-        <actionGroup ref="seeInMarginFieldsSlideOutPanelActionGroup" stepKey="validateMargins2">
+        <actionGroup ref="SeeInMarginFieldsSlideOutPanelActionGroup" stepKey="validateMargins2">
             <argument name="property" value="PageBuilderMarginsPropertyDefault"/>
         </actionGroup>
-        <actionGroup ref="seeInPaddingFieldsSlideOutPanelActionGroup" stepKey="validatePadding2">
+        <actionGroup ref="SeeInPaddingFieldsSlideOutPanelActionGroup" stepKey="validatePadding2">
             <argument name="property" value="PageBuilderPaddingPropertyDefault"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <seeElement selector="{{SliderOnFrontend.noAlignment('1')}}" stepKey="seeAlignmentStorefront"/>
@@ -243,53 +243,53 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragSliderIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragSliderIntoStage">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusSlide"/>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSectionActionGroup" stepKey="expandConfigurationSection"/>
+        <actionGroup ref="ExpandConfigurationSectionActionGroup" stepKey="expandConfigurationSection"/>
         <!-- Update Values -->
         <comment userInput="Update Values" stepKey="commentUpdateValues"/>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAlignmentCenter">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterAlignmentCenter">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelFieldActionGroup" stepKey="enterBorder">
+        <actionGroup ref="SelectSlideOutPanelFieldActionGroup" stepKey="enterBorder">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBorderColor">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBorderColor">
             <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBorderWidth">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBorderWidth">
             <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBorderRadius">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBorderRadius">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterCssClasses">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterCssClasses">
             <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldMarginsActionGroup" stepKey="enterMargins">
+        <actionGroup ref="FillSlideOutPanelFieldMarginsActionGroup" stepKey="enterMargins">
             <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldPaddingActionGroup" stepKey="enterPadding">
+        <actionGroup ref="FillSlideOutPanelFieldPaddingActionGroup" stepKey="enterPadding">
             <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <seeElement selector="{{SliderOnStage.alignment('1', PageBuilderAdvancedAlignmentPropertyCenter.value)}}" stepKey="seeAlignmentStage"/>
@@ -299,39 +299,39 @@
         <seeElement selector="{{SliderOnStage.borderRadius('1', PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="seeBorderRadiusStage"/>
         <seeElement selector="{{SliderOnStage.margins('1', PageBuilderMarginsPropertyUnique.value)}}" stepKey="seeMarginsStage"/>
         <seeElement selector="{{SliderOnStage.padding('1', PageBuilderPaddingPropertyUnique.value)}}" stepKey="seePaddingStage"/>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage2">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSectionActionGroup" stepKey="expandConfigurationSection2"/>
+        <actionGroup ref="ExpandConfigurationSectionActionGroup" stepKey="expandConfigurationSection2"/>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
-        <actionGroup ref="seeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateAlignment">
+        <actionGroup ref="SeeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateAlignment">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateBorder">
+        <actionGroup ref="SeeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateBorder">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderColor">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderColor">
             <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderWidth">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderWidth">
             <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderRadius">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderRadius">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateCssClasses">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateCssClasses">
             <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
         </actionGroup>
-        <actionGroup ref="seeInMarginFieldsSlideOutPanelActionGroup" stepKey="validateMargins">
+        <actionGroup ref="SeeInMarginFieldsSlideOutPanelActionGroup" stepKey="validateMargins">
             <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
         </actionGroup>
-        <actionGroup ref="seeInPaddingFieldsSlideOutPanelActionGroup" stepKey="validatePadding">
+        <actionGroup ref="SeeInPaddingFieldsSlideOutPanelActionGroup" stepKey="validatePadding">
             <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
-        <actionGroup ref="closeEditPanelSettingsActionGroup" stepKey="closeEditPanelSettings2"/>
+        <actionGroup ref="CloseEditPanelSettingsActionGroup" stepKey="closeEditPanelSettings2"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
         <seeElement selector="{{SliderOnStage.alignment('1', PageBuilderAdvancedAlignmentPropertyCenter.value)}}" stepKey="seeAlignmentStage2"/>
@@ -343,37 +343,37 @@
         <seeElement selector="{{SliderOnStage.padding('1', PageBuilderPaddingPropertyUnique.value)}}" stepKey="seePaddingStage2"/>
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage3">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage3">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSectionActionGroup" stepKey="expandConfigurationSection3"/>
-        <actionGroup ref="seeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateAlignment2">
+        <actionGroup ref="ExpandConfigurationSectionActionGroup" stepKey="expandConfigurationSection3"/>
+        <actionGroup ref="SeeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateAlignment2">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateBorder2">
+        <actionGroup ref="SeeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateBorder2">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderColor2">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderColor2">
             <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderWidth2">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderWidth2">
             <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderRadius2">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderRadius2">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateCssClasses2">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateCssClasses2">
             <argument name="property" value="PageBuilderSliderAdvancedCssClassesPropertyThreeClasses"/>
         </actionGroup>
-        <actionGroup ref="seeInMarginFieldsSlideOutPanelActionGroup" stepKey="validateMargins2">
+        <actionGroup ref="SeeInMarginFieldsSlideOutPanelActionGroup" stepKey="validateMargins2">
             <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
         </actionGroup>
-        <actionGroup ref="seeInPaddingFieldsSlideOutPanelActionGroup" stepKey="validatePadding2">
+        <actionGroup ref="SeeInPaddingFieldsSlideOutPanelActionGroup" stepKey="validatePadding2">
             <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <seeElement selector="{{SliderOnFrontend.alignment('1', PageBuilderAdvancedAlignmentPropertyCenter.value)}}" stepKey="seeAlignmentStorefront"/>
@@ -400,103 +400,103 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragSliderOntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragSliderOntoStage">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditPanelAfterDrop">
+        <actionGroup ref="OpenPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditPanelAfterDrop">
             <argument name="section" value="SlideOnBackend"/>
         </actionGroup>
         <!-- Fill Out Slide Item Edit Panel -->
         <comment userInput="Fill Out Slide Item Edit Panel" stepKey="commentFillEditPanel"/>
-        <actionGroup ref="addTextToTinyMCEActionGroup" stepKey="addTextToTinyMCE">
+        <actionGroup ref="AddTextToTinyMCEActionGroup" stepKey="addTextToTinyMCE">
             <argument name="property" value="PageBuilderSlideItemContent_Slide1"/>
             <argument name="section" value="SlideOnConfigurationPanel"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanel1Settings"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanel1Settings"/>
         <!-- Open Slider settings -->
         <comment userInput="Open Slider settings" stepKey="editSlider"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusSlide"/>
-        <actionGroup ref="openPageBuilderEditPanelByIndexActionGroup" stepKey="openSliderEditPanel">
+        <actionGroup ref="OpenPageBuilderEditPanelByIndexActionGroup" stepKey="openSliderEditPanel">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
             <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneralActionGroup" stepKey="enterAutoPlay">
+        <actionGroup ref="ConditionalClickSlideOutPanelFieldGeneralActionGroup" stepKey="enterAutoPlay">
             <argument name="property" value="PageBuilderSliderAutoPlay_Enabled"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterAutoPlaySpeed">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterAutoPlaySpeed">
             <argument name="property" value="PageBuilderSliderAutoPlaySpeed_50000"/>
         </actionGroup>
-        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneralActionGroup" stepKey="enterFade">
+        <actionGroup ref="ConditionalClickSlideOutPanelFieldGeneralActionGroup" stepKey="enterFade">
             <argument name="property" value="PageBuilderSliderFade_Enabled"/>
         </actionGroup>
-        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneralActionGroup" stepKey="enterInfiniteLoop">
+        <actionGroup ref="ConditionalClickSlideOutPanelFieldGeneralActionGroup" stepKey="enterInfiniteLoop">
             <argument name="property" value="PageBuilderSliderInfiniteLoop_Enabled"/>
         </actionGroup>
-        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneralActionGroup" stepKey="enterShowArrow">
+        <actionGroup ref="ConditionalClickSlideOutPanelFieldGeneralActionGroup" stepKey="enterShowArrow">
             <argument name="property" value="PageBuilderSliderShowArrows_Enabled"/>
         </actionGroup>
-        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneralActionGroup" stepKey="enterShowDots">
+        <actionGroup ref="ConditionalClickSlideOutPanelFieldGeneralActionGroup" stepKey="enterShowDots">
             <argument name="property" value="PageBuilderSliderShowDots_Enabled"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterSliderMinHeight">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterSliderMinHeight">
             <argument name="property" value="PageBuilderSliderMinHeight_100"/>
         </actionGroup>
         <!-- Edit Advanced Slider settings -->
         <comment userInput="Edit Advanced Slider settings" stepKey="commentEditSliderAdvanced"/>
-        <actionGroup ref="expandConfigurationSectionActionGroup" stepKey="expandConfigurationSection"/>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="selectAlignmentLeft2">
+        <actionGroup ref="ExpandConfigurationSectionActionGroup" stepKey="expandConfigurationSection"/>
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="selectAlignmentLeft2">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyLeft"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelFieldActionGroup" stepKey="enterAdvancedBorderProperty">
+        <actionGroup ref="SelectSlideOutPanelFieldActionGroup" stepKey="enterAdvancedBorderProperty">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyDotted"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBorderColor">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBorderColor">
             <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldActionGroup" stepKey="enterAdvancedBorderWidthProperty">
+        <actionGroup ref="FillSlideOutPanelFieldActionGroup" stepKey="enterAdvancedBorderWidthProperty">
             <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldActionGroup" stepKey="enterAdvancedBorderRadiusProperty">
+        <actionGroup ref="FillSlideOutPanelFieldActionGroup" stepKey="enterAdvancedBorderRadiusProperty">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldActionGroup" stepKey="enterAdvancedClassProperty">
+        <actionGroup ref="FillSlideOutPanelFieldActionGroup" stepKey="enterAdvancedClassProperty">
             <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldMarginsActionGroup" stepKey="enterMargins">
+        <actionGroup ref="FillSlideOutPanelFieldMarginsActionGroup" stepKey="enterMargins">
             <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldPaddingActionGroup" stepKey="enterPadding">
+        <actionGroup ref="FillSlideOutPanelFieldPaddingActionGroup" stepKey="enterPadding">
             <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings1"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings1"/>
         <!-- Add second slide -->
         <comment userInput="Add second slide" stepKey="addSecondSlide"/>
-        <actionGroup ref="addChildContentTypeFromOptionMenuActionGroup" stepKey="addChildContentType">
+        <actionGroup ref="AddChildContentTypeFromOptionMenuActionGroup" stepKey="addChildContentType">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditPanelAfterAddSlide">
+        <actionGroup ref="OpenPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditPanelAfterAddSlide">
             <argument name="section" value="SlideOnBackend"/>
             <argument name="targetIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="addTextToTinyMCEActionGroup" stepKey="addTextToTinyMCE2">
+        <actionGroup ref="AddTextToTinyMCEActionGroup" stepKey="addTextToTinyMCE2">
             <argument name="property" value="PageBuilderSlideItemContent_Slide2"/>
             <argument name="section" value="SlideOnConfigurationPanel"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanel2Settings"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanel2Settings"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage: Slider Settings -->
         <comment userInput="Validate Stage: Slider Settings" stepKey="commentValidateSliderSettingsStage"/>
         <seeElement selector="{{SliderOnStage.autoPlay('1', PageBuilderSliderAutoPlay_Enabled.value)}}" stepKey="seeAutoPlayStage"/>
@@ -525,7 +525,7 @@
         <click selector="{{SliderOnStage.slideNavigationDot('1', '2')}}" stepKey="clickSlide2Stage"/>
         <waitForPageLoad stepKey="waitForPageLoad2"/>
         <seeElement selector="{{SlideOnBackend.messageContent('2', PageBuilderSlideItemContent_Slide2.value)}}" stepKey="seeSlide2ContentStage"/>
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <!-- Validate Storefront: Slider Settings -->
@@ -571,45 +571,45 @@
             <group value="pagebuilder-slide"/>
             <group value="pagebuilder-sliderCommon"/>
         </annotations>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" after="enterPageTitle" stepKey="expandMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" after="enterPageTitle" stepKey="expandMenuSection">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" after="commentConfigureContentType" stepKey="dragContentTypeToStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" after="commentConfigureContentType" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <click selector="{{PageBuilderPanel.searchPanel}}" after="dragContentTypeToStage" stepKey="unFocusSlide"/>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditPanel">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditPanel">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterMinHeightProperty">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterMinHeightProperty">
             <argument name="property" value="PageBuilderSliderMinHeight_Default"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelSmallByIndexActionGroup" after="saveEditPanelSettings" stepKey="openSlideItemEditPanel">
+        <actionGroup ref="OpenPageBuilderEditPanelSmallByIndexActionGroup" after="saveEditPanelSettings" stepKey="openSlideItemEditPanel">
             <argument name="section" value="SlideOnBackend"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" after="openSlideItemEditPanel" stepKey="enterMinHeightPropertySlideItem">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" after="openSlideItemEditPanel" stepKey="enterMinHeightPropertySlideItem">
             <argument name="property" value="PageBuilderSlideItemMinimumHeight_100"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" after="enterMinHeightPropertySlideItem" stepKey="saveEditPanelSettings2"/>
-        <actionGroup ref="validateContentTypeHeightEqualToMinHeightActionGroup" stepKey="validateContentTypeHeightBeforeSave">
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" after="enterMinHeightPropertySlideItem" stepKey="saveEditPanelSettings2"/>
+        <actionGroup ref="ValidateContentTypeHeightEqualToMinHeightActionGroup" stepKey="validateContentTypeHeightBeforeSave">
             <argument name="content" value="{{SliderOnStage.containerCSS}}"/>
             <argument name="height" value="PageBuilderSliderMinHeight_Default"/>
             <argument name="border" value="PageBuilderAdvancedBorderWidthProperty10"/>
             <argument name="padding" value="PageBuilderPaddingProperty10"/>
         </actionGroup>
-        <actionGroup ref="validateContentTypeHeightEqualToMinHeightActionGroup" stepKey="validateContentTypeHeightAfterSave">
+        <actionGroup ref="ValidateContentTypeHeightEqualToMinHeightActionGroup" stepKey="validateContentTypeHeightAfterSave">
             <argument name="content" value="{{SliderOnStage.containerCSS}}"/>
             <argument name="height" value="PageBuilderSliderMinHeight_Default"/>
             <argument name="border" value="PageBuilderAdvancedBorderWidthProperty10"/>
             <argument name="padding" value="PageBuilderPaddingProperty10"/>
         </actionGroup>
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="validateContentTypeHeightEqualToMinHeightActionGroup" stepKey="validateContentTypeHeightStorefront">
+        <actionGroup ref="ValidateContentTypeHeightEqualToMinHeightActionGroup" stepKey="validateContentTypeHeightStorefront">
             <argument name="content" value="{{SliderOnFrontend.all}}"/>
             <argument name="height" value="PageBuilderSliderMinHeight_Default"/>
             <argument name="border" value="PageBuilderAdvancedBorderWidthProperty10"/>
@@ -629,53 +629,53 @@
             <group value="pagebuilder-slide"/>
             <group value="pagebuilder-sliderCommon"/>
         </annotations>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" after="enterPageTitle" stepKey="expandMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" after="enterPageTitle" stepKey="expandMenuSection">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" after="commentConfigureContentType" stepKey="dragContentTypeToStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" after="commentConfigureContentType" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="unFocusOptionMenuActionGroup" after="dragContentTypeToStage" stepKey="unfocusSlideOptions">
+        <actionGroup ref="UnFocusOptionMenuActionGroup" after="dragContentTypeToStage" stepKey="unfocusSlideOptions">
             <argument name="contentType" value="PageBuilderSlideContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditPanel">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditPanel">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterMinHeightProperty">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterMinHeightProperty">
             <argument name="property" value="PageBuilderSliderMinHeight_Default"/>
         </actionGroup>
-        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneralActionGroup" after="enterMinHeightProperty" stepKey="enterShowDotsDisabled">
+        <actionGroup ref="ConditionalClickSlideOutPanelFieldGeneralActionGroup" after="enterMinHeightProperty" stepKey="enterShowDotsDisabled">
             <argument name="property" value="PageBuilderSliderShowDots_Disabled"/>
         </actionGroup>
         <remove keyForRemoval="enterBorder"/>
         <remove keyForRemoval="enterBorderColor"/>
         <remove keyForRemoval="enterBorderWidth"/>
         <remove keyForRemoval="enterPadding"/>
-        <actionGroup ref="openPageBuilderEditPanelSmallByIndexActionGroup" after="saveEditPanelSettings" stepKey="openSlideItemEditPanel">
+        <actionGroup ref="OpenPageBuilderEditPanelSmallByIndexActionGroup" after="saveEditPanelSettings" stepKey="openSlideItemEditPanel">
             <argument name="section" value="SlideOnBackend"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" after="openSlideItemEditPanel" stepKey="enterMinHeightPropertySlideItem">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" after="openSlideItemEditPanel" stepKey="enterMinHeightPropertySlideItem">
             <argument name="property" value="PageBuilderSlideItemMinimumHeight_300"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldActionGroup" after="enterMinHeightPropertySlideItem" stepKey="enterBackgroundColor">
+        <actionGroup ref="FillSlideOutPanelFieldActionGroup" after="enterMinHeightPropertySlideItem" stepKey="enterBackgroundColor">
             <argument name="property" value="PageBuilderBackgroundColor_Hex_Grey"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" after="enterBackgroundColor" stepKey="saveEditPanelSettings2"/>
-        <actionGroup ref="validateContentTypeHeightEqualToMinHeightActionGroup" stepKey="validateContentTypeHeightBeforeSave">
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" after="enterBackgroundColor" stepKey="saveEditPanelSettings2"/>
+        <actionGroup ref="ValidateContentTypeHeightEqualToMinHeightActionGroup" stepKey="validateContentTypeHeightBeforeSave">
             <argument name="content" value="{{SliderOnStage.containerCSS}}"/>
             <argument name="height" value="PageBuilderSliderMinHeight_Default"/>
         </actionGroup>
-        <actionGroup ref="validateContentTypeHeightEqualToMinHeightActionGroup" stepKey="validateContentTypeHeightAfterSave">
+        <actionGroup ref="ValidateContentTypeHeightEqualToMinHeightActionGroup" stepKey="validateContentTypeHeightAfterSave">
             <argument name="content" value="{{SliderOnStage.containerCSS}}"/>
             <argument name="height" value="PageBuilderSliderMinHeight_Default"/>
         </actionGroup>
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="validateContentTypeHeightEqualToMinHeightActionGroup" stepKey="validateContentTypeHeightStorefront">
+        <actionGroup ref="ValidateContentTypeHeightEqualToMinHeightActionGroup" stepKey="validateContentTypeHeightStorefront">
             <argument name="content" value="{{SliderOnFrontend.all}}"/>
             <argument name="height" value="PageBuilderSliderMinHeight_Default"/>
         </actionGroup>
@@ -696,54 +696,54 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <!-- Add Heading to Stage -->
         <comment userInput="Add Heading to Stage" stepKey="commentAddHeadingToStage"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToContainerActionGroup" stepKey="dragHeadingToColumn">
+        <actionGroup ref="DragContentTypeToContainerActionGroup" stepKey="dragHeadingToColumn">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="2" />
         </actionGroup>
-        <actionGroup ref="enterHeadingOnStageActionGroup" stepKey="enterHeadingOnStage">
+        <actionGroup ref="EnterHeadingOnStageActionGroup" stepKey="enterHeadingOnStage">
             <argument name="headingText" value="PageBuilderHeadingTextProperty"/>
         </actionGroup>
-        <actionGroup ref="clickOutsideLiveEditHeadingActionGroup" stepKey="clickOutsideLiveEditHeading">
+        <actionGroup ref="ClickOutsideLiveEditHeadingActionGroup" stepKey="clickOutsideLiveEditHeading">
             <argument name="index" value="1"/>
         </actionGroup>
         <!-- Add Slider to Stage -->
         <comment userInput="Add Slider to Stage" stepKey="commentAddSliderToStage"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionInteractive">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionInteractive">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToContainerActionGroup" stepKey="dragSliderToColumn">
+        <actionGroup ref="DragContentTypeToContainerActionGroup" stepKey="dragSliderToColumn">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="2" />
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditPanelAfterDrop">
+        <actionGroup ref="OpenPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditPanelAfterDrop">
             <argument name="section" value="SlideOnBackend"/>
         </actionGroup>
         <!-- Update Edit Panel -->
         <comment userInput="Update Edit Panel" stepKey="commentEdit"/>
-        <actionGroup ref="fillSlideOutPanelFieldActionGroup" stepKey="enterBackgroundColor">
+        <actionGroup ref="FillSlideOutPanelFieldActionGroup" stepKey="enterBackgroundColor">
             <argument name="property" value="PageBuilderBackgroundColor_Hex_Grey"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
-        <actionGroup ref="duplicateSmallContentTypeActionGroup" stepKey="duplicateSmallContentType">
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="DuplicateSmallContentTypeActionGroup" stepKey="duplicateSmallContentType">
             <argument name="section" value="SlideOnBackend"/>
             <argument name="targetIndex" value="1"/>
         </actionGroup>
@@ -752,14 +752,14 @@
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusSlide"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <actionGroup ref="validateContentTypeInsideContainerStageActionGroup" stepKey="validateHeadingStage">
+        <actionGroup ref="ValidateContentTypeInsideContainerStageActionGroup" stepKey="validateHeadingStage">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="positionInContainer" value="1"/>
             <argument name="contentTypeIndex" value="1"/>
             <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="validateContentTypeInsideContainerStageActionGroup" stepKey="validateSliderStage">
+        <actionGroup ref="ValidateContentTypeInsideContainerStageActionGroup" stepKey="validateSliderStage">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="positionInContainer" value="2"/>
@@ -768,19 +768,19 @@
         </actionGroup>
         <!-- Move Slider -->
         <comment userInput="Move Slider" stepKey="commentMoveSlider"/>
-        <actionGroup ref="moveContentTypeToContainerActionGroup" stepKey="moveSliderToLeftColumn">
+        <actionGroup ref="MoveContentTypeToContainerActionGroup" stepKey="moveSliderToLeftColumn">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
             <argument name="contentTypeIndex" value="1"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="validateContentTypeInsideContainerStageActionGroup" stepKey="validateHeadingStage2">
+        <actionGroup ref="ValidateContentTypeInsideContainerStageActionGroup" stepKey="validateHeadingStage2">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="contentTypeIndex" value="1"/>
             <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="validateContentTypeInsideContainerStageActionGroup" stepKey="validateSliderStage2">
+        <actionGroup ref="ValidateContentTypeInsideContainerStageActionGroup" stepKey="validateSliderStage2">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="contentTypeIndex" value="1"/>
@@ -791,13 +791,13 @@
         <!-- Change appearance of row and re-evaluate -->
         <comment userInput="Change appearance of row and re-evaluate" stepKey="commentChangeAppearanceOfRowAndReevaluate"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="loseFocus2"/>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStageForFirstRow">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStageForFirstRow">
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAppearanceRow1">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterAppearanceRow1">
             <argument name="property" value="PageBuilderRowAppearance_FullWidth"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettingsRow1"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettingsRow1"/>
         <seeElement selector="{{SlideOnBackend.backgroundColor('2', PageBuilderBackgroundColor_Hex_Grey.rgb)}}" stepKey="seeBackgroundColorForSlideItem2OnStageAfterChangingRowAppearance"/>
         <dontSeeElement selector="{{SlideOnBackend.backgroundColor('1', PageBuilderBackgroundColor_Hex_Grey.rgb)}}" stepKey="dontSeeBackgroundColorForSlideItem1OnStageAfterChangingRowAppearance"/>
         <!-- Save Page -->
@@ -805,16 +805,16 @@
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="validateStorefront"/>
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="validateContentTypeInsideContainerStorefrontActionGroup" stepKey="validateHeadingStorefront">
+        <actionGroup ref="ValidateContentTypeInsideContainerStorefrontActionGroup" stepKey="validateHeadingStorefront">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="contentTypeIndex" value="1"/>
             <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="validateContentTypeInsideContainerStorefrontActionGroup" stepKey="validateSliderStorefront">
+        <actionGroup ref="ValidateContentTypeInsideContainerStorefrontActionGroup" stepKey="validateSliderStorefront">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="contentTypeIndex" value="1"/>
@@ -839,34 +839,34 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <!-- Add Slider to Stage -->
         <comment userInput="Add Slider to Stage" stepKey="commentAddSliderToStage"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragContentTypeToStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditPanelAfterDrop">
+        <actionGroup ref="OpenPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditPanelAfterDrop">
             <argument name="section" value="SlideOnBackend"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldActionGroup" stepKey="enterBackgroundColor">
+        <actionGroup ref="FillSlideOutPanelFieldActionGroup" stepKey="enterBackgroundColor">
             <argument name="property" value="PageBuilderBackgroundColor_Hex_Grey"/>
         </actionGroup>
-        <actionGroup ref="addTextToTinyMCEActionGroup" stepKey="addTextToTinyMCE">
+        <actionGroup ref="AddTextToTinyMCEActionGroup" stepKey="addTextToTinyMCE">
             <argument name="property" value="PageBuilderSlideItemContent_Slide1"/>
             <argument name="section" value="SlideOnConfigurationPanel"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusSlide"/>
         <waitForPageLoad stepKey="waitForOptionsHide"/>
         <!-- Stage: Validate Default Show/Hide State - Before Save -->
@@ -875,11 +875,11 @@
         <!-- Stage: Validate Default Show/Hide State - After Save -->
         <comment userInput="Stage: Validate Default Show/Hide State - After Save" stepKey="commentValidateDefaultShowHideStateOnStageAfterSave"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <seeElement selector="{{SliderOnStage.notHidden('1')}}" stepKey="seeContentTypeNotHiddenStageAfterSave"/>
         <!-- Storefront: Validate Default Show/Hide State -->
         <comment userInput="Storefront: Validate Default Show/Hide State" stepKey="commentValidateDefaultShowHideStateOnStorefront"/>
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <seeElement selector="{{SliderOnFrontend.notHidden('1')}}" stepKey="seeContentTypeNotHiddenStorefront"/>
@@ -900,48 +900,48 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
             <closeTab stepKey="closeOpenedTab" />
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragContentTypeToStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditPanelAfterDrop">
+        <actionGroup ref="OpenPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditPanelAfterDrop">
             <argument name="section" value="SlideOnBackend"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldActionGroup" stepKey="enterBackgroundColor">
+        <actionGroup ref="FillSlideOutPanelFieldActionGroup" stepKey="enterBackgroundColor">
             <argument name="property" value="PageBuilderBackgroundColor_Hex_Grey"/>
         </actionGroup>
-        <actionGroup ref="addTextToTinyMCEActionGroup" stepKey="addTextToTinyMCE">
+        <actionGroup ref="AddTextToTinyMCEActionGroup" stepKey="addTextToTinyMCE">
             <argument name="property" value="PageBuilderSlideItemContent_Slide1"/>
             <argument name="section" value="SlideOnConfigurationPanel"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusSlide"/>
         <waitForPageLoad stepKey="waitForOptionsHide"/>
-        <actionGroup ref="hideContentTypeActionGroup" stepKey="hideContentType">
+        <actionGroup ref="HideContentTypeActionGroup" stepKey="hideContentType">
             <argument name="section" value="SliderOnStage"/>
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage1"/>
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage1"/>
         <!-- Validate content type remains disabled after save -->
         <comment userInput="Validate content type remains disabled after save" stepKey="commentValidateHiddenStage"/>
         <seeElement selector="{{SliderOnStage.hidden('1')}}" stepKey="waitForContentTypeHidden" />
         <!-- Validate store front -->
         <comment userInput="Validate content type is disabled on storefront" stepKey="commentValidateHiddenStorefront"/>
         <openNewTab stepKey="openNewTab" />
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <waitForElement selector="{{SliderOnFrontend.base('1')}}" stepKey="waitForContentTypeNotVisible" />
@@ -954,8 +954,8 @@
         <switchToNextTab stepKey="switchBackToAdmin" />
         <reloadPage stepKey="reloadPage" />
         <waitForPageLoad stepKey="waitForAdminReload" />
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
-        <actionGroup ref="showContentTypeActionGroup" stepKey="showContentType">
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="ShowContentTypeActionGroup" stepKey="showContentType">
             <argument name="section" value="SliderOnStage"/>
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
@@ -984,109 +984,109 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <!-- Add Slider to Stage -->
         <comment userInput="Add Slider to Stage" stepKey="commentAddSliderToStage"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragContentTypeToStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditPanelAfterDrop">
+        <actionGroup ref="OpenPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditPanelAfterDrop">
             <argument name="section" value="SlideOnBackend"/>
         </actionGroup>
-        <actionGroup ref="addTextToTinyMCEActionGroup" stepKey="enterMessageText">
+        <actionGroup ref="AddTextToTinyMCEActionGroup" stepKey="enterMessageText">
             <argument name="property" value="PageBuilderSlideItemContent_Slide1"/>
             <argument name="section" value="SlideOnConfigurationPanel"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusSlide"/>
         <!-- Add second slide -->
         <comment userInput="Add second slide" stepKey="addSecondSlide"/>
-        <actionGroup ref="addChildContentTypeFromOptionMenuActionGroup" stepKey="addChildContentType">
+        <actionGroup ref="AddChildContentTypeFromOptionMenuActionGroup" stepKey="addChildContentType">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditPanelAfterAdd">
+        <actionGroup ref="OpenPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditPanelAfterAdd">
             <argument name="section" value="SlideOnBackend"/>
             <argument name="targetIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="addTextToTinyMCEActionGroup" stepKey="enterMessageText2">
+        <actionGroup ref="AddTextToTinyMCEActionGroup" stepKey="enterMessageText2">
             <argument name="property" value="PageBuilderSlideItemContent_Slide2"/>
             <argument name="section" value="SlideOnConfigurationPanel"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings2"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings2"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusSlide2"/>
         <!-- Edit Slider settings -->
         <comment userInput="Edit Slider settings" stepKey="editSlider"/>
-        <actionGroup ref="openPageBuilderEditPanelByIndexActionGroup" stepKey="openSliderEditPanel">
+        <actionGroup ref="OpenPageBuilderEditPanelByIndexActionGroup" stepKey="openSliderEditPanel">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
             <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneralActionGroup" stepKey="enterAutoPlay">
+        <actionGroup ref="ConditionalClickSlideOutPanelFieldGeneralActionGroup" stepKey="enterAutoPlay">
             <argument name="property" value="PageBuilderSliderAutoPlay_Enabled"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterAutoPlaySpeed">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterAutoPlaySpeed">
             <argument name="property" value="PageBuilderSliderAutoPlaySpeed_50000"/>
         </actionGroup>
-        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneralActionGroup" stepKey="enterFade">
+        <actionGroup ref="ConditionalClickSlideOutPanelFieldGeneralActionGroup" stepKey="enterFade">
             <argument name="property" value="PageBuilderSliderFade_Enabled"/>
         </actionGroup>
-        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneralActionGroup" stepKey="enterInfiniteLoop">
+        <actionGroup ref="ConditionalClickSlideOutPanelFieldGeneralActionGroup" stepKey="enterInfiniteLoop">
             <argument name="property" value="PageBuilderSliderInfiniteLoop_Enabled"/>
         </actionGroup>
-        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneralActionGroup" stepKey="enterShowArrow">
+        <actionGroup ref="ConditionalClickSlideOutPanelFieldGeneralActionGroup" stepKey="enterShowArrow">
             <argument name="property" value="PageBuilderSliderShowArrows_Enabled"/>
         </actionGroup>
-        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneralActionGroup" stepKey="enterShowDots">
+        <actionGroup ref="ConditionalClickSlideOutPanelFieldGeneralActionGroup" stepKey="enterShowDots">
             <argument name="property" value="PageBuilderSliderShowDots_Enabled"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterSliderMinHeight">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterSliderMinHeight">
             <argument name="property" value="PageBuilderSliderMinHeight_100"/>
         </actionGroup>
         <!-- Edit Advanced Slider settings -->
         <comment userInput="Edit Advanced Slider settings" stepKey="commentEditSliderAdvanced"/>
-        <actionGroup ref="expandConfigurationSectionActionGroup" stepKey="expandConfigurationSection"/>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="selectAlignmentLeft2">
+        <actionGroup ref="ExpandConfigurationSectionActionGroup" stepKey="expandConfigurationSection"/>
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="selectAlignmentLeft2">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelFieldActionGroup" stepKey="enterAdvancedBorderProperty">
+        <actionGroup ref="SelectSlideOutPanelFieldActionGroup" stepKey="enterAdvancedBorderProperty">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBorderColor">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBorderColor">
             <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldActionGroup" stepKey="enterAdvancedBorderWidthProperty">
+        <actionGroup ref="FillSlideOutPanelFieldActionGroup" stepKey="enterAdvancedBorderWidthProperty">
             <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldActionGroup" stepKey="enterAdvancedBorderRadiusProperty">
+        <actionGroup ref="FillSlideOutPanelFieldActionGroup" stepKey="enterAdvancedBorderRadiusProperty">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldActionGroup" stepKey="enterAdvancedClassProperty">
+        <actionGroup ref="FillSlideOutPanelFieldActionGroup" stepKey="enterAdvancedClassProperty">
             <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldMarginsActionGroup" stepKey="enterMargins">
+        <actionGroup ref="FillSlideOutPanelFieldMarginsActionGroup" stepKey="enterMargins">
             <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldPaddingActionGroup" stepKey="enterPadding">
+        <actionGroup ref="FillSlideOutPanelFieldPaddingActionGroup" stepKey="enterPadding">
             <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings3"/>
-        <actionGroup ref="hideContentTypeActionGroup" stepKey="hideContentType">
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings3"/>
+        <actionGroup ref="HideContentTypeActionGroup" stepKey="hideContentType">
             <argument name="section" value="SliderOnStage"/>
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <!-- Duplicate -->
         <comment userInput="Duplicate" stepKey="commentDuplicate"/>
-        <actionGroup ref="duplicateContentTypeActionGroup" stepKey="duplicateContentType">
+        <actionGroup ref="DuplicateContentTypeActionGroup" stepKey="duplicateContentType">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <!-- Validate Duplicate Is Disabled -->
@@ -1113,11 +1113,11 @@
         <seeElement selector="{{SliderOnStage.padding('2', PageBuilderPaddingPropertyUnique.value)}}" stepKey="seePaddingStage"/>
         <!-- Show Content -->
         <comment userInput="Show Content" stepKey="commentShowContent"/>
-        <actionGroup ref="showContentTypeActionGroup" stepKey="showContentTypeFirstSlider">
+        <actionGroup ref="ShowContentTypeActionGroup" stepKey="showContentTypeFirstSlider">
             <argument name="section" value="SliderOnStage"/>
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="showContentTypeActionGroup" stepKey="showContentTypeSecondSlider">
+        <actionGroup ref="ShowContentTypeActionGroup" stepKey="showContentTypeSecondSlider">
             <argument name="section" value="SliderOnStage"/>
             <argument name="contentType" value="PageBuilderSliderContentType"/>
             <argument name="targetIndex" value="2"/>
@@ -1133,7 +1133,7 @@
         <waitForPageLoad stepKey="waitForPageLoad2"/>
         <seeElement selector="{{SlideOnBackend.messageContent('4', PageBuilderSlideItemContent_Slide2.value)}}" stepKey="seeMessageContentSlideItem2Stage"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage1"/>
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage1"/>
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage1"/>
         <!-- Validate Stage After Save: Slider Settings -->
         <comment userInput="Validate Stage After Save: Slider Settings" stepKey="commentValidateSettingsStage2"/>
         <seeElement selector="{{SliderOnStage.autoPlay('2', PageBuilderSliderAutoPlay_Enabled.value)}}" stepKey="seeAutoPlayStage2"/>
@@ -1163,61 +1163,61 @@
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusSlide4"/>
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel"/>
-        <actionGroup ref="openPageBuilderEditPanelByIndexActionGroup" stepKey="openEditPanel">
+        <actionGroup ref="OpenPageBuilderEditPanelByIndexActionGroup" stepKey="openEditPanel">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
             <argument name="index" value="2"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsCheckedSlideOutPropertyActionGroup" stepKey="validateAutoPlay">
+        <actionGroup ref="SeeOptionIsCheckedSlideOutPropertyActionGroup" stepKey="validateAutoPlay">
             <argument name="property" value="PageBuilderSliderAutoPlay_Enabled"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateAutoPlaySpeed">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateAutoPlaySpeed">
             <argument name="property" value="PageBuilderSliderAutoPlaySpeed_50000"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsCheckedSlideOutPropertyActionGroup" stepKey="validateFade">
+        <actionGroup ref="SeeOptionIsCheckedSlideOutPropertyActionGroup" stepKey="validateFade">
             <argument name="property" value="PageBuilderSliderFade_Enabled"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsCheckedSlideOutPropertyActionGroup" stepKey="validateInfiniteLoop">
+        <actionGroup ref="SeeOptionIsCheckedSlideOutPropertyActionGroup" stepKey="validateInfiniteLoop">
             <argument name="property" value="PageBuilderSliderInfiniteLoop_Enabled"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsCheckedSlideOutPropertyActionGroup" stepKey="validateShowArrows">
+        <actionGroup ref="SeeOptionIsCheckedSlideOutPropertyActionGroup" stepKey="validateShowArrows">
             <argument name="property" value="PageBuilderSliderShowArrows_Enabled"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsCheckedSlideOutPropertyActionGroup" stepKey="validateShowDots">
+        <actionGroup ref="SeeOptionIsCheckedSlideOutPropertyActionGroup" stepKey="validateShowDots">
             <argument name="property" value="PageBuilderSliderShowDots_Enabled"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateMinHeight">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateMinHeight">
             <argument name="property" value="PageBuilderSliderMinHeight_100"/>
         </actionGroup>
         <!-- Validate Edit Panel After Save: Advanced -->
         <comment userInput="Validate Edit Panel After Save: Advanced" stepKey="commentValidateEditPanelAdvanced"/>
-        <actionGroup ref="expandConfigurationSectionActionGroup" stepKey="expandConfigurationSection3"/>
-        <actionGroup ref="seeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateAlignment2">
+        <actionGroup ref="ExpandConfigurationSectionActionGroup" stepKey="expandConfigurationSection3"/>
+        <actionGroup ref="SeeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateAlignment2">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateBorder2">
+        <actionGroup ref="SeeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateBorder2">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderColor2">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderColor2">
             <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderWidth2">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderWidth2">
             <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderRadius2">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderRadius2">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateCssClasses2">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateCssClasses2">
             <argument name="property" value="PageBuilderSliderAdvancedCssClassesPropertyThreeClasses"/>
         </actionGroup>
-        <actionGroup ref="seeInMarginFieldsSlideOutPanelActionGroup" stepKey="validateMargins2">
+        <actionGroup ref="SeeInMarginFieldsSlideOutPanelActionGroup" stepKey="validateMargins2">
             <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
         </actionGroup>
-        <actionGroup ref="seeInPaddingFieldsSlideOutPanelActionGroup" stepKey="validatePadding2">
+        <actionGroup ref="SeeInPaddingFieldsSlideOutPanelActionGroup" stepKey="validatePadding2">
             <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
         <!-- Validate Storefront: Slider Settings -->
         <comment userInput="Validate Storefront: Slider Settings" stepKey="commentValidateSettingsStorefront"/>
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <seeElement selector="{{SliderOnFrontend.notHidden('1')}}" stepKey="waitForContentTypeShownStorefront1"/>
@@ -1263,28 +1263,28 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <!-- Add Slider and Save Page -->
         <comment userInput="Add Slider and Save Page" stepKey="commentAddSlider"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragSliderIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragSliderIntoStage">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <!-- Delete Slider -->
         <comment userInput="Delete Slider" stepKey="commentDeleteSlider"/>
-        <actionGroup ref="removeContentTypeFromStageActionGroup" stepKey="removeSlider">
+        <actionGroup ref="RemoveContentTypeFromStageActionGroup" stepKey="removeSlider">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <!-- Validate Stage -->
@@ -1293,13 +1293,13 @@
         <!-- Save Page -->
         <comment userInput="Save Page" stepKey="commentSavePage"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage2"/>
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage2"/>
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage2"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
         <dontSeeElementInDOM selector="{{PageBuilderStage.contentTypeInStageByIndex(PageBuilderSliderContentType.role, '1')}}" stepKey="dontSeeContentTypeInStage2"/>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <dontSeeElementInDOM selector="{{SliderOnFrontend.all}}" stepKey="dontSeeContentTypeInStorefront"/>
@@ -1319,28 +1319,28 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragSliderOntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragSliderOntoStage">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="unFocusOptionMenuActionGroup" stepKey="unFocusOptionMenu">
+        <actionGroup ref="UnFocusOptionMenuActionGroup" stepKey="unFocusOptionMenu">
             <argument name="contentType" value="PageBuilderSlideContentType"/>
         </actionGroup>
-        <actionGroup ref="moveContentTypeToContainerActionGroup" stepKey="moveSliderIntoExistingRow">
+        <actionGroup ref="MoveContentTypeToContainerActionGroup" stepKey="moveSliderIntoExistingRow">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
             <argument name="contentTypeIndex" value="1"/>
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="removeContentTypeFromStageActionGroup" stepKey="removeSliderFromStage">
+        <actionGroup ref="RemoveContentTypeFromStageActionGroup" stepKey="removeSliderFromStage">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <waitForElementNotVisible selector="{{PageBuilderStage.contentTypeInStage(PageBuilderSliderContentType.role)}}" stepKey="dontSeeSliderInContent" />
@@ -1362,16 +1362,16 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionLayout">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionLayout">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="cannotDragContentTypeToTargetActionGroup" stepKey="dragSliderIntoStage">
+        <actionGroup ref="CannotDragContentTypeToTargetActionGroup" stepKey="dragSliderIntoStage">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
             <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
         </actionGroup>
@@ -1394,41 +1394,41 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <!-- Add Slider to Stage -->
         <comment userInput="Add Slider to Stage" stepKey="addSliderToStage"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionLayout">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionLayout">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToContainerActionGroup" stepKey="dragSliderOntoColumn">
+        <actionGroup ref="DragContentTypeToContainerActionGroup" stepKey="dragSliderOntoColumn">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="2" />
         </actionGroup>
         <!-- Validate Stage -->
         <comment userInput="User sees slider displayed in column on Stage" stepKey="confirmSliderOnStage"/>
-        <actionGroup ref="validateContentTypeInsideContainerStageActionGroup" stepKey="checkContentTypeInContainerStage">
+        <actionGroup ref="ValidateContentTypeInsideContainerStageActionGroup" stepKey="checkContentTypeInContainerStage">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="contentTypeIndex" value="1"/>
             <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage2"/>
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage2"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate stage after save" stepKey="validateSliderOnStage"/>
-        <actionGroup ref="validateContentTypeInsideContainerStageActionGroup" stepKey="checkContentTypeInContainerStage2">
+        <actionGroup ref="ValidateContentTypeInsideContainerStageActionGroup" stepKey="checkContentTypeInContainerStage2">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="contentTypeIndex" value="1"/>
@@ -1436,10 +1436,10 @@
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="View Slider inside column on storefront" stepKey="viewSliderOnStorefront"/>
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="validateContentTypeInsideContainerStorefrontInDOMActionGroup" stepKey="checkContentTypeInContainerStorefront">
+        <actionGroup ref="ValidateContentTypeInsideContainerStorefrontInDOMActionGroup" stepKey="checkContentTypeInContainerStorefront">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="contentTypeIndex" value="1"/>
@@ -1461,22 +1461,22 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragSliderOntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragSliderOntoStage">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSectionElements">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSectionElements">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToDropZoneActionGroup" stepKey="dragTextIntoRowAboveSlider">
+        <actionGroup ref="DragContentTypeToDropZoneActionGroup" stepKey="dragTextIntoRowAboveSlider">
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="1"/>
@@ -1485,14 +1485,14 @@
             <argument name="offsetXCoordinate" value="0"/>
         </actionGroup>
         <comment userInput="User sees Text displayed in row above Slider on Stage" stepKey="confirmContentTypesOnStage"/>
-        <actionGroup ref="validateContentTypeInsideContainerStageActionGroup" stepKey="checkTextPositionInRow">
+        <actionGroup ref="ValidateContentTypeInsideContainerStageActionGroup" stepKey="checkTextPositionInRow">
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="1"/>
             <argument name="positionInContainer" value="1"/>
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="validateContentTypeInsideContainerStageActionGroup" stepKey="checkSliderPositionInRow">
+        <actionGroup ref="ValidateContentTypeInsideContainerStageActionGroup" stepKey="checkSliderPositionInRow">
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="1"/>
             <argument name="positionInContainer" value="2"/>
@@ -1515,16 +1515,16 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragSliderOntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragSliderOntoStage">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <comment userInput="Attempt to drag heading block onto top part of slider" stepKey="commentValidateAboveSlider"/>
@@ -1534,10 +1534,10 @@
         <executeJS function="return Math.round({$sliderWidthSansPadding}/20)" stepKey="sliderWidthOffset"/>
         <executeJS function="return Math.round({$actualStageSliderHeight}-{{PageBuilderAdvancedMarginsAndPaddingPropertyDefaultSlide.paddingTop}}-{{PageBuilderAdvancedMarginsAndPaddingPropertyDefaultSlide.paddingBottom}})" stepKey="sliderHeightSansPadding"/>
         <executeJS function="return Math.round({$sliderHeightSansPadding}/5)" stepKey="sliderHeightOffset"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSectionElements">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSectionElements">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToContentTypeActionGroup" stepKey="dragHeadingOntoSliderTop">
+        <actionGroup ref="DragContentTypeToContentTypeActionGroup" stepKey="dragHeadingOntoSliderTop">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
             <argument name="targetBlockType" value="PageBuilderSliderContentType"/>
             <argument name="offsetXCoordinate" value="$sliderWidthOffset"/>
@@ -1547,7 +1547,7 @@
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="clickOutsideLiveEdit1"/>
         <waitForPageLoad time="30" stepKey="waitForAnimation1"/>
         <comment userInput="Attempt to drag heading block onto bottom part of slider" stepKey="commentValidateBelowSlider"/>
-        <actionGroup ref="dragContentTypeToContentTypeActionGroup" stepKey="dragHeadingOntoSliderBottom">
+        <actionGroup ref="DragContentTypeToContentTypeActionGroup" stepKey="dragHeadingOntoSliderBottom">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
             <argument name="targetBlockType" value="PageBuilderSliderContentType"/>
             <argument name="offsetXCoordinate" value="$sliderWidthOffset"/>
@@ -1556,21 +1556,21 @@
         <moveMouseOver selector="{{PageBuilderPanel.searchPanel}}" stepKey="moveMouseOutsideLiveEdit2"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="clickOutsideLiveEdit2"/>
         <waitForPageLoad time="30" stepKey="waitForAnimation2"/>
-        <actionGroup ref="validateContentTypeInsideContainerStageActionGroup" stepKey="validateHeadingFirst">
+        <actionGroup ref="ValidateContentTypeInsideContainerStageActionGroup" stepKey="validateHeadingFirst">
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="1"/>
             <argument name="positionInContainer" value="1"/>
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
             <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="validateContentTypeInsideContainerStageActionGroup" stepKey="validateSliderSecond">
+        <actionGroup ref="ValidateContentTypeInsideContainerStageActionGroup" stepKey="validateSliderSecond">
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="1"/>
             <argument name="positionInContainer" value="2"/>
             <argument name="contentType" value="PageBuilderSliderContentType"/>
             <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="validateContentTypeInsideContainerStageActionGroup" stepKey="validateHeadingThird">
+        <actionGroup ref="ValidateContentTypeInsideContainerStageActionGroup" stepKey="validateHeadingThird">
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="1"/>
             <argument name="positionInContainer" value="3"/>
@@ -1593,16 +1593,16 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragIntoStage">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <!-- Validate Slide 1 Is Shown -->
@@ -1617,13 +1617,13 @@
         <see selector="{{SlideOnBackend.optionsMenu('1')}}" userInput="Slide 1" stepKey="seeSlideOptionsAppearWithSlide1DefaultTitle"/>
         <!-- Update Slide 1 -->
         <comment userInput="Update Slide 1" stepKey="commentUpdateSlide1"/>
-        <actionGroup ref="openPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditPanel1">
+        <actionGroup ref="OpenPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditPanel1">
             <argument name="section" value="SlideOnBackend"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterSlideNameText1">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterSlideNameText1">
             <argument name="property" value="PageBuilderSlideItemSlideName_Slide1"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanel1Settings"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanel1Settings"/>
         <!-- User Still Sees Slide Item Option Menu If Hovering Over Slider -->
         <comment userInput="User Still Sees Slide Item Option Menu If Hovering Over Slider" stepKey="commentHoverSlider"/>
         <click selector="{{SliderOnStage.slideNavigationDot('1', '1')}}" stepKey="clickSlideOptionsMenu1"/>
@@ -1643,7 +1643,7 @@
         <dontSeeElement selector="{{SlideOnBackend.optionsMenu('1')}}" stepKey="dontSeeSlideOptionsMenu"/>
         <!-- Add 2nd Slide -->
         <comment userInput="Add 2nd Slide" stepKey="commentAddSlide"/>
-        <actionGroup ref="addChildContentTypeFromOptionMenuActionGroup" stepKey="addChildContentType">
+        <actionGroup ref="AddChildContentTypeFromOptionMenuActionGroup" stepKey="addChildContentType">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <!-- Validate Slide 2 Is Shown -->
@@ -1660,14 +1660,14 @@
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusSlide2"/>
         <!-- Update Slide 2 -->
         <comment userInput="Update Slide 2" stepKey="commentUpdateSlide2"/>
-        <actionGroup ref="openPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditPanel2">
+        <actionGroup ref="OpenPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditPanel2">
             <argument name="section" value="SlideOnBackend"/>
             <argument name="targetIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterSlideNameText2">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterSlideNameText2">
             <argument name="property" value="PageBuilderSlideItemSlideName_Slide2"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings2"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings2"/>
         <!-- Validate On Hover Tooltips -->
         <comment userInput="Validate On Hover Tooltips" stepKey="commentValidateTooltips"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusSlide3"/>
@@ -1694,36 +1694,36 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragSliderOntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragSliderOntoStage">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditPanelOnDrop">
+        <actionGroup ref="OpenPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditPanelOnDrop">
             <argument name="section" value="SlideOnBackend"/>
         </actionGroup>
-        <actionGroup ref="fillOutColorPickerActionGroup" stepKey="fillOutSlideOneColour">
+        <actionGroup ref="FillOutColorPickerActionGroup" stepKey="fillOutSlideOneColour">
             <argument name="colorCode" value="PageBuilderBackgroundColorProperty_087E8B"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
-        <actionGroup ref="addChildContentTypeFromOptionMenuActionGroup" stepKey="addChildContentType">
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="AddChildContentTypeFromOptionMenuActionGroup" stepKey="addChildContentType">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditPanelAfterDrop">
+        <actionGroup ref="OpenPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditPanelAfterDrop">
             <argument name="section" value="SlideOnBackend"/>
             <argument name="targetIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="fillOutColorPickerActionGroup" stepKey="fillOutSlideTwoColour">
+        <actionGroup ref="FillOutColorPickerActionGroup" stepKey="fillOutSlideTwoColour">
             <argument name="colorCode" value="PageBuilderBackgroundColorProperty_3C3C3C"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettingsForSlideTwo"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettingsForSlideTwo"/>
         <!-- Switch to first slide -->
         <waitForElementVisible selector="{{SliderOnStage.slideNavigationDot('1', '1')}}" stepKey="waitForSliderDot1"/>
         <click selector="{{SliderOnStage.slideNavigationDot('1', '1')}}" stepKey="clickSliderDot1"/>
@@ -1752,10 +1752,10 @@
         </annotations>
         <!-- Add Slider -->
         <comment userInput="Add Slider" stepKey="commentAddContentType"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragContentTypeIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragContentTypeIntoStage">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <click selector="{{SlideOnBackend.tinymce('1')}}" stepKey="focusOnEditorArea1"/>
@@ -1788,38 +1788,38 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragSliderOntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragSliderOntoStage">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <!-- Open Slider settings -->
         <comment userInput="Open Slider settings" stepKey="editSlider"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusSlide"/>
-        <actionGroup ref="openPageBuilderEditPanelByIndexActionGroup" stepKey="openSliderEditPanel">
+        <actionGroup ref="OpenPageBuilderEditPanelByIndexActionGroup" stepKey="openSliderEditPanel">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
             <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneralActionGroup" stepKey="enterFade">
+        <actionGroup ref="ConditionalClickSlideOutPanelFieldGeneralActionGroup" stepKey="enterFade">
             <argument name="property" value="PageBuilderSliderFade_Enabled"/>
         </actionGroup>
-        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneralActionGroup" stepKey="enterShowDots">
+        <actionGroup ref="ConditionalClickSlideOutPanelFieldGeneralActionGroup" stepKey="enterShowDots">
             <argument name="property" value="PageBuilderSliderShowDots_Enabled"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings1"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings1"/>
         <!-- Add second slide -->
         <comment userInput="Add second slide" stepKey="addSecondSlide"/>
-        <actionGroup ref="addChildContentTypeFromOptionMenuActionGroup" stepKey="addChildContentType">
+        <actionGroup ref="AddChildContentTypeFromOptionMenuActionGroup" stepKey="addChildContentType">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <!-- Switch to Slide 2 -->
@@ -1842,13 +1842,13 @@
         </assertGreaterThan>
         <!-- Add Content To Slide 2 -->
         <comment userInput="Add Content To Slide 2" stepKey="commentAddContentToSlide2"/>
-        <actionGroup ref="inlineEditWYSIWYGFromStageActionGroup" stepKey="inlineEdit">
+        <actionGroup ref="InlineEditWYSIWYGFromStageActionGroup" stepKey="inlineEdit">
             <argument name="contentType" value="PageBuilderSlideContentType"/>
             <argument name="content" value="{{PageBuilderSlideItemContent_Slide1.value}}"/>
             <argument name="index" value="2"/>
         </actionGroup>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage"/>
         <click selector="{{SliderOnStage.slideNavigationDot('1', '2')}}" stepKey="clickSlide2StageAfterSave"/>

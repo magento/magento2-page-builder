@@ -8,7 +8,7 @@
 
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
-    <actionGroup name="dragColumnToAnotherColumnGroupActionGroup">
+    <actionGroup name="DragColumnToAnotherColumnGroupActionGroup">
         <arguments>
             <argument name="contentType" defaultValue="PageBuilderColumnContentType"/>
             <argument name="contentTypeIndex" defaultValue="1" type="string"/>
@@ -25,7 +25,7 @@
         <dragAndDrop selector1="{{ColumnOnBackend.columnMoveByIndex(contentTypeIndex)}}" selector2="{{PageBuilderStage.contentTypeContainer(contentType.role, containerTargetIndex)}}" stepKey="moveContentTypeIntoContainer"/>
         <waitForPageLoad stepKey="waitForDragOperation"/>
     </actionGroup>
-    <actionGroup name="openGridSizeFormActionGroup">
+    <actionGroup name="OpenGridSizeFormActionGroup">
         <arguments>
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
@@ -34,7 +34,7 @@
         <waitForPageLoad stepKey="waitForAnimation"/>
         <waitForElementVisible selector="{{ColumnOnBackend.gridSizeInput(index)}}" stepKey="waitForGridVisible"/>
     </actionGroup>
-    <actionGroup name="closeGridSizeFormActionGroup">
+    <actionGroup name="CloseGridSizeFormActionGroup">
         <arguments>
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
@@ -42,7 +42,7 @@
         <waitForPageLoad stepKey="waitForAnimation"/>
         <waitForElementNotVisible selector="{{ColumnOnBackend.gridSizeInput(index)}}" stepKey="waitForGridNotVisible"/>
     </actionGroup>
-    <actionGroup name="updateGridSizeActionGroup">
+    <actionGroup name="UpdateGridSizeActionGroup">
         <arguments>
             <argument name="index" defaultValue="1" type="string"/>
             <argument name="gridSize" defaultValue="12" type="string"/>
@@ -56,7 +56,7 @@
         <waitForPageLoad stepKey="waitForUpdate"/>
         <waitForElementVisible selector="{{ColumnOnBackend.displayLabelGridSize(index, gridSize)}}" stepKey="validateGridSize"/>
     </actionGroup>
-    <actionGroup name="updateGridSizeInvalidActionGroup">
+    <actionGroup name="UpdateGridSizeInvalidActionGroup">
         <arguments>
             <argument name="index" defaultValue="1" type="string"/>
             <argument name="gridSize" defaultValue="12" type="string"/>
@@ -67,7 +67,7 @@
         <waitForPageLoad stepKey="waitForAnimation"/>
         <waitForElementVisible selector="{{ColumnOnBackend.gridSizeError(index, errorMessage)}}" stepKey="verifyError"/>
     </actionGroup>
-    <actionGroup name="validateColumnAppearanceFullHeightActionGroup">
+    <actionGroup name="ValidateColumnAppearanceFullHeightActionGroup">
         <arguments>
             <argument name="section" defaultValue="ColumnOnBackend"/>
             <argument name="columnIndex" defaultValue="1" type="string"/>
@@ -86,7 +86,7 @@
             <actualResult type="variable">heightDifference</actualResult>
         </assertLessThan>
     </actionGroup>
-    <actionGroup name="validateColumnAppearanceTopAlignedActionGroup">
+    <actionGroup name="ValidateColumnAppearanceTopAlignedActionGroup">
         <arguments>
             <argument name="section" defaultValue="ColumnOnBackend"/>
             <argument name="height" defaultValue="PageBuilderMinHeightProperty_300"/>
@@ -114,13 +114,13 @@
             <actualResult type="variable">topOfColumnDifference</actualResult>
         </assertLessThan>
     </actionGroup>
-    <actionGroup name="validateColumnAppearanceCenterAlignedActionGroup" extends="validateColumnAppearanceTopAlignedActionGroup">
+    <actionGroup name="ValidateColumnAppearanceCenterAlignedActionGroup" extends="validateColumnAppearanceTopAlignedActionGroup">
         <comment userInput="validateColumnAppearanceCenterAligned" stepKey="comment"/>
         <seeElement selector="{{section.appearance(columnIndex, PageBuilderColumnAppearanceProperty_Center.value)}}" stepKey="seeColumnAppearance"/>
         <executeJS function="return Math.round(document.querySelectorAll('{{section.allColumnGroups}}')[{{columnGroupIndex}}-1].getBoundingClientRect().top + (document.querySelectorAll('{{section.allColumnGroups}}')[{{columnGroupIndex}}-1].clientHeight / 2))" stepKey="topOfColumnGroup"/>
         <executeJS function="return Math.round(document.querySelectorAll('{{section.baseCSS}}')[{{columnIndex}}-1].getBoundingClientRect().top  + (document.querySelectorAll('{{section.baseCSS}}')[{{columnIndex}}-1].clientHeight / 2))" stepKey="topOfIndividualColumn"/>
     </actionGroup>
-    <actionGroup name="validateColumnAppearanceBottomAlignedActionGroup" extends="validateColumnAppearanceTopAlignedActionGroup">
+    <actionGroup name="ValidateColumnAppearanceBottomAlignedActionGroup" extends="validateColumnAppearanceTopAlignedActionGroup">
         <comment userInput="validateColumnAppearanceBottomAligned" stepKey="comment"/>
         <seeElement selector="{{section.appearance(columnIndex, PageBuilderColumnAppearanceProperty_Bottom.value)}}" stepKey="seeColumnAppearance"/>
         <executeJS function="return document.querySelectorAll('{{section.allColumnGroups}}')[{{columnGroupIndex}}-1].getBoundingClientRect().bottom" stepKey="topOfColumnGroup"/>

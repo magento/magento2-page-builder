@@ -24,56 +24,56 @@
         <before>
             <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key {{googleMapsAPIKey.invalidOneCharacter}}" stepKey="setInvalidGoogleMapsAPIKey"/>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setEmptyGoogleMapsAPIKey"/>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionMedia">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionMedia">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragContentTypeIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragContentTypeIntoStage">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <actionGroup ref="validateMapErrorMessageStageActionGroup" stepKey="validateMapErrorMessageOnStage"/>
+        <actionGroup ref="ValidateMapErrorMessageStageActionGroup" stepKey="validateMapErrorMessageOnStage"/>
         <!-- Validate Edit Form -->
         <comment userInput="Validate Edit Form" stepKey="commentValidateEditForm"/>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditAfterDrop">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditAfterDrop">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <waitForElement selector="{{EditMapForm.warningMessage}}" stepKey="waitForWarningMessageElement"/>
         <dontSeeElement selector="{{EditMapForm.warningMessage}}" stepKey="dontSeeWarningMessage"/>
-        <actionGroup ref="clickAddLocationButtonActionGroup" stepKey="clickAddLocationButton"/>
-        <actionGroup ref="validateMapErrorMessageAddLocationFormActionGroup" stepKey="validateMapErrorMessageOnEditPanel"/>
-        <actionGroup ref="closeLocationFormActionGroup" stepKey="closeLocationForm"/>
-        <actionGroup ref="closeEditPanelSettingsActionGroup" stepKey="closeEditPanel"/>
+        <actionGroup ref="ClickAddLocationButtonActionGroup" stepKey="clickAddLocationButton"/>
+        <actionGroup ref="ValidateMapErrorMessageAddLocationFormActionGroup" stepKey="validateMapErrorMessageOnEditPanel"/>
+        <actionGroup ref="CloseLocationFormActionGroup" stepKey="closeLocationForm"/>
+        <actionGroup ref="CloseEditPanelSettingsActionGroup" stepKey="closeEditPanel"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
-        <actionGroup ref="validateMapErrorMessageStageActionGroup" stepKey="validateMapErrorMessageOnStage2"/>
+        <actionGroup ref="ValidateMapErrorMessageStageActionGroup" stepKey="validateMapErrorMessageOnStage2"/>
         <!-- Validate Edit Form After Save -->
         <comment userInput="Validate Edit Form After Save" stepKey="commentValidateEditForm2"/>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <waitForElement selector="{{EditMapForm.warningMessage}}" stepKey="waitForWarningMessageElement2"/>
         <dontSeeElement selector="{{EditMapForm.warningMessage}}" stepKey="dontSeeWarningMessage2"/>
-        <actionGroup ref="clickAddLocationButtonActionGroup" stepKey="clickAddLocationButton2"/>
-        <actionGroup ref="validateMapErrorMessageAddLocationFormActionGroup" stepKey="validateMapErrorMessageOnEditPanel2"/>
+        <actionGroup ref="ClickAddLocationButtonActionGroup" stepKey="clickAddLocationButton2"/>
+        <actionGroup ref="ValidateMapErrorMessageAddLocationFormActionGroup" stepKey="validateMapErrorMessageOnEditPanel2"/>
         <!-- Validate No Message On Storefront After Save -->
         <comment userInput="Validate No Message On Storefront After Save" stepKey="commentValidateMessageOnStorefrontAfterSave"/>
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="validateEmptyMapStoreFrontActionGroup" stepKey="validateEmptyMapStoreFront"/>
+        <actionGroup ref="ValidateEmptyMapStoreFrontActionGroup" stepKey="validateEmptyMapStoreFront"/>
     </test>
     <test name="MapEmptyAPIKeyWarningMessage" extends="MapInvalidAPIKeyWarningMessage">
         <annotations>
@@ -110,40 +110,40 @@
         <before>
             <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setEmptyGoogleMapsAPIKey"/>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionMedia">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionMedia">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragContentTypeIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragContentTypeIntoStage">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage1"/>
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage1"/>
         <!-- Stage: Validate Warning Message Link -->
         <comment userInput="Stage: Validate Warning Message Link" stepKey="commentValidateWarningMessageLinkStage"/>
-        <actionGroup ref="validateWarningMessageLinkActionGroup" stepKey="validateWarningMessageLink1">
+        <actionGroup ref="ValidateWarningMessageLinkActionGroup" stepKey="validateWarningMessageLink1">
             <argument name="section" value="MapOnStage"/>
         </actionGroup>
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage2"/>
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage2"/>
         <!-- Edit Form: Validate Warning Message Link -->
         <comment userInput="Edit Form: Validate Warning Message Link" stepKey="commentValidateWarningMessageLinkEditForm"/>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditPanel1">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditPanel1">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="validateWarningMessageLinkActionGroup" stepKey="validateWarningMessageLink2">
+        <actionGroup ref="ValidateWarningMessageLinkActionGroup" stepKey="validateWarningMessageLink2">
             <argument name="section" value="EditMapForm"/>
         </actionGroup>
         <!-- Location Form: Validate Warning Message Link -->
-        <actionGroup ref="clickAddLocationButtonActionGroup" stepKey="clickAddLocationButton"/>
-        <actionGroup ref="validateWarningMessageLinkActionGroup" stepKey="validateWarningMessageLink3">
+        <actionGroup ref="ClickAddLocationButtonActionGroup" stepKey="clickAddLocationButton"/>
+        <actionGroup ref="ValidateWarningMessageLinkActionGroup" stepKey="validateWarningMessageLink3">
             <argument name="section" value="AddLocationForm"/>
         </actionGroup>
     </test>
@@ -186,46 +186,46 @@
         <before>
             <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key {{googleMapsAPIKey.invalidOneCharacter}}" stepKey="setInvalidGoogleMapsAPIKey"/>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setEmptyGoogleMapsAPIKey"/>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionMedia">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionMedia">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragContentTypeIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragContentTypeIntoStage">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditAfterDrop">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditAfterDrop">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <!-- Add Location -->
         <comment userInput="Add Location" stepKey="commentAddLocation"/>
-        <actionGroup ref="clickAddLocationButtonActionGroup" stepKey="clickAddLocationButton"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLatitude">
+        <actionGroup ref="ClickAddLocationButtonActionGroup" stepKey="clickAddLocationButton"/>
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLatitude">
             <argument name="property" value="PageBuilderMapLatitude_Positive39_74"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLongitude">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLongitude">
             <argument name="property" value="PageBuilderMapLongitude_Positive9_67"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLocationName">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLocationName">
             <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
         </actionGroup>
-        <actionGroup ref="saveLocationFormActionGroup" stepKey="saveLocationForm"/>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="SaveLocationFormActionGroup" stepKey="saveLocationForm"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Location Was Saved -->
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditPanel2">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditPanel2">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="validateLocationGridDataActionGroup" stepKey="validateLocationGridData">
+        <actionGroup ref="ValidateLocationGridDataActionGroup" stepKey="validateLocationGridData">
             <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
             <argument name="rowIndex" value="1"/>
         </actionGroup>
@@ -263,44 +263,44 @@
         <before>
             <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key {{googleMapsAPIKey.invalidOneCharacter}}" stepKey="setInvalidGoogleMapsAPIKey"/>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setEmptyGoogleMapsAPIKey"/>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
         <!-- Save Page With Map -->
         <comment userInput="Save Page With Map" stepKey="commentSavePage1"/>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionMedia">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionMedia">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragContentTypeIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragContentTypeIntoStage">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditAfterDrop">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditAfterDrop">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="clickAddLocationButtonActionGroup" stepKey="clickAddLocationButton"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLatitude">
+        <actionGroup ref="ClickAddLocationButtonActionGroup" stepKey="clickAddLocationButton"/>
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLatitude">
             <argument name="property" value="PageBuilderMapLatitude_Positive39_74"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLongitude">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLongitude">
             <argument name="property" value="PageBuilderMapLongitude_Positive9_67"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLocationName">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLocationName">
             <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
         </actionGroup>
-        <actionGroup ref="saveLocationFormActionGroup" stepKey="saveLocationForm"/>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="SaveLocationFormActionGroup" stepKey="saveLocationForm"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <!-- Verify Can Still Edit Location -->
         <comment userInput="Verify Can Still Edit Location" stepKey="commentEdit"/>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <waitForElementVisible selector="{{PageBuilderDataGrid.gridBase}}" stepKey="waitForGrid"/>
@@ -310,30 +310,30 @@
         <waitForElementVisible selector="{{AddLocationForm.form}}" stepKey="waitForForm"/>
         <see userInput="Add Location" selector="{{AddLocationForm.formTitle}}" stepKey="seeFormTitle"/>
         <waitForElementVisible selector="{{AddLocationForm.errorContainer('1')}}" stepKey="waitForLocationMapOverlay"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLocationName2">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLocationName2">
             <argument name="property" value="PageBuilderMapLocationName_TestLocationEdit"/>
         </actionGroup>
-        <actionGroup ref="saveLocationFormActionGroup" stepKey="saveLocationForm2"/>
-        <actionGroup ref="validateLocationGridDataActionGroup" stepKey="validateLocationGridData">
+        <actionGroup ref="SaveLocationFormActionGroup" stepKey="saveLocationForm2"/>
+        <actionGroup ref="ValidateLocationGridDataActionGroup" stepKey="validateLocationGridData">
             <argument name="locationName" value="PageBuilderMapLocationName_TestLocationEdit"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings2"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings2"/>
         <!-- Save Page -->
         <comment userInput="Save Page" stepKey="commentSavePage2"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage2"/>
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage2"/>
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage2"/>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage2">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="validateLocationGridDataActionGroup" stepKey="validateLocationGridData2">
+        <actionGroup ref="ValidateLocationGridDataActionGroup" stepKey="validateLocationGridData2">
             <argument name="locationName" value="PageBuilderMapLocationName_TestLocationEdit"/>
         </actionGroup>
-        <actionGroup ref="clickLocationGridRowActionGroup" stepKey="clickLocationGridRow2">
+        <actionGroup ref="ClickLocationGridRowActionGroup" stepKey="clickLocationGridRow2">
             <argument name="locationName" value="PageBuilderMapLocationName_TestLocationEdit"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateEditPanelField">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateEditPanelField">
             <argument name="property" value="PageBuilderMapLocationName_TestLocationEdit"/>
         </actionGroup>
     </test>
@@ -370,58 +370,58 @@
         <before>
             <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key {{googleMapsAPIKey.invalidOneCharacter}}" stepKey="setInvalidGoogleMapsAPIKey"/>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setEmptyGoogleMapsAPIKey"/>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
         <!-- Save Page With Map -->
         <comment userInput="Save Page With Map" stepKey="commentSavePage1"/>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionMedia">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionMedia">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragContentTypeIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragContentTypeIntoStage">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditAfterDrop">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditAfterDrop">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="clickAddLocationButtonActionGroup" stepKey="clickAddLocationButton"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLatitude">
+        <actionGroup ref="ClickAddLocationButtonActionGroup" stepKey="clickAddLocationButton"/>
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLatitude">
             <argument name="property" value="PageBuilderMapLatitude_Positive39_74"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLongitude">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLongitude">
             <argument name="property" value="PageBuilderMapLongitude_Positive9_67"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLocationName">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLocationName">
             <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
         </actionGroup>
-        <actionGroup ref="saveLocationFormActionGroup" stepKey="saveLocationForm"/>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings1"/>
+        <actionGroup ref="SaveLocationFormActionGroup" stepKey="saveLocationForm"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings1"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage1"/>
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage1"/>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage1"/>
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <!-- Verify Can Still Delete Location -->
         <comment userInput="Verify Can Still Delete Location" stepKey="commentDelete"/>
-        <actionGroup ref="deleteLocationFromGridActionGroup" stepKey="deleteLocationFromGrid">
+        <actionGroup ref="DeleteLocationFromGridActionGroup" stepKey="deleteLocationFromGrid">
             <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
         </actionGroup>
         <seeElement selector="{{PageBuilderDataGrid.emptyGridMessage(PageBuilderMapGrid.emptyMessage)}}" stepKey="seeEmptyGrid1"/>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings2"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings2"/>
         <!-- Save Page -->
         <comment userInput="Save Page" stepKey="commentSavePage2"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage2"/>
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage2"/>
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage2"/>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage2">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <seeElement selector="{{PageBuilderDataGrid.emptyGridMessage(PageBuilderMapGrid.emptyMessage)}}" stepKey="seeEmptyGrid2"/>
@@ -459,55 +459,55 @@
         <before>
             <magentoCLI command="config:set cms/pagebuilder/google_maps_style ''" stepKey="setEmptyGoogleMapsStyle"/>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <magentoCLI command="config:set cms/pagebuilder/google_maps_style ''" stepKey="setEmptyGoogleMapsStyle"/>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionMedia">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionMedia">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragContentTypeIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragContentTypeIntoStage">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditAfterDrop">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditAfterDrop">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <!-- Add Location -->
         <comment userInput="Add Location" stepKey="commentAddLocation"/>
-        <actionGroup ref="clickAddLocationButtonActionGroup" stepKey="clickAddLocationButton"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLatitude">
+        <actionGroup ref="ClickAddLocationButtonActionGroup" stepKey="clickAddLocationButton"/>
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLatitude">
             <argument name="property" value="PageBuilderMapLatitude_Positive39_74"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLongitude">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLongitude">
             <argument name="property" value="PageBuilderMapLongitude_Positive9_67"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLocationName">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLocationName">
             <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
         </actionGroup>
-        <actionGroup ref="saveLocationFormActionGroup" stepKey="saveLocationForm"/>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="SaveLocationFormActionGroup" stepKey="saveLocationForm"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <openNewTab stepKey="openNewTab"/>
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront1">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront1">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <!--Set Google Maps Style -->
         <comment userInput="Set Google Maps Style" stepKey="commentSetStyle"/>
         <actionGroup ref="NavigateToAdminContentManagementPageActionGroup" stepKey="navigateToAdminContentManagementPage"/>
         <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
-        <actionGroup ref="inputGoogleMapsStyleActionGroup" stepKey="inputGoogleMapsStyle">
+        <actionGroup ref="InputGoogleMapsStyleActionGroup" stepKey="inputGoogleMapsStyle">
             <argument name="style" value="{{googleMapsStyle.validShort}}"/>
         </actionGroup>
         <actionGroup ref="SaveStoreConfigurationActionGroup" stepKey="saveStoreConfiguration"/>
         <!-- Storefront: Validate Map Style Unchanged -->
         <comment userInput="Storefront: Validate Map Style Unchanged" stepKey="commentValidate1"/>
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront2">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront2">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <executeJS function="return document.evaluate('//body//script[contains(.,\'Magento_PageBuilder/js/utils/map\')]', document, null, XPathResult.STRING_TYPE, null).stringValue.match(/(?&lt;=style:\s').+(?=')/)" stepKey="mapStyle1"/>
@@ -536,7 +536,7 @@
         <magentoCLI command="config:set cms/pagebuilder/google_maps_style ''" stepKey="setEmptyGoogleMapsStyle"/>
         <!-- Storefront: Validate Map Style Unchanged -->
         <comment userInput="Storefront: Validate Map Style Unchanged" stepKey="commentValidate3"/>
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront4">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront4">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <executeJS function="return decodeURIComponent(JSON.parse('&quot;' + document.evaluate('//body//script[contains(.,\'Magento_PageBuilder/js/utils/map\')]', document, null, XPathResult.STRING_TYPE, null).stringValue.match(/(?&lt;=style:\s').+(?=')/)[0].replace(/\\&quot;/g, '\\\\&quot;') + '&quot;'))" stepKey="mapStyle3"/>
@@ -547,7 +547,7 @@
         <!-- Clean Cache -->
         <comment userInput="Clean Cache" stepKey="commentCleanCache"/>
         <magentoCLI command="cache:clean" stepKey="cleanCache"/>
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront5">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront5">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <executeJS function="return document.evaluate('//body//script[contains(.,\'Magento_PageBuilder/js/utils/map\')]', document, null, XPathResult.STRING_TYPE, null).stringValue.match(/(?&lt;=style:\s').+(?=')/)" stepKey="mapStyle4"/>
@@ -572,20 +572,20 @@
         <before>
             <magentoCLI command="config:set cms/pagebuilder/google_maps_style ''" stepKey="setEmptyGoogleMapsStyle"/>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <magentoCLI command="config:set cms/pagebuilder/google_maps_style ''" stepKey="setEmptyGoogleMapsStyle"/>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionMedia">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionMedia">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragContentTypeIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragContentTypeIntoStage">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
@@ -594,7 +594,7 @@
         <openNewTab stepKey="openNewTab"/>
         <actionGroup ref="NavigateToAdminContentManagementPageActionGroup" stepKey="navigateToAdminContentManagementPage"/>
         <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
-        <actionGroup ref="inputGoogleMapsStyleActionGroup" stepKey="inputGoogleMapsStyle">
+        <actionGroup ref="InputGoogleMapsStyleActionGroup" stepKey="inputGoogleMapsStyle">
             <argument name="style" value="{{googleMapsStyle.validShort}}"/>
         </actionGroup>
         <actionGroup ref="SaveStoreConfigurationActionGroup" stepKey="saveStoreConfiguration"/>

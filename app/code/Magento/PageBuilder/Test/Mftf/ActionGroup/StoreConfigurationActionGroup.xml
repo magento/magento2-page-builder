@@ -8,7 +8,7 @@
 
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
-    <actionGroup name="enablePageBuilderSettingActionGroup">
+    <actionGroup name="EnablePageBuilderSettingActionGroup">
         <amOnPage url="{{AdminContentManagementPage.url}}" stepKey="navigateToConfigurationPage" />
         <waitForPageLoad stepKey="wait1"/>
         <conditionalClick stepKey="expandWYSIWYGOptions" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true" />
@@ -18,7 +18,7 @@
         <click selector="{{ContentManagementSection.Save}}" stepKey="saveConfig" />
         <waitForPageLoad stepKey="wait2"/>
     </actionGroup>
-    <actionGroup name="disablePageBuilderSettingActionGroup">
+    <actionGroup name="DisablePageBuilderSettingActionGroup">
         <!-- Enable first since it's dependent on disable Disclaimer modal showing -->
         <amOnPage url="{{AdminContentManagementPage.url}}" stepKey="navigateToConfigurationPage1" />
         <waitForPageLoad stepKey="waitForPageLoad1"/>
@@ -42,7 +42,7 @@
         <click selector="{{ContentManagementSection.Save}}" stepKey="saveConfig2" />
         <waitForPageLoad stepKey="waitForPageLoad3"/>
     </actionGroup>
-    <actionGroup name="applyGoogleMapsAPIKeyActionGroup">
+    <actionGroup name="ApplyGoogleMapsAPIKeyActionGroup">
         <arguments>
             <argument name="apiKey" defaultValue="{{googleMapsAPIKey.valid}}" type="string"/>
         </arguments>
@@ -56,7 +56,7 @@
         <click selector="{{ContentManagementSection.Save}}" stepKey="saveConfig"/>
         <waitForPageLoad stepKey="waitForPageLoad3"/>
     </actionGroup>
-    <actionGroup name="inputGoogleMapsAPIKeyActionGroup">
+    <actionGroup name="InputGoogleMapsAPIKeyActionGroup">
         <arguments>
             <argument name="apiKey" defaultValue="{{googleMapsAPIKey.valid}}" type="string"/>
         </arguments>
@@ -65,7 +65,7 @@
         <fillField selector="{{ContentManagementSection.GoogleMapsAPIKeyInputField}}" userInput="{{apiKey}}" stepKey="inputAPIKey"/>
         <pressKey selector="{{ContentManagementSection.GoogleMapsAPIKeyInputField}}" parameterArray="[\WebDriverKeys::ENTER]" stepKey="pressKey"/>
     </actionGroup>
-    <actionGroup name="clickAndValidateGoogleMapsAPIKeyTestKeyButtonActionGroup">
+    <actionGroup name="ClickAndValidateGoogleMapsAPIKeyTestKeyButtonActionGroup">
         <arguments>
             <argument name="expectedResult" defaultValue="success" type="string"/>
             <argument name="buttonText" type="string"/>
@@ -77,7 +77,7 @@
         <waitForElementVisible selector="{{ContentManagementSection.GoogleMapsAPIKeyTestKeyResult}} .icon-admin-pagebuilder-{{expectedResult}}" stepKey="waitForTestKeyButtonResult"/>
         <see userInput="{{buttonText}}" selector="{{ContentManagementSection.GoogleMapsAPIKeyTestKeyResult}}" stepKey="seeTestKeyButtonText"/>
     </actionGroup>
-    <actionGroup name="inputGoogleMapsStyleActionGroup">
+    <actionGroup name="InputGoogleMapsStyleActionGroup">
         <arguments>
             <argument name="style" defaultValue="{{googleMapsStyle.valid}}" type="string"/>
         </arguments>
@@ -85,14 +85,14 @@
         <waitForElementVisible selector="{{ContentManagementSection.GoogleMapsStyleInputField}}" stepKey="waitForGoogleMapsStyleInputField"/>
         <fillField selector="{{ContentManagementSection.GoogleMapsStyleInputField}}" userInput="{{style}}" stepKey="inputStyle"/>
     </actionGroup>
-    <actionGroup name="updateDefaultGridSizeConfigActionGroup">
+    <actionGroup name="UpdateDefaultGridSizeConfigActionGroup">
         <arguments>
             <argument name="gridSize" defaultValue="12" type="string"/>
         </arguments>
         <waitForElementVisible selector="{{ContentManagementSection.ColumnGridDefaultInputField}}" stepKey="waitForDefaultGridSizeInputFieldVisible"/>
         <fillField selector="{{ContentManagementSection.ColumnGridDefaultInputField}}" userInput="{{gridSize}}" stepKey="enterDefaultGridSize"/>
     </actionGroup>
-    <actionGroup name="updateMaxGridSizeConfigActionGroup">
+    <actionGroup name="UpdateMaxGridSizeConfigActionGroup">
         <arguments>
             <argument name="gridSize" defaultValue="16" type="string"/>
         </arguments>

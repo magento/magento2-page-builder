@@ -22,26 +22,26 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
         <comment userInput="Validate Initial Row Height" stepKey="commentValidateRowHeight"/>
-        <actionGroup ref="validateContentTypeHeightOnStageActionGroup" stepKey="assertInitialRowHeightMatchesExpected">
+        <actionGroup ref="ValidateContentTypeHeightOnStageActionGroup" stepKey="assertInitialRowHeightMatchesExpected">
             <argument name="contentType" value="PageBuilderRowContentType"/>
             <argument name="index" value="1"/>
             <argument name="containerDefaultHeight" value="PageBuilderRowDefaultHeight"/>
             <argument name="expectedPaddingTop" value="PageBuilderPaddingProperty10"/>
             <argument name="expectedPaddingBottom" value="PageBuilderPaddingProperty10"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <seeNumberOfElements selector="{{ColumnOnBackend.columnGroupColumns('1')}}" userInput="2" stepKey="seeElementColumn"/>
         <comment userInput="Validate Initial Column Height On Stage Matches Expected" stepKey="commentValidateColumnHeight"/>
-        <actionGroup ref="validateContentTypeHeightOnStageWithoutPaddingActionGroup" stepKey="assertInitialColumnHeightMatchesExpected">
+        <actionGroup ref="ValidateContentTypeHeightOnStageWithoutPaddingActionGroup" stepKey="assertInitialColumnHeightMatchesExpected">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="index" value="1"/>
             <argument name="containerDefaultHeight" value="PageBuilderMinHeightProperty_300"/>
@@ -69,28 +69,28 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <seeNumberOfElements selector="{{ColumnOnBackend.columnGroupColumns('1')}}" userInput="2" stepKey="seeElementColumn"/>
-        <actionGroup ref="removeEmptyContentTypeFromStageActionGroup" stepKey="removeColumn1">
+        <actionGroup ref="RemoveEmptyContentTypeFromStageActionGroup" stepKey="removeColumn1">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <seeNumberOfElements selector="{{ColumnOnBackend.columnGroupColumns('1')}}" userInput="1" stepKey="seeOneColumnInGroup" />
         <!-- As the removal of the first column caused this ones width to change we have to confirm the removal -->
-        <actionGroup ref="removeEmptyContentTypeFromStageActionGroup" stepKey="removeColumn2">
+        <actionGroup ref="RemoveEmptyContentTypeFromStageActionGroup" stepKey="removeColumn2">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <dontSeeElement selector="{{ColumnOnBackend.column}}" stepKey="dontSeeColumn"/>
         <dontSeeElement selector="{{ColumnOnBackend.columnGroup('1')}}" stepKey="dontSeeColumnGroup"/>
         <comment userInput="Validate Row Height shrinks with removal of columns" stepKey="commentValidateRowHeight"/>
-        <actionGroup ref="validateContentTypeHeightOnStageActionGroup" stepKey="assertRowHeightMatchesExpectedAfterDeleteColumns">
+        <actionGroup ref="ValidateContentTypeHeightOnStageActionGroup" stepKey="assertRowHeightMatchesExpectedAfterDeleteColumns">
             <argument name="contentType" value="PageBuilderRowContentType"/>
             <argument name="index" value="1"/>
             <argument name="containerDefaultHeight" value="PageBuilderRowDefaultHeight"/>
@@ -112,67 +112,67 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelByIndexActionGroup" stepKey="openEditPanel">
+        <actionGroup ref="OpenPageBuilderEditPanelByIndexActionGroup" stepKey="openEditPanel">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="validateSlideOutPanelFieldActionGroup" stepKey="seeAppearanceMinHeightProperty">
+        <actionGroup ref="ValidateSlideOutPanelFieldActionGroup" stepKey="seeAppearanceMinHeightProperty">
             <argument name="property" value="PageBuilderMinHeightProperty_500"/>
         </actionGroup>
-        <actionGroup ref="validateSlideOutPanelFieldActionGroup" stepKey="seeBackgroundColorProperty">
+        <actionGroup ref="ValidateSlideOutPanelFieldActionGroup" stepKey="seeBackgroundColorProperty">
             <argument name="property" value="PageBuilderBackgroundColorProperty"/>
         </actionGroup>
-        <actionGroup ref="validateSlideOutPanelFieldActionGroup" stepKey="seeBackgroundImageProperty">
+        <actionGroup ref="ValidateSlideOutPanelFieldActionGroup" stepKey="seeBackgroundImageProperty">
             <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
-        <actionGroup ref="validateSlideOutPanelFieldActionGroup" stepKey="seeBackgroundPositionProperty">
+        <actionGroup ref="ValidateSlideOutPanelFieldActionGroup" stepKey="seeBackgroundPositionProperty">
             <argument name="property" value="PageBuilderBackgroundPositionProperty"/>
         </actionGroup>
-        <actionGroup ref="validateSlideOutPanelFieldActionGroup" stepKey="seeBackgroundSizeProperty">
+        <actionGroup ref="ValidateSlideOutPanelFieldActionGroup" stepKey="seeBackgroundSizeProperty">
             <argument name="property" value="PageBuilderBackgroundSizeProperty"/>
         </actionGroup>
-        <actionGroup ref="validateSlideOutPanelFieldActionGroup" stepKey="seeBackgroundRepeatProperty">
+        <actionGroup ref="ValidateSlideOutPanelFieldActionGroup" stepKey="seeBackgroundRepeatProperty">
             <argument name="property" value="PageBuilderBackgroundRepeatProperty"/>
         </actionGroup>
-        <actionGroup ref="validateSlideOutPanelFieldActionGroup" stepKey="seeBackgroundAttachmentProperty">
+        <actionGroup ref="ValidateSlideOutPanelFieldActionGroup" stepKey="seeBackgroundAttachmentProperty">
             <argument name="property" value="PageBuilderBackgroundAttachmentProperty"/>
         </actionGroup>
-        <actionGroup ref="validateSlideOutPanelFieldIsNotRequiredActionGroup" stepKey="seeColumnMinHeightNotRequired">
+        <actionGroup ref="ValidateSlideOutPanelFieldIsNotRequiredActionGroup" stepKey="seeColumnMinHeightNotRequired">
             <argument name="property" value="PageBuilderMinHeightProperty_500"/>
         </actionGroup>
-        <actionGroup ref="validateSlideOutPanelFieldIsNotRequiredActionGroup" stepKey="seeBackgroundColorNotRequired">
+        <actionGroup ref="ValidateSlideOutPanelFieldIsNotRequiredActionGroup" stepKey="seeBackgroundColorNotRequired">
             <argument name="property" value="PageBuilderBackgroundColorProperty"/>
         </actionGroup>
-        <actionGroup ref="validateSlideOutPanelFieldIsNotRequiredActionGroup" stepKey="seeBackgroundImageIsRequired">
+        <actionGroup ref="ValidateSlideOutPanelFieldIsNotRequiredActionGroup" stepKey="seeBackgroundImageIsRequired">
             <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
-        <actionGroup ref="validateSlideOutPanelFieldIsNotRequiredActionGroup" stepKey="seeBackgroundPositionNotRequired">
+        <actionGroup ref="ValidateSlideOutPanelFieldIsNotRequiredActionGroup" stepKey="seeBackgroundPositionNotRequired">
             <argument name="property" value="PageBuilderBackgroundPositionProperty"/>
         </actionGroup>
-        <actionGroup ref="validateSlideOutPanelFieldIsNotRequiredActionGroup" stepKey="seeBackgroundSizeNotRequired">
+        <actionGroup ref="ValidateSlideOutPanelFieldIsNotRequiredActionGroup" stepKey="seeBackgroundSizeNotRequired">
             <argument name="property" value="PageBuilderBackgroundSizeProperty"/>
         </actionGroup>
-        <actionGroup ref="validateSlideOutPanelFieldIsNotRequiredActionGroup" stepKey="seeBackgroundRepeatNotRequired">
+        <actionGroup ref="ValidateSlideOutPanelFieldIsNotRequiredActionGroup" stepKey="seeBackgroundRepeatNotRequired">
             <argument name="property" value="PageBuilderBackgroundRepeatProperty"/>
         </actionGroup>
-        <actionGroup ref="validateSlideOutPanelFieldIsNotRequiredActionGroup" stepKey="seeBackgroundAttachmentNotRequired">
+        <actionGroup ref="ValidateSlideOutPanelFieldIsNotRequiredActionGroup" stepKey="seeBackgroundAttachmentNotRequired">
             <argument name="property" value="PageBuilderBackgroundAttachmentProperty"/>
         </actionGroup>
-        <actionGroup ref="validateSlideOutPanelFieldIsNotRequiredActionGroup" stepKey="seeMinHeightNotRequired">
+        <actionGroup ref="ValidateSlideOutPanelFieldIsNotRequiredActionGroup" stepKey="seeMinHeightNotRequired">
             <argument name="property" value="PageBuilderMinHeightProperty_500"/>
         </actionGroup>
-        <actionGroup ref="validateSlideOutPanelFieldIsNotRequiredActionGroup" stepKey="seeVerticalAlignmentNotRequired">
+        <actionGroup ref="ValidateSlideOutPanelFieldIsNotRequiredActionGroup" stepKey="seeVerticalAlignmentNotRequired">
             <argument name="property" value="PageBuilderVerticalAlignmentPropertyTop"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <waitForElementVisible selector="{{ColumnOnBackend.base('1')}}" stepKey="waitForColumnOnStage" />
     </test>
     <test name="ColumnWithBordersAndPaddingEqualToMinHeight" extends="RowWithBordersAndPaddingEqualToMinHeight">
@@ -187,26 +187,26 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
         </annotations>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" after="commentConfigureContentType" stepKey="dragContentTypeToStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" after="commentConfigureContentType" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelByIndexActionGroup" stepKey="openEditPanel">
+        <actionGroup ref="OpenPageBuilderEditPanelByIndexActionGroup" stepKey="openEditPanel">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="validateContentTypeHeightEqualToMinHeightActionGroup" stepKey="validateContentTypeHeightBeforeSave">
+        <actionGroup ref="ValidateContentTypeHeightEqualToMinHeightActionGroup" stepKey="validateContentTypeHeightBeforeSave">
             <argument name="content" value="{{ColumnOnBackend.baseCSS}}"/>
         </actionGroup>
-        <actionGroup ref="validateContentTypeHeightEqualToMinHeightActionGroup" stepKey="validateContentTypeHeightAfterSave">
+        <actionGroup ref="ValidateContentTypeHeightEqualToMinHeightActionGroup" stepKey="validateContentTypeHeightAfterSave">
             <argument name="content" value="{{ColumnOnBackend.baseCSS}}"/>
         </actionGroup>
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="validateContentTypeHeightEqualToMinHeightActionGroup" stepKey="validateContentTypeHeightStorefront">
+        <actionGroup ref="ValidateContentTypeHeightEqualToMinHeightActionGroup" stepKey="validateContentTypeHeightStorefront">
             <argument name="content" value="{{ColumnOnFrontend.baseCSS}}"/>
         </actionGroup>
     </test>
@@ -222,35 +222,35 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
         </annotations>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" after="commentConfigureContentType" stepKey="dragContentTypeToStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" after="commentConfigureContentType" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelByIndexActionGroup" stepKey="openEditPanel">
+        <actionGroup ref="OpenPageBuilderEditPanelByIndexActionGroup" stepKey="openEditPanel">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToContainerActionGroup" stepKey="dragContentTypeToContainer">
+        <actionGroup ref="DragContentTypeToContainerActionGroup" stepKey="dragContentTypeToContainer">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="validateContentTypeHeightGreaterThanMinHeightActionGroup" stepKey="validateContentTypeHeightBeforeSave">
+        <actionGroup ref="ValidateContentTypeHeightGreaterThanMinHeightActionGroup" stepKey="validateContentTypeHeightBeforeSave">
             <argument name="content" value="{{ColumnOnBackend.baseCSS}}"/>
             <argument name="border" value="PageBuilderAdvancedBorderWidthProperty10"/>
             <argument name="height" value="PageBuilderMinHeightProperty_200"/>
             <argument name="padding" value="PageBuilderPaddingProperty10"/>
         </actionGroup>
-        <actionGroup ref="validateContentTypeHeightGreaterThanMinHeightActionGroup" stepKey="validateContentTypeHeightAfterSave">
+        <actionGroup ref="ValidateContentTypeHeightGreaterThanMinHeightActionGroup" stepKey="validateContentTypeHeightAfterSave">
             <argument name="content" value="{{ColumnOnBackend.baseCSS}}"/>
             <argument name="border" value="PageBuilderAdvancedBorderWidthProperty10"/>
             <argument name="height" value="PageBuilderMinHeightProperty_200"/>
             <argument name="padding" value="PageBuilderPaddingProperty10"/>
         </actionGroup>
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="validateContentTypeHeightGreaterThanMinHeightActionGroup" stepKey="validateContentTypeHeightStorefront">
+        <actionGroup ref="ValidateContentTypeHeightGreaterThanMinHeightActionGroup" stepKey="validateContentTypeHeightStorefront">
             <argument name="content" value="{{ColumnOnFrontend.baseCSS}}"/>
             <argument name="height" value="PageBuilderMinHeightProperty_200"/>
         </actionGroup>
@@ -269,29 +269,29 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
         <!-- Add column to stage and open configuration form -->
         <comment userInput="Add column to stage" stepKey="commentAddColumnToStage"/>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelByIndexActionGroup" stepKey="openEditPanelForFirstColumn">
+        <actionGroup ref="OpenPageBuilderEditPanelByIndexActionGroup" stepKey="openEditPanelForFirstColumn">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <!-- Validate Vertical Alignment Fields -->
         <comment userInput="Validate vertical alignment fields" stepKey="commentVerticalAlignment"/>
-        <actionGroup ref="validateVerticalAlignmentVisualSelectsActionGroup" stepKey="validateVerticalAlignment">
+        <actionGroup ref="ValidateVerticalAlignmentVisualSelectsActionGroup" stepKey="validateVerticalAlignment">
             <argument name="property1" value="PageBuilderVerticalAlignmentPropertyTop"/>
             <argument name="property2" value="PageBuilderVerticalAlignmentPropertyCenter"/>
             <argument name="property3" value="PageBuilderVerticalAlignmentPropertyBottom"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="verticalAlignTopSelected">
+        <actionGroup ref="SeeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="verticalAlignTopSelected">
             <argument name="property" value="PageBuilderVerticalAlignmentPropertyTop"/>
         </actionGroup>
     </test>
@@ -309,38 +309,38 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle1">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle1">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <!-- Configure First Column - Vertical Align Top -->
         <comment userInput="Configure vertical align top" stepKey="commentConfigureVerticalAlignTop"/>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragColumnGroupToStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragColumnGroupToStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="duplicateContentTypeActionGroup" stepKey="duplicateContentType">
+        <actionGroup ref="DuplicateContentTypeActionGroup" stepKey="duplicateContentType">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelByIndexActionGroup" stepKey="openEditPanelForFirstColumn">
+        <actionGroup ref="OpenPageBuilderEditPanelByIndexActionGroup" stepKey="openEditPanelForFirstColumn">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterMinHeightProperty">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterMinHeightProperty">
             <argument name="property" value="PageBuilderMinHeightProperty_300"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterVerticalAlignmentTopProperty">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterVerticalAlignmentTopProperty">
             <argument name="property" value="PageBuilderVerticalAlignmentPropertyTop"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettingsFirstColumn"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettingsFirstColumn"/>
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderDividerContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToContainerActionGroup" stepKey="dragDividerToFirstColumn">
+        <actionGroup ref="DragContentTypeToContainerActionGroup" stepKey="dragDividerToFirstColumn">
             <argument name="contentType" value="PageBuilderDividerContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="1"/>
@@ -348,15 +348,15 @@
         </actionGroup>
         <!-- Configure Second Column - Vertical Align Center -->
         <comment userInput="Configure vertical align center" stepKey="commentConfigureVerticalAlignCenter"/>
-        <actionGroup ref="openPageBuilderEditPanelByIndexActionGroup" stepKey="openEditPanelForSecondColumn">
+        <actionGroup ref="OpenPageBuilderEditPanelByIndexActionGroup" stepKey="openEditPanelForSecondColumn">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterVerticalAlignmenCenterProperty">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterVerticalAlignmenCenterProperty">
             <argument name="property" value="PageBuilderVerticalAlignmentPropertyCenter"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettingsSecondColumn"/>
-        <actionGroup ref="dragContentTypeToContainerActionGroup" stepKey="dragDividerToSecondColumn">
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettingsSecondColumn"/>
+        <actionGroup ref="DragContentTypeToContainerActionGroup" stepKey="dragDividerToSecondColumn">
             <argument name="contentType" value="PageBuilderDividerContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="2"/>
@@ -364,15 +364,15 @@
         </actionGroup>
         <!-- Configure Third Column - Vertical Align Bottom -->
         <comment userInput="Configure vertical align bottom" stepKey="commentConfigureVerticalAlignBottom"/>
-        <actionGroup ref="openPageBuilderEditPanelByIndexActionGroup" stepKey="openEditPanelForThirdColumn">
+        <actionGroup ref="OpenPageBuilderEditPanelByIndexActionGroup" stepKey="openEditPanelForThirdColumn">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="contentTypeIndex" value="3"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterVerticalAlignmenBottomProperty">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterVerticalAlignmenBottomProperty">
             <argument name="property" value="PageBuilderVerticalAlignmentPropertyBottom"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettingsThirdColumn"/>
-        <actionGroup ref="dragContentTypeToContainerActionGroup" stepKey="dragDividerToThirdColumn">
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettingsThirdColumn"/>
+        <actionGroup ref="DragContentTypeToContainerActionGroup" stepKey="dragDividerToThirdColumn">
             <argument name="contentType" value="PageBuilderDividerContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="3"/>
@@ -386,12 +386,12 @@
         <!-- Verify Vertical Alignment On Stage - After Save -->
         <comment userInput="Verify vertical alignment on stage after save" stepKey="commentVerifyVerticalAlignmentOnStageAfterSave"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <seeElement selector="{{ColumnOnBackend.columnChildrenStyle('1', '1', PageBuilderVerticalAlignmentPropertyTop.style)}}" stepKey="seeFirstColumnVerticalAlignmentTopAfterSave"/>
         <seeElement selector="{{ColumnOnBackend.columnChildrenStyle('1', '2', PageBuilderVerticalAlignmentPropertyCenter.style)}}" stepKey="seeFirstColumnVerticalAlignmentCenterAfterSave"/>
         <seeElement selector="{{ColumnOnBackend.columnChildrenStyle('1', '3', PageBuilderVerticalAlignmentPropertyBottom.style)}}" stepKey="seeFirstColumnVerticalAlignmentBottomAfterSave"/>
         <!-- Verify Vertical Alignment In Storefront -->
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <seeElement selector="{{ColumnOnFrontend.columnStyle('1', PageBuilderVerticalAlignmentPropertyTop.style)}}" stepKey="seeColumn1VerticalAlignmentTopApplied"/>
@@ -412,41 +412,41 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle1">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle1">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <!-- Configure First Column - Vertical Align Top -->
         <comment userInput="Configure vertical align top" stepKey="commentConfigureVerticalAlignTop"/>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragColumnGroupToStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragColumnGroupToStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="duplicateContentTypeActionGroup" stepKey="duplicateContentType">
+        <actionGroup ref="DuplicateContentTypeActionGroup" stepKey="duplicateContentType">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelByIndexActionGroup" stepKey="openEditPanelForFirstColumn">
+        <actionGroup ref="OpenPageBuilderEditPanelByIndexActionGroup" stepKey="openEditPanelForFirstColumn">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAppearanceTopProperty">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterAppearanceTopProperty">
             <argument name="property" value="PageBuilderColumnAppearanceProperty_Top"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterMinHeightProperty500">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterMinHeightProperty500">
             <argument name="property" value="PageBuilderMinHeightProperty_500"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterVerticalAlignmentTopProperty">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterVerticalAlignmentTopProperty">
             <argument name="property" value="PageBuilderVerticalAlignmentPropertyTop"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettingsFirstColumn"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettingsFirstColumn"/>
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderDividerContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToContainerActionGroup" stepKey="dragDividerToFirstColumn">
+        <actionGroup ref="DragContentTypeToContainerActionGroup" stepKey="dragDividerToFirstColumn">
             <argument name="contentType" value="PageBuilderDividerContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="1"/>
@@ -454,21 +454,21 @@
         </actionGroup>
         <!-- Configure Second Column - Vertical Align Center -->
         <comment userInput="Configure vertical align center" stepKey="commentConfigureVerticalAlignCenter"/>
-        <actionGroup ref="openPageBuilderEditPanelByIndexActionGroup" stepKey="openEditPanelForSecondColumn">
+        <actionGroup ref="OpenPageBuilderEditPanelByIndexActionGroup" stepKey="openEditPanelForSecondColumn">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAppearanceCenterProperty">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterAppearanceCenterProperty">
             <argument name="property" value="PageBuilderColumnAppearanceProperty_Center"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterMinHeightProperty300">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterMinHeightProperty300">
             <argument name="property" value="PageBuilderMinHeightProperty_300"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterVerticalAlignmenCenterProperty">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterVerticalAlignmenCenterProperty">
             <argument name="property" value="PageBuilderVerticalAlignmentPropertyCenter"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettingsSecondColumn"/>
-        <actionGroup ref="dragContentTypeToContainerActionGroup" stepKey="dragDividerToSecondColumn">
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettingsSecondColumn"/>
+        <actionGroup ref="DragContentTypeToContainerActionGroup" stepKey="dragDividerToSecondColumn">
             <argument name="contentType" value="PageBuilderDividerContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="2"/>
@@ -476,21 +476,21 @@
         </actionGroup>
         <!-- Configure Third Column - Vertical Align Bottom -->
         <comment userInput="Configure vertical align bottom" stepKey="commentConfigureVerticalAlignBottom"/>
-        <actionGroup ref="openPageBuilderEditPanelByIndexActionGroup" stepKey="openEditPanelForThirdColumn">
+        <actionGroup ref="OpenPageBuilderEditPanelByIndexActionGroup" stepKey="openEditPanelForThirdColumn">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="contentTypeIndex" value="3"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAppearanceCenterBottom">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterAppearanceCenterBottom">
             <argument name="property" value="PageBuilderColumnAppearanceProperty_Bottom"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterMinHeightProperty200">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterMinHeightProperty200">
             <argument name="property" value="PageBuilderMinHeightProperty_200"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterVerticalAlignmenBottomProperty">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterVerticalAlignmenBottomProperty">
             <argument name="property" value="PageBuilderVerticalAlignmentPropertyBottom"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettingsThirdColumn"/>
-        <actionGroup ref="dragContentTypeToContainerActionGroup" stepKey="dragDividerToThirdColumn">
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettingsThirdColumn"/>
+        <actionGroup ref="DragContentTypeToContainerActionGroup" stepKey="dragDividerToThirdColumn">
             <argument name="contentType" value="PageBuilderDividerContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="3"/>
@@ -504,13 +504,13 @@
         <!-- Verify Vertical Alignment On Stage - After Save -->
         <comment userInput="Verify vertical alignment on stage after save" stepKey="commentVerifyVerticalAlignmentOnStageAfterSave"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <seeElement selector="{{ColumnOnBackend.columnChildrenStyle('1', '1', PageBuilderVerticalAlignmentPropertyTop.style)}}" stepKey="seeFirstColumnVerticalAlignmentTopAfterSave"/>
         <seeElement selector="{{ColumnOnBackend.columnChildrenStyle('1', '2', PageBuilderVerticalAlignmentPropertyCenter.style)}}" stepKey="seeFirstColumnVerticalAlignmentCenterAfterSave"/>
         <seeElement selector="{{ColumnOnBackend.columnChildrenStyle('1', '3', PageBuilderVerticalAlignmentPropertyBottom.style)}}" stepKey="seeFirstColumnVerticalAlignmentBottomAfterSave"/>
         <!-- Verify Vertical Alignment In Storefront -->
         <comment userInput="Verify vertical alignment in storefront" stepKey="commentVerifyVerticalAlignmentInStorefront"/>
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <seeElement selector="{{ColumnOnFrontend.columnStyle('1', PageBuilderVerticalAlignmentPropertyTop.style)}}" stepKey="seeColumn1VerticalAlignmentTopApplied"/>
@@ -531,13 +531,13 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="dragContentTypeToContainerActionGroup" stepKey="dragFirstTwoColumns">
+        <actionGroup ref="DragContentTypeToContainerActionGroup" stepKey="dragFirstTwoColumns">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="1"/>
@@ -560,13 +560,13 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="dragContentTypeToContainerActionGroup" stepKey="dragFirstTwoColumns">
+        <actionGroup ref="DragContentTypeToContainerActionGroup" stepKey="dragFirstTwoColumns">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="1"/>
@@ -574,7 +574,7 @@
         </actionGroup>
         <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('1','6/12')}}" stepKey="findBeforeLabelColumn1"/>
         <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('2','6/12')}}" stepKey="findBeforeLabelColumn2"/>
-        <actionGroup ref="dragContentTypeToContainerActionGroup" stepKey="dragNewColumnToFirstColumn">
+        <actionGroup ref="DragContentTypeToContainerActionGroup" stepKey="dragNewColumnToFirstColumn">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="1" />
@@ -598,17 +598,17 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <seeNumberOfElements selector="{{ColumnOnBackend.columnGroupColumns('1')}}" userInput="2" stepKey="seeElementColumn"/>
-        <actionGroup ref="openPageBuilderEditPanelByIndexActionGroup" stepKey="openEditPanelForFirstColumn">
+        <actionGroup ref="OpenPageBuilderEditPanelByIndexActionGroup" stepKey="openEditPanelForFirstColumn">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <seeElement selector="{{EditPanelForm.editForm}}" stepKey="seeEditForm"/>
@@ -632,8 +632,8 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
@@ -643,40 +643,40 @@
             <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="deleteImageFromStorage">
                 <argument name="Image" value="PageBuilderBackgroundImage_JPG"/>
             </actionGroup>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelByIndexActionGroup" stepKey="openEditPanel">
+        <actionGroup ref="OpenPageBuilderEditPanelByIndexActionGroup" stepKey="openEditPanel">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAppearanceAlignmentProperty">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterAppearanceAlignmentProperty">
             <argument name="property" value="PageBuilderColumnAppearanceProperty_Bottom"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterMinHeightProperty">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterMinHeightProperty">
             <argument name="property" value="PageBuilderMinHeightProperty_500"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldActionGroup" stepKey="enterBackgroundColorProperty">
+        <actionGroup ref="FillSlideOutPanelFieldActionGroup" stepKey="enterBackgroundColorProperty">
             <argument name="property" value="PageBuilderBackgroundColorProperty"/>
         </actionGroup>
-        <actionGroup ref="attachFileSlideOutPropertyActionGroup" stepKey="attachPageBuilderFile">
+        <actionGroup ref="AttachFileSlideOutPropertyActionGroup" stepKey="attachPageBuilderFile">
             <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelFieldGeneralActionGroup" stepKey="enterBackgroundPositionProperty">
+        <actionGroup ref="SelectSlideOutPanelFieldGeneralActionGroup" stepKey="enterBackgroundPositionProperty">
             <argument name="property" value="PageBuilderBackgroundPosition_TopLeft"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterBackgroundSizePropertyContain">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterBackgroundSizePropertyContain">
             <argument name="property" value="PageBuilderBackgroundSize_Contain"/>
         </actionGroup>
-        <actionGroup ref="clickSlideOutPanelFieldGeneralActionGroup" stepKey="enterBackgroundRepeatYes">
+        <actionGroup ref="ClickSlideOutPanelFieldGeneralActionGroup" stepKey="enterBackgroundRepeatYes">
             <argument name="property" value="PageBuilderBackgroundRepeatProperty"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelFieldActionGroup" stepKey="enterBackgroundAttachmentProperty">
+        <actionGroup ref="SelectSlideOutPanelFieldActionGroup" stepKey="enterBackgroundAttachmentProperty">
             <argument name="property" value="PageBuilderBackgroundAttachmentProperty"/>
         </actionGroup>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask"/>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <seeElement selector="{{ColumnOnBackend.columnStyle('1', PageBuilderColumnStyles.alignmentBottom)}}" stepKey="seeFirstColumnAlignmentBottom"/>
         <seeElement selector="{{ColumnOnBackend.columnStyle('1', PageBuilderColumnStyles.minHeight)}}" stepKey="seeFirstColumnMinHeight"/>
         <seeElement selector="{{ColumnOnBackend.columnStyle('1', PageBuilderColumnStyles.bgColor)}}" stepKey="seeFirstColumnBgColor"/>
@@ -700,58 +700,58 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
         <scrollTo selector="{{CmsNewPagePageActionsSection.pageTitle}}" stepKey="scrollToTop"/>
-        <actionGroup ref="dragContentTypeToContainerActionGroup" stepKey="dragFirstTwoColumns">
+        <actionGroup ref="DragContentTypeToContainerActionGroup" stepKey="dragFirstTwoColumns">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="1"/>
             <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <scrollTo selector="{{CmsNewPagePageActionsSection.pageTitle}}" stepKey="scrollToTop2"/>
-        <actionGroup ref="dragContentTypeToContainerActionGroup" stepKey="dragThirdColumn">
+        <actionGroup ref="DragContentTypeToContainerActionGroup" stepKey="dragThirdColumn">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="1" />
             <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle1">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle1">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelByIndexActionGroup" stepKey="openEditPanelForFirstColumn">
+        <actionGroup ref="OpenPageBuilderEditPanelByIndexActionGroup" stepKey="openEditPanelForFirstColumn">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterBackgroundAppearancePropertyBottom">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterBackgroundAppearancePropertyBottom">
             <argument name="property" value="PageBuilderColumnAppearanceProperty_Bottom"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterMinHeightProperty">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterMinHeightProperty">
             <argument name="property" value="PageBuilderMinHeightProperty_500"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
-        <actionGroup ref="openPageBuilderEditPanelByIndexActionGroup" stepKey="openEditPanelForSecondColumn">
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="OpenPageBuilderEditPanelByIndexActionGroup" stepKey="openEditPanelForSecondColumn">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterBackgroundAppearancePropertyCentered">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterBackgroundAppearancePropertyCentered">
             <argument name="property" value="PageBuilderColumnAppearanceProperty_Center"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterMinHeightProperty2">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterMinHeightProperty2">
             <argument name="property" value="PageBuilderMinHeightProperty_500"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings2"/>
-        <actionGroup ref="openPageBuilderEditPanelByIndexActionGroup" stepKey="openEditPanelForThirdColumn">
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings2"/>
+        <actionGroup ref="OpenPageBuilderEditPanelByIndexActionGroup" stepKey="openEditPanelForThirdColumn">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="contentTypeIndex" value="3"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterMinHeightProperty3">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterMinHeightProperty3">
             <argument name="property" value="PageBuilderMinHeightProperty_500"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings3"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings3"/>
         <actionGroup ref="SaveCmsPageActionGroup" stepKey="saveCmsPage"/>
         <amOnPage url="column{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <waitForPageLoad stepKey="waitForPageLoadStoreFront"/>
@@ -776,8 +776,8 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
@@ -791,63 +791,63 @@
             <waitForPageLoad stepKey="waitForPageLoad"/>
             <conditionalClick selector="{{CmsPagesPageActionsSection.clearAllButton}}" dependentSelector="{{CmsPagesPageActionsSection.activeFilters}}" stepKey="clickToResetFilter" visible="true"/>
             <waitForPageLoad stepKey="waitForGridReload"/>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle1">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle1">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelByIndexActionGroup" stepKey="openEditPanelForFirstColumn">
+        <actionGroup ref="OpenPageBuilderEditPanelByIndexActionGroup" stepKey="openEditPanelForFirstColumn">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterMinHeightProperty">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterMinHeightProperty">
             <argument name="property" value="PageBuilderMinHeightProperty_500"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldActionGroup" stepKey="enterBackgroundColorProperty">
+        <actionGroup ref="FillSlideOutPanelFieldActionGroup" stepKey="enterBackgroundColorProperty">
             <argument name="property" value="PageBuilderBackgroundColorProperty_087E8B"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelFieldActionGroup" stepKey="enterBackgroundPositionProperty">
+        <actionGroup ref="SelectSlideOutPanelFieldActionGroup" stepKey="enterBackgroundPositionProperty">
             <argument name="property" value="PageBuilderBackgroundPosition_Default"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterBackgroundSizePropertyCover">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterBackgroundSizePropertyCover">
             <argument name="property" value="PageBuilderBackgroundSize_Cover"/>
         </actionGroup>
-        <actionGroup ref="attachFileSlideOutPropertyActionGroup" stepKey="attachPageBuilderFile">
+        <actionGroup ref="AttachFileSlideOutPropertyActionGroup" stepKey="attachPageBuilderFile">
             <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
-        <actionGroup ref="clickSlideOutPanelFieldGeneralActionGroup" stepKey="clickBackgroundProperty">
+        <actionGroup ref="ClickSlideOutPanelFieldGeneralActionGroup" stepKey="clickBackgroundProperty">
             <argument name="property" value="PageBuilderBackgroundRepeatProperty"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelFieldActionGroup" stepKey="enterBackgroundAttachmentProperty">
+        <actionGroup ref="SelectSlideOutPanelFieldActionGroup" stepKey="enterBackgroundAttachmentProperty">
             <argument name="property" value="PageBuilderBackgroundAttachmentProperty"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
-        <actionGroup ref="openPageBuilderEditPanelByIndexActionGroup" stepKey="openEditPanelForFirstColumnAfterSave">
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="OpenPageBuilderEditPanelByIndexActionGroup" stepKey="openEditPanelForFirstColumnAfterSave">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="pageBuilderMinHeightProperty_500">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="pageBuilderMinHeightProperty_500">
             <argument name="property" value="PageBuilderMinHeightProperty_500"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="seeBackgroundColorProperty">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="seeBackgroundColorProperty">
             <argument name="property" value="PageBuilderBackgroundColorProperty_087E8B"/>
         </actionGroup>
         <seeElementInDOM selector="{{EditPanelForm.backgroundImagePreview}}" stepKey="backgroundImagePreview"/>
-        <actionGroup ref="seeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="seeBackgroundPositionProperty">
+        <actionGroup ref="SeeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="seeBackgroundPositionProperty">
             <argument name="property" value="PageBuilderBackgroundPosition_Default"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="seeBackgroundSizeProperty">
+        <actionGroup ref="SeeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="seeBackgroundSizeProperty">
             <argument name="property" value="PageBuilderBackgroundSize_Cover"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsCheckedSlideOutPropertyActionGroup" stepKey="seeBackgroundRepeatProperty">
+        <actionGroup ref="SeeOptionIsCheckedSlideOutPropertyActionGroup" stepKey="seeBackgroundRepeatProperty">
             <argument name="property" value="PageBuilderBackgroundRepeatProperty"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="seeBackgroundAttachmentProperty">
+        <actionGroup ref="SeeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="seeBackgroundAttachmentProperty">
             <argument name="property" value="PageBuilderBackgroundAttachmentProperty"/>
         </actionGroup>
     </test>
@@ -865,8 +865,8 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
@@ -876,18 +876,18 @@
             <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="deleteImageFromStorage">
                 <argument name="Image" value="PageBuilderBackgroundImage_JPG"/>
             </actionGroup>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelByIndexActionGroup" stepKey="openEditPanelForFirstColumn">
+        <actionGroup ref="OpenPageBuilderEditPanelByIndexActionGroup" stepKey="openEditPanelForFirstColumn">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterMinHeightProperty">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterMinHeightProperty">
             <argument name="property" value="PageBuilderMinHeightProperty_500"/>
         </actionGroup>
-        <actionGroup ref="attachFileSlideOutPropertyActionGroup" stepKey="attachPageBuilderFile">
+        <actionGroup ref="AttachFileSlideOutPropertyActionGroup" stepKey="attachPageBuilderFile">
             <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
     </test>
@@ -905,71 +905,71 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
             <closeTab stepKey="closeTab" />
         </after>
-        <actionGroup ref="dragContentTypeToContainerActionGroup" stepKey="dragFirstColumn">
+        <actionGroup ref="DragContentTypeToContainerActionGroup" stepKey="dragFirstColumn">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragRowIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragRowIntoStage">
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToContainerActionGroup" stepKey="dragSecondColumn">
+        <actionGroup ref="DragContentTypeToContainerActionGroup" stepKey="dragSecondColumn">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="1" />
             <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle1">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle1">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelByIndexActionGroup" stepKey="openEditPanelForFirstColumn">
+        <actionGroup ref="OpenPageBuilderEditPanelByIndexActionGroup" stepKey="openEditPanelForFirstColumn">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterBackgroundAppearanceProperty1">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterBackgroundAppearanceProperty1">
             <argument name="property" value="PageBuilderColumnAppearanceProperty_Bottom"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterMinHeightProperty1">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterMinHeightProperty1">
             <argument name="property" value="PageBuilderMinHeightProperty_500"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldActionGroup" stepKey="enterBackgroundColorProperty1">
+        <actionGroup ref="FillSlideOutPanelFieldActionGroup" stepKey="enterBackgroundColorProperty1">
             <argument name="property" value="PageBuilderBackgroundColorProperty_087E8B"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings1"/>
-        <actionGroup ref="openPageBuilderEditPanelByIndexActionGroup" stepKey="openEditPanelForSecondColumn">
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings1"/>
+        <actionGroup ref="OpenPageBuilderEditPanelByIndexActionGroup" stepKey="openEditPanelForSecondColumn">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterBackgroundAppearanceProperty2">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterBackgroundAppearanceProperty2">
             <argument name="property" value="PageBuilderColumnAppearanceProperty_Center"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterMinHeightProperty2">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterMinHeightProperty2">
             <argument name="property" value="PageBuilderMinHeightProperty_300"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldActionGroup" stepKey="enterBackgroundColorProperty2">
+        <actionGroup ref="FillSlideOutPanelFieldActionGroup" stepKey="enterBackgroundColorProperty2">
             <argument name="property" value="PageBuilderBackgroundColorProperty_FF5A5F"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings2"/>
-        <actionGroup ref="openPageBuilderEditPanelByIndexActionGroup" stepKey="openEditPanelForThirdColumn">
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings2"/>
+        <actionGroup ref="OpenPageBuilderEditPanelByIndexActionGroup" stepKey="openEditPanelForThirdColumn">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="contentTypeIndex" value="3"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterMinHeightProperty3">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterMinHeightProperty3">
             <argument name="property" value="PageBuilderMinHeightProperty_200"/>
         </actionGroup>
         <comment userInput="I fill out color into Background Color using Color Picker" stepKey="comment"/>
-        <actionGroup ref="fillOutColorPickerActionGroup" stepKey="fillOutColor">
+        <actionGroup ref="FillOutColorPickerActionGroup" stepKey="fillOutColor">
             <argument name="colorCode" value="PageBuilderBackgroundColorProperty_3C3C3C"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyAlternateActionGroup" stepKey="seeHEXInField7">
+        <actionGroup ref="SeeInFieldSlideOutPropertyAlternateActionGroup" stepKey="seeHEXInField7">
             <argument name="property" value="PageBuilderBackgroundColorProperty_3C3C3C"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings3"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings3"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <openNewTab stepKey="openNewTab"/>
         <amOnPage url="column{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
@@ -986,21 +986,21 @@
         <switchToPreviousTab stepKey="switchToPreviousTab"/>
         <reloadPage stepKey="reloadPage"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage2"/>
-        <actionGroup ref="openPageBuilderEditPanelByIndexActionGroup" stepKey="openEditPanelForSecondColumn1">
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage2"/>
+        <actionGroup ref="OpenPageBuilderEditPanelByIndexActionGroup" stepKey="openEditPanelForSecondColumn1">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="seePageBuilderAppearanceProperty">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="seePageBuilderAppearanceProperty">
             <argument name="property" value="PageBuilderColumnAppearanceProperty_Center"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="seePageBuilderMinHeightProperty_500">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="seePageBuilderMinHeightProperty_500">
             <argument name="property" value="PageBuilderMinHeightProperty_300"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="seeBackgroundColorProperty">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="seeBackgroundColorProperty">
             <argument name="property" value="PageBuilderBackgroundColorProperty_FF5A5F"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettingsWithoutModifying"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettingsWithoutModifying"/>
         <actionGroup ref="SaveCmsPageActionGroup" stepKey="saveCmsPage"/>
         <switchToNextTab stepKey="switchToNextTab"/>
         <amOnPage url="column{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage2"/>
@@ -1029,95 +1029,95 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle1">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle1">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragContentTypeToStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <!-- Validate Default Values -->
         <comment userInput="Validate Default Values" stepKey="commentValidateDefaultValues"/>
-        <actionGroup ref="seeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateAlignment">
+        <actionGroup ref="SeeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateAlignment">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateBorder">
+        <actionGroup ref="SeeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateBorder">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
         </actionGroup>
         <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getBorderColor"/>
         <assertEmpty actual="getBorderColor" actualType="variable" message="Text field has text: $getBorderColor" stepKey="assertBorderColor"/>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderWidth">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderWidth">
             <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderRadius">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderRadius">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
         </actionGroup>
         <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedCssClassesDefaultProperty.section, PageBuilderAdvancedCssClassesDefaultProperty.fieldName)}}" stepKey="getCssClasses"/>
         <assertEmpty actual="getCssClasses" actualType="variable" message="Text field was not empty. Had text: $getCssClasses" stepKey="assertCssClasses"/>
-        <actionGroup ref="seeInMarginFieldsSlideOutPanelActionGroup" stepKey="validateMargins">
+        <actionGroup ref="SeeInMarginFieldsSlideOutPanelActionGroup" stepKey="validateMargins">
             <argument name="property" value="PageBuilderMarginsPropertyDefault"/>
         </actionGroup>
-        <actionGroup ref="seeInPaddingFieldsSlideOutPanelActionGroup" stepKey="validatePadding">
+        <actionGroup ref="SeeInPaddingFieldsSlideOutPanelActionGroup" stepKey="validatePadding">
             <argument name="property" value="PageBuilderPaddingProperty10"/>
         </actionGroup>
         <!-- Check for border radius -->
-        <actionGroup ref="validateSlideOutPanelFieldActionGroup" stepKey="seeAdvancedBorderRadiusProperty">
+        <actionGroup ref="ValidateSlideOutPanelFieldActionGroup" stepKey="seeAdvancedBorderRadiusProperty">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
         </actionGroup>
         <seeInField userInput="0" selector="{{AdvancedForm.advancedBorderRadius}}" stepKey="assertBorderRadiusDefaultValue"/>
         <!-- Check for class field -->
-        <actionGroup ref="validateSlideOutPanelFieldActionGroup" stepKey="seeAdvancedCssClassesProperty">
+        <actionGroup ref="ValidateSlideOutPanelFieldActionGroup" stepKey="seeAdvancedCssClassesProperty">
             <argument name="property" value="PageBuilderAdvancedCssClassesDefaultProperty"/>
         </actionGroup>
         <!-- Check for margins & paddings -->
-        <actionGroup ref="validateSlideOutPanelFieldActionGroup" stepKey="seeAdvancedMarginsAndPaddingProperty">
+        <actionGroup ref="ValidateSlideOutPanelFieldActionGroup" stepKey="seeAdvancedMarginsAndPaddingProperty">
             <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
         </actionGroup>
         <!-- Check border fields become enabled when changing border -->
-        <actionGroup ref="selectSlideOutPanelFieldActionGroup" stepKey="enterAdvancedBorderProperty">
+        <actionGroup ref="SelectSlideOutPanelFieldActionGroup" stepKey="enterAdvancedBorderProperty">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyDotted"/>
         </actionGroup>
-        <actionGroup ref="validateSlideOutPanelFieldIsNotDisabledActionGroup" stepKey="seeAdvancedBorderColorPropertyIsNotDisabled">
+        <actionGroup ref="ValidateSlideOutPanelFieldIsNotDisabledActionGroup" stepKey="seeAdvancedBorderColorPropertyIsNotDisabled">
             <argument name="property" value="PageBuilderAdvancedBorderColorProperty"/>
         </actionGroup>
-        <actionGroup ref="validateSlideOutPanelFieldIsNotDisabledActionGroup" stepKey="seeAdvancedBorderWidthPropertyIsNotDisabled">
+        <actionGroup ref="ValidateSlideOutPanelFieldIsNotDisabledActionGroup" stepKey="seeAdvancedBorderWidthPropertyIsNotDisabled">
             <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
         </actionGroup>
         <!-- Validate the default values in the fields -->
         <seeElement selector="{{AdvancedForm.advancedBorderWidthDefault}}" stepKey="assertBorderWidthDefaultValue"/>
         <!-- Add test data into form -->
         <comment userInput="I fill out Border Color into Border Color using Color Picker" stepKey="comment"/>
-        <actionGroup ref="fillOutColorPickerActionGroup" stepKey="fillOutColor">
+        <actionGroup ref="FillOutColorPickerActionGroup" stepKey="fillOutColor">
             <argument name="colorCode" value="PageBuilderAdvancedBorderColorProperty_ffffff"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyAlternateActionGroup" stepKey="seeHexInField7">
+        <actionGroup ref="SeeInFieldSlideOutPropertyAlternateActionGroup" stepKey="seeHexInField7">
             <argument name="property" value="PageBuilderAdvancedBorderColorProperty_ffffff"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldActionGroup" stepKey="enterAdvancedBorderWidthProperty">
+        <actionGroup ref="FillSlideOutPanelFieldActionGroup" stepKey="enterAdvancedBorderWidthProperty">
             <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldActionGroup" stepKey="enterAdvancedBorderRadiusProperty">
+        <actionGroup ref="FillSlideOutPanelFieldActionGroup" stepKey="enterAdvancedBorderRadiusProperty">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldActionGroup" stepKey="enterAdvancedCssClassesProperty">
+        <actionGroup ref="FillSlideOutPanelFieldActionGroup" stepKey="enterAdvancedCssClassesProperty">
             <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="selectAlignmentLeft">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="selectAlignmentLeft">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyLeft"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldMarginsAndPaddingActionGroup" stepKey="enterAdvancedMarginsAndPaddingProperty">
+        <actionGroup ref="FillSlideOutPanelFieldMarginsAndPaddingActionGroup" stepKey="enterAdvancedMarginsAndPaddingProperty">
             <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
         </actionGroup>
         <!-- Save form data -->
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveRowEditPanelSettings"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveRowEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <waitForElementVisible time="2" selector="{{ColumnOnBackend.column}}" stepKey="waitForBackEndColumn"/>
@@ -1130,7 +1130,7 @@
         <seeElement selector="{{ColumnOnBackend.padding('1', '1', PageBuilderAdvancedMarginsAndPaddingProperty.value)}}" stepKey="seeColumnPaddingStyleOnStage"/>
         <seeElement selector="{{ColumnOnBackend.cssClasses('1', '1', PageBuilderAdvancedCssClassesPropertyThreeClasses.value)}}" stepKey="seeColumnClassOnStage"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage2"/>
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage2"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
         <seeElement selector="{{ColumnOnBackend.alignment('1', '1', PageBuilderAdvancedAlignmentPropertyLeft.value)}}" stepKey="seetextAlignStyleOnStageAfterSave"/>
@@ -1142,10 +1142,10 @@
         <seeElement selector="{{ColumnOnBackend.padding('1', '1', PageBuilderAdvancedMarginsAndPaddingProperty.value)}}" stepKey="seeColumnPaddingStyleOnStageAfterSave"/>
         <seeElement selector="{{ColumnOnBackend.cssClasses('1', '1', PageBuilderAdvancedCssClassesPropertyThreeClasses.value)}}" stepKey="seeColumnClassOnStageAfterSave"/>
         <!-- Validate form data has been persisted in the advanced section -->
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openSavedEditMenuOnStage">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openSavedEditMenuOnStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="validateTextAlignmentActionGroup" stepKey="seeOptionIsSelected">
+        <actionGroup ref="ValidateTextAlignmentActionGroup" stepKey="seeOptionIsSelected">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyLeft"/>
         </actionGroup>
         <seeOptionIsSelected userInput="{{PageBuilderAdvancedBorderPropertyDotted.value}}" selector="{{AdvancedForm.advancedBorder}}" stepKey="assertBorderSavedInColumn"/>
@@ -1186,19 +1186,19 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="dragContentTypeToContainerActionGroup" stepKey="dragFirstTwoColumns">
+        <actionGroup ref="DragContentTypeToContainerActionGroup" stepKey="dragFirstTwoColumns">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="1"/>
             <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToContainerActionGroup" stepKey="dragThirdColumn">
+        <actionGroup ref="DragContentTypeToContainerActionGroup" stepKey="dragThirdColumn">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="1" />
@@ -1207,7 +1207,7 @@
         <waitForElementVisible selector="{{ColumnOnBackend.columnStyle('1', PageBuilderColumnStyles.widthOneTwelfth)}}" stepKey="seeFirstColumnWidth"/>
         <seeElement selector="{{ColumnOnBackend.columnStyle('2', PageBuilderColumnStyles.widthFiveTwelfth)}}" stepKey="seeSecondColumnWidth"/>
         <seeElement selector="{{ColumnOnBackend.columnStyle('3', PageBuilderColumnStyles.widthHalf)}}" stepKey="seeThirdColumnWidth"/>
-        <actionGroup ref="removeEmptyContentTypeFromStageActionGroup" stepKey="removeColumn1">
+        <actionGroup ref="RemoveEmptyContentTypeFromStageActionGroup" stepKey="removeColumn1">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <waitForElementVisible selector="{{ColumnOnBackend.columnStyle('1', PageBuilderColumnStyles.widthHalf)}}" stepKey="seeFirstColumnWidthDistributed"/>
@@ -1228,51 +1228,51 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle1">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle1">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToContainerActionGroup" stepKey="dragFirstColumn">
+        <actionGroup ref="DragContentTypeToContainerActionGroup" stepKey="dragFirstColumn">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="1"/>
             <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToContainerActionGroup" stepKey="dragHeading1ToFirstColumn">
+        <actionGroup ref="DragContentTypeToContainerActionGroup" stepKey="dragHeading1ToFirstColumn">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="1"/>
             <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="clickOutsideLiveEditHeadingActionGroup" stepKey="clickOutsideLiveEditHeading1">
+        <actionGroup ref="ClickOutsideLiveEditHeadingActionGroup" stepKey="clickOutsideLiveEditHeading1">
             <argument name="index" value="1"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeNextToExistingContentTypeActionGroup" stepKey="dragHeading2ToFirstColumn">
+        <actionGroup ref="DragContentTypeNextToExistingContentTypeActionGroup" stepKey="dragHeading2ToFirstColumn">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
             <argument name="contentTypeIndex" value="2"/>
             <argument name="existingContentType" value="PageBuilderHeadingContentType"/>
             <argument name="existingContentTypeIndex" value="1"/>
             <argument name="offsetYCoordinate" value="25"/>
         </actionGroup>
-        <actionGroup ref="clickOutsideLiveEditHeadingActionGroup" stepKey="clickOutsideLiveEditHeading2">
+        <actionGroup ref="ClickOutsideLiveEditHeadingActionGroup" stepKey="clickOutsideLiveEditHeading2">
             <argument name="index" value="2"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeNextToExistingContentTypeActionGroup" stepKey="dragHeading3ToFirstColumn">
+        <actionGroup ref="DragContentTypeNextToExistingContentTypeActionGroup" stepKey="dragHeading3ToFirstColumn">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
             <argument name="contentTypeIndex" value="3"/>
             <argument name="existingContentType" value="PageBuilderHeadingContentType"/>
             <argument name="existingContentTypeIndex" value="2"/>
             <argument name="offsetYCoordinate" value="25"/>
         </actionGroup>
-        <actionGroup ref="clickOutsideLiveEditHeadingActionGroup" stepKey="clickOutsideLiveEditHeading3">
+        <actionGroup ref="ClickOutsideLiveEditHeadingActionGroup" stepKey="clickOutsideLiveEditHeading3">
             <argument name="index" value="3"/>
         </actionGroup>
         <comment userInput="User sees 3 Heading content blocks displayed in first column on Stage" stepKey="confirmContentTypesOnStage"/>
@@ -1297,23 +1297,23 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="dragContentTypeToContainerActionGroup" stepKey="dragFirstColumnOntoStage">
+        <actionGroup ref="DragContentTypeToContainerActionGroup" stepKey="dragFirstColumnOntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToDropZoneActionGroup" stepKey="dragSecondColumnOntoStage">
+        <actionGroup ref="DragContentTypeToDropZoneActionGroup" stepKey="dragSecondColumnOntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="offsetXCoordinate" value="5" />
             <argument name="offsetYCoordinate" value="5" />
         </actionGroup>
-        <actionGroup ref="dragContentTypeToDropZoneActionGroup" stepKey="dragThirdColumnOntoStage">
+        <actionGroup ref="DragContentTypeToDropZoneActionGroup" stepKey="dragThirdColumnOntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="offsetXCoordinate" value="5" />
@@ -1337,48 +1337,48 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <!-- Add Column to Stage -->
         <comment userInput="Add Column to Stage" stepKey="commentAddColumnToStage"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragContentTypeToStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <!-- Add Heading to Column -->
         <comment userInput="Add Heading to Column" stepKey="commentAddHeadingToColumn"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSectionHeading">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSectionHeading">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToContainerActionGroup" stepKey="dragHeadingTypeToStage">
+        <actionGroup ref="DragContentTypeToContainerActionGroup" stepKey="dragHeadingTypeToStage">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="enterHeadingOnStageActionGroup" stepKey="enterHeadingOnStage">
+        <actionGroup ref="EnterHeadingOnStageActionGroup" stepKey="enterHeadingOnStage">
             <argument name="index" value="1"/>
             <argument name="headingText" value="PageBuilderHeadingTextProperty"/>
             <argument name="headingType" value="PageBuilderHeadingTypeProperty_H2"/>
             <argument name="headingAlignment" value="PageBuilderHeadingAlignmentProperty_left"/>
         </actionGroup>
-        <actionGroup ref="clickOutsideLiveEditHeadingActionGroup" stepKey="clickOutsideLiveEditHeading">
+        <actionGroup ref="ClickOutsideLiveEditHeadingActionGroup" stepKey="clickOutsideLiveEditHeading">
             <argument name="index" value="1"/>
         </actionGroup>
-        <actionGroup ref="hideContentTypeActionGroup" stepKey="hideContentType">
+        <actionGroup ref="HideContentTypeActionGroup" stepKey="hideContentType">
             <argument name="section" value="HeadingOnStage"/>
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <!-- Duplicate -->
         <comment userInput="Duplicate" stepKey="commentDuplicate"/>
-        <actionGroup ref="duplicateContentTypeActionGroup" stepKey="duplicateContentType">
+        <actionGroup ref="DuplicateContentTypeActionGroup" stepKey="duplicateContentType">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <!-- Validate content type is disabled -->
@@ -1388,16 +1388,16 @@
         <!-- Stage: Validate Default Show/Hide State - After Save -->
         <comment userInput="Stage: Validate Default Show/Hide State - After Save" stepKey="commentValidateDefaultShowHideStateOnStageAfterSave"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <waitForElementVisible selector="{{HeadingOnStage.hidden('1')}}" stepKey="waitForContentTypeHiddenAfterSave1"/>
         <waitForElementVisible selector="{{HeadingOnStage.hidden('2')}}" stepKey="waitForContentTypeHiddenAfterSave2"/>
         <!-- Reset Stage and Verify Settings -->
         <comment userInput="Reset stage and verify settings" stepKey="commentResetStage"/>
-        <actionGroup ref="showContentTypeActionGroup" stepKey="showContentTypeFirstTabs">
+        <actionGroup ref="ShowContentTypeActionGroup" stepKey="showContentTypeFirstTabs">
             <argument name="section" value="HeadingOnStage"/>
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
-        <actionGroup ref="showContentTypeActionGroup" stepKey="showContentTypeSecondHeading">
+        <actionGroup ref="ShowContentTypeActionGroup" stepKey="showContentTypeSecondHeading">
             <argument name="section" value="HeadingOnStage"/>
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
             <argument name="targetIndex" value="2"/>
@@ -1405,7 +1405,7 @@
         <waitForElementVisible selector="{{HeadingOnStage.notHidden('1')}}" stepKey="waitForContentTypeHiddenReset1"/>
         <waitForElementVisible selector="{{HeadingOnStage.notHidden('2')}}" stepKey="waitForContentTypeHiddenReset2"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPageAfterReset"/>
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <!-- Validate content type is enabled in Storefront -->
@@ -1428,16 +1428,16 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="duplicateContentTypeActionGroup" stepKey="duplicateColumn">
+        <actionGroup ref="DuplicateContentTypeActionGroup" stepKey="duplicateColumn">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="3" stepKey="seeDuplicatedColumn"/>
@@ -1470,7 +1470,7 @@
         </assertEquals>
         <!-- Duplicate the second column -->
         <comment userInput="Duplicate second column" stepKey="commentDuplicateSecondColumn"/>
-        <actionGroup ref="duplicateContentTypeActionGroup" stepKey="duplicateSecondColumn">
+        <actionGroup ref="DuplicateContentTypeActionGroup" stepKey="duplicateSecondColumn">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="targetIndex" value="2"/>
         </actionGroup>
@@ -1512,16 +1512,16 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionLayout">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionLayout">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="cannotDragContentTypeToTargetActionGroup" stepKey="dragColumnIntoStage">
+        <actionGroup ref="CannotDragContentTypeToTargetActionGroup" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
         </actionGroup>
@@ -1544,27 +1544,27 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionLayout">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionLayout">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <!-- Drag column into a column -->
-        <actionGroup ref="dragContentTypeToContainerActionGroup" stepKey="dragRowOntoColumn">
+        <actionGroup ref="DragContentTypeToContainerActionGroup" stepKey="dragRowOntoColumn">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="2" />
         </actionGroup>
         <!-- Validate Stage -->
         <comment userInput="User dont see column displayed in column on Stage" stepKey="confirmNoColumnInColumn"/>
-        <actionGroup ref="validateContentTypeNotInsideContainerStageActionGroup" stepKey="checkContentTypeNotInContainerStage">
+        <actionGroup ref="ValidateContentTypeNotInsideContainerStageActionGroup" stepKey="checkContentTypeNotInContainerStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="contentTypeIndex" value="1"/>
@@ -1587,13 +1587,13 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <moveMouseOver selector="{{ColumnOnBackend.base('1')}}" stepKey="moveMouseOverColumn" />
@@ -1617,39 +1617,39 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <!-- Add Column to Stage -->
         <comment userInput="Add Column to Stage" stepKey="commentAddColumnToStage"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragContentTypeToStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <!-- Add Heading to Column -->
         <comment userInput="Add Heading to Column" stepKey="commentAddHeadingToColumn"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSectionHeading">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSectionHeading">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToContainerActionGroup" stepKey="dragHeadingTypeToStage">
+        <actionGroup ref="DragContentTypeToContainerActionGroup" stepKey="dragHeadingTypeToStage">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="enterHeadingOnStageActionGroup" stepKey="enterHeadingOnStage">
+        <actionGroup ref="EnterHeadingOnStageActionGroup" stepKey="enterHeadingOnStage">
             <argument name="index" value="1"/>
             <argument name="headingText" value="PageBuilderHeadingTextProperty"/>
             <argument name="headingType" value="PageBuilderHeadingTypeProperty_H2"/>
             <argument name="headingAlignment" value="PageBuilderHeadingAlignmentProperty_left"/>
         </actionGroup>
-        <actionGroup ref="clickOutsideLiveEditHeadingActionGroup" stepKey="clickOutsideLiveEditHeading">
+        <actionGroup ref="ClickOutsideLiveEditHeadingActionGroup" stepKey="clickOutsideLiveEditHeading">
             <argument name="index" value="1"/>
         </actionGroup>
         <!-- Stage: Validate Default Show/Hide State - Before Save -->
@@ -1658,11 +1658,11 @@
         <!-- Stage: Validate Default Show/Hide State - After Save -->
         <comment userInput="Stage: Validate Default Show/Hide State - After Save" stepKey="commentValidateDefaultShowHideStateOnStageAfterSave"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <seeElement selector="{{HeadingOnStage.notHidden('1')}}" stepKey="seeContentTypeNotHiddenStageAfterSave"/>
         <!-- Storefront: Validate Default Show/Hide State -->
         <comment userInput="Storefront: Validate Default Show/Hide State" stepKey="commentValidateDefaultShowHideStateOnStorefront"/>
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <seeElement selector="{{HeadingOnStorefront.notHidden('1')}}" stepKey="seeContentTypeNotHiddenStorefront"/>
@@ -1683,51 +1683,51 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
             <closeTab stepKey="closeOpenedTab" />
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSectionColumn">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSectionColumn">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragColumnTypeToStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragColumnTypeToStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSectionHeading">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSectionHeading">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToContainerActionGroup" stepKey="dragHeadingTypeToStage">
+        <actionGroup ref="DragContentTypeToContainerActionGroup" stepKey="dragHeadingTypeToStage">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="enterHeadingOnStageActionGroup" stepKey="enterHeadingOnStage">
+        <actionGroup ref="EnterHeadingOnStageActionGroup" stepKey="enterHeadingOnStage">
             <argument name="index" value="1"/>
             <argument name="headingText" value="PageBuilderHeadingTextProperty"/>
             <argument name="headingType" value="PageBuilderHeadingTypeProperty_H2"/>
             <argument name="headingAlignment" value="PageBuilderHeadingAlignmentProperty_left"/>
         </actionGroup>
-        <actionGroup ref="clickOutsideLiveEditHeadingActionGroup" stepKey="clickOutsideLiveEditHeading">
+        <actionGroup ref="ClickOutsideLiveEditHeadingActionGroup" stepKey="clickOutsideLiveEditHeading">
             <argument name="index" value="1"/>
         </actionGroup>
-        <actionGroup ref="hideContentTypeActionGroup" stepKey="hideContentType">
+        <actionGroup ref="HideContentTypeActionGroup" stepKey="hideContentType">
             <argument name="section" value="HeadingOnStage"/>
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage1"/>
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage1"/>
         <!-- Validate content type remains disabled after save -->
         <comment userInput="Validate content type remains disabled after save" stepKey="commentValidateHiddenStage"/>
         <seeElement selector="{{HeadingOnStage.hidden('1')}}" stepKey="waitForContentTypeHidden" />
         <!-- Validate store front -->
         <comment userInput="Validate content type is disabled on storefront" stepKey="commentValidateHiddenStorefront"/>
         <openNewTab stepKey="openNewTab" />
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <waitForElement selector="{{HeadingOnStorefront.base('1')}}" stepKey="waitForContentTypeNotVisible" />
@@ -1738,8 +1738,8 @@
         <switchToNextTab stepKey="switchBackToAdmin" />
         <reloadPage stepKey="reloadPage" />
         <waitForPageLoad stepKey="waitForAdminReload" />
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
-        <actionGroup ref="showContentTypeActionGroup" stepKey="showContentType">
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="ShowContentTypeActionGroup" stepKey="showContentType">
             <argument name="section" value="HeadingOnStage"/>
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>

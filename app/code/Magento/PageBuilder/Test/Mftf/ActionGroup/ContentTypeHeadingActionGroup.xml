@@ -8,7 +8,7 @@
 
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
-    <actionGroup name="verifyHeadingInStageActionGroup">
+    <actionGroup name="VerifyHeadingInStageActionGroup">
         <arguments>
             <argument name="headingType" defaultValue="PageBuilderHeadingTypeDefaultProperty"/>
             <argument name="headingText" defaultValue="PageBuilderHeadingTextProperty"/>
@@ -18,7 +18,7 @@
         <waitForElement selector="{{HeadingOnStage.headingType(headingType.value, index)}}" stepKey="waitForHeadingStyle"/>
         <seeElement selector="{{HeadingOnStage.headingText(headingType.value, headingText.value, index)}}" stepKey="seeStageHeadingText"/>
     </actionGroup>
-    <actionGroup name="verifyHeadingInStageWithAlignmentActionGroup">
+    <actionGroup name="VerifyHeadingInStageWithAlignmentActionGroup">
         <arguments>
             <argument name="headingType" defaultValue="PageBuilderHeadingTypeDefaultProperty"/>
             <argument name="headingText" defaultValue="PageBuilderHeadingTextProperty"/>
@@ -30,7 +30,7 @@
         <waitForElement selector="{{HeadingOnStage.headingType(headingType.value, index)}}" stepKey="waitForHeadingStyle"/>
         <seeElement selector="{{HeadingOnStage.headingText(headingType.value, headingText.value, index)}}" stepKey="seeStageHeadingText"/>
     </actionGroup>
-    <actionGroup name="clickInsideLiveEditHeadingActionGroup">
+    <actionGroup name="ClickInsideLiveEditHeadingActionGroup">
         <arguments>
             <argument name="index" defaultValue="1" type="string"/>
             <argument name="headingType" defaultValue="PageBuilderHeadingTypeDefaultProperty"/>
@@ -44,7 +44,7 @@
         <seeElement selector="{{HeadingOnStage.headingTypeToolbar(index, headingType.toolbar)}}" stepKey="seeHeadingTypeToolbar"/>
         <seeElement selector="{{HeadingOnStage.headingTextAlignToolbar(index, headingAlignment.toolbar)}}" stepKey="seeHeadingAlignmentToolbar"/>
     </actionGroup>
-    <actionGroup name="clickOutsideLiveEditHeadingActionGroup">
+    <actionGroup name="ClickOutsideLiveEditHeadingActionGroup">
         <arguments>
             <argument name="index" defaultValue="1" type="string"/>
             <argument name="headingType" defaultValue="PageBuilderHeadingTypeDefaultProperty"/>
@@ -58,7 +58,7 @@
         <dontSeeElement selector="{{HeadingOnStage.headingTypeToolbar(index, headingType.toolbar)}}" stepKey="dontSeeHeadingTypeToolbar"/>
         <dontSeeElement selector="{{HeadingOnStage.headingTextAlignToolbar(index, headingAlignment.toolbar)}}" stepKey="dontSeeHeadingAlignmentToolbar"/>
     </actionGroup>
-    <actionGroup name="enterHeadingOnStageActionGroup">
+    <actionGroup name="EnterHeadingOnStageActionGroup">
         <arguments>
             <argument name="index" defaultValue="1" type="string"/>
             <argument name="headingText" defaultValue="PageBuilderHeadingTextProperty"/>
@@ -76,7 +76,7 @@
         <waitForPageLoad stepKey="waitForAnimationType1" time="30"/>
         <seeElement selector="{{HeadingOnStage.headingTextAlignToolbarSelected(index, headingAlignment.toolbar)}}" stepKey="seeAlignmentSelected"/>
     </actionGroup>
-    <actionGroup name="verifyHeadingInStorefrontActionGroup">
+    <actionGroup name="VerifyHeadingInStorefrontActionGroup">
         <arguments>
             <argument name="page" defaultValue=""/>
             <argument name="headingType" defaultValue="PageBuilderHeadingTypeDefaultProperty"/>
@@ -87,7 +87,7 @@
         <waitForElementVisible selector="{{HeadingOnStorefront.headingType(headingType.value, index)}}" stepKey="waitForStorefrontHeadingStyle"/>
         <seeElement selector="{{HeadingOnStorefront.headingText(headingType.value, headingText.value, index)}}" stepKey="seeStorefrontHeadingText"/>
     </actionGroup>
-    <actionGroup name="verifyHeadingInStorefrontWithAlignmentActionGroup">
+    <actionGroup name="VerifyHeadingInStorefrontWithAlignmentActionGroup">
         <arguments>
             <argument name="page" defaultValue=""/>
             <argument name="headingType" defaultValue="PageBuilderHeadingTypeDefaultProperty"/>
@@ -100,7 +100,7 @@
         <waitForElementVisible selector="{{HeadingOnStorefront.headingType(headingType.value, index)}}" stepKey="waitForStorefrontHeadingStyle"/>
         <seeElement selector="{{HeadingOnStorefront.headingText(headingType.value, headingText.value, index)}}" stepKey="seeStorefrontHeadingText"/>
     </actionGroup>
-    <actionGroup name="verifyHeadingDefaultAdvancedConfigurationActionGroup">
+    <actionGroup name="VerifyHeadingDefaultAdvancedConfigurationActionGroup">
         <arguments>
             <argument name="page" defaultValue=""/>
             <argument name="headingType" defaultValue="PageBuilderHeadingTypeDefaultProperty"/>
@@ -119,7 +119,7 @@
         <waitForElementVisible selector="{{page.noMargins(headingType.value, index)}}" stepKey="waitForMarginVisible"/>
         <waitForElementVisible selector="{{page.noPadding(headingType.value, index)}}" stepKey="waitForPaddingVisible"/>
     </actionGroup>
-    <actionGroup name="verifyHeadingAdvancedConfigurationWithAllUpdatedActionGroup">
+    <actionGroup name="VerifyHeadingAdvancedConfigurationWithAllUpdatedActionGroup">
         <arguments>
             <argument name="page" defaultValue=""/>
             <argument name="headingType" defaultValue="PageBuilderHeadingTypeDefaultProperty"/>
@@ -143,7 +143,7 @@
         <waitForElementVisible selector="{{page.margins(headingType.value, index, margin.value)}}" stepKey="waitForMarginVisible"/>
         <waitForElementVisible selector="{{page.padding(headingType.value, index, padding.value)}}" stepKey="waitForPaddingVisible"/>
     </actionGroup>
-    <actionGroup name="verifyHeadingDefaultAdvancedConfigurationNotVisibleActionGroup">
+    <actionGroup name="VerifyHeadingDefaultAdvancedConfigurationNotVisibleActionGroup">
         <arguments>
             <argument name="page" defaultValue=""/>
             <argument name="headingType" defaultValue="PageBuilderHeadingTypeDefaultProperty"/>

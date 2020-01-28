@@ -7,7 +7,7 @@
 -->
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
-    <actionGroup name="addImageToStageActionGroup">
+    <actionGroup name="AddImageToStageActionGroup">
         <arguments>
             <argument name="property"/>
         </arguments>
@@ -24,7 +24,7 @@
         <remove keyForRemoval="waitForOkButton"/>
         <remove keyForRemoval="clickOk"/>
     </actionGroup>
-    <actionGroup name="verifyImageOnSlideoutActionGroup">
+    <actionGroup name="VerifyImageOnSlideoutActionGroup">
         <arguments>
             <argument name="property"/>
         </arguments>
@@ -32,7 +32,7 @@
         <waitForElementVisible selector="{{ImageOnConfigurationPanel.imageName(property.value)}}" stepKey="seeImageNameOnPreview"/>
         <waitForElementVisible selector="{{ImageOnConfigurationPanel.imageSource(property.fileName)}}" stepKey="seeMainImageSource"/>
     </actionGroup>
-    <actionGroup name="validateImageActionGroup">
+    <actionGroup name="ValidateImageActionGroup">
         <arguments>
             <argument name="section"/>
             <argument name="image"/>

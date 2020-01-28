@@ -23,25 +23,25 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logOut"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logOut"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <comment userInput="Validate default grid size on initial drop" stepKey="commentValidateInitial"/>
-        <actionGroup ref="openGridSizeFormActionGroup" stepKey="openGridSizeForm" />
+        <actionGroup ref="OpenGridSizeFormActionGroup" stepKey="openGridSizeForm" />
         <seeInField selector="{{ColumnOnBackend.gridSizeInput('1')}}" userInput="{{PageBuilderGridSize.defaultGridSize}}" stepKey="seeDefaultGridSize"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <comment userInput="Validate default grid size after save" stepKey="commentValidateAfterSave"/>
-        <actionGroup ref="openGridSizeFormActionGroup" stepKey="openGridSizeFormAfterSave" />
+        <actionGroup ref="OpenGridSizeFormActionGroup" stepKey="openGridSizeFormAfterSave" />
         <seeInField selector="{{ColumnOnBackend.gridSizeInput('1')}}" userInput="{{PageBuilderGridSize.defaultGridSize}}" stepKey="seeDefaultGridSizeAfterSave"/>
     </test>
     <test name="ValidateGridInputFocusedOnOpen">
@@ -59,18 +59,18 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logOut"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logOut"/>
         </after>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <!-- Validate input is focused -->
         <comment userInput="Validate input is focused" stepKey="commentValidateInitial"/>
-        <actionGroup ref="openGridSizeFormActionGroup" stepKey="openGridSizeForm" />
+        <actionGroup ref="OpenGridSizeFormActionGroup" stepKey="openGridSizeForm" />
         <executeJS function="return window.getSelection().toString();" stepKey="getSelectedTextFromWindow"/>
         <assertEquals stepKey="assertSelectionIsDefaultGridSize">
             <expectedResult type="variable">getSelectedTextFromWindow</expectedResult>
@@ -93,14 +93,14 @@
         <before>
             <magentoCLI command="config:set cms/pagebuilder/column_grid_default 5" stepKey="setDefaultGridSize"/>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <magentoCLI command="config:set cms/pagebuilder/column_grid_default 12" stepKey="setDefaultGridSize"/>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('1', '3/5')}}" stepKey="verifyFirstColumn"/>
@@ -123,18 +123,18 @@
             <magentoCLI command="config:set cms/pagebuilder/column_grid_default 3" stepKey="setDefaultGridSize"/>
             <magentoCLI command="config:set cms/pagebuilder/column_grid_max 5" stepKey="setMaxGridSize"/>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <magentoCLI command="config:set cms/pagebuilder/column_grid_default 12" stepKey="setDefaultGridSize"/>
             <magentoCLI command="config:set cms/pagebuilder/column_grid_max 16" stepKey="setMaxGridSize"/>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="openGridSizeFormActionGroup" stepKey="openGridSizeForm" />
+        <actionGroup ref="OpenGridSizeFormActionGroup" stepKey="openGridSizeForm" />
         <click selector="{{ColumnOnBackend.gridSizeTooltip('1')}}" stepKey="clickWithinPanel"/>
         <waitForElementVisible selector="{{ColumnOnBackend.gridSizeTooltipWithMax('1', PageBuilderGridSize.gridSize_5)}}" stepKey="verifyTooltip"/>
     </test>
@@ -153,18 +153,18 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logOut"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logOut"/>
         </after>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth" stepKey="columnOneWidthGrid12"/>
         <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('2')}}').clientWidth" stepKey="columnTwoWidthGrid12"/>
-        <actionGroup ref="updateGridSizeActionGroup" stepKey="updateGridSizeTo14">
+        <actionGroup ref="UpdateGridSizeActionGroup" stepKey="updateGridSizeTo14">
             <argument name="gridSize" value="14"/>
         </actionGroup>
         <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth" stepKey="columnOneWidthGrid14"/>
@@ -197,19 +197,19 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <magentoCLI command="config:set cms/pagebuilder/column_grid_default 12" stepKey="setDefaultGridSize"/>
-            <actionGroup ref="logoutActionGroup" stepKey="logOut"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logOut"/>
         </after>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth" stepKey="columnOneWidthGrid12"/>
         <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('2')}}').clientWidth" stepKey="columnTwoWidthGrid12"/>
-        <actionGroup ref="updateGridSizeActionGroup" stepKey="updateGridSizeTo7">
+        <actionGroup ref="UpdateGridSizeActionGroup" stepKey="updateGridSizeTo7">
             <argument name="gridSize" value="7"/>
         </actionGroup>
         <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth" stepKey="columnOneWidthGrid7"/>
@@ -245,16 +245,16 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logOut"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logOut"/>
         </after>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="updateGridSizeActionGroup" stepKey="updateGridSizeTo6">
+        <actionGroup ref="UpdateGridSizeActionGroup" stepKey="updateGridSizeTo6">
             <argument name="gridSize" value="6"/>
         </actionGroup>
         <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="2" stepKey="seeNumberOfColumns2"/>
@@ -262,10 +262,10 @@
         <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('2','3/6')}}" stepKey="validateRightColumnWidth"/>
         <!-- Drag divider into first column to clear history -->
         <comment userInput="Drag divider into first column to clear history" stepKey="commentAddDividerToColumn" />
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderDividerContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToContainerActionGroup" stepKey="dragIntoStage">
+        <actionGroup ref="DragContentTypeToContainerActionGroup" stepKey="dragIntoStage">
             <argument name="contentType" value="PageBuilderDividerContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
         </actionGroup>
@@ -278,7 +278,7 @@
         <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('2','5/6')}}" stepKey="validateRightColumnWidth2"/>
         <!-- Change grid size back to 12 and validate column maintained ratio -->
         <comment userInput="Change grid size back to 12 and validate column maintained ratio" stepKey="commentSetGridSizeTo12" />
-        <actionGroup ref="updateGridSizeActionGroup" stepKey="updateGridSizeTo12">
+        <actionGroup ref="UpdateGridSizeActionGroup" stepKey="updateGridSizeTo12">
             <argument name="gridSize" value="12"/>
         </actionGroup>
         <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('1','2/12')}}" stepKey="validateLeftColumnWidth3"/>
@@ -299,19 +299,19 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logOut"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logOut"/>
         </after>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragAdditionalRow">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragAdditionalRow">
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="openGridSizeFormActionGroup" stepKey="openGridSizeForm" />
+        <actionGroup ref="OpenGridSizeFormActionGroup" stepKey="openGridSizeForm" />
         <!-- Validate column options dont display -->
         <comment userInput="Validate column options dont display" stepKey="commentColumnOptionsHidden"/>
         <moveMouseOver selector="{{ColumnOnBackend.columnX('2')}}" stepKey="moveMouseOverColumn" />
@@ -327,7 +327,7 @@
         <dontSee selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenuByIndex(PageBuilderRowContentType.role, '2')}}" stepKey="dontSeeRowOptions" />
         <!-- Close grid form and check options are restored -->
         <comment userInput="Close grid form and check options are restored" stepKey="commentCloseAndValidateOptionsAreRestored"/>
-        <actionGroup ref="closeGridSizeFormActionGroup" stepKey="closeGridForm" />
+        <actionGroup ref="CloseGridSizeFormActionGroup" stepKey="closeGridForm" />
         <moveMouseOver selector="{{PageBuilderStage.contentTypeInStage(PageBuilderRowContentType.role)}}" x="10" y="0" stepKey="onMouseOverContentTypeStage"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForElementVisible time="10" selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(PageBuilderRowContentType.role)}}" stepKey="waitForOptions"/>
@@ -348,32 +348,32 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logOut"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logOut"/>
         </after>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragAdditionalRow">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragAdditionalRow">
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragAdditionalRow2">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragAdditionalRow2">
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToContainerActionGroup" stepKey="dragColumnIntoStage">
+        <actionGroup ref="DragContentTypeToContainerActionGroup" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToContainerActionGroup" stepKey="dragTabsIntoStage">
+        <actionGroup ref="DragContentTypeToContainerActionGroup" stepKey="dragTabsIntoStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="openGridSizeFormActionGroup" stepKey="openGridSizeForm" />
+        <actionGroup ref="OpenGridSizeFormActionGroup" stepKey="openGridSizeForm" />
         <!-- Validate column options don't display -->
         <comment userInput="Validate column options don't display" stepKey="commentColumnOptionsHidden"/>
         <moveMouseOver selector="{{ColumnOnBackend.columnX('2')}}" stepKey="moveMouseOverColumn" />
@@ -389,7 +389,7 @@
         <dontSee selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenuByIndex(PageBuilderRowContentType.role, '3')}}" stepKey="dontSeeRowOptions" />
         <!-- Close grid form and check options are restored -->
         <comment userInput="Close grid form and check options are restored" stepKey="commentCloseAndValidateOptionsAreRestored"/>
-        <actionGroup ref="closeGridSizeFormActionGroup" stepKey="closeGridForm" />
+        <actionGroup ref="CloseGridSizeFormActionGroup" stepKey="closeGridForm" />
         <scrollTo selector="{{CmsNewPagePageActionsSection.pageTitle}}" stepKey="scrollToTop"/>
         <moveMouseOver selector="{{PageBuilderStage.contentTypeInStage(PageBuilderRowContentType.role)}}" x="10" y="0" stepKey="onMouseOverContentTypeStage"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
@@ -410,18 +410,18 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logOut"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logOut"/>
         </after>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="openGridSizeFormActionGroup" stepKey="openGridSizeForm" />
+        <actionGroup ref="OpenGridSizeFormActionGroup" stepKey="openGridSizeForm" />
         <fillField selector="{{ColumnOnBackend.gridSizeInput('1')}}" userInput="8" stepKey="enterGridSize"/>
-        <actionGroup ref="closeGridSizeFormActionGroup" stepKey="closeGridFormByClicking" />
+        <actionGroup ref="CloseGridSizeFormActionGroup" stepKey="closeGridFormByClicking" />
         <seeElement selector="{{ColumnOnBackend.displayLabel('1','4/8')}}" stepKey="checkWidthFirstColumn"/>
         <seeElement selector="{{ColumnOnBackend.displayLabel('2','4/8')}}" stepKey="checkWidthSecondColumn"/>
     </test>
@@ -441,32 +441,32 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logOut"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logOut"/>
         </after>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderDividerContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToContainerActionGroup" stepKey="dragIntoStage">
+        <actionGroup ref="DragContentTypeToContainerActionGroup" stepKey="dragIntoStage">
             <argument name="contentType" value="PageBuilderDividerContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="duplicateContentTypeActionGroup" stepKey="duplicateColumn">
+        <actionGroup ref="DuplicateContentTypeActionGroup" stepKey="duplicateColumn">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="targetIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="duplicateContentTypeActionGroup" stepKey="duplicateColumn2">
+        <actionGroup ref="DuplicateContentTypeActionGroup" stepKey="duplicateColumn2">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="targetIndex" value="1"/>
         </actionGroup>
         <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="4" stepKey="seeNumberOfColumns4"/>
-        <actionGroup ref="updateGridSizeActionGroup" stepKey="updateGridSizeTo1">
+        <actionGroup ref="UpdateGridSizeActionGroup" stepKey="updateGridSizeTo1">
             <argument name="gridSize" value="3"/>
         </actionGroup>
         <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="3" stepKey="seeNumberOfColumns3"/>
@@ -486,25 +486,25 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logOut"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logOut"/>
         </after>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="duplicateContentTypeActionGroup" stepKey="duplicateColumn">
+        <actionGroup ref="DuplicateContentTypeActionGroup" stepKey="duplicateColumn">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="targetIndex" value="1"/>
         </actionGroup>
         <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="3" stepKey="seeNumberOfColumns3"/>
-        <actionGroup ref="updateGridSizeActionGroup" stepKey="updateGridSizeTo7">
+        <actionGroup ref="UpdateGridSizeActionGroup" stepKey="updateGridSizeTo7">
             <argument name="gridSize" value="7"/>
         </actionGroup>
         <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="3" stepKey="seeNumberOfColumnsStill3"/>
-        <actionGroup ref="closeGridSizeFormActionGroup" stepKey="closeGridSizeForm"/>
+        <actionGroup ref="CloseGridSizeFormActionGroup" stepKey="closeGridSizeForm"/>
         <!-- Verify Initial Column Sizes -->
         <comment userInput="Verify Initial Column Sizes " stepKey="context0"/>
         <seeElement selector="{{ColumnOnBackend.displayLabel('1','2/7')}}" stepKey="checkWidthFirstColumn"/>
@@ -539,13 +539,13 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logOut"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logOut"/>
         </after>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <executeJS function="return parseInt(document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth / 10, 10) * 10;" stepKey="columnOneWidthGrid12"/>
@@ -554,7 +554,7 @@
             <expectedResult type="variable">columnOneWidthGrid12</expectedResult>
             <actualResult type="variable">columnTwoWidthGrid12</actualResult>
         </assertEquals>
-        <actionGroup ref="updateGridSizeActionGroup" stepKey="updateGridSizeTo13">
+        <actionGroup ref="UpdateGridSizeActionGroup" stepKey="updateGridSizeTo13">
             <argument name="gridSize" value="13"/>
         </actionGroup>
         <executeJS function="return parseInt(document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth / 10, 10) * 10;" stepKey="columnOneWidthGrid13"/>
@@ -600,20 +600,20 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logOut"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logOut"/>
         </after>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="updateGridSizeActionGroup" stepKey="updateGridSizeTo3">
+        <actionGroup ref="UpdateGridSizeActionGroup" stepKey="updateGridSizeTo3">
             <argument name="gridSize" value="3"/>
         </actionGroup>
-        <actionGroup ref="closeGridSizeFormActionGroup" stepKey="closeGridSizeForm"/>
-        <actionGroup ref="duplicateContentTypeActionGroup" stepKey="duplicateColumn">
+        <actionGroup ref="CloseGridSizeFormActionGroup" stepKey="closeGridSizeForm"/>
+        <actionGroup ref="DuplicateContentTypeActionGroup" stepKey="duplicateColumn">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="targetIndex" value="1"/>
         </actionGroup>
@@ -637,19 +637,19 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logOut"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logOut"/>
         </after>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="updateGridSizeActionGroup" stepKey="updateGridSizeTo2">
+        <actionGroup ref="UpdateGridSizeActionGroup" stepKey="updateGridSizeTo2">
             <argument name="gridSize" value="2"/>
         </actionGroup>
-        <actionGroup ref="closeGridSizeFormActionGroup" stepKey="closeGridSizeForm"/>
+        <actionGroup ref="CloseGridSizeFormActionGroup" stepKey="closeGridSizeForm"/>
         <waitForElementVisible selector="{{PageBuilderStage.contentTypeInStageByIndex(PageBuilderColumnContentType.role, '1')}}" stepKey="waitForColumn1Visible"/>
         <moveMouseOver selector="{{PageBuilderStage.contentTypeInStageByIndex(PageBuilderColumnContentType.role, '1')}}" stepKey="mouseOverColumn1"/>
         <waitForElementVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenuByIndex(PageBuilderColumnContentType.role, '1')}}" stepKey="waitForOptionsMenu"/>
@@ -676,17 +676,17 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logOut"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logOut"/>
         </after>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="openGridSizeFormActionGroup" stepKey="openGridSizeForm" />
-        <actionGroup ref="updateGridSizeInvalidActionGroup" stepKey="enterGridSizeOverMax">
+        <actionGroup ref="OpenGridSizeFormActionGroup" stepKey="openGridSizeForm" />
+        <actionGroup ref="UpdateGridSizeInvalidActionGroup" stepKey="enterGridSizeOverMax">
             <argument name="gridSize" value="50"/>
             <argument name="index" value="1"/>
             <argument name="errorMessage" value="PageBuilderGridSize.maximumGridSizeErrorMessage"/>
@@ -707,27 +707,27 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logOut"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logOut"/>
         </after>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="openGridSizeFormActionGroup" stepKey="openGridSizeForm" />
-        <actionGroup ref="updateGridSizeInvalidActionGroup" stepKey="enterNegativeGridSize">
+        <actionGroup ref="OpenGridSizeFormActionGroup" stepKey="openGridSizeForm" />
+        <actionGroup ref="UpdateGridSizeInvalidActionGroup" stepKey="enterNegativeGridSize">
             <argument name="gridSize" value="-50"/>
             <argument name="index" value="1"/>
             <argument name="errorMessage" value="PageBuilderGridSize.minimumGridSizeErrorMessage"/>
         </actionGroup>
-        <actionGroup ref="updateGridSizeInvalidActionGroup" stepKey="enterGridSize1">
+        <actionGroup ref="UpdateGridSizeInvalidActionGroup" stepKey="enterGridSize1">
             <argument name="gridSize" value="1"/>
             <argument name="index" value="1"/>
             <argument name="errorMessage" value="PageBuilderGridSize.minimumGridSizeErrorMessage"/>
         </actionGroup>
-        <actionGroup ref="updateGridSizeInvalidActionGroup" stepKey="enterGridSize0">
+        <actionGroup ref="UpdateGridSizeInvalidActionGroup" stepKey="enterGridSize0">
             <argument name="gridSize" value="0"/>
             <argument name="index" value="1"/>
             <argument name="errorMessage" value="PageBuilderGridSize.minimumGridSizeErrorMessage"/>
@@ -735,7 +735,7 @@
         <!-- Check validation occurs when entering as text -->
         <comment userInput="Check validation occurs when entering as text" stepKey="commentValidateStringInput"/>
         <executeJS function="document.evaluate(&quot;{{ColumnOnBackend.gridSizeInput('1')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.setAttribute('type', 'text')" stepKey="changeInputToText" />
-        <actionGroup ref="updateGridSizeInvalidActionGroup" stepKey="enterInvalidGridSizeString">
+        <actionGroup ref="UpdateGridSizeInvalidActionGroup" stepKey="enterInvalidGridSizeString">
             <argument name="gridSize" value="InvalidString"/>
             <argument name="index" value="1"/>
             <argument name="errorMessage" value="PageBuilderGridSize.invalidNumberErrorMessage"/>
@@ -756,32 +756,32 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logOut"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logOut"/>
         </after>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragSecondRowIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragSecondRowIntoStage">
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToContainerActionGroup" stepKey="dragColumn1IntoStage">
+        <actionGroup ref="DragContentTypeToContainerActionGroup" stepKey="dragColumn1IntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToContainerActionGroup" stepKey="dragColumn2IntoStage">
+        <actionGroup ref="DragContentTypeToContainerActionGroup" stepKey="dragColumn2IntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="updateGridSizeActionGroup" stepKey="updateGridSize1">
+        <actionGroup ref="UpdateGridSizeActionGroup" stepKey="updateGridSize1">
             <argument name="index" value="1"/>
             <argument name="gridSize" value="6"/>
         </actionGroup>
         <seeElement selector="{{ColumnOnBackend.displayLabel('1','3/6')}}" stepKey="checkWidthFirstColumnGroupColumn1"/>
         <seeElement selector="{{ColumnOnBackend.displayLabel('2','3/6')}}" stepKey="checkWidthFirstColumnGroupColumn2"/>
-        <actionGroup ref="updateGridSizeActionGroup" stepKey="updateGridSize2">
+        <actionGroup ref="UpdateGridSizeActionGroup" stepKey="updateGridSize2">
             <argument name="index" value="2"/>
             <argument name="gridSize" value="8"/>
         </actionGroup>
@@ -803,17 +803,17 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logOut"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logOut"/>
         </after>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="openGridSizeFormActionGroup" stepKey="openGridSizeForm" />
-        <actionGroup ref="updateGridSizeInvalidActionGroup" stepKey="enterInvalidGridSize">
+        <actionGroup ref="OpenGridSizeFormActionGroup" stepKey="openGridSizeForm" />
+        <actionGroup ref="UpdateGridSizeInvalidActionGroup" stepKey="enterInvalidGridSize">
             <argument name="gridSize" value="50"/>
             <argument name="index" value="1"/>
             <argument name="errorMessage" value="PageBuilderGridSize.maximumGridSizeErrorMessage"/>
@@ -821,7 +821,7 @@
         <click selector="{{ColumnOnBackend.columnGroup('1')}}" stepKey="clickOtherArea"/>
         <seeElement selector="{{ColumnOnBackend.gridSizeError('1', 'maximum grid size supported')}}" stepKey="verifyMaxError2"/>
         <fillField selector="{{ColumnOnBackend.gridSizeInput('1')}}" userInput="8" stepKey="enterValidGridSize"/>
-        <actionGroup ref="closeGridSizeFormActionGroup" stepKey="closeGridFormByClicking2" />
+        <actionGroup ref="CloseGridSizeFormActionGroup" stepKey="closeGridFormByClicking2" />
         <waitForElement selector="{{ColumnOnBackend.gridSizeInput('1')}}" stepKey="waitForValidatePanelClosed"/>
         <dontSeeElement selector="{{ColumnOnBackend.gridSizeInput('1')}}" stepKey="validatePanelClosed"/>
     </test>
@@ -840,52 +840,52 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logOut"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logOut"/>
         </after>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="updateGridSizeActionGroup" stepKey="updateGridSizeTo4">
+        <actionGroup ref="UpdateGridSizeActionGroup" stepKey="updateGridSizeTo4">
             <argument name="gridSize" value="4"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToContainerActionGroup" stepKey="addColumn1">
+        <actionGroup ref="DragContentTypeToContainerActionGroup" stepKey="addColumn1">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToContainerActionGroup" stepKey="addColumn2">
+        <actionGroup ref="DragContentTypeToContainerActionGroup" stepKey="addColumn2">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="3"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToContainerActionGroup" stepKey="addText1">
+        <actionGroup ref="DragContentTypeToContainerActionGroup" stepKey="addText1">
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToContainerActionGroup" stepKey="addText2">
+        <actionGroup ref="DragContentTypeToContainerActionGroup" stepKey="addText2">
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToContainerActionGroup" stepKey="addText3">
+        <actionGroup ref="DragContentTypeToContainerActionGroup" stepKey="addText3">
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="3"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToContainerActionGroup" stepKey="addText4">
+        <actionGroup ref="DragContentTypeToContainerActionGroup" stepKey="addText4">
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="4"/>
         </actionGroup>
-        <actionGroup ref="openGridSizeFormActionGroup" stepKey="openGridSizeForm" />
-        <actionGroup ref="updateGridSizeInvalidActionGroup" stepKey="enterInvalidGridSize">
+        <actionGroup ref="OpenGridSizeFormActionGroup" stepKey="openGridSizeForm" />
+        <actionGroup ref="UpdateGridSizeInvalidActionGroup" stepKey="enterInvalidGridSize">
             <argument name="gridSize" value="3"/>
             <argument name="index" value="1"/>
             <argument name="errorMessage" value="PageBuilderGridSize.smallerThanTotalColumnsErrorMessage"/>
@@ -906,31 +906,31 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logOut"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logOut"/>
         </after>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragSecondRowIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragSecondRowIntoStage">
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToContainerActionGroup" stepKey="dragColumn1IntoStage">
+        <actionGroup ref="DragContentTypeToContainerActionGroup" stepKey="dragColumn1IntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToContainerActionGroup" stepKey="dragColumn2IntoStage">
+        <actionGroup ref="DragContentTypeToContainerActionGroup" stepKey="dragColumn2IntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="updateGridSizeActionGroup" stepKey="updateGridSize1">
+        <actionGroup ref="UpdateGridSizeActionGroup" stepKey="updateGridSize1">
             <argument name="index" value="1"/>
             <argument name="gridSize" value="8"/>
         </actionGroup>
-        <actionGroup ref="closeGridSizeFormActionGroup" stepKey="closeGridFormByClicking" />
-        <actionGroup ref="dragColumnToAnotherColumnGroupActionGroup" stepKey="moveColumnToSecondGroup">
+        <actionGroup ref="CloseGridSizeFormActionGroup" stepKey="closeGridFormByClicking" />
+        <actionGroup ref="DragColumnToAnotherColumnGroupActionGroup" stepKey="moveColumnToSecondGroup">
             <argument name="contentTypeIndex" value="1"/>
             <argument name="containerTargetIndex" value="3"/>
         </actionGroup>
@@ -952,16 +952,16 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logOut"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logOut"/>
         </after>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="openGridSizeFormActionGroup" stepKey="openGridSizeForm" />
+        <actionGroup ref="OpenGridSizeFormActionGroup" stepKey="openGridSizeForm" />
         <click selector="{{ColumnOnBackend.gridSizeTooltip('1')}}" stepKey="clickWithinPanel"/>
         <seeElement selector="{{ColumnOnBackend.gridSizeInput('1')}}" stepKey="verifyPanelStillOpen"/>
     </test>

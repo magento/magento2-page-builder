@@ -23,45 +23,45 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle1">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle1">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
         <comment userInput="Add tabs to stage" stepKey="commentAddTabsToStage"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragTabsIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragTabsIntoStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditPanel">
+        <actionGroup ref="OpenPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditPanel">
             <argument name="section" value="TabOnStage"/>
         </actionGroup>
         <!-- Validate Min Height Field -->
         <comment userInput="Validate min height fields" stepKey="commentMinHeight"/>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateEmptyHeightField">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateEmptyHeightField">
             <argument name="property" value="PageBuilderTabMinimumHeightEmptyProperty"/>
         </actionGroup>
         <!-- Validate Vertical Alignment Fields -->
         <comment userInput="Validate vertical alignment fields" stepKey="commentVerticalAlignment"/>
-        <actionGroup ref="validateVerticalAlignmentVisualSelectsActionGroup" stepKey="validateVerticalAlignment">
+        <actionGroup ref="ValidateVerticalAlignmentVisualSelectsActionGroup" stepKey="validateVerticalAlignment">
             <argument name="property1" value="PageBuilderTabVerticalAlignmentPropertyTop"/>
             <argument name="property2" value="PageBuilderTabVerticalAlignmentPropertyCenter"/>
             <argument name="property3" value="PageBuilderTabVerticalAlignmentPropertyBottom"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="verticalAlignTopSelected">
+        <actionGroup ref="SeeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="verticalAlignTopSelected">
             <argument name="property" value="PageBuilderTabVerticalAlignmentPropertyTop"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettingsThirdColumn"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettingsThirdColumn"/>
         <!-- Verify Min Height Not Used and Vertical Alignment On Stage - Before Save -->
         <comment userInput="Verify min height not used and vertical alignment on stage before save" stepKey="commentVerifyMinHeightAndVerticalAlignmentOnStageBeforeSave"/>
-        <actionGroup ref="validateLayoutStylesNoHeightActionGroup" stepKey="validateLayoutStylesBeforeSave">
+        <actionGroup ref="ValidateLayoutStylesNoHeightActionGroup" stepKey="validateLayoutStylesBeforeSave">
             <argument name="page" value="TabOnStage"/>
             <argument name="index" value="1"/>
             <argument name="verticalAlignContainer" value="PageBuilderTabVerticalAlignmentPropertyTop"/>
@@ -69,34 +69,34 @@
         <!-- Verify Min Height Not Used and Vertical Alignment On Stage - After Save -->
         <comment userInput="Verify min height not used and vertical alignment on stage after save" stepKey="commentVerifyMinHeightAndVerticalAlignmentOnStageAfterSave"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
-        <actionGroup ref="validateLayoutStylesNoHeightActionGroup" stepKey="validateLayoutStylesAfterSave">
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="ValidateLayoutStylesNoHeightActionGroup" stepKey="validateLayoutStylesAfterSave">
             <argument name="page" value="TabOnStage"/>
             <argument name="index" value="1"/>
             <argument name="verticalAlignContainer" value="PageBuilderTabVerticalAlignmentPropertyTop"/>
         </actionGroup>
         <!-- Verify Min Height Not Used and Vertical Alignment In Form - After Save -->
         <comment userInput="Verify min height and vertical alignment in form after save" stepKey="commentVerifyMinHeightAndVerticalAlignmentInFormAfterSave"/>
-        <actionGroup ref="openPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditPanelForFirstTabAfterSave">
+        <actionGroup ref="OpenPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditPanelForFirstTabAfterSave">
             <argument name="section" value="TabOnStage"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateEmptyHeightFieldAfterSave">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateEmptyHeightFieldAfterSave">
             <argument name="property" value="PageBuilderTabMinimumHeightEmptyProperty"/>
         </actionGroup>
-        <actionGroup ref="validateVerticalAlignmentVisualSelectsActionGroup" stepKey="validateVerticalAlignmentAfterSave">
+        <actionGroup ref="ValidateVerticalAlignmentVisualSelectsActionGroup" stepKey="validateVerticalAlignmentAfterSave">
             <argument name="property1" value="PageBuilderTabVerticalAlignmentPropertyTop"/>
             <argument name="property2" value="PageBuilderTabVerticalAlignmentPropertyCenter"/>
             <argument name="property3" value="PageBuilderTabVerticalAlignmentPropertyBottom"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="verticalAlignTopSelectedAfterSave">
+        <actionGroup ref="SeeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="verticalAlignTopSelectedAfterSave">
             <argument name="property" value="PageBuilderTabVerticalAlignmentPropertyTop"/>
         </actionGroup>
         <!-- Verify Min Height and Vertical Alignment Not Used In Storefront -->
         <comment userInput="Verify min height and vertical alignment not used in storefront" stepKey="commentVerifyMinHeightAndVerticalAlignmentNotUsedInStorefront"/>
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
-        <actionGroup ref="validateLayoutStylesNoHeightActionGroup" stepKey="validateLayoutStylesInStorefront">
+        <actionGroup ref="ValidateLayoutStylesNoHeightActionGroup" stepKey="validateLayoutStylesInStorefront">
             <argument name="page" value="TabOnStorefront"/>
             <argument name="index" value="1"/>
             <argument name="verticalAlignContainer" value="PageBuilderTabVerticalAlignmentPropertyTop"/>
@@ -117,55 +117,55 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle1">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle1">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
         <comment userInput="Add tabs to stage" stepKey="commentAddTabsToStage"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragTabsIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragTabsIntoStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditPanel">
+        <actionGroup ref="OpenPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditPanel">
             <argument name="section" value="TabOnStage"/>
         </actionGroup>
         <!-- Enter Height: NonNumeric -->
         <comment userInput="Enter Height: NonNumeric" stepKey="commentEnterHeightNonNumeric"/>
-        <actionGroup ref="fillSlideOutPanelFieldAndExpectToSeeErrorInFieldsetGeneralActionGroup" stepKey="enterMinHeightPropertyNonNumeric">
+        <actionGroup ref="FillSlideOutPanelFieldAndExpectToSeeErrorInFieldsetGeneralActionGroup" stepKey="enterMinHeightPropertyNonNumeric">
             <argument name="property" value="PageBuilderTabMinimumHeightProperty_NonNumeric"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSectionActionGroup" stepKey="validateErrorNonNumeric">
+        <actionGroup ref="SaveEditPanelAndValidateFieldErrorGeneralSectionActionGroup" stepKey="validateErrorNonNumeric">
             <argument name="property" value="PageBuilderTabMinimumHeightProperty_NonNumeric"/>
         </actionGroup>
         <!-- Enter Height: Negative -->
         <comment userInput="Enter Height: Negative" stepKey="commentEnterHeightNegative"/>
-        <actionGroup ref="fillSlideOutPanelFieldAndExpectToSeeErrorInFieldsetGeneralActionGroup" stepKey="enterMinHeightPropertyNegative">
+        <actionGroup ref="FillSlideOutPanelFieldAndExpectToSeeErrorInFieldsetGeneralActionGroup" stepKey="enterMinHeightPropertyNegative">
             <argument name="property" value="PageBuilderTabMinHeightProperty_Negative1"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSectionActionGroup" stepKey="validateErrorNegative">
+        <actionGroup ref="SaveEditPanelAndValidateFieldErrorGeneralSectionActionGroup" stepKey="validateErrorNegative">
             <argument name="property" value="PageBuilderTabMinHeightProperty_Negative1"/>
         </actionGroup>
         <!-- Enter Height: Valid After Invalid -->
         <comment userInput="Enter Height: Valid After Invalid" stepKey="commentEnterHeightValidAfterInvalid"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterMinHeightPropertyValid">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterMinHeightPropertyValid">
             <argument name="property" value="PageBuilderTabsMinHeightProperty_500"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <!-- Verify Valid Height After Invalid - Before Save -->
         <comment userInput="Verify valid height after invalid on stage before save" stepKey="commentVerifyValidHeightAfterInvalidBeforeSave"/>
         <waitForElementVisible selector="{{TabOnStage.minHeight('1', PageBuilderTabsMinHeightProperty_500.value)}}" stepKey="seeTabMinHeight"/>
         <!-- Verify Valid Height After Invalid - After Save -->
         <comment userInput="Verify valid height after invalid on stage after save" stepKey="commentVerifyHeightAfterInvalidOnStageAfterSave"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <waitForElementVisible selector="{{TabOnStage.minHeight('1', PageBuilderTabsMinHeightProperty_500.value)}}" stepKey="seeTabMinHeightAfterSave"/>
     </test>
     <test name="TabItemWithBordersAndPaddingEqualToMinHeight" extends="RowWithBordersAndPaddingEqualToMinHeight">
@@ -181,32 +181,32 @@
             <group value="pagebuilder-tabs"/>
             <group value="pagebuilder-tabsLayout"/>
         </annotations>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" after="commentConfigureContentType" stepKey="dragContentTypeToStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" after="commentConfigureContentType" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditPanel">
+        <actionGroup ref="OpenPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditPanel">
             <argument name="section" value="TabOnStage"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterMinHeightProperty">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterMinHeightProperty">
             <argument name="property" value="PageBuilderTabMinimumHeightDefaultProperty"/>
         </actionGroup>
-        <actionGroup ref="validateContentTypeHeightEqualToMinHeightActionGroup" stepKey="validateContentTypeHeightBeforeSave">
+        <actionGroup ref="ValidateContentTypeHeightEqualToMinHeightActionGroup" stepKey="validateContentTypeHeightBeforeSave">
             <argument name="content" value="{{TabOnStage.tabContentCSS}}"/>
             <argument name="border" value="PageBuilderAdvancedBorderWidthProperty10"/>
             <argument name="padding" value="PageBuilderPaddingProperty10"/>
         </actionGroup>
-        <actionGroup ref="validateContentTypeHeightEqualToMinHeightActionGroup" stepKey="validateContentTypeHeightAfterSave">
+        <actionGroup ref="ValidateContentTypeHeightEqualToMinHeightActionGroup" stepKey="validateContentTypeHeightAfterSave">
             <argument name="content" value="{{TabOnStage.tabContentCSS}}"/>
             <argument name="border" value="PageBuilderAdvancedBorderWidthProperty10"/>
             <argument name="padding" value="PageBuilderPaddingProperty10"/>
         </actionGroup>
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
-        <actionGroup ref="validateContentTypeHeightEqualToMinHeightActionGroup" stepKey="validateContentTypeHeightStorefront">
+        <actionGroup ref="ValidateContentTypeHeightEqualToMinHeightActionGroup" stepKey="validateContentTypeHeightStorefront">
             <argument name="content" value="{{TabOnStorefront.tabContentCSS}}"/>
         </actionGroup>
     </test>
@@ -225,47 +225,47 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" after="commentConfigureContentType" stepKey="dragContentTypeToStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" after="commentConfigureContentType" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditPanel">
+        <actionGroup ref="OpenPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditPanel">
             <argument name="section" value="TabOnStage"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterMinHeightProperty">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterMinHeightProperty">
             <argument name="property" value="PageBuilderTabMinimumHeight200Property"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToContainerActionGroup" stepKey="dragContentTypeToContainer">
+        <actionGroup ref="DragContentTypeToContainerActionGroup" stepKey="dragContentTypeToContainer">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
             <argument name="containerTargetType" value="PageBuilderTabsContentType"/>
         </actionGroup>
-        <actionGroup ref="validateContentTypeHeightGreaterThanMinHeightActionGroup" stepKey="validateContentTypeHeightBeforeSave">
+        <actionGroup ref="ValidateContentTypeHeightGreaterThanMinHeightActionGroup" stepKey="validateContentTypeHeightBeforeSave">
             <argument name="content" value="{{TabOnStage.tabContentCSS}}"/>
             <argument name="border" value="PageBuilderAdvancedBorderWidthProperty10"/>
             <argument name="height" value="PageBuilderTabMinimumHeight200Property"/>
             <argument name="padding" value="PageBuilderPaddingProperty10"/>
         </actionGroup>
-        <actionGroup ref="validateContentTypeHeightGreaterThanMinHeightActionGroup" stepKey="validateContentTypeHeightAfterSave">
+        <actionGroup ref="ValidateContentTypeHeightGreaterThanMinHeightActionGroup" stepKey="validateContentTypeHeightAfterSave">
             <argument name="content" value="{{TabOnStage.tabContentCSS}}"/>
             <argument name="border" value="PageBuilderAdvancedBorderWidthProperty10"/>
             <argument name="height" value="PageBuilderTabMinimumHeight200Property"/>
             <argument name="padding" value="PageBuilderPaddingProperty10"/>
         </actionGroup>
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
-        <actionGroup ref="validateContentTypeHeightGreaterThanMinHeightActionGroup" stepKey="validateContentTypeHeightStorefront">
+        <actionGroup ref="ValidateContentTypeHeightGreaterThanMinHeightActionGroup" stepKey="validateContentTypeHeightStorefront">
             <argument name="content" value="{{TabOnStorefront.tabContentCSS}}"/>
             <argument name="height" value="PageBuilderTabMinimumHeight200Property"/>
         </actionGroup>
@@ -285,37 +285,37 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle1">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle1">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
         <comment userInput="Add tabs to stage" stepKey="commentAddTabsToStage"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragTabsIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragTabsIntoStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Configure Tab - Vertical Align Top -->
         <comment userInput="Configure vertical align top" stepKey="commentConfigureVerticalAlignTop"/>
-        <actionGroup ref="openPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditPanel">
+        <actionGroup ref="OpenPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditPanel">
             <argument name="section" value="TabOnStage"/>
             <argument name="targetIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterVerticalAlignmentTopProperty">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterVerticalAlignmentTopProperty">
             <argument name="property" value="PageBuilderTabVerticalAlignmentPropertyTop"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettingsFirstTab"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSectionButtons">
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettingsFirstTab"/>
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSectionButtons">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToContainerActionGroup" stepKey="dragButtonToTab">
+        <actionGroup ref="DragContentTypeToContainerActionGroup" stepKey="dragButtonToTab">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
             <argument name="containerTargetType" value="PageBuilderTabsContentType"/>
             <argument name="containerTargetIndex" value="1"/>
@@ -323,7 +323,7 @@
         </actionGroup>
         <!-- Verify Vertical Alignment On Stage - Before Save -->
         <comment userInput="Verify vertical alignment on stage before save" stepKey="commentVerifyVerticalAlignmentOnStageBeforeSave"/>
-        <actionGroup ref="validateLayoutStylesNoHeightActionGroup" stepKey="validateTopLayoutStylesBeforeSave">
+        <actionGroup ref="ValidateLayoutStylesNoHeightActionGroup" stepKey="validateTopLayoutStylesBeforeSave">
             <argument name="page" value="TabOnStage"/>
             <argument name="index" value="1"/>
             <argument name="verticalAlignContainer" value="PageBuilderTabVerticalAlignmentPropertyTop"/>
@@ -331,18 +331,18 @@
         <!-- Verify Vertical Alignment On Stage - After Save -->
         <comment userInput="Verify vertical alignment on stage after save" stepKey="commentVerifyVerticalAlignmentOnStageAfterSave"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
-        <actionGroup ref="validateLayoutStylesNoHeightActionGroup" stepKey="validateTopLayoutStylesAfterSave">
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="ValidateLayoutStylesNoHeightActionGroup" stepKey="validateTopLayoutStylesAfterSave">
             <argument name="page" value="TabOnStage"/>
             <argument name="index" value="1"/>
             <argument name="verticalAlignContainer" value="PageBuilderTabVerticalAlignmentPropertyTop"/>
         </actionGroup>
         <!-- Verify Vertical Alignment In Storefront -->
         <comment userInput="Verify vertical alignment in storefront" stepKey="commentVerifyVerticalAlignmentInStorefront"/>
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
-        <actionGroup ref="validateLayoutStylesNoHeightActionGroup" stepKey="validateTopLayoutStylesOnStorefront">
+        <actionGroup ref="ValidateLayoutStylesNoHeightActionGroup" stepKey="validateTopLayoutStylesOnStorefront">
             <argument name="page" value="TabOnStorefront"/>
             <argument name="index" value="1"/>
             <argument name="verticalAlignContainer" value="PageBuilderTabVerticalAlignmentPropertyTop"/>
@@ -363,37 +363,37 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle1">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle1">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
         <comment userInput="Add tabs to stage" stepKey="commentAddTabsToStage"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragTabsIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragTabsIntoStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Configure Tab - Vertical Align Center -->
         <comment userInput="Configure vertical align center" stepKey="commentConfigureVerticalAlignCenter"/>
-        <actionGroup ref="openPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditPanel">
+        <actionGroup ref="OpenPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditPanel">
             <argument name="section" value="TabOnStage"/>
             <argument name="targetIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterVerticalAlignmenCenterProperty">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterVerticalAlignmenCenterProperty">
             <argument name="property" value="PageBuilderTabVerticalAlignmentPropertyCenter"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettingsSecondTab"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSectionButtons">
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettingsSecondTab"/>
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSectionButtons">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToContainerActionGroup" stepKey="dragButtonToTab">
+        <actionGroup ref="DragContentTypeToContainerActionGroup" stepKey="dragButtonToTab">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
             <argument name="containerTargetType" value="PageBuilderTabsContentType"/>
             <argument name="containerTargetIndex" value="1"/>
@@ -401,7 +401,7 @@
         </actionGroup>
         <!-- Verify Vertical Alignment On Stage - Before Save -->
         <comment userInput="Verify vertical alignment on stage before save" stepKey="commentVerifyVerticalAlignmentOnStageBeforeSave"/>
-        <actionGroup ref="validateLayoutStylesNoHeightActionGroup" stepKey="validateCenterLayoutStylesBeforeSave">
+        <actionGroup ref="ValidateLayoutStylesNoHeightActionGroup" stepKey="validateCenterLayoutStylesBeforeSave">
             <argument name="page" value="TabOnStage"/>
             <argument name="index" value="1"/>
             <argument name="verticalAlignContainer" value="PageBuilderTabVerticalAlignmentPropertyCenter"/>
@@ -409,18 +409,18 @@
         <!-- Verify Vertical Alignment On Stage - After Save -->
         <comment userInput="Verify vertical alignment on stage after save" stepKey="commentVerifyVerticalAlignmentOnStageAfterSave"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
-        <actionGroup ref="validateLayoutStylesNoHeightActionGroup" stepKey="validateCenterLayoutStylesAfterSave">
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="ValidateLayoutStylesNoHeightActionGroup" stepKey="validateCenterLayoutStylesAfterSave">
             <argument name="page" value="TabOnStage"/>
             <argument name="index" value="1"/>
             <argument name="verticalAlignContainer" value="PageBuilderTabVerticalAlignmentPropertyCenter"/>
         </actionGroup>
         <!-- Verify Vertical Alignment In Storefront -->
         <comment userInput="Verify vertical alignment in storefront" stepKey="commentVerifyVerticalAlignmentInStorefront"/>
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
-        <actionGroup ref="validateLayoutStylesNoHeightActionGroup" stepKey="validateCenterLayoutStylesOnStorefront">
+        <actionGroup ref="ValidateLayoutStylesNoHeightActionGroup" stepKey="validateCenterLayoutStylesOnStorefront">
             <argument name="page" value="TabOnStorefront"/>
             <argument name="index" value="1"/>
             <argument name="verticalAlignContainer" value="PageBuilderTabVerticalAlignmentPropertyCenter"/>
@@ -441,37 +441,37 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
         <comment userInput="Add tabs to stage" stepKey="commentAddTabsToStage"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragTabsIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragTabsIntoStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Configure Tab - Vertical Align Bottom -->
         <comment userInput="Configure vertical align bottom" stepKey="commentConfigureVerticalAlignBottom"/>
-        <actionGroup ref="openPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditPanel">
+        <actionGroup ref="OpenPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditPanel">
             <argument name="section" value="TabOnStage"/>
             <argument name="targetIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterVerticalAlignmentBottomProperty">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterVerticalAlignmentBottomProperty">
             <argument name="property" value="PageBuilderTabVerticalAlignmentPropertyBottom"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettingsThirdColumn"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSectionButtons">
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettingsThirdColumn"/>
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSectionButtons">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToContainerActionGroup" stepKey="dragButtonToTab">
+        <actionGroup ref="DragContentTypeToContainerActionGroup" stepKey="dragButtonToTab">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
             <argument name="containerTargetType" value="PageBuilderTabsContentType"/>
             <argument name="containerTargetIndex" value="1"/>
@@ -479,7 +479,7 @@
         </actionGroup>
         <!-- Verify Vertical Alignment On Stage - Before Save -->
         <comment userInput="Verify vertical alignment on stage before save" stepKey="commentVerifyVerticalAlignmentOnStageBeforeSave"/>
-        <actionGroup ref="validateLayoutStylesNoHeightActionGroup" stepKey="validateBottomLayoutStylesBeforeSave">
+        <actionGroup ref="ValidateLayoutStylesNoHeightActionGroup" stepKey="validateBottomLayoutStylesBeforeSave">
             <argument name="page" value="TabOnStage"/>
             <argument name="index" value="1"/>
             <argument name="verticalAlignContainer" value="PageBuilderTabVerticalAlignmentPropertyBottom"/>
@@ -487,18 +487,18 @@
         <!-- Verify Vertical Alignment On Stage - After Save -->
         <comment userInput="Verify vertical alignment on stage after save" stepKey="commentVerifyVerticalAlignmentOnStageAfterSave"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
-        <actionGroup ref="validateLayoutStylesNoHeightActionGroup" stepKey="validateBottomLayoutStylesAfterSave">
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="ValidateLayoutStylesNoHeightActionGroup" stepKey="validateBottomLayoutStylesAfterSave">
             <argument name="page" value="TabOnStage"/>
             <argument name="index" value="1"/>
             <argument name="verticalAlignContainer" value="PageBuilderTabVerticalAlignmentPropertyBottom"/>
         </actionGroup>
         <!-- Verify Vertical Alignment In Storefront -->
         <comment userInput="Verify vertical alignment in storefront" stepKey="commentVerifyVerticalAlignmentInStorefront"/>
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
-        <actionGroup ref="validateLayoutStylesNoHeightActionGroup" stepKey="validateBottomLayoutStylesOnStorefront">
+        <actionGroup ref="ValidateLayoutStylesNoHeightActionGroup" stepKey="validateBottomLayoutStylesOnStorefront">
             <argument name="page" value="TabOnStorefront"/>
             <argument name="index" value="1"/>
             <argument name="verticalAlignContainer" value="PageBuilderTabVerticalAlignmentPropertyBottom"/>
@@ -519,40 +519,40 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
         <comment userInput="Add tabs to stage" stepKey="commentAddTabsToStage"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragTabsIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragTabsIntoStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Configure Tab - Vertical Align Top -->
         <comment userInput="Configure vertical align top" stepKey="commentConfigureVerticalAlignTop"/>
-        <actionGroup ref="openPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditPanel">
+        <actionGroup ref="OpenPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditPanel">
             <argument name="section" value="TabOnStage"/>
             <argument name="targetIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterMinHeightPropertyTab">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterMinHeightPropertyTab">
             <argument name="property" value="PageBuilderTabsMinHeightProperty_500"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterVerticalAlignmentTopProperty">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterVerticalAlignmentTopProperty">
             <argument name="property" value="PageBuilderTabVerticalAlignmentPropertyTop"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettingsRow"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSectionButtons">
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettingsRow"/>
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSectionButtons">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToContainerActionGroup" stepKey="dragButtonToTab">
+        <actionGroup ref="DragContentTypeToContainerActionGroup" stepKey="dragButtonToTab">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
             <argument name="containerTargetType" value="PageBuilderTabsContentType"/>
             <argument name="containerTargetIndex" value="1"/>
@@ -560,7 +560,7 @@
         </actionGroup>
         <!-- Verify Vertical Alignment On Stage - Before Save -->
         <comment userInput="Verify min height and vertical alignment on stage before save" stepKey="commentVerifyMinHeightAndVerticalAlignmentOnStageBeforeSave"/>
-        <actionGroup ref="validateLayoutStylesWithAllUpdatedActionGroup" stepKey="validateAllLayoutStageBeforeSave">
+        <actionGroup ref="ValidateLayoutStylesWithAllUpdatedActionGroup" stepKey="validateAllLayoutStageBeforeSave">
             <argument name="page" value="TabOnStage"/>
             <argument name="index" value="1"/>
             <argument name="minHeight" value="PageBuilderTabsMinHeightProperty_500"/>
@@ -569,8 +569,8 @@
         <!-- Verify Vertical Alignment On Stage - After Save -->
         <comment userInput="Verify min height and vertical alignment on stage after save" stepKey="commentVerifyMinHeightAndVerticalAlignmentOnStageAfterSave"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
-        <actionGroup ref="validateLayoutStylesWithAllUpdatedActionGroup" stepKey="validateAllLayoutStageAfterSave">
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="ValidateLayoutStylesWithAllUpdatedActionGroup" stepKey="validateAllLayoutStageAfterSave">
             <argument name="page" value="TabOnStage"/>
             <argument name="index" value="1"/>
             <argument name="minHeight" value="PageBuilderTabsMinHeightProperty_500"/>
@@ -578,10 +578,10 @@
         </actionGroup>
         <!-- Verify Min Height and Vertical Alignment In Storefront -->
         <comment userInput="Verify min height and vertical alignment in storefront" stepKey="commentVerifyMinHeightAndVerticalAlignmentInStorefront"/>
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
-        <actionGroup ref="validateLayoutStylesWithAllUpdatedActionGroup" stepKey="validateAllLayoutStageStorefront">
+        <actionGroup ref="ValidateLayoutStylesWithAllUpdatedActionGroup" stepKey="validateAllLayoutStageStorefront">
             <argument name="page" value="TabOnStorefront"/>
             <argument name="index" value="1"/>
             <argument name="minHeight" value="PageBuilderTabsMinHeightProperty_500"/>
@@ -603,40 +603,40 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
         <comment userInput="Add tabs to stage" stepKey="commentAddTabsToStage"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragTabsIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragTabsIntoStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Configure Tab - Vertical Align Center -->
         <comment userInput="Configure vertical align center" stepKey="commentConfigureVerticalAlignCenter"/>
-        <actionGroup ref="openPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditPanel">
+        <actionGroup ref="OpenPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditPanel">
             <argument name="section" value="TabOnStage"/>
             <argument name="targetIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterMinHeightPropertyTab">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterMinHeightPropertyTab">
             <argument name="property" value="PageBuilderTabMinimumHeight300Property"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterVerticalAlignmentCenterProperty">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterVerticalAlignmentCenterProperty">
             <argument name="property" value="PageBuilderTabVerticalAlignmentPropertyCenter"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSectionButtons">
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSectionButtons">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToContainerActionGroup" stepKey="dragButtonToTab">
+        <actionGroup ref="DragContentTypeToContainerActionGroup" stepKey="dragButtonToTab">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
             <argument name="containerTargetType" value="PageBuilderTabsContentType"/>
             <argument name="containerTargetIndex" value="1"/>
@@ -644,7 +644,7 @@
         </actionGroup>
         <!-- Verify Vertical Alignment On Stage - Before Save -->
         <comment userInput="Verify min height and vertical alignment on stage before save" stepKey="commentVerifyMinHeightAndVerticalAlignmentOnStageBeforeSave"/>
-        <actionGroup ref="validateLayoutStylesWithAllUpdatedActionGroup" stepKey="validateAllLayoutStageBeforeSave">
+        <actionGroup ref="ValidateLayoutStylesWithAllUpdatedActionGroup" stepKey="validateAllLayoutStageBeforeSave">
             <argument name="page" value="TabOnStage"/>
             <argument name="index" value="1"/>
             <argument name="minHeight" value="PageBuilderTabMinimumHeight300Property"/>
@@ -653,8 +653,8 @@
         <!-- Verify Vertical Alignment On Stage - After Save -->
         <comment userInput="Verify min height and vertical alignment on stage after save" stepKey="commentVerifyMinHeightAndVerticalAlignmentOnStageAfterSave"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
-        <actionGroup ref="validateLayoutStylesWithAllUpdatedActionGroup" stepKey="validateAllLayoutStageAfterSave">
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="ValidateLayoutStylesWithAllUpdatedActionGroup" stepKey="validateAllLayoutStageAfterSave">
             <argument name="page" value="TabOnStage"/>
             <argument name="index" value="1"/>
             <argument name="minHeight" value="PageBuilderTabMinimumHeight300Property"/>
@@ -662,10 +662,10 @@
         </actionGroup>
         <!-- Verify Min Height and Vertical Alignment In Storefront -->
         <comment userInput="Verify min height and vertical alignment in storefront" stepKey="commentVerifyMinHeightAndVerticalAlignmentInStorefront"/>
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
-        <actionGroup ref="validateLayoutStylesWithAllUpdatedActionGroup" stepKey="validateAllLayoutStageStorefront">
+        <actionGroup ref="ValidateLayoutStylesWithAllUpdatedActionGroup" stepKey="validateAllLayoutStageStorefront">
             <argument name="page" value="TabOnStorefront"/>
             <argument name="index" value="1"/>
             <argument name="minHeight" value="PageBuilderTabMinimumHeight300Property"/>
@@ -687,40 +687,40 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
         <comment userInput="Add tabs to stage" stepKey="commentAddTabsToStage"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragTabsIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragTabsIntoStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Configure Tab - Vertical Align Bottom -->
         <comment userInput="Configure vertical align bottom" stepKey="commentConfigureVerticalAlignBottom"/>
-        <actionGroup ref="openPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditPanel">
+        <actionGroup ref="OpenPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditPanel">
             <argument name="section" value="TabOnStage"/>
             <argument name="targetIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterMinHeightPropertyTab">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterMinHeightPropertyTab">
             <argument name="property" value="PageBuilderTabMinimumHeight200Property"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterVerticalAlignmentBottomProperty">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterVerticalAlignmentBottomProperty">
             <argument name="property" value="PageBuilderTabVerticalAlignmentPropertyBottom"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettingsTab"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSectionButtons">
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettingsTab"/>
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSectionButtons">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToContainerActionGroup" stepKey="dragButtonToTab">
+        <actionGroup ref="DragContentTypeToContainerActionGroup" stepKey="dragButtonToTab">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
             <argument name="containerTargetType" value="PageBuilderTabsContentType"/>
             <argument name="containerTargetIndex" value="1"/>
@@ -728,7 +728,7 @@
         </actionGroup>
         <!-- Verify Vertical Alignment On Stage - Before Save -->
         <comment userInput="Verify min height and vertical alignment on stage before save" stepKey="commentVerifyMinHeightAndVerticalAlignmentOnStageBeforeSave"/>
-        <actionGroup ref="validateLayoutStylesWithAllUpdatedActionGroup" stepKey="validateAllLayoutStageBeforeSave">
+        <actionGroup ref="ValidateLayoutStylesWithAllUpdatedActionGroup" stepKey="validateAllLayoutStageBeforeSave">
             <argument name="page" value="TabOnStage"/>
             <argument name="index" value="1"/>
             <argument name="minHeight" value="PageBuilderTabMinimumHeight200Property"/>
@@ -737,8 +737,8 @@
         <!-- Verify Vertical Alignment On Stage - After Save -->
         <comment userInput="Verify min height and vertical alignment on stage after save" stepKey="commentVerifyMinHeightAndVerticalAlignmentOnStageAfterSave"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
-        <actionGroup ref="validateLayoutStylesWithAllUpdatedActionGroup" stepKey="validateAllLayoutStageAfterSave">
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="ValidateLayoutStylesWithAllUpdatedActionGroup" stepKey="validateAllLayoutStageAfterSave">
             <argument name="page" value="TabOnStage"/>
             <argument name="index" value="1"/>
             <argument name="minHeight" value="PageBuilderTabMinimumHeight200Property"/>
@@ -746,10 +746,10 @@
         </actionGroup>
         <!-- Verify Min Height and Vertical Alignment In Storefront -->
         <comment userInput="Verify min height and vertical alignment in storefront" stepKey="commentVerifyMinHeightAndVerticalAlignmentInStorefront"/>
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
-        <actionGroup ref="validateLayoutStylesWithAllUpdatedActionGroup" stepKey="validateAllLayoutStageStorefrontTab">
+        <actionGroup ref="ValidateLayoutStylesWithAllUpdatedActionGroup" stepKey="validateAllLayoutStageStorefrontTab">
             <argument name="page" value="TabOnStorefront"/>
             <argument name="index" value="1"/>
             <argument name="minHeight" value="PageBuilderTabMinimumHeight200Property"/>

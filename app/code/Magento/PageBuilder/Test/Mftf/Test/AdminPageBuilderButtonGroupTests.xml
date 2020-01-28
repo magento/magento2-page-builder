@@ -23,39 +23,39 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Add Button Group -->
         <comment userInput="Add Button Group" stepKey="commentAddButtonGroup"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragContentTypeToStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <waitForElementVisible selector="{{ButtonGroupOnStage.base('1')}}" stepKey="waitForButtons"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <!-- Remove Button Group -->
         <comment userInput="Remove Button Group" stepKey="commentRemoveButtonGroup"/>
-        <actionGroup ref="removeEmptyContentTypeFromStageActionGroup" stepKey="removeButtonFromStage">
+        <actionGroup ref="RemoveEmptyContentTypeFromStageActionGroup" stepKey="removeButtonFromStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="confirmRemovalModalActionGroup" stepKey="confirmRemovalModal"/>
+        <actionGroup ref="ConfirmRemovalModalActionGroup" stepKey="confirmRemovalModal"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <dontSeeElementInDOM selector="{{ButtonGroupOnStage.base('1')}}" stepKey="dontSeeButtonsStage"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage2"/>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <dontSeeElementInDOM selector="{{ButtonGroupOnStorefront.base('1')}}" stepKey="dontSeeButtonsStorefront"/>
@@ -75,29 +75,29 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragContentTypeToStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="unFocusOptionMenuActionGroup" stepKey="unFocusOptionMenu">
+        <actionGroup ref="UnFocusOptionMenuActionGroup" stepKey="unFocusOptionMenu">
             <argument name="contentType" value="PageBuilderButtonItemContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Validate Required Fields -->
         <comment userInput="Validate Required Fields" stepKey="commentValidateRequired"/>
         <waitForElementVisible selector="{{EditPanelForm.editFormAllRequiredFields}}" stepKey="waitForRequiredClassInEditForm"/>
         <seeNumberOfElements selector="{{EditPanelForm.editFormAllRequiredFields}}" userInput="1" stepKey="seeNumberOfRequiredElements"/>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <waitForElementVisible time="10" selector="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" stepKey="waitForCmsPageSaveButton"/>
     </test>
     <test name="ButtonGroupDuplicate">
@@ -115,95 +115,95 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragContentTypeToStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="unFocusOptionMenuActionGroup" stepKey="unFocusOptionMenu">
+        <actionGroup ref="UnFocusOptionMenuActionGroup" stepKey="unFocusOptionMenu">
             <argument name="contentType" value="PageBuilderButtonItemContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Fill All Fields -->
         <comment userInput="Fill All Fields" stepKey="commentEdit"/>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAppearance">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterAppearance">
             <argument name="property" value="PageBuilderButtonGroupAppearance_Stacked"/>
         </actionGroup>
-        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneralActionGroup" stepKey="setSameSize">
+        <actionGroup ref="ConditionalClickSlideOutPanelFieldGeneralActionGroup" stepKey="setSameSize">
             <argument name="property" value="PageBuilderButtonGroupSameSize_Enabled"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAlignment">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterAlignment">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelFieldActionGroup" stepKey="enterBorder">
+        <actionGroup ref="SelectSlideOutPanelFieldActionGroup" stepKey="enterBorder">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBorderColor">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBorderColor">
             <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBorderWidth">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBorderWidth">
             <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBorderRadius">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBorderRadius">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterCssClasses">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterCssClasses">
             <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldMarginsActionGroup" stepKey="enterMargins">
+        <actionGroup ref="FillSlideOutPanelFieldMarginsActionGroup" stepKey="enterMargins">
             <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldPaddingActionGroup" stepKey="enterPadding">
+        <actionGroup ref="FillSlideOutPanelFieldPaddingActionGroup" stepKey="enterPadding">
             <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings1"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings1"/>
         <!-- Add Button -->
         <comment userInput="Add Button" stepKey="commentAddButton"/>
-        <actionGroup ref="addChildContentTypeFromOptionMenuActionGroup" stepKey="addChildContentType2">
+        <actionGroup ref="AddChildContentTypeFromOptionMenuActionGroup" stepKey="addChildContentType2">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Edit buttons -->
         <comment userInput="Edit Buttons" stepKey="commentEditButtons"/>
-        <actionGroup ref="openPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditMenuOnStage1">
+        <actionGroup ref="OpenPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditMenuOnStage1">
             <argument name="section" value="ButtonItemOnStage"/>
             <argument name="targetIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="fillButton1TextField">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="fillButton1TextField">
             <argument name="property" value="PageBuilderButtonItemText_First"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelFieldGeneralActionGroup" stepKey="fillButton1TypeField">
+        <actionGroup ref="SelectSlideOutPanelFieldGeneralActionGroup" stepKey="fillButton1TypeField">
             <argument name="property" value="PageBuilderButtonItemType_Secondary"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelLinkUrlFieldActionGroup" stepKey="fillButton1LinkField">
+        <actionGroup ref="FillSlideOutPanelLinkUrlFieldActionGroup" stepKey="fillButton1LinkField">
             <argument name="property" value="PageBuilderButtonItemLink_Secure"/>
             <argument name="selection" value="{{ExternalLink.url}}"/>
             <argument name="newTab" value="PageBuilderButtonItemOpenInNewTab_False"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings2"/>
-        <actionGroup ref="inlineEditButtonActionGroup" stepKey="inlineEditButton2">
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings2"/>
+        <actionGroup ref="InlineEditButtonActionGroup" stepKey="inlineEditButton2">
             <argument name="text" value="PageBuilderButtonItemText_Second"/>
             <argument name="index" value="2"/>
         </actionGroup>
-        <actionGroup ref="hideContentTypeActionGroup" stepKey="hideContentType">
+        <actionGroup ref="HideContentTypeActionGroup" stepKey="hideContentType">
             <argument name="section" value="ButtonGroupOnStage"/>
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unfocusButtonGroup"/>
         <!-- Duplicate and Validate Stage -->
         <comment userInput="Duplicate" stepKey="commentDuplicate"/>
-        <actionGroup ref="duplicateContentTypeActionGroup" stepKey="duplicateContentType">
+        <actionGroup ref="DuplicateContentTypeActionGroup" stepKey="duplicateContentType">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unfocusButtonGroupAfterDuplicate"/>
@@ -213,28 +213,28 @@
         <waitForElementVisible selector="{{ButtonGroupOnStage.hidden('2')}}" stepKey="waitForContentTypeHidden2"/>
         <!-- Show duplicated content type -->
         <comment userInput="Show duplicate content type" stepKey="commentShowContentType"/>
-        <actionGroup ref="showContentTypeActionGroup" stepKey="showContentType">
+        <actionGroup ref="ShowContentTypeActionGroup" stepKey="showContentType">
             <argument name="section" value="ButtonGroupOnStage"/>
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="showContentTypeActionGroup" stepKey="showContentType2">
+        <actionGroup ref="ShowContentTypeActionGroup" stepKey="showContentType2">
             <argument name="section" value="ButtonGroupOnStage"/>
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
             <argument name="targetIndex" value="2"/>
         </actionGroup>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unfocusButtonGroupAfterShow"/>
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <actionGroup ref="validateButtonGroupStackedAppearanceActionGroup" stepKey="seeAppearanceOnStage">
+        <actionGroup ref="ValidateButtonGroupStackedAppearanceActionGroup" stepKey="seeAppearanceOnStage">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
             <argument name="buttonGroupIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="validateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSameSizeStage">
+        <actionGroup ref="ValidateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSameSizeStage">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
             <argument name="buttonGroupIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="validateAdvancedStyleWithAllUpdatedActionGroup" stepKey="validateAllAdvancedStage">
+        <actionGroup ref="ValidateAdvancedStyleWithAllUpdatedActionGroup" stepKey="validateAllAdvancedStage">
             <argument name="page" value="ButtonGroupOnStage"/>
             <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
@@ -247,7 +247,7 @@
             <argument name="index" value="2"/>
         </actionGroup>
         <!-- 1st Button -->
-        <actionGroup ref="validateButtonItemContentActionGroup" stepKey="validateButton2Stage1">
+        <actionGroup ref="ValidateButtonItemContentActionGroup" stepKey="validateButton2Stage1">
             <argument name="page" value="ButtonItemOnStage"/>
             <argument name="text" value="PageBuilderButtonItemText_First"/>
             <argument name="type" value="PageBuilderButtonItemType_Secondary"/>
@@ -256,58 +256,58 @@
             <argument name="index" value="3"/>
         </actionGroup>
         <!-- 2nd Button -->
-        <actionGroup ref="validateButtonItemContentActionGroup" stepKey="validateButton1Stage1">
+        <actionGroup ref="ValidateButtonItemContentActionGroup" stepKey="validateButton1Stage1">
             <argument name="page" value="ButtonItemOnStage"/>
             <argument name="text" value="PageBuilderButtonItemText_Second"/>
             <argument name="index" value="4"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelByIndexActionGroup" stepKey="openEditMenuOnStage2">
+        <actionGroup ref="OpenPageBuilderEditPanelByIndexActionGroup" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
             <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
         <!-- Validate Edit Panel For Duplicate -->
         <comment userInput="Validate Edit Panel For Duplicate" stepKey="commentValidateEdit"/>
-        <actionGroup ref="seeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateStackedAppearance2">
+        <actionGroup ref="SeeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateStackedAppearance2">
             <argument name="property" value="PageBuilderButtonGroupAppearance_Stacked"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsCheckedSlideOutPropertyActionGroup" stepKey="validateButtonSameSize2">
+        <actionGroup ref="SeeOptionIsCheckedSlideOutPropertyActionGroup" stepKey="validateButtonSameSize2">
             <argument name="property" value="PageBuilderButtonGroupSameSize_Enabled"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateAlignment">
+        <actionGroup ref="SeeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateAlignment">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateBorder">
+        <actionGroup ref="SeeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateBorder">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderColor">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderColor">
             <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderWidth">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderWidth">
             <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderRadius">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderRadius">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateCssClasses">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateCssClasses">
             <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
         </actionGroup>
-        <actionGroup ref="seeInMarginFieldsSlideOutPanelActionGroup" stepKey="validateMargins">
+        <actionGroup ref="SeeInMarginFieldsSlideOutPanelActionGroup" stepKey="validateMargins">
             <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
         </actionGroup>
-        <actionGroup ref="seeInPaddingFieldsSlideOutPanelActionGroup" stepKey="validatePadding">
+        <actionGroup ref="SeeInPaddingFieldsSlideOutPanelActionGroup" stepKey="validatePadding">
             <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
-        <actionGroup ref="closeEditPanelSettingsActionGroup" stepKey="closeEditPanel"/>
+        <actionGroup ref="CloseEditPanelSettingsActionGroup" stepKey="closeEditPanel"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
-        <actionGroup ref="validateButtonGroupStackedAppearanceActionGroup" stepKey="seeAppearanceOnStage2">
+        <actionGroup ref="ValidateButtonGroupStackedAppearanceActionGroup" stepKey="seeAppearanceOnStage2">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
             <argument name="buttonGroupIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="validateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSameSizeStage2">
+        <actionGroup ref="ValidateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSameSizeStage2">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
             <argument name="buttonGroupIndex" value="2"/>
@@ -316,7 +316,7 @@
         <comment userInput="Validate content type is enabled after save" stepKey="commentValidateShownOnStage"/>
         <waitForElementVisible selector="{{ButtonGroupOnStage.notHidden('1')}}" stepKey="waitForContentTypeShown1"/>
         <waitForElementVisible selector="{{ButtonGroupOnStage.notHidden('2')}}" stepKey="waitForContentTypeShown2"/>
-        <actionGroup ref="validateAdvancedStyleWithAllUpdatedActionGroup" stepKey="validateAllAdvancedStage2">
+        <actionGroup ref="ValidateAdvancedStyleWithAllUpdatedActionGroup" stepKey="validateAllAdvancedStage2">
             <argument name="page" value="ButtonGroupOnStage"/>
             <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
@@ -329,7 +329,7 @@
             <argument name="index" value="2"/>
         </actionGroup>
         <!-- 1st Button -->
-        <actionGroup ref="validateButtonItemContentActionGroup" stepKey="validateButton2Stage2">
+        <actionGroup ref="ValidateButtonItemContentActionGroup" stepKey="validateButton2Stage2">
             <argument name="page" value="ButtonItemOnStage"/>
             <argument name="text" value="PageBuilderButtonItemText_First"/>
             <argument name="type" value="PageBuilderButtonItemType_Secondary"/>
@@ -338,31 +338,31 @@
             <argument name="index" value="3"/>
         </actionGroup>
         <!-- 2nd Button -->
-        <actionGroup ref="validateButtonItemContentActionGroup" stepKey="validateButton1Stage2">
+        <actionGroup ref="ValidateButtonItemContentActionGroup" stepKey="validateButton1Stage2">
             <argument name="page" value="ButtonItemOnStage"/>
             <argument name="text" value="PageBuilderButtonItemText_Second"/>
             <argument name="index" value="4"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Validate content type is enabled in Storefront -->
         <comment userInput="Validate content type is enabled in Storefront" stepKey="commentValidateShownStorefront"/>
         <waitForElementVisible selector="{{ButtonGroupOnStorefront.notHidden('1')}}" stepKey="waitForContentTypeShownStorefront1"/>
         <waitForElementVisible selector="{{ButtonGroupOnStorefront.notHidden('2')}}" stepKey="waitForContentTypeShownStorefront2"/>
-        <actionGroup ref="validateButtonGroupStackedAppearanceActionGroup" stepKey="seeAppearanceOnStorefront">
+        <actionGroup ref="ValidateButtonGroupStackedAppearanceActionGroup" stepKey="seeAppearanceOnStorefront">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
             <argument name="buttonGroupIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="validateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSameSizeStorefront">
+        <actionGroup ref="ValidateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSameSizeStorefront">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
             <argument name="buttonGroupIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="validateAdvancedStyleWithAllUpdatedActionGroup" stepKey="validateAllAdvancedStorefront">
+        <actionGroup ref="ValidateAdvancedStyleWithAllUpdatedActionGroup" stepKey="validateAllAdvancedStorefront">
             <argument name="page" value="ButtonGroupOnStorefront"/>
             <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
@@ -375,7 +375,7 @@
             <argument name="index" value="2"/>
         </actionGroup>
         <!-- 1st Button -->
-        <actionGroup ref="validateButtonItemContentActionGroup" stepKey="validateButton1Storefront">
+        <actionGroup ref="ValidateButtonItemContentActionGroup" stepKey="validateButton1Storefront">
             <argument name="page" value="ButtonItemOnStorefront"/>
             <argument name="text" value="PageBuilderButtonItemText_First"/>
             <argument name="type" value="PageBuilderButtonItemType_Secondary"/>
@@ -384,7 +384,7 @@
             <argument name="index" value="3"/>
         </actionGroup>
         <!-- 2nd Button -->
-        <actionGroup ref="validateButtonItemContentActionGroup" stepKey="validateButton2Storefront">
+        <actionGroup ref="ValidateButtonItemContentActionGroup" stepKey="validateButton2Storefront">
             <argument name="page" value="ButtonItemOnStorefrontEmptyLink"/>
             <argument name="text" value="PageBuilderButtonItemText_Second"/>
             <argument name="index" value="4"/>
@@ -405,59 +405,59 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Add Button Group -->
         <comment userInput="Add Button Group" stepKey="commentAddButtonGroup"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragButtonsOntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragButtonsOntoStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="unFocusOptionMenuActionGroup" stepKey="unFocusOptionMenu">
+        <actionGroup ref="UnFocusOptionMenuActionGroup" stepKey="unFocusOptionMenu">
             <argument name="contentType" value="PageBuilderButtonItemContentType"/>
         </actionGroup>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage1">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage1">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateAlignment">
+        <actionGroup ref="SeeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateAlignment">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateBorder">
+        <actionGroup ref="SeeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateBorder">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderColor">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderColor">
             <argument name="property" value="PageBuilderAdvancedBorderColorProperty_Empty"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderWidth">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderWidth">
             <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderRadius">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderRadius">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateCssClasses">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateCssClasses">
             <argument name="property" value="PageBuilderAdvancedCssClassesProperty_Empty"/>
         </actionGroup>
-        <actionGroup ref="seeInMarginFieldsSlideOutPanelActionGroup" stepKey="validateMargins">
+        <actionGroup ref="SeeInMarginFieldsSlideOutPanelActionGroup" stepKey="validateMargins">
             <argument name="property" value="PageBuilderMarginsPropertyDefault"/>
         </actionGroup>
-        <actionGroup ref="seeInPaddingFieldsSlideOutPanelActionGroup" stepKey="validatePadding">
+        <actionGroup ref="SeeInPaddingFieldsSlideOutPanelActionGroup" stepKey="validatePadding">
             <argument name="property" value="PageBuilderPaddingPropertyButtons"/>
         </actionGroup>
-        <actionGroup ref="closeEditPanelSettingsActionGroup" stepKey="closeEditPanelSettings2"/>
+        <actionGroup ref="CloseEditPanelSettingsActionGroup" stepKey="closeEditPanelSettings2"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <actionGroup ref="validateAdvancedStyleWithNoAlignmentActionGroup" stepKey="validateStage">
+        <actionGroup ref="ValidateAdvancedStyleWithNoAlignmentActionGroup" stepKey="validateStage">
             <argument name="page" value="ButtonGroupOnStage"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyNone"/>
             <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
@@ -467,10 +467,10 @@
             <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
-        <actionGroup ref="validateAdvancedStyleWithNoAlignmentActionGroup" stepKey="validateStage2">
+        <actionGroup ref="ValidateAdvancedStyleWithNoAlignmentActionGroup" stepKey="validateStage2">
             <argument name="page" value="ButtonGroupOnStage"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyNone"/>
             <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
@@ -481,10 +481,10 @@
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="validateAdvancedStyleWithNoAlignmentActionGroup" stepKey="validateStorefront">
+        <actionGroup ref="ValidateAdvancedStyleWithNoAlignmentActionGroup" stepKey="validateStorefront">
             <argument name="page" value="ButtonGroupOnStorefront"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyNone"/>
             <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
@@ -509,59 +509,59 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Add Button Group -->
         <comment userInput="Add Button Group" stepKey="commentAddButtonGroup"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragContentTypeToStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="unFocusOptionMenuActionGroup" stepKey="unFocusOptionMenu">
+        <actionGroup ref="UnFocusOptionMenuActionGroup" stepKey="unFocusOptionMenu">
             <argument name="contentType" value="PageBuilderButtonItemContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage1">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage1">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Update Values -->
         <comment userInput="Update Values" stepKey="commentUpdateValues"/>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAlignment">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterAlignment">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelFieldActionGroup" stepKey="enterBorder">
+        <actionGroup ref="SelectSlideOutPanelFieldActionGroup" stepKey="enterBorder">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBorderColor">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBorderColor">
             <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBorderWidth">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBorderWidth">
             <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBorderRadius">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBorderRadius">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterCssClasses">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterCssClasses">
             <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldMarginsActionGroup" stepKey="enterMargins">
+        <actionGroup ref="FillSlideOutPanelFieldMarginsActionGroup" stepKey="enterMargins">
             <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldPaddingActionGroup" stepKey="enterPadding">
+        <actionGroup ref="FillSlideOutPanelFieldPaddingActionGroup" stepKey="enterPadding">
             <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <actionGroup ref="validateAdvancedStyleWithAllUpdatedActionGroup" stepKey="validateAllAdvancedStage">
+        <actionGroup ref="ValidateAdvancedStyleWithAllUpdatedActionGroup" stepKey="validateAllAdvancedStage">
             <argument name="page" value="ButtonGroupOnStage"/>
             <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
@@ -575,39 +575,39 @@
         </actionGroup>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage2">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateAlignment">
+        <actionGroup ref="SeeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateAlignment">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateBorder">
+        <actionGroup ref="SeeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateBorder">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderColor">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderColor">
             <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderWidth">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderWidth">
             <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderRadius">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderRadius">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateCssClasses">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateCssClasses">
             <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
         </actionGroup>
-        <actionGroup ref="seeInMarginFieldsSlideOutPanelActionGroup" stepKey="validateMargins">
+        <actionGroup ref="SeeInMarginFieldsSlideOutPanelActionGroup" stepKey="validateMargins">
             <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
         </actionGroup>
-        <actionGroup ref="seeInPaddingFieldsSlideOutPanelActionGroup" stepKey="validatePadding">
+        <actionGroup ref="SeeInPaddingFieldsSlideOutPanelActionGroup" stepKey="validatePadding">
             <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
-        <actionGroup ref="closeEditPanelSettingsActionGroup" stepKey="closeEditPanelSettings"/>
+        <actionGroup ref="CloseEditPanelSettingsActionGroup" stepKey="closeEditPanelSettings"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
-        <actionGroup ref="validateAdvancedStyleWithAllUpdatedActionGroup" stepKey="validateAllAdvancedStage2">
+        <actionGroup ref="ValidateAdvancedStyleWithAllUpdatedActionGroup" stepKey="validateAllAdvancedStage2">
             <argument name="page" value="ButtonGroupOnStage"/>
             <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
@@ -621,10 +621,10 @@
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="validateAdvancedStyleWithAllUpdatedActionGroup" stepKey="validateAllAdvancedStorefront">
+        <actionGroup ref="ValidateAdvancedStyleWithAllUpdatedActionGroup" stepKey="validateAllAdvancedStorefront">
             <argument name="page" value="ButtonGroupOnStorefront"/>
             <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
@@ -652,18 +652,18 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
         <!-- Add Button Group -->
         <comment userInput="Add Button Group" stepKey="commentAddButtonGroup"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragButtonsOntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragButtonsOntoStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Validate Don't See Old Add Button -->
@@ -689,16 +689,16 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionElements">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionElements">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="cannotDragContentTypeToTargetActionGroup" stepKey="dragButtonsIntoStage">
+        <actionGroup ref="CannotDragContentTypeToTargetActionGroup" stepKey="dragButtonsIntoStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
             <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
         </actionGroup>
@@ -721,41 +721,41 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <!-- Add Buttons to Stage -->
         <comment userInput="Add Buttons to Stage" stepKey="addButtonsToStage"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToContainerActionGroup" stepKey="dragButtonsOntoColumn">
+        <actionGroup ref="DragContentTypeToContainerActionGroup" stepKey="dragButtonsOntoColumn">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="2" />
         </actionGroup>
         <!-- Validate Stage -->
         <comment userInput="User sees Buttons displayed in column on Stage" stepKey="confirmButtonsOnStage"/>
-        <actionGroup ref="validateContentTypeInsideContainerStageActionGroup" stepKey="checkContentTypeInContainerStage">
+        <actionGroup ref="ValidateContentTypeInsideContainerStageActionGroup" stepKey="checkContentTypeInContainerStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="contentTypeIndex" value="1"/>
             <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage2"/>
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage2"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate stage after save" stepKey="validateButtonsOnStage"/>
-        <actionGroup ref="validateContentTypeInsideContainerStageActionGroup" stepKey="checkContentTypeInContainerStage2">
+        <actionGroup ref="ValidateContentTypeInsideContainerStageActionGroup" stepKey="checkContentTypeInContainerStage2">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="contentTypeIndex" value="1"/>
@@ -763,10 +763,10 @@
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="View Buttons inside column on storefront" stepKey="viewButtonsOnStorefront"/>
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="validateContentTypeInsideContainerStorefrontActionGroup" stepKey="checkContentTypeInContainerStorefront">
+        <actionGroup ref="ValidateContentTypeInsideContainerStorefrontActionGroup" stepKey="checkContentTypeInContainerStorefront">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="contentTypeIndex" value="1"/>
@@ -788,82 +788,82 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Add Button Group -->
         <comment userInput="Add Button Group" stepKey="commentAddButtonGroup"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragContentTypeToStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="inlineEditButtonActionGroup" stepKey="inlineEditButton1">
+        <actionGroup ref="InlineEditButtonActionGroup" stepKey="inlineEditButton1">
             <argument name="text" value="PageBuilderButtonItemText_First"/>
         </actionGroup>
-        <actionGroup ref="addChildContentTypeFromOptionMenuActionGroup" stepKey="addChildContentType">
+        <actionGroup ref="AddChildContentTypeFromOptionMenuActionGroup" stepKey="addChildContentType">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="inlineEditButtonActionGroup" stepKey="inlineEditButton2">
+        <actionGroup ref="InlineEditButtonActionGroup" stepKey="inlineEditButton2">
             <argument name="text" value="PageBuilderButtonItemText_Second"/>
             <argument name="index" value="2"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage1">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage1">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Update Appearance Section -->
         <comment userInput="Update Appearance Section" stepKey="commentUpdateAppearance"/>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAppearance">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterAppearance">
             <argument name="property" value="PageBuilderButtonGroupAppearance_Stacked"/>
         </actionGroup>
-        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneralActionGroup" stepKey="setSameSize">
+        <actionGroup ref="ConditionalClickSlideOutPanelFieldGeneralActionGroup" stepKey="setSameSize">
             <argument name="property" value="PageBuilderButtonGroupSameSize_Enabled"/>
         </actionGroup>
         <!-- Update Advanced Section -->
         <comment userInput="Update Advanced Section" stepKey="commentUpdateAdvanced"/>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAlignment">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterAlignment">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelFieldActionGroup" stepKey="enterBorder">
+        <actionGroup ref="SelectSlideOutPanelFieldActionGroup" stepKey="enterBorder">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBorderColor">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBorderColor">
             <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBorderWidth">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBorderWidth">
             <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBorderRadius">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBorderRadius">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterCssClasses">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterCssClasses">
             <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldMarginsActionGroup" stepKey="enterMargins">
+        <actionGroup ref="FillSlideOutPanelFieldMarginsActionGroup" stepKey="enterMargins">
             <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldPaddingActionGroup" stepKey="enterPadding">
+        <actionGroup ref="FillSlideOutPanelFieldPaddingActionGroup" stepKey="enterPadding">
             <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <actionGroup ref="validateButtonGroupStackedAppearanceActionGroup" stepKey="seeAppearanceOnStage">
+        <actionGroup ref="ValidateButtonGroupStackedAppearanceActionGroup" stepKey="seeAppearanceOnStage">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
         </actionGroup>
-        <actionGroup ref="validateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSameSizeStage">
+        <actionGroup ref="ValidateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSameSizeStage">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
         </actionGroup>
-        <actionGroup ref="validateAdvancedStyleWithAllUpdatedActionGroup" stepKey="validateAllAdvancedStage">
+        <actionGroup ref="ValidateAdvancedStyleWithAllUpdatedActionGroup" stepKey="validateAllAdvancedStage">
             <argument name="page" value="ButtonGroupOnStage"/>
             <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
@@ -877,53 +877,53 @@
         </actionGroup>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage2">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateStackedAppearance">
+        <actionGroup ref="SeeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateStackedAppearance">
             <argument name="property" value="PageBuilderButtonGroupAppearance_Stacked"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsCheckedSlideOutPropertyActionGroup" stepKey="validateButtonSameSize">
+        <actionGroup ref="SeeOptionIsCheckedSlideOutPropertyActionGroup" stepKey="validateButtonSameSize">
             <argument name="property" value="PageBuilderButtonGroupSameSize_Enabled"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateAlignment">
+        <actionGroup ref="SeeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateAlignment">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateBorder">
+        <actionGroup ref="SeeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateBorder">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderColor">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderColor">
             <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderWidth">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderWidth">
             <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderRadius">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderRadius">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateCssClasses">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateCssClasses">
             <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
         </actionGroup>
-        <actionGroup ref="seeInMarginFieldsSlideOutPanelActionGroup" stepKey="validateMargins">
+        <actionGroup ref="SeeInMarginFieldsSlideOutPanelActionGroup" stepKey="validateMargins">
             <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
         </actionGroup>
-        <actionGroup ref="seeInPaddingFieldsSlideOutPanelActionGroup" stepKey="validatePadding">
+        <actionGroup ref="SeeInPaddingFieldsSlideOutPanelActionGroup" stepKey="validatePadding">
             <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
-        <actionGroup ref="closeEditPanelSettingsActionGroup" stepKey="closeEditPanelSettings"/>
+        <actionGroup ref="CloseEditPanelSettingsActionGroup" stepKey="closeEditPanelSettings"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
-        <actionGroup ref="validateButtonGroupStackedAppearanceActionGroup" stepKey="seeAppearanceOnStage2">
+        <actionGroup ref="ValidateButtonGroupStackedAppearanceActionGroup" stepKey="seeAppearanceOnStage2">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
         </actionGroup>
-        <actionGroup ref="validateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSameSizeStage2">
+        <actionGroup ref="ValidateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSameSizeStage2">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
         </actionGroup>
-        <actionGroup ref="validateAdvancedStyleWithAllUpdatedActionGroup" stepKey="validateAllAdvancedStage2">
+        <actionGroup ref="ValidateAdvancedStyleWithAllUpdatedActionGroup" stepKey="validateAllAdvancedStage2">
             <argument name="page" value="ButtonGroupOnStage"/>
             <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
@@ -937,18 +937,18 @@
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="validateButtonGroupStackedAppearanceActionGroup" stepKey="seeAppearanceOnStorefront">
+        <actionGroup ref="ValidateButtonGroupStackedAppearanceActionGroup" stepKey="seeAppearanceOnStorefront">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
-        <actionGroup ref="validateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSameSizeStorefront">
+        <actionGroup ref="ValidateButtonItemsSameSizeActionGroup" stepKey="validateButtonsSameSizeStorefront">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
-        <actionGroup ref="validateAdvancedStyleWithAllUpdatedActionGroup" stepKey="validateAllAdvancedStorefront">
+        <actionGroup ref="ValidateAdvancedStyleWithAllUpdatedActionGroup" stepKey="validateAllAdvancedStorefront">
             <argument name="page" value="ButtonGroupOnStorefront"/>
             <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
@@ -977,24 +977,24 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Add Buttons to Stage -->
         <comment userInput="Add Buttons to Stage" stepKey="commentAddButtonsToStage"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragContentTypeToStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="inlineEditButtonActionGroup" stepKey="inlineEditButton">
+        <actionGroup ref="InlineEditButtonActionGroup" stepKey="inlineEditButton">
             <argument name="text" value="PageBuilderButtonItemText_First"/>
             <argument name="index" value="1"/>
         </actionGroup>
@@ -1004,11 +1004,11 @@
         <!-- Stage: Validate Default Show/Hide State - After Save -->
         <comment userInput="Stage: Validate Default Show/Hide State - After Save" stepKey="commentValidateDefaultShowHideStateOnStageAfterSave"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <seeElement selector="{{ButtonGroupOnStage.notHidden('1')}}" stepKey="seeContentTypeNotHiddenStageAfterSave"/>
         <!-- Storefront: Validate Default Show/Hide State -->
         <comment userInput="Storefront: Validate Default Show/Hide State" stepKey="commentValidateDefaultShowHideStateOnStorefront"/>
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <seeElement selector="{{ButtonGroupOnStorefront.notHidden('1')}}" stepKey="seeContentTypeNotHiddenStorefront"/>
@@ -1029,39 +1029,39 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
             <closeTab stepKey="closeOpenedTab" />
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionAddContent">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionAddContent">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragButtonsIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragButtonsIntoStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="addChildContentTypeFromOptionMenuActionGroup" stepKey="addChildContentType">
+        <actionGroup ref="AddChildContentTypeFromOptionMenuActionGroup" stepKey="addChildContentType">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="inlineEditButtonActionGroup" stepKey="inlineEditButton1">
+        <actionGroup ref="InlineEditButtonActionGroup" stepKey="inlineEditButton1">
             <argument name="text" value="PageBuilderButtonItemText_First"/>
             <argument name="index" value="1"/>
         </actionGroup>
-        <actionGroup ref="inlineEditButtonActionGroup" stepKey="inlineEditButton2">
+        <actionGroup ref="InlineEditButtonActionGroup" stepKey="inlineEditButton2">
             <argument name="text" value="PageBuilderButtonItemText_Second"/>
             <argument name="index" value="2"/>
         </actionGroup>
-        <actionGroup ref="hideContentTypeActionGroup" stepKey="hideContentType">
+        <actionGroup ref="HideContentTypeActionGroup" stepKey="hideContentType">
             <argument name="section" value="ButtonGroupOnStage"/>
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage1"/>
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage1"/>
         <!-- Validate content type remains disabled after save -->
         <comment userInput="Validate content type remains disabled after save" stepKey="commentValidateHiddenStage"/>
         <seeElement selector="{{ButtonGroupOnStage.hidden('1')}}" stepKey="waitForContentTypeHidden" />
@@ -1075,7 +1075,7 @@
         <!-- Validate store front -->
         <comment userInput="Validate content type is disabled on storefront" stepKey="commentValidateHiddenStorefront"/>
         <openNewTab stepKey="openNewTab" />
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <waitForElement selector="{{ButtonGroupOnStorefront.base('1')}}" stepKey="waitForContentTypeNotVisible" />
@@ -1089,8 +1089,8 @@
         <switchToNextTab stepKey="switchBackToAdmin" />
         <reloadPage stepKey="reloadPage" />
         <waitForPageLoad stepKey="waitForAdminReload" />
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
-        <actionGroup ref="showContentTypeActionGroup" stepKey="showContentType">
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="ShowContentTypeActionGroup" stepKey="showContentType">
             <argument name="section" value="ButtonGroupOnStage"/>
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
@@ -1119,18 +1119,18 @@
             <group value="pagebuilder-buttonItem"/>
             <group value="pagebuilder-hideShow"/>
         </annotations>
-        <actionGroup ref="unFocusOptionMenuActionGroup" stepKey="unFocusOptionMenu" after="dragButtonsIntoStage">
+        <actionGroup ref="UnFocusOptionMenuActionGroup" stepKey="unFocusOptionMenu" after="dragButtonsIntoStage">
             <argument name="contentType" value="PageBuilderButtonItemContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage" after="unFocusOptionMenu">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage" after="unFocusOptionMenu">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Select Stacked Appearance -->
         <comment userInput="Select Stacked Appearances" stepKey="commentSelectStackedAppearance" after="openEditMenuOnStage"/>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAppearance" after="commentSelectStackedAppearance">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterAppearance" after="commentSelectStackedAppearance">
             <argument name="property" value="PageBuilderButtonGroupAppearance_Stacked"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings1" after="enterAppearance"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings1" after="enterAppearance"/>
     </test>
     <test name="ButtonGroupOnDifferentLineWhenInFullWidthRow">
         <annotations>
@@ -1152,36 +1152,36 @@
             <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
                 <argument name="CMSPage" value="$$createCMSPage$$"/>
             </actionGroup>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStagePage"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStagePage"/>
         </before>
         <after>
             <deleteData createDataKey="createCMSPage" stepKey="deleteCreatedCategory"/>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
         <!-- Change row appearance to full-width -->
         <comment userInput="Change row appearance to full-width" stepKey="commentChangeRowAppearance"/>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openRowEditMenuOnStage">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openRowEditMenuOnStage">
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAppearanceRow">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterAppearanceRow">
             <argument name="property" value="PageBuilderRowAppearance_FullWidth"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettingsRow"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettingsRow"/>
         <!-- Add button groups to row -->
         <comment userInput="Add button groups to row" stepKey="commentAddButtonGroupsToRow"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSectionButtons">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSectionButtons">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragButtonsContentTypeToStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragButtonsContentTypeToStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="unFocusOptionMenuActionGroup" stepKey="unFocusOptionMenuButtons">
+        <actionGroup ref="UnFocusOptionMenuActionGroup" stepKey="unFocusOptionMenuButtons">
             <argument name="contentType" value="PageBuilderButtonItemContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragContentTypeToStage2Buttons">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragContentTypeToStage2Buttons">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="unFocusOptionMenuActionGroup" stepKey="unFocusOptionMenu2Buttons">
+        <actionGroup ref="UnFocusOptionMenuActionGroup" stepKey="unFocusOptionMenu2Buttons">
             <argument name="contentType" value="PageBuilderButtonItemContentType"/>
         </actionGroup>
         <!-- Validate Stage -->

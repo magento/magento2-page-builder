@@ -8,7 +8,7 @@
 
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
-    <actionGroup name="attachFileSlideOutPropertyActionGroup">
+    <actionGroup name="AttachFileSlideOutPropertyActionGroup">
         <annotations>
             <description>Uploads the provided Image to the wysiwyg directory in the Media Gallery from Page Builder's slide out edit form for a content type.
                 If you use this action group, you MUST add steps to delete the image in the "after" steps. </description>
@@ -20,7 +20,7 @@
         <waitForLoadingMaskToDisappear stepKey="waitForLoading"/>
         <waitForElementVisible selector="{{EditPanelForm.backgroundImagePreview}}" stepKey="waitForImageUpload"/>
     </actionGroup>
-    <actionGroup name="attachFileSlideOutPropertyGeneralActionGroup">
+    <actionGroup name="AttachFileSlideOutPropertyGeneralActionGroup">
         <annotations>
             <description>Uploads the provided Image to the wysiwyg directory in the Media Gallery from Page Builder's slide out edit form for a content type.
                 If you use this action group, you MUST add steps to delete the image in the "after" steps. </description>
@@ -33,7 +33,7 @@
         <waitForLoadingMaskToDisappear stepKey="waitForLoading"/>
         <waitForElementVisible time="10" selector="{{EditPanelForm.editFormUploadedImage(property.section, property.fieldName)}}" stepKey="waitForImageUploaded"/>
     </actionGroup>
-    <actionGroup name="attachInvalidFileOnSlideOutActionGroup">
+    <actionGroup name="AttachInvalidFileOnSlideOutActionGroup">
         <arguments>
             <argument name="property"/>
         </arguments>
@@ -46,7 +46,7 @@
         <waitForElementNotVisible selector="{{EditPanelForm.invalidUploadTitle}}" stepKey="waitForModalGone"/>
         <dontSeeElementInDOM selector="{{EditPanelForm.backgroundImagePreview}}" stepKey="dontSeeImage"/>
     </actionGroup>
-    <actionGroup name="clickSelectFromGallerySlideOutActionGroup">
+    <actionGroup name="ClickSelectFromGallerySlideOutActionGroup">
         <arguments>
             <argument name="property"/>
         </arguments>
@@ -55,14 +55,14 @@
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
     </actionGroup>
-    <actionGroup name="seeImageUploadedOnSlideOutActionGroup">
+    <actionGroup name="SeeImageUploadedOnSlideOutActionGroup">
         <arguments>
             <argument name="property"/>
         </arguments>
         <waitForElement selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElement" />
         <waitForElementVisible selector="{{EditPanelForm.editFormUploadedImageSource(property.section, property.fieldName, property.fileName, property.extension)}}" stepKey="seeUploadedFile"/>
     </actionGroup>
-    <actionGroup name="seeNoImageUploadedOnSlideOutActionGroup">
+    <actionGroup name="SeeNoImageUploadedOnSlideOutActionGroup">
         <arguments>
             <argument name="property"/>
         </arguments>

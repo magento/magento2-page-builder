@@ -28,114 +28,114 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setEmptyGoogleMapsAPIKey"/>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionMedia">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionMedia">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragTextIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragTextIntoStage">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditAfterDrop">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditAfterDrop">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <!-- Add 1st Location: Common Characters -->
         <comment userInput="Add 1st Location: Common Characters" stepKey="commentAddLocation1"/>
-        <actionGroup ref="clickAddLocationButtonActionGroup" stepKey="clickAddLocationButton1"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLatitude1">
+        <actionGroup ref="ClickAddLocationButtonActionGroup" stepKey="clickAddLocationButton1"/>
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLatitude1">
             <argument name="property" value="PageBuilderMapLatitude_Positive39_74"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLongitude1">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLongitude1">
             <argument name="property" value="PageBuilderMapLongitude_Positive9_67"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLocationName1">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLocationName1">
             <argument name="property" value="PageBuilderMapLocationName_CommonCharacters"/>
         </actionGroup>
-        <actionGroup ref="saveLocationFormActionGroup" stepKey="saveLocationForm1"/>
-        <actionGroup ref="validateLocationGridDataActionGroup" stepKey="validateLocation1GridData1">
+        <actionGroup ref="SaveLocationFormActionGroup" stepKey="saveLocationForm1"/>
+        <actionGroup ref="ValidateLocationGridDataActionGroup" stepKey="validateLocation1GridData1">
             <argument name="locationName" value="PageBuilderMapLocationName_CommonCharacters"/>
         </actionGroup>
         <!-- Add 2nd Location: Special Characters -->
         <comment userInput="Add 2nd Location: Special Characters" stepKey="commentAddLocation2"/>
-        <actionGroup ref="clickAddLocationButtonActionGroup" stepKey="clickAddLocationButton2"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLatitude2">
+        <actionGroup ref="ClickAddLocationButtonActionGroup" stepKey="clickAddLocationButton2"/>
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLatitude2">
             <argument name="property" value="PageBuilderMapLatitude_Negative74_69"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLongitude2">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLongitude2">
             <argument name="property" value="PageBuilderMapLongitude_Negative104_99"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLocationName2">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLocationName2">
             <argument name="property" value="PageBuilderMapLocationName_SpecialCharacters"/>
         </actionGroup>
-        <actionGroup ref="saveLocationFormActionGroup" stepKey="saveLocationForm2"/>
-        <actionGroup ref="validateLocationGridDataActionGroup" stepKey="validateLocation2GridData1">
+        <actionGroup ref="SaveLocationFormActionGroup" stepKey="saveLocationForm2"/>
+        <actionGroup ref="ValidateLocationGridDataActionGroup" stepKey="validateLocation2GridData1">
             <argument name="locationName" value="PageBuilderMapLocationName_SpecialCharacters"/>
             <argument name="rowIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <!-- Save Page and Set Valid API Key -->
         <comment userInput="Save Page and Set Valid API Key" stepKey="commentSavePageAndSetKey"/>
         <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key {{googleMapsAPIKey.valid}}" stepKey="setValidGoogleMapsAPIKey"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage1"/>
-        <actionGroup ref="openMapPinTooltipWindowActionGroup" stepKey="openMapPin1TooltipWindowStage1"/>
+        <actionGroup ref="OpenMapPinTooltipWindowActionGroup" stepKey="openMapPin1TooltipWindowStage1"/>
         <seeElement selector="{{MapOnStage.locationName('1', PageBuilderMapLocationName_CommonCharacters.value)}}" stepKey="seeLocation1NameStage1"/>
-        <actionGroup ref="closeMapPinTooltipWindowActionGroup" stepKey="closeMapPin1TooltipWindowStage1"/>
-        <actionGroup ref="openMapPinTooltipWindowActionGroup" stepKey="openMapPin2TooltipWindowStage1">
+        <actionGroup ref="CloseMapPinTooltipWindowActionGroup" stepKey="closeMapPin1TooltipWindowStage1"/>
+        <actionGroup ref="OpenMapPinTooltipWindowActionGroup" stepKey="openMapPin2TooltipWindowStage1">
             <argument name="pinIndex" value="2"/>
         </actionGroup>
         <seeElement selector="{{MapOnStage.locationName('1', PageBuilderMapLocationName_SpecialCharacters.value)}}" stepKey="seeLocationName2Stage1"/>
-        <actionGroup ref="closeMapPinTooltipWindowActionGroup" stepKey="closeMapPin2TooltipWindowStage1">
+        <actionGroup ref="CloseMapPinTooltipWindowActionGroup" stepKey="closeMapPin2TooltipWindowStage1">
             <argument name="pinIndex" value="2"/>
         </actionGroup>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="validateLocationGridDataActionGroup" stepKey="validateLocation1GridData2">
+        <actionGroup ref="ValidateLocationGridDataActionGroup" stepKey="validateLocation1GridData2">
             <argument name="locationName" value="PageBuilderMapLocationName_CommonCharacters"/>
         </actionGroup>
-        <actionGroup ref="validateLocationGridDataActionGroup" stepKey="validateLocation2GridData2">
+        <actionGroup ref="ValidateLocationGridDataActionGroup" stepKey="validateLocation2GridData2">
             <argument name="locationName" value="PageBuilderMapLocationName_SpecialCharacters"/>
             <argument name="rowIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="clickLocationGridRowActionGroup" stepKey="clickLocationGridRow1">
+        <actionGroup ref="ClickLocationGridRowActionGroup" stepKey="clickLocationGridRow1">
             <argument name="locationName" value="PageBuilderMapLocationName_CommonCharacters"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateEditPanelField1">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateEditPanelField1">
             <argument name="property" value="PageBuilderMapLocationName_CommonCharacters"/>
         </actionGroup>
-        <actionGroup ref="closeLocationFormActionGroup" stepKey="closeLocationForm1"/>
-        <actionGroup ref="clickLocationGridRowActionGroup" stepKey="clickLocationGridRow2">
+        <actionGroup ref="CloseLocationFormActionGroup" stepKey="closeLocationForm1"/>
+        <actionGroup ref="ClickLocationGridRowActionGroup" stepKey="clickLocationGridRow2">
             <argument name="locationName" value="PageBuilderMapLocationName_SpecialCharacters"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateEditPanelField2">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateEditPanelField2">
             <argument name="property" value="PageBuilderMapLocationName_SpecialCharacters"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="openMapPinTooltipWindowActionGroup" stepKey="openMapPin1TooltipWindowStorefront">
+        <actionGroup ref="OpenMapPinTooltipWindowActionGroup" stepKey="openMapPin1TooltipWindowStorefront">
             <argument name="page" value="MapOnStorefront"/>
         </actionGroup>
         <seeElement selector="{{MapOnStorefront.locationName('1', PageBuilderMapLocationName_CommonCharacters.value)}}" stepKey="seeLocationName1Storefront"/>
-        <actionGroup ref="closeMapPinTooltipWindowActionGroup" stepKey="closeMapPin1TooltipWindowStorefront">
+        <actionGroup ref="CloseMapPinTooltipWindowActionGroup" stepKey="closeMapPin1TooltipWindowStorefront">
             <argument name="page" value="MapOnStorefront"/>
         </actionGroup>
-        <actionGroup ref="openMapPinTooltipWindowActionGroup" stepKey="openMapPin2TooltipWindowStorefront">
+        <actionGroup ref="OpenMapPinTooltipWindowActionGroup" stepKey="openMapPin2TooltipWindowStorefront">
             <argument name="page" value="MapOnStorefront"/>
             <argument name="pinIndex" value="2"/>
         </actionGroup>
@@ -157,55 +157,55 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionMedia">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionMedia">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragTextIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragTextIntoStage">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditAfterDrop">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditAfterDrop">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <!-- Add Location -->
         <comment userInput="Add Location" stepKey="commentAddLocation"/>
-        <actionGroup ref="clickAddLocationButtonActionGroup" stepKey="clickAddLocationButton"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLatitude">
+        <actionGroup ref="ClickAddLocationButtonActionGroup" stepKey="clickAddLocationButton"/>
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLatitude">
             <argument name="property" value="PageBuilderMapLatitude_Positive39_74"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLongitude">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLongitude">
             <argument name="property" value="PageBuilderMapLongitude_Positive9_67"/>
         </actionGroup>
         <!-- Location Name: Empty -->
         <comment userInput="Location Name: Empty" stepKey="commentLocationNameEmpty"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLocationNameEmpty">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLocationNameEmpty">
             <argument name="property" value="PageBuilderMapLocationName_Empty"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSectionActionGroup" stepKey="validateErrorEmpty">
+        <actionGroup ref="SaveEditPanelAndValidateFieldErrorGeneralSectionActionGroup" stepKey="validateErrorEmpty">
             <argument name="form" value="AddLocationForm"/>
             <argument name="property" value="PageBuilderMapLocationName_Empty"/>
         </actionGroup>
         <!-- Location Name: Space -->
         <comment userInput="Location Name: Space" stepKey="commentLocationNameSpace"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLocationNameSpace">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLocationNameSpace">
             <argument name="property" value="PageBuilderMapLocationName_Space"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSectionActionGroup" stepKey="validateErrorSpace">
+        <actionGroup ref="SaveEditPanelAndValidateFieldErrorGeneralSectionActionGroup" stepKey="validateErrorSpace">
             <argument name="form" value="AddLocationForm"/>
             <argument name="property" value="PageBuilderMapLocationName_Space"/>
         </actionGroup>
         <!-- Add Valid Location Name After Errors And Verify Success -->
         <comment userInput="Add Valid Location Name After Errors And Verify Success" stepKey="commentLocationNameValid"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterValid">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterValid">
             <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
         </actionGroup>
-        <actionGroup ref="saveLocationFormActionGroup" stepKey="saveLocationForm"/>
-        <actionGroup ref="validateLocationGridDataActionGroup" stepKey="validateLocationGridData">
+        <actionGroup ref="SaveLocationFormActionGroup" stepKey="saveLocationForm"/>
+        <actionGroup ref="ValidateLocationGridDataActionGroup" stepKey="validateLocationGridData">
             <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
         </actionGroup>
     </test>
@@ -230,108 +230,108 @@
         <before>
             <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key {{googleMapsAPIKey.valid}}" stepKey="setValidGoogleMapsAPIKey"/>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setEmptyGoogleMapsAPIKey"/>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionMedia">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionMedia">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragTextIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragTextIntoStage">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditAfterDrop">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditAfterDrop">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <!-- Add Pin To Map -->
         <comment userInput="Add Pin To Map" stepKey="commentAddPinToMap"/>
-        <actionGroup ref="clickAddLocationButtonActionGroup" stepKey="clickAddLocationButton"/>
-        <actionGroup ref="clickMapToAddOrMovePinActionGroup" stepKey="addMapPin"/>
+        <actionGroup ref="ClickAddLocationButtonActionGroup" stepKey="clickAddLocationButton"/>
+        <actionGroup ref="ClickMapToAddOrMovePinActionGroup" stepKey="addMapPin"/>
         <!-- Enter Required Fields -->
         <comment userInput="Enter Required Fields" stepKey="commentEnterRequiredFields"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLocationName">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLocationName">
             <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterCoordinate">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterCoordinate">
             <argument name="property" value="PageBuilderMapLongitude_Negative104_99"/>
         </actionGroup>
-        <actionGroup ref="verifyMapHasPinActionGroup" stepKey="verifyMapHasPinEditPanel1">
+        <actionGroup ref="VerifyMapHasPinActionGroup" stepKey="verifyMapHasPinEditPanel1">
             <argument name="page" value="AddLocationForm"/>
         </actionGroup>
         <!-- Latitude: Empty -->
         <comment userInput="Latitude: Empty" stepKey="commentEmpty"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterEmpty">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterEmpty">
             <argument name="property" value="PageBuilderMapLatitude_Empty"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSectionActionGroup" stepKey="validateErrorEmpty">
+        <actionGroup ref="SaveEditPanelAndValidateFieldErrorGeneralSectionActionGroup" stepKey="validateErrorEmpty">
             <argument name="form" value="AddLocationForm"/>
             <argument name="property" value="PageBuilderMapLatitude_Empty"/>
         </actionGroup>
-        <actionGroup ref="verifyMapHasPinActionGroup" stepKey="verifyMapHasPinEditPanel2">
+        <actionGroup ref="VerifyMapHasPinActionGroup" stepKey="verifyMapHasPinEditPanel2">
             <argument name="page" value="AddLocationForm"/>
         </actionGroup>
         <!-- Latitude: Space -->
         <comment userInput="Latitude: Space" stepKey="commentSpace"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterSpace">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterSpace">
             <argument name="property" value="PageBuilderMapLatitude_Space"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSectionActionGroup" stepKey="validateErrorSpace">
+        <actionGroup ref="SaveEditPanelAndValidateFieldErrorGeneralSectionActionGroup" stepKey="validateErrorSpace">
             <argument name="form" value="AddLocationForm"/>
             <argument name="property" value="PageBuilderMapLatitude_Space"/>
         </actionGroup>
-        <actionGroup ref="verifyMapHasPinActionGroup" stepKey="verifyMapHasPinEditPanel3">
+        <actionGroup ref="VerifyMapHasPinActionGroup" stepKey="verifyMapHasPinEditPanel3">
             <argument name="page" value="AddLocationForm"/>
         </actionGroup>
         <!-- Latitude: Non-Numeric -->
         <comment userInput="Latitude: Non-Numeric" stepKey="commentNonNumeric"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterNonNumeric">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterNonNumeric">
             <argument name="property" value="PageBuilderMapLatitude_NonNumeric"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSectionActionGroup" stepKey="validateErrorNonNumeric">
+        <actionGroup ref="SaveEditPanelAndValidateFieldErrorGeneralSectionActionGroup" stepKey="validateErrorNonNumeric">
             <argument name="form" value="AddLocationForm"/>
             <argument name="property" value="PageBuilderMapLatitude_NonNumeric"/>
         </actionGroup>
-        <actionGroup ref="verifyMapHasPinActionGroup" stepKey="verifyMapHasPinEditPanel4">
+        <actionGroup ref="VerifyMapHasPinActionGroup" stepKey="verifyMapHasPinEditPanel4">
             <argument name="page" value="AddLocationForm"/>
         </actionGroup>
         <!-- Latitude: Negative Boundary -->
         <comment userInput="Latitude: Negative Boundary" stepKey="commentNegativeBoundary"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterNegativeBoundary">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterNegativeBoundary">
             <argument name="property" value="PageBuilderMapLatitude_NegativeBoundary"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSectionActionGroup" stepKey="validateErrorNegativeBoundary">
+        <actionGroup ref="SaveEditPanelAndValidateFieldErrorGeneralSectionActionGroup" stepKey="validateErrorNegativeBoundary">
             <argument name="form" value="AddLocationForm"/>
             <argument name="property" value="PageBuilderMapLatitude_NegativeBoundary"/>
         </actionGroup>
-        <actionGroup ref="verifyMapHasPinActionGroup" stepKey="verifyMapHasPinEditPanel5">
+        <actionGroup ref="VerifyMapHasPinActionGroup" stepKey="verifyMapHasPinEditPanel5">
             <argument name="page" value="AddLocationForm"/>
         </actionGroup>
         <!-- Latitude: Positive Boundary -->
         <comment userInput="Latitude: Positive Boundary" stepKey="commentPositiveBoundary"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterPositiveBoundary">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterPositiveBoundary">
             <argument name="property" value="PageBuilderMapLatitude_PositiveBoundary"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSectionActionGroup" stepKey="validateErrorPositiveBoundary">
+        <actionGroup ref="SaveEditPanelAndValidateFieldErrorGeneralSectionActionGroup" stepKey="validateErrorPositiveBoundary">
             <argument name="form" value="AddLocationForm"/>
             <argument name="property" value="PageBuilderMapLatitude_PositiveBoundary"/>
         </actionGroup>
-        <actionGroup ref="verifyMapHasPinActionGroup" stepKey="verifyMapHasPinEditPanel6">
+        <actionGroup ref="VerifyMapHasPinActionGroup" stepKey="verifyMapHasPinEditPanel6">
             <argument name="page" value="AddLocationForm"/>
         </actionGroup>
         <!-- Add Valid Latitude After Errors And Verify Map Has Pin -->
         <comment userInput="Add Valid Latitude After Errors And Verify Map Has Pin" stepKey="commentAddPinToMap2"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterValid">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterValid">
             <argument name="property" value="PageBuilderMapLatitude_Positive39_74"/>
         </actionGroup>
-        <actionGroup ref="verifyMapHasPinActionGroup" stepKey="verifyMapHasPinEditPanel7">
+        <actionGroup ref="VerifyMapHasPinActionGroup" stepKey="verifyMapHasPinEditPanel7">
             <argument name="page" value="AddLocationForm"/>
         </actionGroup>
-        <actionGroup ref="saveLocationFormActionGroup" stepKey="saveLocationForm"/>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
-        <actionGroup ref="verifyMapHasPinActionGroup" stepKey="verifyMapHasPinStage">
+        <actionGroup ref="SaveLocationFormActionGroup" stepKey="saveLocationForm"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="VerifyMapHasPinActionGroup" stepKey="verifyMapHasPinStage">
             <argument name="page" value="MapOnStage"/>
         </actionGroup>
     </test>
@@ -353,51 +353,51 @@
                 <issueId value="MTS-657"/>
             </skip>
         </annotations>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterCoordinate">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterCoordinate">
             <argument name="property" value="PageBuilderMapLatitude_Positive39_74"/>
         </actionGroup>
         <comment userInput="Longitude: Empty" stepKey="commentEmpty"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterEmpty">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterEmpty">
             <argument name="property" value="PageBuilderMapLongitude_Empty"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSectionActionGroup" stepKey="validateErrorEmpty">
+        <actionGroup ref="SaveEditPanelAndValidateFieldErrorGeneralSectionActionGroup" stepKey="validateErrorEmpty">
             <argument name="form" value="AddLocationForm"/>
             <argument name="property" value="PageBuilderMapLongitude_Empty"/>
         </actionGroup>
         <comment userInput="Longitude: Space" stepKey="commentSpace"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterSpace">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterSpace">
             <argument name="property" value="PageBuilderMapLongitude_Space"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSectionActionGroup" stepKey="validateErrorSpace">
+        <actionGroup ref="SaveEditPanelAndValidateFieldErrorGeneralSectionActionGroup" stepKey="validateErrorSpace">
             <argument name="form" value="AddLocationForm"/>
             <argument name="property" value="PageBuilderMapLongitude_Space"/>
         </actionGroup>
         <comment userInput="Longitude: Non-Numeric" stepKey="commentNonNumeric"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterNonNumeric">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterNonNumeric">
             <argument name="property" value="PageBuilderMapLongitude_NonNumeric"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSectionActionGroup" stepKey="validateErrorNonNumeric">
+        <actionGroup ref="SaveEditPanelAndValidateFieldErrorGeneralSectionActionGroup" stepKey="validateErrorNonNumeric">
             <argument name="form" value="AddLocationForm"/>
             <argument name="property" value="PageBuilderMapLongitude_NonNumeric"/>
         </actionGroup>
         <comment userInput="Longitude: Negative Boundary" stepKey="commentNegativeBoundary"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterNegativeBoundary">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterNegativeBoundary">
             <argument name="property" value="PageBuilderMapLongitude_NegativeBoundary"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSectionActionGroup" stepKey="validateErrorNegativeBoundary">
+        <actionGroup ref="SaveEditPanelAndValidateFieldErrorGeneralSectionActionGroup" stepKey="validateErrorNegativeBoundary">
             <argument name="form" value="AddLocationForm"/>
             <argument name="property" value="PageBuilderMapLongitude_NegativeBoundary"/>
         </actionGroup>
         <comment userInput="Longitude: Positive Boundary" stepKey="commentPositiveBoundary"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterPositiveBoundary">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterPositiveBoundary">
             <argument name="property" value="PageBuilderMapLongitude_PositiveBoundary"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSectionActionGroup" stepKey="validateErrorPositiveBoundary">
+        <actionGroup ref="SaveEditPanelAndValidateFieldErrorGeneralSectionActionGroup" stepKey="validateErrorPositiveBoundary">
             <argument name="form" value="AddLocationForm"/>
             <argument name="property" value="PageBuilderMapLongitude_PositiveBoundary"/>
         </actionGroup>
         <comment userInput="Add Valid Longitude After Errors And Verify Map Has Pin" stepKey="commentAddPinToMap2"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterValid">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterValid">
             <argument name="property" value="PageBuilderMapLongitude_Negative104_99"/>
         </actionGroup>
     </test>
@@ -421,178 +421,178 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setEmptyGoogleMapsAPIKey"/>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionMedia">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionMedia">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragTextIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragTextIntoStage">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditAfterDrop">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditAfterDrop">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <!-- Add 1st Location: Common Characters -->
         <comment userInput="Add 1st Location: Common Characters" stepKey="commentAddLocation1"/>
-        <actionGroup ref="clickAddLocationButtonActionGroup" stepKey="clickAddLocationButton1"/>
+        <actionGroup ref="ClickAddLocationButtonActionGroup" stepKey="clickAddLocationButton1"/>
         <!-- Negative Coordinates Use Case Covered Here -->
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLatitude1">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLatitude1">
             <argument name="property" value="PageBuilderMapLatitude_Negative1"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLongitude1">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLongitude1">
             <argument name="property" value="PageBuilderMapLongitude_Negative1"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLocationName1">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLocationName1">
             <argument name="property" value="PageBuilderMapLocationName_a"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterPhoneNumber1">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterPhoneNumber1">
             <argument name="property" value="PageBuilderMapPhoneNumber_CommonCharacters"/>
         </actionGroup>
-        <actionGroup ref="saveLocationFormActionGroup" stepKey="saveLocationForm1"/>
-        <actionGroup ref="validateLocationGridDataActionGroup" stepKey="validateLocation1GridData1">
+        <actionGroup ref="SaveLocationFormActionGroup" stepKey="saveLocationForm1"/>
+        <actionGroup ref="ValidateLocationGridDataActionGroup" stepKey="validateLocation1GridData1">
             <argument name="locationName" value="PageBuilderMapLocationName_a"/>
             <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_CommonCharacters"/>
         </actionGroup>
         <!-- Add 2nd Location: Special Characters -->
         <comment userInput="Add 2nd Location: Special Characters" stepKey="commentAddLocation2"/>
-        <actionGroup ref="clickAddLocationButtonActionGroup" stepKey="clickAddLocationButton2"/>
+        <actionGroup ref="ClickAddLocationButtonActionGroup" stepKey="clickAddLocationButton2"/>
         <!-- 0,0 Coordinates Use Case Covered Here -->
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLatitude2">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLatitude2">
             <argument name="property" value="PageBuilderMapLatitude_0"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLongitude2">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLongitude2">
             <argument name="property" value="PageBuilderMapLongitude_0"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLocationName2">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLocationName2">
             <argument name="property" value="PageBuilderMapLocationName_B"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterPhoneNumber2">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterPhoneNumber2">
             <argument name="property" value="PageBuilderMapPhoneNumber_SpecialCharacters"/>
         </actionGroup>
-        <actionGroup ref="saveLocationFormActionGroup" stepKey="saveLocationForm2"/>
-        <actionGroup ref="validateLocationGridDataActionGroup" stepKey="validateLocation2GridData1">
+        <actionGroup ref="SaveLocationFormActionGroup" stepKey="saveLocationForm2"/>
+        <actionGroup ref="ValidateLocationGridDataActionGroup" stepKey="validateLocation2GridData1">
             <argument name="locationName" value="PageBuilderMapLocationName_B"/>
             <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_SpecialCharacters"/>
             <argument name="rowIndex" value="2"/>
         </actionGroup>
         <!-- Add 3rd Location: Empty -->
         <comment userInput="Add 3rd Location: Empty" stepKey="commentAddLocation3"/>
-        <actionGroup ref="clickAddLocationButtonActionGroup" stepKey="clickAddLocationButton3"/>
+        <actionGroup ref="ClickAddLocationButtonActionGroup" stepKey="clickAddLocationButton3"/>
         <!-- Positive Coordinates Use Case Covered Here -->
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLatitude3">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLatitude3">
             <argument name="property" value="PageBuilderMapLatitude_Positive1"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLongitude3">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLongitude3">
             <argument name="property" value="PageBuilderMapLongitude_Positive1"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLocationName3">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLocationName3">
             <argument name="property" value="PageBuilderMapLocationName_z"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterPhoneNumber3">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterPhoneNumber3">
             <argument name="property" value="PageBuilderMapPhoneNumber_Empty"/>
         </actionGroup>
-        <actionGroup ref="saveLocationFormActionGroup" stepKey="saveLocationForm3"/>
-        <actionGroup ref="validateLocationGridDataActionGroup" stepKey="validateLocation3GridData1">
+        <actionGroup ref="SaveLocationFormActionGroup" stepKey="saveLocationForm3"/>
+        <actionGroup ref="ValidateLocationGridDataActionGroup" stepKey="validateLocation3GridData1">
             <argument name="locationName" value="PageBuilderMapLocationName_z"/>
             <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_Empty"/>
             <argument name="rowIndex" value="3"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <!-- Save Page and Set Valid API Key -->
         <comment userInput="Save Page and Set Valid API Key" stepKey="commentSavePageAndSetKey"/>
         <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key {{googleMapsAPIKey.valid}}" stepKey="setValidGoogleMapsAPIKey"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage1"/>
-        <actionGroup ref="openMapPinTooltipWindowActionGroup" stepKey="openMapPin1TooltipWindowStage1"/>
+        <actionGroup ref="OpenMapPinTooltipWindowActionGroup" stepKey="openMapPin1TooltipWindowStage1"/>
         <seeElement selector="{{MapOnStage.locationName('1', PageBuilderMapLocationName_a.value)}}" stepKey="seeLocation1NameStage1"/>
         <seeElement selector="{{MapOnStage.phoneNumber('1', PageBuilderMapPhoneNumber_CommonCharacters.value)}}" stepKey="seePhoneNumber1Stage1"/>
-        <actionGroup ref="closeMapPinTooltipWindowActionGroup" stepKey="closeMapPin1TooltipWindowStage1"/>
-        <actionGroup ref="openMapPinTooltipWindowActionGroup" stepKey="openMapPin2TooltipWindowStage1">
+        <actionGroup ref="CloseMapPinTooltipWindowActionGroup" stepKey="closeMapPin1TooltipWindowStage1"/>
+        <actionGroup ref="OpenMapPinTooltipWindowActionGroup" stepKey="openMapPin2TooltipWindowStage1">
             <argument name="pinIndex" value="2"/>
         </actionGroup>
         <seeElement selector="{{MapOnStage.locationName('1', PageBuilderMapLocationName_B.value)}}" stepKey="seeLocationName2Stage1"/>
         <seeElement selector="{{MapOnStage.phoneNumber('1', PageBuilderMapPhoneNumber_SpecialCharacters.value)}}" stepKey="seePhoneNumber2Stage1"/>
-        <actionGroup ref="closeMapPinTooltipWindowActionGroup" stepKey="closeMapPin2TooltipWindowStage1">
+        <actionGroup ref="CloseMapPinTooltipWindowActionGroup" stepKey="closeMapPin2TooltipWindowStage1">
             <argument name="pinIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="openMapPinTooltipWindowActionGroup" stepKey="openMapPin3TooltipWindowStage1">
+        <actionGroup ref="OpenMapPinTooltipWindowActionGroup" stepKey="openMapPin3TooltipWindowStage1">
             <argument name="pinIndex" value="3"/>
         </actionGroup>
         <seeElement selector="{{MapOnStage.locationName('1', PageBuilderMapLocationName_z.value)}}" stepKey="seeLocationName3Stage1"/>
         <dontSeeElement selector="{{MapOnStage.phoneNumber('1', PageBuilderMapPhoneNumber_Empty.value)}}" stepKey="dontSeePhoneNumber3Stage1"/>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="validateLocationGridDataActionGroup" stepKey="validateLocation1GridData2">
+        <actionGroup ref="ValidateLocationGridDataActionGroup" stepKey="validateLocation1GridData2">
             <argument name="locationName" value="PageBuilderMapLocationName_a"/>
             <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_CommonCharacters"/>
         </actionGroup>
-        <actionGroup ref="validateLocationGridDataActionGroup" stepKey="validateLocation2GridData2">
+        <actionGroup ref="ValidateLocationGridDataActionGroup" stepKey="validateLocation2GridData2">
             <argument name="locationName" value="PageBuilderMapLocationName_B"/>
             <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_SpecialCharacters"/>
             <argument name="rowIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="validateLocationGridDataActionGroup" stepKey="validateLocation3GridData2">
+        <actionGroup ref="ValidateLocationGridDataActionGroup" stepKey="validateLocation3GridData2">
             <argument name="locationName" value="PageBuilderMapLocationName_z"/>
             <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_Empty"/>
             <argument name="rowIndex" value="3"/>
         </actionGroup>
-        <actionGroup ref="clickLocationGridRowActionGroup" stepKey="clickLocationGridRow1">
+        <actionGroup ref="ClickLocationGridRowActionGroup" stepKey="clickLocationGridRow1">
             <argument name="locationName" value="PageBuilderMapLocationName_a"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateEditPanelField1">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateEditPanelField1">
             <argument name="property" value="PageBuilderMapPhoneNumber_CommonCharacters"/>
         </actionGroup>
-        <actionGroup ref="closeLocationFormActionGroup" stepKey="closeLocationForm1"/>
-        <actionGroup ref="clickLocationGridRowActionGroup" stepKey="clickLocationGridRow2">
+        <actionGroup ref="CloseLocationFormActionGroup" stepKey="closeLocationForm1"/>
+        <actionGroup ref="ClickLocationGridRowActionGroup" stepKey="clickLocationGridRow2">
             <argument name="locationName" value="PageBuilderMapLocationName_B"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateEditPanelField2">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateEditPanelField2">
             <argument name="property" value="PageBuilderMapPhoneNumber_SpecialCharacters"/>
         </actionGroup>
-        <actionGroup ref="closeLocationFormActionGroup" stepKey="closeLocationForm2"/>
-        <actionGroup ref="clickLocationGridRowActionGroup" stepKey="clickLocationGridRow3">
+        <actionGroup ref="CloseLocationFormActionGroup" stepKey="closeLocationForm2"/>
+        <actionGroup ref="ClickLocationGridRowActionGroup" stepKey="clickLocationGridRow3">
             <argument name="locationName" value="PageBuilderMapLocationName_z"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateEditPanelField3">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateEditPanelField3">
             <argument name="property" value="PageBuilderMapPhoneNumber_Empty"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="openMapPinTooltipWindowActionGroup" stepKey="openMapPin1TooltipWindowStorefront">
+        <actionGroup ref="OpenMapPinTooltipWindowActionGroup" stepKey="openMapPin1TooltipWindowStorefront">
             <argument name="page" value="MapOnStorefront"/>
         </actionGroup>
         <seeElement selector="{{MapOnStorefront.locationName('1', PageBuilderMapLocationName_a.value)}}" stepKey="seeLocationName1Storefront"/>
         <seeElement selector="{{MapOnStorefront.phoneNumber('1', PageBuilderMapPhoneNumber_CommonCharacters.value)}}" stepKey="seePhoneNumber1Storefront"/>
-        <actionGroup ref="closeMapPinTooltipWindowActionGroup" stepKey="closeMapPin1TooltipWindowStorefront">
+        <actionGroup ref="CloseMapPinTooltipWindowActionGroup" stepKey="closeMapPin1TooltipWindowStorefront">
             <argument name="page" value="MapOnStorefront"/>
         </actionGroup>
-        <actionGroup ref="openMapPinTooltipWindowActionGroup" stepKey="openMapPin2TooltipWindowStorefront">
+        <actionGroup ref="OpenMapPinTooltipWindowActionGroup" stepKey="openMapPin2TooltipWindowStorefront">
             <argument name="page" value="MapOnStorefront"/>
             <argument name="pinIndex" value="2"/>
         </actionGroup>
         <seeElement selector="{{MapOnStorefront.locationName('1', PageBuilderMapLocationName_B.value)}}" stepKey="seeLocationName2Storefront"/>
         <seeElement selector="{{MapOnStorefront.phoneNumber('1', PageBuilderMapPhoneNumber_SpecialCharacters.value)}}" stepKey="seePhoneNumber2Storefront"/>
-        <actionGroup ref="closeMapPinTooltipWindowActionGroup" stepKey="closeMapPin2TooltipWindowStorefront">
+        <actionGroup ref="CloseMapPinTooltipWindowActionGroup" stepKey="closeMapPin2TooltipWindowStorefront">
             <argument name="page" value="MapOnStorefront"/>
             <argument name="pinIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="openMapPinTooltipWindowActionGroup" stepKey="openMapPin3TooltipWindowStorefront">
+        <actionGroup ref="OpenMapPinTooltipWindowActionGroup" stepKey="openMapPin3TooltipWindowStorefront">
             <argument name="page" value="MapOnStorefront"/>
             <argument name="pinIndex" value="3"/>
         </actionGroup>
@@ -617,25 +617,25 @@
                 <issueId value="MTS-657"/>
             </skip>
         </annotations>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterPhoneNumber1">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterPhoneNumber1">
             <argument name="property" value="PageBuilderMapStreetAddress_CommonCharacters"/>
         </actionGroup>
-        <actionGroup ref="validateLocationGridDataActionGroup" stepKey="validateLocation1GridData1">
+        <actionGroup ref="ValidateLocationGridDataActionGroup" stepKey="validateLocation1GridData1">
             <argument name="locationName" value="PageBuilderMapLocationName_a"/>
             <argument name="address" value="PageBuilderMapStreetAddress_CommonCharacters"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterPhoneNumber2">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterPhoneNumber2">
             <argument name="property" value="PageBuilderMapStreetAddress_SpecialCharacters"/>
         </actionGroup>
-        <actionGroup ref="validateLocationGridDataActionGroup" stepKey="validateLocation2GridData1">
+        <actionGroup ref="ValidateLocationGridDataActionGroup" stepKey="validateLocation2GridData1">
             <argument name="locationName" value="PageBuilderMapLocationName_B"/>
             <argument name="address" value="PageBuilderMapStreetAddress_SpecialCharacters"/>
             <argument name="rowIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterPhoneNumber3">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterPhoneNumber3">
             <argument name="property" value="PageBuilderMapStreetAddress_Empty"/>
         </actionGroup>
-        <actionGroup ref="validateLocationGridDataActionGroup" stepKey="validateLocation3GridData1">
+        <actionGroup ref="ValidateLocationGridDataActionGroup" stepKey="validateLocation3GridData1">
             <argument name="locationName" value="PageBuilderMapLocationName_z"/>
             <argument name="address" value="PageBuilderMapStreetAddress_Empty"/>
             <argument name="rowIndex" value="3"/>
@@ -643,27 +643,27 @@
         <seeElement selector="{{MapOnStage.addressCityStateZipCountry('1', PageBuilderMapStreetAddress_CommonCharacters.value, PageBuilderMapCity_Default.value, PageBuilderMapState_Default.value, PageBuilderMapZipCode_Default.value, PageBuilderMapCountry_Default.tooltipValue)}}" stepKey="seePhoneNumber1Stage1"/>
         <seeElement selector="{{MapOnStage.addressCityStateZipCountry('1', PageBuilderMapStreetAddress_SpecialCharacters.value, PageBuilderMapCity_Default.value, PageBuilderMapState_Default.value, PageBuilderMapZipCode_Default.value, PageBuilderMapCountry_Default.tooltipValue)}}" stepKey="seePhoneNumber2Stage1"/>
         <dontSeeElement selector="{{MapOnStage.addressCityStateZipCountry('1', PageBuilderMapStreetAddress_Empty.value, PageBuilderMapCity_Default.value, PageBuilderMapState_Default.value, PageBuilderMapZipCode_Default.value, PageBuilderMapCountry_Default.tooltipValue)}}" stepKey="dontSeePhoneNumber3Stage1"/>
-        <actionGroup ref="validateLocationGridDataActionGroup" stepKey="validateLocation1GridData2">
+        <actionGroup ref="ValidateLocationGridDataActionGroup" stepKey="validateLocation1GridData2">
             <argument name="locationName" value="PageBuilderMapLocationName_a"/>
             <argument name="address" value="PageBuilderMapStreetAddress_CommonCharacters"/>
         </actionGroup>
-        <actionGroup ref="validateLocationGridDataActionGroup" stepKey="validateLocation2GridData2">
+        <actionGroup ref="ValidateLocationGridDataActionGroup" stepKey="validateLocation2GridData2">
             <argument name="locationName" value="PageBuilderMapLocationName_B"/>
             <argument name="address" value="PageBuilderMapStreetAddress_SpecialCharacters"/>
             <argument name="rowIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="validateLocationGridDataActionGroup" stepKey="validateLocation3GridData2">
+        <actionGroup ref="ValidateLocationGridDataActionGroup" stepKey="validateLocation3GridData2">
             <argument name="locationName" value="PageBuilderMapLocationName_z"/>
             <argument name="address" value="PageBuilderMapStreetAddress_Empty"/>
             <argument name="rowIndex" value="3"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateEditPanelField1">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateEditPanelField1">
             <argument name="property" value="PageBuilderMapStreetAddress_CommonCharacters"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateEditPanelField2">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateEditPanelField2">
             <argument name="property" value="PageBuilderMapStreetAddress_SpecialCharacters"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateEditPanelField3">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateEditPanelField3">
             <argument name="property" value="PageBuilderMapStreetAddress_Empty"/>
         </actionGroup>
         <seeElement selector="{{MapOnStorefront.addressCityStateZipCountry('1', PageBuilderMapStreetAddress_CommonCharacters.value, PageBuilderMapCity_Default.value, PageBuilderMapState_Default.value, PageBuilderMapZipCode_Default.value, PageBuilderMapCountry_Default.tooltipValue)}}" stepKey="seePhoneNumber1Storefront"/>
@@ -688,25 +688,25 @@
                 <issueId value="MTS-657"/>
             </skip>
         </annotations>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterPhoneNumber1">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterPhoneNumber1">
             <argument name="property" value="PageBuilderMapCity_CommonCharacters"/>
         </actionGroup>
-        <actionGroup ref="validateLocationGridDataActionGroup" stepKey="validateLocation1GridData1">
+        <actionGroup ref="ValidateLocationGridDataActionGroup" stepKey="validateLocation1GridData1">
             <argument name="locationName" value="PageBuilderMapLocationName_a"/>
             <argument name="city" value="PageBuilderMapCity_CommonCharacters"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterPhoneNumber2">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterPhoneNumber2">
             <argument name="property" value="PageBuilderMapCity_SpecialCharacters"/>
         </actionGroup>
-        <actionGroup ref="validateLocationGridDataActionGroup" stepKey="validateLocation2GridData1">
+        <actionGroup ref="ValidateLocationGridDataActionGroup" stepKey="validateLocation2GridData1">
             <argument name="locationName" value="PageBuilderMapLocationName_B"/>
             <argument name="city" value="PageBuilderMapCity_SpecialCharacters"/>
             <argument name="rowIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterPhoneNumber3">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterPhoneNumber3">
             <argument name="property" value="PageBuilderMapCity_Empty"/>
         </actionGroup>
-        <actionGroup ref="validateLocationGridDataActionGroup" stepKey="validateLocation3GridData1">
+        <actionGroup ref="ValidateLocationGridDataActionGroup" stepKey="validateLocation3GridData1">
             <argument name="locationName" value="PageBuilderMapLocationName_z"/>
             <argument name="city" value="PageBuilderMapCity_Empty"/>
             <argument name="rowIndex" value="3"/>
@@ -714,27 +714,27 @@
         <seeElement selector="{{MapOnStage.addressCityStateZipCountry('1', PageBuilderMapStreetAddress_Default.value, PageBuilderMapCity_CommonCharacters.value, PageBuilderMapState_Default.value, PageBuilderMapZipCode_Default.value, PageBuilderMapCountry_Default.tooltipValue)}}" stepKey="seePhoneNumber1Stage1"/>
         <seeElement selector="{{MapOnStage.addressCityStateZipCountry('1', PageBuilderMapStreetAddress_Default.value, PageBuilderMapCity_SpecialCharacters.value, PageBuilderMapState_Default.value, PageBuilderMapZipCode_Default.value, PageBuilderMapCountry_Default.tooltipValue)}}" stepKey="seePhoneNumber2Stage1"/>
         <dontSeeElement selector="{{MapOnStage.addressCityStateZipCountry('1', PageBuilderMapStreetAddress_Default.value, PageBuilderMapCity_Empty.value, PageBuilderMapState_Default.value, PageBuilderMapZipCode_Default.value, PageBuilderMapCountry_Default.tooltipValue)}}" stepKey="dontSeePhoneNumber3Stage1"/>
-        <actionGroup ref="validateLocationGridDataActionGroup" stepKey="validateLocation1GridData2">
+        <actionGroup ref="ValidateLocationGridDataActionGroup" stepKey="validateLocation1GridData2">
             <argument name="locationName" value="PageBuilderMapLocationName_a"/>
             <argument name="city" value="PageBuilderMapCity_CommonCharacters"/>
         </actionGroup>
-        <actionGroup ref="validateLocationGridDataActionGroup" stepKey="validateLocation2GridData2">
+        <actionGroup ref="ValidateLocationGridDataActionGroup" stepKey="validateLocation2GridData2">
             <argument name="locationName" value="PageBuilderMapLocationName_B"/>
             <argument name="city" value="PageBuilderMapCity_SpecialCharacters"/>
             <argument name="rowIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="validateLocationGridDataActionGroup" stepKey="validateLocation3GridData2">
+        <actionGroup ref="ValidateLocationGridDataActionGroup" stepKey="validateLocation3GridData2">
             <argument name="locationName" value="PageBuilderMapLocationName_z"/>
             <argument name="city" value="PageBuilderMapCity_Empty"/>
             <argument name="rowIndex" value="3"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateEditPanelField1">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateEditPanelField1">
             <argument name="property" value="PageBuilderMapCity_CommonCharacters"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateEditPanelField2">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateEditPanelField2">
             <argument name="property" value="PageBuilderMapCity_SpecialCharacters"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateEditPanelField3">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateEditPanelField3">
             <argument name="property" value="PageBuilderMapCity_Empty"/>
         </actionGroup>
         <seeElement selector="{{MapOnStorefront.addressCityStateZipCountry('1', PageBuilderMapStreetAddress_Default.value, PageBuilderMapCity_CommonCharacters.value, PageBuilderMapState_Default.value, PageBuilderMapZipCode_Default.value, PageBuilderMapCountry_Default.tooltipValue)}}" stepKey="seePhoneNumber1Storefront"/>
@@ -759,25 +759,25 @@
                 <issueId value="MTS-657"/>
             </skip>
         </annotations>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterPhoneNumber1">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterPhoneNumber1">
             <argument name="property" value="PageBuilderMapState_CommonCharacters"/>
         </actionGroup>
-        <actionGroup ref="validateLocationGridDataActionGroup" stepKey="validateLocation1GridData1">
+        <actionGroup ref="ValidateLocationGridDataActionGroup" stepKey="validateLocation1GridData1">
             <argument name="locationName" value="PageBuilderMapLocationName_a"/>
             <argument name="state" value="PageBuilderMapState_CommonCharacters"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterPhoneNumber2">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterPhoneNumber2">
             <argument name="property" value="PageBuilderMapState_SpecialCharacters"/>
         </actionGroup>
-        <actionGroup ref="validateLocationGridDataActionGroup" stepKey="validateLocation2GridData1">
+        <actionGroup ref="ValidateLocationGridDataActionGroup" stepKey="validateLocation2GridData1">
             <argument name="locationName" value="PageBuilderMapLocationName_B"/>
             <argument name="state" value="PageBuilderMapState_SpecialCharacters"/>
             <argument name="rowIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterPhoneNumber3">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterPhoneNumber3">
             <argument name="property" value="PageBuilderMapState_Empty"/>
         </actionGroup>
-        <actionGroup ref="validateLocationGridDataActionGroup" stepKey="validateLocation3GridData1">
+        <actionGroup ref="ValidateLocationGridDataActionGroup" stepKey="validateLocation3GridData1">
             <argument name="locationName" value="PageBuilderMapLocationName_z"/>
             <argument name="state" value="PageBuilderMapState_Empty"/>
             <argument name="rowIndex" value="3"/>
@@ -785,27 +785,27 @@
         <seeElement selector="{{MapOnStage.addressCityStateZipCountry('1', PageBuilderMapStreetAddress_Default.value, PageBuilderMapCity_Default.value, PageBuilderMapState_CommonCharacters.tooltipValue, PageBuilderMapZipCode_Default.value, PageBuilderMapCountry_Default.tooltipValue)}}" stepKey="seePhoneNumber1Stage1"/>
         <seeElement selector="{{MapOnStage.addressCityStateZipCountry('1', PageBuilderMapStreetAddress_Default.value, PageBuilderMapCity_Default.value, PageBuilderMapState_SpecialCharacters.tooltipValue, PageBuilderMapZipCode_Default.value, PageBuilderMapCountry_Default.tooltipValue)}}" stepKey="seePhoneNumber2Stage1"/>
         <dontSeeElement selector="{{MapOnStage.addressCityStateZipCountry('1', PageBuilderMapStreetAddress_Default.value, PageBuilderMapCity_Default.value, PageBuilderMapState_Empty.value, PageBuilderMapZipCode_Default.value, PageBuilderMapCountry_Default.tooltipValue)}}" stepKey="dontSeePhoneNumber3Stage1"/>
-        <actionGroup ref="validateLocationGridDataActionGroup" stepKey="validateLocation1GridData2">
+        <actionGroup ref="ValidateLocationGridDataActionGroup" stepKey="validateLocation1GridData2">
             <argument name="locationName" value="PageBuilderMapLocationName_a"/>
             <argument name="state" value="PageBuilderMapState_CommonCharacters"/>
         </actionGroup>
-        <actionGroup ref="validateLocationGridDataActionGroup" stepKey="validateLocation2GridData2">
+        <actionGroup ref="ValidateLocationGridDataActionGroup" stepKey="validateLocation2GridData2">
             <argument name="locationName" value="PageBuilderMapLocationName_B"/>
             <argument name="state" value="PageBuilderMapState_SpecialCharacters"/>
             <argument name="rowIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="validateLocationGridDataActionGroup" stepKey="validateLocation3GridData2">
+        <actionGroup ref="ValidateLocationGridDataActionGroup" stepKey="validateLocation3GridData2">
             <argument name="locationName" value="PageBuilderMapLocationName_z"/>
             <argument name="state" value="PageBuilderMapState_Empty"/>
             <argument name="rowIndex" value="3"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateEditPanelField1">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateEditPanelField1">
             <argument name="property" value="PageBuilderMapState_CommonCharacters"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateEditPanelField2">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateEditPanelField2">
             <argument name="property" value="PageBuilderMapState_SpecialCharacters"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateEditPanelField3">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateEditPanelField3">
             <argument name="property" value="PageBuilderMapState_Empty"/>
         </actionGroup>
         <seeElement selector="{{MapOnStorefront.addressCityStateZipCountry('1', PageBuilderMapStreetAddress_Default.value, PageBuilderMapCity_Default.value, PageBuilderMapState_CommonCharacters.tooltipValue, PageBuilderMapZipCode_Default.value, PageBuilderMapCountry_Default.tooltipValue)}}" stepKey="seePhoneNumber1Storefront"/>
@@ -830,25 +830,25 @@
                 <issueId value="MTS-657"/>
             </skip>
         </annotations>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterPhoneNumber1">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterPhoneNumber1">
             <argument name="property" value="PageBuilderMapZipCode_CommonCharacters"/>
         </actionGroup>
-        <actionGroup ref="validateLocationGridDataActionGroup" stepKey="validateLocation1GridData1">
+        <actionGroup ref="ValidateLocationGridDataActionGroup" stepKey="validateLocation1GridData1">
             <argument name="locationName" value="PageBuilderMapLocationName_a"/>
             <argument name="zip" value="PageBuilderMapZipCode_CommonCharacters"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterPhoneNumber2">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterPhoneNumber2">
             <argument name="property" value="PageBuilderMapZipCode_SpecialCharacters"/>
         </actionGroup>
-        <actionGroup ref="validateLocationGridDataActionGroup" stepKey="validateLocation2GridData1">
+        <actionGroup ref="ValidateLocationGridDataActionGroup" stepKey="validateLocation2GridData1">
             <argument name="locationName" value="PageBuilderMapLocationName_B"/>
             <argument name="zip" value="PageBuilderMapZipCode_SpecialCharacters"/>
             <argument name="rowIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterPhoneNumber3">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterPhoneNumber3">
             <argument name="property" value="PageBuilderMapZipCode_Empty"/>
         </actionGroup>
-        <actionGroup ref="validateLocationGridDataActionGroup" stepKey="validateLocation3GridData1">
+        <actionGroup ref="ValidateLocationGridDataActionGroup" stepKey="validateLocation3GridData1">
             <argument name="locationName" value="PageBuilderMapLocationName_z"/>
             <argument name="zip" value="PageBuilderMapZipCode_Empty"/>
             <argument name="rowIndex" value="3"/>
@@ -856,27 +856,27 @@
         <seeElement selector="{{MapOnStage.addressCityStateZipCountry('1', PageBuilderMapStreetAddress_Default.value, PageBuilderMapCity_Default.value, PageBuilderMapState_Default.value, PageBuilderMapZipCode_CommonCharacters.value, PageBuilderMapCountry_Default.tooltipValue)}}" stepKey="seePhoneNumber1Stage1"/>
         <seeElement selector="{{MapOnStage.addressCityStateZipCountry('1', PageBuilderMapStreetAddress_Default.value, PageBuilderMapCity_Default.value, PageBuilderMapState_Default.value, PageBuilderMapZipCode_SpecialCharacters.value, PageBuilderMapCountry_Default.tooltipValue)}}" stepKey="seePhoneNumber2Stage1"/>
         <dontSeeElement selector="{{MapOnStage.addressCityStateZipCountry('1', PageBuilderMapStreetAddress_Default.value, PageBuilderMapCity_Default.value, PageBuilderMapState_Default.value, PageBuilderMapZipCode_Empty.value, PageBuilderMapCountry_Default.tooltipValue)}}" stepKey="dontSeePhoneNumber3Stage1"/>
-        <actionGroup ref="validateLocationGridDataActionGroup" stepKey="validateLocation1GridData2">
+        <actionGroup ref="ValidateLocationGridDataActionGroup" stepKey="validateLocation1GridData2">
             <argument name="locationName" value="PageBuilderMapLocationName_a"/>
             <argument name="zip" value="PageBuilderMapZipCode_CommonCharacters"/>
         </actionGroup>
-        <actionGroup ref="validateLocationGridDataActionGroup" stepKey="validateLocation2GridData2">
+        <actionGroup ref="ValidateLocationGridDataActionGroup" stepKey="validateLocation2GridData2">
             <argument name="locationName" value="PageBuilderMapLocationName_B"/>
             <argument name="zip" value="PageBuilderMapZipCode_SpecialCharacters"/>
             <argument name="rowIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="validateLocationGridDataActionGroup" stepKey="validateLocation3GridData2">
+        <actionGroup ref="ValidateLocationGridDataActionGroup" stepKey="validateLocation3GridData2">
             <argument name="locationName" value="PageBuilderMapLocationName_z"/>
             <argument name="zip" value="PageBuilderMapZipCode_Empty"/>
             <argument name="rowIndex" value="3"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateEditPanelField1">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateEditPanelField1">
             <argument name="property" value="PageBuilderMapZipCode_CommonCharacters"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateEditPanelField2">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateEditPanelField2">
             <argument name="property" value="PageBuilderMapZipCode_SpecialCharacters"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateEditPanelField3">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateEditPanelField3">
             <argument name="property" value="PageBuilderMapZipCode_Empty"/>
         </actionGroup>
         <seeElement selector="{{MapOnStorefront.addressCityStateZipCountry('1', PageBuilderMapStreetAddress_Default.value, PageBuilderMapCity_Default.value, PageBuilderMapState_Default.value, PageBuilderMapZipCode_CommonCharacters.value, PageBuilderMapCountry_Default.tooltipValue)}}" stepKey="seePhoneNumber1Storefront"/>
@@ -903,77 +903,77 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setEmptyGoogleMapsAPIKey"/>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionMedia">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionMedia">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragTextIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragTextIntoStage">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditAfterDrop">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditAfterDrop">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <!-- Add Location: Common Country -->
         <comment userInput="Add Location: Common Country" stepKey="commentAddLocation"/>
-        <actionGroup ref="clickAddLocationButtonActionGroup" stepKey="clickAddLocationButton"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLatitude1">
+        <actionGroup ref="ClickAddLocationButtonActionGroup" stepKey="clickAddLocationButton"/>
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLatitude1">
             <argument name="property" value="PageBuilderMapLatitude_Positive39_74"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLongitude1">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLongitude1">
             <argument name="property" value="PageBuilderMapLongitude_Negative104_99"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLocationName">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLocationName">
             <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelMultiSelectFieldActionGroup" stepKey="enterCountry">
+        <actionGroup ref="FillSlideOutPanelMultiSelectFieldActionGroup" stepKey="enterCountry">
             <argument name="property" value="PageBuilderMapCountry_USA"/>
         </actionGroup>
-        <actionGroup ref="saveLocationFormActionGroup" stepKey="saveLocationForm"/>
-        <actionGroup ref="validateLocationGridDataActionGroup" stepKey="validateLocationGridData">
+        <actionGroup ref="SaveLocationFormActionGroup" stepKey="saveLocationForm"/>
+        <actionGroup ref="ValidateLocationGridDataActionGroup" stepKey="validateLocationGridData">
             <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
             <argument name="country" value="PageBuilderMapCountry_USA"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <!-- Save Page and Set Valid API Key -->
         <comment userInput="Save Page and Set Valid API Key" stepKey="commentSavePageAndSetKey"/>
         <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key {{googleMapsAPIKey.valid}}" stepKey="setValidGoogleMapsAPIKey"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage1"/>
-        <actionGroup ref="openMapPinTooltipWindowActionGroup" stepKey="openMapPinTooltipWindowStage1"/>
+        <actionGroup ref="OpenMapPinTooltipWindowActionGroup" stepKey="openMapPinTooltipWindowStage1"/>
         <waitForElementVisible selector="{{MapOnStage.locationName('1', PageBuilderMapLocationName_TestLocation.value)}}" stepKey="waitForLocationNameStage1"/>
         <waitForElementVisible selector="{{MapOnStage.addressCityStateZipCountry('1', PageBuilderMapStreetAddress_Default.value, PageBuilderMapCity_Default.value, PageBuilderMapState_Default.value, PageBuilderMapZipCode_Default.value, PageBuilderMapCountry_USA.value)}}" stepKey="waitForCountryStage1"/>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="validateLocationGridDataActionGroup" stepKey="validateLocationGridData2">
+        <actionGroup ref="ValidateLocationGridDataActionGroup" stepKey="validateLocationGridData2">
             <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
             <argument name="country" value="PageBuilderMapCountry_USA"/>
         </actionGroup>
-        <actionGroup ref="clickLocationGridRowActionGroup" stepKey="clickLocationGridRow">
+        <actionGroup ref="ClickLocationGridRowActionGroup" stepKey="clickLocationGridRow">
             <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
         </actionGroup>
-        <actionGroup ref="seeInSlideOutMultiSelectFieldActionGroup" stepKey="validateEditPanelField">
+        <actionGroup ref="SeeInSlideOutMultiSelectFieldActionGroup" stepKey="validateEditPanelField">
             <argument name="property" value="PageBuilderMapCountry_USA"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="openMapPinTooltipWindowActionGroup" stepKey="openMapPinTooltipWindowStorefront">
+        <actionGroup ref="OpenMapPinTooltipWindowActionGroup" stepKey="openMapPinTooltipWindowStorefront">
             <argument name="page" value="MapOnStorefront"/>
         </actionGroup>
         <waitForElementVisible selector="{{MapOnStorefront.locationName('1', PageBuilderMapLocationName_TestLocation.value)}}" stepKey="waitForLocationNameStorefront"/>
@@ -997,15 +997,15 @@
                 <issueId value="MTS-657"/>
             </skip>
         </annotations>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterPhoneNumber1">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterPhoneNumber1">
             <argument name="property" value="PageBuilderMapComment_CommonCharacters"/>
         </actionGroup>
         <comment userInput="Merging to remove action" stepKey="validateLocation1GridData1"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterPhoneNumber2">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterPhoneNumber2">
             <argument name="property" value="PageBuilderMapComment_SpecialCharacters"/>
         </actionGroup>
         <comment userInput="Merging to remove action" stepKey="validateLocation2GridData1"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterPhoneNumber3">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterPhoneNumber3">
             <argument name="property" value="PageBuilderMapComment_Empty"/>
         </actionGroup>
         <comment userInput="Merging to remove action" stepKey="validateLocation3GridData1"/>
@@ -1015,13 +1015,13 @@
         <comment userInput="Merging to remove action" stepKey="validateLocation1GridData2"/>
         <comment userInput="Merging to remove action" stepKey="validateLocation2GridData2"/>
         <comment userInput="Merging to remove action" stepKey="validateLocation3GridData2"/>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateEditPanelField1">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateEditPanelField1">
             <argument name="property" value="PageBuilderMapComment_CommonCharacters"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateEditPanelField2">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateEditPanelField2">
             <argument name="property" value="PageBuilderMapComment_SpecialCharacters"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateEditPanelField3">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateEditPanelField3">
             <argument name="property" value="PageBuilderMapComment_Empty"/>
         </actionGroup>
         <seeElement selector="{{MapOnStorefront.comment('1', PageBuilderMapComment_CommonCharacters.value)}}" stepKey="seePhoneNumber1Storefront"/>
@@ -1053,60 +1053,60 @@
         <after>
             <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setEmptyGoogleMapsAPIKey"/>
             <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
         <!-- Add Map to Stage -->
         <comment userInput="Add Map to Stage" stepKey="commentAddMapToStage"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelGroup">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelGroup">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragContentTypeToStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditAfterDrop">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditAfterDrop">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterMapHeight">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterMapHeight">
             <argument name="property" value="PageBuilderMapHeightProperty500px"/>
         </actionGroup>
         <!-- Add location with HTML characters -->
         <comment userInput="Add location with HTML characters" stepKey="commentAddLocation"/>
-        <actionGroup ref="clickAddLocationButtonActionGroup" stepKey="clickAddLocationButton"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLocationName">
+        <actionGroup ref="ClickAddLocationButtonActionGroup" stepKey="clickAddLocationButton"/>
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLocationName">
             <argument name="property" value="PageBuilderMapLocationName_HtmlCode"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLatitude">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLatitude">
             <argument name="property" value="PageBuilderMapLatitude_Negative1"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLongitude">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterLongitude">
             <argument name="property" value="PageBuilderMapLongitude_Negative1"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterPhoneNumber">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterPhoneNumber">
             <argument name="property" value="PageBuilderMapPhoneNumber_HtmlCode"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterStreetAddress">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterStreetAddress">
             <argument name="property" value="PageBuilderMapStreetAddress_HtmlCode"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterCity">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterCity">
             <argument name="property" value="PageBuilderMapCity_HtmlCode"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterState">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterState">
             <argument name="property" value="PageBuilderMapState_HtmlCode"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterZipCode">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterZipCode">
             <argument name="property" value="PageBuilderMapZipCode_HtmlCode"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelMultiSelectFieldActionGroup" stepKey="enterCountry">
+        <actionGroup ref="FillSlideOutPanelMultiSelectFieldActionGroup" stepKey="enterCountry">
             <argument name="property" value="PageBuilderMapCountry_USA"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterComment2">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterComment2">
             <argument name="property" value="PageBuilderMapComment_HtmlCode"/>
         </actionGroup>
-        <actionGroup ref="saveLocationFormActionGroup" stepKey="saveLocationForm"/>
-        <actionGroup ref="validateLocationGridDataActionGroup" stepKey="validateLocationGrid">
+        <actionGroup ref="SaveLocationFormActionGroup" stepKey="saveLocationForm"/>
+        <actionGroup ref="ValidateLocationGridDataActionGroup" stepKey="validateLocationGrid">
             <argument name="locationName" value="PageBuilderMapLocationName_HtmlCode"/>
             <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_HtmlCode"/>
             <argument name="address" value="PageBuilderMapStreetAddress_HtmlCode"/>
@@ -1115,17 +1115,17 @@
             <argument name="zip" value="PageBuilderMapZipCode_HtmlCode"/>
             <argument name="country" value="PageBuilderMapCountry_USA"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <!-- Save Page and Set Valid API Key -->
         <comment userInput="Save Page and Set Valid API Key" stepKey="commentSavePageAndSetKey"/>
         <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key {{googleMapsAPIKey.valid}}" stepKey="setValidGoogleMapsAPIKey"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage1"/>
         <!-- Validate contents of tooltip on stage -->
         <comment userInput="Validate contents of tooltip on stage" stepKey="commentValidateContentsOfTooltip" />
-        <actionGroup ref="validateMapPinLocationDataActionGroup" stepKey="validateMapTooltipStage">
+        <actionGroup ref="ValidateMapPinLocationDataActionGroup" stepKey="validateMapTooltipStage">
             <argument name="page" value="MapOnStage" />
             <argument name="locationName" value="PageBuilderMapLocationName_HtmlCode"/>
             <argument name="comment" value="PageBuilderMapComment_HtmlCode"/>
@@ -1141,7 +1141,7 @@
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCmsPage">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
-        <actionGroup ref="validateMapPinLocationDataActionGroup" stepKey="validateMapTooltipStorefront">
+        <actionGroup ref="ValidateMapPinLocationDataActionGroup" stepKey="validateMapTooltipStorefront">
             <argument name="page" value="MapOnStorefront" />
             <argument name="locationName" value="PageBuilderMapLocationName_HtmlCode"/>
             <argument name="comment" value="PageBuilderMapComment_HtmlCode"/>

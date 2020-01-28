@@ -23,72 +23,72 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragBannerIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragBannerIntoStage">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <!-- Fill Out Edit Panel -->
         <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
-        <actionGroup ref="fillSlideOutPanelFieldMarginsActionGroup" stepKey="enterMargins">
+        <actionGroup ref="FillSlideOutPanelFieldMarginsActionGroup" stepKey="enterMargins">
             <argument name="property" value="PageBuilderMarginsProperty_50"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <!-- Validate stage before save -->
         <comment userInput="Validate stage before save" stepKey="commentValidateStageBeforeSave"/>
-        <actionGroup ref="validatePositionRightWithinContainerActionGroup" stepKey="validatePositionRightBeforeSave">
+        <actionGroup ref="ValidatePositionRightWithinContainerActionGroup" stepKey="validatePositionRightBeforeSave">
             <argument name="content" value="{{BannerOnBackend.baseCSS}}"/>
             <argument name="contentMargins" value="PageBuilderMarginsProperty_50"/>
             <argument name="container" value="{{RowOnStage.baseCSS}}"/>
             <argument name="containerPadding" value="PageBuilderPaddingPropertyRowDefault"/>
         </actionGroup>
-        <actionGroup ref="validateContentWidthEqualToContainerWidthActionGroup" stepKey="validateContentWidthEqualToContainerWidthBeforeSave">
+        <actionGroup ref="ValidateContentWidthEqualToContainerWidthActionGroup" stepKey="validateContentWidthEqualToContainerWidthBeforeSave">
             <argument name="content" value="{{BannerOnBackend.baseCSS}}"/>
             <argument name="contentMargins" value="PageBuilderMarginsProperty_50"/>
             <argument name="container" value="{{RowOnStage.baseCSS}}"/>
             <argument name="containerPadding" value="PageBuilderPaddingPropertyRowDefault"/>
         </actionGroup>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <!-- Validate stage after save -->
         <comment userInput="Validate stage after save" stepKey="commentValidateStageAfterSave"/>
-        <actionGroup ref="validatePositionRightWithinContainerActionGroup" stepKey="validatePositionRightAfterSave">
+        <actionGroup ref="ValidatePositionRightWithinContainerActionGroup" stepKey="validatePositionRightAfterSave">
             <argument name="content" value="{{BannerOnBackend.baseCSS}}"/>
             <argument name="contentMargins" value="PageBuilderMarginsProperty_50"/>
             <argument name="container" value="{{RowOnStage.baseCSS}}"/>
             <argument name="containerPadding" value="PageBuilderPaddingPropertyRowDefault"/>
         </actionGroup>
-        <actionGroup ref="validateContentWidthEqualToContainerWidthActionGroup" stepKey="validateContentWidthEqualToContainerWidthAfterSave">
+        <actionGroup ref="ValidateContentWidthEqualToContainerWidthActionGroup" stepKey="validateContentWidthEqualToContainerWidthAfterSave">
             <argument name="content" value="{{BannerOnBackend.baseCSS}}"/>
             <argument name="contentMargins" value="PageBuilderMarginsProperty_50"/>
             <argument name="container" value="{{RowOnStage.baseCSS}}"/>
             <argument name="containerPadding" value="PageBuilderPaddingPropertyRowDefault"/>
         </actionGroup>
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <!-- Validate storefront -->
         <comment userInput="Validate storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="validatePositionRightWithinContainerActionGroup" stepKey="validatePositionRightStorefront">
+        <actionGroup ref="ValidatePositionRightWithinContainerActionGroup" stepKey="validatePositionRightStorefront">
             <argument name="content" value="{{BannerOnFrontend.baseCSS}}"/>
             <argument name="contentMargins" value="PageBuilderMarginsProperty_50"/>
             <argument name="container" value="{{RowOnStorefront.innerCSS}}"/>
             <argument name="containerPadding" value="PageBuilderPaddingPropertyRowDefault"/>
         </actionGroup>
-        <actionGroup ref="validateContentWidthEqualToContainerWidthActionGroup" stepKey="validateContentWidthEqualToContainerWidthStorefront">
+        <actionGroup ref="ValidateContentWidthEqualToContainerWidthActionGroup" stepKey="validateContentWidthEqualToContainerWidthStorefront">
             <argument name="content" value="{{BannerOnFrontend.baseCSS}}"/>
             <argument name="contentMargins" value="PageBuilderMarginsProperty_50"/>
             <argument name="container" value="{{RowOnStorefront.innerCSS}}"/>
@@ -112,47 +112,47 @@
             <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG"/>
             <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="enableTinyMCE4"/>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <!-- Add Banner -->
         <comment userInput="Add Banner" stepKey="commentAddBanner"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToContainerActionGroup" stepKey="dragContentTypeIntoContainer">
+        <actionGroup ref="DragContentTypeToContainerActionGroup" stepKey="dragContentTypeIntoContainer">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <!-- Inline Edit Banner Content -->
         <comment userInput="Inline Edit Banner Content" stepKey="commentInlineEdit"/>
-        <actionGroup ref="inlineEditWYSIWYGFromStageActionGroup" stepKey="inlineEdit">
+        <actionGroup ref="InlineEditWYSIWYGFromStageActionGroup" stepKey="inlineEdit">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
             <argument name="content" value="{{PageBuilderBannerMessageProperty.value}}"/>
         </actionGroup>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="validateTextInTinyMCEActionGroup" stepKey="seeMessageText">
+        <actionGroup ref="ValidateTextInTinyMCEActionGroup" stepKey="seeMessageText">
             <argument name="property" value="PageBuilderBannerMessageProperty"/>
             <argument name="section" value="BannerOnConfigurationPanel"/>
         </actionGroup>
-        <actionGroup ref="closeEditPanelSettingsActionGroup" stepKey="closeEditPanelSettings2"/>
+        <actionGroup ref="CloseEditPanelSettingsActionGroup" stepKey="closeEditPanelSettings2"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage"/>
         <seeElement selector="{{BannerOnBackend.messageContent('1', PageBuilderBannerMessageProperty.value)}}" stepKey="seeMessageContentStage"/>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <seeElement selector="{{BannerOnFrontend.messageContent('1', PageBuilderBannerMessageProperty.value)}}" stepKey="seeMessageContentStorefront"/>
@@ -178,7 +178,7 @@
         <after>
             <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG" before="logout"/>
         </after>
-        <actionGroup ref="inlineEditTextAreaFromStageActionGroup" stepKey="inlineEdit">
+        <actionGroup ref="InlineEditTextAreaFromStageActionGroup" stepKey="inlineEdit">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
             <argument name="content" value="{{PageBuilderBannerMessageProperty.value}}"/>
         </actionGroup>
@@ -187,7 +187,7 @@
             <expectedResult type="string">{{PageBuilderBannerMessageProperty.value}}</expectedResult>
             <actualResult type="variable">seeMessageText</actualResult>
         </assertEquals>
-        <actionGroup ref="assertTextareaContainsValueActionGroup" stepKey="seeMessageContentStage">
+        <actionGroup ref="AssertTextareaContainsValueActionGroup" stepKey="seeMessageContentStage">
             <argument name="selector" value="{{PageBuilderStage.inlineTextAreaEditor(PageBuilderBannerContentType.role, '1')}}"/>
             <argument name="value" value="{{PageBuilderBannerMessageProperty.value}}"/>
         </actionGroup>
@@ -213,11 +213,11 @@
         <after>
             <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="enableTinyMCE4" before="logout"/>
         </after>
-        <actionGroup ref="inlineEditTextAreaFromStageActionGroup" stepKey="inlineEdit">
+        <actionGroup ref="InlineEditTextAreaFromStageActionGroup" stepKey="inlineEdit">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
             <argument name="content" value="{{PageBuilderBannerMessageProperty.value}}"/>
         </actionGroup>
-        <actionGroup ref="assertTextareaContainsValueActionGroup" stepKey="seeMessageContentStage">
+        <actionGroup ref="AssertTextareaContainsValueActionGroup" stepKey="seeMessageContentStage">
             <argument name="selector" value="{{PageBuilderStage.inlineTextAreaEditor(PageBuilderBannerContentType.role, '1')}}"/>
             <argument name="value" value="{{PageBuilderBannerMessageProperty.value}}"/>
         </actionGroup>
@@ -240,28 +240,28 @@
             <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG"/>
             <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="enableTinyMCE4"/>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <!-- Add Banner To Column -->
         <comment userInput="Add Banner To Column" stepKey="commentAddBanner"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToContainerActionGroup" stepKey="dragContentTypeIntoContainer">
+        <actionGroup ref="DragContentTypeToContainerActionGroup" stepKey="dragContentTypeIntoContainer">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection2">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection2">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToContainerActionGroup" stepKey="dragContentTypeIntoContainer2">
+        <actionGroup ref="DragContentTypeToContainerActionGroup" stepKey="dragContentTypeIntoContainer2">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="2"/>
@@ -281,30 +281,30 @@
         </assertEquals>
         <!-- Inline Edit Banner Content -->
         <comment userInput="Inline Edit Banner Content" stepKey="commentInlineEdit"/>
-        <actionGroup ref="inlineEditWYSIWYGFromStageActionGroup" stepKey="inlineEdit">
+        <actionGroup ref="InlineEditWYSIWYGFromStageActionGroup" stepKey="inlineEdit">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
             <argument name="content" value="{{PageBuilderBannerMessageProperty.value}}"/>
         </actionGroup>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
             <argument name="offsetXCoordinate" value="null"/>
             <argument name="offsetYCoordinate" value="null"/>
         </actionGroup>
-        <actionGroup ref="validateTextInTinyMCEActionGroup" stepKey="seeMessageText">
+        <actionGroup ref="ValidateTextInTinyMCEActionGroup" stepKey="seeMessageText">
             <argument name="property" value="PageBuilderBannerMessageProperty"/>
             <argument name="section" value="BannerOnConfigurationPanel"/>
         </actionGroup>
-        <actionGroup ref="closeEditPanelSettingsActionGroup" stepKey="closeEditPanelSettings2"/>
+        <actionGroup ref="CloseEditPanelSettingsActionGroup" stepKey="closeEditPanelSettings2"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage"/>
         <seeElement selector="{{BannerOnBackend.messageContent('1', PageBuilderBannerMessageProperty.value)}}" stepKey="seeMessageContentStage"/>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <seeElement selector="{{BannerOnFrontend.messageContent('1', PageBuilderBannerMessageProperty.value)}}" stepKey="seeMessageContentStorefront"/>
@@ -324,8 +324,8 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
@@ -342,55 +342,55 @@
             <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="deleteImageFromStorage2">
                 <argument name="Image" value="PageBuilderBackgroundMobileImage_GIF"/>
             </actionGroup>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragBannerIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragBannerIntoStage">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <!-- Fill Out Edit Panel -->
         <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAppearanceProperty">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderBannerAppearance_Poster"/>
         </actionGroup>
-        <actionGroup ref="attachFileSlideOutPropertyActionGroup" stepKey="attachPageBuilderFile">
+        <actionGroup ref="AttachFileSlideOutPropertyActionGroup" stepKey="attachPageBuilderFile">
             <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
-        <actionGroup ref="attachFileSlideOutPropertyActionGroup" stepKey="attachPageBuilderMobileFile">
+        <actionGroup ref="AttachFileSlideOutPropertyActionGroup" stepKey="attachPageBuilderMobileFile">
             <argument name="property" value="PageBuilderBackgroundMobileImage_GIF"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <actionGroup ref="validateBackgroundImageActionGroup" stepKey="validateImageStage">
+        <actionGroup ref="ValidateBackgroundImageActionGroup" stepKey="validateImageStage">
             <argument name="section" value="BannerOnBackend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <!-- Validate desktop image is displayed before browser is resized -->
         <comment userInput="Validate desktop image is displayed before browser is resized" stepKey="commentDesktopImage"/>
-        <actionGroup ref="validateBackgroundImageContainerActionGroup" stepKey="validateImageOnStorefront1">
+        <actionGroup ref="ValidateBackgroundImageContainerActionGroup" stepKey="validateImageOnStorefront1">
             <argument name="section" value="BannerOnFrontend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <!-- Validate mobile image is displayed when browser is resized -->
         <comment userInput="Validate mobile image is displayed when browser is resized" stepKey="commentMobileImage"/>
         <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
-        <actionGroup ref="validateBackgroundImageContainerActionGroup" stepKey="validateMobileImageOnStorefront">
+        <actionGroup ref="ValidateBackgroundImageContainerActionGroup" stepKey="validateMobileImageOnStorefront">
             <argument name="section" value="BannerOnFrontend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundMobileImage_GIF"/>
         </actionGroup>
@@ -410,8 +410,8 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
@@ -422,52 +422,52 @@
             <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="deleteImageFromStorage">
                 <argument name="Image" value="PageBuilderBackgroundImage_JPG"/>
             </actionGroup>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragBannerIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragBannerIntoStage">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <!-- Fill Out Edit Panel -->
         <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAppearanceProperty">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderBannerAppearance_Poster"/>
         </actionGroup>
-        <actionGroup ref="attachFileSlideOutPropertyActionGroup" stepKey="attachPageBuilderFile">
+        <actionGroup ref="AttachFileSlideOutPropertyActionGroup" stepKey="attachPageBuilderFile">
             <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <actionGroup ref="validateBackgroundImageActionGroup" stepKey="validateImageStage">
+        <actionGroup ref="ValidateBackgroundImageActionGroup" stepKey="validateImageStage">
             <argument name="section" value="BannerOnBackend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <!-- Validate desktop image is displayed before browser is resized -->
         <comment userInput="Validate desktop image is displayed before browser is resized" stepKey="commentDesktopImage"/>
-        <actionGroup ref="validateBackgroundImageContainerActionGroup" stepKey="validateImageOnStorefront1">
+        <actionGroup ref="ValidateBackgroundImageContainerActionGroup" stepKey="validateImageOnStorefront1">
             <argument name="section" value="BannerOnFrontend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <!-- Validate desktop image still visible in mobile view -->
         <comment userInput="Validate desktop image still visible in mobile view" stepKey="commentDesktopImageMobileView"/>
         <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
-        <actionGroup ref="validateBackgroundImageContainerActionGroup" stepKey="validateImageOnStorefront2">
+        <actionGroup ref="ValidateBackgroundImageContainerActionGroup" stepKey="validateImageOnStorefront2">
             <argument name="section" value="BannerOnFrontend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
@@ -487,35 +487,35 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragBannerIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragBannerIntoStage">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAppearanceProperty">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderBannerAppearance_Poster"/>
         </actionGroup>
         <!-- Add Link To WYSIWYG -->
         <comment userInput="Add Link To WYSIWYG" stepKey="commentAddLink"/>
-        <actionGroup ref="insertLinkInWYSIWYGActionGroup" stepKey="insertLinkInWYSIWYG">
+        <actionGroup ref="InsertLinkInWYSIWYGActionGroup" stepKey="insertLinkInWYSIWYG">
             <argument name="url" value="{{ExternalLink.googleUrl}}"/>
             <argument name="textToDisplay" value="{{ExternalLink.googleUrl}}"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
@@ -523,13 +523,13 @@
         <!-- Save Page -->
         <comment userInput="Save Page" stepKey="commentSavePage"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Page Save -->
         <comment userInput="Validate Stage After Page Save" stepKey="commentValidateStage2"/>
         <seeElement selector="{{BannerOnBackend.wysiwygLinkUrl('1', ExternalLink.googleUrl)}}" stepKey="waitForBannerStage2"/>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <seeElement selector="{{BannerOnFrontend.wysiwygLinkUrl('1', ExternalLink.googleUrl)}}" stepKey="waitForBannerStorefront"/>
@@ -553,37 +553,37 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragBannerIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragBannerIntoStage">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <!-- Fill Out Edit Panel -->
         <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAppearanceProperty">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderBannerAppearance_Poster"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldActionGroup" stepKey="enterBackgroundColor">
+        <actionGroup ref="FillSlideOutPanelFieldActionGroup" stepKey="enterBackgroundColor">
             <argument name="property" value="PageBuilderBackgroundColor_Plaintext_Green"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelFieldActionGroup" stepKey="selectBannerButtonNeverShow">
+        <actionGroup ref="SelectSlideOutPanelFieldActionGroup" stepKey="selectBannerButtonNeverShow">
             <argument name="property" value="PageBuilderBannerShowButtonNeverProperty"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
@@ -595,7 +595,7 @@
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderBannerAppearance_Poster.value)}}" stepKey="seePosterStorefront"/>
@@ -628,37 +628,37 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragBannerIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragBannerIntoStage">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <!-- Fill Out Edit Panel -->
         <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAppearanceProperty">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderBannerAppearance_Poster"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldActionGroup" stepKey="enterBackgroundColor">
+        <actionGroup ref="FillSlideOutPanelFieldActionGroup" stepKey="enterBackgroundColor">
             <argument name="property" value="PageBuilderBackgroundColor_Plaintext_Green"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelFieldActionGroup" stepKey="selectBannerButtonShowOnHover">
+        <actionGroup ref="SelectSlideOutPanelFieldActionGroup" stepKey="selectBannerButtonShowOnHover">
             <argument name="property" value="PageBuilderBannerShowButtonOnHoverProperty"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
@@ -671,7 +671,7 @@
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderBannerAppearance_Poster.value)}}" stepKey="seePosterStorefront"/>
@@ -706,37 +706,37 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragBannerIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragBannerIntoStage">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <!-- Fill Out Edit Panel -->
         <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAppearanceProperty">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderBannerAppearance_Poster"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldActionGroup" stepKey="enterBackgroundColor">
+        <actionGroup ref="FillSlideOutPanelFieldActionGroup" stepKey="enterBackgroundColor">
             <argument name="property" value="PageBuilderBackgroundColor_Plaintext_Green"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelFieldActionGroup" stepKey="enterBannerOverlayNeverShow">
+        <actionGroup ref="SelectSlideOutPanelFieldActionGroup" stepKey="enterBannerOverlayNeverShow">
             <argument name="property" value="PageBuilderBannerShowContentOverlayNeverShowProperty"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
@@ -748,7 +748,7 @@
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderBannerAppearance_Poster.value)}}" stepKey="seePosterStorefront"/>
@@ -781,40 +781,40 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragBannerIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragBannerIntoStage">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <!-- Fill Out Edit Panel -->
         <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAppearanceProperty">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderBannerAppearance_Poster"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldActionGroup" stepKey="enterBackgroundColor">
+        <actionGroup ref="FillSlideOutPanelFieldActionGroup" stepKey="enterBackgroundColor">
             <argument name="property" value="PageBuilderBackgroundColor_Plaintext_Green"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelFieldActionGroup" stepKey="enterBannerOverlayShowOnHover">
+        <actionGroup ref="SelectSlideOutPanelFieldActionGroup" stepKey="enterBannerOverlayShowOnHover">
             <argument name="property" value="PageBuilderBannerShowContentOverlayOnHoverProperty"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBannerOverlayColor">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBannerOverlayColor">
             <argument name="property" value="PageBuilderBannerOverlayColor_Blue_Opaque"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
@@ -824,7 +824,7 @@
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderBannerAppearance_Poster.value)}}" stepKey="seeAppearanceStorefront"/>
@@ -853,48 +853,48 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragBannerIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragBannerIntoStage">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <!-- Fill Out Edit Panel -->
         <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAppearanceProperty">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderBannerAppearance_Poster"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldActionGroup" stepKey="enterBackgroundColor">
+        <actionGroup ref="FillSlideOutPanelFieldActionGroup" stepKey="enterBackgroundColor">
             <argument name="property" value="PageBuilderBackgroundColor_Plaintext_Green"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelFieldActionGroup" stepKey="selectBannerButtonShowOnHover">
+        <actionGroup ref="SelectSlideOutPanelFieldActionGroup" stepKey="selectBannerButtonShowOnHover">
             <argument name="property" value="PageBuilderBannerShowButtonOnHoverProperty"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelFieldActionGroup" stepKey="enterBannerOverlayShowOnHover">
+        <actionGroup ref="SelectSlideOutPanelFieldActionGroup" stepKey="enterBannerOverlayShowOnHover">
             <argument name="property" value="PageBuilderBannerShowContentOverlayOnHoverProperty"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBannerOverlayColor">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBannerOverlayColor">
             <argument name="property" value="PageBuilderBannerOverlayColor_Blue_Opaque"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelLinkUrlFieldActionGroup" stepKey="enterBannerLinkUrl">
+        <actionGroup ref="FillSlideOutPanelLinkUrlFieldActionGroup" stepKey="enterBannerLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlPropertyValidate"/>
             <argument name="selection" value="{{ExternalLink.url}}"/>
             <argument name="newTab" value="PageBuilderBannerNewTabDefaultProperty"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
@@ -909,7 +909,7 @@
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderBannerAppearance_Poster.value)}}" stepKey="seeAppearanceStorefront"/>
@@ -927,7 +927,7 @@
         <wait time="3" stepKey="waitArbitraryTimeForPotentialNavigationToOccurStorefront" />
         <seeCurrentUrlEquals url="{{PageBuilderBannerLinkUrlPropertyValidate.value}}" stepKey="seeThatUrlIsChangedToButtonUrlStorefront" />
         <!-- Validate Storefront Mobile -->
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront3">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront3">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <comment userInput="Validate Storefront Mobile" stepKey="commentValidateStorefrontMobile"/>
@@ -961,59 +961,59 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragBannerIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragBannerIntoStage">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <!-- Fill Out Edit Panel -->
         <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAppearanceProperty">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderAppearance_Poster"/>
         </actionGroup>
-        <actionGroup ref="addTextToTinyMCEActionGroup" stepKey="addTextToTinyMCE">
+        <actionGroup ref="AddTextToTinyMCEActionGroup" stepKey="addTextToTinyMCE">
             <argument name="property" value="PageBuilderBannerMessageProperty"/>
             <argument name="section" value="BannerOnConfigurationPanel"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelFieldActionGroup" stepKey="selectShowOverlay">
+        <actionGroup ref="SelectSlideOutPanelFieldActionGroup" stepKey="selectShowOverlay">
             <argument name="property" value="PageBuilderBannerShowContentOverlayAlwaysProperty"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldActionGroup" stepKey="enterOverlayColor">
+        <actionGroup ref="FillSlideOutPanelFieldActionGroup" stepKey="enterOverlayColor">
             <argument name="property" value="PageBuilderBannerOverlayColor_Blue_Opaque"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <actionGroup ref="validateOverlayPositionPosterActionGroup" stepKey="validateOverlayPositionStage">
+        <actionGroup ref="ValidateOverlayPositionPosterActionGroup" stepKey="validateOverlayPositionStage">
             <argument name="page" value="BannerOnBackend"/>
         </actionGroup>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
-        <actionGroup ref="validateOverlayPositionPosterActionGroup" stepKey="validateOverlayPositionStageAfterSave">
+        <actionGroup ref="ValidateOverlayPositionPosterActionGroup" stepKey="validateOverlayPositionStageAfterSave">
             <argument name="page" value="BannerOnBackend"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="validateOverlayPositionPosterActionGroup" stepKey="validateOverlayPositionStorefront">
+        <actionGroup ref="ValidateOverlayPositionPosterActionGroup" stepKey="validateOverlayPositionStorefront">
             <argument name="page" value="BannerOnFrontend"/>
         </actionGroup>
     </test>
@@ -1032,50 +1032,50 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragBannerIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragBannerIntoStage">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <!-- Fill Out Edit Panel -->
         <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAppearanceProperty">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderBannerAppearance_Poster"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelFieldActionGroup" stepKey="selectShowButtonAlwaysProperty">
+        <actionGroup ref="SelectSlideOutPanelFieldActionGroup" stepKey="selectShowButtonAlwaysProperty">
             <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <seeElementInDOM selector="{{BannerOnBackend.editableButtonOnStage('1')}}" stepKey="seeButtonIsEditable"/>
         <click selector="{{BannerOnBackend.editableButtonOnStage('1')}}" stepKey="clickButtonToEdit"/>
         <pressKey selector="{{BannerOnBackend.editableButtonOnStage('1')}}" userInput="{{PageBuilderButtonItemText_Common2.value}}" stepKey="enterButtonText"/>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage2">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="seeButtonTextOnForm">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="seeButtonTextOnForm">
             <argument name="property" value="PageBuilderBannerButtonTextProperty2"/>
         </actionGroup>
-        <actionGroup ref="closeEditPanelSettingsActionGroup" stepKey="closeEditPanelSettings"/>
+        <actionGroup ref="CloseEditPanelSettingsActionGroup" stepKey="closeEditPanelSettings"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <!-- Validate Storefront -->
@@ -1097,57 +1097,57 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragContentTypeIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragContentTypeIntoStage">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <!-- Update Values -->
         <comment userInput="Update Values" stepKey="commentUpdateValues"/>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAppearanceProperty">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderBannerAppearance_Poster"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldActionGroup" stepKey="enterBackgroundColor">
+        <actionGroup ref="FillSlideOutPanelFieldActionGroup" stepKey="enterBackgroundColor">
             <argument name="property" value="PageBuilderBackgroundColor_Hex_White"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAlignmentCenter">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterAlignmentCenter">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelFieldActionGroup" stepKey="enterBorder">
+        <actionGroup ref="SelectSlideOutPanelFieldActionGroup" stepKey="enterBorder">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBorderColor">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBorderColor">
             <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBorderWidth">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBorderWidth">
             <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBorderRadius">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBorderRadius">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterCssClasses">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterCssClasses">
             <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldMarginsActionGroup" stepKey="enterMargins">
+        <actionGroup ref="FillSlideOutPanelFieldMarginsActionGroup" stepKey="enterMargins">
             <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldPaddingActionGroup" stepKey="enterPadding">
+        <actionGroup ref="FillSlideOutPanelFieldPaddingActionGroup" stepKey="enterPadding">
             <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
@@ -1160,38 +1160,38 @@
         <seeElement selector="{{BannerOnBackend.cssClasses('1', PageBuilderAdvancedCssClassesPropertyThreeClasses.value)}}" stepKey="seeCSSClassesStage"/>
         <seeElement selector="{{BannerOnBackend.margins('1', PageBuilderMarginsPropertyUnique.value)}}" stepKey="seeMarginsStage"/>
         <seeElement selector="{{BannerOnBackend.posterPadding('1', PageBuilderPaddingPropertyUnique.value)}}" stepKey="seePaddingStage"/>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage2">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
-        <actionGroup ref="seeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateAlignment">
+        <actionGroup ref="SeeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateAlignment">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateBorder">
+        <actionGroup ref="SeeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateBorder">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderColor">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderColor">
             <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderWidth">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderWidth">
             <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderRadius">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderRadius">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateCssClasses">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateCssClasses">
             <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
         </actionGroup>
-        <actionGroup ref="seeInMarginFieldsSlideOutPanelActionGroup" stepKey="validateMargins">
+        <actionGroup ref="SeeInMarginFieldsSlideOutPanelActionGroup" stepKey="validateMargins">
             <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
         </actionGroup>
-        <actionGroup ref="seeInPaddingFieldsSlideOutPanelActionGroup" stepKey="validatePadding">
+        <actionGroup ref="SeeInPaddingFieldsSlideOutPanelActionGroup" stepKey="validatePadding">
             <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
-        <actionGroup ref="closeEditPanelSettingsActionGroup" stepKey="closeEditPanelSettings"/>
+        <actionGroup ref="CloseEditPanelSettingsActionGroup" stepKey="closeEditPanelSettings"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
         <seeElement selector="{{BannerOnBackend.appearance('1', PageBuilderBannerAppearance_Poster.value)}}" stepKey="seeAppearanceStage2"/>
@@ -1205,36 +1205,36 @@
         <seeElement selector="{{BannerOnBackend.posterPadding('1', PageBuilderPaddingPropertyUnique.value)}}" stepKey="seePaddingStage2"/>
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage3">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage3">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateAlignment2">
+        <actionGroup ref="SeeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateAlignment2">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateBorder2">
+        <actionGroup ref="SeeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateBorder2">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderColor2">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderColor2">
             <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderWidth2">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderWidth2">
             <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderRadius2">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderRadius2">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateCssClasses2">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateCssClasses2">
             <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
         </actionGroup>
-        <actionGroup ref="seeInMarginFieldsSlideOutPanelActionGroup" stepKey="validateMargins2">
+        <actionGroup ref="SeeInMarginFieldsSlideOutPanelActionGroup" stepKey="validateMargins2">
             <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
         </actionGroup>
-        <actionGroup ref="seeInPaddingFieldsSlideOutPanelActionGroup" stepKey="validatePadding2">
+        <actionGroup ref="SeeInPaddingFieldsSlideOutPanelActionGroup" stepKey="validatePadding2">
             <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderBannerAppearance_Poster.value)}}" stepKey="seeAppearanceStorefront"/>
@@ -1262,8 +1262,8 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
@@ -1280,104 +1280,104 @@
             <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="deleteImageFromStorage2">
                 <argument name="Image" value="PageBuilderBackgroundMobileImage_GIF"/>
             </actionGroup>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragBannerIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragBannerIntoStage">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <!-- Fill Out Edit Panel -->
         <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAppearanceProperty">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderBannerAppearance_Poster"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBannerMinHeight">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBannerMinHeight">
             <argument name="property" value="PageBuilderBannerMinimumHeightProperty"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldActionGroup" stepKey="enterBackgroundColor">
+        <actionGroup ref="FillSlideOutPanelFieldActionGroup" stepKey="enterBackgroundColor">
             <argument name="property" value="PageBuilderBackgroundColor_Hex_White"/>
         </actionGroup>
-        <actionGroup ref="attachFileSlideOutPropertyActionGroup" stepKey="attachImage">
+        <actionGroup ref="AttachFileSlideOutPropertyActionGroup" stepKey="attachImage">
             <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
-        <actionGroup ref="attachFileSlideOutPropertyGeneralActionGroup" stepKey="attachMobileImage">
+        <actionGroup ref="AttachFileSlideOutPropertyGeneralActionGroup" stepKey="attachMobileImage">
             <argument name="property" value="PageBuilderBackgroundMobileImage_GIF"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="selectBackgroundSize">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="selectBackgroundSize">
             <argument name="property" value="PageBuilderBackgroundSize_Contain"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelFieldActionGroup" stepKey="selectBackgroundPosition">
+        <actionGroup ref="SelectSlideOutPanelFieldActionGroup" stepKey="selectBackgroundPosition">
             <argument name="property" value="PageBuilderBackgroundPosition_Center"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelFieldActionGroup" stepKey="selectBackgroundAttachment">
+        <actionGroup ref="SelectSlideOutPanelFieldActionGroup" stepKey="selectBackgroundAttachment">
             <argument name="property" value="PageBuilderBackgroundAttachment_Fixed"/>
         </actionGroup>
-        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneralActionGroup" stepKey="selectBackgroundRepeat">
+        <actionGroup ref="ConditionalClickSlideOutPanelFieldGeneralActionGroup" stepKey="selectBackgroundRepeat">
             <argument name="property" value="PageBuilderBackgroundRepeat_Enabled"/>
         </actionGroup>
-        <actionGroup ref="addTextToTinyMCEActionGroup" stepKey="enterMessageText">
+        <actionGroup ref="AddTextToTinyMCEActionGroup" stepKey="enterMessageText">
             <argument name="property" value="PageBuilderBannerMessageProperty"/>
             <argument name="section" value="BannerOnConfigurationPanel"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelLinkUrlFieldActionGroup" stepKey="enterLink">
+        <actionGroup ref="FillSlideOutPanelLinkUrlFieldActionGroup" stepKey="enterLink">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
             <argument name="selection" value="{{ExternalLink.url}}"/>
             <argument name="newTab" value="PageBuilderBannerNewTabProperty"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelFieldActionGroup" stepKey="selectShowButton">
+        <actionGroup ref="SelectSlideOutPanelFieldActionGroup" stepKey="selectShowButton">
             <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldActionGroup" stepKey="enterButtonText">
+        <actionGroup ref="FillSlideOutPanelFieldActionGroup" stepKey="enterButtonText">
             <argument name="property" value="PageBuilderBannerButtonTextProperty2"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelFieldActionGroup" stepKey="selectButtonType">
+        <actionGroup ref="SelectSlideOutPanelFieldActionGroup" stepKey="selectButtonType">
             <argument name="property" value="PageBuilderBannerButtonTypeSecondaryProperty"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelFieldActionGroup" stepKey="selectShowOverlay">
+        <actionGroup ref="SelectSlideOutPanelFieldActionGroup" stepKey="selectShowOverlay">
             <argument name="property" value="PageBuilderBannerShowContentOverlayAlwaysProperty"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldActionGroup" stepKey="enterOverlayColor">
+        <actionGroup ref="FillSlideOutPanelFieldActionGroup" stepKey="enterOverlayColor">
             <argument name="property" value="PageBuilderBannerOverlayColor_Blue_Opaque"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAlignmentCenter">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterAlignmentCenter">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelFieldActionGroup" stepKey="enterBorder">
+        <actionGroup ref="SelectSlideOutPanelFieldActionGroup" stepKey="enterBorder">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBorderColor">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBorderColor">
             <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBorderWidth">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBorderWidth">
             <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBorderRadius">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBorderRadius">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterCssClasses">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterCssClasses">
             <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldMarginsActionGroup" stepKey="enterMargins">
+        <actionGroup ref="FillSlideOutPanelFieldMarginsActionGroup" stepKey="enterMargins">
             <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldPaddingActionGroup" stepKey="enterPadding">
+        <actionGroup ref="FillSlideOutPanelFieldPaddingActionGroup" stepKey="enterPadding">
             <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <seeElement selector="{{BannerOnBackend.appearance('1', PageBuilderBannerAppearance_Poster.value)}}" stepKey="seeAppearanceStage"/>
         <seeElement selector="{{BannerOnBackend.posterMinimumHeight('1', PageBuilderBannerMinimumHeightProperty.value)}}" stepKey="seeMinimumHeightStage"/>
-        <actionGroup ref="validateBackgroundAttributesWithNoImageActionGroup" stepKey="validateBackgroundAttributesStage">
+        <actionGroup ref="ValidateBackgroundAttributesWithNoImageActionGroup" stepKey="validateBackgroundAttributesStage">
             <argument name="section" value="BannerOnBackend"/>
             <argument name="backgroundColor" value="PageBuilderBackgroundColor_Hex_White"/>
             <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_Center"/>
@@ -1385,7 +1385,7 @@
             <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
             <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Fixed"/>
         </actionGroup>
-        <actionGroup ref="validateBackgroundImageActionGroup" stepKey="validateImageStage">
+        <actionGroup ref="ValidateBackgroundImageActionGroup" stepKey="validateImageStage">
             <argument name="section" value="BannerOnBackend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
@@ -1404,12 +1404,12 @@
         <seeElement selector="{{BannerOnBackend.margins('1', PageBuilderMarginsPropertyUnique.value)}}" stepKey="seeMarginsStage"/>
         <seeElement selector="{{BannerOnBackend.posterPadding('1', PageBuilderPaddingPropertyUnique.value)}}" stepKey="seePaddingStage"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
         <seeElement selector="{{BannerOnBackend.appearance('1', PageBuilderBannerAppearance_Poster.value)}}" stepKey="seeAppearanceStage2"/>
         <seeElement selector="{{BannerOnBackend.posterMinimumHeight('1', PageBuilderBannerMinimumHeightProperty.value)}}" stepKey="seeMinimumHeightStage2"/>
-        <actionGroup ref="validateBackgroundAttributesWithNoImageActionGroup" stepKey="validateBackgroundAttributesStage2">
+        <actionGroup ref="ValidateBackgroundAttributesWithNoImageActionGroup" stepKey="validateBackgroundAttributesStage2">
             <argument name="section" value="BannerOnBackend"/>
             <argument name="backgroundColor" value="PageBuilderBackgroundColor_Hex_White"/>
             <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_Center"/>
@@ -1417,7 +1417,7 @@
             <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
             <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Fixed"/>
         </actionGroup>
-        <actionGroup ref="validateBackgroundImageActionGroup" stepKey="validateImageStage2">
+        <actionGroup ref="ValidateBackgroundImageActionGroup" stepKey="validateImageStage2">
             <argument name="section" value="BannerOnBackend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
@@ -1437,92 +1437,92 @@
         <seeElement selector="{{BannerOnBackend.posterPadding('1', PageBuilderPaddingPropertyUnique.value)}}" stepKey="seePaddingStage2"/>
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage2">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="seeAppearance">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="seeAppearance">
             <argument name="property" value="PageBuilderBannerAppearance_Poster"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="seeMinimumHeight">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="seeMinimumHeight">
             <argument name="property" value="PageBuilderBannerMinimumHeightProperty"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="seeBackgroundColor">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="seeBackgroundColor">
             <argument name="property" value="PageBuilderBackgroundColor_Hex_White"/>
         </actionGroup>
-        <actionGroup ref="seeImageUploadedOnSlideOutActionGroup" stepKey="seeBackgroundImage">
+        <actionGroup ref="SeeImageUploadedOnSlideOutActionGroup" stepKey="seeBackgroundImage">
             <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
-        <actionGroup ref="seeImageUploadedOnSlideOutActionGroup" stepKey="seeBackgroundMobileImage">
+        <actionGroup ref="SeeImageUploadedOnSlideOutActionGroup" stepKey="seeBackgroundMobileImage">
             <argument name="property" value="PageBuilderBackgroundMobileImage_GIF"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="seeBackgroundSize">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="seeBackgroundSize">
             <argument name="property" value="PageBuilderBackgroundSize_Contain"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="seeBackgroundPosition">
+        <actionGroup ref="SeeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="seeBackgroundPosition">
             <argument name="property" value="PageBuilderBackgroundPosition_Center"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="seeBackgroundAttachment">
+        <actionGroup ref="SeeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="seeBackgroundAttachment">
             <argument name="property" value="PageBuilderBackgroundAttachment_Fixed"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsCheckedSlideOutPropertyActionGroup" stepKey="seeBackgroundRepeat">
+        <actionGroup ref="SeeOptionIsCheckedSlideOutPropertyActionGroup" stepKey="seeBackgroundRepeat">
             <argument name="property" value="PageBuilderBackgroundRepeat_Enabled"/>
         </actionGroup>
-        <actionGroup ref="validateTextInTinyMCEActionGroup" stepKey="seeMessageText">
+        <actionGroup ref="ValidateTextInTinyMCEActionGroup" stepKey="seeMessageText">
             <argument name="property" value="PageBuilderBannerMessageProperty"/>
             <argument name="section" value="BannerOnConfigurationPanel"/>
         </actionGroup>
-        <actionGroup ref="validateSlideOutPanelLinkUrlFieldActionGroup" stepKey="seeLink">
+        <actionGroup ref="ValidateSlideOutPanelLinkUrlFieldActionGroup" stepKey="seeLink">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
             <argument name="selection" value="{{ExternalLink.url}}"/>
             <argument name="newTab" value="PageBuilderBannerNewTabProperty"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="seeShowButton">
+        <actionGroup ref="SeeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="seeShowButton">
             <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="seeButtonText">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="seeButtonText">
             <argument name="property" value="PageBuilderBannerButtonTextProperty2"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="seeButtonType">
+        <actionGroup ref="SeeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="seeButtonType">
             <argument name="property" value="PageBuilderBannerButtonTypeSecondaryProperty"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="seeShowOverlay">
+        <actionGroup ref="SeeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="seeShowOverlay">
             <argument name="property" value="PageBuilderBannerShowContentOverlayAlwaysProperty"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="seeOverlayColor">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="seeOverlayColor">
             <argument name="property" value="PageBuilderBannerOverlayColor_Blue_Opaque"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateAlignment">
+        <actionGroup ref="SeeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateAlignment">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateBorder">
+        <actionGroup ref="SeeOptionIsSelectedSlideOutPropertyActionGroup" stepKey="validateBorder">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderColor">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderColor">
             <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderWidth">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderWidth">
             <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderRadius">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderRadius">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="validateCssClasses">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateCssClasses">
             <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
         </actionGroup>
-        <actionGroup ref="seeInMarginFieldsSlideOutPanelActionGroup" stepKey="validateMargins">
+        <actionGroup ref="SeeInMarginFieldsSlideOutPanelActionGroup" stepKey="validateMargins">
             <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
         </actionGroup>
-        <actionGroup ref="seeInPaddingFieldsSlideOutPanelActionGroup" stepKey="validatePadding">
+        <actionGroup ref="SeeInPaddingFieldsSlideOutPanelActionGroup" stepKey="validatePadding">
             <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderBannerAppearance_Poster.value)}}" stepKey="seeAppearanceStorefront"/>
         <seeElement selector="{{BannerOnFrontend.posterMinimumHeight('1', PageBuilderBannerMinimumHeightProperty.value)}}" stepKey="seeMinimumHeightStorefront"/>
-        <actionGroup ref="validateBackgroundAttributesWithNoImageActionGroup" stepKey="validateBackgroundAttributesStorefront">
+        <actionGroup ref="ValidateBackgroundAttributesWithNoImageActionGroup" stepKey="validateBackgroundAttributesStorefront">
             <argument name="section" value="BannerOnFrontend"/>
             <argument name="backgroundColor" value="PageBuilderBackgroundColor_Hex_White"/>
             <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_Center"/>
@@ -1530,7 +1530,7 @@
             <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
             <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Fixed"/>
         </actionGroup>
-        <actionGroup ref="validateBackgroundImageContainerActionGroup" stepKey="validateImageOnStorefront">
+        <actionGroup ref="ValidateBackgroundImageContainerActionGroup" stepKey="validateImageOnStorefront">
             <argument name="section" value="BannerOnFrontend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
@@ -1554,7 +1554,7 @@
         <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
         <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderBannerAppearance_Poster.value)}}" stepKey="seeMobileAppearanceStorefront"/>
         <seeElement selector="{{BannerOnFrontend.posterMinimumHeight('1', PageBuilderBannerMinimumHeightProperty.value)}}" stepKey="seeMobileMinimumHeightStorefront"/>
-        <actionGroup ref="validateBackgroundAttributesWithNoImageActionGroup" stepKey="validateMobileBackgroundAttributesStorefront">
+        <actionGroup ref="ValidateBackgroundAttributesWithNoImageActionGroup" stepKey="validateMobileBackgroundAttributesStorefront">
             <argument name="section" value="BannerOnFrontend"/>
             <argument name="backgroundColor" value="PageBuilderBackgroundColor_Hex_White"/>
             <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_Center"/>
@@ -1576,7 +1576,7 @@
         <seeElement selector="{{BannerOnFrontend.cssClasses('1', PageBuilderAdvancedCssClassesPropertyThreeClasses.value)}}" stepKey="seeMobileCSSClassesStorefront"/>
         <seeElement selector="{{BannerOnFrontend.margins('1', PageBuilderMarginsPropertyUnique.value)}}" stepKey="seeMobileMarginsStorefront"/>
         <seeElement selector="{{BannerOnFrontend.posterPadding('1', PageBuilderPaddingPropertyUnique.value)}}" stepKey="seeMobilePaddingStorefront"/>
-        <actionGroup ref="validateBackgroundImageContainerActionGroup" stepKey="validateMobileImageOnStorefront">
+        <actionGroup ref="ValidateBackgroundImageContainerActionGroup" stepKey="validateMobileImageOnStorefront">
             <argument name="section" value="BannerOnFrontend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundMobileImage_GIF"/>
         </actionGroup>
@@ -1597,33 +1597,33 @@
             <group value="pagebuilder-banner"/>
             <group value="pagebuilder-bannerPoster"/>
         </annotations>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" after="enterPageTitle" stepKey="expandMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" after="enterPageTitle" stepKey="expandMenuSection">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" after="commentConfigureContentType" stepKey="dragContentTypeToStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" after="commentConfigureContentType" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditPanel">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditPanel">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterMinHeightProperty">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterMinHeightProperty">
             <argument name="property" value="PageBuilderBannerMinimumHeightDefaultProperty"/>
         </actionGroup>
-        <actionGroup ref="validateContentTypeHeightEqualToMinHeightActionGroup" stepKey="validateContentTypeHeightBeforeSave">
+        <actionGroup ref="ValidateContentTypeHeightEqualToMinHeightActionGroup" stepKey="validateContentTypeHeightBeforeSave">
             <argument name="content" value="{{BannerOnBackend.wrapperCSS}}"/>
             <argument name="border" value="PageBuilderAdvancedBorderWidthProperty10"/>
         </actionGroup>
-        <actionGroup ref="validateContentTypeHeightEqualToMinHeightActionGroup" stepKey="validateContentTypeHeightAfterSave">
+        <actionGroup ref="ValidateContentTypeHeightEqualToMinHeightActionGroup" stepKey="validateContentTypeHeightAfterSave">
             <argument name="content" value="{{BannerOnBackend.wrapperCSS}}"/>
             <argument name="border" value="PageBuilderAdvancedBorderWidthProperty10"/>
         </actionGroup>
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="validateContentTypeHeightEqualToMinHeightActionGroup" stepKey="validateContentTypeHeightStorefront">
+        <actionGroup ref="ValidateContentTypeHeightEqualToMinHeightActionGroup" stepKey="validateContentTypeHeightStorefront">
             <argument name="content" value="{{BannerOnFrontend.wrapperCSS}}"/>
             <argument name="border" value="PageBuilderAdvancedBorderWidthProperty10"/>
         </actionGroup>
@@ -1641,7 +1641,7 @@
             <group value="pagebuilder-banner"/>
             <group value="pagebuilder-bannerPoster"/>
         </annotations>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAppearanceProperty">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderBannerAppearance_Poster"/>
         </actionGroup>
     </test>
@@ -1658,7 +1658,7 @@
             <group value="pagebuilder-banner"/>
             <group value="pagebuilder-bannerPoster"/>
         </annotations>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAppearanceProperty">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderBannerAppearance_Poster"/>
         </actionGroup>
     </test>
@@ -1677,46 +1677,46 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
             <closeTab stepKey="closeTab"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragBannerIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragBannerIntoStage">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <!-- Open edit panel and apply border radius/width where border radius > border width -->
         <comment userInput="Open edit panel and apply border radius/width where border radius greater than border width" stepKey="commentOpenEditPanel"/>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="selectAppearance">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="selectAppearance">
             <argument name="property" value="PageBuilderAppearance_Poster"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelFieldActionGroup" stepKey="enterBorder">
+        <actionGroup ref="SelectSlideOutPanelFieldActionGroup" stepKey="enterBorder">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBorderWidth">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBorderWidth">
             <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBorderRadius">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBorderRadius">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelFieldActionGroup" stepKey="enterBannerShowOverlayAlways">
+        <actionGroup ref="SelectSlideOutPanelFieldActionGroup" stepKey="enterBannerShowOverlayAlways">
             <argument name="property" value="PageBuilderBannerShowContentOverlayAlwaysProperty"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldActionGroup" stepKey="enterOverlayColor">
+        <actionGroup ref="FillSlideOutPanelFieldActionGroup" stepKey="enterOverlayColor">
             <argument name="property" value="PageBuilderBannerOverlayColor_Blue_Opaque"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage where border radius > border width -->
         <comment userInput="Validate Stage where border radius greater than border width" stepKey="commentValidateStage"/>
         <seeElement selector="{{BannerOnBackend.overlay('1')}}" stepKey="seeOverlay"/>
@@ -1730,7 +1730,7 @@
         <comment userInput="Validate Storefront where border radius greater than border width" stepKey="commentValidateStorefront"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <openNewTab stepKey="openNewTab"/>
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <executeJS function="return parseInt(getComputedStyle(document.evaluate(&quot;{{BannerOnFrontend.overlay('1')}}&quot;,document.body).iterateNext()).borderRadius, 10)" stepKey="overlayBorderRadiusStorefront"/>
@@ -1741,17 +1741,17 @@
         <switchToPreviousTab stepKey="switchBackToAdmin"/>
         <reloadPage stepKey="refreshPage"/>
         <waitForPageLoad stepKey="waitForPageRefresh"/>
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage2"/>
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage2"/>
         <!-- Open edit panel and apply border radius/width where border radius <= border width -->
         <comment userInput="Open edit panel and apply border radius/width where border radius less than or equal to border width" stepKey="commentOpenEditPanel2"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor"/>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage2">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBorderRadius2">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBorderRadius2">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty1"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings2"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings2"/>
         <!-- Validate Stage on where border radius <= border width -->
         <comment userInput="Validate Stage where border radius less than or equal to border width" stepKey="commentValidateStagePoster"/>
         <executeJS function="return parseInt(getComputedStyle(document.evaluate(&quot;{{BannerOnBackend.overlay('1')}}&quot;,document.body).iterateNext()).borderRadius, 10)" stepKey="overlayBorderRadius2" />
@@ -1764,7 +1764,7 @@
         <comment userInput="Validate Storefront where border radius less than or equal to border width" stepKey="commentValidateStorefront2"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage2"/>
         <switchToNextTab stepKey="switchBackToStorefront" />
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront2">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront2">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <executeJS function="return parseInt(getComputedStyle(document.evaluate(&quot;{{BannerOnFrontend.overlay('1')}}&quot;,document.body).iterateNext()).borderRadius, 10)" stepKey="overlayBorderRadiusStorefront2" />
@@ -1788,75 +1788,75 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <!-- Add Column to Stage -->
         <comment userInput="Add Column to Stage" stepKey="addColumnToStage"/>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <!-- Duplicate column to achieve 3/12 width -->
         <comment userInput="Duplicate column to achieve 3/12 width" stepKey="duplicateColumn"/>
-        <actionGroup ref="duplicateContentTypeActionGroup" stepKey="duplicateContentType">
+        <actionGroup ref="DuplicateContentTypeActionGroup" stepKey="duplicateContentType">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <!-- Add Banner to Stage -->
         <comment userInput="Add Banner to Stage" stepKey="addBannerToStage"/>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionMedia">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionMedia">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToContainerActionGroup" stepKey="dragBannerOntoColumn">
+        <actionGroup ref="DragContentTypeToContainerActionGroup" stepKey="dragBannerOntoColumn">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openEditPanelOnStage">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditPanelOnStage">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <!-- Fill Out Edit Panel -->
         <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAppearanceProperty">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderAppearance_Poster"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldActionGroup" stepKey="enterBackgroundColor">
+        <actionGroup ref="FillSlideOutPanelFieldActionGroup" stepKey="enterBackgroundColor">
             <argument name="property" value="PageBuilderBackgroundColor_RGB_Blue"/>
         </actionGroup>
-        <actionGroup ref="addTextToTinyMCEActionGroup" stepKey="enterMessageText">
+        <actionGroup ref="AddTextToTinyMCEActionGroup" stepKey="enterMessageText">
             <argument name="property" value="PageBuilderBannerMessagePropertyLong"/>
             <argument name="section" value="BannerOnConfigurationPanel"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelFieldActionGroup" stepKey="selectShowButton">
+        <actionGroup ref="SelectSlideOutPanelFieldActionGroup" stepKey="selectShowButton">
             <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldActionGroup" stepKey="enterButtonText">
+        <actionGroup ref="FillSlideOutPanelFieldActionGroup" stepKey="enterButtonText">
             <argument name="property" value="PageBuilderBannerButtonTextPropertyLong"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelFieldActionGroup" stepKey="selectShowOverlay">
+        <actionGroup ref="SelectSlideOutPanelFieldActionGroup" stepKey="selectShowOverlay">
             <argument name="property" value="PageBuilderBannerShowContentOverlayAlwaysProperty"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldActionGroup" stepKey="enterOverlayColor">
+        <actionGroup ref="FillSlideOutPanelFieldActionGroup" stepKey="enterOverlayColor">
             <argument name="property" value="PageBuilderBannerOverlayColor_Blue_Opaque"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelFieldActionGroup" stepKey="enterBorder">
+        <actionGroup ref="SelectSlideOutPanelFieldActionGroup" stepKey="enterBorder">
             <argument name="property" value="PageBuilderAdvancedBorderPropertySolid"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBorderColor">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBorderColor">
             <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBorderWidth">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterBorderWidth">
             <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <actionGroup ref="validateOverlayAndButtonPosterActionGroup" stepKey="validateBannerOnStage">
+        <actionGroup ref="ValidateOverlayAndButtonPosterActionGroup" stepKey="validateBannerOnStage">
             <argument name="column" value="ColumnOnBackend"/>
             <argument name="element" value="BannerOnBackend"/>
             <argument name="elementBorderWidth" value="PageBuilderAdvancedBorderWidthProperty10"/>
@@ -1865,10 +1865,10 @@
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="validateOverlayAndButtonPosterActionGroup" stepKey="validateBannerOnStorefront">
+        <actionGroup ref="ValidateOverlayAndButtonPosterActionGroup" stepKey="validateBannerOnStorefront">
             <argument name="column" value="ColumnOnFrontend"/>
             <argument name="element" value="BannerOnFrontend"/>
             <argument name="elementBorderWidth" value="PageBuilderAdvancedBorderWidthProperty10"/>
@@ -1890,48 +1890,48 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <!-- Add Banner To Row -->
         <comment userInput="Add Banner To Row" stepKey="commentAddBannerToRow"/>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragBannerIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragBannerIntoStage">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openBannerEditMenuOnStage">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openBannerEditMenuOnStage">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <!-- Fill Out Banner Edit Panel -->
         <comment userInput="Fill Out Banner Edit Panel" stepKey="commentFillBannerEditPanel"/>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAppearanceProperty">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderBannerAppearance_Poster"/>
         </actionGroup>
-        <actionGroup ref="addTextToTinyMCEActionGroup" stepKey="enterMessageText">
+        <actionGroup ref="AddTextToTinyMCEActionGroup" stepKey="enterMessageText">
             <argument name="property" value="PageBuilderBannerMessageProperty"/>
             <argument name="section" value="BannerOnConfigurationPanel"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelFieldActionGroup" stepKey="selectShowButton">
+        <actionGroup ref="SelectSlideOutPanelFieldActionGroup" stepKey="selectShowButton">
             <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelFieldActionGroup" stepKey="selectButtonType">
+        <actionGroup ref="SelectSlideOutPanelFieldActionGroup" stepKey="selectButtonType">
             <argument name="property" value="PageBuilderBannerButtonTypePrimaryProperty"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneralActionGroup" stepKey="enterButtonText">
+        <actionGroup ref="FillSlideOutPanelFieldGeneralActionGroup" stepKey="enterButtonText">
             <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAlignmentDefault">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterAlignmentDefault">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveBannerEditPanelSettings"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveBannerEditPanelSettings"/>
         <executeJS function="return {{BannerOnBackend.overlayJS('1')}}.getBoundingClientRect().left" stepKey="overlayLeftPosition"/>
         <executeJS function="return document.evaluate(&quot;{{BannerOnBackend.button('1')}}&quot;, document.body).iterateNext().getBoundingClientRect().left" stepKey="buttonLeftPosition"/>
         <executeJS function="return Math.abs(Math.round({$buttonLeftPosition}-{$overlayLeftPosition}-{{PageBuilderPaddingProperty40.paddingLeft}}))" stepKey="buttonMinusOverlayMinusPadding"/>
@@ -1947,14 +1947,14 @@
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusBannerEditor"/>
         <!-- Fill Out Row Edit Panel -->
         <comment userInput="Fill Out Row Edit Panel" stepKey="commentFillRowEditPanel"/>
-        <actionGroup ref="openPageBuilderEditPanelActionGroup" stepKey="openRowEditMenuOnStage">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openRowEditMenuOnStage">
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <comment userInput="Update Values" stepKey="commentUpdateValues"/>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAlignment">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterAlignment">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyRight"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveRowEditPanelSettings"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveRowEditPanelSettings"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusRowEditor"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
@@ -1971,7 +1971,7 @@
             <actualResult type="variable">grabComputedTextAlign</actualResult>
         </assertEquals>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
         <executeJS function="return {{BannerOnBackend.overlayJS('1')}}.getBoundingClientRect().right" stepKey="overlayRightPositionAfterSave"/>
@@ -1988,7 +1988,7 @@
         </assertEquals>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <executeJS function="return {{BannerOnFrontend.overlayJS('1')}}.getBoundingClientRect().right" stepKey="overlayRightPositionStoreFront"/>

@@ -21,7 +21,7 @@
             <group value="pagebuilder-slide"/>
             <group value="pagebuilder-slideItemCollageCenter"/>
         </annotations>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAppearanceProperty">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
         </actionGroup>
     </test>
@@ -46,10 +46,10 @@
         <after>
             <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG" before="logout"/>
         </after>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAppearanceProperty">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
         </actionGroup>
-        <actionGroup ref="inlineEditTextAreaFromStageActionGroup" stepKey="inlineEdit">
+        <actionGroup ref="InlineEditTextAreaFromStageActionGroup" stepKey="inlineEdit">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
             <argument name="content" value="{{PageBuilderSlideItemContent_Slide1.value}}"/>
         </actionGroup>
@@ -58,7 +58,7 @@
             <expectedResult type="string">{{PageBuilderSlideItemContent_Slide1.value}}</expectedResult>
             <actualResult type="variable">seeMessageText</actualResult>
         </assertEquals>
-        <actionGroup ref="assertTextareaContainsValueActionGroup" stepKey="seeMessageContentStage">
+        <actionGroup ref="AssertTextareaContainsValueActionGroup" stepKey="seeMessageContentStage">
             <argument name="selector" value="{{PageBuilderStage.inlineTextAreaEditor(PageBuilderSlideContentType.role, '1')}}"/>
             <argument name="value" value="{{PageBuilderSlideItemContent_Slide1.value}}"/>
         </actionGroup>
@@ -84,14 +84,14 @@
         <after>
             <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="enableTinyMCE4" before="logout"/>
         </after>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAppearanceProperty">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
         </actionGroup>
-        <actionGroup ref="inlineEditTextAreaFromStageActionGroup" stepKey="inlineEdit">
+        <actionGroup ref="InlineEditTextAreaFromStageActionGroup" stepKey="inlineEdit">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
             <argument name="content" value="{{PageBuilderSlideItemContent_Slide1.value}}"/>
         </actionGroup>
-        <actionGroup ref="assertTextareaContainsValueActionGroup" stepKey="seeMessageContentStage">
+        <actionGroup ref="AssertTextareaContainsValueActionGroup" stepKey="seeMessageContentStage">
             <argument name="selector" value="{{PageBuilderStage.inlineTextAreaEditor(PageBuilderSlideContentType.role, '1')}}"/>
             <argument name="value" value="{{PageBuilderSlideItemContent_Slide1.value}}"/>
         </actionGroup>
@@ -110,10 +110,10 @@
             <group value="pagebuilder-slide"/>
             <group value="pagebuilder-slideItemCollageCenter"/>
         </annotations>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAppearanceProperty">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
         </actionGroup>
-        <actionGroup ref="inlineEditWYSIWYGFromStageForSlideCollageAppearancesInSmallColumnsActionGroup" stepKey="inlineEdit">
+        <actionGroup ref="InlineEditWYSIWYGFromStageForSlideCollageAppearancesInSmallColumnsActionGroup" stepKey="inlineEdit">
             <argument name="contentType" value="PageBuilderSlideContentType"/>
             <argument name="content" value="{{PageBuilderSlideItemContent_Slide1.value}}"/>
         </actionGroup>
@@ -133,8 +133,8 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
@@ -151,54 +151,54 @@
             <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="deleteImageFromStorage2">
                 <argument name="Image" value="PageBuilderBackgroundMobileImage_GIF"/>
             </actionGroup>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragSliderIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragSliderIntoStage">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditPanelAfterDrop">
+        <actionGroup ref="OpenPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditPanelAfterDrop">
             <argument name="section" value="SlideOnBackend"/>
         </actionGroup>
         <!-- Fill Out Edit Panel -->
         <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAppearanceProperty">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
         </actionGroup>
-        <actionGroup ref="attachFileSlideOutPropertyActionGroup" stepKey="attachPageBuilderFile">
+        <actionGroup ref="AttachFileSlideOutPropertyActionGroup" stepKey="attachPageBuilderFile">
             <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
-        <actionGroup ref="attachFileSlideOutPropertyActionGroup" stepKey="attachPageBuilderMobileFile">
+        <actionGroup ref="AttachFileSlideOutPropertyActionGroup" stepKey="attachPageBuilderMobileFile">
             <argument name="property" value="PageBuilderBackgroundMobileImage_GIF"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <actionGroup ref="validateBackgroundImageActionGroup" stepKey="validateImageStage">
+        <actionGroup ref="ValidateBackgroundImageActionGroup" stepKey="validateImageStage">
             <argument name="section" value="SlideOnBackend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <!-- Validate desktop image is displayed before browser is resized -->
         <comment userInput="Validate desktop image is displayed before browser is resized" stepKey="commentDesktopImage"/>
-        <actionGroup ref="validateBackgroundImageContainerActionGroup" stepKey="validateImageStorefront">
+        <actionGroup ref="ValidateBackgroundImageContainerActionGroup" stepKey="validateImageStorefront">
             <argument name="section" value="SlideOnFrontend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <!-- Validate mobile image is displayed when browser is resized -->
         <comment userInput="Validate mobile image is displayed when browser is resized" stepKey="commentMobileImage"/>
         <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
-        <actionGroup ref="validateBackgroundImageContainerActionGroup" stepKey="validateMobileImageStorefront">
+        <actionGroup ref="ValidateBackgroundImageContainerActionGroup" stepKey="validateMobileImageStorefront">
             <argument name="section" value="SlideOnFrontend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundMobileImage_GIF"/>
         </actionGroup>
@@ -218,8 +218,8 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
@@ -230,51 +230,51 @@
             <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="deleteImageFromStorage">
                 <argument name="Image" value="PageBuilderBackgroundImage_JPG"/>
             </actionGroup>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragSlideIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragSlideIntoStage">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditPanelAfterDrop">
+        <actionGroup ref="OpenPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditPanelAfterDrop">
             <argument name="section" value="SlideOnBackend"/>
         </actionGroup>
         <!-- Fill Out Edit Panel -->
         <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAppearanceProperty">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
         </actionGroup>
-        <actionGroup ref="attachFileSlideOutPropertyActionGroup" stepKey="attachPageBuilderFile">
+        <actionGroup ref="AttachFileSlideOutPropertyActionGroup" stepKey="attachPageBuilderFile">
             <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <actionGroup ref="validateBackgroundImageActionGroup" stepKey="validateImageStage">
+        <actionGroup ref="ValidateBackgroundImageActionGroup" stepKey="validateImageStage">
             <argument name="section" value="SlideOnBackend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <!-- Validate desktop image is displayed before browser is resized -->
         <comment userInput="Validate desktop image is displayed before browser is resized" stepKey="commentDesktopImage"/>
-        <actionGroup ref="validateBackgroundImageContainerActionGroup" stepKey="validateImageStorefront">
+        <actionGroup ref="ValidateBackgroundImageContainerActionGroup" stepKey="validateImageStorefront">
             <argument name="section" value="SlideOnFrontend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <!-- Validate desktop image still visible in mobile view -->
         <comment userInput="Validate desktop image still visible in mobile view" stepKey="commentDesktopImageMobileView"/>
         <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
-        <actionGroup ref="validateBackgroundImageContainerActionGroup" stepKey="validateMobileImageStorefront">
+        <actionGroup ref="ValidateBackgroundImageContainerActionGroup" stepKey="validateMobileImageStorefront">
             <argument name="section" value="SlideOnFrontend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
@@ -292,7 +292,7 @@
             <group value="pagebuilder-slide"/>
             <group value="pagebuilder-slideItemCollageCenter"/>
         </annotations>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAppearanceProperty">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
         </actionGroup>
         <seeElement selector="{{SlideOnBackend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="seeAppearanceStage"/>
@@ -312,7 +312,7 @@
             <group value="pagebuilder-slide"/>
             <group value="pagebuilder-slideItemCollageCenter"/>
         </annotations>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAppearanceProperty">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
         </actionGroup>
         <seeElement selector="{{SlideOnBackend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="seeAppearanceStage"/>
@@ -332,7 +332,7 @@
             <group value="pagebuilder-slide"/>
             <group value="pagebuilder-slideItemCollageCenter"/>
         </annotations>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAppearanceProperty">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
         </actionGroup>
         <seeElement selector="{{SlideOnBackend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="seeAppearanceStage"/>
@@ -352,7 +352,7 @@
             <group value="pagebuilder-slide"/>
             <group value="pagebuilder-slideItemCollageCenter"/>
         </annotations>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAppearanceProperty">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
         </actionGroup>
         <seeElement selector="{{SlideOnBackend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="seeAppearanceStage"/>
@@ -372,7 +372,7 @@
             <group value="pagebuilder-slide"/>
             <group value="pagebuilder-slideItemCollageCenter"/>
         </annotations>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAppearanceProperty">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
         </actionGroup>
         <seeElement selector="{{SlideOnBackend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="seeAppearanceStage"/>
@@ -394,22 +394,22 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAppearanceProperty">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
         </actionGroup>
-        <actionGroup ref="validateOverlayPositionCollageCenterActionGroup" stepKey="validateOverlayPositionStage">
+        <actionGroup ref="ValidateOverlayPositionCollageCenterActionGroup" stepKey="validateOverlayPositionStage">
             <argument name="page" value="SlideOnBackend"/>
         </actionGroup>
-        <actionGroup ref="validateOverlayPositionCollageCenterActionGroup" stepKey="validateOverlayPositionStageAfterSave">
+        <actionGroup ref="ValidateOverlayPositionCollageCenterActionGroup" stepKey="validateOverlayPositionStageAfterSave">
             <argument name="page" value="SlideOnBackend"/>
         </actionGroup>
-        <actionGroup ref="validateOverlayPositionCollageCenterActionGroup" stepKey="validateOverlayPositionStorefront">
+        <actionGroup ref="ValidateOverlayPositionCollageCenterActionGroup" stepKey="validateOverlayPositionStorefront">
             <argument name="page" value="SlideOnFrontend"/>
         </actionGroup>
     </test>
@@ -426,7 +426,7 @@
             <group value="pagebuilder-slide"/>
             <group value="pagebuilder-slideItemCollageCenter"/>
         </annotations>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAppearanceProperty">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
         </actionGroup>
     </test>
@@ -443,10 +443,10 @@
             <group value="pagebuilder-slide"/>
             <group value="pagebuilder-slideItemCollageCenter"/>
         </annotations>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAppearanceProperty">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldPaddingActionGroup" stepKey="enterPadding">
+        <actionGroup ref="FillSlideOutPanelFieldPaddingActionGroup" stepKey="enterPadding">
             <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
         <seeElement selector="{{SlideOnBackend.collageAlignment('1', PageBuilderAdvancedAlignmentPropertyCenter.value)}}" stepKey="seeAlignmentStage"/>
@@ -456,7 +456,7 @@
         <seeElement selector="{{SlideOnBackend.collageBorderRadius('1', PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="seeBorderRadiusStage"/>
         <seeElement selector="{{SlideOnBackend.collageMargins('1', PageBuilderMarginsPropertyUnique.value)}}" stepKey="seeMarginsStage"/>
         <seeElement selector="{{SlideOnBackend.collagePadding('1', PageBuilderPaddingPropertyUnique.value)}}" stepKey="seePaddingStage"/>
-        <actionGroup ref="seeInPaddingFieldsSlideOutPanelActionGroup" stepKey="validatePadding">
+        <actionGroup ref="SeeInPaddingFieldsSlideOutPanelActionGroup" stepKey="validatePadding">
             <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
         <seeElement selector="{{SlideOnBackend.collageAlignment('1', PageBuilderAdvancedAlignmentPropertyCenter.value)}}" stepKey="seeAlignmentStage2"/>
@@ -466,7 +466,7 @@
         <seeElement selector="{{SlideOnBackend.collageBorderRadius('1', PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="seeBorderRadiusStage2"/>
         <seeElement selector="{{SlideOnBackend.collageMargins('1', PageBuilderMarginsPropertyUnique.value)}}" stepKey="seeMarginsStage2"/>
         <seeElement selector="{{SlideOnBackend.collagePadding('1', PageBuilderPaddingPropertyUnique.value)}}" stepKey="seePaddingStage2"/>
-        <actionGroup ref="seeInPaddingFieldsSlideOutPanelActionGroup" stepKey="validatePadding2">
+        <actionGroup ref="SeeInPaddingFieldsSlideOutPanelActionGroup" stepKey="validatePadding2">
             <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
         <seeElement selector="{{SlideOnFrontend.collagePadding('1', PageBuilderPaddingPropertyUnique.value)}}" stepKey="seePaddingStorefront"/>
@@ -484,10 +484,10 @@
             <group value="pagebuilder-slide"/>
             <group value="pagebuilder-slideItemCollageCenter"/>
         </annotations>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAppearanceProperty">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldPaddingActionGroup" stepKey="enterPadding">
+        <actionGroup ref="FillSlideOutPanelFieldPaddingActionGroup" stepKey="enterPadding">
             <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
         <seeElement selector="{{SlideOnBackend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="seeAppearanceStage"/>
@@ -509,10 +509,10 @@
         <seeElement selector="{{SlideOnBackend.collageBorderRadius('1', PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="seeBorderRadiusStage2"/>
         <seeElement selector="{{SlideOnBackend.collageMargins('1', PageBuilderMarginsPropertyUnique.value)}}" stepKey="seeMarginsStage2"/>
         <seeElement selector="{{SlideOnBackend.collagePadding('1', PageBuilderPaddingPropertyUnique.value)}}" stepKey="seePaddingStage2"/>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="seeAppearance">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="seeAppearance">
             <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
         </actionGroup>
-        <actionGroup ref="seeInPaddingFieldsSlideOutPanelActionGroup" stepKey="validatePadding">
+        <actionGroup ref="SeeInPaddingFieldsSlideOutPanelActionGroup" stepKey="validatePadding">
             <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
         <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="seeAppearanceStorefront"/>
@@ -535,53 +535,53 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragSliderIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragSliderIntoStage">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditPanelAfterDrop">
+        <actionGroup ref="OpenPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditPanelAfterDrop">
             <argument name="section" value="SlideOnBackend"/>
         </actionGroup>
         <!-- Fill Out Edit Panel -->
         <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAppearance">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterAppearance">
             <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelFieldActionGroup" stepKey="selectShowButtonAlwaysProperty">
+        <actionGroup ref="SelectSlideOutPanelFieldActionGroup" stepKey="selectShowButtonAlwaysProperty">
             <argument name="property" value="PageBuilderSlideItemShowButton_Always"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldActionGroup" stepKey="enterButtonText">
+        <actionGroup ref="FillSlideOutPanelFieldActionGroup" stepKey="enterButtonText">
             <argument name="property" value="PageBuilderSlideItemButtonText_Html"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <seeElement selector="{{SlideOnBackend.buttonText('1', PageBuilderSlideItemButtonText_Html.value)}}" stepKey="seeButtonTextStage"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
-        <actionGroup ref="openPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditPanel">
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="OpenPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditPanel">
             <argument name="section" value="SlideOnBackend"/>
         </actionGroup>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
-        <actionGroup ref="seeInFieldSlideOutPropertyActionGroup" stepKey="seeButtonTextOnForm">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="seeButtonTextOnForm">
             <argument name="property" value="PageBuilderSlideItemButtonText_Html"/>
         </actionGroup>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
         <seeElement selector="{{SlideOnBackend.buttonText('1', PageBuilderSlideItemButtonText_Html.value)}}" stepKey="seeButtonTextStage2"/>
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <!-- Validate Storefront -->
@@ -603,33 +603,33 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
+        <actionGroup ref="AddPageBuilderPageTitleActionGroup" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageActionGroup" stepKey="dragSliderIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragSliderIntoStage">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditPanelAfterDrop">
+        <actionGroup ref="OpenPageBuilderEditPanelSmallByIndexActionGroup" stepKey="openEditPanelAfterDrop">
             <argument name="section" value="SlideOnBackend"/>
         </actionGroup>
         <!-- Fill Out Edit Panel -->
         <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAppearance">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterAppearance">
             <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelFieldActionGroup" stepKey="selectShowButtonAlwaysProperty">
+        <actionGroup ref="SelectSlideOutPanelFieldActionGroup" stepKey="selectShowButtonAlwaysProperty">
             <argument name="property" value="PageBuilderSlideItemShowButton_Always"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="SaveEditPanelSettingsActionGroup" stepKey="saveEditPanelSettings"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
@@ -638,11 +638,11 @@
         <pressKey selector="{{SlideOnBackend.editableButtonItemElement('1')}}" userInput="{{PageBuilderSlideItemButtonText_Non_Breaking_Space.value}}" stepKey="enterButtonText"/>
         <see selector="{{SlideOnBackend.editableButtonItemElement('1')}}" userInput="{{PageBuilderSlideItemButtonText_Non_Breaking_Space.value}}" stepKey="seeStageNBSPBannerButtonText"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage2"/>
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage2"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
         <see selector="{{SlideOnBackend.editableButtonItemElement('1')}}" userInput="{{PageBuilderSlideItemButtonText_Non_Breaking_Space.value}}" stepKey="seeStageNBSPBannerButtonTextAfterSave"/>
-        <actionGroup ref="navigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <!-- Validate Storefront -->
@@ -662,16 +662,16 @@
             <group value="pagebuilder-slider"/>
             <group value="pagebuilder-sliderCollageCenter"/>
         </annotations>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAppearanceProperty">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
         </actionGroup>
-        <actionGroup ref="validateOverlayAndButtonCollageActionGroup" stepKey="validateSlideOnStage">
+        <actionGroup ref="ValidateOverlayAndButtonCollageActionGroup" stepKey="validateSlideOnStage">
             <argument name="column" value="ColumnOnBackend"/>
             <argument name="element" value="SlideOnBackend"/>
             <argument name="elementBorderWidth" value="PageBuilderAdvancedBorderWidthProperty10"/>
             <argument name="diffThreshold" value="2"/>
         </actionGroup>
-        <actionGroup ref="validateOverlayAndButtonCollageActionGroup" stepKey="validateSlideOnStorefront">
+        <actionGroup ref="ValidateOverlayAndButtonCollageActionGroup" stepKey="validateSlideOnStorefront">
             <argument name="column" value="ColumnOnFrontend"/>
             <argument name="element" value="SlideOnFrontend"/>
             <argument name="elementBorderWidth" value="PageBuilderAdvancedBorderWidthProperty10"/>
@@ -691,7 +691,7 @@
             <group value="pagebuilder-slide"/>
             <group value="pagebuilder-sliderCollageCenter"/>
         </annotations>
-        <actionGroup ref="chooseVisualSelectOptionActionGroup" stepKey="enterAppearanceProperty">
+        <actionGroup ref="ChooseVisualSelectOptionActionGroup" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
         </actionGroup>
         <executeJS function="return Math.abs(Math.round({$buttonLeftPosition}-{$overlayLeftPosition}-30))" stepKey="buttonMinusOverlayMinusPadding"/>
