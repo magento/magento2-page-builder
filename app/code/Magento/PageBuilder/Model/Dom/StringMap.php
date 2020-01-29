@@ -28,40 +28,52 @@ class StringMap implements StringMapInterface
 
     /**
      * HtmlDocument constructor.
+     *
      * @param ObjectManagerInterface $objectManager
      * @param GtDomStringMap $stringMap
      */
     public function __construct(
         ObjectManagerInterface $objectManager,
-        string $stringMap
+        GtDomStringMap $stringMap
     ) {
         $this->objectManager = $objectManager;
         $this->stringMap = $stringMap;
     }
 
-
+    /**
+     * @inheritDoc
+     */
     public function __isset(string $name): bool
     {
         return $this->stringMap->__isset($name);
     }
 
+    /**
+     * @inheritDoc
+     */
     public function __unset(string $name): void
     {
         $this->stringMap->__unset($name);
     }
 
+    /**
+     * @inheritDoc
+     */
     public function __get(string $name): ?string
     {
         return $this->stringMap->__get($name);
     }
 
+    /**
+     * @inheritDoc
+     */
     public function __set(string $name, string $value): void
     {
         $this->stringMap->__set($name, $value);
     }
 
     /**
-     * @link https://php.net/manual/en/arrayaccess.offsetexists.php
+     * @inheritDoc
      */
     public function offsetExists($offset): bool
     {
@@ -69,7 +81,7 @@ class StringMap implements StringMapInterface
     }
 
     /**
-     * @link https://php.net/manual/en/arrayaccess.offsetget.php
+     * @inheritDoc
      */
     public function offsetGet($offset): ?string
     {
@@ -77,7 +89,7 @@ class StringMap implements StringMapInterface
     }
 
     /**
-     * @link https://php.net/manual/en/arrayaccess.offsetset.php
+     * @inheritDoc
      */
     public function offsetSet($offset, $value): void
     {
@@ -85,7 +97,7 @@ class StringMap implements StringMapInterface
     }
 
     /**
-     * @link https://php.net/manual/en/arrayaccess.offsetunset.php
+     * @inheritDoc
      */
     public function offsetUnset($offset): void
     {

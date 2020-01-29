@@ -27,16 +27,16 @@ class XmlDocument implements XmlDocumentInterface
     private $document;
 
     /**
-     * HtmlDocument constructor.
+     * XmlDocument constructor.
+     *
      * @param ObjectManagerInterface $objectManager
-     * @param GtDomXMLDocument $document
+     * @param string $document
      */
     public function __construct(
         ObjectManagerInterface $objectManager,
-        GtDomXMLDocument $document
+        string $document = ""
     ) {
         $this->objectManager = $objectManager;
-        $this->document = $document;
+        $this->document = $this->objectManager->create(GtDomXmlDocument::class, [ 'document' => $document ]);
     }
-
 }

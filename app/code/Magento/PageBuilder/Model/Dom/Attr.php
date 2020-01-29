@@ -44,6 +44,6 @@ class Attr implements AttrInterface
      */
     public function remove(): AttrInterface
     {
-        return $this->objectManager->create(AttrInterface::class, [ $this->attr->remove() ]);
+        return $this->objectManager->create(AttrInterface::class, [ 'attr' => $this->attr->remove() ]);
     }
 }

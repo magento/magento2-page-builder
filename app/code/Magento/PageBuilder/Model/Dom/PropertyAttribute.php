@@ -14,5 +14,4 @@ use Magento\PageBuilder\Model\Dom\Adapter\PropertyAttributeInterface;
  */
 class PropertyAttribute implements PropertyAttributeInterface
 {
-
 }

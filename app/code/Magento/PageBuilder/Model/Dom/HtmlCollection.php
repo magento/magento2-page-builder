@@ -7,7 +7,10 @@ declare(strict_types=1);
 
 namespace Magento\PageBuilder\Model\Dom;
 
+use ArrayAccess;
+use Countable;
 use Gt\Dom\HTMLCollection as GtDomHTMLCollection;
+use Iterator;
 use Magento\Framework\ObjectManagerInterface;
 use Magento\PageBuilder\Model\Dom\Adapter\ElementInterface;
 use Magento\PageBuilder\Model\Dom\Adapter\HtmlCollectionInterface;
@@ -15,7 +18,7 @@ use Magento\PageBuilder\Model\Dom\Adapter\HtmlCollectionInterface;
 /**
  * PhpGt DOM HTMLCollection wrapper.
  */
-class HtmlCollection implements HtmlCollectionInterface
+class HtmlCollection implements Iterator, ArrayAccess, Countable, HtmlCollectionInterface
 {
     /**
      * @var ObjectManagerInterface
@@ -29,6 +32,7 @@ class HtmlCollection implements HtmlCollectionInterface
 
     /**
      * HtmlCollection constructor.
+     *
      * @param ObjectManagerInterface $objectManager
      * @param GtDomHTMLCollection $collection
      */
@@ -41,65 +45,108 @@ class HtmlCollection implements HtmlCollectionInterface
     }
 
     /**
-     * Wrapper function for HTMLCollection::namedItem
-     * @param string $name
-     * @return Element|null
+     * @inheritDoc
      */
     public function namedItem(string $name): ?ElementInterface
     {
-        return $this->objectManager->create(ElementInterface::class, [ $this->collection->namedItem($name) ]);
+        return $this->objectManager->create(
+            ElementInterface::class,
+            [ 'element' => $this->collection->namedItem($name) ]
+        );
     }
 
+    /**
+     * @inheritDoc
+     */
     public function item(int $index): ?ElementInterface
     {
-        return $this->objectManager->create(ElementInterface::class, [ $this->collection->item($index) ]);
+        return $this->objectManager->create(
+            ElementInterface::class,
+            [ 'element' =>  $this->collection->item($index) ]
+        );
     }
 
+    /**
+     * @inheritDoc
+     */
     public function rewind(): void
     {
         $this->collection->rewind();
     }
 
+    /**
+     * @inheritDoc
+     */
     public function key(): int
     {
         return $this->collection->key();
     }
 
+    /**
+     * @inheritDoc
+     */
     public function valid(): bool
     {
         return $this->collection->valid();
     }
 
+    /**
+     * @inheritDoc
+     */
     public function next(): void
     {
         $this->collection->next();
     }
 
+    /**
+     * @inheritDoc
+     */
     public function current(): ?ElementInterface
     {
-        return $this->objectManager->create(ElementInterface::class, [ $this->collection->current() ]);
+        return $this->objectManager->create(
+            ElementInterface::class,
+            [ 'element' =>  $this->collection->current() ]
+        );
     }
 
+    /**
+     * @inheritDoc
+     */
     public function offsetExists($offset): bool
     {
         return $this->collection->offsetExists($offset);
     }
 
+    /**
+     * @inheritDoc
+     */
     public function offsetGet($offset): ?ElementInterface
     {
-        return $this->objectManager->create(ElementInterface::class, [ $this->collection->offsetGet($offset) ]);
+        return $this->objectManager->create(
+            ElementInterface::class,
+            [ 'element' =>  $this->collection->offsetGet($offset) ]
+        );
     }
 
+    /**
+     * @inheritDoc
+     */
     public function offsetSet($offset, $value): void
     {
         $this->collection->offsetSet($offset, $value);
     }
 
+    /**
+     * @inheritDoc
+     */
     public function offsetUnset($offset): void
     {
         $this->collection->offsetUnset($offset);
     }
 
+    /**
+     * @inheritDoc
+     */
     public function count(): int
     {
         return $this->collection->count();

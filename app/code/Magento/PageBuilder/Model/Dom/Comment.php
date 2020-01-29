@@ -14,5 +14,4 @@ use Magento\PageBuilder\Model\Dom\Adapter\CommentInterface;
  */
 class Comment implements CommentInterface
 {
-
 }

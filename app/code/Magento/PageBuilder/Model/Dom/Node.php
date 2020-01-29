@@ -14,5 +14,4 @@ use Magento\PageBuilder\Model\Dom\Adapter\NodeInterface;
  */
 class Node implements NodeInterface
 {
-
 }

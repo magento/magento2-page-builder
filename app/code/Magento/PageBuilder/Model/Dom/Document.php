@@ -11,7 +11,6 @@ use DOMNode;
 use Gt\Dom\Document as GtDomDocument;
 use Magento\Framework\ObjectManagerInterface;
 use Magento\PageBuilder\Model\Dom\Adapter\DocumentInterface;
-use RuntimeException;
 
 /**
  * PhpGt DOM Document wrapper.
@@ -29,7 +28,7 @@ class Document implements DocumentInterface
     private $document;
 
     /**
-     * HtmlDocument constructor.
+     * Document constructor.
      * @param ObjectManagerInterface $objectManager
      * @param string $document
      */
@@ -38,7 +37,7 @@ class Document implements DocumentInterface
         string $document = ""
     ) {
         $this->objectManager = $objectManager;
-        $this->document = $this->objectManager->create(GtDomDocument::class, [ $document ]);
+        $this->document = $this->objectManager->create(GtDomDocument::class, [ 'document' => $document ]);
     }
 
     /**
