@@ -14,5 +14,4 @@ use Magento\PageBuilder\Model\Dom\Adapter\DocumentTypeInterface;
  */
 class DocumentType implements DocumentTypeInterface
 {
-
 }

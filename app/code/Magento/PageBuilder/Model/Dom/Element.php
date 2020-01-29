@@ -9,6 +9,7 @@ namespace Magento\PageBuilder\Model\Dom;
 
 use Gt\Dom\Element as GtDomElement;
 use Magento\Framework\ObjectManagerInterface;
+use Magento\PageBuilder\Model\Dom\Adapter\AttrInterface;
 use Magento\PageBuilder\Model\Dom\Adapter\ElementInterface;
 use Magento\PageBuilder\Model\Dom\Adapter\HtmlCollectionInterface;
 
@@ -53,7 +54,10 @@ class Element implements ElementInterface
      */
     public function getElementsByClassName(string $names): HtmlCollectionInterface
     {
-        return $this->objectManager->create(HtmlCollectionInterface::class, [ $this->element->getElementsByClassName($names) ]);
+        return $this->objectManager->create(
+            HtmlCollectionInterface::class,
+            [ 'collection' => $this->element->getElementsByClassName($names) ]
+        );
     }
 
     /**
@@ -61,7 +65,10 @@ class Element implements ElementInterface
      */
     public function closest(string $selectors): ?ElementInterface
     {
-        return $this->objectManager->create(ElementInterface::class, [ $this->element->closest($selectors) ]);
+        return $this->objectManager->create(
+            ElementInterface::class,
+            [ 'element' => $this->element->closest($selectors) ]
+        );
     }
 
     /**
@@ -70,5 +77,38 @@ class Element implements ElementInterface
     public function getAttribute($name): ?string
     {
         return $this->element->getAttribute($name);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setAttribute($name, $value): AttrInterface
+    {
+        return $this->objectManager->create(
+            AttrInterface::class,
+            [ 'attr' => $this->element->setAttribute($name, $value) ]
+        );
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function querySelector(string $selector): ElementInterface
+    {
+        return $this->objectManager->create(
+            ElementInterface::class,
+            [ 'element' => $this->element->querySelector($selector) ]
+        );
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function querySelectorAll(string $selector): HtmlCollectionInterface
+    {
+        return $this->objectManager->create(
+            HtmlCollectionInterface::class,
+            [ 'collection' => $this->element->querySelectorAll($selector) ]
+        );
     }
 }

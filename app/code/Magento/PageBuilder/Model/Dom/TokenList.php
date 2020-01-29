@@ -27,7 +27,8 @@ class TokenList implements TokenListInterface
     private $tokenList;
 
     /**
-     * HtmlDocument constructor.
+     * TokenList constructor.
+     *
      * @param ObjectManagerInterface $objectManager
      * @param GtDomTokenList $tokenList
      */

@@ -8,46 +8,54 @@ declare(strict_types=1);
 namespace Magento\PageBuilder\Model\Dom\Adapter;
 
 /**
- * Interface for interface TokenList wrappers
+ * Interface for TokenList wrappers
  */
 interface TokenListInterface
 {
     /**
-     * Returns an item in the list by its index (or null if the number is
-     * greater than or equal to the length of the list).
+     * Returns an item in the list by its index (or null if the number is >= the length of the list).
+     *
      * @param int $index
      * @return string|null
      */
-    public function item(int $index):?string;
+    public function item(int $index): ?string;
 
     /**
      * Returns true if the underlying string contains $token, otherwise false.
+     *
      * @param string $token
      * @return bool
      */
-    public function contains(string $token):bool;
+    public function contains(string $token): bool;
 
     /**
      * Adds $token to the underlying attribute value.
+     *
      * @param string $token
      * @return void
      */
-    public function add(string $token):void;
+    public function add(string $token): void;
 
     /**
      * Removes $token from the underlying attribute value.
+     *
      * @param string $token
-     * @return null
+     * @return void
      */
-    public function remove(string $token):void;
+    public function remove(string $token): void;
 
     /**
-     * Removes $token from the underlying attribute value and returns false. If
-     * $token doesn't exist, it's added and the function returns true.
+     * Removes $token and returns false. If $token doesn't exist, it's added and the function returns true.
+     *
      * @param string $token
      * @return bool true if token is added, false if token is removed.
      */
-    public function toggle(string $token):bool;
+    public function toggle(string $token): bool;
 
-    public function __toString():string;
+    /**
+     * Returns a string representation of the list
+     *
+     * @return string
+     */
+    public function __toString(): string;
 }

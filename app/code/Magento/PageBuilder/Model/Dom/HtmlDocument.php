@@ -9,6 +9,7 @@ namespace Magento\PageBuilder\Model\Dom;
 
 use Gt\Dom\HTMLDocument as GtDomHTMLDocument;
 use Magento\Framework\ObjectManagerInterface;
+use Magento\PageBuilder\Model\Dom\Adapter\ElementInterface;
 use Magento\PageBuilder\Model\Dom\Adapter\HtmlCollectionInterface;
 use Magento\PageBuilder\Model\Dom\Adapter\HtmlDocumentInterface;
 
@@ -30,14 +31,44 @@ class HtmlDocument implements HtmlDocumentInterface
     /**
      * HtmlDocument constructor.
      * @param ObjectManagerInterface $objectManager
-     * @param GtDomHTMLDocument $document
+     * @param string $document
      */
     public function __construct(
         ObjectManagerInterface $objectManager,
-        GtDomHTMLDocument $document
+        string $document = ""
     ) {
         $this->objectManager = $objectManager;
-        $this->document = $document;
+        $this->document = $this->objectManager->create(GtDomHTMLDocument::class, [ 'document' => $document ]);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function querySelector(string $selector): ElementInterface
+    {
+        return $this->objectManager->create(
+            ElementInterface::class,
+            [ 'element' => $this->document->querySelector($selector) ]
+        );
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function querySelectorAll(string $selector): HtmlCollectionInterface
+    {
+        return $this->objectManager->create(
+            HtmlCollectionInterface::class,
+            [ 'collection' => $this->document->querySelectorAll($selector) ]
+        );
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function saveHTML(): string
+    {
+        return $this->document->saveHTML();
     }
 
     /**
@@ -45,6 +76,9 @@ class HtmlDocument implements HtmlDocumentInterface
      */
     public function getElementsByClassName(string $names): HtmlCollectionInterface
     {
-        return $this->objectManager->create(HtmlCollectionInterface::class, [ $this->document->getElementsByClassName($names) ]);
+        return $this->objectManager->create(
+            HtmlCollectionInterface::class,
+            [ 'collection' => $this->document->getElementsByClassName($names) ]
+        );
     }
 }

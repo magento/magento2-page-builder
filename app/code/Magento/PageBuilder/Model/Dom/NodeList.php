@@ -10,6 +10,7 @@ namespace Magento\PageBuilder\Model\Dom;
 use Gt\Dom\NodeList as GtDomNodeList;
 use Magento\Framework\ObjectManagerInterface;
 use Magento\PageBuilder\Model\Dom\Adapter\ElementInterface;
+use Magento\PageBuilder\Model\Dom\Adapter\NodeInterface;
 use Magento\PageBuilder\Model\Dom\Adapter\NodeListInterface;
 
 /**
@@ -45,7 +46,7 @@ class NodeList implements NodeListInterface
      */
     public function item($index): ?ElementInterface
     {
-        return $this->objectManager->create(ElementInterface::class, [ $this->nodeList->item($index) ]);
+        return $this->objectManager->create(ElementInterface::class, [ 'element' => $this->nodeList->item($index) ]);
     }
 
     /**
@@ -83,9 +84,12 @@ class NodeList implements NodeListInterface
     /**
      * @inheritDoc
      */
-    public function current()
+    public function current(): NodeInterface
     {
-        return $this->nodeList->current();
+        return $this->objectManager->create(
+            NodeInterface::class,
+            [ $this->nodeList->current() ]
+        );
     }
 
     /**
@@ -101,7 +105,10 @@ class NodeList implements NodeListInterface
      */
     public function offsetGet($offset): ?ElementInterface
     {
-        return $this->objectManager->create(ElementInterface::class, [ $this->nodeList->offsetGet($offset) ]);
+        return $this->objectManager->create(
+            ElementInterface::class,
+            [ 'element' => $this->nodeList->offsetGet($offset) ]
+        );
     }
 
     /**

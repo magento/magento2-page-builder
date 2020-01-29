@@ -12,5 +12,10 @@ namespace Magento\PageBuilder\Model\Dom\Adapter;
  */
 interface AttrInterface
 {
-    public function remove():self;
+    /**
+     * Removes attribute
+     *
+     * @return $this
+     */
+    public function remove(): self;
 }

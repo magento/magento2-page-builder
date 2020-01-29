@@ -7,13 +7,16 @@ declare(strict_types=1);
 
 namespace Magento\PageBuilder\Model\Dom\Adapter;
 
-use DOMNode;
-use RuntimeException;
-
 /**
  * Interface for DocumentFragment wrappers
  */
 interface DocumentFragmentInterface
 {
-    public function appendHTML(string $data):bool;
+    /**
+     * Appends the specified content to the document fragment
+     *
+     * @param string $data
+     * @return bool
+     */
+    public function appendHTML(string $data): bool;
 }

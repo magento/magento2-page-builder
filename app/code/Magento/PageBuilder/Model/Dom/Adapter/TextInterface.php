@@ -12,5 +12,12 @@ namespace Magento\PageBuilder\Model\Dom\Adapter;
  */
 interface TextInterface
 {
-    public function isElementContentWhitespace():bool;
+    /**
+     * Determines if the element contains only whitespace
+     *
+     * @see http://php.net/manual/en/domtext.iswhitespaceinelementcontent.php
+     * @see https://developer.mozilla.org/en-US/docs/Web/API/Text/isElementContentWhitespace
+     * @return bool
+     */
+    public function isElementContentWhitespace(): bool;
 }

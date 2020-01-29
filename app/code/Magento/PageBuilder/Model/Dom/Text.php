@@ -27,7 +27,8 @@ class Text implements TextInterface
     private $text;
 
     /**
-     * HtmlDocument constructor.
+     * Text constructor.
+     *
      * @param ObjectManagerInterface $objectManager
      * @param GtDomText $text
      */
@@ -39,8 +40,10 @@ class Text implements TextInterface
         $this->text = $text;
     }
 
-
-    public function isElementContentWhitespace():bool
+    /**
+     * @inheritDoc
+     */
+    public function isElementContentWhitespace(): bool
     {
         return $this->text->isElementContentWhitespace();
     }
