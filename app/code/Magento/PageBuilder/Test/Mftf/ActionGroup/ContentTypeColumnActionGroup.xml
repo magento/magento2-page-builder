@@ -114,13 +114,13 @@
             <actualResult type="variable">topOfColumnDifference</actualResult>
         </assertLessThan>
     </actionGroup>
-    <actionGroup name="ValidateColumnAppearanceCenterAlignedActionGroup" extends="validateColumnAppearanceTopAlignedActionGroup">
+    <actionGroup name="ValidateColumnAppearanceCenterAlignedActionGroup" extends="ValidateColumnAppearanceTopAlignedActionGroup">
         <comment userInput="validateColumnAppearanceCenterAligned" stepKey="comment"/>
         <seeElement selector="{{section.appearance(columnIndex, PageBuilderColumnAppearanceProperty_Center.value)}}" stepKey="seeColumnAppearance"/>
         <executeJS function="return Math.round(document.querySelectorAll('{{section.allColumnGroups}}')[{{columnGroupIndex}}-1].getBoundingClientRect().top + (document.querySelectorAll('{{section.allColumnGroups}}')[{{columnGroupIndex}}-1].clientHeight / 2))" stepKey="topOfColumnGroup"/>
         <executeJS function="return Math.round(document.querySelectorAll('{{section.baseCSS}}')[{{columnIndex}}-1].getBoundingClientRect().top  + (document.querySelectorAll('{{section.baseCSS}}')[{{columnIndex}}-1].clientHeight / 2))" stepKey="topOfIndividualColumn"/>
     </actionGroup>
-    <actionGroup name="ValidateColumnAppearanceBottomAlignedActionGroup" extends="validateColumnAppearanceTopAlignedActionGroup">
+    <actionGroup name="ValidateColumnAppearanceBottomAlignedActionGroup" extends="ValidateColumnAppearanceTopAlignedActionGroup">
         <comment userInput="validateColumnAppearanceBottomAligned" stepKey="comment"/>
         <seeElement selector="{{section.appearance(columnIndex, PageBuilderColumnAppearanceProperty_Bottom.value)}}" stepKey="seeColumnAppearance"/>
         <executeJS function="return document.querySelectorAll('{{section.allColumnGroups}}')[{{columnGroupIndex}}-1].getBoundingClientRect().bottom" stepKey="topOfColumnGroup"/>

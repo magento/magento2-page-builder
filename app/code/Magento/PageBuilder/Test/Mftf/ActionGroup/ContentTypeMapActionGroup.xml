@@ -153,7 +153,7 @@
         <waitForElementVisible selector="{{page.allPins(mapIndex)}}" stepKey="waitForMapPin"/>
         <seeNumberOfElements selector="{{page.allPins(mapIndex)}}" userInput="{{count}}" stepKey="seeNumberOfPins"/>
     </actionGroup>
-    <actionGroup name="VerifyNumberOfPinsOnMapActionGroup" extends="verifyNumberOfPinsOnMapNoClickActionGroup">
+    <actionGroup name="VerifyNumberOfPinsOnMapActionGroup" extends="VerifyNumberOfPinsOnMapNoClickActionGroup">
         <conditionalClick selector="{{page.googleModalOkButton(mapIndex)}}" dependentSelector="{{page.googleModalOkButton(mapIndex)}}" visible="true" stepKey="clickOkButton" after="waitForMap"/>
         <waitForElementNotVisible selector="{{page.googleModalOkButton(mapIndex)}}" stepKey="waitForGoogleModalGone" after="clickOkButton"/>
         <dontSeeElementInDOM selector="{{page.googleModalOkButton(mapIndex)}}" stepKey="dontSeeGoogleModalInDOM" after="waitForGoogleModalGone"/>
@@ -418,10 +418,10 @@
         <seeElement selector="{{ContentManagementSection.GoogleMapsAPIKeyInputField}}" stepKey="seeGoogleMapsAPIKeyInputField"/>
         <closeTab stepKey="closeOpenedTab" />
     </actionGroup>
-    <actionGroup name="ValidateAdvancedStyleWithAllUpdatedMapWithErrorOverlayActionGroup" extends="validateAdvancedStyleWithAllUpdatedNotVisibleActionGroup">
+    <actionGroup name="ValidateAdvancedStyleWithAllUpdatedMapWithErrorOverlayActionGroup" extends="ValidateAdvancedStyleWithAllUpdatedNotVisibleActionGroup">
         <waitForElementVisible selector="{{page.warningMessageLink(index)}}" stepKey="dontSeeElement"/>
     </actionGroup>
-    <actionGroup name="ValidateAdvancedStyleWithNoAlignmentMapWithErrorOverlayActionGroup" extends="validateAdvancedStyleWithNoAlignmentNotVisibleActionGroup">
+    <actionGroup name="ValidateAdvancedStyleWithNoAlignmentMapWithErrorOverlayActionGroup" extends="ValidateAdvancedStyleWithNoAlignmentNotVisibleActionGroup">
         <waitForElementVisible selector="{{page.warningMessageLink(index)}}" stepKey="dontSeeElement"/>
     </actionGroup>
     <actionGroup name="ValidateMapHeightActionGroup">

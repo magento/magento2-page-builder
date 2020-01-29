@@ -36,7 +36,7 @@
         <click selector="{{pageBuilderArea}}{{PageBuilderPanel.searchPanel}}" stepKey="loseFocusFromEditor"/>
         <waitForPageLoad stepKey="waitForUnFocus"/>
     </actionGroup>
-    <actionGroup name="AddTextToTinyMCEInlineWYSIWYGDisabledActionGroup" extends="addTextToTinyMCEInlineActionGroup">
+    <actionGroup name="AddTextToTinyMCEInlineWYSIWYGDisabledActionGroup" extends="AddTextToTinyMCEInlineActionGroup">
         <comment userInput="addTextToTinyMCEInlineWYSIWYGDisabled" stepKey="comment"/>
         <waitForElementVisible selector="{{section.textArea(index)}}" stepKey="waitForEditorFocused"/>
         <pressKey selector="{{section.textArea(index)}}" userInput="{{text}}" stepKey="enterText"/>
@@ -44,7 +44,7 @@
         <click selector="{{pageBuilderArea}}{{PageBuilderPanel.searchPanel}}" stepKey="loseFocusFromEditor"/>
         <waitForPageLoad stepKey="waitForUnFocus"/>
     </actionGroup>
-    <actionGroup name="ReplaceTextToTinyMCEActionGroup" extends="addTextToTinyMCEActionGroup">
+    <actionGroup name="ReplaceTextToTinyMCEActionGroup" extends="AddTextToTinyMCEActionGroup">
         <executeJS function="tinymce.activeEditor.setContent('{{property.value}}')" stepKey="addTextToWYSIWYG"/>
     </actionGroup>
     <actionGroup name="AddVariableToTinyMCEActionGroup">
@@ -61,11 +61,11 @@
         <click selector="{{VariableSection.InsertWidget}}" stepKey="clickInsertVariable2"/>
         <waitForElementNotVisible selector="{{VariableSection.InsertWidget}}" stepKey="waitForVariableModalToClose"/>
     </actionGroup>
-    <actionGroup name="AddVariableToTinyMCEInlineActionGroup" extends="addVariableToTinyMCEActionGroup">
+    <actionGroup name="AddVariableToTinyMCEInlineActionGroup" extends="AddVariableToTinyMCEActionGroup">
         <waitForElementVisible selector="{{TinyMCESection.InsertVariableIcon}}" stepKey="waitForInsertVariable1"/>
         <click selector="{{TinyMCESection.InsertVariableIcon}}" stepKey="clickInsertVariable1"/>
     </actionGroup>
-    <actionGroup name="AddVariableToTinyMCE3ActionGroup" extends="addVariableToTinyMCEActionGroup">
+    <actionGroup name="AddVariableToTinyMCE3ActionGroup" extends="AddVariableToTinyMCEActionGroup">
         <arguments>
             <argument name="variable" defaultValue=""/>
         </arguments>
@@ -119,11 +119,11 @@
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear5"/>
         <waitForElementNotVisible selector="{{WidgetSection.InsertWidget}}" stepKey="waitForInsertWidgetModalToClose"/>
     </actionGroup>
-    <actionGroup name="AddPageLinkWidgetToTinyMCEInlineActionGroup" extends="addPageLinkWidgetToTinyMCEActionGroup">
+    <actionGroup name="AddPageLinkWidgetToTinyMCEInlineActionGroup" extends="AddPageLinkWidgetToTinyMCEActionGroup">
         <waitForElementVisible selector="{{TinyMCESection.InsertWidgetIcon}}" stepKey="waitForInsertWidget1"/>
         <click selector="{{TinyMCESection.InsertWidgetIcon}}" stepKey="clickAddWidgetBtn"/>
     </actionGroup>
-    <actionGroup name="AddPageLinkWidgetToTinyMCE3ActionGroup" extends="addPageLinkWidgetToTinyMCEActionGroup">
+    <actionGroup name="AddPageLinkWidgetToTinyMCE3ActionGroup" extends="AddPageLinkWidgetToTinyMCEActionGroup">
         <arguments>
             <argument name="widget" defaultValue=""/>
             <argument name="page" defaultValue="" type="string"/>
@@ -133,7 +133,7 @@
         <click selector="{{TextOnConfiguration.tinyMCE3WidgetBtn}}" stepKey="clickAddWidgetBtn"/>
         <waitForElementVisible selector="{{TextOnConfiguration.tinyMCE3WidgetBtn}}" stepKey="waitForInsertWidgetModalToClose"/>
     </actionGroup>
-    <actionGroup name="AddPageLinkWidgetWYSIWYGDisabledActionGroup" extends="addPageLinkWidgetToTinyMCEActionGroup">
+    <actionGroup name="AddPageLinkWidgetWYSIWYGDisabledActionGroup" extends="AddPageLinkWidgetToTinyMCEActionGroup">
         <arguments>
             <argument name="widget" defaultValue=""/>
             <argument name="page" defaultValue="" type="string"/>

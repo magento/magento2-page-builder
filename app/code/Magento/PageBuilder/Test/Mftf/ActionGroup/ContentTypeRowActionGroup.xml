@@ -39,7 +39,7 @@
         <waitForElementVisible selector="{{page.parallaxState(index, parallaxStateValue.value)}}" stepKey="waitForParallaxBackgroundState"/>
         <waitForElementVisible selector="{{page.parallaxSpeed(index, parallaxSpeedValue.value)}}" stepKey="waitForParallaxBackgroundSpeed"/>
     </actionGroup>
-    <actionGroup name="ValidateBackgroundImageContainerForParallaxRowActionGroup" extends="validateBackgroundImageContainerActionGroup">
+    <actionGroup name="ValidateBackgroundImageContainerForParallaxRowActionGroup" extends="ValidateBackgroundImageContainerActionGroup">
         <comment userInput="validateBackgroundImageContainerForParallaxRow" stepKey="comment"/>
         <executeJS function="return window.getComputedStyle({{section.parallaxJS(index)}}).backgroundImage" stepKey="backgroundImageValue"/>
     </actionGroup>
@@ -98,7 +98,7 @@
         </assertLessThanOrEqual>
         <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
     </actionGroup>
-    <actionGroup name="ValidateFullBleedRowAppearanceActionGroup" extends="validateFullWidthRowAppearanceActionGroup">
+    <actionGroup name="ValidateFullBleedRowAppearanceActionGroup" extends="ValidateFullWidthRowAppearanceActionGroup">
         <executeJS function="return Math.abs({$rowChildElementWidth} - {$rowWidth})" stepKey="rowMinusChildWidth" after="pageMinusRowWidth"/>
         <assertLessThanOrEqual stepKey="assertRowWidthGreaterThanOrEqualToContents">
             <expectedResult type="int">{{acceptableOffset}}</expectedResult>
