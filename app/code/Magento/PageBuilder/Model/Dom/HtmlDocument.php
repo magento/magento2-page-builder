@@ -16,18 +16,8 @@ use Magento\PageBuilder\Model\Dom\Adapter\HtmlDocumentInterface;
 /**
  * PhpGt DOM HTMLDocument wrapper.
  */
-class HtmlDocument implements HtmlDocumentInterface
+class HtmlDocument extends Document implements HtmlDocumentInterface
 {
-    /**
-     * @var ObjectManagerInterface
-     */
-    private $objectManager;
-
-    /**
-     * @var GtDomHTMLDocument
-     */
-    private $document;
-
     /**
      * HtmlDocument constructor.
      * @param ObjectManagerInterface $objectManager
@@ -39,36 +29,6 @@ class HtmlDocument implements HtmlDocumentInterface
     ) {
         $this->objectManager = $objectManager;
         $this->document = $this->objectManager->create(GtDomHTMLDocument::class, [ 'document' => $document ]);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function querySelector(string $selector): ElementInterface
-    {
-        return $this->objectManager->create(
-            ElementInterface::class,
-            [ 'element' => $this->document->querySelector($selector) ]
-        );
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function querySelectorAll(string $selector): HtmlCollectionInterface
-    {
-        return $this->objectManager->create(
-            HtmlCollectionInterface::class,
-            [ 'collection' => $this->document->querySelectorAll($selector) ]
-        );
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function saveHTML(): string
-    {
-        return $this->document->saveHTML();
     }
 
     /**

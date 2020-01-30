@@ -10,7 +10,10 @@ namespace Magento\PageBuilder\Model\Dom;
 use DOMNode;
 use Gt\Dom\Document as GtDomDocument;
 use Magento\Framework\ObjectManagerInterface;
+use Magento\PageBuilder\Model\Dom\Adapter\DocumentFragmentInterface;
 use Magento\PageBuilder\Model\Dom\Adapter\DocumentInterface;
+use Magento\PageBuilder\Model\Dom\Adapter\ElementInterface;
+use Magento\PageBuilder\Model\Dom\Adapter\HtmlCollectionInterface;
 
 /**
  * PhpGt DOM Document wrapper.
@@ -20,12 +23,12 @@ class Document implements DocumentInterface
     /**
      * @var ObjectManagerInterface
      */
-    private $objectManager;
+    protected $objectManager;
 
     /**
      * @var GtDomDocument
      */
-    private $document;
+    protected $document;
 
     /**
      * Document constructor.
@@ -38,6 +41,7 @@ class Document implements DocumentInterface
     ) {
         $this->objectManager = $objectManager;
         $this->document = $this->objectManager->create(GtDomDocument::class, [ 'document' => $document ]);
+        $this->document->createDocumentFragment();
     }
 
     /**
@@ -46,6 +50,39 @@ class Document implements DocumentInterface
     public function __toString(): string
     {
         return $this->document->__toString();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function createDocumentFragment(): DocumentFragmentInterface
+    {
+        return $this->objectManager->create(
+            DocumentFragmentInterface::class,
+            [ 'documentFragment' => $this->document->createDocumentFragment() ]
+        );
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function querySelector(string $selector): ElementInterface
+    {
+        return $this->objectManager->create(
+            ElementInterface::class,
+            [ 'element' => $this->document->querySelector($selector) ]
+        );
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function querySelectorAll(string $selector): HtmlCollectionInterface
+    {
+        return $this->objectManager->create(
+            HtmlCollectionInterface::class,
+            [ 'collection' => $this->document->querySelectorAll($selector) ]
+        );
     }
 
     /**

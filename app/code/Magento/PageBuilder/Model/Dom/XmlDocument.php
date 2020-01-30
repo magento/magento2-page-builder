@@ -14,18 +14,8 @@ use Magento\PageBuilder\Model\Dom\Adapter\XmlDocumentInterface;
 /**
  * PhpGt DOM XmlDocument wrapper.
  */
-class XmlDocument implements XmlDocumentInterface
+class XmlDocument extends Document implements XmlDocumentInterface
 {
-    /**
-     * @var ObjectManagerInterface
-     */
-    private $objectManager;
-
-    /**
-     * @var GtDomXMLDocument
-     */
-    private $document;
-
     /**
      * XmlDocument constructor.
      *
