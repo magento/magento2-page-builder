@@ -5,16 +5,20 @@
  */
 namespace Magento\PageBuilder\Setup;
 
-use Magento\Framework\DB\Select\QueryModifierFactory;
-use Magento\Framework\DB\FieldToConvert;
-use Magento\Framework\Setup\ModuleDataSetupInterface;
 use Magento\Framework\DB\AggregatedFieldDataConverter;
 use Magento\Framework\DB\FieldDataConversionException;
+use Magento\Framework\DB\FieldToConvert;
+use Magento\Framework\DB\Select\QueryModifierFactory;
+use Magento\Framework\Setup\ModuleDataSetupInterface;
 use Magento\PageBuilder\Model\UpgradableEntitiesPool;
 
+/**
+ * Helper class to run collection of converters
+ */
 class UpgradeContentHelper
 {
     public const PAGE_BUILDER_CONTENT_PATTERN = '%data-content-type="%';
+
     /**
      * @var ModuleDataSetupInterface $moduleDataSetup
      */
@@ -36,7 +40,8 @@ class UpgradeContentHelper
     private $aggregatedFieldDataConverter;
 
     /**
-     * UpdateContent constructor.
+     * UpgradeContentHelper constructor.
+     *
      * @param ModuleDataSetupInterface $moduleDataSetup
      * @param QueryModifierFactory $queryModifierFactory
      * @param UpgradableEntitiesPool $entitiesPool
@@ -55,9 +60,8 @@ class UpgradeContentHelper
     }
 
     /**
-     * @param array $converters
-     */
-    /**
+     * Executes each specified converter against all upgradable fields in the database
+     *
      * @param array $converters
      * @throws FieldDataConversionException
      */

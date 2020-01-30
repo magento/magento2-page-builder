@@ -5,13 +5,13 @@
  */
 namespace Magento\PageBuilder\Setup\Patch\Data;
 
-use Magento\Framework\Setup\Patch\DataPatchInterface;
 use Magento\Framework\DB\FieldDataConversionException;
+use Magento\Framework\Setup\Patch\DataPatchInterface;
+use Magento\PageBuilder\Setup\Converters\FixFullWidthRowPadding;
 use Magento\PageBuilder\Setup\UpgradeContentHelper;
-use Magento\PageBuilder\Setup\Converters\MoveAttribute;
 
 /**
- * Patch is mechanism, that allows to do atomic upgrade data changes
+ * Patch is mechanism that allows us to do atomic upgrade data changes
  */
 class UpdateContent implements DataPatchInterface
 {
@@ -30,23 +30,20 @@ class UpdateContent implements DataPatchInterface
     }
 
     /**
-     * Do Upgrade
+     * Do upgrade
      *
      * @return void
-     */
-    /**
-     * @return DataPatchInterface|void
      * @throws FieldDataConversionException
      */
     public function apply()
     {
         $this->helper->upgrade([
-            MoveAttribute::class
+            FixFullWidthRowPadding::class
         ]);
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getAliases()
     {
@@ -54,7 +51,7 @@ class UpdateContent implements DataPatchInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public static function getDependencies()
     {
