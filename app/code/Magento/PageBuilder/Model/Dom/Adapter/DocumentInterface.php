@@ -23,6 +23,29 @@ interface DocumentInterface
     public function __toString(): string;
 
     /**
+     * Create new document fragment
+     *
+     * @return DocumentFragmentInterface
+     */
+    public function createDocumentFragment(): DocumentFragmentInterface;
+
+    /**
+     * Returns the first element matching the specified selector.
+     *
+     * @param string $selector
+     * @return ElementInterface
+     */
+    public function querySelector(string $selector): ElementInterface;
+
+    /**
+     * Returns all elements matching the specified selector.
+     *
+     * @param string $selector
+     * @return HtmlCollectionInterface
+     */
+    public function querySelectorAll(string $selector): HtmlCollectionInterface;
+
+    /**
      * Dumps the internal document into a string using HTML formatting
      *
      * @param DOMNode|null $node

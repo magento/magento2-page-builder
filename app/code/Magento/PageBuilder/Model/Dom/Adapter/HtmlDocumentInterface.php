@@ -19,27 +19,4 @@ interface HtmlDocumentInterface
      * @return HtmlCollectionInterface
      */
     public function getElementsByClassName(string $names): HtmlCollectionInterface;
-
-    /**
-     * Returns the first element matching the specified selector.
-     *
-     * @param string $selector
-     * @return HtmlCollectionInterface
-     */
-    public function querySelector(string $selector): ElementInterface;
-
-    /**
-     * Returns all elements matching the specified selector.
-     *
-     * @param string $selector
-     * @return HtmlCollectionInterface
-     */
-    public function querySelectorAll(string $selector): HtmlCollectionInterface;
-
-    /**
-     * Dumps the internal document into a string using HTML formatting
-     *
-     * @return string
-     */
-    public function saveHTML(): string;
 }

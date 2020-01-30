@@ -10,6 +10,8 @@ namespace Magento\PageBuilder\Model\Dom;
 use Gt\Dom\DocumentFragment as GtDomDocumentFragment;
 use Magento\Framework\ObjectManagerInterface;
 use Magento\PageBuilder\Model\Dom\Adapter\DocumentFragmentInterface;
+use Magento\PageBuilder\Model\Dom\Adapter\ElementInterface;
+use Magento\PageBuilder\Model\Dom\Adapter\HtmlCollectionInterface;
 
 /**
  * PhpGt DOM DocumentFragment wrapper.
@@ -44,6 +46,36 @@ class DocumentFragment implements DocumentFragmentInterface
      */
     public function appendHTML(string $data): bool
     {
-        return $this->documentFragment->appendXML($data);
+        return $this->documentFragment->appendHTML($data);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function querySelector(string $selector): ElementInterface
+    {
+        return $this->objectManager->create(
+            ElementInterface::class,
+            [ 'element' => $this->documentFragment->querySelector($selector) ]
+        );
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function querySelectorAll(string $selector): HtmlCollectionInterface
+    {
+        return $this->objectManager->create(
+            HtmlCollectionInterface::class,
+            [ 'collection' => $this->documentFragment->querySelectorAll($selector) ]
+        );
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function prop_get_innerText(): string
+    {
+        return $this->documentFragment->prop_get_innerText();
     }
 }
