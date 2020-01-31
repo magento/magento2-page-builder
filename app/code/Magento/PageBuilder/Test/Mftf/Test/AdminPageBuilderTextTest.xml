@@ -703,10 +703,10 @@
         <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage2"/>
         <waitForElementVisible selector="{{TextOnStage.text('1', TinyMCEVariableBaseURL.editPanelValue)}}" stepKey="waitForVariabBaseURLleStage2"/>
         <!--Verify ability to double click on variable prior to focusing TinyMCE-->
-        <actionGroup ref="doubleClickVariableTinyMCE" stepKey="doubleClickVariable">
+        <actionGroup ref="DoubleClickVariableTinyMCEActionGroup" stepKey="doubleClickVariable">
             <argument name="variable" value="TinyMCEVariableBaseURL"/>
         </actionGroup>
-        <actionGroup ref="closeVariablePanelTinyMCE" stepKey="closeVariablePanel" />
+        <actionGroup ref="CloseVariablePanelTinyMCEActionGroup" stepKey="closeVariablePanel" />
         <!-- Validate Storefront -->
         <comment userInput="Verify variable  on storefront" stepKey="commentVerifyEmptyBlock"/>
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
@@ -775,10 +775,10 @@
         <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage2"/>
         <waitForElementVisible selector="{{TextOnStage.text('1', TinyMCEWidgetCMSPageLink.editPanelValue)}}" stepKey="waitForWidgetStage2"/>
         <!--Verify ability to double click on widget prior to focusing TinyMCE-->
-        <actionGroup ref="doubleClickWidgetTinyMCE" stepKey="doubleClickWidget">
+        <actionGroup ref="DoubleClickWidgetTinyMCEActionGroup" stepKey="doubleClickWidget">
             <argument name="widget" value="TinyMCEWidgetCMSPageLink.editPanelValue"/>
         </actionGroup>
-        <actionGroup ref="closeWidgetPanelTinyMCE" stepKey="closeWidgetPanelTinyMCE"/>
+        <actionGroup ref="CloseWidgetPanelTinyMCEActionGroup" stepKey="closeWidgetPanelTinyMCE"/>
         <!-- Validate Storefront -->
         <comment userInput="Verify Widget Content Type on storefront" stepKey="commentVerifyWidgetOnStorefront"/>
         <amOnPage url="$$createCMSPageA.identifier$$" stepKey="amOnPageTestPage"/>
@@ -1095,7 +1095,7 @@
         <assertEmpty message="Text field has text: $getBorderColor" stepKey="assertBorderColor">
             <actualResult type="variable">getBorderColor</actualResult>
         </assertEmpty>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderWidth">
             <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderRadius">
@@ -1105,7 +1105,7 @@
         <assertEmpty message="Text field was not empty. Had text: $getCssClasses" stepKey="assertCssClasses">
             <actualResult type="variable">getCssClasses</actualResult>
         </assertEmpty>
-        <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins">
+        <actionGroup ref="SeeInMarginFieldsSlideOutPanelActionGroup" stepKey="validateMargins">
             <argument name="property" value="PageBuilderMarginsPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="SeeInPaddingFieldsSlideOutPanelActionGroup" stepKey="validatePadding">
@@ -1151,7 +1151,7 @@
         <assertEmpty message="Text field has text: $getBorderColor2" stepKey="assertBorderColor2">
             <actualResult type="variable">getBorderColor2</actualResult>
         </assertEmpty>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth2">
+        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderWidth2">
             <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderRadius2">
@@ -1161,7 +1161,7 @@
         <assertEmpty message="Text field was not empty. Had text: $getCssClasses2" stepKey="assertCssClasses2">
             <actualResult type="variable">getCssClasses2</actualResult>
         </assertEmpty>
-        <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins2">
+        <actionGroup ref="SeeInMarginFieldsSlideOutPanelActionGroup" stepKey="validateMargins2">
             <argument name="property" value="PageBuilderMarginsPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="SeeInPaddingFieldsSlideOutPanelActionGroup" stepKey="validatePadding2">
@@ -1611,7 +1611,7 @@
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
         <waitForElementVisible selector="{{TextOnStage.base('1')}}" stepKey="waitForTextStage2"/>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+        <actionGroup ref="OpenPageBuilderEditPanelActionGroup" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <!-- Validate Edit Panel For Duplicate After Save -->
@@ -1876,7 +1876,7 @@
             <actualResult type="variable">getText</actualResult>
             <expectedResult type="string">{{PageBuilderTextArea_WidgetCMSPageLink.editPanelValue}}</expectedResult>
         </assertContains>
-        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <actionGroup ref="CloseEditPanelSettingsActionGroup" stepKey="closeEditPanelSettings"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
@@ -1897,7 +1897,7 @@
             <actualResult type="variable">getText2</actualResult>
             <expectedResult type="string">{{PageBuilderTextArea_WidgetCMSPageLink.editPanelValue}}</expectedResult>
         </assertContains>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <!-- Validate Storefront -->
@@ -1961,7 +1961,7 @@
             <actualResult type="variable">getText</actualResult>
             <expectedResult type="string">{{PageBuilderTextArea_VariableBaseURL.editPanelValue}}</expectedResult>
         </assertContains>
-        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <actionGroup ref="CloseEditPanelSettingsActionGroup" stepKey="closeEditPanelSettings"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
@@ -2853,23 +2853,23 @@
         <seeElement selector="{{TextOnStage.text('1', PageBuilderVariableWidgetText.expectedString1)}}" stepKey="seeExpectedString" />
         <seeElement selector="{{TextOnStage.text('1', PageBuilderVariableWidgetText.expectedString2)}}" stepKey="seeExpectedString1" />
         <!-- Verify clicking the variable focuses the directive -->
-        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusEditor">
+        <actionGroup ref="UnFocusOptionMenuActionGroup" stepKey="unFocusEditor">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <actionGroup ref="clickDirectiveTinyMCE" stepKey="clickDirectiveTinyMCE">
+        <actionGroup ref="ClickDirectiveTinyMCEActionGroup" stepKey="clickDirectiveTinyMCE">
             <argument name="labelValue" value="TinyMCEVariableBaseURL.editPanelValue" />
         </actionGroup>
-        <actionGroup ref="seeDirectiveFocusedTinyMCE" stepKey="seeDirectiveFocusedTinyMCE">
+        <actionGroup ref="SeeDirectiveFocusedTinyMCEActionGroup" stepKey="seeDirectiveFocusedTinyMCE">
             <argument name="labelValue" value="TinyMCEVariableBaseURL.editPanelValue" />
         </actionGroup>
         <!-- Save page and verify single clicking on variable will retain selection -->
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        <actionGroup ref="clickDirectiveTinyMCE" stepKey="clickDirectiveTinyMCE2">
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="ClickDirectiveTinyMCEActionGroup" stepKey="clickDirectiveTinyMCE2">
             <argument name="labelValue" value="TinyMCEVariableBaseURL.editPanelValue" />
         </actionGroup>
-        <actionGroup ref="waitForTinyMCEInFocus" stepKey="waitForTinyMCEInFocus" />
-        <actionGroup ref="seeDirectiveFocusedTinyMCE" stepKey="seeDirectiveFocusedTinyMCE2">
+        <actionGroup ref="WaitForTinyMCEInFocusActionGroup" stepKey="waitForTinyMCEInFocus" />
+        <actionGroup ref="SeeDirectiveFocusedTinyMCEActionGroup" stepKey="seeDirectiveFocusedTinyMCE2">
             <argument name="labelValue" value="TinyMCEVariableBaseURL.editPanelValue" />
         </actionGroup>
     </test>
@@ -2923,23 +2923,23 @@
         <seeElement selector="{{TextOnStage.text('1', PageBuilderVariableWidgetText.expectedString1)}}" stepKey="seeExpectedString" />
         <seeElement selector="{{TextOnStage.text('1', PageBuilderVariableWidgetText.expectedString2)}}" stepKey="seeExpectedString1" />
         <!-- Verify clicking the widget focuses the directive -->
-        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusEditor">
+        <actionGroup ref="UnFocusOptionMenuActionGroup" stepKey="unFocusEditor">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <actionGroup ref="clickDirectiveTinyMCE" stepKey="clickDirectiveTinyMCE">
+        <actionGroup ref="ClickDirectiveTinyMCEActionGroup" stepKey="clickDirectiveTinyMCE">
             <argument name="labelValue" value="TinyMCEWidgetCMSPageLink.editPanelValue" />
         </actionGroup>
-        <actionGroup ref="seeDirectiveFocusedTinyMCE" stepKey="seeDirectiveFocusedTinyMCE">
+        <actionGroup ref="SeeDirectiveFocusedTinyMCEActionGroup" stepKey="seeDirectiveFocusedTinyMCE">
             <argument name="labelValue" value="TinyMCEWidgetCMSPageLink.editPanelValue" />
         </actionGroup>
         <!-- Save page and verify single clicking on widget will retain selection -->
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        <actionGroup ref="clickDirectiveTinyMCE" stepKey="clickDirectiveTinyMCE2">
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="ClickDirectiveTinyMCEActionGroup" stepKey="clickDirectiveTinyMCE2">
             <argument name="labelValue" value="TinyMCEWidgetCMSPageLink.editPanelValue" />
         </actionGroup>
-        <actionGroup ref="waitForTinyMCEInFocus" stepKey="waitForTinyMCEInFocus" />
-        <actionGroup ref="seeDirectiveFocusedTinyMCE" stepKey="seeDirectiveFocusedTinyMCE2">
+        <actionGroup ref="WaitForTinyMCEInFocusActionGroup" stepKey="waitForTinyMCEInFocus" />
+        <actionGroup ref="SeeDirectiveFocusedTinyMCEActionGroup" stepKey="seeDirectiveFocusedTinyMCE2">
             <argument name="labelValue" value="TinyMCEWidgetCMSPageLink.editPanelValue" />
         </actionGroup>
     </test>
@@ -3049,24 +3049,24 @@
         <before>
             <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
             <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="switchToTinyMCE4"/>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
         </before>
         <after>
             <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage1">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection1">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandPageBuilderPanelMenuSection1">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragTextOntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragTextOntoStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <actionGroup ref="focusTinyMCE" stepKey="focusTinyMCE"/>
+        <actionGroup ref="FocusTinyMCEActionGroup" stepKey="focusTinyMCE"/>
         <!-- Create new Heading 2 -->
-        <actionGroup ref="formatTextTinyMCE" stepKey="formatTextHeading2">
+        <actionGroup ref="FormatTextTinyMCEActionGroup" stepKey="formatTextHeading2">
             <argument name="format" value="TinyMCEFormatHeading2"/>
         </actionGroup>
         <pressKey selector="{{TextOnStage.tinymce('1')}}" userInput="{{PageBuilderTextHeadingProperty.value}}" stepKey="addHeadingText"/>
@@ -3079,15 +3079,15 @@
         <seeElement selector="{{TextOnStage.text('1', PageBuilderTextProperty.value)}}" stepKey="seeText"/>
         <!-- Add a variable on the previous line -->
         <pressKey selector="{{TextOnStage.tinymce('1')}}" parameterArray="[\Facebook\WebDriver\WebDriverKeys::HOME, \Facebook\WebDriver\WebDriverKeys::ENTER, \Facebook\WebDriver\WebDriverKeys::ARROW_UP]" stepKey="goToPreviousLine"/>
-        <actionGroup ref="addVariableToTinyMCEInline" stepKey="addVariableToTinyMCE">
+        <actionGroup ref="AddVariableToTinyMCEInlineActionGroup" stepKey="addVariableToTinyMCE">
             <argument name="variable" value="TinyMCEVariableBaseURL"/>
         </actionGroup>
-        <actionGroup ref="seeVariableTinyMCE" stepKey="seeVariableTinyMCE">
+        <actionGroup ref="SeeVariableTinyMCEActionGroup" stepKey="seeVariableTinyMCE">
             <argument name="labelValue" value="TinyMCEVariableBaseURL.editPanelValue"/>
         </actionGroup>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        <actionGroup ref="scrollToTinyMCE" stepKey="scrollToTinyMCE"/>
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="ScrollToTinyMCEActionGroup" stepKey="scrollToTinyMCE"/>
         <!-- Select portion of Heading "his is a h" -->
         <executeInSelenium function="function ($webdriver) use ($I) {
             $heading = $webdriver->findElement(\Facebook\WebDriver\WebDriverBy::xpath('//div[contains(@class, \'inline-wysiwyg\')]//h2'));
@@ -3098,14 +3098,14 @@
                 ->release()
                 ->perform();
         }" stepKey="selectHeadingTextInTinyMCE"/>
-        <actionGroup ref="waitForTinyMCEInFocus" stepKey="waitForTinyMCEInFocus" />
-        <actionGroup ref="assertSelectedText" stepKey="assertSelection">
+        <actionGroup ref="WaitForTinyMCEInFocusActionGroup" stepKey="waitForTinyMCEInFocus" />
+        <actionGroup ref="AssertSelectedTextActionGroup" stepKey="assertSelection">
             <argument name="expectedSelectedText" value="TinyMCEPartialHeadingSelection"/>
         </actionGroup>
         <reloadPage stepKey="reloadPage" />
         <waitForPageLoad stepKey="waitForReload" />
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
-        <actionGroup ref="scrollToTinyMCE" stepKey="scrollToTinyMCE2"/>
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage2"/>
+        <actionGroup ref="ScrollToTinyMCEActionGroup" stepKey="scrollToTinyMCE2"/>
         <!-- Select portion of paragraph text "es stri" -->
         <executeInSelenium function="function ($webdriver) use ($I) {
             $text = $webdriver->findElement(\Facebook\WebDriver\WebDriverBy::xpath('//div[contains(@class, \'inline-wysiwyg\')]//p[2]'));
@@ -3116,14 +3116,14 @@
                 ->release()
                 ->perform();
         }" stepKey="selectTextInTinyMCE"/>
-        <actionGroup ref="waitForTinyMCEInFocus" stepKey="waitForTinyMCEInFocus2" />
-        <actionGroup ref="assertSelectedText" stepKey="assertSelection2">
+        <actionGroup ref="WaitForTinyMCEInFocusActionGroup" stepKey="waitForTinyMCEInFocus2" />
+        <actionGroup ref="AssertSelectedTextActionGroup" stepKey="assertSelection2">
             <argument name="expectedSelectedText" value="TinyMCEPartialTextSelection"/>
         </actionGroup>
         <reloadPage stepKey="reloadPage2" />
         <waitForPageLoad stepKey="waitForReload2" />
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage3"/>
-        <actionGroup ref="scrollToTinyMCE" stepKey="scrollToTinyMCE3"/>
+        <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage3"/>
+        <actionGroup ref="ScrollToTinyMCEActionGroup" stepKey="scrollToTinyMCE3"/>
         <!-- Select from part of the heading, over the variable, to part of the text string -->
         <executeInSelenium function="function ($webdriver) use ($I) {
             $heading = $webdriver->findElement(\Facebook\WebDriver\WebDriverBy::xpath('//div[contains(@class, \'inline-wysiwyg\')]//h2'));
@@ -3135,8 +3135,8 @@
                 ->release()
                 ->perform();
         }" stepKey="selectHeadingTextAndVariableTinyMCE"/>
-        <actionGroup ref="waitForTinyMCEInFocus" stepKey="waitForTinyMCEInFocus3" />
-        <actionGroup ref="assertSelectedText" stepKey="assertSelection3">
+        <actionGroup ref="WaitForTinyMCEInFocusActionGroup" stepKey="waitForTinyMCEInFocus3" />
+        <actionGroup ref="AssertSelectedTextActionGroup" stepKey="assertSelection3">
             <argument name="expectedSelectedText" value="TinyMCEHeadingVariableTextSelection"/>
         </actionGroup>
     </test>

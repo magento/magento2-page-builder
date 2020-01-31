@@ -2442,21 +2442,21 @@
                 <argument name="product" value="$$createCMSPage$$"/>
             </actionGroup>
             <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandAdminProductSection" after="navigateToCreatedCMSPage"/>
-            <actionGroup ref="openPageBuilderForAttribute" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="OpenPageBuilderForAttributeActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <deleteData createDataKey="createCategory" stepKey="deleteCategory" before="deleteCMSPage"/>
             <actionGroup ref="NavigateToAndResetProductGridToDefaultViewActionGroup" stepKey="NavigateToAndResetProductGridToDefaultView" after="deletePageBuilderTemplate"/>
         </after>
-        <actionGroup ref="savePageBuilderTemplate" stepKey="savePageBuilderTemplate">
+        <actionGroup ref="SavePageBuilderTemplateActionGroup" stepKey="savePageBuilderTemplate">
             <argument name="baseContent" value="{{PageBuilderStage.applyTemplateButton}}"/>
         </actionGroup>
         <actionGroup ref="NavigateToCreatedProductEditPageActionGroup" stepKey="navigateToCreatedCMSPage">
             <argument name="product" value="$$createCMSPage$$"/>
         </actionGroup>
         <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandAdminProductSection" after="navigateToCreatedCMSPage"/>
-        <actionGroup ref="openPageBuilderForAttribute" stepKey="switchToPageBuilderStage"/>
-        <actionGroup ref="confirmApplyFromPageBuilderApplyTemplateSlideOut" stepKey="confirmApplyFromPageBuilderApplyTemplateSlideOut">
+        <actionGroup ref="OpenPageBuilderForAttributeActionGroup" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="ConfirmApplyFromPageBuilderApplyTemplateSlideOutActionGroup" stepKey="confirmApplyFromPageBuilderApplyTemplateSlideOut">
             <argument name="baseContent" value="{{PageBuilderStage.applyTemplateButton}}"/>
         </actionGroup>
     </test>

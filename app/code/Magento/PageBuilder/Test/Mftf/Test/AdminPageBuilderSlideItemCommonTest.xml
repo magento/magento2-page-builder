@@ -2018,29 +2018,29 @@
             <group value="pagebuilder-slideItemCommon"/>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="LoginAsAdminActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="NavigateToAPageWithPageBuilderActionGroup" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="SwitchToPageBuilderStageActionGroup" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="LogoutActionGroup" stepKey="logout"/>
         </after>
         <!-- Add Column to Stage -->
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+        <actionGroup ref="DragContentTypeToStageActionGroup" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <!-- Add Slider to Column -->
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionElements">
+        <actionGroup ref="ExpandPageBuilderPanelMenuSectionActionGroup" stepKey="expandMenuSectionElements">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToContainer" stepKey="dragSliderToColumn">
+        <actionGroup ref="DragContentTypeToContainerActionGroup" stepKey="dragSliderToColumn">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="1"/>
         </actionGroup>
         <!-- Duplicate column 1 -->
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unfocusSlide"/>
-        <actionGroup ref="duplicateContentType" stepKey="duplicateColumn">
+        <actionGroup ref="DuplicateContentTypeActionGroup" stepKey="duplicateColumn">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="targetIndex" value="1"/>
             <argument name="contentTypeXCoordinate" value="10"/>
@@ -2048,7 +2048,7 @@
         </actionGroup>
         <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="3" stepKey="seeDuplicatedColumn"/>
         <!-- Invoke inline editing of slide -->
-        <actionGroup ref="focusOnInlineTinyMCEEditor" stepKey="focusOnInlineTinyMCEEditor">
+        <actionGroup ref="FocusOnInlineTinyMCEEditorActionGroup" stepKey="focusOnInlineTinyMCEEditor">
             <argument name="section" value="SlideOnBackend"/>
         </actionGroup>
         <!-- Assert slide overflow is not hidden -->
@@ -2057,7 +2057,7 @@
             <expectedResult type="string">visible</expectedResult>
             <actualResult type="variable">$slideOverflowProperty</actualResult>
         </assertEquals>
-        <actionGroup ref="addVariableToTinyMCEInline" stepKey="verifySlideInsertVariableButtonIsVisible">
+        <actionGroup ref="AddVariableToTinyMCEInlineActionGroup" stepKey="verifySlideInsertVariableButtonIsVisible">
             <argument name="variable" value="TinyMCEVariableBaseURL"/>
         </actionGroup>
     </test>

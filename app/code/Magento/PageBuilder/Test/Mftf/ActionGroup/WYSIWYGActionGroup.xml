@@ -65,7 +65,7 @@
         <waitForElementVisible selector="{{TinyMCESection.InsertVariableIcon}}" stepKey="waitForInsertVariable1"/>
         <click selector="{{TinyMCESection.InsertVariableIcon}}" stepKey="clickInsertVariable1"/>
     </actionGroup>
-    <actionGroup name="seeVariableTinyMCE">
+    <actionGroup name="SeeVariableTinyMCEActionGroup">
         <arguments>
             <argument name="section" defaultValue="TextOnStage"/>
             <argument name="index" defaultValue="1" type="string"/>
@@ -74,7 +74,7 @@
         <waitForElementVisible selector="{{section.text(index, labelValue)}}" stepKey="waitForVariable"/>
         <seeElement selector="{{section.text(index, labelValue)}}" stepKey="seeVariable"/>
     </actionGroup>
-    <actionGroup name="addVariableToTinyMCE3" extends="addVariableToTinyMCE">
+    <actionGroup name="AddVariableToTinyMCE3ActionGroup" extends="AddVariableToTinyMCEActionGroup">
         <arguments>
             <argument name="variable" defaultValue=""/>
         </arguments>
@@ -258,7 +258,7 @@
         <waitForPageLoad stepKey="waitForPageLoad1"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="loseFocusFromEditor"/>
     </actionGroup>
-    <actionGroup name="formatTextTinyMCE">
+    <actionGroup name="FormatTextTinyMCEActionGroup">
         <arguments>
             <argument name="section" defaultValue="WYSIWYGOnPageBuilderInline"/>
             <!-- Receives pagebuilder_tinymce_format -->
@@ -270,14 +270,14 @@
         <click selector="{{section.formatOption(format.label)}}" stepKey="clickFormatOption"/>
         <waitForElementNotVisible selector="{{section.formatOption(format.label)}}" stepKey="waitForFormatInvisible"/>
     </actionGroup>
-    <actionGroup name="waitForTinyMCEInFocus">
+    <actionGroup name="WaitForTinyMCEInFocusActionGroup">
         <arguments>
             <argument name="section" defaultValue="TextOnStage"/>
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
         <waitForElementVisible selector="{{section.tinymceInFocus(index)}}" stepKey="waitForTinyMCEInFocus"/>
     </actionGroup>
-    <actionGroup name="clickDirectiveTinyMCE">
+    <actionGroup name="ClickDirectiveTinyMCEActionGroup">
         <arguments>
             <argument name="section" defaultValue="TextOnStage"/>
             <argument name="index" defaultValue="1" type="string"/>
@@ -286,7 +286,7 @@
         <waitForElementVisible selector="{{section.directive(index, labelValue)}}" stepKey="waitForDirective"/>
         <click selector="{{section.directive(index, labelValue)}}" stepKey="clickDirective"/>
     </actionGroup>
-    <actionGroup name="seeDirectiveFocusedTinyMCE">
+    <actionGroup name="SeeDirectiveFocusedTinyMCEActionGroup">
         <arguments>
             <argument name="section" defaultValue="TextOnStage"/>
             <argument name="index" defaultValue="1" type="string"/>
@@ -295,7 +295,7 @@
         <waitForElementVisible selector="{{section.directiveFocused(index, labelValue)}}" stepKey="waitForDirectiveFocused"/>
         <seeElement selector="{{section.directiveFocused(index, labelValue)}}" stepKey="verifyDirectiveIsFocused"/>
     </actionGroup>
-    <actionGroup name="scrollToTinyMCE">
+    <actionGroup name="ScrollToTinyMCEActionGroup">
         <arguments>
             <argument name="section" defaultValue="TextOnStage"/>
             <argument name="index" defaultValue="1" type="string"/>
@@ -303,7 +303,7 @@
         <scrollTo selector="{{section.tinymce(index)}}" stepKey="scrollToTinyMCE"/>
         <waitForElementVisible selector="{{section.tinymce(index)}}" stepKey="waitForTinyMCEVisible"/>
     </actionGroup>
-    <actionGroup name="assertSelectedText">
+    <actionGroup name="AssertSelectedTextActionGroup">
         <arguments>
             <argument name="expectedSelectedText"/>
         </arguments>
@@ -313,7 +313,7 @@
             <actualResult type="variable">selectionString</actualResult>
         </assertEquals>
     </actionGroup>
-    <actionGroup name="doubleClickVariableTinyMCE">
+    <actionGroup name="DoubleClickVariableTinyMCEActionGroup">
         <arguments>
             <argument name="section" defaultValue="TextOnStage"/>
             <argument name="index" defaultValue="1" type="string"/>
@@ -325,13 +325,13 @@
         <waitForElementVisible selector="{{VariableSection.CancelBtnEnabled}}" stepKey="waitForCancelButton"/>
         <waitForElementVisible selector="{{VariableSection.Radio(variable.variableName)}}" stepKey="waitForVariableAfterDoubleClick"/>
     </actionGroup>
-    <actionGroup name="closeVariablePanelTinyMCE">
+    <actionGroup name="CloseVariablePanelTinyMCEActionGroup">
         <waitForElementVisible selector="{{VariableSection.CancelBtnEnabled}}" stepKey="waitForCancelButton"/>
         <click selector="{{VariableSection.CancelBtnEnabled}}" stepKey="clickCancelButton"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForElementNotVisible selector="{{VariableSection.CancelBtnEnabled}}" stepKey="waitForVariableCancelNotVisible"/>
     </actionGroup>
-    <actionGroup name="doubleClickWidgetTinyMCE">
+    <actionGroup name="DoubleClickWidgetTinyMCEActionGroup">
         <arguments>
             <argument name="section" defaultValue="TextOnStage"/>
             <argument name="index" defaultValue="1" type="string"/>
@@ -342,13 +342,13 @@
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForElementVisible selector="{{WidgetSection.CancelBtnEnabled}}" stepKey="waitForCancelButtonVisible"/>
     </actionGroup>
-    <actionGroup name="closeWidgetPanelTinyMCE">
+    <actionGroup name="CloseWidgetPanelTinyMCEActionGroup">
         <waitForElementVisible selector="{{WidgetSection.CancelBtnEnabled}}" stepKey="waitForCancelButton"/>
         <click selector="{{WidgetSection.CancelBtnEnabled}}" stepKey="clickCancelButton"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForElementNotVisible selector="{{WidgetSection.CancelBtnEnabled}}" stepKey="waitForCancelButtonNotVisible"/>
     </actionGroup>
-    <actionGroup name="focusTinyMCE">
+    <actionGroup name="FocusTinyMCEActionGroup">
         <arguments>
             <argument name="section" defaultValue="TextOnStage"/>
             <argument name="index" defaultValue="1" type="string"/>
