@@ -84,6 +84,7 @@ interface HtmlCollectionInterface
      *
      * @param int $offset
      * @param string $value
+     * @return void
      */
     public function offsetSet($offset, $value): void;
 
