@@ -6,6 +6,7 @@
 @border-size: 2px;
 
 .pagebuilder-header {
+    opacity: 0;
     text-align: right;
 
     > .icon-pagebuilder-fullscreen {
@@ -16,6 +17,11 @@
 
     > .icon-pagebuilder-fullscreen-exit:before {
         padding-left: 0;
+    }
+
+    &.visible {
+        opacity: 1;
+        visibility: visible;
     }
 }
 
@@ -56,26 +62,37 @@
         z-index: 800;
 
         .pagebuilder-header {
-            float: right;
-            height: 0;
+            -moz-transition: opacity .75s ease-in-out, visibility .75s ease-in-out;
+            -webkit-transition: opacity .75s ease-in-out, visibility .75s ease-in-out;
+            background: @color-very-dark-grayish-orange;
+            border: none;
+            border-bottom: 1px solid @color-brownie-almost;
+            left: 150px;
+            opacity: 0;
             padding: 0;
             position: fixed;
             position: -webkit-sticky;
             position: sticky;
             right: 0;
             top: 0;
-            width: auto;
-            z-index: 101;
+            transition: opacity .75s ease-in-out, visibility .75s ease-in-out;
+            width: calc(~'100% - 150px');
+            z-index: 106;
 
             .icon-pagebuilder-fullscreen-exit {
-                background: rgba(255,255,255,.8);
                 border: none;
                 border-radius: 0;
                 box-shadow: none;
+                color: @color-ivory;
                 cursor: pointer;
                 display: inline-block;
                 margin: 0;
-                padding: 15px 20px;
+                padding: 10px 20px;
+            }
+
+            &.visible {
+                opacity: 1;
+                visibility: visible;
             }
         }
 
@@ -195,11 +212,11 @@
     }
 
     .pagebuilder-canvas {
-        -moz-transition: opacity .75s ease-in-out, visibility .75s ease-in-out, padding-top .35s ease-in-out;
-        -webkit-transition: opacity .75s ease-in-out, visibility .75s ease-in-out, padding-top .35s ease-in-out;
+        -moz-transition: opacity .75s ease-in-out, visibility .75s ease-in-out;
+        -webkit-transition: opacity .75s ease-in-out, visibility .75s ease-in-out;
         opacity: 0;
         padding-bottom: 120px;
-        transition: opacity .75s ease-in-out, visibility .75s ease-in-out, padding-top .35s ease-in-out;
+        transition: opacity .75s ease-in-out, visibility .75s ease-in-out;
         visibility: hidden;
 
         &.active {

@@ -5,10 +5,13 @@
 
 import $ from "jquery";
 import ko from "knockout";
+import $t from "mage/translate";
 import events from "Magento_PageBuilder/js/events";
 import { formatPath } from "Magento_Ui/js/lib/knockout/template/loader";
+import alertDialog from "Magento_Ui/js/modal/alert";
 import utils from "mageUtils";
 import _ from "underscore";
+import {isAllowed, resources} from "./acl";
 import Config from "./config";
 import ConfigInterface from "./config.types";
 import ContentTypeCollectionInterface from "./content-type-collection";
@@ -17,6 +20,7 @@ import PageBuilderInterface from "./page-builder.types";
 import Panel from "./panel";
 import Stage from "./stage";
 import {StageToggleFullScreenParamsInterface} from "./stage-events.types";
+import {saveAsTemplate} from "./template-manager";
 
 export default class PageBuilder implements PageBuilderInterface {
     public template: string = "Magento_PageBuilder/page-builder";
@@ -30,6 +34,9 @@ export default class PageBuilder implements PageBuilderInterface {
     public isFullScreen: KnockoutObservable<boolean> = ko.observable(false);
     public loading: KnockoutObservable<boolean> = ko.observable(true);
     public wrapperStyles: KnockoutObservable<{[key: string]: string}> = ko.observable({});
+    public content: string;
+    public isAllowedTemplateSave: boolean;
+    public isAllowedTemplateApply: boolean;
     private previousWrapperStyles: {[key: string]: string} = {};
     private previousPanelHeight: number;
 
@@ -40,6 +47,9 @@ export default class PageBuilder implements PageBuilderInterface {
         this.initialValue = initialValue;
         this.isFullScreen(config.isFullScreen);
         this.config = config;
+
+        this.isAllowedTemplateApply = isAllowed(resources.TEMPLATE_APPLY);
+        this.isAllowedTemplateSave = isAllowed(resources.TEMPLATE_SAVE);
 
         // Create the required root container for the stage
         createContentType(
@@ -67,6 +77,9 @@ export default class PageBuilder implements PageBuilderInterface {
      */
     public initListeners() {
         events.on(`stage:${ this.id }:toggleFullscreen`, this.toggleFullScreen.bind(this));
+        events.on(`stage:${ this.id }:masterFormatRenderAfter`, (content: {value: string}) => {
+            this.content = content.value;
+        });
         this.isFullScreen.subscribe(() => this.onFullScreenChange());
     }
 
@@ -155,6 +168,30 @@ export default class PageBuilder implements PageBuilderInterface {
      */
     public getTemplate() {
         return this.template;
+    }
+
+    /**
+     * Toggle template manager
+     */
+    public toggleTemplateManger() {
+        if (!isAllowed(resources.TEMPLATE_APPLY)) {
+            alertDialog({
+                content: $t("You do not have permission to apply templates."),
+                title: $t("Permission Error"),
+            });
+            return false;
+        }
+
+        events.trigger(`stage:templateManager:open`, {
+            stage: this.stage,
+        });
+    }
+
+    /**
+     * Enable saving the current stage as a template
+     */
+    public saveAsTemplate() {
+        return saveAsTemplate(this.stage);
     }
 
     /**

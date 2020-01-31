@@ -936,7 +936,9 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <seeElement selector="{{TextOnStage.emptyTextInImportantStyle('1')}}" stepKey="seeTextInImportantStyleOnPreview" />
         <grabValueFrom selector="{{TextOnStage.emptyTextInImportantStyle('1')}}" stepKey="grabTextFromEditor"/>
-        <assertEmpty stepKey="assertTextIsEmpty" actual="grabTextFromEditor" actualType="variable"/>
+        <assertEmpty stepKey="assertTextIsEmpty">
+            <actualResult type="variable">grabTextFromEditor</actualResult>
+        </assertEmpty>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage2"/>
         <!--Verify FontStyle on Storeview-->
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage2"/>
@@ -1090,7 +1092,9 @@
             <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
         </actionGroup>
         <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getBorderColor"/>
-        <assertEmpty actual="getBorderColor" actualType="variable" message="Text field has text: $getBorderColor" stepKey="assertBorderColor"/>
+        <assertEmpty message="Text field has text: $getBorderColor" stepKey="assertBorderColor">
+            <actualResult type="variable">getBorderColor</actualResult>
+        </assertEmpty>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth">
             <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
         </actionGroup>
@@ -1098,7 +1102,9 @@
             <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
         </actionGroup>
         <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedCssClassesDefaultProperty.section, PageBuilderAdvancedCssClassesDefaultProperty.fieldName)}}" stepKey="getCssClasses"/>
-        <assertEmpty actual="getCssClasses" actualType="variable" message="Text field was not empty. Had text: $getCssClasses" stepKey="assertCssClasses"/>
+        <assertEmpty message="Text field was not empty. Had text: $getCssClasses" stepKey="assertCssClasses">
+            <actualResult type="variable">getCssClasses</actualResult>
+        </assertEmpty>
         <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins">
             <argument name="property" value="PageBuilderMarginsPropertyDefault"/>
         </actionGroup>
@@ -1142,7 +1148,9 @@
             <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
         </actionGroup>
         <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getBorderColor2"/>
-        <assertEmpty actual="getBorderColor2" actualType="variable" message="Text field has text: $getBorderColor2" stepKey="assertBorderColor2"/>
+        <assertEmpty message="Text field has text: $getBorderColor2" stepKey="assertBorderColor2">
+            <actualResult type="variable">getBorderColor2</actualResult>
+        </assertEmpty>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth2">
             <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
         </actionGroup>
@@ -1150,7 +1158,9 @@
             <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
         </actionGroup>
         <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedCssClassesDefaultProperty.section, PageBuilderAdvancedCssClassesDefaultProperty.fieldName)}}" stepKey="getCssClasses2"/>
-        <assertEmpty actual="getCssClasses2" actualType="variable" message="Text field was not empty. Had text: $getCssClasses2" stepKey="assertCssClasses2"/>
+        <assertEmpty message="Text field was not empty. Had text: $getCssClasses2" stepKey="assertCssClasses2">
+            <actualResult type="variable">getCssClasses2</actualResult>
+        </assertEmpty>
         <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins2">
             <argument name="property" value="PageBuilderMarginsPropertyDefault"/>
         </actionGroup>
@@ -1862,7 +1872,10 @@
         </actionGroup>
         <waitForElementVisible selector="{{TextOnConfiguration.textArea}}" stepKey="waitForTextOnEditPanel2"/>
         <executeJS function="return document.getElementById('{{TextOnConfiguration.textAreaId}}').value;" stepKey="getText"/>
-        <assertContains actual="getText" actualType="variable" expected="{{PageBuilderTextArea_WidgetCMSPageLink.editPanelValue}}" expectedType="string" stepKey="assertValue"/>
+        <assertContains stepKey="assertValue">
+            <actualResult type="variable">getText</actualResult>
+            <expectedResult type="string">{{PageBuilderTextArea_WidgetCMSPageLink.editPanelValue}}</expectedResult>
+        </assertContains>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
@@ -1880,7 +1893,10 @@
         </actionGroup>
         <waitForElementVisible selector="{{TextOnConfiguration.textArea}}" stepKey="waitForTextOnEditPanel3"/>
         <executeJS function="return document.getElementById('{{TextOnConfiguration.textAreaId}}').value;" stepKey="getText2"/>
-        <assertContains actual="getText2" actualType="variable" expected="{{PageBuilderTextArea_WidgetCMSPageLink.editPanelValue}}" expectedType="string" stepKey="assertValue2"/>
+        <assertContains stepKey="assertValue2">
+            <actualResult type="variable">getText2</actualResult>
+            <expectedResult type="string">{{PageBuilderTextArea_WidgetCMSPageLink.editPanelValue}}</expectedResult>
+        </assertContains>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
@@ -1941,7 +1957,10 @@
         </actionGroup>
         <waitForElementVisible selector="{{TextOnConfiguration.textArea}}" stepKey="waitForTextOnEditPanel2"/>
         <executeJS function="return document.getElementById('{{TextOnConfiguration.textAreaId}}').value;" stepKey="getText"/>
-        <assertContains actual="getText" actualType="variable" expected="{{PageBuilderTextArea_VariableBaseURL.editPanelValue}}" expectedType="string" stepKey="assertValue"/>
+        <assertContains stepKey="assertValue">
+            <actualResult type="variable">getText</actualResult>
+            <expectedResult type="string">{{PageBuilderTextArea_VariableBaseURL.editPanelValue}}</expectedResult>
+        </assertContains>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
@@ -1959,7 +1978,10 @@
         </actionGroup>
         <waitForElementVisible selector="{{TextOnConfiguration.textArea}}" stepKey="waitForTextOnEditPanel3"/>
         <executeJS function="return document.getElementById('{{TextOnConfiguration.textAreaId}}').value;" stepKey="getText2"/>
-        <assertContains actual="getText2" actualType="variable" expected="{{PageBuilderTextArea_VariableBaseURL.editPanelValue}}" expectedType="string" stepKey="assertValue2"/>
+        <assertContains stepKey="assertValue2">
+            <actualResult type="variable">getText2</actualResult>
+            <expectedResult type="string">{{PageBuilderTextArea_VariableBaseURL.editPanelValue}}</expectedResult>
+        </assertContains>
         <amOnPage url="" stepKey="goToBaseURL"/>
         <grabFromCurrentUrl stepKey="grabBaseURL"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
