@@ -28,7 +28,17 @@
         <arguments>
             <argument name="collections" xsi:type="array">
                 <item name="pagebuilder_block_select_grid_data_source" xsi:type="string">Magento\Cms\Model\ResourceModel\Block\Grid\Collection</item>
+                <item name="pagebuilder_stage_template_grid_data_source" xsi:type="string">Magento\PageBuilder\Model\ResourceModel\Template\Grid\Collection</item>
+                <item name="pagebuilder_template_grid_data_source" xsi:type="string">Magento\PageBuilder\Model\ResourceModel\Template\Grid\Collection</item>
             </argument>
+        </arguments>
+    </type>
+    <type name="Magento\PageBuilder\Model\ResourceModel\Template\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">pagebuilder_template</argument>
+            <argument name="eventPrefix" xsi:type="string">pagebuilder_template_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">template_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Magento\PageBuilder\Model\ResourceModel\Template</argument>
         </arguments>
     </type>
     <type name="Magento\Catalog\Model\Product\Attribute\Repository">
@@ -250,5 +260,8 @@
                 <item name="price_low_to_high" xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\Price\LowToHigh</item>
             </argument>
         </arguments>
+    </type>
+    <type name="Magento\Framework\Filter\Template">
+        <plugin name="convertBackgroundImages" type="Magento\PageBuilder\Plugin\Filter\TemplatePlugin"/>
     </type>
 </config>

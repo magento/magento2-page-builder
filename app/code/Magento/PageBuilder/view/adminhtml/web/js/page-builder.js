@@ -1,6 +1,6 @@
 /*eslint-disable */
 /* jscs:disable */
-define(["jquery", "knockout", "Magento_PageBuilder/js/events", "mageUtils", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/panel", "Magento_PageBuilder/js/stage"], function (_jquery, _knockout, _events, _mageUtils, _underscore, _config, _contentTypeFactory, _panel, _stage) {
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Ui/js/lib/knockout/template/loader", "Magento_Ui/js/modal/alert", "mageUtils", "underscore", "Magento_PageBuilder/js/acl", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/panel", "Magento_PageBuilder/js/stage", "Magento_PageBuilder/js/template-manager"], function (_jquery, _knockout, _translate, _events, _loader, _alert, _mageUtils, _underscore, _acl, _config, _contentTypeFactory, _panel, _stage, _templateManager) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -26,9 +26,12 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "mageUtils", "und
 
       _config.setMode("Preview");
 
+      this.preloadTemplates(config);
       this.initialValue = initialValue;
       this.isFullScreen(config.isFullScreen);
-      this.config = config; // Create the required root container for the stage
+      this.config = config;
+      this.isAllowedTemplateApply = (0, _acl.isAllowed)(_acl.resources.TEMPLATE_APPLY);
+      this.isAllowedTemplateSave = (0, _acl.isAllowed)(_acl.resources.TEMPLATE_SAVE); // Create the required root container for the stage
 
       (0, _contentTypeFactory)(_config.getContentTypeConfig(_stage.rootContainerName), null, this.id).then(function (rootContainer) {
         _this.stage = new _stage(_this, rootContainer);
@@ -39,16 +42,28 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "mageUtils", "und
       this.initListeners();
     }
     /**
-     * Init listeners.
+     * Destroy rootContainer instance.
      */
 
 
     var _proto = PageBuilder.prototype;
 
+    _proto.destroy = function destroy() {
+      this.stage.rootContainer.destroy();
+    }
+    /**
+     * Init listeners.
+     */
+    ;
+
     _proto.initListeners = function initListeners() {
       var _this2 = this;
 
       _events.on("stage:" + this.id + ":toggleFullscreen", this.toggleFullScreen.bind(this));
+
+      _events.on("stage:" + this.id + ":masterFormatRenderAfter", function (content) {
+        _this2.content = content.value;
+      });
 
       this.isFullScreen.subscribe(function () {
         return _this2.onFullScreenChange();
@@ -150,6 +165,54 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "mageUtils", "und
 
     _proto.getTemplate = function getTemplate() {
       return this.template;
+    }
+    /**
+     * Toggle template manager
+     */
+    ;
+
+    _proto.toggleTemplateManger = function toggleTemplateManger() {
+      if (!(0, _acl.isAllowed)(_acl.resources.TEMPLATE_APPLY)) {
+        (0, _alert)({
+          content: (0, _translate)("You do not have permission to apply templates."),
+          title: (0, _translate)("Permission Error")
+        });
+        return false;
+      }
+
+      _events.trigger("stage:templateManager:open", {
+        stage: this.stage
+      });
+    }
+    /**
+     * Enable saving the current stage as a template
+     */
+    ;
+
+    _proto.saveAsTemplate = function saveAsTemplate() {
+      return (0, _templateManager.saveAsTemplate)(this.stage);
+    }
+    /**
+     * Preload all templates into the window to reduce calls later in the app
+     *
+     * @param config
+     */
+    ;
+
+    _proto.preloadTemplates = function preloadTemplates(config) {
+      var previewTemplates = _underscore.values(config.content_types).map(function (contentType) {
+        return _underscore.values(contentType.appearances).map(function (appearance) {
+          return appearance.preview_template;
+        });
+      }).reduce(function (array, value) {
+        return array.concat(value);
+      }, []).map(function (value) {
+        return (0, _loader.formatPath)(value);
+      });
+
+      _underscore.defer(function () {
+        require(previewTemplates);
+      });
     };
 
     return PageBuilder;

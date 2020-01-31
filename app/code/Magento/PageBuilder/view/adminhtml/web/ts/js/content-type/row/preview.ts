@@ -92,11 +92,6 @@ export default class Preview extends PreviewCollection {
                 this.buildJarallax();
             }
         });
-        events.on(`stage:${this.contentType.stageId}:fullScreenModeChangeAfter`, () => {
-            _.delay(() => {
-                this.buildJarallax();
-            }, 350);
-        });
     }
 
     /**
@@ -144,5 +139,16 @@ export default class Preview extends PreviewCollection {
                 jarallax(this.element, "onScroll");
             }
         }).observe(this.element);
+    }
+
+    /**
+     * Destroy jarallax instance.
+     */
+    public destroy(): void {
+        super.destroy();
+
+        if (this.element) {
+            jarallax(this.element, "destroy");
+        }
     }
 }

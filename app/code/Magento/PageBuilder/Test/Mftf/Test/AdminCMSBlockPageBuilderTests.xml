@@ -834,4 +834,36 @@
             <deleteData createDataKey="createCMSPage" stepKey="deleteCreatedCategory" after="deleteCreatedProduct"/>
         </after>
     </test>
+    <test name="PageBuilderCMSBlockCreateAndApplyTemplate" extends="PageBuilderCMSPageCreateAndApplyTemplate">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="CMS Block"/>
+            <title value="Create and Apply Page Builder Template to CMS Block"/>
+            <description value="Verify that user can create and apply a Page Builder template to a CMS Block's content"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="PB-341"/>
+            <testCaseId value="MC-30602"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-templates"/>
+            <group value="pagebuilder-cms-block"/>
+        </annotations>
+        <before>
+            <createData entity="_emptyCmsBlock" stepKey="createCMSPage"/>
+            <actionGroup ref="NavigateToCreatedCMSBlockPageActionGroup" stepKey="navigateToCreatedCMSPage">
+                <argument name="CMSBlockPage" value="$$createCMSPage$$"/>
+            </actionGroup>
+            <remove keyForRemoval="switchToPageBuilderStage"/>
+        </before>
+        <actionGroup ref="savePageBuilderTemplate" stepKey="savePageBuilderTemplate">
+            <argument name="baseContent" value="{{BlockNewPagePageActionsSection.saveBlock}}"/>
+        </actionGroup>
+        <!-- Go to CMS Block -->
+        <actionGroup ref="NavigateToCreatedCMSBlockPageActionGroup" stepKey="navigateToCreatedCMSPage">
+            <argument name="CMSBlockPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <remove keyForRemoval="switchToPageBuilderStage"/>
+        <actionGroup ref="confirmApplyFromPageBuilderApplyTemplateSlideOut" stepKey="confirmApplyFromPageBuilderApplyTemplateSlideOut">
+            <argument name="baseContent" value="{{BlockNewPagePageActionsSection.saveBlock}}"/>
+        </actionGroup>
+    </test>
 </tests>

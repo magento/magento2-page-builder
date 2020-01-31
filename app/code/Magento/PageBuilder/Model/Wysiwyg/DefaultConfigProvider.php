@@ -39,41 +39,43 @@ class DefaultConfigProvider implements \Magento\Framework\Data\Wysiwyg\ConfigPro
      */
     public function getConfig(\Magento\Framework\DataObject $config): \Magento\Framework\DataObject
     {
-        $config->addData([
-            'tinymce4' => [
-                'toolbar' => 'undo redo | styleselect | fontsizeselect | lineheightselect | forecolor backcolor ' .
-                    '| bold italic underline | alignleft aligncenter alignright | numlist bullist ' .
-                    '| link image table charmap',
+        $config->addData(
+            [
+                'tinymce4' => [
+                    'toolbar' => 'undo redo | styleselect | fontsizeselect | lineheightselect | forecolor backcolor ' .
+                        '| bold italic underline | alignleft aligncenter alignright | numlist bullist ' .
+                        '| link image table charmap',
 
-                'plugins' => implode(
-                    ' ',
-                    [
-                        'advlist',
-                        'autolink',
-                        'lists',
-                        'link',
-                        'charmap',
-                        'media',
-                        'noneditable',
-                        'table',
-                        'contextmenu',
-                        'paste',
-                        'code',
-                        'help',
-                        'table',
-                        'textcolor',
-                        'image',
-                        'colorpicker',
-                        'lineheight'
+                    'plugins' => implode(
+                        ' ',
+                        [
+                            'advlist',
+                            'autolink',
+                            'lists',
+                            'link',
+                            'charmap',
+                            'media',
+                            'noneditable',
+                            'table',
+                            'contextmenu',
+                            'paste',
+                            'code',
+                            'help',
+                            'table',
+                            'textcolor',
+                            'image',
+                            'colorpicker',
+                            'lineheight'
+                        ]
+                    ),
+                    'content_css' => [
+                        $this->assetRepo->getUrl('mage/adminhtml/wysiwyg/tiny_mce/themes/ui.css'),
+                        $this->assetRepo->getUrl('Magento_PageBuilder::css/source/form/element/tinymce.css')
                     ]
-                ),
-                'content_css' => [
-                    $this->assetRepo->getUrl('mage/adminhtml/wysiwyg/tiny_mce/themes/ui.css'),
-                    $this->assetRepo->getUrl('Magento_PageBuilder/css/source/form/element/tinymce.css')
-                ]
-            ],
-            'settings' => $this->additionalSettings
-        ]);
+                ],
+                'settings' => $this->additionalSettings
+            ]
+        );
         return $config;
     }
 }

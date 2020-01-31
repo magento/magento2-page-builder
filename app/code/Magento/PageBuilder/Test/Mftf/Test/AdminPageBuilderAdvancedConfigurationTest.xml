@@ -108,7 +108,10 @@
         <comment userInput="Check Drop Down Counts" stepKey="commentCheckDropDownCounts"/>
         <grabMultiple selector="{{EditPanelForm.panelFieldOptions(PageBuilderAdvancedAlignmentPropertyDefault.section, PageBuilderAdvancedAlignmentPropertyDefault.fieldName)}}" userInput="value" stepKey="getDropDownCountAlignment"/>
         <grabMultiple selector="{{EditPanelForm.panelFieldOptions(PageBuilderAdvancedBorderPropertyDefault.section, PageBuilderAdvancedBorderPropertyDefault.fieldName)}}" userInput="value" stepKey="getDropDownCountBorder"/>
-        <assertCount actual="getDropDownCountBorder" actualType="variable" expected="10" expectedType="int" stepKey="assertDropDownCountBorder"/>
+        <assertCount stepKey="assertDropDownCountBorder">
+            <actualResult type="variable">getDropDownCountBorder</actualResult>
+            <expectedResult type="int">10</expectedResult>
+        </assertCount>
         <!-- Check Placeholder Text -->
         <comment userInput="Check Placeholder Text" stepKey="commentCheckPlaceholderText"/>
         <actionGroup ref="ValidateSlideOutPanelFieldPlaceholderTextActionGroup" stepKey="checkPlaceholderTextBorderColor">

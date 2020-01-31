@@ -236,12 +236,18 @@
         <!-- Validate Default Values -->
         <comment userInput="Validate Default Values" stepKey="commentValidateDefaultValues"/>
         <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderVideoUrl_Default.section, PageBuilderVideoUrl_Default.fieldName)}}" stepKey="getUrl"/>
-        <assertEmpty actual="getUrl" actualType="variable" message="Text field was not empty. Had text: $getUrl" stepKey="assertUrl"/>
+        <assertEmpty message="Text field was not empty. Had text: $getUrl" stepKey="assertUrl">
+            <actualResult type="variable">getUrl</actualResult>
+        </assertEmpty>
         <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderVideoUrl_Default.section, PageBuilderVideoUrl_Default.fieldName)}}" stepKey="getWidth"/>
-        <assertEmpty actual="getWidth" actualType="variable" message="Text field was not empty. Had text: $getWidth" stepKey="assertWidth"/>
+        <assertEmpty message="Text field was not empty. Had text: $getWidth" stepKey="assertWidth">
+            <actualResult type="variable">getWidth</actualResult>
+        </assertEmpty>
         <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderVideoUrl_Default.section, PageBuilderVideoUrl_Default.fieldName)}}" stepKey="getHeight"/>
-        <assertEmpty actual="getHeight" actualType="variable" message="Text field was not empty. Had text: $getHeight" stepKey="assertHeight"/>
-        <actionGroup ref="CloseEditPanelSettingsActionGroup" stepKey="closeEditPanelSettings"/>
+        <assertEmpty message="Text field was not empty. Had text: $getHeight" stepKey="assertHeight">
+            <actualResult type="variable">getHeight</actualResult>
+        </assertEmpty>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <actionGroup ref="ValidateEmptyVideoStageActionGroup" stepKey="validateStage"/>
@@ -256,12 +262,18 @@
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
         <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderVideoUrl_Default.section, PageBuilderVideoUrl_Default.fieldName)}}" stepKey="getUrl2"/>
-        <assertEmpty actual="getUrl2" actualType="variable" message="Text field was not empty. Had text: $getUrl2" stepKey="assertUrl2"/>
+        <assertEmpty message="Text field was not empty. Had text: $getUrl2" stepKey="assertUrl2">
+            <actualResult type="variable">getUrl2</actualResult>
+        </assertEmpty>
         <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderVideoUrl_Default.section, PageBuilderVideoUrl_Default.fieldName)}}" stepKey="getWidth2"/>
-        <assertEmpty actual="getWidth2" actualType="variable" message="Text field was not empty. Had text: $getWidth2" stepKey="assertWidth2"/>
+        <assertEmpty message="Text field was not empty. Had text: $getWidth2" stepKey="assertWidth2">
+            <actualResult type="variable">getWidth2</actualResult>
+        </assertEmpty>
         <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderVideoUrl_Default.section, PageBuilderVideoUrl_Default.fieldName)}}" stepKey="getHeight2"/>
-        <assertEmpty actual="getHeight2" actualType="variable" message="Text field was not empty. Had text: $getHeight2" stepKey="assertHeight2"/>
-        <actionGroup ref="NavigateToStoreFrontActionGroup" stepKey="navigateToStoreFront">
+        <assertEmpty message="Text field was not empty. Had text: $getHeight2" stepKey="assertHeight2">
+            <actualResult type="variable">getHeight2</actualResult>
+        </assertEmpty>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderVideoContentType"/>
         </actionGroup>
         <!-- Validate Storefront -->
@@ -312,16 +324,20 @@
             <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
         </actionGroup>
         <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getBorderColor"/>
-        <assertEmpty actual="getBorderColor" actualType="variable" message="Text field has text: $getBorderColor" stepKey="assertBorderColor"/>
-        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderWidth">
+        <assertEmpty message="Text field was not empty. Had text: $getBorderColor" stepKey="assertBorderColor">
+            <actualResult type="variable">getBorderColor</actualResult>
+        </assertEmpty>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth">
             <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderRadius">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
         </actionGroup>
         <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedCssClassesDefaultProperty.section, PageBuilderAdvancedCssClassesDefaultProperty.fieldName)}}" stepKey="getCssClasses"/>
-        <assertEmpty actual="getCssClasses" actualType="variable" message="Text field was not empty. Had text: $getCssClasses" stepKey="assertCssClasses"/>
-        <actionGroup ref="SeeInMarginFieldsSlideOutPanelActionGroup" stepKey="validateMargins">
+        <assertEmpty message="Text field was not empty. Had text: $getCssClasses" stepKey="assertCssClasses">
+            <actualResult type="variable">getCssClasses</actualResult>
+        </assertEmpty>
+        <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins">
             <argument name="property" value="PageBuilderMarginsPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="SeeInPaddingFieldsSlideOutPanelActionGroup" stepKey="validatePadding">
@@ -364,16 +380,20 @@
             <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
         </actionGroup>
         <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getBorderColor2"/>
-        <assertEmpty actual="getBorderColor2" actualType="variable" message="Text field has text: $getBorderColor2" stepKey="assertBorderColor2"/>
-        <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderWidth2">
+        <assertEmpty message="Text field was not empty. Had text: $getBorderColor2" stepKey="assertBorderColor2">
+            <actualResult type="variable">getBorderColor2</actualResult>
+        </assertEmpty>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth2">
             <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="SeeInFieldSlideOutPropertyActionGroup" stepKey="validateBorderRadius2">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
         </actionGroup>
         <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedCssClassesDefaultProperty.section, PageBuilderAdvancedCssClassesDefaultProperty.fieldName)}}" stepKey="getCssClasses2"/>
-        <assertEmpty actual="getCssClasses2" actualType="variable" message="Text field was not empty. Had text: $getCssClasses2" stepKey="assertCssClasses2"/>
-        <actionGroup ref="SeeInMarginFieldsSlideOutPanelActionGroup" stepKey="validateMargins2">
+        <assertEmpty message="Text field was not empty. Had text: $getCssClasses2" stepKey="assertCssClasses2">
+            <actualResult type="variable">getCssClasses2</actualResult>
+        </assertEmpty>
+        <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins2">
             <argument name="property" value="PageBuilderMarginsPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="SeeInPaddingFieldsSlideOutPanelActionGroup" stepKey="validatePadding2">

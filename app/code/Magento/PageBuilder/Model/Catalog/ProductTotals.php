@@ -8,13 +8,14 @@ declare(strict_types=1);
 
 namespace Magento\PageBuilder\Model\Catalog;
 
+use Magento\Catalog\Api\CategoryRepositoryInterface;
 use Magento\Catalog\Model\Product\Attribute\Source\Status;
 use Magento\Catalog\Model\Product\Visibility;
 use Magento\Catalog\Model\ResourceModel\Product\Collection;
 use Magento\Catalog\Model\ResourceModel\Product\CollectionFactory;
-use Magento\CatalogInventory\Helper\Stock;
 use Magento\CatalogWidget\Model\Rule;
 use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Rule\Model\Condition\Combine;
 use Magento\Rule\Model\Condition\Sql\Builder;
 use Magento\Widget\Helper\Conditions;
@@ -22,6 +23,8 @@ use Zend_Db_Select_Exception;
 
 /**
  * Product totals for Products content type
+ *
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class ProductTotals
 {
@@ -46,29 +49,29 @@ class ProductTotals
     private $conditionsHelper;
 
     /**
-     * @var Stock
+     * @var CategoryRepositoryInterface
      */
-    private $stockFilter;
+    private $categoryRepository;
 
     /**
      * @param CollectionFactory $productCollectionFactory
      * @param Builder $sqlBuilder
      * @param Rule $rule
      * @param Conditions $conditionsHelper
-     * @param Stock $stockFilter
+     * @param CategoryRepositoryInterface $categoryRepository
      */
     public function __construct(
         CollectionFactory $productCollectionFactory,
         Builder $sqlBuilder,
         Rule $rule,
         Conditions $conditionsHelper,
-        Stock $stockFilter
+        CategoryRepositoryInterface $categoryRepository
     ) {
         $this->productCollectionFactory = $productCollectionFactory;
         $this->sqlBuilder = $sqlBuilder;
         $this->rule = $rule;
         $this->conditionsHelper = $conditionsHelper;
-        $this->stockFilter = $stockFilter;
+        $this->categoryRepository = $categoryRepository;
     }
 
     /**
@@ -84,15 +87,47 @@ class ProductTotals
         }
 
         foreach ($conditions as $key => $condition) {
-            if (!empty($condition['attribute'])
-                && in_array($condition['attribute'], ['special_from_date', 'special_to_date'])
-            ) {
-                $conditions[$key]['value'] = date('Y-m-d H:i:s', strtotime($condition['value']));
+            if (!empty($condition['attribute'])) {
+                if (in_array($condition['attribute'], ['special_from_date', 'special_to_date'])) {
+                    $conditions[$key]['value'] = date('Y-m-d H:i:s', strtotime($condition['value']));
+                }
+
+                if ($condition['attribute'] == 'category_ids') {
+                    $conditions[$key] = $this->updateAnchorCategoryConditions($condition);
+                }
             }
         }
 
         $this->rule->loadPost(['conditions' => $conditions]);
         return $this->rule->getConditions();
+    }
+
+    /**
+     * Update conditions if the category is an anchor category
+     *
+     * @param array $condition
+     * @return array
+     */
+    private function updateAnchorCategoryConditions(array $condition): array
+    {
+        if (array_key_exists('value', $condition)) {
+            $categoryId = $condition['value'];
+
+            try {
+                $category = $this->categoryRepository->get($categoryId);
+            } catch (NoSuchEntityException $e) {
+                return $condition;
+            }
+
+            if ($category->getIsAnchor() && $category->getChildren(true)) {
+                $children = explode(',', $category->getChildren(true));
+
+                $condition['operator'] = "()";
+                $condition['value'] = array_merge([$categoryId], $children);
+            }
+        }
+
+        return $condition;
     }
 
     /**
@@ -156,34 +191,6 @@ class ProductTotals
     }
 
     /**
-     * Retrieve count of all out of stock products
-     *
-     * @param Collection $baseCollection
-     * @return int number of out of stock products
-     * @throws Zend_Db_Select_Exception
-     */
-    private function getOutOfStockCount(Collection $baseCollection): int
-    {
-        // Retrieve in stock products, then subtract them from the total
-        $outOfStockCollection = clone $baseCollection;
-        $this->stockFilter->addIsInStockFilterToCollection($outOfStockCollection);
-        // Remove existing stock_status where condition from query
-        $outOfStockWhere = $outOfStockCollection->getSelect()->getPart('where');
-        $outOfStockWhere = array_filter(
-            $outOfStockWhere,
-            function ($whereCondition) {
-                return !stristr($whereCondition, 'stock_status');
-            }
-        );
-        $outOfStockCollection->getSelect()->setPart('where', $outOfStockWhere);
-        $outOfStockCollection->getSelect()->where(
-            'stock_status_index.stock_status = ?',
-            \Magento\CatalogInventory\Model\Stock\Status::STATUS_OUT_OF_STOCK
-        );
-        return $outOfStockCollection->getSize();
-    }
-
-    /**
      * Retrieve product totals for collection
      *
      * @param string $conditions
@@ -209,13 +216,11 @@ class ProductTotals
 
         $disabledCount = $this->getDisabledCount($collection);
         $notVisibleCount = $this->getNotVisibleCount($collection);
-        $outOfStockCount = $this->getOutOfStockCount($collection);
 
         return [
             'total' => $collection->getSize(),
             'disabled' => $disabledCount,
             'notVisible' => $notVisibleCount,
-            'outOfStock' => $outOfStockCount,
         ];
     }
 }
