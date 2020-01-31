@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<container xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="template" xsi:type="string">templates/edit_form</item>
+    </argument>
+    <dataSource name="pagebuilder_stage_template_data_source">
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+        <dataProvider name="pagebuilder_stage_template_data_source" class="Magento\PageBuilder\Model\ContentType\DataProvider">
+            <settings>
+                <requestFieldName/>
+                <primaryFieldName/>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <modal name="modal" component="Magento_PageBuilder/js/modal/template-manager-modal">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="messageContainerProvider" xsi:type="string">${ $.name }.messages</item>
+                <item name="listingProvider" xsi:type="string">${ $.name }.pagebuilder_stage_template_grid</item>
+            </item>
+        </argument>
+        <settings>
+            <options>
+                <option name="title" xsi:type="string" translate="true">Apply Template</option>
+            </options>
+            <listens>
+                <link name="pagebuilder_stage_template_grid.pagebuilder_stage_template_grid.columns.ids:lastSelected">applySelected</link>
+            </listens>
+        </settings>
+        <container name="messages" component="Magento_Ui/js/form/components/html" sortOrder="10">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="tracks" xsi:type="array">
+                        <item name="additionalClasses" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </container>
+        <insertListing name="pagebuilder_stage_template_grid" sortOrder="20">
+            <settings>
+                <externalData>template_id</externalData>
+                <externalProvider>${ $.ns }.pagebuilder_stage_template_grid_data_source</externalProvider>
+                <loading>false</loading>
+                <selectionsProvider>${ $.ns }.${ $.ns }.columns.ids</selectionsProvider>
+                <autoRender>true</autoRender>
+                <dataScope>template_id</dataScope>
+                <ns>pagebuilder_stage_template_grid</ns>
+                <dataLinks>
+                    <imports>false</imports>
+                    <exports>true</exports>
+                </dataLinks>
+            </settings>
+        </insertListing>
+    </modal>
+</container>

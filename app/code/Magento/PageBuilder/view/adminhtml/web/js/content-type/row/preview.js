@@ -78,12 +78,6 @@ define(["jarallax", "jquery", "knockout", "Magento_PageBuilder/js/events", "Mage
         }
       });
 
-      _events.on("stage:" + _this.contentType.stageId + ":fullScreenModeChangeAfter", function () {
-        _underscore.delay(function () {
-          _this.buildJarallax();
-        }, 350);
-      });
-
       return _this;
     }
     /**

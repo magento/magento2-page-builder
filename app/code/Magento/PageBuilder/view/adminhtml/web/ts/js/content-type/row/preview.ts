@@ -92,11 +92,6 @@ export default class Preview extends PreviewCollection {
                 this.buildJarallax();
             }
         });
-        events.on(`stage:${this.contentType.stageId}:fullScreenModeChangeAfter`, () => {
-            _.delay(() => {
-                this.buildJarallax();
-            }, 350);
-        });
     }
 
     /**
