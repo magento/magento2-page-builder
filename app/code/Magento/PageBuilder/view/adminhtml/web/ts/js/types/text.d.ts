@@ -11,3 +11,8 @@ declare let text: {
 declare module "mage/requirejs/text" {
     export = text;
 }
+
+declare module "text!*" {
+    const content: string;
+    export default content;
+}

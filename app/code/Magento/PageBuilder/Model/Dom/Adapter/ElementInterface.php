@@ -58,7 +58,7 @@ interface ElementInterface
      * Returns the first element matching the specified selector.
      *
      * @param string $selector
-     * @return HtmlCollectionInterface
+     * @return ElementInterface
      */
     public function querySelector(string $selector): ElementInterface;
 
