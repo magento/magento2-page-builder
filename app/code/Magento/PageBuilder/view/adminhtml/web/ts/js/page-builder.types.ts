@@ -18,4 +18,5 @@ export default interface PageBuilderInterface  {
     isFullScreen: KnockoutObservable<boolean>;
     loading: KnockoutObservable<boolean>;
     wrapperStyles: KnockoutObservable<{[key: string]: string}>;
+    content: string;
 }
