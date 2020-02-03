@@ -39,5 +39,5 @@ interface DocumentFragmentInterface
     /**
      * Returns string content of fragment
      */
-    public function prop_get_innerText(): string;
+    public function propGetInnerText(): string;
 }

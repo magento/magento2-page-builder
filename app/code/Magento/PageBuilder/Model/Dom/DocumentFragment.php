@@ -74,7 +74,7 @@ class DocumentFragment implements DocumentFragmentInterface
     /**
      * @inheritDoc
      */
-    public function prop_get_innerText(): string
+    public function propGetInnerText(): string
     {
         return $this->documentFragment->prop_get_innerText();
     }
