@@ -79,7 +79,7 @@ export interface DataMappingAttributesInterface {
     var?: string;
     name: string;
     reader?: string;
-    value?: string;
+    value?: string|boolean;
     converter?: string;
     preview_converter?: string;
     persistence_mode?: string;

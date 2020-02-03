@@ -8,6 +8,13 @@
 <div attr="data.main.attributes"
      ko-style="Object.assign(data.container.style(), data.main.style())"
      css="data.main.css">
+    <div if="data.video_overlay.style().backgroundColor"
+         class="video-overlay"
+         attr="data.video_overlay.attributes"
+         ko-style="data.video_overlay.style" />
+    <img if="data.video_img.attributes().src"
+         attr="data.video_img.attributes"
+         class="jarallax-img jarallax-video-fallback" />
     <div class="row-full-width-inner"
          attr="data.inner.attributes"
          ko-style="data.inner.style"

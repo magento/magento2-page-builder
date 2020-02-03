@@ -11,6 +11,13 @@
     <div attr="data.inner.attributes"
          ko-style="Object.assign(data.container.style(), data.inner.style())"
          css="data.inner.css">
+        <div if="data.video_overlay.style().backgroundColor"
+             class="video-overlay"
+             attr="data.video_overlay.attributes"
+             ko-style="data.video_overlay.style" />
+        <img if="data.video_img.attributes().src"
+             attr="data.video_img.attributes"
+             class="jarallax-img jarallax-video-fallback" />
         <render args="masterTemplate"/>
     </div>
 </div>

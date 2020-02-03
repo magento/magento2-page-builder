@@ -4,6 +4,8 @@
  */
 
 import "jarallax";
+import "jarallaxVideo";
+import Player from "vimeo";
 import $ from "jquery";
 import ko from "knockout";
 import events from "Magento_PageBuilder/js/events";
@@ -17,6 +19,10 @@ import ContentTypeInterface from "../../content-type.types";
 import {ContentTypeMountEventParamsInterface, ContentTypeReadyEventParamsInterface} from "../content-type-events.types";
 import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
+
+declare global {
+    interface Window { Vimeo: any; }
+}
 
 /**
  * @api
@@ -44,6 +50,7 @@ export default class Preview extends PreviewCollection {
         }
         if (this.element &&
             $(this.element).hasClass("jarallax") &&
+            (this.contentType.dataStore.get("background_type") as string) !== 'video' &&
             (this.contentType.dataStore.get("background_image") as any[]).length
         ) {
             _.defer(() => {
@@ -67,6 +74,31 @@ export default class Preview extends PreviewCollection {
                 jarallax(this.element, "onResize");
             });
         }
+
+        if (this.element &&
+            (this.contentType.dataStore.get("background_type") as string) === 'video' &&
+            (this.contentType.dataStore.get("video_source") as any[]).length
+        ) {
+            window.Vimeo = window.Vimeo || {"Player": Player};
+            const parallaxSpeed = (this.contentType.dataStore.get("enable_parallax") as string) === "1"
+                ? Number.parseFloat(this.contentType.dataStore.get("parallax_speed") as string)
+                : 1;
+
+            _.defer(() => {
+                // Build Parallax on elements with the correct class
+                jarallax(
+                    this.element,
+                    {
+                        videoSrc: this.contentType.dataStore.get("video_source") as string,
+                        videoLoop: (this.contentType.dataStore.get("video_loop") as string) === "true",
+                        speed: !isNaN(parallaxSpeed) ? parallaxSpeed : 0.5,
+                        videoPlayOnlyVisible: (this.contentType.dataStore.get("video_play_only_visible") as string) === "true",
+                        videoLazyLoading: (this.contentType.dataStore.get("video_lazy_load") as string) === "true"
+                    },
+                );
+            });
+        }
+
     }, 50);
 
     /**

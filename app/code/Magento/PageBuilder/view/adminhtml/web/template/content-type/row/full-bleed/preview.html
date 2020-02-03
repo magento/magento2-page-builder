@@ -11,6 +11,13 @@
      css="Object.assign(data.main.css(), {'empty-container': contentType.children().length == 0, 'jarallax': data.main.attributes()['data-enable-parallax'] == 1})"
      event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false"
      afterRender="initParallax">
+    <div if="data.video_overlay.style().backgroundColor"
+         class="video-overlay"
+         attr="data.video_overlay.attributes"
+         ko-style="data.video_overlay.style" />
+    <img if="data.video_img.attributes().src"
+         attr="data.video_img.attributes"
+         class="jarallax-img jarallax-video-fallback"/>
     <render args="getOptions().template"/>
     <div class="element-children content-type-container" each="contentType.getChildren()" ko-style="data.container.style" css="getChildrenCss()" attr="{id: contentType.id + '-children'}" data-bind="sortable: getSortableOptions()" afterRender="function (element) { if (typeof afterChildrenRender === 'function') { afterChildrenRender(element); } }">
         <if args="$parent.isContainer()">

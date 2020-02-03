@@ -53,12 +53,24 @@
                             <attribute name="enable_parallax" source="data-enable-parallax"/>
                             <attribute name="parallax_speed" source="data-parallax-speed"/>
                             <attribute name="background_images" source="data-background-images"/>
+                            <attribute name="background_type" source="data-background-type"/>
+                            <attribute name="video_source" source="data-video-src"/>
+                            <attribute name="video_loop" source="data-video-loop"/>
+                            <attribute name="video_play_only_visible" source="data-video-play-only-visible"/>
+                            <attribute name="video_lazy_load" source="data-video-lazy-load"/>
                             <css name="css_classes"/>
                         </element>
                         <element name="container">
                             <style name="justify_content" source="justify_content"/>
                             <static_style source="display" value="flex"/>
                             <static_style source="flex_direction" value="column"/>
+                        </element>
+                        <element name="video_img">
+                            <attribute name="video_fallback_image" source="src" converter="Magento_PageBuilder/js/converter/attribute/src" preview_converter="Magento_PageBuilder/js/converter/attribute/preview/src"/>
+                        </element>
+                        <element name="video_overlay">
+                            <style name="video_overlay_color" source="background_color" converter="Magento_PageBuilder/js/converter/style/video-overlay-color" persistence_mode="write"/>
+                            <attribute name="video_overlay_color_attribute" storage_key="video_overlay_color" source="data-video-overlay-color" converter="Magento_PageBuilder/js/converter/attribute/video-overlay-color"/>
                         </element>
                     </elements>
                     <converters>
@@ -98,6 +110,11 @@
                         <attribute name="enable_parallax" source="data-enable-parallax"/>
                         <attribute name="parallax_speed" source="data-parallax-speed"/>
                         <attribute name="background_images" source="data-background-images"/>
+                        <attribute name="background_type" source="data-background-type"/>
+                        <attribute name="video_source" source="data-video-src"/>
+                        <attribute name="video_loop" source="data-video-loop"/>
+                        <attribute name="video_play_only_visible" source="data-video-play-only-visible"/>
+                        <attribute name="video_lazy_load" source="data-video-lazy-load"/>
                         <css name="css_classes"/>
                     </element>
                     <element name="inner" />
@@ -105,6 +122,13 @@
                         <style name="justify_content" source="justify_content"/>
                         <static_style source="display" value="flex"/>
                         <static_style source="flex_direction" value="column"/>
+                    </element>
+                    <element name="video_img">
+                        <attribute name="video_fallback_image" source="src" converter="Magento_PageBuilder/js/converter/attribute/src" preview_converter="Magento_PageBuilder/js/converter/attribute/preview/src"/>
+                    </element>
+                    <element name="video_overlay">
+                        <style name="video_overlay_color" source="background_color" converter="Magento_PageBuilder/js/converter/style/video-overlay-color" persistence_mode="write"/>
+                        <attribute name="video_overlay_color_attribute" storage_key="video_overlay_color" source="data-video-overlay-color" converter="Magento_PageBuilder/js/converter/attribute/video-overlay-color"/>
                     </element>
                 </elements>
                 <converters>
@@ -144,6 +168,11 @@
                         <attribute name="enable_parallax" source="data-enable-parallax"/>
                         <attribute name="parallax_speed" source="data-parallax-speed"/>
                         <attribute name="background_images" source="data-background-images"/>
+                        <attribute name="background_type" source="data-background-type"/>
+                        <attribute name="video_source" source="data-video-src"/>
+                        <attribute name="video_loop" source="data-video-loop"/>
+                        <attribute name="video_play_only_visible" source="data-video-play-only-visible"/>
+                        <attribute name="video_lazy_load" source="data-video-lazy-load"/>
                         <css name="css_classes"/>
                     </element>
                     <element name="inner" />
@@ -151,6 +180,13 @@
                         <style name="justify_content" source="justify_content"/>
                         <static_style source="display" value="flex"/>
                         <static_style source="flex_direction" value="column"/>
+                    </element>
+                    <element name="video_img">
+                        <attribute name="video_fallback_image" source="src" converter="Magento_PageBuilder/js/converter/attribute/src" preview_converter="Magento_PageBuilder/js/converter/attribute/preview/src"/>
+                    </element>
+                    <element name="video_overlay">
+                        <style name="video_overlay_color" source="background_color" converter="Magento_PageBuilder/js/converter/style/video-overlay-color" persistence_mode="write"/>
+                        <attribute name="video_overlay_color_attribute" storage_key="video_overlay_color" source="data-video-overlay-color" converter="Magento_PageBuilder/js/converter/attribute/video-overlay-color"/>
                     </element>
                 </elements>
                 <converters>

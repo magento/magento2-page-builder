@@ -113,6 +113,16 @@ interface JarallaxOptions {
     videoPlayOnlyVisible?: boolean;
 
     /**
+     * Preload videos only when it is visible on the screen.
+     */
+    videoLazyLoading?: boolean;
+
+    /**
+     * Loop video to play infinitely.
+     */
+    videoLoop?: boolean;
+
+    /**
      * Called when parallax working. Use first argument with calculations.
      * More info https://github.com/nk-o/jarallax#onscroll-event.
      *
