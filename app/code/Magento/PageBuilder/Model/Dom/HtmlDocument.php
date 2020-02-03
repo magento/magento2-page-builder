@@ -19,6 +19,16 @@ use Magento\PageBuilder\Model\Dom\Adapter\HtmlDocumentInterface;
 class HtmlDocument extends Document implements HtmlDocumentInterface
 {
     /**
+     * @var ObjectManagerInterface
+     */
+    private $objectManager;
+
+    /**
+     * @var GtDomHTMLDocument
+     */
+    private $document;
+
+    /**
      * HtmlDocument constructor.
      * @param ObjectManagerInterface $objectManager
      * @param string $document

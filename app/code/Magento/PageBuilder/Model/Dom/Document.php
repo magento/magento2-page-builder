@@ -23,12 +23,12 @@ class Document implements DocumentInterface
     /**
      * @var ObjectManagerInterface
      */
-    protected $objectManager;
+    private $objectManager;
 
     /**
      * @var GtDomDocument
      */
-    protected $document;
+    private $document;
 
     /**
      * Document constructor.
