@@ -69,4 +69,20 @@ interface ElementInterface
      * @return HtmlCollectionInterface
      */
     public function querySelectorAll(string $selector): HtmlCollectionInterface;
+
+    /**
+     * Removes the specified style property from the style attribute.
+     *
+     * @param string $styleProperty
+     */
+    public function removeStyle(string $styleProperty): string;
+
+    /**
+     * Adds the specified property & value to the style attribute.
+     *
+     * @param string $styleProperty
+     * @param string $value
+     * @return string
+     */
+    public function addStyle(string $styleProperty, string $value): string;
 }

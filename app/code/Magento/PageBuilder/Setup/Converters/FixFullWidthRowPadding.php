@@ -31,20 +31,31 @@ class FixFullWidthRowPadding implements DataConverterInterface
         );
         // remove padding from main row element
         $fullWidthRows = $document->querySelectorAll("div[data-content-type='row'][data-appearance='full-width']");
-        /** @var ElementInterface $row */
+        /**
+         * @var ElementInterface $row
+         */
         foreach ($fullWidthRows as $row) {
             $style = $row->getAttribute("style");
             preg_match("/padding:(.*?);/", $style, $results);
-            $padding = isset($results[0]) ? $results[0] : '';
+            $padding = isset($results[1]) ? trim($results[1]) : '';
             // remove padding from main row element
-            $row->setAttribute("style", preg_replace("/padding:(.*?);/", "", $style));
+            $row->removeStyle("padding");
             // add padding to inner row element
-            /** @var ElementInterface $innerDiv */
             $innerDiv = $row->querySelector(".row-full-width-inner");
-            $innerDiv->setAttribute("style", $padding . $innerDiv->getAttribute("style") ?: '');
+            $innerDiv->addStyle("padding", $padding);
         }
-        //strip the added html content
-        preg_match('/<body>(.*)<\/body>/', $document->getContents(), $matches);
+        return $this->stripHtmlWrapperTags($document->getContents());
+    }
+
+    /**
+     * Strips the HTML doctype, body, etc. tags that are automatically wrapped around the content.
+     *
+     * @param string $content
+     * @return string
+     */
+    private function stripHtmlWrapperTags(string $content): string
+    {
+        preg_match('/<body>(.*)<\/body>/', $content, $matches);
         return isset($matches[1]) ? $matches[1] : '';
     }
 }
