@@ -396,7 +396,7 @@
         </actionGroup>
         <!--Input text into stage-->
         <comment userInput="Input text into stage" stepKey="commentInputTextIntoStage"/>
-        <click selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnEditorArea"/>
+        <clickWithLeftButton x="10" y="10" selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnEditorArea"/>
         <fillField selector="{{TextOnStage.tinymce('1')}}" userInput="{{PageBuilderTextContentTypeDefault.value}}" stepKey="fillTextToTinyMCE4"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="lostFocusFromWYSIWYG1"/>
         <!--Verify inputed text on slideout-->
@@ -410,7 +410,7 @@
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings1"/>
         <!--Input variable into stage-->
         <comment userInput="Input variable into stage" stepKey="commentInputVariableIntoStage"/>
-        <click selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnEditorArea1"/>
+        <clickWithLeftButton x="10" y="10" selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnEditorArea1"/>
         <actionGroup ref="addVariableToTinyMCEInline" stepKey="addVariableToTinyMCE">
             <argument name="variable" value="TinyMCEVariableBaseURL"/>
         </actionGroup>
@@ -427,7 +427,7 @@
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings2"/>
         <!--Input widget into stage-->
         <comment userInput="Input widget into stage" stepKey="commentInputWidgetIntoStage"/>
-        <click selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnEditorArea2"/>
+        <clickWithLeftButton x="10" y="10" selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnEditorArea2"/>
         <actionGroup ref="addPageLinkWidgetToTinyMCEInline" stepKey="addPageLinkWidgetToTinyMCE">
             <argument name="widget" value="TinyMCEWidgetCMSPageLink"/>
             <argument name="page" value="$$createCMSPageB.identifier$$"/>
@@ -443,7 +443,7 @@
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <!--Input image into stage-->
         <comment userInput="Input image into stage" stepKey="commentInputImageIntoStage"/>
-        <click selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnTextEditorArea"/>
+        <clickWithLeftButton x="10" y="10" selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnTextEditorArea"/>
         <waitForElementVisible selector="{{TinyMCESection.InsertImageIcon}}" stepKey="waitForInsertImageIcon"/>
         <click selector="{{TinyMCESection.InsertImageIcon}}" stepKey="clickInsertImageIcon"/>
         <waitForPageLoad stepKey="waitForPageLoad" />
@@ -542,7 +542,7 @@
         </actionGroup>
         <!--Input text into stage-->
         <comment userInput="Input text into stage" stepKey="commentInputTextIntoStage"/>
-        <click selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnEditorArea"/>
+        <clickWithLeftButton x="10" y="10" selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnEditorArea"/>
         <fillField selector="{{TextOnStage.tinymce('1')}}" userInput="{{PageBuilderTextContentTypeDefault.value}}" stepKey="fillTextToTinyMCE4"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="lostFocusFromWYSIWYG1"/>
         <!--Verify inputed text on slideout-->
@@ -605,7 +605,7 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragTextOntoStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <click selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnTextEditorArea"/>
+        <clickWithLeftButton x="10" y="10" selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnTextEditorArea"/>
         <waitForElementVisible selector="{{TinyMCESection.InsertImageIcon}}" stepKey="waitForInsertImageIcon"/>
         <click selector="{{TinyMCESection.InsertImageIcon}}" stepKey="clickInsertImageIcon" />
         <waitForPageLoad stepKey="waitForPageLoad" />
@@ -672,7 +672,7 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragTextOntoStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <click selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnTextEditorArea"/>
+        <clickWithLeftButton x="10" y="10" selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnTextEditorArea"/>
         <actionGroup ref="addVariableToTinyMCEInline" stepKey="addVariableToTinyMCE">
             <argument name="variable" value="TinyMCEVariableCountry"/>
         </actionGroup>
@@ -744,7 +744,7 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragTextOntoStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <click selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnTextEditorArea"/>
+        <clickWithLeftButton x="10" y="10" selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnTextEditorArea"/>
         <actionGroup ref="addPageLinkWidgetToTinyMCEInline" stepKey="addPageLinkWidgetToTinyMCE">
             <argument name="widget" value="TinyMCEWidgetCMSPageLink"/>
             <argument name="page" value="$$createCMSPageB.identifier$$"/>
@@ -814,7 +814,7 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsOntoStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <click selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnTextEditorArea"/>
+        <clickWithLeftButton x="10" y="10" selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnTextEditorArea"/>
         <actionGroup ref="VerifyTinyMCEActionGroup" stepKey="verifyTinyMCE4"/>
         <actionGroup ref="VerifyMagentoEntityActionGroup" stepKey="verifyMagentoEntities"/>
         <seeElement selector="{{WYSIWYGOnPageBuilderInline.undo}}" stepKey="seeUndo"/>
@@ -871,7 +871,7 @@
         <see userInput="72px" stepKey="seeLineHeight72px" />
         <!--Verify FontStyle on preview-->
         <comment userInput="Verify FontStyle on preview" stepKey="commentVerifyFontsizeOnPreview"/>
-        <click selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnEditorArea"/>
+        <clickWithLeftButton x="10" y="10" selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnEditorArea"/>
         <fillField selector="{{TextOnStage.tinymce('1')}}" userInput="{{PageBuilderTextProperty.value}}" stepKey="fillTextToTinyMCE4"/>
         <click selector="{{WYSIWYGOnPageBuilderInline.formatSelector}}" stepKey="expandFormatList"/>
         <see userInput="Important" stepKey="seeImportantStyle"/>
@@ -2137,7 +2137,7 @@
         </actionGroup>
         <!--Input text into stage-->
         <comment userInput="Input text into stage" stepKey="commentInputTextIntoStage"/>
-        <click selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnEditorArea"/>
+        <clickWithLeftButton x="10" y="10" selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnEditorArea"/>
         <fillField selector="{{TextOnStage.tinymce('1')}}" userInput="{{PageBuilderTextContentTypeDefault.value}}" stepKey="fillTextToTinyMCE4"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="lostFocusFromWYSIWYG1"/>
         <!--Verify inputed text on slideout-->
@@ -2151,7 +2151,7 @@
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings1"/>
         <!--Input variable into stage-->
         <comment userInput="Input variable into stage" stepKey="commentInputVariableIntoStage"/>
-        <click selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnEditorArea1"/>
+        <clickWithLeftButton x="10" y="10" selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnEditorArea1"/>
         <actionGroup ref="addVariableToTinyMCEInline" stepKey="addVariableToTinyMCE">
             <argument name="variable" value="TinyMCEVariableBaseURL"/>
         </actionGroup>
@@ -2168,7 +2168,7 @@
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings2"/>
         <!--Input widget into stage-->
         <comment userInput="Input widget into stage" stepKey="commentInputWidgetIntoStage"/>
-        <click selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnEditorArea2"/>
+        <clickWithLeftButton x="10" y="10" selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnEditorArea2"/>
         <actionGroup ref="addPageLinkWidgetToTinyMCEInline" stepKey="addPageLinkWidgetToTinyMCE">
             <argument name="widget" value="TinyMCEWidgetCMSPageLink"/>
             <argument name="page" value="$$createCMSPageB.identifier$$"/>
@@ -2184,7 +2184,7 @@
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <!--Input image into stage-->
         <comment userInput="Input image into stage" stepKey="commentInputImageIntoStage"/>
-        <click selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnTextEditorArea"/>
+        <clickWithLeftButton x="10" y="10" selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnTextEditorArea"/>
         <waitForElementVisible selector="{{TinyMCESection.InsertImageIcon}}" stepKey="waitForInsertImageIcon"/>
         <click selector="{{TinyMCESection.InsertImageIcon}}" stepKey="clickInsertImageIcon"/>
         <waitForPageLoad stepKey="waitForPageLoad" />
@@ -2390,7 +2390,7 @@
         </actionGroup>
         <!-- Add variable to text on stage -->
         <comment userInput="Add variable to text on stage" stepKey="commentAddVariableToTextOnStage"/>
-        <click selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnEditorArea1"/>
+        <clickWithLeftButton x="10" y="10" selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnEditorArea1"/>
         <actionGroup ref="addVariableToTinyMCEInline" stepKey="addVariableToTinyMCEInline">
             <argument name="variable" value="TinyMCEVariableStoreName"/>
         </actionGroup>
@@ -2458,7 +2458,7 @@
         </actionGroup>
         <!--Input variable into stage-->
         <comment userInput="Input variable into stage" stepKey="commentInputVariableIntoStage"/>
-        <click selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnEditorArea1"/>
+        <clickWithLeftButton x="10" y="10" selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnEditorArea1"/>
         <waitForPageLoad stepKey="waitForTextEditor1"/>
         <actionGroup ref="addVariableToTinyMCEInline" stepKey="addVariableToTinyMCE">
             <argument name="variable" value="TinyMCEVariableBaseURL"/>
@@ -2539,7 +2539,7 @@
         <comment userInput="Removed closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <!-- Add Image to Text -->
         <comment userInput="Add Image to Text" stepKey="commentAddImageToContentType"/>
-        <click selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnEditorArea"/>
+        <clickWithLeftButton x="10" y="10" selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnEditorArea"/>
         <!-- Validate Image Editor On Backend -->
         <seeElement selector="{{TextOnStage.inlineWYSIWYGEditorWithTag('1', 'img')}}" stepKey="validateImageInEditor"/>
         <!-- Validate Image Editor On Backend After Save -->
@@ -2835,7 +2835,7 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragTextIntoStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <click selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnTextEditorArea"/>
+        <clickWithLeftButton x="10" y="10" selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnTextEditorArea"/>
         <comment userInput="Write text into WYSIWYG" stepKey="commentWriteTextIntoWysiwyg"/>
         <pressKey selector="{{TextOnStage.tinymce('1')}}" userInput="{{PageBuilderVariableWidgetText.value}}" stepKey="fillWysiwygField"/>
         <waitForElementVisible selector="{{TextOnStage.text('1', PageBuilderVariableWidgetText.value)}}" stepKey="waitForTextOnStage"/>
@@ -2904,7 +2904,7 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragTextIntoStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <click selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnTextEditorArea"/>
+        <clickWithLeftButton x="10" y="10" selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnTextEditorArea"/>
         <comment userInput="Write text into WYSIWYG" stepKey="commentWriteTextIntoWysiwyg"/>
         <pressKey selector="{{TextOnStage.tinymce('1')}}" userInput="{{PageBuilderVariableWidgetText.value}}" stepKey="fillWysiwygField"/>
         <waitForElementVisible selector="{{TextOnStage.text('1', PageBuilderVariableWidgetText.value)}}" stepKey="waitForTextOnStage"/>
@@ -2972,7 +2972,7 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragTextIntoStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <click selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnTextEditorArea"/>
+        <clickWithLeftButton x="10" y="10" selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnTextEditorArea"/>
         <comment userInput="Write text into WYSIWYG" stepKey="commentWriteTextIntoWysiwyg"/>
         <pressKey selector="{{TextOnStage.tinymce('1')}}" userInput="{{PageBuilderVariableWidgetText.value}}" stepKey="fillWysiwygField"/>
         <waitForElementVisible selector="{{TextOnStage.text('1', PageBuilderVariableWidgetText.value)}}" stepKey="waitForTextOnStage"/>
@@ -3021,7 +3021,7 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragTextIntoStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <click selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnTextEditorArea"/>
+        <clickWithLeftButton x="10" y="10" selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnTextEditorArea"/>
         <comment userInput="Write text into WYSIWYG" stepKey="commentWriteTextIntoWysiwyg"/>
         <pressKey selector="{{TextOnStage.tinymce('1')}}" userInput="{{PageBuilderTextProperty.value}}" stepKey="fillWysiwygField"/>
         <waitForElementVisible selector="{{TextOnStage.text('1', PageBuilderTextProperty.value)}}" stepKey="waitForTextOnStage"/>
