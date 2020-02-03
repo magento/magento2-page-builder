@@ -63,7 +63,7 @@ define(["jarallax", "jarallaxVideo", "vimeo", "jquery", "knockout", "Magento_Pag
           });
         }
 
-        if (_this.element && _this.contentType.dataStore.get("background_type") === 'video' && _this.contentType.dataStore.get("video_source").length) {
+        if (_this.element && _this.contentType.dataStore.get("background_type") === 'video' && _this.element.dataset.videoSrc.length) {
           window.Vimeo = window.Vimeo || {
             "Player": _vimeo
           };
@@ -72,7 +72,7 @@ define(["jarallax", "jarallaxVideo", "vimeo", "jquery", "knockout", "Magento_Pag
           _underscore.defer(function () {
             // Build Parallax on elements with the correct class
             jarallax(_this.element, {
-              videoSrc: _this.contentType.dataStore.get("video_source"),
+              videoSrc: _this.element.dataset.videoSrc,
               videoLoop: _this.contentType.dataStore.get("video_loop") === "true",
               speed: !isNaN(parallaxSpeed) ? parallaxSpeed : 0.5,
               videoPlayOnlyVisible: _this.contentType.dataStore.get("video_play_only_visible") === "true",

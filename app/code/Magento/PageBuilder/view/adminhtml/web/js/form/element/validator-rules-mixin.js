@@ -157,6 +157,24 @@ define([
         );
 
         validator.addRule(
+            'validate-video-source',
+            function (href) {
+                if (utils.isEmptyNoTrim(href)) {
+                    return true;
+                }
+
+                href = (href || '').replace(/^\s+/, '').replace(/\s+$/, '');
+
+                return validateIsUrl(href) && (
+                    href.match(/youtube\.com|youtu\.be/)
+                    || href.match(/vimeo\.com/)
+                    || href.match(/\.(mp4|ogv|webm)(?!\w)/)
+                );
+            },
+            $.mage.__('Please enter a valid video URL.')
+        );
+
+        validator.addRule(
             'validate-css-class',
             function (value) {
                 if (utils.isEmptyNoTrim(value)) {

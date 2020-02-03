@@ -77,7 +77,7 @@ export default class Preview extends PreviewCollection {
 
         if (this.element &&
             (this.contentType.dataStore.get("background_type") as string) === 'video' &&
-            (this.contentType.dataStore.get("video_source") as any[]).length
+            (this.element.dataset.videoSrc as string).length
         ) {
             window.Vimeo = window.Vimeo || {"Player": Player};
             const parallaxSpeed = (this.contentType.dataStore.get("enable_parallax") as string) === "1"
@@ -89,7 +89,7 @@ export default class Preview extends PreviewCollection {
                 jarallax(
                     this.element,
                     {
-                        videoSrc: this.contentType.dataStore.get("video_source") as string,
+                        videoSrc: this.element.dataset.videoSrc as string,
                         videoLoop: (this.contentType.dataStore.get("video_loop") as string) === "true",
                         speed: !isNaN(parallaxSpeed) ? parallaxSpeed : 0.5,
                         videoPlayOnlyVisible: (this.contentType.dataStore.get("video_play_only_visible") as string) === "true",
