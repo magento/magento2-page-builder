@@ -182,14 +182,13 @@
             <description>Opens the Page Builder Apply Template slide out from the Page Builder stage.</description>
         </annotations>
         <arguments>
-            <argument name="title" defaultValue="Apply Template" type="string"/>
             <argument name="pageBuilderArea" defaultValue="" type="string"/>
         </arguments>
         <waitForElementVisible selector="{{pageBuilderArea}}{{PageBuilderStage.applyTemplateButton}}" stepKey="waitForApplyTemplateButton"/>
         <click selector="{{pageBuilderArea}}{{PageBuilderStage.applyTemplateButton}}" stepKey="clickApplyTemplateButton"/>
         <waitForPageLoad stepKey="waitForSlideOutLoad"/>
         <waitForElementVisible selector="{{PageBuilderApplyTemplateSlideOut.activeSlideOut}}" stepKey="waitForSlideOut"/>
-        <see userInput="{{title}}" selector="{{PageBuilderApplyTemplateSlideOut.title}}" stepKey="seeTitle"/>
+        <see userInput="Apply Template" selector="{{PageBuilderApplyTemplateSlideOut.title}}" stepKey="seeTitle"/>
         <waitForPageLoad stepKey="waitForSlideOutForm"/>
     </actionGroup>
     <actionGroup name="closePageBuilderApplyTemplateSlideOut">
