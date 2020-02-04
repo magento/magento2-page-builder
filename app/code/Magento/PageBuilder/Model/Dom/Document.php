@@ -204,4 +204,13 @@ class Document implements DocumentInterface
     {
         return $this->document->getMetadata($key);
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function stripHtmlWrapperTags(): string
+    {
+        preg_match('/<body>(.*)<\/body>/', $this->getContents(), $matches);
+        return isset($matches[1]) ? $matches[1] : '';
+    }
 }

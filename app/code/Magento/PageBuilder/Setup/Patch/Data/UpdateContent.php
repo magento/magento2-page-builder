@@ -11,7 +11,7 @@ use Magento\PageBuilder\Setup\Converters\FixFullWidthRowPadding;
 use Magento\PageBuilder\Setup\UpgradeContentHelper;
 
 /**
- * Patch is mechanism that allows us to do atomic upgrade data changes
+ * Patch upgrade mechanism allows us to do atomic data changes
  */
 class UpdateContent implements DataPatchInterface
 {
