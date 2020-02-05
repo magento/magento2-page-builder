@@ -23,12 +23,12 @@ class Document implements DocumentInterface
     /**
      * @var ObjectManagerInterface
      */
-    private $objectManager;
+    protected $objectManager;
 
     /**
      * @var GtDomDocument
      */
-    private $document;
+    protected $document;
 
     /**
      * Document constructor.
@@ -41,7 +41,6 @@ class Document implements DocumentInterface
     ) {
         $this->objectManager = $objectManager;
         $this->document = $this->objectManager->create(GtDomDocument::class, [ 'document' => $document ]);
-        $this->document->createDocumentFragment();
     }
 
     /**

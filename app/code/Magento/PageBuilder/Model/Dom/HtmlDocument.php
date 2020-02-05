@@ -9,7 +9,6 @@ namespace Magento\PageBuilder\Model\Dom;
 
 use Gt\Dom\HTMLDocument as GtDomHTMLDocument;
 use Magento\Framework\ObjectManagerInterface;
-use Magento\PageBuilder\Model\Dom\Adapter\ElementInterface;
 use Magento\PageBuilder\Model\Dom\Adapter\HtmlCollectionInterface;
 use Magento\PageBuilder\Model\Dom\Adapter\HtmlDocumentInterface;
 
@@ -19,16 +18,6 @@ use Magento\PageBuilder\Model\Dom\Adapter\HtmlDocumentInterface;
 class HtmlDocument extends Document implements HtmlDocumentInterface
 {
     /**
-     * @var ObjectManagerInterface
-     */
-    private $objectManager;
-
-    /**
-     * @var GtDomHTMLDocument
-     */
-    private $document;
-
-    /**
      * HtmlDocument constructor.
      * @param ObjectManagerInterface $objectManager
      * @param string $document
@@ -37,7 +26,7 @@ class HtmlDocument extends Document implements HtmlDocumentInterface
         ObjectManagerInterface $objectManager,
         string $document = ""
     ) {
-        $this->objectManager = $objectManager;
+        parent::__construct($objectManager, $document);
         $this->document = $this->objectManager->create(GtDomHTMLDocument::class, [ 'document' => $document ]);
     }
 
