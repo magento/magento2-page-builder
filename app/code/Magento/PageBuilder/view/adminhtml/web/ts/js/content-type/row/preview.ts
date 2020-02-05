@@ -76,7 +76,7 @@ export default class Preview extends PreviewCollection {
         }
 
         if (this.element &&
-            (this.contentType.dataStore.get("background_type") as string) === 'video' &&
+            (this.element.dataset.backgroundType as string) === 'video' &&
             (this.element.dataset.videoSrc as string).length
         ) {
             window.Vimeo = window.Vimeo || {"Player": Player};
@@ -90,6 +90,7 @@ export default class Preview extends PreviewCollection {
                     this.element,
                     {
                         videoSrc: this.element.dataset.videoSrc as string,
+                        imgSrc: this.element.dataset.videoFallbackSrc as string,
                         videoLoop: (this.contentType.dataStore.get("video_loop") as string) === "true",
                         speed: !isNaN(parallaxSpeed) ? parallaxSpeed : 0.5,
                         videoPlayOnlyVisible: (this.contentType.dataStore.get("video_play_only_visible") as string) === "true",

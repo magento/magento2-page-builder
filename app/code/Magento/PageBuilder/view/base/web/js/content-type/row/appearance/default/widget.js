@@ -35,6 +35,7 @@ define([
             parallaxSpeed = $element.data('enableParallax') !== 1 ? 1 : parallaxSpeed;
 
             jarallaxConfig = {
+                imgSrc: $element.data('videoFallbackSrc'),
                 speed: !isNaN(parallaxSpeed) ? parallaxSpeed : 0.5,
                 videoLoop: $element.data('videoLoop'),
                 videoPlayOnlyVisible: $element.data('videoPlayOnlyVisible'),

@@ -11,6 +11,11 @@
     </settings>
     <fieldset name="background">
         <field name="background_type" sortOrder="20" formElement="select" component="Magento_PageBuilder/js/form/element/condition-options">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">image</item>
+                </item>
+            </argument>
             <settings>
                 <dataType>text</dataType>
                 <label translate="true">Background Type</label>
@@ -77,6 +82,7 @@
             <settings>
                 <visible>false</visible>
                 <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
                     <rule name="validate-video-source" xsi:type="boolean">true</rule>
                 </validation>
                 <dataType>text</dataType>
