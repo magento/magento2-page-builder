@@ -10,6 +10,9 @@ namespace Magento\PageBuilder\Setup\Converters;
 
 use Magento\Framework\ObjectManagerInterface;
 
+/**
+ * @SuppressWarnings(PHPCS.Magento2.Files.LineLength.MaxExceeded)
+ */
 class FixFullWidthRowPaddingTest extends \PHPUnit\Framework\TestCase
 {
     /**
@@ -82,5 +85,4 @@ class FixFullWidthRowPaddingTest extends \PHPUnit\Framework\TestCase
             ]
         ];
     }
-
 }

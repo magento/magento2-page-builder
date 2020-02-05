@@ -13,7 +13,9 @@ use Magento\PageBuilder\Model\Dom\Adapter\ElementInterface;
 use Magento\PageBuilder\Model\Dom\HtmlDocument;
 use PHPUnit\Framework\TestCase;
 
-
+/**
+ * @SuppressWarnings(PHPCS.Magento2.Files.LineLength.MaxExceeded)
+ */
 class ElementTest extends TestCase
 {
     /**
