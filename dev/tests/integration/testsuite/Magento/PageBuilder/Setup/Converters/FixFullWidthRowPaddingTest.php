@@ -10,9 +10,6 @@ namespace Magento\PageBuilder\Setup\Converters;
 
 use Magento\Framework\ObjectManagerInterface;
 
-/**
- * @SuppressWarnings(PHPCS.Magento2.Files.LineLength.MaxExceeded)
- */
 class FixFullWidthRowPaddingTest extends \PHPUnit\Framework\TestCase
 {
     /**
@@ -40,6 +37,7 @@ class FixFullWidthRowPaddingTest extends \PHPUnit\Framework\TestCase
      */
     public function conversionData(): array
     {
+        // phpcs:disable Generic.Files.LineLength.TooLong
         return [
             // one contained row, one full-width row
             [
@@ -84,5 +82,6 @@ class FixFullWidthRowPaddingTest extends \PHPUnit\Framework\TestCase
                 . '<div data-content-type="row" data-appearance="full-width" data-enable-parallax="0" data-parallax-speed="0.5" data-background-images="{}" data-element="main" style="justify-content: flex-start; display: flex; flex-direction: column; background-position: left top; background-size: cover; background-repeat: no-repeat; background-attachment: scroll; border-style: none; border-width: 1px; border-radius: 0px; margin: 0px 0px 10px; "><div class="row-full-width-inner" data-element="inner" style="padding: 40px; "><div data-content-type="buttons" data-appearance="inline" data-same-width="false" data-element="main" style="border-style: none; border-width: 1px; border-radius: 0px; margin: 0px; padding: 10px 10px 0px;"><div data-content-type="button-item" data-appearance="default" data-element="main" style="display: inline-block;"><div class="pagebuilder-button-primary" data-element="empty_link" style="text-align: center;"><span data-element="link_text">full width</span></div></div></div></div></div>'
             ]
         ];
+        // phpcs:enable Generic.Files.LineLength.TooLong
     }
 }

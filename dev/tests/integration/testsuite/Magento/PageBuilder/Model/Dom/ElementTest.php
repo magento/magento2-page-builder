@@ -13,9 +13,6 @@ use Magento\PageBuilder\Model\Dom\Adapter\ElementInterface;
 use Magento\PageBuilder\Model\Dom\HtmlDocument;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @SuppressWarnings(PHPCS.Magento2.Files.LineLength.MaxExceeded)
- */
 class ElementTest extends TestCase
 {
     /**
@@ -52,6 +49,7 @@ class ElementTest extends TestCase
 
     public function removeStylesDataProvider()
     {
+        // phpcs:disable Generic.Files.LineLength.TooLong
         return [
             [
                 '<div data-element="inner" style="border-style: none; border-width: 1px; border-radius: 0px; margin: 0px 0px 10px; padding: 10px;">',
@@ -69,6 +67,7 @@ class ElementTest extends TestCase
                 '',
             ],
         ];
+        // phpcs:enable Generic.Files.LineLength.TooLong
     }
 
     /**
@@ -93,6 +92,7 @@ class ElementTest extends TestCase
 
     public function addStyleDataProvider()
     {
+        // phpcs:disable Generic.Files.LineLength.TooLong
         return [
             [
                 '<div data-element="inner" style="border-style: none; border-width: 1px; border-radius: 0px; padding: 10px;">',
@@ -113,5 +113,6 @@ class ElementTest extends TestCase
                 'margin: 10px; ',
             ],
         ];
+        // phpcs:enable Generic.Files.LineLength.TooLong
     }
 }
