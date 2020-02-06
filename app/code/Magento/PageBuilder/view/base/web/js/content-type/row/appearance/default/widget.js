@@ -40,7 +40,7 @@ define([
                 videoLoop: $element.data('videoLoop'),
                 videoPlayOnlyVisible: $element.data('videoPlayOnlyVisible'),
                 disableVideo: false
-            }
+            };
         }
 
         jarallaxConfig = jarallaxConfig || {

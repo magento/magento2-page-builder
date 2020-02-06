@@ -166,9 +166,9 @@ define([
                 href = (href || '').replace(/^\s+/, '').replace(/\s+$/, '');
 
                 return validateIsUrl(href) && (
-                    href.match(/youtube\.com|youtu\.be/)
-                    || href.match(/vimeo\.com/)
-                    || href.match(/\.(mp4|ogv|webm)(?!\w)/)
+                    href.match(/youtube\.com|youtu\.be/) ||
+                    href.match(/vimeo\.com/) ||
+                    href.match(/\.(mp4|ogv|webm)(?!\w)/)
                 );
             },
             $.mage.__('Please enter a valid video URL.')
