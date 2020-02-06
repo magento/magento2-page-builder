@@ -8,7 +8,10 @@
 <div class="pagebuilder-content-type type-container pagebuilder-row children-min-height"
      attr="data.main.attributes"
      ko-style="data.main.style"
-     css="Object.assign(data.main.css(), {'empty-container': contentType.children().length == 0, 'jarallax': data.main.attributes()['data-enable-parallax'] == 1})"
+     css="Object.assign(data.main.css(), {
+        'empty-container': contentType.children().length == 0,
+        'jarallax': data.main.attributes()['data-enable-parallax'] == 1 || data.main.attributes()['data-background-type'] == 'video'
+        })"
      event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false"
      afterRender="initParallax">
     <div if="data.video_overlay.attributes()['data-video-overlay-color']"

@@ -8,26 +8,24 @@ define([
     'use strict';
 
     describe('Magento_PageBuilder/js/content-type/row/appearance/default/widget', function () {
-        it('Should not call jarallax if enableParallax !== 1 and image background', function () {
+        it('Should not call jarallax if enableParallax !== 1', function () {
             var el = document.createElement('div');
 
             spyOn(window, 'jarallax');
 
-            el.setAttribute('data-enable-parallax', '0');
-            el.setAttribute('data-background-type', 'image');
+            el.setAttribute('data-enable-parallax', 0);
 
             rowWidgetInitializer(undefined, el);
 
             expect(window.jarallax).not.toHaveBeenCalled();
         });
 
-        it('Should call call jarallax if enableParallax === 1 and image background', function () {
+        it('Should call jarallax if enableParallax === 1', function () {
             var el = document.createElement('div');
 
             spyOn(window, 'jarallax');
 
-            el.setAttribute('data-enable-parallax', '1');
-            el.setAttribute('data-background-type', 'image');
+            el.setAttribute('data-enable-parallax', 1);
 
             rowWidgetInitializer(undefined, el);
 
@@ -39,13 +37,12 @@ define([
 
             spyOn(window, 'jarallax');
 
-            el.setAttribute('data-enable-parallax', '1');
-            el.setAttribute('data-background-type', 'image');
+            el.setAttribute('data-enable-parallax', 1);
 
             el.style.backgroundPosition = '0px 50%';
             el.style.backgroundRepeat = 'repeat';
             el.style.backgroundSize = '100%';
-            el.setAttribute('data-parallax-speed', '1');
+            el.setAttribute('data-parallax-speed', 1);
 
             rowWidgetInitializer(undefined, el);
 
