@@ -50,6 +50,10 @@ class FixFullWidthRowPadding implements DataConverterInterface
             $innerDiv = $row->querySelector(".row-full-width-inner");
             $innerDiv->addStyle("padding", $padding);
         }
-        return $document->stripHtmlWrapperTags();
+        if ($fullWidthRows->count() > 0) {
+            return $document->stripHtmlWrapperTags();
+        } else {
+            return $value;
+        }
     }
 }
