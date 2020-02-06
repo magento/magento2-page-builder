@@ -13,10 +13,13 @@ var config = {
         }
     },
     shim: {
-        'slick': {
+        'Magento_PageBuilder/js/resource/slick/slick': {
             deps: ['jquery']
         },
-        'vimeo': {
+        'Magento_PageBuilder/js/resource/jarallax/jarallax-video': {
+            deps: ['jarallax', 'vimeo']
+        },
+        'Magento_PageBuilder/js/resource/vimeo/player': {
             exports: ['Player']
         }
     }
