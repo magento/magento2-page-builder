@@ -42,7 +42,9 @@
         <comment userInput="Validate Heading Placeholder" stepKey="CommentHeadingPlaceholder"/>
         <seeElement selector="{{HeadingOnStage.headingPlaceholder(PageBuilderHeadingTypeDefaultProperty.value, 'Edit Heading Text', '1')}}" stepKey="waitForStageHeadingText"/>
         <grabValueFrom selector="{{HeadingOnStage.headingOnStage(PageBuilderHeadingTypeDefaultProperty.value, '1')}}" stepKey="getHeadingText"/>
-        <assertEmpty actual="getHeadingText" actualType="variable" message="Heading has text: getHeadingText" stepKey="assertGetTextFromHeadingTextAttribute"/>
+        <assertEmpty message="Heading has text: getHeadingText" stepKey="assertGetTextFromHeadingTextAttribute">
+            <actualResult type="variable">getHeadingText</actualResult>
+        </assertEmpty>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Verify Default Heading in Stage After Page Save -->
@@ -105,7 +107,10 @@
             <argument name="property" value="PageBuilderHeadingTypeDefaultProperty"/>
         </actionGroup>
         <grabMultiple selector="{{EditPanelForm.panelFieldOptions(PageBuilderHeadingTypeDefaultProperty.section, PageBuilderHeadingTypeDefaultProperty.fieldName)}}" userInput="value" stepKey="grabHeadingTypeOptions"/>
-        <assertCount actual="grabHeadingTypeOptions" actualType="variable" expected="6" expectedType="int" stepKey="assertHeadingTypeOptions"/>
+        <assertCount stepKey="assertHeadingTypeOptions">
+            <actualResult type="variable">grabHeadingTypeOptions</actualResult>
+            <expectedResult type="int">6</expectedResult>
+        </assertCount>
         <!-- Heading Text -->
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeHeadingTextAttribute">
             <argument name="property" value="PageBuilderHeadingTextDefaultProperty"/>
@@ -118,7 +123,9 @@
         </actionGroup>
         <!-- Refactor in MAGETWO-88795 -->
         <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderHeadingTextDefaultProperty.section, PageBuilderHeadingTextDefaultProperty.fieldName)}}" stepKey="getTextFromHeadingTextAttribute"/>
-        <assertEmpty actual="getTextFromHeadingTextAttribute" actualType="variable" message="Text field has text: $getTextFromHeadingTextAttribute" stepKey="assertGetTextFromHeadingTextAttribute"/>
+        <assertEmpty message="Heading has text: $getTextFromHeadingTextAttribute" stepKey="assertGetTextFromHeadingTextAttribute">
+            <actualResult type="variable">getTextFromHeadingTextAttribute</actualResult>
+        </assertEmpty>
         <!-- Save page and verify fields (because some of them change) -->
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
@@ -132,7 +139,9 @@
         </actionGroup>
         <!-- Heading Text -->
         <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderHeadingTextDefaultProperty.section, PageBuilderHeadingTextDefaultProperty.fieldName)}}" stepKey="getTextFromHeadingTextAttribute2"/>
-        <assertEmpty actual="getTextFromHeadingTextAttribute2" actualType="variable" message="Text field has text: $getTextFromHeadingTextAttribute2" stepKey="assertGetTextFromHeadingTextAttribute2"/>
+        <assertEmpty message="Heading has text: $getTextFromHeadingTextAttribute2" stepKey="assertGetTextFromHeadingTextAttribute2">
+            <actualResult type="variable">getTextFromHeadingTextAttribute2</actualResult>
+        </assertEmpty>
     </test>
     <test name="HeadingValidateAdvancedConfigurationDefaultValues">
         <annotations>
@@ -178,7 +187,9 @@
             <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
         </actionGroup>
         <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getBorderColor"/>
-        <assertEmpty actual="getBorderColor" actualType="variable" message="Text field has text: $getBorderColor" stepKey="assertBorderColor"/>
+        <assertEmpty message="Heading has text: $getBorderColor" stepKey="assertBorderColor">
+            <actualResult type="variable">getBorderColor</actualResult>
+        </assertEmpty>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth">
             <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
         </actionGroup>
@@ -186,23 +197,41 @@
             <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
         </actionGroup>
         <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedCssClassesDefaultProperty.section, PageBuilderAdvancedCssClassesDefaultProperty.fieldName)}}" stepKey="getCssClasses"/>
-        <assertEmpty actual="getCssClasses" actualType="variable" message="Text field was not empty. Had text: $getCssClasses" stepKey="assertCssClasses"/>
+        <assertEmpty message="Text field was not empty. Had text: $getCssClasses" stepKey="assertCssClasses">
+            <actualResult type="variable">getCssClasses</actualResult>
+        </assertEmpty>
         <grabValueFrom selector="{{AdvancedForm.advancedMarginTop}}" stepKey="getMarginTop"/>
-        <assertEmpty actual="getMarginTop" actualType="variable" message="Text field has text: $getMarginTop" stepKey="assertMarginTop"/>
+        <assertEmpty message="Text field has text: $getMarginTop" stepKey="assertMarginTop">
+            <actualResult type="variable">getMarginTop</actualResult>
+        </assertEmpty>
         <grabValueFrom selector="{{AdvancedForm.advancedMarginRight}}" stepKey="getMarginRight"/>
-        <assertEmpty actual="getMarginRight" actualType="variable" message="Text field has text: $getMarginRight" stepKey="assertMarginRight"/>
+        <assertEmpty message="Text field has text: $getMarginRight" stepKey="assertMarginRight">
+            <actualResult type="variable">getMarginRight</actualResult>
+        </assertEmpty>
         <grabValueFrom selector="{{AdvancedForm.advancedMarginLeft}}" stepKey="getMarginLeft"/>
-        <assertEmpty actual="getMarginLeft" actualType="variable" message="Text field has text: $getMarginLeft" stepKey="assertMarginLeft"/>
+        <assertEmpty message="Text field has text: $getMarginLeft" stepKey="assertMarginLeft">
+            <actualResult type="variable">getMarginLeft</actualResult>
+        </assertEmpty>
         <grabValueFrom selector="{{AdvancedForm.advancedMarginBottom}}" stepKey="getMarginBottom"/>
-        <assertEmpty actual="getMarginBottom" actualType="variable" message="Text field has text: $getMarginBottom" stepKey="assertMarginBottom"/>
+        <assertEmpty message="Text field has text: $getMarginBottom" stepKey="assertMarginBottom">
+            <actualResult type="variable">getMarginBottom</actualResult>
+        </assertEmpty>
         <grabValueFrom selector="{{AdvancedForm.advancedPaddingTop}}" stepKey="getPaddingTop"/>
-        <assertEmpty actual="getPaddingTop" actualType="variable" message="Text field has text: $getPaddingTop" stepKey="assertPaddingTop"/>
+        <assertEmpty message="Text field has text: $getPaddingTop" stepKey="assertPaddingTop">
+            <actualResult type="variable">getPaddingTop</actualResult>
+        </assertEmpty>
         <grabValueFrom selector="{{AdvancedForm.advancedPaddingRight}}" stepKey="getPaddingRight"/>
-        <assertEmpty actual="getPaddingRight" actualType="variable" message="Text field has text: $getPaddingRight" stepKey="assertPaddingRight"/>
+        <assertEmpty message="Text field has text: $getPaddingRight" stepKey="assertPaddingRight">
+            <actualResult type="variable">getPaddingRight</actualResult>
+        </assertEmpty>
         <grabValueFrom selector="{{AdvancedForm.advancedPaddingLeft}}" stepKey="getPaddingLeft"/>
-        <assertEmpty actual="getPaddingLeft" actualType="variable" message="Text field has text: $getPaddingLeft" stepKey="assertPaddingLeft"/>
+        <assertEmpty message="Text field has text: $getPaddingLeft" stepKey="assertPaddingLeft">
+            <actualResult type="variable">getPaddingLeft</actualResult>
+        </assertEmpty>
         <grabValueFrom selector="{{AdvancedForm.advancedPaddingBottom}}" stepKey="getPaddingBottom"/>
-        <assertEmpty actual="getPaddingBottom" actualType="variable" message="Text field has text: $getPaddingBottom" stepKey="assertPaddingBottom"/>
+        <assertEmpty message="Text field has text: $getPaddingBottom" stepKey="assertPaddingBottom">
+            <actualResult type="variable">getPaddingBottom</actualResult>
+        </assertEmpty>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
@@ -236,7 +265,9 @@
             <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
         </actionGroup>
         <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getBorderColor2"/>
-        <assertEmpty actual="getBorderColor2" actualType="variable" message="Text field has text: $getBorderColor2" stepKey="assertBorderColor2"/>
+        <assertEmpty message="Text field has text: $getBorderColor2" stepKey="assertBorderColor2">
+            <actualResult type="variable">getBorderColor2</actualResult>
+        </assertEmpty>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth2">
             <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
         </actionGroup>
@@ -244,23 +275,41 @@
             <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
         </actionGroup>
         <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedCssClassesDefaultProperty.section, PageBuilderAdvancedCssClassesDefaultProperty.fieldName)}}" stepKey="getCssClasses2"/>
-        <assertEmpty actual="getCssClasses2" actualType="variable" message="Text field was not empty. Had text: $getCssClasses2" stepKey="assertCssClasses2"/>
+        <assertEmpty message="Text field was not empty. Had text: $getCssClasses2" stepKey="assertCssClasses2">
+            <actualResult type="variable">getCssClasses2</actualResult>
+        </assertEmpty>
         <grabValueFrom selector="{{AdvancedForm.advancedMarginTop}}" stepKey="getMarginTop2"/>
-        <assertEmpty actual="getMarginTop2" actualType="variable" message="Text field has text: $getMarginTop2" stepKey="assertMarginTop2"/>
+        <assertEmpty message="Text field has text: $getMarginTop2" stepKey="assertMarginTop2">
+            <actualResult type="variable">getMarginTop2</actualResult>
+        </assertEmpty>
         <grabValueFrom selector="{{AdvancedForm.advancedMarginRight}}" stepKey="getMarginRight2"/>
-        <assertEmpty actual="getMarginRight2" actualType="variable" message="Text field has text: $getMarginRight2" stepKey="assertMarginRight2"/>
+        <assertEmpty message="Text field has text: $getMarginRight2" stepKey="assertMarginRight2">
+            <actualResult type="variable">getMarginRight2</actualResult>
+        </assertEmpty>
         <grabValueFrom selector="{{AdvancedForm.advancedMarginLeft}}" stepKey="getMarginLeft2"/>
-        <assertEmpty actual="getMarginLeft2" actualType="variable" message="Text field has text: $getMarginLeft2" stepKey="assertMarginLeft2"/>
+        <assertEmpty message="Text field has text: $getMarginLeft2" stepKey="assertMarginLeft2">
+            <actualResult type="variable">getMarginLeft2</actualResult>
+        </assertEmpty>
         <grabValueFrom selector="{{AdvancedForm.advancedMarginBottom}}" stepKey="getMarginBottom2"/>
-        <assertEmpty actual="getMarginBottom2" actualType="variable" message="Text field has text: $getMarginBottom2" stepKey="assertMarginBottom2"/>
+        <assertEmpty message="Text field has text: $getMarginBottom2" stepKey="assertMarginBottom2">
+            <actualResult type="variable">getMarginBottom2</actualResult>
+        </assertEmpty>
         <grabValueFrom selector="{{AdvancedForm.advancedPaddingTop}}" stepKey="getPaddingTop2"/>
-        <assertEmpty actual="getPaddingTop2" actualType="variable" message="Text field has text: $getPaddingTop2" stepKey="assertPaddingTop2"/>
+        <assertEmpty message="Text field has text: $getPaddingTop2" stepKey="assertPaddingTop2">
+            <actualResult type="variable">getPaddingTop2</actualResult>
+        </assertEmpty>
         <grabValueFrom selector="{{AdvancedForm.advancedPaddingRight}}" stepKey="getPaddingRight2"/>
-        <assertEmpty actual="getPaddingRight2" actualType="variable" message="Text field has text: $getPaddingRight2" stepKey="assertPaddingRight2"/>
+        <assertEmpty message="Text field has text: $getPaddingRight2" stepKey="assertPaddingRight2">
+            <actualResult type="variable">getPaddingRight2</actualResult>
+        </assertEmpty>
         <grabValueFrom selector="{{AdvancedForm.advancedPaddingLeft}}" stepKey="getPaddingLeft2"/>
-        <assertEmpty actual="getPaddingLeft2" actualType="variable" message="Text field has text: $getPaddingLeft2" stepKey="assertPaddingLeft2"/>
+        <assertEmpty message="Text field has text: $getPaddingLeft2" stepKey="assertPaddingLeft2">
+            <actualResult type="variable">getPaddingLeft2</actualResult>
+        </assertEmpty>
         <grabValueFrom selector="{{AdvancedForm.advancedPaddingBottom}}" stepKey="getPaddingBottom2"/>
-        <assertEmpty actual="getPaddingBottom2" actualType="variable" message="Text field has text: $getPaddingBottom2" stepKey="assertPaddingBottom2"/>
+        <assertEmpty message="Text field has text: $getPaddingBottom2" stepKey="assertPaddingBottom2">
+            <actualResult type="variable">getPaddingBottom2</actualResult>
+        </assertEmpty>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>

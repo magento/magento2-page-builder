@@ -1,0 +1,585 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="openPageBuilderSaveTemplateModal">
+        <annotations>
+            <description>Opens the Page Builder Save as Template modal from the Page Builder stage.</description>
+        </annotations>
+        <arguments>
+            <argument name="pageBuilderArea" defaultValue="" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{pageBuilderArea}}{{PageBuilderStage.saveAsTemplateButton}}" stepKey="waitForSaveAsTemplateButton"/>
+        <click selector="{{pageBuilderArea}}{{PageBuilderStage.saveAsTemplateButton}}" stepKey="clickSaveAsTemplateButton"/>
+        <waitForPageLoad stepKey="waitForModalLoad"/>
+        <waitForElementVisible selector="{{PageBuilderSaveTemplateModal.activeModal}}" stepKey="waitForModalVisible"/>
+        <see userInput="Save Content as Template" selector="{{PageBuilderSaveTemplateModal.title}}" stepKey="seeTitle"/>
+        <waitForPageLoad stepKey="waitForPreviewLoad"/>
+    </actionGroup>
+    <actionGroup name="closePageBuilderSaveTemplateModal">
+        <annotations>
+            <description>Closes the Page Builder Save as Template modal.</description>
+        </annotations>
+        <arguments>
+            <argument name="baseContent" defaultValue="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" type="string"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForModalLoad"/>
+        <waitForElementVisible selector="{{PageBuilderSaveTemplateModal.closeButton}}" stepKey="waitForCloseButton"/>
+        <click selector="{{PageBuilderSaveTemplateModal.closeButton}}" stepKey="clickCloseButton"/>
+        <waitForPageLoad stepKey="waitForModalClose"/>
+        <waitForElementNotVisible time="5" selector="{{PageBuilderSaveTemplateModal.activeModal}}" stepKey="waitForModalNotVisible"/>
+        <waitForElementVisible time="10" selector="{{baseContent}}" stepKey="waitForContentUnderModalVisible"/>
+    </actionGroup>
+    <actionGroup name="fillPageBuilderSaveTemplateForm">
+        <annotations>
+            <description>Enters template name and created for values on the Page Builder Save as Template modal's form.</description>
+        </annotations>
+        <arguments>
+            <argument name="templateName" defaultValue="{{PageBuilderTemplateNameRandom.name}}" type="string"/>
+            <argument name="createdFor" defaultValue="{{PageBuilderTemplateCreatedFor.any}}" type="string"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForModalLoad"/>
+        <waitForElement selector="{{PageBuilderSaveTemplateModal.templateNameInput}}" stepKey="waitForTemplateName"/>
+        <fillField userInput="{{templateName}}" selector="{{PageBuilderSaveTemplateModal.templateNameInput}}" stepKey="enterTemplateName"/>
+        <waitForElement selector="{{PageBuilderSaveTemplateModal.createdForSelect}}" stepKey="waitForCreatedFor"/>
+        <selectOption userInput="{{createdFor}}" selector="{{PageBuilderSaveTemplateModal.createdForSelect}}" stepKey="selectCreatedFor"/>
+    </actionGroup>
+    <actionGroup name="fillPageBuilderSaveTemplateFormWithSpaceForTemplateName" extends="fillPageBuilderSaveTemplateForm">
+        <annotations>
+            <description>Enters template name (as a space character) and created for values on the Page Builder Save as Template modal's form.</description>
+        </annotations>
+        <pressKey selector="{{PageBuilderSaveTemplateModal.templateNameInput}}" parameterArray="[\Facebook\WebDriver\WebDriverKeys::SPACE]" stepKey="enterTemplateName"/>
+    </actionGroup>
+    <actionGroup name="clickSaveOnPageBuilderSaveTemplateModal">
+        <annotations>
+            <description>Clicks the Save button on the Page Builder Save as Template modal and expects to see the save confirmation modal.</description>
+        </annotations>
+        <waitForPageLoad stepKey="waitForModalLoad"/>
+        <waitForElement selector="{{PageBuilderSaveTemplateModal.saveButton}}" stepKey="waitForSaveButton"/>
+        <click selector="{{PageBuilderSaveTemplateModal.saveButton}}" stepKey="clickSaveButton"/>
+        <waitForPageLoad stepKey="waitForModalClose"/>
+        <waitForElementVisible selector="{{PageBuilderSaveTemplateConfirmationModal.modal}}" stepKey="waitForConfirmationModal"/>
+    </actionGroup>
+    <actionGroup name="clickSaveOnPageBuilderSaveTemplateModalAndExpectNoChanges" extends="clickSaveOnPageBuilderSaveTemplateModal">
+        <annotations>
+            <description>Clicks the Save button on the Page Builder Save as Template modal and expects no action.</description>
+        </annotations>
+        <seeElement selector="{{PageBuilderSaveTemplateModal.saveButton}}" stepKey="waitForConfirmationModal"/>
+    </actionGroup>
+    <actionGroup name="clickSaveOnPageBuilderSaveTemplateModalAndExpectErrorModal" extends="clickSaveOnPageBuilderSaveTemplateModal">
+        <annotations>
+            <description>Clicks the Save button on the Page Builder Save as Template modal and expects to see an error modal.</description>
+        </annotations>
+        <seeElement selector="{{PageBuilderSaveTemplateErrorModal.modal}}" stepKey="waitForConfirmationModal"/>
+    </actionGroup>
+    <actionGroup name="clickCloseOnPageBuilderSaveTemplateConfirmationModal">
+        <annotations>
+            <description>Clicks the Cancel button on the Page Builder Save as Template modal.</description>
+        </annotations>
+        <arguments>
+            <argument name="baseContent" defaultValue="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" type="string"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForModal"/>
+        <waitForElementVisible selector="{{PageBuilderSaveTemplateConfirmationModal.closeButton}}" stepKey="waitForCloseButton"/>
+        <click selector="{{PageBuilderSaveTemplateConfirmationModal.closeButton}}" stepKey="clickCloseButton"/>
+        <waitForPageLoad stepKey="waitForModalGone"/>
+        <waitForElementNotVisible time="5" selector="{{PageBuilderSaveTemplateConfirmationModal.modal}}" stepKey="waitForModalNotVisible"/>
+        <waitForElementVisible time="10" selector="{{baseContent}}" stepKey="waitForContentUnderModalVisible"/>
+    </actionGroup>
+    <actionGroup name="clickOkOnPageBuilderSaveTemplateErrorModal">
+        <annotations>
+            <description>Clicks the OK button on the Page Builder Save as Template error modal.</description>
+        </annotations>
+        <waitForPageLoad stepKey="waitForModal"/>
+        <waitForElementVisible selector="{{PageBuilderSaveTemplateErrorModal.okButton}}" stepKey="waitForOkButton"/>
+        <click selector="{{PageBuilderSaveTemplateErrorModal.okButton}}" stepKey="clickOkButton"/>
+        <waitForPageLoad stepKey="waitForModalGone"/>
+        <waitForElementNotVisible time="5" selector="{{PageBuilderSaveTemplateErrorModal.modal}}" stepKey="waitForModalNotVisible"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderSaveTemplateModal.activeModal}}" stepKey="waitForSaveTemplateModal"/>
+    </actionGroup>
+    <actionGroup name="savePageBuilderTemplate">
+        <annotations>
+            <description>Clicks the Save button on the Page Builder Save as Template modal and clicks OK on the save confirmation modal.</description>
+        </annotations>
+        <arguments>
+            <argument name="baseContent" defaultValue="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" type="string"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForModalLoad"/>
+        <waitForElement selector="{{PageBuilderSaveTemplateModal.saveButton}}" stepKey="waitForSaveButton"/>
+        <click selector="{{PageBuilderSaveTemplateModal.saveButton}}" stepKey="clickSaveButton"/>
+        <waitForPageLoad stepKey="waitForModalClose"/>
+        <waitForElementVisible selector="{{PageBuilderSaveTemplateConfirmationModal.okButton}}" stepKey="waitForOKButton"/>
+        <click selector="{{PageBuilderSaveTemplateConfirmationModal.okButton}}" stepKey="clickOKButton"/>
+        <waitForPageLoad stepKey="waitForModalGone"/>
+        <waitForElementNotVisible time="5" selector="{{PageBuilderSaveTemplateConfirmationModal.modal}}" stepKey="waitForModalNotVisible"/>
+        <waitForElementVisible time="10" selector="{{baseContent}}" stepKey="waitForContentUnderModalVisible"/>
+    </actionGroup>
+    <actionGroup name="validatePageBuilderSaveTemplateModal">
+        <annotations>
+            <description>Validate all buttons, text, inputs, and preview image on the Save as Template modal.</description>
+        </annotations>
+        <arguments>
+            <argument name="totalCreatedForOptions" defaultValue="5" type="string"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForModalLoad"/>
+        <waitForElementVisible selector="{{PageBuilderSaveTemplateModal.previewImage}}" stepKey="waitForImageLoad"/>
+        <see userInput="Save Content as Template" selector="{{PageBuilderSaveTemplateModal.title}}" stepKey="seeTitle"/>
+        <seeElement selector="{{PageBuilderSaveTemplateModal.closeButton}}" stepKey="seeCloseButton"/>
+        <seeElement selector="{{PageBuilderSaveTemplateModal.previewImage}}" stepKey="seePreview"/>
+        <executeJS function="return document.evaluate(&quot;{{PageBuilderSaveTemplateModal.previewImage}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.naturalHeight" stepKey="screenshotNaturalHeight"/>
+        <executeJS function="return document.evaluate(&quot;{{PageBuilderSaveTemplateModal.previewImage}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.naturalWidth" stepKey="screenshotNaturalWidth"/>
+        <assertGreaterThan stepKey="assertNaturalHeightGreaterThanZero">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">screenshotNaturalHeight</actualResult>
+        </assertGreaterThan>
+        <assertGreaterThan stepKey="assertNaturalWidthGreaterThanZero">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">screenshotNaturalWidth</actualResult>
+        </assertGreaterThan>
+        <seeElement selector="{{PageBuilderSaveTemplateModal.templateNameInput}}" stepKey="seeTemplateNameInput"/>
+        <seeElement selector="{{PageBuilderSaveTemplateModal.createdForSelect}}" stepKey="seeCreatedForSelect"/>
+        <grabMultiple selector="{{PageBuilderSaveTemplateModal.createdForOptions}}" userInput="value" stepKey="totalCreatedForOptions"/>
+        <assertCount stepKey="assertTotalCreatedForOptions">
+            <expectedResult type="int">{{totalCreatedForOptions}}</expectedResult>
+            <actualResult type="variable">totalCreatedForOptions</actualResult>
+        </assertCount>
+        <see userInput="Created For is to help with filtering templates. This does not restrict where this template can be used." selector="{{PageBuilderSaveTemplateModal.createdForHelperText}}" stepKey="seeCreatedForHelperText"/>
+        <seeElement selector="{{PageBuilderSaveTemplateModal.saveButton}}" stepKey="seeSaveButton"/>
+        <seeElement selector="{{PageBuilderSaveTemplateModal.cancelButton}}" stepKey="seeCancelButton"/>
+    </actionGroup>
+    <actionGroup name="validatePageBuilderSaveTemplateConfirmationModal">
+        <annotations>
+            <description>Validate all buttons and text on the Save as Template confirmation modal.</description>
+        </annotations>
+        <waitForPageLoad stepKey="waitForModalLoad"/>
+        <seeElement selector="{{PageBuilderSaveTemplateConfirmationModal.title}}" stepKey="seeTitle"/>
+        <seeElement selector="{{PageBuilderSaveTemplateConfirmationModal.closeButton}}" stepKey="seeCloseButton"/>
+        <seeElement selector="{{PageBuilderSaveTemplateConfirmationModal.message}}" stepKey="seeMessage"/>
+        <seeElement selector="{{PageBuilderSaveTemplateConfirmationModal.okButton}}" stepKey="seeOKButton"/>
+    </actionGroup>
+    <actionGroup name="validatePageBuilderSaveTemplateErrorModal">
+        <annotations>
+            <description>Validate all buttons and text on the Save as Template error modal.</description>
+        </annotations>
+        <arguments>
+            <argument name="errorTitle" defaultValue="An error occurred" type="string"/>
+            <argument name="errorMessage" defaultValue="A required field is missing." type="string"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForModalLoad"/>
+        <see userInput="{{errorTitle}}" selector="{{PageBuilderSaveTemplateConfirmationModal.title}}" stepKey="seeTitle"/>
+        <seeElement selector="{{PageBuilderSaveTemplateConfirmationModal.closeButton}}" stepKey="seeCloseButton"/>
+        <see userInput="{{errorMessage}}" selector="{{PageBuilderSaveTemplateConfirmationModal.message}}" stepKey="seeMessage"/>
+        <seeElement selector="{{PageBuilderSaveTemplateConfirmationModal.okButton}}" stepKey="seeOKButton"/>
+    </actionGroup>
+    <actionGroup name="openPageBuilderApplyTemplateSlideOut">
+        <annotations>
+            <description>Opens the Page Builder Apply Template slide out from the Page Builder stage.</description>
+        </annotations>
+        <arguments>
+            <argument name="pageBuilderArea" defaultValue="" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{pageBuilderArea}}{{PageBuilderStage.applyTemplateButton}}" stepKey="waitForApplyTemplateButton"/>
+        <click selector="{{pageBuilderArea}}{{PageBuilderStage.applyTemplateButton}}" stepKey="clickApplyTemplateButton"/>
+        <waitForPageLoad stepKey="waitForSlideOutLoad"/>
+        <waitForElementVisible selector="{{PageBuilderApplyTemplateSlideOut.activeSlideOut}}" stepKey="waitForSlideOut"/>
+        <see userInput="Apply Template" selector="{{PageBuilderApplyTemplateSlideOut.title}}" stepKey="seeTitle"/>
+        <waitForPageLoad stepKey="waitForSlideOutForm"/>
+    </actionGroup>
+    <actionGroup name="closePageBuilderApplyTemplateSlideOut">
+        <annotations>
+            <description>Closes the Page Builder Apply Template slide out.</description>
+        </annotations>
+        <arguments>
+            <argument name="baseContent" defaultValue="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" type="string"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForSlideOutLoad"/>
+        <waitForElementVisible selector="{{PageBuilderApplyTemplateSlideOut.closeButton}}" stepKey="waitForCloseButton"/>
+        <click selector="{{PageBuilderApplyTemplateSlideOut.closeButton}}" stepKey="clickCloseButton"/>
+        <waitForPageLoad stepKey="waitForSlideOutClose"/>
+        <waitForElementNotVisible time="5" selector="{{PageBuilderApplyTemplateSlideOut.slideOut}}" stepKey="waitForSlideOutNotVisible"/>
+        <waitForElementVisible time="10" selector="{{baseContent}}" stepKey="waitForContentUnderSlideOutVisible"/>
+    </actionGroup>
+    <actionGroup name="clickApplyFromPageBuilderApplyTemplateSlideOut">
+        <annotations>
+            <description>Clicks the Apply button for a row in the grid from the Page Builder Apply Template slide out.</description>
+        </annotations>
+        <arguments>
+            <argument name="templateIdentifier" defaultValue="{{PageBuilderTemplateNameRandom.name}}" type="string"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForSlideOutLoad"/>
+        <waitForElementVisible selector="{{PageBuilderApplyTemplatesGrid.applyButton(templateIdentifier)}}" stepKey="waitForApplyButton"/>
+        <click selector="{{PageBuilderApplyTemplatesGrid.applyButton(templateIdentifier)}}" stepKey="clickApplyButton"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+    </actionGroup>
+    <actionGroup name="confirmApplyFromPageBuilderApplyTemplateSlideOut" extends="confirmRemovalModal">
+        <annotations>
+            <description>Clicks the OK button on the Page Builder Apply Template confirmation modal.</description>
+        </annotations>
+        <arguments>
+            <argument name="baseContent" defaultValue="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" type="string"/>
+        </arguments>
+        <waitForElementNotVisible time="5" selector="{{PageBuilderApplyTemplateSlideOut.slideOut}}" stepKey="waitForSlideOutNotVisible" after="waitForPageLoad2"/>
+        <waitForElementVisible time="10" selector="{{baseContent}}" stepKey="waitForContentUnderSlideOutVisible" after="waitForSlideOutNotVisible"/>
+    </actionGroup>
+    <actionGroup name="verifyNoPageBuilderSaveOrApplyTemplateButtons">
+        <annotations>
+            <description>Verifies that the Page Builder Apply Template and Save as Template buttons are not present on the Page Builder stage.</description>
+        </annotations>
+        <arguments>
+            <argument name="pageBuilderArea" defaultValue="" type="string"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <dontSeeElementInDOM selector="{{pageBuilderArea}}{{PageBuilderStage.saveAsTemplateButton}}" stepKey="dontSeeSaveAsTemplateButton"/>
+        <dontSeeElementInDOM selector="{{pageBuilderArea}}{{PageBuilderStage.applyTemplateButton}}" stepKey="dontSeeApplyTemplateButton"/>
+    </actionGroup>
+    <actionGroup name="navigateToPageBuilderTemplatesGridPage">
+        <annotations>
+            <description>Navigates to the Page Builder Templates grid page.</description>
+        </annotations>
+        <amOnPage url="{{PageBuilderTemplatesGridPage.url}}" stepKey="goToPageBuilderTemplatesGridPage"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible selector="{{PageBuilderTemplatesPage.pageTitle}}" stepKey="waitForPageTitle"/>
+        <see userInput="Templates" selector="{{PageBuilderTemplatesPage.pageTitle}}" stepKey="seePageTitle"/>
+    </actionGroup>
+    <actionGroup name="verifyCannotNavigateToPageBuilderTemplatesGridPage">
+        <annotations>
+            <description>Verifies that you cannot navigates to the Page Builder Templates grid page via direct url nor via the left nav menu.</description>
+        </annotations>
+        <arguments>
+            <argument name="pageHeading" defaultValue="Sorry, you need permissions to view this content." type="string"/>
+        </arguments>
+        <amOnPage url="{{PageBuilderTemplatesGridPage.url}}" stepKey="goToPageBuilderTemplatesGridPage"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible selector="{{PageBuilderTemplatesPage.pageTitle}}" stepKey="waitForPageTitle"/>
+        <see userInput="Magento Admin" selector="{{PageBuilderTemplatesPage.pageTitle}}" stepKey="seePageTitle"/>
+        <see selector="{{AdminHeaderSection.pageHeading}}" userInput="{{pageHeading}}" stepKey="seeErrorHeading"/>
+        <waitForElementVisible selector="{{AdminMenuSection.content}}" stepKey="waitForContent"/>
+        <click selector="{{AdminMenuSection.content}}" stepKey="clickContent"/>
+        <waitForPageLoad stepKey="waitForMenu"/>
+        <seeElement selector="{{AdminMenuSection.menuItem('magento-backend-content-elements')}}" stepKey="seeElementsSection"/>
+        <see userInput="Pages" selector="{{AdminMenuSection.menuItem('magento-backend-content-elements')}}" stepKey="seeTemplates"/>
+        <dontSee userInput="Templates" selector="{{AdminMenuSection.menuItem('magento-backend-content-elements')}}" stepKey="dontSeeTemplates"/>
+    </actionGroup>
+    <actionGroup name="clearFiltersPageBuilderTemplateGrid">
+        <annotations>
+            <description>Clears the filters on the Page Builder templates grid.</description>
+        </annotations>
+        <arguments>
+            <argument name="section" defaultValue="PageBuilderTemplatesPageGrid"/>
+        </arguments>
+        <conditionalClick selector="{{section.clearFilters}}" dependentSelector="{{section.clearFilters}}" visible="true" stepKey="clickClearFilters"/>
+        <waitForPageLoad stepKey="waitForClearFilters"/>
+        <dontSeeElement selector="{{section.clearFilters}}" stepKey="dontSeeClearFilters"/>
+    </actionGroup>
+    <actionGroup name="filterPageBuilderTemplateGridByName">
+        <annotations>
+            <description>Applies a template name filter on the Page Builder templates grid.</description>
+        </annotations>
+        <arguments>
+            <argument name="section" defaultValue="PageBuilderTemplatesPageGrid"/>
+            <argument name="templateName" defaultValue="{{PageBuilderTemplateNameRandom.name}}" type="string"/>
+        </arguments>
+        <click selector="{{section.filters}}" stepKey="openFilters"/>
+        <waitForElementVisible selector="{{section.templateNameFilter}}" stepKey="waitForTemplateNameFilter"/>
+        <fillField selector="{{section.templateNameFilter}}" userInput="{{templateName}}" stepKey="fillTemplateNameFilter"/>
+        <waitForElementVisible selector="{{section.applyFilters}}" stepKey="waitForApplyFilters"/>
+        <click selector="{{section.applyFilters}}" stepKey="clickApplyFilters"/>
+        <waitForPageLoad stepKey="waitForFilterOnGrid"/>
+        <waitForElementVisible selector="{{section.clearFilters}}" stepKey="waitForClearFilters2"/>
+    </actionGroup>
+    <actionGroup name="filterPageBuilderTemplateGridById">
+        <annotations>
+            <description>Applies a template id filter on the Page Builder templates grid.</description>
+        </annotations>
+        <arguments>
+            <argument name="section" defaultValue="PageBuilderTemplatesPageGrid"/>
+            <argument name="templateIdFrom" defaultValue="0" type="string"/>
+            <argument name="templateIdTo" defaultValue="1" type="string"/>
+        </arguments>
+        <click selector="{{section.filters}}" stepKey="openFilters"/>
+        <waitForElementVisible selector="{{section.templateIdFromFilter}}" stepKey="waitForTemplateIdFilter"/>
+        <fillField selector="{{section.templateIdFromFilter}}" userInput="{{templateIdFrom}}" stepKey="fillTemplateIdFromFilter"/>
+        <fillField selector="{{section.templateIdToFilter}}" userInput="{{templateIdTo}}" stepKey="fillTemplateIdToFilter"/>
+        <waitForElementVisible selector="{{section.applyFilters}}" stepKey="waitForApplyFilters"/>
+        <click selector="{{section.applyFilters}}" stepKey="clickApplyFilters"/>
+        <waitForPageLoad stepKey="waitForFilterOnGrid"/>
+        <waitForElementVisible selector="{{section.clearFilters}}" stepKey="waitForClearFilters2"/>
+    </actionGroup>
+    <actionGroup name="filterPageBuilderTemplateGridByCreatedDate">
+        <annotations>
+            <description>Applies a created date filter on the Page Builder templates grid.</description>
+        </annotations>
+        <arguments>
+            <argument name="section" defaultValue="PageBuilderTemplatesPageGrid"/>
+            <argument name="createdFrom" defaultValue="" type="string"/>
+            <argument name="createdTo" defaultValue="" type="string"/>
+        </arguments>
+        <click selector="{{section.filters}}" stepKey="openFilters"/>
+        <waitForElementVisible selector="{{section.createdDateFromFilter}}" stepKey="waitForTemplateCreatedDateFilter"/>
+        <fillField selector="{{section.createdDateFromFilter}}" userInput="{{createdFrom}}" stepKey="fillTemplateCreatedDateFromFilter"/>
+        <fillField selector="{{section.createdDateToFilter}}" userInput="{{createdTo}}" stepKey="fillTemplateCreatedDateToFilter"/>
+        <waitForElementVisible selector="{{section.applyFilters}}" stepKey="waitForApplyFilters"/>
+        <click selector="{{section.applyFilters}}" stepKey="clickApplyFilters"/>
+        <waitForPageLoad stepKey="waitForFilterOnGrid"/>
+        <waitForElementVisible selector="{{section.clearFilters}}" stepKey="waitForClearFilters2"/>
+    </actionGroup>
+    <actionGroup name="choosePageBuilderTemplateCreatedForOptionsInFilter">
+        <annotations>
+            <description>Checks an option in the Created For drop-down on the Page Builder templates grid filter.</description>
+        </annotations>
+        <arguments>
+            <argument name="section" defaultValue="PageBuilderTemplatesPageGrid"/>
+            <argument name="createdFor" defaultValue="{{PageBuilderTemplateCreatedFor.any}}" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{section.createdForDropDownFilter}}" stepKey="waitForCreatedFor"/>
+        <click selector="{{section.createdForDropDownFilter}}" stepKey="openCreatedForDropDown"/>
+        <checkOption selector="{{section.createdForInputByLabelFilter(createdFor)}}" stepKey="checkCreatedForOption"/>
+        <click selector="{{section.createdForDropDownDoneButtonFilter}}" stepKey="closeCreatedForDropDown"/>
+        <seeElement selector="{{section.selectedCreatedForOptionFilter(createdFor)}}" stepKey="seeCreatedForOptionSelected"/>
+    </actionGroup>
+    <actionGroup name="openPageBuilderTemplatesGridFilter">
+        <annotations>
+            <description>Opens the Page Builder templates grid filter.</description>
+        </annotations>
+        <arguments>
+            <argument name="section" defaultValue="PageBuilderTemplatesPageGrid"/>
+        </arguments>
+        <waitForElementVisible selector="{{section.filters}}" stepKey="waitForFilter"/>
+        <click selector="{{section.filters}}" stepKey="openFilters"/>
+        <waitForElementVisible selector="{{section.applyFilters}}" stepKey="waitForApplyFilters"/>
+    </actionGroup>
+    <actionGroup name="clickApplyPageBuilderTemplatesGridFilter">
+        <annotations>
+            <description>Clicks the Apply button on the Page Builder templates grid filter.</description>
+        </annotations>
+        <arguments>
+            <argument name="section" defaultValue="PageBuilderTemplatesPageGrid"/>
+        </arguments>
+        <waitForElementVisible selector="{{section.applyFilters}}" stepKey="waitForApplyFilters"/>
+        <click selector="{{section.applyFilters}}" stepKey="clickApplyFilters"/>
+        <waitForPageLoad stepKey="waitForFilterOnGrid"/>
+        <waitForElementVisible selector="{{section.clearFilters}}" stepKey="waitForClearFilters2"/>
+    </actionGroup>
+    <actionGroup name="validatePageBuilderTemplateDataInGrid">
+        <annotations>
+            <description>Validates the values for each cell in a row on the Page Builder templates grid.</description>
+        </annotations>
+        <arguments>
+            <argument name="section" defaultValue="PageBuilderTemplatesPageGrid"/>
+            <argument name="templateName" defaultValue="{{PageBuilderTemplateNameRandom.name}}" type="string"/>
+            <argument name="createdFor" defaultValue="{{PageBuilderTemplateCreatedFor.any}}" type="string"/>
+            <argument name="createdDate" defaultValue="" type="string"/>
+            <argument name="createdDateAMorPM" defaultValue="" type="string"/>
+            <argument name="rowIndex" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForGridLoad"/>
+        <grabTextFrom selector="{{section.templateId(rowIndex)}}" stepKey="grabTemplateId"/>
+        <assertGreaterThan stepKey="assertGreaterThanZero">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">grabTemplateId</actualResult>
+        </assertGreaterThan>
+        <seeElement selector="{{section.image(rowIndex)}}" stepKey="seeImage"/>
+        <executeJS function="return document.evaluate(&quot;{{section.image(rowIndex)}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.naturalHeight" stepKey="screenshotNaturalHeight"/>
+        <executeJS function="return document.evaluate(&quot;{{section.image(rowIndex)}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.naturalWidth" stepKey="screenshotNaturalWidth"/>
+        <assertGreaterThan stepKey="assertNaturalHeightGreaterThanZero">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">screenshotNaturalHeight</actualResult>
+        </assertGreaterThan>
+        <assertGreaterThan stepKey="assertNaturalWidthGreaterThanZero">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">screenshotNaturalWidth</actualResult>
+        </assertGreaterThan>
+        <see userInput="{{templateName}}" selector="{{section.templateName(rowIndex)}}" stepKey="seeTemplateName"/>
+        <see userInput="{{createdFor}}" selector="{{section.createdFor(rowIndex)}}" stepKey="seeCreatedFor"/>
+        <see userInput="{{createdDate}}" selector="{{section.createdDate(rowIndex)}}" stepKey="seeCreatedDate"/>
+        <see userInput="{{createdDateAMorPM}}" selector="{{section.createdDate(rowIndex)}}" stepKey="seeCreatedDateAMorPM"/>
+    </actionGroup>
+    <actionGroup name="validatePageBuilderTemplateEmptyGrid">
+        <annotations>
+            <description>Validates that there are no data rows on the Page Builder templates grid.</description>
+        </annotations>
+        <arguments>
+            <argument name="section" defaultValue="PageBuilderTemplatesPageGrid"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForGridLoad"/>
+        <waitForElementVisible selector="{{section.emptyGrid}}" stepKey="waitForEmptyGrid"/>
+        <see userInput="We couldn't find any records." selector="{{section.emptyGrid}}" stepKey="seeEmptyGridMessage"/>
+    </actionGroup>
+    <actionGroup name="deletePageBuilderTemplate">
+        <annotations>
+            <description>Deletes a Page Builder template from the Page Builder Templates grid page.</description>
+        </annotations>
+        <arguments>
+            <argument name="templateIdentifier" defaultValue="{{PageBuilderTemplateNameRandom.name}}" type="string"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible selector="{{PageBuilderTemplatesPageGrid.deleteButton(templateIdentifier)}}" stepKey="waitForDeleteButton"/>
+        <click selector="{{PageBuilderTemplatesPageGrid.deleteButton(templateIdentifier)}}" stepKey="clickDeleteButton"/>
+        <waitForPageLoad stepKey="waitForConfirmationModalLoad"/>
+        <waitForElementVisible selector="{{PageBuilderDeleteTemplateConfirmationModal.modal}}" stepKey="waitForConfirmationModalVisible"/>
+        <waitForElementVisible selector="{{PageBuilderDeleteTemplateConfirmationModal.okButton}}" stepKey="waitForConfirmationModalOKButton"/>
+        <click selector="{{PageBuilderDeleteTemplateConfirmationModal.okButton}}" stepKey="clickConfirmationModalOKButton"/>
+        <waitForPageLoad stepKey="waitForDelete"/>
+        <see userInput="Template successfully deleted." stepKey="seeSuccessMessage"/>
+    </actionGroup>
+    <actionGroup name="verifyNoPageBuilderDeleteTemplateButton">
+        <annotations>
+            <description>Verifies that there is not a Delete button in the templates data grid on the Page Builder Templates grid page.</description>
+        </annotations>
+        <arguments>
+            <argument name="section" defaultValue="PageBuilderTemplatesPageGrid"/>
+            <argument name="templateIdentifier" defaultValue="{{PageBuilderTemplateNameRandom.name}}" type="string"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible selector="{{section.templateName('1')}}" stepKey="waitForTemplateName"/>
+        <see userInput="{{templateIdentifier}}" selector="{{section.templateName('1')}}" stepKey="seeTemplateName"/>
+        <dontSeeElementInDOM selector="{{section.deleteButton(templateIdentifier)}}" stepKey="dontSeeDeleteTemplateButton"/>
+    </actionGroup>
+    <actionGroup name="sortPageBuilderTemplateGridColumn">
+        <annotations>
+            <description>Clicks a column header in the Page Builder templates data grid to sort the column.</description>
+        </annotations>
+        <arguments>
+            <argument name="section" defaultValue="PageBuilderTemplatesPageGrid"/>
+            <argument name="columnName" defaultValue="{{PageBuilderTemplateGridColumns.id}}" type="string"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForGridLoad"/>
+        <waitForElementVisible selector="{{section.columnHeader(columnName)}}" stepKey="waitForGridColumn"/>
+        <click selector="{{section.columnHeader(columnName)}}" stepKey="clickGridColumn"/>
+        <waitForPageLoad stepKey="waitForGridSort"/>
+    </actionGroup>
+    <actionGroup name="searchByKeywordPageBuilderTemplateGrid">
+        <annotations>
+            <description>Searches by keyword in the Page Builder templates data grid.</description>
+        </annotations>
+        <arguments>
+            <argument name="section" defaultValue="PageBuilderTemplatesPageGrid"/>
+            <argument name="keyword" defaultValue="{{PageBuilderTemplateNameRandom.name}}" type="string"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForGridLoad"/>
+        <waitForElementVisible selector="{{section.searchByKeyword}}" stepKey="waitForSearchByKeywordInput"/>
+        <fillField userInput="{{keyword}}" selector="{{section.searchByKeyword}}" stepKey="enterKeyword"/>
+        <waitForElementVisible selector="{{section.searchByKeywordButton}}" stepKey="waitForSearchByKeywordButton"/>
+        <click selector="{{section.searchByKeywordButton}}" stepKey="clickSearchByKeywordButton"/>
+        <waitForPageLoad stepKey="waitForSearch"/>
+    </actionGroup>
+    <actionGroup name="validateTotalRecordsFoundInPageBuilderTemplateGrid">
+        <annotations>
+            <description>Validates the text for total records found on the Page Builder templates data grid.</description>
+        </annotations>
+        <arguments>
+            <argument name="section" defaultValue="PageBuilderTemplatesPageGrid"/>
+            <argument name="total" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForGridLoad"/>
+        <waitForElementVisible selector="{{section.totalRecordsFound}}" stepKey="waitForTotalRecords"/>
+        <see userInput="{{total}}" selector="{{section.totalRecordsFound}}" stepKey="seeTotalRecordsFound"/>
+    </actionGroup>
+    <actionGroup name="editPageBuilderTemplateGridTotalResultsPerPage">
+        <annotations>
+            <description>Changes the value for number of results per page on the Page Builder templates data grid.</description>
+        </annotations>
+        <arguments>
+            <argument name="section" defaultValue="PageBuilderTemplatesPageGrid"/>
+            <argument name="totalPerPage" defaultValue="20" type="string"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForGridLoad"/>
+        <waitForElementVisible selector="{{section.totalRecordsPerPage}}" stepKey="waitForTotalRecordsPerPageInput"/>
+        <pressKey selector="{{section.totalRecordsPerPage}}" parameterArray="[\Facebook\WebDriver\WebDriverKeys::BACKSPACE, \Facebook\WebDriver\WebDriverKeys::BACKSPACE, \Facebook\WebDriver\WebDriverKeys::BACKSPACE, '{{totalPerPage}}', \Facebook\WebDriver\WebDriverKeys::ENTER]" stepKey="enterTotal"/>
+        <waitForPageLoad stepKey="waitForGridLoad2"/>
+    </actionGroup>
+    <actionGroup name="validateTotalNumberOfRowsInPageBuilderTemplateGrid">
+        <annotations>
+            <description>Validates the total number of rows in the Page Builder templates data grid.</description>
+        </annotations>
+        <arguments>
+            <argument name="section" defaultValue="PageBuilderTemplatesPageGrid"/>
+            <argument name="total" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForGridLoad"/>
+        <waitForElementVisible selector="{{section.allRows}}" stepKey="waitForRows"/>
+        <seeNumberOfElements userInput="{{total}}" selector="{{section.allRows}}" stepKey="seeNumberOfRows"/>
+    </actionGroup>
+    <actionGroup name="clickNextPageOnPageBuilderTemplateGrid">
+        <annotations>
+            <description>Clicks the next page button on the Page Builder templates data grid.</description>
+        </annotations>
+        <arguments>
+            <argument name="section" defaultValue="PageBuilderTemplatesPageGrid"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForGridLoad"/>
+        <waitForElementVisible selector="{{section.nextPageButton}}" stepKey="waitForNextPageButton"/>
+        <click selector="{{section.nextPageButton}}" stepKey="clickNextPageButton"/>
+        <waitForPageLoad stepKey="waitForNextPage"/>
+    </actionGroup>
+    <actionGroup name="clickPreviousPageOnPageBuilderTemplateGrid">
+        <annotations>
+            <description>Clicks the previous page button on the Page Builder templates data grid.</description>
+        </annotations>
+        <arguments>
+            <argument name="section" defaultValue="PageBuilderTemplatesPageGrid"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForGridLoad1"/>
+        <waitForElementVisible selector="{{section.previousPageButton}}" stepKey="waitForPreviousPageButton"/>
+        <click selector="{{section.previousPageButton}}" stepKey="clickPreviousPageButton"/>
+        <waitForPageLoad stepKey="waitForPreviousPage"/>
+    </actionGroup>
+    <actionGroup name="openPageBuilderTemplatePreviewImageModal">
+        <annotations>
+            <description>Opens the template preview image modal from the template grid.</description>
+        </annotations>
+        <arguments>
+            <argument name="templateName" defaultValue="{{PageBuilderTemplateNameRandom.name}}" type="string"/>
+            <argument name="section" defaultValue="PageBuilderTemplatesPageGrid"/>
+            <argument name="rowIndex" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{section.image(rowIndex)}}" stepKey="waitForPreviewImageInGrid"/>
+        <click selector="{{section.image(rowIndex)}}" stepKey="clickPreviewImageInGrid"/>
+        <waitForPageLoad stepKey="waitForModalLoad"/>
+        <waitForElementVisible selector="{{PageBuilderPreviewImageModal.activeModal}}" stepKey="waitForModalVisible"/>
+        <see userInput="{{templateName}}" selector="{{PageBuilderPreviewImageModal.title}}" stepKey="seeTitle"/>
+        <waitForPageLoad stepKey="waitForPreviewLoad"/>
+    </actionGroup>
+    <actionGroup name="closePageBuilderTemplatePreviewImageModal">
+        <annotations>
+            <description>Closes the template preview image modal.</description>
+        </annotations>
+        <arguments>
+            <argument name="section" defaultValue="PageBuilderTemplatesPageGrid"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForModalLoad"/>
+        <waitForElementVisible selector="{{PageBuilderPreviewImageModal.closeButton}}" stepKey="waitForCloseButton"/>
+        <click selector="{{PageBuilderPreviewImageModal.closeButton}}" stepKey="clickCloseButton"/>
+        <waitForPageLoad stepKey="waitForModalClose"/>
+        <waitForElementNotVisible time="5" selector="{{PageBuilderPreviewImageModal.activeModal}}" stepKey="waitForModalNotVisible"/>
+        <waitForElementVisible time="10" selector="{{section.grid}}" stepKey="waitForTemplateGridVisible"/>
+    </actionGroup>
+    <actionGroup name="validatePageBuilderTemplatePreviewImageModal">
+        <annotations>
+            <description>Validate all buttons and the image on the template image preview modal.</description>
+        </annotations>
+        <arguments>
+            <argument name="templateName" defaultValue="{{PageBuilderTemplateNameRandom.name}}" type="string"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForModalLoad"/>
+        <waitForElementVisible selector="{{PageBuilderPreviewImageModal.image}}" stepKey="waitForImageLoad"/>
+        <see userInput="{{templateName}}" selector="{{PageBuilderPreviewImageModal.title}}" stepKey="seeTitle"/>
+        <seeElement selector="{{PageBuilderPreviewImageModal.closeButton}}" stepKey="seeCloseButton"/>
+        <executeJS function="return document.evaluate(&quot;{{PageBuilderPreviewImageModal.image}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.naturalHeight" stepKey="screenshotNaturalHeight"/>
+        <executeJS function="return document.evaluate(&quot;{{PageBuilderPreviewImageModal.image}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.naturalWidth" stepKey="screenshotNaturalWidth"/>
+        <assertGreaterThan stepKey="assertNaturalHeightGreaterThanZero">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">screenshotNaturalHeight</actualResult>
+        </assertGreaterThan>
+        <assertGreaterThan stepKey="assertNaturalWidthGreaterThanZero">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">screenshotNaturalWidth</actualResult>
+        </assertGreaterThan>
+    </actionGroup>
+</actionGroups>

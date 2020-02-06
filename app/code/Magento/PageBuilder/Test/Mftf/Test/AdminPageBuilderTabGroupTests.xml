@@ -54,7 +54,9 @@
             <argument name="property" value="PageBuilderAdvancedBorderPropertyDefault"/>
         </actionGroup>
         <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getBorderColor"/>
-        <assertEmpty actual="getBorderColor" actualType="variable" message="Text field has text: $getBorderColor" stepKey="assertBorderColor"/>
+        <assertEmpty message="Text field has text: $getBorderColor" stepKey="assertBorderColor">
+            <actualResult type="variable">getBorderColor</actualResult>
+        </assertEmpty>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth">
             <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
         </actionGroup>
@@ -62,7 +64,9 @@
             <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
         </actionGroup>
         <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedCssClassesDefaultProperty.section, PageBuilderAdvancedCssClassesDefaultProperty.fieldName)}}" stepKey="getCssClasses"/>
-        <assertEmpty actual="getCssClasses" actualType="variable" message="Text field was not empty. Had text: $getCssClasses" stepKey="assertCssClasses"/>
+        <assertEmpty message="Text field has text: $getCssClasses" stepKey="assertCssClasses">
+            <actualResult type="variable">getCssClasses</actualResult>
+        </assertEmpty>
         <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins">
             <argument name="property" value="PageBuilderMarginsPropertyDefault"/>
         </actionGroup>

@@ -44,6 +44,7 @@ class HtmlFilter
         try {
             //this code is required because of https://bugs.php.net/bug.php?id=60021
             $previous = libxml_use_internal_errors(true);
+            $content = '<div>' . $content . '</div>';
             $string = mb_convert_encoding($content, 'HTML-ENTITIES', 'UTF-8');
             $dom->loadHTML($string, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
         } catch (\Exception $e) {
@@ -82,6 +83,6 @@ class HtmlFilter
             );
             $htmlContentType->nodeValue = htmlentities($innerHTML);
         }
-        return $dom->saveHTML();
+        return substr(trim($dom->saveHTML()), 5, -6);
     }
 }

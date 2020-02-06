@@ -51,7 +51,9 @@
         </actionGroup>
         <seeElement selector="{{HeadingOnStage.headingPlaceholder(PageBuilderHeadingTypeDefaultProperty.value, 'Edit Heading Text', '1')}}" stepKey="waitForStageHeadingText"/>
         <grabValueFrom selector="{{HeadingOnStage.headingOnStage(PageBuilderHeadingTypeDefaultProperty.value, '1')}}" stepKey="getHeadingText"/>
-        <assertEmpty actual="getHeadingText" actualType="variable" message="Heading has text: getHeadingText" stepKey="assertGetTextFromHeadingTextAttribute"/>
+        <assertEmpty message="Heading has text: getHeadingText" stepKey="assertGetTextFromHeadingTextAttribute">
+            <actualResult type="variable">getHeadingText</actualResult>
+        </assertEmpty>
         <dontSeeElement selector="{{HeadingOnStage.headingTypeToolbar('1',PageBuilderHeadingTypeProperty_H1.toolbar)}}" stepKey="dontSeeH1InToolbar"/>
         <dontSeeElement selector="{{HeadingOnStage.headingTypeToolbar('1',PageBuilderHeadingTypeProperty_H2.toolbar)}}" stepKey="dontSeeH2InToolbar"/>
         <dontSeeElement selector="{{HeadingOnStage.headingTypeToolbar('1',PageBuilderHeadingTypeProperty_H3.toolbar)}}" stepKey="dontSeeH3InToolbar"/>

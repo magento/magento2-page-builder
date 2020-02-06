@@ -108,7 +108,10 @@
         <comment userInput="Check Drop Down Counts" stepKey="commentCheckDropDownCounts"/>
         <grabMultiple selector="{{EditPanelForm.panelFieldOptions(PageBuilderAdvancedAlignmentPropertyDefault.section, PageBuilderAdvancedAlignmentPropertyDefault.fieldName)}}" userInput="value" stepKey="getDropDownCountAlignment"/>
         <grabMultiple selector="{{EditPanelForm.panelFieldOptions(PageBuilderAdvancedBorderPropertyDefault.section, PageBuilderAdvancedBorderPropertyDefault.fieldName)}}" userInput="value" stepKey="getDropDownCountBorder"/>
-        <assertCount actual="getDropDownCountBorder" actualType="variable" expected="10" expectedType="int" stepKey="assertDropDownCountBorder"/>
+        <assertCount stepKey="assertDropDownCountBorder">
+            <actualResult type="variable">getDropDownCountBorder</actualResult>
+            <expectedResult type="int">10</expectedResult>
+        </assertCount>
         <!-- Check Placeholder Text -->
         <comment userInput="Check Placeholder Text" stepKey="commentCheckPlaceholderText"/>
         <actionGroup ref="validateSlideOutPanelFieldPlaceholderText" stepKey="checkPlaceholderTextBorderColor">
@@ -1493,6 +1496,8 @@
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage1">
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="contentTypeIndex" value="1"/>
+            <argument name="contentTypeXCoordinate" value="10"/>
+            <argument name="contentTypeYCoordinate" value="10"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText1">
             <argument name="property" value="PageBuilderTextProperty"/>
@@ -1507,6 +1512,8 @@
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="contentTypeIndex" value="2"/>
+            <argument name="contentTypeXCoordinate" value="10"/>
+            <argument name="contentTypeYCoordinate" value="10"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText2">
             <argument name="property" value="PageBuilderTextProperty"/>
@@ -1521,6 +1528,8 @@
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage3">
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="contentTypeIndex" value="3"/>
+            <argument name="contentTypeXCoordinate" value="10"/>
+            <argument name="contentTypeYCoordinate" value="10"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText3">
             <argument name="property" value="PageBuilderTextProperty"/>

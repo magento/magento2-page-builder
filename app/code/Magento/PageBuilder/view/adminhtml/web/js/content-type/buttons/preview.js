@@ -34,7 +34,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         _this.resizeChildButtons();
       }, 350);
 
-      _this.contentType.children.subscribe(function (args) {
+      _this.contentType.children.subscribe(function () {
         var sortableElement = (0, _jquery)(_this.wrapperElement).find(".buttons-container");
 
         if (!sortableElement.data("sortable")) {

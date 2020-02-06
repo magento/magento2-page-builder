@@ -97,12 +97,6 @@ define(["jarallax", "jarallaxVideo", "vimeo", "jquery", "knockout", "Magento_Pag
         }
       });
 
-      _events.on("stage:" + _this.contentType.stageId + ":fullScreenModeChangeAfter", function () {
-        _underscore.delay(function () {
-          _this.buildJarallax();
-        }, 350);
-      });
-
       return _this;
     }
     /**
