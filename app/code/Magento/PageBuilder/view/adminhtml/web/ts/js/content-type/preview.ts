@@ -25,6 +25,7 @@ import ContentTypeInterface from "../content-type.types";
 import {DataObject} from "../data-store";
 import {getDraggedContentTypeConfig} from "../drag-drop/registry";
 import {getSortableOptions} from "../drag-drop/sortable";
+import checkStageFullScreen from "../utils/check-stage-full-screen";
 import {get} from "../utils/object";
 import appearanceConfig from "./appearance-config";
 import ObservableUpdater from "./observable-updater";
@@ -537,6 +538,30 @@ export default class Preview implements PreviewInterface {
             return;
         });
         return hasDataChanges;
+    }
+
+    /**
+     * Update min-height for element base on configuration
+     *
+     * @param {HTMLElement} element
+     */
+    protected updateMinHeight(element: HTMLElement): void {
+        const state = this.contentType.dataStore.getState();
+
+        if (state.full_min_height === "true" && element) {
+            const {top, bottom} = state.margins_and_padding.padding;
+            const $stage = $("#" + this.contentType.stageId);
+            const isFullScreen = checkStageFullScreen(this.contentType.stageId);
+            let stageOffset = $(".page-main-actions").outerHeight() || 0;
+
+            if (isFullScreen) {
+                stageOffset = $stage[0].offsetTop;
+            }
+
+            element.style.minHeight = `calc(100vh - ${stageOffset}px - ${top}px - ${bottom}px)`;
+        } else if (element) {
+            element.style.minHeight = state.min_height;
+        }
     }
 
     /**

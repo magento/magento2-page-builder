@@ -24,7 +24,7 @@ import PreviewCollection from "../preview-collection";
 export default class Preview extends PreviewCollection {
     public getChildren: KnockoutComputed<{}>;
     public wrapClass: KnockoutObservable<boolean> = ko.observable(false);
-    private element: Element;
+    private element: HTMLElement;
 
     /**
      * Debounce and defer the init of Jarallax
@@ -81,17 +81,28 @@ export default class Preview extends PreviewCollection {
     ) {
         super(contentType, config, observableUpdater);
 
-        this.contentType.dataStore.subscribe(this.buildJarallax);
+        this.contentType.dataStore.subscribe(() => {
+            this.buildJarallax();
+            this.updateMinHeight(this.element);
+        });
         events.on("row:mountAfter", (args: ContentTypeReadyEventParamsInterface) => {
             if (args.id === this.contentType.id) {
                 this.buildJarallax();
+                this.updateMinHeight(this.element);
+
             }
         });
         events.on("contentType:mountAfter", (args: ContentTypeMountEventParamsInterface) => {
             if (args.contentType.parentContentType && args.contentType.parentContentType.id === this.contentType.id) {
                 this.buildJarallax();
+                this.updateMinHeight(this.element);
             }
         });
+        events.on(
+            `stage:${ this.contentType.stageId }:fullScreenModeChangeAfter`, () => {
+                _.delay(this.updateMinHeight.bind(this, this.element), 350);
+            },
+        );
     }
 
     /**
@@ -124,8 +135,9 @@ export default class Preview extends PreviewCollection {
      *
      * @param {Element} element
      */
-    public initParallax(element: Element) {
+    public initParallax(element: HTMLElement) {
         this.element = element;
+        this.updateMinHeight(element);
         _.defer(() => {
             this.buildJarallax();
         });

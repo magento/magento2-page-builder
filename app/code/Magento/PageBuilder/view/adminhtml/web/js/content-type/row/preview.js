@@ -3,6 +3,8 @@
 
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
 define(["jarallax", "jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/resource/resize-observer/ResizeObserver", "underscore", "Magento_PageBuilder/js/content-type-menu/conditional-remove-option", "Magento_PageBuilder/js/content-type-menu/hide-show-option", "Magento_PageBuilder/js/content-type/preview-collection"], function (_jarallax, _jquery, _knockout, _events, _ResizeObserver, _underscore, _conditionalRemoveOption, _hideShowOption, _previewCollection) {
@@ -64,18 +66,30 @@ define(["jarallax", "jquery", "knockout", "Magento_PageBuilder/js/events", "Mage
         }
       }, 50);
 
-      _this.contentType.dataStore.subscribe(_this.buildJarallax);
+      _this.contentType.dataStore.subscribe(function () {
+        _this.buildJarallax();
+
+        _this.updateMinHeight(_this.element);
+      });
 
       _events.on("row:mountAfter", function (args) {
         if (args.id === _this.contentType.id) {
           _this.buildJarallax();
+
+          _this.updateMinHeight(_this.element);
         }
       });
 
       _events.on("contentType:mountAfter", function (args) {
         if (args.contentType.parentContentType && args.contentType.parentContentType.id === _this.contentType.id) {
           _this.buildJarallax();
+
+          _this.updateMinHeight(_this.element);
         }
+      });
+
+      _events.on("stage:" + _this.contentType.stageId + ":fullScreenModeChangeAfter", function () {
+        _underscore.delay(_this.updateMinHeight.bind(_assertThisInitialized(_this), _this.element), 350);
       });
 
       return _this;
@@ -116,6 +130,7 @@ define(["jarallax", "jquery", "knockout", "Magento_PageBuilder/js/events", "Mage
       var _this2 = this;
 
       this.element = element;
+      this.updateMinHeight(element);
 
       _underscore.defer(function () {
         _this2.buildJarallax();

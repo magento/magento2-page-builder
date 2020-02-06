@@ -16,6 +16,10 @@ define([
             $element = $(element).find('[data-element="inner"]');
         }
 
+        if ($('[data-content-type="row"]').index(element) === 0 && $element.data('full-min-height')) {
+            $element[0].style.minHeight = 'calc(100vh - ' + element[0].offsetTop + 'px)';
+        }
+
         if ($element.data('enableParallax') !== 1) {
             return;
         }

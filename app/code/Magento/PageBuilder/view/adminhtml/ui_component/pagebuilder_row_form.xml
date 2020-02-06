@@ -69,7 +69,37 @@
                 </select>
             </formElements>
         </field>
+        <field name="full_min_height" sortOrder="15" formElement="checkbox">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">false</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>boolean</dataType>
+                <label translate="true">Page full height</label>
+                <dataScope>full_min_height</dataScope>
+            </settings>
+            <formElements>
+                <checkbox>
+                    <settings>
+                        <valueMap>
+                            <map name="false" xsi:type="string">false</map>
+                            <map name="true" xsi:type="string">true</map>
+                        </valueMap>
+                        <prefer>toggle</prefer>
+                    </settings>
+                </checkbox>
+            </formElements>
+        </field>
         <field name="min_height" sortOrder="20" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="disabledValues" xsi:type="array">
+                        <item name="true" xsi:type="string">true</item>
+                    </item>
+                </item>
+            </argument>
             <settings>
                 <label translate="true">Minimum Height</label>
                 <addAfter translate="true">px</addAfter>
@@ -80,6 +110,9 @@
                     <rule name="validate-number" xsi:type="boolean">true</rule>
                     <rule name="greater-than-equals-to" xsi:type="number">0</rule>
                 </validation>
+                <imports>
+                    <link name="setDisabled">ns = ${ $.ns }, index = full_min_height:value</link>
+                </imports>
             </settings>
         </field>
         <field name="justify_content" sortOrder="30" formElement="select" component="Magento_PageBuilder/js/form/element/visual-select">
