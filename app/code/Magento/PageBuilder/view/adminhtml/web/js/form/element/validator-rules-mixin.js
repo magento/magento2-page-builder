@@ -233,7 +233,7 @@ define([
             function (value) {
                 return validateCalc(value);
             },
-            $.mage.__('Please enter a valid value or expression: the + and - operators must be surrounded by whitespace; unexpected division by zero; single value should have extension.')//eslint-disable-line max-len
+            $.mage.__('Please enter a valid number or calculation: Valid numbers must have an extension (px, %, pt, vh). Calculations must have white space around the + and - operators and cannot divide by zero.')//eslint-disable-line max-len
         );
 
         validateObjectField(validator, 'validate-number');
