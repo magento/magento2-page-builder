@@ -4,10 +4,10 @@
  */
 define([
     'jquery',
-    'vimeo',
     'jarallax',
-    'jarallaxVideo'
-], function ($, Player) {
+    'jarallaxVideo',
+    'vimeoWrapper'
+], function ($) {
     'use strict';
 
     return function (config, element) {
@@ -28,10 +28,6 @@ define([
         parallaxSpeed = parallaxSpeed || parseFloat($element.data('parallaxSpeed'));
 
         if ($element.data('background-type') === 'video') {
-            window.Vimeo = window.Vimeo || {
-                'Player': Player
-            };
-
             parallaxSpeed = $element.data('enableParallax') !== 1 ? 1 : parallaxSpeed;
 
             jarallaxConfig = {

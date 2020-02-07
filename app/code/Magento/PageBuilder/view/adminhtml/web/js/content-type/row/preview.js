@@ -5,7 +5,7 @@ function _extends() { _extends = Object.assign || function (target) { for (var i
 
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-define(["jarallax", "jarallaxVideo", "vimeo", "jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/resource/resize-observer/ResizeObserver", "underscore", "Magento_PageBuilder/js/content-type-menu/conditional-remove-option", "Magento_PageBuilder/js/content-type-menu/hide-show-option", "Magento_PageBuilder/js/content-type/preview-collection"], function (_jarallax, _jarallaxVideo, _vimeo, _jquery, _knockout, _events, _ResizeObserver, _underscore, _conditionalRemoveOption, _hideShowOption, _previewCollection) {
+define(["jarallax", "jarallaxVideo", "vimeoWrapper", "jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/resource/resize-observer/ResizeObserver", "underscore", "Magento_PageBuilder/js/content-type-menu/conditional-remove-option", "Magento_PageBuilder/js/content-type-menu/hide-show-option", "Magento_PageBuilder/js/content-type/preview-collection"], function (_jarallax, _jarallaxVideo, _vimeoWrapper, _jquery, _knockout, _events, _ResizeObserver, _underscore, _conditionalRemoveOption, _hideShowOption, _previewCollection) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -43,13 +43,19 @@ define(["jarallax", "jarallaxVideo", "vimeo", "jquery", "knockout", "Magento_Pag
           // store/apply correct style after destroying, as jarallax incorrectly overrides it with stale value
           var style = _this.element.getAttribute("style") || _this.element.getAttribute("data-jarallax-original-styles");
 
+          var backgroundImage = _this.contentType.dataStore.get("background_image");
+
           jarallax(_this.element, "destroy");
 
           _this.element.setAttribute("style", style);
+
+          if (_this.contentType.dataStore.get("background_type") !== "video" && backgroundImage) {
+            _this.element.style.backgroundImage = backgroundImage;
+          }
         } catch (e) {// Failure of destroying is acceptable
         }
 
-        if (_this.element && (0, _jquery)(_this.element).hasClass("jarallax") && _this.contentType.dataStore.get("background_type") !== 'video' && _this.contentType.dataStore.get("background_image").length) {
+        if (_this.element && (0, _jquery)(_this.element).hasClass("jarallax") && _this.contentType.dataStore.get("background_type") !== "video" && _this.contentType.dataStore.get("background_image").length) {
           _underscore.defer(function () {
             // Build Parallax on elements with the correct class
             var parallaxSpeed = Number.parseFloat(_this.contentType.dataStore.get("parallax_speed"));
@@ -63,10 +69,7 @@ define(["jarallax", "jarallaxVideo", "vimeo", "jquery", "knockout", "Magento_Pag
           });
         }
 
-        if (_this.element && _this.element.dataset.backgroundType === 'video' && _this.element.dataset.videoSrc.length) {
-          window.Vimeo = window.Vimeo || {
-            "Player": _vimeo
-          };
+        if (_this.element && _this.element.dataset.backgroundType === "video" && _this.element.dataset.videoSrc.length) {
           var parallaxSpeed = _this.contentType.dataStore.get("enable_parallax") === "1" ? Number.parseFloat(_this.contentType.dataStore.get("parallax_speed")) : 1;
 
           _underscore.defer(function () {

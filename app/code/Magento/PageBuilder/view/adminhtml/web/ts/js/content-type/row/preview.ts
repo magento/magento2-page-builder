@@ -5,7 +5,7 @@
 
 import "jarallax";
 import "jarallaxVideo";
-import Player from "vimeo";
+import "vimeoWrapper";
 import $ from "jquery";
 import ko from "knockout";
 import events from "Magento_PageBuilder/js/events";
@@ -19,10 +19,6 @@ import ContentTypeInterface from "../../content-type.types";
 import {ContentTypeMountEventParamsInterface, ContentTypeReadyEventParamsInterface} from "../content-type-events.types";
 import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
-
-declare global {
-    interface Window { Vimeo: any; }
-}
 
 /**
  * @api
@@ -43,14 +39,18 @@ export default class Preview extends PreviewCollection {
             // store/apply correct style after destroying, as jarallax incorrectly overrides it with stale value
             const style = this.element.getAttribute("style") ||
                 this.element.getAttribute("data-jarallax-original-styles");
+            const backgroundImage = (this.contentType.dataStore.get("background_image") as any[]);
             jarallax(this.element, "destroy");
             this.element.setAttribute("style", style);
+            if (this.contentType.dataStore.get("background_type") as string !== "video" && backgroundImage) {
+                this.element.style.backgroundImage = backgroundImage;
+            }
         } catch (e) {
             // Failure of destroying is acceptable
         }
         if (this.element &&
             $(this.element).hasClass("jarallax") &&
-            (this.contentType.dataStore.get("background_type") as string) !== 'video' &&
+            (this.contentType.dataStore.get("background_type") as string) !== "video" &&
             (this.contentType.dataStore.get("background_image") as any[]).length
         ) {
             _.defer(() => {
@@ -76,10 +76,9 @@ export default class Preview extends PreviewCollection {
         }
 
         if (this.element &&
-            (this.element.dataset.backgroundType as string) === 'video' &&
+            (this.element.dataset.backgroundType as string) === "video" &&
             (this.element.dataset.videoSrc as string).length
         ) {
-            window.Vimeo = window.Vimeo || {"Player": Player};
             const parallaxSpeed = (this.contentType.dataStore.get("enable_parallax") as string) === "1"
                 ? Number.parseFloat(this.contentType.dataStore.get("parallax_speed") as string)
                 : 1;

@@ -26,15 +26,15 @@ export default class BackgroundType implements ConverterInterface {
      * @returns {object}
      */
     public toDom(data: ConverterDataInterface, config: ConverterConfigInterface): ConverterDataInterface {
-        const   backgroundType = get(data, config.attribute_name);
+        const backgroundType = get<string>(data, config.attribute_name);
 
         if (backgroundType === 'video') {
-            set(data, "background_image", []);
-            set(data, "mobile_image", []);
+            set(data, config.desktop_image_variable, []);
+            set(data, config.mobile_image_variable, []);
         } else if (backgroundType === 'image') {
-            set(data, "video_source", "");
-            set(data, "video_fallback_image", []);
-            set(data, "video_overlay_color", "");
+            set(data, config.video_source_variable, null);
+            set(data, config.video_fallback_image_variable, []);
+            set(data, config.video_overlay_color_variable, "");
         }
 
         return data;

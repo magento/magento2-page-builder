@@ -37,12 +37,12 @@ define(["Magento_PageBuilder/js/utils/object"], function (_object) {
       var backgroundType = (0, _object.get)(data, config.attribute_name);
 
       if (backgroundType === 'video') {
-        (0, _object.set)(data, "background_image", []);
-        (0, _object.set)(data, "mobile_image", []);
+        (0, _object.set)(data, config.desktop_image_variable, []);
+        (0, _object.set)(data, config.mobile_image_variable, []);
       } else if (backgroundType === 'image') {
-        (0, _object.set)(data, "video_source", "");
-        (0, _object.set)(data, "video_fallback_image", []);
-        (0, _object.set)(data, "video_overlay_color", "");
+        (0, _object.set)(data, config.video_source_variable, null);
+        (0, _object.set)(data, config.video_fallback_image_variable, []);
+        (0, _object.set)(data, config.video_overlay_color_variable, "");
       }
 
       return data;

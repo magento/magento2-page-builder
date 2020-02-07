@@ -171,7 +171,7 @@ define([
                     href.match(/\.(mp4|ogv|webm)(?!\w)/)
                 );
             },
-            $.mage.__('Please enter a valid video URL. Valid URLs have a video file extension (.mp4, .webm, .ogv) or an embed code from YouTube or Vimeo.')//eslint-disable-line max-len
+            $.mage.__('Please enter a valid video URL. Valid URLs have a video file extension (.mp4, .webm, .ogv) or links to videos on YouTube or Vimeo.')//eslint-disable-line max-len
         );
 
         validator.addRule(
