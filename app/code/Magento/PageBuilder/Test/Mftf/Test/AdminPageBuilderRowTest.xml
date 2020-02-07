@@ -982,7 +982,7 @@
             <argument name="property" value="PageBuilderRowParallaxSpeed_2"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateMinHeight">
-            <argument name="property" value="PageBuilderMinHeightProperty_500"/>
+            <argument name="property" value="PageBuilderMinHeightProperty_500px"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateVerticalAlignContent">
             <argument name="property" value="PageBuilderVerticalAlignmentPropertyCenter"/>
@@ -1092,7 +1092,7 @@
             <argument name="property" value="PageBuilderRowParallaxSpeed_2"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateMinHeight2">
-            <argument name="property" value="PageBuilderMinHeightProperty_500"/>
+            <argument name="property" value="PageBuilderMinHeightProperty_500px"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateVerticalAlignContent2">
             <argument name="property" value="PageBuilderVerticalAlignmentPropertyCenter"/>
@@ -1149,7 +1149,7 @@
         <actionGroup ref="validateLayoutStylesWithAllUpdated" stepKey="validateAllLayoutStorefront">
             <argument name="page" value="RowOnStorefront_FullWidth_FullBleed"/>
             <argument name="index" value="2"/>
-            <argument name="minHeight" value="PageBuilderMinHeightProperty_500"/>
+            <argument name="minHeight" value="PageBuilderMinHeightProperty_500px"/>
             <argument name="verticalAlignContainer" value="PageBuilderVerticalAlignmentPropertyCenter"/>
         </actionGroup>
         <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateAllAdvancedStorefront">
@@ -1981,20 +1981,20 @@
         <!-- Get value of assigned min height on element -->
         <executeJS function="return parseInt(document.evaluate(&quot;{{RowOnStage.base('1')}}&quot;, document.body).iterateNext().style.minHeight, 10)" stepKey="assignedHeight" />
         <assertEquals stepKey="assertEqualToEnteredValue">
-            <expectedResult type="string">{{PageBuilderMinHeightProperty_300.value}}</expectedResult>
+            <expectedResult type="string">{{PageBuilderMinHeightProperty_300px.value}}</expectedResult>
             <actualResult type="variable">$assignedHeight</actualResult>
         </assertEquals>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinimumHeightProperty2">
-            <argument name="property" value="PageBuilderMinHeightProperty_500"/>
+            <argument name="property" value="PageBuilderMinHeightProperty_500px"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings4"/>
         <!-- Get value of assigned min height on element -->
         <executeJS function="return parseInt(document.evaluate(&quot;{{RowOnStage.base('1')}}&quot;, document.body).iterateNext().style.minHeight, 10)" stepKey="assignedHeight2" />
         <assertEquals stepKey="assertEqualToEnteredValue2">
-            <expectedResult type="string">{{PageBuilderMinHeightProperty_500.value}}</expectedResult>
+            <expectedResult type="string">{{PageBuilderMinHeightProperty_500px.value}}</expectedResult>
             <actualResult type="variable">$assignedHeight2</actualResult>
         </assertEquals>
     </test>
