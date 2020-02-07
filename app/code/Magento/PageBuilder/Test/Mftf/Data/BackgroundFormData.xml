@@ -14,6 +14,7 @@
         <data key="section">background</data>
         <data key="fieldName">background_color</data>
         <data key="value"/>
+        <data key="rgba">rgba(0, 0, 0, 0)</data>
         <data key="colorSwatchColor">rgba(0, 0, 0, 0)</data>
         <data key="colorWheelDefault">rgb(255, 0, 0)</data>
         <data key="placeholderText">No Color</data>
@@ -433,5 +434,118 @@
         <data key="section">background</data>
         <data key="fieldName">background_attachment</data>
         <data key="value">fixed</data>
+    </entity>
+    <!-- Video: Video Url -->
+    <entity name="PageBuilderVideoBackgroundUrl_Empty" type="pagebuilder_video_background_url">
+        <data key="name">Video URL</data>
+        <data key="section">background</data>
+        <data key="fieldName">video_source</data>
+        <data key="value"/>
+        <data key="tooltipText">Supported video sources are: URL to YouTube or Vimeo video URL to .mp4, .ogv or .webm video file</data>
+        <data key="errorMessage">This is a required field.</data>
+    </entity>
+    <entity name="PageBuilderVideoBackgroundUrl_YouTube_Embedded" type="pagebuilder_video_background_url">
+        <data key="name">Video URL</data>
+        <data key="section">background</data>
+        <data key="fieldName">video_source</data>
+        <data key="value">https://www.youtube.com/embed/slOtnjsbff0</data>
+        <data key="renderedValue">https://www.youtube.com/embed/slOtnjsbff0</data>
+        <data key="editPanelValue">https://www.youtube.com/watch?v=slOtnjsbff0</data>
+    </entity>
+    <entity name="PageBuilderVideoBackgroundUrl_YouTube_NonEmbedded" type="pagebuilder_video_background_url">
+        <data key="name">Video URL</data>
+        <data key="section">background</data>
+        <data key="fieldName">video_source</data>
+        <data key="value">https://www.youtube.com/watch?v=slOtnjsbff0</data>
+        <data key="renderedValue">https://www.youtube.com/embed/slOtnjsbff0</data>
+    </entity>
+    <entity name="PageBuilderVideoBackgroundUrl_Invalid_Text" type="pagebuilder_video_background_url">
+        <data key="name">Video URL</data>
+        <data key="section">background</data>
+        <data key="fieldName">video_source</data>
+        <data key="value">Test</data>
+        <data key="errorMessage">Please enter a valid video URL.</data>
+    </entity>
+    <entity name="PageBuilderVideoBackgroundUrl_Invalid_VideoDoesNotExit" type="pagebuilder_video_background_url">
+        <data key="name">Video URL</data>
+        <data key="section">background</data>
+        <data key="fieldName">video_source</data>
+        <data key="value">https://www.youtube.com/watch?v=doesnotexist</data>
+    </entity>
+    <!-- Video: Overlay Color -->
+    <entity name="PageBuilderVideoBackgroundOverlayColor_Empty" type="pagebuilder_video_background_overlay_color">
+        <data key="name">Overlay Color</data>
+        <data key="section">background</data>
+        <data key="fieldName">video_overlay_color</data>
+        <data key="value"/>
+        <data key="rgba">rgba(0, 0, 0, 0)</data>
+        <data key="colorSwatchColor">rgba(0, 0, 0, 0)</data>
+        <data key="colorWheelDefault">rgb(255, 0, 0)</data>
+        <data key="placeholderText">No Color</data>
+    </entity>
+    <entity name="PageBuilderVideoBackgroundOverlayColor_Hex_Grey" type="pagebuilder_video_background_overlay_color">
+        <data key="name">Overlay Color</data>
+        <data key="section">background</data>
+        <data key="fieldName">video_overlay_color</data>
+        <data key="value">rgba(204, 204, 204, 0.25)</data>
+        <data key="rgba">rgba(204, 204, 204, 0.25)</data>
+    </entity>
+    <!-- Video: Infinite Loop -->
+    <entity name="PageBuilderVideoBackgroundInfiniteLoop_Enabled" type="pagebuilder_video_background_infinite_loop">
+        <data key="name">Infinite Loop</data>
+        <data key="section">background</data>
+        <data key="fieldName">video_loop</data>
+        <data key="value">true</data>
+    </entity>
+    <entity name="PageBuilderVideoBackgroundInfiniteLoop_Disabled" type="pagebuilder_video_background_infinite_loop">
+        <data key="name">Infinite Loop</data>
+        <data key="section">background</data>
+        <data key="fieldName">video_loop</data>
+        <data key="value">false</data>
+    </entity>
+    <!-- Video: Lazy Load -->
+    <entity name="PageBuilderVideoBackgroundLazyLoad_Enabled" type="pagebuilder_video_background_lazy_load">
+        <data key="name">Lazy Load</data>
+        <data key="section">background</data>
+        <data key="fieldName">video_lazy_load</data>
+        <data key="value">true</data>
+        <data key="helperText">Preload videos only when it is visible on the screen.</data>
+    </entity>
+    <entity name="PageBuilderVideoBackgroundLazyLoad_Disabled" type="pagebuilder_video_background_lazy_load">
+        <data key="name">Lazy Load</data>
+        <data key="section">background</data>
+        <data key="fieldName">video_lazy_load</data>
+        <data key="value">false</data>
+    </entity>
+    <!-- Video: Play Only Visible -->
+    <entity name="PageBuilderVideoBackgroundPlayOnlyVisible_Enabled" type="pagebuilder_video_background_play_only_visible">
+        <data key="name">Play Only Visible</data>
+        <data key="section">background</data>
+        <data key="fieldName">video_play_only_visible</data>
+        <data key="value">true</data>
+        <data key="helperText">Video will play only when it is visible on the screen.</data>
+    </entity>
+    <entity name="PageBuilderVideoBackgroundPlayOnlyVisible_Disabled" type="pagebuilder_video_background_play_only_visible">
+        <data key="name">Play Only Visible</data>
+        <data key="section">background</data>
+        <data key="fieldName">video_play_only_visible</data>
+        <data key="value">false</data>
+    </entity>
+    <!-- Video: Fallback Image -->
+    <entity name="PageBuilderVideoBackgroundFallbackImage_Empty" type="pagebuilder_video_background_fallback_image">
+        <data key="name">Fallback Image</data>
+        <data key="section">background</data>
+        <data key="fieldName">video_fallback_image</data>
+        <data key="value"/>
+<!--        <data key="helperText">Maximum file size: 4 MB. Allowed file types: JPG, GIF, PNG.</data>-->
+    </entity>
+    <entity name="PageBuilderVideoBackgroundFallbackImage_JPG" type="pagebuilder_video_background_fallback_image">
+        <data key="name">Background Image</data>
+        <data key="section">background</data>
+        <data key="fieldName">video_fallback_image</data>
+        <data key="value">magento.jpg</data>
+        <data key="fileName">magento</data>
+        <data key="extension">jpg</data>
+        <data key="path">wysiwyg</data>
     </entity>
 </entities>
