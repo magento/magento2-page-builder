@@ -49,8 +49,8 @@ define(["jarallax", "jarallaxVideo", "vimeoWrapper", "jquery", "knockout", "Mage
 
           _this.element.setAttribute("style", style);
 
-          if (_this.contentType.dataStore.get("background_type") !== "video" && backgroundImage) {
-            _this.element.style.backgroundImage = backgroundImage;
+          if (_this.contentType.dataStore.get("background_type") !== "video" && backgroundImage.length) {
+            _this.element.style.backgroundImage = "url(" + backgroundImage[0].url + ")";
           }
         } catch (e) {// Failure of destroying is acceptable
         }

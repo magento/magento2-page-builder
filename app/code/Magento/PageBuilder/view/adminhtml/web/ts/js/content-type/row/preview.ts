@@ -42,8 +42,8 @@ export default class Preview extends PreviewCollection {
             const backgroundImage = (this.contentType.dataStore.get("background_image") as any[]);
             jarallax(this.element, "destroy");
             this.element.setAttribute("style", style);
-            if (this.contentType.dataStore.get("background_type") as string !== "video" && backgroundImage) {
-                this.element.style.backgroundImage = backgroundImage;
+            if (this.contentType.dataStore.get("background_type") as string !== "video" && backgroundImage.length) {
+                this.element.style.backgroundImage = `url(${backgroundImage[0].url})`;
             }
         } catch (e) {
             // Failure of destroying is acceptable
