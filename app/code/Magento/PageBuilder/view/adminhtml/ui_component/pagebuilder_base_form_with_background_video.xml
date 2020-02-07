@@ -204,7 +204,7 @@
                 </checkbox>
             </formElements>
         </field>
-        <field name="video_fallback_image" sortOrder="140" formElement="imageUploader">
+        <field name="video_fallback_image" sortOrder="140" formElement="imageUploader" template="Magento_PageBuilder/form/element/uploader/image">
             <settings>
                 <visible>false</visible>
                 <label translate="true">Fallback Image</label>
@@ -212,6 +212,9 @@
                 <imports>
                     <link name="visible">${$.parentName}.background_type:videoVisible</link>
                 </imports>
+                <tooltip>
+                    <description translate="true">Fallback images appear on the screen before a video loads. When the video loads, it replaces the fallback image. If the video does not load for some reason, the fallback image remains on the screen in place of the video.</description>
+                </tooltip>
             </settings>
             <formElements>
                 <imageUploader>

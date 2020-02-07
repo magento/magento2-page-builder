@@ -26,7 +26,7 @@ import PreviewCollection from "../preview-collection";
 export default class Preview extends PreviewCollection {
     public getChildren: KnockoutComputed<{}>;
     public wrapClass: KnockoutObservable<boolean> = ko.observable(false);
-    private element: Element;
+    private element: HTMLElement;
 
     /**
      * Debounce and defer the init of Jarallax
@@ -154,9 +154,9 @@ export default class Preview extends PreviewCollection {
     /**
      * Init the parallax element
      *
-     * @param {Element} element
+     * @param {HTMLElement} element
      */
-    public initParallax(element: Element) {
+    public initParallax(element: HTMLElement) {
         this.element = element;
         _.defer(() => {
             this.buildJarallax();
