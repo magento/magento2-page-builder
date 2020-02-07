@@ -28,10 +28,10 @@ export default class BackgroundType implements ConverterInterface {
     public toDom(data: ConverterDataInterface, config: ConverterConfigInterface): ConverterDataInterface {
         const backgroundType = get<string>(data, config.attribute_name);
 
-        if (backgroundType === 'video') {
+        if (backgroundType === "video") {
             set(data, config.desktop_image_variable, []);
             set(data, config.mobile_image_variable, []);
-        } else if (backgroundType === 'image') {
+        } else if (backgroundType === "image") {
             set(data, config.video_source_variable, null);
             set(data, config.video_fallback_image_variable, []);
             set(data, config.video_overlay_color_variable, "");

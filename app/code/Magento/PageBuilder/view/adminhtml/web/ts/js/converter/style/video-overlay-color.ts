@@ -3,9 +3,9 @@
  * See COPYING.txt for license details.
  */
 
-import ConverterInterface from "../converter-interface";
 import {DataObject} from "../../data-store";
 import {get} from "../../utils/object";
+import ConverterInterface from "../converter-interface";
 
 export default class VideoOverlayColor implements ConverterInterface {
     /**

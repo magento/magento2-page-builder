@@ -17,7 +17,7 @@ export default class Src implements ConverterInterface {
     public fromDom(value: string): string | object {
         const fileRegExp = new RegExp("^(webm:|mp4:|ogv:)");
         if (fileRegExp.test(value)) {
-            return value.substr(fileRegExp.exec(value)[0].length)
+            return value.substr(fileRegExp.exec(value)[0].length);
         }
 
         return value;

@@ -5,12 +5,12 @@
 
 import "jarallax";
 import "jarallaxVideo";
-import "vimeoWrapper";
 import $ from "jquery";
 import ko from "knockout";
 import events from "Magento_PageBuilder/js/events";
 import ResizeObserver from "Magento_PageBuilder/js/resource/resize-observer/ResizeObserver";
 import _ from "underscore";
+import "vimeoWrapper";
 import ContentTypeConfigInterface from "../../content-type-config.types";
 import ConditionalRemoveOption from "../../content-type-menu/conditional-remove-option";
 import HideShowOption from "../../content-type-menu/hide-show-option";
@@ -93,7 +93,7 @@ export default class Preview extends PreviewCollection {
                         videoLoop: (this.contentType.dataStore.get("video_loop") as string) === "true",
                         speed: !isNaN(parallaxSpeed) ? parallaxSpeed : 0.5,
                         videoPlayOnlyVisible: (this.contentType.dataStore.get("video_play_only_visible") as string) === "true",
-                        videoLazyLoading: (this.contentType.dataStore.get("video_lazy_load") as string) === "true"
+                        videoLazyLoading: (this.contentType.dataStore.get("video_lazy_load") as string) === "true",
                     },
                 );
             });

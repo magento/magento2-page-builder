@@ -36,10 +36,10 @@ define(["Magento_PageBuilder/js/utils/object"], function (_object) {
     _proto.toDom = function toDom(data, config) {
       var backgroundType = (0, _object.get)(data, config.attribute_name);
 
-      if (backgroundType === 'video') {
+      if (backgroundType === "video") {
         (0, _object.set)(data, config.desktop_image_variable, []);
         (0, _object.set)(data, config.mobile_image_variable, []);
-      } else if (backgroundType === 'image') {
+      } else if (backgroundType === "image") {
         (0, _object.set)(data, config.video_source_variable, null);
         (0, _object.set)(data, config.video_fallback_image_variable, []);
         (0, _object.set)(data, config.video_overlay_color_variable, "");

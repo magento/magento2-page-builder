@@ -3,8 +3,8 @@
  * See COPYING.txt for license details.
  */
 
-import ConverterInterface from "../converter-interface";
 import {DataObject} from "../../data-store";
+import ConverterInterface from "../converter-interface";
 
 export default class OverlayColor implements ConverterInterface {
     /**
