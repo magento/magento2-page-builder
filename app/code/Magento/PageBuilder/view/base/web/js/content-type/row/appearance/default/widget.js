@@ -4,48 +4,38 @@
  */
 define([
     'jquery',
-    'jarallax',
-    'jarallaxVideo',
-    'vimeoWrapper'
-], function ($) {
+    'Magento_PageBuilder/js/widget/video-background',
+    'jarallax'
+], function ($, videoBackground) {
     'use strict';
 
     return function (config, element) {
         var $element = $(element),
-            parallaxSpeed = null,
-            jarallaxConfig = null;
+            parallaxSpeed = null;
 
         if ($element.data('appearance') === 'contained') {
             $element = $(element).find('[data-element="inner"]');
         }
 
-        if ($element.data('enableParallax') !== 1 && $element.data('background-type') !== 'video') {
+        if ($element.data('background-type') === 'video') {
+            videoBackground(config, $element[0]);
+            return;
+        }
+
+        if ($element.data('enableParallax') !== 1) {
             return;
         }
 
         $element.addClass('jarallax');
         $element.attr('data-jarallax', '');
-        parallaxSpeed = parallaxSpeed || parseFloat($element.data('parallaxSpeed'));
 
-        if ($element.data('background-type') === 'video') {
-            parallaxSpeed = $element.data('enableParallax') !== 1 ? 1 : parallaxSpeed;
+        parallaxSpeed = parseFloat($element.data('parallaxSpeed'));
 
-            jarallaxConfig = {
-                imgSrc: $element.data('videoFallbackSrc'),
-                speed: !isNaN(parallaxSpeed) ? parallaxSpeed : 0.5,
-                videoLoop: $element.data('videoLoop'),
-                videoPlayOnlyVisible: $element.data('videoPlayOnlyVisible'),
-                disableVideo: false
-            };
-        }
-
-        jarallaxConfig = jarallaxConfig || {
+        window.jarallax($element[0], {
             imgPosition: $element[0].style.backgroundPosition || '50% 50%',
             imgRepeat: $element[0].style.backgroundRepeat || 'no-repeat',
             imgSize: $element[0].style.backgroundSize || 'cover',
             speed: !isNaN(parallaxSpeed) ? parallaxSpeed : 0.5
-        };
-
-        window.jarallax($element[0], jarallaxConfig);
+        });
     };
 });
