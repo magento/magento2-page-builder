@@ -217,7 +217,8 @@
             <expectedResult type="string">{{backgroundColor}}</expectedResult>
             <actualResult type="variable">$backgroundColor</actualResult>
         </assertEquals>
-        <waitForElementVisible selector="{{section.videoBackgroundVideoUrl(index, videoUrl.renderedValue)}}" stepKey="waitForVideoUrl"/>
+        <waitForElementVisible selector="{{section.videoBackgroundVideoElement(index)}}" stepKey="waitForVideoVisible"/>
+        <waitForElement selector="{{section.videoBackgroundVideoUrl(index, videoUrl.renderedValue)}}" stepKey="waitForVideoUrl"/>
         <grabAttributeFrom selector="{{section.videoBackgroundJarallaxContainer(index)}}" userInput="style" stepKey="jarallaxStyle"/>
         <assertContains stepKey="assertHeight">
             <expectedResult type="string">height: 100%;</expectedResult>
@@ -231,7 +232,7 @@
             <expectedResult type="string">overflow: hidden;</expectedResult>
             <actualResult type="variable">$jarallaxStyle</actualResult>
         </assertContains>
-        <grabAttributeFrom selector="{{section.videoBackgroundVideoIframe(index)}}" userInput="style" stepKey="videoStyle"/>
+        <grabAttributeFrom selector="{{section.videoBackgroundVideoElement(index)}}" userInput="style" stepKey="videoStyle"/>
         <assertContains stepKey="assertVideoPosition">
             <expectedResult type="string">position: absolute;</expectedResult>
             <actualResult type="variable">$videoStyle</actualResult>
@@ -289,7 +290,7 @@
         </arguments>
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForElementVisible selector="{{section.backgroundType(index, 'video')}}" stepKey="waitForVideoBackground"/>
-        <dontSeeElementInDOM selector="{{section.videoBackgroundVideoIframe(index)}}" stepKey="dontSeeVideoInDOM"/>
+        <dontSeeElementInDOM selector="{{section.videoBackgroundVideoElement(index)}}" stepKey="dontSeeVideoInDOM"/>
         <waitForElementVisible selector="{{section.videoBackgroundFallbackImage(index)}}" stepKey="waitForFallbackImageVisible"/>
         <grabAttributeFrom selector="{{section.videoBackgroundFallbackImageSource(index, fallbackImage.fileName)}}" userInput="src" stepKey="fallbackImageSource"/>
         <assertRegExp stepKey="assertFallbackImageValueContainsFileInformation">
@@ -313,7 +314,7 @@
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForElementVisible selector="{{section.backgroundType(index, 'video')}}" stepKey="waitForVideoBackground"/>
         <waitForElementVisible selector="{{section.videoBackgroundNoFallbackImage(index)}}" stepKey="waitForNoFallbackImage"/>
-        <dontSeeElementInDOM selector="{{section.videoBackgroundVideoIframe(index)}}" stepKey="dontSeeVideoInDOM"/>
+        <dontSeeElementInDOM selector="{{section.videoBackgroundVideoElement(index)}}" stepKey="dontSeeVideoInDOM"/>
         <dontSeeElementInDOM selector="{{section.videoBackgroundFallbackImage(index)}}" stepKey="dontSeeFallbackImageInDOM"/>
     </actionGroup>
     <actionGroup name="validateVideoBackgroundWithOnlyVideoUrl">
@@ -331,7 +332,8 @@
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForElementVisible selector="{{section.backgroundType(index, 'video')}}" stepKey="waitForVideoBackground"/>
         <dontSeeElementInDOM selector="{{section.backgroundColorElement(index)}}" stepKey="dontSeeBackgroundColorInDOM"/>
-        <waitForElementVisible selector="{{section.videoBackgroundVideoUrl(index, videoUrl.renderedValue)}}" stepKey="waitForVideoUrl"/>
+        <waitForElementVisible selector="{{section.videoBackgroundVideoElement(index)}}" stepKey="waitForVideoVisible"/>
+        <waitForElement selector="{{section.videoBackgroundVideoUrl(index, videoUrl.renderedValue)}}" stepKey="waitForVideoUrl"/>
         <grabAttributeFrom selector="{{section.videoBackgroundJarallaxContainer(index)}}" userInput="style" stepKey="jarallaxStyle"/>
         <assertContains stepKey="assertHeight">
             <expectedResult type="string">height: 100%;</expectedResult>
@@ -345,7 +347,7 @@
             <expectedResult type="string">overflow: hidden;</expectedResult>
             <actualResult type="variable">$jarallaxStyle</actualResult>
         </assertContains>
-        <grabAttributeFrom selector="{{section.videoBackgroundVideoIframe(index)}}" userInput="style" stepKey="videoStyle"/>
+        <grabAttributeFrom selector="{{section.videoBackgroundVideoElement(index)}}" userInput="style" stepKey="videoStyle"/>
         <assertContains stepKey="assertVideoPosition">
             <expectedResult type="string">position: absolute;</expectedResult>
             <actualResult type="variable">$videoStyle</actualResult>

@@ -441,7 +441,7 @@
         <data key="section">background</data>
         <data key="fieldName">video_source</data>
         <data key="value"/>
-        <data key="tooltipText">Supported video sources are: URL to YouTube or Vimeo video URL to .mp4, .ogv or .webm video file</data>
+        <data key="tooltipText">Video URLs can be links to videos on YouTube or Vimeo, or HTTP(S) links to files with valid video extensions (we recommend .mp4)</data>
         <data key="errorMessage">This is a required field.</data>
     </entity>
     <entity name="PageBuilderVideoBackgroundUrl_YouTube_Embedded" type="pagebuilder_video_background_url">
@@ -450,7 +450,6 @@
         <data key="fieldName">video_source</data>
         <data key="value">https://www.youtube.com/embed/slOtnjsbff0</data>
         <data key="renderedValue">https://www.youtube.com/embed/slOtnjsbff0</data>
-        <data key="editPanelValue">https://www.youtube.com/watch?v=slOtnjsbff0</data>
     </entity>
     <entity name="PageBuilderVideoBackgroundUrl_YouTube_NonEmbedded" type="pagebuilder_video_background_url">
         <data key="name">Video URL</data>
@@ -459,12 +458,33 @@
         <data key="value">https://www.youtube.com/watch?v=slOtnjsbff0</data>
         <data key="renderedValue">https://www.youtube.com/embed/slOtnjsbff0</data>
     </entity>
+    <entity name="PageBuilderVideoBackgroundUrl_Vimeo_Embedded" type="pagebuilder_video_background_url">
+        <data key="name">Video URL</data>
+        <data key="section">background</data>
+        <data key="fieldName">video_source</data>
+        <data key="value">https://player.vimeo.com/video/2393127</data>
+        <data key="renderedValue">https://player.vimeo.com/video/2393127</data>
+    </entity>
+    <entity name="PageBuilderVideoBackgroundUrl_Vimeo_NonEmbedded" type="pagebuilder_video_background_url">
+        <data key="name">Video URL</data>
+        <data key="section">background</data>
+        <data key="fieldName">video_source</data>
+        <data key="value">https://vimeo.com/2393127</data>
+        <data key="renderedValue">https://player.vimeo.com/video/2393127</data>
+    </entity>
+    <entity name="PageBuilderVideoBackgroundUrl_Mp4_URL" type="pagebuilder_video_background_url">
+        <data key="name">Video URL</data>
+        <data key="section">background</data>
+        <data key="fieldName">video_source</data>
+        <data key="value">https://obsessive-owls.s3.us-east-2.amazonaws.com/MFTF/avocado.mp4</data>
+        <data key="renderedValue">https://obsessive-owls.s3.us-east-2.amazonaws.com/MFTF/avocado.mp4</data>
+    </entity>
     <entity name="PageBuilderVideoBackgroundUrl_Invalid_Text" type="pagebuilder_video_background_url">
         <data key="name">Video URL</data>
         <data key="section">background</data>
         <data key="fieldName">video_source</data>
         <data key="value">Test</data>
-        <data key="errorMessage">Please enter a valid video URL.</data>
+        <data key="errorMessage">Please enter a valid video URL. Valid URLs have a video file extension (.mp4, .webm, .ogv) or links to videos on YouTube or Vimeo.</data>
     </entity>
     <entity name="PageBuilderVideoBackgroundUrl_Invalid_VideoDoesNotExit" type="pagebuilder_video_background_url">
         <data key="name">Video URL</data>
@@ -537,7 +557,8 @@
         <data key="section">background</data>
         <data key="fieldName">video_fallback_image</data>
         <data key="value"/>
-<!--        <data key="helperText">Maximum file size: 4 MB. Allowed file types: JPG, GIF, PNG.</data>-->
+        <data key="helperText">Maximum file size: 4 MB. Allowed file types: JPG, GIF, PNG.</data>
+        <data key="tooltipText">Fallback images appear on the screen before a video loads. When the video loads, it replaces the fallback image. If the video does not load for some reason, the fallback image remains on the screen in place of the video.</data>
     </entity>
     <entity name="PageBuilderVideoBackgroundFallbackImage_JPG" type="pagebuilder_video_background_fallback_image">
         <data key="name">Background Image</data>
@@ -546,6 +567,15 @@
         <data key="value">magento.jpg</data>
         <data key="fileName">magento</data>
         <data key="extension">jpg</data>
+        <data key="path">wysiwyg</data>
+    </entity>
+    <entity name="PageBuilderVideoBackgroundFallbackImage_GIF" type="pagebuilder_video_background_fallback_image">
+        <data key="name">Background Image</data>
+        <data key="section">background</data>
+        <data key="fieldName">video_fallback_image</data>
+        <data key="value">m-logo.gif</data>
+        <data key="fileName">m-logo</data>
+        <data key="extension">gif</data>
         <data key="path">wysiwyg</data>
     </entity>
 </entities>
