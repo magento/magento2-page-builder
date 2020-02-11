@@ -59,12 +59,16 @@ export function saveAsTemplate(stage: Stage) {
              */
             confirm(name: string, createdFor: string) {
                 return new Promise((resolve, reject) => {
-                    capture.then((imageSrc: string) => {
+                    // Retrieve the rendering lock from the stage
+                    const renderingLock = stage.renderingLocks[stage.renderingLocks.length - 1];
+
+                    // Wait for the screenshot and the rendering lock to complete before making the request
+                    $.when(capture, renderingLock).then((imageSrc: string, content: string) => {
                         $.ajax({
                             url: Config.getConfig("template_save_url"),
                             data: {
                                 name,
-                                template: stage.pageBuilder.content,
+                                template: content,
                                 previewImage: imageSrc,
                                 createdFor,
                             },

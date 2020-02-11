@@ -50,12 +50,15 @@ define(["html2canvas", "jquery", "mage/translate", "Magento_PageBuilder/js/modal
          */
         confirm: function confirm(name, createdFor) {
           return new Promise(function (resolve, reject) {
-            capture.then(function (imageSrc) {
+            // Retrieve the rendering lock from the stage
+            var renderingLock = stage.renderingLocks[stage.renderingLocks.length - 1]; // Wait for the screenshot and the rendering lock to complete before making the request
+
+            _jquery.when(capture, renderingLock).then(function (imageSrc, content) {
               _jquery.ajax({
                 url: _config.getConfig("template_save_url"),
                 data: {
                   name: name,
-                  template: stage.pageBuilder.content,
+                  template: content,
                   previewImage: imageSrc,
                   createdFor: createdFor
                 },

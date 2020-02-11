@@ -36,7 +36,7 @@ export default class Stage {
      * We always complete a single render when the stage is first loaded, so we can set the lock when the stage is
      * created. The lock is used to halt the parent forms submission when Page Builder is rendering.
      */
-    public renderingLocks: Array<JQueryDeferred<void>> = [];
+    public renderingLocks: Array<JQueryDeferred<string>> = [];
     private template: string = "Magento_PageBuilder/content-type/preview";
     private render: Render;
     private collection: Collection = new Collection();
@@ -48,11 +48,12 @@ export default class Stage {
      */
     private applyBindingsDebounce = _.debounce(() => {
         this.render.applyBindings(this.rootContainer)
-            .then((renderedOutput: string) => events.trigger(`stage:${ this.id }:masterFormatRenderAfter`, {
-                value: renderedOutput,
-            })).then(() => {
+            .then((renderedOutput: string) => {
+                events.trigger(`stage:${ this.id }:masterFormatRenderAfter`, {
+                    value: renderedOutput,
+                });
                 this.renderingLocks.forEach((lock) => {
-                    lock.resolve();
+                    lock.resolve(renderedOutput);
                 });
             }).catch((error: Error) => {
                 if (error) {

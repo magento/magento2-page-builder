@@ -34,7 +34,6 @@ export default class PageBuilder implements PageBuilderInterface {
     public isFullScreen: KnockoutObservable<boolean> = ko.observable(false);
     public loading: KnockoutObservable<boolean> = ko.observable(true);
     public wrapperStyles: KnockoutObservable<{[key: string]: string}> = ko.observable({});
-    public content: string;
     public isAllowedTemplateSave: boolean;
     public isAllowedTemplateApply: boolean;
     private previousWrapperStyles: {[key: string]: string} = {};
@@ -77,9 +76,6 @@ export default class PageBuilder implements PageBuilderInterface {
      */
     public initListeners() {
         events.on(`stage:${ this.id }:toggleFullscreen`, this.toggleFullScreen.bind(this));
-        events.on(`stage:${ this.id }:masterFormatRenderAfter`, (content: {value: string}) => {
-            this.content = content.value;
-        });
         this.isFullScreen.subscribe(() => this.onFullScreenChange());
     }
 

@@ -40,12 +40,12 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
       this.collection = new _collection();
       this.applyBindingsDebounce = _underscore.debounce(function () {
         _this.render.applyBindings(_this.rootContainer).then(function (renderedOutput) {
-          return _events.trigger("stage:" + _this.id + ":masterFormatRenderAfter", {
+          _events.trigger("stage:" + _this.id + ":masterFormatRenderAfter", {
             value: renderedOutput
           });
-        }).then(function () {
+
           _this.renderingLocks.forEach(function (lock) {
-            lock.resolve();
+            lock.resolve(renderedOutput);
           });
         }).catch(function (error) {
           if (error) {
