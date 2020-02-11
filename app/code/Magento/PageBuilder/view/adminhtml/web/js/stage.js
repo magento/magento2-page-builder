@@ -11,6 +11,11 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
     "use strict";
 
     /**
+     * We always complete a single render when the stage is first loaded, so we can set the lock when the stage is
+     * created. The lock is used to halt the parent forms submission when Page Builder is rendering.
+     */
+
+    /**
      * Debounce the applyBindings call by 500ms to stop duplicate calls
      *
      * @type {(() => void) & _.Cancelable}
@@ -30,17 +35,18 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
       this.focusChild = _knockout.observable(false);
       this.dataStore = new _dataStore();
       this.afterRenderDeferred = (0, _promiseDeferred)();
+      this.renderingLocks = [];
       this.template = "Magento_PageBuilder/content-type/preview";
       this.collection = new _collection();
       this.applyBindingsDebounce = _underscore.debounce(function () {
-        _this.renderingLock = _jquery.Deferred();
-
         _this.render.applyBindings(_this.rootContainer).then(function (renderedOutput) {
           return _events.trigger("stage:" + _this.id + ":masterFormatRenderAfter", {
             value: renderedOutput
           });
         }).then(function () {
-          _this.renderingLock.resolve();
+          _this.renderingLocks.forEach(function (lock) {
+            lock.resolve();
+          });
         }).catch(function (error) {
           if (error) {
             console.error(error);
@@ -124,6 +130,9 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
 
       _events.on("stage:updateAfter", function (args) {
         if (args.stageId === _this2.id) {
+          // Create the rendering lock straight away
+          _this2.createLock();
+
           _this2.applyBindingsDebounce();
         }
       });
@@ -156,6 +165,14 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
       _events.on("stage:childFocusStop", function () {
         return _this2.focusChild(false);
       });
+    }
+    /**
+     * Create a new lock for rendering
+     */
+    ;
+
+    _proto.createLock = function createLock() {
+      this.renderingLocks.push(_jquery.Deferred());
     }
     /**
      * On content type removed

@@ -36,7 +36,7 @@ export default class Stage {
      * We always complete a single render when the stage is first loaded, so we can set the lock when the stage is
      * created. The lock is used to halt the parent forms submission when Page Builder is rendering.
      */
-    public renderingLock: JQueryDeferred<void>;
+    public renderingLocks: Array<JQueryDeferred<void>> = [];
     private template: string = "Magento_PageBuilder/content-type/preview";
     private render: Render;
     private collection: Collection = new Collection();
@@ -47,12 +47,13 @@ export default class Stage {
      * @type {(() => void) & _.Cancelable}
      */
     private applyBindingsDebounce = _.debounce(() => {
-        this.renderingLock = $.Deferred();
         this.render.applyBindings(this.rootContainer)
             .then((renderedOutput: string) => events.trigger(`stage:${ this.id }:masterFormatRenderAfter`, {
                 value: renderedOutput,
             })).then(() => {
-                this.renderingLock.resolve();
+                this.renderingLocks.forEach((lock) => {
+                    lock.resolve();
+                });
             }).catch((error: Error) => {
                 if (error) {
                     console.error(error);
@@ -129,6 +130,8 @@ export default class Stage {
         // can occur concurrently.
         events.on("stage:updateAfter", (args: StageUpdateAfterParamsInterface) => {
             if (args.stageId === this.id) {
+                // Create the rendering lock straight away
+                this.createLock();
                 this.applyBindingsDebounce();
             }
         });
@@ -152,6 +155,13 @@ export default class Stage {
         });
         events.on("stage:childFocusStart", () => this.focusChild(true));
         events.on("stage:childFocusStop", () => this.focusChild(false));
+    }
+
+    /**
+     * Create a new lock for rendering
+     */
+    private createLock(): void {
+        this.renderingLocks.push($.Deferred());
     }
 
     /**
