@@ -3,14 +3,19 @@
  * See COPYING.txt for license details.
  */
 
+import "jarallax";
+import "jarallaxVideo";
 import $ from "jquery";
 import ko from "knockout";
 import $t from "mage/translate";
 import events from "Magento_PageBuilder/js/events";
 import _ from "underscore";
+import "vimeoWrapper";
 import {PreviewSortableSortUpdateEventParams} from "../../binding/sortable-children.types";
+import ContentTypeConfigInterface from "../../content-type-config.types";
 import ConditionalRemoveOption from "../../content-type-menu/conditional-remove-option";
 import {OptionsInterface} from "../../content-type-menu/option.types";
+import ContentTypeInterface from "../../content-type.types";
 import {DataObject} from "../../data-store";
 import Uploader from "../../uploader";
 import delayUntil from "../../utils/delay-until";
@@ -25,7 +30,8 @@ import {
 import nestingLinkDialog from "../../utils/nesting-link-dialog";
 import WysiwygFactory from "../../wysiwyg/factory";
 import WysiwygInterface from "../../wysiwyg/wysiwyg-interface";
-import {ContentTypeMountEventParamsInterface} from "../content-type-events.types";
+import {ContentTypeMountEventParamsInterface, ContentTypeReadyEventParamsInterface} from "../content-type-events.types";
+import ObservableUpdater from "../observable-updater";
 import BasePreview from "../preview";
 import SliderPreview from "../slider/preview";
 
@@ -61,6 +67,11 @@ export default class Preview extends BasePreview {
     private element: HTMLElement;
 
     /**
+     * The element the text content type is bound to
+     */
+    private wrapper: HTMLElement;
+
+    /**
      * Slide flag
      */
     private slideChanged: boolean = true;
@@ -69,6 +80,74 @@ export default class Preview extends BasePreview {
      * Have we handled a double click on init?
      */
     private handledDoubleClick: boolean = false;
+
+    /**
+     * Debounce and defer the init of Jarallax
+     *
+     * @type {(() => void) & _.Cancelable}
+     */
+    private buildJarallax = _.debounce(() => {
+        // Destroy all instances of the plugin prior
+        try {
+            // store/apply correct style after destroying, as jarallax incorrectly overrides it with stale value
+            const style = this.wrapper.getAttribute("style") ||
+                this.wrapper.getAttribute("data-jarallax-original-styles");
+            const backgroundImage = (this.contentType.dataStore.get("background_image") as any[]);
+            jarallax(this.wrapper, "destroy");
+            this.wrapper.setAttribute("style", style);
+            if (this.contentType.dataStore.get("background_type") as string !== "video" && backgroundImage.length) {
+                this.wrapper.style.backgroundImage = `url(${backgroundImage[0].url})`;
+            }
+        } catch (e) {
+            // Failure of destroying is acceptable
+        }
+
+        if (this.wrapper &&
+            (this.wrapper.dataset.backgroundType as string) === "video" &&
+            (this.wrapper.dataset.videoSrc as string).length
+        ) {
+            _.defer(() => {
+                // Build Parallax on elements with the correct class
+                jarallax(
+                    this.wrapper,
+                    {
+                        videoSrc: this.wrapper.dataset.videoSrc as string,
+                        imgSrc: this.wrapper.dataset.videoFallbackSrc as string,
+                        videoLoop: (this.contentType.dataStore.get("video_loop") as string) === "true",
+                        speed: 1,
+                        videoPlayOnlyVisible: (this.contentType.dataStore.get("video_play_only_visible") as string) === "true",
+                        videoLazyLoading: (this.contentType.dataStore.get("video_lazy_load") as string) === "true",
+                    },
+                );
+            });
+        }
+
+    }, 50);
+
+    /**
+     * @param {ContentTypeInterface} contentType
+     * @param {ContentTypeConfigInterface} config
+     * @param {ObservableUpdater} observableUpdater
+     */
+    constructor(
+        contentType: ContentTypeInterface,
+        config: ContentTypeConfigInterface,
+        observableUpdater: ObservableUpdater,
+    ) {
+        super(contentType, config, observableUpdater);
+
+        this.contentType.dataStore.subscribe(this.buildJarallax);
+        events.on("row:mountAfter", (args: ContentTypeReadyEventParamsInterface) => {
+            if (args.id === this.contentType.id) {
+                this.buildJarallax();
+            }
+        });
+        events.on("contentType:mountAfter", (args: ContentTypeMountEventParamsInterface) => {
+            if (args.contentType.parentContentType && args.contentType.parentContentType.id === this.contentType.id) {
+                this.buildJarallax();
+            }
+        });
+    }
 
     /**
      * @param {HTMLElement} element
@@ -363,6 +442,29 @@ export default class Preview extends BasePreview {
             this.wysiwyg = wysiwyg;
             return wysiwyg;
         });
+    }
+
+    /**
+     * Init the parallax element
+     *
+     * @param {HTMLElement} element
+     */
+    public initParallax(element: HTMLElement) {
+        this.wrapper = element;
+        _.defer(() => {
+            this.buildJarallax();
+        });
+    }
+
+    /**
+     * Destroy jarallax instance.
+     */
+    public destroy(): void {
+        super.destroy();
+
+        if (this.wrapper) {
+            jarallax(this.wrapper, "destroy");
+        }
     }
 
     /**

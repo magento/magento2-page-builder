@@ -5,7 +5,7 @@ function _extends() { _extends = Object.assign || function (target) { for (var i
 
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/content-type-menu/conditional-remove-option", "Magento_PageBuilder/js/uploader", "Magento_PageBuilder/js/utils/delay-until", "Magento_PageBuilder/js/utils/editor", "Magento_PageBuilder/js/utils/nesting-link-dialog", "Magento_PageBuilder/js/wysiwyg/factory", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _knockout, _translate, _events, _underscore, _conditionalRemoveOption, _uploader, _delayUntil, _editor, _nestingLinkDialog, _factory, _preview) {
+define(["jarallax", "jarallaxVideo", "jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "underscore", "vimeoWrapper", "Magento_PageBuilder/js/content-type-menu/conditional-remove-option", "Magento_PageBuilder/js/uploader", "Magento_PageBuilder/js/utils/delay-until", "Magento_PageBuilder/js/utils/editor", "Magento_PageBuilder/js/utils/nesting-link-dialog", "Magento_PageBuilder/js/wysiwyg/factory", "Magento_PageBuilder/js/content-type/preview"], function (_jarallax, _jarallaxVideo, _jquery, _knockout, _translate, _events, _underscore, _vimeoWrapper, _conditionalRemoveOption, _uploader, _delayUntil, _editor, _nestingLinkDialog, _factory, _preview) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -21,27 +21,98 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
     _inheritsLoose(Preview, _preview2);
 
-    function Preview() {
+    /**
+     * Slide name
+     */
+
+    /**
+     * Wysiwyg deferred event
+     */
+
+    /**
+     * Slide flag
+     */
+
+    /**
+     * Have we handled a double click on init?
+     */
+
+    /**
+     * Debounce and defer the init of Jarallax
+     *
+     * @type {(() => void) & _.Cancelable}
+     */
+
+    /**
+     * @param {ContentTypeInterface} contentType
+     * @param {ContentTypeConfigInterface} config
+     * @param {ObservableUpdater} observableUpdater
+     */
+    function Preview(contentType, config, observableUpdater) {
       var _this;
 
-      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
-
-      _this = _preview2.call.apply(_preview2, [this].concat(args)) || this;
+      _this = _preview2.call(this, contentType, config, observableUpdater) || this;
       _this.buttonPlaceholder = (0, _translate)("Edit Button Text");
       _this.slideName = _knockout.observable();
       _this.wysiwygDeferred = _jquery.Deferred();
       _this.slideChanged = true;
       _this.handledDoubleClick = false;
+      _this.buildJarallax = _underscore.debounce(function () {
+        // Destroy all instances of the plugin prior
+        try {
+          // store/apply correct style after destroying, as jarallax incorrectly overrides it with stale value
+          var style = _this.wrapper.getAttribute("style") || _this.wrapper.getAttribute("data-jarallax-original-styles");
+
+          var backgroundImage = _this.contentType.dataStore.get("background_image");
+
+          jarallax(_this.wrapper, "destroy");
+
+          _this.wrapper.setAttribute("style", style);
+
+          if (_this.contentType.dataStore.get("background_type") !== "video" && backgroundImage.length) {
+            _this.wrapper.style.backgroundImage = "url(" + backgroundImage[0].url + ")";
+          }
+        } catch (e) {// Failure of destroying is acceptable
+        }
+
+        if (_this.wrapper && _this.wrapper.dataset.backgroundType === "video" && _this.wrapper.dataset.videoSrc.length) {
+          _underscore.defer(function () {
+            // Build Parallax on elements with the correct class
+            jarallax(_this.wrapper, {
+              videoSrc: _this.wrapper.dataset.videoSrc,
+              imgSrc: _this.wrapper.dataset.videoFallbackSrc,
+              videoLoop: _this.contentType.dataStore.get("video_loop") === "true",
+              speed: 1,
+              videoPlayOnlyVisible: _this.contentType.dataStore.get("video_play_only_visible") === "true",
+              videoLazyLoading: _this.contentType.dataStore.get("video_lazy_load") === "true"
+            });
+          });
+        }
+      }, 50);
+
+      _this.contentType.dataStore.subscribe(_this.buildJarallax);
+
+      _events.on("row:mountAfter", function (args) {
+        if (args.id === _this.contentType.id) {
+          _this.buildJarallax();
+        }
+      });
+
+      _events.on("contentType:mountAfter", function (args) {
+        if (args.contentType.parentContentType && args.contentType.parentContentType.id === _this.contentType.id) {
+          _this.buildJarallax();
+        }
+      });
+
       return _this;
     }
-
-    var _proto = Preview.prototype;
-
     /**
      * @param {HTMLElement} element
      */
+
+
+    var _proto = Preview.prototype;
+
     _proto.afterRenderWysiwyg = function afterRenderWysiwyg(element) {
       var _this2 = this;
 
@@ -331,61 +402,89 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       });
     }
     /**
+     * Init the parallax element
+     *
+     * @param {HTMLElement} element
+     */
+    ;
+
+    _proto.initParallax = function initParallax(element) {
+      var _this7 = this;
+
+      this.wrapper = element;
+
+      _underscore.defer(function () {
+        _this7.buildJarallax();
+      });
+    }
+    /**
+     * Destroy jarallax instance.
+     */
+    ;
+
+    _proto.destroy = function destroy() {
+      _preview2.prototype.destroy.call(this);
+
+      if (this.wrapper) {
+        jarallax(this.wrapper, "destroy");
+      }
+    }
+    /**
      * @inheritDoc
      */
     ;
 
     _proto.bindEvents = function bindEvents() {
-      var _this7 = this;
+      var _this8 = this;
 
       _preview2.prototype.bindEvents.call(this);
 
       _events.on(this.config.name + ":" + this.contentType.id + ":updateAfter", function () {
-        var dataStore = _this7.contentType.dataStore.getState();
+        var dataStore = _this8.contentType.dataStore.getState();
 
-        var imageObject = dataStore[_this7.config.additional_data.uploaderConfig.dataScope][0] || {};
+        var imageObject = dataStore[_this8.config.additional_data.uploaderConfig.dataScope][0] || {};
 
-        _events.trigger("image:" + _this7.contentType.id + ":assignAfter", imageObject);
+        _events.trigger("image:" + _this8.contentType.id + ":assignAfter", imageObject);
 
-        (0, _nestingLinkDialog)(_this7.contentType.dataStore, _this7.wysiwyg, "content", "link_url");
+        (0, _nestingLinkDialog)(_this8.contentType.dataStore, _this8.wysiwyg, "content", "link_url");
       }); // Remove wysiwyg before assign new instance.
 
 
       _events.on("childContentType:sortUpdate", function (args) {
-        if (args.instance.id === _this7.contentType.parentContentType.id) {
-          _this7.wysiwyg = null;
+        if (args.instance.id === _this8.contentType.parentContentType.id) {
+          _this8.wysiwyg = null;
         }
       });
 
       _events.on(this.config.name + ":mountAfter", function (args) {
-        if (args.id === _this7.contentType.id) {
+        if (args.id === _this8.contentType.id) {
           // Update the display label for the slide
-          var slider = _this7.contentType.parentContentType;
+          var slider = _this8.contentType.parentContentType;
 
-          _this7.displayLabel((0, _translate)("Slide " + (slider.children().indexOf(_this7.contentType) + 1)));
+          _this8.displayLabel((0, _translate)("Slide " + (slider.children().indexOf(_this8.contentType) + 1)));
 
           slider.children.subscribe(function (children) {
-            var index = children.indexOf(_this7.contentType);
+            var index = children.indexOf(_this8.contentType);
 
-            _this7.displayLabel((0, _translate)("Slide " + (slider.children().indexOf(_this7.contentType) + 1)));
+            _this8.displayLabel((0, _translate)("Slide " + (slider.children().indexOf(_this8.contentType) + 1)));
           });
         }
       });
 
       _events.on(this.config.name + ":renderAfter", function (args) {
-        if (args.id === _this7.contentType.id) {
-          var slider = _this7.contentType.parentContentType;
+        if (args.id === _this8.contentType.id) {
+          var slider = _this8.contentType.parentContentType;
           (0, _jquery)(slider.preview.element).on("beforeChange", function () {
-            _this7.slideChanged = false;
+            _this8.slideChanged = false;
           });
           (0, _jquery)(slider.preview.element).on("afterChange", function () {
-            _this7.slideChanged = true;
+            _this8.slideChanged = true;
           });
         }
       });
 
       this.contentType.dataStore.subscribe(function (data) {
-        _this7.slideName(data.slide_name);
+        _this8.slideName(data.slide_name);
       });
     }
     /**
