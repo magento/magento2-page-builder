@@ -42,7 +42,6 @@
         <element name="backgroundType" type="text" parameterized="true" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-row')])[{{index}}][@data-background-type='{{backgroundType}}']"/>
         <element name="backgroundColor" type="button" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-row')])[{{arg1}}][contains(@style,'background-color: {{arg2}};')]" parameterized="true"/>
         <element name="backgroundColorElement" type="button" parameterized="true" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-row')])[{{arg1}}][contains(@style,'background-color:')]"/>
-        <element name="backgroundColorCSS" type="button" selector=".pagebuilder-content-type.pagebuilder-row[style*='background-color:']"/>
         <element name="noBackgroundColor" type="button" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-row')])[{{arg1}}][not(contains(@style,'background-color:'))]" parameterized="true"/>
         <element name="backgroundImage" type="button" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-row')])[{{arg1}}][contains(@style,'background-image: url(') and contains(@style,'{{arg2}}')]" parameterized="true"/>
         <element name="noBackgroundImage" type="button" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-row')])[{{arg1}}][not(contains(@style,'background-image:'))]" parameterized="true"/>
@@ -60,7 +59,6 @@
         <element name="videoBackgroundJarallaxContainer" type="text" parameterized="true" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-row')])[{{rowIndex}}]//div[contains(@id,'jarallax-container')]"/>
         <element name="videoBackgroundVideoElement" type="text" parameterized="true" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-row')])[{{rowIndex}}]//div[contains(@id,'jarallax-container')]//iframe|(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-row')])[{{rowIndex}}]//div[contains(@id,'jarallax-container')]//video"/>
         <element name="videoBackgroundVideoUrl" type="text" parameterized="true" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-row')])[{{rowIndex}}]//div[contains(@id,'jarallax-container')]//*[contains(@src,'{{videoURL}}')]"/>
-        <element name="videoBackgroundOverlayCSS" type="text" selector=".pagebuilder-content-type.pagebuilder-row [data-element='video_overlay']"/>
         <element name="videoBackgroundOverlayElement" type="text" parameterized="true" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-row')])[{{rowIndex}}]//div[@data-element='video_overlay']"/>
         <element name="videoBackgroundInfiniteLoop" type="text" parameterized="true" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-row')])[{{rowIndex}}][@data-video-loop='{{infiniteLoopValue}}']"/>
         <element name="videoBackgroundLazyLoad" type="text" parameterized="true" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-row')])[{{rowIndex}}][@data-video-lazy-load='{{lazyLoadValue}}']"/>
@@ -111,7 +109,6 @@
         <!-- Background Configuration -->
         <element name="backgroundType" type="text" parameterized="true" selector="(//div[@data-content-type='row'])[{{index}}]/div[@data-background-type='{{backgroundType}}']"/>
         <element name="backgroundColor" type="button" selector="(//div[@data-content-type='row'])[{{arg1}}]/div[contains(@style,'background-color: {{arg2}};')]" parameterized="true"/>
-        <element name="backgroundColorCSS" type="button" selector="[data-content-type='row'] [data-element='inner'][style*='background-color:']"/>
         <element name="backgroundColorElement" type="button" parameterized="true" selector="(//div[@data-content-type='row'])[{{arg1}}]/div[contains(@style,'background-color:')]"/>
         <element name="noBackgroundColor" type="button" selector="(//div[@data-content-type='row'])[{{arg1}}]/div[not(contains(@style,'background-color:'))]" parameterized="true"/>
         <element name="backgroundImage" type="button" selector="(//div[@data-content-type='row'])[{{arg1}}]/div[contains(@style,'background-image: url(') and contains(@style,'{{arg2}}')]" parameterized="true"/>
@@ -130,7 +127,6 @@
         <element name="videoBackgroundJarallaxContainer" type="text" parameterized="true" selector="(//div[@data-content-type='row'])[{{rowIndex}}]//div[contains(@id,'jarallax-container')]"/>
         <element name="videoBackgroundVideoElement" type="text" parameterized="true" selector="(//div[@data-content-type='row'])[{{rowIndex}}]//div[contains(@id,'jarallax-container')]//iframe|(//div[@data-content-type='row'])[{{rowIndex}}]//div[contains(@id,'jarallax-container')]//video"/>
         <element name="videoBackgroundVideoUrl" type="text" parameterized="true" selector="(//div[@data-content-type='row'])[{{rowIndex}}]//div[contains(@id,'jarallax-container')]//*[contains(@src,'{{videoURL}}')]"/>
-        <element name="videoBackgroundOverlayCSS" type="text" selector="[data-content-type='row'] [data-element='video_overlay']"/>
         <element name="videoBackgroundOverlayElement" type="text" parameterized="true" selector="(//div[@data-content-type='row'])[{{rowIndex}}]//div[@data-element='video_overlay']"/>
         <element name="videoBackgroundInfiniteLoop" type="text" parameterized="true" selector="(//div[@data-content-type='row'])[{{rowIndex}}]//div[@data-element='inner' and @data-video-loop='{{infiniteLoopValue}}']"/>
         <element name="videoBackgroundLazyLoad" type="text" parameterized="true" selector="(//div[@data-content-type='row'])[{{rowIndex}}]//div[@data-element='inner' and @data-video-lazy-load='{{lazyLoadValue}}']"/>
@@ -163,7 +159,6 @@
         <element name="backgroundType" type="text" parameterized="true" selector="(//div[@data-content-type='row'])[{{index}}][@data-background-type='{{backgroundType}}']"/>
         <element name="backgroundColor" type="button" selector="(//div[@data-content-type='row'])[{{arg1}}][contains(@style,'background-color: {{arg2}};')]" parameterized="true"/>
         <element name="backgroundColorElement" type="button" parameterized="true" selector="(//div[@data-content-type='row'])[{{arg1}}][contains(@style,'background-color:')]"/>
-        <element name="backgroundColorCSS" type="button" selector="[data-content-type='row'][style*='background-color:']"/>
         <element name="noBackgroundColor" type="button" selector="(//div[@data-content-type='row'])[{{arg1}}][not(contains(@style,'background-color:'))]" parameterized="true"/>
         <element name="backgroundImage" type="button" selector='(//div[@data-content-type="row"])[{{arg1}}][contains(@style,"background-image: url(&apos;") and contains(@style,"/{{arg2}}_") and contains(@style,".{{arg3}}&apos;);")]' parameterized="true"/>
         <element name="noBackgroundImage" type="button" selector='(//div[@data-content-type="row"])[{{arg1}}][not(contains(@style,"background-image:"))]' parameterized="true"/>
@@ -181,7 +176,6 @@
         <element name="videoBackgroundJarallaxContainer" type="text" parameterized="true" selector="(//div[@data-content-type='row'])[{{rowIndex}}]//div[contains(@id,'jarallax-container')]"/>
         <element name="videoBackgroundVideoElement" type="text" parameterized="true" selector="(//div[@data-content-type='row'])[{{rowIndex}}]//div[contains(@id,'jarallax-container')]//iframe|(//div[@data-content-type='row'])[{{rowIndex}}]//div[contains(@id,'jarallax-container')]//video"/>
         <element name="videoBackgroundVideoUrl" type="text" parameterized="true" selector="(//div[@data-content-type='row'])[{{rowIndex}}]//div[contains(@id,'jarallax-container')]//*[contains(@src,'{{videoURL}}')]"/>
-        <element name="videoBackgroundOverlayCSS" type="text" selector="[data-content-type='row'] [data-element='video_overlay']"/>
         <element name="videoBackgroundOverlayElement" type="text" parameterized="true" selector="(//div[@data-content-type='row'])[{{rowIndex}}]//div[@data-element='video_overlay']"/>
         <element name="videoBackgroundInfiniteLoop" type="text" parameterized="true" selector="(//div[@data-content-type='row'])[{{rowIndex}}][@data-video-loop='{{infiniteLoopValue}}']"/>
         <element name="videoBackgroundLazyLoad" type="text" parameterized="true" selector="(//div[@data-content-type='row'])[{{rowIndex}}][@data-video-lazy-load='{{lazyLoadValue}}']"/>

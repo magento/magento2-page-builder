@@ -1699,4 +1699,190 @@
             <argument name="property" value="PageBuilderVideoBackgroundFallbackImage_Empty"/>
         </actionGroup>
     </test>
+    <test name="RowValidateVideoBackgroundPlayOnlyWhenVisibleEnabled">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Row"/>
+            <title value="Validate Video Background Play Only When Visible Enabled"/>
+            <description value="Verify that the video background play only when visible attribute works as intended when enabled."/>
+            <severity value="MAJOR"/>
+            <useCaseId value="PB-95"/>
+            <testCaseId value="MC-31332"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-row"/>
+            <group value="pagebuilder-rowBackground"/>
+            <group value="pagebuilder-video-background"/>
+        </annotations>
+        <before>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
+                <argument name="CMSPage" value="$$createCMSPage$$"/>
+            </actionGroup>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Set Large Min Height on Row 1 -->
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage1">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty1">
+            <argument name="property" value="PageBuilderMinHeightProperty_500"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
+        <!-- Create 3 more Rows -->
+        <actionGroup ref="duplicateContentType" stepKey="duplicateRow1">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateRow2">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateRow3">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <!-- Set Video Background on Row 4 -->
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage4">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="contentTypeIndex" value="4"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setBackgroundType">
+            <argument name="property" value="PageBuilderRowBackgroundType_Video"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrl">
+            <argument name="property" value="PageBuilderVideoBackgroundUrl_YouTube_NonEmbedded"/>
+        </actionGroup>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="setLazyLoadDisabled">
+            <argument name="property" value="PageBuilderVideoBackgroundLazyLoad_Disabled"/>
+        </actionGroup>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="setPlayOnlyVisibleEnabled">
+            <argument name="property" value="PageBuilderVideoBackgroundPlayOnlyVisible_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings4"/>
+        <!-- Stage: Validate Video is Playing -->
+        <actionGroup ref="validateVideoBackgroundPlaying" stepKey="validateVideoPlayingStage1">
+            <argument name="section" value="RowOnStage"/>
+            <argument name="playOnlyVisible" value="PageBuilderVideoBackgroundPlayOnlyVisible_Enabled"/>
+            <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_YouTube_NonEmbedded"/>
+            <argument name="index" value="4"/>
+        </actionGroup>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!-- Stage: Validate Video is not Playing -->
+        <actionGroup ref="validateVideoBackgroundNotPlaying" stepKey="validateVideoNotPlayingStage1">
+            <argument name="section" value="RowOnStage"/>
+            <argument name="playOnlyVisible" value="PageBuilderVideoBackgroundPlayOnlyVisible_Enabled"/>
+            <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_YouTube_NonEmbedded"/>
+            <argument name="index" value="4"/>
+        </actionGroup>
+        <scrollTo selector="{{RowOnStage.base('4')}}" stepKey="scrollRow4Stage"/>
+        <!-- Stage: Validate Video is Playing -->
+        <actionGroup ref="validateVideoBackgroundPlaying" stepKey="validateVideoPlayingStage2">
+            <argument name="section" value="RowOnStage"/>
+            <argument name="playOnlyVisible" value="PageBuilderVideoBackgroundPlayOnlyVisible_Enabled"/>
+            <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_YouTube_NonEmbedded"/>
+            <argument name="index" value="4"/>
+        </actionGroup>
+        <!-- Storefront: Validate Video is not Playing -->
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStorefront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <actionGroup ref="validateVideoBackgroundNotPlaying" stepKey="validateVideoNotPlayingStorefront">
+            <argument name="section" value="RowOnStorefront"/>
+            <argument name="playOnlyVisible" value="PageBuilderVideoBackgroundPlayOnlyVisible_Enabled"/>
+            <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_YouTube_NonEmbedded"/>
+            <argument name="index" value="4"/>
+        </actionGroup>
+        <scrollTo selector="{{RowOnStorefront.base('4')}}" stepKey="scrollRow4Storefront"/>
+        <actionGroup ref="validateVideoBackgroundPlaying" stepKey="validateVideoPlayingStorefront">
+            <argument name="section" value="RowOnStorefront"/>
+            <argument name="playOnlyVisible" value="PageBuilderVideoBackgroundPlayOnlyVisible_Enabled"/>
+            <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_YouTube_NonEmbedded"/>
+            <argument name="index" value="4"/>
+        </actionGroup>
+    </test>
+    <test name="RowValidateVideoBackgroundLazyLoadEnabled" extends="RowValidateVideoBackgroundPlayOnlyWhenVisibleEnabled">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Row"/>
+            <title value="Validate Video Background Lazy Load Enabled"/>
+            <description value="Verify that the video background lazy load attribute works as intended when enabled."/>
+            <severity value="MAJOR"/>
+            <useCaseId value="PB-95"/>
+            <testCaseId value="MC-31341"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-row"/>
+            <group value="pagebuilder-rowBackground"/>
+            <group value="pagebuilder-video-background"/>
+        </annotations>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="setLazyLoadDisabled">
+            <argument name="property" value="PageBuilderVideoBackgroundLazyLoad_Enabled"/>
+        </actionGroup>
+        <remove keyForRemoval="setPlayOnlyVisibleEnabled"/>
+        <actionGroup ref="validateVideoBackgroundLoaded" stepKey="validateVideoPlayingStage1">
+            <argument name="section" value="RowOnStage"/>
+            <argument name="index" value="4"/>
+        </actionGroup>
+        <actionGroup ref="validateVideoBackgroundNotLoaded" stepKey="validateVideoNotPlayingStage1">
+            <argument name="section" value="RowOnStage"/>
+            <argument name="index" value="4"/>
+        </actionGroup>
+        <actionGroup ref="validateVideoBackgroundLoaded" stepKey="validateVideoPlayingStage2">
+            <argument name="section" value="RowOnStage"/>
+            <argument name="index" value="4"/>
+        </actionGroup>
+        <actionGroup ref="validateVideoBackgroundNotLoaded" stepKey="validateVideoNotPlayingStorefront">
+            <argument name="section" value="RowOnStorefront"/>
+            <argument name="index" value="4"/>
+        </actionGroup>
+        <actionGroup ref="validateVideoBackgroundLoaded" stepKey="validateVideoPlayingStorefront">
+            <argument name="section" value="RowOnStorefront"/>
+            <argument name="index" value="4"/>
+        </actionGroup>
+    </test>
+    <test name="RowValidateVideoBackgroundLazyLoadDisabled" extends="RowValidateVideoBackgroundPlayOnlyWhenVisibleEnabled">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Row"/>
+            <title value="Validate Video Background Lazy Load Disabled"/>
+            <description value="Verify that the video background lazy load attribute works as intended when disabled."/>
+            <severity value="MAJOR"/>
+            <useCaseId value="PB-95"/>
+            <testCaseId value="MC-31342"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-row"/>
+            <group value="pagebuilder-rowBackground"/>
+            <group value="pagebuilder-video-background"/>
+        </annotations>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="setLazyLoadDisabled">
+            <argument name="property" value="PageBuilderVideoBackgroundLazyLoad_Disabled"/>
+        </actionGroup>
+        <remove keyForRemoval="setPlayOnlyVisibleEnabled"/>
+        <actionGroup ref="validateVideoBackgroundLoaded" stepKey="validateVideoPlayingStage1">
+            <argument name="section" value="RowOnStage"/>
+            <argument name="index" value="4"/>
+        </actionGroup>
+        <actionGroup ref="validateVideoBackgroundLoaded" stepKey="validateVideoNotPlayingStage1">
+            <argument name="section" value="RowOnStage"/>
+            <argument name="index" value="4"/>
+        </actionGroup>
+        <actionGroup ref="validateVideoBackgroundLoaded" stepKey="validateVideoPlayingStage2">
+            <argument name="section" value="RowOnStage"/>
+            <argument name="index" value="4"/>
+        </actionGroup>
+        <actionGroup ref="validateVideoBackgroundLoaded" stepKey="validateVideoNotPlayingStorefront">
+            <argument name="section" value="RowOnStorefront"/>
+            <argument name="index" value="4"/>
+        </actionGroup>
+        <actionGroup ref="validateVideoBackgroundLoaded" stepKey="validateVideoPlayingStorefront">
+            <argument name="section" value="RowOnStorefront"/>
+            <argument name="index" value="4"/>
+        </actionGroup>
+    </test>
 </tests>
