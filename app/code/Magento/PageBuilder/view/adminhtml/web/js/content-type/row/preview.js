@@ -130,7 +130,7 @@ define(["jarallax", "jarallaxVideo", "jquery", "knockout", "Magento_PageBuilder/
     /**
      * Init the parallax element
      *
-     * @param {Element} element
+     * @param {HTMLElement} element
      */
     ;
 

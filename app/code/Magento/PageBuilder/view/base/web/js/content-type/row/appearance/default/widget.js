@@ -19,6 +19,7 @@ define([
 
         if ($element.data('background-type') === 'video') {
             videoBackground(config, $element[0]);
+
             return;
         }
 
