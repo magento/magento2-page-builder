@@ -385,6 +385,16 @@
         </arguments>
         <dontSeeElementInDOM selector="{{EditPanelForm.panelFieldNoAfterLabelText(property.fieldName)}}" stepKey="dontSeeElementInDOM"/>
     </actionGroup>
+    <actionGroup name="validateSlideOutPanelFieldHelperText">
+        <annotations>
+            <description>Validates the helper text for a field on the edit panel form.</description>
+        </annotations>
+        <arguments>
+            <argument name="property"/>
+        </arguments>
+        <waitForElement time="2" selector="{{EditPanelForm.panelFieldHelperText(property.section, property.fieldName)}}" stepKey="waitForElement"/>
+        <see userInput="{{property.helperText}}" selector="{{EditPanelForm.panelFieldHelperText(property.section, property.fieldName)}}" stepKey="seeHelperText"/>
+    </actionGroup>
     <actionGroup name="validateSlideOutPanelFieldNotPresent">
         <arguments>
             <argument name="property"/>
