@@ -67,21 +67,14 @@
             </formElements>
         </field>
         <field name="min_height" sortOrder="20" formElement="input">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="default" xsi:type="number">300</item>
-                </item>
-            </argument>
             <settings>
                 <label translate="true">Minimum Height</label>
+                <notice translate="true">Minimum height can be a single number with any valid CSS unit (50px, 50%, 50em, 50vh) or a calculation (50% + 50px).</notice>
                 <additionalClasses>
-                    <class name="admin__field-small">true</class>
+                    <class name="admin__field-medium">true</class>
                 </additionalClasses>
-                <addAfter translate="true">px</addAfter>
-                <dataType>text</dataType>
-                <dataScope>min_height</dataScope>
                 <validation>
-                    <rule name="validate-number" xsi:type="boolean">true</rule>
+                    <rule name="validate-calc" xsi:type="boolean">true</rule>
                 </validation>
             </settings>
         </field>
