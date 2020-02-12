@@ -1073,11 +1073,15 @@
             <argument name="property" value="PageBuilderPadding_0"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <!-- Row 2: Min Height = 100vh -->
         <actionGroup ref="duplicateContentType" stepKey="duplicateContentType1">
             <argument name="contentType" value="PageBuilderRowContentType"/>
             <argument name="targetIndex" value="1"/>
         </actionGroup>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateContentType2">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <!-- Row 2: Min Height = 100vh -->
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanel2">
             <argument name="contentType" value="PageBuilderRowContentType"/>
             <argument name="contentTypeIndex" value="2"/>
@@ -1087,12 +1091,6 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <!-- Row 3: Min Height = 100vh - 200px -->
-        <scrollTo selector="{{RowOnStage.base('2')}}" x="0" y="-400" stepKey="scrollToRow2"/>
-        <actionGroup ref="duplicateContentType" stepKey="duplicateContentType2">
-            <argument name="contentType" value="PageBuilderRowContentType"/>
-            <argument name="targetIndex" value="2"/>
-        </actionGroup>
-        <scrollTo selector="{{RowOnStage.base('3')}}" x="0" y="-400" stepKey="scrollToRow3"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanel3">
             <argument name="contentType" value="PageBuilderRowContentType"/>
             <argument name="contentTypeIndex" value="3"/>
