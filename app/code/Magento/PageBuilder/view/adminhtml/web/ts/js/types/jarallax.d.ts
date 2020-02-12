@@ -113,7 +113,7 @@ interface JarallaxOptions {
     videoPlayOnlyVisible?: boolean;
 
     /**
-     * Preload videos only when it is visible on the screen.
+     * Preload video only when it is visible on the screen.
      */
     videoLazyLoading?: boolean;
 
