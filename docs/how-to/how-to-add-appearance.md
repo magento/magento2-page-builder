@@ -5,6 +5,7 @@ Appearances provide different layout and styling options for a content type. For
 This topic shows how to add appearances to existing content types. An overview of the steps and the files you need to add are illustrated here:
 
 ![How to add an appearance](../images/how-to-add-appearance.svg)
+
 _Steps for adding appearances_
 
 Even though this topic describes how to add appearances to Page Builder's native content types, the steps can be applied to adding more appearances to your custom content types as well.
@@ -14,11 +15,13 @@ Even though this topic describes how to add appearances to Page Builder's native
 First, we need a way select an appearance within the Admin UI. In Page Builder, we use the `VisualSelect` class. This class provides the UI for selecting different appearances. For example, the `VisualSelect` class for the Banner provides four appearances to choose from:
 
 ![Banner visual selector](../images/banner-visual-selector.png)
+
 _Visual selector for Banner_
 
 To add a new appearance option for one of Page Builder's native content types, like the Banner, create a new `di.xml` file in your module, as shown here:
 
 ![Add VisualSelect class](../images/add-visualselect-class.png)
+
 _File and location for the VisualSelect class_
 
 Within the `di.xml` file, add a `VisualSelect` class using the Banner's `VisualSelect` class name (`<virtualType name="AppearanceSourceBanner"`), as shown here:
@@ -54,6 +57,7 @@ The following table describes the configuration arguments for each appearance op
 | `title`         | Display name for the appearance option. Banner example: Poster. |
 | `icon`          | Path to the `.svg` icon for the appearance: `view/adminthtml/web/css/images/content-type/[content-type-name]/appearance/*.svg`. See Creating an icon for your appearance |
 | `noticeMessage` | (Not shown in example.) The `noticeMessage` displays a message below the appearance options when the appearance is selected. For example, two of the Row appearances (`full-width` and `full-bleed`) define `noticeMessage` strings that display when selected. |
+{:style="table-layout:auto"}
 
 To add more appearance options, simply create more ` item` arrays, as shown here:
 
@@ -101,12 +105,14 @@ You can use whatever tool you want to create your SVG. Just make sure you follow
 | background `rect y`          | 21          |
 | background `rect fill`       | #524D49     |
 | other `rect fill` properties | #FFF        |
+{:style="table-layout:fixed"}
 
 ## Step 2: Add appearance configurations
 
 Appearance configurations connect the data entered in a content type's form to its HTML templates. For example, the Heading content type has an `<html>` config element (`<html name="heading_text" />`)  that maps the text entered into the content type's `heading_text` form field (`<field name="heading_text" formElement="input">`) to the Heading's Knockout template binding (`html="data.main.html"`), as illustrated here:
 
 ![Appearance configurations](../images/appearance-configurations.png)
+
 _Appearance configurations explained_
 
 The same concept applies to `styles`, `attributes`, and `css` elements. These elements ensure that the form settings (both content and styles) get applied to the templates as expected.
@@ -114,6 +120,7 @@ The same concept applies to `styles`, `attributes`, and `css` elements. These el
 To add a new Banner appearance configuration, create a content type config file named `banner.xml`, as shown here:
 
 ![Appearance configuration config file](../images/appearance-config-file.png)
+
 _Add additional appearances to Banner content type_
 
 {: .bs-callout .bs-callout-info }
@@ -171,6 +178,7 @@ _Adding a form to an appearance_
 Appearances use different HTML templates to create different layouts and apply different styles to those layouts. For example, the Banner content type uses four sets of `preview.html` and `master.html` templates, to create the visual differences for each content type:
 
 ![Appearance configuration config file](../images/appearance-templates-banner.png)
+
 _Banner appearance templates_
 
 Each template set is located within a folder named after the appearance for which they are used. The folder names must match the appearance names assigned in the content type's config file.
@@ -178,6 +186,7 @@ Each template set is located within a folder named after the appearance for whic
 To create appearance templates for additional Banner appearances, such as the `simple-poster` appearance described in steps 1 and 2, you must add a new appearance folder for your module's templates, as shown here:
 
 ![Appearance templates](../images/appearance-templates-additional.png)
+
 _Adding additional appearance templates_
 
 ## Step 5: Add appearance styles
@@ -185,11 +194,13 @@ _Adding additional appearance templates_
 Appearances use different CSS/LESS files to create different visual styles for a content type. For example, the Banner content type uses a different `.less` file for each appearance, as shown here:
 
 ![Appearance stylesheets](../images/appearance-css-banner.png)
+
 _Banner stylesheets_
 
 To create a LESS stylesheet for an additional Banner appearances, such as the `simple-poster`, you must add a new appearance folder for your module's templates, as shown here:
 
 ![Additional appearance stylesheets](../images/appearance-css-additional.png)
+
 _Adding additional stylesheets_
 
 The `_module.less` file is an import file that ensures the additional stylesheet gets added to the existing Banner styles. The `_module.xml` file for our `simple-poster.less` file looks like this:
@@ -205,6 +216,4 @@ Using appearances to extend Page Builder's native content types represents one o
 
 ## Example Module
 
-An example module for this topic is available for download in the `pagebuilder-examples` repository here:
-
-https://github.com/magento-devdocs/pagebuilder-examples/tree/master/Example/PageBuilderBannerAppearance
+An example module for this topic is available for download in the [pagebuilder-examples repository](https://github.com/magento-devdocs/pagebuilder-examples/tree/master/Example/PageBuilderBannerAppearance).
