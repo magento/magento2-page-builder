@@ -1264,61 +1264,97 @@
             <argument name="property" value="PageBuilderVideoBackgroundUrl_Invalid_Text"/>
         </actionGroup>
         <!-- Update to YouTube Embedded -->
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrl">
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrlYouTubeEmbedded">
             <argument name="property" value="PageBuilderVideoBackgroundUrl_YouTube_Embedded"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <actionGroup ref="validateVideoBackgroundWithOnlyVideoUrl" stepKey="validateStage1">
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsYouTubeEmbedded"/>
+        <actionGroup ref="validateVideoBackgroundWithOnlyVideoUrl" stepKey="validateYouTubeEmbeddedStage">
             <argument name="section" value="RowOnStage"/>
             <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_YouTube_Embedded"/>
         </actionGroup>
         <!-- Update to YouTube Non-Embedded -->
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStageYouTubeNonEmbedded">
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrl2">
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrlYouTubeNonEmbedded">
             <argument name="property" value="PageBuilderVideoBackgroundUrl_YouTube_NonEmbedded"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
-        <actionGroup ref="validateVideoBackgroundWithOnlyVideoUrl" stepKey="validateStage2">
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsYouTubeNonEmbedded"/>
+        <actionGroup ref="validateVideoBackgroundWithOnlyVideoUrl" stepKey="validateYouTubeNonEmbeddedStage">
             <argument name="section" value="RowOnStage"/>
             <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_YouTube_NonEmbedded"/>
         </actionGroup>
-        <!-- Update to Vimeo Embedded-->
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage4">
+        <!-- Update to YouTube Insecure -->
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStageYouTubeInsecure">
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrl4">
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrlYouTubeInsecure">
+            <argument name="property" value="PageBuilderVideoBackgroundUrl_YouTube_Insecure"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsInsecure"/>
+        <actionGroup ref="validateVideoBackgroundWithOnlyVideoUrl" stepKey="validateYouTubeInsecureStage">
+            <argument name="section" value="RowOnStage"/>
+            <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_YouTube_Insecure"/>
+        </actionGroup>
+        <!-- Update to Vimeo Embedded-->
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStageVimeoEmbedded">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrlVimeoEmbedded">
             <argument name="property" value="PageBuilderVideoBackgroundUrl_Vimeo_Embedded"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings4"/>
-        <actionGroup ref="validateVideoBackgroundWithOnlyVideoUrl" stepKey="validateStage4">
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsVimeoEmbedded"/>
+        <actionGroup ref="validateVideoBackgroundWithOnlyVideoUrl" stepKey="validateVimeoEmbeddedStage">
             <argument name="section" value="RowOnStage"/>
             <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_Vimeo_Embedded"/>
         </actionGroup>
         <!-- Update to Vimeo Non-Embedded -->
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage5">
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStageVimeoNonEmbedded">
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrl5">
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrlVimeoNonEmbedded">
             <argument name="property" value="PageBuilderVideoBackgroundUrl_Vimeo_NonEmbedded"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings5"/>
-        <actionGroup ref="validateVideoBackgroundWithOnlyVideoUrl" stepKey="validateStage5">
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsVimeoNonEmbedded"/>
+        <actionGroup ref="validateVideoBackgroundWithOnlyVideoUrl" stepKey="validateVimeoNonEmbeddedStage">
             <argument name="section" value="RowOnStage"/>
             <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_Vimeo_NonEmbedded"/>
         </actionGroup>
-        <!-- Update to .mp4 URL -->
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage7">
+        <!-- Update to Vimeo Insecure -->
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStageVimeoInsecure">
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrl7">
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrlVimeoInsecure">
+            <argument name="property" value="PageBuilderVideoBackgroundUrl_Vimeo_Insecure"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsVimeoInsecure"/>
+        <actionGroup ref="validateVideoBackgroundWithOnlyVideoUrl" stepKey="validateVimeoInsecureStage">
+            <argument name="section" value="RowOnStage"/>
+            <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_Vimeo_Insecure"/>
+        </actionGroup>
+        <!-- Update to .mp4 URL -->
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStageMp4">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrlMp4">
             <argument name="property" value="PageBuilderVideoBackgroundUrl_Mp4_URL"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings7"/>
-        <actionGroup ref="validateVideoBackgroundWithOnlyVideoUrl" stepKey="validateStage7">
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsMp4"/>
+        <actionGroup ref="validateVideoBackgroundWithOnlyVideoUrl" stepKey="validateMp4Stage">
             <argument name="section" value="RowOnStage"/>
             <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_Mp4_URL"/>
+        </actionGroup>
+        <!-- Update to .mp4 URL Insecure -->
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStageMp4Insecure">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrlMp4Insecure">
+            <argument name="property" value="PageBuilderVideoBackgroundUrl_Mp4_URL_Insecure"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsMp4Insecure"/>
+        <actionGroup ref="validateVideoBackgroundWithOnlyVideoUrl" stepKey="validateMp4InsecureStage">
+            <argument name="section" value="RowOnStage"/>
+            <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_Mp4_URL_Insecure"/>
         </actionGroup>
     </test>
     <test name="RowContainedVerifyCanSwitchBackgroundTypes">
@@ -1699,6 +1735,144 @@
             <argument name="property" value="PageBuilderVideoBackgroundFallbackImage_Empty"/>
         </actionGroup>
     </test>
+    <test name="RowValidateVideoBackgroundInfiniteLoopEnabled">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Row"/>
+            <title value="Validate Video Background Infinite Loop Enabled"/>
+            <description value="Verify that the video background infinite loop attribute works as intended when enabled."/>
+            <severity value="MAJOR"/>
+            <useCaseId value="PB-95"/>
+            <testCaseId value="MC-31417"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-row"/>
+            <group value="pagebuilder-rowBackground"/>
+            <group value="pagebuilder-video-background"/>
+        </annotations>
+        <before>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
+                <argument name="CMSPage" value="$$createCMSPage$$"/>
+            </actionGroup>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="navigateToFallbackImageFolder">
+                <argument name="FolderName" value="{{PageBuilderVideoBackgroundFallbackImage_JPG.path}}"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="deleteFallbackImage">
+                <argument name="Image" value="PageBuilderVideoBackgroundFallbackImage_JPG"/>
+            </actionGroup>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty">
+            <argument name="property" value="PageBuilderMinHeightProperty_200"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setBackgroundType">
+            <argument name="property" value="PageBuilderRowBackgroundType_Video"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrl">
+            <argument name="property" value="PageBuilderVideoBackgroundUrl_Mp4_URL"/>
+        </actionGroup>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="setInfiniteLoopEnabled">
+            <argument name="property" value="PageBuilderVideoBackgroundInfiniteLoop_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachFallbackImage">
+            <argument name="property" value="PageBuilderVideoBackgroundFallbackImage_JPG"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings4"/>
+        <!-- Stage: Validate Video is Playing -->
+        <actionGroup ref="validateVideoBackgroundPlaying" stepKey="validateVideoPlayingStage1">
+            <argument name="section" value="RowOnStage"/>
+            <argument name="playOnlyVisible" value="PageBuilderVideoBackgroundInfiniteLoop_Enabled"/>
+            <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_Mp4_URL"/>
+        </actionGroup>
+        <wait time="5" stepKey="waitForVideoCompleteStage"/>
+        <actionGroup ref="validateVideoBackgroundPlaying" stepKey="validateVideoPlayingStage2">
+            <argument name="section" value="RowOnStage"/>
+            <argument name="playOnlyVisible" value="PageBuilderVideoBackgroundInfiniteLoop_Enabled"/>
+            <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_Mp4_URL"/>
+        </actionGroup>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!-- Storefront: Validate Video is Playing -->
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStorefront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <actionGroup ref="validateVideoBackgroundPlaying" stepKey="validateVideoPlayingStorefront1">
+            <argument name="section" value="RowOnStorefront"/>
+            <argument name="playOnlyVisible" value="PageBuilderVideoBackgroundInfiniteLoop_Enabled"/>
+            <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_Mp4_URL"/>
+        </actionGroup>
+        <wait time="5" stepKey="waitForVideoCompleteStorefront"/>
+        <actionGroup ref="validateVideoBackgroundPlaying" stepKey="validateVideoPlayingStorefront2">
+            <argument name="section" value="RowOnStorefront"/>
+            <argument name="playOnlyVisible" value="PageBuilderVideoBackgroundInfiniteLoop_Enabled"/>
+            <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_Mp4_URL"/>
+        </actionGroup>
+    </test>
+    <test name="RowValidateVideoBackgroundInfiniteLoopDisabled" extends="RowValidateVideoBackgroundInfiniteLoopEnabled">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Row"/>
+            <title value="Validate Video Background Infinite Loop Disabled"/>
+            <description value="Verify that the video background infinite loop attribute works as intended when disabled."/>
+            <severity value="MAJOR"/>
+            <useCaseId value="PB-95"/>
+            <testCaseId value="MC-31418"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-row"/>
+            <group value="pagebuilder-rowBackground"/>
+            <group value="pagebuilder-video-background"/>
+        </annotations>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="setInfiniteLoopEnabled">
+            <argument name="property" value="PageBuilderVideoBackgroundInfiniteLoop_Disabled"/>
+        </actionGroup>
+        <wait time="5" stepKey="waitForVideoCompleteStageBefore" before="validateVideoPlayingStage1"/>
+        <actionGroup ref="validateVideoBackgroundFinishedPlaying" stepKey="validateVideoPlayingStage1">
+            <argument name="section" value="RowOnStage"/>
+            <argument name="playOnlyVisible" value="PageBuilderVideoBackgroundInfiniteLoop_Disabled"/>
+            <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_Mp4_URL"/>
+        </actionGroup>
+        <actionGroup ref="validateFallbackImageAfterVideoFinishesPlayingInVideoBackground" stepKey="validateFallbackImageVisibleStage1" after="validateVideoPlayingStage1">
+            <argument name="section" value="RowOnStage"/>
+            <argument name="fallbackImage" value="PageBuilderVideoBackgroundFallbackImage_JPG"/>
+        </actionGroup>
+        <actionGroup ref="validateVideoBackgroundFinishedPlaying" stepKey="validateVideoPlayingStage2">
+            <argument name="section" value="RowOnStage"/>
+            <argument name="playOnlyVisible" value="PageBuilderVideoBackgroundInfiniteLoop_Disabled"/>
+            <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_Mp4_URL"/>
+        </actionGroup>
+        <actionGroup ref="validateFallbackImageAfterVideoFinishesPlayingInVideoBackground" stepKey="validateFallbackImageVisibleStage2" after="validateVideoPlayingStage2">
+            <argument name="section" value="RowOnStage"/>
+            <argument name="fallbackImage" value="PageBuilderVideoBackgroundFallbackImage_JPG"/>
+        </actionGroup>
+        <wait time="5" stepKey="waitForVideoCompleteStorefrontBefore" before="validateVideoPlayingStorefront1"/>
+        <actionGroup ref="validateVideoBackgroundFinishedPlaying" stepKey="validateVideoPlayingStorefront1">
+            <argument name="section" value="RowOnStorefront"/>
+            <argument name="playOnlyVisible" value="PageBuilderVideoBackgroundInfiniteLoop_Disabled"/>
+            <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_Mp4_URL"/>
+        </actionGroup>
+        <actionGroup ref="validateFallbackImageAfterVideoFinishesPlayingInVideoBackground" stepKey="validateFallbackImageVisibleStorefront1" after="validateVideoPlayingStorefront1">
+            <argument name="section" value="RowOnStorefront"/>
+            <argument name="fallbackImage" value="PageBuilderVideoBackgroundFallbackImage_JPG"/>
+        </actionGroup>
+        <actionGroup ref="validateVideoBackgroundFinishedPlaying" stepKey="validateVideoPlayingStorefront2">
+            <argument name="section" value="RowOnStorefront"/>
+            <argument name="playOnlyVisible" value="PageBuilderVideoBackgroundInfiniteLoop_Disabled"/>
+            <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_Mp4_URL"/>
+        </actionGroup>
+        <actionGroup ref="validateFallbackImageAfterVideoFinishesPlayingInVideoBackground" stepKey="validateFallbackImageVisibleStorefront2" after="validateVideoPlayingStorefront2">
+            <argument name="section" value="RowOnStorefront"/>
+            <argument name="fallbackImage" value="PageBuilderVideoBackgroundFallbackImage_JPG"/>
+        </actionGroup>
+    </test>
     <test name="RowValidateVideoBackgroundPlayOnlyWhenVisibleEnabled">
         <annotations>
             <features value="PageBuilder"/>
@@ -1768,16 +1942,14 @@
         <!-- Stage: Validate Video is Playing -->
         <actionGroup ref="validateVideoBackgroundPlaying" stepKey="validateVideoPlayingStage1">
             <argument name="section" value="RowOnStage"/>
-            <argument name="playOnlyVisible" value="PageBuilderVideoBackgroundPlayOnlyVisible_Enabled"/>
             <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_YouTube_NonEmbedded"/>
             <argument name="index" value="4"/>
         </actionGroup>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Stage: Validate Video is not Playing -->
-        <actionGroup ref="validateVideoBackgroundNotPlaying" stepKey="validateVideoNotPlayingStage1">
+        <actionGroup ref="validateVideoBackgroundLoadedButNotPlaying" stepKey="validateVideoNotPlayingStage1">
             <argument name="section" value="RowOnStage"/>
-            <argument name="playOnlyVisible" value="PageBuilderVideoBackgroundPlayOnlyVisible_Enabled"/>
             <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_YouTube_NonEmbedded"/>
             <argument name="index" value="4"/>
         </actionGroup>
@@ -1785,7 +1957,6 @@
         <!-- Stage: Validate Video is Playing -->
         <actionGroup ref="validateVideoBackgroundPlaying" stepKey="validateVideoPlayingStage2">
             <argument name="section" value="RowOnStage"/>
-            <argument name="playOnlyVisible" value="PageBuilderVideoBackgroundPlayOnlyVisible_Enabled"/>
             <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_YouTube_NonEmbedded"/>
             <argument name="index" value="4"/>
         </actionGroup>
@@ -1793,17 +1964,158 @@
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
-        <actionGroup ref="validateVideoBackgroundNotPlaying" stepKey="validateVideoNotPlayingStorefront">
+        <actionGroup ref="validateVideoBackgroundLoadedButNotPlaying" stepKey="validateVideoNotPlayingStorefront">
             <argument name="section" value="RowOnStorefront"/>
-            <argument name="playOnlyVisible" value="PageBuilderVideoBackgroundPlayOnlyVisible_Enabled"/>
             <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_YouTube_NonEmbedded"/>
             <argument name="index" value="4"/>
         </actionGroup>
         <scrollTo selector="{{RowOnStorefront.base('4')}}" stepKey="scrollRow4Storefront"/>
         <actionGroup ref="validateVideoBackgroundPlaying" stepKey="validateVideoPlayingStorefront">
             <argument name="section" value="RowOnStorefront"/>
-            <argument name="playOnlyVisible" value="PageBuilderVideoBackgroundPlayOnlyVisible_Enabled"/>
             <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_YouTube_NonEmbedded"/>
+            <argument name="index" value="4"/>
+        </actionGroup>
+    </test>
+    <test name="RowValidateVideoBackgroundPlayOnlyWhenVisibleDisabled">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Row"/>
+            <title value="Validate Video Background Play Only When Visible Disabled"/>
+            <description value="Verify that the video background play only when visible attribute works as intended when disabled."/>
+            <severity value="MAJOR"/>
+            <useCaseId value="PB-95"/>
+            <testCaseId value="MC-31428"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-row"/>
+            <group value="pagebuilder-rowBackground"/>
+            <group value="pagebuilder-video-background"/>
+        </annotations>
+        <before>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
+                <argument name="CMSPage" value="$$createCMSPage$$"/>
+            </actionGroup>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="navigateToFallbackImageFolder">
+                <argument name="FolderName" value="{{PageBuilderVideoBackgroundFallbackImage_JPG.path}}"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="deleteFallbackImage">
+                <argument name="Image" value="PageBuilderVideoBackgroundFallbackImage_JPG"/>
+            </actionGroup>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Set Large Min Height on Row 1 -->
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage1">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty1">
+            <argument name="property" value="PageBuilderMinHeightProperty_500"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
+        <!-- Create 3 more Rows -->
+        <actionGroup ref="duplicateContentType" stepKey="duplicateRow1">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateRow2">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateRow3">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <!-- Set Video Background on Row 4 -->
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage4">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="contentTypeIndex" value="4"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setBackgroundType">
+            <argument name="property" value="PageBuilderRowBackgroundType_Video"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrl">
+            <argument name="property" value="PageBuilderVideoBackgroundUrl_Mp4_URL"/>
+        </actionGroup>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="setInfiniteLoopDisabled">
+            <argument name="property" value="PageBuilderVideoBackgroundInfiniteLoop_Disabled"/>
+        </actionGroup>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="setLazyLoadDisabled">
+            <argument name="property" value="PageBuilderVideoBackgroundLazyLoad_Disabled"/>
+        </actionGroup>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="setPlayOnlyVisibleEnabled">
+            <argument name="property" value="PageBuilderVideoBackgroundPlayOnlyVisible_Disabled"/>
+        </actionGroup>
+        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachFallbackImage">
+            <argument name="property" value="PageBuilderVideoBackgroundFallbackImage_JPG"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings4"/>
+        <!-- Validate Stage -->
+        <wait time="5" stepKey="waitForVideoCompleteStage"/>
+        <actionGroup ref="validateVideoBackgroundFinishedPlaying" stepKey="validateVideoFinishedPlayingStage1">
+            <argument name="section" value="RowOnStage"/>
+            <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_Mp4_URL"/>
+            <argument name="index" value="4"/>
+        </actionGroup>
+        <actionGroup ref="validateFallbackImageAfterVideoFinishesPlayingInVideoBackground" stepKey="validateFallbackImageVisibleStage">
+            <argument name="section" value="RowOnStage"/>
+            <argument name="fallbackImage" value="PageBuilderVideoBackgroundFallbackImage_JPG"/>
+            <argument name="index" value="4"/>
+        </actionGroup>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!-- Validate Stage After Save -->
+        <wait time="5" stepKey="waitForVideoCompleteStage2"/>
+        <actionGroup ref="validateVideoBackgroundFinishedPlayingBeforeViewing" stepKey="validateVideoFinishedPlayingStage2">
+            <argument name="section" value="RowOnStage"/>
+            <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_Mp4_URL"/>
+            <argument name="index" value="4"/>
+        </actionGroup>
+        <actionGroup ref="validateFallbackImageAfterVideoFinishesPlayingInVideoBackground" stepKey="validateFallbackImageVisibleStage2">
+            <argument name="section" value="RowOnStage"/>
+            <argument name="fallbackImage" value="PageBuilderVideoBackgroundFallbackImage_JPG"/>
+            <argument name="index" value="4"/>
+        </actionGroup>
+        <scrollTo selector="{{RowOnStage.base('4')}}" stepKey="scrollRow4Stage"/>
+        <actionGroup ref="validateVideoBackgroundFinishedPlayingBeforeViewing" stepKey="validateVideoFinishedPlayingStage3">
+            <argument name="section" value="RowOnStage"/>
+            <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_Mp4_URL"/>
+            <argument name="index" value="4"/>
+        </actionGroup>
+        <actionGroup ref="validateFallbackImageAfterVideoFinishesPlayingInVideoBackground" stepKey="validateFallbackImageVisibleStage3">
+            <argument name="section" value="RowOnStage"/>
+            <argument name="fallbackImage" value="PageBuilderVideoBackgroundFallbackImage_JPG"/>
+            <argument name="index" value="4"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <wait time="5" stepKey="waitForVideoCompleteStorefront"/>
+        <actionGroup ref="validateVideoBackgroundFinishedPlayingBeforeViewing" stepKey="validateVideoFinishedPlayingStorefront">
+            <argument name="section" value="RowOnStorefront"/>
+            <argument name="playOnlyVisible" value="PageBuilderVideoBackgroundPlayOnlyVisible_Enabled"/>
+            <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_Mp4_URL"/>
+            <argument name="index" value="4"/>
+        </actionGroup>
+        <actionGroup ref="validateFallbackImageAfterVideoFinishesPlayingInVideoBackground" stepKey="validateFallbackImageVisibleStorefront">
+            <argument name="section" value="RowOnStorefront"/>
+            <argument name="fallbackImage" value="PageBuilderVideoBackgroundFallbackImage_JPG"/>
+            <argument name="index" value="4"/>
+        </actionGroup>
+        <scrollTo selector="{{RowOnStorefront.base('4')}}" stepKey="scrollRow4Storefront"/>
+        <wait time="5" stepKey="waitForVideoCompleteStorefront2"/>
+        <actionGroup ref="validateVideoBackgroundFinishedPlayingBeforeViewing" stepKey="validateVideoFinishedPlayingStorefront2">
+            <argument name="section" value="RowOnStorefront"/>
+            <argument name="playOnlyVisible" value="PageBuilderVideoBackgroundPlayOnlyVisible_Enabled"/>
+            <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_Mp4_URL"/>
+            <argument name="index" value="4"/>
+        </actionGroup>
+        <actionGroup ref="validateFallbackImageAfterVideoFinishesPlayingInVideoBackground" stepKey="validateFallbackImageVisibleStorefront2">
+            <argument name="section" value="RowOnStorefront"/>
+            <argument name="fallbackImage" value="PageBuilderVideoBackgroundFallbackImage_JPG"/>
             <argument name="index" value="4"/>
         </actionGroup>
     </test>
