@@ -2197,4 +2197,120 @@
             <argument name="index" value="4"/>
         </actionGroup>
     </test>
+    <test name="RowValidateVideoBackgroundAspectRatio">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Row"/>
+            <title value="Validate Video Background Aspect Ratio"/>
+            <description value="Verify that the video background aspect ratio is maintained in each appearance."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="PB-95"/>
+            <testCaseId value="MC-31468"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-row"/>
+            <group value="pagebuilder-rowBackground"/>
+            <group value="pagebuilder-video-background"/>
+        </annotations>
+        <before>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
+                <argument name="CMSPage" value="$$createCMSPage$$"/>
+            </actionGroup>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Get Aspect Ratio of Actual Video -->
+        <openNewTab stepKey="openNewTab"/>
+        <amOnUrl url="{{PageBuilderVideoBackgroundUrl_Mp4_URL.value}}" stepKey="openVideo"/>
+        <executeJS function="return document.querySelector('video').getBoundingClientRect().width" stepKey="expectedVideoWidth"/>
+        <executeJS function="return document.querySelector('video').getBoundingClientRect().height" stepKey="expectedVideoHeight"/>
+        <executeJS function="return {$expectedVideoWidth} / {$expectedVideoHeight}" stepKey="expectedVideoAspectRatio"/>
+        <closeTab stepKey="closeTab"/>
+        <!-- Add Video to Contained Row -->
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage1">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setAppearance">
+            <argument name="property" value="PageBuilderRowAppearance_Contained"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty1">
+            <argument name="property" value="PageBuilderMinHeightProperty_200"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setBackgroundType">
+            <argument name="property" value="PageBuilderRowBackgroundType_Video"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrl">
+            <argument name="property" value="PageBuilderVideoBackgroundUrl_Mp4_URL"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
+        <!-- Create 2 more Rows -->
+        <actionGroup ref="duplicateContentType" stepKey="duplicateRow1">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateRow2">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <!-- Add Full Width Row -->
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage2">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setAppearance2">
+            <argument name="property" value="PageBuilderRowAppearance_FullWidth"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <!-- Add Full Bleed Row -->
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage3">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="contentTypeIndex" value="3"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setAppearance3">
+            <argument name="property" value="PageBuilderRowAppearance_FullBleed"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
+        <!-- Validate Stage -->
+        <actionGroup ref="validateVideoAspectRatio" stepKey="validateVideoAspectRatioRow1Stage">
+            <argument name="section" value="RowOnStage"/>
+            <argument name="expectedRatio" value="{$expectedVideoAspectRatio}"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateVideoAspectRatio" stepKey="validateVideoAspectRatioRow2Stage">
+            <argument name="section" value="RowOnStage"/>
+            <argument name="expectedRatio" value="{$expectedVideoAspectRatio}"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateVideoAspectRatio" stepKey="validateVideoAspectRatioRow3Stage">
+            <argument name="section" value="RowOnStage"/>
+            <argument name="expectedRatio" value="{$expectedVideoAspectRatio}"/>
+            <argument name="index" value="3"/>
+        </actionGroup>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate Storefront -->
+        <amOnUrl url="{{_ENV.MAGENTO_BASE_URL}}" stepKey="goBackToMagento"/>
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStorefront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <actionGroup ref="validateVideoAspectRatio" stepKey="validateVideoAspectRatioRow1Storefront">
+            <argument name="section" value="RowOnStorefront"/>
+            <argument name="expectedRatio" value="{$expectedVideoAspectRatio}"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateVideoAspectRatio" stepKey="validateVideoAspectRatioRow2Storefront">
+            <argument name="section" value="RowOnStorefront_FullWidth_FullBleed"/>
+            <argument name="expectedRatio" value="{$expectedVideoAspectRatio}"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateVideoAspectRatio" stepKey="validateVideoAspectRatioRow3Storefront">
+            <argument name="section" value="RowOnStorefront_FullWidth_FullBleed"/>
+            <argument name="expectedRatio" value="{$expectedVideoAspectRatio}"/>
+            <argument name="index" value="3"/>
+        </actionGroup>
+    </test>
 </tests>
