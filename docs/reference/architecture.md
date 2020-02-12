@@ -40,7 +40,7 @@ This means you don't have to change your custom extensions if you're using UI co
 | ----------------- | --------------------- | ------------------------------------------------------------ |
 | Content type      | `component`           | View model responsible for rendering the preview and master format |
 | Preview component | `preview_component`   | Contains preview specific logic generic for all appearances. Preview component is optional |
-| Master component  | `content_component`   | Contains master format rendering logic generic for all appearances. Content component is optional |
+| Master component  | `master_component`    | Contains master format rendering logic generic for all appearances. Master component is optional |
 | Data Store        |                       | Contains data for the content type                           |
 | Appearance        | `appearance`          | Configuration for content type that defines look and behavior. Includes data mapping, form, templates, reader. |
 | Preview template  | `preview_template`    | Template used to display the element in the preview          |
@@ -62,7 +62,7 @@ The following is a simple overview of the data flow:
 6. Page Builder converts the data using mass converters.
 7. Page Builder converts the data using element data converters.
 8. Page Builder updates the preview and master component observables.
-9. Page Builder updates the stage with the associated data from the preview update. 
+9. Page Builder updates the stage with the associated data from the preview update.
 10. Page Builder completes a render cycle of the master format, which updates the underlying textarea with the changed content.
 11. When the end-user saves the edited parent entity to the Page Builder instance (such as the CMS page or catalog product), Page Builder saves the rendered master format in the same way as any other content for the field.
 
@@ -111,7 +111,7 @@ interface ConverterInterface {
 }
 ```
 
-For more information, read about how Page Builder [stores data](#datastore). 
+For more information, read about how Page Builder [stores data](#datastore).
 
 ### Element converter
 
