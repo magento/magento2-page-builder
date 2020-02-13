@@ -10,22 +10,27 @@ define([
     'use strict';
 
     return function (config, element) {
+        var videoElement = element[0].querySelector('[data-background-type=video]'),
+            $slider = null,
+            currentVideoSlide = null;
+
         showOnHover(config);
 
-        var videoElement = element[0].querySelector('[data-background-type=video]');
         if (videoElement) {
-            var $slider = $(element).closest('[data-content-type=slider]');
+            $slider = $(element).closest('[data-content-type=slider]');
             videoBackground(config, videoElement);
-            $slider.on('setPosition', function(event, slick){
-                var currentVideoSlide = slick.$slides[slick.currentSlide].querySelector('.jarallax');
+            $slider.on('setPosition', function (event, slick) {
+                currentVideoSlide = slick.$slides[slick.currentSlide].querySelector('.jarallax');
+
                 if (currentVideoSlide.jarallax.options.videoPlayOnlyVisible) {
                     currentVideoSlide.jarallax.video.play();
                 }
+
                 if (videoElement.jarallax.isVideoInserted) {
                     videoElement.classList.add('video-inserted');
                 }
             });
-            $slider.on('beforeChange', function(event, slick){
+            $slider.on('beforeChange', function (event, slick) {
                 var currentVideoSlide = slick.$slides[slick.currentSlide].querySelector('.jarallax');
 
                 if (currentVideoSlide.jarallax.options.videoPlayOnlyVisible) {
