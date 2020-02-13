@@ -50,14 +50,14 @@ The following table describes the configuration arguments for each appearance op
 | Arguments       | Description                                                  |
 | --------------- | ------------------------------------------------------------ |
 | `optionsData`   | Grouping array for all the appearance options of a content type. |
-| `item array`    | Grouping array of properties that define an appearance option. The `name="4"` signifies the index order for displaying the option. The Banner's existing options stop with an index of 3 (`name="3"`), ensuring that our new appearance option is positioned after the last Banner option. |
-| `value`         | Assigns the unique key used in the component dataSource.     |
+| `item array`    | Grouping array of properties that define an appearance option. We recommend you match the `name` of the item array to the option's `value` string. In our example, the `item` array's name is `simple-poster`, which matches the option's value string `simple-poster`. |
+| `value`         | The `value` string should match the appearance name defined in the content type's configuration file. Page Builder uses this value to link the option to the appearance.|
 | `title`         | Display name for the appearance option. Banner example: Poster. |
-| `icon`          | Path to the `.svg` icon for the appearance: `view/adminthtml/web/css/images/content-type/[content-type-name]/appearance/*.svg`. See Creating an icon for your appearance |
+| `icon`          | Path to the `.svg` icon for the appearance: `view/adminthtml/web/css/images/content-type/[content-type-name]/appearance/*.svg`. See [Creating an icon for your appearance](#create-an-appearance-icon) |
 | `noticeMessage` | (Not shown in example.) The `noticeMessage` displays a message below the appearance options when the appearance is selected. For example, two of the Row appearances (`full-width` and `full-bleed`) define `noticeMessage` strings that display when selected. |
 {:style="table-layout:auto"}
 
-To add more appearance options, simply create more `item` arrays, as shown here:
+To add more appearance options, simply create more `item` arrays with names that match the `value`, as shown here:
 
 ```xml
 <item name="tall" xsi:type="array">
@@ -81,7 +81,7 @@ Appearance icons are `.svg` files that graphically depict the layout of an appea
 
 _Add appearance icons for Banner content type_
 
-Use the following SVG template as a starting place for creating your own appearance icon:
+You can use any design tool to create your SVG. But if you want to match your appearance icons to Page Builder's icons _perfectly_, use the SVG structure and dimensions shown here:
 
 ```xml
 <svg xmlns="http://www.w3.org/2000/svg" width="218" height="110" viewBox="0 0 218 110">
@@ -96,7 +96,7 @@ Use the following SVG template as a starting place for creating your own appeara
 ```
 _SVG appearance template_
 
-You can use whatever tool you want to create your SVG. Just make sure you follow these specific dimensions to ensure your icon fits in with the existing appearance icons:
+These specific dimensions ensure that your icon fits seamlessly with the existing appearance icons:
 
 | Property                       | Value       |
 | ------------------------------ | ----------- |
