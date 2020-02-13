@@ -75,14 +75,21 @@ To add more appearance options, simply create more ` item` arrays, as shown here
 ```
 _Example of additional appearance options_
 
-### Creating an appearance icon
+### Create an appearance icon
 
-Appearance icons are `.svg` files that graphically depict the layout of an appearance. Use the following SVG template as a starting place for creating your own appearance icon:
+Appearance icons are `.svg` files that graphically depict the layout of an appearance. Add all the appearance icons for your content type within the following directory: `css/images/content-type/[content-type-name]/appearance/`.
+
+![Add appearance icons](../images/appearance-icon-location.png)
+
+_Add appearance icons for Banner content type_
+
+Use the following SVG template as a starting place for creating your own appearance icon:
 
 ```xml
 <svg xmlns="http://www.w3.org/2000/svg" width="218" height="110" viewBox="0 0 218 110">
   <g fill="none" fill-rule="evenodd">
     <rect width="149" height="69" x="35" y="21" fill="#524D49"/>
+    <!--- Optional shapes displayed on top of base rect -->
     <rect width="45" height="16" x="87" y="60" fill="#FFF"/>
     <rect width="72" height="4" x="73" y="34" fill="#FFF"/>
     <rect width="60" height="4" x="79" y="43" fill="#FFF"/>
@@ -93,18 +100,18 @@ _SVG appearance template_
 
 You can use whatever tool you want to create your SVG. Just make sure you follow these specific dimensions to ensure your icon fits in with the existing appearance icons:
 
-| Property                     | Value       |
-| ---------------------------- | ----------- |
-| `svg width`                  | 218         |
-| `svg height`                 | 110         |
-| `svg viewbox`                | 0 0 218 110 |
-| `g fill`                     | none        |
-| background `rect width`      | 149         |
-| background `rect height`     | 69          |
-| background `rect x`          | 35          |
-| background `rect y`          | 21          |
-| background `rect fill`       | #524D49     |
-| other `rect fill` properties | #FFF        |
+| Property                       | Value       |
+| ------------------------------ | ----------- |
+| `svg width`                    | 218         |
+| `svg height`                   | 110         |
+| `svg viewbox`                  | 0 0 218 110 |
+| `g fill`                       | none        |
+| base `rect width`              | 149         |
+| base `rect height`             | 69          |
+| base `rect x`                  | 35          |
+| base `rect y`                  | 21          |
+| base `rect fill`               | #524D49     |
+| other  shape `fill` properties | #FFF        |
 {:style="table-layout:fixed"}
 
 ## Step 2: Add appearance configurations
