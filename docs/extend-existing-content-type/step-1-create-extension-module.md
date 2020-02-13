@@ -45,5 +45,4 @@ From your Magento root directory, use `bin/magento setup:upgrade` to install and
 
 ## Next
 
-[Step 2: Extend appearances](step-2-extend-appearances.md) 
-
+[Step 2: Extend appearances](step-2-extend-appearances.md)
