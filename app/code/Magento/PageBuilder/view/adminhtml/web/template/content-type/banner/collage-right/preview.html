@@ -10,8 +10,15 @@
     <div class="pagebuilder-banner-wrapper"
          attr="data.wrapper.attributes"
          ko-style="data.wrapper.style"
-         css="data.wrapper.css"
-         event="{mouseover: onMouseOverWrapper, mouseout: onMouseOutWrapper, mousedown: activateEditor }">
+         css="Object.assign(data.wrapper.css(), {
+            'jarallax': data.wrapper.attributes()['data-background-type'] == 'video'
+            })"
+         event="{ mouseover: onMouseOverWrapper, mouseout: onMouseOutWrapper, mousedown: activateEditor }"
+         afterRender="initParallax">
+        <div if="data.video_overlay.attributes()['data-video-overlay-color']"
+             class="video-overlay"
+             attr="data.video_overlay.attributes"
+             ko-style="data.video_overlay.style" />
         <div class="pagebuilder-overlay" attr="data.overlay.attributes" ko-style="data.overlay.style" css="data.overlay.css">
             <scope args="getUploader().getUiComponent()">
                 <render />
