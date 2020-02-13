@@ -2225,7 +2225,7 @@
         </after>
         <!-- Get Aspect Ratio of Actual Video -->
         <openNewTab stepKey="openNewTab"/>
-        <amOnUrl url="{{PageBuilderVideoBackgroundUrl_Mp4_URL.value}}" stepKey="openVideo"/>
+        <amOnUrl url="{{PageBuilderVideoBackgroundUrl_Mp4_URL_Insecure.value}}" stepKey="openVideo"/>
         <executeJS function="return document.querySelector('video').getBoundingClientRect().width" stepKey="expectedVideoWidth"/>
         <executeJS function="return document.querySelector('video').getBoundingClientRect().height" stepKey="expectedVideoHeight"/>
         <executeJS function="return {$expectedVideoWidth} / {$expectedVideoHeight}" stepKey="expectedVideoAspectRatio"/>
