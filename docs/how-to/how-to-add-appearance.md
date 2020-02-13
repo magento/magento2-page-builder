@@ -2,15 +2,15 @@
 
 Appearances provide different layout and styling options for a content type. For example, the Banner content type has four appearances. Each appearance shows a different layout for the Banner's text and button.
 
-This topic shows how to add appearances to existing content types. An overview of the steps and the files you need to add are illustrated here:
+This topic shows how to add appearances to Page Builder's native content types. An overview of the steps and the files you need to add are illustrated here:
 
 ![How to add an appearance](../images/how-to-add-appearance.svg)
 
 _Steps for adding appearances_
 
-Even though this topic describes how to add appearances to Page Builder's native content types, the steps can be applied to adding more appearances to your custom content types as well.
+These steps also apply to adding appearances to your custom content types and third-party content types.
 
-## Step 1: Add VisualSelect class
+## Step 1: Add virtual type for VisualSelect class
 
 First, we need a way select an appearance within the Admin UI. In Page Builder, we use the `VisualSelect` class. This class provides the UI for selecting different appearances. For example, the `VisualSelect` class for the Banner provides four appearances to choose from:
 
@@ -24,15 +24,14 @@ To add a new appearance option for one of Page Builder's native content types, l
 
 _File and location for the VisualSelect class_
 
-Within the `di.xml` file, add a `VisualSelect` class using the Banner's `VisualSelect` class name (`<virtualType name="AppearanceSourceBanner"`), as shown here:
+Within the `di.xml` file, add a virtual type using the`VisualSelect` class with the Banner's virtual type name (`<virtualType name="AppearanceSourceBanner"`), as shown here:
 
 ```xml
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     <virtualType name="AppearanceSourceBanner" type="Magento\PageBuilder\Model\Source\VisualSelect">
         <arguments>
-            <argument name="optionsSize" xsi:type="string">large</argument>
             <argument name="optionsData" xsi:type="array">
-                <item name="4" xsi:type="array">
+                <item name="simple-poster" xsi:type="array">
                     <item name="value" xsi:type="string">simple-poster</item>
                     <item name="title" xsi:type="string" translate="true">Simple Poster</item>
                     <item name="icon" xsi:type="string">Example_PageBuilderBannerAppearance/css/images/content-type/banner/appearance/simple-poster.svg</item>
@@ -50,7 +49,6 @@ The following table describes the configuration arguments for each appearance op
 
 | Arguments       | Description                                                  |
 | --------------- | ------------------------------------------------------------ |
-| `optionsSize`   | The size of the icons that display each option. Use `large` for appearance options. |
 | `optionsData`   | Grouping array for all the appearance options of a content type. |
 | `item array`    | Grouping array of properties that define an appearance option. The `name="4"` signifies the index order for displaying the option. The Banner's existing options stop with an index of 3 (`name="3"`), ensuring that our new appearance option is positioned after the last Banner option. |
 | `value`         | Assigns the unique key used in the component dataSource.     |
@@ -59,15 +57,15 @@ The following table describes the configuration arguments for each appearance op
 | `noticeMessage` | (Not shown in example.) The `noticeMessage` displays a message below the appearance options when the appearance is selected. For example, two of the Row appearances (`full-width` and `full-bleed`) define `noticeMessage` strings that display when selected. |
 {:style="table-layout:auto"}
 
-To add more appearance options, simply create more ` item` arrays, as shown here:
+To add more appearance options, simply create more `item` arrays, as shown here:
 
 ```xml
-<item name="5" xsi:type="array">
+<item name="tall" xsi:type="array">
     <item name="value" xsi:type="string">tall</item>
     <item name="title" xsi:type="string" translate="true">Tall</item>
     <item name="icon" xsi:type="string">Example_PageBuilderExtensionBanner/css/images/content-type/banner/appearance/tall.svg</item>
 </item>
-<item name="6" xsi:type="array">
+<item name="short" xsi:type="array">
     <item name="value" xsi:type="string">short</item>
     <item name="title" xsi:type="string" translate="true">Short</item>
     <item name="icon" xsi:type="string">Example_PageBuilderBannerExtensionBanner/css/images/content-type/banner/appearance/short.svg</item>
@@ -167,6 +165,15 @@ _Additional simple-poster appearance for the Banner content type_
 
 Appearances for a content type can share the same form or use different forms. For example, the Products content type uses two different forms, one for each appearance. The Grid appearance uses the `pagebuilder_products_form.xml` to provide options for displaying products in a grid. While the Carousel appearance uses the `pagebuilder_products_carousel_form.xml` to provide extra options for displaying products in a carousel.
 
+When you select an appearance with its own form, Page Builder replaces the content type's form (defined in the `<type>` element) with the appearance's form. But when you select an appearance that does not have a form defined, the appearance switches back to using the content type's form.
+
+```xml
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"...>
+    <type name="products"
+          form="pagebuilder_products_form"
+```
+_Content type form used by default for all appearances_
+
 To add a form for an appearance, add a `<form>` element as a child of the `<appearance>` element in your content type's config file. As mentioned, the Products content type does this for its Carousel appearance, shown here:
 
 ```xml
@@ -182,15 +189,15 @@ _Adding a form to an appearance_
 
 ## Step 4: Add appearance templates
 
-Appearances use different HTML templates to create different layouts and apply different styles to those layouts. For example, the Banner content type uses four sets of `preview.html` and `master.html` templates, to create the visual differences for each content type:
+Appearances use different HTML templates to create different layouts and apply different styles to those layouts. For example, the Banner content type uses four sets of `preview.html` and `master.html` templates to create the visual differences for each content type:
 
 ![Appearance configuration config file](../images/appearance-templates-banner.png)
 
 _Banner appearance templates_
 
-Each template set is located within a folder named after the appearance for which they are used. The folder names must match the appearance names assigned in the content type's config file.
+Notice how Page Builder organizes the Banner templates by appearance name. We recommend the same practice when adding templates for your appearances.
 
-To create appearance templates for additional Banner appearances, such as the `simple-poster` appearance described in steps 1 and 2, you must add a new appearance folder for your module's templates, as shown here:
+To create appearance templates for additional Banner appearances, such as the `simple-poster` appearance described in steps 1 and 2, add a new appearance folder for your module's templates, as shown here:
 
 ![Appearance templates](../images/appearance-templates-additional.png)
 
