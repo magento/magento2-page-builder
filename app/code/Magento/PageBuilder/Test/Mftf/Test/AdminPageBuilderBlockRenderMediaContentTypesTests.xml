@@ -1225,7 +1225,7 @@
             <argument name="property" value="PageBuilderSliderShowDots_Enabled"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSliderMinHeight">
-            <argument name="property" value="PageBuilderSliderMinHeight_500"/>
+            <argument name="property" value="PageBuilderMinHeightProperty_500px"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
         <!-- Add Slide 2 -->
@@ -1238,7 +1238,7 @@
             <argument name="targetIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="setMinHeight">
-            <argument name="property" value="PageBuilderSlideItemMinimumHeight_Empty"/>
+            <argument name="property" value="PageBuilderMinHeightProperty_Empty"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="addTextToTinyMCE">
             <argument name="property" value="PageBuilderSlideItemContent_Slide2"/>
@@ -1254,7 +1254,7 @@
         <seeElement selector="{{SliderOnStage.infiniteLoop('1', PageBuilderSliderInfiniteLoop_Enabled.value)}}" stepKey="seeInfiniteLoopCMSBlockStage"/>
         <seeElement selector="{{SliderOnStage.showArrows('1', PageBuilderSliderShowArrows_Enabled.value)}}" stepKey="seeArrowsCMSBlockStage"/>
         <seeElement selector="{{SliderOnStage.showDots('1', PageBuilderSliderShowDots_Enabled.value)}}" stepKey="seeDotsCMSBlockStage"/>
-        <seeElement selector="{{SliderOnStage.minHeight('1', PageBuilderSliderMinHeight_500.value)}}" stepKey="seeMinHeightCMSBlockStage"/>
+        <seeElement selector="{{SliderOnStage.minHeight('1', PageBuilderMinHeightProperty_500px.value)}}" stepKey="seeMinHeightCMSBlockStage"/>
         <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateHeightSlide1CMSBlockStage">
             <argument name="content" value="{{SlideOnBackend.wrapperCSS}}"/>
             <argument name="height" value="PageBuilderSlideItemMinimumHeight_300"/>
@@ -1309,7 +1309,7 @@
         <seeElement selector="{{SliderOnFrontend.infiniteLoop('1', PageBuilderSliderInfiniteLoop_Enabled.value)}}" stepKey="seeInfiniteLoopCMSPageStage"/>
         <seeElement selector="{{SliderOnFrontend.showArrows('1', PageBuilderSliderShowArrows_Enabled.value)}}" stepKey="seeArrowsCMSPageStage"/>
         <seeElement selector="{{SliderOnFrontend.showDots('1', PageBuilderSliderShowDots_Enabled.value)}}" stepKey="seeDotsCMSPageStage"/>
-        <seeElement selector="{{SliderOnFrontend.minHeight('1', PageBuilderSliderMinHeight_500.value)}}" stepKey="seeHeightCMSPageStage"/>
+        <seeElement selector="{{SliderOnFrontend.minHeight('1', PageBuilderMinHeightProperty_500px.value)}}" stepKey="seeHeightCMSPageStage"/>
         <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateHeightSlide1CMSPageStage">
             <argument name="content" value="{{SlideOnFrontend.wrapperCSS}}"/>
             <argument name="height" value="PageBuilderSlideItemMinimumHeight_300"/>
@@ -1327,7 +1327,7 @@
         <seeElement selector="{{SliderOnFrontend.infiniteLoop('1', PageBuilderSliderInfiniteLoop_Enabled.value)}}" stepKey="seeInfiniteLoopCMSPageStorefront"/>
         <seeElement selector="{{SliderOnFrontend.showArrows('1', PageBuilderSliderShowArrows_Enabled.value)}}" stepKey="seeArrowsCMSPageStorefront"/>
         <seeElement selector="{{SliderOnFrontend.showDots('1', PageBuilderSliderShowDots_Enabled.value)}}" stepKey="seeDotsCMSPageStorefront"/>
-        <seeElement selector="{{SliderOnFrontend.minHeight('1', PageBuilderSliderMinHeight_500.value)}}" stepKey="seeHeightCMSPageStorefront"/>
+        <seeElement selector="{{SliderOnFrontend.minHeight('1', PageBuilderMinHeightProperty_500px.value)}}" stepKey="seeHeightCMSPageStorefront"/>
         <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateHeightSlide1CMSPageStorefront">
             <argument name="content" value="{{SlideOnFrontend.wrapperCSS}}"/>
             <argument name="height" value="PageBuilderSlideItemMinimumHeight_300"/>
@@ -1416,7 +1416,7 @@
             <argument name="property" value="PageBuilderSlideItemSlideName_Slide1"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="setMinHeight">
-            <argument name="property" value="PageBuilderSlideItemMinimumHeight_500"/>
+            <argument name="property" value="PageBuilderMinHeightProperty_500px"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="setBackgroundColor">
             <argument name="property" value="PageBuilderBackgroundColor_Plaintext_Green"/>
@@ -1471,7 +1471,7 @@
         <seeElement selector="{{SlideOnBackend.slideName('1', PageBuilderSlideItemSlideName_Slide1.value)}}" stepKey="seeSlideNameCMSBlockStage"/>
         <moveMouseOver selector="{{SliderOnStage.activeSlideNavigationDot}}" stepKey="mouseOverSlideDotCMSBlockStage"/>
         <see userInput="{{PageBuilderSlideItemSlideName_Slide1.value}}" selector="{{SliderOnStage.slideNavigationDotNameTooltip('1')}}" stepKey="seeSlideName1InTooltipCMSBlockStage"/>
-        <seeElement selector="{{SlideOnBackend.posterMinimumHeight('1', PageBuilderSlideItemMinimumHeight_500.value)}}" stepKey="seeMinimumHeightCMSBlockStage"/>
+        <seeElement selector="{{SlideOnBackend.posterMinimumHeight('1', PageBuilderMinHeightProperty_500px.value)}}" stepKey="seeMinimumHeightCMSBlockStage"/>
         <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateHeightCMSBlockStage">
             <argument name="content" value="{{SlideOnBackend.wrapperCSS}}"/>
             <argument name="height" value="PageBuilderSlideItemMinimumHeight_500"/>
@@ -1533,7 +1533,7 @@
         <actionGroup ref="validateOverlayPositionPoster" stepKey="validateOverlayPositionCMSPageStage">
             <argument name="page" value="SlideOnFrontend"/>
         </actionGroup>
-        <seeElement selector="{{SlideOnFrontend.minimumHeight('1', PageBuilderSlideItemMinimumHeight_500.value)}}" stepKey="seeMinimumHeightCMSPageStage"/>
+        <seeElement selector="{{SlideOnFrontend.minimumHeight('1', PageBuilderMinHeightProperty_500px.value)}}" stepKey="seeMinimumHeightCMSPageStage"/>
         <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateHeightCMSPageStage">
             <argument name="content" value="{{SlideOnFrontend.wrapperCSS}}"/>
             <argument name="height" value="PageBuilderSlideItemMinimumHeight_500"/>
@@ -1577,7 +1577,7 @@
             <argument name="page" value="SlideOnFrontend"/>
         </actionGroup>
         <seeElement selector="{{SlideOnFrontend.slideName('1', PageBuilderSlideItemSlideName_Slide1.value)}}" stepKey="seeSlideNameCMSPageStorefront"/>
-        <seeElement selector="{{SlideOnFrontend.minimumHeight('1', PageBuilderSlideItemMinimumHeight_500.value)}}" stepKey="seeMinimumHeightCMSPageStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.minimumHeight('1', PageBuilderMinHeightProperty_500px.value)}}" stepKey="seeMinimumHeightCMSPageStorefront"/>
         <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateHeightCMSPageStorefront">
             <argument name="content" value="{{SlideOnFrontend.wrapperCSS}}"/>
             <argument name="height" value="PageBuilderSlideItemMinimumHeight_500"/>
@@ -1671,7 +1671,7 @@
         <actionGroup ref="validateOverlayPositionCollageLeft" stepKey="validateOverlayPositionCMSBlockStage">
             <argument name="page" value="SlideOnBackend"/>
         </actionGroup>
-        <seeElement selector="{{SlideOnBackend.collageMinimumHeight('1', PageBuilderSlideItemMinimumHeight_500.value)}}" stepKey="seeMinimumHeightCMSBlockStage"/>
+        <seeElement selector="{{SlideOnBackend.collageMinimumHeight('1', PageBuilderMinHeightProperty_500px.value)}}" stepKey="seeMinimumHeightCMSBlockStage"/>
         <moveMouseOver selector="{{SlideOnBackend.appearance('1', PageBuilderAppearance_CollageLeft.value)}}" stepKey="moveMouseOverSlideCMSBlockStage"/>
         <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSBlockStage}-{$overlayLeftPositionCMSBlockStage}-30))" stepKey="buttonMinusOverlayMinusPaddingCMSBlockStage"/>
         <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_CollageLeft.value)}}" stepKey="seeAppearanceCMSPageStage"/>
@@ -1713,7 +1713,7 @@
         <actionGroup ref="validateOverlayPositionCollageCenter" stepKey="validateOverlayPositionCMSBlockStage">
             <argument name="page" value="SlideOnBackend"/>
         </actionGroup>
-        <seeElement selector="{{SlideOnBackend.collageMinimumHeight('1', PageBuilderSlideItemMinimumHeight_500.value)}}" stepKey="seeMinimumHeightCMSBlockStage"/>
+        <seeElement selector="{{SlideOnBackend.collageMinimumHeight('1', PageBuilderMinHeightProperty_500px.value)}}" stepKey="seeMinimumHeightCMSBlockStage"/>
         <moveMouseOver selector="{{SlideOnBackend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="moveMouseOverSlideCMSBlockStage"/>
         <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSBlockStage}-{$overlayLeftPositionCMSBlockStage}-30))" stepKey="buttonMinusOverlayMinusPaddingCMSBlockStage"/>
         <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="seeAppearanceCMSPageStage"/>
@@ -1755,7 +1755,7 @@
         <actionGroup ref="validateOverlayPositionCollageRight" stepKey="validateOverlayPositionCMSBlockStage">
             <argument name="page" value="SlideOnBackend"/>
         </actionGroup>
-        <seeElement selector="{{SlideOnBackend.collageMinimumHeight('1', PageBuilderSlideItemMinimumHeight_500.value)}}" stepKey="seeMinimumHeightCMSBlockStage"/>
+        <seeElement selector="{{SlideOnBackend.collageMinimumHeight('1', PageBuilderMinHeightProperty_500px.value)}}" stepKey="seeMinimumHeightCMSBlockStage"/>
         <moveMouseOver selector="{{SlideOnBackend.appearance('1', PageBuilderAppearance_CollageRight.value)}}" stepKey="moveMouseOverSlideCMSBlockStage"/>
         <executeJS function="return Math.abs(Math.round({$buttonLeftPositionCMSBlockStage}-{$overlayLeftPositionCMSBlockStage}-30))" stepKey="buttonMinusOverlayMinusPaddingCMSBlockStage"/>
         <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_CollageRight.value)}}" stepKey="seeAppearanceCMSPageStage"/>
