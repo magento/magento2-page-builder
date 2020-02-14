@@ -13,7 +13,7 @@ use Magento\PageBuilder\Setup\UpgradeContentHelper;
 /**
  * Patch upgrade mechanism allows us to do atomic data changes
  */
-class UpdateContent implements DataPatchInterface
+class UpgradeFullWidthPadding implements DataPatchInterface
 {
     /**
      * @var UpgradeContentHelper
