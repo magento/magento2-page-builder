@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd" extends="pagebuilder_base_form_with_background_attributes">
+    <settings>
+        <namespace>pagebuilder_base_form_with_background_video</namespace>
+    </settings>
+    <fieldset name="background">
+        <field name="background_type" sortOrder="20" formElement="select" component="Magento_PageBuilder/js/form/element/condition-options">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">image</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Background Type</label>
+                <elementTmpl>Magento_PageBuilder/form/element/visual-select</elementTmpl>
+                <dataScope>background_type</dataScope>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="BackgroundTypeSource"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="background_image" sortOrder="30">
+            <settings>
+                <visible>false</visible>
+                <imports>
+                    <link name="visible">${$.parentName}.background_type:imageVisible</link>
+                </imports>
+            </settings>
+        </field>
+        <field name="mobile_image" sortOrder="40">
+            <settings>
+                <visible>false</visible>
+                <imports>
+                    <link name="visible">${$.parentName}.background_type:imageVisible</link>
+                </imports>
+            </settings>
+        </field>
+        <field name="background_size" sortOrder="50">
+            <settings>
+                <visible>false</visible>
+                <imports>
+                    <link name="visible">${$.parentName}.background_type:imageVisible</link>
+                </imports>
+            </settings>
+        </field>
+        <field name="background_position" sortOrder="60">
+            <settings>
+                <visible>false</visible>
+                <imports>
+                    <link name="visible">${$.parentName}.background_type:imageVisible</link>
+                </imports>
+            </settings>
+        </field>
+        <field name="background_attachment" sortOrder="70">
+            <settings>
+                <visible>false</visible>
+                <imports>
+                    <link name="visible">${$.parentName}.background_type:imageVisible</link>
+                </imports>
+            </settings>
+        </field>
+        <field name="background_repeat" sortOrder="80">
+            <settings>
+                <visible>false</visible>
+                <imports>
+                    <link name="visible">${$.parentName}.background_type:imageVisible</link>
+                </imports>
+            </settings>
+        </field>
+        <field name="video_source" sortOrder="90" formElement="input">
+            <settings>
+                <visible>false</visible>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                    <rule name="validate-video-source" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">Video URL</label>
+                <tooltip>
+                    <description translate="true">Video URLs can be links to videos on YouTube or Vimeo, or HTTP(S) links to files with valid video extensions (we recommend .mp4)</description>
+                </tooltip>
+                <imports>
+                    <link name="visible">${$.parentName}.background_type:videoVisible</link>
+                </imports>
+            </settings>
+        </field>
+        <field name="video_overlay_color" sortOrder="100" formElement="colorPicker">
+            <settings>
+                <visible>false</visible>
+                <label translate="true">Overlay Color</label>
+                <componentType>colorPicker</componentType>
+                <placeholder translate="true">No Color</placeholder>
+                <validation>
+                    <rule name="validate-color" xsi:type="boolean">true</rule>
+                </validation>
+                <dataScope>video_overlay_color</dataScope>
+                <additionalClasses>
+                    <class name="admin__field-medium">true</class>
+                </additionalClasses>
+                <imports>
+                    <link name="visible">${$.parentName}.background_type:videoVisible</link>
+                </imports>
+            </settings>
+            <formElements>
+                <colorPicker>
+                    <settings>
+                        <colorPickerMode>full</colorPickerMode>
+                        <colorFormat>hex</colorFormat>
+                    </settings>
+                </colorPicker>
+            </formElements>
+        </field>
+        <field name="video_loop" sortOrder="110" formElement="checkbox">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">true</item>
+                </item>
+            </argument>
+            <settings>
+                <visible>false</visible>
+                <dataType>boolean</dataType>
+                <label translate="true">Infinite Loop</label>
+                <dataScope>video_loop</dataScope>
+                <imports>
+                    <link name="visible">${$.parentName}.background_type:videoVisible</link>
+                </imports>
+            </settings>
+            <formElements>
+                <checkbox>
+                    <settings>
+                        <valueMap>
+                            <map name="false" xsi:type="string">false</map>
+                            <map name="true" xsi:type="string">true</map>
+                        </valueMap>
+                        <prefer>toggle</prefer>
+                    </settings>
+                </checkbox>
+            </formElements>
+        </field>
+        <field name="video_lazy_load" sortOrder="120" formElement="checkbox">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">true</item>
+                </item>
+            </argument>
+            <settings>
+                <visible>false</visible>
+                <dataType>boolean</dataType>
+                <label translate="true">Lazy Load</label>
+                <dataScope>video_lazy_load</dataScope>
+                <imports>
+                    <link name="visible">${$.parentName}.background_type:videoVisible</link>
+                </imports>
+                <notice translate="true">Preload video only when it is visible on the screen.</notice>
+            </settings>
+            <formElements>
+                <checkbox>
+                    <settings>
+                        <valueMap>
+                            <map name="false" xsi:type="string">false</map>
+                            <map name="true" xsi:type="string">true</map>
+                        </valueMap>
+                        <prefer>toggle</prefer>
+                    </settings>
+                </checkbox>
+            </formElements>
+        </field>
+        <field name="video_play_only_visible" sortOrder="130" formElement="checkbox">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">true</item>
+                </item>
+            </argument>
+            <settings>
+                <visible>false</visible>
+                <dataType>boolean</dataType>
+                <label translate="true">Play Only When Visible</label>
+                <dataScope>video_play_only_visible</dataScope>
+                <notice translate="true">Video will play only when it is visible on the screen.</notice>
+                <imports>
+                    <link name="visible">${$.parentName}.background_type:videoVisible</link>
+                </imports>
+            </settings>
+            <formElements>
+                <checkbox>
+                    <settings>
+                        <valueMap>
+                            <map name="false" xsi:type="string">false</map>
+                            <map name="true" xsi:type="string">true</map>
+                        </valueMap>
+                        <prefer>toggle</prefer>
+                    </settings>
+                </checkbox>
+            </formElements>
+        </field>
+        <field name="video_fallback_image" sortOrder="140" formElement="imageUploader" template="Magento_PageBuilder/form/element/uploader/image">
+            <settings>
+                <visible>false</visible>
+                <label translate="true">Fallback Image</label>
+                <componentType>imageUploader</componentType>
+                <imports>
+                    <link name="visible">${$.parentName}.background_type:videoVisible</link>
+                </imports>
+                <tooltip>
+                    <description translate="true">Fallback images appear on the screen before a video loads. When the video loads, it replaces the fallback image. If the video does not load for some reason, the fallback image remains on the screen in place of the video.</description>
+                </tooltip>
+            </settings>
+            <formElements>
+                <imageUploader>
+                    <settings>
+                        <allowedExtensions>jpg jpeg gif png</allowedExtensions>
+                        <maxFileSize>4194304</maxFileSize>
+                        <uploaderConfig>
+                            <param xsi:type="string" name="url">pagebuilder/contenttype/image_upload</param>
+                        </uploaderConfig>
+                        <previewTmpl>Magento_PageBuilder/form/element/uploader/preview</previewTmpl>
+                    </settings>
+                </imageUploader>
+            </formElements>
+        </field>
+    </fieldset>
+</form>
