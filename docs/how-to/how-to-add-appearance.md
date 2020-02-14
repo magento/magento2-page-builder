@@ -198,7 +198,7 @@ _Banner appearance templates_
 {: .bs-callout .bs-callout-info }
 Notice how Page Builder organizes the Banner templates by appearance name. We recommend the same practice when adding templates for your appearances.
 
-To create templates for additional Banner appearances, such as the `simple-poster` appearance described in steps 1 and 2, add a new appearance folder with your `master.html` and `preview.html` templates, as shown here:
+To create templates for additional Banner appearances, such as the `simple-poster` described in steps 1 and 2, add a new appearance folder with your `master.html` and `preview.html` templates, as shown here:
 
 ![Appearance templates](../images/appearance-templates-additional.png)
 
