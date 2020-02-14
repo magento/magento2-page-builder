@@ -280,4 +280,45 @@
     <type name="Magento\Framework\Filter\Template">
         <plugin name="convertBackgroundImages" type="Magento\PageBuilder\Plugin\Filter\TemplatePlugin"/>
     </type>
+    <type name="Magento\PageBuilder\Model\UpgradableEntitiesPool">
+        <arguments>
+            <argument name="entities" xsi:type="array">
+                <item name="cms_block" xsi:type="array">
+                    <item name="identifier" xsi:type="string">block_id</item>
+                    <item name="fields" xsi:type="array">
+                        <item name="content" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+                <item name="cms_page" xsi:type="array">
+                    <item name="identifier" xsi:type="string">page_id</item>
+                    <item name="fields" xsi:type="array">
+                        <item name="content" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+                <item name="catalog_category_entity_text" xsi:type="array">
+                    <item name="identifier" xsi:type="string">value_id</item>
+                    <item name="fields" xsi:type="array">
+                        <item name="value" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+                <item name="catalog_product_entity_text" xsi:type="array">
+                    <item name="identifier" xsi:type="string">value_id</item>
+                    <item name="fields" xsi:type="array">
+                        <item name="value" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+                <item name="pagebuilder_template" xsi:type="array">
+                    <item name="identifier" xsi:type="string">template_id</item>
+                    <item name="fields" xsi:type="array">
+                        <item name="template" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+    <virtualType name="pageBuilderHtmlDocumentFactory" type="Magento\PageBuilder\Model\Dom\HtmlDocumentFactory">
+        <arguments>
+            <argument name="instanceName" xsi:type="string">Magento\PageBuilder\Model\Dom\HtmlDocument</argument>
+        </arguments>
+    </virtualType>
 </config>

@@ -181,4 +181,11 @@ interface DocumentInterface
      *     value is found, or null if the key is not found.
      */
     public function getMetadata($key = null);
+
+    /**
+     * Strips the HTML doctype, body, etc. tags that are automatically wrapped around the content.
+     *
+     * @return string
+     */
+    public function stripHtmlWrapperTags(): string;
 }

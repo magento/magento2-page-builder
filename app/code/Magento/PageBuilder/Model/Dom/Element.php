@@ -111,4 +111,24 @@ class Element implements ElementInterface
             [ 'collection' => $this->element->querySelectorAll($selector) ]
         );
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function removeStyle(string $styleProperty): string
+    {
+        $style = $this->getAttribute('style');
+        $this->setAttribute('style', preg_replace("/${styleProperty}:(.*?);/", '', $style ?? ''));
+        return $this->getAttribute('style') ?? '';
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function addStyle(string $styleProperty, string $value): string
+    {
+        $this->removeStyle($styleProperty);
+        $this->setAttribute('style', "${styleProperty}: $value; " . $this->getAttribute('style') ?? '');
+        return $this->getAttribute('style') ?? '';
+    }
 }
