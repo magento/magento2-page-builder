@@ -1,6 +1,6 @@
 # Step 1: Add configuration
 
-The configuration file defines the settings and references to your content type files. You will return to this file often to update references and change settings during the development process. 
+The configuration file defines the settings and references to your content type files. You will return to this file often to update references and change settings during the development process.
 
 Files referenced from the configuration include the HTML templates, the JavaScript components, the icon displayed for your content type in the Page Builder panel, and the UI component form for your content type editor within the Admin.
 
@@ -8,7 +8,7 @@ Files referenced from the configuration include the HTML templates, the JavaScri
 
 ## Configuration conventions
 
-By convention, Page Builder requires the configuration file to be in the `<module_name>/view/adminhtml/pagebuilder/content_type` or `content-type` directory.
+By convention, Page Builder requires the configuration file to be in the `<module_name>/view/adminhtml/pagebuilder/content_type` directory.
 
 The name of your configuration file should reflect the name of your content type prefixed by your module vendor name and separated by an underscore (_). For example, our module name is `Example/PageBuilderQuote` and our content type is a quote control, so we name our configuration file `example_quote.xml` and add it to our module within the following directory structure (`view/adminhtml/pagebuilder/content_type/`):
 
@@ -20,7 +20,6 @@ The reason we suggest prefixing your content type with your vendor name is to pr
 ## The `example_quote` configuration
 
 Only a subset of configuration elements are described in our Quote example (enough to understand the basic role of the configuration file). For more details, refer to [Content type configurations](../reference/configurations.md) and [Additional configurations](../how-to/how-to-add-additional-configurations.md).
-
 
 The following configuration is from the Quote content type. An overview of these elements and attributes are described in the tables that follow.
 
@@ -74,7 +73,7 @@ The `type` element defines the key properties of your content type. The attribut
 
 ## The  `children` element
 
-The `children` element determines if your content type can contain other content types as children. In the Admin UI, it either allows or prevents you from dragging and dropping *other* content types from the panel into *your* content type. 
+The `children` element determines if your content type can contain other content types as children. In the Admin UI, it either allows or prevents you from dragging and dropping *other* content types from the panel into *your* content type.
 
 ```xml
 <children default_policy="deny"/>

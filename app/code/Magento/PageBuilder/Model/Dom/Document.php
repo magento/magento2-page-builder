@@ -209,7 +209,13 @@ class Document implements DocumentInterface
      */
     public function stripHtmlWrapperTags(): string
     {
-        preg_match('/<body>(.*)<\/body>/', $this->getContents(), $matches);
-        return isset($matches[1]) ? $matches[1] : '';
+        preg_match('/<body>(.*)<\/body>/s', $this->saveHTML(), $matches);
+        return preg_replace_callback(
+            '/=\"(%7B%7B[^"]*%7D%7D)\"/m',
+            function ($matches) {
+                return urldecode($matches[0]);
+            },
+            $matches[1]
+        );
     }
 }

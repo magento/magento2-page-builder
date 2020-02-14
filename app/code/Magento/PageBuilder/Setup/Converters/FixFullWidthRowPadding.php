@@ -44,6 +44,9 @@ class FixFullWidthRowPadding implements DataConverterInterface
             $style = $row->getAttribute("style");
             preg_match("/padding:(.*?);/", $style, $results);
             $padding = isset($results[1]) ? trim($results[1]) : '';
+            if (!$padding) {
+                continue;
+            }
             // remove padding from main row element
             $row->removeStyle("padding");
             // add padding to inner row element
