@@ -529,9 +529,9 @@
         <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth" stepKey="columnOneWidth"/>
         <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('2')}}').clientWidth" stepKey="columnTwoWidth"/>
         <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('3')}}').clientWidth" stepKey="columnThreeWidth"/>
-        <executeJS function="return Math.round({$columnOneWidth}/{$columnTwoWidth}*10)/10" stepKey="columnRatio"/>
+        <executeJS function="return Math.round(({$columnOneWidth}/{$columnTwoWidth})*10)" stepKey="columnRatio"/>
         <assertEquals stepKey="assertRatioIsCorrect">
-            <expectedResult type="float">1.5</expectedResult>
+            <expectedResult type="int">15</expectedResult>
             <actualResult type="variable">columnRatio</actualResult>
         </assertEquals>
         <executeJS function="return Math.round({$columnOneWidth}/{$columnThreeWidth})" stepKey="columnRatio2"/>
@@ -548,9 +548,9 @@
         <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth" stepKey="columnOneWidth2"/>
         <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('2')}}').clientWidth" stepKey="columnTwoWidth2"/>
         <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('3')}}').clientWidth" stepKey="columnThreeWidth2"/>
-        <executeJS function="return Math.round({$columnOneWidth2}/{$columnTwoWidth2}*10)/10" stepKey="columnRatio3"/>
+        <executeJS function="return Math.round(({$columnOneWidth2}/{$columnTwoWidth2})*10)" stepKey="columnRatio3"/>
         <assertEquals stepKey="assertRatioIsCorrect3">
-            <expectedResult type="float">1.5</expectedResult>
+            <expectedResult type="int">15</expectedResult>
             <actualResult type="variable">columnRatio3</actualResult>
         </assertEquals>
         <executeJS function="return Math.round({$columnOneWidth2}/{$columnThreeWidth2})" stepKey="columnRatio4"/>
@@ -568,9 +568,9 @@
         <executeJS function="return document.querySelector('{{ColumnOnFrontend.columnX('1')}}').clientWidth" stepKey="columnOneWidthFrontend"/>
         <executeJS function="return document.querySelector('{{ColumnOnFrontend.columnX('2')}}').clientWidth" stepKey="columnTwoWidthFrontend"/>
         <executeJS function="return document.querySelector('{{ColumnOnFrontend.columnX('3')}}').clientWidth" stepKey="columnThreeWidthFrontend"/>
-        <executeJS function="return Math.round({$columnOneWidthFrontend}/{$columnTwoWidthFrontend}*10)/10" stepKey="columnRatioFrontend"/>
+        <executeJS function="return Math.round(({$columnOneWidthFrontend}/{$columnTwoWidthFrontend})*10)" stepKey="columnRatioFrontend"/>
         <assertEquals stepKey="assertFrontendRatioIsCorrect">
-            <expectedResult type="int">1.5</expectedResult>
+            <expectedResult type="int">15</expectedResult>
             <actualResult type="variable">columnRatioFrontend</actualResult>
         </assertEquals>
         <executeJS function="return Math.round({$columnOneWidthFrontend}/{$columnThreeWidthFrontend})" stepKey="columnRatioFrontend2"/>
