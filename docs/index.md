@@ -16,7 +16,7 @@ For end-users, this means _no coding required_. For you as a developer, it means
 - **Extend** existing content types
 - **Create** new content types
 
-This documentation describes how to do both.  
+This documentation describes how to do both.
 
 ## Getting started with Page Builder development
 
@@ -26,3 +26,7 @@ The following topics will help you get started with Page Builder development:
 - [View Page Builder](getting-started/view-pagebuilder.md)
 - [Install Page Builder Examples](getting-started/install-pagebuilder-examples.md)
 - [Check out the User Guide](https://docs.magento.com/m2/ee/user_guide/cms/page-builder.html)
+
+## Videos
+
+<iframe title="Adobe Video Publishing Cloud Player" width="1024" height="576" src="https://video.tv.adobe.com/v/31596t4/?enable10seconds=on&quality=12&speedcontrol=on" frameborder="1" webkitallowfullscreen mozallowfullscreen allowfullscreen scrolling="no"></iframe>

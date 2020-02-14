@@ -18,7 +18,7 @@
         </arguments>
         <attachFile userInput="{{property.value}}" selector='{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}' stepKey="attachBackgroundImageFile"/>
         <waitForLoadingMaskToDisappear stepKey="waitForLoading"/>
-        <waitForElementVisible selector="{{EditPanelForm.backgroundImagePreview}}" stepKey="waitForImageUpload"/>
+        <waitForElementVisible selector="{{EditPanelForm.editFormUploadedImage(property.section, property.fieldName)}}" stepKey="waitForImageUpload"/>
     </actionGroup>
     <actionGroup name="attachFileSlideOutPropertyGeneral">
         <annotations>
@@ -44,7 +44,7 @@
         <waitForElementVisible selector="{{EditPanelForm.invalidUploadOkBtn}}" stepKey="waitForInvalidUploadBtn"/>
         <click selector="{{EditPanelForm.invalidUploadOkBtn}}" stepKey="clickInvalidUploadBtn"/>
         <waitForElementNotVisible selector="{{EditPanelForm.invalidUploadTitle}}" stepKey="waitForModalGone"/>
-        <dontSeeElementInDOM selector="{{EditPanelForm.backgroundImagePreview}}" stepKey="dontSeeImage"/>
+        <dontSeeElementInDOM selector="{{EditPanelForm.editFormUploadedImage(property.section, property.fieldName)}}" stepKey="dontSeeImage"/>
     </actionGroup>
     <actionGroup name="clickSelectFromGallerySlideOut">
         <arguments>
