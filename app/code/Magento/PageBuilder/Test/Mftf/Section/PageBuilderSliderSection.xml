@@ -24,7 +24,7 @@
         <element name="showArrows" type="button" selector="(//div[@data-content-type='slider'])[{{arg1}}][@data-show-arrows='{{arg2}}']" parameterized="true"/>
         <element name="showDots" type="button" selector="(//div[@data-content-type='slider'])[{{arg1}}][@data-show-dots='{{arg2}}']" parameterized="true"/>
         <element name="minHeight" type="button" selector="(//div[@data-content-type='slider'])[{{arg1}}][contains(@style,'min-height: {{arg2}}')]" parameterized="true"/>
-        <element name="noMinHeight" type="button" selector="(//div[@data-content-type='slider'])[{{arg1}}][not(contains(@style,'min-height:'))]" parameterized="true"/>
+        <element name="noMinHeight" type="button" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}][not(contains(@style,'min-height:'))]" parameterized="true"/>
         <!-- Advanced Configuration -->
         <element name="alignment" type="text" selector="(//div[@data-content-type='slider'])[{{arg1}}][contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
         <element name="noAlignment" type="text" selector="(//div[@data-content-type='slider'])[{{arg1}}][not(contains(@style,'text-align:'))]" parameterized="true"/>
@@ -58,7 +58,7 @@
         <element name="showArrows" type="button" selector="(//div[@data-content-type='slider'])[{{arg1}}][@data-show-arrows='{{arg2}}']" parameterized="true"/>
         <element name="showDots" type="button" selector="(//div[@data-content-type='slider'])[{{arg1}}][@data-show-dots='{{arg2}}']" parameterized="true"/>
         <element name="minHeight" type="button" selector="(//div[@data-content-type='slider']/div[contains(@class,'slider-container')])[{{arg1}}][contains(@style,'min-height: {{arg2}};')]" parameterized="true"/>
-        <element name="noMinHeight" type="button" selector="(//div[@data-content-type='slider']/div[contains(@class,'slider-container')])[{{arg1}}][not(contains(@style,'min-height:'))]" parameterized="true"/>
+        <element name="noMinHeight" type="button" selector="(//div[@data-content-type='slider']/div[contains(@class,'slider-container')])[{{sliderIndex}}][not(contains(@style,'min-height:'))]" parameterized="true"/>
         <!-- Advanced Configuration -->
         <element name="alignment" type="text" selector="(//div[@data-content-type='slider']/div[contains(@class,'slider-container')])[{{arg1}}][contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
         <element name="noAlignment" type="text" selector="(//div[@data-content-type='slider']/div[contains(@class,'slider-container')])[{{arg1}}][not(contains(@style,'text-align:'))]" parameterized="true"/>
@@ -86,7 +86,7 @@
         <element name="appearance" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}][@data-appearance='{{arg2}}']" parameterized="true"/>
         <element name="slideName" type="button" selector="(//div[@data-content-type='slide'])[{{arg1}}][@data-slide-name='{{arg2}}']" parameterized="true"/>
         <element name="minimumHeight" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}]//div[@data-element='wrapper'][contains(@style,'min-height: {{arg2}};')]" parameterized="true"/>
-        <element name="noMinimumHeight" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}]//div[@data-element='wrapper'][not(contains(@style,'min-height:'))]" parameterized="true"/>
+        <element name="noMinimumHeight" type="text" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='wrapper'][not(contains(@style,'min-height:'))]" parameterized="true"/>
         <!-- Background Configuration -->
         <element name="backgroundColor" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}]//div[@data-element='wrapper'][contains(@style,'background-color: {{arg2}};')]" parameterized="true"/>
         <element name="noBackgroundColor" type="button" selector="(//div[@data-content-type='slide'])[{{arg1}}]//div[@data-element='wrapper'][not(contains(@style,'background-color:'))]" parameterized="true"/>
@@ -156,9 +156,9 @@
         <element name="appearance" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}][@data-appearance='{{arg2}}']" parameterized="true"/>
         <element name="slideName" type="button" selector="(//div[@data-content-type='slide'])[{{arg1}}][@data-slide-name='{{arg2}}']" parameterized="true"/>
         <element name="posterMinimumHeight" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}]//div[@class='pagebuilder-slide-wrapper'][contains(@style,'min-height: {{arg2}};')]" parameterized="true"/>
-        <element name="noPosterMinimumHeight" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}]//div[@class='pagebuilder-slide-wrapper'][not(contains(@style,'min-height:'))]" parameterized="true"/>
+        <element name="noPosterMinimumHeight" type="text" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@class='pagebuilder-slide-wrapper'][not(contains(@style,'min-height:'))]" parameterized="true"/>
         <element name="collageMinimumHeight" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}]/div[contains(@style,'min-height: {{arg2}};')]" parameterized="true"/>
-        <element name="noCollageMinimumHeight" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}]/div[not(contains(@style,'min-height:'))]" parameterized="true"/>
+        <element name="noCollageMinimumHeight" type="text" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]/div[not(contains(@style,'min-height:'))]" parameterized="true"/>
         <!-- Background Configuration -->
         <element name="backgroundColor" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}]/div[contains(@style,'background-color: {{arg2}};')]" parameterized="true"/>
         <element name="noBackgroundColor" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}]/div[not(contains(@style,'background-color:'))]" parameterized="true"/>
