@@ -225,10 +225,10 @@ The `_module.less` file is an import file that ensures the additional stylesheet
 ```
 _Use _module.less for import statements_
 
-## Conclusion
-
-Using appearances to extend Page Builder's native content types represents one of Page Builder's best practices for creating a variety of new content building blocks based on existing content types. We hope this topic has helped adequately describe this best practice.
-
 ## Example Module
 
 An example module for this topic is available for download in the [pagebuilder-examples repository](https://github.com/magento-devdocs/pagebuilder-examples/tree/master/Example/PageBuilderBannerAppearance).
+
+## Conclusion
+
+Using appearances to extend Page Builder's native content types represents one of Page Builder's best practices for creating a variety of new content building blocks based on existing content types.
