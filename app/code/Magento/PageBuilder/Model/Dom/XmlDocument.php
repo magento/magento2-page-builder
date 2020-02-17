@@ -17,16 +17,6 @@ use Magento\PageBuilder\Model\Dom\Adapter\XmlDocumentInterface;
 class XmlDocument extends Document implements XmlDocumentInterface
 {
     /**
-     * @var ObjectManagerInterface
-     */
-    private $objectManager;
-
-    /**
-     * @var GtDomXmlDocument
-     */
-    private $document;
-
-    /**
      * XmlDocument constructor.
      *
      * @param ObjectManagerInterface $objectManager
@@ -36,7 +26,7 @@ class XmlDocument extends Document implements XmlDocumentInterface
         ObjectManagerInterface $objectManager,
         string $document = ""
     ) {
-        $this->objectManager = $objectManager;
+        parent::__construct($objectManager, $document);
         $this->document = $this->objectManager->create(GtDomXmlDocument::class, [ 'document' => $document ]);
     }
 }

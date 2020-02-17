@@ -4,8 +4,9 @@
  */
 define([
     'jquery',
+    'Magento_PageBuilder/js/widget/video-background',
     'jarallax'
-], function ($) {
+], function ($, videoBackground) {
     'use strict';
 
     return function (config, element) {
@@ -14,6 +15,12 @@ define([
 
         if ($element.data('appearance') === 'contained') {
             $element = $(element).find('[data-element="inner"]');
+        }
+
+        if ($element.data('background-type') === 'video') {
+            videoBackground(config, $element[0]);
+
+            return;
         }
 
         if ($element.data('enableParallax') !== 1) {
