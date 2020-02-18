@@ -23,12 +23,12 @@ class Document implements DocumentInterface
     /**
      * @var ObjectManagerInterface
      */
-    private $objectManager;
+    protected $objectManager;
 
     /**
      * @var GtDomDocument
      */
-    private $document;
+    protected $document;
 
     /**
      * Document constructor.
@@ -41,7 +41,6 @@ class Document implements DocumentInterface
     ) {
         $this->objectManager = $objectManager;
         $this->document = $this->objectManager->create(GtDomDocument::class, [ 'document' => $document ]);
-        $this->document->createDocumentFragment();
     }
 
     /**
@@ -203,5 +202,20 @@ class Document implements DocumentInterface
     public function getMetadata($key = null)
     {
         return $this->document->getMetadata($key);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function stripHtmlWrapperTags(): string
+    {
+        preg_match('/<body>(.*)<\/body>/s', $this->saveHTML(), $matches);
+        return preg_replace_callback(
+            '/=\"(%7B%7B[^"]*%7D%7D)\"/m',
+            function ($matches) {
+                return urldecode($matches[0]);
+            },
+            $matches[1]
+        );
     }
 }

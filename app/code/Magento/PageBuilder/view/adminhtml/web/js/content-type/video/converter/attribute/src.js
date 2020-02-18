@@ -47,7 +47,7 @@ define(["Magento_PageBuilder/js/utils/object"], function (_object) {
 
       var youtubeRegExp = new RegExp("^(?:https?:\/\/|\/\/)?(?:www\\.|m\\.)?" + "(?:youtu\\.be\/|youtube\\.com\/(?:embed\/|v\/|watch\\?v=|watch\\?.+&v=))([\\w-]{11})(?![\\w-])");
       var vimeoRegExp = new RegExp("https?:\/\/(?:www\\.|player\\.)?vimeo.com\/(?:channels\/" + "(?:\\w+\/)?|groups\/([^\/]*)\/videos\/|album\/(\\d+)\/video\/|video\/|)(\\d+)(?:$|\/|\\?)");
-      var fileRegExp = new RegExp("^(?:https:)?\\/\\/.*[\\\\\\/].+\\.(webm|mp4|ogv)(?!\w)");
+      var fileRegExp = new RegExp("^(?:https:|http:)?\\/\\/.*[\\\\\\/].+\\.(webm|mp4|ogv)(?!\w)");
 
       if (youtubeRegExp.test(value)) {
         return "https://www.youtube.com/embed/" + youtubeRegExp.exec(value)[1];
