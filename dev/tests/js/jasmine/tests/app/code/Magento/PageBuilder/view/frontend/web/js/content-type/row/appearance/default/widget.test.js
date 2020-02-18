@@ -8,7 +8,7 @@ define([
     'use strict';
 
     describe('Magento_PageBuilder/js/content-type/row/appearance/default/widget', function () {
-        it('Should call not call jarallax if enableParallax !== 1', function () {
+        it('Should not call jarallax if enableParallax !== 1', function () {
             var el = document.createElement('div');
 
             spyOn(window, 'jarallax');
@@ -20,7 +20,7 @@ define([
             expect(window.jarallax).not.toHaveBeenCalled();
         });
 
-        it('Should call call jarallax if enableParallax === 1', function () {
+        it('Should call jarallax if enableParallax === 1', function () {
             var el = document.createElement('div');
 
             spyOn(window, 'jarallax');

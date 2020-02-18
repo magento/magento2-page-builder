@@ -11,9 +11,16 @@
     <div class="pagebuilder-content-type type-container pagebuilder-row children-min-height"
          attr="data.inner.attributes"
          ko-style="data.inner.style"
-         css="Object.assign(data.inner.css(), {'empty-container': contentType.children().length == 0, 'jarallax': data.inner.attributes()['data-enable-parallax'] == 1})"
+         css="Object.assign(data.inner.css(), {
+            'empty-container': contentType.children().length == 0,
+            'jarallax': data.inner.attributes()['data-enable-parallax'] == 1 || data.inner.attributes()['data-background-type'] == 'video'
+            })"
          event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false"
          afterRender="initParallax">
+        <div if="data.video_overlay.attributes()['data-video-overlay-color']"
+             class="video-overlay"
+             attr="data.video_overlay.attributes"
+             ko-style="data.video_overlay.style" />
         <render args="getOptions().template"/>
         <div class="element-children content-type-container" each="contentType.getChildren()" ko-style="data.container.style" css="getChildrenCss()" attr="{id: contentType.id + '-children'}" data-bind="sortable: getSortableOptions()" afterRender="function (element) { if (typeof afterChildrenRender === 'function') { afterChildrenRender(element); } }">
             <if args="$parent.isContainer()">
