@@ -105,6 +105,25 @@ define([
         );
     }
 
+    /**
+     * Validate calc value.
+     *
+     * @param {String} value
+     * @returns {Boolean}
+     */
+    function validateCalc(value) {
+        var el = document.createElement('div'),
+            style = el.style;
+
+        if (!value.trim().length) {
+            return true;
+        }
+
+        style.width = 'calc(' + value + ')';
+
+        return !!style.width.length;
+    }
+
     return function (validator) {
         var requiredInputRule = validator.getRule('required-entry');
 
@@ -225,6 +244,14 @@ define([
                 return validateOneAnchorTagField(message, url);
             },
             $.mage.__('Adding link in both content and outer element is not allowed.')
+        );
+
+        validator.addRule(
+            'validate-calc',
+            function (value) {
+                return validateCalc(value);
+            },
+            $.mage.__('Please enter a valid number or calculation: Valid numbers must have an extension (px, %, pt, vh). Calculations must have white space around the + and - operators and cannot divide by zero.')//eslint-disable-line max-len
         );
 
         validateObjectField(validator, 'validate-number');

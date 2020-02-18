@@ -206,7 +206,7 @@
             <argument name="overlayColor" defaultValue="{{PageBuilderVideoBackgroundOverlayColor_Empty.rgb}}" type="string"/>
             <argument name="infiniteLoop" defaultValue="PageBuilderVideoBackgroundInfiniteLoop_Enabled"/>
             <argument name="lazyLoad" defaultValue="PageBuilderVideoBackgroundLazyLoad_Enabled"/>
-            <argument name="playOnlyVisible" defaultValue="PageBuilderVideoBackgroundPlayOnlyVisible_Enabled"/>
+            <argument name="playOnlyWhenVisible" defaultValue="PageBuilderVideoBackgroundPlayOnlyWhenVisible_Enabled"/>
             <argument name="fallbackImage" defaultValue="PageBuilderVideoBackgroundFallbackImage_Empty"/>
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
@@ -249,7 +249,7 @@
         </assertEquals>
         <waitForElementVisible selector="{{section.videoBackgroundInfiniteLoop(index, infiniteLoop.value)}}" stepKey="waitForInfiniteLoop"/>
         <waitForElementVisible selector="{{section.videoBackgroundLazyLoad(index, lazyLoad.value)}}" stepKey="waitForLazyLoad"/>
-        <waitForElementVisible selector="{{section.videoBackgroundPlayOnlyVisible(index, playOnlyVisible.value)}}" stepKey="waitForPlayOnlyVisible"/>
+        <waitForElementVisible selector="{{section.videoBackgroundPlayOnlyWhenVisible(index, playOnlyWhenVisible.value)}}" stepKey="waitForPlayOnlyWhenVisible"/>
         <waitForElement selector="{{section.videoBackgroundFallbackImage(index)}}" stepKey="waitForFallbackImage"/>
         <waitForElementNotVisible selector="{{section.videoBackgroundFallbackImage(index)}}" stepKey="waitForFallbackImageNotVisible"/>
         <grabAttributeFrom selector="{{section.videoBackgroundFallbackImageSource(index, fallbackImage.fileName)}}" userInput="src" stepKey="fallbackImageSource"/>
@@ -351,7 +351,7 @@
             <argument name="videoUrl" defaultValue="PageBuilderVideoBackgroundUrl_Empty"/>
             <argument name="infiniteLoop" defaultValue="PageBuilderVideoBackgroundInfiniteLoop_Enabled"/>
             <argument name="lazyLoad" defaultValue="PageBuilderVideoBackgroundLazyLoad_Enabled"/>
-            <argument name="playOnlyVisible" defaultValue="PageBuilderVideoBackgroundPlayOnlyVisible_Enabled"/>
+            <argument name="playOnlyWhenVisible" defaultValue="PageBuilderVideoBackgroundPlayOnlyWhenVisible_Enabled"/>
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
         <waitForPageLoad stepKey="waitForPageLoad"/>
@@ -384,7 +384,7 @@
         <dontSeeElementInDOM selector="{{section.videoBackgroundOverlayElement(index)}}" stepKey="dontSeeOverlayColorInDOM"/>
         <waitForElementVisible selector="{{section.videoBackgroundInfiniteLoop(index, infiniteLoop.value)}}" stepKey="waitForInfiniteLoop"/>
         <waitForElementVisible selector="{{section.videoBackgroundLazyLoad(index, lazyLoad.value)}}" stepKey="waitForLazyLoad"/>
-        <waitForElementVisible selector="{{section.videoBackgroundPlayOnlyVisible(index, playOnlyVisible.value)}}" stepKey="waitForPlayOnlyVisible"/>
+        <waitForElementVisible selector="{{section.videoBackgroundPlayOnlyWhenVisible(index, playOnlyWhenVisible.value)}}" stepKey="waitForPlayOnlyWhenVisible"/>
         <waitForElement selector="{{section.videoBackgroundNoFallbackImage(index)}}" stepKey="waitForNoFallbackImage"/>
         <dontSeeElement selector="{{section.videoBackgroundNoFallbackImage(index)}}" stepKey="dontSeeFallbackImage"/>
         <dontSeeElementInDOM selector="{{section.videoBackgroundFallbackImage(index)}}" stepKey="dontSeeFallbackImageInDOM"/>
@@ -461,5 +461,25 @@
             <description>Validates that the video in the video background is not loaded.</description>
         </annotations>
         <dontSeeElementInDOM selector="{{section.videoBackgroundVideoElement(index)}}" stepKey="seeVideoInDOM"/>
+    </actionGroup>
+    <actionGroup name="validateVideoAspectRatio">
+        <annotations>
+            <description>Validates that the video in the video background has the correct aspect ratio.</description>
+        </annotations>
+        <arguments>
+            <argument name="section" defaultValue="RowOnStage"/>
+            <argument name="expectedAspectRatio" defaultValue="1" type="string"/>
+            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="acceptableOffset" defaultValue="5" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{section.videoBackgroundVideoElement(index)}}" stepKey="waitForVideoBackgroundElement"/>
+        <executeJS function="return document.evaluate(&quot;{{section.videoBackgroundVideoElement(index)}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().width" stepKey="actualVideoWidth"/>
+        <executeJS function="return document.evaluate(&quot;{{section.videoBackgroundVideoElement(index)}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="actualVideoHeight"/>
+        <executeJS function="return {$actualVideoWidth} / {$actualVideoHeight}" stepKey="actualVideoAspectRatio"/>
+        <executeJS function="return ({$actualVideoAspectRatio} * 1000) - ({{expectedAspectRatio}} * 1000)" stepKey="actualMinusExpected"/>
+        <assertLessThanOrEqual stepKey="assertAcceptableAspectRatio">
+            <actualResult type="variable">actualMinusExpected</actualResult>
+            <expectedResult type="int">{{acceptableOffset}}</expectedResult>
+        </assertLessThanOrEqual>
     </actionGroup>
 </actionGroups>
