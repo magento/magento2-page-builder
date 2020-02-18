@@ -84,7 +84,7 @@ class FixFullWidthRowPadding implements DataConverterInterface
 
 ### Data patch class example
 
-The data patch class implements the `DataPatchInterface`. Specifically, it uses the framework's `UpgradeContentHelper` class to apply the converter class to all the database entities where Page Builder content exists. These locations are provided by the `UpgradableEntitiesPool`, described later in this topic.
+The data patch class implements the `DataPatchInterface`. Specifically, it uses the Page Builder `UpgradeContentHelper` class to apply the converter class to all the database entities where Page Builder content exists. These locations are provided by the `UpgradableEntitiesPool`, described later in this topic.
 
 Page Builder's `UpgradeFullWidthPadding` class is provided here as an example implementation:
 
