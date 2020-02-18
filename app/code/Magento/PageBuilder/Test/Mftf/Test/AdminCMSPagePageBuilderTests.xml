@@ -14,7 +14,7 @@
             <stories value="CMS Page"/>
             <title value="Admin should be able to see PageBuilder on CMS Page after enable PageBuilder and WYSIWYG from Configuration"/>
             <description value="Admin should be able to see PageBuilder on CMS Page after enable PageBuilder and WYSIWYG from Configuration"/>
-            <severity value="CRITICAL"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MAGETWO-86314"/>
             <testCaseId value="MC-2407"/>
             <group value="pagebuilder"/>
@@ -57,11 +57,16 @@
     </test>
     <test name="AdminConfigDefaultCMSPageLayoutFromConfigurationSettingTest">
         <annotations>
+            <features value="PageBuilder"/>
             <stories value="CMS Page"/>
-            <description value="Admin should be able to configure the default layout for CMS Page from System Configuration using Page Builder's full width layouts"/>
+            <title value="Verify Default Layout for Catalog Category"/>
+            <description value="Admin should be able to configure the default layout for CMS Page from System Configuration, verify the default is updated to the Page Builder's default layout"/>
+            <severity value="AVERAGE"/>
             <useCaseId value="MC-936"/>
             <testCaseId value="MC-3106"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-layout"/>
+            <group value="pagebuilder-fullwidth"/>
             <group value="pagebuilder-cms-page"/>
         </annotations>
         <!-- PageBuilder is enabled so check default is full width -->
@@ -76,7 +81,7 @@
             <stories value="CMS Page"/>
             <title value="Create CMS Page with full page layout"/>
             <description value="Create CMS Page with full page layout"/>
-            <severity value="MAJOR"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MC-936"/>
             <testCaseId value="MC-3092"/>
             <group value="pagebuilder"/>
@@ -121,8 +126,8 @@
             <argument name="layoutOption" value="PageBuilderFullWidthLayout.cms"/>
         </actionGroup>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
-        <!-- Check that description is full width on storefront -->
-        <comment userInput="Check that description is full width on storefront" stepKey="commentSeeDescriptionFullWidth"/>
+        <!-- Check that content is full width on storefront -->
+        <comment userInput="Check that content is full width on storefront" stepKey="commentSeeDescriptionFullWidth"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
@@ -134,7 +139,7 @@
             <stories value="CMS Page"/>
             <title value="Create CMS Page with invalid full page layout"/>
             <description value="Create CMS Page with invalid full page layout"/>
-            <severity value="MAJOR"/>
+            <severity value="AVERAGE"/>
             <useCaseId value="MC-936"/>
             <testCaseId value="MC-3171"/>
             <group value="pagebuilder"/>

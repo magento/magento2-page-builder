@@ -10,7 +10,11 @@
        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
     <test name="AdminConfigDefaultCategoryLayoutFromConfigurationSettingTest">
         <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Catalog Category"/>
+            <title value="Verify Default Layout for Catalog Category"/>
             <description value="Admin should be able to configure the default layout for Category Page from System Configuration, verify the default is updated to the Page Builder's default layout"/>
+            <severity value="AVERAGE"/>
             <useCaseId value="MC-936"/>
             <testCaseId value="MC-3105"/>
             <group value="pagebuilder"/>
@@ -28,7 +32,7 @@
             <stories value="Catalog Category"/>
             <title value="Admin are able to see PageBuilder on Catalog Category page after enable PageBuilder from Configuration"/>
             <description value="Admin are able to see PageBuilder on Catalog Category page after enable PageBuilder from Configuration"/>
-            <severity value="CRITICAL"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MC-1432"/>
             <testCaseId value="MC-2408"/>
             <group value="pagebuilder"/>
@@ -186,7 +190,7 @@
             <argument name="section" value="ButtonItemOnStorefront"/>
         </actionGroup>
     </test>
-    <test name="PageBuilderCatalogCategoryUploadImageToCategory">
+    <test name="PageBuilderCatalogCategoryUploadImageToCategory" deprecated="Duplicate of MC-188. Remove in PB-413">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Catalog Category"/>
@@ -259,8 +263,8 @@
             <features value="PageBuilder"/>
             <stories value="Catalog Category"/>
             <title value="Page Layout - Category description should display in full width"/>
-            <description value="Category description should display in full width"/>
-            <severity value="MAJOR"/>
+            <description value="Verify that the Category description displays in full width on the storefront"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MC-936"/>
             <testCaseId value="MC-3075"/>
             <group value="pagebuilder"/>
@@ -322,7 +326,7 @@
             <stories value="Catalog Category"/>
             <title value="Create category with unsupported Page Builder full width layout"/>
             <description value="Create category with unsupported Page Builder full width layout"/>
-            <severity value="MAJOR"/>
+            <severity value="AVERAGE"/>
             <useCaseId value="MC-936"/>
             <testCaseId value="MC-3107"/>
             <group value="pagebuilder"/>
@@ -400,7 +404,7 @@
             <stories value="Catalog Category"/>
             <title value="Add and Edit Row, Column, and Slider to PageBuilder in Catalog Category Description"/>
             <description value="This test is intended to ensure that basic adding and editing of multiple content types work correctly in the Catalog Category area of PageBuilder."/>
-            <severity value="CRITICAL"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MC-3330"/>
             <testCaseId value="MC-13959"/>
             <group value="pagebuilder"/>
@@ -436,7 +440,7 @@
             <stories value="Catalog Category"/>
             <title value="Verify That User Can Move Content Types From On-Hover Option Menus"/>
             <description value="This test is intended to ensure that users can move content types from the on-hover option menus within the PageBuilder stage for Category Description."/>
-            <severity value="CRITICAL"/>
+            <severity value="MAJOR"/>
             <useCaseId value="MC-3330"/>
             <testCaseId value="MC-13965"/>
             <group value="pagebuilder"/>
@@ -473,7 +477,7 @@
             <stories value="Catalog Category"/>
             <title value="Verify That User Can Edit Content Types From On-Hover Option Menus"/>
             <description value="This test is intended to ensure that users can edit content types from the on-hover option menus within the PageBuilder stage for Category Description."/>
-            <severity value="CRITICAL"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MC-3330"/>
             <testCaseId value="MC-14811"/>
             <group value="pagebuilder"/>
@@ -508,7 +512,7 @@
             <stories value="Catalog Category"/>
             <title value="Verify That User Can Duplicate Content Types From On-Hover Option Menus"/>
             <description value="This test is intended to ensure that users can duplicate content types from the on-hover option menus within the PageBuilder stage for Category Description."/>
-            <severity value="CRITICAL"/>
+            <severity value="MAJOR"/>
             <useCaseId value="MC-3330"/>
             <testCaseId value="MC-14812"/>
             <group value="pagebuilder"/>
@@ -585,7 +589,7 @@
             <stories value="Catalog Category"/>
             <title value="Verify That User Can Add Child Content Types From On-Hover Option Menus"/>
             <description value="This test is intended to ensure that users can add child content types from the on-hover option menus within the PageBuilder stage for Category Description."/>
-            <severity value="CRITICAL"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MC-3330"/>
             <testCaseId value="MC-14827"/>
             <group value="pagebuilder"/>
@@ -620,7 +624,7 @@
             <stories value="Catalog Category"/>
             <title value="Verify That User Can Edit Content Types From On-Click Option Menus"/>
             <description value="This test is intended to ensure that users can edit content types from the on-click option menus within the PageBuilder stage for Category Description."/>
-            <severity value="CRITICAL"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MC-3330"/>
             <testCaseId value="MC-14828"/>
             <group value="pagebuilder"/>
@@ -655,7 +659,7 @@
             <stories value="Catalog Category"/>
             <title value="Verify That User Can Duplicate Content Types From On-Click Option Menus"/>
             <description value="This test is intended to ensure that users can duplicate content types from the on-click option menus within the PageBuilder stage for Category Description."/>
-            <severity value="CRITICAL"/>
+            <severity value="MAJOR"/>
             <useCaseId value="MC-3330"/>
             <testCaseId value="MC-14829"/>
             <group value="pagebuilder"/>
@@ -732,7 +736,7 @@
             <stories value="Catalog Category"/>
             <title value="Verify That User Can Move Button Items"/>
             <description value="This test is intended to ensure that users can move button items within the PageBuilder stage for Category Description."/>
-            <severity value="CRITICAL"/>
+            <severity value="MAJOR"/>
             <useCaseId value="MC-3330"/>
             <testCaseId value="MC-14831"/>
             <group value="pagebuilder"/>
@@ -770,7 +774,7 @@
             <stories value="Catalog Category"/>
             <title value="Verify That User Can Move Slide Items"/>
             <description value="This test is intended to ensure that users can move slide items within the PageBuilder stage for Category Description."/>
-            <severity value="CRITICAL"/>
+            <severity value="MAJOR"/>
             <useCaseId value="MC-3330"/>
             <testCaseId value="MC-14865"/>
             <group value="pagebuilder"/>
@@ -816,7 +820,7 @@
             <stories value="Catalog Category"/>
             <title value="Verify That User Can Move Tab Items"/>
             <description value="This test is intended to ensure that users can move tab items within the PageBuilder stage for Category Description."/>
-            <severity value="CRITICAL"/>
+            <severity value="MAJOR"/>
             <useCaseId value="MC-3330"/>
             <testCaseId value="MC-14879"/>
             <group value="pagebuilder"/>
@@ -853,7 +857,7 @@
             <stories value="Catalog Category"/>
             <title value="Verify That Full-Screen Mode Covers Entire Screen"/>
             <description value="This test is to ensure that the PageBuilder full-screen mode covers the entire screen when opened for Category Description."/>
-            <severity value="CRITICAL"/>
+            <severity value="MAJOR"/>
             <useCaseId value="MC-3330"/>
             <testCaseId value="MC-14909"/>
             <group value="pagebuilder"/>
@@ -879,7 +883,7 @@
             <stories value="Catalog Category"/>
             <title value="Left Panel Is Full-Height and Works In Full-Screen Mode"/>
             <description value="This test is to ensure that the PageBuilder left panel works and grows to span the full height of the viewport in full-screen mode when opened for Category Description."/>
-            <severity value="CRITICAL"/>
+            <severity value="AVERAGE"/>
             <useCaseId value="MC-3330"/>
             <testCaseId value="MC-14910"/>
             <group value="pagebuilder"/>

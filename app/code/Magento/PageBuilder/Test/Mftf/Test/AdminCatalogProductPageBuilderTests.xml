@@ -8,6 +8,22 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="AdminConfigDefaultProductLayoutFromConfigurationSettingTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Catalog Products"/>
+            <title value="Verify Default Layout for Catalog Products"/>
+            <description value="Admin should be able to configure the default layout for Products Page from System Configuration, verify the default is updated to the Page Builder's default layout"/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MC-936"/>
+            <testCaseId value="MC-31615"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-layout"/>
+            <group value="pagebuilder-fullwidth"/>
+            <group value="pagebuilder-catalog-product"/>
+        </annotations>
+        <seeOptionIsSelected selector="{{ProductDesignSection.LayoutDropdown}}" userInput="{{PageBuilderFullWidthLayout.product}}" stepKey="seeDefaultProductLayout" after="DefaultProductLayout"/>
+    </test>
     <test name="PageBuilderCatalogProductDirectivesTest">
         <annotations>
             <features value="PageBuilder"/>
@@ -232,7 +248,7 @@
             <stories value="Catalog Products"/>
             <title value="Can downgrade pagebuilder product attribute to text area product attribute"/>
             <description value="Can downgrade pagebuilder product attribute to text area product attribute"/>
-            <severity value="CRITICAL"/>
+            <severity value="AVERAGE"/>
             <useCaseId value="MC-1423"/>
             <testCaseId value="MC-3015"/>
             <group value="pagebuilder"/>
@@ -294,7 +310,7 @@
             <stories value="Catalog Products"/>
             <title value="Can downgrade pagebuilder product attribute to text editor product attribute"/>
             <description value="Can downgrade pagebuilder product attribute to text editor product attribute"/>
-            <severity value="CRITICAL"/>
+            <severity value="AVERAGE"/>
             <useCaseId value="MC-1423"/>
             <testCaseId value="MC-3013"/>
             <group value="pagebuilder"/>
@@ -356,7 +372,7 @@
             <stories value="Catalog Products"/>
             <title value="Can upgrade texteditor product attribute to pagebuilder product attribute"/>
             <description value="Can upgrade texteditor product attribute to pagebuilder product attribute"/>
-            <severity value="CRITICAL"/>
+            <severity value="MAJOR"/>
             <useCaseId value="MC-1423"/>
             <testCaseId value="MC-4026"/>
             <group value="pagebuilder"/>
@@ -414,7 +430,7 @@
             <stories value="Catalog Products"/>
             <title value="Can create pagebuilder product attribute on product form"/>
             <description value="Can create pagebuilder product attribute on product form"/>
-            <severity value="CRITICAL"/>
+            <severity value="MAJOR"/>
             <useCaseId value="MC-1423"/>
             <testCaseId value="MC-1332"/>
             <group value="pagebuilder"/>
@@ -473,8 +489,8 @@
             <features value="PageBuilder"/>
             <stories value="Catalog Products"/>
             <title value="Product description should display in full width"/>
-            <description value="Product description should display in full width"/>
-            <severity value="MAJOR"/>
+            <description value="Verify page builder contents in the Product description render correctly in the full width layout"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MC-936"/>
             <testCaseId value="MC-3090"/>
             <group value="pagebuilder"/>
@@ -547,7 +563,7 @@
             <stories value="Catalog Products"/>
             <title value="Create product with unsupported Page Builder full width layout"/>
             <description value="Create product with unsupported Page Builder full width layout"/>
-            <severity value="MAJOR"/>
+            <severity value="AVERAGE"/>
             <useCaseId value="MC-936"/>
             <testCaseId value="MC-3172"/>
             <group value="pagebuilder"/>
@@ -637,8 +653,8 @@
             <features value="PageBuilder"/>
             <stories value="Catalog Products"/>
             <title value="Create product with custom Page Builder attribute with full width layout"/>
-            <description value="Create product with custom Page Builder attribute with full width layout"/>
-            <severity value="CRITICAL"/>
+            <description value="Verify page builder contents in a custom Page Builder product attribute render correctly in the full width layout"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MC-3103"/>
             <testCaseId value="MC-3278"/>
             <group value="pagebuilder"/>
@@ -735,7 +751,7 @@
             <stories value="Catalog Products"/>
             <title value="Custom attribute text field displays as expected with full width"/>
             <description value="Create product attribute of type text field, populate on full width product, verify display of attribute on front-end in more information section"/>
-            <severity value="MAJOR"/>
+            <severity value="AVERAGE"/>
             <useCaseId value="MC-3103"/>
             <testCaseId value="MC-3279"/>
             <group value="pagebuilder"/>
@@ -783,7 +799,7 @@
             <stories value="Catalog Products"/>
             <title value="Attributes should be displayed in the order they are sorted in the attribute set"/>
             <description value="Attributes should be displayed in the order they are sorted in the attribute set"/>
-            <severity value="MAJOR"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MC-3103"/>
             <testCaseId value="MC-3295"/>
             <group value="pagebuilder"/>
@@ -903,7 +919,7 @@
             <stories value="Catalog Products"/>
             <title value="Catalog product storefront page should be ordered correctly"/>
             <description value="Catalog product storefront detail page should be ordered correctly"/>
-            <severity value="MAJOR"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MC-5450"/>
             <testCaseId value="MC-5477"/>
             <group value="pagebuilder"/>
@@ -1115,7 +1131,7 @@
             <stories value="Catalog Products"/>
             <title value="Add and Edit Row, Column, and Slider to PageBuilder in Catalog Product Description"/>
             <description value="This test is intended to ensure that basic adding and editing of multiple content types work correctly in the Catalog Product area of PageBuilder."/>
-            <severity value="CRITICAL"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MC-3329"/>
             <testCaseId value="MC-13664"/>
             <group value="pagebuilder"/>
@@ -1266,7 +1282,7 @@
             <stories value="Catalog Products"/>
             <title value="Verify That User Can Move Content Types From On-Hover Option Menus"/>
             <description value="This test is intended to ensure that users can move content types from the on-hover option menus within the PageBuilder stage for Product Description."/>
-            <severity value="CRITICAL"/>
+            <severity value="MAJOR"/>
             <useCaseId value="MC-3329"/>
             <testCaseId value="MC-13665"/>
             <group value="pagebuilder"/>
@@ -1408,7 +1424,7 @@
             <stories value="Catalog Products"/>
             <title value="Verify That User Can Edit Content Types From On-Hover Option Menus"/>
             <description value="This test is intended to ensure that users can edit content types from the on-hover option menus within the PageBuilder stage for Product Description."/>
-            <severity value="CRITICAL"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MC-3329"/>
             <testCaseId value="MC-13666"/>
             <group value="pagebuilder"/>
@@ -1478,7 +1494,7 @@
             <stories value="Catalog Products"/>
             <title value="Verify That User Can Duplicate Content Types From On-Hover Option Menus"/>
             <description value="This test is intended to ensure that users can duplicate content types from the on-hover option menus within the PageBuilder stage for Product Description."/>
-            <severity value="CRITICAL"/>
+            <severity value="MAJOR"/>
             <useCaseId value="MC-3329"/>
             <testCaseId value="MC-13667"/>
             <group value="pagebuilder"/>
@@ -1632,7 +1648,7 @@
             <stories value="Catalog Products"/>
             <title value="Verify That User Can Add Child Content Types From On-Hover Option Menus"/>
             <description value="This test is intended to ensure that users can add child content types from the on-hover option menus within the PageBuilder stage for Product Description."/>
-            <severity value="CRITICAL"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MC-3329"/>
             <testCaseId value="MC-13669"/>
             <group value="pagebuilder"/>
@@ -1698,7 +1714,7 @@
             <stories value="Catalog Products"/>
             <title value="Verify That User Can Edit Content Types From On-Click Option Menus"/>
             <description value="This test is intended to ensure that users can edit content types from the on-click option menus within the PageBuilder stage for Product Description."/>
-            <severity value="CRITICAL"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MC-3329"/>
             <testCaseId value="MC-13670"/>
             <group value="pagebuilder"/>
@@ -1777,7 +1793,7 @@
             <stories value="Catalog Products"/>
             <title value="Verify That User Can Duplicate Content Types From On-Click Option Menus"/>
             <description value="This test is intended to ensure that users can duplicate content types from the on-click option menus within the PageBuilder stage for Product Description."/>
-            <severity value="CRITICAL"/>
+            <severity value="MAJOR"/>
             <useCaseId value="MC-3329"/>
             <testCaseId value="MC-13671"/>
             <group value="pagebuilder"/>
@@ -1947,7 +1963,7 @@
             <stories value="Catalog Products"/>
             <title value="Verify That User Can Move Button Items"/>
             <description value="This test is intended to ensure that users can move button items within the PageBuilder stage for Product Description."/>
-            <severity value="CRITICAL"/>
+            <severity value="MAJOR"/>
             <useCaseId value="MC-3329"/>
             <testCaseId value="MC-13673"/>
             <group value="pagebuilder"/>
@@ -1990,7 +2006,7 @@
             <stories value="Catalog Products"/>
             <title value="Verify That User Can Move Slide Items"/>
             <description value="This test is intended to ensure that users can move slide items within the PageBuilder stage for Product Description."/>
-            <severity value="CRITICAL"/>
+            <severity value="MAJOR"/>
             <useCaseId value="MC-3329"/>
             <testCaseId value="MC-13674"/>
             <group value="pagebuilder"/>
@@ -2040,7 +2056,7 @@
             <stories value="Catalog Products"/>
             <title value="Verify That User Can Move Tab Items"/>
             <description value="This test is intended to ensure that users can move tab items within the PageBuilder stage for Product Description."/>
-            <severity value="CRITICAL"/>
+            <severity value="MAJOR"/>
             <useCaseId value="MC-3329"/>
             <testCaseId value="MC-13675"/>
             <group value="pagebuilder"/>
@@ -2082,7 +2098,7 @@
             <stories value="Catalog Products"/>
             <title value="Verify That Full-Screen Mode Covers Entire Screen"/>
             <description value="This test is to ensure that the PageBuilder full-screen mode covers the entire screen when opened for Product Description."/>
-            <severity value="CRITICAL"/>
+            <severity value="MAJOR"/>
             <useCaseId value="MC-3329"/>
             <testCaseId value="MC-13676"/>
             <group value="pagebuilder"/>
@@ -2113,7 +2129,7 @@
             <stories value="Catalog Products"/>
             <title value="Left Panel Is Full-Height and Works In Full-Screen Mode"/>
             <description value="This test is to ensure that the PageBuilder left panel works and grows to span the full height of the viewport in full-screen mode when opened for Product Description."/>
-            <severity value="CRITICAL"/>
+            <severity value="AVERAGE"/>
             <useCaseId value="MC-3329"/>
             <testCaseId value="MC-13677"/>
             <group value="pagebuilder"/>
@@ -2144,7 +2160,7 @@
             <stories value="Catalog Products"/>
             <title value="PageBuilder Works For Each Product Attribute"/>
             <description value="This test is to ensure that the PageBuilder works for Catalog Product Description, Short Description, and Custom Attributes."/>
-            <severity value="CRITICAL"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MC-3329"/>
             <testCaseId value="MC-13680"/>
             <group value="pagebuilder"/>
