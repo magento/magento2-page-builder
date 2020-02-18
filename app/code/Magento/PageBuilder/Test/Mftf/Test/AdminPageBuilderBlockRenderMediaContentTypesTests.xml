@@ -1255,9 +1255,9 @@
         <seeElement selector="{{SliderOnStage.showArrows('1', PageBuilderSliderShowArrows_Enabled.value)}}" stepKey="seeArrowsCMSBlockStage"/>
         <seeElement selector="{{SliderOnStage.showDots('1', PageBuilderSliderShowDots_Enabled.value)}}" stepKey="seeDotsCMSBlockStage"/>
         <seeElement selector="{{SliderOnStage.minHeight('1', PageBuilderMinHeightProperty_500px.value)}}" stepKey="seeMinHeightCMSBlockStage"/>
-        <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateHeightSlide1CMSBlockStage">
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateHeightSlide1CMSBlockStage">
             <argument name="content" value="{{SlideOnBackend.wrapperCSS}}"/>
-            <argument name="height" value="PageBuilderSlideItemMinimumHeight_300"/>
+            <argument name="height" value="{{PageBuilderMinHeightProperty_300px.intValue}}"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <click selector="{{SliderOnStage.slideNavigationDot('1', '1')}}" stepKey="clickSlide1CMSBlockStage"/>
@@ -1278,9 +1278,9 @@
         <click selector="{{SliderOnStage.nextSlideArrow('1')}}" stepKey="clickNextSlideArrowCMSBlockStage2"/>
         <waitForPageLoad stepKey="waitForNextSlideCMSBlockStage2"/>
         <seeElement selector="{{SlideOnBackend.messageContent('2', PageBuilderSlideItemContent_Slide2.value)}}" stepKey="seeSlide2ContentCMSBlockStage3"/>
-        <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateHeightSlide2CMSBlockStage">
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateHeightSlide2CMSBlockStage">
             <argument name="content" value="{{SlideOnBackend.wrapperCSS}}"/>
-            <argument name="height" value="PageBuilderSliderMinHeight_500"/>
+            <argument name="height" value="{{PageBuilderMinHeightProperty_500px.intValue}}"/>
             <argument name="index" value="2"/>
         </actionGroup>
         <!-- Add Block to CMS Page -->
@@ -1310,9 +1310,9 @@
         <seeElement selector="{{SliderOnFrontend.showArrows('1', PageBuilderSliderShowArrows_Enabled.value)}}" stepKey="seeArrowsCMSPageStage"/>
         <seeElement selector="{{SliderOnFrontend.showDots('1', PageBuilderSliderShowDots_Enabled.value)}}" stepKey="seeDotsCMSPageStage"/>
         <seeElement selector="{{SliderOnFrontend.minHeight('1', PageBuilderMinHeightProperty_500px.value)}}" stepKey="seeHeightCMSPageStage"/>
-        <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateHeightSlide1CMSPageStage">
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateHeightSlide1CMSPageStage">
             <argument name="content" value="{{SlideOnFrontend.wrapperCSS}}"/>
-            <argument name="height" value="PageBuilderSlideItemMinimumHeight_300"/>
+            <argument name="height" value="{{PageBuilderMinHeightProperty_300px.intValue}}"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
@@ -1328,9 +1328,9 @@
         <seeElement selector="{{SliderOnFrontend.showArrows('1', PageBuilderSliderShowArrows_Enabled.value)}}" stepKey="seeArrowsCMSPageStorefront"/>
         <seeElement selector="{{SliderOnFrontend.showDots('1', PageBuilderSliderShowDots_Enabled.value)}}" stepKey="seeDotsCMSPageStorefront"/>
         <seeElement selector="{{SliderOnFrontend.minHeight('1', PageBuilderMinHeightProperty_500px.value)}}" stepKey="seeHeightCMSPageStorefront"/>
-        <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateHeightSlide1CMSPageStorefront">
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateHeightSlide1CMSPageStorefront">
             <argument name="content" value="{{SlideOnFrontend.wrapperCSS}}"/>
-            <argument name="height" value="PageBuilderSlideItemMinimumHeight_300"/>
+            <argument name="height" value="{{PageBuilderMinHeightProperty_300px.intValue}}"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <click selector="{{SliderOnFrontend.slideNavigationDot('1', '1')}}" stepKey="clickSlide1CMSPageStorefront"/>
@@ -1351,9 +1351,9 @@
         <click selector="{{SliderOnFrontend.nextSlideArrow('1')}}" stepKey="clickNextSlideArrowCMSPageStorefront2"/>
         <waitForPageLoad stepKey="waitForNextSlideCMSPageStorefront2"/>
         <seeElement selector="{{SlideOnFrontend.messageContent('2', PageBuilderSlideItemContent_Slide2.value)}}" stepKey="seeSlide2ContentCMSPageStorefront3"/>
-        <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateHeightSlide2CMSPageStorefront">
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateHeightSlide2CMSPageStorefront">
             <argument name="content" value="{{SlideOnFrontend.wrapperCSS}}"/>
-            <argument name="height" value="PageBuilderSliderMinHeight_500"/>
+            <argument name="height" value="{{PageBuilderMinHeightProperty_500px.intValue}}"/>
             <argument name="index" value="2"/>
         </actionGroup>
     </test>
@@ -1472,9 +1472,9 @@
         <moveMouseOver selector="{{SliderOnStage.activeSlideNavigationDot}}" stepKey="mouseOverSlideDotCMSBlockStage"/>
         <see userInput="{{PageBuilderSlideItemSlideName_Slide1.value}}" selector="{{SliderOnStage.slideNavigationDotNameTooltip('1')}}" stepKey="seeSlideName1InTooltipCMSBlockStage"/>
         <seeElement selector="{{SlideOnBackend.posterMinimumHeight('1', PageBuilderMinHeightProperty_500px.value)}}" stepKey="seeMinimumHeightCMSBlockStage"/>
-        <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateHeightCMSBlockStage">
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateHeightCMSBlockStage">
             <argument name="content" value="{{SlideOnBackend.wrapperCSS}}"/>
-            <argument name="height" value="PageBuilderSlideItemMinimumHeight_500"/>
+            <argument name="height" value="{{PageBuilderMinHeightProperty_500px.intValue}}"/>
         </actionGroup>
         <actionGroup ref="validateBackgroundAttributesWithNoImageForSlide" stepKey="validateBackgroundAttributesCMSBlockStage">
             <argument name="section" value="SlideOnBackend"/>
@@ -1534,9 +1534,9 @@
             <argument name="page" value="SlideOnFrontend"/>
         </actionGroup>
         <seeElement selector="{{SlideOnFrontend.minimumHeight('1', PageBuilderMinHeightProperty_500px.value)}}" stepKey="seeMinimumHeightCMSPageStage"/>
-        <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateHeightCMSPageStage">
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateHeightCMSPageStage">
             <argument name="content" value="{{SlideOnFrontend.wrapperCSS}}"/>
-            <argument name="height" value="PageBuilderSlideItemMinimumHeight_500"/>
+            <argument name="height" value="{{PageBuilderMinHeightProperty_500px.intValue}}"/>
         </actionGroup>
         <actionGroup ref="validateBackgroundAttributesWithNoImageForSlide" stepKey="validateBackgroundAttributesCMSPageStage">
             <argument name="section" value="SlideOnFrontend"/>
@@ -1578,9 +1578,9 @@
         </actionGroup>
         <seeElement selector="{{SlideOnFrontend.slideName('1', PageBuilderSlideItemSlideName_Slide1.value)}}" stepKey="seeSlideNameCMSPageStorefront"/>
         <seeElement selector="{{SlideOnFrontend.minimumHeight('1', PageBuilderMinHeightProperty_500px.value)}}" stepKey="seeMinimumHeightCMSPageStorefront"/>
-        <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateHeightCMSPageStorefront">
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateHeightCMSPageStorefront">
             <argument name="content" value="{{SlideOnFrontend.wrapperCSS}}"/>
-            <argument name="height" value="PageBuilderSlideItemMinimumHeight_500"/>
+            <argument name="height" value="{{PageBuilderMinHeightProperty_500px.intValue}}"/>
         </actionGroup>
         <actionGroup ref="validateBackgroundAttributesWithNoImageForSlide" stepKey="validateBackgroundAttributesCMSPageStorefront">
             <argument name="section" value="SlideOnFrontend"/>
@@ -1629,9 +1629,9 @@
         <actionGroup ref="validateOverlayPositionPoster" stepKey="validateOverlayPositionCMSPageStorefrontMobile">
             <argument name="page" value="SlideOnFrontend"/>
         </actionGroup>
-        <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateHeightCMSPageStorefrontMobile">
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateHeightCMSPageStorefrontMobile">
             <argument name="content" value="{{SlideOnFrontend.wrapperCSS}}"/>
-            <argument name="height" value="PageBuilderSlideItemMinimumHeight_500"/>
+            <argument name="height" value="{{PageBuilderMinHeightProperty_500px.intValue}}"/>
         </actionGroup>
         <actionGroup ref="validateBackgroundImageContainer" stepKey="validateBackgroundImageCMSPageStorefrontMobile">
             <argument name="section" value="SlideOnFrontend"/>
