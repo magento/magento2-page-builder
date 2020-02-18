@@ -8,10 +8,10 @@ To fix this limitation for versions 1.3+, Page Builder uses Magento's native upg
 
 The Page Builder team recently had to change the configuration of the Row's full-width appearance to fix a layout issue. The fix was simple. We moved a style attribute from one element in the Row's full-width appearance to another element. But without the upgrade helpers, our change to the Row's configuration would have broken all previously saved Page Builder content with Rows. And because all Page Builder content starts with a Row, all Page Builder content would be broken!
 
-To fix this issue, we used the Page Builder DOM helper classes (`Magento\PageBuilder\Model\Dom\*`) to create a converter and a data patcher for the native Row content type:
+To fix this issue, we used the Page Builder DOM helper classes (`Magento\PageBuilder\Model\Dom\*`) to create a converter and a data patch for the native Row content type:
 
 1. **Converter** (See `FixFullWidthRowPadding.php`)
-2. **Patcher** (See `UpgradeFullWidthPadding.php`)
+2. **Data Patch** (See `UpgradeFullWidthPadding.php`)
 
    ![Example converter and upgrader classes](../images/upgrade-framework-example-pb.png)
 
@@ -82,9 +82,9 @@ class FixFullWidthRowPadding implements DataConverterInterface
 }
 ```
 
-### Patcher class example
+### Data patch class example
 
-The patcher class implements the `DataPatchInterface`. Specifically, it uses the framework's `UpgradeContentHelper` class to apply the converter class to all the database entities where Page Builder content exists. These locations are provided by the `UpgradableEntitiesPool`, described later in this topic.
+The data patch class implements the `DataPatchInterface`. Specifically, it uses the framework's `UpgradeContentHelper` class to apply the converter class to all the database entities where Page Builder content exists. These locations are provided by the `UpgradableEntitiesPool`, described later in this topic.
 
 Page Builder's `UpgradeFullWidthPadding` class is provided here as an example implementation:
 
@@ -225,7 +225,7 @@ To use Page Builder's content upgrade helpers for your own content-type configur
 
 1. Implement the `DataConverterInterface` to create a converter for your content type, using Page Builder's `FixFullWidthRowPadding` class as an example.
 
-1. Implement the `DataPatchInterface` to create a patcher for your content type, using Page Builder's `UpgradeFullWidthPadding` class as an example.
+1. Implement the `DataPatchInterface` to create a data patch for your content type, using Page Builder's `UpgradeFullWidthPadding` class as an example.
 
 1. Make a copy of the data in the `content` fields of existing entities (`cms_page`, `cms_block`, and so on). You will compare this content with the content changes made after running your upgrade patch.
 
@@ -235,10 +235,10 @@ To use Page Builder's content upgrade helpers for your own content-type configur
 
 1. Compare your post-upgraded content to the previous content.
 
-   If the conversion didn't convert your content as planned, remove your entry from the `patch_list` table, switch away from your test branch, and run `bin/magento setup:upgrade` to reset the database content and try again.
+   If the conversion didn't convert your content as planned, remove your entry from the `patch_list` table, restore your database content to the original values, tweak your converter, then run `bin/magento setup:upgrade` again. Repeat as necessary.
 
 ## How to upgrade overloaded Page Builder content types
 
-If you have overloaded the configurations of native Page Builder content types, you need to review Page Builder's native configuration changes for each release. If necessary, you will need to create a converter and patcher to customize how the native content types are updated for your changes.
+If you have overloaded the configurations of native Page Builder content types, you need to review Page Builder's native configuration changes for each release. If necessary, you will need to create a converter and data patch to customize how the native content types are updated for your changes.
 
 For example, in version 1.3, we updated the configuration of the native Row content type. As mentioned, we moved the padding attribute of the `full-width` appearance from the `<main>` element to the `<inner>` element. So if your Row configuration is different in your custom content type (for example, you removed the `<inner>` element), then you will need to upgrade your overloaded Row as described in the previous steps.
