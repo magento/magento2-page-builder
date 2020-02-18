@@ -31,7 +31,7 @@ define([
                 }
             });
             $slider.on('beforeChange', function (event, slick) {
-                var currentVideoSlide = slick.$slides[slick.currentSlide].querySelector('.jarallax');
+                currentVideoSlide = slick.$slides[slick.currentSlide].querySelector('.jarallax');
 
                 if (currentVideoSlide.jarallax.options.videoPlayOnlyVisible) {
                     currentVideoSlide.jarallax.video.pause();
