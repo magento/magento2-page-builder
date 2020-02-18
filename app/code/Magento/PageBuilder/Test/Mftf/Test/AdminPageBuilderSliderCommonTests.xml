@@ -596,24 +596,27 @@
         <actionGroup ref="saveEditPanelSettings" after="enterMinHeightPropertySlideItem" stepKey="saveEditPanelSettings2"/>
         <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateContentTypeHeightBeforeSave">
             <argument name="content" value="{{SliderOnStage.containerCSS}}"/>
-            <argument name="height" value="{{PageBuilderMinHeightProperty_300px.intValue}}"/>
-            <argument name="border" value="PageBuilderAdvancedBorderWidthProperty10"/>
-            <argument name="padding" value="PageBuilderPaddingProperty10"/>
+            <argument name="minHeight" value="{{PageBuilderMinHeightProperty_300px.intValue}}"/>
+            <argument name="borderWidth" value="{{PageBuilderAdvancedBorderWidthProperty10.value}}"/>
+            <argument name="paddingTop" value="{{PageBuilderPaddingProperty10.paddingTop}}"/>
+            <argument name="paddingBottom" value="{{PageBuilderPaddingProperty10.paddingBottom}}"/>
         </actionGroup>
         <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateContentTypeHeightAfterSave">
             <argument name="content" value="{{SliderOnStage.containerCSS}}"/>
-            <argument name="height" value="{{PageBuilderMinHeightProperty_300px.intValue}}"/>
-            <argument name="border" value="PageBuilderAdvancedBorderWidthProperty10"/>
-            <argument name="padding" value="PageBuilderPaddingProperty10"/>
+            <argument name="minHeight" value="{{PageBuilderMinHeightProperty_300px.intValue}}"/>
+            <argument name="borderWidth" value="{{PageBuilderAdvancedBorderWidthProperty10.value}}"/>
+            <argument name="paddingTop" value="{{PageBuilderPaddingProperty10.paddingTop}}"/>
+            <argument name="paddingBottom" value="{{PageBuilderPaddingProperty10.paddingBottom}}"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateContentTypeHeightStorefront">
             <argument name="content" value="{{SliderOnFrontend.all}}"/>
-            <argument name="height" value="{{PageBuilderMinHeightProperty_300px.intValue}}"/>
-            <argument name="border" value="PageBuilderAdvancedBorderWidthProperty10"/>
-            <argument name="padding" value="PageBuilderPaddingProperty10"/>
+            <argument name="minHeight" value="{{PageBuilderMinHeightProperty_300px.intValue}}"/>
+            <argument name="borderWidth" value="{{PageBuilderAdvancedBorderWidthProperty10.value}}"/>
+            <argument name="paddingTop" value="{{PageBuilderPaddingProperty10.paddingTop}}"/>
+            <argument name="paddingBottom" value="{{PageBuilderPaddingProperty10.paddingBottom}}"/>
         </actionGroup>
     </test>
     <test name="SliderWithNoDotsEqualToMinHeight" extends="RowWithBordersAndPaddingEqualToMinHeight">
@@ -666,18 +669,18 @@
         <actionGroup ref="saveEditPanelSettings" after="enterBackgroundColor" stepKey="saveEditPanelSettings2"/>
         <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateContentTypeHeightBeforeSave">
             <argument name="content" value="{{SliderOnStage.containerCSS}}"/>
-            <argument name="height" value="{{PageBuilderMinHeightProperty_300px.intValue}}"/>
+            <argument name="minHeight" value="{{PageBuilderMinHeightProperty_300px.intValue}}"/>
         </actionGroup>
         <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateContentTypeHeightAfterSave">
             <argument name="content" value="{{SliderOnStage.containerCSS}}"/>
-            <argument name="height" value="{{PageBuilderMinHeightProperty_300px.intValue}}"/>
+            <argument name="minHeight" value="{{PageBuilderMinHeightProperty_300px.intValue}}"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateContentTypeHeightStorefront">
             <argument name="content" value="{{SliderOnFrontend.all}}"/>
-            <argument name="height" value="{{PageBuilderMinHeightProperty_300px.intValue}}"/>
+            <argument name="minHeight" value="{{PageBuilderMinHeightProperty_300px.intValue}}"/>
         </actionGroup>
     </test>
     <test name="SliderMoveSlider">
