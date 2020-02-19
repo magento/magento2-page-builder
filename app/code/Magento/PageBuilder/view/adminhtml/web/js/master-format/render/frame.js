@@ -133,11 +133,18 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "und
 
         var renderFinished = _jquery.Deferred();
 
-        element.addEventListener("DOMSubtreeModified", function () {
+        var observer = new MutationObserver(function () {
           assertRenderFinished(element, countContentTypes(rootContainer), renderFinished.resolve);
+        });
+        observer.observe(element, {
+          attributes: true,
+          childList: true,
+          subtree: true
         }); // Combine this event with our engine waitForRenderFinish to ensure rendering is completed
 
         _jquery.when(_engine.waitForFinishRender(), renderFinished).then(function () {
+          observer.disconnect();
+
           _knockout.cleanNode(element);
 
           var filtered = (0, _filterHtml)((0, _jquery)(element));

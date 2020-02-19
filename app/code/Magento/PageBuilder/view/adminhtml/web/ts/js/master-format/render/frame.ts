@@ -134,12 +134,14 @@ function render(message: {stageId: string, tree: TreeItem}) {
              * present within the content.
              */
             const renderFinished = $.Deferred();
-            element.addEventListener("DOMSubtreeModified", () => {
+            const observer = new MutationObserver(() => {
                 assertRenderFinished(element, countContentTypes(rootContainer), renderFinished.resolve);
             });
+            observer.observe(element, { attributes: true, childList: true, subtree: true });
 
             // Combine this event with our engine waitForRenderFinish to ensure rendering is completed
             $.when(engine.waitForFinishRender(), renderFinished).then(() => {
+                observer.disconnect();
                 ko.cleanNode(element);
                 const filtered: JQuery = filterHtml($(element));
                 const output = decodeAllDataUrlsInString(filtered.html());
