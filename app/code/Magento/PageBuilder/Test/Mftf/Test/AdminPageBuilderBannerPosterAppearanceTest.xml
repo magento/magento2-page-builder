@@ -2074,7 +2074,7 @@
             <argument name="property" value="PageBuilderVideoBackgroundLazyLoad_Enabled"/>
         </actionGroup>
         <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="setPlayOnlyVisible">
-            <argument name="property" value="PageBuilderVideoBackgroundPlayOnlyVisible_Enabled"/>
+            <argument name="property" value="PageBuilderVideoBackgroundPlayOnlyWhenVisible_Enabled"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachFallbackImage">
             <argument name="property" value="PageBuilderVideoBackgroundFallbackImage_JPG"/>
@@ -2088,7 +2088,7 @@
             <argument name="overlayColor" value="{{PageBuilderVideoBackgroundOverlayColor_Hex_Grey.rgba}}"/>
             <argument name="infiniteLoop" value="PageBuilderVideoBackgroundInfiniteLoop_Enabled"/>
             <argument name="lazyLoad" value="PageBuilderVideoBackgroundLazyLoad_Enabled"/>
-            <argument name="playOnlyVisible" value="PageBuilderVideoBackgroundPlayOnlyVisible_Enabled"/>
+            <argument name="playOnlyVisible" value="PageBuilderVideoBackgroundPlayOnlyWhenVisible_Enabled"/>
             <argument name="fallbackImage" value="PageBuilderVideoBackgroundFallbackImage_JPG"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection2">
@@ -2109,7 +2109,7 @@
             <argument name="overlayColor" value="{{PageBuilderVideoBackgroundOverlayColor_Hex_Grey.rgba}}"/>
             <argument name="infiniteLoop" value="PageBuilderVideoBackgroundInfiniteLoop_Enabled"/>
             <argument name="lazyLoad" value="PageBuilderVideoBackgroundLazyLoad_Enabled"/>
-            <argument name="playOnlyVisible" value="PageBuilderVideoBackgroundPlayOnlyVisible_Enabled"/>
+            <argument name="playOnlyVisible" value="PageBuilderVideoBackgroundPlayOnlyWhenVisible_Enabled"/>
             <argument name="fallbackImage" value="PageBuilderVideoBackgroundFallbackImage_JPG"/>
         </actionGroup>
         <seeElement selector="{{ButtonItemOnStage.base('1')}}" stepKey="seeButtonStage2"/>
@@ -2136,7 +2136,7 @@
             <argument name="property" value="PageBuilderVideoBackgroundLazyLoad_Enabled"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsCheckedSlideOutProperty" stepKey="seePlayOnlyVisible">
-            <argument name="property" value="PageBuilderVideoBackgroundPlayOnlyVisible_Enabled"/>
+            <argument name="property" value="PageBuilderVideoBackgroundPlayOnlyWhenVisible_Enabled"/>
         </actionGroup>
         <actionGroup ref="seeImageUploadedOnSlideOut" stepKey="seeFallbackImage">
             <argument name="property" value="PageBuilderVideoBackgroundFallbackImage_JPG"/>
@@ -2152,7 +2152,7 @@
             <argument name="overlayColor" value="{{PageBuilderVideoBackgroundOverlayColor_Hex_Grey.rgba}}"/>
             <argument name="infiniteLoop" value="PageBuilderVideoBackgroundInfiniteLoop_Enabled"/>
             <argument name="lazyLoad" value="PageBuilderVideoBackgroundLazyLoad_Enabled"/>
-            <argument name="playOnlyVisible" value="PageBuilderVideoBackgroundPlayOnlyVisible_Enabled"/>
+            <argument name="playOnlyVisible" value="PageBuilderVideoBackgroundPlayOnlyWhenVisible_Enabled"/>
             <argument name="fallbackImage" value="PageBuilderVideoBackgroundFallbackImage_JPG"/>
         </actionGroup>
         <seeElement selector="{{ButtonItemOnStorefrontEmptyLink.base('1')}}" stepKey="seeButtonStorefront"/>
@@ -2322,6 +2322,286 @@
         </actionGroup>
         <actionGroup ref="validateInvalidVideoBackgroundAndNoFallbackImage" stepKey="validateStorefront">
             <argument name="section" value="BannerOnFrontend"/>
+        </actionGroup>
+        <seeElement selector="{{ButtonItemOnStorefrontEmptyLink.base('1')}}" stepKey="seeButtonStorefront"/>
+    </test>
+    <test name="BannerPosterVideoBackgroundNoFallbackImageDisabledLoopAndPlayWhenVisibleAndLazyLoad">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Banner"/>
+            <title value="Validate Banner with Poster Appearance with No Fallback Image, Disabled Infinite Loop, Disabled Play Only When Visible, and Disabled Lazy Load"/>
+            <description value="Validate video background with no fallback image, disabled infinite loop, disabled play only when visible, and disabled lazy load."/>
+            <severity value="MAJOR"/>
+            <useCaseId value="PB-265"/>
+            <testCaseId value="MC-31646"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-banner"/>
+            <group value="pagebuilder-bannerPoster"/>
+            <group value="pagebuilder-backgroundForm"/>
+            <group value="pagebuilder-video-background"/>
+        </annotations>
+        <before>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
+                <argument name="CMSPage" value="$$createCMSPage$$"/>
+            </actionGroup>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBannerIntoStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setAppearance">
+            <argument name="property" value="PageBuilderBannerAppearance_Poster"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty">
+            <argument name="property" value="PageBuilderMinHeightProperty_200"/>
+        </actionGroup>
+        <!-- Set Edit Panel -->
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setBackgroundType">
+            <argument name="property" value="PageBuilderRowBackgroundType_Video"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrlValid">
+            <argument name="property" value="PageBuilderVideoBackgroundUrl_YouTube_Embedded"/>
+        </actionGroup>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="disableInfiniteLoop">
+            <argument name="property" value="PageBuilderVideoBackgroundInfiniteLoop_Disabled"/>
+        </actionGroup>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="disableLazyLoad">
+            <argument name="property" value="PageBuilderVideoBackgroundLazyLoad_Disabled"/>
+        </actionGroup>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="disablePlayOnlyWhenVisible">
+            <argument name="property" value="PageBuilderVideoBackgroundPlayOnlyWhenVisible_Disabled"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <actionGroup ref="validateVideoBackgroundWithOnlyVideoUrl" stepKey="validateStage1">
+            <argument name="section" value="BannerOnBackend"/>
+            <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_YouTube_Embedded"/>
+            <argument name="infiniteLoop" value="PageBuilderVideoBackgroundInfiniteLoop_Disabled"/>
+            <argument name="lazyLoad" value="PageBuilderVideoBackgroundLazyLoad_Disabled"/>
+            <argument name="playOnlyWhenVisible" value="PageBuilderVideoBackgroundPlayOnlyWhenVisible_Disabled"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection2">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <seeElement selector="{{ButtonItemOnStage.base('1')}}" stepKey="seeButtonStage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!-- Validate Stage After Save -->
+        <scrollTo selector="{{BannerOnBackend.base('1')}}" stepKey="scrollRow4Stage"/>
+        <actionGroup ref="validateVideoBackgroundWithOnlyVideoUrl" stepKey="validateStage2">
+            <argument name="section" value="BannerOnBackend"/>
+            <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_YouTube_Embedded"/>
+            <argument name="infiniteLoop" value="PageBuilderVideoBackgroundInfiniteLoop_Disabled"/>
+            <argument name="lazyLoad" value="PageBuilderVideoBackgroundLazyLoad_Disabled"/>
+            <argument name="playOnlyWhenVisible" value="PageBuilderVideoBackgroundPlayOnlyWhenVisible_Disabled"/>
+        </actionGroup>
+        <seeElement selector="{{ButtonItemOnStage.base('1')}}" stepKey="seeButtonStage2"/>
+        <!-- Validate Edit Panel After Save -->
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditPanelAfterSave">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBackgroundColorEmptyAfterSave">
+            <argument name="property" value="PageBuilderBackgroundColor_Default"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateVideoUrlAfterSave">
+            <argument name="property" value="PageBuilderVideoBackgroundUrl_YouTube_Embedded"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateOverlayColorEmptyAfterSave">
+            <argument name="property" value="PageBuilderVideoBackgroundOverlayColor_Empty"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="validateInfiniteLoopAfterSave">
+            <argument name="property" value="PageBuilderVideoBackgroundInfiniteLoop_Disabled"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="validateLazyLoadAfterSave">
+            <argument name="property" value="PageBuilderVideoBackgroundLazyLoad_Disabled"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="validatePlayOnlyWhenVisibleAfterSave">
+            <argument name="property" value="PageBuilderVideoBackgroundPlayOnlyWhenVisible_Disabled"/>
+        </actionGroup>
+        <actionGroup ref="seeNoImageUploadedOnSlideOut" stepKey="validateNoFallbackImageAfterSave">
+            <argument name="property" value="PageBuilderVideoBackgroundFallbackImage_Empty"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStorefront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <actionGroup ref="validateVideoBackgroundWithOnlyVideoUrl" stepKey="validateStorefront">
+            <argument name="section" value="BannerOnFrontend"/>
+            <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_YouTube_Embedded"/>
+            <argument name="infiniteLoop" value="PageBuilderVideoBackgroundInfiniteLoop_Disabled"/>
+            <argument name="lazyLoad" value="PageBuilderVideoBackgroundLazyLoad_Disabled"/>
+            <argument name="playOnlyWhenVisible" value="PageBuilderVideoBackgroundPlayOnlyWhenVisible_Disabled"/>
+        </actionGroup>
+        <seeElement selector="{{ButtonItemOnStorefront.base('1')}}" stepKey="seeButtonStorefront"/>
+    </test>
+    <test name="BlockRenderBannerPosterAppearanceWithVideoBackgroundThroughBlockContentType">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Block Content"/>
+            <title value="Render Banner Poster Appearance with Video Background Through Block Content Type"/>
+            <description value="Verify that users are able to successfully render the banner content type poster appearance with a video background through the Block content type."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="PB-265"/>
+            <testCaseId value="MC-31686"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+            <group value="pagebuilder-block-content"/>
+            <group value="pagebuilder-banner"/>
+            <group value="pagebuilder-bannerPoster"/>
+            <group value="pagebuilder-backgroundForm"/>
+            <group value="pagebuilder-video-background"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <createData entity="_emptyCmsBlock" stepKey="createCMSBlock"/>
+            <actionGroup ref="NavigateToCreatedCMSBlockPageActionGroup" stepKey="navigateToCreatedCMSBlockPage1">
+                <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
+            </actionGroup>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock"/>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="navigateToFallbackImageFolder">
+                <argument name="FolderName" value="{{PageBuilderVideoBackgroundFallbackImage_JPG.path}}"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="deleteFallbackImage">
+                <argument name="Image" value="PageBuilderVideoBackgroundFallbackImage_JPG"/>
+            </actionGroup>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBannerIntoStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setAppearance">
+            <argument name="property" value="PageBuilderBannerAppearance_Poster"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty">
+            <argument name="property" value="PageBuilderMinHeightProperty_200"/>
+        </actionGroup>
+        <!-- Update All Video Background Fields -->
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBackgroundColor">
+            <argument name="property" value="PageBuilderBackgroundColor_Pink"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setBackgroundType">
+            <argument name="property" value="PageBuilderRowBackgroundType_Video"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrl">
+            <argument name="property" value="PageBuilderVideoBackgroundUrl_YouTube_Embedded"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterOverlayColor">
+            <argument name="property" value="PageBuilderVideoBackgroundOverlayColor_Hex_Grey"/>
+        </actionGroup>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="setInfiniteLoop">
+            <argument name="property" value="PageBuilderVideoBackgroundInfiniteLoop_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="setLazyLoad">
+            <argument name="property" value="PageBuilderVideoBackgroundLazyLoad_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="setPlayOnlyWhenVisible">
+            <argument name="property" value="PageBuilderVideoBackgroundPlayOnlyWhenVisible_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachFallbackImage">
+            <argument name="property" value="PageBuilderVideoBackgroundFallbackImage_JPG"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <actionGroup ref="validateVideoBackgroundWithAllAttributes" stepKey="validateCMSBlockStage">
+            <argument name="section" value="BannerOnBackend"/>
+            <argument name="backgroundColor" value="{{PageBuilderBackgroundColor_Pink.rgb}}"/>
+            <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_YouTube_Embedded"/>
+            <argument name="overlayColor" value="{{PageBuilderVideoBackgroundOverlayColor_Hex_Grey.rgba}}"/>
+            <argument name="infiniteLoop" value="PageBuilderVideoBackgroundInfiniteLoop_Enabled"/>
+            <argument name="lazyLoad" value="PageBuilderVideoBackgroundLazyLoad_Enabled"/>
+            <argument name="playOnlyWhenVisible" value="PageBuilderVideoBackgroundPlayOnlyWhenVisible_Enabled"/>
+            <argument name="fallbackImage" value="PageBuilderVideoBackgroundFallbackImage_JPG"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection2">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <seeElement selector="{{ButtonItemOnStage.base('1')}}" stepKey="seeButtonStage"/>
+        <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveCMSBlock"/>
+        <!-- Add Block to CMS Page -->
+        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPanelAddContentMenuSection">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDropBlock">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
+            <argument name="block" value="$$createCMSBlock$$"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsBlock"/>
+        <!-- Edit Row On CMS Page -->
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuRowCMSPage">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceCMSPage">
+            <argument name="property" value="PageBuilderRowAppearance_FullBleed"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldPadding" stepKey="enterPaddingCMSPage">
+            <argument name="property" value="PageBuilderPaddingPropertyDefault"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsRowCMSPage"/>
+        <!-- Validate CMS Page Stage -->
+        <actionGroup ref="validateVideoBackgroundWithAllAttributes" stepKey="validateCMSPageStage">
+            <argument name="section" value="BannerOnFrontend"/>
+            <argument name="backgroundColor" value="{{PageBuilderBackgroundColor_Pink.rgb}}"/>
+            <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_YouTube_Embedded"/>
+            <argument name="overlayColor" value="{{PageBuilderVideoBackgroundOverlayColor_Hex_Grey.rgba}}"/>
+            <argument name="infiniteLoop" value="PageBuilderVideoBackgroundInfiniteLoop_Enabled"/>
+            <argument name="lazyLoad" value="PageBuilderVideoBackgroundLazyLoad_Enabled"/>
+            <argument name="playOnlyWhenVisible" value="PageBuilderVideoBackgroundPlayOnlyWhenVisible_Enabled"/>
+            <argument name="fallbackImage" value="PageBuilderVideoBackgroundFallbackImage_JPG"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <seeElement selector="{{ButtonItemOnStorefrontEmptyLink.base('1')}}" stepKey="seeButtonCMSPageStage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate Storefront -->
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStorefront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <actionGroup ref="validateVideoBackgroundWithAllAttributes" stepKey="validateStorefront">
+            <argument name="section" value="BannerOnFrontend"/>
+            <argument name="backgroundColor" value="{{PageBuilderBackgroundColor_Pink.rgb}}"/>
+            <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_YouTube_Embedded"/>
+            <argument name="overlayColor" value="{{PageBuilderVideoBackgroundOverlayColor_Hex_Grey.rgba}}"/>
+            <argument name="infiniteLoop" value="PageBuilderVideoBackgroundInfiniteLoop_Enabled"/>
+            <argument name="lazyLoad" value="PageBuilderVideoBackgroundLazyLoad_Enabled"/>
+            <argument name="playOnlyWhenVisible" value="PageBuilderVideoBackgroundPlayOnlyWhenVisible_Enabled"/>
+            <argument name="fallbackImage" value="PageBuilderVideoBackgroundFallbackImage_JPG"/>
+            <argument name="index" value="1"/>
         </actionGroup>
         <seeElement selector="{{ButtonItemOnStorefrontEmptyLink.base('1')}}" stepKey="seeButtonStorefront"/>
     </test>
