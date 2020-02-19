@@ -699,7 +699,7 @@
         <executeJS function="return Math.abs(Math.round({$overlayRightPositionAfterSave}-{$buttonRightPositionAfterSave}-30))" stepKey="overlayMinusButtonMinusPaddingAfterSave"/>
         <executeJS function="return Math.abs(Math.round({$overlayRightPositionStoreFront}-{$buttonRightPositionStoreFront}-30))" stepKey="overlayMinusButtonMinusPaddingStoreFront"/>
     </test>
-    <test name="SliderMinHeightWithCollageCenterSlideMinHeight" extends="SliderMinHeightWithSlideMinHeight">
+    <test name="SliderMinHeightWithCollageCenterSlideMinHeight" extends="SliderMinHeightWithPosterSlideMinHeight">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
@@ -713,7 +713,7 @@
             <group value="pagebuilder-slider"/>
             <group value="pagebuilder-sliderCollageCenter"/>
         </annotations>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearancePropertySlider1" before="enterSlideMinHeight1">
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceSlide1">
             <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
         </actionGroup>
         <waitForElementVisible selector="{{SlideOnBackend.noCollageMinimumHeight('1')}}" stepKey="seeFirstSlideHeightStage"/>
