@@ -6,6 +6,7 @@
 import $ from "jquery";
 import ko from "knockout";
 import engine from "Magento_Ui/js/lib/knockout/template/engine";
+import _ from "underscore";
 import Config from "../../config";
 import ConfigInterface from "../../config.types";
 import ContentTypeCollectionInterface from "../../content-type-collection.types";
@@ -94,6 +95,32 @@ export function loadTemplate(name: string): Promise<string> {
 }
 
 /**
+ * Assert if the render has finished
+ */
+const assertRenderFinished = _.debounce((element: HTMLElement, expectedCount: number, callback: () => {}) => {
+    if (element.querySelectorAll("[data-content-type]").length === expectedCount) {
+        callback();
+    }
+}, 50);
+
+/**
+ * Iterate over the root container and count all content types
+ *
+ * @param rootContainer
+ * @param count
+ */
+function countContentTypes(rootContainer: ContentTypeCollectionInterface, count?: number) {
+    count = count || 0;
+    rootContainer.getChildren()().forEach((child: ContentTypeCollectionInterface) => {
+        ++count;
+        if (typeof child.getChildren !== "undefined" && child.getChildren()().length > 0) {
+            count = countContentTypes(child, count);
+        }
+    });
+    return count;
+}
+
+/**
  * Perform a render of the provided data
  *
  * @param message
@@ -102,12 +129,23 @@ function render(message: {stageId: string, tree: TreeItem}) {
     return new Promise((resolve, reject) => {
         createRenderTree(message.stageId, message.tree).then((rootContainer: ContentTypeCollectionInterface) => {
             const element = document.createElement("div");
-            engine.waitForFinishRender().then(() => {
+            /**
+             * Setup an event on the element to observe changes and count the expected amount of content types are
+             * present within the content.
+             */
+            const renderFinished = $.Deferred();
+            element.addEventListener("DOMSubtreeModified", () => {
+                assertRenderFinished(element, countContentTypes(rootContainer), renderFinished.resolve);
+            });
+
+            // Combine this event with our engine waitForRenderFinish to ensure rendering is completed
+            $.when(engine.waitForFinishRender(), renderFinished).then(() => {
                 ko.cleanNode(element);
                 const filtered: JQuery = filterHtml($(element));
                 const output = decodeAllDataUrlsInString(filtered.html());
                 resolve(output);
             });
+
             ko.applyBindingsToNode(
                 element,
                 {

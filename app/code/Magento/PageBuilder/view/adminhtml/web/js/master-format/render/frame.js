@@ -1,6 +1,6 @@
 /*eslint-disable */
 /* jscs:disable */
-define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/master-format/filter-html"], function (_jquery, _knockout, _engine, _config, _contentTypeFactory, _directives, _filterHtml) {
+define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/master-format/filter-html"], function (_jquery, _knockout, _engine, _underscore, _config, _contentTypeFactory, _directives, _filterHtml) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -87,6 +87,35 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "Mag
     });
   }
   /**
+   * Assert if the render has finished
+   */
+
+
+  var assertRenderFinished = _underscore.debounce(function (element, expectedCount, callback) {
+    if (element.querySelectorAll("[data-content-type]").length === expectedCount) {
+      callback();
+    }
+  }, 50);
+  /**
+   * Iterate over the root container and count all content types
+   *
+   * @param rootContainer
+   * @param count
+   */
+
+
+  function countContentTypes(rootContainer, count) {
+    count = count || 0;
+    rootContainer.getChildren()().forEach(function (child) {
+      ++count;
+
+      if (typeof child.getChildren !== "undefined" && child.getChildren()().length > 0) {
+        count = countContentTypes(child, count);
+      }
+    });
+    return count;
+  }
+  /**
    * Perform a render of the provided data
    *
    * @param message
@@ -97,8 +126,18 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "Mag
     return new Promise(function (resolve, reject) {
       createRenderTree(message.stageId, message.tree).then(function (rootContainer) {
         var element = document.createElement("div");
+        /**
+         * Setup an event on the element to observe changes and count the expected amount of content types are
+         * present within the content.
+         */
 
-        _engine.waitForFinishRender().then(function () {
+        var renderFinished = _jquery.Deferred();
+
+        element.addEventListener("DOMSubtreeModified", function () {
+          assertRenderFinished(element, countContentTypes(rootContainer), renderFinished.resolve);
+        }); // Combine this event with our engine waitForRenderFinish to ensure rendering is completed
+
+        _jquery.when(_engine.waitForFinishRender(), renderFinished).then(function () {
           _knockout.cleanNode(element);
 
           var filtered = (0, _filterHtml)((0, _jquery)(element));
