@@ -92,14 +92,8 @@ define(["jarallax", "jarallaxVideo", "jquery", "knockout", "mage/translate", "Ma
 
       _this.contentType.dataStore.subscribe(_this.buildJarallax);
 
-      _events.on("row:mountAfter", function (args) {
+      _events.on("slide:mountAfter", function (args) {
         if (args.id === _this.contentType.id) {
-          _this.buildJarallax();
-        }
-      });
-
-      _events.on("contentType:mountAfter", function (args) {
-        if (args.contentType.parentContentType && args.contentType.parentContentType.id === _this.contentType.id) {
           _this.buildJarallax();
         }
       });

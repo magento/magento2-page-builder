@@ -11,8 +11,7 @@ define([
 
     return function (config, element) {
         var videoElement = element[0].querySelector('[data-background-type=video]'),
-            $slider = null,
-            currentVideoSlide = null;
+            $slider = null;
 
         showOnHover(config);
 
@@ -20,7 +19,7 @@ define([
             $slider = $(element).closest('[data-content-type=slider]');
             videoBackground(config, videoElement);
             $slider.on('setPosition', function (event, slick) {
-                currentVideoSlide = slick.$slides[slick.currentSlide].querySelector('.jarallax');
+                var currentVideoSlide = slick.$slides[slick.currentSlide].querySelector('.jarallax');
 
                 if (currentVideoSlide.jarallax.options.videoPlayOnlyVisible) {
                     currentVideoSlide.jarallax.video.play();
@@ -31,7 +30,7 @@ define([
                 }
             });
             $slider.on('beforeChange', function (event, slick) {
-                currentVideoSlide = slick.$slides[slick.currentSlide].querySelector('.jarallax');
+                var currentVideoSlide = slick.$slides[slick.currentSlide].querySelector('.jarallax');
 
                 if (currentVideoSlide.jarallax.options.videoPlayOnlyVisible) {
                     currentVideoSlide.jarallax.video.pause();

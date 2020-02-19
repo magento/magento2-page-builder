@@ -137,13 +137,8 @@ export default class Preview extends BasePreview {
         super(contentType, config, observableUpdater);
 
         this.contentType.dataStore.subscribe(this.buildJarallax);
-        events.on("row:mountAfter", (args: ContentTypeReadyEventParamsInterface) => {
+        events.on("slide:mountAfter", (args: ContentTypeReadyEventParamsInterface) => {
             if (args.id === this.contentType.id) {
-                this.buildJarallax();
-            }
-        });
-        events.on("contentType:mountAfter", (args: ContentTypeMountEventParamsInterface) => {
-            if (args.contentType.parentContentType && args.contentType.parentContentType.id === this.contentType.id) {
                 this.buildJarallax();
             }
         });
