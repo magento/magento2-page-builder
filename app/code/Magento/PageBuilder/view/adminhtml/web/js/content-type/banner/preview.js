@@ -80,14 +80,8 @@ define(["jarallax", "jarallaxVideo", "jquery", "mage/translate", "Magento_PageBu
 
       _this.contentType.dataStore.subscribe(_this.buildJarallax);
 
-      _events.on("row:mountAfter", function (args) {
+      _events.on("banner:mountAfter", function (args) {
         if (args.id === _this.contentType.id) {
-          _this.buildJarallax();
-        }
-      });
-
-      _events.on("contentType:mountAfter", function (args) {
-        if (args.contentType.parentContentType && args.contentType.parentContentType.id === _this.contentType.id) {
           _this.buildJarallax();
         }
       });
