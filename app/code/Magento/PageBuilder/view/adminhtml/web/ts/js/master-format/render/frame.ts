@@ -25,9 +25,7 @@ let lastRenderId: string;
 /**
  * Debounce the render call, so we don't render until the final request
  */
-const debounceRender = _.debounce((message: {stageId: string, tree: TreeItem}) => {
-    const renderId = mageUtils.uniqueid();
-    lastRenderId = renderId;
+const debounceRender = _.debounce((message: {stageId: string, tree: TreeItem}, renderId: string) => {
     render(message).then((output) => {
         // Only post the most recent render back to the parent
         if (lastRenderId === renderId) {
@@ -58,7 +56,9 @@ export default function listen(config: ConfigInterface) {
                 portDeferred.resolve(port);
                 port.onmessage = (messageEvent) => {
                     if (messageEvent.data.type === "render") {
-                        debounceRender(messageEvent.data.message);
+                        const renderId = mageUtils.uniqueid();
+                        lastRenderId = renderId;
+                        debounceRender(messageEvent.data.message, renderId);
                     }
                     if (messageEvent.data.type === "template") {
                         const message = messageEvent.data.message;
@@ -156,12 +156,10 @@ function render(message: {stageId: string, tree: TreeItem}) {
             // Combine this event with our engine waitForRenderFinish to ensure rendering is completed
             $.when(engine.waitForFinishRender(), renderFinished).then(() => {
                 observer.disconnect();
-                _.defer(() => {
-                    ko.cleanNode(element);
-                    const filtered: JQuery = filterHtml($(element));
-                    const output = decodeAllDataUrlsInString(filtered.html());
-                    resolve(output);
-                });
+                ko.cleanNode(element);
+                const filtered: JQuery = filterHtml($(element));
+                const output = decodeAllDataUrlsInString(filtered.html());
+                resolve(output);
             });
 
             ko.applyBindingsToNode(

@@ -1,6 +1,6 @@
 /*eslint-disable */
 /* jscs:disable */
-define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/resource/jquery/ui/jquery.ui.touch-punch", "underscore", "Magento_PageBuilder/js/binding/sortable", "Magento_PageBuilder/js/collection", "Magento_PageBuilder/js/data-store", "Magento_PageBuilder/js/drag-drop/matrix", "Magento_PageBuilder/js/master-format/render", "Magento_PageBuilder/js/stage-builder", "Magento_PageBuilder/js/utils/promise-deferred"], function (_jquery, _knockout, _events, _jqueryUi, _underscore, _sortable, _collection, _dataStore, _matrix, _render, _stageBuilder, _promiseDeferred) {
+define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/resource/jquery/ui/jquery.ui.touch-punch", "mageUtils", "underscore", "Magento_PageBuilder/js/binding/sortable", "Magento_PageBuilder/js/collection", "Magento_PageBuilder/js/data-store", "Magento_PageBuilder/js/drag-drop/matrix", "Magento_PageBuilder/js/master-format/render", "Magento_PageBuilder/js/stage-builder", "Magento_PageBuilder/js/utils/promise-deferred"], function (_jquery, _knockout, _events, _jqueryUi, _mageUtils, _underscore, _sortable, _collection, _dataStore, _matrix, _render, _stageBuilder, _promiseDeferred) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -38,15 +38,17 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
       this.renderingLocks = [];
       this.template = "Magento_PageBuilder/content-type/preview";
       this.collection = new _collection();
-      this.applyBindingsDebounce = _underscore.debounce(function () {
+      this.applyBindingsDebounce = _underscore.debounce(function (renderId) {
         _this.render.applyBindings(_this.rootContainer).then(function (renderedOutput) {
-          _events.trigger("stage:" + _this.id + ":masterFormatRenderAfter", {
-            value: renderedOutput
-          });
+          if (_this.lastRenderId === renderId) {
+            _events.trigger("stage:" + _this.id + ":masterFormatRenderAfter", {
+              value: renderedOutput
+            });
 
-          _this.renderingLocks.forEach(function (lock) {
-            lock.resolve(renderedOutput);
-          });
+            _this.renderingLocks.forEach(function (lock) {
+              lock.resolve(renderedOutput);
+            });
+          }
         }).catch(function (error) {
           if (error) {
             console.error(error);
@@ -133,7 +135,11 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
           // Create the rendering lock straight away
           _this2.createLock();
 
-          _this2.applyBindingsDebounce();
+          var renderId = _mageUtils.uniqueid();
+
+          _this2.lastRenderId = renderId;
+
+          _this2.applyBindingsDebounce(renderId);
         }
       });
 

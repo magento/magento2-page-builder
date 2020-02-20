@@ -15,10 +15,7 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "mag
    * Debounce the render call, so we don't render until the final request
    */
 
-  var debounceRender = _underscore.debounce(function (message) {
-    var renderId = _mageUtils.uniqueid();
-
-    lastRenderId = renderId;
+  var debounceRender = _underscore.debounce(function (message, renderId) {
     render(message).then(function (output) {
       // Only post the most recent render back to the parent
       if (lastRenderId === renderId) {
@@ -51,7 +48,10 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "mag
 
         port.onmessage = function (messageEvent) {
           if (messageEvent.data.type === "render") {
-            debounceRender(messageEvent.data.message);
+            var renderId = _mageUtils.uniqueid();
+
+            lastRenderId = renderId;
+            debounceRender(messageEvent.data.message, renderId);
           }
 
           if (messageEvent.data.type === "template") {
@@ -160,13 +160,11 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "mag
         _jquery.when(_engine.waitForFinishRender(), renderFinished).then(function () {
           observer.disconnect();
 
-          _underscore.defer(function () {
-            _knockout.cleanNode(element);
+          _knockout.cleanNode(element);
 
-            var filtered = (0, _filterHtml)((0, _jquery)(element));
-            var output = (0, _directives)(filtered.html());
-            resolve(output);
-          });
+          var filtered = (0, _filterHtml)((0, _jquery)(element));
+          var output = (0, _directives)(filtered.html());
+          resolve(output);
         });
 
         _knockout.applyBindingsToNode(element, {

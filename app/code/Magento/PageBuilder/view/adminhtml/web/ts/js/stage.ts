@@ -7,6 +7,7 @@ import $ from "jquery";
 import ko from "knockout";
 import events from "Magento_PageBuilder/js/events";
 import "Magento_PageBuilder/js/resource/jquery/ui/jquery.ui.touch-punch";
+import mageUtils from "mageUtils";
 import _ from "underscore";
 import "./binding/sortable";
 import Collection from "./collection";
@@ -40,21 +41,24 @@ export default class Stage {
     private template: string = "Magento_PageBuilder/content-type/preview";
     private render: Render;
     private collection: Collection = new Collection();
+    private lastRenderId: string;
 
     /**
      * Debounce the applyBindings call by 500ms to stop duplicate calls
      *
      * @type {(() => void) & _.Cancelable}
      */
-    private applyBindingsDebounce = _.debounce(() => {
+    private applyBindingsDebounce = _.debounce((renderId: string) => {
         this.render.applyBindings(this.rootContainer)
             .then((renderedOutput: string) => {
-                events.trigger(`stage:${ this.id }:masterFormatRenderAfter`, {
-                    value: renderedOutput,
-                });
-                this.renderingLocks.forEach((lock) => {
-                    lock.resolve(renderedOutput);
-                });
+                if (this.lastRenderId === renderId) {
+                    events.trigger(`stage:${ this.id }:masterFormatRenderAfter`, {
+                        value: renderedOutput,
+                    });
+                    this.renderingLocks.forEach((lock) => {
+                        lock.resolve(renderedOutput);
+                    });
+                }
             }).catch((error: Error) => {
                 if (error) {
                     console.error(error);
@@ -133,7 +137,9 @@ export default class Stage {
             if (args.stageId === this.id) {
                 // Create the rendering lock straight away
                 this.createLock();
-                this.applyBindingsDebounce();
+                const renderId = mageUtils.uniqueid();
+                this.lastRenderId = renderId;
+                this.applyBindingsDebounce(renderId);
             }
         });
 
