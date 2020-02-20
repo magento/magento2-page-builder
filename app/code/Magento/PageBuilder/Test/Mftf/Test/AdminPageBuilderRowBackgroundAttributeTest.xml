@@ -2093,6 +2093,9 @@
             <argument name="index" value="4"/>
         </actionGroup>
         <!-- Validate Storefront -->
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStorefront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
         <wait time="5" stepKey="waitForVideoCompleteStorefront"/>
         <actionGroup ref="validateVideoBackgroundFinishedPlayingBeforeViewing" stepKey="validateVideoFinishedPlayingStorefront">
             <argument name="section" value="RowOnStorefront"/>
