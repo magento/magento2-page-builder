@@ -9,9 +9,10 @@ define([
     'use strict';
 
     return function (config, element) {
+        var videoElement = element[0].querySelector('[data-background-type=video]');
+
         showOnHover(config);
 
-        var videoElement = element[0].querySelector('[data-background-type=video]');
         if (videoElement) {
             videoBackground(config, videoElement);
         }
