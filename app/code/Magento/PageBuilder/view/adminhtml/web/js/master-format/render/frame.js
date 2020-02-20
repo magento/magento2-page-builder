@@ -1,6 +1,6 @@
 /*eslint-disable */
 /* jscs:disable */
-define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/master-format/filter-html"], function (_jquery, _knockout, _engine, _underscore, _config, _contentTypeFactory, _directives, _filterHtml) {
+define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "mageUtils", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/master-format/filter-html"], function (_jquery, _knockout, _engine, _mageUtils, _underscore, _config, _contentTypeFactory, _directives, _filterHtml) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -10,9 +10,29 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "und
   var portDeferred = _jquery.Deferred();
 
   var deferredTemplates = {};
+  var lastRenderId;
+  /**
+   * Debounce the render call, so we don't render until the final request
+   */
+
+  var debounceRender = _underscore.debounce(function (message) {
+    var renderId = _mageUtils.uniqueid();
+
+    lastRenderId = renderId;
+    render(message).then(function (output) {
+      // Only post the most recent render back to the parent
+      if (lastRenderId === renderId) {
+        port.postMessage({
+          type: "render",
+          message: output
+        });
+      }
+    });
+  }, 50);
   /**
    * Listen for requests from the parent window for a render
    */
+
 
   function listen(config) {
     _config.setConfig(config);
@@ -31,12 +51,7 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "und
 
         port.onmessage = function (messageEvent) {
           if (messageEvent.data.type === "render") {
-            render(messageEvent.data.message).then(function (output) {
-              port.postMessage({
-                type: "render",
-                message: output
-              });
-            });
+            debounceRender(messageEvent.data.message);
           }
 
           if (messageEvent.data.type === "template") {
@@ -143,6 +158,7 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "und
         }); // Combine this event with our engine waitForRenderFinish to ensure rendering is completed
 
         _jquery.when(_engine.waitForFinishRender(), renderFinished).then(function () {
+          console.log("count " + countContentTypes(rootContainer));
           observer.disconnect();
 
           _knockout.cleanNode(element);

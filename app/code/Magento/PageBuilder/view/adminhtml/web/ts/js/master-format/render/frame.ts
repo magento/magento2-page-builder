@@ -6,6 +6,7 @@
 import $ from "jquery";
 import ko from "knockout";
 import engine from "Magento_Ui/js/lib/knockout/template/engine";
+import mageUtils from "mageUtils";
 import _ from "underscore";
 import Config from "../../config";
 import ConfigInterface from "../../config.types";
@@ -19,6 +20,24 @@ import { TreeItem } from "./serialize";
 let port: MessagePort = null;
 const portDeferred: JQueryDeferred<MessagePort> = $.Deferred();
 const deferredTemplates: {[key: string]: JQueryDeferred<string>} = {};
+let lastRenderId: string;
+
+/**
+ * Debounce the render call, so we don't render until the final request
+ */
+const debounceRender = _.debounce((message: {stageId: string, tree: TreeItem}) => {
+    const renderId = mageUtils.uniqueid();
+    lastRenderId = renderId;
+    render(message).then((output) => {
+        // Only post the most recent render back to the parent
+        if (lastRenderId === renderId) {
+            port.postMessage({
+                type: "render",
+                message: output,
+            });
+        }
+    });
+}, 50);
 
 /**
  * Listen for requests from the parent window for a render
@@ -39,12 +58,7 @@ export default function listen(config: ConfigInterface) {
                 portDeferred.resolve(port);
                 port.onmessage = (messageEvent) => {
                     if (messageEvent.data.type === "render") {
-                        render(messageEvent.data.message).then((output) => {
-                            port.postMessage({
-                                type: "render",
-                                message: output,
-                            });
-                        });
+                        debounceRender(messageEvent.data.message);
                     }
                     if (messageEvent.data.type === "template") {
                         const message = messageEvent.data.message;
@@ -141,6 +155,7 @@ function render(message: {stageId: string, tree: TreeItem}) {
 
             // Combine this event with our engine waitForRenderFinish to ensure rendering is completed
             $.when(engine.waitForFinishRender(), renderFinished).then(() => {
+                console.log("count " + countContentTypes(rootContainer));
                 observer.disconnect();
                 ko.cleanNode(element);
                 const filtered: JQuery = filterHtml($(element));
