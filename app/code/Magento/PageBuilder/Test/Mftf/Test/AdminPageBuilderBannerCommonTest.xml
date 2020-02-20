@@ -52,7 +52,7 @@
             <stories value="Banner"/>
             <title value="Validate empty banner on preview"/>
             <description value="Validate contents and layout of empty banner on preview page."/>
-            <severity value="CRITICAL"/>
+            <severity value="AVERAGE"/>
             <useCaseId value="MAGETWO-83928"/>
             <testCaseId value="MC-2718"/>
             <group value="pagebuilder"/>
@@ -115,7 +115,7 @@
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceCollageLeftProperty">
-            <argument name="property" value="PageBuilderBannerCollageLeftProperty"/>
+            <argument name="property" value="PageBuilderAppearance_CollageLeft"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsCollageLeft"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPageWithCollageLeftBanner"/>
@@ -153,7 +153,7 @@
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceCollageCenteredProperty">
-            <argument name="property" value="PageBuilderBannerCollageCenteredProperty"/>
+            <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsCollageCentered"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPageWithCollageCenteredBanner"/>
@@ -191,7 +191,7 @@
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceCollageRightProperty">
-            <argument name="property" value="PageBuilderBannerCollageRightProperty"/>
+            <argument name="property" value="PageBuilderAppearance_CollageRight"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsCollageRight"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPageWithCollageRightBanner"/>
@@ -282,7 +282,7 @@
             <stories value="Banner"/>
             <title value="Banner has  no required fields in edit form"/>
             <description value="Check there is no required fields in banner edit form"/>
-            <severity value="CRITICAL"/>
+            <severity value="AVERAGE"/>
             <useCaseId value="MAGETWO-83928"/>
             <testCaseId value="MC-2626"/>
             <group value="pagebuilder"/>
@@ -317,7 +317,7 @@
             <stories value="Banner"/>
             <title value="Banner has the correct fields and default values in edit form"/>
             <description value="A user should see the correct fields and default values when edit button is clicked for banner"/>
-            <severity value="CRITICAL"/>
+            <severity value="AVERAGE"/>
             <useCaseId value="MAGETWO-81599"/>
             <testCaseId value="MC-2664"/>
             <group value="pagebuilder"/>
@@ -347,13 +347,16 @@
         <!-- Validate Edit Panel Fields -->
         <comment userInput="Validate Edit Panel Fields" stepKey="commentValidateEditPanelFields"/>
         <actionGroup ref="validateVisualSelects" stepKey="validateAlignment">
-            <argument name="property1" value="PageBuilderBannerAppearanceDefaultProperty"/>
-            <argument name="property2" value="PageBuilderBannerCollageLeftProperty"/>
-            <argument name="property3" value="PageBuilderBannerCollageRightProperty"/>
-            <argument name="property4" value="PageBuilderBannerCollageCenteredProperty"/>
+            <argument name="property1" value="PageBuilderAppearance_Poster"/>
+            <argument name="property2" value="PageBuilderAppearance_CollageLeft"/>
+            <argument name="property3" value="PageBuilderAppearance_CollageRight"/>
+            <argument name="property4" value="PageBuilderAppearance_CollageCentered"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeMinimumHeightProperty">
-            <argument name="property" value="PageBuilderBannerMinimumHeightDefaultProperty"/>
+            <argument name="property" value="PageBuilderMinHeightProperty_300px"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldHelperText" stepKey="validateHelperText">
+            <argument name="property" value="PageBuilderMinHeightProperty_Empty"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeBackgroundColorProperty">
             <argument name="property" value="PageBuilderBackgroundColor_Hex_White"/>
@@ -402,8 +405,11 @@
         </actionGroup>
         <!-- Validate Edit Panel Defaults -->
         <comment userInput="Validate Edit Panel Defaults" stepKey="commentValidateEditPanelDefaults"/>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeAppearance">
+            <argument name="property" value="PageBuilderAppearance_Poster"/>
+        </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeDefaultMinimumHeightProperty">
-            <argument name="property" value="PageBuilderBannerMinimumHeightDefaultProperty"/>
+            <argument name="property" value="PageBuilderMinHeightProperty_300px"/>
         </actionGroup>
         <grabMultiple selector="{{EditPanelForm.panelFieldOptions(PageBuilderBackgroundPosition_Default.section, PageBuilderBackgroundPosition_Default.fieldName)}}" userInput="innerText" stepKey="grabBackgroundPositionDropdownValues"/>
         <assertEquals stepKey="assertPositionDropdown" message="Background Position in dropdown">
@@ -452,7 +458,7 @@
             <stories value="Banner"/>
             <title value="Validate Background Section Default Values"/>
             <description value="Validate the default values for every attribute in the Background section for Banner. Validate Stage and Storefront as well."/>
-            <severity value="CRITICAL"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MAGETWO-90828"/>
             <testCaseId value="MC-2831"/>
             <group value="pagebuilder"/>
@@ -588,7 +594,7 @@
             <stories value="Banner"/>
             <title value="Validate Advanced Configuration Default Values"/>
             <description value="Validate the default values for every attribute in the Advanced Configuration form and on Stage for Banner."/>
-            <severity value="CRITICAL"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MC-522"/>
             <testCaseId value="MC-2894"/>
             <group value="pagebuilder"/>
@@ -745,7 +751,7 @@
         <!-- Fill Out Edit Panel: Primary -->
         <comment userInput="Fill Out Edit Panel: Primary" stepKey="commentFillEditPanel"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
-            <argument name="property" value="PageBuilderBannerAppearance_Poster"/>
+            <argument name="property" value="PageBuilderAppearance_Poster"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterBackgroundColor">
             <argument name="property" value="PageBuilderBackgroundColor_Plaintext_Green"/>
@@ -764,7 +770,7 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage: Primary -->
         <comment userInput="Validate Stage: Primary" stepKey="commentValidateStage"/>
-        <seeElement selector="{{BannerOnBackend.appearance('1', PageBuilderBannerAppearance_Poster.value)}}" stepKey="seeAppearanceStage"/>
+        <seeElement selector="{{BannerOnBackend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seeAppearanceStage"/>
         <seeElement selector="{{BannerOnBackend.button('1')}}" stepKey="seeButtonStage"/>
         <seeElement selector="{{BannerOnBackend.buttonType('1', PageBuilderBannerButtonTypePrimaryProperty.value)}}" stepKey="seeButtonTypeStage"/>
         <seeElement selector="{{BannerOnBackend.buttonText('1', PageBuilderBannerButtonTextProperty.value)}}" stepKey="seeButtonTextStage"/>
@@ -774,7 +780,7 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderBannerAppearance_Poster.value)}}" stepKey="seeAppearanceStorefront"/>
+        <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seeAppearanceStorefront"/>
         <seeElement selector="{{BannerOnFrontend.button('1')}}" stepKey="seeButtonStorefront"/>
         <seeElement selector="{{BannerOnFrontend.buttonType('1', PageBuilderBannerButtonTypePrimaryProperty.value)}}" stepKey="seeButtonTypeStorefront"/>
         <seeElement selector="{{BannerOnFrontend.buttonText('1', PageBuilderBannerButtonTextProperty.value)}}" stepKey="seeButtonTextStorefront"/>
@@ -795,7 +801,7 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage3"/>
         <!-- Validate Stage: Secondary -->
         <comment userInput="Validate Stage: Secondary" stepKey="commentValidateStage2"/>
-        <seeElement selector="{{BannerOnBackend.appearance('1', PageBuilderBannerAppearance_Poster.value)}}" stepKey="seeAppearanceStage2"/>
+        <seeElement selector="{{BannerOnBackend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seeAppearanceStage2"/>
         <seeElement selector="{{BannerOnBackend.button('1')}}" stepKey="seeButtonStage2"/>
         <seeElement selector="{{BannerOnBackend.buttonType('1', PageBuilderBannerButtonTypeSecondaryProperty.value)}}" stepKey="seeButtonTypeStage2"/>
         <seeElement selector="{{BannerOnBackend.buttonText('1', PageBuilderBannerButtonTextProperty.value)}}" stepKey="seeButtonTextStage2"/>
@@ -804,7 +810,7 @@
         <switchToNextTab stepKey="switchToNextTab"/>
         <reloadPage stepKey="reloadPage2"/>
         <waitForPageLoad stepKey="waitForPageLoad2"/>
-        <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderBannerAppearance_Poster.value)}}" stepKey="seeAppearanceStorefront2"/>
+        <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seeAppearanceStorefront2"/>
         <seeElement selector="{{BannerOnFrontend.button('1')}}" stepKey="seeButtonStorefront2"/>
         <seeElement selector="{{BannerOnFrontend.buttonType('1', PageBuilderBannerButtonTypeSecondaryProperty.value)}}" stepKey="seeButtonTypeStorefront2"/>
         <seeElement selector="{{BannerOnFrontend.buttonText('1', PageBuilderBannerButtonTextProperty.value)}}" stepKey="seeButtonTextStorefront2"/>
@@ -825,7 +831,7 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage5"/>
         <!-- Validate Stage: Link -->
         <comment userInput="Validate Stage: Link" stepKey="commentValidateStage3"/>
-        <seeElement selector="{{BannerOnBackend.appearance('1', PageBuilderBannerAppearance_Poster.value)}}" stepKey="seeAppearanceStage3"/>
+        <seeElement selector="{{BannerOnBackend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seeAppearanceStage3"/>
         <seeElement selector="{{BannerOnBackend.button('1')}}" stepKey="seeButtonStage3"/>
         <seeElement selector="{{BannerOnBackend.buttonType('1', PageBuilderBannerButtonTypeLinkProperty.value)}}" stepKey="seeButtonTypeStage3"/>
         <seeElement selector="{{BannerOnBackend.buttonText('1', PageBuilderBannerButtonTextProperty.value)}}" stepKey="seeButtonTextStage3"/>
@@ -834,7 +840,7 @@
         <switchToNextTab stepKey="switchToNextTab2"/>
         <reloadPage stepKey="reloadPage4"/>
         <waitForPageLoad stepKey="waitForPageLoad4"/>
-        <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderBannerAppearance_Poster.value)}}" stepKey="seeAppearanceStorefront3"/>
+        <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seeAppearanceStorefront3"/>
         <seeElement selector="{{BannerOnFrontend.button('1')}}" stepKey="seeButtonStorefront3"/>
         <seeElement selector="{{BannerOnFrontend.buttonType('1', PageBuilderBannerButtonTypeLinkProperty.value)}}" stepKey="seeButtonTypeStorefront3"/>
         <seeElement selector="{{BannerOnFrontend.buttonText('1', PageBuilderBannerButtonTextProperty.value)}}" stepKey="seeButtonTextStorefront3"/>
@@ -845,7 +851,7 @@
             <stories value="Banner"/>
             <title value="Banner can open in new tab in frontend"/>
             <description value="A user should be able to click on banner and open in new tab for frontend"/>
-            <severity value="CRITICAL"/>
+            <severity value="MAJOR"/>
             <useCaseId value="MAGETWO-81599"/>
             <testCaseId value="MC-2773"/>
             <group value="pagebuilder"/>
@@ -973,7 +979,7 @@
             <stories value="Banner"/>
             <title value="Banner does not navigate on click when on the stage"/>
             <description value="A user should be to click on the banner in stage and not have it navigate to another page."/>
-            <severity value="CRITICAL"/>
+            <severity value="AVERAGE"/>
             <useCaseId value="MAGETWO-81599"/>
             <testCaseId value="MC-2597"/>
             <group value="pagebuilder"/>
@@ -1156,7 +1162,7 @@
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty1">
-            <argument name="property" value="PageBuilderBannerCollageLeftProperty"/>
+            <argument name="property" value="PageBuilderAppearance_CollageLeft"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
         <!-- Collage Left: Verify On Hover Upload Buttons -->
@@ -1171,7 +1177,7 @@
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty2">
-            <argument name="property" value="PageBuilderBannerCollageCenteredProperty"/>
+            <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <!-- Collage Center: Verify On Hover Upload Buttons -->
@@ -1187,7 +1193,7 @@
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty3">
-            <argument name="property" value="PageBuilderBannerCollageRightProperty"/>
+            <argument name="property" value="PageBuilderAppearance_CollageRight"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
         <!-- Collage Right: Verify On Hover Upload Buttons -->
@@ -1206,7 +1212,7 @@
             <stories value="Banner"/>
             <title value="Cannot add Banner to Stage"/>
             <description value="If user drags Banner to Stage, it should have no effect"/>
-            <severity value="CRITICAL"/>
+            <severity value="AVERAGE"/>
             <useCaseId value="MC-515"/>
             <testCaseId value="MC-3115"/>
             <group value="pagebuilder"/>
@@ -1306,7 +1312,7 @@
             <stories value="Banner"/>
             <title value="Move Banner Between Columns"/>
             <description value="Verify that moving a banner content type on the stage will update the storefront"/>
-            <severity value="CRITICAL"/>
+            <severity value="MAJOR"/>
             <useCaseId value="MC-3239"/>
             <testCaseId value="MC-3366"/>
             <group value="pagebuilder"/>
@@ -1427,7 +1433,7 @@
             <stories value="Banner"/>
             <title value="Duplicate Banner"/>
             <description value="A user should be able to duplicate a banner content type. Verify on Stage amd Storefront."/>
-            <severity value="CRITICAL"/>
+            <severity value="MAJOR"/>
             <useCaseId value="MC-1433"/>
             <testCaseId value="MC-3431"/>
             <group value="pagebuilder"/>
@@ -1471,10 +1477,10 @@
         <!-- Fill Out Edit Panel -->
         <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
-            <argument name="property" value="PageBuilderBannerCollageCenteredProperty"/>
+            <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerMinHeight">
-            <argument name="property" value="PageBuilderBannerMinimumHeightProperty"/>
+            <argument name="property" value="PageBuilderMinHeightProperty_500px"/>
         </actionGroup>
         <!-- Update Background Section -->
         <comment userInput="Update Background Section" stepKey="commentUpdateBackgroundSection"/>
@@ -1577,8 +1583,8 @@
             <argument name="contentType" value="PageBuilderBannerContentType"/>
             <argument name="targetIndex" value="2"/>
         </actionGroup>
-        <seeElement selector="{{BannerOnBackend.appearance('2', PageBuilderBannerCollageCenteredProperty.value)}}" stepKey="seeAppearanceStage"/>
-        <seeElement selector="{{BannerOnBackend.collageMinimumHeight('2', PageBuilderBannerMinimumHeightProperty.value)}}" stepKey="seeMinimumHeightStage"/>
+        <seeElement selector="{{BannerOnBackend.appearance('2', PageBuilderAppearance_CollageCentered.value)}}" stepKey="seeAppearanceStage"/>
+        <seeElement selector="{{BannerOnBackend.collageMinimumHeight('2', PageBuilderMinHeightProperty_500px.value)}}" stepKey="seeMinimumHeightStage"/>
         <actionGroup ref="validateBackgroundAttributesWithNoImage" stepKey="validateBackgroundAttributesStage">
             <argument name="section" value="BannerOnBackend"/>
             <argument name="backgroundColor" value="PageBuilderBackgroundColor_Hex_White"/>
@@ -1611,8 +1617,8 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
-        <seeElement selector="{{BannerOnBackend.appearance('2', PageBuilderBannerCollageCenteredProperty.value)}}" stepKey="seeAppearanceStage2"/>
-        <seeElement selector="{{BannerOnBackend.collageMinimumHeight('2', PageBuilderBannerMinimumHeightProperty.value)}}" stepKey="seeMinimumHeightStage2"/>
+        <seeElement selector="{{BannerOnBackend.appearance('2', PageBuilderAppearance_CollageCentered.value)}}" stepKey="seeAppearanceStage2"/>
+        <seeElement selector="{{BannerOnBackend.collageMinimumHeight('2', PageBuilderMinHeightProperty_500px.value)}}" stepKey="seeMinimumHeightStage2"/>
         <!-- Validate content type is enabled after save -->
         <comment userInput="Validate content type is enabled after save" stepKey="commentValidateShownOnStage"/>
         <waitForElementVisible selector="{{BannerOnBackend.notHidden('1')}}" stepKey="waitForContentTypeShown1"/>
@@ -1652,10 +1658,10 @@
             <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAppearance">
-            <argument name="property" value="PageBuilderBannerCollageCenteredProperty"/>
+            <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeMinimumHeight">
-            <argument name="property" value="PageBuilderBannerMinimumHeightProperty"/>
+            <argument name="property" value="PageBuilderMinHeightProperty_500px"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeBackgroundColor">
             <argument name="property" value="PageBuilderBackgroundColor_Hex_White"/>
@@ -1731,8 +1737,8 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <seeElement selector="{{BannerOnFrontend.appearance('2', PageBuilderBannerCollageCenteredProperty.value)}}" stepKey="seeAppearanceStorefront"/>
-        <seeElement selector="{{BannerOnFrontend.collageMinimumHeight('2', PageBuilderBannerMinimumHeightProperty.value)}}" stepKey="seeMinimumHeightStorefront"/>
+        <seeElement selector="{{BannerOnFrontend.appearance('2', PageBuilderAppearance_CollageCentered.value)}}" stepKey="seeAppearanceStorefront"/>
+        <seeElement selector="{{BannerOnFrontend.collageMinimumHeight('2', PageBuilderMinHeightProperty_500px.value)}}" stepKey="seeMinimumHeightStorefront"/>
         <!-- Validate content type is enabled in Storefront -->
         <comment userInput="Validate content type is enabled in Storefront" stepKey="commentValidateShownStorefront"/>
         <waitForElementVisible selector="{{BannerOnFrontend.notHidden('1')}}" stepKey="waitForContentTypeShownStorefront1"/>
@@ -1769,8 +1775,8 @@
         <!-- Validate Storefront Mobile -->
         <comment userInput="Validate Storefront Mobile" stepKey="commentValidateStorefrontMobile"/>
         <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
-        <seeElement selector="{{BannerOnFrontend.appearance('2', PageBuilderBannerCollageCenteredProperty.value)}}" stepKey="seeMobileAppearanceStorefront"/>
-        <seeElement selector="{{BannerOnFrontend.collageMinimumHeight('2', PageBuilderBannerMinimumHeightProperty.value)}}" stepKey="seeMobileMinimumHeightStorefront"/>
+        <seeElement selector="{{BannerOnFrontend.appearance('2', PageBuilderAppearance_CollageCentered.value)}}" stepKey="seeMobileAppearanceStorefront"/>
+        <seeElement selector="{{BannerOnFrontend.collageMinimumHeight('2', PageBuilderMinHeightProperty_500px.value)}}" stepKey="seeMobileMinimumHeightStorefront"/>
         <actionGroup ref="validateBackgroundAttributesWithNoImage" stepKey="validateMobileBackgroundAttributesStorefront">
             <argument name="section" value="BannerOnFrontend"/>
             <argument name="backgroundColor" value="PageBuilderBackgroundColor_Hex_White"/>
@@ -1809,7 +1815,7 @@
             <stories value="Banner"/>
             <title value="Banner is shown by default"/>
             <description value="Banner is shown by default in stage and storefront"/>
-            <severity value="CRITICAL"/>
+            <severity value="AVERAGE"/>
             <useCaseId value="MC-965"/>
             <testCaseId value="MC-3552"/>
             <group value="pagebuilder"/>
@@ -1865,7 +1871,7 @@
             <stories value="Banner"/>
             <title value="Banner has hide show capabilities"/>
             <description value="A user is able to hide and show the banner successfully"/>
-            <severity value="CRITICAL"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MC-965"/>
             <testCaseId value="MC-3533"/>
             <group value="pagebuilder"/>
@@ -1941,7 +1947,7 @@
             <stories value="Banner"/>
             <title value="Image from Banner Content Block get wiped out after delete image from Media Storage"/>
             <description value="Image from Banner Content Block get wiped out after delete image from Media Storage"/>
-            <severity value="MAJOR"/>
+            <severity value="AVERAGE"/>
             <useCaseId value="MC-2294"/>
             <testCaseId value="MC-3593"/>
             <group value="pagebuilder"/>
@@ -2101,9 +2107,9 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Banner"/>
-            <title value="Banner widget placeholder and variable placeholder styling works on inline editing"/>
-            <description value="Verify that widget placeholder and variable placeholder styling works on inline editing"/>
-            <severity value="MAJOR"/>
+            <title value="Verify widget and variable placeholder styling is correct in admin and that they resolve on storefront"/>
+            <description value="Verify widget and variable placeholder styling is correct in admin and that they resolve on storefront"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MC-4150"/>
             <testCaseId value="MC-4947"/>
             <group value="pagebuilder"/>
