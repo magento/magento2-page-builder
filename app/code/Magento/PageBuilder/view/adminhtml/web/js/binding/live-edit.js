@@ -26,9 +26,8 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes", "underscore"], func
    * @returns {string}
    */
   function stripHtml(html) {
-    var tempDiv = document.createElement("div");
-    tempDiv.innerHTML = html;
-    return tempDiv.textContent;
+    var tempDiv = new DOMParser().parseFromString(html, "text/html");
+    return tempDiv.body.textContent;
   }
   /**
    * Add or remove the placeholder-text class from the element based on its content
@@ -193,7 +192,7 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes", "underscore"], func
         _underscore.default.defer(function () {
           var strippedValue = stripHtml(element.innerHTML);
           lastUpdateValue = strippedValue;
-          element.innerHTML = strippedValue;
+          element.textContent = strippedValue;
           /**
            * Calculate the position the caret should end up at, the difference in string length + the original
            * end offset position

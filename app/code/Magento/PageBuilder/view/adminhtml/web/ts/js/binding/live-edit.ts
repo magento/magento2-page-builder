@@ -18,10 +18,9 @@ import {DataObject} from "../data-store";
  * @returns {string}
  */
 function stripHtml(html: string) {
-    const tempDiv = document.createElement("div");
+    const tempDiv = new DOMParser().parseFromString(html, "text/html");
 
-    tempDiv.innerHTML = html;
-    return tempDiv.textContent;
+    return tempDiv.body.textContent;
 }
 
 /**
@@ -171,7 +170,7 @@ ko.bindingHandlers.liveEdit = {
             _.defer(() => {
                 const strippedValue = stripHtml(element.innerHTML);
                 lastUpdateValue = strippedValue;
-                element.innerHTML = strippedValue;
+                element.textContent = strippedValue;
                 /**
                  * Calculate the position the caret should end up at, the difference in string length + the original
                  * end offset position
