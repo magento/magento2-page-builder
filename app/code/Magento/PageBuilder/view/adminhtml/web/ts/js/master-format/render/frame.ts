@@ -142,6 +142,7 @@ function countContentTypes(rootContainer: ContentTypeCollectionInterface, count?
 function render(message: {stageId: string, tree: TreeItem}) {
     return new Promise((resolve, reject) => {
         createRenderTree(message.stageId, message.tree).then((rootContainer: ContentTypeCollectionInterface) => {
+            console.log("createRenderTree");
             const element = document.createElement("div");
             /**
              * Setup an event on the element to observe changes and count the expected amount of content types are
@@ -198,6 +199,7 @@ function createRenderTree(
             tree.data,
             parent !== null ? tree.children.length : null,
         ).then((contentType: ContentTypeCollectionInterface) => {
+            console.log("content type");
             // Ensure  we retain the original tree ID's
             contentType.id = tree.id;
             if (tree.children.length > 0) {

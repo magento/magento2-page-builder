@@ -140,6 +140,7 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "mag
   function render(message) {
     return new Promise(function (resolve, reject) {
       createRenderTree(message.stageId, message.tree).then(function (rootContainer) {
+        console.log("createRenderTree");
         var element = document.createElement("div");
         /**
          * Setup an event on the element to observe changes and count the expected amount of content types are
@@ -195,7 +196,8 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "mag
 
     return new Promise(function (resolve, reject) {
       (0, _contentTypeFactory)(_config.getContentTypeConfig(tree.name), parent, stageId, tree.data, parent !== null ? tree.children.length : null).then(function (contentType) {
-        // Ensure  we retain the original tree ID's
+        console.log("content type"); // Ensure  we retain the original tree ID's
+
         contentType.id = tree.id;
 
         if (tree.children.length > 0) {
