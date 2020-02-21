@@ -18,9 +18,9 @@ import {DataObject} from "../data-store";
  * @returns {string}
  */
 function stripHtml(html: string) {
-    const tempDiv = new DOMParser().parseFromString(html, "text/html");
+    const htmlDocument = new DOMParser().parseFromString(html, "text/html");
 
-    return tempDiv.body.textContent;
+    return htmlDocument.body.textContent;
 }
 
 /**
