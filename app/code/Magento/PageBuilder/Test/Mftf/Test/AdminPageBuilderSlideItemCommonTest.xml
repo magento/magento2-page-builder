@@ -44,7 +44,7 @@
         <seeElement selector="{{SlideOnBackend.emptySlide('1')}}" stepKey="seeEmptySlideStage"/>
         <seeElement selector="{{SlideOnBackend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seePosterAppearanceStage"/>
         <seeElement selector="{{SlideOnBackend.slideName('1', PageBuilderSlideItemSlideName_Empty.value)}}" stepKey="seeSlideName"/>
-        <seeElement selector="{{SlideOnBackend.posterMinimumHeight('1', PageBuilderSlideItemMinimumHeight_300.value)}}" stepKey="seeMinimumHeight"/>
+        <seeElement selector="{{SlideOnBackend.posterMinimumHeight('1', PageBuilderMinHeightProperty_300px.value)}}" stepKey="seeMinimumHeight"/>
         <seeElement selector="{{SlideOnBackend.transparentOverlay('1')}}" stepKey="seeTransparencyOverlayStage"/>
         <!-- Validate Stage: No Tooltip -->
         <comment userInput="Validate Stage: No Tooltip" stepKey="commentNoTooltipStage"/>
@@ -66,7 +66,7 @@
         <comment userInput="Validate Storefront: Slide Item Defaults" stepKey="commentValidateSlideItemStorefront"/>
         <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seePosterAppearanceStorefront"/>
         <seeElement selector="{{SlideOnFrontend.slideName('1', PageBuilderSlideItemSlideName_Empty.value)}}" stepKey="seeSlideNameStorefront"/>
-        <seeElement selector="{{SlideOnFrontend.minimumHeight('1', PageBuilderSlideItemMinimumHeight_300.value)}}" stepKey="seeMinimumHeightStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.minimumHeight('1', PageBuilderMinHeightProperty_300px.value)}}" stepKey="seeMinimumHeightStorefront"/>
         <seeElement selector="{{SlideOnFrontend.transparentOverlay('1')}}" stepKey="seeTransparencyOverlayStorefront"/>
         <dontSeeInPageSource userInput="Edit Slide Text" stepKey="dontSeeDummyTextInPageSource"/>
         <!-- Validate Storefront: Slide Item Defaults -->
@@ -74,7 +74,7 @@
         <resizeWindow width="375" height="667" stepKey="resizeWindowToMobile"/>
         <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seePosterAppearanceStorefrontMobile"/>
         <seeElement selector="{{SlideOnFrontend.slideName('1', PageBuilderSlideItemSlideName_Empty.value)}}" stepKey="seeSlideNameStorefrontMobile"/>
-        <seeElement selector="{{SlideOnFrontend.minimumHeight('1', PageBuilderSlideItemMinimumHeight_300.value)}}" stepKey="seeMinimumHeightStorefrontMobile"/>
+        <seeElement selector="{{SlideOnFrontend.minimumHeight('1', PageBuilderMinHeightProperty_300px.value)}}" stepKey="seeMinimumHeightStorefrontMobile"/>
         <seeElement selector="{{SlideOnFrontend.transparentOverlay('1')}}" stepKey="seeTransparencyOverlayStorefrontMobile"/>
         <dontSeeInPageSource userInput="Edit Slide Text" stepKey="dontSeeDummyTextInPageSourceMobile"/>
     </test>
@@ -126,9 +126,9 @@
         <assertEmpty stepKey="assertEmptyName" message="Name has text: $grabNameDefaultValue">
             <actualResult type="variable">grabNameDefaultValue</actualResult>
         </assertEmpty>
-        <comment userInput="Minimum Height: input defaults to 300" stepKey="AC4"/>
+        <comment userInput="Minimum Height: input defaults to 300px" stepKey="AC4"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeMinHeightDefault300">
-            <argument name="property" value="PageBuilderSlideItemMinimumHeight_300"/>
+            <argument name="property" value="PageBuilderMinHeightProperty_300px"/>
         </actionGroup>
     </test>
     <test name="SlideItemBackgroundSectionDefaults">
@@ -203,7 +203,7 @@
         <seeElement selector="{{SlideOnBackend.backgroundRepeat('1', PageBuilderBackgroundRepeat_Default.styleValue)}}" stepKey="seeBackgroundRepeatStage"/>
         <executeJS function="return window.getComputedStyle(document.evaluate(&quot;{{SlideOnBackend.noBackgroundColor('1')}}&quot;, document.body).iterateNext()).backgroundColor" stepKey="grabDefaultBackgroundColor"/>
         <assertEquals stepKey="assertDefaultBackgroundColor">
-            <expectedResult type="string">{{PageBuilderSlideItemBackgroundColor_Empty.stageValue}}</expectedResult>
+            <expectedResult type="string">{{PageBuilderBackgroundColor_Empty.stageValue}}</expectedResult>
             <actualResult type="variable">grabDefaultBackgroundColor</actualResult>
         </assertEquals>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
@@ -217,7 +217,7 @@
         <seeElement selector="{{SlideOnBackend.backgroundRepeat('1', PageBuilderBackgroundRepeat_Default.styleValue)}}" stepKey="seeBackgroundRepeatStage2"/>
         <executeJS function="return window.getComputedStyle(document.evaluate(&quot;{{SlideOnBackend.noBackgroundColor('1')}}&quot;, document.body).iterateNext()).backgroundColor" stepKey="grabDefaultBackgroundColorAfterSave"/>
         <assertEquals stepKey="assertDefaultBackgroundColorAfterSave">
-            <expectedResult type="string">{{PageBuilderSlideItemBackgroundColor_Empty.stageValue}}</expectedResult>
+            <expectedResult type="string">{{PageBuilderBackgroundColor_Empty.stageValue}}</expectedResult>
             <actualResult type="variable">grabDefaultBackgroundColorAfterSave</actualResult>
         </assertEquals>
         <!-- Validate Edit Panel After Save -->
