@@ -61,10 +61,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
       _events.on("stage:" + this.id + ":toggleFullscreen", this.toggleFullScreen.bind(this));
 
-      _events.on("stage:" + this.id + ":masterFormatRenderAfter", function (content) {
-        _this2.content = content.value;
-      });
-
       this.isFullScreen.subscribe(function () {
         return _this2.onFullScreenChange();
       });
