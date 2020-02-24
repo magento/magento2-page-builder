@@ -18,9 +18,13 @@ import {DataObject} from "../data-store";
  * @returns {string}
  */
 function stripHtml(html: string) {
-    const htmlDocument = new DOMParser().parseFromString(html, "text/html");
+    if (html) {
+        const htmlDocument = new DOMParser().parseFromString(html, "text/html");
 
-    return htmlDocument.body.textContent;
+        return htmlDocument.body ? htmlDocument.body.textContent : "";
+    }
+
+    return html;
 }
 
 /**

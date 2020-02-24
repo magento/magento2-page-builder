@@ -26,8 +26,12 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes", "underscore"], func
    * @returns {string}
    */
   function stripHtml(html) {
-    var htmlDocument = new DOMParser().parseFromString(html, "text/html");
-    return htmlDocument.body.textContent;
+    if (html) {
+      var htmlDocument = new DOMParser().parseFromString(html, "text/html");
+      return htmlDocument.body ? htmlDocument.body.textContent : "";
+    }
+
+    return html;
   }
   /**
    * Add or remove the placeholder-text class from the element based on its content
