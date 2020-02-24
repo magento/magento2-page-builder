@@ -106,8 +106,15 @@ export default class Preview extends BasePreview {
             (this.wrapper.dataset.backgroundType as string) === "video" &&
             (this.wrapper.dataset.videoSrc as string).length
         ) {
+
             _.defer(() => {
                 // Build Parallax on elements with the correct class
+                const viewportElement = $("<div class=\"jarallax-viewport-element\"></div>") as JQuery;
+
+                $(this.wrapper).append(
+                    $('.jarallax-viewport-element', this.wrapper).length ? '' : viewportElement
+                );
+
                 jarallax(
                     this.wrapper,
                     {
@@ -116,7 +123,7 @@ export default class Preview extends BasePreview {
                         videoLoop: (this.contentType.dataStore.get("video_loop") as string) === "true",
                         speed: 1,
                         videoPlayOnlyVisible: (this.contentType.dataStore.get("video_play_only_visible") as string) === "true",
-                        videoLazyLoading: (this.contentType.dataStore.get("video_lazy_load") as string) === "true",
+                        elementInViewport: $('.jarallax-viewport-element', this.wrapper)
                     },
                 );
             });
@@ -501,7 +508,13 @@ export default class Preview extends BasePreview {
                 $((slider.preview as SliderPreview).element).on("beforeChange", () => {
                     this.slideChanged = false;
                 });
-                $((slider.preview as SliderPreview).element).on("afterChange", () => {
+                $((slider.preview as SliderPreview).element).on("afterChange", (event, slider) => {
+                    $(slider.$slides).each((index, slide) => {
+                        const videoSlide = slide.querySelector('.jarallax');
+                        if (videoSlide) {
+                            jarallax(videoSlide, 'onScroll');
+                        }
+                    });
                     this.slideChanged = true;
                 });
             }

@@ -11,31 +11,30 @@ define([
 
     return function (config, element) {
         var videoElement = element[0].querySelector('[data-background-type=video]'),
+            viewportElement = document.createElement('div'),
             $slider = null;
 
         showOnHover(config);
 
         if (videoElement) {
             $slider = $(element).closest('[data-content-type=slider]');
+            viewportElement.classList.add('jarallax-viewport-element');
+            videoElement.setAttribute('data-element-in-viewport', '.jarallax-viewport-element');
+            videoElement.appendChild(viewportElement);
             videoBackground(config, videoElement);
-            $slider.on('setPosition', function (event, slick) {
-                var currentVideoSlide = slick.$slides[slick.currentSlide].querySelector('.jarallax');
 
-                if (currentVideoSlide.jarallax.options.videoPlayOnlyVisible) {
-                    currentVideoSlide.jarallax.video.play();
-                }
+            if ($slider.data('afterChangeIsSet')) {
+                return;
+            }
 
-                if (videoElement.jarallax.isVideoInserted) {
-                    videoElement.classList.add('video-inserted');
-                }
+            $slider.on('afterChange', function () {
+                var videoSlides = $slider[0].querySelectorAll('.jarallax');
+
+                videoSlides.forEach(function (videoSlide) {
+                    videoSlide.jarallax.onScroll();
+                });
             });
-            $slider.on('beforeChange', function (event, slick) {
-                var currentVideoSlide = slick.$slides[slick.currentSlide].querySelector('.jarallax');
-
-                if (currentVideoSlide.jarallax.options.videoPlayOnlyVisible) {
-                    currentVideoSlide.jarallax.video.pause();
-                }
-            });
+            $slider.data('afterChangeIsSet', true)
         }
     };
 });

@@ -27,7 +27,8 @@ define([
             videoLoop: $element.data('videoLoop'),
             videoPlayOnlyVisible: $element.data('videoPlayOnlyVisible'),
             videoLazyLoading: $element.data('videoLazyLoad'),
-            disableVideo: false
+            disableVideo: false,
+            elementInViewport: $element.data('elementInViewport') && $element[0].querySelector($element.data('elementInViewport'))
         });
     };
 });

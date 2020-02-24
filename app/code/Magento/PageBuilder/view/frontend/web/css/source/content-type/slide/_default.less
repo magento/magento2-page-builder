@@ -44,12 +44,16 @@
         overflow-wrap: break-word;
         word-wrap: break-word;
 
-        &[data-background-type='video'][data-play-only-visible='true'] {
-            transform: translate3d(0, 150vh, 0);
+        .jarallax-viewport-element {
+            height: 100%;
+            left: -150vw;
+            position: absolute;
+            top: 0;
+            width: 1px;
+            z-index: 100;
 
-            &.video-inserted,
             .slick-current & {
-                transform: translate3d(0, 0, 0);
+                left: 0;
             }
         }
 
@@ -64,8 +68,10 @@
             }
 
             [id*='jarallax-container'] {
-                video,
-                iframe {
+                > div,
+                > img,
+                > video,
+                > iframe {
                     margin: auto !important;
                     transform: none !important;
                 }

@@ -78,13 +78,15 @@ define(["jarallax", "jarallaxVideo", "jquery", "knockout", "mage/translate", "Ma
         if (_this.wrapper && _this.wrapper.dataset.backgroundType === "video" && _this.wrapper.dataset.videoSrc.length) {
           _underscore.defer(function () {
             // Build Parallax on elements with the correct class
+            var viewportElement = (0, _jquery)("<div class=\"jarallax-viewport-element\"></div>");
+            (0, _jquery)(_this.wrapper).append((0, _jquery)('.jarallax-viewport-element', _this.wrapper).length ? '' : viewportElement);
             jarallax(_this.wrapper, {
               videoSrc: _this.wrapper.dataset.videoSrc,
               imgSrc: _this.wrapper.dataset.videoFallbackSrc,
               videoLoop: _this.contentType.dataStore.get("video_loop") === "true",
               speed: 1,
               videoPlayOnlyVisible: _this.contentType.dataStore.get("video_play_only_visible") === "true",
-              videoLazyLoading: _this.contentType.dataStore.get("video_lazy_load") === "true"
+              elementInViewport: (0, _jquery)('.jarallax-viewport-element', _this.wrapper)
             });
           });
         }
@@ -471,7 +473,14 @@ define(["jarallax", "jarallaxVideo", "jquery", "knockout", "mage/translate", "Ma
           (0, _jquery)(slider.preview.element).on("beforeChange", function () {
             _this8.slideChanged = false;
           });
-          (0, _jquery)(slider.preview.element).on("afterChange", function () {
+          (0, _jquery)(slider.preview.element).on("afterChange", function (event, slider) {
+            (0, _jquery)(slider.$slides).each(function (index, slide) {
+              var videoSlide = slide.querySelector('.jarallax');
+
+              if (videoSlide) {
+                jarallax(videoSlide, 'onScroll');
+              }
+            });
             _this8.slideChanged = true;
           });
         }
