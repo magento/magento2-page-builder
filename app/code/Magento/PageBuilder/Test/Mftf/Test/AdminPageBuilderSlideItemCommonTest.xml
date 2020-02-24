@@ -3124,4 +3124,181 @@
             <argument name="section" value="SlideOnFrontend"/>
         </actionGroup>
     </test>
+    <test name="SlideItemValidateVideoBackgroundAspectRatio">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Slide Item: Validate Video Background Aspect Ratio"/>
+            <description value="Verify that the video background aspect ratio is maintained in each appearance."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="PB-266"/>
+            <testCaseId value="MC-31821"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-slideItemCommon"/>
+            <group value="pagebuilder-video-background"/>
+        </annotations>
+        <before>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
+                <argument name="CMSPage" value="$$createCMSPage$$"/>
+            </actionGroup>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Add Slider to Stage -->
+        <comment userInput="Add Slider to Stage" stepKey="addSliderToStage"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragSliderIntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+        </actionGroup>
+        <!-- Set Video Background on Poster appearance Slide -->
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanelAfterDrop">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setAppearance">
+            <argument name="property" value="PageBuilderAppearance_Poster"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty">
+            <argument name="property" value="PageBuilderMinHeightProperty_200"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setBackgroundType">
+            <argument name="property" value="PageBuilderSlideItemBackgroundType_Video"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrl">
+            <argument name="property" value="PageBuilderVideoBackgroundUrl_Mp4_URL"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Create 3 more Slides -->
+        <actionGroup ref="duplicateSmallContentType" stepKey="duplicateSlide1">
+            <argument name="section" value="SlideOnBackend"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="duplicateSmallContentType" stepKey="duplicateSlide2">
+            <argument name="section" value="SlideOnBackend"/>
+            <argument name="targetIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="duplicateSmallContentType" stepKey="duplicateSlide3">
+            <argument name="section" value="SlideOnBackend"/>
+            <argument name="targetIndex" value="3"/>
+        </actionGroup>
+        <!-- Configure Collage Left Slide appearance -->
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanelToChangeAppearance1">
+            <argument name="section" value="SlideOnBackend"/>
+            <argument name="targetIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setAppearance1">
+            <argument name="property" value="PageBuilderAppearance_CollageLeft"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty1">
+            <argument name="property" value="PageBuilderMinHeightProperty_300"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
+        <!-- Configure Collage Center Slide appearance -->
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanelToChangeAppearance2">
+            <argument name="section" value="SlideOnBackend"/>
+            <argument name="targetIndex" value="3"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty2">
+            <argument name="property" value="PageBuilderMinHeightProperty_200"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setAppearance2">
+            <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <!-- Configure Collage Right Slide appearance -->
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanelToChangeAppearance3">
+            <argument name="section" value="SlideOnBackend"/>
+            <argument name="targetIndex" value="4"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setAppearance3">
+            <argument name="property" value="PageBuilderAppearance_CollageRight"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty3">
+            <argument name="property" value="PageBuilderMinHeightProperty_500"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
+        <executeJS function="return parseInt(&quot;{{PageBuilderVideoBackgroundUrl_Mp4_URL_Insecure.width}}&quot;) / parseInt(&quot;{{PageBuilderVideoBackgroundUrl_Mp4_URL_Insecure.height}}&quot;)" stepKey="expectedVideoAspectRatio"/>
+        <!-- Validate Stage -->
+        <actionGroup ref="switchSlide" stepKey="showSlide1">
+            <argument name="slideIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateVideoAspectRatio" stepKey="validateVideoAspectRatioSlide1Stage">
+            <argument name="section" value="SlideOnBackend"/>
+            <argument name="expectedRatio" value="{$expectedVideoAspectRatio}"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="switchSlide" stepKey="showSlide2">
+            <argument name="slideIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateVideoAspectRatio" stepKey="validateVideoAspectRatioSlide2Stage">
+            <argument name="section" value="SlideOnBackend"/>
+            <argument name="expectedRatio" value="{$expectedVideoAspectRatio}"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <actionGroup ref="switchSlide" stepKey="showSlide3">
+            <argument name="slideIndex" value="3"/>
+        </actionGroup>
+        <actionGroup ref="validateVideoAspectRatio" stepKey="validateVideoAspectRatioSlide3Stage">
+            <argument name="section" value="SlideOnBackend"/>
+            <argument name="expectedRatio" value="{$expectedVideoAspectRatio}"/>
+            <argument name="index" value="3"/>
+        </actionGroup>
+        <actionGroup ref="switchSlide" stepKey="showSlide4">
+            <argument name="slideIndex" value="4"/>
+        </actionGroup>
+        <actionGroup ref="validateVideoAspectRatio" stepKey="validateVideoAspectRatioSlide4Stage">
+            <argument name="section" value="SlideOnBackend"/>
+            <argument name="expectedRatio" value="{$expectedVideoAspectRatio}"/>
+            <argument name="index" value="4"/>
+        </actionGroup>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate Storefront -->
+        <amOnUrl url="{{_ENV.MAGENTO_BASE_URL}}" stepKey="goBackToMagento"/>
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStorefront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <actionGroup ref="validateVideoAspectRatio" stepKey="validateVideoAspectRatioSlide1Storefront">
+            <argument name="section" value="SlideOnFrontend"/>
+            <argument name="expectedRatio" value="{$expectedVideoAspectRatio}"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <actionGroup ref="switchSlide" stepKey="showSlideOnStorefront2">
+            <argument name="sliderSection" value="SliderOnFrontend"/>
+            <argument name="slideSection" value="SlideOnFrontend"/>
+            <argument name="slideIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateVideoAspectRatio" stepKey="validateVideoAspectRatioSlide2Storefront">
+            <argument name="section" value="SlideOnFrontend"/>
+            <argument name="expectedRatio" value="{$expectedVideoAspectRatio}"/>
+            <argument name="index" value="3"/>
+        </actionGroup>
+        <actionGroup ref="switchSlide" stepKey="showSlideOnStorefront3">
+            <argument name="sliderSection" value="SliderOnFrontend"/>
+            <argument name="slideSection" value="SlideOnFrontend"/>
+            <argument name="slideIndex" value="3"/>
+        </actionGroup>
+        <actionGroup ref="validateVideoAspectRatio" stepKey="validateVideoAspectRatioSlide3Storefront">
+            <argument name="section" value="SlideOnFrontend"/>
+            <argument name="expectedRatio" value="{$expectedVideoAspectRatio}"/>
+            <argument name="index" value="4"/>
+        </actionGroup>
+        <actionGroup ref="switchSlide" stepKey="showSlideOnStorefront4">
+            <argument name="sliderSection" value="SliderOnFrontend"/>
+            <argument name="slideSection" value="SlideOnFrontend"/>
+            <argument name="slideIndex" value="4"/>
+        </actionGroup>
+        <actionGroup ref="validateVideoAspectRatio" stepKey="validateVideoAspectRatioSlide4Storefront">
+            <argument name="section" value="SlideOnFrontend"/>
+            <argument name="expectedRatio" value="{$expectedVideoAspectRatio}"/>
+            <argument name="index" value="5"/>
+        </actionGroup>
+    </test>
 </tests>
