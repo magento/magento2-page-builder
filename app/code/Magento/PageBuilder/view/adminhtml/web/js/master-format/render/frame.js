@@ -1,6 +1,6 @@
 /*eslint-disable */
 /* jscs:disable */
-define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/master-format/filter-html"], function (_jquery, _knockout, _engine, _config, _contentTypeFactory, _directives, _filterHtml) {
+define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "mageUtils", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/master-format/filter-html"], function (_jquery, _knockout, _engine, _mageUtils, _underscore, _config, _contentTypeFactory, _directives, _filterHtml) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -10,9 +10,26 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "Mag
   var portDeferred = _jquery.Deferred();
 
   var deferredTemplates = {};
+  var lastRenderId;
+  /**
+   * Debounce the render call, so we don't render until the final request
+   */
+
+  var debounceRender = _underscore.debounce(function (message, renderId) {
+    render(message).then(function (output) {
+      // Only post the most recent render back to the parent
+      if (lastRenderId === renderId) {
+        port.postMessage({
+          type: "render",
+          message: output
+        });
+      }
+    });
+  }, 50);
   /**
    * Listen for requests from the parent window for a render
    */
+
 
   function listen(config) {
     _config.setConfig(config);
@@ -31,12 +48,10 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "Mag
 
         port.onmessage = function (messageEvent) {
           if (messageEvent.data.type === "render") {
-            render(messageEvent.data.message).then(function (output) {
-              port.postMessage({
-                type: "render",
-                message: output
-              });
-            });
+            var renderId = _mageUtils.uniqueid();
+
+            lastRenderId = renderId;
+            debounceRender(messageEvent.data.message, renderId);
           }
 
           if (messageEvent.data.type === "template") {
@@ -87,6 +102,35 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "Mag
     });
   }
   /**
+   * Assert if the render has finished
+   */
+
+
+  var assertRenderFinished = _underscore.debounce(function (element, expectedCount, callback) {
+    if (element.querySelectorAll("[data-content-type]").length === expectedCount) {
+      callback();
+    }
+  }, 50);
+  /**
+   * Iterate over the root container and count all content types
+   *
+   * @param rootContainer
+   * @param count
+   */
+
+
+  function countContentTypes(rootContainer, count) {
+    count = count || 0;
+    rootContainer.getChildren()().forEach(function (child) {
+      ++count;
+
+      if (typeof child.getChildren !== "undefined" && child.getChildren()().length > 0) {
+        count = countContentTypes(child, count);
+      }
+    });
+    return count;
+  }
+  /**
    * Perform a render of the provided data
    *
    * @param message
@@ -97,8 +141,25 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "Mag
     return new Promise(function (resolve, reject) {
       createRenderTree(message.stageId, message.tree).then(function (rootContainer) {
         var element = document.createElement("div");
+        /**
+         * Setup an event on the element to observe changes and count the expected amount of content types are
+         * present within the content.
+         */
 
-        _engine.waitForFinishRender().then(function () {
+        var renderFinished = _jquery.Deferred();
+
+        var observer = new MutationObserver(function () {
+          assertRenderFinished(element, countContentTypes(rootContainer), renderFinished.resolve);
+        });
+        observer.observe(element, {
+          attributes: true,
+          childList: true,
+          subtree: true
+        }); // Combine this event with our engine waitForRenderFinish to ensure rendering is completed
+
+        _jquery.when(_engine.waitForFinishRender(), renderFinished).then(function () {
+          observer.disconnect();
+
           _knockout.cleanNode(element);
 
           var filtered = (0, _filterHtml)((0, _jquery)(element));
