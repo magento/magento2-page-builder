@@ -7,6 +7,7 @@ import $ from "jquery";
 import ko from "knockout";
 import events from "Magento_PageBuilder/js/events";
 import "Magento_PageBuilder/js/resource/jquery/ui/jquery.ui.touch-punch";
+import mageUtils from "mageUtils";
 import _ from "underscore";
 import "./binding/sortable";
 import Collection from "./collection";
@@ -36,23 +37,28 @@ export default class Stage {
      * We always complete a single render when the stage is first loaded, so we can set the lock when the stage is
      * created. The lock is used to halt the parent forms submission when Page Builder is rendering.
      */
-    public renderingLock: JQueryDeferred<void>;
+    public renderingLocks: Array<JQueryDeferred<string>> = [];
     private template: string = "Magento_PageBuilder/content-type/preview";
     private render: Render;
     private collection: Collection = new Collection();
+    private lastRenderId: string;
 
     /**
      * Debounce the applyBindings call by 500ms to stop duplicate calls
      *
      * @type {(() => void) & _.Cancelable}
      */
-    private applyBindingsDebounce = _.debounce(() => {
-        this.renderingLock = $.Deferred();
+    private applyBindingsDebounce = _.debounce((renderId: string) => {
         this.render.applyBindings(this.rootContainer)
-            .then((renderedOutput: string) => events.trigger(`stage:${ this.id }:masterFormatRenderAfter`, {
-                value: renderedOutput,
-            })).then(() => {
-                this.renderingLock.resolve();
+            .then((renderedOutput: string) => {
+                if (this.lastRenderId === renderId) {
+                    events.trigger(`stage:${ this.id }:masterFormatRenderAfter`, {
+                        value: renderedOutput,
+                    });
+                    this.renderingLocks.forEach((lock) => {
+                        lock.resolve(renderedOutput);
+                    });
+                }
             }).catch((error: Error) => {
                 if (error) {
                     console.error(error);
@@ -129,7 +135,11 @@ export default class Stage {
         // can occur concurrently.
         events.on("stage:updateAfter", (args: StageUpdateAfterParamsInterface) => {
             if (args.stageId === this.id) {
-                this.applyBindingsDebounce();
+                // Create the rendering lock straight away
+                this.createLock();
+                const renderId = mageUtils.uniqueid();
+                this.lastRenderId = renderId;
+                this.applyBindingsDebounce(renderId);
             }
         });
 
@@ -152,6 +162,13 @@ export default class Stage {
         });
         events.on("stage:childFocusStart", () => this.focusChild(true));
         events.on("stage:childFocusStop", () => this.focusChild(false));
+    }
+
+    /**
+     * Create a new lock for rendering
+     */
+    private createLock(): void {
+        this.renderingLocks.push($.Deferred());
     }
 
     /**
