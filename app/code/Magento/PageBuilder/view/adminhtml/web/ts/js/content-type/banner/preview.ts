@@ -466,7 +466,7 @@ export default class Preview extends BasePreview {
             nestingLinkDialog(this.contentType.dataStore, this.wysiwyg, "message", "link_url");
         });
         this.contentType.dataStore.subscribe(function(data: DataObject) {
-            if (this.isVideoShouldBeUpdated(data)) {
+            if (this.shouldUpdateVideo(data)) {
                 this.buildJarallax();
             }
         }.bind(this));
@@ -492,12 +492,12 @@ export default class Preview extends BasePreview {
     }
 
     /**
-     * Adjust textarea's height based on scrollHeight
+     * Check if video options has been updated.
      *
      * @return boolean
      */
-    private isVideoShouldBeUpdated(state: DataObject): boolean {
-        const previousState = this.contentType.dataStore.previousState;
+    private shouldUpdateVideo(state: DataObject): boolean {
+        const previousState = this.contentType.dataStore.getPreviousState();
         const diff = mageUtils.compare(previousState, state).changes;
 
         if (diff.length > 0) {

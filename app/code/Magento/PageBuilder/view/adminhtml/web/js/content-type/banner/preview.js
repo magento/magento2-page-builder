@@ -421,7 +421,7 @@ define(["jarallax", "jarallaxVideo", "jquery", "mage/translate", "Magento_PageBu
       });
 
       this.contentType.dataStore.subscribe(function (data) {
-        if (this.isVideoShouldBeUpdated(data)) {
+        if (this.shouldUpdateVideo(data)) {
           this.buildJarallax();
         }
       }.bind(this));
@@ -448,16 +448,16 @@ define(["jarallax", "jarallaxVideo", "jquery", "mage/translate", "Magento_PageBu
       (0, _jquery)(this.textarea).height(scrollHeight);
     }
     /**
-     * Adjust textarea's height based on scrollHeight
+     * Check if video options has been updated.
      *
      * @return boolean
      */
     ;
 
-    _proto.isVideoShouldBeUpdated = function isVideoShouldBeUpdated(state) {
+    _proto.shouldUpdateVideo = function shouldUpdateVideo(state) {
       var _this9 = this;
 
-      var previousState = this.contentType.dataStore.previousState;
+      var previousState = this.contentType.dataStore.getPreviousState();
 
       var diff = _mageUtils.compare(previousState, state).changes;
 

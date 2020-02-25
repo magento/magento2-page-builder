@@ -11,9 +11,9 @@ define(["jquery", "Magento_PageBuilder/js/utils/object"], function (_jquery, _ob
     "use strict";
 
     function DataStore() {
-      this.previousState = {};
       this.state = {};
       this.events = (0, _jquery)({});
+      this.previousState = {};
     }
 
     var _proto = DataStore.prototype;
@@ -37,6 +37,16 @@ define(["jquery", "Magento_PageBuilder/js/utils/object"], function (_jquery, _ob
 
     _proto.getState = function getState() {
       return this.state;
+    }
+    /**
+     * Retrieve the entire previous state of the data object
+     *
+     * @returns {DataObject}
+     */
+    ;
+
+    _proto.getPreviousState = function getPreviousState() {
+      return this.previousState;
     }
     /**
      * Set a specific keys value in the data store
