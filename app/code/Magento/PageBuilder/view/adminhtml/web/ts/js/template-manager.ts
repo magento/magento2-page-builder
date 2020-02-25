@@ -59,12 +59,15 @@ export function saveAsTemplate(stage: Stage) {
              */
             confirm(name: string, createdFor: string) {
                 return new Promise((resolve, reject) => {
-                    capture.then((imageSrc: string) => {
+                    // Wait for the screenshot and the rendering lock to complete before making the request
+                    const renderingLock = stage.renderingLocks[stage.renderingLocks.length - 1];
+
+                    $.when(capture, renderingLock).then((imageSrc: string, content: string) => {
                         $.ajax({
                             url: Config.getConfig("template_save_url"),
                             data: {
                                 name,
-                                template: stage.pageBuilder.content,
+                                template: content,
                                 previewImage: imageSrc,
                                 createdFor,
                             },
@@ -130,43 +133,48 @@ function createCapture(stage: Stage) {
     const stageElement = document.querySelector("#" + stage.id) as HTMLElement;
     const deferred = $.Deferred();
 
-    // Resolve issues with Parallax
-    const parallaxRestore = disableParallax(stageElement);
+    // Wait for the stage to complete rendering before taking the capture
+    const renderingLock = stage.renderingLocks[stage.renderingLocks.length - 1];
+    renderingLock.then(() => {
+        // Resolve issues with Parallax
+        const parallaxRestore = disableParallax(stageElement);
 
-    stageElement.style.height = $(stageElement).outerHeight(false) + "px";
-    stageElement.classList.add("capture");
-    stageElement.classList.add("interacting");
+        stageElement.style.height = $(stageElement).outerHeight(false) + "px";
+        stageElement.classList.add("capture");
+        stageElement.classList.add("interacting");
 
-    if (stage.pageBuilder.isFullScreen()) {
-        window.scrollTo({
-            top: 0,
+        if (stage.pageBuilder.isFullScreen()) {
+            window.scrollTo({
+                top: 0,
+            });
+        }
+
+        _.defer(() => {
+            html2canvas(
+                document.querySelector("#" + stage.id + " .pagebuilder-canvas"),
+                {
+                    scale: 1,
+                    useCORS: true,
+                    scrollY: (window.pageYOffset * -1),
+                },
+            ).then((canvas: HTMLCanvasElement) => {
+                const imageSrc = canvas.toDataURL("image/jpeg", 0.85);
+
+                deferred.resolve(imageSrc);
+
+                if (stage.pageBuilder.isFullScreen()) {
+                    window.scrollTo({
+                        top: scrollY,
+                    });
+                }
+
+                stageElement.style.height = null;
+                stageElement.classList.remove("capture");
+                stageElement.classList.remove("interacting");
+                restoreParallax(parallaxRestore);
+            });
         });
-    }
 
-    _.defer(() => {
-        html2canvas(
-            document.querySelector("#" + stage.id + " .pagebuilder-canvas"),
-            {
-                scale: 1,
-                useCORS: true,
-                scrollY: (window.pageYOffset * -1),
-            },
-        ).then((canvas: HTMLCanvasElement) => {
-            const imageSrc = canvas.toDataURL("image/jpeg", 0.85);
-
-            deferred.resolve(imageSrc);
-
-            if (stage.pageBuilder.isFullScreen()) {
-                window.scrollTo({
-                    top: scrollY,
-                });
-            }
-
-            stageElement.style.height = null;
-            stageElement.classList.remove("capture");
-            stageElement.classList.remove("interacting");
-            restoreParallax(parallaxRestore);
-        });
     });
 
     return deferred;

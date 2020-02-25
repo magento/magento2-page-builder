@@ -18,7 +18,7 @@ define([
     var google = window.google || {},
 
         /**
-         * Generates a google map usuable latitude and longitude object
+         * Generates a google map usable latitude and longitude object
          *
          * @param {Object} position
          * @return {google.maps.LatLng}
@@ -46,6 +46,11 @@ define([
         if (gmAuthFailure) {
             events.trigger('googleMaps:authFailure');
 
+            return;
+        }
+
+        // If Google Maps isn't loaded don't try init the map, it won't work
+        if (typeof google.maps === 'undefined') {
             return;
         }
 
