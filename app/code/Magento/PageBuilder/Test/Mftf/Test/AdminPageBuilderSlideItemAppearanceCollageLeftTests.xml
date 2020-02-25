@@ -593,13 +593,6 @@
         <actionGroup ref="chooseVisualSelectOption" stepKey="setAppearance">
             <argument name="property" value="PageBuilderAppearance_CollageLeft"/>
         </actionGroup>
-        <actionGroup ref="validateVideoBackgroundWithOnlyVideoUrl" stepKey="validateStorefront">
-            <argument name="section" value="SlideOnFrontend"/>
-            <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_YouTube_Embedded"/>
-            <argument name="infiniteLoop" value="PageBuilderVideoBackgroundInfiniteLoop_Disabled"/>
-            <argument name="lazyLoad" value="PageBuilderVideoBackgroundLazyLoad_Disabled"/>
-            <argument name="playOnlyWhenVisible" value="PageBuilderVideoBackgroundPlayOnlyWhenVisible_Disabled"/>
-        </actionGroup>
     </test>
     <test name="SliderCollageLeftValidateVideoBackground" extends="SliderPosterValidateVideoBackground">
         <annotations>
@@ -618,15 +611,41 @@
         <actionGroup ref="chooseVisualSelectOption" stepKey="setAppearance">
             <argument name="property" value="PageBuilderAppearance_CollageLeft"/>
         </actionGroup>
-        <actionGroup ref="validateVideoBackgroundWithAllAttributes" stepKey="validateStorefront">
-            <argument name="section" value="SlideOnFrontend"/>
-            <argument name="backgroundColor" value="{{PageBuilderBackgroundColor_Pink.rgb}}"/>
-            <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_YouTube_Embedded"/>
-            <argument name="overlayColor" value="{{PageBuilderVideoBackgroundOverlayColor_Hex_Grey.rgba}}"/>
-            <argument name="infiniteLoop" value="PageBuilderVideoBackgroundInfiniteLoop_Enabled"/>
-            <argument name="lazyLoad" value="PageBuilderVideoBackgroundLazyLoad_Enabled"/>
-            <argument name="playOnlyWhenVisible" value="PageBuilderVideoBackgroundPlayOnlyWhenVisible_Enabled"/>
-            <argument name="fallbackImage" value="PageBuilderVideoBackgroundFallbackImage_JPG"/>
+    </test>
+    <test name="SliderCollageLeftVideoBackgroundValidateFallbackImage" extends="SliderPosterVideoBackgroundValidateFallbackImage">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Validate Video Background Fallback Image Renders When Video Isn't Loaded in Collage Left Slide"/>
+            <description value="Validate that the video background fallback image loads and renders in a Collage Left Slide when the video hasn't loaded."/>
+            <severity value="MAJOR"/>
+            <useCaseId value="PB-266"/>
+            <testCaseId value="MC-31846"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-sliderCollageLeft"/>
+            <group value="pagebuilder-video-background"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setAppearance">
+            <argument name="property" value="PageBuilderAppearance_CollageLeft"/>
+        </actionGroup>
+    </test>
+    <test name="SliderCollageLeftInvalidVideoBackgroundNoFallbackImage" extends="SliderPosterInvalidVideoBackgroundNoFallbackImage">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Verify Collage Left Slide Renders When Video Isn't Loaded and There's No Fallback Image"/>
+            <description value="Validate that the Row renders correctly when the video background video hasn't loaded and there is no fallback image."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="PB-266"/>
+            <testCaseId value="MC-31847"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-sliderCollageLeft"/>
+            <group value="pagebuilder-video-background"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setAppearance">
+            <argument name="property" value="PageBuilderAppearance_CollageLeft"/>
         </actionGroup>
     </test>
 </tests>
