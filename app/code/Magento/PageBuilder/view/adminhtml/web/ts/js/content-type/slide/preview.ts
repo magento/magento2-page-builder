@@ -9,13 +9,12 @@ import $ from "jquery";
 import ko from "knockout";
 import $t from "mage/translate";
 import events from "Magento_PageBuilder/js/events";
+import mageUtils from "mageUtils";
 import _ from "underscore";
 import "vimeoWrapper";
 import {PreviewSortableSortUpdateEventParams} from "../../binding/sortable-children.types";
-import ContentTypeConfigInterface from "../../content-type-config.types";
 import ConditionalRemoveOption from "../../content-type-menu/conditional-remove-option";
 import {OptionsInterface} from "../../content-type-menu/option.types";
-import ContentTypeInterface from "../../content-type.types";
 import {DataObject} from "../../data-store";
 import Uploader from "../../uploader";
 import delayUntil from "../../utils/delay-until";
@@ -31,7 +30,6 @@ import nestingLinkDialog from "../../utils/nesting-link-dialog";
 import WysiwygFactory from "../../wysiwyg/factory";
 import WysiwygInterface from "../../wysiwyg/wysiwyg-interface";
 import {ContentTypeMountEventParamsInterface, ContentTypeReadyEventParamsInterface} from "../content-type-events.types";
-import ObservableUpdater from "../observable-updater";
 import BasePreview from "../preview";
 import SliderPreview from "../slider/preview";
 
@@ -82,6 +80,18 @@ export default class Preview extends BasePreview {
     private handledDoubleClick: boolean = false;
 
     /**
+     * Properties change that should cause rebuilding video background
+     */
+    private videoUpdateProperties = [
+        "background_type",
+        "video_fallback_image",
+        "video_lazy_load",
+        "video_loop",
+        "video_play_only_visible",
+        "video_source",
+    ];
+
+    /**
      * Debounce and defer the init of Jarallax
      *
      * @type {(() => void) & _.Cancelable}
@@ -112,7 +122,7 @@ export default class Preview extends BasePreview {
                 const viewportElement = $("<div class=\"jarallax-viewport-element\"></div>") as JQuery;
 
                 $(this.wrapper).append(
-                    $('.jarallax-viewport-element', this.wrapper).length ? '' : viewportElement
+                    $(".jarallax-viewport-element", this.wrapper).length ? "" : viewportElement,
                 );
 
                 jarallax(
@@ -123,33 +133,13 @@ export default class Preview extends BasePreview {
                         videoLoop: (this.contentType.dataStore.get("video_loop") as string) === "true",
                         speed: 1,
                         videoPlayOnlyVisible: (this.contentType.dataStore.get("video_play_only_visible") as string) === "true",
-                        elementInViewport: $('.jarallax-viewport-element', this.wrapper)
+                        elementInViewport: $(".jarallax-viewport-element", this.wrapper),
                     },
                 );
             });
         }
 
     }, 50);
-
-    /**
-     * @param {ContentTypeInterface} contentType
-     * @param {ContentTypeConfigInterface} config
-     * @param {ObservableUpdater} observableUpdater
-     */
-    constructor(
-        contentType: ContentTypeInterface,
-        config: ContentTypeConfigInterface,
-        observableUpdater: ObservableUpdater,
-    ) {
-        super(contentType, config, observableUpdater);
-
-        this.contentType.dataStore.subscribe(this.buildJarallax);
-        events.on("slide:mountAfter", (args: ContentTypeReadyEventParamsInterface) => {
-            if (args.id === this.contentType.id) {
-                this.buildJarallax();
-            }
-        });
-    }
 
     /**
      * @param {HTMLElement} element
@@ -475,6 +465,12 @@ export default class Preview extends BasePreview {
     protected bindEvents() {
         super.bindEvents();
 
+        events.on("slide:mountAfter", (args: ContentTypeReadyEventParamsInterface) => {
+            if (args.id === this.contentType.id) {
+                this.buildJarallax();
+            }
+        });
+
         events.on(`${this.config.name}:${this.contentType.id}:updateAfter`, () => {
             const dataStore = this.contentType.dataStore.getState();
             const imageObject = (dataStore[this.config.additional_data.uploaderConfig.dataScope] as object[])[0] || {};
@@ -508,11 +504,11 @@ export default class Preview extends BasePreview {
                 $((slider.preview as SliderPreview).element).on("beforeChange", () => {
                     this.slideChanged = false;
                 });
-                $((slider.preview as SliderPreview).element).on("afterChange", (event, slider) => {
-                    $(slider.$slides).each((index, slide) => {
-                        const videoSlide = slide.querySelector('.jarallax');
+                $((slider.preview as SliderPreview).element).on("afterChange", (event, slick) => {
+                    $(slick.$slides).each((index, slide) => {
+                        const videoSlide = slide.querySelector(".jarallax");
                         if (videoSlide) {
-                            jarallax(videoSlide, 'onScroll');
+                            jarallax(videoSlide, "onScroll");
                         }
                     });
                     this.slideChanged = true;
@@ -520,11 +516,17 @@ export default class Preview extends BasePreview {
             }
         });
 
-        this.contentType.dataStore.subscribe(
-            (data: DataObject) => {
-                this.slideName(data.slide_name);
-            },
-        );
+        this.contentType.dataStore.subscribe(function(data: DataObject) {
+            this.slideName(data.slide_name);
+
+            if (this.isVideoShouldBeUpdated(data)) {
+                this.buildJarallax();
+            }
+        }.bind(this));
+
+        events.on(`image:${this.contentType.id}:uploadAfter`, () => {
+            this.contentType.dataStore.set("background_type", "image");
+        });
     }
 
     /**
@@ -553,5 +555,26 @@ export default class Preview extends BasePreview {
         }
 
         $(this.textarea).height(scrollHeight);
+    }
+
+    /**
+     * Check if video background should be rebuilt
+     *
+     * @return boolean
+     */
+    private isVideoShouldBeUpdated(state: DataObject): boolean {
+        const previousState = this.contentType.dataStore.previousState;
+        const diff = mageUtils.compare(previousState, state).changes;
+
+        if (diff.length > 0) {
+            return _.some(diff, (element) => {
+                if (element.name === "video_fallback_image") {
+                    return (!_.isEmpty(previousState.video_fallback_image) && previousState.video_fallback_image) !==
+                        (!_.isEmpty(state.video_fallback_image) && state.video_fallback_image);
+                }
+
+                return this.videoUpdateProperties.indexOf(element.name) !== -1;
+            });
+        }
     }
 }
