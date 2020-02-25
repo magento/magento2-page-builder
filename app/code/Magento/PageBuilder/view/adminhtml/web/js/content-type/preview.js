@@ -20,6 +20,12 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     "use strict";
 
     /**
+     * Provide preview data as an object which can be queried
+     *
+     * @deprecated please use getOptionValue directly
+     */
+
+    /**
      * Fields that should not be considered when evaluating whether an object has been configured.
      *
      * @see {Preview.isConfigured}
@@ -38,6 +44,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       this.appearance = _knockout.observable();
       this.isPlaceholderVisible = _knockout.observable(true);
       this.isEmpty = _knockout.observable(true);
+      this.previewData = {};
       this.fieldsToIgnoreOnRemove = [];
       this.events = {};
       this.mouseover = false;
@@ -52,6 +59,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         "empty-placeholder-background": this.isPlaceholderVisible
       });
       this.bindEvents();
+      this.populatePreviewData();
     }
     /**
      * Retrieve the preview template
@@ -120,6 +128,16 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
     _proto.updateData = function updateData(key, value) {
       this.contentType.dataStore.set(key, value);
+    }
+    /**
+     * Retrieve the value for an option
+     *
+     * @param key
+     */
+    ;
+
+    _proto.getOptionValue = function getOptionValue(key) {
+      return this.contentType.dataStore.get(key);
     }
     /**
      * Set state based on mouseover event for the preview
@@ -580,6 +598,30 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       var paddingBottom = parseFloat(padding.bottom) || 0;
       var paddingTop = parseFloat(padding.top) || 0;
       this.isPlaceholderVisible(paddingBottom + paddingTop + minHeight >= 130);
+    }
+    /**
+     * Populate the preview data with calls to the supported getOptionValue method
+     *
+     * @deprecated this function is only included to preserve backwards compatibility, use getOptionValue directly
+     */
+    ;
+
+    _proto.populatePreviewData = function populatePreviewData() {
+      var _this8 = this;
+
+      var response = {};
+
+      if (this.config.fields) {
+        _underscore.each(this.config.fields, function (fields) {
+          _underscore.keys(fields).forEach(function (key) {
+            response[key] = function () {
+              return _this8.getOptionValue(key);
+            };
+          });
+        });
+      }
+
+      this.previewData = response;
     };
 
     _createClass(Preview, [{

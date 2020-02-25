@@ -14,7 +14,7 @@ import "../binding/sortable";
 import "../binding/sortable-children";
 import ContentTypeCollection from "../content-type-collection";
 import ContentTypeCollectionInterface from "../content-type-collection.types";
-import ContentTypeConfigInterface from "../content-type-config.types";
+import ContentTypeConfigInterface, {ConfigFieldInterface} from "../content-type-config.types";
 import createContentType from "../content-type-factory";
 import ContentTypeMenu from "../content-type-menu";
 import Edit from "../content-type-menu/edit";
@@ -45,6 +45,13 @@ export default class Preview implements PreviewInterface {
     public placeholderCss: KnockoutObservable<object>;
     public isPlaceholderVisible: KnockoutObservable<boolean> = ko.observable(true);
     public isEmpty: KnockoutObservable<boolean> = ko.observable(true);
+
+    /**
+     * Provide preview data as an object which can be queried
+     *
+     * @deprecated please use getOptionValue directly
+     */
+    public previewData = {};
 
     /**
      * Fields that should not be considered when evaluating whether an object has been configured.
@@ -82,6 +89,7 @@ export default class Preview implements PreviewInterface {
             "empty-placeholder-background": this.isPlaceholderVisible,
         });
         this.bindEvents();
+        this.populatePreviewData();
     }
 
     /**
@@ -142,6 +150,15 @@ export default class Preview implements PreviewInterface {
      */
     public updateData(key: string, value: string) {
         this.contentType.dataStore.set(key, value);
+    }
+
+    /**
+     * Retrieve the value for an option
+     *
+     * @param key
+     */
+    public getOptionValue(key: string) {
+        return this.contentType.dataStore.get(key);
     }
 
     /**
@@ -580,5 +597,24 @@ export default class Preview implements PreviewInterface {
         const paddingTop = parseFloat(padding.top) || 0;
 
         this.isPlaceholderVisible(paddingBottom + paddingTop + minHeight >= 130);
+    }
+
+    /**
+     * Populate the preview data with calls to the supported getOptionValue method
+     *
+     * @deprecated this function is only included to preserve backwards compatibility, use getOptionValue directly
+     */
+    private populatePreviewData(): void {
+        const response: {[key: string]: () => any} = {};
+        if (this.config.fields) {
+            _.each(this.config.fields, (fields) => {
+                _.keys(fields).forEach((key: string) => {
+                    response[key] = () => {
+                        return this.getOptionValue(key);
+                    };
+                });
+            });
+        }
+        this.previewData = response;
     }
 }
