@@ -609,19 +609,30 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _proto.populatePreviewData = function populatePreviewData() {
       var _this8 = this;
 
-      var response = {};
-
       if (this.config.fields) {
         _underscore.each(this.config.fields, function (fields) {
           _underscore.keys(fields).forEach(function (key) {
-            response[key] = function () {
-              return _this8.getOptionValue(key);
-            };
+            _this8.previewData[key] = _knockout.observable("");
           });
         });
-      }
+      } // Subscribe to this content types data in the store
 
-      this.previewData = response;
+
+      this.contentType.dataStore.subscribe(function (data) {
+        _underscore.forEach(data, function (value, key) {
+          var optionValue = _this8.getOptionValue(key);
+
+          if (_knockout.isObservable(_this8.previewData[key])) {
+            _this8.previewData[key](optionValue);
+          } else {
+            if (_underscore.isArray(optionValue)) {
+              _this8.previewData[key] = _knockout.observableArray(optionValue);
+            } else {
+              _this8.previewData[key] = _knockout.observable(optionValue);
+            }
+          }
+        });
+      });
     };
 
     _createClass(Preview, [{

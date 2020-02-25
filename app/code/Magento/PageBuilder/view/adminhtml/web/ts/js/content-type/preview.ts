@@ -51,7 +51,7 @@ export default class Preview implements PreviewInterface {
      *
      * @deprecated please use getOptionValue directly
      */
-    public previewData = {};
+    public previewData: {[key: string]: KnockoutObservable<any>} = {};
 
     /**
      * Fields that should not be considered when evaluating whether an object has been configured.
@@ -605,16 +605,30 @@ export default class Preview implements PreviewInterface {
      * @deprecated this function is only included to preserve backwards compatibility, use getOptionValue directly
      */
     private populatePreviewData(): void {
-        const response: {[key: string]: () => any} = {};
         if (this.config.fields) {
             _.each(this.config.fields, (fields) => {
                 _.keys(fields).forEach((key: string) => {
-                    response[key] = () => {
-                        return this.getOptionValue(key);
-                    };
+                    this.previewData[key] = ko.observable("");
                 });
             });
         }
-        this.previewData = response;
+
+        // Subscribe to this content types data in the store
+        this.contentType.dataStore.subscribe(
+            (data: DataObject) => {
+                _.forEach(data, (value, key) => {
+                    const optionValue = this.getOptionValue(key);
+                    if (ko.isObservable(this.previewData[key])) {
+                        this.previewData[key](optionValue);
+                    } else {
+                        if (_.isArray(optionValue)) {
+                            this.previewData[key] = ko.observableArray(optionValue);
+                        } else {
+                            this.previewData[key] = ko.observable(optionValue);
+                        }
+                    }
+                });
+            },
+        );
     }
 }
