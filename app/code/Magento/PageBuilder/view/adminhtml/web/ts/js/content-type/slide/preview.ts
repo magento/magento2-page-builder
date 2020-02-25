@@ -519,7 +519,7 @@ export default class Preview extends BasePreview {
         this.contentType.dataStore.subscribe(function(data: DataObject) {
             this.slideName(data.slide_name);
 
-            if (this.isVideoShouldBeUpdated(data)) {
+            if (this.shouldUpdateVideo(data)) {
                 this.buildJarallax();
             }
         }.bind(this));
@@ -558,12 +558,12 @@ export default class Preview extends BasePreview {
     }
 
     /**
-     * Check if video background should be rebuilt
+     * Check if video options has been updated.
      *
      * @return boolean
      */
-    private isVideoShouldBeUpdated(state: DataObject): boolean {
-        const previousState = this.contentType.dataStore.previousState;
+    private shouldUpdateVideo(state: DataObject): boolean {
+        const previousState = this.contentType.dataStore.getPreviousState();
         const diff = mageUtils.compare(previousState, state).changes;
 
         if (diff.length > 0) {

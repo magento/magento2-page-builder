@@ -463,7 +463,7 @@ define(["jarallax", "jarallaxVideo", "jquery", "knockout", "mage/translate", "Ma
       this.contentType.dataStore.subscribe(function (data) {
         this.slideName(data.slide_name);
 
-        if (this.isVideoShouldBeUpdated(data)) {
+        if (this.shouldUpdateVideo(data)) {
           this.buildJarallax();
         }
       }.bind(this));
@@ -500,16 +500,16 @@ define(["jarallax", "jarallaxVideo", "jquery", "knockout", "mage/translate", "Ma
       (0, _jquery)(this.textarea).height(scrollHeight);
     }
     /**
-     * Check if video background should be rebuilt
+     * Check if video options has been updated.
      *
      * @return boolean
      */
     ;
 
-    _proto.isVideoShouldBeUpdated = function isVideoShouldBeUpdated(state) {
+    _proto.shouldUpdateVideo = function shouldUpdateVideo(state) {
       var _this9 = this;
 
-      var previousState = this.contentType.dataStore.previousState;
+      var previousState = this.contentType.dataStore.getPreviousState();
 
       var diff = _mageUtils.compare(previousState, state).changes;
 
