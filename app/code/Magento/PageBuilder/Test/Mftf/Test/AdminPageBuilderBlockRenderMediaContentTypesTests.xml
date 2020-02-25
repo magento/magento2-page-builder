@@ -2910,7 +2910,7 @@
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <actionGroup ref="chooseVisualSelectOption" stepKey="setAppearance">
-            <argument name="property" value="PageBuilderBannerAppearance_Poster"/>
+            <argument name="property" value="PageBuilderAppearance_Poster"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty">
             <argument name="property" value="PageBuilderMinHeightProperty_200px"/>
@@ -2952,13 +2952,6 @@
             <argument name="playOnlyWhenVisible" value="PageBuilderVideoBackgroundPlayOnlyWhenVisible_Enabled"/>
             <argument name="fallbackImage" value="PageBuilderVideoBackgroundFallbackImage_JPG"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection2">
-            <argument name="contentType" value="PageBuilderButtonsContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
-            <argument name="contentType" value="PageBuilderButtonsContentType"/>
-        </actionGroup>
-        <seeElement selector="{{ButtonItemOnStage.base('1')}}" stepKey="seeButtonStage"/>
         <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveCMSBlock"/>
         <!-- Add Block to CMS Page -->
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
@@ -3000,7 +2993,6 @@
             <argument name="fallbackImage" value="PageBuilderVideoBackgroundFallbackImage_JPG"/>
             <argument name="index" value="1"/>
         </actionGroup>
-        <seeElement selector="{{ButtonItemOnStorefrontEmptyLink.base('1')}}" stepKey="seeButtonCMSPageStage"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate Storefront -->
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStorefront">
@@ -3017,7 +3009,6 @@
             <argument name="fallbackImage" value="PageBuilderVideoBackgroundFallbackImage_JPG"/>
             <argument name="index" value="1"/>
         </actionGroup>
-        <seeElement selector="{{ButtonItemOnStorefrontEmptyLink.base('1')}}" stepKey="seeButtonStorefront"/>
     </test>
     <test name="BlockRenderBannerCollageLeftAppearanceWithVideoBackgroundThroughBlockContentType" extends="BlockRenderBannerPosterAppearanceWithVideoBackgroundThroughBlockContentType">
         <annotations>
