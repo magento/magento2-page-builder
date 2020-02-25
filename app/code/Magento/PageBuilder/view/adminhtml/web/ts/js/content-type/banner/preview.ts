@@ -8,12 +8,12 @@ import "jarallaxVideo";
 import $ from "jquery";
 import $t from "mage/translate";
 import events from "Magento_PageBuilder/js/events";
+import mageUtils from "mageUtils";
 import _ from "underscore";
 import "vimeoWrapper";
-import ContentTypeConfigInterface from "../../content-type-config.types";
 import HideShowOption from "../../content-type-menu/hide-show-option";
 import {OptionsInterface} from "../../content-type-menu/option.types";
-import ContentTypeInterface from "../../content-type.types";
+import {DataObject} from "../../data-store";
 import Uploader from "../../uploader";
 import delayUntil from "../../utils/delay-until";
 import {
@@ -27,8 +27,7 @@ import {
 import nestingLinkDialog from "../../utils/nesting-link-dialog";
 import WysiwygFactory from "../../wysiwyg/factory";
 import WysiwygInterface from "../../wysiwyg/wysiwyg-interface";
-import {ContentTypeMountEventParamsInterface, ContentTypeReadyEventParamsInterface} from "../content-type-events.types";
-import ObservableUpdater from "../observable-updater";
+import {ContentTypeReadyEventParamsInterface} from "../content-type-events.types";
 import BasePreview from "../preview";
 
 /**
@@ -66,6 +65,18 @@ export default class Preview extends BasePreview {
      * Have we handled a double click on init?
      */
     private handledDoubleClick: boolean = false;
+
+    /**
+     * Properties that cause rebuilding video background
+     */
+    private videoUpdateProperties = [
+        "background_type",
+        "video_fallback_image",
+        "video_lazy_load",
+        "video_loop",
+        "video_play_only_visible",
+        "video_source",
+    ];
 
     /**
      * Debounce and defer the init of Jarallax
@@ -109,26 +120,6 @@ export default class Preview extends BasePreview {
         }
 
     }, 50);
-
-    /**
-     * @param {ContentTypeInterface} contentType
-     * @param {ContentTypeConfigInterface} config
-     * @param {ObservableUpdater} observableUpdater
-     */
-    constructor(
-        contentType: ContentTypeInterface,
-        config: ContentTypeConfigInterface,
-        observableUpdater: ObservableUpdater,
-    ) {
-        super(contentType, config, observableUpdater);
-
-        this.contentType.dataStore.subscribe(this.buildJarallax);
-        events.on("banner:mountAfter", (args: ContentTypeReadyEventParamsInterface) => {
-            if (args.id === this.contentType.id) {
-                this.buildJarallax();
-            }
-        });
-    }
 
     /**
      * Return an array of options
@@ -459,7 +450,11 @@ export default class Preview extends BasePreview {
      */
     protected bindEvents() {
         super.bindEvents();
-
+        events.on("banner:mountAfter", (args: ContentTypeReadyEventParamsInterface) => {
+            if (args.id === this.contentType.id) {
+                this.buildJarallax();
+            }
+        });
         events.on(`${this.config.name}:${this.contentType.id}:updateAfter`, () => {
             const dataStore = this.contentType.dataStore.getState();
             const imageObject = (dataStore[this.config.additional_data.uploaderConfig.dataScope] as object[])[0] || {};
@@ -469,6 +464,14 @@ export default class Preview extends BasePreview {
             }
             events.trigger(`image:${this.contentType.id}:assignAfter`, imageObject);
             nestingLinkDialog(this.contentType.dataStore, this.wysiwyg, "message", "link_url");
+        });
+        this.contentType.dataStore.subscribe(function(data: DataObject) {
+            if (this.isVideoShouldBeUpdated(data)) {
+                this.buildJarallax();
+            }
+        }.bind(this));
+        events.on(`image:${this.contentType.id}:uploadAfter`, () => {
+            this.contentType.dataStore.set("background_type", "image");
         });
     }
 
@@ -486,5 +489,26 @@ export default class Preview extends BasePreview {
         }
 
         $(this.textarea).height(scrollHeight);
+    }
+
+    /**
+     * Adjust textarea's height based on scrollHeight
+     *
+     * @return boolean
+     */
+    private isVideoShouldBeUpdated(state: DataObject): boolean {
+        const previousState = this.contentType.dataStore.previousState;
+        const diff = mageUtils.compare(previousState, state).changes;
+
+        if (diff.length > 0) {
+            return _.some(diff, (element) => {
+                if (element.name === "video_fallback_image") {
+                    return (!_.isEmpty(previousState.video_fallback_image) && previousState.video_fallback_image) !==
+                        (!_.isEmpty(state.video_fallback_image) && state.video_fallback_image);
+                }
+
+                return this.videoUpdateProperties.indexOf(element.name) !== -1;
+            });
+        }
     }
 }

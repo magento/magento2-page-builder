@@ -15,9 +15,9 @@ export interface DataObject<T = any> {
 }
 
 export default class DataStore {
+    public previousState: DataObject = {};
     private state: DataObject = {};
     private events: JQuery = $({});
-    private previousState: DataObject = {};
 
     /**
      * Retrieve specific data from the data store
@@ -46,6 +46,7 @@ export default class DataStore {
      * @param value
      */
     public set(key: string, value: any) {
+        this.previousState = Object.assign({}, this.state);
         set(this.state, key, value);
         this.emitState();
     }
@@ -56,6 +57,7 @@ export default class DataStore {
      * @param {DataObject} state
      */
     public setState(state: DataObject) {
+        this.previousState = Object.assign({}, this.state);
         this.state = state;
         this.emitState();
     }

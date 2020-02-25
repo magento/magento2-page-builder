@@ -3,7 +3,7 @@
 
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-define(["jarallax", "jarallaxVideo", "jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore", "vimeoWrapper", "Magento_PageBuilder/js/content-type-menu/hide-show-option", "Magento_PageBuilder/js/uploader", "Magento_PageBuilder/js/utils/delay-until", "Magento_PageBuilder/js/utils/editor", "Magento_PageBuilder/js/utils/nesting-link-dialog", "Magento_PageBuilder/js/wysiwyg/factory", "Magento_PageBuilder/js/content-type/preview"], function (_jarallax, _jarallaxVideo, _jquery, _translate, _events, _underscore, _vimeoWrapper, _hideShowOption, _uploader, _delayUntil, _editor, _nestingLinkDialog, _factory, _preview) {
+define(["jarallax", "jarallaxVideo", "jquery", "mage/translate", "Magento_PageBuilder/js/events", "mageUtils", "underscore", "vimeoWrapper", "Magento_PageBuilder/js/content-type-menu/hide-show-option", "Magento_PageBuilder/js/uploader", "Magento_PageBuilder/js/utils/delay-until", "Magento_PageBuilder/js/utils/editor", "Magento_PageBuilder/js/utils/nesting-link-dialog", "Magento_PageBuilder/js/wysiwyg/factory", "Magento_PageBuilder/js/content-type/preview"], function (_jarallax, _jarallaxVideo, _jquery, _translate, _events, _mageUtils, _underscore, _vimeoWrapper, _hideShowOption, _uploader, _delayUntil, _editor, _nestingLinkDialog, _factory, _preview) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -19,32 +19,18 @@ define(["jarallax", "jarallaxVideo", "jquery", "mage/translate", "Magento_PageBu
 
     _inheritsLoose(Preview, _preview2);
 
-    /**
-     * Wysiwyg deferred event
-     */
-
-    /**
-     * Have we handled a double click on init?
-     */
-
-    /**
-     * Debounce and defer the init of Jarallax
-     *
-     * @type {(() => void) & _.Cancelable}
-     */
-
-    /**
-     * @param {ContentTypeInterface} contentType
-     * @param {ContentTypeConfigInterface} config
-     * @param {ObservableUpdater} observableUpdater
-     */
-    function Preview(contentType, config, observableUpdater) {
+    function Preview() {
       var _this;
 
-      _this = _preview2.call(this, contentType, config, observableUpdater) || this;
+      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      _this = _preview2.call.apply(_preview2, [this].concat(args)) || this;
       _this.buttonPlaceholder = (0, _translate)("Edit Button Text");
       _this.wysiwygDeferred = _jquery.Deferred();
       _this.handledDoubleClick = false;
+      _this.videoUpdateProperties = ["background_type", "video_fallback_image", "video_lazy_load", "video_loop", "video_play_only_visible", "video_source"];
       _this.buildJarallax = _underscore.debounce(function () {
         // Destroy all instances of the plugin prior
         try {
@@ -77,26 +63,16 @@ define(["jarallax", "jarallaxVideo", "jquery", "mage/translate", "Magento_PageBu
           });
         }
       }, 50);
-
-      _this.contentType.dataStore.subscribe(_this.buildJarallax);
-
-      _events.on("banner:mountAfter", function (args) {
-        if (args.id === _this.contentType.id) {
-          _this.buildJarallax();
-        }
-      });
-
       return _this;
     }
+
+    var _proto = Preview.prototype;
+
     /**
      * Return an array of options
      *
      * @returns {OptionsInterface}
      */
-
-
-    var _proto = Preview.prototype;
-
     _proto.retrieveOptions = function retrieveOptions() {
       var options = _preview2.prototype.retrieveOptions.call(this);
 
@@ -424,6 +400,12 @@ define(["jarallax", "jarallaxVideo", "jquery", "mage/translate", "Magento_PageBu
 
       _preview2.prototype.bindEvents.call(this);
 
+      _events.on("banner:mountAfter", function (args) {
+        if (args.id === _this8.contentType.id) {
+          _this8.buildJarallax();
+        }
+      });
+
       _events.on(this.config.name + ":" + this.contentType.id + ":updateAfter", function () {
         var dataStore = _this8.contentType.dataStore.getState();
 
@@ -436,6 +418,16 @@ define(["jarallax", "jarallaxVideo", "jquery", "mage/translate", "Magento_PageBu
         _events.trigger("image:" + _this8.contentType.id + ":assignAfter", imageObject);
 
         (0, _nestingLinkDialog)(_this8.contentType.dataStore, _this8.wysiwyg, "message", "link_url");
+      });
+
+      this.contentType.dataStore.subscribe(function (data) {
+        if (this.isVideoShouldBeUpdated(data)) {
+          this.buildJarallax();
+        }
+      }.bind(this));
+
+      _events.on("image:" + this.contentType.id + ":uploadAfter", function () {
+        _this8.contentType.dataStore.set("background_type", "image");
       });
     }
     /**
@@ -454,6 +446,30 @@ define(["jarallax", "jarallaxVideo", "jquery", "mage/translate", "Magento_PageBu
       }
 
       (0, _jquery)(this.textarea).height(scrollHeight);
+    }
+    /**
+     * Adjust textarea's height based on scrollHeight
+     *
+     * @return boolean
+     */
+    ;
+
+    _proto.isVideoShouldBeUpdated = function isVideoShouldBeUpdated(state) {
+      var _this9 = this;
+
+      var previousState = this.contentType.dataStore.previousState;
+
+      var diff = _mageUtils.compare(previousState, state).changes;
+
+      if (diff.length > 0) {
+        return _underscore.some(diff, function (element) {
+          if (element.name === "video_fallback_image") {
+            return (!_underscore.isEmpty(previousState.video_fallback_image) && previousState.video_fallback_image) !== (!_underscore.isEmpty(state.video_fallback_image) && state.video_fallback_image);
+          }
+
+          return _this9.videoUpdateProperties.indexOf(element.name) !== -1;
+        });
+      }
     };
 
     return Preview;

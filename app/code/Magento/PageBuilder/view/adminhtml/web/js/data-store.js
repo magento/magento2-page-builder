@@ -11,9 +11,9 @@ define(["jquery", "Magento_PageBuilder/js/utils/object"], function (_jquery, _ob
     "use strict";
 
     function DataStore() {
+      this.previousState = {};
       this.state = {};
       this.events = (0, _jquery)({});
-      this.previousState = {};
     }
 
     var _proto = DataStore.prototype;
@@ -47,6 +47,7 @@ define(["jquery", "Magento_PageBuilder/js/utils/object"], function (_jquery, _ob
     ;
 
     _proto.set = function set(key, value) {
+      this.previousState = Object.assign({}, this.state);
       (0, _object.set)(this.state, key, value);
       this.emitState();
     }
@@ -58,6 +59,7 @@ define(["jquery", "Magento_PageBuilder/js/utils/object"], function (_jquery, _ob
     ;
 
     _proto.setState = function setState(state) {
+      this.previousState = Object.assign({}, this.state);
       this.state = state;
       this.emitState();
     }
