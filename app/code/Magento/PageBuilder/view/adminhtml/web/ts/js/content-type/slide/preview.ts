@@ -134,6 +134,7 @@ export default class Preview extends BasePreview {
                         speed: 1,
                         videoPlayOnlyVisible: (this.contentType.dataStore.get("video_play_only_visible") as string) === "true",
                         elementInViewport: $(".jarallax-viewport-element", this.wrapper),
+                        videoLazyLoading: (this.contentType.dataStore.get("video_lazy_load") as string) === "true",
                     },
                 );
             });
