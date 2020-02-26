@@ -119,7 +119,7 @@ export default class Preview extends BasePreview {
 
             _.defer(() => {
                 // Build Parallax on elements with the correct class
-                const viewportElement = $("<div class=\"jarallax-viewport-element\"></div>") as JQuery;
+                const viewportElement = $("<div/>").addClass("jarallax-viewport-element") as JQuery;
 
                 $(this.wrapper).append(
                     $(".jarallax-viewport-element", this.wrapper).length ? "" : viewportElement,
@@ -517,13 +517,13 @@ export default class Preview extends BasePreview {
             }
         });
 
-        this.contentType.dataStore.subscribe(function(data: DataObject) {
+        this.contentType.dataStore.subscribe((data: DataObject) => {
             this.slideName(data.slide_name);
 
             if (this.shouldUpdateVideo(data)) {
                 this.buildJarallax();
             }
-        }.bind(this));
+        });
 
         events.on(`image:${this.contentType.id}:uploadAfter`, () => {
             this.contentType.dataStore.set("background_type", "image");

@@ -56,7 +56,7 @@ define(["jarallax", "jarallaxVideo", "jquery", "knockout", "mage/translate", "Ma
         if (_this.wrapper && _this.wrapper.dataset.backgroundType === "video" && _this.wrapper.dataset.videoSrc.length) {
           _underscore.defer(function () {
             // Build Parallax on elements with the correct class
-            var viewportElement = (0, _jquery)("<div class=\"jarallax-viewport-element\"></div>");
+            var viewportElement = (0, _jquery)("<div/>").addClass("jarallax-viewport-element");
             (0, _jquery)(_this.wrapper).append((0, _jquery)(".jarallax-viewport-element", _this.wrapper).length ? "" : viewportElement);
             jarallax(_this.wrapper, {
               videoSrc: _this.wrapper.dataset.videoSrc,
@@ -462,12 +462,12 @@ define(["jarallax", "jarallaxVideo", "jquery", "knockout", "mage/translate", "Ma
       });
 
       this.contentType.dataStore.subscribe(function (data) {
-        this.slideName(data.slide_name);
+        _this8.slideName(data.slide_name);
 
-        if (this.shouldUpdateVideo(data)) {
-          this.buildJarallax();
+        if (_this8.shouldUpdateVideo(data)) {
+          _this8.buildJarallax();
         }
-      }.bind(this));
+      });
 
       _events.on("image:" + this.contentType.id + ":uploadAfter", function () {
         _this8.contentType.dataStore.set("background_type", "image");
