@@ -8,10 +8,17 @@
 <div class="pagebuilder-content-type pagebuilder-banner type-nested" attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
     <render args="getOptions().template" />
     <div class="pagebuilder-banner-wrapper"
-         css="data.wrapper.css"
          attr="data.wrapper.attributes"
          ko-style="data.wrapper.style"
-         event="{mouseover: onMouseOverWrapper, mouseout: onMouseOutWrapper, mousedown: activateEditor }">
+         css="Object.assign(data.wrapper.css(), {
+            'jarallax': data.wrapper.attributes()['data-background-type'] == 'video'
+            })"
+         event="{mouseover: onMouseOverWrapper, mouseout: onMouseOutWrapper, mousedown: activateEditor}"
+         afterRender="initParallax">
+        <div if="data.video_overlay.attributes()['data-video-overlay-color']"
+             class="video-overlay"
+             attr="data.video_overlay.attributes"
+             ko-style="data.video_overlay.style" />
         <div class="pagebuilder-overlay" css="data.overlay.css" attr="data.overlay.attributes" ko-style="data.overlay.style">
             <scope args="getUploader().getUiComponent()">
                 <render />

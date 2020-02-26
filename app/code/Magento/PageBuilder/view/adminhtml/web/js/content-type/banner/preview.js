@@ -3,7 +3,7 @@
 
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/content-type-menu/hide-show-option", "Magento_PageBuilder/js/uploader", "Magento_PageBuilder/js/utils/delay-until", "Magento_PageBuilder/js/utils/editor", "Magento_PageBuilder/js/utils/nesting-link-dialog", "Magento_PageBuilder/js/wysiwyg/factory", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _translate, _events, _underscore, _hideShowOption, _uploader, _delayUntil, _editor, _nestingLinkDialog, _factory, _preview) {
+define(["jarallax", "jarallaxVideo", "jquery", "mage/translate", "Magento_PageBuilder/js/events", "mageUtils", "underscore", "vimeoWrapper", "Magento_PageBuilder/js/content-type-menu/hide-show-option", "Magento_PageBuilder/js/uploader", "Magento_PageBuilder/js/utils/delay-until", "Magento_PageBuilder/js/utils/editor", "Magento_PageBuilder/js/utils/nesting-link-dialog", "Magento_PageBuilder/js/wysiwyg/factory", "Magento_PageBuilder/js/content-type/preview"], function (_jarallax, _jarallaxVideo, _jquery, _translate, _events, _mageUtils, _underscore, _vimeoWrapper, _hideShowOption, _uploader, _delayUntil, _editor, _nestingLinkDialog, _factory, _preview) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -30,6 +30,39 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore
       _this.buttonPlaceholder = (0, _translate)("Edit Button Text");
       _this.wysiwygDeferred = _jquery.Deferred();
       _this.handledDoubleClick = false;
+      _this.videoUpdateProperties = ["background_type", "video_fallback_image", "video_lazy_load", "video_loop", "video_play_only_visible", "video_source"];
+      _this.buildJarallax = _underscore.debounce(function () {
+        // Destroy all instances of the plugin prior
+        try {
+          // store/apply correct style after destroying, as jarallax incorrectly overrides it with stale value
+          var style = _this.wrapper.getAttribute("style") || _this.wrapper.getAttribute("data-jarallax-original-styles");
+
+          var backgroundImage = _this.contentType.dataStore.get("background_image");
+
+          jarallax(_this.wrapper, "destroy");
+
+          _this.wrapper.setAttribute("style", style);
+
+          if (_this.contentType.dataStore.get("background_type") !== "video" && backgroundImage.length) {
+            _this.wrapper.style.backgroundImage = "url(" + backgroundImage[0].url + ")";
+          }
+        } catch (e) {// Failure of destroying is acceptable
+        }
+
+        if (_this.wrapper && _this.wrapper.dataset.backgroundType === "video" && _this.wrapper.dataset.videoSrc.length) {
+          _underscore.defer(function () {
+            // Build Parallax on elements with the correct class
+            jarallax(_this.wrapper, {
+              videoSrc: _this.wrapper.dataset.videoSrc,
+              imgSrc: _this.wrapper.dataset.videoFallbackSrc,
+              videoLoop: _this.contentType.dataStore.get("video_loop") === "true",
+              speed: 1,
+              videoPlayOnlyVisible: _this.contentType.dataStore.get("video_play_only_visible") === "true",
+              videoLazyLoading: _this.contentType.dataStore.get("video_lazy_load") === "true"
+            });
+          });
+        }
+      }, 50);
       return _this;
     }
 
@@ -330,27 +363,71 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore
       _events.trigger("stage:interactionStop");
     }
     /**
+     * Init the parallax element
+     *
+     * @param {HTMLElement} element
+     */
+    ;
+
+    _proto.initParallax = function initParallax(element) {
+      var _this7 = this;
+
+      this.wrapper = element;
+
+      _underscore.defer(function () {
+        _this7.buildJarallax();
+      });
+    }
+    /**
+     * Destroy jarallax instance.
+     */
+    ;
+
+    _proto.destroy = function destroy() {
+      _preview2.prototype.destroy.call(this);
+
+      if (this.wrapper) {
+        jarallax(this.wrapper, "destroy");
+      }
+    }
+    /**
      * @inheritDoc
      */
     ;
 
     _proto.bindEvents = function bindEvents() {
-      var _this7 = this;
+      var _this8 = this;
 
       _preview2.prototype.bindEvents.call(this);
 
-      _events.on(this.config.name + ":" + this.contentType.id + ":updateAfter", function () {
-        var dataStore = _this7.contentType.dataStore.getState();
+      _events.on("banner:mountAfter", function (args) {
+        if (args.id === _this8.contentType.id) {
+          _this8.buildJarallax();
+        }
+      });
 
-        var imageObject = dataStore[_this7.config.additional_data.uploaderConfig.dataScope][0] || {}; // Resolves issue when tinyMCE injects a non-breaking space on reinitialization and removes placeholder.
+      _events.on(this.config.name + ":" + this.contentType.id + ":updateAfter", function () {
+        var dataStore = _this8.contentType.dataStore.getState();
+
+        var imageObject = dataStore[_this8.config.additional_data.uploaderConfig.dataScope][0] || {}; // Resolves issue when tinyMCE injects a non-breaking space on reinitialization and removes placeholder.
 
         if (dataStore.message === "<div data-bind=\"html: data.content.html\">&nbsp;</div>") {
-          _this7.contentType.dataStore.set("message", "");
+          _this8.contentType.dataStore.set("message", "");
         }
 
-        _events.trigger("image:" + _this7.contentType.id + ":assignAfter", imageObject);
+        _events.trigger("image:" + _this8.contentType.id + ":assignAfter", imageObject);
 
-        (0, _nestingLinkDialog)(_this7.contentType.dataStore, _this7.wysiwyg, "message", "link_url");
+        (0, _nestingLinkDialog)(_this8.contentType.dataStore, _this8.wysiwyg, "message", "link_url");
+      });
+
+      this.contentType.dataStore.subscribe(function (data) {
+        if (this.shouldUpdateVideo(data)) {
+          this.buildJarallax();
+        }
+      }.bind(this));
+
+      _events.on("image:" + this.contentType.id + ":uploadAfter", function () {
+        _this8.contentType.dataStore.set("background_type", "image");
       });
     }
     /**
@@ -369,6 +446,30 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore
       }
 
       (0, _jquery)(this.textarea).height(scrollHeight);
+    }
+    /**
+     * Check if video options has been updated.
+     *
+     * @return boolean
+     */
+    ;
+
+    _proto.shouldUpdateVideo = function shouldUpdateVideo(state) {
+      var _this9 = this;
+
+      var previousState = this.contentType.dataStore.getPreviousState();
+
+      var diff = _mageUtils.compare(previousState, state).changes;
+
+      if (diff.length > 0) {
+        return _underscore.some(diff, function (element) {
+          if (element.name === "video_fallback_image") {
+            return (!_underscore.isEmpty(previousState.video_fallback_image) && previousState.video_fallback_image) !== (!_underscore.isEmpty(state.video_fallback_image) && state.video_fallback_image);
+          }
+
+          return _this9.videoUpdateProperties.indexOf(element.name) !== -1;
+        });
+      }
     };
 
     return Preview;

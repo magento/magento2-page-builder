@@ -3,12 +3,17 @@
  * See COPYING.txt for license details.
  */
 
+import "jarallax";
+import "jarallaxVideo";
 import $ from "jquery";
 import $t from "mage/translate";
 import events from "Magento_PageBuilder/js/events";
+import mageUtils from "mageUtils";
 import _ from "underscore";
+import "vimeoWrapper";
 import HideShowOption from "../../content-type-menu/hide-show-option";
 import {OptionsInterface} from "../../content-type-menu/option.types";
+import {DataObject} from "../../data-store";
 import Uploader from "../../uploader";
 import delayUntil from "../../utils/delay-until";
 import {
@@ -22,6 +27,7 @@ import {
 import nestingLinkDialog from "../../utils/nesting-link-dialog";
 import WysiwygFactory from "../../wysiwyg/factory";
 import WysiwygInterface from "../../wysiwyg/wysiwyg-interface";
+import {ContentTypeReadyEventParamsInterface} from "../content-type-events.types";
 import BasePreview from "../preview";
 
 /**
@@ -46,6 +52,11 @@ export default class Preview extends BasePreview {
     private element: HTMLElement;
 
     /**
+     * The element the text content type is bound to
+     */
+    private wrapper: HTMLElement;
+
+    /**
      * The textarea element in disabled mode
      */
     private textarea: HTMLTextAreaElement;
@@ -54,6 +65,61 @@ export default class Preview extends BasePreview {
      * Have we handled a double click on init?
      */
     private handledDoubleClick: boolean = false;
+
+    /**
+     * Properties that cause rebuilding video background
+     */
+    private videoUpdateProperties = [
+        "background_type",
+        "video_fallback_image",
+        "video_lazy_load",
+        "video_loop",
+        "video_play_only_visible",
+        "video_source",
+    ];
+
+    /**
+     * Debounce and defer the init of Jarallax
+     *
+     * @type {(() => void) & _.Cancelable}
+     */
+    private buildJarallax = _.debounce(() => {
+        // Destroy all instances of the plugin prior
+        try {
+            // store/apply correct style after destroying, as jarallax incorrectly overrides it with stale value
+            const style = this.wrapper.getAttribute("style") ||
+                this.wrapper.getAttribute("data-jarallax-original-styles");
+            const backgroundImage = (this.contentType.dataStore.get("background_image") as any[]);
+            jarallax(this.wrapper, "destroy");
+            this.wrapper.setAttribute("style", style);
+            if (this.contentType.dataStore.get("background_type") as string !== "video" && backgroundImage.length) {
+                this.wrapper.style.backgroundImage = `url(${backgroundImage[0].url})`;
+            }
+        } catch (e) {
+            // Failure of destroying is acceptable
+        }
+
+        if (this.wrapper &&
+            (this.wrapper.dataset.backgroundType as string) === "video" &&
+            (this.wrapper.dataset.videoSrc as string).length
+        ) {
+            _.defer(() => {
+                // Build Parallax on elements with the correct class
+                jarallax(
+                    this.wrapper,
+                    {
+                        videoSrc: this.wrapper.dataset.videoSrc as string,
+                        imgSrc: this.wrapper.dataset.videoFallbackSrc as string,
+                        videoLoop: (this.contentType.dataStore.get("video_loop") as string) === "true",
+                        speed: 1,
+                        videoPlayOnlyVisible: (this.contentType.dataStore.get("video_play_only_visible") as string) === "true",
+                        videoLazyLoading: (this.contentType.dataStore.get("video_lazy_load") as string) === "true",
+                    },
+                );
+            });
+        }
+
+    }, 50);
 
     /**
      * Return an array of options
@@ -358,11 +424,37 @@ export default class Preview extends BasePreview {
     }
 
     /**
+     * Init the parallax element
+     *
+     * @param {HTMLElement} element
+     */
+    public initParallax(element: HTMLElement) {
+        this.wrapper = element;
+        _.defer(() => {
+            this.buildJarallax();
+        });
+    }
+
+    /**
+     * Destroy jarallax instance.
+     */
+    public destroy(): void {
+        super.destroy();
+        if (this.wrapper) {
+            jarallax(this.wrapper, "destroy");
+        }
+    }
+
+    /**
      * @inheritDoc
      */
     protected bindEvents() {
         super.bindEvents();
-
+        events.on("banner:mountAfter", (args: ContentTypeReadyEventParamsInterface) => {
+            if (args.id === this.contentType.id) {
+                this.buildJarallax();
+            }
+        });
         events.on(`${this.config.name}:${this.contentType.id}:updateAfter`, () => {
             const dataStore = this.contentType.dataStore.getState();
             const imageObject = (dataStore[this.config.additional_data.uploaderConfig.dataScope] as object[])[0] || {};
@@ -372,6 +464,14 @@ export default class Preview extends BasePreview {
             }
             events.trigger(`image:${this.contentType.id}:assignAfter`, imageObject);
             nestingLinkDialog(this.contentType.dataStore, this.wysiwyg, "message", "link_url");
+        });
+        this.contentType.dataStore.subscribe(function(data: DataObject) {
+            if (this.shouldUpdateVideo(data)) {
+                this.buildJarallax();
+            }
+        }.bind(this));
+        events.on(`image:${this.contentType.id}:uploadAfter`, () => {
+            this.contentType.dataStore.set("background_type", "image");
         });
     }
 
@@ -389,5 +489,26 @@ export default class Preview extends BasePreview {
         }
 
         $(this.textarea).height(scrollHeight);
+    }
+
+    /**
+     * Check if video options has been updated.
+     *
+     * @return boolean
+     */
+    private shouldUpdateVideo(state: DataObject): boolean {
+        const previousState = this.contentType.dataStore.getPreviousState();
+        const diff = mageUtils.compare(previousState, state).changes;
+
+        if (diff.length > 0) {
+            return _.some(diff, (element) => {
+                if (element.name === "video_fallback_image") {
+                    return (!_.isEmpty(previousState.video_fallback_image) && previousState.video_fallback_image) !==
+                        (!_.isEmpty(state.video_fallback_image) && state.video_fallback_image);
+                }
+
+                return this.videoUpdateProperties.indexOf(element.name) !== -1;
+            });
+        }
     }
 }
