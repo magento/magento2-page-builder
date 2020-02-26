@@ -3433,4 +3433,59 @@
             <argument name="property" value="PageBuilderSliderFade_Enabled"/>
         </actionGroup>
     </test>
+    <test name="SlideItemNotActiveValidateVideoBackgroundLazyLoadEnabled" extends="SlideItemNotActiveValidateVideoBackgroundPlayOnlyWhenVisibleEnabled">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Validate Video Background Lazy Load Enabled for not active slide item"/>
+            <description value="Verify that the video background lazy load attribute works as intended when enabled."/>
+            <severity value="MAJOR"/>
+            <useCaseId value="PB-266"/>
+            <testCaseId value="MC-0000"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-slideItemCommon"/>
+            <group value="pagebuilder-video-background"/>
+        </annotations>
+        <remove keyForRemoval="setLazyLoadDisabled"/>
+        <remove keyForRemoval="setPlayOnlyWhenVisibleEnabled"/>
+        <actionGroup ref="validateVideoBackgroundLoaded" stepKey="validateVideoPlayingStage1">
+            <argument name="section" value="SlideOnBackend"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateVideoBackgroundNotLoaded" stepKey="validateVideoNotPlayingStage1">
+            <argument name="section" value="SlideOnBackend"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateVideoBackgroundLoaded" stepKey="validateVideoPlayingStage2">
+            <argument name="section" value="SlideOnBackend"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateVideoBackgroundNotLoaded" stepKey="validateVideoNotPlayingStorefront">
+            <argument name="section" value="SlideOnFrontend"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateVideoBackgroundLoaded" stepKey="validateVideoPlayingStorefront">
+            <argument name="section" value="SlideOnFrontend"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+    </test>
+    <test name="SlideItemNotActiveFadeValidateVideoBackgroundLazyLoadEnabled" extends="SlideItemNotActiveValidateVideoBackgroundPlayOnlyWhenVisibleEnabled">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Validate Video Background Lazy Load Enabled for not active slide item with Fade enabled"/>
+            <description value="Verify that the video background lazy load attribute works as intended when enabled."/>
+            <severity value="MAJOR"/>
+            <useCaseId value="PB-266"/>
+            <testCaseId value="MC-0000"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-slideItemCommon"/>
+            <group value="pagebuilder-video-background"/>
+        </annotations>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="enterFade">
+            <argument name="property" value="PageBuilderSliderFade_Enabled"/>
+        </actionGroup>
+    </test>
 </tests>
