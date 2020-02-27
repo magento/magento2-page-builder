@@ -2133,7 +2133,7 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
-        <actionGroup ref="validateEmptyRowWithInvalidVideoBackgroundAndNoFallbackImage" stepKey="validateStage1">
+        <actionGroup ref="validateInvalidVideoBackgroundAndNoFallbackImage" stepKey="validateStage1">
             <argument name="section" value="SlideOnBackend"/>
         </actionGroup>
         <seeElementInDOM selector="{{SlideOnBackend.editableButtonItemElement('1')}}" stepKey="seeButtonIsEditable"/>
@@ -2142,7 +2142,7 @@
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Validate Stage After Save -->
-        <actionGroup ref="validateEmptyRowWithInvalidVideoBackgroundAndNoFallbackImage" stepKey="validateStage2">
+        <actionGroup ref="validateInvalidVideoBackgroundAndNoFallbackImage" stepKey="validateStage2">
             <argument name="section" value="SlideOnBackend"/>
         </actionGroup>
         <seeElementInDOM selector="{{SlideOnBackend.editableButtonItemElement('1')}}" stepKey="seeButtonIsEditable2"/>
@@ -2150,7 +2150,7 @@
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
-        <actionGroup ref="validateEmptyRowWithInvalidVideoBackgroundAndNoFallbackImage" stepKey="validateStorefront">
+        <actionGroup ref="validateInvalidVideoBackgroundAndNoFallbackImage" stepKey="validateStorefront">
             <argument name="section" value="SlideOnFrontend"/>
         </actionGroup>
         <seeElement selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideItemButtonText_Common2.value)}}" stepKey="seeButtonTextStorefront"/>
