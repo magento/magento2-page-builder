@@ -29,5 +29,10 @@ define([
             videoLazyLoading: $element.data('videoLazyLoad'),
             disableVideo: false
         });
+        $element[0].jarallax.video.on('started', function () {
+            if ($element[0].jarallax.$video) {
+                $element[0].jarallax.$video.style.visibility = 'visible';
+            }
+        });
     };
 });

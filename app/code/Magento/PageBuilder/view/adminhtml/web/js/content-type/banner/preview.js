@@ -59,6 +59,14 @@ define(["jarallax", "jarallaxVideo", "jquery", "mage/translate", "Magento_PageBu
               speed: 1,
               videoPlayOnlyVisible: _this.contentType.dataStore.get("video_play_only_visible") === "true",
               videoLazyLoading: _this.contentType.dataStore.get("video_lazy_load") === "true"
+            }); // @ts-ignore
+
+            _this.wrapper.jarallax.video.on("started", function () {
+              // @ts-ignore
+              if (_this.wrapper.jarallax.$video) {
+                // @ts-ignore
+                _this.wrapper.jarallax.$video.style.visibility = "visible";
+              }
             });
           });
         }
