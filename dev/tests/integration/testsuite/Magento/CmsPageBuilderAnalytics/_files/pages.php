@@ -390,3 +390,25 @@ $page->setTitle('Page Builder Analytics Test Page')
     ->setContent($content)
     ->setPageLayout('cms-full-width')
     ->save();
+
+/** @var $emptyContentPage \Magento\Cms\Model\Page */
+$emptyContentPage = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(\Magento\Cms\Model\Page::class);
+$emptyContentPage->setTitle('Page Builder Analytics Test Page - Empty Content')
+    ->setIdentifier('page-builder-analytics-test-page-empty')
+    ->setStores([0, 1])
+    ->setIsActive(1)
+    ->setCreatedIn(1)
+    ->setContent('')
+    ->setPageLayout('cms-full-width')
+    ->save();
+
+/** @var $nullContentPage \Magento\Cms\Model\Page */
+$nullContentPage = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(\Magento\Cms\Model\Page::class);
+$nullContentPage->setTitle('Page Builder Analytics Test Page - Null Content')
+    ->setIdentifier('page-builder-analytics-test-page-null')
+    ->setStores([0, 1])
+    ->setIsActive(1)
+    ->setCreatedIn(1)
+    ->setContent(null)
+    ->setPageLayout('cms-full-width')
+    ->save();
