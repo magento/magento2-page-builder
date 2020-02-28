@@ -48,6 +48,18 @@ define(["Magento_PageBuilder/js/content-type-menu/hide-show-option", "Magento_Pa
       var youtubeRegExp = new RegExp("^(?:https?:\/\/|\/\/)?(?:www\\.|m\\.)?" + "(?:youtu\\.be\/|youtube\\.com\/(?:embed\/|v\/|watch\\?v=|watch\\?.+&v=))([\\w-]{11})(?![\\w-])");
       var vimeoRegExp = new RegExp("https?:\/\/(?:www\\.|player\\.)?vimeo.com\/(?:channels\/" + "(?:\\w+\/)?|groups\/([^\/]*)\/videos\/|album\/(\\d+)\/video\/|video\/|)(\\d+)(?:$|\/|\\?)");
       return vimeoRegExp.test(src) || youtubeRegExp.test(src);
+    }
+    /**
+     * After render callback
+     *
+     * @param {HTMLVideoElement} videoElement
+     * @param {Preview} self
+     */
+    ;
+
+    _proto.onAfterRender = function onAfterRender(videoElement, self) {
+      // Assign muted attribute explicitly due to API issues
+      videoElement.muted = self.data.video.attributes().autoplay;
     };
 
     return Preview;

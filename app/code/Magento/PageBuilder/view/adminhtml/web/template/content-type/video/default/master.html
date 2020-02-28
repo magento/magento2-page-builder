@@ -10,7 +10,7 @@
         <div class="pagebuilder-video-wrapper" attr="data.wrapper.attributes" ko-style="Object.assign(data.wrapper.style(), {backgroundColor: data.wrapper.style().borderColor})" css="data.wrapper.css">
             <div class="pagebuilder-video-container" if="data.video.attributes().src">
                 <iframe frameborder="0" allowfullscreen attr="data.video.attributes" if="isHosted(data.video.attributes().src)"/>
-                <video frameborder="0" controls="" attr="autoplay: data.video.attributes().autoplay ==='true' ? 'true' : null, src: data.video.attributes().src, 'data-element': data.video.attributes()['data-element']" ifnot="isHosted(data.video.attributes().src)"/>
+                <video frameborder="0" controls="" attr="data.video.attributes" ifnot="isHosted(data.video.attributes().src)"/>
             </div>
         </div>
     </div>

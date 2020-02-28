@@ -40,4 +40,14 @@ export default class Preview extends BasePreview {
         return (vimeoRegExp.test(src) || youtubeRegExp.test(src));
     }
 
+    /**
+     * After render callback
+     *
+     * @param {HTMLVideoElement} videoElement
+     * @param {Preview} self
+     */
+    public onAfterRender(videoElement: HTMLVideoElement, self: Preview) {
+        // Assign muted attribute explicitly due to API issues
+        videoElement.muted = self.data.video.attributes().autoplay;
+    }
 }
