@@ -246,6 +246,19 @@
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="loseFocusFromEditor"/>
     </actionGroup>
+    <actionGroup name="inlineEditWYSIWYGSWithVideoFromStage">
+        <arguments>
+            <argument name="contentType"/>
+            <argument name="content" type="string"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <click selector="{{PageBuilderStage.inlineWYSIWYGEditor(contentType.role, index)}}" stepKey="focusOnEditorArea"/>
+        <click selector="{{PageBuilderStage.inlineWYSIWYGEditor(contentType.role, index)}}" stepKey="focusOnEditorArea1"/>
+        <waitForElementVisible selector="{{PageBuilderStage.inlineWYSIWYGEditorPanel(contentType.role, index)}}" stepKey="waitForEditorPanel"/>
+        <pressKey selector="{{PageBuilderStage.inlineWYSIWYGEditor(contentType.role, index)}}" userInput="{{content}}" stepKey="enterContentIntoEditor"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="loseFocusFromEditor"/>
+    </actionGroup>
     <actionGroup name="inlineEditTextAreaFromStage">
         <arguments>
             <argument name="contentType"/>
