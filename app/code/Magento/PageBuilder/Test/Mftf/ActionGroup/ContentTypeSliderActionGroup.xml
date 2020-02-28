@@ -29,4 +29,18 @@
     <actionGroup name="validateBackgroundAttributesForSlide" extends="validateBackgroundAttributes">
         <remove keyForRemoval="waitForBackgroundAttachment"/>
     </actionGroup>
+    <actionGroup name="inlineEditSlideOrBannerButton">
+        <arguments>
+            <argument name="section" defaultValue="SlideOnBackend"/>
+            <argument name="text" defaultValue="{{PageBuilderSlideItemButtonText_Slide1.value}}" type="string"/>
+            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="pageBuilderArea" defaultValue="" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{section.editableButtonItemElement(index)}}" stepKey="waitForButtonVisible"/>
+        <click selector="{{section.editableButtonItemElement(index)}}" stepKey="clickButtonToEdit"/>
+        <pressKey selector="{{section.editableButtonItemElement(index)}}" userInput="{{text}}" stepKey="enterButtonText"/>
+        <waitForElementVisible selector="{{section.buttonText(index, text)}}" stepKey="seeButtonText"/>
+        <click selector="{{pageBuilderArea}}{{PageBuilderPanel.searchPanel}}" stepKey="unFocusLiveEdit"/>
+        <waitForPageLoad stepKey="waitForUnFocus"/>
+    </actionGroup>
 </actionGroups>

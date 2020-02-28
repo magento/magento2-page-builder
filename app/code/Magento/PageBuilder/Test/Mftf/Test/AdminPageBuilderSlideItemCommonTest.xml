@@ -2088,7 +2088,6 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <!-- Add Slider to Stage -->
-        <comment userInput="Add Slider to Stage" stepKey="addSliderToStage"/>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
@@ -2155,7 +2154,7 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
-            <title value="Validate Slider Item Video Background Video Urls"/>
+            <title value="Slide Item: Validate Video Background Video Urls"/>
             <description value="Verify that the video background URL field is required, only accepts valid urls, and that the user can set an embedded or non-embedded video background to a YouTube or Vimeo video, or to a stored .mp4 video."/>
             <severity value="BLOCKER"/>
             <useCaseId value="PB-266"/>
@@ -2178,7 +2177,6 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <!-- Add Slider to Stage -->
-        <comment userInput="Add Slider to Stage" stepKey="addSliderToStage"/>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
@@ -2303,7 +2301,7 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
-            <title value="Verify User Can Switch Between Background Images and Videos for Slider Item"/>
+            <title value="Slide Item: Verify User Can Switch Between Background Images and Videos"/>
             <description value="Verify that a user can switch between background images and background videos."/>
             <severity value="MAJOR"/>
             <useCaseId value="PB-266"/>
@@ -2345,7 +2343,6 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <!-- Add Slider to Stage -->
-        <comment userInput="Add Slider to Stage" stepKey="addSliderToStage"/>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
@@ -2703,7 +2700,6 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <!-- Add Slider to Stage -->
-        <comment userInput="Add Slider to Stage" stepKey="addSliderToStage"/>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
@@ -2844,7 +2840,6 @@
         <!-- Set Large Min Height on Row 1 -->
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage1">
             <argument name="contentType" value="PageBuilderRowContentType"/>
-            <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty1">
             <argument name="property" value="PageBuilderMinHeightProperty_300vh"/>
@@ -2854,13 +2849,11 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
         <!-- Add Slider to Stage -->
-        <comment userInput="Add Slider to Stage" stepKey="addSliderToStage"/>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragSliderIntoStage">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
-            <argument name="containerTargetIndex" value="1"/>
         </actionGroup>
         <!-- Set Video Background on Slide -->
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanelAfterDrop">
@@ -2886,7 +2879,6 @@
         <actionGroup ref="validateVideoBackgroundPlaying" stepKey="validateVideoPlayingStage1">
             <argument name="section" value="SlideOnBackend"/>
             <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_YouTube_NonEmbedded"/>
-            <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
@@ -2894,14 +2886,12 @@
         <actionGroup ref="validateVideoBackgroundLoadedButNotPlaying" stepKey="validateVideoNotPlayingStage1">
             <argument name="section" value="SlideOnBackend"/>
             <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_YouTube_NonEmbedded"/>
-            <argument name="index" value="1"/>
         </actionGroup>
         <scrollTo selector="{{SlideOnBackend.base('1')}}" stepKey="scrollToSlideStage"/>
         <!-- Stage: Validate Video is Playing -->
         <actionGroup ref="validateVideoBackgroundPlaying" stepKey="validateVideoPlayingStage2">
             <argument name="section" value="SlideOnBackend"/>
             <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_YouTube_NonEmbedded"/>
-            <argument name="index" value="1"/>
         </actionGroup>
         <!-- Storefront: Validate Video is not Playing -->
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStorefront">
@@ -2910,13 +2900,11 @@
         <actionGroup ref="validateVideoBackgroundLoadedButNotPlaying" stepKey="validateVideoNotPlayingStorefront">
             <argument name="section" value="SlideOnFrontend"/>
             <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_YouTube_NonEmbedded"/>
-            <argument name="index" value="1"/>
         </actionGroup>
         <scrollTo selector="{{SlideOnFrontend.base('1')}}" stepKey="scrollToSlideStorefront"/>
         <actionGroup ref="validateVideoBackgroundPlaying" stepKey="validateVideoPlayingStorefront">
             <argument name="section" value="SlideOnFrontend"/>
             <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_YouTube_NonEmbedded"/>
-            <argument name="index" value="1"/>
         </actionGroup>
     </test>
     <test name="SlideItemValidateVideoBackgroundPlayOnlyWhenVisibleDisabled">
@@ -2955,7 +2943,6 @@
         <!-- Set Large Min Height on Row 1 -->
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage1">
             <argument name="contentType" value="PageBuilderRowContentType"/>
-            <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty1">
             <argument name="property" value="PageBuilderMinHeightProperty_300vh"/>
@@ -2965,13 +2952,11 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
         <!-- Add Slider to Stage -->
-        <comment userInput="Add Slider to Stage" stepKey="addSliderToStage"/>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragSliderIntoStage">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
-            <argument name="containerTargetIndex" value="1"/>
         </actionGroup>
         <!-- Set Video Background on Slide -->
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanelAfterDrop">
@@ -3151,13 +3136,11 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <!-- Add Slider to Stage -->
-        <comment userInput="Add Slider to Stage" stepKey="addSliderToStage"/>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragSliderIntoStage">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
-            <argument name="containerTargetIndex" value="1"/>
         </actionGroup>
         <!-- Set Video Background on Poster appearance Slide -->
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanelAfterDrop">
@@ -3261,7 +3244,6 @@
         </actionGroup>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate Storefront -->
-        <amOnUrl url="{{_ENV.MAGENTO_BASE_URL}}" stepKey="goBackToMagento"/>
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
@@ -3301,12 +3283,12 @@
             <argument name="index" value="4"/>
         </actionGroup>
     </test>
-    <test name="SlideItemNotActiveValidateVideoBackgroundPlayOnlyWhenVisibleEnabled">
+    <test name="SlideItemNotActiveValidateVideoBackgroundPlayOnlyWhenVisibleEnabledWithSliderFadeDisabled">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
-            <title value="Slide Item: Validate Video Background Play Only When Visible Enabled"/>
-            <description value="Verify that the video background play only when visible attribute works as intended when enabled."/>
+            <title value="Slide Item: Validate Video Background Play Only When Visible Enabled For Non-Active Slide Item With Slider Fade Disabled"/>
+            <description value="Verify that the video background play only when visible attribute works as intended when enabled for a non-active slide item and the slider fade attribute is disabled."/>
             <severity value="CRITICAL"/>
             <useCaseId value="PB-266"/>
             <testCaseId value="MC-31938"/>
@@ -3328,16 +3310,13 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <!-- Add Slider to Stage -->
-        <comment userInput="Add Slider to Stage" stepKey="addSliderToStage"/>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragSliderIntoStage">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
-            <argument name="containerTargetIndex" value="1"/>
         </actionGroup>
         <!-- Set Slider Fade Setting -->
-        <comment userInput="Edit Slider" stepKey="commentEditSlider"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusSlide"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openSliderEditPanelAfterDrop">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
@@ -3415,12 +3394,12 @@
             <argument name="index" value="2"/>
         </actionGroup>
     </test>
-    <test name="SlideItemNotActiveFadeValidateVideoBackgroundPlayOnlyWhenVisibleEnabled" extends="SlideItemNotActiveValidateVideoBackgroundPlayOnlyWhenVisibleEnabled">
+    <test name="SlideItemNotActiveValidateVideoBackgroundPlayOnlyWhenVisibleEnabledWithSliderFadeEnabled" extends="SlideItemNotActiveValidateVideoBackgroundPlayOnlyWhenVisibleEnabledWithSliderFadeDisabled">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
-            <title value="Validate Video Background Play Only When Visible Enabled for not active slide with Fade enabled"/>
-            <description value="Verify that the video background play only when visible attribute works as intended when enabled."/>
+            <title value="Slide Item: Validate Video Background Play Only When Visible Enabled For Non-Active Slide Item With Slider Fade Enabled"/>
+            <description value="Verify that the video background play only when visible attribute works as intended when enabled for a non-active slide item and the slider fade attribute is enabled."/>
             <severity value="CRITICAL"/>
             <useCaseId value="PB-266"/>
             <testCaseId value="MC-31939"/>
@@ -3433,12 +3412,12 @@
             <argument name="property" value="PageBuilderSliderFade_Enabled"/>
         </actionGroup>
     </test>
-    <test name="SlideItemNotActiveValidateVideoBackgroundLazyLoadEnabled" extends="SlideItemNotActiveValidateVideoBackgroundPlayOnlyWhenVisibleEnabled">
+    <test name="SlideItemNotActiveValidateVideoBackgroundLazyLoadEnabledWithSliderFadeDisabled" extends="SlideItemNotActiveValidateVideoBackgroundPlayOnlyWhenVisibleEnabledWithSliderFadeDisabled">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
-            <title value="Validate Video Background Lazy Load Enabled for not active slide item"/>
-            <description value="Verify that the video background lazy load attribute works as intended when enabled."/>
+            <title value="Slide Item: Validate Video Background Lazy Load Enabled For Non-Active Slide Item With Slider Fade Disabled"/>
+            <description value="Verify that the video background lazy load attribute works as intended when enabled for a non-active slide item and the slider fade attribute is disabled."/>
             <severity value="CRITICAL"/>
             <useCaseId value="PB-266"/>
             <testCaseId value="MC-31950"/>
@@ -3447,7 +3426,9 @@
             <group value="pagebuilder-slideItemCommon"/>
             <group value="pagebuilder-video-background"/>
         </annotations>
-        <remove keyForRemoval="setLazyLoadDisabled"/>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="setLazyLoadDisabled">
+            <argument name="property" value="PageBuilderVideoBackgroundLazyLoad_Enabled"/>
+        </actionGroup>
         <remove keyForRemoval="setPlayOnlyWhenVisibleEnabled"/>
         <actionGroup ref="validateVideoBackgroundLoaded" stepKey="validateVideoPlayingStage1">
             <argument name="section" value="SlideOnBackend"/>
@@ -3470,12 +3451,12 @@
             <argument name="index" value="2"/>
         </actionGroup>
     </test>
-    <test name="SlideItemNotActiveFadeValidateVideoBackgroundLazyLoadEnabled" extends="SlideItemNotActiveValidateVideoBackgroundPlayOnlyWhenVisibleEnabled">
+    <test name="SlideItemNotActiveValidateVideoBackgroundLazyLoadEnabledWithSliderFadeEnabled" extends="SlideItemNotActiveValidateVideoBackgroundPlayOnlyWhenVisibleEnabledWithSliderFadeDisabled">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
-            <title value="Validate Video Background Lazy Load Enabled for not active slide item with Fade enabled"/>
-            <description value="Verify that the video background lazy load attribute works as intended when enabled."/>
+            <title value="Slide Item: Validate Video Background Lazy Load Enabled For Non-Active Slide Item With Slider Fade Enabled"/>
+            <description value="Verify that the video background lazy load attribute works as intended when enabled for a non-active slide item and the slider fade attribute is enabled."/>
             <severity value="CRITICAL"/>
             <useCaseId value="PB-266"/>
             <testCaseId value="MC-31951"/>

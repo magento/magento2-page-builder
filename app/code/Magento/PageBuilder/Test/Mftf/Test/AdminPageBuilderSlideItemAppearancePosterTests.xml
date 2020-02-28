@@ -1719,7 +1719,6 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <!-- Add Slider to Stage -->
-        <comment userInput="Add Slider to Stage" stepKey="addSliderToStage"/>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
@@ -1752,18 +1751,11 @@
         <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="disablePlayOnlyWhenVisible">
             <argument name="property" value="PageBuilderVideoBackgroundPlayOnlyWhenVisible_Disabled"/>
         </actionGroup>
-        <actionGroup ref="addTextToTinyMCE" stepKey="enterMessageText">
-            <argument name="property" value="PageBuilderSlideItemMessage_Long"/>
-            <argument name="section" value="SlideOnConfigurationPanel"/>
-        </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButton">
             <argument name="property" value="PageBuilderSlideItemShowButton_Always"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
-        <seeElementInDOM selector="{{SlideOnBackend.editableButtonItemElement('1')}}" stepKey="seeButtonIsEditable"/>
-        <click selector="{{SlideOnBackend.editableButtonItemElement('1')}}" stepKey="clickButtonToEdit"/>
-        <pressKey selector="{{SlideOnBackend.editableButtonItemElement('1')}}" userInput="{{PageBuilderSlideItemButtonText_Common2.value}}" stepKey="enterButtonText"/>
         <actionGroup ref="validateVideoBackgroundWithOnlyVideoUrl" stepKey="validateStage1">
             <argument name="section" value="SlideOnBackend"/>
             <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_YouTube_Embedded"/>
@@ -1771,6 +1763,15 @@
             <argument name="lazyLoad" value="PageBuilderVideoBackgroundLazyLoad_Disabled"/>
             <argument name="playOnlyWhenVisible" value="PageBuilderVideoBackgroundPlayOnlyWhenVisible_Disabled"/>
         </actionGroup>
+        <actionGroup ref="inlineEditWYSIWYGFromStage" stepKey="inlineEdit">
+            <argument name="contentType" value="PageBuilderSlideContentType"/>
+            <argument name="content" value="{{PageBuilderSlideItemContent_Slide1.value}}"/>
+        </actionGroup>
+        <actionGroup ref="inlineEditSlideOrBannerButton" stepKey="inlineEditSlideButton">
+            <argument name="text" value="{{PageBuilderSlideItemButtonText_Slide1.value}}"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="waitForMessageContentStage"/>
+        <waitForElementVisible selector="{{SlideOnBackend.buttonText('1', PageBuilderSlideItemButtonText_Slide1.value)}}" stepKey="waitForButtonTextStage"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Validate Stage After Save -->
@@ -1781,6 +1782,8 @@
             <argument name="lazyLoad" value="PageBuilderVideoBackgroundLazyLoad_Disabled"/>
             <argument name="playOnlyWhenVisible" value="PageBuilderVideoBackgroundPlayOnlyWhenVisible_Disabled"/>
         </actionGroup>
+        <waitForElementVisible selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="waitForMessageContentStage2"/>
+        <waitForElementVisible selector="{{SlideOnBackend.buttonText('1', PageBuilderSlideItemButtonText_Slide1.value)}}" stepKey="waitForButtonTextStage2"/>
         <!-- Validate Edit Panel After Save -->
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanelAfterSave">
             <argument name="section" value="SlideOnBackend"/>
@@ -1817,7 +1820,8 @@
             <argument name="lazyLoad" value="PageBuilderVideoBackgroundLazyLoad_Disabled"/>
             <argument name="playOnlyWhenVisible" value="PageBuilderVideoBackgroundPlayOnlyWhenVisible_Disabled"/>
         </actionGroup>
-        <seeElement selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideItemButtonText_Common2.value)}}" stepKey="seeButtonTextStorefront"/>
+        <waitForElementVisible selector="{{SlideOnFrontend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="waitForMessageContentStorefront"/>
+        <waitForElementVisible selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideItemButtonText_Slide1.value)}}" stepKey="waitForButtonTextStorefront"/>
     </test>
     <test name="SliderPosterValidateVideoBackground">
         <annotations>
@@ -1853,7 +1857,6 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <!-- Add Slider to Stage -->
-        <comment userInput="Add Slider to Stage" stepKey="addSliderToStage"/>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
@@ -1896,18 +1899,11 @@
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachFallbackImage">
             <argument name="property" value="PageBuilderVideoBackgroundFallbackImage_JPG"/>
         </actionGroup>
-        <actionGroup ref="addTextToTinyMCE" stepKey="enterMessageText">
-            <argument name="property" value="PageBuilderSlideItemMessage_Long"/>
-            <argument name="section" value="SlideOnConfigurationPanel"/>
-        </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButton">
             <argument name="property" value="PageBuilderSlideItemShowButton_Always"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
-        <seeElementInDOM selector="{{SlideOnBackend.editableButtonItemElement('1')}}" stepKey="seeButtonIsEditable"/>
-        <click selector="{{SlideOnBackend.editableButtonItemElement('1')}}" stepKey="clickButtonToEdit"/>
-        <pressKey selector="{{SlideOnBackend.editableButtonItemElement('1')}}" userInput="{{PageBuilderSlideItemButtonText_Common2.value}}" stepKey="enterButtonText"/>
         <actionGroup ref="validateVideoBackgroundWithAllAttributes" stepKey="validateStage1">
             <argument name="section" value="SlideOnBackend"/>
             <argument name="backgroundColor" value="{{PageBuilderBackgroundColor_Pink.rgb}}"/>
@@ -1918,6 +1914,15 @@
             <argument name="playOnlyWhenVisible" value="PageBuilderVideoBackgroundPlayOnlyWhenVisible_Enabled"/>
             <argument name="fallbackImage" value="PageBuilderVideoBackgroundFallbackImage_JPG"/>
         </actionGroup>
+        <actionGroup ref="inlineEditSlideOrBannerButton" stepKey="inlineEditSlideButton">
+            <argument name="text" value="{{PageBuilderSlideItemButtonText_Slide1.value}}"/>
+        </actionGroup>
+        <actionGroup ref="inlineEditWYSIWYGFromStage" stepKey="inlineEdit">
+            <argument name="contentType" value="PageBuilderSlideContentType"/>
+            <argument name="content" value="{{PageBuilderSlideItemContent_Slide1.value}}"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="waitForMessageContentStage"/>
+        <waitForElementVisible selector="{{SlideOnBackend.buttonText('1', PageBuilderSlideItemButtonText_Slide1.value)}}" stepKey="waitForButtonTextStage"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Validate Stage After Save -->
@@ -1931,7 +1936,8 @@
             <argument name="playOnlyWhenVisible" value="PageBuilderVideoBackgroundPlayOnlyWhenVisible_Enabled"/>
             <argument name="fallbackImage" value="PageBuilderVideoBackgroundFallbackImage_JPG"/>
         </actionGroup>
-        <seeElementInDOM selector="{{SlideOnBackend.editableButtonItemElement('1')}}" stepKey="seeButtonIsEditable2"/>
+        <waitForElementVisible selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="waitForMessageContentStage2"/>
+        <waitForElementVisible selector="{{SlideOnBackend.buttonText('1', PageBuilderSlideItemButtonText_Slide1.value)}}" stepKey="waitForButtonTextStage2"/>
         <!-- Validate Edit Panel After Save -->
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanelAfterSave">
             <argument name="section" value="SlideOnBackend"/>
@@ -1974,7 +1980,8 @@
             <argument name="playOnlyWhenVisible" value="PageBuilderVideoBackgroundPlayOnlyWhenVisible_Enabled"/>
             <argument name="fallbackImage" value="PageBuilderVideoBackgroundFallbackImage_JPG"/>
         </actionGroup>
-        <seeElement selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideItemButtonText_Common2.value)}}" stepKey="seeButtonTextStorefront"/>
+        <waitForElementVisible selector="{{SlideOnFrontend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="waitForMessageContentStorefront"/>
+        <waitForElementVisible selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideItemButtonText_Slide1.value)}}" stepKey="waitForButtonTextStorefront"/>
     </test>
     <test name="SliderPosterVideoBackgroundValidateFallbackImage">
         <annotations>
@@ -2010,7 +2017,6 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <!-- Add Slider to Stage -->
-        <comment userInput="Add Slider to Stage" stepKey="addSliderToStage"/>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
@@ -2038,10 +2044,6 @@
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachFallbackImage">
             <argument name="property" value="PageBuilderVideoBackgroundFallbackImage_JPG"/>
         </actionGroup>
-        <actionGroup ref="addTextToTinyMCE" stepKey="enterMessageText">
-            <argument name="property" value="PageBuilderSlideItemMessage_Long"/>
-            <argument name="section" value="SlideOnConfigurationPanel"/>
-        </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButton">
             <argument name="property" value="PageBuilderSlideItemShowButton_Always"/>
         </actionGroup>
@@ -2051,9 +2053,15 @@
             <argument name="section" value="SlideOnBackend"/>
             <argument name="fallbackImage" value="PageBuilderVideoBackgroundFallbackImage_JPG"/>
         </actionGroup>
-        <seeElementInDOM selector="{{SlideOnBackend.editableButtonItemElement('1')}}" stepKey="seeButtonIsEditable"/>
-        <click selector="{{SlideOnBackend.editableButtonItemElement('1')}}" stepKey="clickButtonToEdit"/>
-        <pressKey selector="{{SlideOnBackend.editableButtonItemElement('1')}}" userInput="{{PageBuilderSlideItemButtonText_Common2.value}}" stepKey="enterButtonText"/>
+        <actionGroup ref="inlineEditSlideOrBannerButton" stepKey="inlineEditSlideButton">
+            <argument name="text" value="{{PageBuilderSlideItemButtonText_Slide1.value}}"/>
+        </actionGroup>
+        <actionGroup ref="inlineEditWYSIWYGFromStage" stepKey="inlineEdit">
+            <argument name="contentType" value="PageBuilderSlideContentType"/>
+            <argument name="content" value="{{PageBuilderSlideItemContent_Slide1.value}}"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="waitForMessageContentStage"/>
+        <waitForElementVisible selector="{{SlideOnBackend.buttonText('1', PageBuilderSlideItemButtonText_Slide1.value)}}" stepKey="waitForButtonTextStage"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Validate Stage After Save -->
@@ -2061,7 +2069,8 @@
             <argument name="section" value="SlideOnBackend"/>
             <argument name="fallbackImage" value="PageBuilderVideoBackgroundFallbackImage_JPG"/>
         </actionGroup>
-        <seeElementInDOM selector="{{SlideOnBackend.editableButtonItemElement('1')}}" stepKey="seeButtonIsEditable2"/>
+        <waitForElementVisible selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="waitForMessageContentStage2"/>
+        <waitForElementVisible selector="{{SlideOnBackend.buttonText('1', PageBuilderSlideItemButtonText_Slide1.value)}}" stepKey="waitForButtonTextStage2"/>
         <!-- Validate Storefront -->
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
@@ -2070,14 +2079,15 @@
             <argument name="section" value="SlideOnFrontend"/>
             <argument name="fallbackImage" value="PageBuilderVideoBackgroundFallbackImage_JPG"/>
         </actionGroup>
-        <seeElement selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideItemButtonText_Common2.value)}}" stepKey="seeButtonTextStorefront"/>
+        <waitForElementVisible selector="{{SlideOnFrontend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="waitForMessageContentStorefront"/>
+        <waitForElementVisible selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideItemButtonText_Slide1.value)}}" stepKey="waitForButtonTextStorefront"/>
     </test>
     <test name="SliderPosterInvalidVideoBackgroundNoFallbackImage">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
             <title value="Verify Poster Slide Renders When Video Isn't Loaded and There's No Fallback Image"/>
-            <description value="Validate that the Row renders correctly when the video background video hasn't loaded and there is no fallback image."/>
+            <description value="Validate that the slide renders correctly when the video background video hasn't loaded and there is no fallback image."/>
             <severity value="BLOCKER"/>
             <useCaseId value="PB-266"/>
             <testCaseId value="MC-31845"/>
@@ -2099,7 +2109,6 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <!-- Add Slider to Stage -->
-        <comment userInput="Add Slider to Stage" stepKey="addSliderToStage"/>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
@@ -2124,10 +2133,6 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrl">
             <argument name="property" value="PageBuilderVideoBackgroundUrl_Invalid_VideoDoesNotExit"/>
         </actionGroup>
-        <actionGroup ref="addTextToTinyMCE" stepKey="enterMessageText">
-            <argument name="property" value="PageBuilderSlideItemMessage_Long"/>
-            <argument name="section" value="SlideOnConfigurationPanel"/>
-        </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButton">
             <argument name="property" value="PageBuilderSlideItemShowButton_Always"/>
         </actionGroup>
@@ -2136,16 +2141,23 @@
         <actionGroup ref="validateInvalidVideoBackgroundAndNoFallbackImage" stepKey="validateStage1">
             <argument name="section" value="SlideOnBackend"/>
         </actionGroup>
-        <seeElementInDOM selector="{{SlideOnBackend.editableButtonItemElement('1')}}" stepKey="seeButtonIsEditable"/>
-        <click selector="{{SlideOnBackend.editableButtonItemElement('1')}}" stepKey="clickButtonToEdit"/>
-        <pressKey selector="{{SlideOnBackend.editableButtonItemElement('1')}}" userInput="{{PageBuilderSlideItemButtonText_Common2.value}}" stepKey="enterButtonText"/>
+        <actionGroup ref="inlineEditSlideOrBannerButton" stepKey="inlineEditSlideButton">
+            <argument name="text" value="{{PageBuilderSlideItemButtonText_Slide1.value}}"/>
+        </actionGroup>
+        <actionGroup ref="inlineEditWYSIWYGFromStage" stepKey="inlineEdit">
+            <argument name="contentType" value="PageBuilderSlideContentType"/>
+            <argument name="content" value="{{PageBuilderSlideItemContent_Slide1.value}}"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="waitForMessageContentStage"/>
+        <waitForElementVisible selector="{{SlideOnBackend.buttonText('1', PageBuilderSlideItemButtonText_Slide1.value)}}" stepKey="waitForButtonTextStage"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Validate Stage After Save -->
         <actionGroup ref="validateInvalidVideoBackgroundAndNoFallbackImage" stepKey="validateStage2">
             <argument name="section" value="SlideOnBackend"/>
         </actionGroup>
-        <seeElementInDOM selector="{{SlideOnBackend.editableButtonItemElement('1')}}" stepKey="seeButtonIsEditable2"/>
+        <waitForElementVisible selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="waitForMessageContentStage2"/>
+        <waitForElementVisible selector="{{SlideOnBackend.buttonText('1', PageBuilderSlideItemButtonText_Slide1.value)}}" stepKey="waitForButtonTextStage2"/>
         <!-- Validate Storefront -->
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
@@ -2153,6 +2165,7 @@
         <actionGroup ref="validateInvalidVideoBackgroundAndNoFallbackImage" stepKey="validateStorefront">
             <argument name="section" value="SlideOnFrontend"/>
         </actionGroup>
-        <seeElement selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideItemButtonText_Common2.value)}}" stepKey="seeButtonTextStorefront"/>
+        <waitForElementVisible selector="{{SlideOnFrontend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="waitForMessageContentStorefront"/>
+        <waitForElementVisible selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideItemButtonText_Slide1.value)}}" stepKey="waitForButtonTextStorefront"/>
     </test>
 </tests>
