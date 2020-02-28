@@ -134,9 +134,9 @@ class UploadTest extends TestCase
      * Initiates Uploader object for `$fieldId` and returns as a result of `UploaderFactory::create()`
      *
      * @param string $fieldId
-     * @return Uploader|MockObject
+     * @return void
      */
-    private function setUploaderMockForField(string $fieldId): Uploader
+    private function setUploaderMockForField(string $fieldId): void
     {
         $uploader = $this->objectManager->create(Uploader::class, [
             'fileId' => $fieldId,
