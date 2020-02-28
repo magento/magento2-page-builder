@@ -21,6 +21,9 @@ define(["Magento_PageBuilder/js/utils/object"], function (_object) {
      * @returns {string | object}
      */
     _proto.fromDom = function fromDom(value) {
+      value = value.replace(/\?autoplay=1&mute=1/g, "");
+      value = value.replace(/\?title=0&byline=0&portrait=0/g, "");
+      value = value.replace(/&autoplay=1&autopause=0&muted=1/g, "");
       return value;
     }
     /**

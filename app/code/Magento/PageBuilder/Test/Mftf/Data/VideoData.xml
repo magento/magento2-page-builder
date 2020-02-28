@@ -27,14 +27,14 @@
         <data key="section">general</data>
         <data key="fieldName">video_source</data>
         <data key="value">Test</data>
-        <data key="errorMessage">Please enter a valid video URL.</data>
+        <data key="errorMessage">Please enter a valid video URL. Valid URLs have a video file extension (.mp4, .webm, .ogv) or links to videos on YouTube or Vimeo.</data>
     </entity>
     <entity name="PageBuilder_InvalidVideoURL_HTML" type="pagebuilder_video_url_property">
         <data key="name">Video URL</data>
         <data key="section">general</data>
         <data key="fieldName">video_source</data>
         <data key="value">&lt;iframe width=&quot;1280&quot; height=&quot;720&quot; src=&quot;https://www.youtube.com/embed/bLXEUP6vKEk"&gt;&lt;/iframe&gt;</data>
-        <data key="errorMessage">Please enter a valid video URL.</data>
+        <data key="errorMessage">Please enter a valid video URL. Valid URLs have a video file extension (.mp4, .webm, .ogv) or links to videos on YouTube or Vimeo.</data>
     </entity>
     <entity name="PageBuilderVideoUrl_NonEmbedded" type="pagebuilder_video_url_property">
         <data key="name">Video URL</data>
@@ -42,6 +42,57 @@
         <data key="fieldName">video_source</data>
         <data key="value">https://www.youtube.com/watch?v=slOtnjsbff0</data>
         <data key="renderedValue">https://www.youtube.com/embed/slOtnjsbff0</data>
+    </entity>
+    <entity name="PageBuilderVideoUrl_Empty" type="pagebuilder_video_url_property">
+        <data key="name">Video URL</data>
+        <data key="section">general</data>
+        <data key="fieldName">video_source</data>
+        <data key="value"/>
+        <data key="tooltipText">Video URLs can be links to videos on YouTube or Vimeo, or HTTP(S) links to files with valid video extensions (we recommend .mp4)</data>
+    </entity>
+    <entity name="PageBuilderVideoUrl_YouTube_Insecure" type="pagebuilder_video_url_property">
+        <data key="name">Video URL</data>
+        <data key="section">general</data>
+        <data key="fieldName">video_source</data>
+        <data key="value">http://www.youtube.com/watch?v=slOtnjsbff0</data>
+        <data key="renderedValue">https://www.youtube.com/embed/slOtnjsbff0</data>
+    </entity>
+    <entity name="PageBuilderVideoUrl_Vimeo_Embedded" type="pagebuilder_video_url_property">
+        <data key="name">Video URL</data>
+        <data key="section">general</data>
+        <data key="fieldName">video_source</data>
+        <data key="value">https://player.vimeo.com/video/2393127</data>
+        <data key="renderedValue">https://player.vimeo.com/video/2393127</data>
+    </entity>
+    <entity name="PageBuilderVideoUrl_Vimeo_NonEmbedded" type="pagebuilder_video_url_property">
+        <data key="name">Video URL</data>
+        <data key="section">general</data>
+        <data key="fieldName">video_source</data>
+        <data key="value">https://vimeo.com/2393127</data>
+        <data key="renderedValue">https://player.vimeo.com/video/2393127</data>
+    </entity>
+    <entity name="PageBuilderVideoUrl_Vimeo_Insecure" type="pagebuilder_video_url_property">
+        <data key="name">Video URL</data>
+        <data key="section">general</data>
+        <data key="fieldName">video_source</data>
+        <data key="value">http://vimeo.com/2393127</data>
+        <data key="renderedValue">https://player.vimeo.com/video/2393127</data>
+    </entity>
+    <entity name="PageBuilderVideoUrl_Mp4_URL" type="pagebuilder_video_url_property">
+        <data key="name">Video URL</data>
+        <data key="section">general</data>
+        <data key="fieldName">video_source</data>
+        <data key="value">https://obsessive-owls.s3.us-east-2.amazonaws.com/MFTF/avocado.mp4</data>
+        <data key="renderedValue">https://obsessive-owls.s3.us-east-2.amazonaws.com/MFTF/avocado.mp4</data>
+    </entity>
+    <entity name="PageBuilderVideoUrl_Mp4_URL_Insecure" type="pagebuilder_video_url_property">
+        <data key="name">Video URL</data>
+        <data key="section">general</data>
+        <data key="fieldName">video_source</data>
+        <data key="value">http://obsessive-owls.s3.us-east-2.amazonaws.com/MFTF/avocado.mp4</data>
+        <data key="renderedValue">http://obsessive-owls.s3.us-east-2.amazonaws.com/MFTF/avocado.mp4</data>
+        <data key="width">320px</data>
+        <data key="height">320px</data>
     </entity>
     <!-- Width -->
     <entity name="PageBuilderVideoWidth_500" type="pagebuilder_video_width_property">
@@ -53,5 +104,18 @@
     <!-- Height -->
     <entity name="PageBuilderVideoContainerHeight" type="pagebuilder_video_height_property">
         <data key="value">281</data>
+    </entity>
+    <!-- Autoplay -->
+    <entity name="PageBuilderVideoAutoplay_Enabled" type="pagebuilder_video_autoplay_property">
+        <data key="name">Autoplay</data>
+        <data key="section">general</data>
+        <data key="fieldName">autoplay</data>
+        <data key="value">true</data>
+    </entity>
+    <entity name="PageBuilderVideoAutoplay_Disabled" type="pagebuilder_video_autoplay_property">
+        <data key="name">Autoplay</data>
+        <data key="section">general</data>
+        <data key="fieldName">autoplay</data>
+        <data key="value">false</data>
     </entity>
 </entities>

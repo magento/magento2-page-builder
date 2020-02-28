@@ -15,6 +15,9 @@ export default class VideoSrc implements ConverterInterface {
      * @returns {string | object}
      */
     public fromDom(value: string): string | object {
+        value = value.replace(/\?autoplay=1&mute=1/g, "");
+        value = value.replace(/\?title=0&byline=0&portrait=0/g, "");
+        value = value.replace(/&autoplay=1&autopause=0&muted=1/g, "");
         return value;
     }
 
