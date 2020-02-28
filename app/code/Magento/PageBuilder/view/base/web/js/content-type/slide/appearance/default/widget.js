@@ -34,7 +34,7 @@ define([
                     videoSlide.jarallax.onScroll();
                 });
             });
-            $slider.data('afterChangeIsSet', true)
+            $slider.data('afterChangeIsSet', true);
         }
     };
 });
