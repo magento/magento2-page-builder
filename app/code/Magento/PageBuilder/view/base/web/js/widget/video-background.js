@@ -28,7 +28,8 @@ define([
             videoPlayOnlyVisible: $element.data('videoPlayOnlyVisible'),
             videoLazyLoading: $element.data('videoLazyLoad'),
             disableVideo: false,
-            elementInViewport: $element.data('elementInViewport') && $element[0].querySelector($element.data('elementInViewport'))
+            elementInViewport: $element.data('elementInViewport') &&
+                $element[0].querySelector($element.data('elementInViewport'))
         });
     };
 });
