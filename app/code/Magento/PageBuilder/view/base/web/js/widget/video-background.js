@@ -31,5 +31,10 @@ define([
             elementInViewport: $element.data('elementInViewport') &&
                 $element[0].querySelector($element.data('elementInViewport'))
         });
+        $element[0].jarallax.video && $element[0].jarallax.video.on('started', function () {
+            if ($element[0].jarallax.$video) {
+                $element[0].jarallax.$video.style.visibility = 'visible';
+            }
+        });
     };
 });

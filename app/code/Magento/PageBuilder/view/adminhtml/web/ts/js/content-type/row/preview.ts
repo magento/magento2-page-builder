@@ -96,6 +96,14 @@ export default class Preview extends PreviewCollection {
                         videoLazyLoading: (this.contentType.dataStore.get("video_lazy_load") as string) === "true",
                     },
                 );
+                // @ts-ignore
+                this.element.jarallax.video.on("started", () => {
+                    // @ts-ignore
+                    if (this.element.jarallax.$video) {
+                        // @ts-ignore
+                        this.element.jarallax.$video.style.visibility = "visible";
+                    }
+                });
             });
         }
 

@@ -19,10 +19,10 @@
              class="video-overlay"
              attr="data.video_overlay.attributes"
              ko-style="data.video_overlay.style" />
+        <scope args="getUploader().getUiComponent()">
+            <render />
+        </scope>
         <div class="pagebuilder-overlay" attr="data.overlay.attributes" ko-style="data.overlay.style" css="data.overlay.css">
-            <scope args="getUploader().getUiComponent()">
-                <render />
-            </scope>
             <div class="pagebuilder-collage-content" event="mousedown: activateEditor">
                 <div class="pagebuilder-banner-text-content">
                     <div if="isWysiwygSupported()"

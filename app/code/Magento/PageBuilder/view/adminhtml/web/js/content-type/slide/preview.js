@@ -68,7 +68,7 @@ define(["jarallax", "jarallaxVideo", "jquery", "knockout", "mage/translate", "Ma
               videoLazyLoading: _this.contentType.dataStore.get("video_lazy_load") === "true"
             }); // @ts-ignore
 
-            _this.wrapper.jarallax.video.on("started", function () {
+            _this.wrapper.jarallax.video && _this.wrapper.jarallax.video.on("started", function () {
               // @ts-ignore
               if (_this.wrapper.jarallax.$video) {
                 // @ts-ignore
