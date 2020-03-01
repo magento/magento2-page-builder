@@ -27,7 +27,7 @@ define([
                 return;
             }
 
-            $slider.on('afterChange', function () {
+            $slider.on('afterChange init', function () {
                 var videoSlides = $slider[0].querySelectorAll('.jarallax');
 
                 videoSlides.forEach(function (videoSlide) {
