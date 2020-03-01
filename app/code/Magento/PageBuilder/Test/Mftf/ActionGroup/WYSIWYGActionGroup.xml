@@ -255,6 +255,18 @@
         </annotations>
         <doubleClick selector="{{PageBuilderStage.inlineWYSIWYGEditor(contentType.role, index)}}" stepKey="focusOnEditorArea0" before="focusOnEditorArea"/>
     </actionGroup>
+    <actionGroup name="openInlineWYSIWYGEditorOnStage">
+        <annotations>
+            <description>Opens the inline wysiwyg editor on the stage in a content type</description>
+        </annotations>
+        <arguments>
+            <argument name="contentType"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElement selector="{{PageBuilderStage.inlineWYSIWYGEditor(contentType.role, index)}}" stepKey="waitForEditor"/>
+        <click selector="{{PageBuilderStage.inlineWYSIWYGEditor(contentType.role, index)}}" stepKey="clickEditor"/>
+        <waitForElementVisible selector="{{PageBuilderStage.inlineWYSIWYGEditorPanel(contentType.role, index)}}" stepKey="waitForEditorPanelVisible"/>
+    </actionGroup>
     <actionGroup name="inlineEditTextAreaFromStage">
         <arguments>
             <argument name="contentType"/>
@@ -366,5 +378,12 @@
         <click selector="{{section.tinymce(index)}}" stepKey="focusOnTextEditorArea"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForElementVisible selector="{{section.tinymceInFocus(index)}}" stepKey="waitForTinyMCEInFocus"/>
+    </actionGroup>
+    <actionGroup name="verifyInlineTinyMCEEditorNotUnderOtherElements">
+        <annotations>
+            <description>Validates that the inline TinyMCE Editor is not hidden under another element.</description>
+        </annotations>
+        <waitForElementVisible selector="{{WYSIWYGOnPageBuilderInline.underline}}" stepKey="waitForUnderlineVisible"/>
+        <click selector="{{WYSIWYGOnPageBuilderInline.underline}}" stepKey="clickUnderline"/>
     </actionGroup>
 </actionGroups>

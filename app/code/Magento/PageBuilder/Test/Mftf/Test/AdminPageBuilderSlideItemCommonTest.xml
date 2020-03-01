@@ -1250,7 +1250,7 @@
             <stories value="Slider"/>
             <title value="Slide Item - Upload Image From Stage"/>
             <description value="A user should be able to use the on hover upload buttons for Slide on the stage."/>
-            <severity value="MAJOR"/>
+            <severity value="AVERAGE"/>
             <useCaseId value="MAGETWO-75104"/>
             <testCaseId value="MC-2417"/>
             <group value="pagebuilder"/>
@@ -1323,7 +1323,7 @@
             <stories value="Slider"/>
             <title value="Slide Item - Verify Each Appearance Has Stage Upload Image Buttons"/>
             <description value="A user should be able to add image to slide stage when switching between appearance types"/>
-            <severity value="MAJOR"/>
+            <severity value="AVERAGE"/>
             <useCaseId value="MAGETWO-75104"/>
             <testCaseId value="MC-2418"/>
             <group value="pagebuilder"/>
@@ -2728,13 +2728,11 @@
         <!-- Stage: Validate Video is Playing -->
         <actionGroup ref="validateVideoBackgroundPlaying" stepKey="validateVideoPlayingStage1">
             <argument name="section" value="SlideOnBackend"/>
-            <argument name="playOnlyWhenVisible" value="PageBuilderVideoBackgroundInfiniteLoop_Enabled"/>
             <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_Mp4_URL"/>
         </actionGroup>
         <wait time="5" stepKey="waitForVideoCompleteStage"/>
         <actionGroup ref="validateVideoBackgroundPlaying" stepKey="validateVideoPlayingStage2">
             <argument name="section" value="SlideOnBackend"/>
-            <argument name="playOnlyWhenVisible" value="PageBuilderVideoBackgroundInfiniteLoop_Enabled"/>
             <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_Mp4_URL"/>
         </actionGroup>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
@@ -2745,13 +2743,11 @@
         </actionGroup>
         <actionGroup ref="validateVideoBackgroundPlaying" stepKey="validateVideoPlayingStorefront1">
             <argument name="section" value="SlideOnFrontend"/>
-            <argument name="playOnlyWhenVisible" value="PageBuilderVideoBackgroundInfiniteLoop_Enabled"/>
             <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_Mp4_URL"/>
         </actionGroup>
         <wait time="5" stepKey="waitForVideoCompleteStorefront"/>
         <actionGroup ref="validateVideoBackgroundPlaying" stepKey="validateVideoPlayingStorefront2">
             <argument name="section" value="SlideOnFrontend"/>
-            <argument name="playOnlyWhenVisible" value="PageBuilderVideoBackgroundInfiniteLoop_Enabled"/>
             <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_Mp4_URL"/>
         </actionGroup>
     </test>
@@ -3467,6 +3463,185 @@
         </annotations>
         <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="enterFade">
             <argument name="property" value="PageBuilderSliderFade_Enabled"/>
+        </actionGroup>
+    </test>
+    <test name="SlideItemTinyMCEMenuOpensInFrontOfVideoBackground">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Slide Item: Verify TinyMCE Menu Opens In Front of Video Background"/>
+            <description value="Validate that the TinyMCE menu opens in front of a slide's video background."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="PB-266"/>
+            <testCaseId value="MC-32033"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-slideItemCommon"/>
+            <group value="pagebuilder-video-background"/>
+        </annotations>
+        <before>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
+                <argument name="CMSPage" value="$$createCMSPage$$"/>
+            </actionGroup>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Add Column and Slider to Stage -->
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSectionColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnToStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSectionSlider">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragSliderToColumn">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <!-- Add Video Background -->
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty">
+            <argument name="property" value="PageBuilderMinHeightProperty_300px"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setBackgroundType">
+            <argument name="property" value="PageBuilderBackgroundType_Video"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrl">
+            <argument name="property" value="PageBuilderVideoBackgroundUrl_YouTube_Embedded"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Create Slides Beside One Another -->
+        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusSlideOptionMenu">
+            <argument name="contentType" value="PageBuilderSlideContentType"/>
+        </actionGroup>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateSlider">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="moveContentTypeToContainer" stepKey="moveSliderToSecondColumn">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!-- Wait For Videos to Start -->
+        <actionGroup ref="validateVideoBackgroundPlaying" stepKey="validateVideoPlaying1">
+            <argument name="section" value="SlideOnBackend"/>
+            <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_YouTube_Embedded"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateVideoBackgroundPlaying" stepKey="validateVideoPlaying2">
+            <argument name="section" value="SlideOnBackend"/>
+            <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_YouTube_Embedded"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <!-- Open Editor For Slide 1 and Verify -->
+        <actionGroup ref="openInlineWYSIWYGEditorOnStage" stepKey="openInlineWYSIWYGEditorOnStage">
+            <argument name="contentType" value="PageBuilderSlideContentType"/>
+        </actionGroup>
+        <actionGroup ref="verifyInlineTinyMCEEditorNotUnderOtherElements" stepKey="verifyInlineTinyMCEEditorNotUnderOtherElements"/>
+    </test>
+    <test name="SlideItemVerifyStageUploadImageButtonsWorkWithVideoBackground">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Slide Item - Verify Each Appearance With Video Background Has Stage Upload Image Buttons"/>
+            <description value="Verify that the on hover upload image buttons work for slides with video backgrounds"/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="PB-266"/>
+            <testCaseId value="MC-32034"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-slideItemCommon"/>
+            <group value="pagebuilder-video-background"/>
+        </annotations>
+        <before>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
+                <argument name="CMSPage" value="$$createCMSPage$$"/>
+            </actionGroup>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="navigateToFallbackImageFolder">
+                <argument name="FolderName" value="{{PageBuilderBackgroundImage_JPG.path}}"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="deleteBackgroundImage1">
+                <argument name="Image" value="PageBuilderBackgroundImage_JPG"/>
+            </actionGroup>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragSliderOntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <!-- Add Video Background -->
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty">
+            <argument name="property" value="PageBuilderMinHeightProperty_300px"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setBackgroundType">
+            <argument name="property" value="PageBuilderBackgroundType_Video"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrl">
+            <argument name="property" value="PageBuilderVideoBackgroundUrl_YouTube_Embedded"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusSlideOptionMenu">
+            <argument name="contentType" value="PageBuilderSlideContentType"/>
+        </actionGroup>
+        <actionGroup ref="validateVideoBackgroundPlaying" stepKey="validateVideoPlaying">
+            <argument name="section" value="SlideOnBackend"/>
+            <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_YouTube_Embedded"/>
+        </actionGroup>
+        <!-- Verify Upload Image Buttons -->
+        <actionGroup ref="verifyUploadImageButtons" stepKey="verifyUploadImageButtons">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="verifySelectFromGalleryButtonWorks" stepKey="verifySelectFromGalleryButtonWorks">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="uploadImageToContentTypeFromStage" stepKey="uploadImageToSlide">
+            <argument name="property" value="PageBuilderImageProperty_JPG"/>
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="validateBackgroundImage" stepKey="validateBackgroundImageStage">
+            <argument name="section" value="SlideOnBackend"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
+        </actionGroup>
+        <!-- Verify Edit Panel -->
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel2">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundType">
+            <argument name="property" value="PageBuilderBackgroundType_Image"/>
+        </actionGroup>
+        <actionGroup ref="seeImageUploadedOnSlideOut" stepKey="seeImageOnSlideOut">
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
     </test>
 </tests>
