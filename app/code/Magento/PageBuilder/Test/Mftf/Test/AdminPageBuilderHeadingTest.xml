@@ -8,7 +8,7 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
-    <test name="HeadingDefaultState">
+    <test name="HeadingDefaultStateTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Heading"/>
@@ -56,7 +56,7 @@
         <seeElementInDOM selector="{{HeadingOnStorefront.headingNoText(PageBuilderHeadingTypeDefaultProperty.value, '1')}}" stepKey="seeStorefrontNoHeadingTextInDOM"/>
         <dontSeeElement selector="{{HeadingOnStorefront.headingType(PageBuilderHeadingTypeDefaultProperty.value, '1')}}" stepKey="dontSeeStorefrontHeading"/>
     </test>
-    <test name="HeadingEditPanelGeneralSectionVisual">
+    <test name="HeadingEditPanelGeneralSectionVisualTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Heading"/>
@@ -134,7 +134,7 @@
         <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderHeadingTextDefaultProperty.section, PageBuilderHeadingTextDefaultProperty.fieldName)}}" stepKey="getTextFromHeadingTextAttribute2"/>
         <assertEmpty actual="getTextFromHeadingTextAttribute2" actualType="variable" message="Text field has text: $getTextFromHeadingTextAttribute2" stepKey="assertGetTextFromHeadingTextAttribute2"/>
     </test>
-    <test name="HeadingValidateAdvancedConfigurationDefaultValues">
+    <test name="HeadingValidateAdvancedConfigurationDefaultValuesTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Heading"/>
@@ -274,7 +274,7 @@
             <argument name="index" value="1"/>
         </actionGroup>
     </test>
-    <test name="HeadingUpdateAdvancedConfigurationValues">
+    <test name="HeadingUpdateAdvancedConfigurationValuesTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Heading"/>
@@ -443,7 +443,7 @@
             <argument name="index" value="1"/>
         </actionGroup>
     </test>
-    <test name="HeadingVerifyOnHoverOptionMenu">
+    <test name="HeadingVerifyOnHoverOptionMenuTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Heading"/>
@@ -484,7 +484,7 @@
         <seeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeDuplicate(PageBuilderHeadingContentType.role, '1')}}" stepKey="seeHeadingOptionsDuplicate"/>
         <seeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeRemove(PageBuilderHeadingContentType.role)}}" stepKey="seeHeadingOptionsRemove"/>
     </test>
-    <test name="HeadingEditText">
+    <test name="HeadingEditTextTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Heading"/>
@@ -532,7 +532,7 @@
         <!-- Verify Heading in Storefront -->
         <actionGroup ref="verifyHeadingInStorefront" stepKey="verifyHeadingInStorefront"/>
     </test>
-    <test name="HeadingEditTypeH1">
+    <test name="HeadingEditTypeH1Test">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Heading"/>
@@ -587,7 +587,7 @@
             <argument name="headingType" value="PageBuilderHeadingTypeProperty_H1"/>
         </actionGroup>
     </test>
-    <test name="HeadingEditTypeH2">
+    <test name="HeadingEditTypeH2Test">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Heading"/>
@@ -642,7 +642,7 @@
             <argument name="headingType" value="PageBuilderHeadingTypeProperty_H2"/>
         </actionGroup>
     </test>
-    <test name="HeadingEditTypeH3">
+    <test name="HeadingEditTypeH3Test">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Heading"/>
@@ -697,7 +697,7 @@
             <argument name="headingType" value="PageBuilderHeadingTypeProperty_H3"/>
         </actionGroup>
     </test>
-    <test name="HeadingEditTypeH4">
+    <test name="HeadingEditTypeH4Test">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Heading"/>
@@ -752,7 +752,7 @@
             <argument name="headingType" value="PageBuilderHeadingTypeProperty_H4"/>
         </actionGroup>
     </test>
-    <test name="HeadingEditTypeH5">
+    <test name="HeadingEditTypeH5Test">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Heading"/>
@@ -807,7 +807,7 @@
             <argument name="headingType" value="PageBuilderHeadingTypeProperty_H5"/>
         </actionGroup>
     </test>
-    <test name="HeadingEditTypeH6">
+    <test name="HeadingEditTypeH6Test">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Heading"/>
@@ -862,7 +862,7 @@
             <argument name="headingType" value="PageBuilderHeadingTypeProperty_H6"/>
         </actionGroup>
     </test>
-    <test name="HeadingVerifyNoRequiredAttributes">
+    <test name="HeadingVerifyNoRequiredAttributesTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Heading"/>
@@ -919,7 +919,7 @@
         <!-- Verify Heading in Storefront -->
         <waitForElement selector="{{HeadingOnStorefront.headingType(PageBuilderHeadingTypeDefaultProperty.value, '1')}}" stepKey="waitForStorefrontHeading"/>
     </test>
-    <test name="HeadingDuplicate">
+    <test name="HeadingDuplicateTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Heading"/>
@@ -1092,7 +1092,7 @@
             <argument name="index" value="2"/>
         </actionGroup>
     </test>
-    <test name="HeadingDelete">
+    <test name="HeadingDeleteTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Heading"/>
@@ -1139,7 +1139,7 @@
         <!-- Verify Not In Storefront -->
         <dontSeeElementInDOM selector="{{HeadingOnStorefront.headingType(PageBuilderHeadingTypeDefaultProperty.value, '1')}}" stepKey="dontSeeContentTypeInStorefront"/>
     </test>
-    <test name="HeadingCannotAddToStage">
+    <test name="HeadingCannotAddToStageTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Heading"/>
@@ -1169,7 +1169,7 @@
         </actionGroup>
         <dontSeeElementInDOM selector="{{HeadingOnStage.all}}" stepKey="dontSeeHeading"/>
     </test>
-    <test name="ValidateShowHideOnHeadingDefaultState">
+    <test name="ValidateShowHideOnHeadingDefaultStateTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Heading"/>
@@ -1225,7 +1225,7 @@
         </actionGroup>
         <seeElement selector="{{HeadingOnStorefront.notHidden('1')}}" stepKey="seeContentTypeNotHiddenStorefront"/>
     </test>
-    <test name="ValidateShowHideOnHeading">
+    <test name="ValidateShowHideOnHeadingTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Heading"/>
@@ -1302,7 +1302,7 @@
         <dontSeeElementInDOM selector="{{HeadingOnStorefront.hidden('1')}}" stepKey="dontSeeHiddenElement"/>
         <seeElement selector="{{HeadingOnStorefront.base('1')}}" stepKey="waitForContentTypeVisible" />
     </test>
-    <test name="HeadingLiveEditToolbarNotCutOffInFullScreenMode">
+    <test name="HeadingLiveEditToolbarNotCutOffInFullScreenModeTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Heading"/>
@@ -1422,7 +1422,7 @@
             <actualResult type="variable">$toolbarBottomPositionAfterExitFullScreen</actualResult>
         </assertLessThanOrEqual>
     </test>
-    <test name="HeadingOptionsMenuNotOverflowRight">
+    <test name="HeadingOptionsMenuNotOverflowRightTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Heading"/>

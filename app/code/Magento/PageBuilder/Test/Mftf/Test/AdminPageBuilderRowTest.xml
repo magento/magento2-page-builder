@@ -8,7 +8,7 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
-    <test name="RowInitializeWithRow">
+    <test name="RowInitializeWithRowTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Row"/>
@@ -31,7 +31,7 @@
         </after>
         <waitForElementVisible selector="{{RowOnStage.base('1')}}" stepKey="seeElementRow"/>
     </test>
-    <test name="RowAddAdditionalRowBelowInitialRow">
+    <test name="RowAddAdditionalRowBelowInitialRowTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Row"/>
@@ -84,7 +84,7 @@
         <waitForElement selector="{{PageBuilderStage.dropZone(PageBuilderRootContainerContentType.role, '1', '2')}}" stepKey="waitForSecondDropZone" />
         <waitForElement selector="{{PageBuilderStage.dropZone(PageBuilderRootContainerContentType.role, '1', '3')}}" stepKey="waitForThirdDropZone" />
     </test>
-    <test name="RowAddAdditionalRowAboveInitialRow">
+    <test name="RowAddAdditionalRowAboveInitialRowTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Row"/>
@@ -138,7 +138,7 @@
         <waitForElement selector="{{PageBuilderStage.dropZone(PageBuilderRootContainerContentType.role, '1', '2')}}" stepKey="waitForSecondDropZone" />
         <waitForElement selector="{{PageBuilderStage.dropZone(PageBuilderRootContainerContentType.role, '1', '3')}}" stepKey="waitForThirdDropZone" />
     </test>
-    <test name="RowRemoveRowFromStage">
+    <test name="RowRemoveRowFromStageTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Row"/>
@@ -168,7 +168,7 @@
         </actionGroup>
         <seeNumberOfElements selector="{{RowOnStage.allRows}}" userInput="1" stepKey="seeOneRow"/>
     </test>
-    <test name="RowCantRemoveLastRow">
+    <test name="RowCantRemoveLastRowTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Row"/>
@@ -202,7 +202,7 @@
         <seeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeRemoveDisabled}}" stepKey="seeDisabledRemoveContentTypeButton" />
         <seeNumberOfElements selector="{{RowOnStage.allRows}}" userInput="1" stepKey="seeOneRow1"/>
     </test>
-    <test name="RowPlaceholderAndDisplayLabelInAdminPreview">
+    <test name="RowPlaceholderAndDisplayLabelInAdminPreviewTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Row"/>
@@ -235,7 +235,7 @@
         </actionGroup>
         <dontSee selector="{{RowOnStage.empty('1')}}" stepKey="dontSeeRowPlaceholder"/>
     </test>
-    <test name="RowHeightAdjustsToContentWhenContentIsSmallerHeading">
+    <test name="RowHeightAdjustsToContentWhenContentIsSmallerHeadingTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Row"/>
@@ -298,7 +298,7 @@
             <actualResult type="variable">getNewRowHeight2</actualResult>
         </assertEquals>
     </test>
-    <test name="RowHeightAdjustsToContentWhenContentIsLargerSlider">
+    <test name="RowHeightAdjustsToContentWhenContentIsLargerSliderTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Row"/>
@@ -351,7 +351,7 @@
             <actualResult type="variable">actualStageRowHeightWithSlider</actualResult>
         </assertGreaterThanOrEqual>
     </test>
-    <test name="RowValidateAdvancedConfigurationDefaultValues">
+    <test name="RowValidateAdvancedConfigurationDefaultValuesTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Row"/>
@@ -469,7 +469,7 @@
             <argument name="index" value="1"/>
         </actionGroup>
     </test>
-    <test name="RowUpdateAdvancedConfigurationValues">
+    <test name="RowUpdateAdvancedConfigurationValuesTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Row"/>
@@ -634,7 +634,7 @@
             <argument name="index" value="1"/>
         </actionGroup>
     </test>
-    <test name="RowCanAddUnlimitedRows">
+    <test name="RowCanAddUnlimitedRowsTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Row"/>
@@ -717,7 +717,7 @@
         </actionGroup>
         <seeNumberOfElements selector="{{RowOnStage.allRows}}" userInput="21" stepKey="seeElementRow"/>
     </test>
-    <test name="RowNoRequiredAttributes">
+    <test name="RowNoRequiredAttributesTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Row"/>
@@ -772,7 +772,7 @@
         <!-- Note that Advanced section is a shared form and is covered in AdvancedConfigurationEditPanelVisual test -->
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
     </test>
-    <test name="RowDuplicate">
+    <test name="RowDuplicateTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Row"/>
@@ -1328,7 +1328,7 @@
             <argument name="rowIndex" value="3"/>
         </actionGroup>
     </test>
-    <test name="RowAppearancesFullWidthTextAlignment">
+    <test name="RowAppearancesFullWidthTextAlignmentTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Row"/>
@@ -1597,7 +1597,7 @@
         </actionGroup>
         <waitForElementNotVisible selector="{{RowOnBackend.appearanceWarningMessage}}" stepKey="warningMessageHidden3"/>
     </test>
-    <test name="RowCannotAddToRow">
+    <test name="RowCannotAddToRowTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Row"/>
@@ -1633,7 +1633,7 @@
         </actionGroup>
         <seeNumberOfElements selector="{{RowOnStage.allRows}}" userInput="2" stepKey="seeTwoElementRows"/>
     </test>
-    <test name="RowCannotAddToColumns">
+    <test name="RowCannotAddToColumnsTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Row"/>
@@ -1676,7 +1676,7 @@
         </actionGroup>
         <seeNumberOfElements selector="{{RowOnStage.allRows}}" userInput="2" stepKey="seeTwoElementRows"/>
     </test>
-    <test name="ValidateShowHideOnRowDefaultState">
+    <test name="ValidateShowHideOnRowDefaultStateTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Row"/>
@@ -1715,7 +1715,7 @@
         </actionGroup>
         <seeElement selector="{{RowOnStorefront.notHidden('1')}}" stepKey="seeContentTypeNotHiddenStorefront"/>
     </test>
-    <test name="ValidateShowHideOnRow">
+    <test name="ValidateShowHideOnRowTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Text"/>
@@ -1824,7 +1824,7 @@
         <seeElement selector="{{RowOnStorefront.base('1')}}" stepKey="waitForContentTypeVisible" />
         <seeElement selector="{{HeadingOnStorefront.base('1')}}" stepKey="waitForHeadingVisible" />
     </test>
-    <test name="ValidateCannotMoveContentTypeIntoHiddenRow">
+    <test name="ValidateCannotMoveContentTypeIntoHiddenRowTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Row"/>
@@ -1870,7 +1870,7 @@
             <argument name="containerTargetIndex" value="1" />
         </actionGroup>
     </test>
-    <test name="RowValidateBorderOnAppearanceChange">
+    <test name="RowValidateBorderOnAppearanceChangeTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Row"/>
@@ -1936,7 +1936,7 @@
         <dontSeeElement selector="{{RowOnStage_Contained_Invalid.borderColor('1', PageBuilderAdvancedBorderColorProperty_green.rgb)}}" stepKey="dontSeeBorderColorOnOutside" />
         <dontSeeElement selector="{{RowOnStage_Contained_Invalid.borderWidth('1', PageBuilderAdvancedBorderWidthProperty10.value)}}" stepKey="dontSeeBorderWidthOnOutside" />
     </test>
-    <test name="RowMinimumHeightIsObeyedWhenParallaxIsEnabled">
+    <test name="RowMinimumHeightIsObeyedWhenParallaxIsEnabledTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Row"/>
@@ -1990,7 +1990,7 @@
             <actualResult type="variable">$assignedHeight2</actualResult>
         </assertEquals>
     </test>
-    <test name="RowWithParallaxEnabledStillShowsBackgroundImageAfterAddingColumnToIt">
+    <test name="RowWithParallaxEnabledStillShowsBackgroundImageAfterAddingColumnToItTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Row"/>
@@ -2062,7 +2062,7 @@
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
     </test>
-    <test name="RowFullBleedAppearanceNoErrorThrown">
+    <test name="RowFullBleedAppearanceNoErrorThrownTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Row"/>

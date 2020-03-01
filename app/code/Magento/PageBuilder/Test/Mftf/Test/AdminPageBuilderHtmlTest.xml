@@ -8,7 +8,7 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
-    <test name="HtmlAddToCMSPage">
+    <test name="HtmlAddToCMSPageTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="HTML Code"/>
@@ -151,7 +151,7 @@
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <seeCurrentUrlEquals url="{{_ENV.MAGENTO_BASE_URL}}$$createCMSPage.identifier$$" stepKey="seeThatUrlIsChangedToPageLinkWidgetUrlStorefront"/>
     </test>
-    <test name="HtmlDelete">
+    <test name="HtmlDeleteTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="HTML Code"/>
@@ -206,7 +206,7 @@
         </actionGroup>
         <dontSeeElementInDOM selector="{{HtmlOnStorefront.base('1')}}" stepKey="dontSeeContentTypeInStorefront"/>
     </test>
-    <test name="HtmlValidateGeneralDefaultValues">
+    <test name="HtmlValidateGeneralDefaultValuesTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="HTML Code"/>
@@ -272,7 +272,7 @@
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <seeElementInDOM selector="{{HtmlOnStorefront.base('1')}}" stepKey="waitForHtmlStorefront"/>
     </test>
-    <test name="HtmlValidateAdvancedConfigurationDefaultValues">
+    <test name="HtmlValidateAdvancedConfigurationDefaultValuesTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="HTML Code"/>
@@ -395,7 +395,7 @@
             <argument name="index" value="1"/>
         </actionGroup>
     </test>
-    <test name="HtmlUpdateAdvancedConfigurationValues">
+    <test name="HtmlUpdateAdvancedConfigurationValuesTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="HTML Code"/>
@@ -570,7 +570,7 @@
             <argument name="index" value="1"/>
         </actionGroup>
     </test>
-    <test name="HtmlDuplicate">
+    <test name="HtmlDuplicateTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="HTML Code"/>
@@ -783,7 +783,7 @@
             <argument name="index" value="2"/>
         </actionGroup>
     </test>
-    <test name="HtmlVerifyUpdatingDuplicateDoesNotAffectInitial">
+    <test name="HtmlVerifyUpdatingDuplicateDoesNotAffectInitialTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="HTML Code"/>
@@ -860,7 +860,7 @@
         <waitForElementVisible selector="{{HtmlOnStorefront.base('2')}}" stepKey="waitForDuplicatedHtmlBaseStorefront"/>
         <waitForElementVisible selector="{{HtmlOnStorefront.html('2', PageBuilderHtmlPropertyButtonDuplicate.selectorOnFrontend)}}" stepKey="waitForDuplicatedHtmlStorefront"/>
     </test>
-    <test name="HtmlNoRequiredAttributes">
+    <test name="HtmlNoRequiredAttributesTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="HTML Code"/>
@@ -894,7 +894,7 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <waitForElementVisible selector="{{HtmlOnStage.empty('1')}}" stepKey="waitForHtmlBaseStage1"/>
     </test>
-    <test name="HTMLEmpty">
+    <test name="HTMLEmptyTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="HTML Code"/>
@@ -937,7 +937,7 @@
         <dontSeeElement selector="{{HtmlOnStorefront.base('1')}}" stepKey="dontSeeHtmlContentVisible"/>
         <seeElementInDOM selector="{{HtmlOnStorefront.base('1')}}" stepKey="seeHtmlContentInDOM"/>
     </test>
-    <test name="HTMLCannotAddToStage">
+    <test name="HTMLCannotAddToStageTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="HTML Code"/>
@@ -967,7 +967,7 @@
         </actionGroup>
         <dontSeeElementInDOM selector="{{HtmlOnStage.base('1')}}" stepKey="dontSeeHTML"/>
     </test>
-    <test name="HTMLCanAddToColumn">
+    <test name="HTMLCanAddToColumnTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="HTML Code"/>
@@ -1035,7 +1035,7 @@
             <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
     </test>
-    <test name="ValidateShowHideOnHtmlDefaultState">
+    <test name="ValidateShowHideOnHtmlDefaultStateTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="HTML Code"/>
@@ -1089,7 +1089,7 @@
         </actionGroup>
         <seeElement selector="{{HtmlOnStorefront.notHidden('1')}}" stepKey="seeContentTypeNotHiddenStorefront"/>
     </test>
-    <test name="ValidateShowHideOnHtml">
+    <test name="ValidateShowHideOnHtmlTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="HTML Code"/>
@@ -1164,7 +1164,7 @@
         <dontSeeElementInDOM selector="{{HtmlOnStorefront.hidden('1')}}" stepKey="dontSeeHiddenElement"/>
         <seeElement selector="{{HtmlOnStorefront.base('1')}}" stepKey="waitForContentTypeVisible" />
     </test>
-    <test name="HtmlMove">
+    <test name="HtmlMoveTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="HTML Code"/>

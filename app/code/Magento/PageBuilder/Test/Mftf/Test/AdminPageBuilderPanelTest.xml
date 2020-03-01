@@ -8,7 +8,7 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
-    <test name="ActivatePageBuilderFullScreen">
+    <test name="ActivatePageBuilderFullScreenTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Panel"/>
@@ -39,7 +39,7 @@
         <waitForElementVisible selector="{{PageBuilderStage.stageWrapper}}" stepKey="waitForStage2"/>
         <waitForElementNotVisible selector="{{PageBuilderStage.stageWrapperFullScreen}}" stepKey="verifyStageNotFullScreen2"/>
     </test>
-    <test name="ShowPanelMenuSections">
+    <test name="ShowPanelMenuSectionsTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Panel"/>
@@ -62,7 +62,7 @@
         <seeElement selector='{{PageBuilderPanel.firstSection}}' parameterArray="['class' => 'active']" stepKey="firstSectionOfPanelIsOpen"/>
         <actionGroup ref="validateMenuSectionsAndContentTypes" stepKey="validateMenuSectionsAndContentTypes"/>
     </test>
-    <test name="SearchOneCharInPanel">
+    <test name="SearchOneCharInPanelTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Panel"/>
@@ -87,7 +87,7 @@
         <see userInput="Banner" selector="{{PageBuilderPanel.searchResults}}" stepKey="validateContentTypeBanner"/>
         <see userInput="Block" selector="{{PageBuilderPanel.searchResults}}" stepKey="validateContentTypeStaticBlock"/>
     </test>
-    <test name="SearchRemovedContentType">
+    <test name="SearchRemovedContentTypeTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Panel"/>
@@ -112,7 +112,7 @@
         <fillField selector="{{PageBuilderPanel.searchPanel}}" userInput="Code" stepKey="fillCode"/>
         <see userInput="HTML Code" selector="{{PageBuilderPanel.searchResults}}" stepKey="validateCodeButtons"/>
     </test>
-    <test name="SearchThreeCharInPanel">
+    <test name="SearchThreeCharInPanelTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Panel"/>
@@ -135,7 +135,7 @@
         <fillField selector="{{PageBuilderPanel.searchPanel}}" userInput="blo" stepKey="fillSearch"/>
         <see userInput="Block" selector="{{PageBuilderPanel.searchResults}}" stepKey="validateStaticBlock"/>
     </test>
-    <test name="SearchNoMatchesInPanel">
+    <test name="SearchNoMatchesInPanelTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Panel"/>
@@ -158,7 +158,7 @@
         <fillField selector="{{PageBuilderPanel.searchPanel}}" userInput="abcdef" stepKey="fillSearch"/>
         <see userInput="Nothing found" selector="{{PageBuilderPanel.nothingFound}}" stepKey="validateNothingFound"/>
     </test>
-    <test name="SearchSpecialCharactersInPanel">
+    <test name="SearchSpecialCharactersInPanelTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Panel"/>
@@ -184,7 +184,7 @@
         <fillField selector="{{PageBuilderPanel.searchPanel}}" userInput="Code" stepKey="fillCode"/>
         <see userInput="HTML Code" selector="{{PageBuilderPanel.searchResults}}" stepKey="validateCodeButtonShowsUp"/>
     </test>
-    <test name="ClearSearchInPanel">
+    <test name="ClearSearchInPanelTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Panel"/>
@@ -224,7 +224,7 @@
         <scrollTo selector="{{CmsNewPagePageActionsSection.contentSectionName}}" stepKey="scrollToTopOfStage"/>
         <actionGroup ref="validateMenuSectionsAndContentTypes" stepKey="validateMenuSectionsAndContentTypesAfterClearField"/>
     </test>
-    <test name="SearchContentTypeAndAddToStage">
+    <test name="SearchContentTypeAndAddToStageTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Panel"/>
@@ -257,7 +257,7 @@
         </actionGroup>
         <dontSeeJsError stepKey="dontSeeJsError"/>
     </test>
-    <test name="ValidatePanelContentTypesGroupedCorrectly">
+    <test name="ValidatePanelContentTypesGroupedCorrectlyTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Panel"/>
@@ -308,7 +308,7 @@
         <seeElement selector="{{PageBuilderPanel.contentTypeInMenuSection('4', 'Add Content', '2', 'Products')}}" stepKey="validateContentTypeProducts"/>
         <click selector="{{PageBuilderPanel.panelMenuSection('Add Content')}}" stepKey="closeAddContentMenuSection"/>
     </test>
-    <test name="ValidatePanelDefaultState">
+    <test name="ValidatePanelDefaultStateTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Panel"/>
@@ -333,7 +333,7 @@
         <dontSeeElement selector="{{PageBuilderPanel.panelMenuSectionActive('Media')}}" stepKey="checkInactiveMenuSection2"/>
         <dontSeeElement selector="{{PageBuilderPanel.panelMenuSectionActive('Add Content')}}" stepKey="checkInactiveMenuSection3"/>
     </test>
-    <test name="ValidatePanelContentTypeIcons">
+    <test name="ValidatePanelContentTypeIconsTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Panel"/>
@@ -383,7 +383,7 @@
         <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('block','Block')}}" stepKey="validateBlockIcon"/>
         <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('products','Products')}}" stepKey="validateProductsIcon"/>
     </test>
-    <test name="HeaderFixedInFullScreen">
+    <test name="HeaderFixedInFullScreenTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Panel"/>
@@ -423,7 +423,7 @@
         <scrollTo selector="{{RowOnStage.base('6')}}" stepKey="scrollToBottom"/>
         <seeElement selector="{{PageBuilderStage.exitFullScreen}}" stepKey="verifyHeader"/>
     </test>
-    <test name="ValidatePanelStickiness">
+    <test name="ValidatePanelStickinessTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Panel"/>

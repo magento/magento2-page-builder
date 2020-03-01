@@ -8,7 +8,7 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
-    <test name="DefaultSystemBordersAppearInAdmin">
+    <test name="DefaultSystemBordersAppearInAdminTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Common Tests"/>
@@ -351,7 +351,7 @@
             <actualResult type="variable">getDefaultProductsHoverBoxShadowStyle</actualResult>
         </assertEquals>
     </test>
-    <test name="NoConfirmationOnDefaultStateContentTypeRemoval">
+    <test name="NoConfirmationOnDefaultStateContentTypeRemovalTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Common Tests"/>
@@ -400,7 +400,7 @@
         <dontSee selector="{{PageBuilderStage.modal}}" stepKey="dontSeeModalRow"/>
         <dontSee selector="{{PageBuilderStage.modalOk}}" stepKey="dontSeeModalOkRow" />
     </test>
-    <test name="ConfirmationOnContainerWithChildrenRemoval">
+    <test name="ConfirmationOnContainerWithChildrenRemovalTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Common Tests"/>
@@ -455,7 +455,7 @@
         <!-- Validate the item is removed -->
         <seeNumberOfElements selector="{{RowOnStage.allRows}}" userInput="1" stepKey="seeElementRow"/>
     </test>
-    <test name="ConfirmationOnConfiguredContentTypeRemoval">
+    <test name="ConfirmationOnConfiguredContentTypeRemovalTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Common Tests"/>
@@ -513,7 +513,7 @@
         <!-- Validate the item is removed -->
         <dontSeeElement selector="{{PageBuilderStage.contentTypeInStage(PageBuilderHeadingContentType.role)}}" stepKey="dontSeeHeaderInStage"/>
     </test>
-    <test name="NoRemovalConfirmationModalAfterConfiguringContentToDefaultState">
+    <test name="NoRemovalConfirmationModalAfterConfiguringContentToDefaultStateTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Common Tests"/>
@@ -595,7 +595,7 @@
         <dontSee selector="{{PageBuilderStage.modalOk}}" stepKey="dontSeeModalOkRow"/>
         <seeNumberOfElements selector="{{RowOnStage.allRows}}" userInput="1" stepKey="seeRows2"/>
     </test>
-    <test name="DismissRemovalConfirmationModal">
+    <test name="DismissRemovalConfirmationModalTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Common Tests"/>
@@ -648,7 +648,7 @@
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
             <argument name="contentTypeNumber" value="1"/>
         </actionGroup>
-        
+
         <waitForElementVisible time="2" selector="{{PageBuilderStage.modal}}" stepKey="waitForModalVisible"/>
         <seeElementInDOM selector="{{PageBuilderStage.modal}}" stepKey="seeModal"/>
         <seeElementInDOM selector="{{PageBuilderStage.modalOk}}" stepKey="seeModalOk" />
@@ -667,7 +667,7 @@
         <!-- Validate the items are removed -->
         <dontSeeElement selector="{{PageBuilderStage.contentTypeInStage(PageBuilderHeadingContentType.role)}}" stepKey="dontSeeHeaderInStage"/>
     </test>
-    <test name="DismissedConfirmationPersistsSession">
+    <test name="DismissedConfirmationPersistsSessionTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Common Tests"/>
@@ -746,7 +746,7 @@
         <!-- Validate the items are removed -->
         <dontSeeElement selector="{{PageBuilderStage.contentTypeInStage(PageBuilderHeadingContentType.role)}}" stepKey="dontSeeHeaderInStage"/>
     </test>
-    <test name="CancelOnRemovalConfirmationModal">
+    <test name="CancelOnRemovalConfirmationModalTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Common Tests"/>
@@ -806,7 +806,7 @@
         <comment userInput="Verify Heading Still Exists" stepKey="validateHeading"/>
         <waitForElementVisible selector="{{HeadingOnStage.baseByTagName(PageBuilderHeadingTypeProperty_H2.value, '1')}}" stepKey="validateHeading2"/>
     </test>
-    <test name="XOnRemovalConfirmationModal">
+    <test name="XOnRemovalConfirmationModalTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Common Tests"/>
@@ -866,7 +866,7 @@
         <comment userInput="Verify Heading Still Exists" stepKey="validateHeading"/>
         <waitForElementVisible selector="{{HeadingOnStage.baseByTagName(PageBuilderHeadingTypeProperty_H2.value, '1')}}" stepKey="validateHeading2"/>
     </test>
-    <test name="LoginCycleResetsRemoveConfirmationDismissal">
+    <test name="LoginCycleResetsRemoveConfirmationDismissalTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Common Tests"/>
@@ -986,7 +986,7 @@
         <!-- Validate the items are removed -->
         <dontSeeElement selector="{{PageBuilderStage.contentTypeInStage(PageBuilderHeadingContentType.role)}}" stepKey="dontSeeHeaderInStage2"/>
     </test>
-    <test name="EditPanelColorPickerUpdatesFromFieldInput">
+    <test name="EditPanelColorPickerUpdatesFromFieldInputTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Common Tests"/>
@@ -1108,7 +1108,7 @@
             <argument name="color" value="{{PageBuilderBackgroundColor_HSVa_Orange.rgb}}"/>
         </actionGroup>
     </test>
-    <test name="EditPanelColorPickerWindowFunctionality">
+    <test name="EditPanelColorPickerWindowFunctionalityTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Common Tests"/>
@@ -1610,7 +1610,7 @@
         </assertRegExp>
         <deleteData createDataKey="createCMSPageA" stepKey="deletePreReqCMSPageA" />
     </test>
-    <test name="EditFormModalNoResetButton">
+    <test name="EditFormModalNoResetButtonTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Common Tests"/>

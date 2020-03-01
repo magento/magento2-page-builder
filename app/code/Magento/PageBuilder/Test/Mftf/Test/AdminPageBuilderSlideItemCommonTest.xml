@@ -8,7 +8,7 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
-    <test name="SlideItemVerifyEmptySlideDefaultState">
+    <test name="SlideItemVerifyEmptySlideDefaultStateTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
@@ -78,7 +78,7 @@
         <seeElement selector="{{SlideOnFrontend.transparentOverlay('1')}}" stepKey="seeTransparencyOverlayStorefrontMobile"/>
         <dontSeeInPageSource userInput="Edit Slide Text" stepKey="dontSeeDummyTextInPageSourceMobile"/>
     </test>
-    <test name="SlideItemAppearanceSectionDefaults">
+    <test name="SlideItemAppearanceSectionDefaultsTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
@@ -131,7 +131,7 @@
             <argument name="property" value="PageBuilderSlideItemMinimumHeight_300"/>
         </actionGroup>
     </test>
-    <test name="SlideItemBackgroundSectionDefaults">
+    <test name="SlideItemBackgroundSectionDefaultsTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
@@ -264,7 +264,7 @@
         <seeElement selector="{{SlideOnFrontend.backgroundPosition('1', PageBuilderBackgroundPosition_Default.styleValue)}}" stepKey="seeBackgroundPositionStorefrontMobile"/>
         <seeElement selector="{{SlideOnFrontend.backgroundRepeat('1', PageBuilderBackgroundRepeat_Default.styleValue)}}" stepKey="seeBackgroundRepeatStorefrontMobile"/>
     </test>
-    <test name="SlideItemContentSectionDefaults">
+    <test name="SlideItemContentSectionDefaultsTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
@@ -423,7 +423,7 @@
             <actualResult type="variable">currentUrl2</actualResult>
         </assertEquals>
     </test>
-    <test name="SlideItemValidateAdvancedConfigurationDefaultValues">
+    <test name="SlideItemValidateAdvancedConfigurationDefaultValuesTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
@@ -548,7 +548,7 @@
         <seeElement selector="{{SlideOnFrontend.margins('1', PageBuilderMarginsPropertyDefault.value)}}" stepKey="seeMarginsStorefront"/>
         <seeElement selector="{{SlideOnFrontend.posterPadding('1', PageBuilderPaddingProperty40.value)}}" stepKey="seePaddingStorefront"/>
     </test>
-    <test name="SlideItemMoveSlideItemsToRearrange">
+    <test name="SlideItemMoveSlideItemsToRearrangeTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
@@ -686,7 +686,7 @@
         <waitForElementVisible selector="{{SlideOnFrontend.slickSlideIndex('1')}}" stepKey="waitForSlide2"/>
         <see userInput="{{PageBuilderSlideItemContent_Slide1.value}}" selector="{{SlideOnFrontend.slickSlideIndex('1')}}" stepKey="seeSlide2ContentDisplayed"/>
     </test>
-    <test name="SlideItemValidateSlideCannotBeHidden">
+    <test name="SlideItemValidateSlideCannotBeHiddenTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
@@ -719,7 +719,7 @@
         <waitForElementNotVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeHide(PageBuilderSlideContentType.role, '1')}}" stepKey="waitForHideOptionNotVisible" />
         <dontSeeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeHide(PageBuilderSlideContentType.role, '1')}}" stepKey="dontSeeHideOption" />
     </test>
-    <test name="SlideItemDeleteSlideItem">
+    <test name="SlideItemDeleteSlideItemTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
@@ -788,7 +788,7 @@
         </actionGroup>
         <seeNumberOfElements selector="{{SlideOnFrontend.all}}" userInput="1" stepKey="seeSlidesStorefront"/>
     </test>
-    <test name="SlideItemCannotDeleteLastSlide">
+    <test name="SlideItemCannotDeleteLastSlideTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
@@ -849,7 +849,7 @@
         </actionGroup>
         <seeNumberOfElements selector="{{SlideOnFrontend.all}}" userInput="1" stepKey="seeSlideStorefront"/>
     </test>
-    <test name="SlideItemHasEditButtonTextButtonStyledInAdminAndStorefront">
+    <test name="SlideItemHasEditButtonTextButtonStyledInAdminAndStorefrontTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
@@ -1003,7 +1003,7 @@
         <seeElement selector="{{SlideOnFrontend.buttonType('1', PageBuilderSlideItemButtonType_Link.value)}}" stepKey="seeButtonTypeStorefront3"/>
         <seeElement selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideItemButtonText_Common.value)}}" stepKey="seeButtonTextStorefront3"/>
     </test>
-    <test name="SlideItemLinkURLFunctions">
+    <test name="SlideItemLinkURLFunctionsTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
@@ -1057,7 +1057,7 @@
         <switchToNextTab stepKey="switchToNextTab"/>
         <seeCurrentUrlEquals url="{{PageBuilderSlideItemLinkURL_External.value}}" stepKey="seeCurrentUrlEquals"/>
     </test>
-    <test name="SlideItemEmptyLinkURLDoesNothingOnStorefront">
+    <test name="SlideItemEmptyLinkURLDoesNothingOnStorefrontTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
@@ -1109,7 +1109,7 @@
         <wait time="3" stepKey="waitArbitraryTimeForPotentialNavigationToOccur" />
         <seeCurrentUrlEquals url="{{_ENV.MAGENTO_BASE_URL}}{{PageBuilderSliderContentType.pageNamePrefix}}{{PageBuilderPageTitle.pageName}}" stepKey="seeThatCurrentUrlIsUnchanged" />
     </test>
-    <test name="SlideItemDoesNotNavigateInPreview">
+    <test name="SlideItemDoesNotNavigateInPreviewTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
@@ -1158,7 +1158,7 @@
             <actualResult type="variable">currentUrl</actualResult>
         </assertEquals>
     </test>
-    <test name="SlideItemWithDefaultMinHeightAdjustsToContentHeight">
+    <test name="SlideItemWithDefaultMinHeightAdjustsToContentHeightTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
@@ -1244,7 +1244,7 @@
             <actualResult type="variable">slideNewHeightStorefront</actualResult>
         </assertGreaterThan>
     </test>
-    <test name="SlideItemUploadImageFromStage">
+    <test name="SlideItemUploadImageFromStageTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
@@ -1317,7 +1317,7 @@
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
     </test>
-    <test name="SlideItemVerifyStageUploadImageButtonsForEachAppearance">
+    <test name="SlideItemVerifyStageUploadImageButtonsForEachAppearanceTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
@@ -1400,7 +1400,7 @@
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
     </test>
-    <test name="SlideItemDeleteImage">
+    <test name="SlideItemDeleteImageTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
@@ -1474,7 +1474,7 @@
         <seeElementInDOM selector="{{SlideOnBackend.emptySlide('1')}}" stepKey="seeEmptySliderOnStage"/>
         <dontSeeElementInDOM selector="{{SlideOnBackend.backgroundImage('1', PageBuilderBackgroundImage_GIF.fileName)}}" stepKey="dontSeeImageInrMainImageSource1"/>
     </test>
-    <test name="SlideItemBorderIsVisible">
+    <test name="SlideItemBorderIsVisibleTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
@@ -1538,7 +1538,7 @@
             <actualResult type="variable">actualBoxSizingStyle</actualResult>
         </assertEquals>
     </test>
-    <test name="SlideContentVariableCanWrap">
+    <test name="SlideContentVariableCanWrapTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
@@ -1618,7 +1618,7 @@
             <actualResult type="variable">columnOneTextHeight</actualResult>
         </assertGreaterThan>
     </test>
-    <test name="SlideItemBackgroundColorAlwaysDisplayed">
+    <test name="SlideItemBackgroundColorAlwaysDisplayedTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
@@ -1740,7 +1740,7 @@
         <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeSlideContentAfterHideShow"/>
         <seeElement selector="{{SlideOnBackend.backgroundColor('1', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeSlideBackgroundColorAfterHideShow"/>
     </test>
-    <test name="SlideItemInlineWysiwygUploadImage">
+    <test name="SlideItemInlineWysiwygUploadImageTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
@@ -1820,7 +1820,7 @@
         <waitForPageLoad stepKey="waitForPageLoad4"/>
         <seeElement selector="{{SlideOnFrontend.messageContentTextAreaImage('1', PageBuilderImageProperty_StageJPG.value)}}" stepKey="validateImageFrontEnd"/>
     </test>
-    <test name="SlideNameDoesNotRenderHtml">
+    <test name="SlideNameDoesNotRenderHtmlTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
@@ -1869,7 +1869,7 @@
         <waitForElementVisible selector="{{SliderOnStage.slideNavigationDotNameTooltip('1')}}" stepKey="waitForTooltipVisible" />
         <see selector="{{SliderOnStage.slideNavigationDotNameTooltip('1')}}" userInput="{{PageBuilderSlideItemSlideName_HtmlCode.value}}" stepKey="seeHtmlCodeInTooltip" />
     </test>
-    <test name="SlideItemTextContainingPageBuilderMarkupWontBreakStage">
+    <test name="SlideItemTextContainingPageBuilderMarkupWontBreakStageTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
@@ -1898,7 +1898,7 @@
         <waitForElementVisible selector="{{SlideOnBackend.base('1')}}" stepKey="waitForSlideItemVisible" />
         <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemButtonText_Common.value)}}" stepKey="seeTestStringInSlideItem"/>
     </test>
-    <test name="SlideItemCannotHaveInlineWysiwygLinkAndLinkUrl">
+    <test name="SlideItemCannotHaveInlineWysiwygLinkAndLinkUrlTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>

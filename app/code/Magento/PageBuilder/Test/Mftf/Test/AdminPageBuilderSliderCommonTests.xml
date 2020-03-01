@@ -8,7 +8,7 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
-    <test name="SliderSettingsSectionDefaults">
+    <test name="SliderSettingsSectionDefaultsTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
@@ -101,7 +101,7 @@
         <seeElement selector="{{SliderOnFrontend.showDots('1', PageBuilderSliderShowDots_Enabled.value)}}" stepKey="seeDotsStorefront"/>
         <seeElement selector="{{SliderOnFrontend.minHeight('1', PageBuilderSliderMinHeight_Default.value)}}" stepKey="seeHeightStorefront"/>
     </test>
-    <test name="SliderValidateAdvancedConfigurationDefaultValues">
+    <test name="SliderValidateAdvancedConfigurationDefaultValuesTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
@@ -228,7 +228,7 @@
         <seeElement selector="{{SliderOnFrontend.margins('1', PageBuilderMarginsPropertyDefault.value)}}" stepKey="seeMarginsStorefront"/>
         <seeElement selector="{{SliderOnFrontend.padding('1', PageBuilderPaddingPropertyDefault.value)}}" stepKey="seePaddingStorefront"/>
     </test>
-    <test name="SliderUpdateAdvancedConfigurationValues">
+    <test name="SliderUpdateAdvancedConfigurationValuesTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
@@ -385,7 +385,7 @@
         <seeElement selector="{{SliderOnFrontend.margins('1', PageBuilderMarginsPropertyUnique.value)}}" stepKey="seeMarginsStorefront"/>
         <seeElement selector="{{SliderOnFrontend.padding('1', PageBuilderPaddingPropertyUnique.value)}}" stepKey="seePaddingStorefront"/>
     </test>
-    <test name="SliderAllAttributes">
+    <test name="SliderAllAttributesTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
@@ -558,7 +558,7 @@
         <waitForPageLoad stepKey="waitForPageLoad4"/>
         <seeElement selector="{{SlideOnFrontend.messageContent('2', PageBuilderSlideItemContent_Slide2.value)}}" stepKey="seeSlide2ContentStorefront"/>
     </test>
-    <test name="SliderWithBordersAndPaddingEqualToMinHeight" extends="RowWithBordersAndPaddingEqualToMinHeight">
+    <test name="SliderWithBordersAndPaddingEqualToMinHeightTest" extends="RowWithBordersAndPaddingEqualToMinHeightTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
@@ -616,7 +616,7 @@
             <argument name="padding" value="PageBuilderPaddingProperty10"/>
         </actionGroup>
     </test>
-    <test name="SliderWithNoDotsEqualToMinHeight" extends="RowWithBordersAndPaddingEqualToMinHeight">
+    <test name="SliderWithNoDotsEqualToMinHeightTest" extends="RowWithBordersAndPaddingEqualToMinHeightTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
@@ -680,7 +680,7 @@
             <argument name="height" value="PageBuilderSliderMinHeight_Default"/>
         </actionGroup>
     </test>
-    <test name="SliderMoveSlider">
+    <test name="SliderMoveSliderTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
@@ -823,7 +823,7 @@
         <seeElement selector="{{SliderOnFrontend.slideNavigationDot('1', '1')}}" stepKey="seeSlideItem1NavigationDotOnStorefront"/>
         <seeElement selector="{{SliderOnFrontend.slideNavigationDot('1', '2')}}" stepKey="seeSlideItem2NavigationDotOnStorefront"/>
     </test>
-    <test name="SliderValidateShowHideOnSliderDefaultState">
+    <test name="SliderValidateShowHideOnSliderDefaultStateTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
@@ -884,7 +884,7 @@
         </actionGroup>
         <seeElement selector="{{SliderOnFrontend.notHidden('1')}}" stepKey="seeContentTypeNotHiddenStorefront"/>
     </test>
-    <test name="SliderValidateShowHideOnSlider">
+    <test name="SliderValidateShowHideOnSliderTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
@@ -969,7 +969,7 @@
         <seeElement selector="{{SliderOnFrontend.base('1')}}" stepKey="seeContentTypeVisible" />
         <seeElement selector="{{SlideOnFrontend.base('1')}}" stepKey="seeSlideVisible" />
     </test>
-    <test name="SliderDuplicate">
+    <test name="SliderDuplicateTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
@@ -1248,7 +1248,7 @@
         <waitForPageLoad stepKey="waitForPageLoad6"/>
         <seeElement selector="{{SlideOnFrontend.messageContent('4', PageBuilderSlideItemContent_Slide2.value)}}" stepKey="seeMessageContentSlideItem2Storefront"/>
     </test>
-    <test name="SliderDelete">
+    <test name="SliderDeleteTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
@@ -1304,7 +1304,7 @@
         </actionGroup>
         <dontSeeElementInDOM selector="{{SliderOnFrontend.all}}" stepKey="dontSeeContentTypeInStorefront"/>
     </test>
-    <test name="SliderCanBeDeletedAfterAccidentalDrag">
+    <test name="SliderCanBeDeletedAfterAccidentalDragTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
@@ -1346,7 +1346,7 @@
         <waitForElementNotVisible selector="{{PageBuilderStage.contentTypeInStage(PageBuilderSliderContentType.role)}}" stepKey="dontSeeSliderInContent" />
         <dontSeeElementInDOM selector="{{PageBuilderStage.contentTypeInStage(PageBuilderSliderContentType.role)}}" stepKey="dontSeeSliderInDOM" />
     </test>
-    <test name="SliderCannotAddToStage">
+    <test name="SliderCannotAddToStageTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
@@ -1377,7 +1377,7 @@
         </actionGroup>
         <dontSeeElementInDOM selector="{{SliderOnStage.all}}" stepKey="dontSeeSlider"/>
     </test>
-    <test name="SliderAddToColumn">
+    <test name="SliderAddToColumnTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
@@ -1446,7 +1446,7 @@
             <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
     </test>
-    <test name="SliderCanHaveContentPlacedAbove">
+    <test name="SliderCanHaveContentPlacedAboveTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
@@ -1500,7 +1500,7 @@
             <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
     </test>
-    <test name="SliderCannotHaveContentDroppedInside">
+    <test name="SliderCannotHaveContentDroppedInsideTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
@@ -1578,7 +1578,7 @@
             <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
     </test>
-    <test name="SliderCanManageSlides">
+    <test name="SliderCanManageSlidesTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
@@ -1679,7 +1679,7 @@
         <waitForPageLoad stepKey="waitForPageLoad8"/>
         <see userInput="{{PageBuilderSlideItemSlideName_Slide1.value}}" selector="{{SliderOnStage.slideNavigationDotNameTooltip('1')}}" stepKey="seeSlideName1InTooltip"/>
     </test>
-    <test name="SliderCanBeNavigatedQuickly">
+    <test name="SliderCanBeNavigatedQuicklyTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
@@ -1737,7 +1737,7 @@
         <click selector="{{SliderOnStage.slideNavigationDot('1', '1')}}" stepKey="clickSliderDot3"/>
         <waitForElementVisible selector="{{SlideOnBackend.base('1')}}" stepKey="waitForSlideOneVisible"/>
     </test>
-    <test name="SlideInlineWYSIWYGWidgetAndVariableStyle" extends="TextInlineWYSIWYGWidgetAndVariableStyle">
+    <test name="SlideInlineWYSIWYGWidgetAndVariableStyleTest" extends="TextInlineWYSIWYGWidgetAndVariableStyleTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
@@ -1773,7 +1773,7 @@
         <seeElement selector="{{SlideOnFrontend.messageContentWidget('1', _ENV.MAGENTO_BASE_URL, $$createCMSPageB.identifier$$)}}" stepKey="seeWidgetStorefront"/>
         <click selector="{{SlideOnFrontend.messageContentWidget('1', _ENV.MAGENTO_BASE_URL, $$createCMSPageB.identifier$$)}}" stepKey="clickWidgetStorefront"/>
     </test>
-    <test name="SliderFadeCanBeInlineEdited">
+    <test name="SliderFadeCanBeInlineEditedTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>

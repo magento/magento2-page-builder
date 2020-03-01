@@ -8,7 +8,7 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
-    <test name="BannerCanAddBanner">
+    <test name="BannerCanAddBannerTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Banner"/>
@@ -46,7 +46,7 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <waitForElementVisible selector="{{BannerOnBackend.emptyBanner('1')}}" stepKey="waitForBannerVisible"/>
     </test>
-    <test name="BannerEmptyBannerPreviewValidation">
+    <test name="BannerEmptyBannerPreviewValidationTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Banner"/>
@@ -220,7 +220,7 @@
         <moveMouseOver selector="{{BannerOnFrontend.base('1')}}" stepKey="moveMouseOverBannerFrontend4"/>
         <dontSeeElementInDOM selector="{{BannerOnFrontend.button('1')}}" stepKey="dontSeeInDOMButtonOnHoverInFrontend4"/>
     </test>
-    <test name="BannerDelete">
+    <test name="BannerDeleteTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Banner"/>
@@ -276,7 +276,7 @@
         </actionGroup>
         <dontSeeElementInDOM selector="{{BannerOnFrontend.base('1')}}" stepKey="dontSeeContentTypeInStorefront"/>
     </test>
-    <test name="BannerHasNoRequired">
+    <test name="BannerHasNoRequiredTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Banner"/>
@@ -311,7 +311,7 @@
         </actionGroup>
         <dontSeeElement selector="{{EditPanelForm.editFormAllRequiredFields}}" stepKey="checkNoRequiredField"/>
     </test>
-    <test name="BannerHasExpectedFieldsAndDefaults">
+    <test name="BannerHasExpectedFieldsAndDefaultsTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Banner"/>
@@ -446,7 +446,7 @@
             <argument name="property" value="PageBuilderBannerContentOverlayColorProperty"/>
         </actionGroup>
     </test>
-    <test name="BannerValidateBackgroundSectionDefaultValues">
+    <test name="BannerValidateBackgroundSectionDefaultValuesTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Banner"/>
@@ -582,7 +582,7 @@
             <argument name="section" value="BannerOnFrontend"/>
         </actionGroup>
     </test>
-    <test name="BannerValidateAdvancedConfigurationDefaultValues">
+    <test name="BannerValidateAdvancedConfigurationDefaultValuesTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Banner"/>
@@ -708,7 +708,7 @@
         <seeElementInDOM selector="{{BannerOnFrontend.margins('1', PageBuilderMarginsPropertyDefault.value)}}" stepKey="seeInDOMMarginsStorefront"/>
         <seeElementInDOM selector="{{BannerOnFrontend.posterPadding('1', PageBuilderPaddingProperty40.value)}}" stepKey="seeInDOMPaddingStorefront"/>
     </test>
-    <test name="BannerHasButtonStyled">
+    <test name="BannerHasButtonStyledTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Banner"/>
@@ -839,7 +839,7 @@
         <seeElement selector="{{BannerOnFrontend.buttonType('1', PageBuilderBannerButtonTypeLinkProperty.value)}}" stepKey="seeButtonTypeStorefront3"/>
         <seeElement selector="{{BannerOnFrontend.buttonText('1', PageBuilderBannerButtonTextProperty.value)}}" stepKey="seeButtonTextStorefront3"/>
     </test>
-    <test name="BannerCanOpenInNewTab">
+    <test name="BannerCanOpenInNewTabTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Banner"/>
@@ -915,7 +915,7 @@
         <switchToNextTab stepKey="switchToNextTab"/>
         <seeCurrentUrlEquals url="{{PageBuilderBannerLinkUrlProperty.value}}" stepKey="seeCurrentUrlEquals"/>
     </test>
-    <test name="BannerEmptyLinkURLDoesNothingOnStorefront">
+    <test name="BannerEmptyLinkURLDoesNothingOnStorefrontTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Banner"/>
@@ -967,7 +967,7 @@
         <wait time="3" stepKey="waitArbitraryTimeForPotentialNavigationToOccur" />
         <seeCurrentUrlEquals url="{{_ENV.MAGENTO_BASE_URL}}{{PageBuilderBannerContentType.pageNamePrefix}}{{PageBuilderPageTitle.pageName}}" stepKey="seeThatCurrentUrlIsUnchanged" />
     </test>
-    <test name="BannerDoesNotNavigateOnStage">
+    <test name="BannerDoesNotNavigateOnStageTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Banner"/>
@@ -1048,7 +1048,7 @@
             <actualResult type="variable">currentUrl</actualResult>
         </assertEquals>
     </test>
-    <test name="BannerUploadImageFromStage">
+    <test name="BannerUploadImageFromStageTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Banner"/>
@@ -1120,7 +1120,7 @@
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
     </test>
-    <test name="BannerVerifyStageUploadImageButtonsForEachAppearance">
+    <test name="BannerVerifyStageUploadImageButtonsForEachAppearanceTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Banner"/>
@@ -1200,7 +1200,7 @@
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
     </test>
-    <test name="BannerCannotAddToStage">
+    <test name="BannerCannotAddToStageTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Banner"/>
@@ -1231,7 +1231,7 @@
         </actionGroup>
         <dontSeeElementInDOM selector="{{BannerOnBackend.base('1')}}" stepKey="dontSeeBanner"/>
     </test>
-    <test name="BannerCanAddToColumn">
+    <test name="BannerCanAddToColumnTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Banner"/>
@@ -1300,7 +1300,7 @@
             <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
     </test>
-    <test name="BannerMoveBanner">
+    <test name="BannerMoveBannerTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Banner"/>
@@ -1421,7 +1421,7 @@
             <argument name="containerTargetIndex" value="1"/>
         </actionGroup>
     </test>
-    <test name="DuplicateBanner">
+    <test name="DuplicateBannerTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Banner"/>
@@ -1803,7 +1803,7 @@
         <switchToNextTab stepKey="switchToNextTab"/>
         <seeCurrentUrlEquals url="{{PageBuilderBannerLinkUrlProperty.value}}" stepKey="seeCurrentUrlEquals"/>
     </test>
-    <test name="ValidateShowHideOnBannerDefaultState">
+    <test name="ValidateShowHideOnBannerDefaultStateTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Banner"/>
@@ -1859,7 +1859,7 @@
         </actionGroup>
         <seeElement selector="{{BannerOnFrontend.notHidden('1')}}" stepKey="seeContentTypeNotHiddenStorefront"/>
     </test>
-    <test name="ValidateShowHideOnBanner">
+    <test name="ValidateShowHideOnBannerTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Banner"/>
@@ -1935,7 +1935,7 @@
         <dontSeeElementInDOM selector="{{BannerOnFrontend.hidden('1')}}" stepKey="dontSeeHiddenElement"/>
         <seeElement selector="{{BannerOnFrontend.base('1')}}" stepKey="waitForContentTypeVisible"/>
     </test>
-    <test name="BannerContentBlockDeleteImage">
+    <test name="BannerContentBlockDeleteImageTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Banner"/>
@@ -2020,7 +2020,7 @@
         <seeElement selector="{{BannerOnBackend.emptyBanner('1')}}" stepKey="seeBannerPlaceholder2"/>
         <dontSeeElementInDOM selector="{{BannerOnBackend.imageOnStage('1',PageBuilderBackgroundImage_JPG.fileName)}}" stepKey="dontSeeImageInDOM2"/>
     </test>
-    <test name="BannerContentVariableCanWrap">
+    <test name="BannerContentVariableCanWrapTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Banner"/>
@@ -2097,7 +2097,7 @@
             <actualResult type="variable">columnOneTextHeight</actualResult>
         </assertGreaterThan>
     </test>
-    <test name="BannerInlineWYSIWYGWidgetAndVariableStyle" extends="TextInlineWYSIWYGWidgetAndVariableStyle">
+    <test name="BannerInlineWYSIWYGWidgetAndVariableStyleTest" extends="TextInlineWYSIWYGWidgetAndVariableStyleTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Banner"/>
@@ -2130,7 +2130,7 @@
         <seeElement selector="{{BannerOnFrontend.messageContentWidget('1', _ENV.MAGENTO_BASE_URL, $$createCMSPageB.identifier$$)}}" stepKey="seeWidgetStorefront"/>
         <click selector="{{BannerOnFrontend.messageContentWidget('1', _ENV.MAGENTO_BASE_URL, $$createCMSPageB.identifier$$)}}" stepKey="clickWidgetStorefront"/>
     </test>
-    <test name="BannerInlineWysiwygUploadImage" extends="SlideItemInlineWysiwygUploadImage">
+    <test name="BannerInlineWysiwygUploadImageTest" extends="SlideItemInlineWysiwygUploadImageTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Banner"/>
@@ -2161,7 +2161,7 @@
         <!-- Validate Image Editor On Storefront -->
         <seeElement selector="{{BannerOnFrontend.messageContentTextAreaImage('1', PageBuilderBackgroundImage_JPG.value)}}" stepKey="validateImageFrontEnd"/>
     </test>
-    <test name="BannerCannotHaveInlineWysiwygLinkAndLinkUrl">
+    <test name="BannerCannotHaveInlineWysiwygLinkAndLinkUrlTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Banner"/>
@@ -2258,7 +2258,7 @@
             <actualResult type="variable">grabIfFrontendAnchorInContentBoolean</actualResult>
         </assertFalse>
     </test>
-    <test name="BannerTextContainingPageBuilderMarkupWontBreakStage">
+    <test name="BannerTextContainingPageBuilderMarkupWontBreakStageTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Banner"/>

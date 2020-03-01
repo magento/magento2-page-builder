@@ -8,7 +8,7 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
-    <test name="VideoAddToCMSPage">
+    <test name="VideoAddToCMSPageTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Video"/>
@@ -83,7 +83,7 @@
             <argument name="width" value="PageBuilderVideoWidth_500"/>
         </actionGroup>
     </test>
-    <test name="VideoNonEmbeddedUrl">
+    <test name="VideoNonEmbeddedUrlTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Video"/>
@@ -136,7 +136,7 @@
             <argument name="url" value="PageBuilderVideoUrl_NonEmbedded"/>
         </actionGroup>
     </test>
-    <test name="VideoDelete">
+    <test name="VideoDeleteTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Video"/>
@@ -201,7 +201,7 @@
         <dontSeeElementInDOM selector="{{VideoOnStorefront.base('1')}}" stepKey="dontSeeContentTypeInStorefront"/>
         <dontSeeElementInDOM selector="{{VideoOnStorefront.empty('1')}}" stepKey="dontSeeEmptyContentTypeInStorefront"/>
     </test>
-    <test name="VideoValidateGeneralDefaultValues">
+    <test name="VideoValidateGeneralDefaultValuesTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Video"/>
@@ -268,7 +268,7 @@
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <seeElementInDOM selector="{{VideoOnStorefront.empty}}" stepKey="seeVideo"/>
     </test>
-    <test name="VideoValidateAdvancedConfigurationDefaultValues">
+    <test name="VideoValidateAdvancedConfigurationDefaultValuesTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Video"/>
@@ -394,7 +394,7 @@
             <argument name="index" value="1"/>
         </actionGroup>
     </test>
-    <test name="VideoUpdateAdvancedConfigurationValues">
+    <test name="VideoUpdateAdvancedConfigurationValuesTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Video"/>
@@ -563,7 +563,7 @@
             <argument name="index" value="1"/>
         </actionGroup>
     </test>
-    <test name="VideoWithBordersAndPaddingEqualToMaxWidth">
+    <test name="VideoWithBordersAndPaddingEqualToMaxWidthTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Video"/>
@@ -635,7 +635,7 @@
             <argument name="content" value="{{VideoOnStorefront.wrapperCSS}}"/>
         </actionGroup>
     </test>
-    <test name="VideoHeightRendersCorrectlyBasedOnMaxWidthAndAspectRatio" extends="RowWithBordersAndPaddingEqualToMinHeight">
+    <test name="VideoHeightRendersCorrectlyBasedOnMaxWidthAndAspectRatioTest" extends="RowWithBordersAndPaddingEqualToMinHeightTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Video"/>
@@ -691,7 +691,7 @@
             <argument name="pixelBuffer" value="2"/>
         </actionGroup>
     </test>
-    <test name="VideoValidateURL">
+    <test name="VideoValidateURLTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Video"/>
@@ -736,7 +736,7 @@
             <argument name="property" value="PageBuilder_InvalidVideoURL_HTML"/>
         </actionGroup>
     </test>
-    <test name="VideoCannotAddToStage">
+    <test name="VideoCannotAddToStageTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Video"/>
@@ -766,7 +766,7 @@
         </actionGroup>
         <dontSeeElementInDOM selector="{{VideoOnStage.base('1')}}" stepKey="dontSeeVideo"/>
     </test>
-    <test name="CanAddVideoToColumn">
+    <test name="CanAddVideoToColumnTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Video"/>
@@ -844,7 +844,7 @@
             <argument name="containerTargetIndex" value="1"/>
         </actionGroup>
     </test>
-    <test name="VideoMoveVideo">
+    <test name="VideoMoveVideoTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Video"/>
@@ -963,7 +963,7 @@
             <argument name="containerTargetIndex" value="1"/>
         </actionGroup>
     </test>
-    <test name="VideoDuplicate">
+    <test name="VideoDuplicateTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Video"/>
@@ -1207,7 +1207,7 @@
             <argument name="index" value="2"/>
         </actionGroup>
     </test>
-    <test name="ValidateShowHideOnVideoDefaultState">
+    <test name="ValidateShowHideOnVideoDefaultStateTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Video"/>
@@ -1261,7 +1261,7 @@
         </actionGroup>
         <seeElement selector="{{VideoOnStorefront.notHidden('1')}}" stepKey="seeContentTypeNotHiddenStorefront"/>
     </test>
-    <test name="ValidateShowHideOnVideo">
+    <test name="ValidateShowHideOnVideoTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Video"/>
