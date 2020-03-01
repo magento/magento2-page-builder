@@ -138,7 +138,7 @@ export default class Preview extends BasePreview {
                     },
                 );
                 // @ts-ignore
-                this.wrapper.jarallax.video.on("started", () => {
+                this.wrapper.jarallax.video && this.wrapper.jarallax.video.on("started", () => {
                     // @ts-ignore
                     if (this.wrapper.jarallax.$video) {
                         // @ts-ignore
