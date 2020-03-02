@@ -120,7 +120,20 @@
     }
 
     .video-overlay {
-        z-index: 0;
+        z-index: auto;
+    }
+
+    &.jarallax {
+        position: unset!important;
+    }
+
+    [id*='jarallax-container'] {
+        z-index: auto!important;
+
+        > iframe,
+        > video {
+            z-index: auto!important;
+        }
     }
 }
 

@@ -114,6 +114,9 @@ export default class Preview extends BasePreview {
                         speed: 1,
                         videoPlayOnlyVisible: (this.contentType.dataStore.get("video_play_only_visible") as string) === "true",
                         videoLazyLoading: (this.contentType.dataStore.get("video_lazy_load") as string) === "true",
+                        onInit() {
+                            $(this.image.$container).prependTo($(this.image.$container).parent());
+                        },
                     },
                 );
                 // @ts-ignore
