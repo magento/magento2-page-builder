@@ -31,6 +31,9 @@ define(["jarallax", "jarallaxVideo", "jquery", "mage/translate", "Magento_PageBu
       _this.wysiwygDeferred = _jquery.Deferred();
       _this.handledDoubleClick = false;
       _this.videoUpdateProperties = ["background_type", "video_fallback_image", "video_lazy_load", "video_loop", "video_play_only_visible", "video_source"];
+      _this.bannerOverlaySelector = ".pagebuilder-overlay";
+      _this.defaultOverlayZIndex = 2;
+      _this.activeEditorOverlayZIndex = 3;
       _this.buildJarallax = _underscore.debounce(function () {
         // Destroy all instances of the plugin prior
         try {
@@ -58,10 +61,7 @@ define(["jarallax", "jarallaxVideo", "jquery", "mage/translate", "Magento_PageBu
               videoLoop: _this.contentType.dataStore.get("video_loop") === "true",
               speed: 1,
               videoPlayOnlyVisible: _this.contentType.dataStore.get("video_play_only_visible") === "true",
-              videoLazyLoading: _this.contentType.dataStore.get("video_lazy_load") === "true",
-              onInit: function onInit() {
-                (0, _jquery)(this.image.$container).prependTo((0, _jquery)(this.image.$container).parent());
-              }
+              videoLazyLoading: _this.contentType.dataStore.get("video_lazy_load") === "true"
             }); // @ts-ignore
 
             _this.wrapper.jarallax.video && _this.wrapper.jarallax.video.on("started", function () {
@@ -186,7 +186,14 @@ define(["jarallax", "jarallaxVideo", "jquery", "mage/translate", "Magento_PageBu
       if (focus) {
         wysiwygConfig.adapter.settings.auto_focus = this.element.id;
 
-        wysiwygConfig.adapter.settings.init_instance_callback = function () {
+        wysiwygConfig.adapter.settings.init_instance_callback = function (editor) {
+          editor.on("focus", function () {
+            (0, _jquery)(_this3.element).parents(_this3.bannerOverlaySelector).zIndex(_this3.activeEditorOverlayZIndex);
+          });
+          editor.on("blur", function () {
+            (0, _jquery)(_this3.element).parents(_this3.bannerOverlaySelector).zIndex(_this3.defaultOverlayZIndex);
+          });
+
           _underscore.defer(function () {
             _this3.element.blur();
 

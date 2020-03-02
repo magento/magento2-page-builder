@@ -79,6 +79,21 @@ export default class Preview extends BasePreview {
     ];
 
     /**
+     * Selector for banner overlay
+     */
+    private bannerOverlaySelector = ".pagebuilder-overlay";
+
+    /**
+     * Default banner overlay z-index
+     */
+    private defaultOverlayZIndex = 2;
+
+    /**
+     * Banner overlay z-index with active editor
+     */
+    private activeEditorOverlayZIndex = 3;
+
+    /**
      * Debounce and defer the init of Jarallax
      *
      * @type {(() => void) & _.Cancelable}
@@ -114,9 +129,6 @@ export default class Preview extends BasePreview {
                         speed: 1,
                         videoPlayOnlyVisible: (this.contentType.dataStore.get("video_play_only_visible") as string) === "true",
                         videoLazyLoading: (this.contentType.dataStore.get("video_lazy_load") as string) === "true",
-                        onInit() {
-                            $(this.image.$container).prependTo($(this.image.$container).parent());
-                        },
                     },
                 );
                 // @ts-ignore
@@ -237,7 +249,13 @@ export default class Preview extends BasePreview {
 
         if (focus) {
             wysiwygConfig.adapter.settings.auto_focus = this.element.id;
-            wysiwygConfig.adapter.settings.init_instance_callback = () => {
+            wysiwygConfig.adapter.settings.init_instance_callback = (editor) => {
+                editor.on("focus", () => {
+                    $(this.element).parents(this.bannerOverlaySelector).zIndex(this.activeEditorOverlayZIndex);
+                });
+                editor.on("blur", () => {
+                    $(this.element).parents(this.bannerOverlaySelector).zIndex(this.defaultOverlayZIndex);
+                });
                 _.defer(() => {
                     this.element.blur();
                     this.element.focus();
