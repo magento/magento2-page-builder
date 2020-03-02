@@ -31,7 +31,7 @@ define([
                 var videoSlides = $slider[0].querySelectorAll('.jarallax');
 
                 videoSlides.forEach(function (videoSlide) {
-                    videoSlide.jarallax.onScroll();
+                    videoSlide.jarallax && videoSlide.jarallax.onScroll();
                 });
             });
             $slider.data('afterChangeIsSet', true);
