@@ -58,7 +58,10 @@ define(["jarallax", "jarallaxVideo", "jquery", "mage/translate", "Magento_PageBu
               videoLoop: _this.contentType.dataStore.get("video_loop") === "true",
               speed: 1,
               videoPlayOnlyVisible: _this.contentType.dataStore.get("video_play_only_visible") === "true",
-              videoLazyLoading: _this.contentType.dataStore.get("video_lazy_load") === "true"
+              videoLazyLoading: _this.contentType.dataStore.get("video_lazy_load") === "true",
+              onInit: function onInit() {
+                (0, _jquery)(this.image.$container).prependTo((0, _jquery)(this.image.$container).parent());
+              }
             }); // @ts-ignore
 
             _this.wrapper.jarallax.video && _this.wrapper.jarallax.video.on("started", function () {
