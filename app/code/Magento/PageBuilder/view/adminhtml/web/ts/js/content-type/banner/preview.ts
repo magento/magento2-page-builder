@@ -9,6 +9,7 @@ import $ from "jquery";
 import $t from "mage/translate";
 import events from "Magento_PageBuilder/js/events";
 import mageUtils from "mageUtils";
+import {Editor} from "tinymce";
 import _ from "underscore";
 import "vimeoWrapper";
 import HideShowOption from "../../content-type-menu/hide-show-option";
@@ -29,7 +30,6 @@ import WysiwygFactory from "../../wysiwyg/factory";
 import WysiwygInterface from "../../wysiwyg/wysiwyg-interface";
 import {ContentTypeReadyEventParamsInterface} from "../content-type-events.types";
 import BasePreview from "../preview";
-import {Editor} from "tinymce";
 
 /**
  * @api
@@ -134,6 +134,7 @@ export default class Preview extends BasePreview {
                 );
                 // @ts-ignore
                 if (this.wrapper.jarallax && this.wrapper.jarallax.video) {
+                    // @ts-ignore
                     this.wrapper.jarallax.video.on("started", () => {
                         // @ts-ignore
                         if (this.wrapper.jarallax && this.wrapper.jarallax.$video) {
