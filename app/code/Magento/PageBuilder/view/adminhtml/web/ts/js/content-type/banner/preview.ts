@@ -132,12 +132,14 @@ export default class Preview extends BasePreview {
                     },
                 );
                 // @ts-ignore
-                this.wrapper.jarallax.video && this.wrapper.jarallax.video.on("started", () => {
-                    // @ts-ignore
-                    if (this.wrapper.jarallax.$video) {
+                this.wrapper.jarallax &&
+                    this.wrapper.jarallax.video &&
+                    this.wrapper.jarallax.video.on("started", () => {
                         // @ts-ignore
-                        this.wrapper.jarallax.$video.style.visibility = "visible";
-                    }
+                        if (this.wrapper.jarallax && this.wrapper.jarallax.$video) {
+                            // @ts-ignore
+                            this.wrapper.jarallax.$video.style.visibility = "visible";
+                        }
                 });
             });
         }
