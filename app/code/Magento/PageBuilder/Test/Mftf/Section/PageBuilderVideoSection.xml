@@ -27,6 +27,7 @@
         <element name="src" type="text" selector="(//div[contains(@class,'pagebuilder-video-wrapper')])[{{arg1}}]//iframe[src]" parameterized="true"/>
         <element name="videoElement" type="text" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-video')])[{{videoIndex}}]//iframe|(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-video')])[{{videoIndex}}]//video" parameterized="true"/>
         <element name="iframePlaying" type="text" selector="(//div[@id='player'])[{{playerIndex}}]//div[contains(@class, 'playing-mode')]" parameterized="true"/>
+        <element name="iframeNotAutoplaying" type="text" selector="(//div[@id='player'])[{{playerIndex}}]//div[contains(@class, 'unstarted-mode')]" parameterized="true"/>
         <element name="width" type="text" selector="(//div[contains(@class,'pagebuilder-video-inner')])[{{arg1}}][contains(@style,'max-width: {{arg2}}px;')]" parameterized="true"/>
         <element name="noWidth" type="text" selector="(//div[contains(@class,'pagebuilder-video-wrapper')])[{{arg1}}][not(starts-with(@style,'width:')) and not(contains(@style,' width:'))][contains(@class,'pagebuilder-video-wrapper')]" parameterized="true"/>
         <!-- Advanced Configuration -->
@@ -57,6 +58,7 @@
         <element name="noWidth" type="text" selector="(//div[@data-content-type='video']//iframe)[{{arg1}}][not(starts-with(@style,'width:')) and not(contains(@style,' width:'))]" parameterized="true"/>
         <element name="videoElement" type="text" parameterized="true" selector="(//div[@data-content-type='video'])[{{videoIndex}}]//iframe|(//div[@data-content-type='row'])[{{videoIndex}}]//video"/>
         <element name="iframePlaying" type="text" selector="(//div[@id='player'])[{{playerIndex}}]//div[contains(@class, 'playing-mode')]" parameterized="true"/>
+        <element name="iframeNotAutoplaying" type="text" selector="(//div[@id='player'])[{{playerIndex}}]//div[contains(@class, 'unstarted-mode')]" parameterized="true"/>
         <!-- Advanced Configuration -->
         <element name="alignment" type="text" selector="(//div[@data-content-type='video'])[{{arg1}}][contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
         <element name="noAlignment" type="text" selector="(//div[@data-content-type='video'])[{{arg1}}][not(contains(@style,'text-align'))]" parameterized="true"/>

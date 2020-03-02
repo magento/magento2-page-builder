@@ -107,11 +107,16 @@
         </arguments>
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForElementVisible selector="{{page.videoElement(index)}}" stepKey="waitForVideoVisible"/>
-<!--        <waitForElement selector="{{page.videoBackgroundVideoUrl(index, url.renderedValue)}}" stepKey="waitForVideoUrl"/>-->
         <executeJS function="document.querySelector('[data-element=\'video\']').id = 'video-iframe'" stepKey="setIframeId"/>
         <switchToIFrame userInput="video-iframe" stepKey="switchToVideoIframe"/>
         <waitForElementVisible selector="{{page.iframePlaying(index)}}" stepKey="seeIframePlaying"/>
         <switchToIFrame stepKey="switchBackFromIframe"/>
+    </actionGroup>
+    <actionGroup name="validateVideoNotAutoplaying" extends="validateVideoPlaying">
+        <annotations>
+            <description>Validates that the video content type is not autoplaying.</description>
+        </annotations>
+        <waitForElementVisible selector="{{page.iframeNotAutoplaying(index)}}" stepKey="seeIframePlaying"/>
     </actionGroup>
     <actionGroup name="validateEmptyVideoStage">
         <arguments>
