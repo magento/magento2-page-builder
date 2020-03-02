@@ -29,6 +29,7 @@ import WysiwygFactory from "../../wysiwyg/factory";
 import WysiwygInterface from "../../wysiwyg/wysiwyg-interface";
 import {ContentTypeReadyEventParamsInterface} from "../content-type-events.types";
 import BasePreview from "../preview";
+import {Editor} from "tinymce";
 
 /**
  * @api
@@ -132,15 +133,15 @@ export default class Preview extends BasePreview {
                     },
                 );
                 // @ts-ignore
-                this.wrapper.jarallax &&
-                    this.wrapper.jarallax.video &&
+                if (this.wrapper.jarallax && this.wrapper.jarallax.video) {
                     this.wrapper.jarallax.video.on("started", () => {
                         // @ts-ignore
                         if (this.wrapper.jarallax && this.wrapper.jarallax.$video) {
                             // @ts-ignore
                             this.wrapper.jarallax.$video.style.visibility = "visible";
                         }
-                });
+                    });
+                }
             });
         }
 
@@ -251,7 +252,7 @@ export default class Preview extends BasePreview {
 
         if (focus) {
             wysiwygConfig.adapter.settings.auto_focus = this.element.id;
-            wysiwygConfig.adapter.settings.init_instance_callback = (editor) => {
+            wysiwygConfig.adapter.settings.init_instance_callback = (editor: Editor) => {
                 editor.on("focus", () => {
                     $(this.element).parents(this.bannerOverlaySelector).zIndex(this.activeEditorOverlayZIndex);
                 });

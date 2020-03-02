@@ -66,15 +66,18 @@ define(["jarallax", "jarallaxVideo", "jquery", "knockout", "mage/translate", "Ma
               videoPlayOnlyVisible: _this.contentType.dataStore.get("video_play_only_visible") === "true",
               elementInViewport: (0, _jquery)(".jarallax-viewport-element", _this.wrapper),
               videoLazyLoading: _this.contentType.dataStore.get("video_lazy_load") === "true"
-            }); // @ts-ignore
-
-            _this.wrapper.jarallax && _this.wrapper.jarallax.video && _this.wrapper.jarallax.video.on("started", function () {
-              // @ts-ignore
-              if (_this.wrapper.jarallax && _this.wrapper.jarallax.$video) {
-                // @ts-ignore
-                _this.wrapper.jarallax.$video.style.visibility = "visible";
-              }
             });
+
+            if (_this.wrapper.jarallax && _this.wrapper.jarallax.video) {
+              // @ts-ignore
+              _this.wrapper.jarallax.video.on("started", function () {
+                // @ts-ignore
+                if (_this.wrapper.jarallax && _this.wrapper.jarallax.$video) {
+                  // @ts-ignore
+                  _this.wrapper.jarallax.$video.style.visibility = "visible";
+                }
+              });
+            }
           });
         }
       }, 50);
