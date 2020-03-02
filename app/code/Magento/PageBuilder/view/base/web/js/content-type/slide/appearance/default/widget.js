@@ -4,9 +4,10 @@
  */
 define([
     'jquery',
+    'underscore',
     'Magento_PageBuilder/js/widget/show-on-hover',
     'Magento_PageBuilder/js/widget/video-background'
-], function ($, showOnHover, videoBackground) {
+], function ($, _, showOnHover, videoBackground) {
     'use strict';
 
     return function (config, element) {
@@ -30,7 +31,7 @@ define([
             $slider.on('afterChange init', function () {
                 var videoSlides = $slider[0].querySelectorAll('.jarallax');
 
-                videoSlides.forEach(function (videoSlide) {
+                _.each(videoSlides, function (videoSlide) {
                     videoSlide.jarallax && videoSlide.jarallax.onScroll();
                 });
             });
