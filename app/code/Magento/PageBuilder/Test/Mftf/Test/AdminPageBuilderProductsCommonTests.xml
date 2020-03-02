@@ -14,7 +14,7 @@
             <stories value="Products"/>
             <title value="Save with condition"/>
             <description value="Validate that adding a condition in the General form for Products will update the Stage and Storefront correctly with the correct products."/>
-            <severity value="CRITICAL"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MAGETWO-71425"/>
             <testCaseId value="MC-4027"/>
             <group value="pagebuilder"/>
@@ -88,7 +88,7 @@
             <stories value="Products"/>
             <title value="Main configuration settings are properly saved"/>
             <description value="Validate that main settings are saved and loaded correctly on the stage in memory and after page reload."/>
-            <severity value="CRITICAL"/>
+            <severity value="MAJOR"/>
             <useCaseId value="MAGETWO-71425"/>
             <testCaseId value="MC-4029"/>
             <group value="pagebuilder"/>
@@ -171,7 +171,7 @@
             <stories value="Products"/>
             <title value="Duplicate Products"/>
             <description value="A user should be able to duplicate Products content type. Verify on Stage and Storefront."/>
-            <severity value="CRITICAL"/>
+            <severity value="MAJOR"/>
             <useCaseId value="MC-965"/>
             <testCaseId value="MC-3601"/>
             <group value="pagebuilder"/>
@@ -302,7 +302,7 @@
             <stories value="Products"/>
             <title value="Validate Advanced Configuration Default Values"/>
             <description value="Validate the default values for every attribute in the Advanced Configuration form and on Stage for Product List."/>
-            <severity value="CRITICAL"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MAGETWO-71425"/>
             <testCaseId value="MC-2500"/>
             <group value="pagebuilder"/>
@@ -450,7 +450,7 @@
             <stories value="Products"/>
             <title value="Show out of stock"/>
             <description value="Products display and respect global configuration settings Show Out Of Stock products"/>
-            <severity value="CRITICAL"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MAGETWO-71425"/>
             <testCaseId value="MC-4031"/>
             <group value="pagebuilder"/>
@@ -538,7 +538,7 @@
             <stories value="Products"/>
             <title value="Cannot add Products to Stage"/>
             <description value="If user drags Products to Stage, it should have no effect"/>
-            <severity value="CRITICAL"/>
+            <severity value="AVERAGE"/>
             <useCaseId value="MC-515"/>
             <testCaseId value="MC-3130"/>
             <group value="pagebuilder"/>
@@ -565,7 +565,7 @@
             <stories value="Products"/>
             <title value="Add Products to Column container and view on Admin and Storefront"/>
             <description value="As a Content Manager I want column to be a container so that I can add Products inside"/>
-            <severity value="CRITICAL"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MC-515"/>
             <testCaseId value="MC-3129"/>
             <group value="pagebuilder"/>
@@ -633,7 +633,7 @@
             <stories value="Products"/>
             <title value="Products is shown by default"/>
             <description value="Products is shown by default in stage and storefront"/>
-            <severity value="CRITICAL"/>
+            <severity value="AVERAGE"/>
             <useCaseId value="MC-965"/>
             <testCaseId value="MC-3555"/>
             <group value="pagebuilder"/>
@@ -703,7 +703,7 @@
             <stories value="Products"/>
             <title value="Products has hide show capabilities"/>
             <description value="A user is able to hide and show the video successfully"/>
-            <severity value="CRITICAL"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MC-965"/>
             <testCaseId value="MC-3522"/>
             <group value="pagebuilder"/>
@@ -794,7 +794,7 @@
             <stories value="Products"/>
             <title value="Product from Different Website Shows on Stage"/>
             <description value="As a product manager I want to be able to see products from all store views on stage in admin so that I don't get worried that conditions are being applied incorrectly"/>
-            <severity value="CRITICAL"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MC-5373"/>
             <testCaseId value="MC-6294"/>
             <group value="pagebuilder"/>
@@ -914,7 +914,7 @@
             <stories value="Products"/>
             <title value="Product Content Type is invulnerable to XSS via product condition payload injection"/>
             <description value="As a Content Manager I want Product Content Type to be invulnerable to XSS via product condition payload injection so that the security of my admin experience is retained"/>
-            <severity value="CRITICAL"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MC-5835"/>
             <testCaseId value="MC-6486"/>
             <group value="pagebuilder"/>
@@ -966,7 +966,7 @@
             <stories value="Products"/>
             <title value="Product Content Type Combined Condition Rule Works Properly"/>
             <description value="As a Content Manager I want the Products Content Type's combined condition rule to function properly when filtering products from the product list"/>
-            <severity value="CRITICAL"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MC-15297"/>
             <testCaseId value="MC-15312"/>
             <group value="pagebuilder"/>
@@ -1175,7 +1175,7 @@
             <argument name="category" value="$$createCategory1.name$$"/>
         </actionGroup>
         <actionGroup ref="validateProductTotals" stepKey="validateTotalProductsOnEditPanelAgain1">
-            <argument name="productsTotals" value="of 6 total (1 disabled, 1 not visible, 1 out of stock)"/>
+            <argument name="productsTotals" value="of 6 total (1 disabled, 1 not visible)"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel1"/>
         <actionGroup ref="validateProductCountInProducts" stepKey="validateTotalProductsOnStage1">
@@ -1190,7 +1190,7 @@
             <argument name="property" value="PageBuilderProductsProductCarouselAppearance"/>
         </actionGroup>
         <actionGroup ref="validateProductTotals" stepKey="validateTotalProductsOnEditPanel2">
-            <argument name="productsTotals" value="of 6 total (1 disabled, 1 not visible, 1 out of stock)"/>
+            <argument name="productsTotals" value="of 6 total (1 disabled, 1 not visible)"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel2"/>
         <actionGroup ref="validateProductCountInProducts" stepKey="validateTotalProductsOnStage2">
@@ -1209,7 +1209,7 @@
             <argument name="SKUs" value="$$createDisabledProduct.sku$$,$$createProduct1.sku$$,$$createOutOfStockProduct.sku$$,$$createNotVisibleProduct.sku$$"/>
         </actionGroup>
         <actionGroup ref="validateProductTotals" stepKey="validateTotalProductsOnEditPanelAgain3">
-            <argument name="productsTotals" value="of 4 total (1 disabled, 1 not visible, 1 out of stock)"/>
+            <argument name="productsTotals" value="of 4 total (1 disabled, 1 not visible)"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel3"/>
         <actionGroup ref="validateProductCountInProducts" stepKey="validateTotalProductsOnStage3">
@@ -1224,7 +1224,7 @@
             <argument name="property" value="PageBuilderProductsProductGridAppearance"/>
         </actionGroup>
         <actionGroup ref="validateProductTotals" stepKey="validateTotalProductsOnEditPanel4">
-            <argument name="productsTotals" value="of 4 total (1 disabled, 1 not visible, 1 out of stock)"/>
+            <argument name="productsTotals" value="of 4 total (1 disabled, 1 not visible)"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel4"/>
         <actionGroup ref="validateProductCountInProducts" stepKey="validateTotalProductsOnStage4">

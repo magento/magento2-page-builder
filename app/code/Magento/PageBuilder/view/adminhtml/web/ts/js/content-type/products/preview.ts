@@ -67,10 +67,12 @@ export default class Preview extends BasePreview {
 
         // Redraw slider after content type gets redrawn
         events.on("contentType:redrawAfter", (args: ContentTypeAfterRenderEventParamsInterface) => {
-            const $element = $(this.element.children);
+            if (this.element && this.element.children) {
+                const $element = $(this.element.children);
 
-            if (args.element && this.element && $element.closest(args.element).length) {
-                $element.slick("setPosition");
+                if (args.element && $element.closest(args.element).length) {
+                    $element.slick("setPosition");
+                }
             }
         });
     }

@@ -72,7 +72,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
 
       _events.on("tab-item:removeAfter", function (args) {
-        if (args.parentContentType.id === _this.contentType.id) {
+        if (args.parentContentType && args.parentContentType.id === _this.contentType.id) {
           _this.refreshTabs(); // We need to wait for the tabs to refresh before executing the focus
 
 
@@ -131,15 +131,29 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       return _this;
     }
     /**
+     * Remove focused tab
+     */
+
+
+    var _proto = Preview.prototype;
+
+    _proto.destroy = function destroy() {
+      var _this2 = this;
+
+      _previewCollection2.prototype.destroy.call(this);
+
+      _underscore.defer(function () {
+        return _this2.setFocusedTab(null);
+      });
+    }
+    /**
      * Refresh the tabs instance when new content appears
      *
      * @param {number} focusIndex
      * @param {boolean} forceFocus
      * @param {number} activeIndex
      */
-
-
-    var _proto = Preview.prototype;
+    ;
 
     _proto.refreshTabs = function refreshTabs(focusIndex, forceFocus, activeIndex) {
       try {
@@ -173,22 +187,22 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     ;
 
     _proto.setActiveTab = function setActiveTab(index) {
-      var _this2 = this;
+      var _this3 = this;
 
       if (index !== null) {
         // Added to prevent mismatched fragment error caused by not yet rendered tab-item
         index = parseInt(index.toString(), 10);
         (0, _delayUntil)(function () {
-          (0, _jquery)(_this2.element).tabs("option", "active", index);
+          (0, _jquery)(_this3.element).tabs("option", "active", index);
 
-          _this2.activeTab(index);
+          _this3.activeTab(index);
 
           _events.trigger("contentType:redrawAfter", {
-            id: _this2.contentType.id,
-            contentType: _this2
+            id: _this3.contentType.id,
+            contentType: _this3
           });
         }, function () {
-          return (0, _jquery)(_this2.element).find(".pagebuilder-tab-item").length >= index + 1;
+          return (0, _jquery)(_this3.element).find(".pagebuilder-tab-item").length >= index + 1;
         });
       }
     }
@@ -247,21 +261,21 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     ;
 
     _proto.addTab = function addTab() {
-      var _this3 = this;
+      var _this4 = this;
 
       (0, _contentTypeFactory)(_config.getContentTypeConfig("tab-item"), this.contentType, this.contentType.stageId).then(function (tab) {
         _events.on("tab-item:mountAfter", function (args) {
           if (args.id === tab.id) {
-            _this3.setFocusedTab(_this3.contentType.children().length - 1);
+            _this4.setFocusedTab(_this4.contentType.children().length - 1);
 
             _events.off("tab-item:" + tab.id + ":mountAfter");
           }
         }, "tab-item:" + tab.id + ":mountAfter");
 
-        _this3.contentType.addChild(tab, _this3.contentType.children().length); // Update the default tab title when adding a new tab
+        _this4.contentType.addChild(tab, _this4.contentType.children().length); // Update the default tab title when adding a new tab
 
 
-        tab.dataStore.set("tab_name", (0, _translate)("Tab") + " " + (_this3.contentType.children.indexOf(tab) + 1));
+        tab.dataStore.set("tab_name", (0, _translate)("Tab") + " " + (_this4.contentType.children.indexOf(tab) + 1));
       });
     }
     /**
@@ -384,24 +398,24 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     ;
 
     _proto.bindEvents = function bindEvents() {
-      var _this4 = this;
+      var _this5 = this;
 
       _previewCollection2.prototype.bindEvents.call(this); // ContentType being mounted onto container
 
 
       _events.on("tabs:dropAfter", function (args) {
-        if (args.id === _this4.contentType.id && _this4.contentType.children().length === 0) {
-          _this4.addTab();
+        if (args.id === _this5.contentType.id && _this5.contentType.children().length === 0) {
+          _this5.addTab();
         }
       }); // ContentType being removed from container
 
 
       _events.on("tab-item:removeAfter", function (args) {
-        if (args.parentContentType.id === _this4.contentType.id) {
+        if (args.parentContentType && args.parentContentType.id === _this5.contentType.id) {
           // Mark the previous tab as active
           var newIndex = args.index - 1 >= 0 ? args.index - 1 : 0;
 
-          _this4.refreshTabs(newIndex, true);
+          _this5.refreshTabs(newIndex, true);
         }
       }); // Capture when a content type is duplicated within the container
 
@@ -410,7 +424,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       var duplicatedTabIndex;
 
       _events.on("tab-item:duplicateAfter", function (args) {
-        if (_this4.contentType.id === args.duplicateContentType.parentContentType.id && args.direct) {
+        if (_this5.contentType.id === args.duplicateContentType.parentContentType.id && args.direct) {
           var tabData = args.duplicateContentType.dataStore.getState();
           args.duplicateContentType.dataStore.set("tab_name", tabData.tab_name.toString() + " copy");
           duplicatedTab = args.duplicateContentType;
@@ -420,22 +434,22 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
       _events.on("tab-item:mountAfter", function (args) {
         if (duplicatedTab && args.id === duplicatedTab.id) {
-          _this4.refreshTabs(duplicatedTabIndex, true);
+          _this5.refreshTabs(duplicatedTabIndex, true);
 
           duplicatedTab = duplicatedTabIndex = null;
         }
 
-        if (_this4.contentType.id === args.contentType.parentContentType.id) {
-          _this4.updateTabNamesInDataStore();
+        if (_this5.contentType.id === args.contentType.parentContentType.id) {
+          _this5.updateTabNamesInDataStore();
 
           args.contentType.dataStore.subscribe(function () {
-            _this4.updateTabNamesInDataStore();
+            _this5.updateTabNamesInDataStore();
           });
         }
       });
 
       this.contentType.dataStore.subscribe(function (data) {
-        _this4.activeTab(data.default_active);
+        _this5.activeTab(data.default_active);
       });
     }
     /**
@@ -463,7 +477,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     ;
 
     _proto.buildTabs = function buildTabs(activeTabIndex) {
-      var _this5 = this;
+      var _this6 = this;
 
       if (activeTabIndex === void 0) {
         activeTabIndex = this.activeTab() || 0;
@@ -481,15 +495,15 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
         (0, _jquery)(this.element).tabs({
           create: function create() {
-            _this5.ready = true; // Ensure focus tab is restored after a rebuild cycle
+            _this6.ready = true; // Ensure focus tab is restored after a rebuild cycle
 
             if (focusedTab !== null) {
-              _this5.setFocusedTab(focusedTab, true);
+              _this6.setFocusedTab(focusedTab, true);
             } else {
-              _this5.setFocusedTab(null);
+              _this6.setFocusedTab(null);
 
               if (activeTabIndex) {
-                _this5.setActiveTab(activeTabIndex);
+                _this6.setActiveTab(activeTabIndex);
               }
             }
           },
@@ -499,7 +513,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
            */
           activate: function activate() {
             _events.trigger("contentType:redrawAfter", {
-              element: _this5.element
+              element: _this6.element
             });
           }
         });

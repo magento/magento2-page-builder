@@ -5,7 +5,7 @@ function _extends() { _extends = Object.assign || function (target) { for (var i
 
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-define(["jarallax", "jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/resource/resize-observer/ResizeObserver", "underscore", "Magento_PageBuilder/js/content-type-menu/conditional-remove-option", "Magento_PageBuilder/js/content-type-menu/hide-show-option", "Magento_PageBuilder/js/content-type/preview-collection"], function (_jarallax, _jquery, _knockout, _events, _ResizeObserver, _underscore, _conditionalRemoveOption, _hideShowOption, _previewCollection) {
+define(["jarallax", "jarallaxVideo", "jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/resource/resize-observer/ResizeObserver", "underscore", "vimeoWrapper", "Magento_PageBuilder/js/content-type-menu/conditional-remove-option", "Magento_PageBuilder/js/content-type-menu/hide-show-option", "Magento_PageBuilder/js/content-type/preview-collection"], function (_jarallax, _jarallaxVideo, _jquery, _knockout, _events, _ResizeObserver, _underscore, _vimeoWrapper, _conditionalRemoveOption, _hideShowOption, _previewCollection) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -41,15 +41,21 @@ define(["jarallax", "jquery", "knockout", "Magento_PageBuilder/js/events", "Mage
         // Destroy all instances of the plugin prior
         try {
           // store/apply correct style after destroying, as jarallax incorrectly overrides it with stale value
-          var style = _this.element.getAttribute("data-jarallax-original-styles") || _this.element.getAttribute("style");
+          var style = _this.element.getAttribute("style") || _this.element.getAttribute("data-jarallax-original-styles");
+
+          var backgroundImage = _this.contentType.dataStore.get("background_image");
 
           jarallax(_this.element, "destroy");
 
           _this.element.setAttribute("style", style);
+
+          if (_this.contentType.dataStore.get("background_type") !== "video" && backgroundImage.length) {
+            _this.element.style.backgroundImage = "url(" + backgroundImage[0].url + ")";
+          }
         } catch (e) {// Failure of destroying is acceptable
         }
 
-        if (_this.element && (0, _jquery)(_this.element).hasClass("jarallax") && _this.contentType.dataStore.get("background_image").length) {
+        if (_this.element && (0, _jquery)(_this.element).hasClass("jarallax") && _this.contentType.dataStore.get("background_type") !== "video" && _this.contentType.dataStore.get("background_image").length) {
           _underscore.defer(function () {
             // Build Parallax on elements with the correct class
             var parallaxSpeed = Number.parseFloat(_this.contentType.dataStore.get("parallax_speed"));
@@ -60,6 +66,22 @@ define(["jarallax", "jquery", "knockout", "Magento_PageBuilder/js/events", "Mage
               speed: !isNaN(parallaxSpeed) ? parallaxSpeed : 0.5
             });
             jarallax(_this.element, "onResize");
+          });
+        }
+
+        if (_this.element && _this.element.dataset.backgroundType === "video" && _this.element.dataset.videoSrc.length) {
+          var parallaxSpeed = _this.contentType.dataStore.get("enable_parallax") === "1" ? Number.parseFloat(_this.contentType.dataStore.get("parallax_speed")) : 1;
+
+          _underscore.defer(function () {
+            // Build Parallax on elements with the correct class
+            jarallax(_this.element, {
+              videoSrc: _this.element.dataset.videoSrc,
+              imgSrc: _this.element.dataset.videoFallbackSrc,
+              videoLoop: _this.contentType.dataStore.get("video_loop") === "true",
+              speed: !isNaN(parallaxSpeed) ? parallaxSpeed : 0.5,
+              videoPlayOnlyVisible: _this.contentType.dataStore.get("video_play_only_visible") === "true",
+              videoLazyLoading: _this.contentType.dataStore.get("video_lazy_load") === "true"
+            });
           });
         }
       }, 50);
@@ -76,12 +98,6 @@ define(["jarallax", "jquery", "knockout", "Magento_PageBuilder/js/events", "Mage
         if (args.contentType.parentContentType && args.contentType.parentContentType.id === _this.contentType.id) {
           _this.buildJarallax();
         }
-      });
-
-      _events.on("stage:" + _this.contentType.stageId + ":fullScreenModeChangeAfter", function () {
-        _underscore.delay(function () {
-          _this.buildJarallax();
-        }, 350);
       });
 
       return _this;
@@ -114,7 +130,7 @@ define(["jarallax", "jquery", "knockout", "Magento_PageBuilder/js/events", "Mage
     /**
      * Init the parallax element
      *
-     * @param {Element} element
+     * @param {HTMLElement} element
      */
     ;
 
@@ -134,6 +150,18 @@ define(["jarallax", "jquery", "knockout", "Magento_PageBuilder/js/events", "Mage
           jarallax(_this2.element, "onScroll");
         }
       }).observe(this.element);
+    }
+    /**
+     * Destroy jarallax instance.
+     */
+    ;
+
+    _proto.destroy = function destroy() {
+      _previewCollection2.prototype.destroy.call(this);
+
+      if (this.element) {
+        jarallax(this.element, "destroy");
+      }
     };
 
     return Preview;

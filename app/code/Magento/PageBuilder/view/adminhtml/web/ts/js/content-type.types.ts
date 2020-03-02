@@ -19,4 +19,9 @@ export default interface ContentTypeInterface<P extends Preview = Preview, M ext
     preview: P;
     content: M;
     dropped: boolean;
+
+    /**
+     * Destroys current instance
+     */
+    destroy(): void;
 }

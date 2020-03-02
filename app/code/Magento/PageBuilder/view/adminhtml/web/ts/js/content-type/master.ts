@@ -69,6 +69,13 @@ export default class Master {
     }
 
     /**
+     * Destroys current instance
+     */
+    public destroy(): void {
+        return;
+    }
+
+    /**
      * Attach event to updating data in data store to update observables
      */
     protected bindEvents(): void {

@@ -14,7 +14,7 @@
             <stories value="Video"/>
             <title value="Update General Section Values"/>
             <description value="Validate that updating every attribute in the General form for Video will update the Stage and Storefront correctly."/>
-            <severity value="CRITICAL"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MAGETWO-83929"/>
             <testCaseId value="MC-2765"/>
             <group value="pagebuilder"/>
@@ -89,7 +89,7 @@
             <stories value="Video"/>
             <title value="Add Video With Non Embedded Url"/>
             <description value="A user should be able to add an video into a row with standard url."/>
-            <severity value="CRITICAL"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MAGETWO-85972"/>
             <testCaseId value="MC-2569"/>
             <group value="pagebuilder"/>
@@ -207,7 +207,7 @@
             <stories value="Video"/>
             <title value="Validate General Default Values"/>
             <description value="Validate the default values for every attribute in the General section on the Edit Form, Stage, and Storefront for Video."/>
-            <severity value="CRITICAL"/>
+            <severity value="AVERAGE"/>
             <useCaseId value="MAGETWO-89190"/>
             <testCaseId value="MC-2596"/>
             <group value="pagebuilder"/>
@@ -236,11 +236,17 @@
         <!-- Validate Default Values -->
         <comment userInput="Validate Default Values" stepKey="CommentValidateDefaultValues"/>
         <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderVideoUrl_Default.section, PageBuilderVideoUrl_Default.fieldName)}}" stepKey="getUrl"/>
-        <assertEmpty actual="getUrl" actualType="variable" message="Text field was not empty. Had text: $getUrl" stepKey="assertUrl"/>
+        <assertEmpty message="Text field was not empty. Had text: $getUrl" stepKey="assertUrl">
+            <actualResult type="variable">getUrl</actualResult>
+        </assertEmpty>
         <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderVideoUrl_Default.section, PageBuilderVideoUrl_Default.fieldName)}}" stepKey="getWidth"/>
-        <assertEmpty actual="getWidth" actualType="variable" message="Text field was not empty. Had text: $getWidth" stepKey="assertWidth"/>
+        <assertEmpty message="Text field was not empty. Had text: $getWidth" stepKey="assertWidth">
+            <actualResult type="variable">getWidth</actualResult>
+        </assertEmpty>
         <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderVideoUrl_Default.section, PageBuilderVideoUrl_Default.fieldName)}}" stepKey="getHeight"/>
-        <assertEmpty actual="getHeight" actualType="variable" message="Text field was not empty. Had text: $getHeight" stepKey="assertHeight"/>
+        <assertEmpty message="Text field was not empty. Had text: $getHeight" stepKey="assertHeight">
+            <actualResult type="variable">getHeight</actualResult>
+        </assertEmpty>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
@@ -256,11 +262,17 @@
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
         <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderVideoUrl_Default.section, PageBuilderVideoUrl_Default.fieldName)}}" stepKey="getUrl2"/>
-        <assertEmpty actual="getUrl2" actualType="variable" message="Text field was not empty. Had text: $getUrl2" stepKey="assertUrl2"/>
+        <assertEmpty message="Text field was not empty. Had text: $getUrl2" stepKey="assertUrl2">
+            <actualResult type="variable">getUrl2</actualResult>
+        </assertEmpty>
         <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderVideoUrl_Default.section, PageBuilderVideoUrl_Default.fieldName)}}" stepKey="getWidth2"/>
-        <assertEmpty actual="getWidth2" actualType="variable" message="Text field was not empty. Had text: $getWidth2" stepKey="assertWidth2"/>
+        <assertEmpty message="Text field was not empty. Had text: $getWidth2" stepKey="assertWidth2">
+            <actualResult type="variable">getWidth2</actualResult>
+        </assertEmpty>
         <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderVideoUrl_Default.section, PageBuilderVideoUrl_Default.fieldName)}}" stepKey="getHeight2"/>
-        <assertEmpty actual="getHeight2" actualType="variable" message="Text field was not empty. Had text: $getHeight2" stepKey="assertHeight2"/>
+        <assertEmpty message="Text field was not empty. Had text: $getHeight2" stepKey="assertHeight2">
+            <actualResult type="variable">getHeight2</actualResult>
+        </assertEmpty>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderVideoContentType"/>
         </actionGroup>
@@ -274,7 +286,7 @@
             <stories value="Video"/>
             <title value="Validate Advanced Configuration Default Values"/>
             <description value="Validate the default values for every attribute in the Advanced Configuration form and on Stage for Video."/>
-            <severity value="CRITICAL"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MAGETWO-83415"/>
             <testCaseId value="MC-2687"/>
             <group value="pagebuilder"/>
@@ -312,7 +324,9 @@
             <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
         </actionGroup>
         <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getBorderColor"/>
-        <assertEmpty actual="getBorderColor" actualType="variable" message="Text field has text: $getBorderColor" stepKey="assertBorderColor"/>
+        <assertEmpty message="Text field was not empty. Had text: $getBorderColor" stepKey="assertBorderColor">
+            <actualResult type="variable">getBorderColor</actualResult>
+        </assertEmpty>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth">
             <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
         </actionGroup>
@@ -320,7 +334,9 @@
             <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
         </actionGroup>
         <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedCssClassesDefaultProperty.section, PageBuilderAdvancedCssClassesDefaultProperty.fieldName)}}" stepKey="getCssClasses"/>
-        <assertEmpty actual="getCssClasses" actualType="variable" message="Text field was not empty. Had text: $getCssClasses" stepKey="assertCssClasses"/>
+        <assertEmpty message="Text field was not empty. Had text: $getCssClasses" stepKey="assertCssClasses">
+            <actualResult type="variable">getCssClasses</actualResult>
+        </assertEmpty>
         <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins">
             <argument name="property" value="PageBuilderMarginsPropertyDefault"/>
         </actionGroup>
@@ -364,7 +380,9 @@
             <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
         </actionGroup>
         <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getBorderColor2"/>
-        <assertEmpty actual="getBorderColor2" actualType="variable" message="Text field has text: $getBorderColor2" stepKey="assertBorderColor2"/>
+        <assertEmpty message="Text field was not empty. Had text: $getBorderColor2" stepKey="assertBorderColor2">
+            <actualResult type="variable">getBorderColor2</actualResult>
+        </assertEmpty>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth2">
             <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
         </actionGroup>
@@ -372,7 +390,9 @@
             <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
         </actionGroup>
         <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedCssClassesDefaultProperty.section, PageBuilderAdvancedCssClassesDefaultProperty.fieldName)}}" stepKey="getCssClasses2"/>
-        <assertEmpty actual="getCssClasses2" actualType="variable" message="Text field was not empty. Had text: $getCssClasses2" stepKey="assertCssClasses2"/>
+        <assertEmpty message="Text field was not empty. Had text: $getCssClasses2" stepKey="assertCssClasses2">
+            <actualResult type="variable">getCssClasses2</actualResult>
+        </assertEmpty>
         <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins2">
             <argument name="property" value="PageBuilderMarginsPropertyDefault"/>
         </actionGroup>
@@ -400,7 +420,7 @@
             <stories value="Video"/>
             <title value="Update Advanced Configuration Values"/>
             <description value="Validate that updating every attribute in the Advanced Configuration form for Video will update the Stage and Storefront correctly."/>
-            <severity value="CRITICAL"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MAGETWO-89190"/>
             <testCaseId value="MC-2667"/>
             <group value="pagebuilder"/>
@@ -569,7 +589,7 @@
             <stories value="Video"/>
             <title value="Video width with borders and padding is equal to max-width"/>
             <description value="A user can see Video width with borders and padding is equal to max-width"/>
-            <severity value="MAJOR"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MC-5079"/>
             <testCaseId value="MC-5974"/>
             <group value="pagebuilder"/>
@@ -641,7 +661,7 @@
             <stories value="Video"/>
             <title value="Video height is based on max width and aspect ratio"/>
             <description value="A user can see Video height is based on max width and aspect ratio"/>
-            <severity value="AVERAGE"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MC-15812"/>
             <testCaseId value="MC-18149"/>
             <group value="pagebuilder"/>
@@ -697,7 +717,7 @@
             <stories value="Video"/>
             <title value="Invalid Video URLs"/>
             <description value="Validate that validation message will display when inputting invalid video URL."/>
-            <severity value="CRITICAL"/>
+            <severity value="AVERAGE"/>
             <useCaseId value="MC-1410"/>
             <testCaseId value="MC-2514"/>
             <group value="pagebuilder"/>
@@ -742,7 +762,7 @@
             <stories value="Video"/>
             <title value="Cannot add Video to Stage"/>
             <description value="If user drags Video to Stage, it should have no effect"/>
-            <severity value="CRITICAL"/>
+            <severity value="AVERAGE"/>
             <useCaseId value="MC-515"/>
             <testCaseId value="MC-3137"/>
             <group value="pagebuilder"/>
@@ -772,9 +792,9 @@
             <stories value="Video"/>
             <title value="Add Video to Column container and view on Admin and Storefront"/>
             <description value="As a Content Manager I want column to be a container so that I can add video inside the column"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MAGETWO-87081"/>
             <testCaseId value="MC-2494"/>
-            <severity value="CRITICAL"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
             <group value="pagebuilder-video"/>
@@ -850,7 +870,7 @@
             <stories value="Video"/>
             <title value="Move Video Between Columns"/>
             <description value="Verify that moving a video content type on the stage will update the storefront"/>
-            <severity value="CRITICAL"/>
+            <severity value="MAJOR"/>
             <useCaseId value="MC-3229"/>
             <testCaseId value="MC-3380"/>
             <group value="pagebuilder"/>
@@ -969,7 +989,7 @@
             <stories value="Video"/>
             <title value="Duplicate Video"/>
             <description value="A user should be able to duplicate a video content type. Verify on Stage and Storefront."/>
-            <severity value="CRITICAL"/>
+            <severity value="MAJOR"/>
             <useCaseId value="MC-3229"/>
             <testCaseId value="MC-3387"/>
             <group value="pagebuilder"/>
@@ -1213,7 +1233,7 @@
             <stories value="Video"/>
             <title value="Video is shown by default"/>
             <description value="Video is shown by default in stage and storefront"/>
-            <severity value="CRITICAL"/>
+            <severity value="AVERAGE"/>
             <useCaseId value="MC-965"/>
             <testCaseId value="MC-3551"/>
             <group value="pagebuilder"/>
@@ -1267,7 +1287,7 @@
             <stories value="Video"/>
             <title value="Video has hide show capabilities"/>
             <description value="A user is able to hide and show the video successfully"/>
-            <severity value="CRITICAL"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MC-965"/>
             <testCaseId value="MC-3515"/>
             <group value="pagebuilder"/>

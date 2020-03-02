@@ -56,6 +56,9 @@ class ExtendsBaseFormTest extends \PHPUnit\Framework\TestCase
         $ignoreFiles = [
             'pagebuilder_modal_form.xml',
             'pagebuilder_block_select_grid.xml',
+            'pagebuilder_stage_template.xml',
+            'pagebuilder_stage_template_grid.xml',
+            'pagebuilder_template_grid.xml'
         ];
         $overrideFiles = [
             'pagebuilder_base_form.xml' => '',
@@ -64,7 +67,8 @@ class ExtendsBaseFormTest extends \PHPUnit\Framework\TestCase
             'pagebuilder_column_form.xml' => 'pagebuilder_base_form_with_background_attributes',
             'pagebuilder_slide_form.xml' => 'pagebuilder_base_form_with_background_attributes',
             'pagebuilder_tab_item_form.xml' => 'pagebuilder_base_form_with_background_attributes',
-            'pagebuilder_row_form.xml' => 'pagebuilder_base_form_with_background_attributes',
+            'pagebuilder_base_form_with_background_video.xml' => 'pagebuilder_base_form_with_background_attributes',
+            'pagebuilder_row_form.xml' => 'pagebuilder_base_form_with_background_video',
             'pagebuilder_products_carousel_form.xml' => 'pagebuilder_products_form',
         ];
         $componentRegistrar = new ComponentRegistrar();
