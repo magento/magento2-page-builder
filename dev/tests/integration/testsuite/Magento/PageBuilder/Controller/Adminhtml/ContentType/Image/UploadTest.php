@@ -18,9 +18,6 @@ use Magento\PageBuilder\Controller\Adminhtml\ContentType\Image\Upload as UploadC
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
-/**
- * Class UploadTest
- */
 class UploadTest extends TestCase
 {
     /**
@@ -118,7 +115,6 @@ class UploadTest extends TestCase
 
         $this->setFilesGlobalMock($invalid_file_pathname);
         $this->setUploaderMockForField('background_image');
-
 
         $this->resultJson->expects($this->once())->method('setData')->willReturnCallback(function ($result) {
             $this->assertEquals([
