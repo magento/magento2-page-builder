@@ -77,11 +77,13 @@
         <field name="video_source" formElement="input">
             <settings>
                 <validation>
-                    <rule name="validate-video-url" xsi:type="boolean">true</rule>
+                    <rule name="validate-video-source" xsi:type="boolean">true</rule>
                 </validation>
                 <dataType>text</dataType>
                 <label translate="true">Video URL</label>
-                <notice translate="true">YouTube and Vimeo supported</notice>
+                <tooltip>
+                    <description translate="true">Video URLs can be links to videos on YouTube or Vimeo, or HTTP(S) links to files with valid video extensions (we recommend .mp4)</description>
+                </tooltip>
             </settings>
         </field>
         <field name="max_width" formElement="input">
@@ -93,6 +95,29 @@
                     <class name="admin__field-small">true</class>
                 </additionalClasses>
             </settings>
+        </field>
+        <field name="autoplay" sortOrder="110" formElement="checkbox">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">false</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>boolean</dataType>
+                <label translate="true">Autoplay</label>
+                <dataScope>autoplay</dataScope>
+            </settings>
+            <formElements>
+                <checkbox>
+                    <settings>
+                        <valueMap>
+                            <map name="false" xsi:type="string">false</map>
+                            <map name="true" xsi:type="string">true</map>
+                        </valueMap>
+                        <prefer>toggle</prefer>
+                    </settings>
+                </checkbox>
+            </formElements>
         </field>
     </fieldset>
 </form>
