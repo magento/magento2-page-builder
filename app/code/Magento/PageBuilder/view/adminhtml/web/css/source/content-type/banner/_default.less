@@ -116,6 +116,20 @@
 .pagebuilder-banner-wrapper {
     .pagebuilder-overlay {
         padding: 30px;
+        position: relative;
+        z-index: 2;
+    }
+
+    .video-overlay {
+        z-index: 1;
+    }
+
+    &.jarallax {
+        z-index: auto !important;
+    }
+
+    [id*='jarallax-container'] {
+        z-index: 0 !important;
     }
 }
 
@@ -140,6 +154,15 @@
             margin: @margin 0 0 0;
             max-width: 100%;
             word-break: break-word;
+        }
+
+        .dragging {
+            height: 100%;
+            left: 0;
+            position: absolute;
+            top: 0;
+            width: 100%;
+            z-index: 4;
         }
     }
 }

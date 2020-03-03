@@ -126,6 +126,42 @@
         overflow-wrap: break-word;
         word-wrap: break-word;
 
+
+        &.jarallax {
+            .video-overlay {
+                -webkit-transform: unset;
+                z-index: 1;
+            }
+
+            .pagebuilder-overlay {
+                position: relative;
+                z-index: 2;
+            }
+
+            [id*='jarallax-container'] {
+                > div,
+                > img,
+                > video,
+                > iframe {
+                    margin: auto !important;
+                    transform: none !important;
+                }
+            }
+        }
+
+        .jarallax-viewport-element {
+            height: 100%;
+            left: -15000vw;
+            position: absolute;
+            top: 0;
+            width: 1px;
+            z-index: 100;
+
+            .slick-current & {
+                left: 0;
+            }
+        }
+
         .pagebuilder-overlay:not(.pagebuilder-poster-overlay) {
             max-width: 540px;
         }
@@ -143,6 +179,25 @@
             margin: 20px 0 0 0;
             max-width: 100%;
             word-break: break-word;
+        }
+
+        .dragging {
+            height: 100%;
+            left: 0;
+            position: absolute;
+            top: 0;
+            width: 100%;
+            z-index: 4;
+        }
+    }
+
+    & + [data-content-type='slide'] {
+        height: 0;
+        min-height: 0;
+
+        .slick-slider & {
+            height: initial;
+            min-height: inherit;
         }
     }
 }
