@@ -40,12 +40,22 @@ export default class DataStore {
     }
 
     /**
+     * Retrieve the entire previous state of the data object
+     *
+     * @returns {DataObject}
+     */
+    public getPreviousState() {
+        return this.previousState;
+    }
+
+    /**
      * Set a specific keys value in the data store
      *
      * @param {string} key
      * @param value
      */
     public set(key: string, value: any) {
+        this.previousState = Object.assign({}, this.state);
         set(this.state, key, value);
         this.emitState();
     }
@@ -56,6 +66,7 @@ export default class DataStore {
      * @param {DataObject} state
      */
     public setState(state: DataObject) {
+        this.previousState = Object.assign({}, this.state);
         this.state = state;
         this.emitState();
     }
