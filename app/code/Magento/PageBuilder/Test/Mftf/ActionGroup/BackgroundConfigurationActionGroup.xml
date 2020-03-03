@@ -328,9 +328,9 @@
             <actualResult type="variable">$fallbackImageStyle</actualResult>
         </assertContains>
     </actionGroup>
-    <actionGroup name="validateEmptyRowWithInvalidVideoBackgroundAndNoFallbackImage">
+    <actionGroup name="validateInvalidVideoBackgroundAndNoFallbackImage">
         <annotations>
-            <description>Validates that the Row renders as an empty row when the video in video background fails to load and there is no fallback image.</description>
+            <description>Validates that nothing renders when the video in video background fails to load and there is no fallback image.</description>
         </annotations>
         <arguments>
             <argument name="section" defaultValue="RowOnStage"/>
@@ -417,6 +417,16 @@
         <annotations>
             <description>Validates that the video in the video background is loaded but not playing.</description>
         </annotations>
+        <assertNotContains stepKey="assertVideoPlaying">
+            <expectedResult type="string">transform: translate3d(</expectedResult>
+            <actualResult type="variable">$videoStyle</actualResult>
+        </assertNotContains>
+    </actionGroup>
+    <actionGroup name="validateVideoBackgroundLoadedButNotPlayingForNotVisibleElement" extends="validateVideoBackgroundPlaying">
+        <annotations>
+            <description>Validates that the video in the video background is loaded but not playing for an element that is not visible.</description>
+        </annotations>
+        <waitForElement selector="{{section.videoBackgroundVideoElement(index)}}" stepKey="waitForVideoVisible"/>
         <assertNotContains stepKey="assertVideoPlaying">
             <expectedResult type="string">transform: translate3d(</expectedResult>
             <actualResult type="variable">$videoStyle</actualResult>
