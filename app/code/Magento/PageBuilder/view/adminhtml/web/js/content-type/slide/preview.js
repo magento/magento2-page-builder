@@ -66,7 +66,7 @@ define(["jarallax", "jarallaxVideo", "jquery", "knockout", "mage/translate", "Ma
               videoPlayOnlyVisible: _this.contentType.dataStore.get("video_play_only_visible") === "true",
               elementInViewport: (0, _jquery)(".jarallax-viewport-element", _this.wrapper),
               videoLazyLoading: _this.contentType.dataStore.get("video_lazy_load") === "true"
-            });
+            }); // @ts-ignore
 
             if (_this.wrapper.jarallax && _this.wrapper.jarallax.video) {
               // @ts-ignore

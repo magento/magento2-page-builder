@@ -65,6 +65,7 @@ define(["jarallax", "jarallaxVideo", "jquery", "mage/translate", "Magento_PageBu
             }); // @ts-ignore
 
             if (_this.wrapper.jarallax && _this.wrapper.jarallax.video) {
+              // @ts-ignore
               _this.wrapper.jarallax.video.on("started", function () {
                 // @ts-ignore
                 if (_this.wrapper.jarallax && _this.wrapper.jarallax.$video) {

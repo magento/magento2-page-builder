@@ -137,7 +137,7 @@ export default class Preview extends BasePreview {
                         videoLazyLoading: (this.contentType.dataStore.get("video_lazy_load") as string) === "true",
                     },
                 );
-
+                // @ts-ignore
                 if (this.wrapper.jarallax && this.wrapper.jarallax.video) {
                     // @ts-ignore
                     this.wrapper.jarallax.video.on("started", () => {
