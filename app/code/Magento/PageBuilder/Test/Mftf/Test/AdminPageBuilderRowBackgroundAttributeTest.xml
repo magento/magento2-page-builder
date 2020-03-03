@@ -292,7 +292,7 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Row"/>
-            <title value="Video Background - Validate Default Values"/>
+            <title value="Row Video Background - Validate Default Values"/>
             <description value="Validate the default values for every attribute in the Video Background section for Row"/>
             <severity value="AVERAGE"/>
             <useCaseId value="PB-95"/>
@@ -917,7 +917,7 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
-        <actionGroup ref="validateEmptyRowWithInvalidVideoBackgroundAndNoFallbackImage" stepKey="validateStage1">
+        <actionGroup ref="validateInvalidVideoBackgroundAndNoFallbackImage" stepKey="validateStage1">
             <argument name="section" value="RowOnStage"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
@@ -930,7 +930,7 @@
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Validate Stage After Save -->
-        <actionGroup ref="validateEmptyRowWithInvalidVideoBackgroundAndNoFallbackImage" stepKey="validateStage2">
+        <actionGroup ref="validateInvalidVideoBackgroundAndNoFallbackImage" stepKey="validateStage2">
             <argument name="section" value="RowOnStage"/>
         </actionGroup>
         <seeElement selector="{{ButtonItemOnStage.base('1')}}" stepKey="seeButtonStage2"/>
@@ -938,7 +938,7 @@
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
-        <actionGroup ref="validateEmptyRowWithInvalidVideoBackgroundAndNoFallbackImage" stepKey="validateStorefront">
+        <actionGroup ref="validateInvalidVideoBackgroundAndNoFallbackImage" stepKey="validateStorefront">
             <argument name="section" value="RowOnStorefront"/>
         </actionGroup>
         <seeElement selector="{{ButtonItemOnStorefrontEmptyLink.base('1')}}" stepKey="seeButtonStorefront"/>
@@ -961,7 +961,7 @@
         <actionGroup ref="chooseVisualSelectOption" stepKey="setAppearance">
             <argument name="property" value="PageBuilderRowAppearance_FullWidth"/>
         </actionGroup>
-        <actionGroup ref="validateEmptyRowWithInvalidVideoBackgroundAndNoFallbackImage" stepKey="validateStorefront">
+        <actionGroup ref="validateInvalidVideoBackgroundAndNoFallbackImage" stepKey="validateStorefront">
             <argument name="section" value="RowOnStorefront_FullWidth_FullBleed"/>
             <argument name="fallbackImage" value="PageBuilderVideoBackgroundFallbackImage_JPG"/>
         </actionGroup>
@@ -984,7 +984,7 @@
         <actionGroup ref="chooseVisualSelectOption" stepKey="setAppearance">
             <argument name="property" value="PageBuilderRowAppearance_FullBleed"/>
         </actionGroup>
-        <actionGroup ref="validateEmptyRowWithInvalidVideoBackgroundAndNoFallbackImage" stepKey="validateStorefront">
+        <actionGroup ref="validateInvalidVideoBackgroundAndNoFallbackImage" stepKey="validateStorefront">
             <argument name="section" value="RowOnStorefront_FullWidth_FullBleed"/>
             <argument name="fallbackImage" value="PageBuilderVideoBackgroundFallbackImage_JPG"/>
         </actionGroup>
@@ -1221,7 +1221,7 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Row"/>
-            <title value="Validate Video Background Video Urls"/>
+            <title value="Row: Validate Video Background Video Urls"/>
             <description value="Verify that the video background URL field is required, only accepts valid urls, and that the user can set an embedded or non-embedded video background to a YouTube or Vimeo video, or to a stored .mp4 video."/>
             <severity value="BLOCKER"/>
             <useCaseId value="PB-95"/>
@@ -1361,7 +1361,7 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Row"/>
-            <title value="Verify User Can Switch Between Background Images and Videos for Rows"/>
+            <title value="Row: Verify User Can Switch Between Background Images and Videos"/>
             <description value="Verify that a user can switch between background images and background videos."/>
             <severity value="MAJOR"/>
             <useCaseId value="PB-95"/>
@@ -1739,7 +1739,7 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Row"/>
-            <title value="Validate Video Background Infinite Loop Enabled"/>
+            <title value="Row: Validate Video Background Infinite Loop Enabled"/>
             <description value="Verify that the video background infinite loop attribute works as intended when enabled."/>
             <severity value="BLOCKER"/>
             <useCaseId value="PB-95"/>
@@ -1821,7 +1821,7 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Row"/>
-            <title value="Validate Video Background Infinite Loop Disabled"/>
+            <title value="Row: Validate Video Background Infinite Loop Disabled"/>
             <description value="Verify that the video background infinite loop attribute works as intended when disabled."/>
             <severity value="BLOCKER"/>
             <useCaseId value="PB-95"/>
@@ -1877,7 +1877,7 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Row"/>
-            <title value="Validate Video Background Play Only When Visible Enabled"/>
+            <title value="Row: Validate Video Background Play Only When Visible Enabled"/>
             <description value="Verify that the video background play only when visible attribute works as intended when enabled."/>
             <severity value="CRITICAL"/>
             <useCaseId value="PB-95"/>
@@ -1980,7 +1980,7 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Row"/>
-            <title value="Validate Video Background Play Only When Visible Disabled"/>
+            <title value="Row: Validate Video Background Play Only When Visible Disabled"/>
             <description value="Verify that the video background play only when visible attribute works as intended when disabled."/>
             <severity value="CRITICAL"/>
             <useCaseId value="PB-95"/>
@@ -2012,7 +2012,6 @@
         <!-- Set Large Min Height on Row 1 -->
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage1">
             <argument name="contentType" value="PageBuilderRowContentType"/>
-            <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty1">
             <argument name="property" value="PageBuilderMinHeightProperty_500px"/>
@@ -2093,6 +2092,9 @@
             <argument name="index" value="4"/>
         </actionGroup>
         <!-- Validate Storefront -->
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStorefront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
         <wait time="5" stepKey="waitForVideoCompleteStorefront"/>
         <actionGroup ref="validateVideoBackgroundFinishedPlayingBeforeViewing" stepKey="validateVideoFinishedPlayingStorefront">
             <argument name="section" value="RowOnStorefront"/>
@@ -2123,7 +2125,7 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Row"/>
-            <title value="Validate Video Background Lazy Load Enabled"/>
+            <title value="Row: Validate Video Background Lazy Load Enabled"/>
             <description value="Verify that the video background lazy load attribute works as intended when enabled."/>
             <severity value="CRITICAL"/>
             <useCaseId value="PB-95"/>
@@ -2162,7 +2164,7 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Row"/>
-            <title value="Validate Video Background Lazy Load Disabled"/>
+            <title value="Row: Validate Video Background Lazy Load Disabled"/>
             <description value="Verify that the video background lazy load attribute works as intended when disabled."/>
             <severity value="CRITICAL"/>
             <useCaseId value="PB-95"/>
@@ -2201,7 +2203,7 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Row"/>
-            <title value="Validate Video Background Aspect Ratio"/>
+            <title value="Row: Validate Video Background Aspect Ratio"/>
             <description value="Verify that the video background aspect ratio is maintained in each appearance."/>
             <severity value="BLOCKER"/>
             <useCaseId value="PB-95"/>
@@ -2287,7 +2289,6 @@
         </actionGroup>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate Storefront -->
-        <amOnUrl url="{{_ENV.MAGENTO_BASE_URL}}" stepKey="goBackToMagento"/>
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>

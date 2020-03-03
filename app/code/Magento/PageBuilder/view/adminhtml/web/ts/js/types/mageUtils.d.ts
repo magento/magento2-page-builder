@@ -3,6 +3,19 @@
  * See COPYING.txt for license details.
  */
 
+interface CompareObject {
+    containers: object;
+    changes: CompareObjectItem[];
+    equal: boolean;
+}
+
+interface CompareObjectItem {
+    path: string;
+    name: string;
+    value: any;
+    oldValue: any;
+}
+
 declare let mageUtils: {
     /**
      * Generates a unique identifier.
@@ -18,6 +31,14 @@ declare let mageUtils: {
      * @returns {Object|Array} Extended object.
      */
     extend(...args: any[]): object;
+
+    /**
+     * Compare two objects
+     * @param args
+     *
+     * @return {CompareObject}.
+     */
+    compare(...args: any[]): CompareObject;
 };
 declare module "mageUtils" {
     export = mageUtils;

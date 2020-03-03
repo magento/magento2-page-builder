@@ -63,12 +63,12 @@ class ExtendsBaseFormTest extends \PHPUnit\Framework\TestCase
         $overrideFiles = [
             'pagebuilder_base_form.xml' => '',
             'pagebuilder_map_location_form.xml' => '',
-            'pagebuilder_banner_form.xml' => 'pagebuilder_base_form_with_background_attributes',
+            'pagebuilder_banner_form.xml' => 'pagebuilder_base_form_with_background_video',
             'pagebuilder_column_form.xml' => 'pagebuilder_base_form_with_background_attributes',
-            'pagebuilder_slide_form.xml' => 'pagebuilder_base_form_with_background_attributes',
             'pagebuilder_tab_item_form.xml' => 'pagebuilder_base_form_with_background_attributes',
             'pagebuilder_base_form_with_background_video.xml' => 'pagebuilder_base_form_with_background_attributes',
             'pagebuilder_row_form.xml' => 'pagebuilder_base_form_with_background_video',
+            'pagebuilder_slide_form.xml' => 'pagebuilder_base_form_with_background_video',
             'pagebuilder_products_carousel_form.xml' => 'pagebuilder_products_form',
         ];
         $componentRegistrar = new ComponentRegistrar();
