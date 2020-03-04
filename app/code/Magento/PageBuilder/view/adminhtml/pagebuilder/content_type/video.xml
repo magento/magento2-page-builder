@@ -10,6 +10,7 @@
           label="Video"
           component="Magento_PageBuilder/js/content-type"
           preview_component="Magento_PageBuilder/js/content-type/video/preview"
+          master_component="Magento_PageBuilder/js/content-type/video/master"
           form="pagebuilder_video_form"
           menu_section="media"
           icon="icon-pagebuilder-video"
@@ -42,7 +43,9 @@
                         <style name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
                     </element>
                     <element name="video">
-                        <attribute name="video_source" source="src" converter="Magento_PageBuilder/js/content-type/video/converter/attribute/src" preview_converter="Magento_PageBuilder/js/content-type/video/converter/attribute/src"/>
+                        <attribute name="video_source" source="src" converter="Magento_PageBuilder/js/content-type/video/converter/attribute/videosrc" preview_converter="Magento_PageBuilder/js/content-type/video/converter/attribute/videosrc"/>
+                        <attribute name="autoplay" storage_key="autoplay" source="autoplay" converter="Magento_PageBuilder/js/content-type/video/converter/attribute/autoplay"/>
+                        <attribute name="muted_video" storage_key="autoplay" source="muted" converter="Magento_PageBuilder/js/content-type/video/converter/attribute/autoplay"/>
                     </element>
                 </elements>
             </appearance>
