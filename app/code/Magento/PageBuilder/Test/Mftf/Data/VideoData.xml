@@ -9,18 +9,19 @@
 <entities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:mftf:DataGenerator/etc/dataProfileSchema.xsd">
     <!-- URL -->
-    <entity name="PageBuilderVideoUrl_Default" type="pagebuilder_video_url_property">
+    <entity name="PageBuilderVideoUrl_Default" type="pagebuilder_video_url_property" deprecated="Use PageBuilderVideoUrl_Empty instead">
         <data key="name">Video URL</data>
         <data key="section">general</data>
         <data key="fieldName">video_source</data>
         <data key="text">Video</data>
     </entity>
-    <entity name="PageBuilderVideoUrl_YouTube" type="pagebuilder_video_url_property">
+    <entity name="PageBuilderVideoUrl_Empty" type="pagebuilder_video_url_property">
         <data key="name">Video URL</data>
         <data key="section">general</data>
         <data key="fieldName">video_source</data>
-        <data key="value">https://www.youtube.com/embed/slOtnjsbff0</data>
-        <data key="renderedValue">https://www.youtube.com/embed/slOtnjsbff0</data>
+        <data key="value"/>
+        <data key="text">Video</data>
+        <data key="tooltipText">Video URLs can be links to videos on YouTube or Vimeo, or HTTP(S) links to files with valid video extensions (we recommend .mp4)</data>
     </entity>
     <entity name="PageBuilder_InvalidVideoURL_Text" type="pagebuilder_video_url_property">
         <data key="name">Video URL</data>
@@ -36,19 +37,19 @@
         <data key="value">&lt;iframe width=&quot;1280&quot; height=&quot;720&quot; src=&quot;https://www.youtube.com/embed/bLXEUP6vKEk"&gt;&lt;/iframe&gt;</data>
         <data key="errorMessage">Please enter a valid video URL. Valid URLs have a video file extension (.mp4, .webm, .ogv) or links to videos on YouTube or Vimeo.</data>
     </entity>
+    <entity name="PageBuilderVideoUrl_YouTube" type="pagebuilder_video_url_property">
+        <data key="name">Video URL</data>
+        <data key="section">general</data>
+        <data key="fieldName">video_source</data>
+        <data key="value">https://www.youtube.com/embed/slOtnjsbff0</data>
+        <data key="renderedValue">https://www.youtube.com/embed/slOtnjsbff0</data>
+    </entity>
     <entity name="PageBuilderVideoUrl_NonEmbedded" type="pagebuilder_video_url_property">
         <data key="name">Video URL</data>
         <data key="section">general</data>
         <data key="fieldName">video_source</data>
         <data key="value">https://www.youtube.com/watch?v=slOtnjsbff0</data>
         <data key="renderedValue">https://www.youtube.com/embed/slOtnjsbff0</data>
-    </entity>
-    <entity name="PageBuilderVideoUrl_Empty" type="pagebuilder_video_url_property">
-        <data key="name">Video URL</data>
-        <data key="section">general</data>
-        <data key="fieldName">video_source</data>
-        <data key="value"/>
-        <data key="tooltipText">Video URLs can be links to videos on YouTube or Vimeo, or HTTP(S) links to files with valid video extensions (we recommend .mp4)</data>
     </entity>
     <entity name="PageBuilderVideoUrl_YouTube_Insecure" type="pagebuilder_video_url_property">
         <data key="name">Video URL</data>
@@ -95,6 +96,12 @@
         <data key="height">320px</data>
     </entity>
     <!-- Width -->
+    <entity name="PageBuilderVideoWidth_Empty" type="pagebuilder_video_width_property">
+        <data key="name">Maximum Width</data>
+        <data key="section">general</data>
+        <data key="fieldName">max_width</data>
+        <data key="value"/>
+    </entity>
     <entity name="PageBuilderVideoWidth_500" type="pagebuilder_video_width_property">
         <data key="name">Maximum Width</data>
         <data key="section">general</data>

@@ -235,18 +235,27 @@
         </actionGroup>
         <!-- Validate Default Values -->
         <comment userInput="Validate Default Values" stepKey="CommentValidateDefaultValues"/>
-        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderVideoUrl_Default.section, PageBuilderVideoUrl_Default.fieldName)}}" stepKey="getUrl"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderVideoUrl_Empty.section, PageBuilderVideoUrl_Empty.fieldName)}}" stepKey="getUrl"/>
         <assertEmpty message="Text field was not empty. Had text: $getUrl" stepKey="assertUrl">
             <actualResult type="variable">getUrl</actualResult>
         </assertEmpty>
-        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderVideoUrl_Default.section, PageBuilderVideoUrl_Default.fieldName)}}" stepKey="getWidth"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderVideoUrl_Empty.section, PageBuilderVideoUrl_Empty.fieldName)}}" stepKey="getWidth"/>
         <assertEmpty message="Text field was not empty. Had text: $getWidth" stepKey="assertWidth">
             <actualResult type="variable">getWidth</actualResult>
         </assertEmpty>
-        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderVideoUrl_Default.section, PageBuilderVideoUrl_Default.fieldName)}}" stepKey="getHeight"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderVideoUrl_Empty.section, PageBuilderVideoUrl_Empty.fieldName)}}" stepKey="getHeight"/>
         <assertEmpty message="Text field was not empty. Had text: $getHeight" stepKey="assertHeight">
             <actualResult type="variable">getHeight</actualResult>
         </assertEmpty>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateVideoUrlEmpty">
+            <argument name="property" value="PageBuilderVideoUrl_Empty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldTooltip" stepKey="validateTooltipVideoUrl">
+            <argument name="property" value="PageBuilderVideoUrl_Empty"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateWidthEmpty">
+            <argument name="property" value="PageBuilderVideoWidth_Empty"/>
+        </actionGroup>
         <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="validateAutoplay">
             <argument name="property" value="PageBuilderVideoAutoplay_Disabled"/>
         </actionGroup>
@@ -264,18 +273,24 @@
         </actionGroup>
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
-        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderVideoUrl_Default.section, PageBuilderVideoUrl_Default.fieldName)}}" stepKey="getUrl2"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderVideoUrl_Empty.section, PageBuilderVideoUrl_Empty.fieldName)}}" stepKey="getUrl2"/>
         <assertEmpty message="Text field was not empty. Had text: $getUrl2" stepKey="assertUrl2">
             <actualResult type="variable">getUrl2</actualResult>
         </assertEmpty>
-        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderVideoUrl_Default.section, PageBuilderVideoUrl_Default.fieldName)}}" stepKey="getWidth2"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderVideoUrl_Empty.section, PageBuilderVideoUrl_Empty.fieldName)}}" stepKey="getWidth2"/>
         <assertEmpty message="Text field was not empty. Had text: $getWidth2" stepKey="assertWidth2">
             <actualResult type="variable">getWidth2</actualResult>
         </assertEmpty>
-        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderVideoUrl_Default.section, PageBuilderVideoUrl_Default.fieldName)}}" stepKey="getHeight2"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderVideoUrl_Empty.section, PageBuilderVideoUrl_Empty.fieldName)}}" stepKey="getHeight2"/>
         <assertEmpty message="Text field was not empty. Had text: $getHeight2" stepKey="assertHeight2">
             <actualResult type="variable">getHeight2</actualResult>
         </assertEmpty>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateVideoUrlEmpty2">
+            <argument name="property" value="PageBuilderVideoUrl_Empty"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateWidthEmpty2">
+            <argument name="property" value="PageBuilderVideoWidth_Empty"/>
+        </actionGroup>
         <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="validateAutoplay2">
             <argument name="property" value="PageBuilderVideoAutoplay_Disabled"/>
         </actionGroup>
@@ -284,6 +299,7 @@
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <waitForElement selector="{{VideoOnStorefront.empty}}" stepKey="waitForVideo"/>
         <seeElementInDOM selector="{{VideoOnStorefront.empty}}" stepKey="seeVideo"/>
     </test>
     <test name="VideoValidateAdvancedConfigurationDefaultValues">
@@ -721,10 +737,10 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Video"/>
-            <title value="Invalid Video URLs"/>
-            <description value="Validate that validation message will display when inputting invalid video URL."/>
-            <severity value="AVERAGE"/>
-            <useCaseId value="MC-1410"/>
+            <title value="Validate Valid and Invalid Video Urls"/>
+            <description value="Verify that the video URL field is required, only accepts valid urls, and that the user can set an embedded or non-embedded video background to a YouTube or Vimeo video, or to a stored .mp4 video."/>
+            <severity value="BLOCKER"/>
+            <useCaseId value="PB-375"/>
             <testCaseId value="MC-2514"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-video"/>
@@ -767,7 +783,7 @@
             <argument name="property" value="PageBuilderVideoUrl_YouTube"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsYouTubeEmbedded"/>
-        <actionGroup ref="validateVideoWithOnlyVideoUrl" stepKey="validateYouTubeEmbeddedStage">
+        <actionGroup ref="validateVideoUrl" stepKey="validateYouTubeEmbeddedStage">
             <argument name="page" value="VideoOnStage"/>
             <argument name="url" value="PageBuilderVideoUrl_YouTube"/>
         </actionGroup>
@@ -779,7 +795,7 @@
             <argument name="property" value="PageBuilderVideoUrl_NonEmbedded"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsYouTubeNonEmbedded"/>
-        <actionGroup ref="validateVideoWithOnlyVideoUrl" stepKey="validateYouTubeNonEmbeddedStage">
+        <actionGroup ref="validateVideoUrl" stepKey="validateYouTubeNonEmbeddedStage">
             <argument name="page" value="VideoOnStage"/>
             <argument name="url" value="PageBuilderVideoUrl_NonEmbedded"/>
         </actionGroup>
@@ -791,7 +807,7 @@
             <argument name="property" value="PageBuilderVideoUrl_YouTube_Insecure"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsInsecure"/>
-        <actionGroup ref="validateVideoWithOnlyVideoUrl" stepKey="validateYouTubeInsecureStage">
+        <actionGroup ref="validateVideoUrl" stepKey="validateYouTubeInsecureStage">
             <argument name="page" value="VideoOnStage"/>
             <argument name="url" value="PageBuilderVideoUrl_YouTube_Insecure"/>
         </actionGroup>
@@ -803,7 +819,7 @@
             <argument name="property" value="PageBuilderVideoUrl_Vimeo_Embedded"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsVimeoEmbedded"/>
-        <actionGroup ref="validateVideoWithOnlyVideoUrl" stepKey="validateVimeoEmbeddedStage">
+        <actionGroup ref="validateVideoUrl" stepKey="validateVimeoEmbeddedStage">
             <argument name="page" value="VideoOnStage"/>
             <argument name="url" value="PageBuilderVideoUrl_Vimeo_Embedded"/>
         </actionGroup>
@@ -815,7 +831,7 @@
             <argument name="property" value="PageBuilderVideoUrl_Vimeo_NonEmbedded"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsVimeoNonEmbedded"/>
-        <actionGroup ref="validateVideoWithOnlyVideoUrl" stepKey="validateVimeoNonEmbeddedStage">
+        <actionGroup ref="validateVideoUrl" stepKey="validateVimeoNonEmbeddedStage">
             <argument name="page" value="VideoOnStage"/>
             <argument name="url" value="PageBuilderVideoUrl_Vimeo_NonEmbedded"/>
         </actionGroup>
@@ -827,7 +843,7 @@
             <argument name="property" value="PageBuilderVideoUrl_Vimeo_Insecure"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsVimeoInsecure"/>
-        <actionGroup ref="validateVideoWithOnlyVideoUrl" stepKey="validateVimeoInsecureStage">
+        <actionGroup ref="validateVideoUrl" stepKey="validateVimeoInsecureStage">
             <argument name="page" value="VideoOnStage"/>
             <argument name="url" value="PageBuilderVideoUrl_Vimeo_Insecure"/>
         </actionGroup>
@@ -839,7 +855,7 @@
             <argument name="property" value="PageBuilderVideoUrl_Mp4_URL"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsMp4"/>
-        <actionGroup ref="validateVideoWithOnlyVideoUrlMp4" stepKey="validateMp4Stage">
+        <actionGroup ref="validateVideoUrl" stepKey="validateMp4Stage">
             <argument name="page" value="VideoOnStage"/>
             <argument name="url" value="PageBuilderVideoUrl_Mp4_URL"/>
         </actionGroup>
@@ -851,7 +867,7 @@
             <argument name="property" value="PageBuilderVideoUrl_Mp4_URL_Insecure"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsMp4Insecure"/>
-        <actionGroup ref="validateVideoWithOnlyVideoUrlMp4" stepKey="validateMp4InsecureStage">
+        <actionGroup ref="validateVideoUrl" stepKey="validateMp4InsecureStage">
             <argument name="page" value="VideoOnStage"/>
             <argument name="url" value="PageBuilderVideoUrl_Mp4_URL_Insecure"/>
         </actionGroup>
@@ -1456,19 +1472,17 @@
         <dontSeeElementInDOM selector="{{VideoOnStorefront.hidden('1')}}" stepKey="dontSeeHiddenElement"/>
         <seeElement selector="{{VideoOnStorefront.base('1')}}" stepKey="waitForContentTypeVisible" />
     </test>
-    <test name="RowValidateVideoBackgroundVideoURLs">
+    <test name="VideoValidateAutoplayEnabled">
         <annotations>
             <features value="PageBuilder"/>
-            <stories value="Row"/>
-            <title value="Validate Video Background Video Urls"/>
-            <description value="Verify that the video background URL field is required, only accepts valid urls, and that the user can set an embedded or non-embedded video background to a YouTube or Vimeo video, or to a stored .mp4 video."/>
-            <severity value="BLOCKER"/>
-            <useCaseId value="PB-95"/>
-            <testCaseId value="MC-31294"/>
+            <stories value="Video"/>
+            <title value="Validate Video Autoplay Attribute"/>
+            <description value="Validate that setting the autoplay attribute in the General form for Video will update the Stage and Storefront correctly."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="PB-375"/>
+            <testCaseId value="MC-32181"/>
             <group value="pagebuilder"/>
-            <group value="pagebuilder-row"/>
-            <group value="pagebuilder-rowBackground"/>
-            <group value="pagebuilder-video-background"/>
+            <group value="pagebuilder-video"/>
         </annotations>
         <before>
             <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
@@ -1482,143 +1496,7 @@
             <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentType" value="PageBuilderRowContentType"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty">
-            <argument name="property" value="PageBuilderMinHeightProperty_200px"/>
-        </actionGroup>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="setBackgroundType">
-            <argument name="property" value="PageBuilderBackgroundType_Video"/>
-        </actionGroup>
-        <!-- Validate URL Required -->
-        <actionGroup ref="saveEditPanelAndValidateFieldError" stepKey="validateUrlErrorMessageEmpty">
-            <argument name="property" value="PageBuilderVideoBackgroundUrl_Empty"/>
-        </actionGroup>
-        <!-- Validate Invalid URL Message -->
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrlInvalid">
-            <argument name="property" value="PageBuilderVideoBackgroundUrl_Invalid_Text"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelAndValidateFieldError" stepKey="validateUrlErrorMessageInvalid">
-            <argument name="property" value="PageBuilderVideoBackgroundUrl_Invalid_Text"/>
-        </actionGroup>
-        <!-- Update to YouTube Embedded -->
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrlYouTubeEmbedded">
-            <argument name="property" value="PageBuilderVideoBackgroundUrl_YouTube_Embedded"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsYouTubeEmbedded"/>
-        <actionGroup ref="validateVideoBackgroundWithOnlyVideoUrl" stepKey="validateYouTubeEmbeddedStage">
-            <argument name="section" value="RowOnStage"/>
-            <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_YouTube_Embedded"/>
-        </actionGroup>
-        <!-- Update to YouTube Non-Embedded -->
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStageYouTubeNonEmbedded">
-            <argument name="contentType" value="PageBuilderRowContentType"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrlYouTubeNonEmbedded">
-            <argument name="property" value="PageBuilderVideoBackgroundUrl_YouTube_NonEmbedded"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsYouTubeNonEmbedded"/>
-        <actionGroup ref="validateVideoBackgroundWithOnlyVideoUrl" stepKey="validateYouTubeNonEmbeddedStage">
-            <argument name="section" value="RowOnStage"/>
-            <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_YouTube_NonEmbedded"/>
-        </actionGroup>
-        <!-- Update to YouTube Insecure -->
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStageYouTubeInsecure">
-            <argument name="contentType" value="PageBuilderRowContentType"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrlYouTubeInsecure">
-            <argument name="property" value="PageBuilderVideoBackgroundUrl_YouTube_Insecure"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsInsecure"/>
-        <actionGroup ref="validateVideoBackgroundWithOnlyVideoUrl" stepKey="validateYouTubeInsecureStage">
-            <argument name="section" value="RowOnStage"/>
-            <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_YouTube_Insecure"/>
-        </actionGroup>
-        <!-- Update to Vimeo Embedded-->
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStageVimeoEmbedded">
-            <argument name="contentType" value="PageBuilderRowContentType"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrlVimeoEmbedded">
-            <argument name="property" value="PageBuilderVideoBackgroundUrl_Vimeo_Embedded"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsVimeoEmbedded"/>
-        <actionGroup ref="validateVideoBackgroundWithOnlyVideoUrl" stepKey="validateVimeoEmbeddedStage">
-            <argument name="section" value="RowOnStage"/>
-            <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_Vimeo_Embedded"/>
-        </actionGroup>
-        <!-- Update to Vimeo Non-Embedded -->
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStageVimeoNonEmbedded">
-            <argument name="contentType" value="PageBuilderRowContentType"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrlVimeoNonEmbedded">
-            <argument name="property" value="PageBuilderVideoBackgroundUrl_Vimeo_NonEmbedded"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsVimeoNonEmbedded"/>
-        <actionGroup ref="validateVideoBackgroundWithOnlyVideoUrl" stepKey="validateVimeoNonEmbeddedStage">
-            <argument name="section" value="RowOnStage"/>
-            <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_Vimeo_NonEmbedded"/>
-        </actionGroup>
-        <!-- Update to Vimeo Insecure -->
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStageVimeoInsecure">
-            <argument name="contentType" value="PageBuilderRowContentType"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrlVimeoInsecure">
-            <argument name="property" value="PageBuilderVideoBackgroundUrl_Vimeo_Insecure"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsVimeoInsecure"/>
-        <actionGroup ref="validateVideoBackgroundWithOnlyVideoUrl" stepKey="validateVimeoInsecureStage">
-            <argument name="section" value="RowOnStage"/>
-            <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_Vimeo_Insecure"/>
-        </actionGroup>
-        <!-- Update to .mp4 URL -->
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStageMp4">
-            <argument name="contentType" value="PageBuilderRowContentType"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrlMp4">
-            <argument name="property" value="PageBuilderVideoBackgroundUrl_Mp4_URL"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsMp4"/>
-        <actionGroup ref="validateVideoBackgroundWithOnlyVideoUrl" stepKey="validateMp4Stage">
-            <argument name="section" value="RowOnStage"/>
-            <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_Mp4_URL"/>
-        </actionGroup>
-        <!-- Update to .mp4 URL Insecure -->
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStageMp4Insecure">
-            <argument name="contentType" value="PageBuilderRowContentType"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrlMp4Insecure">
-            <argument name="property" value="PageBuilderVideoBackgroundUrl_Mp4_URL_Insecure"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsMp4Insecure"/>
-        <actionGroup ref="validateVideoBackgroundWithOnlyVideoUrl" stepKey="validateMp4InsecureStage">
-            <argument name="section" value="RowOnStage"/>
-            <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_Mp4_URL_Insecure"/>
-        </actionGroup>
-    </test>
-    <test name="VideoValidateAutoplayEnabled">
-        <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Video"/>
-            <title value="Validate Video Autoplay Attribute"/>
-            <description value="Validate that setting the autoplay attribute in the General form for Video will update the Stage and Storefront correctly."/>
-            <severity value="BLOCKER"/>
-            <useCaseId value="PB-375"/>
-            <testCaseId value="PB-423"/>
-            <group value="pagebuilder"/>
-            <group value="pagebuilder-video"/>
-        </annotations>
-        <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        </before>
-        <after>
-            <actionGroup ref="logout" stepKey="logout"/>
-        </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentType" value="PageBuilderVideoContentType"/>
-        </actionGroup>
+        <!-- Add Video w/ Autoplay Enabled -->
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderVideoContentType"/>
         </actionGroup>
@@ -1636,17 +1514,22 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
+        <actionGroup ref="validateVideoAutoPlay" stepKey="validateVideoAutoplayStage">
+            <argument name="page" value="VideoOnStage"/>
+        </actionGroup>
         <actionGroup ref="validateVideoPlaying" stepKey="validateVideoPlayingStage">
             <argument name="page" value="VideoOnStage"/>
-            <argument name="url" value="PageBuilderVideoUrl_YouTube"/>
         </actionGroup>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
+        <actionGroup ref="validateVideoAutoPlay" stepKey="validateVideoAutoplayStage2">
+            <argument name="page" value="VideoOnStage"/>
+        </actionGroup>
         <actionGroup ref="validateVideoPlaying" stepKey="validateVideoPlayingStage2">
             <argument name="page" value="VideoOnStage"/>
-            <argument name="url" value="PageBuilderVideoUrl_YouTube"/>
         </actionGroup>
+        <!-- Validate Edit Panel After Save -->
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderVideoContentType"/>
         </actionGroup>
@@ -1656,13 +1539,15 @@
         <actionGroup ref="seeOptionIsCheckedSlideOutProperty" stepKey="seeAutoplayEnabledAfterSave">
             <argument name="property" value="PageBuilderVideoAutoplay_Enabled"/>
         </actionGroup>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentType" value="PageBuilderVideoContentType"/>
-        </actionGroup>
         <!-- Validate Storefront -->
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStorefront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <actionGroup ref="validateVideoAutoPlay" stepKey="validateVideoAutoplayStorefront">
+            <argument name="page" value="VideoOnStorefront"/>
+        </actionGroup>
         <actionGroup ref="validateVideoPlaying" stepKey="validateVideoPlayingStorefront">
             <argument name="page" value="VideoOnStorefront"/>
-            <argument name="url" value="PageBuilderVideoUrl_YouTube"/>
         </actionGroup>
     </test>
     <test name="VideoValidateAutoplayDisabled">
@@ -1671,23 +1556,25 @@
             <stories value="Video"/>
             <title value="Validate Video Autoplay Attribute"/>
             <description value="Validate that setting the autoplay attribute in the General form for Video will update the Stage and Storefront correctly."/>
-            <severity value="BLOCKER"/>
+            <severity value="CRITICAL"/>
             <useCaseId value="PB-375"/>
-            <testCaseId value="PB-424"/>
+            <testCaseId value="MC-32182"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-video"/>
         </annotations>
         <before>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
+                <argument name="CMSPage" value="$$createCMSPage$$"/>
+            </actionGroup>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentType" value="PageBuilderVideoContentType"/>
-        </actionGroup>
+        <!-- Add Video w/ Autoplay Disabled -->
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderVideoContentType"/>
         </actionGroup>
@@ -1700,8 +1587,14 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrlProperty">
             <argument name="property" value="PageBuilderVideoUrl_YouTube"/>
         </actionGroup>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="setAutoplayDisabled">
+            <argument name="property" value="PageBuilderVideoAutoplay_Disabled"/>
+        </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
+        <actionGroup ref="validateVideoNoAutoPlay" stepKey="validateVideoNoAutoplayStage">
+            <argument name="page" value="VideoOnStage"/>
+        </actionGroup>
         <actionGroup ref="validateVideoNotAutoplaying" stepKey="validateVideoNotPlayingStage">
             <argument name="page" value="VideoOnStage"/>
             <argument name="url" value="PageBuilderVideoUrl_YouTube"/>
@@ -1709,10 +1602,14 @@
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
+        <actionGroup ref="validateVideoNoAutoPlay" stepKey="validateVideoNoAutoplayStage2">
+            <argument name="page" value="VideoOnStage"/>
+        </actionGroup>
         <actionGroup ref="validateVideoNotAutoplaying" stepKey="validateVideoNotPlayingStage2">
             <argument name="page" value="VideoOnStage"/>
             <argument name="url" value="PageBuilderVideoUrl_YouTube"/>
         </actionGroup>
+        <!-- Validate Edit Panel After Save -->
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderVideoContentType"/>
         </actionGroup>
@@ -1722,13 +1619,17 @@
         <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="seeAutoplayDisabledAfterSave">
             <argument name="property" value="PageBuilderVideoAutoplay_Disabled"/>
         </actionGroup>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentType" value="PageBuilderVideoContentType"/>
-        </actionGroup>
         <!-- Validate Storefront -->
-        <actionGroup ref="validateVideoNotAutoplaying" stepKey="validateVideoPlayingStorefront">
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStorefront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <actionGroup ref="validateVideoNoAutoPlay" stepKey="validateVideoNoAutoplayStorefront">
+            <argument name="page" value="VideoOnStorefront"/>
+        </actionGroup>
+        <actionGroup ref="validateVideoNotAutoplaying" stepKey="validateVideoNotPlayingStorefront">
             <argument name="page" value="VideoOnStorefront"/>
             <argument name="url" value="PageBuilderVideoUrl_YouTube"/>
         </actionGroup>
     </test>
+<!--    todo add aspect ratio test-->
 </tests>
