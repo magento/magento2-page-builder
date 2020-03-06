@@ -50,12 +50,15 @@ define(["html2canvas", "jquery", "mage/translate", "Magento_PageBuilder/js/modal
          */
         confirm: function confirm(name, createdFor) {
           return new Promise(function (resolve, reject) {
-            capture.then(function (imageSrc) {
+            // Wait for the screenshot and the rendering lock to complete before making the request
+            var renderingLock = stage.renderingLocks[stage.renderingLocks.length - 1];
+
+            _jquery.when(capture, renderingLock).then(function (imageSrc, content) {
               _jquery.ajax({
                 url: _config.getConfig("template_save_url"),
                 data: {
                   name: name,
-                  template: stage.pageBuilder.content,
+                  template: content,
                   previewImage: imageSrc,
                   createdFor: createdFor
                 },
@@ -118,42 +121,45 @@ define(["html2canvas", "jquery", "mage/translate", "Magento_PageBuilder/js/modal
     var scrollY = window.scrollY;
     var stageElement = document.querySelector("#" + stage.id);
 
-    var deferred = _jquery.Deferred(); // Resolve issues with Parallax
+    var deferred = _jquery.Deferred(); // Wait for the stage to complete rendering before taking the capture
 
 
-    var parallaxRestore = disableParallax(stageElement);
-    stageElement.style.height = (0, _jquery)(stageElement).outerHeight(false) + "px";
-    stageElement.classList.add("capture");
-    stageElement.classList.add("interacting");
+    var renderingLock = stage.renderingLocks[stage.renderingLocks.length - 1];
+    renderingLock.then(function () {
+      // Resolve issues with Parallax
+      var parallaxRestore = disableParallax(stageElement);
+      stageElement.style.height = (0, _jquery)(stageElement).outerHeight(false) + "px";
+      stageElement.classList.add("capture");
+      stageElement.classList.add("interacting");
 
-    if (stage.pageBuilder.isFullScreen()) {
-      window.scrollTo({
-        top: 0
-      });
-    }
+      if (stage.pageBuilder.isFullScreen()) {
+        window.scrollTo({
+          top: 0
+        });
+      }
 
-    _underscore.defer(function () {
-      (0, _html2canvas)(document.querySelector("#" + stage.id + " .pagebuilder-canvas"), {
-        scale: 1,
-        useCORS: true,
-        scrollY: window.pageYOffset * -1
-      }).then(function (canvas) {
-        var imageSrc = canvas.toDataURL("image/jpeg", 0.85);
-        deferred.resolve(imageSrc);
+      _underscore.defer(function () {
+        (0, _html2canvas)(document.querySelector("#" + stage.id + " .pagebuilder-canvas"), {
+          scale: 1,
+          useCORS: true,
+          scrollY: window.pageYOffset * -1
+        }).then(function (canvas) {
+          var imageSrc = canvas.toDataURL("image/jpeg", 0.85);
+          deferred.resolve(imageSrc);
 
-        if (stage.pageBuilder.isFullScreen()) {
-          window.scrollTo({
-            top: scrollY
-          });
-        }
+          if (stage.pageBuilder.isFullScreen()) {
+            window.scrollTo({
+              top: scrollY
+            });
+          }
 
-        stageElement.style.height = null;
-        stageElement.classList.remove("capture");
-        stageElement.classList.remove("interacting");
-        restoreParallax(parallaxRestore);
+          stageElement.style.height = null;
+          stageElement.classList.remove("capture");
+          stageElement.classList.remove("interacting");
+          restoreParallax(parallaxRestore);
+        });
       });
     });
-
     return deferred;
   }
   /**
