@@ -29,7 +29,7 @@
         <element name="iframePlaying" type="text" selector="//div[@id='player']//div[contains(@class,'playing-mode')]"/>
         <element name="iframeNotAutoplaying" type="text" selector="//div[@id='player']//div[contains(@class, 'unstarted-mode')]"/>
         <element name="width" type="text" parameterized="true" selector="(//div[@data-content-type='video'])[{{videoIndex}}]//div[@data-element='inner'][contains(@style,'max-width: {{width}}px;')]"/>
-        <element name="noWidth" type="text" parameterized="true" selector="(//div[@data-content-type='video'])[{{videoIndex}}]//div[@data-element='inner'][not(starts-with(@style,'width:')) and not(contains(@style,' width:'))][contains(@class,'pagebuilder-video-wrapper')]"/>
+        <element name="noWidth" type="text" parameterized="true" selector="(//div[@data-content-type='video'])[{{videoIndex}}]//div[@data-element='inner'][not(starts-with(@style,'max-width:')) and not(contains(@style,' max-width:'))]"/>
         <!-- Advanced Configuration -->
         <element name="alignment" type="text" parameterized="true" selector="(//div[@data-content-type='video'])[{{videoIndex}}][contains(@style,'text-align: {{alignment}};')]"/>
         <element name="noAlignment" type="text" parameterized="true" selector="(//div[@data-content-type='video'])[{{videoIndex}}][not(contains(@style,'text-align:'))]"/>
@@ -62,7 +62,7 @@
         <element name="iframePlaying" type="text" selector="//div[@id='player']/div[contains(@class,'playing-mode')]"/>
         <element name="iframeNotAutoplaying" type="text" selector="//div[@id='player']//div[contains(@class,'unstarted-mode')]"/>
         <element name="width" type="text" parameterized="true" selector="(//div[@data-content-type='video'])[{{videoIndex}}]//div[@data-element='inner'][contains(@style,'max-width: {{width}}')]"/>
-        <element name="noWidth" type="text" parameterized="true" selector="(//div[@data-content-type='video'])[{{videoIndex}}]//div[@data-element='inner'][not(starts-with(@style,'width:')) and not(contains(@style,' width:'))]"/>
+        <element name="noWidth" type="text" parameterized="true" selector="(//div[@data-content-type='video'])[{{videoIndex}}]//div[@data-element='inner'][not(starts-with(@style,'max-width:')) and not(contains(@style,' max-width:'))]"/>
         <!-- Advanced Configuration -->
         <element name="alignment" type="text" parameterized="true" selector="(//div[@data-content-type='video'])[{{videoIndex}}][contains(@style,'text-align: {{alignment}};')]"/>
         <element name="noAlignment" type="text" parameterized="true" selector="(//div[@data-content-type='video'])[{{videoIndex}}][not(contains(@style,'text-align'))]"/>

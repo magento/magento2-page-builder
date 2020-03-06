@@ -65,17 +65,16 @@
     </actionGroup>
     <actionGroup name="validateVideoAspectRatio">
         <annotations>
-            <description>Validates that the video's aspect ratio in the video content type.</description>
+            <description>Validates that the video in the video content type has the correct aspect ratio.</description>
         </annotations>
         <arguments>
             <argument name="page" defaultValue="VideoOnStage"/>
             <argument name="index" defaultValue="1" type="string"/>
             <argument name="acceptableOffset" defaultValue="2" type="string"/>
         </arguments>
-        <waitForPageLoad stepKey="waitForPageLoad"/>
-        <waitForElementVisible selector="{{page.videoElement(index)}}" stepKey="waitForVideoElement"/>
-        <executeJS function="return window.calculatedHeight = parseInt(getComputedStyle(document.evaluate(&quot;{{page.videoElement(index)}}&quot;,document.body).iterateNext()).width) / 16 * 9" stepKey="calculatedHeight"/>
-        <executeJS function="return window.actualHeight = parseInt(getComputedStyle(document.evaluate(&quot;{{page.videoElement(index)}}&quot;,document.body).iterateNext()).height)" stepKey="actualHeight"/>
+        <waitForElementVisible selector="{{page.iframe(index)}}" stepKey="waitForVideoIFrame"/>
+        <executeJS function="return window.calculatedHeight = parseInt(getComputedStyle(document.evaluate(&quot;{{page.iframe(index)}}&quot;,document.body).iterateNext()).width) / 16 * 9" stepKey="calculatedHeight"/>
+        <executeJS function="return window.actualHeight = parseInt(getComputedStyle(document.evaluate(&quot;{{page.iframe(index)}}&quot;,document.body).iterateNext()).height)" stepKey="actualHeight"/>
         <executeJS function="return Math.abs(window.calculatedHeight - window.actualHeight)" stepKey="ratioDifference"/>
         <assertLessThanOrEqual stepKey="assertRatio">
             <expectedResult type="int">{{acceptableOffset}}</expectedResult>
