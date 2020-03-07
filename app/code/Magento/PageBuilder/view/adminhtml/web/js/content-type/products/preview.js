@@ -48,10 +48,12 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       _this.placeholderText = _knockout.observable(_this.messages.EMPTY); // Redraw slider after content type gets redrawn
 
       _events.on("contentType:redrawAfter", function (args) {
-        var $element = (0, _jquery)(_this.element.children);
+        if (_this.element && _this.element.children) {
+          var $element = (0, _jquery)(_this.element.children);
 
-        if (args.element && _this.element && $element.closest(args.element).length) {
-          $element.slick("setPosition");
+          if (args.element && $element.closest(args.element).length) {
+            $element.slick("setPosition");
+          }
         }
       });
 

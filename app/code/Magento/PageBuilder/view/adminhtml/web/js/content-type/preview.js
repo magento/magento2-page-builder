@@ -20,6 +20,12 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     "use strict";
 
     /**
+     * Provide preview data as an object which can be queried
+     *
+     * @deprecated please use getOptionValue directly
+     */
+
+    /**
      * Fields that should not be considered when evaluating whether an object has been configured.
      *
      * @see {Preview.isConfigured}
@@ -38,6 +44,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       this.appearance = _knockout.observable();
       this.isPlaceholderVisible = _knockout.observable(true);
       this.isEmpty = _knockout.observable(true);
+      this.previewData = {};
       this.fieldsToIgnoreOnRemove = [];
       this.events = {};
       this.mouseover = false;
@@ -52,6 +59,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         "empty-placeholder-background": this.isPlaceholderVisible
       });
       this.bindEvents();
+      this.populatePreviewData();
     }
     /**
      * Retrieve the preview template
@@ -120,6 +128,16 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
     _proto.updateData = function updateData(key, value) {
       this.contentType.dataStore.set(key, value);
+    }
+    /**
+     * Retrieve the value for an option
+     *
+     * @param key
+     */
+    ;
+
+    _proto.getOptionValue = function getOptionValue(key) {
+      return this.contentType.dataStore.get(key);
     }
     /**
      * Set state based on mouseover event for the preview
@@ -317,26 +335,13 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       var _this4 = this;
 
       var removeContentType = function removeContentType() {
-        var dispatchRemoveEvent = function dispatchRemoveEvent() {
-          var params = {
-            contentType: _this4.contentType,
-            index: _this4.contentType.parentContentType.getChildren().indexOf(_this4.contentType),
-            parentContentType: _this4.contentType.parentContentType,
-            stageId: _this4.contentType.stageId
-          };
-
-          _events.trigger("contentType:removeAfter", params);
-
-          _events.trigger(_this4.contentType.config.name + ":removeAfter", params);
-        };
-
         if (_this4.wrapperElement) {
           // Fade out the content type
           (0, _jquery)(_this4.wrapperElement).fadeOut(350 / 2, function () {
-            dispatchRemoveEvent();
+            _this4.contentType.destroy();
           });
         } else {
-          dispatchRemoveEvent();
+          _this4.contentType.destroy();
         }
       };
 
@@ -378,6 +383,14 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
     _proto.getSortableOptions = function getSortableOptions() {
       return (0, _sortable2.getSortableOptions)(this);
+    }
+    /**
+     * Destroys current instance
+     */
+    ;
+
+    _proto.destroy = function destroy() {
+      return;
     }
     /**
      * Get the CSS classes for the children element, as we dynamically create this class name it can't sit in the DOM
@@ -585,6 +598,41 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       var paddingBottom = parseFloat(padding.bottom) || 0;
       var paddingTop = parseFloat(padding.top) || 0;
       this.isPlaceholderVisible(paddingBottom + paddingTop + minHeight >= 130);
+    }
+    /**
+     * Populate the preview data with calls to the supported getOptionValue method
+     *
+     * @deprecated this function is only included to preserve backwards compatibility, use getOptionValue directly
+     */
+    ;
+
+    _proto.populatePreviewData = function populatePreviewData() {
+      var _this8 = this;
+
+      if (this.config.fields) {
+        _underscore.each(this.config.fields, function (fields) {
+          _underscore.keys(fields).forEach(function (key) {
+            _this8.previewData[key] = _knockout.observable("");
+          });
+        });
+      } // Subscribe to this content types data in the store
+
+
+      this.contentType.dataStore.subscribe(function (data) {
+        _underscore.forEach(data, function (value, key) {
+          var optionValue = _this8.getOptionValue(key);
+
+          if (_knockout.isObservable(_this8.previewData[key])) {
+            _this8.previewData[key](optionValue);
+          } else {
+            if (_underscore.isArray(optionValue)) {
+              _this8.previewData[key] = _knockout.observableArray(optionValue);
+            } else {
+              _this8.previewData[key] = _knockout.observable(optionValue);
+            }
+          }
+        });
+      });
     };
 
     _createClass(Preview, [{

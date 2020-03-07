@@ -54,19 +54,12 @@ class ProductTotals extends Action implements HttpPostActionInterface
         $conditions = $this->getRequest()->getParam('conditionValue');
 
         try {
-            $totals = $this->productTotals->getProductTotals($conditions);
-            $response = [
-                'total' => $totals['total'],
-                'disabled' => $totals['disabled'],
-                'notVisible' => $totals['notVisible'],
-                'outOfStock' => $totals['outOfStock'],
-            ];
+            $response = $this->productTotals->getProductTotals($conditions);
         } catch (Exception $e) {
             $response = [
                 'total' => 0,
                 'disabled' => 0,
                 'notVisible' => 0,
-                'outOfStock' => 0,
             ];
         }
 

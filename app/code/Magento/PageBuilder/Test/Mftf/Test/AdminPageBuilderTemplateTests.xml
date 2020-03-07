@@ -1,0 +1,1365 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="PageBuilderCreateTemplateAndValidateTemplateGridData">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Templates"/>
+            <title value="Create Page Builder Template and Validate Grid Data"/>
+            <description value="Verify that when a user saves a template, all of the entered data is shown correctly on the template grid"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="PB-341"/>
+            <testCaseId value="MC-30592"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-templates"/>
+        </annotations>
+        <before>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
+                <argument name="CMSPage" value="$$createCMSPage$$"/>
+            </actionGroup>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="navigateToPageBuilderTemplatesGridPage" stepKey="navigateToPageBuilderTemplatesGridPage"/>
+            <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid"/>
+            <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGrid"/>
+            <actionGroup ref="deletePageBuilderTemplate" stepKey="deletePageBuilderTemplate"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Save Template -->
+        <actionGroup ref="openPageBuilderSaveTemplateModal" stepKey="openPageBuilderSaveTemplateModal"/>
+        <actionGroup ref="fillPageBuilderSaveTemplateForm" stepKey="fillPageBuilderSaveTemplateForm"/>
+        <generateDate date="now" format="M j, Y g:" stepKey="today"/>
+        <generateDate date="now" format="A" stepKey="todayAMorPM"/>
+        <actionGroup ref="savePageBuilderTemplate" stepKey="savePageBuilderTemplate"/>
+        <!-- Verify Info on Apply Template Slide Out -->
+        <actionGroup ref="openPageBuilderApplyTemplateSlideOut" stepKey="openPageBuilderApplyTemplateSlideOut"/>
+        <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+        </actionGroup>
+        <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGrid">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+        </actionGroup>
+        <actionGroup ref="validatePageBuilderTemplateDataInGrid" stepKey="validatePageBuilderTemplateDataInGrid1">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="templateName" value="{{PageBuilderTemplateNameRandom.name}}"/>
+            <argument name="createdFor" value="{{PageBuilderTemplateCreatedFor.any}}"/>
+            <argument name="createdDate" value="{$today}"/>
+            <argument name="createdDateAMorPM" value="{$todayAMorPM}"/>
+        </actionGroup>
+        <!-- Verify Info on Template Grid Page -->
+        <actionGroup ref="navigateToPageBuilderTemplatesGridPage" stepKey="navigateToPageBuilderTemplatesGridPage"/>
+        <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid2"/>
+        <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGrid2"/>
+        <actionGroup ref="validatePageBuilderTemplateDataInGrid" stepKey="validatePageBuilderTemplateDataInGrid2">
+            <argument name="templateName" value="{{PageBuilderTemplateNameRandom.name}}"/>
+            <argument name="createdFor" value="{{PageBuilderTemplateCreatedFor.any}}"/>
+            <argument name="createdDate" value="{$today}"/>
+            <argument name="createdDateAMorPM" value="{$todayAMorPM}"/>
+        </actionGroup>
+    </test>
+    <test name="PageBuilderDeleteTemplate">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Templates"/>
+            <title value="Delete Page Builder Template and Validate Grid Data"/>
+            <description value="Verify that when a user deletes a template, the template is removed from the template grids."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="PB-341"/>
+            <testCaseId value="MC-30593"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-templates"/>
+        </annotations>
+        <before>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
+                <argument name="CMSPage" value="$$createCMSPage$$"/>
+            </actionGroup>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="openPageBuilderSaveTemplateModal" stepKey="openPageBuilderSaveTemplateModal"/>
+            <actionGroup ref="fillPageBuilderSaveTemplateForm" stepKey="fillPageBuilderSaveTemplateForm"/>
+            <actionGroup ref="savePageBuilderTemplate" stepKey="savePageBuilderTemplate"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Delete Template -->
+        <actionGroup ref="navigateToPageBuilderTemplatesGridPage" stepKey="navigateToPageBuilderTemplatesGridPage"/>
+        <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid"/>
+        <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGrid"/>
+        <actionGroup ref="deletePageBuilderTemplate" stepKey="deletePageBuilderTemplate"/>
+        <!-- Verify Delete on Template Grid Page -->
+        <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid2"/>
+        <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGrid2"/>
+        <actionGroup ref="validatePageBuilderTemplateEmptyGrid" stepKey="validatePageBuilderTemplateEmptyGrid"/>
+        <!-- Verify Delete on Apply Template Grid -->
+        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="openPageBuilderApplyTemplateSlideOut" stepKey="openPageBuilderApplyTemplateSlideOut"/>
+        <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid3">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+        </actionGroup>
+        <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGrid3">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+        </actionGroup>
+        <actionGroup ref="validatePageBuilderTemplateEmptyGrid" stepKey="validatePageBuilderTemplateEmptyGrid2">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+        </actionGroup>
+    </test>
+    <test name="PageBuilderTemplatesPermission">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Templates"/>
+            <title value="Templates Permission Functionality"/>
+            <description value="Verify that a user can access the templates grid page with only the template permission and cannot access this page without the permission."/>
+            <severity value="BLOCKER"/>
+            <useCaseId value="PB-341"/>
+            <testCaseId value="MC-30594"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-templates"/>
+            <group value="pagebuilder-templates-permissions"/>
+        </annotations>
+        <before>
+            <createData entity="rolePageBuilderTemplates" stepKey="role1"/>
+            <createData entity="roleNoPageBuilderTemplates" stepKey="role2"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="AdminCreateUserWithApiRoleActionGroup" stepKey="adminCreateUser">
+                <argument name="user" value="NewAdminUser"/>
+                <argument name="role" value="rolePageBuilderTemplates"/>
+            </actionGroup>
+            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsCreatedUser">
+                <argument name="adminUser" value="NewAdminUser"/>
+            </actionGroup>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="AdminDeleteRoleByRoleNameActionGroup" stepKey="deleteRole">
+                <argument name="role" value="rolePageBuilderTemplates"/>
+            </actionGroup>
+            <actionGroup ref="AdminDeleteRoleByRoleNameActionGroup" stepKey="deleteRole2">
+                <argument name="role" value="roleNoPageBuilderTemplates"/>
+            </actionGroup>
+            <actionGroup ref="AdminDeleteCustomUserActionGroup" stepKey="deleteUser">
+                <argument name="user" value="NewAdminUser"/>
+            </actionGroup>
+            <actionGroup ref="logout" stepKey="logout2"/>
+        </after>
+        <!-- Verify Successful Navigation to Templates Page -->
+        <actionGroup ref="navigateToPageBuilderTemplatesGridPage" stepKey="navigateToPageBuilderTemplatesGridPage"/>
+        <actionGroup ref="logout" stepKey="logout"/>
+        <!-- Change User Role -->
+        <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+        <actionGroup ref="AdminOpenUserEditPageActionGroup" stepKey="AdminOpenUserEditPageActionGroup">
+            <argument name="user" value="NewAdminUser"/>
+        </actionGroup>
+        <actionGroup ref="AdminUpdateUserRoleActionGroup" stepKey="AdminUpdateUserRoleActionGroup">
+            <argument name="role" value="roleNoPageBuilderTemplates"/>
+        </actionGroup>
+        <actionGroup ref="AdminClickSaveButtonOnUserFormActionGroup" stepKey="AdminClickSaveButtonOnUserFormActionGroup"/>
+        <actionGroup ref="AssertAdminUserSaveMessageActionGroup" stepKey="AssertAdminUserSaveMessageActionGroup"/>
+        <actionGroup ref="logout" stepKey="logout2"/>
+        <!-- Verify Unsuccessful Navigation to Templates Page -->
+        <actionGroup ref="LoginAsAdmin" stepKey="loginAsCreatedUser">
+            <argument name="adminUser" value="NewAdminUser"/>
+        </actionGroup>
+        <actionGroup ref="verifyCannotNavigateToPageBuilderTemplatesGridPage" stepKey="verifyCannotNavigateToPageBuilderTemplatesGridPage"/>
+    </test>
+    <test name="PageBuilderSaveTemplatesPermission">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Templates"/>
+            <title value="Save Templates Permission Functionality"/>
+            <description value="Verify that a user can save a template with only the save template permission and cannot save without the permission."/>
+            <severity value="BLOCKER"/>
+            <useCaseId value="PB-341"/>
+            <testCaseId value="MC-30595"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-templates"/>
+            <group value="pagebuilder-templates-permissions"/>
+        </annotations>
+        <before>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <createData entity="rolePageBuilderSaveTemplates" stepKey="role1"/>
+            <createData entity="rolePageBuilderTemplates" stepKey="role2"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="AdminCreateUserWithApiRoleActionGroup" stepKey="adminCreateUser">
+                <argument name="user" value="NewAdminUser"/>
+                <argument name="role" value="rolePageBuilderSaveTemplates"/>
+            </actionGroup>
+            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsCreatedUser">
+                <argument name="adminUser" value="NewAdminUser"/>
+            </actionGroup>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="AdminDeleteRoleByRoleNameActionGroup" stepKey="deleteRole">
+                <argument name="role" value="rolePageBuilderSaveTemplates"/>
+            </actionGroup>
+            <actionGroup ref="AdminDeleteRoleByRoleNameActionGroup" stepKey="deleteRole2">
+                <argument name="role" value="rolePageBuilderTemplates"/>
+            </actionGroup>
+            <actionGroup ref="AdminDeleteCustomUserActionGroup" stepKey="deleteUser">
+                <argument name="user" value="NewAdminUser"/>
+            </actionGroup>
+            <actionGroup ref="navigateToPageBuilderTemplatesGridPage" stepKey="navigateToPageBuilderTemplatesGridPage"/>
+            <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid"/>
+            <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGrid"/>
+            <actionGroup ref="deletePageBuilderTemplate" stepKey="deletePageBuilderTemplate"/>
+            <actionGroup ref="logout" stepKey="logout2"/>
+        </after>
+        <!-- Verify Can Save Template -->
+        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="openPageBuilderSaveTemplateModal" stepKey="openPageBuilderSaveTemplateModal"/>
+        <actionGroup ref="fillPageBuilderSaveTemplateForm" stepKey="fillPageBuilderSaveTemplateForm"/>
+        <generateDate date="now" format="M j, Y g:" stepKey="today"/>
+        <generateDate date="now" format="A" stepKey="todayAMorPM"/>
+        <actionGroup ref="savePageBuilderTemplate" stepKey="savePageBuilderTemplate"/>
+        <!-- Verify Info on Template Grid Page -->
+        <actionGroup ref="navigateToPageBuilderTemplatesGridPage" stepKey="navigateToPageBuilderTemplatesGridPage"/>
+        <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid"/>
+        <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGrid"/>
+        <actionGroup ref="validatePageBuilderTemplateDataInGrid" stepKey="validatePageBuilderTemplateDataInGrid2">
+            <argument name="templateName" value="{{PageBuilderTemplateNameRandom.name}}"/>
+            <argument name="createdFor" value="{{PageBuilderTemplateCreatedFor.any}}"/>
+            <argument name="createdDate" value="{$today}"/>
+            <argument name="createdDateAMorPM" value="{$todayAMorPM}"/>
+        </actionGroup>
+        <actionGroup ref="logout" stepKey="logout"/>
+        <!-- Change User Role -->
+        <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+        <actionGroup ref="AdminOpenUserEditPageActionGroup" stepKey="AdminOpenUserEditPageActionGroup">
+            <argument name="user" value="NewAdminUser"/>
+        </actionGroup>
+        <actionGroup ref="AdminUpdateUserRoleActionGroup" stepKey="AdminUpdateUserRoleActionGroup">
+            <argument name="role" value="rolePageBuilderTemplates"/>
+        </actionGroup>
+        <actionGroup ref="AdminClickSaveButtonOnUserFormActionGroup" stepKey="AdminClickSaveButtonOnUserFormActionGroup"/>
+        <actionGroup ref="AssertAdminUserSaveMessageActionGroup" stepKey="AssertAdminUserSaveMessageActionGroup"/>
+        <actionGroup ref="logout" stepKey="logout2"/>
+        <!-- Verify Cannot Save Template -->
+        <actionGroup ref="LoginAsAdmin" stepKey="loginAsCreatedUser">
+            <argument name="adminUser" value="NewAdminUser"/>
+        </actionGroup>
+        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage2">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <actionGroup ref="verifyNoPageBuilderSaveOrApplyTemplateButtons" stepKey="verifyNoPageBuilderSaveOrApplyTemplateButtons"/>
+    </test>
+    <test name="PageBuilderApplyTemplatesPermission">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Templates"/>
+            <title value="Apply Templates Permission Functionality"/>
+            <description value="Verify that a user can apply a template with only the apply template permission and cannot apply without the permission."/>
+            <severity value="BLOCKER"/>
+            <useCaseId value="PB-341"/>
+            <testCaseId value="MC-30597"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-templates"/>
+            <group value="pagebuilder-templates-permissions"/>
+        </annotations>
+        <before>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <createData entity="rolePageBuilderApplyTemplates" stepKey="role1"/>
+            <createData entity="rolePageBuilderTemplates" stepKey="role2"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="AdminCreateUserWithApiRoleActionGroup" stepKey="adminCreateUser">
+                <argument name="user" value="NewAdminUser"/>
+                <argument name="role" value="rolePageBuilderApplyTemplates"/>
+            </actionGroup>
+            <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
+                <argument name="CMSPage" value="$$createCMSPage$$"/>
+            </actionGroup>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+                <argument name="contentType" value="PageBuilderButtonsContentType"/>
+            </actionGroup>
+            <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+                <argument name="contentType" value="PageBuilderButtonsContentType"/>
+            </actionGroup>
+            <seeElement selector="{{ButtonItemOnStage.emptyButtonItemElement('1')}}" stepKey="seeEmptyButton"/>
+            <actionGroup ref="openPageBuilderSaveTemplateModal" stepKey="openPageBuilderSaveTemplateModal"/>
+            <actionGroup ref="fillPageBuilderSaveTemplateForm" stepKey="fillPageBuilderSaveTemplateForm"/>
+            <actionGroup ref="savePageBuilderTemplate" stepKey="savePageBuilderTemplate"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsCreatedUser">
+                <argument name="adminUser" value="NewAdminUser"/>
+            </actionGroup>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="AdminDeleteRoleByRoleNameActionGroup" stepKey="deleteRole">
+                <argument name="role" value="rolePageBuilderApplyTemplates"/>
+            </actionGroup>
+            <actionGroup ref="AdminDeleteRoleByRoleNameActionGroup" stepKey="deleteRole2">
+                <argument name="role" value="rolePageBuilderTemplates"/>
+            </actionGroup>
+            <actionGroup ref="AdminDeleteCustomUserActionGroup" stepKey="deleteUser">
+                <argument name="user" value="NewAdminUser"/>
+            </actionGroup>
+            <actionGroup ref="navigateToPageBuilderTemplatesGridPage" stepKey="navigateToPageBuilderTemplatesGridPage"/>
+            <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid"/>
+            <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGrid"/>
+            <actionGroup ref="deletePageBuilderTemplate" stepKey="deletePageBuilderTemplate"/>
+            <actionGroup ref="logout" stepKey="logout2"/>
+        </after>
+        <!-- Verify Can Apply Template -->
+        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="verifyEmptyStage" stepKey="verifyEmptyStage"/>
+        <actionGroup ref="openPageBuilderApplyTemplateSlideOut" stepKey="openPageBuilderApplyTemplateSlideOut"/>
+        <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+        </actionGroup>
+        <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGrid">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+        </actionGroup>
+        <actionGroup ref="clickApplyFromPageBuilderApplyTemplateSlideOut" stepKey="clickApplyFromPageBuilderApplyTemplateSlideOut"/>
+        <actionGroup ref="confirmApplyFromPageBuilderApplyTemplateSlideOut" stepKey="confirmApplyFromPageBuilderApplyTemplateSlideOut"/>
+        <seeElement selector="{{ButtonItemOnStage.emptyButtonItemElement('1')}}" stepKey="seeEmptyButton"/>
+        <actionGroup ref="logout" stepKey="logout"/>
+        <!-- Change User Role -->
+        <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+        <actionGroup ref="AdminOpenUserEditPageActionGroup" stepKey="AdminOpenUserEditPageActionGroup">
+            <argument name="user" value="NewAdminUser"/>
+        </actionGroup>
+        <actionGroup ref="AdminUpdateUserRoleActionGroup" stepKey="AdminUpdateUserRoleActionGroup">
+            <argument name="role" value="rolePageBuilderTemplates"/>
+        </actionGroup>
+        <actionGroup ref="AdminClickSaveButtonOnUserFormActionGroup" stepKey="AdminClickSaveButtonOnUserFormActionGroup"/>
+        <actionGroup ref="AssertAdminUserSaveMessageActionGroup" stepKey="AssertAdminUserSaveMessageActionGroup"/>
+        <actionGroup ref="logout" stepKey="logout2"/>
+        <!-- Verify Cannot Apply Template -->
+        <actionGroup ref="LoginAsAdmin" stepKey="loginAsCreatedUser">
+            <argument name="adminUser" value="NewAdminUser"/>
+        </actionGroup>
+        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage2">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <actionGroup ref="verifyNoPageBuilderSaveOrApplyTemplateButtons" stepKey="verifyNoPageBuilderSaveOrApplyTemplateButtons"/>
+    </test>
+    <test name="PageBuilderDeleteTemplatesPermission">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Templates"/>
+            <title value="Delete Templates Permission Functionality"/>
+            <description value="Verify that a user can delete a template with only the delete template permission and cannot delete without the permission."/>
+            <severity value="BLOCKER"/>
+            <useCaseId value="PB-341"/>
+            <testCaseId value="MC-30598"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-templates"/>
+            <group value="pagebuilder-templates-permissions"/>
+        </annotations>
+        <before>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <createData entity="rolePageBuilderDeleteTemplates" stepKey="role1"/>
+            <createData entity="rolePageBuilderTemplates" stepKey="role2"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="AdminCreateUserWithApiRoleActionGroup" stepKey="adminCreateUser">
+                <argument name="user" value="NewAdminUser"/>
+                <argument name="role" value="rolePageBuilderDeleteTemplates"/>
+            </actionGroup>
+            <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
+                <argument name="CMSPage" value="$$createCMSPage$$"/>
+            </actionGroup>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="openPageBuilderSaveTemplateModal" stepKey="openPageBuilderSaveTemplateModal"/>
+            <actionGroup ref="fillPageBuilderSaveTemplateForm" stepKey="fillPageBuilderSaveTemplateForm"/>
+            <actionGroup ref="savePageBuilderTemplate" stepKey="savePageBuilderTemplate"/>
+            <actionGroup ref="openPageBuilderSaveTemplateModal" stepKey="openPageBuilderSaveTemplateModal2"/>
+            <actionGroup ref="fillPageBuilderSaveTemplateForm" stepKey="fillPageBuilderSaveTemplateForm2">
+                <argument name="templateName" value="{{PageBuilderTemplateNameRandom2.name}}"/>
+            </actionGroup>
+            <actionGroup ref="savePageBuilderTemplate" stepKey="savePageBuilderTemplate2"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsCreatedUser">
+                <argument name="adminUser" value="NewAdminUser"/>
+            </actionGroup>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="AdminDeleteRoleByRoleNameActionGroup" stepKey="deleteRole">
+                <argument name="role" value="rolePageBuilderDeleteTemplates"/>
+            </actionGroup>
+            <actionGroup ref="AdminDeleteRoleByRoleNameActionGroup" stepKey="deleteRole2">
+                <argument name="role" value="rolePageBuilderTemplates"/>
+            </actionGroup>
+            <actionGroup ref="AdminDeleteCustomUserActionGroup" stepKey="deleteUser">
+                <argument name="user" value="NewAdminUser"/>
+            </actionGroup>
+            <actionGroup ref="navigateToPageBuilderTemplatesGridPage" stepKey="navigateToPageBuilderTemplatesGridPage"/>
+            <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid"/>
+            <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGrid">
+                <argument name="keyword" value="{{PageBuilderTemplateNameRandom2.name}}"/>
+            </actionGroup>
+            <actionGroup ref="deletePageBuilderTemplate" stepKey="deletePageBuilderTemplate">
+                <argument name="templateIdentifier" value="{{PageBuilderTemplateNameRandom2.name}}"/>
+            </actionGroup>
+            <actionGroup ref="logout" stepKey="logout2"/>
+        </after>
+        <!-- Verify Can Delete Template -->
+        <actionGroup ref="navigateToPageBuilderTemplatesGridPage" stepKey="navigateToPageBuilderTemplatesGridPage"/>
+        <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid"/>
+        <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGrid"/>
+        <actionGroup ref="deletePageBuilderTemplate" stepKey="deletePageBuilderTemplate"/>
+        <!-- Verify Delete on Template Grid Page -->
+        <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid2"/>
+        <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGrid2"/>
+        <actionGroup ref="validatePageBuilderTemplateEmptyGrid" stepKey="validatePageBuilderTemplateEmptyGrid"/>
+        <actionGroup ref="logout" stepKey="logout"/>
+        <!-- Change User Role -->
+        <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+        <actionGroup ref="AdminOpenUserEditPageActionGroup" stepKey="AdminOpenUserEditPageActionGroup">
+            <argument name="user" value="NewAdminUser"/>
+        </actionGroup>
+        <actionGroup ref="AdminUpdateUserRoleActionGroup" stepKey="AdminUpdateUserRoleActionGroup">
+            <argument name="role" value="rolePageBuilderTemplates"/>
+        </actionGroup>
+        <actionGroup ref="AdminClickSaveButtonOnUserFormActionGroup" stepKey="AdminClickSaveButtonOnUserFormActionGroup"/>
+        <actionGroup ref="AssertAdminUserSaveMessageActionGroup" stepKey="AssertAdminUserSaveMessageActionGroup"/>
+        <actionGroup ref="logout" stepKey="logout2"/>
+        <!-- Verify Cannot Delete Template -->
+        <actionGroup ref="LoginAsAdmin" stepKey="loginAsCreatedUser">
+            <argument name="adminUser" value="NewAdminUser"/>
+        </actionGroup>
+        <actionGroup ref="navigateToPageBuilderTemplatesGridPage" stepKey="navigateToPageBuilderTemplatesGridPage2"/>
+        <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid3"/>
+        <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGrid3">
+            <argument name="keyword" value="{{PageBuilderTemplateNameRandom2.name}}"/>
+        </actionGroup>
+        <actionGroup ref="verifyNoPageBuilderDeleteTemplateButton" stepKey="verifyNoPageBuilderDeleteTemplateButton">
+            <argument name="templateIdentifier" value="{{PageBuilderTemplateNameRandom2.name}}"/>
+        </actionGroup>
+    </test>
+    <test name="PageBuilderTemplatesDisablePageBuilder">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Templates"/>
+            <title value="Verify Cannot Access Page Builder Templates when Page Builder is Disabled"/>
+            <description value="Verify that a user cannot access the templates grid page when Page Builder is disabled."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="PB-341"/>
+            <testCaseId value="MC-30607"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-templates"/>
+            <group value="pagebuilder-disable"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/pagebuilder/enabled 1" stepKey="enablePageBuilder"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Verify Successful Navigation to Templates Page -->
+        <actionGroup ref="navigateToPageBuilderTemplatesGridPage" stepKey="navigateToPageBuilderTemplatesGridPage"/>
+        <!-- Disabled Page Builder -->
+        <magentoCLI command="config:set cms/pagebuilder/enabled 0" stepKey="disablePageBuilder"/>
+        <actionGroup ref="logout" stepKey="logout"/>
+        <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+        <!-- Verify Unsuccessful Navigation to Templates Page -->
+        <actionGroup ref="verifyCannotNavigateToPageBuilderTemplatesGridPage" stepKey="verifyCannotNavigateToPageBuilderTemplatesGridPage">
+            <argument name="pageHeading" value="404 Error"/>
+        </actionGroup>
+    </test>
+    <test name="PageBuilderApplyTemplateMultipleTimes">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Templates"/>
+            <title value="Apply Page Builder Template Multiple Times"/>
+            <description value="Verify that user can apply a Page Builder template multiple times"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="PB-341"/>
+            <testCaseId value="MC-30616"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-templates"/>
+        </annotations>
+        <before>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
+                <argument name="CMSPage" value="$$createCMSPage$$"/>
+            </actionGroup>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+                <argument name="contentType" value="PageBuilderButtonsContentType"/>
+            </actionGroup>
+            <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+                <argument name="contentType" value="PageBuilderButtonsContentType"/>
+            </actionGroup>
+            <seeElement selector="{{ButtonItemOnStage.emptyButtonItemElement('1')}}" stepKey="seeEmptyButton"/>
+            <actionGroup ref="openPageBuilderSaveTemplateModal" stepKey="openPageBuilderSaveTemplateModal"/>
+            <actionGroup ref="fillPageBuilderSaveTemplateForm" stepKey="fillPageBuilderSaveTemplateForm"/>
+            <actionGroup ref="savePageBuilderTemplate" stepKey="savePageBuilderTemplate"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="navigateToPageBuilderTemplatesGridPage" stepKey="navigateToPageBuilderTemplatesGridPage"/>
+            <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid"/>
+            <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGrid"/>
+            <actionGroup ref="deletePageBuilderTemplate" stepKey="deletePageBuilderTemplate"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Go to CMS Page -->
+        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Stage Empty -->
+        <actionGroup ref="verifyEmptyStage" stepKey="verifyEmptyStage"/>
+        <!-- Apply Template -->
+        <actionGroup ref="openPageBuilderApplyTemplateSlideOut" stepKey="openPageBuilderApplyTemplateSlideOut"/>
+        <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+        </actionGroup>
+        <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGrid">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+        </actionGroup>
+        <actionGroup ref="clickApplyFromPageBuilderApplyTemplateSlideOut" stepKey="clickApplyFromPageBuilderApplyTemplateSlideOut"/>
+        <actionGroup ref="confirmApplyFromPageBuilderApplyTemplateSlideOut" stepKey="confirmApplyFromPageBuilderApplyTemplateSlideOut"/>
+        <!-- Validate Stage -->
+        <seeElement selector="{{ButtonItemOnStage.emptyButtonItemElement('1')}}" stepKey="seeEmptyButton"/>
+        <!-- Delete Button Group -->
+        <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeButtonFromStage">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="confirmRemovalModal" stepKey="confirmRemovalModal"/>
+        <actionGroup ref="verifyEmptyStage" stepKey="verifyEmptyStage2"/>
+        <!-- Apply Template Again -->
+        <actionGroup ref="openPageBuilderApplyTemplateSlideOut" stepKey="openPageBuilderApplyTemplateSlideOut2"/>
+        <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid2">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+        </actionGroup>
+        <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGrid2">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+        </actionGroup>
+        <actionGroup ref="clickApplyFromPageBuilderApplyTemplateSlideOut" stepKey="clickApplyFromPageBuilderApplyTemplateSlideOut2"/>
+        <actionGroup ref="confirmApplyFromPageBuilderApplyTemplateSlideOut" stepKey="confirmApplyFromPageBuilderApplyTemplateSlideOut2"/>
+        <!-- Validate Stage Again -->
+        <seeElement selector="{{ButtonItemOnStage.emptyButtonItemElement('1')}}" stepKey="seeEmptyButton2"/>
+    </test>
+    <test name="PageBuilderVerifySaveContentAsTemplateModalAndApplyTemplateSlideOut">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Templates"/>
+            <title value="Verify Save Content as Template Modal and Apply Template Slide Out"/>
+            <description value="Verify the functionality and content of the Save Content as Template modal and the Apply Template slide out."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="PB-341"/>
+            <testCaseId value="MC-30619"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-templates"/>
+        </annotations>
+        <before>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
+                <argument name="CMSPage" value="$$createCMSPage$$"/>
+            </actionGroup>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="navigateToPageBuilderTemplatesGridPage" stepKey="navigateToPageBuilderTemplatesGridPage"/>
+            <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid"/>
+            <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGrid">
+                <argument name="keyword" value="{{PageBuilderTemplateName_EdgeCases.noLeadingSpace}}"/>
+            </actionGroup>
+            <actionGroup ref="deletePageBuilderTemplate" stepKey="deletePageBuilderTemplate">
+                <argument name="templateIdentifier" value="{{PageBuilderTemplateName_EdgeCases.noLeadingSpace}}"/>
+            </actionGroup>
+            <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid2"/>
+            <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGrid2">
+                <argument name="keyword" value="{{PageBuilderTemplateName_EdgeCases.0}}"/>
+            </actionGroup>
+            <actionGroup ref="deletePageBuilderTemplate" stepKey="deletePageBuilderTemplate2">
+                <argument name="templateIdentifier" value="{{PageBuilderTemplateName_EdgeCases.0}}"/>
+            </actionGroup>
+            <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid3"/>
+            <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGrid3">
+                <argument name="keyword" value="./;[]"/>
+            </actionGroup>
+            <actionGroup ref="deletePageBuilderTemplate" stepKey="deletePageBuilderTemplate3">
+                <argument name="templateIdentifier" value="{{PageBuilderTemplateName_EdgeCases.specialCharacters}}"/>
+            </actionGroup>
+            <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid4"/>
+            <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGrid4">
+                <argument name="keyword" value="{{PageBuilderTemplateName_EdgeCases.commonCharacters}}"/>
+            </actionGroup>
+            <actionGroup ref="deletePageBuilderTemplate" stepKey="deletePageBuilderTemplate4">
+                <argument name="templateIdentifier" value="{{PageBuilderTemplateName_EdgeCases.commonCharacters}}"/>
+            </actionGroup>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Open and Close Save Template Modal -->
+        <actionGroup ref="openPageBuilderSaveTemplateModal" stepKey="openPageBuilderSaveTemplateModal1"/>
+        <actionGroup ref="closePageBuilderSaveTemplateModal" stepKey="closePageBuilderSaveTemplateModal"/>
+        <!-- Validate Save Template Modal -->
+        <actionGroup ref="openPageBuilderSaveTemplateModal" stepKey="openPageBuilderSaveTemplateModal2"/>
+        <actionGroup ref="validatePageBuilderSaveTemplateModal" stepKey="validatePageBuilderSaveTemplateModal"/>
+        <!-- Create Leading Space Templates -->
+        <actionGroup ref="fillPageBuilderSaveTemplateForm" stepKey="fillPageBuilderSaveTemplateFormLeadingSpace1">
+            <argument name="templateName" value="{{PageBuilderTemplateName_EdgeCases.noLeadingSpace}}"/>
+        </actionGroup>
+        <actionGroup ref="clickSaveOnPageBuilderSaveTemplateModal" stepKey="clickSaveOnPageBuilderSaveTemplateModal"/>
+        <actionGroup ref="validatePageBuilderSaveTemplateConfirmationModal" stepKey="validatePageBuilderSaveTemplateConfirmationModal"/>
+        <actionGroup ref="clickCloseOnPageBuilderSaveTemplateConfirmationModal" stepKey="clickCloseOnPageBuilderSaveTemplateConfirmationModal"/>
+        <actionGroup ref="openPageBuilderSaveTemplateModal" stepKey="openPageBuilderSaveTemplateModal3"/>
+        <actionGroup ref="fillPageBuilderSaveTemplateForm" stepKey="fillPageBuilderSaveTemplateFormLeadingSpace2">
+            <argument name="templateName" value="{{PageBuilderTemplateName_EdgeCases.leadingSpace}}"/>
+        </actionGroup>
+        <actionGroup ref="clickSaveOnPageBuilderSaveTemplateModalAndExpectErrorModal" stepKey="clickSaveOnPageBuilderSaveTemplateModalAndExpectErrorModal"/>
+        <actionGroup ref="validatePageBuilderSaveTemplateErrorModal" stepKey="validatePageBuilderSaveTemplateErrorModal">
+            <argument name="errorMessage" value="A template with this name already exists."/>
+        </actionGroup>
+        <actionGroup ref="clickOkOnPageBuilderSaveTemplateErrorModal" stepKey="clickOkOnPageBuilderSaveTemplateErrorModal"/>
+        <!-- Attempt Save Empty Template Name -->
+        <actionGroup ref="fillPageBuilderSaveTemplateForm" stepKey="fillPageBuilderSaveTemplateFormEmpty">
+            <argument name="templateName" value="{{PageBuilderTemplateName_EdgeCases.empty}}"/>
+        </actionGroup>
+        <actionGroup ref="clickSaveOnPageBuilderSaveTemplateModalAndExpectNoChanges" stepKey="clickSaveOnPageBuilderSaveTemplateModalAndExpectNoChanges"/>
+        <!-- Attempt Save Space in Template Name -->
+        <actionGroup ref="fillPageBuilderSaveTemplateFormWithSpaceForTemplateName" stepKey="fillPageBuilderSaveTemplateFormSpace"/>
+        <actionGroup ref="clickSaveOnPageBuilderSaveTemplateModalAndExpectErrorModal" stepKey="clickSaveOnPageBuilderSaveTemplateModalAndExpectErrorModal2"/>
+        <actionGroup ref="validatePageBuilderSaveTemplateErrorModal" stepKey="validatePageBuilderSaveTemplateErrorModal2"/>
+        <actionGroup ref="clickOkOnPageBuilderSaveTemplateErrorModal" stepKey="clickOkOnPageBuilderSaveTemplateErrorModal2"/>
+        <actionGroup ref="closePageBuilderSaveTemplateModal" stepKey="closePageBuilderSaveTemplateModal2"/>
+        <!-- Validate No Invalid Templates Were Saved -->
+        <actionGroup ref="openPageBuilderApplyTemplateSlideOut" stepKey="openPageBuilderApplyTemplateSlideOut"/>
+        <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+        </actionGroup>
+        <actionGroup ref="sortPageBuilderTemplateGridColumn" stepKey="sortPageBuilderTemplateGridColumnId">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="columnName" value="{{PageBuilderTemplateGridColumns.id}}"/>
+        </actionGroup>
+        <actionGroup ref="validatePageBuilderTemplateDataInGrid" stepKey="validatePageBuilderTemplateDataInGrid1">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="templateName" value="{{PageBuilderTemplateName_EdgeCases.leadingSpace}}"/>
+            <argument name="rowIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGridLeadingSpace">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="keyword" value="{{PageBuilderTemplateName_EdgeCases.noLeadingSpace}}"/>
+        </actionGroup>
+        <actionGroup ref="validateTotalRecordsFoundInPageBuilderTemplateGrid" stepKey="validateTotalRecordsFoundInPageBuilderTemplateGrid">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="total" value="1"/>
+        </actionGroup>
+        <!-- Validate Preview Image -->
+        <actionGroup ref="openPageBuilderTemplatePreviewImageModal" stepKey="openPageBuilderTemplatePreviewImageModal">
+            <argument name="templateName" value="{{PageBuilderTemplateName_EdgeCases.noLeadingSpace}}"/>
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+        </actionGroup>
+        <actionGroup ref="validatePageBuilderTemplatePreviewImageModal" stepKey="validatePageBuilderTemplatePreviewImageModal">
+            <argument name="templateName" value="{{PageBuilderTemplateName_EdgeCases.noLeadingSpace}}"/>
+        </actionGroup>
+        <actionGroup ref="closePageBuilderTemplatePreviewImageModal" stepKey="closePageBuilderTemplatePreviewImageModal">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+        </actionGroup>
+        <actionGroup ref="closePageBuilderApplyTemplateSlideOut" stepKey="closePageBuilderApplyTemplateSlideOut"/>
+        <!-- Create 0 Template Name -->
+        <actionGroup ref="openPageBuilderSaveTemplateModal" stepKey="openPageBuilderSaveTemplateModal4"/>
+        <actionGroup ref="fillPageBuilderSaveTemplateForm" stepKey="fillPageBuilderSaveTemplateFormZero">
+            <argument name="templateName" value="{{PageBuilderTemplateName_EdgeCases.0}}"/>
+        </actionGroup>
+        <actionGroup ref="savePageBuilderTemplate" stepKey="savePageBuilderTemplateZero"/>
+        <!-- Create Special Characters Template Name -->
+        <actionGroup ref="openPageBuilderSaveTemplateModal" stepKey="openPageBuilderSaveTemplateModal5"/>
+        <actionGroup ref="fillPageBuilderSaveTemplateForm" stepKey="fillPageBuilderSaveTemplateFormSpecialCharacters">
+            <argument name="templateName" value="{{PageBuilderTemplateName_EdgeCases.specialCharacters}}"/>
+        </actionGroup>
+        <actionGroup ref="savePageBuilderTemplate" stepKey="savePageBuilderTemplateZeroSpecialCharacters"/>
+        <!-- Create Common Characters Template Name -->
+        <actionGroup ref="openPageBuilderSaveTemplateModal" stepKey="openPageBuilderSaveTemplateModal6"/>
+        <actionGroup ref="fillPageBuilderSaveTemplateForm" stepKey="fillPageBuilderSaveTemplateFormCommonCharacters">
+            <argument name="templateName" value="{{PageBuilderTemplateName_EdgeCases.commonCharacters}}"/>
+        </actionGroup>
+        <generateDate date="now" format="M j, Y g:" stepKey="today"/>
+        <generateDate date="now" format="A" stepKey="todayAMorPM"/>
+        <actionGroup ref="savePageBuilderTemplate" stepKey="savePageBuilderTemplateZeroCommonCharacters"/>
+        <!-- Validate Common Characters Template -->
+        <actionGroup ref="openPageBuilderApplyTemplateSlideOut" stepKey="openPageBuilderApplyTemplateSlideOut2"/>
+        <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid3">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+        </actionGroup>
+        <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGridCommon">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="keyword" value="{{PageBuilderTemplateName_EdgeCases.commonCharacters}}"/>
+        </actionGroup>
+        <actionGroup ref="validatePageBuilderTemplateDataInGrid" stepKey="validatePageBuilderTemplateDataInGrid3">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="templateName" value="{{PageBuilderTemplateName_EdgeCases.commonCharacters}}"/>
+            <argument name="createdFor" value="{{PageBuilderTemplateCreatedFor.any}}"/>
+            <argument name="createdDate" value="{$today}"/>
+            <argument name="createdDateAMorPM" value="{$todayAMorPM}"/>
+            <argument name="rowIndex" value="1"/>
+        </actionGroup>
+        <!-- Validate 0 Template -->
+        <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid2">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+        </actionGroup>
+        <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateZero">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="keyword" value="{{PageBuilderTemplateName_EdgeCases.0}}"/>
+        </actionGroup>
+        <actionGroup ref="validatePageBuilderTemplateDataInGrid" stepKey="validatePageBuilderTemplateDataInGrid2">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="templateName" value="{{PageBuilderTemplateName_EdgeCases.0}}"/>
+            <argument name="rowIndex" value="1"/>
+        </actionGroup>
+        <!-- Validate Special Characters Template -->
+        <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid4">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+        </actionGroup>
+        <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateSpecial">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="keyword" value="./;[]"/>
+        </actionGroup>
+        <actionGroup ref="validatePageBuilderTemplateDataInGrid" stepKey="validatePageBuilderTemplateDataInGrid4">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="templateName" value="{{PageBuilderTemplateName_EdgeCases.specialCharacters}}"/>
+            <argument name="rowIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="closePageBuilderApplyTemplateSlideOut" stepKey="closePageBuilderApplyTemplateSlideOut2"/>
+        <!-- Verify Empty Stage -->
+        <actionGroup ref="verifyEmptyStage" stepKey="verifyEmptyStage"/>
+        <!-- Reopen Apply Template and Cancel Apply Confirm -->
+        <actionGroup ref="openPageBuilderApplyTemplateSlideOut" stepKey="openPageBuilderApplyTemplateSlideOut3"/>
+        <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid5">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+        </actionGroup>
+        <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateCommon">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="keyword" value="{{PageBuilderTemplateName_EdgeCases.commonCharacters}}"/>
+        </actionGroup>
+        <actionGroup ref="clickApplyFromPageBuilderApplyTemplateSlideOut" stepKey="clickApplyFromPageBuilderApplyTemplateSlideOut2">
+            <argument name="templateIdentifier" value="{{PageBuilderTemplateName_EdgeCases.commonCharacters}}"/>
+        </actionGroup>
+        <actionGroup ref="closeConfirmModal" stepKey="closeConfirmModal"/>
+        <actionGroup ref="closePageBuilderApplyTemplateSlideOut" stepKey="closePageBuilderApplyTemplateSlideOut4"/>
+        <!-- Verify Empty Stage -->
+        <actionGroup ref="verifyEmptyStage" stepKey="verifyEmptyStage2"/>
+    </test>
+    <test name="PageBuilderMustSavePageForApplyTemplateToSave">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Templates"/>
+            <title value="Verify Must Save Page for Apply Template to Save"/>
+            <description value="Verify that applying a template will not save to the page content unless the page is saved."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="PB-341"/>
+            <testCaseId value="MC-30621"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-templates"/>
+        </annotations>
+        <before>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
+                <argument name="CMSPage" value="$$createCMSPage$$"/>
+            </actionGroup>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+                <argument name="contentType" value="PageBuilderButtonsContentType"/>
+            </actionGroup>
+            <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+                <argument name="contentType" value="PageBuilderButtonsContentType"/>
+            </actionGroup>
+            <seeElement selector="{{ButtonItemOnStage.emptyButtonItemElement('1')}}" stepKey="seeEmptyButton"/>
+            <actionGroup ref="openPageBuilderSaveTemplateModal" stepKey="openPageBuilderSaveTemplateModal"/>
+            <actionGroup ref="fillPageBuilderSaveTemplateForm" stepKey="fillPageBuilderSaveTemplateForm"/>
+            <actionGroup ref="savePageBuilderTemplate" stepKey="savePageBuilderTemplate"/>
+            <!-- Go to CMS Page -->
+            <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage2">
+                <argument name="CMSPage" value="$$createCMSPage$$"/>
+            </actionGroup>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="navigateToPageBuilderTemplatesGridPage" stepKey="navigateToPageBuilderTemplatesGridPage"/>
+            <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid"/>
+            <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGrid"/>
+            <actionGroup ref="deletePageBuilderTemplate" stepKey="deletePageBuilderTemplate"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Apply Template -->
+        <actionGroup ref="openPageBuilderApplyTemplateSlideOut" stepKey="openPageBuilderApplyTemplateSlideOut"/>
+        <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+        </actionGroup>
+        <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGrid">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+        </actionGroup>
+        <actionGroup ref="clickApplyFromPageBuilderApplyTemplateSlideOut" stepKey="clickApplyFromPageBuilderApplyTemplateSlideOut2"/>
+        <actionGroup ref="confirmApplyFromPageBuilderApplyTemplateSlideOut" stepKey="confirmApplyFromPageBuilderApplyTemplateSlideOut2"/>
+        <!-- Validate Stage -->
+        <seeElement selector="{{ButtonItemOnStage.emptyButtonItemElement('1')}}" stepKey="seeEmptyButton"/>
+        <!-- Go to CMS PPageBuilderWithWYSIWYGage Again -->
+        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Verify Empty Stage -->
+        <actionGroup ref="verifyEmptyStage" stepKey="verifyEmptyStage"/>
+    </test>
+    <test name="PageBuilderTemplateGridPageGridFunctionality">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Templates"/>
+            <title value="Template Page Grid Functionality"/>
+            <description value="Tests that the Template page's grid functions correctly for filtering, searching, sorting, and pagination."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="PB-341"/>
+            <testCaseId value="MC-30665"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-templates"/>
+        </annotations>
+        <before>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
+                <argument name="CMSPage" value="$$createCMSPage$$"/>
+            </actionGroup>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="navigateToPageBuilderTemplatesGridPage" stepKey="navigateToPageBuilderTemplatesGridPage1"/>
+            <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid"/>
+            <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGrid">
+                <argument name="keyword" value="{{PageBuilderTemplateName_Sorting.999}}"/>
+            </actionGroup>
+            <actionGroup ref="deletePageBuilderTemplate" stepKey="deletePageBuilderTemplate1">
+                <argument name="templateIdentifier" value="{{PageBuilderTemplateName_Sorting.999}}"/>
+            </actionGroup>
+            <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid2"/>
+            <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGrid2">
+                <argument name="keyword" value="{{PageBuilderTemplateName_Sorting.0}}"/>
+            </actionGroup>
+            <actionGroup ref="deletePageBuilderTemplate" stepKey="deletePageBuilderTemplate2">
+                <argument name="templateIdentifier" value="{{PageBuilderTemplateName_Sorting.0}}"/>
+            </actionGroup>
+            <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid3"/>
+            <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGrid3">
+                <argument name="keyword" value="{{PageBuilderTemplateName_Sorting.A}}"/>
+            </actionGroup>
+            <actionGroup ref="deletePageBuilderTemplate" stepKey="deletePageBuilderTemplate3">
+                <argument name="templateIdentifier" value="{{PageBuilderTemplateName_Sorting.A}}"/>
+            </actionGroup>
+            <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid4"/>
+            <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGrid4">
+                <argument name="keyword" value="{{PageBuilderTemplateName_Sorting.aaa}}"/>
+            </actionGroup>
+            <actionGroup ref="deletePageBuilderTemplate" stepKey="deletePageBuilderTemplate4">
+                <argument name="templateIdentifier" value="{{PageBuilderTemplateName_Sorting.aaa}}"/>
+            </actionGroup>
+            <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid5"/>
+            <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGrid5">
+                <argument name="keyword" value="{{PageBuilderTemplateName_Sorting.Z}}"/>
+            </actionGroup>
+            <actionGroup ref="deletePageBuilderTemplate" stepKey="deletePageBuilderTemplate5">
+                <argument name="templateIdentifier" value="{{PageBuilderTemplateName_Sorting.Z}}"/>
+            </actionGroup>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Create Template for Any -->
+        <actionGroup ref="openPageBuilderSaveTemplateModal" stepKey="openPageBuilderSaveTemplateModal"/>
+        <actionGroup ref="fillPageBuilderSaveTemplateForm" stepKey="fillPageBuilderSaveTemplateForm">
+            <argument name="templateName" value="{{PageBuilderTemplateName_Sorting.999}}"/>
+            <argument name="createdFor" value="{{PageBuilderTemplateCreatedFor.any}}"/>
+        </actionGroup>
+        <actionGroup ref="savePageBuilderTemplate" stepKey="savePageBuilderTemplate"/>
+        <!-- Create Template for Page -->
+        <actionGroup ref="openPageBuilderSaveTemplateModal" stepKey="openPageBuilderSaveTemplateModal2"/>
+        <actionGroup ref="fillPageBuilderSaveTemplateForm" stepKey="fillPageBuilderSaveTemplateForm2">
+            <argument name="templateName" value="{{PageBuilderTemplateName_Sorting.0}}"/>
+            <argument name="createdFor" value="{{PageBuilderTemplateCreatedFor.page}}"/>
+        </actionGroup>
+        <actionGroup ref="savePageBuilderTemplate" stepKey="savePageBuilderTemplate2"/>
+        <!-- Create Template for Product -->
+        <actionGroup ref="openPageBuilderSaveTemplateModal" stepKey="openPageBuilderSaveTemplateModal3"/>
+        <actionGroup ref="fillPageBuilderSaveTemplateForm" stepKey="fillPageBuilderSaveTemplateForm3">
+            <argument name="templateName" value="{{PageBuilderTemplateName_Sorting.A}}"/>
+            <argument name="createdFor" value="{{PageBuilderTemplateCreatedFor.product}}"/>
+        </actionGroup>
+        <actionGroup ref="savePageBuilderTemplate" stepKey="savePageBuilderTemplate3"/>
+        <!-- Create Template for Category -->
+        <actionGroup ref="openPageBuilderSaveTemplateModal" stepKey="openPageBuilderSaveTemplateModal4"/>
+        <actionGroup ref="fillPageBuilderSaveTemplateForm" stepKey="fillPageBuilderSaveTemplateForm4">
+            <argument name="templateName" value="{{PageBuilderTemplateName_Sorting.aaa}}"/>
+            <argument name="createdFor" value="{{PageBuilderTemplateCreatedFor.category}}"/>
+        </actionGroup>
+        <actionGroup ref="savePageBuilderTemplate" stepKey="savePageBuilderTemplate4"/>
+        <!-- Create Template for Block -->
+        <actionGroup ref="openPageBuilderSaveTemplateModal" stepKey="openPageBuilderSaveTemplateModal5"/>
+        <actionGroup ref="fillPageBuilderSaveTemplateForm" stepKey="fillPageBuilderSaveTemplateForm5">
+            <argument name="templateName" value="{{PageBuilderTemplateName_Sorting.Z}}"/>
+            <argument name="createdFor" value="{{PageBuilderTemplateCreatedFor.block}}"/>
+        </actionGroup>
+        <actionGroup ref="savePageBuilderTemplate" stepKey="savePageBuilderTemplate5"/>
+        <actionGroup ref="navigateToPageBuilderTemplatesGridPage" stepKey="navigateToPageBuilderTemplatesGridPage"/>
+        <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid"/>
+        <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGrid">
+            <argument name="keyword" value="sorting_"/>
+        </actionGroup>
+        <actionGroup ref="validateTotalRecordsFoundInPageBuilderTemplateGrid" stepKey="validateTotalRecordsFoundInPageBuilderTemplateGrid0">
+            <argument name="total" value="5"/>
+        </actionGroup>
+        <!-- Sort by ID -->
+        <grabTextFrom selector="{{PageBuilderTemplatesPageGrid.templateId('1')}}" stepKey="templateIdRow1Initial"/>
+        <actionGroup ref="sortPageBuilderTemplateGridColumn" stepKey="sortPageBuilderTemplateGridColumnId">
+            <argument name="columnName" value="{{PageBuilderTemplateGridColumns.id}}"/>
+        </actionGroup>
+        <grabTextFrom selector="{{PageBuilderTemplatesPageGrid.templateId('1')}}" stepKey="templateIdRow1AfterSort"/>
+        <assertGreaterThan stepKey="assertTemplateIdSort">
+            <expectedResult type="variable">templateIdRow1Initial</expectedResult>
+            <actualResult type="variable">templateIdRow1AfterSort</actualResult>
+        </assertGreaterThan>
+        <!-- Filter by ID -->
+        <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid1"/>
+        <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGrid2">
+            <argument name="keyword" value="sorting_"/>
+        </actionGroup>
+        <actionGroup ref="filterPageBuilderTemplateGridById" stepKey="filterPageBuilderTemplateGridById">
+            <argument name="templateIdFrom" value="{$templateIdRow1Initial}"/>
+            <argument name="templateIdTo" value="{$templateIdRow1AfterSort}"/>
+        </actionGroup>
+        <actionGroup ref="validateTotalRecordsFoundInPageBuilderTemplateGrid" stepKey="validateTotalRecordsFoundInPageBuilderTemplateGrid">
+            <argument name="total" value="5"/>
+        </actionGroup>
+        <grabTextFrom selector="{{PageBuilderTemplatesPageGrid.templateId('1')}}" stepKey="templateIdRow1AfterFilterInitial"/>
+        <assertEquals stepKey="assertTemplateIdEquals1">
+            <expectedResult type="variable">templateIdRow1AfterFilterInitial</expectedResult>
+            <actualResult type="variable">templateIdRow1AfterSort</actualResult>
+        </assertEquals>
+        <actionGroup ref="sortPageBuilderTemplateGridColumn" stepKey="sortPageBuilderTemplateGridColumnId2">
+            <argument name="columnName" value="{{PageBuilderTemplateGridColumns.id}}"/>
+        </actionGroup>
+        <grabTextFrom selector="{{PageBuilderTemplatesPageGrid.templateId('1')}}" stepKey="templateIdRow1AfterFilterAndSort"/>
+        <assertEquals stepKey="assertTemplateIdEquals2">
+            <expectedResult type="variable">templateIdRow1Initial</expectedResult>
+            <actualResult type="variable">templateIdRow1AfterFilterAndSort</actualResult>
+        </assertEquals>
+        <!-- Filter and Sort by Template Name -->
+        <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid2"/>
+        <actionGroup ref="filterPageBuilderTemplateGridByName" stepKey="filterPageBuilderTemplateGridByTemplateName3">
+            <argument name="templateName" value="sorting_"/>
+        </actionGroup>
+        <actionGroup ref="sortPageBuilderTemplateGridColumn" stepKey="sortPageBuilderTemplateGridColumnTemplateName">
+            <argument name="columnName" value="{{PageBuilderTemplateGridColumns.templateName}}"/>
+        </actionGroup>
+        <see userInput="{{PageBuilderTemplateName_Sorting.0}}" selector="{{PageBuilderTemplatesPageGrid.templateName('1')}}" stepKey="seeTemplateName1"/>
+        <see userInput="{{PageBuilderTemplateName_Sorting.999}}" selector="{{PageBuilderTemplatesPageGrid.templateName('2')}}" stepKey="seeTemplateName2"/>
+        <see userInput="{{PageBuilderTemplateName_Sorting.A}}" selector="{{PageBuilderTemplatesPageGrid.templateName('3')}}" stepKey="seeTemplateName3"/>
+        <see userInput="{{PageBuilderTemplateName_Sorting.aaa}}" selector="{{PageBuilderTemplatesPageGrid.templateName('4')}}" stepKey="seeTemplateName4"/>
+        <see userInput="{{PageBuilderTemplateName_Sorting.Z}}" selector="{{PageBuilderTemplatesPageGrid.templateName('5')}}" stepKey="seeTemplateName5"/>
+        <!-- Sort by Created For -->
+        <actionGroup ref="sortPageBuilderTemplateGridColumn" stepKey="sortPageBuilderTemplateGridColumnCreatedFor">
+            <argument name="columnName" value="{{PageBuilderTemplateGridColumns.createdFor}}"/>
+        </actionGroup>
+        <see userInput="{{PageBuilderTemplateCreatedFor.any}}" selector="{{PageBuilderTemplatesPageGrid.createdFor('1')}}" stepKey="seeTemplateCreatedFor1"/>
+        <see userInput="{{PageBuilderTemplateCreatedFor.block}}" selector="{{PageBuilderTemplatesPageGrid.createdFor('2')}}" stepKey="seeTemplateCreatedFor2"/>
+        <see userInput="{{PageBuilderTemplateCreatedFor.category}}" selector="{{PageBuilderTemplatesPageGrid.createdFor('3')}}" stepKey="seeTemplateCreatedFor3"/>
+        <see userInput="{{PageBuilderTemplateCreatedFor.page}}" selector="{{PageBuilderTemplatesPageGrid.createdFor('4')}}" stepKey="seeTemplateCreatedFor4"/>
+        <see userInput="{{PageBuilderTemplateCreatedFor.product}}" selector="{{PageBuilderTemplatesPageGrid.createdFor('5')}}" stepKey="seeTemplateCreatedFor5"/>
+        <!-- Filter by Created For -->
+        <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid3"/>
+        <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGrid3">
+            <argument name="keyword" value="sorting_"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderTemplatesGridFilter" stepKey="openPageBuilderTemplatesGridFilter"/>
+        <actionGroup ref="choosePageBuilderTemplateCreatedForOptionsInFilter" stepKey="choosePageBuilderTemplateCreatedForOptionsInFilter1">
+            <argument name="createdFor" value="{{PageBuilderTemplateCreatedFor.any}}"/>
+        </actionGroup>
+        <actionGroup ref="choosePageBuilderTemplateCreatedForOptionsInFilter" stepKey="choosePageBuilderTemplateCreatedForOptionsInFilter2">
+            <argument name="createdFor" value="{{PageBuilderTemplateCreatedFor.page}}"/>
+        </actionGroup>
+        <actionGroup ref="clickApplyPageBuilderTemplatesGridFilter" stepKey="clickApplyPageBuilderTemplatesGridFilter"/>
+        <actionGroup ref="validateTotalRecordsFoundInPageBuilderTemplateGrid" stepKey="validateTotalRecordsFoundInPageBuilderTemplateGrid2">
+            <argument name="total" value="2"/>
+        </actionGroup>
+        <see userInput="{{PageBuilderTemplateCreatedFor.any}}" selector="{{PageBuilderTemplatesPageGrid.createdFor('1')}}" stepKey="seeTemplateCreatedForAfterFilter1"/>
+        <see userInput="{{PageBuilderTemplateCreatedFor.page}}" selector="{{PageBuilderTemplatesPageGrid.createdFor('2')}}" stepKey="seeTemplateCreatedForAfterFilter2"/>
+        <!-- Sort by Created -->
+        <actionGroup ref="sortPageBuilderTemplateGridColumn" stepKey="sortPageBuilderTemplateGridColumnCreated">
+            <argument name="columnName" value="{{PageBuilderTemplateGridColumns.created}}"/>
+        </actionGroup>
+        <grabTextFrom selector="{{PageBuilderTemplatesPageGrid.templateId('1')}}" stepKey="templateCreatedRow1Initial"/>
+        <actionGroup ref="sortPageBuilderTemplateGridColumn" stepKey="sortPageBuilderTemplateGridColumnCreated2">
+            <argument name="columnName" value="{{PageBuilderTemplateGridColumns.created}}"/>
+        </actionGroup>
+        <grabTextFrom selector="{{PageBuilderTemplatesPageGrid.templateId('1')}}" stepKey="templateCreatedRow1AfterSort"/>
+        <assertGreaterThan stepKey="assertTemplateCreatedSort">
+            <expectedResult type="variable">templateCreatedRow1Initial</expectedResult>
+            <actualResult type="variable">templateCreatedRow1AfterSort</actualResult>
+        </assertGreaterThan>
+        <!-- Filter by Created -->
+        <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid4"/>
+        <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGrid4">
+            <argument name="keyword" value="sorting_"/>
+        </actionGroup>
+        <generateDate date="-1 day" format="m/d/Y" stepKey="yesterday"/>
+        <generateDate date="+1 day" format="m/d/Y" stepKey="tomorrow"/>
+        <actionGroup ref="filterPageBuilderTemplateGridByCreatedDate" stepKey="filterPageBuilderTemplateGridByCreatedDate">
+            <argument name="createdFrom" value="{$yesterday}"/>
+            <argument name="createdTo" value="{$tomorrow}"/>
+        </actionGroup>
+        <actionGroup ref="validateTotalRecordsFoundInPageBuilderTemplateGrid" stepKey="validateTotalRecordsFoundInPageBuilderTemplateGrid3">
+            <argument name="total" value="5"/>
+        </actionGroup>
+        <!-- Search by Keyword -->
+        <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid5"/>
+        <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGrid5">
+            <argument name="keyword" value="{{PageBuilderTemplateName_Sorting.aaa}}"/>
+        </actionGroup>
+        <actionGroup ref="validatePageBuilderTemplateDataInGrid" stepKey="validatePageBuilderTemplateDataInGrid">
+            <argument name="templateName" value="{{PageBuilderTemplateName_Sorting.aaa}}"/>
+            <argument name="createdFor" value="{{PageBuilderTemplateCreatedFor.category}}"/>
+        </actionGroup>
+        <actionGroup ref="validateTotalRecordsFoundInPageBuilderTemplateGrid" stepKey="validateTotalRecordsFoundInPageBuilderTemplateGrid4">
+            <argument name="total" value="1"/>
+        </actionGroup>
+        <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid6"/>
+        <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGrid6">
+            <argument name="keyword" value="sorting_"/>
+        </actionGroup>
+        <actionGroup ref="validateTotalRecordsFoundInPageBuilderTemplateGrid" stepKey="validateTotalRecordsFoundInPageBuilderTemplateGrid5">
+            <argument name="total" value="5"/>
+        </actionGroup>
+        <!-- Pagination -->
+        <actionGroup ref="editPageBuilderTemplateGridTotalResultsPerPage" stepKey="editPageBuilderTemplateGridTotalResultsPerPage">
+            <argument name="totalPerPage" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateTotalNumberOfRowsInPageBuilderTemplateGrid" stepKey="validateTotalNumberOfRowsInPageBuilderTemplateGrid6">
+            <argument name="total" value="2"/>
+        </actionGroup>
+        <grabTextFrom selector="{{PageBuilderTemplatesPageGrid.templateName('1')}}" stepKey="templateNameOnPageOne"/>
+        <actionGroup ref="clickNextPageOnPageBuilderTemplateGrid" stepKey="clickNextPageOnPageBuilderTemplateGrid"/>
+        <grabTextFrom selector="{{PageBuilderTemplatesPageGrid.templateName('1')}}" stepKey="templateNameOnPageTwo"/>
+        <assertNotEquals stepKey="assertTemplateNameNotTheSame">
+            <expectedResult type="variable">templateNameOnPageOne</expectedResult>
+            <actualResult type="variable">templateNameOnPageTwo</actualResult>
+        </assertNotEquals>
+        <actionGroup ref="clickPreviousPageOnPageBuilderTemplateGrid" stepKey="clickPreviousPageOnPageBuilderTemplateGrid"/>
+        <grabTextFrom selector="{{PageBuilderTemplatesPageGrid.templateName('1')}}" stepKey="templateNameOnPageOneAgain"/>
+        <assertEquals stepKey="assertTemplateNameTheSame">
+            <expectedResult type="variable">templateNameOnPageOne</expectedResult>
+            <actualResult type="variable">templateNameOnPageOneAgain</actualResult>
+        </assertEquals>
+        <!-- Validate Preview Image -->
+        <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid7"/>
+        <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGrid7">
+            <argument name="keyword" value="{{PageBuilderTemplateName_Sorting.aaa}}"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderTemplatePreviewImageModal" stepKey="openPageBuilderTemplatePreviewImageModal">
+            <argument name="templateName" value="{{PageBuilderTemplateName_Sorting.aaa}}"/>
+        </actionGroup>
+        <actionGroup ref="validatePageBuilderTemplatePreviewImageModal" stepKey="validatePageBuilderTemplatePreviewImageModal">
+            <argument name="templateName" value="{{PageBuilderTemplateName_Sorting.aaa}}"/>
+        </actionGroup>
+        <actionGroup ref="closePageBuilderTemplatePreviewImageModal" stepKey="closePageBuilderTemplatePreviewImageModal"/>
+    </test>
+    <test name="PageBuilderApplyTemplateGridFunctionality" extends="PageBuilderTemplateGridPageGridFunctionality">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Templates"/>
+            <title value="Apply Template Grid Functionality"/>
+            <description value="Tests that the Apply Template slide-out's grid functions correctly for filtering, searching, sorting, and pagination."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="PB-341"/>
+            <testCaseId value="MC-30664"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-templates"/>
+        </annotations>
+        <actionGroup ref="openPageBuilderApplyTemplateSlideOut" stepKey="navigateToPageBuilderTemplatesGridPage"/>
+        <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+        </actionGroup>
+        <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGrid">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="keyword" value="sorting_"/>
+        </actionGroup>
+        <actionGroup ref="validateTotalRecordsFoundInPageBuilderTemplateGrid" stepKey="validateTotalRecordsFoundInPageBuilderTemplateGrid0">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="total" value="5"/>
+        </actionGroup>
+        <!-- Sort by ID -->
+        <grabTextFrom selector="{{PageBuilderApplyTemplatesGrid.templateId('1')}}" stepKey="templateIdRow1Initial"/>
+        <actionGroup ref="sortPageBuilderTemplateGridColumn" stepKey="sortPageBuilderTemplateGridColumnId">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="columnName" value="{{PageBuilderTemplateGridColumns.id}}"/>
+        </actionGroup>
+        <grabTextFrom selector="{{PageBuilderApplyTemplatesGrid.templateId('1')}}" stepKey="templateIdRow1AfterSort"/>
+        <!-- Filter by ID -->
+        <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid1">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+        </actionGroup>
+        <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGrid2">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="keyword" value="sorting_"/>
+        </actionGroup>
+        <actionGroup ref="filterPageBuilderTemplateGridById" stepKey="filterPageBuilderTemplateGridById">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="templateIdFrom" value="{$templateIdRow1Initial}"/>
+            <argument name="templateIdTo" value="{$templateIdRow1AfterSort}"/>
+        </actionGroup>
+        <actionGroup ref="validateTotalRecordsFoundInPageBuilderTemplateGrid" stepKey="validateTotalRecordsFoundInPageBuilderTemplateGrid">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="total" value="5"/>
+        </actionGroup>
+        <grabTextFrom selector="{{PageBuilderApplyTemplatesGrid.templateId('1')}}" stepKey="templateIdRow1AfterFilterInitial"/>
+        <actionGroup ref="sortPageBuilderTemplateGridColumn" stepKey="sortPageBuilderTemplateGridColumnId2">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="columnName" value="{{PageBuilderTemplateGridColumns.id}}"/>
+        </actionGroup>
+        <grabTextFrom selector="{{PageBuilderApplyTemplatesGrid.templateId('1')}}" stepKey="templateIdRow1AfterFilterAndSort"/>
+        <!-- Filter and Sort by Template Name -->
+        <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid2">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+        </actionGroup>
+        <actionGroup ref="filterPageBuilderTemplateGridByName" stepKey="filterPageBuilderTemplateGridByTemplateName3">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="templateName" value="sorting_"/>
+        </actionGroup>
+        <actionGroup ref="sortPageBuilderTemplateGridColumn" stepKey="sortPageBuilderTemplateGridColumnTemplateName">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="columnName" value="{{PageBuilderTemplateGridColumns.templateName}}"/>
+        </actionGroup>
+        <see userInput="{{PageBuilderTemplateName_Sorting.0}}" selector="{{PageBuilderApplyTemplatesGrid.templateName('1')}}" stepKey="seeTemplateName1"/>
+        <see userInput="{{PageBuilderTemplateName_Sorting.999}}" selector="{{PageBuilderApplyTemplatesGrid.templateName('2')}}" stepKey="seeTemplateName2"/>
+        <see userInput="{{PageBuilderTemplateName_Sorting.A}}" selector="{{PageBuilderApplyTemplatesGrid.templateName('3')}}" stepKey="seeTemplateName3"/>
+        <see userInput="{{PageBuilderTemplateName_Sorting.aaa}}" selector="{{PageBuilderApplyTemplatesGrid.templateName('4')}}" stepKey="seeTemplateName4"/>
+        <see userInput="{{PageBuilderTemplateName_Sorting.Z}}" selector="{{PageBuilderApplyTemplatesGrid.templateName('5')}}" stepKey="seeTemplateName5"/>
+        <!-- Sort by Created For -->
+        <actionGroup ref="sortPageBuilderTemplateGridColumn" stepKey="sortPageBuilderTemplateGridColumnCreatedFor">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="columnName" value="{{PageBuilderTemplateGridColumns.createdFor}}"/>
+        </actionGroup>
+        <see userInput="{{PageBuilderTemplateCreatedFor.any}}" selector="{{PageBuilderApplyTemplatesGrid.createdFor('1')}}" stepKey="seeTemplateCreatedFor1"/>
+        <see userInput="{{PageBuilderTemplateCreatedFor.block}}" selector="{{PageBuilderApplyTemplatesGrid.createdFor('2')}}" stepKey="seeTemplateCreatedFor2"/>
+        <see userInput="{{PageBuilderTemplateCreatedFor.category}}" selector="{{PageBuilderApplyTemplatesGrid.createdFor('3')}}" stepKey="seeTemplateCreatedFor3"/>
+        <see userInput="{{PageBuilderTemplateCreatedFor.page}}" selector="{{PageBuilderApplyTemplatesGrid.createdFor('4')}}" stepKey="seeTemplateCreatedFor4"/>
+        <see userInput="{{PageBuilderTemplateCreatedFor.product}}" selector="{{PageBuilderApplyTemplatesGrid.createdFor('5')}}" stepKey="seeTemplateCreatedFor5"/>
+        <!-- Filter by Created For -->
+        <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid3">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+        </actionGroup>
+        <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGrid3">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="keyword" value="sorting_"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderTemplatesGridFilter" stepKey="openPageBuilderTemplatesGridFilter">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+        </actionGroup>
+        <actionGroup ref="choosePageBuilderTemplateCreatedForOptionsInFilter" stepKey="choosePageBuilderTemplateCreatedForOptionsInFilter1">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="createdFor" value="{{PageBuilderTemplateCreatedFor.any}}"/>
+        </actionGroup>
+        <actionGroup ref="choosePageBuilderTemplateCreatedForOptionsInFilter" stepKey="choosePageBuilderTemplateCreatedForOptionsInFilter2">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="createdFor" value="{{PageBuilderTemplateCreatedFor.page}}"/>
+        </actionGroup>
+        <actionGroup ref="clickApplyPageBuilderTemplatesGridFilter" stepKey="clickApplyPageBuilderTemplatesGridFilter">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+        </actionGroup>
+        <actionGroup ref="validateTotalRecordsFoundInPageBuilderTemplateGrid" stepKey="validateTotalRecordsFoundInPageBuilderTemplateGrid2">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="total" value="2"/>
+        </actionGroup>
+        <see userInput="{{PageBuilderTemplateCreatedFor.any}}" selector="{{PageBuilderApplyTemplatesGrid.createdFor('1')}}" stepKey="seeTemplateCreatedForAfterFilter1"/>
+        <see userInput="{{PageBuilderTemplateCreatedFor.page}}" selector="{{PageBuilderApplyTemplatesGrid.createdFor('2')}}" stepKey="seeTemplateCreatedForAfterFilter2"/>
+        <!-- Sort by Created -->
+        <actionGroup ref="sortPageBuilderTemplateGridColumn" stepKey="sortPageBuilderTemplateGridColumnCreated">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="columnName" value="{{PageBuilderTemplateGridColumns.created}}"/>
+        </actionGroup>
+        <grabTextFrom selector="{{PageBuilderApplyTemplatesGrid.templateId('1')}}" stepKey="templateCreatedRow1Initial"/>
+        <actionGroup ref="sortPageBuilderTemplateGridColumn" stepKey="sortPageBuilderTemplateGridColumnCreated2">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="columnName" value="{{PageBuilderTemplateGridColumns.created}}"/>
+        </actionGroup>
+        <grabTextFrom selector="{{PageBuilderApplyTemplatesGrid.templateId('1')}}" stepKey="templateCreatedRow1AfterSort"/>
+        <!-- Filter by Created -->
+        <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid4">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+        </actionGroup>
+        <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGrid4">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="keyword" value="sorting_"/>
+        </actionGroup>
+        <actionGroup ref="filterPageBuilderTemplateGridByCreatedDate" stepKey="filterPageBuilderTemplateGridByCreatedDate">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="createdFrom" value="{$yesterday}"/>
+            <argument name="createdTo" value="{$tomorrow}"/>
+        </actionGroup>
+        <actionGroup ref="validateTotalRecordsFoundInPageBuilderTemplateGrid" stepKey="validateTotalRecordsFoundInPageBuilderTemplateGrid3">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="total" value="5"/>
+        </actionGroup>
+        <!-- Search by Keyword -->
+        <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid5">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+        </actionGroup>
+        <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGrid5">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="keyword" value="{{PageBuilderTemplateName_Sorting.aaa}}"/>
+        </actionGroup>
+        <actionGroup ref="validatePageBuilderTemplateDataInGrid" stepKey="validatePageBuilderTemplateDataInGrid">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="templateName" value="{{PageBuilderTemplateName_Sorting.aaa}}"/>
+            <argument name="createdFor" value="{{PageBuilderTemplateCreatedFor.category}}"/>
+        </actionGroup>
+        <actionGroup ref="validateTotalRecordsFoundInPageBuilderTemplateGrid" stepKey="validateTotalRecordsFoundInPageBuilderTemplateGrid4">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="total" value="1"/>
+        </actionGroup>
+        <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid6">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+        </actionGroup>
+        <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGrid6">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="keyword" value="sorting_"/>
+        </actionGroup>
+        <actionGroup ref="validateTotalRecordsFoundInPageBuilderTemplateGrid" stepKey="validateTotalRecordsFoundInPageBuilderTemplateGrid5">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="total" value="5"/>
+        </actionGroup>
+        <!-- Pagination -->
+        <actionGroup ref="editPageBuilderTemplateGridTotalResultsPerPage" stepKey="editPageBuilderTemplateGridTotalResultsPerPage">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="totalPerPage" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateTotalNumberOfRowsInPageBuilderTemplateGrid" stepKey="validateTotalNumberOfRowsInPageBuilderTemplateGrid6">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="total" value="2"/>
+        </actionGroup>
+        <grabTextFrom selector="{{PageBuilderApplyTemplatesGrid.templateName('1')}}" stepKey="templateNameOnPageOne"/>
+        <actionGroup ref="clickNextPageOnPageBuilderTemplateGrid" stepKey="clickNextPageOnPageBuilderTemplateGrid">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+        </actionGroup>
+        <grabTextFrom selector="{{PageBuilderApplyTemplatesGrid.templateName('1')}}" stepKey="templateNameOnPageTwo"/>
+        <actionGroup ref="clickPreviousPageOnPageBuilderTemplateGrid" stepKey="clickPreviousPageOnPageBuilderTemplateGrid">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+        </actionGroup>
+        <grabTextFrom selector="{{PageBuilderApplyTemplatesGrid.templateName('1')}}" stepKey="templateNameOnPageOneAgain"/>
+        <!-- Validate Preview Image -->
+        <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid7">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+        </actionGroup>
+        <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGrid7">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="keyword" value="{{PageBuilderTemplateName_Sorting.aaa}}"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderTemplatePreviewImageModal" stepKey="openPageBuilderTemplatePreviewImageModal">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="templateName" value="{{PageBuilderTemplateName_Sorting.aaa}}"/>
+        </actionGroup>
+        <actionGroup ref="validatePageBuilderTemplatePreviewImageModal" stepKey="validatePageBuilderTemplatePreviewImageModal">
+            <argument name="templateName" value="{{PageBuilderTemplateName_Sorting.aaa}}"/>
+        </actionGroup>
+        <actionGroup ref="closePageBuilderTemplatePreviewImageModal" stepKey="closePageBuilderTemplatePreviewImageModal">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+        </actionGroup>
+    </test>
+    <test name="PageBuilderCreateTemplateOnCMSBlockForPageAndApplyTemplateToCatalogCategory">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Templates"/>
+            <title value="Create Template on CMS Block for a page and Apply Template to Catalog Category"/>
+            <description value="Verify that a user can create a Page Builder template on the CMS Block stage for a page and apply this template to a Catalog Category."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="PB-341"/>
+            <testCaseId value="MC-30724"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-templates"/>
+            <group value="pagebuilder-cms-block"/>
+            <group value="pagebuilder-cms-category"/>
+        </annotations>
+        <before>
+            <createData entity="_emptyCmsBlock" stepKey="createCMSBlock"/>
+            <createData entity="_defaultCategory" stepKey="createCategory"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="NavigateToCreatedCMSBlockPageActionGroup" stepKey="navigateToCreatedCMSBlock">
+                <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
+            </actionGroup>
+            <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+                <argument name="contentType" value="PageBuilderButtonsContentType"/>
+            </actionGroup>
+            <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+                <argument name="contentType" value="PageBuilderButtonsContentType"/>
+            </actionGroup>
+            <seeElement selector="{{ButtonItemOnStage.emptyButtonItemElement('1')}}" stepKey="seeEmptyButton"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock"/>
+            <deleteData createDataKey="createCategory" stepKey="deleteCategory"/>
+            <actionGroup ref="navigateToPageBuilderTemplatesGridPage" stepKey="navigateToPageBuilderTemplatesGridPage"/>
+            <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGrid"/>
+            <actionGroup ref="deletePageBuilderTemplate" stepKey="deletePageBuilderTemplate"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Save Template -->
+        <actionGroup ref="openPageBuilderSaveTemplateModal" stepKey="openPageBuilderSaveTemplateModal"/>
+        <actionGroup ref="fillPageBuilderSaveTemplateForm" stepKey="fillPageBuilderSaveTemplateForm">
+            <argument name="createdFor" value="{{PageBuilderTemplateCreatedFor.page}}"/>
+        </actionGroup>
+        <actionGroup ref="savePageBuilderTemplate" stepKey="savePageBuilderTemplate">
+            <argument name="baseContent" value="{{BlockNewPagePageActionsSection.saveBlock}}"/>
+        </actionGroup>
+        <!-- Go to Catalog Category -->
+        <actionGroup ref="NavigateToCreatedCategoryActionGroup" stepKey="navigateToCreatedCategory">
+            <argument name="Category" value="$$createCategory$$"/>
+        </actionGroup>
+        <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminCategorySection"/>
+        <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForDescription"/>
+        <!-- Validate Stage Empty -->
+        <actionGroup ref="verifyEmptyStage" stepKey="verifyEmptyStage"/>
+        <!-- Apply Template -->
+        <actionGroup ref="openPageBuilderApplyTemplateSlideOut" stepKey="openPageBuilderApplyTemplateSlideOut"/>
+        <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+        </actionGroup>
+        <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGrid">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+        </actionGroup>
+        <actionGroup ref="clickApplyFromPageBuilderApplyTemplateSlideOut" stepKey="clickApplyFromPageBuilderApplyTemplateSlideOut"/>
+        <actionGroup ref="confirmApplyFromPageBuilderApplyTemplateSlideOut" stepKey="confirmApplyFromPageBuilderApplyTemplateSlideOut">
+            <argument name="baseContent" value="{{PageBuilderStage.applyTemplateButton}}"/>
+        </actionGroup>
+        <!-- Validate Stage -->
+        <seeElement selector="{{ButtonItemOnStage.emptyButtonItemElement('1')}}" stepKey="seeEmptyButton"/>
+    </test>
+</tests>

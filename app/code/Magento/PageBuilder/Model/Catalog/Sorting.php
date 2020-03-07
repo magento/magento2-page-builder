@@ -62,13 +62,15 @@ class Sorting
      * Get the instance of the first option which is None
      *
      * @param string $sortOption
-     * @return Sorting\OptionInterface
+     * @return Sorting\OptionInterface|null
      */
-    public function getSortingInstance($sortOption): Sorting\OptionInterface
+    public function getSortingInstance($sortOption): ?Sorting\OptionInterface
     {
         if (isset($this->sortInstances[$sortOption])) {
             return $this->sortInstances[$sortOption];
         }
+
+        return null;
     }
 
     /**
@@ -83,12 +85,14 @@ class Sorting
         \Magento\Catalog\Model\ResourceModel\Product\Collection $collection
     ): \Magento\Catalog\Model\ResourceModel\Product\Collection {
         $sortBuilder = $this->getSortingInstance($option);
-        $_collection = $sortBuilder->sort($collection);
-
-        if ($_collection->isLoaded()) {
-            $_collection->clear();
+        if ($sortBuilder) {
+            $collection = $sortBuilder->sort($collection);
         }
 
-        return $_collection;
+        if ($collection->isLoaded()) {
+            $collection->clear();
+        }
+
+        return $collection;
     }
 }

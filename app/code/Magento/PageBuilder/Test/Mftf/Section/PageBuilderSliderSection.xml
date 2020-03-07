@@ -10,197 +10,229 @@
           xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
     <section name="SliderOnFrontend">
         <element name="all" type="button" selector="div[data-content-type=slider]"/>
-        <element name="base" type="button" selector="(//div[@data-content-type='slider'])[{{arg1}}]" parameterized="true"/>
-        <element name="hidden" type="button" selector="(//div[@data-content-type='slider'])[{{arg1}}][contains(@style,'display: none')]" parameterized="true"/>
-        <element name="notHidden" type="button" selector="(//div[@data-content-type='slider'])[{{arg1}}][not(contains(@style,'display: none'))]" parameterized="true"/>
-        <element name="slideNavigationDot" type="button" selector="((//div[@data-content-type='slider'])[{{arg1}}]//ul[@class='slick-dots']//button)[{{arg2}}]" parameterized="true"/>
-        <element name="previousSlideArrow" type="button" selector="(//div[@data-content-type='slider'])[{{arg1}}]//button[contains(@class,'slick-arrow') and contains(@class,'slick-prev')]" parameterized="true"/>
-        <element name="nextSlideArrow" type="button" selector="(//div[@data-content-type='slider'])[{{arg1}}]//button[contains(@class,'slick-arrow') and contains(@class,'slick-next')]" parameterized="true"/>
+        <element name="base" type="button" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}]" parameterized="true"/>
+        <element name="hidden" type="button" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}][contains(@style,'display: none')]" parameterized="true"/>
+        <element name="notHidden" type="button" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}][not(contains(@style,'display: none'))]" parameterized="true"/>
+        <element name="slideNavigationDot" type="button" selector="((//div[@data-content-type='slider'])[{{sliderIndex}}]//ul[@class='slick-dots']//button)[{{navigationDotIndex}}]" parameterized="true"/>
+        <element name="previousSlideArrow" type="button" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}]//button[contains(@class,'slick-arrow') and contains(@class,'slick-prev')]" parameterized="true"/>
+        <element name="nextSlideArrow" type="button" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}]//button[contains(@class,'slick-arrow') and contains(@class,'slick-next')]" parameterized="true"/>
         <!-- Settings Configuration -->
-        <element name="autoPlay" type="button" selector="(//div[@data-content-type='slider'])[{{arg1}}][@data-autoplay='{{arg2}}']" parameterized="true"/>
-        <element name="autoPlaySpeed" type="button" selector="(//div[@data-content-type='slider'])[{{arg1}}][@data-autoplay-speed='{{arg2}}']" parameterized="true"/>
-        <element name="fade" type="button" selector="(//div[@data-content-type='slider'])[{{arg1}}][@data-fade='{{arg2}}']" parameterized="true"/>
-        <element name="infiniteLoop" type="button" selector="(//div[@data-content-type='slider'])[{{arg1}}][@data-infinite-loop='{{arg2}}']" parameterized="true"/>
-        <element name="showArrows" type="button" selector="(//div[@data-content-type='slider'])[{{arg1}}][@data-show-arrows='{{arg2}}']" parameterized="true"/>
-        <element name="showDots" type="button" selector="(//div[@data-content-type='slider'])[{{arg1}}][@data-show-dots='{{arg2}}']" parameterized="true"/>
-        <element name="minHeight" type="button" selector="(//div[@data-content-type='slider'])[{{arg1}}][contains(@style,'min-height: {{arg2}}px;')]" parameterized="true"/>
+        <element name="autoPlay" type="button" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}][@data-autoplay='{{autoplay}}']" parameterized="true"/>
+        <element name="autoPlaySpeed" type="button" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}][@data-autoplay-speed='{{autoplaySpeed}}']" parameterized="true"/>
+        <element name="fade" type="button" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}][@data-fade='{{fade}}']" parameterized="true"/>
+        <element name="infiniteLoop" type="button" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}][@data-infinite-loop='{{infiniteLoop}}']" parameterized="true"/>
+        <element name="showArrows" type="button" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}][@data-show-arrows='{{showArrows}}']" parameterized="true"/>
+        <element name="showDots" type="button" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}][@data-show-dots='{{showDots}}']" parameterized="true"/>
+        <element name="minHeight" type="button" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}][contains(@style,'min-height: {{minHeight}};')]" parameterized="true"/>
+        <element name="noMinHeight" type="button" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}][not(contains(@style,'min-height:'))]" parameterized="true"/>
         <!-- Advanced Configuration -->
-        <element name="alignment" type="text" selector="(//div[@data-content-type='slider'])[{{arg1}}][contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
-        <element name="noAlignment" type="text" selector="(//div[@data-content-type='slider'])[{{arg1}}][not(contains(@style,'text-align:'))]" parameterized="true"/>
-        <element name="border" type="text" selector="(//div[@data-content-type='slider'])[{{arg1}}][contains(@style,'border-style: {{arg2}};')]" parameterized="true"/>
-        <element name="borderColor" type="text" selector="(//div[@data-content-type='slider'])[{{arg1}}][contains(@style,'border-color: {{arg2}};')]" parameterized="true"/>
-        <element name="noBorderColor" type="text" selector="(//div[@data-content-type='slider'])[{{arg1}}][not(contains(@style,'border-color:'))]" parameterized="true"/>
-        <element name="borderWidth" type="text" selector="(//div[@data-content-type='slider'])[{{arg1}}][contains(@style,'border-width: {{arg2}}px;')]" parameterized="true"/>
-        <element name="borderRadius" type="text" selector="(//div[@data-content-type='slider'])[{{arg1}}][contains(@style,'border-radius: {{arg2}}px;')]" parameterized="true"/>
-        <element name="cssClasses" type="text" selector="(//div[@data-content-type='slider'])[{{arg1}}][contains(@class,'{{arg2}}')]" parameterized="true"/>
-        <element name="margins" type="text" selector="(//div[@data-content-type='slider'])[{{arg1}}][contains(@style,'margin: {{arg2}}px;')]" parameterized="true"/>
-        <element name="padding" type="text" selector="(//div[@data-content-type='slider'])[{{arg1}}][contains(@style,'padding: {{arg2}}px;')]" parameterized="true"/>
+        <element name="alignment" type="text" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}][contains(@style,'text-align: {{alignment}};')]" parameterized="true"/>
+        <element name="noAlignment" type="text" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}][not(contains(@style,'text-align:'))]" parameterized="true"/>
+        <element name="border" type="text" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}][contains(@style,'border-style: {{border}};')]" parameterized="true"/>
+        <element name="borderColor" type="text" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}][contains(@style,'border-color: {{borderColor}};')]" parameterized="true"/>
+        <element name="noBorderColor" type="text" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}][not(contains(@style,'border-color:'))]" parameterized="true"/>
+        <element name="borderWidth" type="text" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}][contains(@style,'border-width: {{borderWidth}}px;')]" parameterized="true"/>
+        <element name="borderRadius" type="text" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}][contains(@style,'border-radius: {{borderRadius}}px;')]" parameterized="true"/>
+        <element name="cssClasses" type="text" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}][contains(@class,'{{cssClasses}}')]" parameterized="true"/>
+        <element name="margins" type="text" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}][contains(@style,'margin: {{margins}}px;')]" parameterized="true"/>
+        <element name="padding" type="text" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}][contains(@style,'padding: {{padding}}px;')]" parameterized="true"/>
     </section>
     <section name="SliderOnStage">
         <element name="all" type="button" selector="div[data-content-type=slider]"/>
-        <element name="base" type="button" selector="(//div[@data-content-type='slider'])[{{arg1}}]" parameterized="true"/>
-        <element name="containerCSS" type="text" selector="[data-content-type=slider] .slider-container"/>
-        <element name="hidden" type="button" selector="(//div[@data-content-type='slider'])[{{arg1}}]/ancestor::*[contains(@class, 'pagebuilder-content-type-wrapper') and contains(@class, 'pagebuilder-content-type-hidden')]" parameterized="true"/>
-        <element name="notHidden" type="button" selector="(//div[@data-content-type='slider'])[{{arg1}}]/parent::*[contains(@class, 'pagebuilder-content-type-wrapper') and not(contains(@class, 'pagebuilder-content-type-hidden'))][1]" parameterized="true"/>
-        <element name="slideNavigationDot" type="button" selector="(//div[@data-content-type='slider'])[{{arg1}}]//div[contains(@class,'navigation-dot')][{{arg2}}]" parameterized="true"/>
-        <element name="previousSlideArrow" type="button" selector="(//div[@data-content-type='slider'])[{{arg1}}]//button[contains(@class,'slick-arrow') and contains(@class,'slick-prev')]" parameterized="true"/>
-        <element name="nextSlideArrow" type="button" selector="(//div[@data-content-type='slider'])[{{arg1}}]//button[contains(@class,'slick-arrow') and contains(@class,'slick-next')]" parameterized="true"/>
+        <element name="base" type="button" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}]" parameterized="true"/>
+        <element name="containerCSS" type="text" selector="[data-content-type=slider] > .slider-container"/>
+        <element name="hidden" type="button" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}]/ancestor::*[contains(@class, 'pagebuilder-content-type-wrapper') and contains(@class, 'pagebuilder-content-type-hidden')]" parameterized="true"/>
+        <element name="notHidden" type="button" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}]/parent::*[contains(@class, 'pagebuilder-content-type-wrapper') and not(contains(@class, 'pagebuilder-content-type-hidden'))][1]" parameterized="true"/>
+        <element name="slideNavigationDot" type="button" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}]//div[contains(@class,'navigation-dot')][{{navigationDotIndex}}]" parameterized="true"/>
+        <element name="previousSlideArrow" type="button" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}]//button[contains(@class,'slick-arrow') and contains(@class,'slick-prev')]" parameterized="true"/>
+        <element name="nextSlideArrow" type="button" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}]//button[contains(@class,'slick-arrow') and contains(@class,'slick-next')]" parameterized="true"/>
         <element name="activeSlideNavigationDot" type="button" selector="div.navigation-dot.active"/>
-        <element name="slideNavigationDotNameTooltip" type="button" selector="(//div[@data-content-type='slider'])[{{arg1}}]//span[@role='tooltip']" parameterized="true"/>
+        <element name="slideNavigationDotNameTooltip" type="button" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}]//span[@role='tooltip']" parameterized="true"/>
         <element name="slideNavigationDragHandle" type="button" selector="a.navigation-dot-anchor"/>
-        <element name="slideNavigationDragHandleByIndex" type="button" selector="((//div[@data-content-type='slider'])[{{arg1}}]//a[contains(@class,'navigation-dot-anchor')])[{{arg2}}]" parameterized="true"/>
+        <element name="slideNavigationDragHandleByIndex" type="button" selector="((//div[@data-content-type='slider'])[{{sliderIndex}}]//a[contains(@class,'navigation-dot-anchor')])[{{navigationDotIndex}}]" parameterized="true"/>
         <!-- Settings Configuration -->
-        <element name="autoPlay" type="button" selector="(//div[@data-content-type='slider'])[{{arg1}}][@data-autoplay='{{arg2}}']" parameterized="true"/>
-        <element name="autoPlaySpeed" type="button" selector="(//div[@data-content-type='slider'])[{{arg1}}][@data-autoplay-speed='{{arg2}}']" parameterized="true"/>
-        <element name="fade" type="button" selector="(//div[@data-content-type='slider'])[{{arg1}}][@data-fade='{{arg2}}']" parameterized="true"/>
-        <element name="infiniteLoop" type="button" selector="(//div[@data-content-type='slider'])[{{arg1}}][@data-infinite-loop='{{arg2}}']" parameterized="true"/>
-        <element name="showArrows" type="button" selector="(//div[@data-content-type='slider'])[{{arg1}}][@data-show-arrows='{{arg2}}']" parameterized="true"/>
-        <element name="showDots" type="button" selector="(//div[@data-content-type='slider'])[{{arg1}}][@data-show-dots='{{arg2}}']" parameterized="true"/>
-        <element name="minHeight" type="button" selector="(//div[@data-content-type='slider']/div[contains(@class,'slider-container')])[{{arg1}}][contains(@style,'min-height: {{arg2}}px;')]" parameterized="true"/>
+        <element name="autoPlay" type="button" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}][@data-autoplay='{{autoplay}}']" parameterized="true"/>
+        <element name="autoPlaySpeed" type="button" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}][@data-autoplay-speed='{{autoplaySpeed}}']" parameterized="true"/>
+        <element name="fade" type="button" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}][@data-fade='{{fade}}']" parameterized="true"/>
+        <element name="infiniteLoop" type="button" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}][@data-infinite-loop='{{infiniteLoop}}']" parameterized="true"/>
+        <element name="showArrows" type="button" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}][@data-show-arrows='{{showArrows}}']" parameterized="true"/>
+        <element name="showDots" type="button" selector="(//div[@data-content-type='slider'])[{{sliderIndex}}][@data-show-dots='{{showDots}}']" parameterized="true"/>
+        <element name="minHeight" type="button" selector="(//div[@data-content-type='slider']/div[contains(@class,'slider-container')])[{{sliderContainerIndex}}][contains(@style,'min-height: {{minHeight}};')]" parameterized="true"/>
+        <element name="noMinHeight" type="button" selector="(//div[@data-content-type='slider']/div[contains(@class,'slider-container')])[{{sliderContainerIndex}}][not(contains(@style,'min-height:'))]" parameterized="true"/>
         <!-- Advanced Configuration -->
-        <element name="alignment" type="text" selector="(//div[@data-content-type='slider']/div[contains(@class,'slider-container')])[{{arg1}}][contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
-        <element name="noAlignment" type="text" selector="(//div[@data-content-type='slider']/div[contains(@class,'slider-container')])[{{arg1}}][not(contains(@style,'text-align:'))]" parameterized="true"/>
-        <element name="border" type="text" selector="(//div[@data-content-type='slider']/div[contains(@class,'slider-container')])[{{arg1}}][contains(@style,'border-style: {{arg2}};')]" parameterized="true"/>
-        <element name="borderColor" type="text" selector="(//div[@data-content-type='slider']/div[contains(@class,'slider-container')])[{{arg1}}][contains(@style,'border-color: {{arg2}};')]" parameterized="true"/>
-        <element name="noBorderColor" type="text" selector="(//div[@data-content-type='slider']/div[contains(@class,'slider-container')])[{{arg1}}][not(contains(@style,'border-color:'))]" parameterized="true"/>
-        <element name="borderWidth" type="text" selector="(//div[@data-content-type='slider']/div[contains(@class,'slider-container')])[{{arg1}}][contains(@style,'border-width: {{arg2}}px;')]" parameterized="true"/>
-        <element name="borderRadius" type="text" selector="(//div[@data-content-type='slider']/div[contains(@class,'slider-container')])[{{arg1}}][contains(@style,'border-radius: {{arg2}}px;')]" parameterized="true"/>
-        <element name="cssClasses" type="text" selector="(//div[@data-content-type='slider']/div[contains(@class,'slider-container')])[{{arg1}}][contains(@class,'{{arg2}}')]" parameterized="true"/>
-        <element name="margins" type="text" selector="(//div[@data-content-type='slider']/div[contains(@class,'slider-container')])[{{arg1}}][contains(@style,'margin: {{arg2}}px;')]" parameterized="true"/>
-        <element name="padding" type="text" selector="(//div[@data-content-type='slider']/div[contains(@class,'slider-container')])[{{arg1}}][contains(@style,'padding: {{arg2}}px;')]" parameterized="true"/>
+        <element name="alignment" type="text" selector="(//div[@data-content-type='slider']/div[contains(@class,'slider-container')])[{{sliderContainerIndex}}][contains(@style,'text-align: {{alignment}};')]" parameterized="true"/>
+        <element name="noAlignment" type="text" selector="(//div[@data-content-type='slider']/div[contains(@class,'slider-container')])[{{sliderContainerIndex}}][not(contains(@style,'text-align:'))]" parameterized="true"/>
+        <element name="border" type="text" selector="(//div[@data-content-type='slider']/div[contains(@class,'slider-container')])[{{sliderContainerIndex}}][contains(@style,'border-style: {{border}};')]" parameterized="true"/>
+        <element name="borderColor" type="text" selector="(//div[@data-content-type='slider']/div[contains(@class,'slider-container')])[{{sliderContainerIndex}}][contains(@style,'border-color: {{borderColor}};')]" parameterized="true"/>
+        <element name="noBorderColor" type="text" selector="(//div[@data-content-type='slider']/div[contains(@class,'slider-container')])[{{sliderContainerIndex}}][not(contains(@style,'border-color:'))]" parameterized="true"/>
+        <element name="borderWidth" type="text" selector="(//div[@data-content-type='slider']/div[contains(@class,'slider-container')])[{{sliderContainerIndex}}][contains(@style,'border-width: {{borderWidth}}px;')]" parameterized="true"/>
+        <element name="borderRadius" type="text" selector="(//div[@data-content-type='slider']/div[contains(@class,'slider-container')])[{{sliderContainerIndex}}][contains(@style,'border-radius: {{borderRadius}}px;')]" parameterized="true"/>
+        <element name="cssClasses" type="text" selector="(//div[@data-content-type='slider']/div[contains(@class,'slider-container')])[{{sliderContainerIndex}}][contains(@class,'{{cssClasses}}')]" parameterized="true"/>
+        <element name="margins" type="text" selector="(//div[@data-content-type='slider']/div[contains(@class,'slider-container')])[{{sliderContainerIndex}}][contains(@style,'margin: {{margins}}px;')]" parameterized="true"/>
+        <element name="padding" type="text" selector="(//div[@data-content-type='slider']/div[contains(@class,'slider-container')])[{{sliderContainerIndex}}][contains(@style,'padding: {{padding}}px;')]" parameterized="true"/>
     </section>
     <section name="SlideOnFrontend">
         <element name="all" type="text" selector="div[data-content-type=slide]"/>
-        <element name="base" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}]" parameterized="true"/>
-        <element name="baseJS" type="button" selector="document.querySelectorAll('[data-content-type=slide] div.pagebuilder-slide-wrapper')[{{arg1}} - 1]" parameterized="true"/>
-        <element name="elementJS" type="button" selector="document.querySelectorAll('[data-content-type=slide]')[{{arg1}} - 1]" parameterized="true"/>
-        <element name="wrapperJS" type="button" selector="document.querySelectorAll('[data-content-type=slide] div.pagebuilder-slide-wrapper')[{{arg1}} - 1]" parameterized="true"/>
+        <element name="base" type="text" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]" parameterized="true"/>
+        <element name="baseJS" type="button" selector="document.querySelectorAll('[data-content-type=slide] div.pagebuilder-slide-wrapper')[{{slideWrapperIndex}} - 1]" parameterized="true"/>
+        <element name="elementJS" type="button" selector="document.querySelectorAll('[data-content-type=slide]')[{{slideIndex}} - 1]" parameterized="true"/>
+        <element name="wrapperJS" type="button" selector="document.querySelectorAll('[data-content-type=slide] div.pagebuilder-slide-wrapper')[{{slideWrapperIndex}} - 1]" parameterized="true"/>
         <element name="wrapperCSS" type="button" selector="[data-content-type=slide] .pagebuilder-slide-wrapper"/>
-        <element name="overlayJS" type="button" selector="document.querySelectorAll('[data-content-type=slide] div.pagebuilder-overlay')[{{arg1}} - 1]" parameterized="true"/>
-        <element name="slickSlideIndex" type="text" selector="[data-slick-index='{{arg1}}']" parameterized="true"/>
+        <element name="overlayJS" type="button" selector="document.querySelectorAll('[data-content-type=slide] div.pagebuilder-overlay')[{{slideOverlayIndex}} - 1]" parameterized="true"/>
+        <element name="slickSlideIndex" type="text" selector="[data-slick-index='{{slickSlideIndex}}']" parameterized="true"/>
         <element name="computedBoxSizing" type="button" selector="return window.getComputedStyle(document.querySelector('[data-content-type=slide]')).boxSizing"/>
-        <element name="wysiwygLinkUrl" type="button" selector="(//div[@data-content-type='slide'])[{{arg1}}]//div[@data-element='wrapper']//a[@href='{{arg2}}']" parameterized="true"/>
+        <element name="wysiwygLinkUrl" type="button" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='wrapper']//a[@href='{{link}}']" parameterized="true"/>
         <!-- Appearance Configuration -->
-        <element name="appearance" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}][@data-appearance='{{arg2}}']" parameterized="true"/>
-        <element name="slideName" type="button" selector="(//div[@data-content-type='slide'])[{{arg1}}][@data-slide-name='{{arg2}}']" parameterized="true"/>
-        <element name="minimumHeight" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}]//div[@data-element='wrapper'][contains(@style,'min-height: {{arg2}}px;')]" parameterized="true"/>
+        <element name="appearance" type="text" selector="(//div[@data-content-type='slide'])[{{slideIndex}}][@data-appearance='{{appearance}}']" parameterized="true"/>
+        <element name="slideName" type="button" selector="(//div[@data-content-type='slide'])[{{slideIndex}}][@data-slide-name='{{slideName}}']" parameterized="true"/>
+        <element name="minimumHeight" type="text" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='wrapper'][contains(@style,'min-height: {{minHeight}};')]" parameterized="true"/>
+        <element name="noMinimumHeight" type="text" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='wrapper'][not(contains(@style,'min-height:'))]" parameterized="true"/>
         <!-- Background Configuration -->
-        <element name="backgroundColor" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}]//div[@data-element='wrapper'][contains(@style,'background-color: {{arg2}};')]" parameterized="true"/>
-        <element name="noBackgroundColor" type="button" selector="(//div[@data-content-type='slide'])[{{arg1}}]//div[@data-element='wrapper'][not(contains(@style,'background-color:'))]" parameterized="true"/>
-        <element name="backgroundImage" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}]//div[@data-element='wrapper'][contains(@style,'background-image: url(') and contains(@style,'{{arg2}}')]" parameterized="true"/>
-        <element name="noBackgroundImage" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}]//div[@data-element='wrapper'][not(contains(@style,'background-image:'))]" parameterized="true"/>
-        <element name="backgroundPosition" type="button" selector="(//div[@data-content-type='slide'])[{{arg1}}]//div[@data-element='wrapper'][contains(@style,'background-position: {{arg2}};')]" parameterized="true"/>
-        <element name="backgroundSize" type="button" selector="(//div[@data-content-type='slide'])[{{arg1}}]//div[@data-element='wrapper'][contains(@style,'background-size: {{arg2}};')]" parameterized="true"/>
-        <element name="backgroundRepeat" type="button" selector="(//div[@data-content-type='slide'])[{{arg1}}]//div[@data-element='wrapper'][contains(@style,'background-repeat: {{arg2}};')]" parameterized="true"/>
-        <element name="backgroundAttachment" type="button" selector="(//div[@data-content-type='slide'])[{{arg1}}]//div[@data-element='wrapper'][contains(@style,'background-attachment: {{arg2}};')]" parameterized="true"/>
+        <element name="backgroundType" type="text" parameterized="true" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='wrapper' and @data-background-type='{{backgroundType}}']"/>
+        <element name="backgroundColorElement" type="button" parameterized="true" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='wrapper'][contains(@style,'background-color:')]"/>
+        <element name="backgroundColor" type="text" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='wrapper'][contains(@style,'background-color: {{backgroundColor}};')]" parameterized="true"/>
+        <element name="noBackgroundColor" type="button" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='wrapper'][not(contains(@style,'background-color:'))]" parameterized="true"/>
+        <element name="backgroundImage" type="text" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='wrapper'][contains(@style,'background-image: url(') and contains(@style,'{{backgroundImage}}')]" parameterized="true"/>
+        <element name="noBackgroundImage" type="text" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='wrapper'][not(contains(@style,'background-image:'))]" parameterized="true"/>
+        <element name="backgroundPosition" type="button" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='wrapper'][contains(@style,'background-position: {{backgroundPosition}};')]" parameterized="true"/>
+        <element name="backgroundSize" type="button" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='wrapper'][contains(@style,'background-size: {{backgroundSize}};')]" parameterized="true"/>
+        <element name="backgroundRepeat" type="button" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='wrapper'][contains(@style,'background-repeat: {{backgroundRepeat}};')]" parameterized="true"/>
+        <element name="backgroundAttachment" type="button" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='wrapper'][contains(@style,'background-attachment: {{backgroundAttachment}};')]" parameterized="true"/>
+        <!-- Video Background -->
+        <element name="videoBackgroundJarallaxContainer" type="text" parameterized="true" selector="(//div[@data-slick-index and not(contains(@class, 'slick-cloned'))]//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='wrapper']//div[contains(@id,'jarallax-container')]"/>
+        <element name="videoBackgroundVideoElement" type="text" parameterized="true" selector="(//div[@data-slick-index and not(contains(@class, 'slick-cloned'))]//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='wrapper']//div[contains(@id,'jarallax-container')]//iframe|(//div[@data-slick-index and not(contains(@class, 'slick-cloned'))]//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='wrapper']//div[contains(@id,'jarallax-container')]//video"/>
+        <element name="videoBackgroundVideoUrl" type="text" parameterized="true" selector="(//div[@data-slick-index and not(contains(@class, 'slick-cloned'))]//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='wrapper']//div[contains(@id,'jarallax-container')]//*[contains(@src,'{{videoURL}}')]"/>
+        <element name="videoBackgroundOverlayElement" type="text" parameterized="true" selector="(//div[@data-slick-index and not(contains(@class, 'slick-cloned'))]//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='wrapper']//div[@data-element='video_overlay']"/>
+        <element name="videoBackgroundInfiniteLoop" type="text" parameterized="true" selector="(//div[@data-slick-index and not(contains(@class, 'slick-cloned'))]//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='wrapper' and @data-video-loop='{{infiniteLoopValue}}']"/>
+        <element name="videoBackgroundLazyLoad" type="text" parameterized="true" selector="(//div[@data-slick-index and not(contains(@class, 'slick-cloned'))]//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='wrapper' and @data-video-lazy-load='{{lazyLoadValue}}']"/>
+        <element name="videoBackgroundPlayOnlyWhenVisible" type="text" parameterized="true" selector="(//div[@data-slick-index and not(contains(@class, 'slick-cloned'))]//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='wrapper' and @data-video-play-only-visible='{{playOnlyWhenVisibleValue}}']"/>
+        <element name="videoBackgroundFallbackImage" type="text" parameterized="true" selector="(//div[@data-slick-index and not(contains(@class, 'slick-cloned'))]//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='wrapper']//div[contains(@id,'jarallax-container')]//img"/>
+        <element name="videoBackgroundFallbackImageSource" type="text" parameterized="true" selector="(//div[@data-slick-index and not(contains(@class, 'slick-cloned'))]//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='wrapper']//div[contains(@id,'jarallax-container')]//img[contains(@src,'{{fileName}}')]"/>
+        <element name="videoBackgroundNoFallbackImage" type="text" parameterized="true" selector="(//div[@data-slick-index and not(contains(@class, 'slick-cloned'))]//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='wrapper']//div[contains(@id,'jarallax-container')]//div"/>
         <!-- Content Configuration -->
-        <element name="contentJS" type="text" selector="document.querySelectorAll('[data-content-type=slide] [data-element=content]')[{{arg1}} - 1]" parameterized="true"/>
-        <element name="messageContent" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}]//div[@data-element='content']//*[contains(text(),'{{arg2}}')]" parameterized="true"/>
-        <element name="noMessageContent" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}]//div[@data-element='wrapper']//div[@data-element='content'][not(*)]" parameterized="true"/>
-        <element name="messageContentWidget" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}]//div[@data-element='content']//a[contains(@href,'{{arg2}}{{arg3}}')]" parameterized="true"/>
-        <element name="messageContentTextArea" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}]//div[@data-element='wrapper']//div[@data-element='content'][contains(text(),'{{arg2}}')]" parameterized="true"/>
-        <element name="messageContentTextAreaImage" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}]//div[@data-element='wrapper']//div[@data-element='content']//img[contains(@src, {{arg2}})]" parameterized="true"/>
-        <element name="messageContentHeightJS" type="text" selector="return document.evaluate(&quot;(//div[@data-content-type='slide'])[{{arg1}}]//div[@data-element='content']//*[contains(text(),'{{arg2}}')]&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.clientHeight;" parameterized="true"/>
-        <element name="linkUrl" type="button" selector="(//div[@data-content-type='slide'])[{{arg1}}]/a[@data-element='link'][contains(@href,'{{arg2}}')]" parameterized="true"/>
-        <element name="openInNewTab" type="button" selector="(//div[@data-content-type='slide'])[{{arg1}}]/a[@data-element='link'][contains(@target,'_blank')]" parameterized="true"/>
-        <element name="button" type="button" selector="(//div[@data-content-type='slide'])[{{arg1}}]//div[@data-element='wrapper']//button[@data-element='button']" parameterized="true"/>
-        <element name="buttonJS" type="text" selector="document.querySelectorAll('.pagebuilder-slide-button')[{{arg1}}-1]" parameterized="true"/>
-        <element name="noButton" type="button" selector="(//div[@data-content-type='slide'])[{{arg1}}]//div[@data-element='wrapper'][not(descendant::*[@data-element='button'])]" parameterized="true"/>
-        <element name="showButton" type="button" selector="(//div[@data-content-type='slide'])[{{arg1}}][@data-show-button='{{arg2}}']" parameterized="true"/>
-        <element name="buttonType" type="button" selector="(//div[@data-content-type='slide'])[{{arg1}}]//div[@data-element='wrapper']//button[@data-element='button'][contains(@class,'{{arg2}}')]" parameterized="true"/>
-        <element name="buttonText" type="button" selector="(//div[@data-content-type='slide'])[{{arg1}}]//div[@data-element='wrapper']//button[@data-element='button'][.='{{arg2}}']" parameterized="true"/>
-        <element name="showOverlay" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}][@data-show-overlay='{{arg2}}']" parameterized="true"/>
-        <element name="overlayBackgroundColor" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}]//div[@data-element='wrapper']//div[@data-element='overlay'][contains(@style,'background-color: {{arg2}};')]" parameterized="true"/>
-        <element name="transparentOverlay" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}]//div[@data-element='wrapper']//div[@data-element='overlay' or contains(@class,'pagebuilder-overlay')][contains(@style,'background-color: transparent;')]" parameterized="true"/>
+        <element name="contentJS" type="text" selector="document.querySelectorAll('[data-content-type=slide] [data-element=content]')[{{slideContentIndex}} - 1]" parameterized="true"/>
+        <element name="messageContent" type="text" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='content']//*[contains(text(),'{{message}}')]" parameterized="true"/>
+        <element name="noMessageContent" type="text" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='wrapper']//div[@data-element='content'][not(*)]" parameterized="true"/>
+        <element name="messageContentWidget" type="text" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='content']//a[contains(@href,'{{baseUrl}}{{path}}')]" parameterized="true"/>
+        <element name="messageContentTextArea" type="text" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='wrapper']//div[@data-element='content'][contains(text(),'{{message}}')]" parameterized="true"/>
+        <element name="messageContentTextAreaImage" type="text" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='wrapper']//div[@data-element='content']//img[contains(@src, {{image}})]" parameterized="true"/>
+        <element name="messageContentHeightJS" type="text" selector="return document.evaluate(&quot;(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='content']//*[contains(text(),'{{message}}')]&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.clientHeight;" parameterized="true"/>
+        <element name="linkUrl" type="button" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]/a[@data-element='link'][contains(@href,'{{link}}')]" parameterized="true"/>
+        <element name="openInNewTab" type="button" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]/a[@data-element='link'][contains(@target,'_blank')]" parameterized="true"/>
+        <element name="button" type="button" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='wrapper']//button[@data-element='button']" parameterized="true"/>
+        <element name="buttonJS" type="text" selector="document.querySelectorAll('.pagebuilder-slide-button')[{{slideButtonIndex}}-1]" parameterized="true"/>
+        <element name="noButton" type="button" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='wrapper'][not(descendant::*[@data-element='button'])]" parameterized="true"/>
+        <element name="showButton" type="button" selector="(//div[@data-content-type='slide'])[{{slideIndex}}][@data-show-button='{{showButton}}']" parameterized="true"/>
+        <element name="buttonType" type="button" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='wrapper']//button[@data-element='button'][contains(@class,'{{buttonType}}')]" parameterized="true"/>
+        <element name="buttonText" type="button" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='wrapper']//button[@data-element='button'][.='{{buttonText}}']" parameterized="true"/>
+        <element name="showOverlay" type="text" selector="(//div[@data-content-type='slide'])[{{slideIndex}}][@data-show-overlay='{{showOverlay}}']" parameterized="true"/>
+        <element name="overlayBackgroundColor" type="text" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='wrapper']//div[@data-element='overlay'][contains(@style,'background-color: {{overlayColor}};')]" parameterized="true"/>
+        <element name="transparentOverlay" type="text" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='wrapper']//div[@data-element='overlay' or contains(@class,'pagebuilder-overlay')][contains(@style,'background-color: transparent;')]" parameterized="true"/>
         <!-- Advanced Configuration -->
-        <element name="alignment" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}]//div[@data-element='wrapper'][contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
-        <element name="noAlignment" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}]//div[@data-element='wrapper'][not(contains(@style,'text-align:'))]" parameterized="true"/>
-        <element name="border" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}]//div[@data-element='wrapper'][contains(@style,'border-style: {{arg2}};')]" parameterized="true"/>
-        <element name="borderColor" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}]//div[@data-element='wrapper'][contains(@style,'border-color: {{arg2}};')]" parameterized="true"/>
-        <element name="noBorderColor" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}]//div[@data-element='wrapper'][not(contains(@style,'border-color:'))]" parameterized="true"/>
-        <element name="borderWidth" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}]//div[@data-element='wrapper'][contains(@style,'border-width: {{arg2}}px;')]" parameterized="true"/>
-        <element name="borderRadius" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}]//div[@data-element='wrapper'][contains(@style,'border-radius: {{arg2}}px;')]" parameterized="true"/>
-        <element name="cssClasses" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}][contains(@class,'{{arg2}}')]" parameterized="true"/>
-        <element name="margins" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}][contains(@style,'margin: {{arg2}}px;')]" parameterized="true"/>
-        <element name="posterPadding" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}]//div[@data-element='wrapper']//div[@data-element='overlay'][contains(@style,'padding: {{arg2}}px')]" parameterized="true"/>
-        <element name="collagePadding" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}]//div[@data-element='wrapper'][contains(@style,'padding: {{arg2}}px')]" parameterized="true"/>
+        <element name="alignment" type="text" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='wrapper'][contains(@style,'text-align: {{alignment}};')]" parameterized="true"/>
+        <element name="noAlignment" type="text" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='wrapper'][not(contains(@style,'text-align:'))]" parameterized="true"/>
+        <element name="border" type="text" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='wrapper'][contains(@style,'border-style: {{border}};')]" parameterized="true"/>
+        <element name="borderColor" type="text" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='wrapper'][contains(@style,'border-color: {{borderColor}};')]" parameterized="true"/>
+        <element name="noBorderColor" type="text" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='wrapper'][not(contains(@style,'border-color:'))]" parameterized="true"/>
+        <element name="borderWidth" type="text" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='wrapper'][contains(@style,'border-width: {{borderWidth}}px;')]" parameterized="true"/>
+        <element name="borderRadius" type="text" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='wrapper'][contains(@style,'border-radius: {{borderRadius}}px;')]" parameterized="true"/>
+        <element name="cssClasses" type="text" selector="(//div[@data-content-type='slide'])[{{slideIndex}}][contains(@class,'{{cssClasses}}')]" parameterized="true"/>
+        <element name="margins" type="text" selector="(//div[@data-content-type='slide'])[{{slideIndex}}][contains(@style,'margin: {{margins}}px;')]" parameterized="true"/>
+        <element name="posterPadding" type="text" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='wrapper']//div[@data-element='overlay'][contains(@style,'padding: {{padding}}px')]" parameterized="true"/>
+        <element name="collagePadding" type="text" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='wrapper'][contains(@style,'padding: {{padding}}px')]" parameterized="true"/>
     </section>
     <section name="SlideOnFrontendEmptyLink">
-        <element name="linkUrl" type="button" selector="(//div[@data-content-type='slide'])[{{arg1}}]/div[@data-element='empty_link'][not(@href) and not(@target)][not(@href='{{arg2}}')]" parameterized="true"/>
+        <element name="linkUrl" type="button" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]/div[@data-element='empty_link'][not(@href) and not(@target)][not(@href='{{link}}')]" parameterized="true"/>
     </section>
     <section name="SlideOnBackend">
         <element name="all" type="button" selector=".pagebuilder-slide"/>
-        <element name="base" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}]" parameterized="true"/>
-        <element name="emptySlide" type="button" selector="(//div[@data-content-type='slide'])[{{arg1}}]//div[@data-element='content'][contains(@class,'pagebuilder-empty-slide') and text()='Edit Slide Text']" parameterized="true"/>
-        <element name="elementJS" type="button" selector="document.querySelectorAll('[data-content-type=slide]')[{{arg1}} - 1]" parameterized="true"/>
-        <element name="wrapperJS" type="button" selector="document.querySelectorAll('[data-content-type=slider] div.pagebuilder-slide-wrapper')[{{arg1}} - 1]" parameterized="true"/>
+        <element name="base" type="text" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]" parameterized="true"/>
+        <element name="emptySlide" type="button" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='content'][contains(@class,'pagebuilder-empty-slide') and text()='Edit Slide Text']" parameterized="true"/>
+        <element name="elementJS" type="button" selector="document.querySelectorAll('[data-content-type=slide]')[{{slideIndex}} - 1]" parameterized="true"/>
+        <element name="wrapperJS" type="button" selector="document.querySelectorAll('[data-content-type=slider] div.pagebuilder-slide-wrapper')[{{slideWrapperIndex}} - 1]" parameterized="true"/>
         <element name="wrapperCSS" type="button" selector="[data-content-type=slider] .pagebuilder-slide-wrapper"/>
-        <element name="overlayJS" type="button" selector="document.querySelectorAll('[data-content-type=slider] div.pagebuilder-overlay')[{{arg1}} - 1]" parameterized="true"/>
-        <element name="editableButtonItemElement" type="button" selector="(//div[@data-content-type='slide'])[{{arg1}}]//a[@data-element='button']//span[contains(@contenteditable, 'true')]" parameterized="true"/>
-        <element name="imageSourceByIndex" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}]/div[contains(@style,'{{arg2}}')]" parameterized="true"/>
-        <element name="openOptionsMenu" type="button" selector="(//div[contains(@class,'navigation-dot')])[{{arg1}}]" parameterized="true"/>
-        <element name="optionsMenu" type="button" selector="(//div[contains(@class,'navigation-dot')])[{{arg1}}]//div[@class='pagebuilder-options-wrapper']" parameterized="true"/>
-        <element name="optionsMenuButton" type="button" selector="(//div[contains(@class,'navigation-dot')])[{{arg1}}]//li[contains(@class,'pagebuilder-options-link')]//a[contains(@class,'{{arg2}}')]" parameterized="true"/>
-        <element name="optionsMenuButtonDisabled" type="button" selector="(//div[contains(@class,'navigation-dot')])[{{arg1}}]//li[contains(@class,'pagebuilder-options-link')]//a[contains(@class,'{{arg2}}') and contains(@class,'disabled')]" parameterized="true"/>
-        <element name="optionsMenuTitle" type="button" selector="(//div[contains(@class,'navigation-dot')])[{{arg1}}]//li[contains(@class,'pagebuilder-options-link')]//div[contains(@class,'option-title')]" parameterized="true"/>
+        <element name="overlayJS" type="button" selector="document.querySelectorAll('[data-content-type=slider] div.pagebuilder-overlay')[{{slideOverlayIndex}} - 1]" parameterized="true"/>
+        <element name="editableButtonItemElement" type="button" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//a[@data-element='button']//span[contains(@contenteditable, 'true')]" parameterized="true"/>
+        <element name="imageSourceByIndex" type="text" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]/div[contains(@style,'{{image}}')]" parameterized="true"/>
+        <element name="openOptionsMenu" type="button" selector="(//div[contains(@class,'navigation-dot')])[{{navigationDotIndex}}]" parameterized="true"/>
+        <element name="optionsMenu" type="button" selector="(//div[contains(@class,'navigation-dot')])[{{navigationDotIndex}}]//div[@class='pagebuilder-options-wrapper']" parameterized="true"/>
+        <element name="optionsMenuButton" type="button" selector="(//div[contains(@class,'navigation-dot')])[{{navigationDotIndex}}]//li[contains(@class,'pagebuilder-options-link')]//a[contains(@class,'{{buttonClass}}')]" parameterized="true"/>
+        <element name="optionsMenuButtonDisabled" type="button" selector="(//div[contains(@class,'navigation-dot')])[{{navigationDotIndex}}]//li[contains(@class,'pagebuilder-options-link')]//a[contains(@class,'{{buttonClass}}') and contains(@class,'disabled')]" parameterized="true"/>
+        <element name="optionsMenuTitle" type="button" selector="(//div[contains(@class,'navigation-dot')])[{{navigationDotIndex}}]//li[contains(@class,'pagebuilder-options-link')]//div[contains(@class,'option-title')]" parameterized="true"/>
         <element name="uploadImageInput" type="button" selector="//div[contains(@class,'pagebuilder-image-uploader-container')]//input[@name='background_image']"/>
-        <element name="variablePlaceholder" type="text" selector="(//div[contains(@class,'pagebuilder-slide')])[{{arg}}]//*[contains(@class, 'magento-variable magento-placeholder')]" parameterized="true"/>
-        <element name="widgetPlaceholder" type="text" selector="(//div[contains(@class,'pagebuilder-slide')])[{{arg}}]//*[contains(@class, 'magento-placeholder magento-widget')]" parameterized="true"/>
-        <element name="tinymce" type="text" selector="(//div[contains(@class,'pagebuilder-slide')])[{{arg}}]//div[contains(@class, 'inline-wysiwyg')]" parameterized="true"/>
-        <element name="tinymceInFocus" type="text" selector="(//div[contains(@class,'pagebuilder-slide')])[{{arg}}]//div[contains(@class, 'inline-wysiwyg') and contains(@class, 'mce-edit-focus')]" parameterized="true"/>
+        <element name="variablePlaceholder" type="text" selector="(//div[contains(@class,'pagebuilder-slide')])[{{slideIndex}}]//*[contains(@class, 'magento-variable') and contains(@class, 'magento-placeholder')]" parameterized="true"/>
+        <element name="widgetPlaceholder" type="text" selector="(//div[contains(@class,'pagebuilder-slide')])[{{slideIndex}}]//*[contains(@class, 'magento-placeholder') and contains(@class, 'magento-widget')]" parameterized="true"/>
+        <element name="tinymce" type="text" selector="(//div[contains(@class,'pagebuilder-slide')])[{{slideIndex}}]//div[contains(@class, 'inline-wysiwyg')]" parameterized="true"/>
+        <element name="tinymceInFocus" type="text" selector="(//div[contains(@class,'pagebuilder-slide')])[{{slideIndex}}]//div[contains(@class, 'inline-wysiwyg') and contains(@class, 'mce-edit-focus')]" parameterized="true"/>
+        <element name="slideOverflowPropertyJS" type="button" selector="return window.getComputedStyle(document.querySelectorAll('[data-content-type=slide] div.mce-tinymce-inline')[{{tinyMCEIndex}}]).overflow" parameterized="true"/>
         <!-- Appearance Configuration -->
-        <element name="appearance" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}][@data-appearance='{{arg2}}']" parameterized="true"/>
-        <element name="slideName" type="button" selector="(//div[@data-content-type='slide'])[{{arg1}}][@data-slide-name='{{arg2}}']" parameterized="true"/>
-        <element name="posterMinimumHeight" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}]//div[@class='pagebuilder-slide-wrapper'][contains(@style,'min-height: {{arg2}}px;')]" parameterized="true"/>
-        <element name="collageMinimumHeight" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}]/div[contains(@style,'min-height: {{arg2}}px;')]" parameterized="true"/>
+        <element name="appearance" type="text" selector="(//div[@data-content-type='slide'])[{{slideIndex}}][@data-appearance='{{appearance}}']" parameterized="true"/>
+        <element name="slideName" type="button" selector="(//div[@data-content-type='slide'])[{{slideIndex}}][@data-slide-name='{{slideName}}']" parameterized="true"/>
+        <element name="posterMinimumHeight" type="text" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@class='pagebuilder-slide-wrapper'][contains(@style,'min-height: {{minHeight}};')]" parameterized="true"/>
+        <element name="noPosterMinimumHeight" type="text" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@class='pagebuilder-slide-wrapper'][not(contains(@style,'min-height:'))]" parameterized="true"/>
+        <element name="collageMinimumHeight" type="text" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]/div[contains(@style,'min-height: {{minHeight}};')]" parameterized="true"/>
+        <element name="noCollageMinimumHeight" type="text" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]/div[not(contains(@style,'min-height:'))]" parameterized="true"/>
         <!-- Background Configuration -->
-        <element name="backgroundColor" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}]/div[contains(@style,'background-color: {{arg2}};')]" parameterized="true"/>
-        <element name="noBackgroundColor" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}]/div[not(contains(@style,'background-color:'))]" parameterized="true"/>
-        <element name="backgroundImage" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}]/div[contains(@style,'background-image: url(') and contains(@style,'{{arg2}}')]" parameterized="true"/>
-        <element name="noBackgroundImage" type="button" selector="(//div[@data-content-type='slide'])[{{arg1}}]/div[not(contains(@style,'background-image:'))]" parameterized="true"/>
-        <element name="backgroundPosition" type="button" selector="(//div[@data-content-type='slide'])[{{arg1}}]/div[contains(@style,'background-position: {{arg2}};')]" parameterized="true"/>
-        <element name="backgroundSize" type="button" selector="(//div[@data-content-type='slide'])[{{arg1}}]/div[contains(@style,'background-size: {{arg2}};')]" parameterized="true"/>
-        <element name="backgroundRepeat" type="button" selector="(//div[@data-content-type='slide'])[{{arg1}}]/div[contains(@style,'background-repeat: {{arg2}};')]" parameterized="true"/>
-        <element name="backgroundAttachment" type="button" selector="(//div[@data-content-type='slide'])[{{arg1}}]/div[contains(@style,'background-attachment: {{arg2}};')]" parameterized="true"/>
+        <element name="backgroundType" type="text" parameterized="true" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-background-type='{{backgroundType}}']"/>
+        <element name="backgroundColorElement" type="button" parameterized="true" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='wrapper'][contains(@style,'background-color:')]"/>
+        <element name="backgroundColor" type="button" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='wrapper'][contains(@style,'background-color: {{backgroundColor}};')]" parameterized="true"/>
+        <element name="noBackgroundColor" type="text" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='wrapper'][not(contains(@style,'background-color:'))]" parameterized="true"/>
+        <element name="backgroundImage" type="text" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='wrapper'][contains(@style,'background-image: url(') and contains(@style,'{{backgroundImage}}')]" parameterized="true"/>
+        <element name="noBackgroundImage" type="button" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='wrapper'][not(contains(@style,'background-image:'))]" parameterized="true"/>
+        <element name="backgroundPosition" type="button" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='wrapper'][contains(@style,'background-position: {{backgroundPosition}};')]" parameterized="true"/>
+        <element name="backgroundSize" type="button" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='wrapper'][contains(@style,'background-size: {{backgroundSize}};')]" parameterized="true"/>
+        <element name="backgroundRepeat" type="button" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='wrapper'][contains(@style,'background-repeat: {{backgroundRepeat}};')]" parameterized="true"/>
+        <element name="backgroundAttachment" type="button" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='wrapper'][contains(@style,'background-attachment: {{backgroundAttachment}};')]" parameterized="true"/>
+        <!-- Video Background -->
+        <element name="videoBackgroundJarallaxContainer" type="text" parameterized="true" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[contains(@id,'jarallax-container')]"/>
+        <element name="videoBackgroundVideoElement" type="text" parameterized="true" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[contains(@id,'jarallax-container')]//iframe|(//div[@data-content-type='slide'])[{{slideIndex}}]//div[contains(@id,'jarallax-container')]//video"/>
+        <element name="videoBackgroundVideoUrl" type="text" parameterized="true" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[contains(@id,'jarallax-container')]//*[contains(@src,'{{videoURL}}')]"/>
+        <element name="videoBackgroundOverlayElement" type="text" parameterized="true" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='video_overlay']"/>
+        <element name="videoBackgroundInfiniteLoop" type="text" parameterized="true" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-video-loop='{{infiniteLoopValue}}']"/>
+        <element name="videoBackgroundLazyLoad" type="text" parameterized="true" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-video-lazy-load='{{lazyLoadValue}}']"/>
+        <element name="videoBackgroundPlayOnlyWhenVisible" type="text" parameterized="true" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-video-play-only-visible='{{playOnlyWhenVisibleValue}}']"/>
+        <element name="videoBackgroundFallbackImage" type="text" parameterized="true" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[contains(@id,'jarallax-container')]//img"/>
+        <element name="videoBackgroundFallbackImageSource" type="text" parameterized="true" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[contains(@id,'jarallax-container')]//img[contains(@src,'{{fileName}}')]"/>
+        <element name="videoBackgroundNoFallbackImage" type="text" parameterized="true" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[contains(@id,'jarallax-container')]//div"/>
         <!-- Content Configuration -->
-        <element name="contentJS" type="text" selector="document.querySelectorAll('[data-content-type=slider] div.inline-wysiwyg')[{{arg1}} - 1]" parameterized="true"/>
-        <element name="textArea" type="text" selector="(//div[@data-content-type='slide'])[{{arg}}]//textarea[contains(@class,'inline-wysiwyg-textarea')]" parameterized="true"/>
-        <element name="messageContent" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}]//div[@data-element='content']//*[contains(text(),'{{arg2}}')]" parameterized="true"/>
-        <element name="noMessageContent" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}]//div[@data-element='content'][.='Edit Slide Text'][not(*)]" parameterized="true"/>
-        <element name="button" type="button" selector="(//div[@data-content-type='slide'])[{{arg1}}]//a[@data-element='button']" parameterized="true"/>
-        <element name="buttonJS" type="text" selector="document.querySelectorAll('.pagebuilder-slide-button')[{{arg1}}-1]" parameterized="true"/>
-        <element name="noButton" type="button" selector="(//div[@data-content-type='slide'])[{{arg1}}][not(descendant::*[@data-element='button'])]" parameterized="true"/>
-        <element name="showButton" type="button" selector="(//div[@data-content-type='slide'])[{{arg1}}][@data-show-button='{{arg2}}']" parameterized="true"/>
-        <element name="buttonType" type="button" selector="(//div[@data-content-type='slide'])[{{arg1}}]//a[@data-element='button'][contains(@class,'{{arg2}}')]" parameterized="true"/>
-        <element name="buttonText" type="button" selector="(//div[@data-content-type='slide'])[{{arg1}}]//a[@data-element='button']//span[.='{{arg2}}']" parameterized="true"/>
-        <element name="showOverlay" type="button" selector="(//div[@data-content-type='slide'])[{{arg1}}][@data-show-overlay='{{arg2}}']" parameterized="true"/>
-        <element name="overlayBackgroundColor" type="button" selector="(//div[@data-content-type='slide'])[{{arg1}}]//div[@data-element='overlay' or contains(@class,'pagebuilder-overlay')][contains(@style,'background-color: {{arg2}};')]" parameterized="true"/>
-        <element name="transparentOverlay" type="button" selector="(//div[@data-content-type='slide'])[{{arg1}}]//div[@data-element='overlay' or contains(@class,'pagebuilder-overlay')][contains(@style,'background-color: transparent;')]" parameterized="true"/>
-        <element name="inlineWYSIWYGEditorWithTag" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}]//div[contains(@class,'inline-wysiwyg')]//{{arg2}}" parameterized="true"/>
+        <element name="contentJS" type="text" selector="document.querySelectorAll('[data-content-type=slider] div.inline-wysiwyg')[{{slideContentIndex}} - 1]" parameterized="true"/>
+        <element name="textArea" type="text" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//textarea[contains(@class,'inline-wysiwyg-textarea')]" parameterized="true"/>
+        <element name="messageContent" type="text" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='content']//*[contains(text(),'{{message}}')]" parameterized="true"/>
+        <element name="noMessageContent" type="text" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='content'][.='Edit Slide Text'][not(*)]" parameterized="true"/>
+        <element name="button" type="button" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//a[@data-element='button']" parameterized="true"/>
+        <element name="buttonJS" type="text" selector="document.querySelectorAll('.pagebuilder-slide-button')[{{slideButtonIndex}}-1]" parameterized="true"/>
+        <element name="noButton" type="button" selector="(//div[@data-content-type='slide'])[{{slideIndex}}][not(descendant::*[@data-element='button'])]" parameterized="true"/>
+        <element name="showButton" type="button" selector="(//div[@data-content-type='slide'])[{{slideIndex}}][@data-show-button='{{showButton}}']" parameterized="true"/>
+        <element name="buttonType" type="button" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//a[@data-element='button'][contains(@class,'{{buttonType}}')]" parameterized="true"/>
+        <element name="buttonText" type="button" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//a[@data-element='button']//span[.='{{buttonText}}']" parameterized="true"/>
+        <element name="showOverlay" type="button" selector="(//div[@data-content-type='slide'])[{{slideIndex}}][@data-show-overlay='{{showOverlay}}']" parameterized="true"/>
+        <element name="overlayBackgroundColor" type="button" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='overlay' or contains(@class,'pagebuilder-overlay')][contains(@style,'background-color: {{overlayColor}};')]" parameterized="true"/>
+        <element name="transparentOverlay" type="button" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='overlay' or contains(@class,'pagebuilder-overlay')][contains(@style,'background-color: transparent;')]" parameterized="true"/>
+        <element name="inlineWYSIWYGEditorWithTag" type="text" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[contains(@class,'inline-wysiwyg')]//{{tag}}" parameterized="true"/>
         <!-- Advanced Configuration -->
-        <element name="posterAlignment" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}]//div[@class='pagebuilder-slide-wrapper'][contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
-        <element name="posterNoAlignment" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}]//div[@class='pagebuilder-slide-wrapper'][not(contains(@style,'text-align:'))]" parameterized="true"/>
-        <element name="collageAlignment" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}]/div[contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
-        <element name="collageNoAlignment" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}]/div[not(contains(@style,'text-align:'))]" parameterized="true"/>
-        <element name="posterBorder" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}]//div[@class='pagebuilder-slide-wrapper'][contains(@style,'border-style: {{arg2}};')]" parameterized="true"/>
-        <element name="collageBorder" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}]/div[contains(@style,'border-style: {{arg2}};')]" parameterized="true"/>
-        <element name="posterBorderColor" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}]//div[@class='pagebuilder-slide-wrapper'][contains(@style,'border-color: {{arg2}};')]" parameterized="true"/>
-        <element name="posterNoBorderColor" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}]//div[@class='pagebuilder-slide-wrapper'][not(contains(@style,'border-color:'))]" parameterized="true"/>
-        <element name="collageBorderColor" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}]/div[contains(@style,'border-color: {{arg2}};')]" parameterized="true"/>
-        <element name="collageNoBorderColor" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}]/div[not(contains(@style,'border-color:'))]" parameterized="true"/>
-        <element name="posterBorderWidth" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}]//div[@class='pagebuilder-slide-wrapper'][contains(@style,'border-width: {{arg2}}px;')]" parameterized="true"/>
-        <element name="collageBorderWidth" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}]/div[contains(@style,'border-width: {{arg2}}px;')]" parameterized="true"/>
-        <element name="posterBorderRadius" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}]//div[@class='pagebuilder-slide-wrapper'][contains(@style,'border-radius: {{arg2}}px;')]" parameterized="true"/>
-        <element name="collageBorderRadius" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}]/div[contains(@style,'border-radius: {{arg2}}px;')]" parameterized="true"/>
-        <element name="cssClasses" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}][contains(@class,'{{arg2}}')]" parameterized="true"/>
-        <element name="posterMargins" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}]//div[@class='pagebuilder-slide-wrapper'][contains(@style,'margin: {{arg2}}px;')]" parameterized="true"/>
-        <element name="collageMargins" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}]/div[contains(@style,'margin: {{arg2}}px;')]" parameterized="true"/>
-        <element name="posterPadding" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}]//div[@data-element='overlay'][contains(@style,'padding: {{arg2}}px;')]" parameterized="true"/>
-        <element name="collagePadding" type="text" selector="(//div[@data-content-type='slide'])[{{arg1}}]/div[contains(@style,'padding: {{arg2}}px;')]" parameterized="true"/>
+        <element name="posterAlignment" type="text" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@class='pagebuilder-slide-wrapper'][contains(@style,'text-align: {{alignment}};')]" parameterized="true"/>
+        <element name="posterNoAlignment" type="text" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@class='pagebuilder-slide-wrapper'][not(contains(@style,'text-align:'))]" parameterized="true"/>
+        <element name="collageAlignment" type="text" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='wrapper'][contains(@style,'text-align: {{alignment}};')]" parameterized="true"/>
+        <element name="collageNoAlignment" type="text" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='wrapper'][not(contains(@style,'text-align:'))]" parameterized="true"/>
+        <element name="posterBorder" type="text" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@class='pagebuilder-slide-wrapper'][contains(@style,'border-style: {{border}};')]" parameterized="true"/>
+        <element name="collageBorder" type="text" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='wrapper'][contains(@style,'border-style: {{borderStyle}};')]" parameterized="true"/>
+        <element name="posterBorderColor" type="text" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@class='pagebuilder-slide-wrapper'][contains(@style,'border-color: {{borderColor}};')]" parameterized="true"/>
+        <element name="posterNoBorderColor" type="text" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@class='pagebuilder-slide-wrapper'][not(contains(@style,'border-color:'))]" parameterized="true"/>
+        <element name="collageBorderColor" type="text" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='wrapper'][contains(@style,'border-color: {{borderColor}};')]" parameterized="true"/>
+        <element name="collageNoBorderColor" type="text" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='wrapper'][not(contains(@style,'border-color:'))]" parameterized="true"/>
+        <element name="posterBorderWidth" type="text" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@class='pagebuilder-slide-wrapper'][contains(@style,'border-width: {{borderWidth}}px;')]" parameterized="true"/>
+        <element name="collageBorderWidth" type="text" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='wrapper'][contains(@style,'border-width: {{borderWidth}}px;')]" parameterized="true"/>
+        <element name="posterBorderRadius" type="text" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@class='pagebuilder-slide-wrapper'][contains(@style,'border-radius: {{borderRadius}}px;')]" parameterized="true"/>
+        <element name="collageBorderRadius" type="text" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='wrapper'][contains(@style,'border-radius: {{borderRadius}}px;')]" parameterized="true"/>
+        <element name="cssClasses" type="text" selector="(//div[@data-content-type='slide'])[{{slideIndex}}][contains(@class,'{{cssClasses}}')]" parameterized="true"/>
+        <element name="posterMargins" type="text" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@class='pagebuilder-slide-wrapper'][contains(@style,'margin: {{margins}}px;')]" parameterized="true"/>
+        <element name="collageMargins" type="text" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='wrapper'][contains(@style,'margin: {{margins}}px;')]" parameterized="true"/>
+        <element name="posterPadding" type="text" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='overlay'][contains(@style,'padding: {{padding}}px;')]" parameterized="true"/>
+        <element name="collagePadding" type="text" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='wrapper'][contains(@style,'padding: {{padding}}px;')]" parameterized="true"/>
     </section>
     <section name="SlideOnConfigurationPanel">
         <element name="textArea" type="text" selector="#pagebuilder_slide_form_content"/>
         <element name="tinyMCEIFrame" type="text" selector="pagebuilder_slide_form_content_ifr"/>
-        <element name="textInIFrame" type="text" selector="//body//p[.='{{arg1}}']" parameterized="true"/>
+        <element name="textInIFrame" type="text" selector="//body//p[.='{{text}}']" parameterized="true"/>
     </section>
 </sections>

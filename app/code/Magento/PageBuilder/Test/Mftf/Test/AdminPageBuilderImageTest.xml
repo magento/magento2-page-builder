@@ -13,8 +13,8 @@
             <features value="PageBuilder"/>
             <stories value="Image"/>
             <title value="AddImageIntoPageBuilderStage"/>
-            <description value="upload and select images to/from Magento Media Gallery from the Bluefoot Stage."/>
-            <severity value="CRITICAL"/>
+            <description value="Upload and select images to/from Magento Media Gallery from the Image content type in the Page Builder Stage."/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MAGETWO-71618"/>
             <testCaseId value="MC-1334"/>
             <group value="pagebuilder"/>
@@ -111,7 +111,7 @@
             <stories value="Image"/>
             <title value="Add Image in PageBuilder for new CMS page and view on Storefront"/>
             <description value="A user should be able to add an image into a row."/>
-            <severity value="CRITICAL"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MAGETWO-83926"/>
             <testCaseId value="MC-2694"/>
             <group value="pagebuilder"/>
@@ -167,7 +167,10 @@
         <waitForElement selector="[name='{{PageBuilderImageAppearance.fieldName}}']" stepKey="waitForImageAppearanceField"/>
         <dontSeeElement selector="[name='{{PageBuilderImageAppearance.fieldName}}']" stepKey="dontSeeImageAppearanceField"/>
         <grabValueFrom selector="[name='{{PageBuilderImageAppearance.fieldName}}']" stepKey="defaultAppearanceValue"/>
-        <assertEquals expected="full-width" expectedType="string" actual="defaultAppearanceValue" actualType="variable" message="pass" stepKey="assertDefaultAppearanceValue"/>
+        <assertEquals message="pass" stepKey="assertDefaultAppearanceValue">
+            <actualResult type="variable">defaultAppearanceValue</actualResult>
+            <expectedResult type="string">full-width</expectedResult>
+        </assertEquals>
         <!-- Upload image from local machine using image placeholder button -->
         <comment userInput="Upload image from local machine using image placeholder button" stepKey="commentUpload"/>
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachImageFile1">
@@ -257,7 +260,7 @@
             <stories value="Image"/>
             <title value="Duplicate Image"/>
             <description value="A user should be able to duplicate Image content type. Verify on Stage and Storefront."/>
-            <severity value="CRITICAL"/>
+            <severity value="MAJOR"/>
             <useCaseId value="MC-965"/>
             <testCaseId value="MC-3598"/>
             <group value="pagebuilder"/>
@@ -421,7 +424,7 @@
             <stories value="Image"/>
             <title value="Validate Advanced Configuration Default Values"/>
             <description value="Validate the default values for every attribute in the Advanced Configuration form and on Stage for Image."/>
-            <severity value="CRITICAL"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MAGETWO-83415"/>
             <testCaseId value="MC-2730"/>
             <group value="pagebuilder"/>
@@ -466,7 +469,9 @@
             <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
         </actionGroup>
         <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getBorderColor"/>
-        <assertEmpty actual="getBorderColor" actualType="variable" message="Text field has text: $getBorderColor" stepKey="assertBorderColor"/>
+        <assertEmpty message="Text field has text: $getBorderColor" stepKey="assertBorderColor">
+            <actualResult type="variable">getBorderColor</actualResult>
+        </assertEmpty>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth">
             <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
         </actionGroup>
@@ -474,7 +479,9 @@
             <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
         </actionGroup>
         <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedCssClassesDefaultProperty.section, PageBuilderAdvancedCssClassesDefaultProperty.fieldName)}}" stepKey="getCssClasses"/>
-        <assertEmpty actual="getCssClasses" actualType="variable" message="Text field was not empty. Had text: $getCssClasses" stepKey="assertCssClasses"/>
+        <assertEmpty message="Text field has text: $getCssClasses" stepKey="assertCssClasses">
+            <actualResult type="variable">getCssClasses</actualResult>
+        </assertEmpty>
         <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins">
             <argument name="property" value="PageBuilderMarginsPropertyDefault"/>
         </actionGroup>
@@ -518,7 +525,9 @@
             <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
         </actionGroup>
         <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getBorderColor2"/>
-        <assertEmpty actual="getBorderColor2" actualType="variable" message="Text field has text: $getBorderColor2" stepKey="assertBorderColor2"/>
+        <assertEmpty message="Text field has text: $getBorderColor2" stepKey="assertBorderColor2">
+            <actualResult type="variable">getBorderColor2</actualResult>
+        </assertEmpty>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth2">
             <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
         </actionGroup>
@@ -526,7 +535,9 @@
             <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
         </actionGroup>
         <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedCssClassesDefaultProperty.section, PageBuilderAdvancedCssClassesDefaultProperty.fieldName)}}" stepKey="getCssClasses2"/>
-        <assertEmpty actual="getCssClasses2" actualType="variable" message="Text field was not empty. Had text: $getCssClasses2" stepKey="assertCssClasses2"/>
+        <assertEmpty message="Text field has text: $getCssClasses2" stepKey="assertCssClasses2">
+            <actualResult type="variable">getCssClasses2</actualResult>
+        </assertEmpty>
         <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins2">
             <argument name="property" value="PageBuilderMarginsPropertyDefault"/>
         </actionGroup>
@@ -554,7 +565,7 @@
             <stories value="Image"/>
             <title value="Update Advanced Configuration Values"/>
             <description value="Validate that updating every attribute in the Advanced Configuration form for Image will update the Stage and Storefront correctly."/>
-            <severity value="CRITICAL"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MAGETWO-90097"/>
             <testCaseId value="MC-2568"/>
             <group value="pagebuilder"/>
@@ -730,7 +741,7 @@
             <stories value="Image"/>
             <title value="Add empty image preview"/>
             <description value="A user should be able to add an empty image preview to stage"/>
-            <severity value="CRITICAL"/>
+            <severity value="AVERAGE"/>
             <useCaseId value="MAGETWO-87077"/>
             <testCaseId value="MC-2887"/>
             <group value="pagebuilder"/>
@@ -770,7 +781,7 @@
             <stories value="Image"/>
             <title value="Cannot add Image to Stage"/>
             <description value="If user drags Image to Stage, it should have no effect"/>
-            <severity value="CRITICAL"/>
+            <severity value="AVERAGE"/>
             <useCaseId value="MC-515"/>
             <testCaseId value="MC-3125"/>
             <group value="pagebuilder"/>
@@ -800,7 +811,7 @@
             <stories value="Image"/>
             <title value="Add Image to Column container and view on Admin and Storefront"/>
             <description value="As a Content Manager I want column to be a container so that I can add Image inside"/>
-            <severity value="CRITICAL"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MC-515"/>
             <testCaseId value="MC-3126"/>
             <group value="pagebuilder"/>
@@ -868,7 +879,7 @@
             <stories value="Image"/>
             <title value="Image is shown by default"/>
             <description value="Image is shown by default in stage and storefront"/>
-            <severity value="CRITICAL"/>
+            <severity value="AVERAGE"/>
             <useCaseId value="MC-965"/>
             <testCaseId value="MC-3550"/>
             <group value="pagebuilder"/>
@@ -925,7 +936,7 @@
             <stories value="Image"/>
             <title value="Image has hide show capabilities"/>
             <description value="A user is able to hide and show the image successfully"/>
-            <severity value="CRITICAL"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MC-965"/>
             <testCaseId value="MC-3517"/>
             <group value="pagebuilder"/>
@@ -1003,7 +1014,7 @@
             <stories value="Image"/>
             <title value="Cannot add image to hidden image"/>
             <description value="A user cannot upload an image to a hidden image content type"/>
-            <severity value="CRITICAL"/>
+            <severity value="AVERAGE"/>
             <useCaseId value="MC-965"/>
             <testCaseId value="MC-3714"/>
             <group value="pagebuilder"/>
@@ -1058,7 +1069,7 @@
             <stories value="Image"/>
             <title value="Duplicate Row with an Image"/>
             <description value="A user should be able to duplicate a row containing an Image content type. Verify on Stage and Storefront."/>
-            <severity value="CRITICAL"/>
+            <severity value="MAJOR"/>
             <useCaseId value="MC-4305"/>
             <testCaseId value="MC-5013"/>
             <group value="pagebuilder"/>
@@ -1130,7 +1141,7 @@
             <stories value="Image"/>
             <title value="Duplicate Column with an Image"/>
             <description value="A user should be able to duplicate a column containing an Image content type. Verify on Stage and Storefront."/>
-            <severity value="CRITICAL"/>
+            <severity value="MAJOR"/>
             <useCaseId value="MC-4305"/>
             <testCaseId value="MC-5021"/>
             <group value="pagebuilder"/>
@@ -1208,7 +1219,7 @@
             <stories value="Image"/>
             <title value="Duplicate Tab with an Image"/>
             <description value="A user should be able to duplicate a tab group and a tab iten containing an Image content type. Verify on Stage and Storefront."/>
-            <severity value="CRITICAL"/>
+            <severity value="MAJOR"/>
             <useCaseId value="MC-4305"/>
             <testCaseId value="MC-5022"/>
             <group value="pagebuilder"/>
@@ -1326,7 +1337,7 @@
             <stories value="Image"/>
             <title value="Image caption does not render HTML"/>
             <description value="Image caption should not render HTML within the browser or storefront"/>
-            <severity value="CRITICAL"/>
+            <severity value="AVERAGE"/>
             <useCaseId value="MC-13922"/>
             <testCaseId value="MC-13933"/>
             <group value="pagebuilder"/>

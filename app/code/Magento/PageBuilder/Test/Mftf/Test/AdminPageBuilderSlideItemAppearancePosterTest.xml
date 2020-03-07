@@ -83,7 +83,7 @@
             <stories value="Slider"/>
             <title value="Poster - Inline Edit With WYSIWYG Disabled"/>
             <description value="Verify that a user can inline edit Slide poster content when WYSIWYG is disabled"/>
-            <severity value="MAJOR"/>
+            <severity value="AVERAGE"/>
             <useCaseId value="MC-937"/>
             <testCaseId value="MC-4039"/>
             <group value="pagebuilder"/>
@@ -119,7 +119,7 @@
             <stories value="Slider"/>
             <title value="Poster - Inline Edit With TinyMCE3 Enabled"/>
             <description value="Verify that a user can inline edit Slide poster content when TinyMCE3 is enabled"/>
-            <severity value="MAJOR"/>
+            <severity value="AVERAGE"/>
             <useCaseId value="MC-3228"/>
             <testCaseId value="MC-3972"/>
             <group value="pagebuilder"/>
@@ -241,7 +241,7 @@
             <stories value="Slider"/>
             <title value="Poster - Check poster button never show state works"/>
             <description value="Check poster button never show state works"/>
-            <severity value="CRITICAL"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MAGETWO-75774"/>
             <testCaseId value="MC-2781"/>
             <group value="pagebuilder"/>
@@ -315,7 +315,7 @@
             <stories value="Slider"/>
             <title value="Poster - Check poster button on hover state works"/>
             <description value="Check poster button on hover state works"/>
-            <severity value="CRITICAL"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MAGETWO-75774"/>
             <testCaseId value="MC-2704"/>
             <group value="pagebuilder"/>
@@ -392,7 +392,7 @@
             <stories value="Slider"/>
             <title value="Poster - Check poster overlay never show state works"/>
             <description value="Check poster overlay never show state works"/>
-            <severity value="CRITICAL"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MAGETWO-75774"/>
             <testCaseId value="MC-2542"/>
             <group value="pagebuilder"/>
@@ -466,7 +466,7 @@
             <stories value="Slider"/>
             <title value="Poster - Check poster overlay on hover state works"/>
             <description value="Check poster overlay on hover state works"/>
-            <severity value="CRITICAL"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MAGETWO-75774"/>
             <testCaseId value="MC-2545"/>
             <group value="pagebuilder"/>
@@ -542,7 +542,7 @@
             <stories value="Slider"/>
             <title value="Poster - Check poster button and overlay on hover state works"/>
             <description value="Check poster button and overlay on hover state works"/>
-            <severity value="CRITICAL"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MAGETWO-75774"/>
             <testCaseId value="MC-2762"/>
             <group value="pagebuilder"/>
@@ -649,7 +649,7 @@
             <stories value="Slider"/>
             <title value="Poster - Check poster overlay position is correct"/>
             <description value="Check poster overlay is correct"/>
-            <severity value="CRITICAL"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MC-4116"/>
             <testCaseId value="MC-5033"/>
             <group value="pagebuilder"/>
@@ -720,7 +720,7 @@
             <stories value="Slider"/>
             <title value="Poster - Ability to edit a poster slider button inline on the stage"/>
             <description value="A user should be able to edit a poster slider button inline on the stage"/>
-            <severity value="CRITICAL"/>
+            <severity value="MAJOR"/>
             <useCaseId value="MAGETWO-87988"/>
             <testCaseId value="MC-2558"/>
             <group value="pagebuilder"/>
@@ -785,7 +785,7 @@
             <stories value="Slider"/>
             <title value="Poster - Update Advanced Configuration Values"/>
             <description value="Validate that updating every attribute in the Advanced Configuration form for poster Slide item will update the Stage and Storefront correctly."/>
-            <severity value="CRITICAL"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MC-3228"/>
             <testCaseId value="MC-3810"/>
             <group value="pagebuilder"/>
@@ -944,7 +944,7 @@
             <stories value="Slider"/>
             <title value="Poster - Update All Attributes"/>
             <description value="A user should be able to add a poster slide with all attribute fields filled."/>
-            <severity value="CRITICAL"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MC-3228"/>
             <testCaseId value="MC-3807"/>
             <group value="pagebuilder"/>
@@ -996,7 +996,7 @@
             <argument name="property" value="PageBuilderSlideItemSlideName_Slide1"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeight">
-            <argument name="property" value="PageBuilderSlideItemMinimumHeight_500"/>
+            <argument name="property" value="PageBuilderMinHeightProperty_500px"/>
         </actionGroup>
         <!-- Fill Out Edit Panel: Background -->
         <comment userInput="Fill Out Edit Panel: Background" stepKey="commentFillEditPanel2"/>
@@ -1076,7 +1076,7 @@
         <comment userInput="Validate Stage: Appearance" stepKey="commentValidateAppearanceStage"/>
         <seeElement selector="{{SlideOnBackend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seeAppearanceStage"/>
         <seeElement selector="{{SlideOnBackend.slideName('1', PageBuilderSlideItemSlideName_Slide1.value)}}" stepKey="seeSlideNameStage"/>
-        <seeElement selector="{{SlideOnBackend.posterMinimumHeight('1', PageBuilderSlideItemMinimumHeight_500.value)}}" stepKey="seeMinimumHeightStage"/>
+        <seeElement selector="{{SlideOnBackend.posterMinimumHeight('1', PageBuilderMinHeightProperty_500px.value)}}" stepKey="seeMinimumHeightStage"/>
         <!-- Validate Stage: Background -->
         <comment userInput="Validate Stage: Background" stepKey="commentValidateBackgroundStage"/>
         <seeElement selector="{{SlideOnBackend.backgroundColor('1', PageBuilderBackgroundColor_Hex_Grey.rgb)}}" stepKey="seeBackgroundColorStage"/>
@@ -1112,7 +1112,7 @@
         <comment userInput="Validate Stage After Save: Appearance" stepKey="commentValidateAppearanceStage2"/>
         <seeElement selector="{{SlideOnBackend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seeAppearanceStage2"/>
         <seeElement selector="{{SlideOnBackend.slideName('1', PageBuilderSlideItemSlideName_Slide1.value)}}" stepKey="seeSlideNameStage2"/>
-        <seeElement selector="{{SlideOnBackend.posterMinimumHeight('1', PageBuilderSlideItemMinimumHeight_500.value)}}" stepKey="seeMinimumHeightStage2"/>
+        <seeElement selector="{{SlideOnBackend.posterMinimumHeight('1', PageBuilderMinHeightProperty_500px.value)}}" stepKey="seeMinimumHeightStage2"/>
         <!-- Validate Stage After Save: Background -->
         <comment userInput="Validate Stage After Save: Background" stepKey="commentValidateBackgroundStage2"/>
         <seeElement selector="{{SlideOnBackend.backgroundColor('1', PageBuilderBackgroundColor_Hex_Grey.rgb)}}" stepKey="seeBackgroundColorStage2"/>
@@ -1154,7 +1154,7 @@
             <argument name="property" value="PageBuilderSlideItemSlideName_Slide1"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeMinimumHeight">
-            <argument name="property" value="PageBuilderSlideItemMinimumHeight_500"/>
+            <argument name="property" value="PageBuilderMinHeightProperty_500px"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeBackgroundColor">
             <argument name="property" value="PageBuilderBackgroundColor_Hex_Grey"/>
@@ -1232,7 +1232,7 @@
         <comment userInput="Validate Storefront: Appearance" stepKey="commentValidateAppearanceStorefront"/>
         <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seeAppearanceStorefront"/>
         <seeElement selector="{{SlideOnFrontend.slideName('1', PageBuilderSlideItemSlideName_Slide1.value)}}" stepKey="seeSlideNameStorefront"/>
-        <seeElement selector="{{SlideOnFrontend.minimumHeight('1', PageBuilderSlideItemMinimumHeight_500.value)}}" stepKey="seeMinimumHeightStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.minimumHeight('1', PageBuilderMinHeightProperty_500px.value)}}" stepKey="seeMinimumHeightStorefront"/>
         <!-- Validate Storefront: Background -->
         <comment userInput="Validate Storefront: Background" stepKey="commentValidateBackgroundStorefront"/>
         <seeElement selector="{{SlideOnFrontend.backgroundColor('1', PageBuilderBackgroundColor_Hex_Grey.rgb)}}" stepKey="seeBackgroundColorStorefront"/>
@@ -1269,7 +1269,7 @@
         <comment userInput="Validate Storefront Mobile: Appearance" stepKey="commentValidateAppearanceStorefrontMobile"/>
         <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seeMobileAppearanceStorefront"/>
         <seeElement selector="{{SlideOnFrontend.slideName('1', PageBuilderSlideItemSlideName_Slide1.value)}}" stepKey="seeMobileSlideNameStorefront"/>
-        <seeElement selector="{{SlideOnFrontend.minimumHeight('1', PageBuilderSlideItemMinimumHeight_500.value)}}" stepKey="seeMobileMinimumHeightStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.minimumHeight('1', PageBuilderMinHeightProperty_500px.value)}}" stepKey="seeMobileMinimumHeightStorefront"/>
         <!-- Validate Storefront Mobile: Background -->
         <comment userInput="Validate Storefront Mobile Background" stepKey="commentValidateBackgroundStorefrontMobile"/>
         <seeElement selector="{{SlideOnFrontend.backgroundColor('1', PageBuilderBackgroundColor_Hex_Grey.rgb)}}" stepKey="seeBackgroundColorStorefrontMobile"/>
@@ -1308,7 +1308,7 @@
             <stories value="Slider"/>
             <title value="Poster - Slide with borders and padding is equal to min height"/>
             <description value="A user can see poster Slide height with borders and padding is equal to min height"/>
-            <severity value="MAJOR"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MC-5079"/>
             <testCaseId value="MC-5792"/>
             <group value="pagebuilder"/>
@@ -1328,7 +1328,7 @@
             <argument name="section" value="SlideOnBackend"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty">
-            <argument name="property" value="PageBuilderSlideItemMinimumHeight_300"/>
+            <argument name="property" value="PageBuilderMinHeightProperty_300px"/>
         </actionGroup>
         <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateContentTypeHeightBeforeSave">
             <argument name="content" value="{{SlideOnBackend.wrapperCSS}}"/>
@@ -1352,12 +1352,12 @@
             <stories value="Slider"/>
             <title value="Poster - HTML Value In Buttons Does Not Render As HTML"/>
             <description value="Validate that html can be entered into the button and that the html doesn't render on stage and storefront."/>
-            <severity value="MAJOR"/>
+            <severity value="AVERAGE"/>
             <useCaseId value="MC-849"/>
             <testCaseId value="MC-3662"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-slider"/>
-            <group value="pagebuilder-sliderPoster"/>
+            <group value="pagebuilder-slideItemPoster"/>
         </annotations>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearance">
             <argument name="property" value="PageBuilderAppearance_Poster"/>
@@ -1369,12 +1369,12 @@
             <stories value="Slider"/>
             <title value="Poster - Non Breaking Space In Button Does Not Render as nbsp;"/>
             <description value="Validate that non breaking space can be entered into the button and that the html doesn't render on stage and storefront as nbsp."/>
-            <severity value="MAJOR"/>
+            <severity value="AVERAGE"/>
             <useCaseId value="MC-3889"/>
             <testCaseId value="MC-4205"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-slider"/>
-            <group value="pagebuilder-sliderPoster"/>
+            <group value="pagebuilder-slideItemPoster"/>
         </annotations>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearance">
             <argument name="property" value="PageBuilderAppearance_Poster"/>
@@ -1391,7 +1391,7 @@
             <testCaseId value="MC-5179"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-slider"/>
-            <group value="pagebuilder-sliderPoster"/>
+            <group value="pagebuilder-slideItemPoster"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1462,12 +1462,12 @@
             <stories value="Slider"/>
             <title value="Poster - Slide Overlay and Button do not go outside container on poster appearance"/>
             <description value="User should be able to place a slide with Poster appearance inside a narrow column without the contents spilling outside of the column."/>
-            <severity value="MAJOR"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MC-5372"/>
             <testCaseId value="MC-5939"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-slider"/>
-            <group value="pagebuilder-sliderPoster"/>
+            <group value="pagebuilder-slideItemPoster"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1569,7 +1569,7 @@
             <testCaseId value="MC-6014"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-slide"/>
-            <group value="pagebuilder-sliderPoster"/>
+            <group value="pagebuilder-slideItemPoster"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1691,5 +1691,481 @@
             <expectedResult type="string">{{PageBuilderAdvancedAlignmentPropertyRight.value}}</expectedResult>
             <actualResult type="variable">grabComputedTextAlignStoreFront</actualResult>
         </assertEquals>
+    </test>
+    <test name="SliderPosterVideoBackgroundNoFallbackImageDisabledLoopAndPlayWhenVisibleAndLazyLoad">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Validate Poster Slide with No Fallback Image, Disabled Infinite Loop, Disabled Play Only When Visible, and Disabled Lazy Load"/>
+            <description value="Validate video background with no fallback image, disabled infinite loop, disabled play only when visible, and disabled lazy load."/>
+            <severity value="BLOCKER"/>
+            <useCaseId value="PB-266"/>
+            <testCaseId value="MC-31830"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-slideItemPoster"/>
+            <group value="pagebuilder-video-background"/>
+        </annotations>
+        <before>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
+                <argument name="CMSPage" value="$$createCMSPage$$"/>
+            </actionGroup>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Add Slider to Stage -->
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragSliderIntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+        </actionGroup>
+        <!-- Set Video Background on Poster appearance Slide -->
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanelAfterDrop">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setAppearance">
+            <argument name="property" value="PageBuilderAppearance_Poster"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty">
+            <argument name="property" value="PageBuilderMinHeightProperty_300px"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setBackgroundType">
+            <argument name="property" value="PageBuilderBackgroundType_Video"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrl">
+            <argument name="property" value="PageBuilderVideoBackgroundUrl_YouTube_Embedded"/>
+        </actionGroup>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="disableInfiniteLoop">
+            <argument name="property" value="PageBuilderVideoBackgroundInfiniteLoop_Disabled"/>
+        </actionGroup>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="disableLazyLoad">
+            <argument name="property" value="PageBuilderVideoBackgroundLazyLoad_Disabled"/>
+        </actionGroup>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="disablePlayOnlyWhenVisible">
+            <argument name="property" value="PageBuilderVideoBackgroundPlayOnlyWhenVisible_Disabled"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButton">
+            <argument name="property" value="PageBuilderSlideItemShowButton_Always"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <actionGroup ref="validateVideoBackgroundWithOnlyVideoUrl" stepKey="validateStage1">
+            <argument name="section" value="SlideOnBackend"/>
+            <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_YouTube_Embedded"/>
+            <argument name="infiniteLoop" value="PageBuilderVideoBackgroundInfiniteLoop_Disabled"/>
+            <argument name="lazyLoad" value="PageBuilderVideoBackgroundLazyLoad_Disabled"/>
+            <argument name="playOnlyWhenVisible" value="PageBuilderVideoBackgroundPlayOnlyWhenVisible_Disabled"/>
+        </actionGroup>
+        <actionGroup ref="doubleClickToInlineEditWYSIWYGFromStage" stepKey="inlineEdit">
+            <argument name="contentType" value="PageBuilderSlideContentType"/>
+            <argument name="content" value="{{PageBuilderSlideItemContent_Slide1.value}}"/>
+        </actionGroup>
+        <actionGroup ref="inlineEditSlideOrBannerButton" stepKey="inlineEditSlideButton">
+            <argument name="text" value="{{PageBuilderSlideItemButtonText_Slide1.value}}"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="waitForMessageContentStage"/>
+        <waitForElementVisible selector="{{SlideOnBackend.buttonText('1', PageBuilderSlideItemButtonText_Slide1.value)}}" stepKey="waitForButtonTextStage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!-- Validate Stage After Save -->
+        <actionGroup ref="validateVideoBackgroundWithOnlyVideoUrl" stepKey="validateStage2">
+            <argument name="section" value="SlideOnBackend"/>
+            <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_YouTube_Embedded"/>
+            <argument name="infiniteLoop" value="PageBuilderVideoBackgroundInfiniteLoop_Disabled"/>
+            <argument name="lazyLoad" value="PageBuilderVideoBackgroundLazyLoad_Disabled"/>
+            <argument name="playOnlyWhenVisible" value="PageBuilderVideoBackgroundPlayOnlyWhenVisible_Disabled"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="waitForMessageContentStage2"/>
+        <waitForElementVisible selector="{{SlideOnBackend.buttonText('1', PageBuilderSlideItemButtonText_Slide1.value)}}" stepKey="waitForButtonTextStage2"/>
+        <!-- Validate Edit Panel After Save -->
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanelAfterSave">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBackgroundColorEmptyAfterSave">
+            <argument name="property" value="PageBuilderBackgroundColor_Default"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateVideoUrlAfterSave">
+            <argument name="property" value="PageBuilderVideoBackgroundUrl_YouTube_Embedded"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateOverlayColorEmptyAfterSave">
+            <argument name="property" value="PageBuilderVideoBackgroundOverlayColor_Empty"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="validateInfiniteLoopAfterSave">
+            <argument name="property" value="PageBuilderVideoBackgroundInfiniteLoop_Disabled"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="validateLazyLoadAfterSave">
+            <argument name="property" value="PageBuilderVideoBackgroundLazyLoad_Disabled"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="validatePlayOnlyWhenVisibleAfterSave">
+            <argument name="property" value="PageBuilderVideoBackgroundPlayOnlyWhenVisible_Disabled"/>
+        </actionGroup>
+        <actionGroup ref="seeNoImageUploadedOnSlideOut" stepKey="validateNoFallbackImageAfterSave">
+            <argument name="property" value="PageBuilderVideoBackgroundFallbackImage_Empty"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStorefront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <actionGroup ref="validateVideoBackgroundWithOnlyVideoUrl" stepKey="validateStorefront">
+            <argument name="section" value="SlideOnFrontend"/>
+            <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_YouTube_Embedded"/>
+            <argument name="infiniteLoop" value="PageBuilderVideoBackgroundInfiniteLoop_Disabled"/>
+            <argument name="lazyLoad" value="PageBuilderVideoBackgroundLazyLoad_Disabled"/>
+            <argument name="playOnlyWhenVisible" value="PageBuilderVideoBackgroundPlayOnlyWhenVisible_Disabled"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{SlideOnFrontend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="waitForMessageContentStorefront"/>
+        <waitForElementVisible selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideItemButtonText_Slide1.value)}}" stepKey="waitForButtonTextStorefront"/>
+    </test>
+    <test name="SliderPosterValidateVideoBackground">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Validate Video Background in Poster Slide"/>
+            <description value="Set all video background attributes for a Poster Slide and validate on stage and storefront."/>
+            <severity value="BLOCKER"/>
+            <useCaseId value="PB-266"/>
+            <testCaseId value="MC-31841"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-slideItemPoster"/>
+            <group value="pagebuilder-video-background"/>
+        </annotations>
+        <before>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
+                <argument name="CMSPage" value="$$createCMSPage$$"/>
+            </actionGroup>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="navigateToFallbackImageFolder">
+                <argument name="FolderName" value="{{PageBuilderVideoBackgroundFallbackImage_JPG.path}}"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="deleteFallbackImage">
+                <argument name="Image" value="PageBuilderVideoBackgroundFallbackImage_JPG"/>
+            </actionGroup>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Add Slider to Stage -->
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragSliderIntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+        </actionGroup>
+        <!-- Set Video Background on Poster appearance Slide -->
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanelAfterDrop">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setAppearance">
+            <argument name="property" value="PageBuilderAppearance_Poster"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty">
+            <argument name="property" value="PageBuilderMinHeightProperty_300px"/>
+        </actionGroup>
+        <!-- Update All Video Background Fields -->
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBackgroundColor">
+            <argument name="property" value="PageBuilderBackgroundColor_Pink"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setBackgroundType">
+            <argument name="property" value="PageBuilderBackgroundType_Video"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrl">
+            <argument name="property" value="PageBuilderVideoBackgroundUrl_YouTube_Embedded"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterOverlayColor">
+            <argument name="property" value="PageBuilderVideoBackgroundOverlayColor_Hex_Grey"/>
+        </actionGroup>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="setInfiniteLoop">
+            <argument name="property" value="PageBuilderVideoBackgroundInfiniteLoop_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="setLazyLoad">
+            <argument name="property" value="PageBuilderVideoBackgroundLazyLoad_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="setPlayOnlyWhenVisible">
+            <argument name="property" value="PageBuilderVideoBackgroundPlayOnlyWhenVisible_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachFallbackImage">
+            <argument name="property" value="PageBuilderVideoBackgroundFallbackImage_JPG"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButton">
+            <argument name="property" value="PageBuilderSlideItemShowButton_Always"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <actionGroup ref="validateVideoBackgroundWithAllAttributes" stepKey="validateStage1">
+            <argument name="section" value="SlideOnBackend"/>
+            <argument name="backgroundColor" value="{{PageBuilderBackgroundColor_Pink.rgb}}"/>
+            <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_YouTube_Embedded"/>
+            <argument name="overlayColor" value="{{PageBuilderVideoBackgroundOverlayColor_Hex_Grey.rgba}}"/>
+            <argument name="infiniteLoop" value="PageBuilderVideoBackgroundInfiniteLoop_Enabled"/>
+            <argument name="lazyLoad" value="PageBuilderVideoBackgroundLazyLoad_Enabled"/>
+            <argument name="playOnlyWhenVisible" value="PageBuilderVideoBackgroundPlayOnlyWhenVisible_Enabled"/>
+            <argument name="fallbackImage" value="PageBuilderVideoBackgroundFallbackImage_JPG"/>
+        </actionGroup>
+        <actionGroup ref="inlineEditSlideOrBannerButton" stepKey="inlineEditSlideButton">
+            <argument name="text" value="{{PageBuilderSlideItemButtonText_Slide1.value}}"/>
+        </actionGroup>
+        <actionGroup ref="doubleClickToInlineEditWYSIWYGFromStage" stepKey="inlineEdit">
+            <argument name="contentType" value="PageBuilderSlideContentType"/>
+            <argument name="content" value="{{PageBuilderSlideItemContent_Slide1.value}}"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="waitForMessageContentStage"/>
+        <waitForElementVisible selector="{{SlideOnBackend.buttonText('1', PageBuilderSlideItemButtonText_Slide1.value)}}" stepKey="waitForButtonTextStage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!-- Validate Stage After Save -->
+        <actionGroup ref="validateVideoBackgroundWithAllAttributes" stepKey="validateStage2">
+            <argument name="section" value="SlideOnBackend"/>
+            <argument name="backgroundColor" value="{{PageBuilderBackgroundColor_Pink.rgb}}"/>
+            <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_YouTube_Embedded"/>
+            <argument name="overlayColor" value="{{PageBuilderVideoBackgroundOverlayColor_Hex_Grey.rgba}}"/>
+            <argument name="infiniteLoop" value="PageBuilderVideoBackgroundInfiniteLoop_Enabled"/>
+            <argument name="lazyLoad" value="PageBuilderVideoBackgroundLazyLoad_Enabled"/>
+            <argument name="playOnlyWhenVisible" value="PageBuilderVideoBackgroundPlayOnlyWhenVisible_Enabled"/>
+            <argument name="fallbackImage" value="PageBuilderVideoBackgroundFallbackImage_JPG"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="waitForMessageContentStage2"/>
+        <waitForElementVisible selector="{{SlideOnBackend.buttonText('1', PageBuilderSlideItemButtonText_Slide1.value)}}" stepKey="waitForButtonTextStage2"/>
+        <!-- Validate Edit Panel After Save -->
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanelAfterSave">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeBackgroundColor">
+            <argument name="property" value="PageBuilderBackgroundColor_Pink"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeBackgroundType">
+            <argument name="property" value="PageBuilderBackgroundType_Video"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeVideoUrl">
+            <argument name="property" value="PageBuilderVideoBackgroundUrl_YouTube_Embedded"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeOverlayColor">
+            <argument name="property" value="PageBuilderVideoBackgroundOverlayColor_Hex_Grey"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsCheckedSlideOutProperty" stepKey="seeInfiniteLoop">
+            <argument name="property" value="PageBuilderVideoBackgroundInfiniteLoop_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsCheckedSlideOutProperty" stepKey="seeLazyLoad">
+            <argument name="property" value="PageBuilderVideoBackgroundLazyLoad_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsCheckedSlideOutProperty" stepKey="seePlayOnlyWhenVisible">
+            <argument name="property" value="PageBuilderVideoBackgroundPlayOnlyWhenVisible_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="seeImageUploadedOnSlideOut" stepKey="seeFallbackImage">
+            <argument name="property" value="PageBuilderVideoBackgroundFallbackImage_JPG"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStorefront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <actionGroup ref="validateVideoBackgroundWithAllAttributes" stepKey="validateStorefront">
+            <argument name="section" value="SlideOnFrontend"/>
+            <argument name="backgroundColor" value="{{PageBuilderBackgroundColor_Pink.rgb}}"/>
+            <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_YouTube_Embedded"/>
+            <argument name="overlayColor" value="{{PageBuilderVideoBackgroundOverlayColor_Hex_Grey.rgba}}"/>
+            <argument name="infiniteLoop" value="PageBuilderVideoBackgroundInfiniteLoop_Enabled"/>
+            <argument name="lazyLoad" value="PageBuilderVideoBackgroundLazyLoad_Enabled"/>
+            <argument name="playOnlyWhenVisible" value="PageBuilderVideoBackgroundPlayOnlyWhenVisible_Enabled"/>
+            <argument name="fallbackImage" value="PageBuilderVideoBackgroundFallbackImage_JPG"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{SlideOnFrontend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="waitForMessageContentStorefront"/>
+        <waitForElementVisible selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideItemButtonText_Slide1.value)}}" stepKey="waitForButtonTextStorefront"/>
+    </test>
+    <test name="SliderPosterVideoBackgroundValidateFallbackImage">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Validate Video Background Fallback Image Renders When Video Isn't Loaded in Poster Slide"/>
+            <description value="Validate that the video background fallback image loads and renders in a Poster Slide when the video hasn't loaded."/>
+            <severity value="BLOCKER"/>
+            <useCaseId value="PB-266"/>
+            <testCaseId value="MC-31844"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-slideItemPoster"/>
+            <group value="pagebuilder-video-background"/>
+        </annotations>
+        <before>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
+                <argument name="CMSPage" value="$$createCMSPage$$"/>
+            </actionGroup>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="navigateToFallbackImageFolder">
+                <argument name="FolderName" value="{{PageBuilderVideoBackgroundFallbackImage_JPG.path}}"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="deleteFallbackImage">
+                <argument name="Image" value="PageBuilderVideoBackgroundFallbackImage_JPG"/>
+            </actionGroup>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Add Slider to Stage -->
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragSliderIntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+        </actionGroup>
+        <!-- Set Video Background on Poster appearance Slide -->
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanelAfterDrop">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setAppearance">
+            <argument name="property" value="PageBuilderAppearance_Poster"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty">
+            <argument name="property" value="PageBuilderMinHeightProperty_300px"/>
+        </actionGroup>
+        <!-- Update Video Background Fields -->
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setBackgroundType">
+            <argument name="property" value="PageBuilderBackgroundType_Video"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrl">
+            <argument name="property" value="PageBuilderVideoBackgroundUrl_Invalid_VideoDoesNotExit"/>
+        </actionGroup>
+        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachFallbackImage">
+            <argument name="property" value="PageBuilderVideoBackgroundFallbackImage_JPG"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButton">
+            <argument name="property" value="PageBuilderSlideItemShowButton_Always"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <actionGroup ref="validateFallbackImageInVideoBackgroundWithInvalidVideo" stepKey="validateStage1">
+            <argument name="section" value="SlideOnBackend"/>
+            <argument name="fallbackImage" value="PageBuilderVideoBackgroundFallbackImage_JPG"/>
+        </actionGroup>
+        <actionGroup ref="inlineEditSlideOrBannerButton" stepKey="inlineEditSlideButton">
+            <argument name="text" value="{{PageBuilderSlideItemButtonText_Slide1.value}}"/>
+        </actionGroup>
+        <actionGroup ref="doubleClickToInlineEditWYSIWYGFromStage" stepKey="inlineEdit">
+            <argument name="contentType" value="PageBuilderSlideContentType"/>
+            <argument name="content" value="{{PageBuilderSlideItemContent_Slide1.value}}"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="waitForMessageContentStage"/>
+        <waitForElementVisible selector="{{SlideOnBackend.buttonText('1', PageBuilderSlideItemButtonText_Slide1.value)}}" stepKey="waitForButtonTextStage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!-- Validate Stage After Save -->
+        <actionGroup ref="validateFallbackImageInVideoBackgroundWithInvalidVideo" stepKey="validateStage2">
+            <argument name="section" value="SlideOnBackend"/>
+            <argument name="fallbackImage" value="PageBuilderVideoBackgroundFallbackImage_JPG"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="waitForMessageContentStage2"/>
+        <waitForElementVisible selector="{{SlideOnBackend.buttonText('1', PageBuilderSlideItemButtonText_Slide1.value)}}" stepKey="waitForButtonTextStage2"/>
+        <!-- Validate Storefront -->
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStorefront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <actionGroup ref="validateFallbackImageInVideoBackgroundWithInvalidVideo" stepKey="validateStorefront">
+            <argument name="section" value="SlideOnFrontend"/>
+            <argument name="fallbackImage" value="PageBuilderVideoBackgroundFallbackImage_JPG"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{SlideOnFrontend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="waitForMessageContentStorefront"/>
+        <waitForElementVisible selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideItemButtonText_Slide1.value)}}" stepKey="waitForButtonTextStorefront"/>
+    </test>
+    <test name="SliderPosterInvalidVideoBackgroundNoFallbackImage">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Verify Poster Slide Renders When Video Isn't Loaded and There's No Fallback Image"/>
+            <description value="Validate that the slide renders correctly when the video background video hasn't loaded and there is no fallback image."/>
+            <severity value="BLOCKER"/>
+            <useCaseId value="PB-266"/>
+            <testCaseId value="MC-31845"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-slideItemPoster"/>
+            <group value="pagebuilder-video-background"/>
+        </annotations>
+        <before>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
+                <argument name="CMSPage" value="$$createCMSPage$$"/>
+            </actionGroup>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Add Slider to Stage -->
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragSliderIntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+        </actionGroup>
+        <!-- Set Video Background on Poster appearance Slide -->
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanelAfterDrop">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setAppearance">
+            <argument name="property" value="PageBuilderAppearance_Poster"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty">
+            <argument name="property" value="PageBuilderMinHeightProperty_300px"/>
+        </actionGroup>
+        <!-- Update Video Background Fields -->
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setBackgroundType">
+            <argument name="property" value="PageBuilderBackgroundType_Video"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrl">
+            <argument name="property" value="PageBuilderVideoBackgroundUrl_Invalid_VideoDoesNotExit"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButton">
+            <argument name="property" value="PageBuilderSlideItemShowButton_Always"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <actionGroup ref="validateInvalidVideoBackgroundAndNoFallbackImage" stepKey="validateStage1">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="inlineEditSlideOrBannerButton" stepKey="inlineEditSlideButton">
+            <argument name="text" value="{{PageBuilderSlideItemButtonText_Slide1.value}}"/>
+        </actionGroup>
+        <actionGroup ref="doubleClickToInlineEditWYSIWYGFromStage" stepKey="inlineEdit">
+            <argument name="contentType" value="PageBuilderSlideContentType"/>
+            <argument name="content" value="{{PageBuilderSlideItemContent_Slide1.value}}"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="waitForMessageContentStage"/>
+        <waitForElementVisible selector="{{SlideOnBackend.buttonText('1', PageBuilderSlideItemButtonText_Slide1.value)}}" stepKey="waitForButtonTextStage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!-- Validate Stage After Save -->
+        <actionGroup ref="validateInvalidVideoBackgroundAndNoFallbackImage" stepKey="validateStage2">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="waitForMessageContentStage2"/>
+        <waitForElementVisible selector="{{SlideOnBackend.buttonText('1', PageBuilderSlideItemButtonText_Slide1.value)}}" stepKey="waitForButtonTextStage2"/>
+        <!-- Validate Storefront -->
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStorefront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <actionGroup ref="validateInvalidVideoBackgroundAndNoFallbackImage" stepKey="validateStorefront">
+            <argument name="section" value="SlideOnFrontend"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{SlideOnFrontend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="waitForMessageContentStorefront"/>
+        <waitForElementVisible selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideItemButtonText_Slide1.value)}}" stepKey="waitForButtonTextStorefront"/>
     </test>
 </tests>

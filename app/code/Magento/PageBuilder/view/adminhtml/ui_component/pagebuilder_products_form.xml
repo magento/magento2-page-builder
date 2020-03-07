@@ -229,6 +229,22 @@
                 <settings>
                     <elementTmpl>Magento_PageBuilder/form/element/product-totals</elementTmpl>
                     <dataType>text</dataType>
+                    <additionalClasses>
+                        <class name="admin__field-product-tooltip">true</class>
+                    </additionalClasses>
+                    <tooltip>
+                        <description translate="true">
+                            <![CDATA[
+                                <p>The products displayed may vary from this total due to several factors, including but not limited to:</p>
+                                <ul>
+                                    <li>Disabled status</li>
+                                    <li>Visibility configuration (not visible in catalog)</li>
+                                    <li>Stock availability (out of stock)</li>
+                                    <li>Website assignment</li>
+                                </ul>
+                            ]]>
+                        </description>
+                    </tooltip>
                     <imports>
                         <link name="conditionOption">ns = ${ $.ns }, index = condition_option:value</link>
                         <link name="conditionValue">ns = ${ $.ns }, index = conditions_form:value</link>

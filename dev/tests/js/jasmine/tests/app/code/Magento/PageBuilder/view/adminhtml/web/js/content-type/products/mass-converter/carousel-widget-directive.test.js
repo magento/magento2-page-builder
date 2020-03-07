@@ -69,7 +69,9 @@ define([
             it('Should transform regular properties', function () {
                 var data = {
                         carousel_products_count: 123,
-                        conditions_encoded: '[]'
+                        conditions_encoded: '[]',
+                        condition_option: 'condition',
+                        sort_order: 'position'
                     },
                     config = {
                         html_variable: 'myhtml'
@@ -86,6 +88,9 @@ define([
                 expect(result.myhtml).toContain(' id_path=""');
                 expect(result.myhtml).toContain(' show_pager="0"');
                 expect(result.myhtml).toContain(' type_name="Catalog Products Carousel"');
+                expect(result.myhtml).toContain(' condition_option="condition');
+                expect(result.myhtml).toContain(' sort_order="position');
+                expect(result.myhtml).toContain(' condition_option_value=""');
             });
             it('Should encode conditions_encoded', function () {
                 var data = {
@@ -107,12 +112,25 @@ define([
                 expect(result.myhtml).toContain(' show_pager="0"');
                 expect(result.myhtml).toContain(' type_name="Catalog Products Carousel"');
             });
+            it('Should not add empty sort_order attribute', function () {
+                var data = {
+                        carousel_products_count: 123,
+                        conditions_encoded: '[]'
+                    },
+                    config = {
+                        html_variable: 'myhtml'
+                    },
+                    result = model.toDom(data, config);
+
+                expect(result.myhtml).not.toContain('sort_order');
+            });
         });
         describe('fromDom', function () {
             it('Should parse regular properties without conditions_encoded', function () {
                 var expected = {
                         carousel_products_count: '123',
-                        conditions_encoded: ''
+                        conditions_encoded: '',
+                        condition_option: 'condition'
                     },
                     config = {
                         html_variable: 'myhtml'
@@ -124,6 +142,7 @@ define([
 
                 expect(result.carousel_products_count).toBe(expected.carousel_products_count);
                 expect(result.conditions_encoded).toBe(expected.conditions_encoded);
+                expect(result.condition_option).toBe(expected.condition_option);
                 // assert the automatically added properties do not get returned.
                 expect(result.type).toBe(undefined);
                 expect(result.id_path).toBe(undefined);

@@ -3,7 +3,7 @@
 
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-menu/hide-show-option", "Magento_PageBuilder/js/uploader", "Magento_PageBuilder/js/utils/nesting-link-dialog", "Magento_PageBuilder/js/wysiwyg/factory", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _translate, _events, _config, _hideShowOption, _uploader, _nestingLinkDialog, _factory, _preview) {
+define(["jarallax", "jarallaxVideo", "jquery", "mage/translate", "Magento_PageBuilder/js/events", "mageUtils", "underscore", "vimeoWrapper", "Magento_PageBuilder/js/content-type-menu/hide-show-option", "Magento_PageBuilder/js/uploader", "Magento_PageBuilder/js/utils/delay-until", "Magento_PageBuilder/js/utils/editor", "Magento_PageBuilder/js/utils/nesting-link-dialog", "Magento_PageBuilder/js/wysiwyg/factory", "Magento_PageBuilder/js/content-type/preview"], function (_jarallax, _jarallaxVideo, _jquery, _translate, _events, _mageUtils, _underscore, _vimeoWrapper, _hideShowOption, _uploader, _delayUntil, _editor, _nestingLinkDialog, _factory, _preview) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -28,6 +28,55 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
 
       _this = _preview2.call.apply(_preview2, [this].concat(args)) || this;
       _this.buttonPlaceholder = (0, _translate)("Edit Button Text");
+      _this.wysiwygDeferred = _jquery.Deferred();
+      _this.handledDoubleClick = false;
+      _this.videoUpdateProperties = ["background_type", "video_fallback_image", "video_lazy_load", "video_loop", "video_play_only_visible", "video_source"];
+      _this.bannerOverlaySelector = ".pagebuilder-overlay";
+      _this.defaultOverlayZIndex = 2;
+      _this.activeEditorOverlayZIndex = 3;
+      _this.buildJarallax = _underscore.debounce(function () {
+        // Destroy all instances of the plugin prior
+        try {
+          // store/apply correct style after destroying, as jarallax incorrectly overrides it with stale value
+          var style = _this.wrapper.getAttribute("style") || _this.wrapper.getAttribute("data-jarallax-original-styles");
+
+          var backgroundImage = _this.contentType.dataStore.get("background_image");
+
+          jarallax(_this.wrapper, "destroy");
+
+          _this.wrapper.setAttribute("style", style);
+
+          if (_this.contentType.dataStore.get("background_type") !== "video" && backgroundImage.length) {
+            _this.wrapper.style.backgroundImage = "url(" + backgroundImage[0].url + ")";
+          }
+        } catch (e) {// Failure of destroying is acceptable
+        }
+
+        if (_this.wrapper && _this.wrapper.dataset.backgroundType === "video" && _this.wrapper.dataset.videoSrc.length) {
+          _underscore.defer(function () {
+            // Build Parallax on elements with the correct class
+            jarallax(_this.wrapper, {
+              videoSrc: _this.wrapper.dataset.videoSrc,
+              imgSrc: _this.wrapper.dataset.videoFallbackSrc,
+              videoLoop: _this.contentType.dataStore.get("video_loop") === "true",
+              speed: 1,
+              videoPlayOnlyVisible: _this.contentType.dataStore.get("video_play_only_visible") === "true",
+              videoLazyLoading: _this.contentType.dataStore.get("video_lazy_load") === "true"
+            }); // @ts-ignore
+
+            if (_this.wrapper.jarallax && _this.wrapper.jarallax.video) {
+              // @ts-ignore
+              _this.wrapper.jarallax.video.on("started", function () {
+                // @ts-ignore
+                if (_this.wrapper.jarallax && _this.wrapper.jarallax.$video) {
+                  // @ts-ignore
+                  _this.wrapper.jarallax.$video.style.visibility = "visible";
+                }
+              });
+            }
+          });
+        }
+      }, 50);
       return _this;
     }
 
@@ -64,21 +113,30 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
       return new _uploader("imageuploader_" + this.contentType.id, this.config.additional_data.uploaderConfig, this.contentType.id, this.contentType.dataStore, initialImageValue);
     }
     /**
-     * Makes WYSIWYG active
-     *
-     * @param {Preview} preview
-     * @param {JQueryEventObject} event
+     * @param {HTMLElement} element
      */
     ;
 
-    _proto.activateEditor = function activateEditor(preview, event) {
-      var element = this.element || this.textarea;
+    _proto.afterRenderWysiwyg = function afterRenderWysiwyg(element) {
+      var _this2 = this;
 
-      if (event.currentTarget !== event.target && event.target !== element && !element.contains(event.target)) {
-        return;
-      }
+      this.element = element;
+      element.id = this.contentType.id + "-editor"; // Set the innerHTML manually so we don't upset Knockout & TinyMCE
 
-      element.focus();
+      element.innerHTML = this.data.content.html();
+      this.contentType.dataStore.subscribe(function () {
+        // If we're not focused into TinyMCE inline, update the value when it changes in the data store
+        if (!_this2.wysiwyg || _this2.wysiwyg && _this2.wysiwyg.getAdapter().id !== (0, _editor.getActiveEditor)().id) {
+          element.innerHTML = _this2.data.content.html();
+        }
+      }, "message");
+      /**
+       * afterRenderWysiwyg is called whenever Knockout causes a DOM re-render. This occurs frequently within Slider
+       * due to Slick's inability to perform a refresh with Knockout managing the DOM. Due to this the original
+       * WYSIWYG instance will be detached from this slide and we need to re-initialize on click.
+       */
+
+      this.wysiwyg = null;
     }
     /**
      * Stop event to prevent execution of action when editing textarea.
@@ -92,6 +150,141 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
     _proto.stopEvent = function stopEvent(preview, event) {
       event.stopPropagation();
       return true;
+    }
+    /**
+     * Init WYSIWYG on load
+     *
+     * @param element
+     * @deprecated please use activateEditor & initWysiwygFromClick
+     */
+    ;
+
+    _proto.initWysiwyg = function initWysiwyg(element) {
+      this.element = element;
+      element.id = this.contentType.id + "-editor";
+      this.wysiwyg = null;
+      return this.initWysiwygFromClick(false);
+    }
+    /**
+     * Init the WYSIWYG
+     *
+     * @param {boolean} focus Should wysiwyg focus after initialization?
+     * @returns Promise
+     */
+    ;
+
+    _proto.initWysiwygFromClick = function initWysiwygFromClick(focus) {
+      var _this3 = this;
+
+      if (focus === void 0) {
+        focus = false;
+      }
+
+      if (this.wysiwyg) {
+        return Promise.resolve(this.wysiwyg);
+      }
+
+      var wysiwygConfig = this.config.additional_data.wysiwygConfig.wysiwygConfigData;
+
+      if (focus) {
+        wysiwygConfig.adapter.settings.auto_focus = this.element.id;
+
+        wysiwygConfig.adapter.settings.init_instance_callback = function (editor) {
+          editor.on("focus", function () {
+            (0, _jquery)(_this3.element).parents(_this3.bannerOverlaySelector).zIndex(_this3.activeEditorOverlayZIndex);
+          });
+          editor.on("blur", function () {
+            (0, _jquery)(_this3.element).parents(_this3.bannerOverlaySelector).zIndex(_this3.defaultOverlayZIndex);
+          });
+
+          _underscore.defer(function () {
+            _this3.element.blur();
+
+            _this3.element.focus();
+          });
+        };
+      }
+
+      wysiwygConfig.adapter.settings.fixed_toolbar_container = "#" + this.contentType.id + " .pagebuilder-banner-text-content";
+      return (0, _factory)(this.contentType.id, this.element.id, this.config.name, wysiwygConfig, this.contentType.dataStore, "message", this.contentType.stageId).then(function (wysiwyg) {
+        _this3.wysiwyg = wysiwyg;
+        return wysiwyg;
+      });
+    }
+    /**
+     * Makes WYSIWYG active
+     *
+     * @param {Preview} preview
+     * @param {JQueryEventObject} event
+     * @returns {Boolean}
+     */
+    ;
+
+    _proto.activateEditor = function activateEditor(preview, event) {
+      var _this4 = this;
+
+      if (this.element && !this.wysiwyg) {
+        var bookmark = (0, _editor.createBookmark)(event);
+        (0, _editor.lockImageSize)(this.element);
+        this.element.removeAttribute("contenteditable");
+
+        _underscore.defer(function () {
+          _this4.initWysiwygFromClick(true).then(function () {
+            return (0, _delayUntil)(function () {
+              // We no longer need to handle double click once it's initialized
+              _this4.handledDoubleClick = true;
+
+              _this4.wysiwygDeferred.resolve();
+
+              (0, _editor.moveToBookmark)(bookmark);
+              (0, _editor.unlockImageSize)(_this4.element);
+            }, function () {
+              return _this4.element.classList.contains("mce-edit-focus");
+            }, 10);
+          }).catch(function (error) {
+            // If there's an error with init of WYSIWYG editor push into the console to aid support
+            console.error(error);
+          });
+        });
+      } else if (this.element && this.wysiwyg) {
+        var element = this.element || this.textarea;
+
+        if (event.currentTarget !== event.target && event.target !== element && !element.contains(event.target)) {
+          return;
+        }
+
+        element.focus();
+      }
+    }
+    /**
+     * If a user double clicks prior to initializing TinyMCE, forward the event
+     *
+     * @param preview
+     * @param event
+     */
+    ;
+
+    _proto.handleDoubleClick = function handleDoubleClick(preview, event) {
+      var _this5 = this;
+
+      if (this.handledDoubleClick) {
+        return;
+      }
+
+      event.preventDefault();
+      var targetIndex = (0, _editor.findNodeIndex)(this.element, event.target.tagName, event.target);
+      this.handledDoubleClick = true;
+      this.wysiwygDeferred.then(function () {
+        var target = document.getElementById(event.target.id);
+
+        if (!target) {
+          target = (0, _editor.getNodeByIndex)(_this5.element, event.target.tagName, targetIndex);
+        }
+
+        if (target) {
+          target.dispatchEvent((0, _editor.createDoubleClickEvent)());
+        }
+      });
     }
     /**
      * Set state based on overlay mouseover event for the preview
@@ -140,23 +333,7 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
     ;
 
     _proto.isWysiwygSupported = function isWysiwygSupported() {
-      return _config.getConfig("can_use_inline_editing_on_stage");
-    }
-    /**
-     * @param {HTMLElement} element
-     */
-    ;
-
-    _proto.initWysiwyg = function initWysiwyg(element) {
-      var _this2 = this;
-
-      this.element = element;
-      element.id = this.contentType.id + "-editor";
-      var config = this.config.additional_data.wysiwygConfig.wysiwygConfigData;
-      config.adapter.settings.fixed_toolbar_container = "#" + this.contentType.id + " .pagebuilder-banner-text-content";
-      (0, _factory)(this.contentType.id, element.id, this.config.name, config, this.contentType.dataStore, "message", this.contentType.stageId).then(function (wysiwyg) {
-        _this2.wysiwyg = wysiwyg;
-      });
+      return (0, _editor.isWysiwygSupported)();
     }
     /**
      * @param {HTMLTextAreaElement} element
@@ -164,7 +341,7 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
     ;
 
     _proto.initTextarea = function initTextarea(element) {
-      var _this3 = this;
+      var _this6 = this;
 
       this.textarea = element; // set initial value of textarea based on data store
 
@@ -172,9 +349,9 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
       this.adjustTextareaHeightBasedOnScrollHeight(); // Update content in our stage preview textarea after its slideout counterpart gets updated
 
       _events.on("form:" + this.contentType.id + ":saveAfter", function () {
-        _this3.textarea.value = _this3.contentType.dataStore.get("message");
+        _this6.textarea.value = _this6.contentType.dataStore.get("message");
 
-        _this3.adjustTextareaHeightBasedOnScrollHeight();
+        _this6.adjustTextareaHeightBasedOnScrollHeight();
       });
     }
     /**
@@ -207,27 +384,71 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
       _events.trigger("stage:interactionStop");
     }
     /**
+     * Init the parallax element
+     *
+     * @param {HTMLElement} element
+     */
+    ;
+
+    _proto.initParallax = function initParallax(element) {
+      var _this7 = this;
+
+      this.wrapper = element;
+
+      _underscore.defer(function () {
+        _this7.buildJarallax();
+      });
+    }
+    /**
+     * Destroy jarallax instance.
+     */
+    ;
+
+    _proto.destroy = function destroy() {
+      _preview2.prototype.destroy.call(this);
+
+      if (this.wrapper) {
+        jarallax(this.wrapper, "destroy");
+      }
+    }
+    /**
      * @inheritDoc
      */
     ;
 
     _proto.bindEvents = function bindEvents() {
-      var _this4 = this;
+      var _this8 = this;
 
       _preview2.prototype.bindEvents.call(this);
 
-      _events.on(this.config.name + ":" + this.contentType.id + ":updateAfter", function () {
-        var dataStore = _this4.contentType.dataStore.getState();
+      _events.on("banner:mountAfter", function (args) {
+        if (args.id === _this8.contentType.id) {
+          _this8.buildJarallax();
+        }
+      });
 
-        var imageObject = dataStore[_this4.config.additional_data.uploaderConfig.dataScope][0] || {}; // Resolves issue when tinyMCE injects a non-breaking space on reinitialization and removes placeholder.
+      _events.on(this.config.name + ":" + this.contentType.id + ":updateAfter", function () {
+        var dataStore = _this8.contentType.dataStore.getState();
+
+        var imageObject = dataStore[_this8.config.additional_data.uploaderConfig.dataScope][0] || {}; // Resolves issue when tinyMCE injects a non-breaking space on reinitialization and removes placeholder.
 
         if (dataStore.message === "<div data-bind=\"html: data.content.html\">&nbsp;</div>") {
-          _this4.contentType.dataStore.set("message", "");
+          _this8.contentType.dataStore.set("message", "");
         }
 
-        _events.trigger("image:" + _this4.contentType.id + ":assignAfter", imageObject);
+        _events.trigger("image:" + _this8.contentType.id + ":assignAfter", imageObject);
 
-        (0, _nestingLinkDialog)(_this4.contentType.dataStore, _this4.wysiwyg, "message", "link_url");
+        (0, _nestingLinkDialog)(_this8.contentType.dataStore, _this8.wysiwyg, "message", "link_url");
+      });
+
+      this.contentType.dataStore.subscribe(function (data) {
+        if (this.shouldUpdateVideo(data)) {
+          this.buildJarallax();
+        }
+      }.bind(this));
+
+      _events.on("image:" + this.contentType.id + ":uploadAfter", function () {
+        _this8.contentType.dataStore.set("background_type", "image");
       });
     }
     /**
@@ -246,6 +467,30 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
       }
 
       (0, _jquery)(this.textarea).height(scrollHeight);
+    }
+    /**
+     * Check if video options has been updated.
+     *
+     * @return boolean
+     */
+    ;
+
+    _proto.shouldUpdateVideo = function shouldUpdateVideo(state) {
+      var _this9 = this;
+
+      var previousState = this.contentType.dataStore.getPreviousState();
+
+      var diff = _mageUtils.compare(previousState, state).changes;
+
+      if (diff.length > 0) {
+        return _underscore.some(diff, function (element) {
+          if (element.name === "video_fallback_image") {
+            return (!_underscore.isEmpty(previousState.video_fallback_image) && previousState.video_fallback_image) !== (!_underscore.isEmpty(state.video_fallback_image) && state.video_fallback_image);
+          }
+
+          return _this9.videoUpdateProperties.indexOf(element.name) !== -1;
+        });
+      }
     };
 
     return Preview;

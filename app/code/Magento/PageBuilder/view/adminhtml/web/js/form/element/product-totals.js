@@ -20,7 +20,6 @@ define([
             totalProductCount: 0,
             totalDisabledProducts: 0,
             totalNotVisibleProducts: 0,
-            totalOutOfStockProducts: 0,
             previousConditions: false,
             listens: {
                 conditionOption: 'updateProductTotals',
@@ -37,7 +36,6 @@ define([
             valuePlaceholder: $t('of %1 total'),
             disabledPlaceholder: $t('%1 disabled'),
             notVisiblePlaceholder: $t('%1 not visible'),
-            outOfStockPlaceholder: $t('%1 out of stock'),
             showSpinner: true,
             loading: false,
             jqXHR: null
@@ -55,8 +53,7 @@ define([
         /** @inheritdoc */
         initObservable: function () {
             return this._super()
-                .observe('value totalProductCount totalDisabledProducts totalNotVisibleProducts ' +
-                    'totalOutOfStockProducts loading');
+                .observe('value totalProductCount totalDisabledProducts totalNotVisibleProducts loading');
         },
 
         /**
@@ -111,7 +108,6 @@ define([
                 this.totalProductCount(parseInt(response.total, 10));
                 this.totalDisabledProducts(parseInt(response.disabled, 10));
                 this.totalNotVisibleProducts(parseInt(response.notVisible, 10));
-                this.totalOutOfStockProducts(parseInt(response.outOfStock, 10));
                 totalText = this.valuePlaceholder
                     .replace('%1', parseInt(response.total, 10));
 
@@ -121,10 +117,6 @@ define([
 
                 if (parseInt(response.notVisible, 10) > 0) {
                     negativeTotals.push(this.notVisiblePlaceholder.replace('%1', parseInt(response.notVisible, 10)));
-                }
-
-                if (parseInt(response.outOfStock, 10) > 0) {
-                    negativeTotals.push(this.outOfStockPlaceholder.replace('%1', parseInt(response.outOfStock, 10)));
                 }
 
                 if (negativeTotals.length > 0) {

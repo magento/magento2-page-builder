@@ -14,7 +14,7 @@
             <stories value="Banner"/>
             <title value="Collage Center - Can Inline Edit Banner Content"/>
             <description value="Verify that users are able to inline edit a collage center Banner's content from the stage"/>
-            <severity value="MAJOR"/>
+            <severity value="AVERAGE"/>
             <useCaseId value="MC-521"/>
             <testCaseId value="MC-3836"/>
             <group value="pagebuilder"/>
@@ -27,7 +27,7 @@
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <actionGroup ref="chooseVisualSelectOption" after="openEditMenuOnStageExtended" stepKey="enterAppearancePropertyExtended">
-            <argument name="property" value="PageBuilderBannerCollageCenteredProperty"/>
+            <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" after="enterAppearancePropertyExtended" stepKey="saveEditPanelSettingsExtended"/>
     </test>
@@ -50,7 +50,7 @@
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <actionGroup ref="chooseVisualSelectOption" after="openEditMenuOnStageExtended" stepKey="enterAppearancePropertyExtended">
-            <argument name="property" value="PageBuilderBannerCollageCenteredProperty"/>
+            <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" after="enterAppearancePropertyExtended" stepKey="saveEditPanelSettingsExtended"/>
     </test>
@@ -60,7 +60,7 @@
             <stories value="Banner"/>
             <title value="Collage Center - Inline Edit With WYSIWYG Disabled"/>
             <description value="Verify that a user can inline edit Banner collage center content when WYSIWYG is disabled"/>
-            <severity value="MAJOR"/>
+            <severity value="AVERAGE"/>
             <useCaseId value="MC-521"/>
             <testCaseId value="MC-3949"/>
             <group value="pagebuilder"/>
@@ -81,7 +81,7 @@
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <actionGroup ref="chooseVisualSelectOption" after="openEditMenuOnStageExtended" stepKey="enterAppearancePropertyExtended">
-            <argument name="property" value="PageBuilderBannerCollageCenteredProperty"/>
+            <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" after="enterAppearancePropertyExtended" stepKey="saveEditPanelSettingsExtended"/>
         <actionGroup ref="inlineEditTextAreaFromStage" stepKey="inlineEdit">
@@ -105,7 +105,7 @@
             <stories value="Banner"/>
             <title value="Collage Center - Inline Edit With TinyMCE3 Enabled"/>
             <description value="Verify that a user can inline edit Banner collage center content when TinyMCE3 is enabled"/>
-            <severity value="MAJOR"/>
+            <severity value="AVERAGE"/>
             <useCaseId value="MC-521"/>
             <testCaseId value="MC-3951"/>
             <group value="pagebuilder"/>
@@ -125,7 +125,7 @@
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <actionGroup ref="chooseVisualSelectOption" after="openEditMenuOnStageExtended" stepKey="enterAppearancePropertyExtended">
-            <argument name="property" value="PageBuilderBannerCollageCenteredProperty"/>
+            <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" after="enterAppearancePropertyExtended" stepKey="saveEditPanelSettingsExtended"/>
         <actionGroup ref="inlineEditTextAreaFromStage" stepKey="inlineEdit">
@@ -144,7 +144,7 @@
             <stories value="Banner"/>
             <title value="Collage Center - Check desktop and mobile images of a collage center banner with mobile image"/>
             <description value="Check desktop and mobile images of a collage center banner with mobile image"/>
-            <severity value="CRITICAL"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MAGETWO-83553"/>
             <testCaseId value="MC-2487"/>
             <group value="pagebuilder"/>
@@ -188,7 +188,7 @@
         <!-- Fill Out Edit Panel -->
         <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
-            <argument name="property" value="PageBuilderBannerCollageCenteredProperty"/>
+            <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
             <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
@@ -230,7 +230,7 @@
             <stories value="Banner"/>
             <title value="Collage Center - Check desktop and mobile images of a collage center banner without mobile image"/>
             <description value="Check desktop and mobile images of a collage center banner without mobile image"/>
-            <severity value="CRITICAL"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MAGETWO-83553"/>
             <testCaseId value="MC-2856"/>
             <group value="pagebuilder"/>
@@ -268,7 +268,7 @@
         <!-- Fill Out Edit Panel -->
         <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
-            <argument name="property" value="PageBuilderBannerCollageCenteredProperty"/>
+            <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
             <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
@@ -307,7 +307,7 @@
             <stories value="Banner"/>
             <title value="Collage Center - Check collage center button never show state works"/>
             <description value="Check collage center button never show state works"/>
-            <severity value="CRITICAL"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MAGETWO-83553"/>
             <testCaseId value="MC-2531"/>
             <group value="pagebuilder"/>
@@ -338,7 +338,7 @@
         <!-- Fill Out Edit Panel -->
         <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
-            <argument name="property" value="PageBuilderBannerCollageCenteredProperty"/>
+            <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterBackgroundColor">
             <argument name="property" value="PageBuilderBackgroundColor_Plaintext_Green"/>
@@ -350,10 +350,10 @@
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <seeElement selector="{{BannerOnBackend.appearance('1', PageBuilderBannerCollageCenteredProperty.value)}}" stepKey="seeCollageCenteredStage"/>
+        <seeElement selector="{{BannerOnBackend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="seeCollageCenteredStage"/>
         <seeElement selector="{{BannerOnBackend.backgroundColor('1', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeBackgroundColorStage"/>
         <dontSeeElementInDOM selector="{{BannerOnBackend.button('1')}}" stepKey="dontSeeButtonInDOMStage"/>
-        <moveMouseOver selector="{{BannerOnBackend.appearance('1', PageBuilderBannerCollageCenteredProperty.value)}}" stepKey="moveMouseOverBannerStage"/>
+        <moveMouseOver selector="{{BannerOnBackend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="moveMouseOverBannerStage"/>
         <dontSeeElementInDOM selector="{{BannerOnBackend.button('1')}}" stepKey="dontSeeButtonInDOMOnHoverStage"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate Storefront -->
@@ -361,7 +361,7 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderBannerCollageCenteredProperty.value)}}" stepKey="seeCollageCenteredStorefront"/>
+        <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="seeCollageCenteredStorefront"/>
         <seeElement selector="{{BannerOnFrontend.backgroundColor('1', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeBackgroundColorStorefront"/>
         <dontSeeElementInDOM selector="{{BannerOnFrontend.button('1')}}" stepKey="dontSeeButtonInDOMStorefront"/>
         <moveMouseOver selector="{{BannerOnFrontend.base('1')}}" stepKey="moveMouseOverBannerStorefront"/>
@@ -370,7 +370,7 @@
         <!-- Validate Storefront Mobile -->
         <comment userInput="Validate Storefront Mobile" stepKey="commentValidateStorefrontMobile"/>
         <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
-        <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderBannerCollageCenteredProperty.value)}}" stepKey="seeCollageCenteredStorefrontMobile"/>
+        <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="seeCollageCenteredStorefrontMobile"/>
         <seeElement selector="{{BannerOnFrontend.backgroundColor('1', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeBackgroundColorStorefrontMobile"/>
         <dontSeeElementInDOM selector="{{BannerOnFrontend.button('1')}}" stepKey="dontSeeButtonInDOMStorefrontMobile"/>
         <moveMouseOver selector="{{BannerOnFrontend.base('1')}}" stepKey="moveMouseOverBannerStorefrontMobile"/>
@@ -382,7 +382,7 @@
             <stories value="Banner"/>
             <title value="Collage Center - Check collage center button on hover state works"/>
             <description value="Check collage center button on hover state works"/>
-            <severity value="CRITICAL"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MAGETWO-83553"/>
             <testCaseId value="MC-2631"/>
             <group value="pagebuilder"/>
@@ -413,7 +413,7 @@
         <!-- Fill Out Edit Panel -->
         <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
-            <argument name="property" value="PageBuilderBannerCollageCenteredProperty"/>
+            <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterBackgroundColor">
             <argument name="property" value="PageBuilderBackgroundColor_Plaintext_Green"/>
@@ -425,11 +425,11 @@
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <seeElement selector="{{BannerOnBackend.appearance('1', PageBuilderBannerCollageCenteredProperty.value)}}" stepKey="seeCollageCenteredStage"/>
+        <seeElement selector="{{BannerOnBackend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="seeCollageCenteredStage"/>
         <seeElement selector="{{BannerOnBackend.backgroundColor('1', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeBackgroundColorStage"/>
         <seeElementInDOM selector="{{BannerOnBackend.button('1')}}" stepKey="seeButtonInDOMStage"/>
         <dontSeeElement selector="{{BannerOnBackend.button('1')}}" stepKey="dontSeeButtonStage"/>
-        <moveMouseOver selector="{{BannerOnBackend.appearance('1', PageBuilderBannerCollageCenteredProperty.value)}}" stepKey="moveMouseOverBannerStage"/>
+        <moveMouseOver selector="{{BannerOnBackend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="moveMouseOverBannerStage"/>
         <seeElement selector="{{BannerOnBackend.button('1')}}" stepKey="seeButtonOnHoverStage"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate Storefront -->
@@ -437,7 +437,7 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderBannerCollageCenteredProperty.value)}}" stepKey="seeCollageCenteredStorefront"/>
+        <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="seeCollageCenteredStorefront"/>
         <seeElement selector="{{BannerOnFrontend.backgroundColor('1', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeBackgroundColorStorefront"/>
         <seeElementInDOM selector="{{BannerOnFrontend.button('1')}}" stepKey="seeButtonInDOMStorefront"/>
         <dontSeeElement selector="{{BannerOnFrontend.button('1')}}" stepKey="dontSeeButtonStorefront"/>
@@ -447,7 +447,7 @@
         <!-- Validate Storefront Mobile -->
         <comment userInput="Validate Storefront Mobile" stepKey="commentValidateStorefrontMobile"/>
         <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
-        <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderBannerCollageCenteredProperty.value)}}" stepKey="seeCollageCenteredStorefrontMobile"/>
+        <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="seeCollageCenteredStorefrontMobile"/>
         <seeElement selector="{{BannerOnFrontend.backgroundColor('1', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeBackgroundColorStorefrontMobile"/>
         <seeElementInDOM selector="{{BannerOnFrontend.button('1')}}" stepKey="seeButtonInDOMStorefrontMobile"/>
         <dontSeeElement selector="{{BannerOnFrontend.button('1')}}" stepKey="dontSeeButtonStorefrontMobile"/>
@@ -460,7 +460,7 @@
             <stories value="Banner"/>
             <title value="Collage Center - Check collage center overlay never show state works"/>
             <description value="Check collage center overlay never show state works"/>
-            <severity value="CRITICAL"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MAGETWO-83553"/>
             <testCaseId value="MC-2860"/>
             <group value="pagebuilder"/>
@@ -491,7 +491,7 @@
         <!-- Fill Out Edit Panel -->
         <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
-            <argument name="property" value="PageBuilderBannerCollageCenteredProperty"/>
+            <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterBackgroundColor">
             <argument name="property" value="PageBuilderBackgroundColor_Plaintext_Green"/>
@@ -503,10 +503,10 @@
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <seeElement selector="{{BannerOnBackend.appearance('1', PageBuilderBannerCollageCenteredProperty.value)}}" stepKey="seeCollageCenteredStage"/>
+        <seeElement selector="{{BannerOnBackend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="seeCollageCenteredStage"/>
         <seeElement selector="{{BannerOnBackend.backgroundColor('1', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeBackgroundColorStage"/>
         <seeElement selector="{{BannerOnBackend.transparentOverlay('1')}}" stepKey="seeTransparentOverlayStage"/>
-        <moveMouseOver selector="{{BannerOnBackend.appearance('1', PageBuilderBannerCollageCenteredProperty.value)}}" stepKey="moveMouseOverBannerStage"/>
+        <moveMouseOver selector="{{BannerOnBackend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="moveMouseOverBannerStage"/>
         <seeElement selector="{{BannerOnBackend.transparentOverlay('1')}}" stepKey="seeTransparentOverlayOnHoverStage"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate Storefront -->
@@ -514,7 +514,7 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderBannerCollageCenteredProperty.value)}}" stepKey="seeCollageCenteredStorefront"/>
+        <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="seeCollageCenteredStorefront"/>
         <seeElement selector="{{BannerOnFrontend.backgroundColor('1', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeBackgroundColorStorefront"/>
         <seeElement selector="{{BannerOnFrontend.transparentOverlay('1')}}" stepKey="seeTransparentOverlayStorefront"/>
         <moveMouseOver selector="{{BannerOnFrontend.base('1')}}" stepKey="moveMouseOverBannerStorefront"/>
@@ -523,7 +523,7 @@
         <!-- Validate Storefront Mobile -->
         <comment userInput="Validate Storefront Mobile" stepKey="commentValidateStorefrontMobile"/>
         <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
-        <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderBannerCollageCenteredProperty.value)}}" stepKey="seeCollageCenteredStorefrontMobile"/>
+        <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="seeCollageCenteredStorefrontMobile"/>
         <seeElement selector="{{BannerOnFrontend.backgroundColor('1', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeBackgroundColorStorefrontMobile"/>
         <seeElement selector="{{BannerOnFrontend.transparentOverlay('1')}}" stepKey="seeTransparentOverlayStorefrontMobile"/>
         <moveMouseOver selector="{{BannerOnFrontend.base('1')}}" stepKey="moveMouseOverBannerStorefrontMobile"/>
@@ -535,7 +535,7 @@
             <stories value="Banner"/>
             <title value="Collage Center - Check collage center overlay on hover state works"/>
             <description value="Check collage center overlay on hover state works"/>
-            <severity value="CRITICAL"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MAGETWO-83553"/>
             <testCaseId value="MC-2599"/>
             <group value="pagebuilder"/>
@@ -543,12 +543,12 @@
             <group value="pagebuilder-bannerCollageCenter"/>
         </annotations>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
-            <argument name="property" value="PageBuilderBannerCollageCenteredProperty"/>
+            <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
         </actionGroup>
-        <seeElement selector="{{BannerOnBackend.appearance('1', PageBuilderBannerCollageCenteredProperty.value)}}" stepKey="seeAppearanceStage"/>
-        <moveMouseOver selector="{{BannerOnBackend.appearance('1', PageBuilderBannerCollageCenteredProperty.value)}}" stepKey="moveMouseOverBannerStage"/>
-        <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderBannerCollageCenteredProperty.value)}}" stepKey="seeAppearanceStorefront"/>
-        <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderBannerCollageCenteredProperty.value)}}" stepKey="seeAppearanceStorefrontMobile"/>
+        <seeElement selector="{{BannerOnBackend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="seeAppearanceStage"/>
+        <moveMouseOver selector="{{BannerOnBackend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="moveMouseOverBannerStage"/>
+        <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="seeAppearanceStorefront"/>
+        <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="seeAppearanceStorefrontMobile"/>
     </test>
     <test name="BannerCollageCenterOverlayAndButtonOnHoverTest" extends="BannerPosterOverlayAndButtonOnHoverTest">
         <annotations>
@@ -556,7 +556,7 @@
             <stories value="Banner"/>
             <title value="Collage Center - Check collage center button and overlay on hover state works"/>
             <description value="Check collage center button and overlay on hover state works"/>
-            <severity value="CRITICAL"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MAGETWO-83553"/>
             <testCaseId value="MC-2793"/>
             <group value="pagebuilder"/>
@@ -564,12 +564,12 @@
             <group value="pagebuilder-bannerCollageCenter"/>
         </annotations>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
-            <argument name="property" value="PageBuilderBannerCollageCenteredProperty"/>
+            <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
         </actionGroup>
-        <seeElement selector="{{BannerOnBackend.appearance('1', PageBuilderBannerCollageCenteredProperty.value)}}" stepKey="seeAppearanceStage"/>
-        <moveMouseOver selector="{{BannerOnBackend.appearance('1', PageBuilderBannerCollageCenteredProperty.value)}}" stepKey="moveMouseOverBannerStage"/>
-        <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderBannerCollageCenteredProperty.value)}}" stepKey="seeAppearanceStorefront"/>
-        <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderBannerCollageCenteredProperty.value)}}" stepKey="seeAppearanceStorefrontMobile"/>
+        <seeElement selector="{{BannerOnBackend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="seeAppearanceStage"/>
+        <moveMouseOver selector="{{BannerOnBackend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="moveMouseOverBannerStage"/>
+        <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="seeAppearanceStorefront"/>
+        <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="seeAppearanceStorefrontMobile"/>
     </test>
     <test name="BannerCollageCenterOverlayPositionTest" extends="BannerCollageLeftOverlayPositionTest">
         <annotations>
@@ -577,7 +577,7 @@
             <stories value="Banner"/>
             <title value="Collage Center - Check collage center overlay position is correct"/>
             <description value="Check collage center overlay is correct"/>
-            <severity value="CRITICAL"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MC-4117"/>
             <testCaseId value="MC-4969"/>
             <group value="pagebuilder"/>
@@ -593,7 +593,7 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
-            <argument name="property" value="PageBuilderBannerCollageCenteredProperty"/>
+            <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
         </actionGroup>
         <actionGroup ref="validateOverlayPositionCollageCenter" stepKey="validateOverlayPositionStage">
             <argument name="page" value="BannerOnBackend"/>
@@ -611,7 +611,7 @@
             <stories value="Banner"/>
             <title value="Collage Center - Ability to edit a collage center banner button inline on the stage"/>
             <description value="A user should be able to edit a collage center banner button inline on the stage"/>
-            <severity value="CRITICAL"/>
+            <severity value="AVERAGE"/>
             <useCaseId value="MAGETWO-87988"/>
             <testCaseId value="MC-4018"/>
             <group value="pagebuilder"/>
@@ -641,7 +641,7 @@
         <!-- Fill Out Edit Panel -->
         <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceCollageCenteredProperty">
-            <argument name="property" value="PageBuilderBannerCollageCenteredProperty"/>
+            <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonAlwaysProperty">
             <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
@@ -650,9 +650,9 @@
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <seeElementInDOM selector="{{BannerOnBackend.editableButtonOnStage('1')}}" stepKey="seeButtonIsEditable"/>
-        <click selector="{{BannerOnBackend.editableButtonOnStage('1')}}" stepKey="clickButtonToEdit"/>
-        <pressKey selector="{{BannerOnBackend.editableButtonOnStage('1')}}" userInput="{{PageBuilderButtonItemText_Common2.value}}" stepKey="enterButtonText"/>
+        <seeElementInDOM selector="{{BannerOnBackend.editableButtonItemElement('1')}}" stepKey="seeButtonIsEditable"/>
+        <click selector="{{BannerOnBackend.editableButtonItemElement('1')}}" stepKey="clickButtonToEdit"/>
+        <pressKey selector="{{BannerOnBackend.editableButtonItemElement('1')}}" userInput="{{PageBuilderButtonItemText_Common2.value}}" stepKey="enterButtonText"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
@@ -676,7 +676,7 @@
             <stories value="Banner"/>
             <title value="Collage Center - Update Advanced Configuration Values"/>
             <description value="Validate that updating every attribute in the Advanced Configuration form for Banner Collage Center appearance will update the Stage and Storefront correctly."/>
-            <severity value="CRITICAL"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MC-3239"/>
             <testCaseId value="MC-3379"/>
             <group value="pagebuilder"/>
@@ -706,7 +706,7 @@
         <!-- Update Values -->
         <comment userInput="Update Values" stepKey="commentUpdateValues"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceCollageCenterProperty">
-            <argument name="property" value="PageBuilderBannerCollageCenteredProperty"/>
+            <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterBackgroundColor">
             <argument name="property" value="PageBuilderBackgroundColor_Hex_White"/>
@@ -739,7 +739,7 @@
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <seeElement selector="{{BannerOnBackend.appearance('1', PageBuilderBannerCollageCenteredProperty.value)}}" stepKey="seeAppearanceStage"/>
+        <seeElement selector="{{BannerOnBackend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="seeAppearanceStage"/>
         <seeElement selector="{{BannerOnBackend.alignment('1', PageBuilderAdvancedAlignmentPropertyCenter.value)}}" stepKey="seeAlignmentStage"/>
         <seeElement selector="{{BannerOnBackend.border('1', PageBuilderAdvancedBorderPropertyDouble.value)}}" stepKey="seeBorderStage"/>
         <seeElement selector="{{BannerOnBackend.borderColor('1', PageBuilderAdvancedBorderColorProperty_green.rgb)}}" stepKey="seeBorderColorStage"/>
@@ -782,7 +782,7 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
-        <seeElement selector="{{BannerOnBackend.appearance('1', PageBuilderBannerCollageCenteredProperty.value)}}" stepKey="seeAppearanceStage2"/>
+        <seeElement selector="{{BannerOnBackend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="seeAppearanceStage2"/>
         <seeElement selector="{{BannerOnBackend.alignment('1', PageBuilderAdvancedAlignmentPropertyCenter.value)}}" stepKey="seeAlignmentStage2"/>
         <seeElement selector="{{BannerOnBackend.border('1', PageBuilderAdvancedBorderPropertyDouble.value)}}" stepKey="seeBorderStage2"/>
         <seeElement selector="{{BannerOnBackend.borderColor('1', PageBuilderAdvancedBorderColorProperty_green.rgb)}}" stepKey="seeBorderColorStage2"/>
@@ -825,7 +825,7 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderBannerCollageCenteredProperty.value)}}" stepKey="seeAppearanceStorefront"/>
+        <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="seeAppearanceStorefront"/>
         <seeElement selector="{{BannerOnFrontend.alignment('1', PageBuilderAdvancedAlignmentPropertyCenter.value)}}" stepKey="seeAlignmentStorefront"/>
         <seeElement selector="{{BannerOnFrontend.border('1', PageBuilderAdvancedBorderPropertyDouble.value)}}" stepKey="seeBorderStorefront"/>
         <seeElement selector="{{BannerOnFrontend.borderColor('1', PageBuilderAdvancedBorderColorProperty_green.rgb)}}" stepKey="seeBorderColorStorefront"/>
@@ -841,7 +841,7 @@
             <stories value="Banner"/>
             <title value="Collage Center - Update All Attributes"/>
             <description value="A user should be able to add a collage center banner with all attribute fields filled."/>
-            <severity value="CRITICAL"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MC-1433"/>
             <testCaseId value="MC-2868"/>
             <group value="pagebuilder"/>
@@ -885,10 +885,10 @@
         <!-- Fill Out Edit Panel -->
         <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
-            <argument name="property" value="PageBuilderBannerCollageCenteredProperty"/>
+            <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerMinHeight">
-            <argument name="property" value="PageBuilderBannerMinimumHeightProperty"/>
+            <argument name="property" value="PageBuilderMinHeightProperty_500px"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterBackgroundColor">
             <argument name="property" value="PageBuilderBackgroundColor_Hex_White"/>
@@ -963,8 +963,8 @@
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <seeElement selector="{{BannerOnBackend.appearance('1', PageBuilderBannerCollageCenteredProperty.value)}}" stepKey="seeAppearanceStage"/>
-        <seeElement selector="{{BannerOnBackend.collageMinimumHeight('1', PageBuilderBannerMinimumHeightProperty.value)}}" stepKey="seeMinimumHeightStage"/>
+        <seeElement selector="{{BannerOnBackend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="seeAppearanceStage"/>
+        <seeElement selector="{{BannerOnBackend.collageMinimumHeight('1', PageBuilderMinHeightProperty_500px.value)}}" stepKey="seeMinimumHeightStage"/>
         <actionGroup ref="validateBackgroundAttributesWithNoImage" stepKey="validateBackgroundAttributesStage">
             <argument name="section" value="BannerOnBackend"/>
             <argument name="backgroundColor" value="PageBuilderBackgroundColor_Hex_White"/>
@@ -995,8 +995,8 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
-        <seeElement selector="{{BannerOnBackend.appearance('1', PageBuilderBannerCollageCenteredProperty.value)}}" stepKey="seeAppearanceStage2"/>
-        <seeElement selector="{{BannerOnBackend.collageMinimumHeight('1', PageBuilderBannerMinimumHeightProperty.value)}}" stepKey="seeMinimumHeightStage2"/>
+        <seeElement selector="{{BannerOnBackend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="seeAppearanceStage2"/>
+        <seeElement selector="{{BannerOnBackend.collageMinimumHeight('1', PageBuilderMinHeightProperty_500px.value)}}" stepKey="seeMinimumHeightStage2"/>
         <actionGroup ref="validateBackgroundAttributesWithNoImage" stepKey="validateBackgroundAttributesStage2">
             <argument name="section" value="BannerOnBackend"/>
             <argument name="backgroundColor" value="PageBuilderBackgroundColor_Hex_White"/>
@@ -1029,10 +1029,10 @@
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAppearance">
-            <argument name="property" value="PageBuilderBannerCollageCenteredProperty"/>
+            <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeMinimumHeight">
-            <argument name="property" value="PageBuilderBannerMinimumHeightProperty"/>
+            <argument name="property" value="PageBuilderMinHeightProperty_500px"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeBackgroundColor">
             <argument name="property" value="PageBuilderBackgroundColor_Hex_White"/>
@@ -1108,8 +1108,8 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderBannerCollageCenteredProperty.value)}}" stepKey="seeAppearanceStorefront"/>
-        <seeElement selector="{{BannerOnFrontend.collageMinimumHeight('1', PageBuilderBannerMinimumHeightProperty.value)}}" stepKey="seeMinimumHeightStorefront"/>
+        <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="seeAppearanceStorefront"/>
+        <seeElement selector="{{BannerOnFrontend.collageMinimumHeight('1', PageBuilderMinHeightProperty_500px.value)}}" stepKey="seeMinimumHeightStorefront"/>
         <actionGroup ref="validateBackgroundAttributesWithNoImage" stepKey="validateBackgroundAttributesStorefront">
             <argument name="section" value="BannerOnFrontend"/>
             <argument name="backgroundColor" value="PageBuilderBackgroundColor_Hex_White"/>
@@ -1140,8 +1140,8 @@
         <!-- Validate Storefront Mobile -->
         <comment userInput="Validate Storefront Mobile" stepKey="commentValidateStorefrontMobile"/>
         <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
-        <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderBannerCollageCenteredProperty.value)}}" stepKey="seeMobileAppearanceStorefront"/>
-        <seeElement selector="{{BannerOnFrontend.collageMinimumHeight('1', PageBuilderBannerMinimumHeightProperty.value)}}" stepKey="seeMobileMinimumHeightStorefront"/>
+        <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="seeMobileAppearanceStorefront"/>
+        <seeElement selector="{{BannerOnFrontend.collageMinimumHeight('1', PageBuilderMinHeightProperty_500px.value)}}" stepKey="seeMobileMinimumHeightStorefront"/>
         <actionGroup ref="validateBackgroundAttributesWithNoImage" stepKey="validateMobileBackgroundAttributesStorefront">
             <argument name="section" value="BannerOnFrontend"/>
             <argument name="backgroundColor" value="PageBuilderBackgroundColor_Hex_White"/>
@@ -1178,7 +1178,7 @@
             <stories value="Banner"/>
             <title value="Collage Center - HTML Value In Buttons Does Not Render As HTML"/>
             <description value="Validate that html can be entered into the button and that the html doesn't render on stage and storefront."/>
-            <severity value="MAJOR"/>
+            <severity value="AVERAGE"/>
             <useCaseId value="MC-849"/>
             <testCaseId value="MC-3654"/>
             <group value="pagebuilder"/>
@@ -1208,7 +1208,7 @@
         <!-- Fill Out Edit Panel -->
         <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
-            <argument name="property" value="PageBuilderBannerCollageCenteredProperty"/>
+            <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonAlwaysProperty">
             <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
@@ -1247,7 +1247,7 @@
             <stories value="Banner"/>
             <title value="Collage Center - Non Breaking Space In Button Does Not Render as nbsp;"/>
             <description value="Validate that non breaking space can be entered into the button and that the html doesn't render on stage and storefront as nbsp."/>
-            <severity value="MAJOR"/>
+            <severity value="AVERAGE"/>
             <useCaseId value="MC-3889"/>
             <testCaseId value="MC-4196"/>
             <group value="pagebuilder"/>
@@ -1277,7 +1277,7 @@
         <!-- Fill Out Edit Panel -->
         <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
-            <argument name="property" value="PageBuilderBannerCollageCenteredProperty"/>
+            <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonAlwaysProperty">
             <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
@@ -1286,15 +1286,15 @@
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <waitForElementVisible selector="{{BannerOnBackend.editableButtonOnStage('1')}}" stepKey="waitForButtonIsEditable"/>
-        <click selector="{{BannerOnBackend.editableButtonOnStage('1')}}" stepKey="clickButtonToEdit"/>
-        <pressKey selector="{{BannerOnBackend.editableButtonOnStage('1')}}" userInput="{{PageBuilderBannerButtonTextProperty_Non_Breaking_Space.value}}" stepKey="enterButtonText"/>
-        <see selector="{{BannerOnBackend.editableButtonOnStage('1')}}" userInput="{{PageBuilderBannerButtonTextProperty_Non_Breaking_Space.value}}" stepKey="seeStageNBSPBannerButtonText"/>
+        <waitForElementVisible selector="{{BannerOnBackend.editableButtonItemElement('1')}}" stepKey="waitForButtonIsEditable"/>
+        <click selector="{{BannerOnBackend.editableButtonItemElement('1')}}" stepKey="clickButtonToEdit"/>
+        <pressKey selector="{{BannerOnBackend.editableButtonItemElement('1')}}" userInput="{{PageBuilderBannerButtonTextProperty_Non_Breaking_Space.value}}" stepKey="enterButtonText"/>
+        <see selector="{{BannerOnBackend.editableButtonItemElement('1')}}" userInput="{{PageBuilderBannerButtonTextProperty_Non_Breaking_Space.value}}" stepKey="seeStageNBSPBannerButtonText"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Validate Stage After Save-->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
-        <see selector="{{BannerOnBackend.editableButtonOnStage('1')}}" userInput="{{PageBuilderBannerButtonTextProperty_Non_Breaking_Space.value}}" stepKey="seeStageNBSPBannerButtonTextAfterSave"/>
+        <see selector="{{BannerOnBackend.editableButtonItemElement('1')}}" userInput="{{PageBuilderBannerButtonTextProperty_Non_Breaking_Space.value}}" stepKey="seeStageNBSPBannerButtonTextAfterSave"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
@@ -1341,7 +1341,7 @@
             <stories value="Banner"/>
             <title value="Collage Center - Banner Overlay and Button do not go outside container on collage center appearance"/>
             <description value="User should be able to place a banner with Collage Center appearance inside a narrow column without the contents spilling outside of the column."/>
-            <severity value="MAJOR"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MC-5372"/>
             <testCaseId value="MC-5933"/>
             <group value="pagebuilder"/>
@@ -1386,5 +1386,110 @@
         <executeJS function="return Math.abs(Math.round({$overlayRightPosition}-{$buttonRightPosition}-30))" stepKey="overlayMinusButtonMinusPadding"/>
         <executeJS function="return Math.abs(Math.round({$overlayRightPositionAfterSave}-{$buttonRightPositionAfterSave}-30))" stepKey="overlayMinusButtonMinusPaddingAfterSave"/>
         <executeJS function="return Math.abs(Math.round({$overlayRightPositionStoreFront}-{$buttonRightPositionStoreFront}-30))" stepKey="overlayMinusButtonMinusPaddingStoreFront"/>
+    </test>
+    <test name="BannerCollageCenterValidateVideoBackground" extends="BannerPosterValidateVideoBackground">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Banner"/>
+            <title value="Validate Video Background in Banner with Collage Center Appearance"/>
+            <description value="Set all video background attributes for a banner with collage center appearance and validate on stage and storefront."/>
+            <severity value="BLOCKER"/>
+            <useCaseId value="PB-265"/>
+            <testCaseId value="MC-31621"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-banner"/>
+            <group value="pagebuilder-bannerCollageCenter"/>
+            <group value="pagebuilder-backgroundForm"/>
+            <group value="pagebuilder-video-background"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
+            <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
+        </actionGroup>
+    </test>
+    <test name="BannerCollageCenterValidateVideoBackgroundFallbackImage" extends="BannerPosterValidateVideoBackgroundFallbackImage">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Banner"/>
+            <title value="Validate Video Background Fallback Image Renders When Video Isn't Loaded in Banner with Collage Center Appearance"/>
+            <description value="Set video background fallback image for a banner with collage center appearance and validate on stage and storefront."/>
+            <severity value="BLOCKER"/>
+            <useCaseId value="PB-265"/>
+            <testCaseId value="MC-31629"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-banner"/>
+            <group value="pagebuilder-bannerCollageCenter"/>
+            <group value="pagebuilder-backgroundForm"/>
+            <group value="pagebuilder-video-background"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
+            <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
+        </actionGroup>
+    </test>
+    <test name="BannerCollageCenterValidateVideoBackgroundNoFallbackImage" extends="BannerPosterValidateVideoBackgroundNoFallbackImage">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Banner"/>
+            <title value="Validate Banner with Collage Center Appearance Renders When Video Isn't Loaded and There's No Fallback Image "/>
+            <description value="Validate that a banner with collage center appearance renders correctly when the video background video hasn't loaded and there is no fallback image."/>
+            <severity value="BLOCKER"/>
+            <useCaseId value="PB-265"/>
+            <testCaseId value="MC-31635"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-banner"/>
+            <group value="pagebuilder-bannerCollageCenter"/>
+            <group value="pagebuilder-backgroundForm"/>
+            <group value="pagebuilder-video-background"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
+            <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
+        </actionGroup>
+    </test>
+    <test name="BannerCollageCenterVideoBackgroundNoFallbackImageDisabledLoopAndPlayWhenVisibleAndLazyLoad" extends="BannerPosterVideoBackgroundNoFallbackImageDisabledLoopAndPlayWhenVisibleAndLazyLoad">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Banner"/>
+            <title value="Validate Banner with Collage Center Appearance with No Fallback Image, Disabled Infinite Loop, Disabled Play Only When Visible, and Disabled Lazy Load"/>
+            <description value="Validate video background with no fallback image, disabled infinite loop, disabled play only when visible, and disabled lazy load."/>
+            <severity value="BLOCKER"/>
+            <useCaseId value="PB-265"/>
+            <testCaseId value="MC-31666"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-banner"/>
+            <group value="pagebuilder-bannerCollageCenter"/>
+            <group value="pagebuilder-backgroundForm"/>
+            <group value="pagebuilder-video-background"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setAppearance">
+            <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
+        </actionGroup>
+    </test>
+    <test name="BannerCollageCenterMinHeightValidInputs" extends="BannerPosterMinHeightValidInputs">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Banner"/>
+            <title value="Collage Center - Banner Min Height Valid Inputs"/>
+            <description value="A user can submit valid min height values (px, view port percentages, calculations, etc.) and they apply correctly to a collage center banner."/>
+            <severity value="BLOCKER"/>
+            <useCaseId value="PB-378"/>
+            <testCaseId value="MC-31599"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-banner"/>
+            <group value="pagebuilder-bannerCollageCenter"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
+            <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
+        </actionGroup>
+        <seeElement selector="{{BannerOnBackend.collageMinimumHeight('1', PageBuilderMinHeightProperty_200px.value)}}" stepKey="seeFirstMinHeightStage"/>
+        <executeJS function="return document.evaluate(&quot;{{BannerOnBackend.wrapper('1')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstMinHeightStage"/>
+        <seeElement selector="{{BannerOnBackend.collageMinimumHeight('2', PageBuilderMinHeightProperty_100vh.value)}}" stepKey="seeSecondMinHeightStage"/>
+        <executeJS function="return document.evaluate(&quot;{{BannerOnBackend.wrapper('2')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="secondMinHeightStage"/>
+        <seeElement selector="{{BannerOnBackend.collageMinimumHeight('3', PageBuilderMinHeightProperty_100vh_Minus_200px.value)}}" stepKey="seeThirdMinHeightStage"/>
+        <executeJS function="return document.evaluate(&quot;{{BannerOnBackend.wrapper('3')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="thirdMinHeightStage"/>
+        <seeElement selector="{{BannerOnFrontend.collageMinimumHeight('1', PageBuilderMinHeightProperty_200px.value)}}" stepKey="seeFirstMinHeightStorefront"/>
+        <executeJS function="return document.evaluate(&quot;{{BannerOnFrontend.wrapper('1')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstMinHeightStorefront"/>
+        <seeElement selector="{{BannerOnFrontend.collageMinimumHeight('2', PageBuilderMinHeightProperty_100vh.value)}}" stepKey="seeSecondMinHeightStorefront"/>
+        <executeJS function="return document.evaluate(&quot;{{BannerOnFrontend.wrapper('2')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="secondMinHeightStorefront"/>
+        <seeElement selector="{{BannerOnFrontend.collageMinimumHeight('3', PageBuilderMinHeightProperty_100vh_Minus_200px.value)}}" stepKey="seeThirdMinHeightStorefront"/>
+        <executeJS function="return document.evaluate(&quot;{{BannerOnFrontend.wrapper('3')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="thirdMinHeightStorefront"/>
     </test>
 </tests>

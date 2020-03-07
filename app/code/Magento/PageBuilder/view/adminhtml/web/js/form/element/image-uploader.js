@@ -235,6 +235,19 @@ define([
         hasData: function () {
             // Some of the components automatically add an empty object if the value is unset.
             return this._super() && !$.isEmptyObject(this.value()[0]);
+        },
+
+        /**
+         * Stop event to prevent it from reaching any objects other than the current object.
+         *
+         * @param {Object} uploader
+         * @param {Event} event
+         * @returns {Boolean}
+         */
+        stopEvent: function (uploader, event) {
+            event.stopPropagation();
+
+            return true;
         }
     });
 });

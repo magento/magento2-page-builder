@@ -14,7 +14,7 @@
             <stories value="Row"/>
             <title value="Row exists on initialise"/>
             <description value="The stage should contain a row on initialise."/>
-            <severity value="CRITICAL"/>
+            <severity value="AVERAGE"/>
             <useCaseId value="MAGETWO-72398"/>
             <testCaseId value="MC-2547"/>
             <group value="pagebuilder"/>
@@ -37,7 +37,7 @@
             <stories value="Row"/>
             <title value="Can add an additional row below the initial row on stage"/>
             <description value="If user drags Row below the stage Droppable area is still registered and new row is added to the bottom"/>
-            <severity value="CRITICAL"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MAGETWO-72398"/>
             <testCaseId value="MC-2794"/>
             <group value="pagebuilder"/>
@@ -57,7 +57,7 @@
         </actionGroup>
         <comment userInput="Modify initial row background color" stepKey="commentEdit"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBackgroundColor">
-            <argument name="property" value="PageBuilderRowBackgroundColor_CCCCCC"/>
+            <argument name="property" value="PageBuilderBackgroundColor_Hex_Grey"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="dragContentTypeToDropZone" stepKey="dragRowIntoStage">
@@ -71,7 +71,7 @@
         <comment userInput="Stage: Check Background Color is present for first row" stepKey="commentStageCheckBackground"/>
         <actionGroup ref="validateBackgroundAttributesWithNoImage" stepKey="validateStage">
             <argument name="section" value="RowOnStage"/>
-            <argument name="backgroundColor" value="PageBuilderRowBackgroundColor_CCCCCC"/>
+            <argument name="backgroundColor" value="PageBuilderBackgroundColor_Hex_Grey"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <comment userInput="Stage: Check Background Color not present for new row" stepKey="commentStageCheckNoBackground"/>
@@ -90,7 +90,7 @@
             <stories value="Row"/>
             <title value="Can add an additional row above the initial row on stage"/>
             <description value="If user drags Row above the stage Droppable area is still registered and new row is added to the top"/>
-            <severity value="CRITICAL"/>
+            <severity value="MAJOR"/>
             <useCaseId value="MAGETWO-72398"/>
             <testCaseId value="MC-4033"/>
             <group value="pagebuilder"/>
@@ -110,7 +110,7 @@
         </actionGroup>
         <comment userInput="Modify initial row background color" stepKey="commentEdit"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBackgroundColor">
-            <argument name="property" value="PageBuilderRowBackgroundColor_CCCCCC"/>
+            <argument name="property" value="PageBuilderBackgroundColor_Hex_Grey"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="dragContentTypeToDropZone" stepKey="dragRowIntoStage">
@@ -125,7 +125,7 @@
         <comment userInput="Stage: Check Background Color is present for existing row" stepKey="commentStageCheckBackground"/>
         <actionGroup ref="validateBackgroundAttributesWithNoImage" stepKey="validateStage">
             <argument name="section" value="RowOnStage"/>
-            <argument name="backgroundColor" value="PageBuilderRowBackgroundColor_CCCCCC"/>
+            <argument name="backgroundColor" value="PageBuilderBackgroundColor_Hex_Grey"/>
             <argument name="index" value="2"/>
         </actionGroup>
         <comment userInput="Stage: Check Background Color not present for new row" stepKey="commentStageCheckNoBackground"/>
@@ -174,7 +174,7 @@
             <stories value="Row"/>
             <title value="Can't Delete Last Row"/>
             <description value="A user shouldn't be able to remove the final row from the stage"/>
-            <severity value="CRITICAL"/>
+            <severity value="AVERAGE"/>
             <useCaseId value="MAGETWO-72398"/>
             <testCaseId value="MC-2822"/>
             <group value="pagebuilder"/>
@@ -208,7 +208,7 @@
             <stories value="Row"/>
             <title value="Row placeholder and display label in admin preview"/>
             <description value="A user should see the row display label and preview with a placeholder that suggests any content types can be dragged there"/>
-            <severity value="CRITICAL"/>
+            <severity value="AVERAGE"/>
             <useCaseId value="MAGETWO-75136"/>
             <testCaseId value="MC-2671"/>
             <group value="pagebuilder"/>
@@ -241,7 +241,7 @@
             <stories value="Row"/>
             <title value="Row height shrinks to fit Heading"/>
             <description value="A user should see the row height adjust to be smaller when Heading is added to the row"/>
-            <severity value="CRITICAL"/>
+            <severity value="AVERAGE"/>
             <useCaseId value="MAGETWO-75136"/>
             <testCaseId value="MC-2648"/>
             <group value="pagebuilder"/>
@@ -304,7 +304,7 @@
             <stories value="Row"/>
             <title value="Row height grows to fit Slider"/>
             <description value="A user should see the row height adjust to be larger when Slider is added to the row"/>
-            <severity value="CRITICAL"/>
+            <severity value="AVERAGE"/>
             <useCaseId value="MAGETWO-86953"/>
             <testCaseId value="MC-2862"/>
             <group value="pagebuilder"/>
@@ -357,7 +357,7 @@
             <stories value="Row"/>
             <title value="Validate Advanced Configuration Default Values"/>
             <description value="Validate the default values for every attribute in the Advanced Configuration form and on Stage for Row."/>
-            <severity value="CRITICAL"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MAGETWO-83415"/>
             <testCaseId value="MC-2742"/>
             <group value="pagebuilder"/>
@@ -387,7 +387,9 @@
             <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
         </actionGroup>
         <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getBorderColor"/>
-        <assertEmpty actual="getBorderColor" actualType="variable" message="Text field has text: $getBorderColor" stepKey="assertBorderColor"/>
+        <assertEmpty message="Text field has text: $getBorderColor" stepKey="assertBorderColor">
+            <actualResult type="variable">getBorderColor</actualResult>
+        </assertEmpty>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth">
             <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
         </actionGroup>
@@ -395,7 +397,9 @@
             <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
         </actionGroup>
         <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedCssClassesDefaultProperty.section, PageBuilderAdvancedCssClassesDefaultProperty.fieldName)}}" stepKey="getCssClasses"/>
-        <assertEmpty actual="getCssClasses" actualType="variable" message="Text field was not empty. Had text: $getCssClasses" stepKey="assertCssClasses"/>
+        <assertEmpty message="Text field was not empty. Had text: $getCssClasses" stepKey="assertCssClasses">
+            <actualResult type="variable">getCssClasses</actualResult>
+        </assertEmpty>
         <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins">
             <argument name="property" value="PageBuilderMarginsPropertyRowDefault"/>
         </actionGroup>
@@ -439,7 +443,9 @@
             <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
         </actionGroup>
         <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getBorderColor2"/>
-        <assertEmpty actual="getBorderColor2" actualType="variable" message="Text field has text: $getBorderColor2" stepKey="assertBorderColor2"/>
+        <assertEmpty message="Text field has text: $getBorderColor2" stepKey="assertBorderColor2">
+            <actualResult type="variable">getBorderColor2</actualResult>
+        </assertEmpty>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth2">
             <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
         </actionGroup>
@@ -447,7 +453,9 @@
             <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
         </actionGroup>
         <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedCssClassesDefaultProperty.section, PageBuilderAdvancedCssClassesDefaultProperty.fieldName)}}" stepKey="getCssClasses2"/>
-        <assertEmpty actual="getCssClasses2" actualType="variable" message="Text field was not empty. Had text: $getCssClasses2" stepKey="assertCssClasses2"/>
+        <assertEmpty message="Text field was not empty. Had text: $getCssClasses2" stepKey="assertCssClasses2">
+            <actualResult type="variable">getCssClasses2</actualResult>
+        </assertEmpty>
         <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins2">
             <argument name="property" value="PageBuilderMarginsPropertyRowDefault"/>
         </actionGroup>
@@ -475,7 +483,7 @@
             <stories value="Row"/>
             <title value="Update Advanced Configuration Values"/>
             <description value="Validate that updating every attribute in the Advanced Configuration form for Row will update the Stage and Storefront correctly."/>
-            <severity value="CRITICAL"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MC-483"/>
             <testCaseId value="MC-2780"/>
             <group value="pagebuilder"/>
@@ -747,27 +755,27 @@
             <argument name="property" value="PageBuilderBackgroundColor_Default"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="validateBackgroundImage">
-            <argument name="property" value="PageBuilderRowBackgroundImage_Default"/>
+            <argument name="property" value="PageBuilderBackgroundImage_Default"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="validateBackgroundPosition">
-            <argument name="property" value="PageBuilderRowBackgroundPosition_Default"/>
+            <argument name="property" value="PageBuilderBackgroundPosition_TopLeft"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="validateBackgroundSize">
-            <argument name="property" value="PageBuilderRowBackgroundSize_Default"/>
+            <argument name="property" value="PageBuilderBackgroundSize_Cover"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="validateBackgroundRepeat">
-            <argument name="property" value="PageBuilderRowBackgroundRepeat_Default"/>
+            <argument name="property" value="PageBuilderBackgroundRepeat_Disabled"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="validateBackgroundAttachment">
-            <argument name="property" value="PageBuilderRowBackgroundAttachment_Default"/>
+            <argument name="property" value="PageBuilderBackgroundAttachment_Scroll"/>
         </actionGroup>
         <!-- Validate Parallax Background Fields Not Required -->
         <comment userInput="Validate Parallax Background Fields Not Required" stepKey="commentParallaxBackground"/>
         <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="validateParallaxBackground">
-            <argument name="property" value="PageBuilderRowParallax_Default"/>
+            <argument name="property" value="PageBuilderRowParallax_Disabled"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="validateParallaxBackgroundSpeed">
-            <argument name="property" value="PageBuilderRowParallaxSpeed_Default"/>
+            <argument name="property" value="PageBuilderRowParallaxSpeed_0_5"/>
         </actionGroup>
         <!-- Note that Advanced section is a shared form and is covered in AdvancedConfigurationEditPanelVisual test -->
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
@@ -778,7 +786,7 @@
             <stories value="Row"/>
             <title value="Duplicate Row"/>
             <description value="A user should be able to duplicate a row content type. Verify on Stage and Storefront."/>
-            <severity value="AVERAGE"/>
+            <severity value="MAJOR"/>
             <useCaseId value="MC-463"/>
             <testCaseId value="MC-2623"/>
             <group value="pagebuilder"/>
@@ -845,7 +853,7 @@
             <argument name="property" value="PageBuilderRowParallaxSpeed_2"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty">
-            <argument name="property" value="PageBuilderMinHeightProperty_500"/>
+            <argument name="property" value="PageBuilderMinHeightProperty_500px"/>
         </actionGroup>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterVerticalAlignmentCenterProperty">
             <argument name="property" value="PageBuilderVerticalAlignmentPropertyCenter"/>
@@ -921,7 +929,7 @@
         <actionGroup ref="validateLayoutStylesWithAllUpdated" stepKey="validateAllLayoutStage">
             <argument name="page" value="RowOnStage"/>
             <argument name="index" value="2"/>
-            <argument name="minHeight" value="PageBuilderMinHeightProperty_500"/>
+            <argument name="minHeight" value="PageBuilderMinHeightProperty_500px"/>
             <argument name="verticalAlignContainer" value="PageBuilderVerticalAlignmentPropertyCenter"/>
         </actionGroup>
         <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateAllAdvancedStage">
@@ -974,7 +982,7 @@
             <argument name="property" value="PageBuilderRowParallaxSpeed_2"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateMinHeight">
-            <argument name="property" value="PageBuilderMinHeightProperty_500"/>
+            <argument name="property" value="PageBuilderMinHeightProperty_500px"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateVerticalAlignContent">
             <argument name="property" value="PageBuilderVerticalAlignmentPropertyCenter"/>
@@ -1031,7 +1039,7 @@
         <actionGroup ref="validateLayoutStylesWithAllUpdated" stepKey="validateAllLayoutStage2">
             <argument name="page" value="RowOnStage"/>
             <argument name="index" value="2"/>
-            <argument name="minHeight" value="PageBuilderMinHeightProperty_500"/>
+            <argument name="minHeight" value="PageBuilderMinHeightProperty_500px"/>
             <argument name="verticalAlignContainer" value="PageBuilderVerticalAlignmentPropertyCenter"/>
         </actionGroup>
         <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateAllAdvancedStage2">
@@ -1084,7 +1092,7 @@
             <argument name="property" value="PageBuilderRowParallaxSpeed_2"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateMinHeight2">
-            <argument name="property" value="PageBuilderMinHeightProperty_500"/>
+            <argument name="property" value="PageBuilderMinHeightProperty_500px"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateVerticalAlignContent2">
             <argument name="property" value="PageBuilderVerticalAlignmentPropertyCenter"/>
@@ -1141,7 +1149,7 @@
         <actionGroup ref="validateLayoutStylesWithAllUpdated" stepKey="validateAllLayoutStorefront">
             <argument name="page" value="RowOnStorefront_FullWidth_FullBleed"/>
             <argument name="index" value="2"/>
-            <argument name="minHeight" value="PageBuilderMinHeightProperty_500"/>
+            <argument name="minHeight" value="PageBuilderMinHeightProperty_500px"/>
             <argument name="verticalAlignContainer" value="PageBuilderVerticalAlignmentPropertyCenter"/>
         </actionGroup>
         <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateAllAdvancedStorefront">
@@ -1164,7 +1172,7 @@
             <stories value="Row"/>
             <title value="Can add row with different appearances"/>
             <description value="Verify that all row appearances can be set and display correctly on the stage and storefront."/>
-            <severity value="AVERAGE"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MC-930"/>
             <testCaseId value="MC-3280"/>
             <group value="pagebuilder"/>
@@ -1189,7 +1197,7 @@
         <!-- Set background color and appearance of row 1 -->
         <comment userInput="Set background color and appearance of row 1" stepKey="commentEdit"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBackgroundColorRow1">
-            <argument name="property" value="PageBuilderRowBackgroundColor_CCCCCC"/>
+            <argument name="property" value="PageBuilderBackgroundColor_Hex_Grey"/>
         </actionGroup>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceRow1">
             <argument name="property" value="PageBuilderRowAppearance_Contained"/>
@@ -1221,7 +1229,7 @@
             <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBackgroundColorRow2">
-            <argument name="property" value="PageBuilderRowBackgroundColor_FF0000"/>
+            <argument name="property" value="PageBuilderBackgroundColor_Red"/>
         </actionGroup>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceRow2">
             <argument name="property" value="PageBuilderRowAppearance_FullWidth"/>
@@ -1254,7 +1262,7 @@
             <argument name="contentTypeIndex" value="3"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBackgroundColorRow3">
-            <argument name="property" value="PageBuilderRowBackgroundColor_Yellow"/>
+            <argument name="property" value="PageBuilderBackgroundColor_Yellow"/>
         </actionGroup>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceRow3">
             <argument name="property" value="PageBuilderRowAppearance_FullBleed"/>
@@ -1334,7 +1342,7 @@
             <stories value="Row"/>
             <title value="Text content type is aligned correctly"/>
             <description value="Verify text is aligned at the same offset left as heading on storefront in full width appearance."/>
-            <severity value="MAJOR"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MC-3389"/>
             <testCaseId value="MC-3390"/>
             <group value="pagebuilder"/>
@@ -1362,7 +1370,7 @@
         <!-- Set background color and appearance of row -->
         <comment userInput="Set background color and appearance of row" stepKey="commentEdit"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBackgroundColorRow">
-            <argument name="property" value="PageBuilderRowBackgroundColor_CCCCCC"/>
+            <argument name="property" value="PageBuilderBackgroundColor_Hex_Grey"/>
         </actionGroup>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceRow">
             <argument name="property" value="PageBuilderRowAppearance_FullWidth"/>
@@ -1432,7 +1440,7 @@
         <!-- Set background color and appearance of row -->
         <comment userInput="Set background color and appearance of row" stepKey="commentEdit"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBackgroundColor">
-            <argument name="property" value="PageBuilderRowBackgroundColor_CCCCCC"/>
+            <argument name="property" value="PageBuilderBackgroundColor_Hex_Grey"/>
         </actionGroup>
         <actionGroup ref="chooseVisualSelectOption" stepKey="selectFullWidthAppearance">
             <argument name="property" value="PageBuilderRowAppearance_FullWidth"/>
@@ -1506,7 +1514,7 @@
         <!-- Set background color and appearance of row -->
         <comment userInput="Set background color and appearance of row" stepKey="commentEdit"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBackgroundColor">
-            <argument name="property" value="PageBuilderRowBackgroundColor_CCCCCC"/>
+            <argument name="property" value="PageBuilderBackgroundColor_Hex_Grey"/>
         </actionGroup>
         <actionGroup ref="chooseVisualSelectOption" stepKey="selectFullBleedAppearance">
             <argument name="property" value="PageBuilderRowAppearance_FullBleed"/>
@@ -1603,7 +1611,7 @@
             <stories value="Row"/>
             <title value="Cannot drag a row into a row"/>
             <description value="If user drags Row into a row, it should have no effect"/>
-            <severity value="CRITICAL"/>
+            <severity value="AVERAGE"/>
             <useCaseId value="MC-515"/>
             <testCaseId value="MC-3132"/>
             <group value="pagebuilder"/>
@@ -1639,7 +1647,7 @@
             <stories value="Row"/>
             <title value="Cannot drag a row into a column"/>
             <description value="If user drags Row into a column, it should have no effect"/>
-            <severity value="CRITICAL"/>
+            <severity value="AVERAGE"/>
             <useCaseId value="MC-515"/>
             <testCaseId value="MC-3131"/>
             <group value="pagebuilder"/>
@@ -1682,7 +1690,7 @@
             <stories value="Row"/>
             <title value="Row is shown by default"/>
             <description value="Row is shown by default in stage and storefront"/>
-            <severity value="CRITICAL"/>
+            <severity value="AVERAGE"/>
             <useCaseId value="MC-965"/>
             <testCaseId value="MC-3539"/>
             <group value="pagebuilder"/>
@@ -1721,7 +1729,7 @@
             <stories value="Text"/>
             <title value="Row has hide show capabilities"/>
             <description value="A user is able to hide and show the heading successfully"/>
-            <severity value="CRITICAL"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MC-965"/>
             <testCaseId value="MC-3530"/>
             <group value="pagebuilder"/>
@@ -1830,7 +1838,7 @@
             <stories value="Row"/>
             <title value="Row whilst hidden doesnt receive drop events"/>
             <description value="A user isn't able to move existing content types into a hidden row"/>
-            <severity value="MAJOR"/>
+            <severity value="AVERAGE"/>
             <useCaseId value="MC-965"/>
             <testCaseId value="MC-3733"/>
             <group value="pagebuilder"/>
@@ -1942,7 +1950,7 @@
             <stories value="Row"/>
             <title value="Row - Minimum Height Obeyed when Parallax is enabled"/>
             <description value="As a Content Manager I want minimum height of parallax-enabled row to reflect the same value configured by me"/>
-            <severity value="CRITICAL"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MC-4128"/>
             <testCaseId value="MC-4304"/>
             <group value="pagebuilder"/>
@@ -1967,7 +1975,7 @@
             <argument name="property" value="PageBuilderRowParallax_Enabled"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinimumHeightProperty">
-            <argument name="property" value="PageBuilderMinHeightProperty_300"/>
+            <argument name="property" value="PageBuilderMinHeightProperty_300px"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
         <!-- Get value of assigned min height on element -->
@@ -1980,7 +1988,7 @@
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinimumHeightProperty2">
-            <argument name="property" value="PageBuilderMinHeightProperty_500"/>
+            <argument name="property" value="PageBuilderMinHeightProperty_500px"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings4"/>
         <!-- Get value of assigned min height on element -->
@@ -1996,7 +2004,7 @@
             <stories value="Row"/>
             <title value="Row - Parallax Background Image Still Appears On Stage After Adding Column to the Row"/>
             <description value="As a Content Manager I want background image of parallax-enabled row to still appear after adding columns so I don't get confused"/>
-            <severity value="MAJOR"/>
+            <severity value="BLOCKER"/>
             <useCaseId value="MC-4327"/>
             <testCaseId value="MC-5207"/>
             <group value="pagebuilder"/>
@@ -2068,7 +2076,7 @@
             <stories value="Row"/>
             <title value="Can change from full-bleed appearance to contained appearance with no console error"/>
             <description value="If user drags have a full-bleed appearance row in stage, they should be able to switch to contained appearance with no console error and failure."/>
-            <severity value="CRITICAL"/>
+            <severity value="MAJOR"/>
             <useCaseId value="MC-11821"/>
             <testCaseId value="MC-13726"/>
             <group value="pagebuilder"/>

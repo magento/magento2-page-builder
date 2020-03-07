@@ -40,11 +40,13 @@ class HtmlFilter
      */
     public function filterHtml(string $content): string
     {
-        $dom = new \DOMDocument();
+        $dom = new \DOMDocument('1.0', 'UTF-8');
         try {
             //this code is required because of https://bugs.php.net/bug.php?id=60021
             $previous = libxml_use_internal_errors(true);
-            $dom->loadHTML($content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+            $content = '<div>' . $content . '</div>';
+            $string = mb_convert_encoding($content, 'HTML-ENTITIES', 'UTF-8');
+            $dom->loadHTML($string, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
         } catch (\Exception $e) {
             $this->loggerInterface->critical($e->getMessage());
         }
@@ -81,6 +83,6 @@ class HtmlFilter
             );
             $htmlContentType->nodeValue = htmlentities($innerHTML);
         }
-        return $dom->saveHTML();
+        return substr(trim($dom->saveHTML()), 5, -6);
     }
 }
