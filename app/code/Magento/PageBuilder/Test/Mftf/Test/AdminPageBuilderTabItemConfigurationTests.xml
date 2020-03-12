@@ -50,8 +50,12 @@
         <see selector="{{TabOnStage.empty}}" userInput="Drag content types or columns here" stepKey="seeTabPlaceholder"/>
         <!-- User sees the first tab to be active and focused. -->
         <comment userInput="User sees the first tab to be active and focused." stepKey="AC4"/>
-        <assertElementContainsAttribute selector="{{TabOnStage.tabPanel('1')}}" attribute="aria-expanded" expectedValue="true" stepKey="assertTab1ContentFocused"/>
-        <assertElementContainsAttribute selector="{{TabOnStage.tabPanel('1')}}" attribute="aria-hidden" expectedValue="false" stepKey="assertTab1ContentVisible"/>
+        <assertElementContainsAttribute stepKey="assertTab1ContentFocused">
+			<expectedResult selector="{{TabOnStage.tabPanel('1')}}" attribute="aria-expanded" type="string">true</expectedResult>
+        </assertElementContainsAttribute>
+        <assertElementContainsAttribute stepKey="assertTab1ContentVisible">
+			<expectedResult selector="{{TabOnStage.tabPanel('1')}}" attribute="aria-hidden" type="string">false</expectedResult>
+        </assertElementContainsAttribute>
         <!-- User doesn't see the Tabs option panel -->
         <comment userInput="User doesn't see the Tabs option panel" stepKey="AC5"/>
         <dontSeeElement selector="{{TabsOnStage.tabsOptionsTitle}}" stepKey="dontSeeTabsOptionsAfterAddTabs"/>
@@ -595,8 +599,12 @@
         </actionGroup>
         <waitForElementVisible selector="{{TabOnStage.tabContent('2')}}" stepKey="waitForNewTabContent"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('2')}}" stepKey="waitForNewTabHeader"/>
-        <assertElementContainsAttribute selector="{{TabOnStage.tabPanel('1')}}" attribute="aria-hidden" expectedValue="true" stepKey="assertTab1ContentHidden"/>
-        <assertElementContainsAttribute selector="{{TabOnStage.tabPanel('2')}}" attribute="aria-hidden" expectedValue="false" stepKey="assertTab2ContentVisible"/>
+        <assertElementContainsAttribute stepKey="assertTab1ContentHidden">
+			<expectedResult selector="{{TabOnStage.tabPanel('1')}}" attribute="aria-hidden" type="string">true</expectedResult>
+        </assertElementContainsAttribute>
+        <assertElementContainsAttribute stepKey="assertTab2ContentVisible">
+			<expectedResult selector="{{TabOnStage.tabPanel('2')}}" attribute="aria-hidden" type="string">false</expectedResult>
+        </assertElementContainsAttribute>
         <comment userInput="Update name, color, and min height for second tab" stepKey="AC6"/>
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel2">
             <argument name="section" value="TabOnStage"/>
@@ -640,8 +648,12 @@
         <waitForElementVisible selector="{{TabOnStorefront.tabHeaderItemActive('1')}}" stepKey="waitForFirstTabHeader"/>
         <waitForPageLoad stepKey="waitForTabsInit" time="30"/>
         <waitForElementVisible selector="{{TabOnStorefront.container('1')}}" stepKey="waitForFirstTabContent"/>
-        <assertElementContainsAttribute selector="{{TabOnStorefront.container('1')}}" attribute="aria-hidden" expectedValue="false" stepKey="assertTab1Visible"/>
-        <assertElementContainsAttribute selector="{{TabOnStorefront.container('2')}}" attribute="aria-hidden" expectedValue="true" stepKey="assertTab2Hidden"/>
+        <assertElementContainsAttribute stepKey="assertTab1Visible">
+			<expectedResult selector="{{TabOnStorefront.container('1')}}" attribute="aria-hidden" type="string">false</expectedResult>
+        </assertElementContainsAttribute>
+        <assertElementContainsAttribute stepKey="assertTab2Hidden">
+			<expectedResult selector="{{TabOnStorefront.container('2')}}" attribute="aria-hidden" type="string">true</expectedResult>
+        </assertElementContainsAttribute>
         <comment userInput="User sees Tab 1 with background color and min height on Storefront" stepKey="AC14"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
         <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleStorefront"/>

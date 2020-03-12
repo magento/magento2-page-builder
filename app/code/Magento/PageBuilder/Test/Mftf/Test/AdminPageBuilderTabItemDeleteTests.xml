@@ -352,8 +352,12 @@
         <comment userInput="Second Tab becomes both active and focused" stepKey="AC3"/>
         <waitForPageLoad stepKey="waitForTabChangeAnimation" />
         <waitForElementVisible selector="{{TabOnStage.tabHeaderItemActive('2')}}" stepKey="seeTab2Active"/>
-        <assertElementContainsAttribute selector="{{TabOnStage.tabPanel('1')}}" attribute="aria-hidden" expectedValue="true" stepKey="assertTab1Hidden"/>
-        <assertElementContainsAttribute selector="{{TabOnStage.tabPanel('2')}}" attribute="aria-hidden" expectedValue="false" stepKey="assertTab2Visible"/>
+        <assertElementContainsAttribute stepKey="assertTab1Hidden">
+			<expectedResult selector="{{TabOnStage.tabPanel('1')}}" attribute="aria-hidden" type="string">true</expectedResult>
+        </assertElementContainsAttribute>
+        <assertElementContainsAttribute stepKey="assertTab2Visible">
+			<expectedResult selector="{{TabOnStage.tabPanel('2')}}" attribute="aria-hidden" type="string">false</expectedResult>
+        </assertElementContainsAttribute>
     </test>
     <test name="TabsDismissedCustomizedTabRemovalConfirmationPersistsSession">
         <annotations>

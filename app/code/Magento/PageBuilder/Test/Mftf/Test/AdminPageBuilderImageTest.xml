@@ -239,7 +239,9 @@
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <waitForElementVisible selector="{{ImageOnStorefront.imageDisplay}}" stepKey="seeMainImageDisplayed"/>
         <waitForElementVisible selector="{{ImageOnStorefront.imageSource(PageBuilderImageProperty_JPG2.fileName)}}" stepKey="seeMainImageSource4"/>
-        <assertElementContainsAttribute selector="{{ImageOnStorefront.imageElement('1')}}" attribute="style" expectedValue="max-width: 100%" stepKey="assertImageHasFullWidthStyle"/>
+        <assertElementContainsAttribute stepKey="assertImageHasFullWidthStyle">
+			<expectedResult selector="{{ImageOnStorefront.imageElement('1')}}" attribute="style" type="string">max-width: 100%</expectedResult>
+        </assertElementContainsAttribute>
         <seeElementInDOM selector="{{ImageOnStorefront.imageLink('1', PageBuilderImageLinkProperty.value)}}" stepKey="seeImageLinkInDOM"/>
         <seeElementInDOM selector="{{ImageOnStorefront.imageLinkTarget('1', PageBuilderImageNewTab_True.stageValue)}}" stepKey="seeImageTargetInDOM"/>
         <seeElementInDOM selector="{{ImageOnStorefront.imageAltText('1', PageBuilderImageAltTextProperty.value)}}" stepKey="seeImageAltText"/>
@@ -250,7 +252,9 @@
         <resizeWindow width="767" height="1024" stepKey="resizeWindowToMobile"/>
         <dontSeeElement selector="{{ImageOnStorefront.imageElement('1')}}" stepKey="dontSeeMainImageOnMobile"/>
         <seeElement selector="{{ImageOnStorefront.imageElement('2')}}" stepKey="seeMobileImageElementOnMobile"/>
-        <assertElementContainsAttribute selector="{{ImageOnStorefront.imageElement('2')}}" attribute="style" expectedValue="max-width: 100%" stepKey="assertMobileImageHasFullWidthStyle"/>
+        <assertElementContainsAttribute stepKey="assertMobileImageHasFullWidthStyle">
+			<expectedResult selector="{{ImageOnStorefront.imageElement('2')}}" attribute="style" type="string">max-width: 100%</expectedResult>
+        </assertElementContainsAttribute>
         <see userInput="{{PageBuilderImageCaptionProperty.value}}" selector="{{ImageOnStorefront.imageCaption('1')}}" stepKey="seeCaptionDisplayedOnStorefrontMobile"/>
         <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
     </test>
