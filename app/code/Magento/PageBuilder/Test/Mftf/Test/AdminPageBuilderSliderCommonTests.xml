@@ -1614,8 +1614,8 @@
         <click selector="{{SliderOnStage.slideNavigationDot('1', '1')}}" stepKey="clickSlideOptionsMenu"/>
         <waitForPageLoad stepKey="waitForPageLoadAfterClickingSlideNavigationDot" />
         <seeElement selector="{{SlideOnBackend.optionsMenu('1')}}" stepKey="seeSlideOptionsMenu"/>
-        <assertElementContainsAttribute selector="{{SliderOnStage.slideNavigationDot('1', '1')}}" attribute="class" stepKey="assertFirstDotActive">
-            <expectedResult type="string">active</expectedResult>
+        <assertElementContainsAttribute stepKey="assertFirstDotActive">
+            <expectedResult selector="{{SliderOnStage.slideNavigationDot('1', '1')}}" attribute="class" type="string">active</expectedResult>
         </assertElementContainsAttribute>
         <see selector="{{SlideOnBackend.optionsMenu('1')}}" userInput="Slide 1" stepKey="seeSlideOptionsAppearWithSlide1DefaultTitle"/>
         <!-- Update Slide 1 -->
@@ -1656,8 +1656,8 @@
         <click selector="{{SliderOnStage.slideNavigationDot('1', '2')}}" stepKey="clickSlide2OptionsMenu"/>
         <waitForPageLoad stepKey="waitForPageLoadAfterClickingSlideNavigationDot2" />
         <seeElement selector="{{SlideOnBackend.optionsMenu('2')}}" stepKey="seeSlideOptionsMenu4"/>
-        <assertElementContainsAttribute selector="{{SliderOnStage.slideNavigationDot('1', '2')}}" attribute="class" stepKey="assertSecondDotActive">
-            <expectedResult type="string">active</expectedResult>
+        <assertElementContainsAttribute stepKey="assertSecondDotActive">
+            <expectedResult selector="{{SliderOnStage.slideNavigationDot('1', '2')}}" attribute="class" type="string">active</expectedResult>
         </assertElementContainsAttribute>
         <see userInput="Slide 2" selector="{{SlideOnBackend.optionsMenu('2')}}" stepKey="seeSlideOptionsAppearWithSlide2DefaultTitle"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusSlide2"/>

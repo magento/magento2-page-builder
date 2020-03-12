@@ -17,8 +17,12 @@
         <click selector="{{section.tabHeader(to)}}" stepKey="switchToTab"/>
         <waitForPageLoad stepKey="waitForPageLoad" time="30"/>
         <waitForElementVisible time="30" selector="{{section.tabHeaderItemActive(to)}}" stepKey="seeNewTabActive"/>
-        <assertElementContainsAttribute selector="{{section.tabPanel(from)}}" attribute="aria-hidden" expectedValue="true" stepKey="assertOldTabHidden"/>
-        <assertElementContainsAttribute selector="{{section.tabPanel(to)}}" attribute="aria-hidden" expectedValue="false" stepKey="assertNewTabVisible"/>
+        <assertElementContainsAttribute stepKey="assertOldTabHidden">
+			<expectedResult selector="{{section.tabPanel(from)}}" attribute="aria-hidden" type="string">true</expectedResult>
+        </assertElementContainsAttribute>
+        <assertElementContainsAttribute stepKey="assertNewTabVisible">
+			<expectedResult selector="{{section.tabPanel(to)}}" attribute="aria-hidden" type="string">false</expectedResult>
+        </assertElementContainsAttribute>
     </actionGroup>
     <actionGroup name="inlineEditTabItemName">
         <arguments>
