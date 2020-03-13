@@ -50,29 +50,18 @@
             <actualResult type="variable">ratioDifference</actualResult>
         </assertLessThanOrEqual>
     </actionGroup>
-    <actionGroup name="validateVideoUrl">
-        <annotations>
-            <description>Validates that the video's url in the video content type.</description>
-        </annotations>
+    <actionGroup name="validateVideoWithOnlyVideoUrl">
         <arguments>
-            <argument name="page" defaultValue="VideoOnStage"/>
+            <argument name="page" defaultValue=""/>
             <argument name="index" defaultValue="1" type="string"/>
-            <argument name="url" defaultValue="PageBuilderVideoUrl_YouTube"/>
+            <argument name="url" defaultValue=""/>
+            <!-- This is 2 because the width and the height may both have fractions that could round by a maximum of 1 for each which makes the maximum 2-->
             <argument name="acceptableOffset" defaultValue="2" type="string"/>
         </arguments>
-        <waitForElementVisible selector="{{page.videoElement(index)}}" stepKey="waitForVideoElement"/>
-        <waitForElementVisible selector="{{page.videoUrl(index, url.renderedValue)}}" stepKey="waitForVideoUrl"/>
-    </actionGroup>
-    <actionGroup name="validateVideoAspectRatio">
-        <annotations>
-            <description>Validates that the video in the video content type has the correct aspect ratio.</description>
-        </annotations>
-        <arguments>
-            <argument name="page" defaultValue="VideoOnStage"/>
-            <argument name="index" defaultValue="1" type="string"/>
-            <argument name="acceptableOffset" defaultValue="2" type="string"/>
-        </arguments>
-        <waitForElementVisible selector="{{page.iframe(index)}}" stepKey="waitForVideoIFrame"/>
+        <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForElement"/>
+        <waitForElementVisible selector="{{page.source(index, url.renderedValue)}}" stepKey="waitForUrl"/>
+        <waitForElementVisible selector="{{page.noWidth(index)}}" stepKey="waitForWidth"/>
+        <comment userInput="Validate Aspect Ratio" stepKey="commentValidateAspectRatio"/>
         <executeJS function="return window.calculatedHeight = parseInt(getComputedStyle(document.evaluate(&quot;{{page.iframe(index)}}&quot;,document.body).iterateNext()).width) / 16 * 9" stepKey="calculatedHeight"/>
         <executeJS function="return window.actualHeight = parseInt(getComputedStyle(document.evaluate(&quot;{{page.iframe(index)}}&quot;,document.body).iterateNext()).height)" stepKey="actualHeight"/>
         <executeJS function="return Math.abs(window.calculatedHeight - window.actualHeight)" stepKey="ratioDifference"/>
@@ -80,59 +69,56 @@
             <expectedResult type="int">{{acceptableOffset}}</expectedResult>
             <actualResult type="variable">ratioDifference</actualResult>
         </assertLessThanOrEqual>
-    </actionGroup>
-    <actionGroup name="validateVideoAutoPlay">
-        <annotations>
-            <description>Validates that the video content type has the autoplay attributes.</description>
-        </annotations>
-        <arguments>
-            <argument name="page" defaultValue="VideoOnStage"/>
-            <argument name="index" defaultValue="1" type="string"/>
-        </arguments>
-        <waitForPageLoad stepKey="waitForPageLoad"/>
-        <waitForElementVisible selector="{{page.videoElement(index)}}" stepKey="waitForVideoElement"/>
-        <waitForElementVisible selector="{{page.videoAutoplay(index)}}" stepKey="waitForVideoAutoplay"/>
-        <grabAttributeFrom selector="{{page.videoElement(index)}}" userInput="src" stepKey="videoSrc"/>
-        <assertContains stepKey="assertAutoplay">
-            <expectedResult type="string">autoplay=1</expectedResult>
-            <actualResult type="variable">$videoSrc</actualResult>
-        </assertContains>
-    </actionGroup>
-    <actionGroup name="validateVideoNoAutoPlay" extends="validateVideoAutoPlay">
-        <annotations>
-            <description>Validates that the video content type does not have the autoplay attributes.</description>
-        </annotations>
-        <waitForElementVisible selector="{{page.videoNoAutoplay(index)}}" stepKey="waitForVideoAutoplay"/>
-        <assertNotContains stepKey="assertAutoplay">
+        <grabAttributeFrom selector="{{page.iframe(index)}}" userInput="src" stepKey="videoSrc"/>
+        <assertNotContains stepKey="assertNoAutoplay">
             <expectedResult type="string">autoplay</expectedResult>
             <actualResult type="variable">$videoSrc</actualResult>
         </assertNotContains>
     </actionGroup>
+    <actionGroup name="validateVideoWithOnlyVideoUrlMp4">
+        <arguments>
+            <argument name="page" defaultValue=""/>
+            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="url" defaultValue=""/>
+            <!-- This is 2 because the width and the height may both have fractions that could round by a maximum of 1 for each which makes the maximum 2-->
+            <argument name="acceptableOffset" defaultValue="2" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForElement"/>
+        <waitForElementVisible selector="{{page.sourceVideo(index, url.renderedValue)}}" stepKey="waitForUrl"/>
+        <waitForElementVisible selector="{{page.noWidth(index)}}" stepKey="waitForWidth"/>
+        <comment userInput="Validate Aspect Ratio" stepKey="commentValidateAspectRatio"/>
+        <executeJS function="return window.calculatedHeight = parseInt(getComputedStyle(document.evaluate(&quot;{{page.video(index)}}&quot;,document.body).iterateNext()).width) / 16 * 9" stepKey="calculatedHeight"/>
+        <executeJS function="return window.actualHeight = parseInt(getComputedStyle(document.evaluate(&quot;{{page.video(index)}}&quot;,document.body).iterateNext()).height)" stepKey="actualHeight"/>
+        <executeJS function="return Math.abs(window.calculatedHeight - window.actualHeight)" stepKey="ratioDifference"/>
+        <assertLessThanOrEqual stepKey="assertRatio">
+            <expectedResult type="int">{{acceptableOffset}}</expectedResult>
+            <actualResult type="variable">ratioDifference</actualResult>
+        </assertLessThanOrEqual>
+        <waitForElementNotVisible selector="{{page.videoAutoplay(index)}}" stepKey="assertNoAutoplay"/>
+    </actionGroup>
     <actionGroup name="validateVideoPlaying">
         <annotations>
-            <description>Validates that the video content type is playing. Only works with videos that play in an iframe.</description>
+            <description>Validates that the video content type is playing.</description>
         </annotations>
         <arguments>
             <argument name="page" defaultValue="VideoOnStage"/>
+            <argument name="url" defaultValue="PageBuilderVideoUrl_Empty"/>
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
         <waitForPageLoad stepKey="waitForPageLoad"/>
-        <waitForElementVisible selector="{{page.videoElement(index)}}" stepKey="waitForVideoElement"/>
-        <executeJS function="document.querySelectorAll('{{page.videoElementCss}}')[{{index}}-1].id = 'video-iframe'" stepKey="setIframeId"/>
-        <switchToIFrame selector="video-iframe" stepKey="switchToVideoIframe"/>
-        <waitForElementVisible selector="{{page.iframePlaying}}" stepKey="seeIframePlaying"/>
+        <waitForElementVisible selector="{{page.videoElement(index)}}" stepKey="waitForVideoVisible"/>
+        <executeJS function="document.querySelector('[data-element=\'video\']').id = 'video-iframe'" stepKey="setIframeId"/>
+        <switchToIFrame userInput="video-iframe" stepKey="switchToVideoIframe"/>
+        <waitForElementVisible selector="{{page.iframePlaying(index)}}" stepKey="seeIframePlaying"/>
         <switchToIFrame stepKey="switchBackFromIframe"/>
     </actionGroup>
     <actionGroup name="validateVideoNotAutoplaying" extends="validateVideoPlaying">
         <annotations>
-            <description>Validates that the video content type is not autoplaying. Only works with videos that play in an iframe.</description>
+            <description>Validates that the video content type is not autoplaying.</description>
         </annotations>
-        <waitForElementVisible selector="{{page.iframeNotAutoplaying}}" stepKey="seeIframePlaying"/>
+        <waitForElementVisible selector="{{page.iframeNotAutoplaying(index)}}" stepKey="seeIframePlaying"/>
     </actionGroup>
     <actionGroup name="validateEmptyVideoStage">
-        <annotations>
-            <description>Validates that the video content type on the stage in admin is empty.</description>
-        </annotations>
         <arguments>
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
