@@ -1,4 +1,4 @@
-## Page Builder pre-release access
+## Page Builder pre-release  access
 
 Pre-release access to Page Builder is opened to all Magento Partners with *no support* from Magento team.
 Use this access to:
