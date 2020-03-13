@@ -7,6 +7,31 @@ The release notes include:
 - {:.new}New features
 - {:.fix}Fixes and improvements
 
+## **1.3.0** for Magento Commerce 2.3.5
+
+**Full Height Rows, Banners, and Sliders**
+
+- {:.new}Page Builder Rows, Banners, and Sliders now have the option to set their heights to the full-height of the page using a number with any CSS unit (px, %, vh, em) or a calculation between units (100vh - 237px). These new features are documented here: [Rows](https://docs.magento.com/m2/ee/user_guide/cms/page-builder-layout-row.html), [Banners](https://docs.magento.com/m2/ee/user_guide/cms/page-builder-media-banner.html), [Sliders](https://docs.magento.com/m2/ee/user_guide/cms/page-builder-media-slider.html).
+
+**Video Backgrounds for Rows, Banners, and Sliders**
+
+- {:.new}Page Builder Rows, Banners, and Sliders now have the option to use videos for their backgrounds. These new features are documented here: [Rows](https://docs.magento.com/m2/ee/user_guide/cms/page-builder-layout-row.html), [Banners](https://docs.magento.com/m2/ee/user_guide/cms/page-builder-media-banner.html), [Sliders](https://docs.magento.com/m2/ee/user_guide/cms/page-builder-media-slider.html).
+
+**Templates**
+
+- {:.new}Page Builder now has templates that can be created from existing content and applied to new content areas. Page Builder templates save both content and layouts of existing pages, blocks, dynamic blocks, product attributes, and category descriptions. For example, you can save an existing Page Builder CMS page as a template and then apply that template (with all its content and layouts) to quickly create new CMS Pages for your site. This new feature is documented here: [Templates](https://docs.magento.com/m2/ee/user_guide/cms/page-builder-templates.html).
+
+**Content type upgrade library**
+
+- {:.new}We can now introduce new versions of Page Builder content types without introducing backward-incompatible issues with previous versions. Prior to this release, significant changes to content type configurations would create display and data-loss issues with previously saved Page Builder content types. Our new upgrade library eliminates these issues. The library upgrades previous versions of content types saved to the database to match the configuration changes of the new versions. The new upgrade library is documented here: https://devdocs.magento.com/page-builder/docs/how-to/how-to-upgrade-content-types.html
+
+   {: .bs-callout .bs-callout-info }
+   Page Builder automatically runs the upgrade library on each new release to ensure that the _native_ Page Builder content types are always upgraded to match any changes made to content types for a new release. However, to upgrade previous versions of your _custom_ Page Builder content types requires additional development, as noted in the previous documentation link.
+
+**Fixes**
+
+- {:.fix}<!-- PB-418 -->Fixed data collection failures caused by an error in `ContentTypeUsageReportProvider`.
+
 ## **1.2.0** for Magento Commerce 2.3.4
 
 **Page Builder integration with PWA Studio**
