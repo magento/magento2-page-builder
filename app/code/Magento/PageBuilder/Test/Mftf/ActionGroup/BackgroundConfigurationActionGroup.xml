@@ -464,15 +464,15 @@
         </arguments>
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForElement selector="{{section.videoBackgroundJarallaxContainer(index)}}" stepKey="waitForJarallaxContainer"/>
-        <waitForElement selector="{{section.videoBackgroundVideoElement(index)}}" stepKey="waitForVideo"/>
+        <seeElement selector="{{section.videoBackgroundVideoElement(index)}}" stepKey="seeVideoInDOM"/>
     </actionGroup>
     <actionGroup name="validateVideoBackgroundNotLoaded" extends="validateVideoBackgroundLoaded">
         <annotations>
             <description>Validates that the video in the video background is not loaded.</description>
         </annotations>
-        <dontSeeElementInDOM selector="{{section.videoBackgroundVideoElement(index)}}" stepKey="waitForVideo"/>
+        <dontSeeElementInDOM selector="{{section.videoBackgroundVideoElement(index)}}" stepKey="seeVideoInDOM"/>
     </actionGroup>
-    <actionGroup name="validateVideoBackgroundVideoAspectRatio">
+    <actionGroup name="validateVideoAspectRatio">
         <annotations>
             <description>Validates that the video in the video background has the correct aspect ratio.</description>
         </annotations>
