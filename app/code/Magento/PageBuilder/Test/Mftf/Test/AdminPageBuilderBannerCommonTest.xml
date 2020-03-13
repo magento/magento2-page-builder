@@ -3442,50 +3442,49 @@
             <argument name="property" value="PageBuilderAppearance_CollageRight"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings4"/>
-        <executeJS function="return parseInt(&quot;{{PageBuilderVideoBackgroundUrl_Mp4_URL_Insecure.width}}&quot;) / parseInt(&quot;{{PageBuilderVideoBackgroundUrl_Mp4_URL_Insecure.height}}&quot;)" stepKey="expectedVideoAspectRatio"/>
+        <executeJS function="return parseInt(&quot;{{PageBuilderVideoBackgroundUrl_Mp4_URL.width}}&quot;) / parseInt(&quot;{{PageBuilderVideoBackgroundUrl_Mp4_URL.height}}&quot;)" stepKey="expectedVideoAspectRatio"/>
         <!-- Validate Stage -->
-        <actionGroup ref="validateVideoAspectRatio" stepKey="validateVideoAspectRatioBanner1Stage">
+        <actionGroup ref="validateVideoBackgroundVideoAspectRatio" stepKey="validateVideoAspectRatioBanner1Stage">
             <argument name="section" value="BannerOnBackend"/>
             <argument name="expectedRatio" value="{$expectedVideoAspectRatio}"/>
             <argument name="index" value="1"/>
         </actionGroup>
-        <actionGroup ref="validateVideoAspectRatio" stepKey="validateVideoAspectRatioBanner2Stage">
+        <actionGroup ref="validateVideoBackgroundVideoAspectRatio" stepKey="validateVideoAspectRatioBanner2Stage">
             <argument name="section" value="BannerOnBackend"/>
             <argument name="expectedRatio" value="{$expectedVideoAspectRatio}"/>
             <argument name="index" value="2"/>
         </actionGroup>
-        <actionGroup ref="validateVideoAspectRatio" stepKey="validateVideoAspectRatioBanner3Stage">
+        <actionGroup ref="validateVideoBackgroundVideoAspectRatio" stepKey="validateVideoAspectRatioBanner3Stage">
             <argument name="section" value="BannerOnBackend"/>
             <argument name="expectedRatio" value="{$expectedVideoAspectRatio}"/>
             <argument name="index" value="3"/>
         </actionGroup>
-        <actionGroup ref="validateVideoAspectRatio" stepKey="validateVideoAspectRatioBanner4Stage">
+        <actionGroup ref="validateVideoBackgroundVideoAspectRatio" stepKey="validateVideoAspectRatioBanner4Stage">
             <argument name="section" value="BannerOnBackend"/>
             <argument name="expectedRatio" value="{$expectedVideoAspectRatio}"/>
             <argument name="index" value="4"/>
         </actionGroup>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate Storefront -->
-        <amOnUrl url="{{_ENV.MAGENTO_BASE_URL}}" stepKey="goBackToMagento"/>
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
-        <actionGroup ref="validateVideoAspectRatio" stepKey="validateVideoAspectRatioBanner1Storefront">
+        <actionGroup ref="validateVideoBackgroundVideoAspectRatio" stepKey="validateVideoAspectRatioBanner1Storefront">
             <argument name="section" value="BannerOnFrontend"/>
             <argument name="expectedRatio" value="{$expectedVideoAspectRatio}"/>
             <argument name="index" value="1"/>
         </actionGroup>
-        <actionGroup ref="validateVideoAspectRatio" stepKey="validateVideoAspectRatioBanner2Storefront">
+        <actionGroup ref="validateVideoBackgroundVideoAspectRatio" stepKey="validateVideoAspectRatioBanner2Storefront">
             <argument name="section" value="BannerOnFrontend"/>
             <argument name="expectedRatio" value="{$expectedVideoAspectRatio}"/>
             <argument name="index" value="2"/>
         </actionGroup>
-        <actionGroup ref="validateVideoAspectRatio" stepKey="validateVideoAspectRatioBanner3Storefront">
+        <actionGroup ref="validateVideoBackgroundVideoAspectRatio" stepKey="validateVideoAspectRatioBanner3Storefront">
             <argument name="section" value="BannerOnFrontend"/>
             <argument name="expectedRatio" value="{$expectedVideoAspectRatio}"/>
             <argument name="index" value="3"/>
         </actionGroup>
-        <actionGroup ref="validateVideoAspectRatio" stepKey="validateVideoAspectRatioBanner4Storefront">
+        <actionGroup ref="validateVideoBackgroundVideoAspectRatio" stepKey="validateVideoAspectRatioBanner4Storefront">
             <argument name="section" value="BannerOnFrontend"/>
             <argument name="expectedRatio" value="{$expectedVideoAspectRatio}"/>
             <argument name="index" value="4"/>
