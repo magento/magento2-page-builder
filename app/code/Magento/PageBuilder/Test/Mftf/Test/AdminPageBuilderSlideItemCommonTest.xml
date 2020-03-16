@@ -3204,12 +3204,12 @@
             <argument name="property" value="PageBuilderMinHeightProperty_500px"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
-        <executeJS function="return parseInt(&quot;{{PageBuilderVideoBackgroundUrl_Mp4_URL.width}}&quot;) / parseInt(&quot;{{PageBuilderVideoBackgroundUrl_Mp4_URL.height}}&quot;)" stepKey="expectedVideoAspectRatio"/>
+        <executeJS function="return parseInt(&quot;{{PageBuilderVideoBackgroundUrl_Mp4_URL_Insecure.width}}&quot;) / parseInt(&quot;{{PageBuilderVideoBackgroundUrl_Mp4_URL_Insecure.height}}&quot;)" stepKey="expectedVideoAspectRatio"/>
         <!-- Validate Stage -->
         <actionGroup ref="switchSlide" stepKey="showSlide1">
             <argument name="slideIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="validateVideoBackgroundVideoAspectRatio" stepKey="validateVideoAspectRatioSlide1Stage">
+        <actionGroup ref="validateVideoAspectRatio" stepKey="validateVideoAspectRatioSlide1Stage">
             <argument name="section" value="SlideOnBackend"/>
             <argument name="expectedRatio" value="{$expectedVideoAspectRatio}"/>
             <argument name="index" value="1"/>
@@ -3217,7 +3217,7 @@
         <actionGroup ref="switchSlide" stepKey="showSlide2">
             <argument name="slideIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="validateVideoBackgroundVideoAspectRatio" stepKey="validateVideoAspectRatioSlide2Stage">
+        <actionGroup ref="validateVideoAspectRatio" stepKey="validateVideoAspectRatioSlide2Stage">
             <argument name="section" value="SlideOnBackend"/>
             <argument name="expectedRatio" value="{$expectedVideoAspectRatio}"/>
             <argument name="index" value="2"/>
@@ -3225,7 +3225,7 @@
         <actionGroup ref="switchSlide" stepKey="showSlide3">
             <argument name="slideIndex" value="3"/>
         </actionGroup>
-        <actionGroup ref="validateVideoBackgroundVideoAspectRatio" stepKey="validateVideoAspectRatioSlide3Stage">
+        <actionGroup ref="validateVideoAspectRatio" stepKey="validateVideoAspectRatioSlide3Stage">
             <argument name="section" value="SlideOnBackend"/>
             <argument name="expectedRatio" value="{$expectedVideoAspectRatio}"/>
             <argument name="index" value="3"/>
@@ -3233,7 +3233,7 @@
         <actionGroup ref="switchSlide" stepKey="showSlide4">
             <argument name="slideIndex" value="4"/>
         </actionGroup>
-        <actionGroup ref="validateVideoBackgroundVideoAspectRatio" stepKey="validateVideoAspectRatioSlide4Stage">
+        <actionGroup ref="validateVideoAspectRatio" stepKey="validateVideoAspectRatioSlide4Stage">
             <argument name="section" value="SlideOnBackend"/>
             <argument name="expectedRatio" value="{$expectedVideoAspectRatio}"/>
             <argument name="index" value="4"/>
@@ -3243,7 +3243,7 @@
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
-        <actionGroup ref="validateVideoBackgroundVideoAspectRatio" stepKey="validateVideoAspectRatioSlide1Storefront">
+        <actionGroup ref="validateVideoAspectRatio" stepKey="validateVideoAspectRatioSlide1Storefront">
             <argument name="section" value="SlideOnFrontend"/>
             <argument name="expectedRatio" value="{$expectedVideoAspectRatio}"/>
             <argument name="index" value="1"/>
@@ -3253,7 +3253,7 @@
             <argument name="slideSection" value="SlideOnFrontend"/>
             <argument name="slideIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="validateVideoBackgroundVideoAspectRatio" stepKey="validateVideoAspectRatioSlide2Storefront">
+        <actionGroup ref="validateVideoAspectRatio" stepKey="validateVideoAspectRatioSlide2Storefront">
             <argument name="section" value="SlideOnFrontend"/>
             <argument name="expectedRatio" value="{$expectedVideoAspectRatio}"/>
             <argument name="index" value="2"/>
@@ -3263,7 +3263,7 @@
             <argument name="slideSection" value="SlideOnFrontend"/>
             <argument name="slideIndex" value="3"/>
         </actionGroup>
-        <actionGroup ref="validateVideoBackgroundVideoAspectRatio" stepKey="validateVideoAspectRatioSlide3Storefront">
+        <actionGroup ref="validateVideoAspectRatio" stepKey="validateVideoAspectRatioSlide3Storefront">
             <argument name="section" value="SlideOnFrontend"/>
             <argument name="expectedRatio" value="{$expectedVideoAspectRatio}"/>
             <argument name="index" value="3"/>
@@ -3273,7 +3273,7 @@
             <argument name="slideSection" value="SlideOnFrontend"/>
             <argument name="slideIndex" value="4"/>
         </actionGroup>
-        <actionGroup ref="validateVideoBackgroundVideoAspectRatio" stepKey="validateVideoAspectRatioSlide4Storefront">
+        <actionGroup ref="validateVideoAspectRatio" stepKey="validateVideoAspectRatioSlide4Storefront">
             <argument name="section" value="SlideOnFrontend"/>
             <argument name="expectedRatio" value="{$expectedVideoAspectRatio}"/>
             <argument name="index" value="4"/>
