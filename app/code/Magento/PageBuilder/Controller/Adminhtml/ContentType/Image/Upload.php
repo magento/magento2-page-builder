@@ -8,7 +8,7 @@ namespace Magento\PageBuilder\Controller\Adminhtml\ContentType\Image;
 use Magento\Framework\App\Action\HttpPostActionInterface;
 
 /**
- * Class Upload
+ * Upload images to the folder structure
  */
 class Upload extends \Magento\Backend\App\Action implements HttpPostActionInterface
 {
