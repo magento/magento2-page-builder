@@ -8,7 +8,7 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
-    <test name="RowValidateLayoutSectionDefaultValues">
+    <test name="RowValidateLayoutSectionDefaultValuesTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Row"/>
@@ -93,7 +93,7 @@
         <dontSeeElement selector="{{RowOnStorefront.rowStyle('1', PageBuilderMinHeightProperty_500px.style)}}" stepKey="seeRow1MinHeightApplied"/>
         <seeElement selector="{{RowOnStorefront.rowStyle('1', PageBuilderVerticalAlignmentPropertyTop.style)}}" stepKey="seeRow1VerticalAlignmentTopApplied"/>
     </test>
-    <test name="RowMinHeightInvalidInputs">
+    <test name="RowMinHeightInvalidInputsTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Row"/>
@@ -152,7 +152,7 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <waitForElementVisible selector="{{RowOnStage.minHeight('1', PageBuilderMinHeightProperty_500px.value)}}" stepKey="seeFirstRowMinHeightAfterSave"/>
     </test>
-    <test name="RowWithBordersAndPaddingEqualToMinHeight">
+    <test name="RowWithBordersAndPaddingEqualToMinHeightTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Row"/>
@@ -222,7 +222,7 @@
             <argument name="content" value="{{RowOnStorefront.baseCSS}}"/>
         </actionGroup>
     </test>
-    <test name="RowWithBordersPaddingAndLargeContentsGreaterThanMinHeight">
+    <test name="RowWithBordersPaddingAndLargeContentsGreaterThanMinHeightTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Row"/>
@@ -303,7 +303,7 @@
             <argument name="height" value="PageBuilderMinHeightProperty_200"/>
         </actionGroup>
     </test>
-    <test name="RowContentIsVerticallyAligned">
+    <test name="RowContentIsVerticallyAlignedTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Row"/>
@@ -412,7 +412,7 @@
         <seeElement selector="{{RowOnStorefront.rowStyle('2', PageBuilderVerticalAlignmentPropertyCenter.style)}}" stepKey="seeRow2VerticalAlignmentCenterApplied"/>
         <seeElement selector="{{RowOnStorefront.rowStyle('3', PageBuilderVerticalAlignmentPropertyBottom.style)}}" stepKey="seeRow3VerticalAlignmentBottomApplied"/>
     </test>
-    <test name="RowContentIsVerticallyAlignedWithDifferentMinimumHeights">
+    <test name="RowContentIsVerticallyAlignedWithDifferentMinimumHeightsTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Row"/>
