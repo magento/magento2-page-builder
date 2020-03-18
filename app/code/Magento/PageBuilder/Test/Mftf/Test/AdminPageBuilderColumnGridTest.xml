@@ -8,7 +8,7 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
-    <test name="ValidateGridDefaultSizeOnStage">
+    <test name="ValidateGridDefaultSizeOnStageTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Column"/>
@@ -44,7 +44,7 @@
         <actionGroup ref="openGridSizeForm" stepKey="openGridSizeFormAfterSave" />
         <seeInField selector="{{ColumnOnBackend.gridSizeInput('1')}}" userInput="{{PageBuilderGridSize.defaultGridSize}}" stepKey="seeDefaultGridSizeAfterSave"/>
     </test>
-    <test name="ValidateGridInputFocusedOnOpen">
+    <test name="ValidateGridInputFocusedOnOpenTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Column"/>
@@ -77,7 +77,7 @@
             <actualResult type="string">{{PageBuilderGridSize.defaultGridSize}}</actualResult>
         </assertEquals>
     </test>
-    <test name="ColumnValidateOddDefaultGridSizeIsSplitCorrectly">
+    <test name="ColumnValidateOddDefaultGridSizeIsSplitCorrectlyTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Column"/>
@@ -106,7 +106,7 @@
         <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('1', '3/5')}}" stepKey="verifyFirstColumn"/>
         <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('2', '2/5')}}" stepKey="verifySecondColumn"/>
     </test>
-    <test name="ColumnValidateColumnGridTooltipMessage">
+    <test name="ColumnValidateColumnGridTooltipMessageTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Column"/>
@@ -138,7 +138,7 @@
         <click selector="{{ColumnOnBackend.gridSizeTooltip('1')}}" stepKey="clickWithinPanel"/>
         <waitForElementVisible selector="{{ColumnOnBackend.gridSizeTooltipWithMax('1', PageBuilderGridSize.gridSize_5)}}" stepKey="verifyTooltip"/>
     </test>
-    <test name="SetDefaultGridSize14">
+    <test name="SetDefaultGridSize14Test">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Column"/>
@@ -182,7 +182,7 @@
             <actualResult type="variable">columnTwoWidthGrid14</actualResult>
         </assertEquals>
     </test>
-    <test name="SetDefaultGridSize7">
+    <test name="SetDefaultGridSize7Test">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Column"/>
@@ -229,7 +229,7 @@
         <seeElement selector="{{ColumnOnBackend.displayLabel('1','4/7')}}" stepKey="checkWidthFirstColumn"/>
         <seeElement selector="{{ColumnOnBackend.displayLabel('2','3/7')}}" stepKey="checkWidthSecondColumn"/>
     </test>
-    <test name="ValidateColumnsMaintainRatioWithoutHistory">
+    <test name="ValidateColumnsMaintainRatioWithoutHistoryTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Column"/>
@@ -284,7 +284,7 @@
         <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('1','2/12')}}" stepKey="validateLeftColumnWidth3"/>
         <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('2','10/12')}}" stepKey="validateRightColumnWidth3"/>
     </test>
-    <test name="ValidateGridSizeFormDisablesStage">
+    <test name="ValidateGridSizeFormDisablesStageTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Column"/>
@@ -332,7 +332,7 @@
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForElementVisible time="10" selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(PageBuilderRowContentType.role)}}" stepKey="waitForOptions"/>
     </test>
-    <test name="ValidateGridSizeFormDisablesStageAfterTabItemOptions">
+    <test name="ValidateGridSizeFormDisablesStageAfterTabItemOptionsTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Column"/>
@@ -395,7 +395,7 @@
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForElementVisible time="10" selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(PageBuilderRowContentType.role)}}" stepKey="waitForOptions"/>
     </test>
-    <test name="ValidateUnfocusUpdatesGrid">
+    <test name="ValidateUnfocusUpdatesGridTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Column"/>
@@ -425,7 +425,7 @@
         <seeElement selector="{{ColumnOnBackend.displayLabel('1','4/8')}}" stepKey="checkWidthFirstColumn"/>
         <seeElement selector="{{ColumnOnBackend.displayLabel('2','4/8')}}" stepKey="checkWidthSecondColumn"/>
     </test>
-    <test name="ValidateEmptyColumnsDeletedOnSmallerGridSize">
+    <test name="ValidateEmptyColumnsDeletedOnSmallerGridSizeTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Column"/>
@@ -471,7 +471,7 @@
         </actionGroup>
         <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="3" stepKey="seeNumberOfColumns3"/>
     </test>
-    <test name="ValidateResizeOnUnevenGrid">
+    <test name="ValidateResizeOnUnevenGridTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Column"/>
@@ -524,7 +524,7 @@
         <seeElement selector="{{ColumnOnBackend.displayLabel('2','3/7')}}" stepKey="checkWidthSecondColumn2"/>
         <seeElement selector="{{ColumnOnBackend.displayLabel('3','3/7')}}" stepKey="checkWidthThirdColumn2"/>
     </test>
-    <test name="ValidateResizeHistory">
+    <test name="ValidateResizeHistoryTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Column"/>
@@ -585,7 +585,7 @@
             <actualResult type="variable">columnTwoWidthGrid12Restored</actualResult>
         </assertEquals>
     </test>
-    <test name="CanAddColumnToSmallGridSize">
+    <test name="CanAddColumnToSmallGridSizeTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Column"/>
@@ -622,7 +622,7 @@
         <seeElement selector="{{ColumnOnBackend.displayLabel('2','1/3')}}" stepKey="checkWidthSecondColumn"/>
         <seeElement selector="{{ColumnOnBackend.displayLabel('3','1/3')}}" stepKey="checkWidthThirdColumn"/>
     </test>
-    <test name="CannotAddColumnToFullSmallGridSize">
+    <test name="CannotAddColumnToFullSmallGridSizeTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Column"/>
@@ -661,7 +661,7 @@
         <waitForPageLoad stepKey="waitForPageLoad2"/>
         <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="2" stepKey="seeNumberOfColumns2"/>
     </test>
-    <test name="ValidateMaxColumnError">
+    <test name="ValidateMaxColumnErrorTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Column"/>
@@ -692,7 +692,7 @@
             <argument name="errorMessage" value="PageBuilderGridSize.maximumGridSizeErrorMessage"/>
         </actionGroup>
     </test>
-    <test name="ValidateInvalidGridSizeError">
+    <test name="ValidateInvalidGridSizeErrorTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Column"/>
@@ -741,7 +741,7 @@
             <argument name="errorMessage" value="PageBuilderGridSize.invalidNumberErrorMessage"/>
         </actionGroup>
     </test>
-    <test name="ValidateDifferentGridSizePerGroup">
+    <test name="ValidateDifferentGridSizePerGroupTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Column"/>
@@ -788,7 +788,7 @@
         <seeElement selector="{{ColumnOnBackend.displayLabel('3','4/8')}}" stepKey="checkWidthSecondColumnGroupColumn1"/>
         <seeElement selector="{{ColumnOnBackend.displayLabel('4','4/8')}}" stepKey="checkWidthSecondColumnGroupColumn2"/>
     </test>
-    <test name="ValidateGridPanelWontCloseWithError">
+    <test name="ValidateGridPanelWontCloseWithErrorTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Column"/>
@@ -825,7 +825,7 @@
         <waitForElement selector="{{ColumnOnBackend.gridSizeInput('1')}}" stepKey="waitForValidatePanelClosed"/>
         <dontSeeElement selector="{{ColumnOnBackend.gridSizeInput('1')}}" stepKey="validatePanelClosed"/>
     </test>
-    <test name="ValidateGridSizeSmallerThanColumnsError">
+    <test name="ValidateGridSizeSmallerThanColumnsErrorTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Column"/>
@@ -891,7 +891,7 @@
             <argument name="errorMessage" value="PageBuilderGridSize.smallerThanTotalColumnsErrorMessage"/>
         </actionGroup>
     </test>
-    <test name="MoveColumnBetweenGroupsOfDifferentGridSize">
+    <test name="MoveColumnBetweenGroupsOfDifferentGridSizeTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Column"/>
@@ -937,7 +937,7 @@
         <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('1', '8/8')}}" stepKey="verifyOriginalColumnGroup"/>
         <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('2', '1/12')}}" stepKey="verifyMovedColumn"/>
     </test>
-    <test name="ValidateGridPanelWontCloseOnArrowClick">
+    <test name="ValidateGridPanelWontCloseOnArrowClickTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Column"/>

@@ -8,7 +8,7 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
-    <test name="DividerAddToCMSPage">
+    <test name="DividerAddToCMSPageTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Divider"/>
@@ -94,7 +94,7 @@
             <argument name="width" value="PageBuilderDividerLineWidth_50"/>
         </actionGroup>
     </test>
-    <test name="DividerValidateGeneralDefaultValues">
+    <test name="DividerValidateGeneralDefaultValuesTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Divider"/>
@@ -182,7 +182,7 @@
             <argument name="width" value="PageBuilderDividerLineWidth_Default"/>
         </actionGroup>
     </test>
-    <test name="DividerValidateAdvancedConfigurationDefaultValues">
+    <test name="DividerValidateAdvancedConfigurationDefaultValuesTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Divider"/>
@@ -313,7 +313,7 @@
             <argument name="index" value="1"/>
         </actionGroup>
     </test>
-    <test name="DividerUpdateAdvancedConfigurationValues">
+    <test name="DividerUpdateAdvancedConfigurationValuesTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Divider"/>
@@ -479,7 +479,7 @@
             <argument name="index" value="1"/>
         </actionGroup>
     </test>
-    <test name="DividerDuplicate">
+    <test name="DividerDuplicateTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Divider"/>
@@ -720,7 +720,7 @@
             <argument name="index" value="2"/>
         </actionGroup>
     </test>
-    <test name="DividerNoRequired">
+    <test name="DividerNoRequiredTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Divider"/>
@@ -777,7 +777,7 @@
         <waitForElementVisible selector="{{DividerOnStage.noThickness('1')}}" stepKey="waitForThicknessVisible"/>
         <waitForElementVisible selector="{{DividerOnStage.noWidth('1')}}" stepKey="waitForWidthVisible"/>
     </test>
-    <test name="DividerCannotAddToStage">
+    <test name="DividerCannotAddToStageTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Divider"/>
@@ -807,7 +807,7 @@
         </actionGroup>
         <dontSeeElementInDOM selector="{{DividerOnStage.allDividers}}" stepKey="dontSeeDivider"/>
     </test>
-    <test name="DividerCanAddToColumn">
+    <test name="DividerCanAddToColumnTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Divider"/>
@@ -878,7 +878,7 @@
             <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
     </test>
-    <test name="DividerDelete">
+    <test name="DividerDeleteTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Divider"/>
@@ -934,7 +934,7 @@
         </actionGroup>
         <dontSeeElementInDOM selector="{{DividerOnStorefront.base('1')}}" stepKey="dontSeeContentTypeInStorefront"/>
     </test>
-    <test name="DividerMoveDivider">
+    <test name="DividerMoveDividerTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Divider"/>
@@ -1045,7 +1045,7 @@
             <argument name="containerTargetIndex" value="1"/>
         </actionGroup>
     </test>
-    <test name="ValidateShowHideOnDividerDefaultState">
+    <test name="ValidateShowHideOnDividerDefaultStateTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Divider"/>
@@ -1092,7 +1092,7 @@
         </actionGroup>
         <seeElement selector="{{DividerOnStorefront.notHidden('1')}}" stepKey="seeContentTypeNotHiddenStorefront"/>
     </test>
-    <test name="ValidateShowHideOnDivider">
+    <test name="ValidateShowHideOnDividerTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Divider"/>
