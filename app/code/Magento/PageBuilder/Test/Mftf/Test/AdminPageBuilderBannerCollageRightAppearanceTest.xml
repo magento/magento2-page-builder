@@ -8,7 +8,7 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
-    <test name="BannerCollageRightCanInlineEditContent" extends="BannerPosterCanInlineEditContent">
+    <test name="BannerCollageRightCanInlineEditContentTest" extends="BannerPosterCanInlineEditContentTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Banner"/>
@@ -31,7 +31,7 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" after="enterAppearancePropertyExtended" stepKey="saveEditPanelSettingsExtended"/>
     </test>
-    <test name="BannerCollageRightCanInlineEditContentWhenIn25PercentWidthColumn" extends="BannerPosterCanInlineEditContentWhenIn25PercentWidthColumn">
+    <test name="BannerCollageRightCanInlineEditContentWhenIn25PercentWidthColumnTest" extends="BannerPosterCanInlineEditContentWhenIn25PercentWidthColumnTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Banner"/>
@@ -54,7 +54,7 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" after="enterAppearancePropertyExtended" stepKey="saveEditPanelSettingsExtended"/>
     </test>
-    <test name="BannerCollageRightWYSIWYGDisabledInlineEdit" extends="BannerPosterCanInlineEditContent">
+    <test name="BannerCollageRightWYSIWYGDisabledInlineEditTest" extends="BannerPosterCanInlineEditContentTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Banner"/>
@@ -99,7 +99,7 @@
         </actionGroup>
         <seeElement selector="{{BannerOnFrontend.messageContentTextArea('1', PageBuilderBannerMessageProperty.value)}}" stepKey="seeMessageContentStorefront"/>
     </test>
-    <test name="BannerCollageRightTinyMCE3InlineEdit" extends="BannerPosterCanInlineEditContent">
+    <test name="BannerCollageRightTinyMCE3InlineEditTest" extends="BannerPosterCanInlineEditContentTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Banner"/>
@@ -138,7 +138,7 @@
         </actionGroup>
         <seeElement selector="{{BannerOnFrontend.messageContentTextArea('1', PageBuilderBannerMessageProperty.value)}}" stepKey="seeMessageContentStorefront"/>
     </test>
-    <test name="BannerCollageRightMobileWithMobileImageValues">
+    <test name="BannerCollageRightMobileWithMobileImageValuesTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Banner"/>
@@ -224,7 +224,7 @@
             <argument name="backgroundImage" value="PageBuilderBackgroundMobileImage_GIF"/>
         </actionGroup>
     </test>
-    <test name="BannerCollageRightMobileWithoutMobileImageValues">
+    <test name="BannerCollageRightMobileWithoutMobileImageValuesTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Banner"/>
@@ -301,7 +301,7 @@
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
     </test>
-    <test name="BannerCollageRightButtonNeverShow">
+    <test name="BannerCollageRightButtonNeverShowTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Banner"/>
@@ -376,7 +376,7 @@
         <moveMouseOver selector="{{BannerOnFrontend.base('1')}}" stepKey="moveMouseOverBannerStorefrontMobile"/>
         <dontSeeElementInDOM selector="{{BannerOnFrontend.button('1')}}" stepKey="dontSeeButtonInDOMOnHoverStorefrontMobile"/>
     </test>
-    <test name="BannerCollageRightButtonOnHover">
+    <test name="BannerCollageRightButtonOnHoverTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Banner"/>
@@ -454,7 +454,7 @@
         <moveMouseOver selector="{{BannerOnFrontend.base('1')}}" stepKey="moveMouseOverBannerStorefrontMobile"/>
         <seeElement selector="{{BannerOnFrontend.button('1')}}" stepKey="seeButtonOnHoverStorefrontMobile"/>
     </test>
-    <test name="BannerCollageRightOverlayNeverShow">
+    <test name="BannerCollageRightOverlayNeverShowTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Banner"/>
@@ -529,7 +529,7 @@
         <moveMouseOver selector="{{BannerOnFrontend.base('1')}}" stepKey="moveMouseOverBannerStorefrontMobile"/>
         <seeElement selector="{{BannerOnFrontend.transparentOverlay('1')}}" stepKey="seeTransparentOverlayOnHoverStorefrontMobile"/>
     </test>
-    <test name="BannerCollageRightOverlayOnHover" extends="BannerPosterOverlayOnHover">
+    <test name="BannerCollageRightOverlayOnHoverTest" extends="BannerPosterOverlayOnHoverTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Banner"/>
@@ -550,7 +550,7 @@
         <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderAppearance_CollageRight.value)}}" stepKey="seeAppearanceStorefront"/>
         <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderAppearance_CollageRight.value)}}" stepKey="seeAppearanceStorefrontMobile"/>
     </test>
-    <test name="BannerCollageRightOverlayAndButtonOnHover" extends="BannerPosterOverlayAndButtonOnHover">
+    <test name="BannerCollageRightOverlayAndButtonOnHoverTest" extends="BannerPosterOverlayAndButtonOnHoverTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Banner"/>
@@ -571,7 +571,7 @@
         <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderAppearance_CollageRight.value)}}" stepKey="seeAppearanceStorefront"/>
         <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderAppearance_CollageRight.value)}}" stepKey="seeAppearanceStorefrontMobile"/>
     </test>
-    <test name="BannerCollageRightOverlayPosition" extends="BannerCollageLeftOverlayPosition">
+    <test name="BannerCollageRightOverlayPositionTest" extends="BannerCollageLeftOverlayPositionTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Banner"/>
@@ -605,7 +605,7 @@
             <argument name="page" value="BannerOnFrontend"/>
         </actionGroup>
     </test>
-    <test name="BannerCollageRightButtonsCanBeEditedInline">
+    <test name="BannerCollageRightButtonsCanBeEditedInlineTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Banner"/>
@@ -670,7 +670,7 @@
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <seeElement selector="{{BannerOnFrontend.buttonText('1', PageBuilderBannerButtonTextProperty2.value)}}" stepKey="seeButtonTextStorefront"/>
     </test>
-    <test name="BannerCollageRightUpdateAdvancedConfigurationValues">
+    <test name="BannerCollageRightUpdateAdvancedConfigurationValuesTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Banner"/>
@@ -835,7 +835,7 @@
         <seeElement selector="{{BannerOnFrontend.margins('1', PageBuilderMarginsPropertyUnique.value)}}" stepKey="seeMarginsStorefront"/>
         <seeElement selector="{{BannerOnFrontend.collagePadding('1', PageBuilderPaddingPropertyUnique.value)}}" stepKey="seePaddingStorefront"/>
     </test>
-    <test name="BannerCollageRightUpdateAllAttributes">
+    <test name="BannerCollageRightUpdateAllAttributesTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Banner"/>
@@ -1172,7 +1172,7 @@
         <switchToNextTab stepKey="switchToNextTab"/>
         <seeCurrentUrlEquals url="{{PageBuilderBannerLinkUrlProperty.value}}" stepKey="seeCurrentUrlEquals"/>
     </test>
-    <test name="BannerCollageRightHtmlValueInButtons" extends="BannerCollageCenterHtmlValueInButtons">
+    <test name="BannerCollageRightHtmlValueInButtonsTest" extends="BannerCollageCenterHtmlValueInButtonsTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Banner"/>
@@ -1189,7 +1189,7 @@
             <argument name="property" value="PageBuilderAppearance_CollageRight"/>
         </actionGroup>
     </test>
-    <test name="BannerCollageRightNonBreakingSpaceValueInButtons" extends="BannerCollageCenterNonBreakingSpaceValueInButtons">
+    <test name="BannerCollageRightNonBreakingSpaceValueInButtonsTest" extends="BannerCollageCenterNonBreakingSpaceValueInButtonsTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Banner"/>
@@ -1206,7 +1206,7 @@
             <argument name="property" value="PageBuilderAppearance_CollageRight"/>
         </actionGroup>
     </test>
-    <test name="BannerOverlayDoesNotHaveBorderRadiusAppliedOnCollageRightAppearance" extends="BannerOverlayHasConvertedBorderRadiusAppliedOnPosterAppearance">
+    <test name="BannerOverlayDoesNotHaveBorderRadiusAppliedOnCollageRightAppearanceTest" extends="BannerOverlayHasConvertedBorderRadiusAppliedOnPosterAppearanceTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Banner"/>
@@ -1239,7 +1239,7 @@
             <actualResult type="variable">$overlayBorderRadiusStorefront2</actualResult>
         </assertEquals>
     </test>
-    <test name="BannerOverlayAndButtonDoNotGoOutsideContainerOnCollageRightAppearance" extends="BannerOverlayAndButtonDoNotGoOutsideContainerOnPosterAppearance">
+    <test name="BannerOverlayAndButtonDoNotGoOutsideContainerOnCollageRightAppearanceTest" extends="BannerOverlayAndButtonDoNotGoOutsideContainerOnPosterAppearanceTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Banner"/>
@@ -1268,7 +1268,7 @@
             <argument name="diffThreshold" value="0"/>
         </actionGroup>
     </test>
-    <test name="BannerCollageRightAlignmentInheritance" extends="BannerPosterAlignmentInheritance">
+    <test name="BannerCollageRightAlignmentInheritanceTest" extends="BannerPosterAlignmentInheritanceTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Banner"/>

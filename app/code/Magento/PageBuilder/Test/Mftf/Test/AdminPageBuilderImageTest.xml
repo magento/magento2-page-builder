@@ -8,7 +8,7 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
-    <test name="ImageAddImageIntoPageBuilderStage">
+    <test name="ImageAddImageIntoPageBuilderStageTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Image"/>
@@ -105,7 +105,7 @@
         <waitForElementVisible selector="{{ImageOnStorefront.imageSourceByIndex('1', PageBuilderImageProperty_JPG2.fileName)}}" stepKey="seeImage1SourceOnStorefront"/>
         <waitForElementVisible selector="{{ImageOnStorefront.imageSourceByIndex('2', PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="seeImage2SourceOnStorefront"/>
     </test>
-    <test name="ImageAddImageContentTypeToCMSPage">
+    <test name="ImageAddImageContentTypeToCMSPageTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Image"/>
@@ -254,7 +254,7 @@
         <see userInput="{{PageBuilderImageCaptionProperty.value}}" selector="{{ImageOnStorefront.imageCaption('1')}}" stepKey="seeCaptionDisplayedOnStorefrontMobile"/>
         <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
     </test>
-    <test name="ImageDuplicate">
+    <test name="ImageDuplicateTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Image"/>
@@ -336,7 +336,7 @@
         <waitForElementVisible selector="{{ImageOnStorefront.notHidden('1')}}" stepKey="waitForContentTypeShownStorefront1"/>
         <waitForElementVisible selector="{{ImageOnStorefront.notHidden('2')}}" stepKey="waitForContentTypeShownStorefront2"/>
     </test>
-    <test name="ImageRemoveImageFromStage">
+    <test name="ImageRemoveImageFromStageTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Image"/>
@@ -369,7 +369,7 @@
         </actionGroup>
         <dontSeeElement selector="{{PageBuilderStage.contentTypeInStage(PageBuilderImageContentType.role)}}" stepKey="dontSeeContentTypeInStage"/>
     </test>
-    <test name="ImageHasNoRequired">
+    <test name="ImageHasNoRequiredTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Image"/>
@@ -418,7 +418,7 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <waitForElementVisible time="10" selector="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" stepKey="waitForCmsPageSaveButton"/>
     </test>
-    <test name="ImageValidateAdvancedConfigurationDefaultValues">
+    <test name="ImageValidateAdvancedConfigurationDefaultValuesTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Image"/>
@@ -559,7 +559,7 @@
             <argument name="index" value="1"/>
         </actionGroup>
     </test>
-    <test name="ImageUpdateAdvancedConfigurationValues">
+    <test name="ImageUpdateAdvancedConfigurationValuesTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Image"/>
@@ -735,7 +735,7 @@
             <argument name="index" value="1"/>
         </actionGroup>
     </test>
-    <test name="ImageCanAddEmptyImagePreview">
+    <test name="ImageCanAddEmptyImagePreviewTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Image"/>
@@ -775,7 +775,7 @@
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <dontSeeElement selector="{{ImageOnStorefront.imageDisplay}}" stepKey="dontSeeMainImageSource"/>
     </test>
-    <test name="ImageCannotAddToStage">
+    <test name="ImageCannotAddToStageTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Image"/>
@@ -805,7 +805,7 @@
         </actionGroup>
         <dontSeeElementInDOM selector="{{ImageOnStageWithoutImageUploaded.base('1')}}" stepKey="dontSeeImage"/>
     </test>
-    <test name="ImageCanAddToColumn">
+    <test name="ImageCanAddToColumnTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Image"/>
@@ -873,7 +873,7 @@
             <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
     </test>
-    <test name="ValidateShowHideOnImageDefaultState">
+    <test name="ValidateShowHideOnImageDefaultStateTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Image"/>
@@ -930,7 +930,7 @@
         </actionGroup>
         <seeElement selector="{{ImageOnStorefront.notHidden('1')}}" stepKey="seeContentTypeNotHiddenStorefront"/>
     </test>
-    <test name="ValidateShowHideOnImage">
+    <test name="ValidateShowHideOnImageTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Image"/>
@@ -1008,7 +1008,7 @@
         <dontSeeElementInDOM selector="{{ImageOnStorefront.hidden('1')}}" stepKey="dontSeeHiddenElement"/>
         <seeElement selector="{{ImageOnStorefront.base('1')}}" stepKey="waitForContentTypeVisible" />
     </test>
-    <test name="ImageUploadIsHiddenWhenDisabled">
+    <test name="ImageUploadIsHiddenWhenDisabledTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Image"/>
@@ -1063,7 +1063,7 @@
         <waitForElementNotVisible selector="{{ImageOnStageWithoutImageUploaded.uploadImageInput('1')}}" stepKey="waitForUploadInputNotVisible"/>
         <dontSeeElement selector="{{ImageOnStageWithoutImageUploaded.uploadImageInput('1')}}" stepKey="dontSeeUploadImageInput"/>
     </test>
-    <test name="DuplicateRowWithImage">
+    <test name="DuplicateRowWithImageTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Image"/>
@@ -1135,7 +1135,7 @@
         <seeElement selector="{{ImageOnStorefront.base('2')}}" stepKey="seeImage2Storefront"/>
         <seeElement selector="{{RowOnStorefront.base('2')}}" stepKey="seeRow2Storefront"/>
     </test>
-    <test name="DuplicateColumnWithImage">
+    <test name="DuplicateColumnWithImageTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Image"/>
@@ -1213,7 +1213,7 @@
         <seeElement selector="{{ImageOnStorefront.base('2')}}" stepKey="seeImage2Storefront"/>
         <seeElement selector="{{ColumnOnFrontend.base('2')}}" stepKey="seeColumn2Storefront"/>
     </test>
-    <test name="DuplicateTabWithImage">
+    <test name="DuplicateTabWithImageTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Image"/>
@@ -1331,7 +1331,7 @@
         <seeElement selector="{{TabOnStorefront.base('4')}}" stepKey="seeTab4Storefront"/>
         <seeElement selector="{{ImageOnStorefront.base('4')}}" stepKey="seeImage4Storefront"/>
     </test>
-    <test name="ImageCaptionDoesNotRenderHtml">
+    <test name="ImageCaptionDoesNotRenderHtmlTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Image"/>
