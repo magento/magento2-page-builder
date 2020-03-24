@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder">
+        <annotations>
+            <description>Validates that a content type's minimum height is equal to it's actual height minus top padding minus bottom padding minus border width times two.</description>
+        </annotations>
+        <arguments>
+            <argument name="content" type="string"/>
+            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="borderWidth" defaultValue="{{PageBuilderAdvancedBorderWidthProperty0.value}}" type="string"/>
+            <argument name="minHeight" defaultValue="{{PageBuilderMinHeightProperty_300px.intValue}}" type="string"/>
+            <argument name="paddingTop" defaultValue="{{PageBuilderPaddingPropertyDefault.paddingTop}}" type="string"/>
+            <argument name="paddingBottom" defaultValue="{{PageBuilderPaddingPropertyDefault.paddingBottom}}" type="string"/>
+            <argument name="pixelBuffer" defaultValue="5" type="string"/>
+        </arguments>
+        <executeJS function="return document.querySelectorAll('{{content}}')[{{index}}-1].getBoundingClientRect().height-{{paddingTop}}-{{paddingBottom}}-({{borderWidth}}*2)" stepKey="actualContentHeight"/>
+        <executeJS function="return Math.round(Math.abs({$actualContentHeight}-{{minHeight}}))" stepKey="contentTypeHeightDifference"/>
+        <assertLessThanOrEqual stepKey="assertContentHeightRatio">
+            <expectedResult type="int">{{pixelBuffer}}</expectedResult>
+            <actualResult type="variable">contentTypeHeightDifference</actualResult>
+        </assertLessThanOrEqual>
+    </actionGroup>
+</actionGroups>

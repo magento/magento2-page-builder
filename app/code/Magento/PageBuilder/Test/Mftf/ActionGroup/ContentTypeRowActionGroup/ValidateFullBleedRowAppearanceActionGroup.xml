@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="validateFullBleedRowAppearance" extends="validateFullWidthRowAppearance">
+        <executeJS function="return Math.abs({$rowChildElementWidth} - {$rowWidth})" stepKey="rowMinusChildWidth" after="pageMinusRowWidth"/>
+        <assertLessThanOrEqual stepKey="assertRowWidthGreaterThanOrEqualToContents">
+            <expectedResult type="int">{{acceptableOffset}}</expectedResult>
+            <actualResult type="variable">rowMinusChildWidth</actualResult>
+        </assertLessThanOrEqual>
+        <comment userInput="---merging to remove step---" stepKey="assertChildContentMaximumWidth"/>
+    </actionGroup>
+</actionGroups>

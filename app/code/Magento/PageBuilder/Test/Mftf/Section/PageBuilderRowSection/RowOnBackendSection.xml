@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
+    <section name="RowOnBackend">
+        <element name="selectFromGallery" type="button" selector="//label[text()='Select from Gallery']"/>
+        <element name="appearanceWarningMessage" type="text" selector="//div[@data-index='appearance']/descendant::div[contains(@class, 'message-notice')]/div"/>
+        <element name="backgroundSectionName" type="button" selector="//div[@data-index='background']"/>
+        <!-- Background Configuration -->
+        <element name="backgroundRepeat" type="button" selector="[name='background-repeat']"/>
+        <!-- Parallax Background Configuration -->
+        <element name="parallaxSectionName" type="button" selector="//div[@data-index='parallax_background']"/>
+        <element name="enableParallaxSwitchValue" type="input" selector="//*[@name='enable_parallax'][contains(@value,'{{arg1}}')]" parameterized="true"/>
+        <element name="parallaxSpeed" type="input" selector="//*[@name='parallax_speed']"/>
+        <element name="parallaxSpeedToolTip" type="input" selector="//div[@data-index='parallax_speed']//div[contains(@class,'admin__field-tooltip')]//a"/>
+        <element name="parallaxSpeedToolTipContent" type="input" selector="//div[@data-index='parallax_speed']//div[contains(@class,'admin__field-tooltip-content')]"/>
+        <element name="parallaxSpeedNotice" type="input" selector="//div[@data-index='parallax_speed']//div[contains(@class,'admin__field-note')]//span"/>
+    </section>
+</sections>

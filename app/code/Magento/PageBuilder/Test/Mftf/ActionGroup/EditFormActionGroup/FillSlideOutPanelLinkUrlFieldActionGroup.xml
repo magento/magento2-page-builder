@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="fillSlideOutPanelLinkUrlField">
+        <arguments>
+            <argument name="property"/>
+            <argument name="selection" type="string"/>
+            <argument name="newTab"/>
+        </arguments>
+        <waitForElementVisible time="10" selector="{{PageBuilderLinkAttributeAdmin.LinkSelect(property.fieldName)}}" stepKey="waitForLinkSelect"/>
+        <waitForElement time="10" selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible"/>
+        <selectOption selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" userInput="{{selection}}" stepKey="selectOption"/>
+        <fillField selector="{{PageBuilderLinkAttributeAdmin.LinkInput(property.fieldName)}}" userInput="{{property.value}}" stepKey="inputLink"/>
+        <conditionalClick selector="{{EditPanelForm.panelFieldControlSwitch(newTab.fieldName)}}" dependentSelector="{{EditPanelForm.panelFieldControlCheckboxState(newTab.fieldName, newTab.value)}}" visible="false" stepKey="conditionalClickNewTab"/>
+        <waitForElementVisible selector="{{EditPanelForm.panelFieldControlCheckboxState(newTab.fieldName, newTab.value)}}" stepKey="waitForNewTabStateChange"/>
+        <click selector="{{EditPanelForm.panelFieldLabel((property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
+    </actionGroup>
+</actionGroups>

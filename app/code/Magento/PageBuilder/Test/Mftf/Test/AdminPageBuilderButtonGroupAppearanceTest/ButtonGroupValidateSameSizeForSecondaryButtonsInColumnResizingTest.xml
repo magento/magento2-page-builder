@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="ButtonGroupValidateSameSizeForSecondaryButtonsInColumnResizingTest" extends="ButtonGroupValidateSameSizeForPrimaryButtonsInColumnResizingTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Buttons"/>
+            <title value="Button Group - Validate Same Size Works For Secondary Buttons When Resizing Columns"/>
+            <description value="Validate that when buttons are added to Columns and same size is enabled, resizing columns will also resize the buttons and the buttons do not stretch outside the column."/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-961"/>
+            <testCaseId value="MC-3716"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-buttons"/>
+            <group value="pagebuilder-buttonGroup"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-columnResize"/>
+        </annotations>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="fillButtonType1">
+            <argument name="property" value="PageBuilderButtonItemType_Secondary"/>
+        </actionGroup>
+    </test>
+</tests>

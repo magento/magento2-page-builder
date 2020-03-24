@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
+    <section name="PageBuilderSaveTemplateErrorModal">
+        <element name="modal" type="text" selector="//aside[contains(@class,'confirm') and contains(@class,'_show')]"/>
+        <element name="title" type="text" selector="//aside[contains(@class,'confirm') and contains(@class,'_show')]//header//h1"/>
+        <element name="closeButton" type="button" selector="//aside[contains(@class,'confirm') and contains(@class,'_show')]//header//button[contains(@class,'action-close')]"/>
+        <element name="message" type="text" selector="//aside[contains(@class,'confirm') and contains(@class,'_show')]//*[@data-role='content']//*"/>
+        <element name="okButton" type="button" selector="//aside[contains(@class,'confirm') and contains(@class,'_show')]//footer//button//span[.='OK']"/>
+    </section>
+</sections>

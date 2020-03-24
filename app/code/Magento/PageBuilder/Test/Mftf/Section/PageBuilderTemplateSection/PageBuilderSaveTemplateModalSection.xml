@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
+    <section name="PageBuilderSaveTemplateModal">
+        <element name="modal" type="text" selector="//aside[contains(@class,'template-manager-save')]"/>
+        <element name="activeModal" type="text" selector="//aside[contains(@class,'template-manager-save') and contains(@class,'_show')]"/>
+        <element name="title" type="text" selector="//aside[contains(@class,'template-manager-save') and contains(@class,'_show')]//header//h1"/>
+        <element name="closeButton" type="button" selector="//aside[contains(@class,'template-manager-save') and contains(@class,'_show')]//header//button[contains(@class,'action-close')]"/>
+        <element name="previewImage" type="text" selector="//aside[contains(@class,'template-manager-save') and contains(@class,'_show')]//*[@data-role='content']//form//img[@alt='Template Preview']"/>
+        <element name="templateNameInput" type="text" selector="//aside[contains(@class,'template-manager-save') and contains(@class,'_show')]//*[@data-role='content']//form//input[@name='name']"/>
+        <element name="createdForSelect" type="text" selector="//aside[contains(@class,'template-manager-save') and contains(@class,'_show')]//*[@data-role='content']//form//select[@name='created_for']"/>
+        <element name="createdForOptions" type="text" selector="//aside[contains(@class,'template-manager-save') and contains(@class,'_show')]//*[@data-role='content']//form//select[@name='created_for']//option"/>
+        <element name="createdForHelperText" type="text" selector="//aside[contains(@class,'template-manager-save') and contains(@class,'_show')]//*[@data-role='content']//form//select[@name='created_for']//..//..//span"/>
+        <element name="saveButton" type="button" selector="//aside[contains(@class,'template-manager-save') and contains(@class,'_show')]//footer//button[contains(@class,'action-save')]//span[.='Save']"/>
+        <element name="cancelButton" type="button" selector="//aside[contains(@class,'template-manager-save') and contains(@class,'_show')]//footer//button[contains(@class,'action-dismiss')]//span[.='Cancel']"/>
+    </section>
+</sections>

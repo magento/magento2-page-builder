@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="fillPageBuilderSaveTemplateForm">
+        <annotations>
+            <description>Enters template name and created for values on the Page Builder Save as Template modal's form.</description>
+        </annotations>
+        <arguments>
+            <argument name="templateName" defaultValue="{{PageBuilderTemplateNameRandom.name}}" type="string"/>
+            <argument name="createdFor" defaultValue="{{PageBuilderTemplateCreatedFor.any}}" type="string"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForModalLoad"/>
+        <waitForElement selector="{{PageBuilderSaveTemplateModal.templateNameInput}}" stepKey="waitForTemplateName"/>
+        <fillField userInput="{{templateName}}" selector="{{PageBuilderSaveTemplateModal.templateNameInput}}" stepKey="enterTemplateName"/>
+        <waitForElement selector="{{PageBuilderSaveTemplateModal.createdForSelect}}" stepKey="waitForCreatedFor"/>
+        <selectOption userInput="{{createdFor}}" selector="{{PageBuilderSaveTemplateModal.createdForSelect}}" stepKey="selectCreatedFor"/>
+    </actionGroup>
+</actionGroups>

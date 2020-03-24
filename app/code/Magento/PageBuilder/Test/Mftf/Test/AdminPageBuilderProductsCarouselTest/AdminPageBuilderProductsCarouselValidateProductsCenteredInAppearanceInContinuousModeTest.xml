@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="AdminPageBuilderProductsCarouselValidateProductsCenteredInAppearanceInContinuousModeTest" extends="AdminPageBuilderProductsCarouselValidateProductsCenteredInAppearanceInDefaultModeTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Products"/>
+            <title value="Carousel - Validate Products Are Centered In Carousel Appearance In Continuous Mode"/>
+            <description value="Validate that setting the Products content type to a Carousel appearance renders products in the center of the content type when in continuous mode"/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="PB-173"/>
+            <testCaseId value="MC-22718"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-products"/>
+            <group value="pagebuilder-productsCarousel"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectCarouselMode">
+            <argument name="property" value="PageBuilderProductsCarouselSettingsCarouselMode_Continuous"/>
+        </actionGroup>
+    </test>
+</tests>

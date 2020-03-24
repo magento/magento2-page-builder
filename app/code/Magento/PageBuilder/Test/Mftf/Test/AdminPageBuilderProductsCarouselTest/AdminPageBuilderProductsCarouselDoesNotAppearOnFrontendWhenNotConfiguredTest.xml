@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="AdminPageBuilderProductsCarouselDoesNotAppearOnFrontendWhenNotConfiguredTest" extends="AdminPageBuilderProductsDoesNotAppearOnFrontendWhenNotConfiguredTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Products"/>
+            <title value="Carousel - Empty Products Does Not Appear on Storefront"/>
+            <description value="Validate that when Products dialog is closed without configuring settings that no products show up on the storefront."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="PB-77"/>
+            <testCaseId value="MC-21986"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-products"/>
+            <group value="pagebuilder-productsCarousel"/>
+        </annotations>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanel" after="dragProductsIntoStage">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance" after="openEditPanel">
+            <argument name="property" value="PageBuilderProductsProductCarouselAppearance"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings" after="selectAppearance"/>
+    </test>
+</tests>

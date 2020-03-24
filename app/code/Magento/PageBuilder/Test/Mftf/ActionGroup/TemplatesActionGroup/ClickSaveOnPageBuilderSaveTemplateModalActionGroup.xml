@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="clickSaveOnPageBuilderSaveTemplateModal">
+        <annotations>
+            <description>Clicks the Save button on the Page Builder Save as Template modal and expects to see the save confirmation modal.</description>
+        </annotations>
+        <waitForPageLoad stepKey="waitForModalLoad"/>
+        <waitForElement selector="{{PageBuilderSaveTemplateModal.saveButton}}" stepKey="waitForSaveButton"/>
+        <click selector="{{PageBuilderSaveTemplateModal.saveButton}}" stepKey="clickSaveButton"/>
+        <waitForPageLoad stepKey="waitForModalClose"/>
+        <waitForElementVisible selector="{{PageBuilderSaveTemplateConfirmationModal.modal}}" stepKey="waitForConfirmationModal"/>
+    </actionGroup>
+</actionGroups>

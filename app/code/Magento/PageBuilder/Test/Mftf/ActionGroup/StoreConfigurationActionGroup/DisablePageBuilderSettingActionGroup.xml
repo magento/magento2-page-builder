@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="disablePageBuilderSetting">
+        <!-- Enable first since it's dependent on disable Disclaimer modal showing -->
+        <amOnPage url="{{AdminContentManagementPage.url}}" stepKey="navigateToConfigurationPage1"/>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <conditionalClick stepKey="expandWYSIWYGOptions" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
+        <waitForElementVisible selector="{{ContentManagementSection.EnablePageBuilder}}" stepKey="waitForEnablePageBuilder"/>
+        <selectOption selector="{{ContentManagementSection.EnablePageBuilder}}" userInput="Yes" stepKey="selectOption1"/>
+        <click selector="{{ContentManagementSection.PageBuilderOptions}}" stepKey="collapsePageBuilderOptions"/>
+        <click selector="{{ContentManagementSection.Save}}" stepKey="saveConfig"/>
+        <!-- NOW disable -->
+        <amOnPage url="{{AdminContentManagementPage.url}}" stepKey="navigateToConfigurationPage2"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <conditionalClick stepKey="expandPageBuilderTab" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
+        <waitForElementVisible selector="{{ContentManagementSection.EnablePageBuilder}}" stepKey="waitForEnablePageBuilderVisible"/>
+        <selectOption selector="{{ContentManagementSection.EnablePageBuilder}}" userInput="No" stepKey="selectNo"/>
+        <waitForElementVisible selector="{{ContentManagementSection.DisclaimerMessage}}" stepKey="waitForPopUpMsg2"/>
+        <waitForElementVisible selector="{{ContentManagementSection.TurnOffBtn}}" stepKey="waitForTurnOffButton"/>
+        <click selector="{{ContentManagementSection.TurnOffBtn}}" stepKey="selectTurnOff"/>
+        <waitForElementNotVisible selector="{{ContentManagementSection.DisclaimerMessage}}" stepKey="waitForPopupClose2"/>
+        <seeOptionIsSelected selector="{{ContentManagementSection.EnablePageBuilder}}" userInput="No" stepKey="verifyNoSelected"/>
+        <click selector="{{ContentManagementSection.PageBuilderOptions}}" stepKey="collapseAdvancedContentToolsTab"/>
+        <click selector="{{ContentManagementSection.Save}}" stepKey="saveConfig2"/>
+        <waitForPageLoad stepKey="waitForPageLoad3"/>
+    </actionGroup>
+</actionGroups>

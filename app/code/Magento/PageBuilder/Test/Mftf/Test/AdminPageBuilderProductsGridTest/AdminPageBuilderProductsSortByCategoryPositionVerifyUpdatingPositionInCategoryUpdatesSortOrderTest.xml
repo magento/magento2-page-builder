@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="AdminPageBuilderProductsSortByCategoryPositionVerifyUpdatingPositionInCategoryUpdatesSortOrderTest" extends="AdminPageBuilderProductsSelectByCategoryAndSortByPositionTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Products"/>
+            <title value="Grid - Verify Updating Product Position In Category Propagates Change to Page Builder Products Content Type"/>
+            <description value="Ensure updating product positions in categories will propagate position changes to the page builder products content type"/>
+            <severity value="BLOCKER"/>
+            <useCaseId value="MC-18338"/>
+            <testCaseId value="MC-20159"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-products"/>
+            <group value="pagebuilder-productsGrid"/>
+        </annotations>
+        <!-- Change Product Position in Category -->
+        <comment userInput="Change Product Position in Category" stepKey="commentChangeProductPositionInCategory" after="validateProduct2Storefront"/>
+        <actionGroup ref="NavigateToCreatedCategoryActionGroup" stepKey="navigateToCategory1" after="commentChangeProductPositionInCategory">
+            <argument name="Category" value="$$createCategory1$$"/>
+        </actionGroup>
+        <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminCategorySection" after="navigateToCategory1">
+            <argument name="sectionSelector" value="{{AdminCategoryBasicFieldSection.productsInCategory}}"/>
+            <argument name="sectionDependentSelector" value="{{AdminCategoryContentSection.productTableRow}}"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{AdminCategoryProductsGridSection.rowPosition('1')}}" stepKey="waitForPositionFieldForProduct1" after="expandAdminCategorySection"/>
+        <pressKey selector="{{AdminCategoryProductsGridSection.rowPosition('1')}}" parameterArray="[\Facebook\WebDriver\WebDriverKeys::BACKSPACE]" stepKey="clearPositionValueForProduct1" after="waitForPositionFieldForProduct1"/>
+        <fillField selector="{{AdminCategoryProductsGridSection.rowPosition('1')}}" userInput="2" stepKey="changePositionForProduct1" after="clearPositionValueForProduct1"/>
+        <pressKey selector="{{AdminCategoryProductsGridSection.rowPosition('1')}}" parameterArray="[\Facebook\WebDriver\WebDriverKeys::ENTER]" stepKey="enterPositionValueForProduct1" after="changePositionForProduct1"/>
+        <waitForElementVisible selector="{{AdminCategoryProductsGridSection.rowPosition('2')}}" stepKey="waitForPositionFieldForProduct2" after="enterPositionValueForProduct1"/>
+        <pressKey selector="{{AdminCategoryProductsGridSection.rowPosition('2')}}" parameterArray="[\Facebook\WebDriver\WebDriverKeys::BACKSPACE]" stepKey="clearPositionValueForProduct2" after="waitForPositionFieldForProduct2"/>
+        <fillField selector="{{AdminCategoryProductsGridSection.rowPosition('2')}}" userInput="1" stepKey="changePositionForProduct2" after="clearPositionValueForProduct2"/>
+        <pressKey selector="{{AdminCategoryProductsGridSection.rowPosition('2')}}" parameterArray="[\Facebook\WebDriver\WebDriverKeys::ENTER]" stepKey="enterPositionValueForProduct2" after="changePositionForProduct2"/>
+        <actionGroup ref="saveCatalogCategory" stepKey="saveCatalogCategory" after="enterPositionValueForProduct2"/>
+        <!-- Stage: Validate Sort Order Changed -->
+        <comment userInput="Stage: Validate Sort Order Changed" stepKey="commentValidateStage2" after="saveCatalogCategory"/>
+        <actionGroup ref="navigateToCMSPage" stepKey="navigateToCMSPage2" after="commentValidateStage2">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2" after="navigateToCMSPage2"/>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage2" after="switchToPageBuilderStage2">
+            <argument name="page" value="ProductsOnStage"/>
+            <argument name="count" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProduct1Stage2" after="validateProductsCountStage2">
+            <argument name="page" value="ProductsOnStage"/>
+            <argument name="product" value="SortProduct1"/>
+            <argument name="productIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProduct2Stage2" after="validateProduct1Stage2">
+            <argument name="page" value="ProductsOnStage"/>
+            <argument name="product" value="SortProduct2"/>
+            <argument name="productIndex" value="2"/>
+        </actionGroup>
+        <!-- Storefront: Validate Sort Order Changed -->
+        <comment userInput="Storefront: Validate Sort Order Changed" stepKey="commentValidateStorefront2" after="validateProduct2Stage2"/>
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront2" after="commentValidateStorefront2">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductCountStorefront2" after="navigateToCMSPageStorefront2">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="count" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProduct1Storefront2" after="validateProductCountStorefront2">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="product" value="SortProduct1"/>
+            <argument name="productIndex" value="1"/>
+            <argument name="isClickable" value="auto"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProduct2Storefront2" after="validateProduct1Storefront2">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="product" value="SortProduct2"/>
+            <argument name="productIndex" value="2"/>
+            <argument name="isClickable" value="auto"/>
+        </actionGroup>
+    </test>
+</tests>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
+    <section name="WYSIWYGInsertLinkModal">
+        <element name="modal" type="input" selector="[aria-label='Insert link']"/>
+        <element name="title" type="input" selector="//div[@aria-label='Insert link']//div[contains(@id,'-title') and .='Insert link']"/>
+        <element name="xButton" type="button" selector="[aria-label='Insert link'] button.mce-close"/>
+        <element name="urlInput" type="input" selector="//div[@aria-label='Insert link']//input[ancestor::div[label[.='Url']]]"/>
+        <element name="browseMediaGalleryButton" type="button" selector="//div[@aria-label='Insert link']//button[ancestor::div[label[.='Url']]]"/>
+        <element name="textToDisplayInput" type="input" selector="//div[@aria-label='Insert link']//input[ancestor::div[label[.='Text to display']]]"/>
+        <element name="titleInput" type="input" selector="//div[@aria-label='Insert link']//input[ancestor::div[label[.='Title']]]"/>
+        <element name="targetInput" type="input" selector="//div[@aria-label='Insert link']//button[ancestor::div[label[.='Target']]]"/>
+        <element name="okButton" type="button" selector="//div[@aria-label='Insert link']//button//span[.='Ok']"/>
+        <element name="cancelButton" type="button" selector="//div[@aria-label='Insert link']//button//span[.='Cancel']"/>
+    </section>
+</sections>

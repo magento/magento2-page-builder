@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="selectCategoryFromCategoryDropDown">
+        <arguments>
+            <argument name="property" defaultValue="PageBuilderProductsSelectCategoryDropDown"/>
+            <argument name="category" type="string"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible time="2" selector="{{EditPanelForm.panelMultiSelectFieldControl(property.section, property.fieldName)}}" stepKey="waitForMultiSelectFieldVisible"/>
+        <click selector="{{EditPanelForm.panelMultiSelectFieldControl(property.section, property.fieldName)}}" stepKey="clickMultiSelectField"/>
+        <waitForElementVisible selector="{{EditPanelForm.panelMultiSelectFieldControlInput(property.section, property.fieldName)}}" stepKey="waitForSearchField"/>
+        <fillField selector="{{EditPanelForm.panelMultiSelectFieldControlInput(property.section, property.fieldName)}}" userInput="{{category}}" stepKey="inputSearchField"/>
+        <waitForElementVisible selector="{{EditPanelForm.panelMultiSelectFieldControlResult(property.section, property.fieldName, category)}}" stepKey="waitForResult"/>
+        <click selector="{{EditPanelForm.panelMultiSelectFieldControlResult(property.section, property.fieldName, category)}}" stepKey="clickResult"/>
+        <click selector="{{EditPanelForm.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
+        <waitForElementNotVisible selector="{{EditPanelForm.panelMultiSelectFieldControlInput(property.section, property.fieldName)}}" stepKey="waitForSearchFieldNotVisible"/>
+        <see selector="{{EditPanelForm.panelMultiSelectFieldControl(property.section, property.fieldName)}}" userInput="{{category}}" stepKey="seeResultInField"/>
+    </actionGroup>
+</actionGroups>

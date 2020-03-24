@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="insertLinkInWYSIWYGExistingText">
+        <arguments>
+            <argument name="section" defaultValue="TinyMCESection"/>
+            <argument name="url" type="string"/>
+            <argument name="title" type="string" defaultValue=""/>
+            <argument name="wysiwygArea" defaultValue="{{WYSIWYGOnPageBuilderInline.notCss}}" type="string"/>
+        </arguments>
+        <comment userInput="insertLinkInWYSIWYGExistingText" stepKey="comment"/>
+        <waitForElementVisible selector="{{wysiwygArea}} {{section.InsertLink}}" stepKey="waitForInsertLinkButton"/>
+        <click selector="{{wysiwygArea}} {{section.InsertLink}}" stepKey="clickInsertLinkButton"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible selector="{{WYSIWYGInsertLinkModal.modal}}" stepKey="waitForInsertLinkModal"/>
+        <fillField selector="{{WYSIWYGInsertLinkModal.urlInput}}" userInput="{{url}}" stepKey="insertUrl"/>
+        <fillField selector="{{WYSIWYGInsertLinkModal.titleInput}}" userInput="{{title}}" stepKey="insertTitle"/>
+        <click selector="{{WYSIWYGInsertLinkModal.okButton}}" stepKey="clickOkButton"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <waitForElementNotVisible selector="{{WYSIWYGInsertLinkModal.modal}}" stepKey="waitForInsertLinkModalGone"/>
+    </actionGroup>
+</actionGroups>

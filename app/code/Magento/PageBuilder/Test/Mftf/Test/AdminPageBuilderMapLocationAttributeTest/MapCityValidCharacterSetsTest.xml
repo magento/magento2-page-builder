@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="MapCityValidCharacterSetsTest" extends="MapPhoneNumberValidCharacterSetsTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Map"/>
+            <title value="Location Attributes - City"/>
+            <description value="Make sure the map accepts common characters, special characters, and empty string for City"/>
+            <severity value="BLOCKER"/>
+            <useCaseId value="MAGETWO-66519"/>
+            <testCaseId value="MC-2890"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="pagebuilder-mapLocation"/>
+            <group value="pagebuilder-mapLocationAttributes"/>
+            <group value="pagebuilder-requiresValidMapAPIKey"/>
+            <skip>
+                <issueId value="MTS-657"/>
+            </skip>
+        </annotations>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterPhoneNumber1">
+            <argument name="property" value="PageBuilderMapCity_CommonCharacters"/>
+        </actionGroup>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocation1GridData1">
+            <argument name="locationName" value="PageBuilderMapLocationName_a"/>
+            <argument name="city" value="PageBuilderMapCity_CommonCharacters"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterPhoneNumber2">
+            <argument name="property" value="PageBuilderMapCity_SpecialCharacters"/>
+        </actionGroup>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocation2GridData1">
+            <argument name="locationName" value="PageBuilderMapLocationName_B"/>
+            <argument name="city" value="PageBuilderMapCity_SpecialCharacters"/>
+            <argument name="rowIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterPhoneNumber3">
+            <argument name="property" value="PageBuilderMapCity_Empty"/>
+        </actionGroup>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocation3GridData1">
+            <argument name="locationName" value="PageBuilderMapLocationName_z"/>
+            <argument name="city" value="PageBuilderMapCity_Empty"/>
+            <argument name="rowIndex" value="3"/>
+        </actionGroup>
+        <seeElement selector="{{MapOnStage.addressCityStateZipCountry('1', PageBuilderMapStreetAddress_Default.value, PageBuilderMapCity_CommonCharacters.value, PageBuilderMapState_Default.value, PageBuilderMapZipCode_Default.value, PageBuilderMapCountry_Default.tooltipValue)}}" stepKey="seePhoneNumber1Stage1"/>
+        <seeElement selector="{{MapOnStage.addressCityStateZipCountry('1', PageBuilderMapStreetAddress_Default.value, PageBuilderMapCity_SpecialCharacters.value, PageBuilderMapState_Default.value, PageBuilderMapZipCode_Default.value, PageBuilderMapCountry_Default.tooltipValue)}}" stepKey="seePhoneNumber2Stage1"/>
+        <dontSeeElement selector="{{MapOnStage.addressCityStateZipCountry('1', PageBuilderMapStreetAddress_Default.value, PageBuilderMapCity_Empty.value, PageBuilderMapState_Default.value, PageBuilderMapZipCode_Default.value, PageBuilderMapCountry_Default.tooltipValue)}}" stepKey="dontSeePhoneNumber3Stage1"/>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocation1GridData2">
+            <argument name="locationName" value="PageBuilderMapLocationName_a"/>
+            <argument name="city" value="PageBuilderMapCity_CommonCharacters"/>
+        </actionGroup>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocation2GridData2">
+            <argument name="locationName" value="PageBuilderMapLocationName_B"/>
+            <argument name="city" value="PageBuilderMapCity_SpecialCharacters"/>
+            <argument name="rowIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocation3GridData2">
+            <argument name="locationName" value="PageBuilderMapLocationName_z"/>
+            <argument name="city" value="PageBuilderMapCity_Empty"/>
+            <argument name="rowIndex" value="3"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateEditPanelField1">
+            <argument name="property" value="PageBuilderMapCity_CommonCharacters"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateEditPanelField2">
+            <argument name="property" value="PageBuilderMapCity_SpecialCharacters"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateEditPanelField3">
+            <argument name="property" value="PageBuilderMapCity_Empty"/>
+        </actionGroup>
+        <seeElement selector="{{MapOnStorefront.addressCityStateZipCountry('1', PageBuilderMapStreetAddress_Default.value, PageBuilderMapCity_CommonCharacters.value, PageBuilderMapState_Default.value, PageBuilderMapZipCode_Default.value, PageBuilderMapCountry_Default.tooltipValue)}}" stepKey="seePhoneNumber1Storefront"/>
+        <seeElement selector="{{MapOnStorefront.addressCityStateZipCountry('1', PageBuilderMapStreetAddress_Default.value, PageBuilderMapCity_SpecialCharacters.value, PageBuilderMapState_Default.value, PageBuilderMapZipCode_Default.value, PageBuilderMapCountry_Default.tooltipValue)}}" stepKey="seePhoneNumber2Storefront"/>
+        <dontSeeElement selector="{{MapOnStorefront.addressCityStateZipCountry('1', PageBuilderMapStreetAddress_Default.value, PageBuilderMapCity_Empty.value, PageBuilderMapState_Default.value, PageBuilderMapZipCode_Default.value, PageBuilderMapCountry_Default.tooltipValue)}}" stepKey="dontSeePhoneNumber3Storefront"/>
+    </test>
+</tests>

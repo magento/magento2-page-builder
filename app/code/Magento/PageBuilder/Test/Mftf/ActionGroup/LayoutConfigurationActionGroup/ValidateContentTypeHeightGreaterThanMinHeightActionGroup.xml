@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="validateContentTypeHeightGreaterThanMinHeight">
+        <arguments>
+            <argument name="content" type="string"/>
+            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="border" defaultValue="PageBuilderAdvancedBorderWidthProperty0"/>
+            <argument name="height" defaultValue="PageBuilderMinHeightProperty_300"/>
+            <argument name="padding" defaultValue="PageBuilderPaddingPropertyDefault"/>
+        </arguments>
+        <executeJS function="return document.querySelectorAll('{{content}}')[{{index}}-1].getBoundingClientRect().height-{{padding.paddingTop}}-{{padding.paddingBottom}}-({{border.value}}*2)" stepKey="actualContentHeight"/>
+        <assertGreaterThan stepKey="assertContentTypeHeightGreaterThanMinHeight">
+            <expectedResult type="int">{{height.value}}</expectedResult>
+            <actualResult type="variable">actualContentHeight</actualResult>
+        </assertGreaterThan>
+    </actionGroup>
+</actionGroups>

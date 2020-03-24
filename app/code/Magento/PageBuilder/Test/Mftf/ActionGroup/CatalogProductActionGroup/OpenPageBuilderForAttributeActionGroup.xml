@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="openPageBuilderForAttribute">
+        <arguments>
+            <argument name="attributeCode" defaultValue="description" type="string"/>
+            <argument name="section" defaultValue="PageBuilderProductAttribute"/>
+            <argument name="pageBuilderArea" defaultValue="" type="string"/>
+        </arguments>
+        <comment userInput="Opening Page Builder for attribute" stepKey="commentOpeningPageBuilder"/>
+        <waitForElementVisible selector="{{section.PageBuilderBtn(attributeCode)}}" stepKey="waitForPageBuilderButton"/>
+        <click selector="{{section.PageBuilderBtn(attributeCode)}}" stepKey="clickOpenPageBuilder"/>
+        <waitForPageLoad stepKey="waitForPageBuilderToOpen"/>
+        <waitForElementVisible selector="{{pageBuilderArea}}{{PageBuilderPanel.layoutMenuSection}}" stepKey="waiForPageBuilderVisible"/>
+    </actionGroup>
+</actionGroups>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="verifyNoPageBuilderDeleteTemplateButton">
+        <annotations>
+            <description>Verifies that there is not a Delete button in the templates data grid on the Page Builder Templates grid page.</description>
+        </annotations>
+        <arguments>
+            <argument name="section" defaultValue="PageBuilderTemplatesPageGrid"/>
+            <argument name="templateIdentifier" defaultValue="{{PageBuilderTemplateNameRandom.name}}" type="string"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible selector="{{section.templateName('1')}}" stepKey="waitForTemplateName"/>
+        <see userInput="{{templateIdentifier}}" selector="{{section.templateName('1')}}" stepKey="seeTemplateName"/>
+        <dontSeeElementInDOM selector="{{section.deleteButton(templateIdentifier)}}" stepKey="dontSeeDeleteTemplateButton"/>
+    </actionGroup>
+</actionGroups>

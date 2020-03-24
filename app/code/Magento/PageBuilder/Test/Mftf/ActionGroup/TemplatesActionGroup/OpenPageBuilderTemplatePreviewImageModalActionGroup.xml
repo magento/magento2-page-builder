@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="openPageBuilderTemplatePreviewImageModal">
+        <annotations>
+            <description>Opens the template preview image modal from the template grid.</description>
+        </annotations>
+        <arguments>
+            <argument name="templateName" defaultValue="{{PageBuilderTemplateNameRandom.name}}" type="string"/>
+            <argument name="section" defaultValue="PageBuilderTemplatesPageGrid"/>
+            <argument name="rowIndex" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{section.image(rowIndex)}}" stepKey="waitForPreviewImageInGrid"/>
+        <click selector="{{section.image(rowIndex)}}" stepKey="clickPreviewImageInGrid"/>
+        <waitForPageLoad stepKey="waitForModalLoad"/>
+        <waitForElementVisible selector="{{PageBuilderPreviewImageModal.activeModal}}" stepKey="waitForModalVisible"/>
+        <see userInput="{{templateName}}" selector="{{PageBuilderPreviewImageModal.title}}" stepKey="seeTitle"/>
+        <waitForPageLoad stepKey="waitForPreviewLoad"/>
+    </actionGroup>
+</actionGroups>
