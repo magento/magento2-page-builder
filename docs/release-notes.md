@@ -22,7 +22,7 @@ The release notes include:
    We can now introduce new versions of Page Builder content types without introducing backward-incompatible issues with previous versions. Prior to this release, significant changes to content type configurations would create display and data-loss issues with previously saved Page Builder content types. Our new upgrade library eliminates these issues. The library upgrades previous versions of content types saved to the database to match the configuration changes of the new versions. The new upgrade library is documented here: [Upgrading content types](https://devdocs.magento.com/page-builder/docs/how-to/how-to-upgrade-content-types.html){:data-proofer-ignore='true'}.
 
    {: .bs-callout .bs-callout-info }
-   Page Builder automatically runs the upgrade library on each new release to ensure that the _native_ Page Builder content types are always upgraded to match any changes made to content types for a new release. However, to upgrade previous versions of your _custom_ Page Builder content types requires additional development, as noted in the previous documentation link.
+   Page Builder automatically runs the upgrade library when we add a patch to a new release. This ensures that the _native_ Page Builder content types are always upgraded to match any changes made to content types for a new release. However, to upgrade previous versions of your _custom_ Page Builder content types requires additional development, as noted in the previous documentation link.
 
 - {:.new}**Documentation on adding new Appearances**<br/>
    Everything you need to know about [adding appearances](https://devdocs.magento.com/page-builder/docs/how-to/how-to-add-appearance.html) for existing or custom content types.
