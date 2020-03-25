@@ -8,7 +8,7 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
-    <test name="BlockValidateEmptyStateTest">
+    <test name="BlockValidateEmptyState">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Block"/>
@@ -49,7 +49,7 @@
         <dontSeeElement selector="{{BlockOnStorefront.empty('1')}}" stepKey="dontSeeBlockOnStorefront"/>
         <seeElementInDOM selector="{{BlockOnStorefront.empty('1')}}" stepKey="seeElementInDOM"/>
     </test>
-    <test name="AddBlockToCmsPageTest">
+    <test name="AddBlockToCmsPage">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Block"/>
@@ -102,7 +102,7 @@
         </actionGroup>
         <see userInput="$$createPreReqBlock.content$$" stepKey="seeBlockContentOnCmsStage"/>
     </test>
-    <test name="BlockGetsUpdatedTest">
+    <test name="BlockGetsUpdated">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Block"/>
@@ -185,7 +185,7 @@
         <waitForElementVisible selector="{{HtmlOnStorefront.base('1')}}" stepKey="waitForHtmlBaseStorefront"/>
         <waitForElementVisible selector="{{BlockOnStorefront.html('1')}}" stepKey="waitForHtmlStorefront"/>
     </test>
-    <test name="VerifyBlockDisabledTest">
+    <test name="VerifyBlockDisabled">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Block"/>
@@ -246,7 +246,7 @@
         <seeElement selector="{{BlockOnStorefront.base('1')}}" stepKey="seeBlockElementOnStorefront"/>
         <dontSee selector="{{BlockOnStorefront.base('1')}}" userInput="$$createPreReqBlock.content$$" stepKey="dontSeeBlockContentOnStorefront"/>
     </test>
-    <test name="BlockHiddenTest">
+    <test name="BlockHidden">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Block"/>
@@ -327,7 +327,7 @@
         <seeElement selector="{{BlockOnStorefront.notHidden('1')}}" stepKey="waitForContentTypeShownStorefront1"/>
         <seeElement selector="{{BlockOnStorefront.notHidden('2')}}" stepKey="waitForContentTypeShownStorefront2"/>
     </test>
-    <test name="BlockDuplicateTest">
+    <test name="BlockDuplicate">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Block"/>
@@ -546,7 +546,7 @@
         <seeElement selector="{{BlockOnStorefront.textContent('1', $$createPreReqBlock.content$$)}}" stepKey="seeBlockContentOnCmsStorefront1"/>
         <seeElement selector="{{BlockOnStorefront.textContent('2', $$createPreReqBlock.content$$)}}" stepKey="seeBlockContentOnCmsStorefront2"/>
     </test>
-    <test name="BlockDeleteTest">
+    <test name="BlockDelete">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Block"/>
@@ -594,7 +594,7 @@
         </actionGroup>
         <dontSeeElementInDOM selector="{{BlockOnStorefront.base('1')}}" stepKey="dontSeeContentTypeInStorefront"/>
     </test>
-    <test name="DisplayingDeletedBlockOnStageTest">
+    <test name="DisplayingDeletedBlockOnStage">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Block"/>
@@ -641,7 +641,7 @@
         </actionGroup>
         <waitForElementVisible selector="{{BlockOnStage.deleted('1','$createPreReqBlock.id$')}}" stepKey="seeDeletedBlockPlaceHolder"/>
     </test>
-    <test name="BlockValidateAdvancedConfigurationDefaultValuesTest">
+    <test name="BlockValidateAdvancedConfigurationDefaultValues">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Block"/>
@@ -777,7 +777,7 @@
             <argument name="index" value="1"/>
         </actionGroup>
     </test>
-    <test name="BlockUpdateAdvancedConfigurationValuesTest">
+    <test name="BlockUpdateAdvancedConfigurationValues">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Block"/>
@@ -948,7 +948,7 @@
             <argument name="index" value="1"/>
         </actionGroup>
     </test>
-    <test name="BlockCannotAddToStageTest">
+    <test name="BlockCannotAddToStage">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Block"/>
@@ -978,7 +978,7 @@
         </actionGroup>
         <dontSeeElementInDOM selector="{{BlockOnStage.base('1')}}" stepKey="dontSeeBlock"/>
     </test>
-    <test name="BlockCanAddToColumnTest">
+    <test name="BlockCanAddToColumn">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Block"/>
@@ -1046,7 +1046,7 @@
             <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
     </test>
-    <test name="ValidateShowHideOnBlockDefaultStateTest">
+    <test name="ValidateShowHideOnBlockDefaultState">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Block"/>
@@ -1102,7 +1102,7 @@
         </actionGroup>
         <seeElement selector="{{BlockOnStorefront.notHidden('1')}}" stepKey="seeContentTypeNotHiddenStorefront"/>
     </test>
-    <test name="ValidateShowHideOnBlockTest">
+    <test name="ValidateShowHideOnBlock">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Block"/>
@@ -1179,7 +1179,7 @@
         <dontSeeElementInDOM selector="{{BlockOnStorefront.hidden('1')}}" stepKey="dontSeeHiddenElement"/>
         <seeElement selector="{{BlockOnStorefront.base('1')}}" stepKey="waitForContentTypeVisible"/>
     </test>
-    <test name="BlockMoveTest">
+    <test name="BlockMove">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Block"/>

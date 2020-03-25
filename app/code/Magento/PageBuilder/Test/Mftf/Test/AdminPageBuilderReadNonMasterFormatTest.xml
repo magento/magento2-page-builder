@@ -8,7 +8,7 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
-    <test name="ReadTextTest">
+    <test name="ReadText">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="WYSIWYG Conversion"/>
@@ -50,7 +50,7 @@
         <seeElement selector="{{PageBuilderStage.contentTypeInStage('html')}}" stepKey="seeContentTypeInStage"/>
         <see userInput="{{simpleCmsPage.content}}" selector="{{HtmlOnStage.base('1')}}" stepKey="assertHtmlContent"/>
     </test>
-    <test name="ReadHtmlTest">
+    <test name="ReadHtml">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="WYSIWYG Conversion"/>
@@ -93,7 +93,7 @@
         <seeElement selector="{{PageBuilderStage.contentTypeInStage('html')}}" stepKey="seeContentTypeInStage"/>
         <seeElementInDOM selector="{{HtmlOnBackendArbitraryHtml.content}}" stepKey="assertHtmlContent"/>
     </test>
-    <test name="ReadHtmlWithNonexistentDataRoleTest">
+    <test name="ReadHtmlWithNonexistentDataRole">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="WYSIWYG Conversion"/>
@@ -137,7 +137,7 @@
         <seeElement selector="{{PageBuilderStage.contentTypeInStage('html')}}" stepKey="seeContentTypeInStage"/>
         <seeElementInDOM selector="{{HtmlOnBackendNonexistentDataRole.content}}" stepKey="assertHtmlContent"/>
     </test>
-    <test name="ReadHtmlWithImageTest">
+    <test name="ReadHtmlWithImage">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="WYSIWYG Conversion"/>
@@ -183,7 +183,7 @@
         <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
         <seeElementInDOM selector="{{HtmlOnFrontendWithImage.content}}" stepKey="assertHtmlContent2"/>
     </test>
-    <test name="ReadHtmlWithNewImageTest">
+    <test name="ReadHtmlWithNewImage">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="WYSIWYG Conversion"/>
