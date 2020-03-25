@@ -8,7 +8,7 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
-    <test name="ColumnAddToRowAndHeightAdjustsTest">
+    <test name="ColumnAddToRowAndHeightAdjusts">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Column"/>
@@ -55,7 +55,7 @@
             <actualResult type="variable">expectedRowHeightWithPaddingAndColumns</actualResult>
         </assertEquals>
     </test>
-    <test name="RemoveColumnFromStageAndRowShrinksTest">
+    <test name="RemoveColumnFromStageAndRowShrinks">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Column"/>
@@ -98,7 +98,7 @@
             <argument name="expectedPaddingBottom" value="PageBuilderPaddingProperty10"/>
         </actionGroup>
     </test>
-    <test name="ColumnNoRequiredTest">
+    <test name="ColumnNoRequired">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Column"/>
@@ -175,7 +175,7 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <waitForElementVisible selector="{{ColumnOnBackend.base('1')}}" stepKey="waitForColumnOnStage" />
     </test>
-    <test name="ColumnWithBordersAndPaddingEqualToMinHeightTest" extends="RowWithBordersAndPaddingEqualToMinHeightTest">
+    <test name="ColumnWithBordersAndPaddingEqualToMinHeight" extends="RowWithBordersAndPaddingEqualToMinHeight">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Column"/>
@@ -213,7 +213,7 @@
             <argument name="content" value="{{ColumnOnFrontend.baseCSS}}"/>
         </actionGroup>
     </test>
-    <test name="ColumnWithBordersPaddingAndLargeContentsGreaterThanMinHeightTest" extends="RowWithBordersPaddingAndLargeContentsGreaterThanMinHeightTest">
+    <test name="ColumnWithBordersPaddingAndLargeContentsGreaterThanMinHeight" extends="RowWithBordersPaddingAndLargeContentsGreaterThanMinHeight">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Column"/>
@@ -261,7 +261,7 @@
             <argument name="height" value="PageBuilderMinHeightProperty_200"/>
         </actionGroup>
     </test>
-    <test name="ColumnConfigurationHasVerticalAlignmentTest">
+    <test name="ColumnConfigurationHasVerticalAlignment">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Column"/>
@@ -301,7 +301,7 @@
             <argument name="property" value="PageBuilderVerticalAlignmentPropertyTop"/>
         </actionGroup>
     </test>
-    <test name="ColumnContentIsVerticallyAlignedTest">
+    <test name="ColumnContentIsVerticallyAligned">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Column"/>
@@ -404,7 +404,7 @@
         <seeElement selector="{{ColumnOnFrontend.columnStyle('2', PageBuilderVerticalAlignmentPropertyCenter.style)}}" stepKey="seeColumn2VerticalAlignmentCenterApplied"/>
         <seeElement selector="{{ColumnOnFrontend.columnStyle('3', PageBuilderVerticalAlignmentPropertyBottom.style)}}" stepKey="seeColumn2VerticalAlignmentBottomApplied"/>
     </test>
-    <test name="ColumnContentIsVerticallyAlignedWithAppearanceAndDifferentMinimumHeightsTest">
+    <test name="ColumnContentIsVerticallyAlignedWithAppearanceAndDifferentMinimumHeights">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Column"/>
@@ -523,7 +523,7 @@
         <seeElement selector="{{ColumnOnFrontend.columnStyle('2', PageBuilderVerticalAlignmentPropertyCenter.style)}}" stepKey="seeColumn2VerticalAlignmentCenterApplied"/>
         <seeElement selector="{{ColumnOnFrontend.columnStyle('3', PageBuilderVerticalAlignmentPropertyBottom.style)}}" stepKey="seeColumn2VerticalAlignmentBottomApplied"/>
     </test>
-    <test name="ColumnPlaceholderInAdminPreviewTest">
+    <test name="ColumnPlaceholderInAdminPreview">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Column"/>
@@ -552,7 +552,7 @@
         <waitForElementVisible time="5" selector="{{ColumnOnBackend.empty('1')}}" stepKey="waitForEmptyColumn"/>
         <seeElementInDOM selector="{{ColumnOnBackend.empty('1')}}" stepKey="seeEmptyColumn"/>
     </test>
-    <test name="ColumnLabelsUpdateTest">
+    <test name="ColumnLabelsUpdate">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Column"/>
@@ -590,7 +590,7 @@
         <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('2','5/12')}}" stepKey="findAfterLabelColumn2"/>
         <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('3','6/12')}}" stepKey="findAfterLabelColumn3"/>
     </test>
-    <test name="ColumnCanInteractEditPanelTest">
+    <test name="ColumnCanInteractEditPanel">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Column"/>
@@ -624,7 +624,7 @@
         <waitForElementNotVisible time="2" selector="{{EditPanelForm.editForm}}" stepKey="waitClose" />
         <dontSeeElement selector="{{EditPanelForm.editForm}}" stepKey="dontSeeEditForm"/>
     </test>
-    <test name="ColumnSettingsAppearInAdminTest">
+    <test name="ColumnSettingsAppearInAdmin">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Column"/>
@@ -692,7 +692,7 @@
         <seeElement selector="{{ColumnOnBackend.columnStyle('1', PageBuilderColumnStyles.bgRepeat)}}" stepKey="seeFirstColumnBgRepeat"/>
         <seeElement selector="{{ColumnOnBackend.columnStyle('1', PageBuilderColumnStyles.bgAttachment)}}" stepKey="seeFirstColumnBgAttachment"/>
     </test>
-    <test name="ColumnAppearanceSettingsShowOnFrontendTest">
+    <test name="ColumnAppearanceSettingsShowOnFrontend">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Column"/>
@@ -768,7 +768,7 @@
         <seeElement selector="{{ColumnOnFrontend.columnStyle('2', PageBuilderColumnStyles.minHeight)}}" stepKey="seeColumn2MinHeightApplied"/>
         <seeElement selector="{{ColumnOnFrontend.columnStyle('3', PageBuilderColumnStyles.alignmentFull)}}" stepKey="seeColumn3AppearanceApplied"/>
     </test>
-    <test name="ColumnChangesPreservedTest">
+    <test name="ColumnChangesPreserved">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Column"/>
@@ -859,7 +859,7 @@
             <argument name="property" value="PageBuilderBackgroundAttachmentProperty"/>
         </actionGroup>
     </test>
-    <test name="PreviewBackgroundImageTest">
+    <test name="PreviewBackgroundImage">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Column"/>
@@ -899,7 +899,7 @@
             <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
     </test>
-    <test name="ColumnBackgroundColorPreservedTest">
+    <test name="ColumnBackgroundColorPreserved">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Column"/>
@@ -1023,7 +1023,7 @@
         <seeElement selector="{{ColumnOnFrontend.column3Appearance}}"  stepKey="seeColumn3AppearanceApplied2"/>
         <seeElement selector="{{ColumnOnFrontend.column3BackgroundColorGrey}}"  stepKey="seeColumn3BackgroundColorApplied2"/>
     </test>
-    <test name="ColumnValidateDefaultAndUpdateAdvancedConfigurationDefaultValuesTest">
+    <test name="ColumnValidateDefaultAndUpdateAdvancedConfigurationDefaultValues">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Column"/>
@@ -1184,7 +1184,7 @@
         <seeElement selector="{{ColumnOnFrontend.columnPadding}}" stepKey="seeColumnPaddingStyle"/>
         <seeElement selector="{{ColumnOnFrontend.columnClass}}" stepKey="seeColumnClass"/>
     </test>
-    <test name="RemovingColumnDistributesWidthTest">
+    <test name="RemovingColumnDistributesWidth">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Column"/>
@@ -1225,7 +1225,7 @@
         <waitForElementVisible selector="{{ColumnOnBackend.columnStyle('1', PageBuilderColumnStyles.widthHalf)}}" stepKey="seeFirstColumnWidthDistributed"/>
         <seeElement selector="{{ColumnOnBackend.columnStyle('2', PageBuilderColumnStyles.widthHalf)}}" stepKey="seeSecondColumnWidthDistributed"/>
     </test>
-    <test name="ColumnFullHeightShowsOnFrontendTest">
+    <test name="ColumnFullHeightShowsOnFrontend">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Column"/>
@@ -1294,7 +1294,7 @@
         <seeElement selector="{{ColumnOnFrontend.column1HeightFull}}" stepKey="seeColumn1FullHeightApplied"/>
         <seeElement selector="{{ColumnOnFrontend.column2HeightFull}}" stepKey="seeColumn2FullHeightApplied"/>
     </test>
-    <test name="DragMultipleColumnsIntoRowTest">
+    <test name="DragMultipleColumnsIntoRow">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Column"/>
@@ -1334,7 +1334,7 @@
         <!-- We validate for 6 columns as each group automatically creates 2 columns -->
         <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="6" stepKey="validateColumnsAdded"/>
     </test>
-    <test name="ColumnDuplicateTest">
+    <test name="ColumnDuplicate">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Column"/>
@@ -1425,7 +1425,7 @@
         <waitForElementVisible selector="{{HeadingOnStorefront.notHidden('1')}}" stepKey="waitForContentTypeShownStorefront1"/>
         <waitForElementVisible selector="{{HeadingOnStorefront.notHidden('2')}}" stepKey="waitForContentTypeShownStorefront2"/>
     </test>
-    <test name="DuplicatingColumnWillDivideSourceColumnTest">
+    <test name="DuplicatingColumnWillDivideSourceColumn">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Column"/>
@@ -1508,7 +1508,7 @@
             <actualResult type="variable">columnAfterDuplicateRatio</actualResult>
         </assertEquals>
     </test>
-    <test name="ColumnCannotAddToStageTest">
+    <test name="ColumnCannotAddToStage">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Column"/>
@@ -1540,7 +1540,7 @@
         <dontSeeElementInDOM selector="{{ColumnOnBackend.column}}" stepKey="dontSeeColumn"/>
         <dontSeeElementInDOM selector="{{ColumnOnBackend.columnGroup('1')}}" stepKey="dontSeeColumnGroup"/>
     </test>
-    <test name="ColumnCannotAddInsideColumnTest">
+    <test name="ColumnCannotAddInsideColumn">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Column"/>
@@ -1584,7 +1584,7 @@
         </actionGroup>
         <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="3" stepKey="seesThreeElementColumns"/>
     </test>
-    <test name="ValidateColumnNotHideableTest">
+    <test name="ValidateColumnNotHideable">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Column"/>
@@ -1613,7 +1613,7 @@
         <waitForElementVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenuByIndex(PageBuilderColumnContentType.role, '1')}}" stepKey="waitForOptions"/>
         <dontSeeElementInDOM selector="{{PageBuilderContentTypeOptionsMenu.contentTypeHide(PageBuilderColumnContentType.role, '1')}}" stepKey="dontSeeDomHideOption" />
     </test>
-    <test name="ValidateShowHideOnColumnChildDefaultStateTest">
+    <test name="ValidateShowHideOnColumnChildDefaultState">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Column"/>
@@ -1679,7 +1679,7 @@
         </actionGroup>
         <seeElement selector="{{HeadingOnStorefront.notHidden('1')}}" stepKey="seeContentTypeNotHiddenStorefront"/>
     </test>
-    <test name="ValidateColumnChildHideShowTest">
+    <test name="ValidateColumnChildHideShow">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Column"/>
