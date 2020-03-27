@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="SliderCollageLeftVideoBackgroundValidateFallbackImage" extends="SliderPosterVideoBackgroundValidateFallbackImage">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Validate Video Background Fallback Image Renders When Video Isn't Loaded in Collage Left Slide"/>
+            <description value="Validate that the video background fallback image loads and renders in a Collage Left Slide when the video hasn't loaded."/>
+            <severity value="BLOCKER"/>
+            <useCaseId value="PB-266"/>
+            <testCaseId value="MC-31846"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-sliderCollageLeft"/>
+            <group value="pagebuilder-video-background"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setAppearance">
+            <argument name="property" value="PageBuilderAppearance_CollageLeft"/>
+        </actionGroup>
+    </test>
+</tests>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="validatePageBuilderTemplateDataInGrid">
+        <annotations>
+            <description>Validates the values for each cell in a row on the Page Builder templates grid.</description>
+        </annotations>
+        <arguments>
+            <argument name="section" defaultValue="PageBuilderTemplatesPageGrid"/>
+            <argument name="templateName" defaultValue="{{PageBuilderTemplateNameRandom.name}}" type="string"/>
+            <argument name="createdFor" defaultValue="{{PageBuilderTemplateCreatedFor.any}}" type="string"/>
+            <argument name="createdDate" defaultValue="" type="string"/>
+            <argument name="createdDateAMorPM" defaultValue="" type="string"/>
+            <argument name="rowIndex" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForGridLoad"/>
+        <grabTextFrom selector="{{section.templateId(rowIndex)}}" stepKey="grabTemplateId"/>
+        <assertGreaterThan stepKey="assertGreaterThanZero">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">grabTemplateId</actualResult>
+        </assertGreaterThan>
+        <seeElement selector="{{section.image(rowIndex)}}" stepKey="seeImage"/>
+        <executeJS function="return document.evaluate(&quot;{{section.image(rowIndex)}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.naturalHeight" stepKey="screenshotNaturalHeight"/>
+        <executeJS function="return document.evaluate(&quot;{{section.image(rowIndex)}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.naturalWidth" stepKey="screenshotNaturalWidth"/>
+        <assertGreaterThan stepKey="assertNaturalHeightGreaterThanZero">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">screenshotNaturalHeight</actualResult>
+        </assertGreaterThan>
+        <assertGreaterThan stepKey="assertNaturalWidthGreaterThanZero">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">screenshotNaturalWidth</actualResult>
+        </assertGreaterThan>
+        <see userInput="{{templateName}}" selector="{{section.templateName(rowIndex)}}" stepKey="seeTemplateName"/>
+        <see userInput="{{createdFor}}" selector="{{section.createdFor(rowIndex)}}" stepKey="seeCreatedFor"/>
+        <see userInput="{{createdDate}}" selector="{{section.createdDate(rowIndex)}}" stepKey="seeCreatedDate"/>
+        <see userInput="{{createdDateAMorPM}}" selector="{{section.createdDate(rowIndex)}}" stepKey="seeCreatedDateAMorPM"/>
+    </actionGroup>
+</actionGroups>

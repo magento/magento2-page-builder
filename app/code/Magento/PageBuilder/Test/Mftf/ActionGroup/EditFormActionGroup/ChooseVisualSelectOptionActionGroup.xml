@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="chooseVisualSelectOption">
+        <arguments>
+            <argument name="property"/>
+        </arguments>
+        <waitForElement time="2" selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible"/>
+        <seeElement selector="//li[@name=&quot;{{property.value}}&quot;]" stepKey="seeVisualSelect"/>
+        <click selector="//div[@data-index=&quot;{{property.section}}&quot;]//li[@name=&quot;{{property.value}}&quot;]" stepKey="chooseVisualSelectOption"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+    </actionGroup>
+</actionGroups>

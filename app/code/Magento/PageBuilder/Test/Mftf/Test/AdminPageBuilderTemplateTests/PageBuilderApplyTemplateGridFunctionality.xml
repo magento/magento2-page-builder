@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="PageBuilderApplyTemplateGridFunctionality" extends="PageBuilderTemplateGridPageGridFunctionality">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Templates"/>
+            <title value="Apply Template Grid Functionality"/>
+            <description value="Tests that the Apply Template slide-out's grid functions correctly for filtering, searching, sorting, and pagination."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="PB-341"/>
+            <testCaseId value="MC-30664"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-templates"/>
+        </annotations>
+        <actionGroup ref="openPageBuilderApplyTemplateSlideOut" stepKey="navigateToPageBuilderTemplatesGridPage"/>
+        <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+        </actionGroup>
+        <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGrid">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="keyword" value="sorting_"/>
+        </actionGroup>
+        <actionGroup ref="validateTotalRecordsFoundInPageBuilderTemplateGrid" stepKey="validateTotalRecordsFoundInPageBuilderTemplateGrid0">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="total" value="5"/>
+        </actionGroup>
+        <!-- Sort by ID -->
+        <grabTextFrom selector="{{PageBuilderApplyTemplatesGrid.templateId('1')}}" stepKey="templateIdRow1Initial"/>
+        <actionGroup ref="sortPageBuilderTemplateGridColumn" stepKey="sortPageBuilderTemplateGridColumnId">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="columnName" value="{{PageBuilderTemplateGridColumns.id}}"/>
+        </actionGroup>
+        <grabTextFrom selector="{{PageBuilderApplyTemplatesGrid.templateId('1')}}" stepKey="templateIdRow1AfterSort"/>
+        <!-- Filter by ID -->
+        <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid1">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+        </actionGroup>
+        <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGrid2">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="keyword" value="sorting_"/>
+        </actionGroup>
+        <actionGroup ref="filterPageBuilderTemplateGridById" stepKey="filterPageBuilderTemplateGridById">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="templateIdFrom" value="{$templateIdRow1Initial}"/>
+            <argument name="templateIdTo" value="{$templateIdRow1AfterSort}"/>
+        </actionGroup>
+        <actionGroup ref="validateTotalRecordsFoundInPageBuilderTemplateGrid" stepKey="validateTotalRecordsFoundInPageBuilderTemplateGrid">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="total" value="5"/>
+        </actionGroup>
+        <grabTextFrom selector="{{PageBuilderApplyTemplatesGrid.templateId('1')}}" stepKey="templateIdRow1AfterFilterInitial"/>
+        <actionGroup ref="sortPageBuilderTemplateGridColumn" stepKey="sortPageBuilderTemplateGridColumnId2">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="columnName" value="{{PageBuilderTemplateGridColumns.id}}"/>
+        </actionGroup>
+        <grabTextFrom selector="{{PageBuilderApplyTemplatesGrid.templateId('1')}}" stepKey="templateIdRow1AfterFilterAndSort"/>
+        <!-- Filter and Sort by Template Name -->
+        <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid2">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+        </actionGroup>
+        <actionGroup ref="filterPageBuilderTemplateGridByName" stepKey="filterPageBuilderTemplateGridByTemplateName3">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="templateName" value="sorting_"/>
+        </actionGroup>
+        <actionGroup ref="sortPageBuilderTemplateGridColumn" stepKey="sortPageBuilderTemplateGridColumnTemplateName">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="columnName" value="{{PageBuilderTemplateGridColumns.templateName}}"/>
+        </actionGroup>
+        <see userInput="{{PageBuilderTemplateName_Sorting.0}}" selector="{{PageBuilderApplyTemplatesGrid.templateName('1')}}" stepKey="seeTemplateName1"/>
+        <see userInput="{{PageBuilderTemplateName_Sorting.999}}" selector="{{PageBuilderApplyTemplatesGrid.templateName('2')}}" stepKey="seeTemplateName2"/>
+        <see userInput="{{PageBuilderTemplateName_Sorting.A}}" selector="{{PageBuilderApplyTemplatesGrid.templateName('3')}}" stepKey="seeTemplateName3"/>
+        <see userInput="{{PageBuilderTemplateName_Sorting.aaa}}" selector="{{PageBuilderApplyTemplatesGrid.templateName('4')}}" stepKey="seeTemplateName4"/>
+        <see userInput="{{PageBuilderTemplateName_Sorting.Z}}" selector="{{PageBuilderApplyTemplatesGrid.templateName('5')}}" stepKey="seeTemplateName5"/>
+        <!-- Sort by Created For -->
+        <actionGroup ref="sortPageBuilderTemplateGridColumn" stepKey="sortPageBuilderTemplateGridColumnCreatedFor">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="columnName" value="{{PageBuilderTemplateGridColumns.createdFor}}"/>
+        </actionGroup>
+        <see userInput="{{PageBuilderTemplateCreatedFor.any}}" selector="{{PageBuilderApplyTemplatesGrid.createdFor('1')}}" stepKey="seeTemplateCreatedFor1"/>
+        <see userInput="{{PageBuilderTemplateCreatedFor.block}}" selector="{{PageBuilderApplyTemplatesGrid.createdFor('2')}}" stepKey="seeTemplateCreatedFor2"/>
+        <see userInput="{{PageBuilderTemplateCreatedFor.category}}" selector="{{PageBuilderApplyTemplatesGrid.createdFor('3')}}" stepKey="seeTemplateCreatedFor3"/>
+        <see userInput="{{PageBuilderTemplateCreatedFor.page}}" selector="{{PageBuilderApplyTemplatesGrid.createdFor('4')}}" stepKey="seeTemplateCreatedFor4"/>
+        <see userInput="{{PageBuilderTemplateCreatedFor.product}}" selector="{{PageBuilderApplyTemplatesGrid.createdFor('5')}}" stepKey="seeTemplateCreatedFor5"/>
+        <!-- Filter by Created For -->
+        <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid3">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+        </actionGroup>
+        <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGrid3">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="keyword" value="sorting_"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderTemplatesGridFilter" stepKey="openPageBuilderTemplatesGridFilter">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+        </actionGroup>
+        <actionGroup ref="choosePageBuilderTemplateCreatedForOptionsInFilter" stepKey="choosePageBuilderTemplateCreatedForOptionsInFilter1">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="createdFor" value="{{PageBuilderTemplateCreatedFor.any}}"/>
+        </actionGroup>
+        <actionGroup ref="choosePageBuilderTemplateCreatedForOptionsInFilter" stepKey="choosePageBuilderTemplateCreatedForOptionsInFilter2">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="createdFor" value="{{PageBuilderTemplateCreatedFor.page}}"/>
+        </actionGroup>
+        <actionGroup ref="clickApplyPageBuilderTemplatesGridFilter" stepKey="clickApplyPageBuilderTemplatesGridFilter">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+        </actionGroup>
+        <actionGroup ref="validateTotalRecordsFoundInPageBuilderTemplateGrid" stepKey="validateTotalRecordsFoundInPageBuilderTemplateGrid2">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="total" value="2"/>
+        </actionGroup>
+        <see userInput="{{PageBuilderTemplateCreatedFor.any}}" selector="{{PageBuilderApplyTemplatesGrid.createdFor('1')}}" stepKey="seeTemplateCreatedForAfterFilter1"/>
+        <see userInput="{{PageBuilderTemplateCreatedFor.page}}" selector="{{PageBuilderApplyTemplatesGrid.createdFor('2')}}" stepKey="seeTemplateCreatedForAfterFilter2"/>
+        <!-- Sort by Created -->
+        <actionGroup ref="sortPageBuilderTemplateGridColumn" stepKey="sortPageBuilderTemplateGridColumnCreated">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="columnName" value="{{PageBuilderTemplateGridColumns.created}}"/>
+        </actionGroup>
+        <grabTextFrom selector="{{PageBuilderApplyTemplatesGrid.templateId('1')}}" stepKey="templateCreatedRow1Initial"/>
+        <actionGroup ref="sortPageBuilderTemplateGridColumn" stepKey="sortPageBuilderTemplateGridColumnCreated2">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="columnName" value="{{PageBuilderTemplateGridColumns.created}}"/>
+        </actionGroup>
+        <grabTextFrom selector="{{PageBuilderApplyTemplatesGrid.templateId('1')}}" stepKey="templateCreatedRow1AfterSort"/>
+        <!-- Filter by Created -->
+        <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid4">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+        </actionGroup>
+        <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGrid4">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="keyword" value="sorting_"/>
+        </actionGroup>
+        <actionGroup ref="filterPageBuilderTemplateGridByCreatedDate" stepKey="filterPageBuilderTemplateGridByCreatedDate">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="createdFrom" value="{$yesterday}"/>
+            <argument name="createdTo" value="{$tomorrow}"/>
+        </actionGroup>
+        <actionGroup ref="validateTotalRecordsFoundInPageBuilderTemplateGrid" stepKey="validateTotalRecordsFoundInPageBuilderTemplateGrid3">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="total" value="5"/>
+        </actionGroup>
+        <!-- Search by Keyword -->
+        <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid5">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+        </actionGroup>
+        <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGrid5">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="keyword" value="{{PageBuilderTemplateName_Sorting.aaa}}"/>
+        </actionGroup>
+        <actionGroup ref="validatePageBuilderTemplateDataInGrid" stepKey="validatePageBuilderTemplateDataInGrid">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="templateName" value="{{PageBuilderTemplateName_Sorting.aaa}}"/>
+            <argument name="createdFor" value="{{PageBuilderTemplateCreatedFor.category}}"/>
+        </actionGroup>
+        <actionGroup ref="validateTotalRecordsFoundInPageBuilderTemplateGrid" stepKey="validateTotalRecordsFoundInPageBuilderTemplateGrid4">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="total" value="1"/>
+        </actionGroup>
+        <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid6">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+        </actionGroup>
+        <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGrid6">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="keyword" value="sorting_"/>
+        </actionGroup>
+        <actionGroup ref="validateTotalRecordsFoundInPageBuilderTemplateGrid" stepKey="validateTotalRecordsFoundInPageBuilderTemplateGrid5">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="total" value="5"/>
+        </actionGroup>
+        <!-- Pagination -->
+        <actionGroup ref="editPageBuilderTemplateGridTotalResultsPerPage" stepKey="editPageBuilderTemplateGridTotalResultsPerPage">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="totalPerPage" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateTotalNumberOfRowsInPageBuilderTemplateGrid" stepKey="validateTotalNumberOfRowsInPageBuilderTemplateGrid6">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="total" value="2"/>
+        </actionGroup>
+        <grabTextFrom selector="{{PageBuilderApplyTemplatesGrid.templateName('1')}}" stepKey="templateNameOnPageOne"/>
+        <actionGroup ref="clickNextPageOnPageBuilderTemplateGrid" stepKey="clickNextPageOnPageBuilderTemplateGrid">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+        </actionGroup>
+        <grabTextFrom selector="{{PageBuilderApplyTemplatesGrid.templateName('1')}}" stepKey="templateNameOnPageTwo"/>
+        <actionGroup ref="clickPreviousPageOnPageBuilderTemplateGrid" stepKey="clickPreviousPageOnPageBuilderTemplateGrid">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+        </actionGroup>
+        <grabTextFrom selector="{{PageBuilderApplyTemplatesGrid.templateName('1')}}" stepKey="templateNameOnPageOneAgain"/>
+        <!-- Validate Preview Image -->
+        <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid7">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+        </actionGroup>
+        <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGrid7">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="keyword" value="{{PageBuilderTemplateName_Sorting.aaa}}"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderTemplatePreviewImageModal" stepKey="openPageBuilderTemplatePreviewImageModal">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+            <argument name="templateName" value="{{PageBuilderTemplateName_Sorting.aaa}}"/>
+        </actionGroup>
+        <actionGroup ref="validatePageBuilderTemplatePreviewImageModal" stepKey="validatePageBuilderTemplatePreviewImageModal">
+            <argument name="templateName" value="{{PageBuilderTemplateName_Sorting.aaa}}"/>
+        </actionGroup>
+        <actionGroup ref="closePageBuilderTemplatePreviewImageModal" stepKey="closePageBuilderTemplatePreviewImageModal">
+            <argument name="section" value="PageBuilderApplyTemplatesGrid"/>
+        </actionGroup>
+    </test>
+</tests>

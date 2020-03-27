@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
+    <section name="PageBuilderStoreFront">
+        <element name="contentTypeInsideContainerStorefront" type="button" selector="(//div[@data-content-type=&quot;{{arg1}}&quot;])[{{arg2}}]//*[@data-content-type=&quot;{{arg3}}&quot;][{{arg4}}]" parameterized="true"/>
+        <element name="imageSourceOnFrontEnd" type="button" selector="//div[not(contains(@class, 'pagebuilder-mobile-hidden')) and contains(@style, '{{var1}}')]" parameterized="true"/>
+        <element name="pageWidthJS" type="button" selector="document.querySelector('#maincontent').clientWidth"/>
+        <element name="computedHeight" type="text" selector="return parseInt(window.getComputedStyle(document.querySelectorAll('div[data-content-type=\'{{arg1}}\']')[{{arg2}}]).height)" parameterized="true"/>
+        <element name="computedWidth" type="text" selector="return parseInt(window.getComputedStyle(document.querySelectorAll('div[data-content-type=\'{{arg1}}\']')[{{arg2}}]).width)" parameterized="true"/>
+    </section>
+</sections>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="sortPageBuilderTemplateGridColumn">
+        <annotations>
+            <description>Clicks a column header in the Page Builder templates data grid to sort the column.</description>
+        </annotations>
+        <arguments>
+            <argument name="section" defaultValue="PageBuilderTemplatesPageGrid"/>
+            <argument name="columnName" defaultValue="{{PageBuilderTemplateGridColumns.id}}" type="string"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForGridLoad"/>
+        <waitForElementVisible selector="{{section.columnHeader(columnName)}}" stepKey="waitForGridColumn"/>
+        <click selector="{{section.columnHeader(columnName)}}" stepKey="clickGridColumn"/>
+        <waitForPageLoad stepKey="waitForGridSort"/>
+    </actionGroup>
+</actionGroups>

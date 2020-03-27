@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="closeConfirmModal">
+        <annotations>
+            <description>Closes the confirmation modal on the Page Builder stage.</description>
+        </annotations>
+        <waitForElementVisible time="10" selector="{{PageBuilderStage.modal}}" stepKey="waitForModalVisible"/>
+        <seeElement selector="{{PageBuilderStage.modal}}" stepKey="seeModal"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderStage.modalCancel}}" stepKey="waitForModalCancelButton"/>
+        <click selector="{{PageBuilderStage.modalCancel}}" stepKey="clickCancelButton"/>
+        <waitForPageLoad stepKey="waitForModalClose"/>
+        <waitForElementNotVisible time="1" selector="{{PageBuilderStage.modal}}" stepKey="waitForModalNotVisible"/>
+    </actionGroup>
+</actionGroups>

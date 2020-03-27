@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="MapCanEditLocationWithEmptyAPIKeyTest" extends="MapCanEditLocationWithInvalidAPIKeyTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Map"/>
+            <title value="Google Maps API Key - Can Edit Location With Empty API Key"/>
+            <description value="A user should be able to edit a location with an empty API key."/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-5723"/>
+            <testCaseId value="MC-6039"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="pagebuilder-googleMapsAPIKey"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setInvalidGoogleMapsAPIKey"/>
+        </before>
+    </test>
+</tests>

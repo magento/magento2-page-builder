@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="validateSlideOutPanelFieldHelperText">
+        <annotations>
+            <description>Validates the helper text for a field on the edit panel form.</description>
+        </annotations>
+        <arguments>
+            <argument name="property"/>
+        </arguments>
+        <waitForElement time="2" selector="{{EditPanelForm.panelFieldHelperText(property.section, property.fieldName)}}" stepKey="waitForElement"/>
+        <see userInput="{{property.helperText}}" selector="{{EditPanelForm.panelFieldHelperText(property.section, property.fieldName)}}" stepKey="seeHelperText"/>
+    </actionGroup>
+</actionGroups>

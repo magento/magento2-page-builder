@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="validatePositionRightWithinContainer">
+        <arguments>
+            <argument name="content" type="string"/>
+            <argument name="contentMargins" defaultValue="PageBuilderMarginsPropertyDefault"/>
+            <argument name="container" type="string"/>
+            <argument name="containerBorder" defaultValue="PageBuilderAdvancedBorderWidthProperty0"/>
+            <argument name="containerPadding" defaultValue="PageBuilderPaddingPropertyDefault"/>
+            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="pixelBuffer" defaultValue="5" type="string"/>
+        </arguments>
+        <!-- Validate right edge of content is within parent -->
+        <comment userInput="Validate right edge of content is within parent" stepKey="commentValidateRightEdgeOfContentIsWithinParent"/>
+        <executeJS function="return document.querySelectorAll('{{content}}')[{{index}}-1].getBoundingClientRect().right+{{contentMargins.marginRight}}" stepKey="contentRightPosition"/>
+        <executeJS function="return document.querySelectorAll('{{container}}')[{{index}}-1].getBoundingClientRect().right-{{containerPadding.paddingRight}}-{{containerBorder.value}}" stepKey="parentRightPosition"/>
+        <executeJS function="return Math.round({$parentRightPosition}-{$contentRightPosition})" stepKey="rightPositionDifference"/>
+        <assertLessThanOrEqual stepKey="assertRightPositionDifference">
+            <expectedResult type="int">{{pixelBuffer}}</expectedResult>
+            <actualResult type="variable">rightPositionDifference</actualResult>
+        </assertLessThanOrEqual>
+        <assertGreaterThanOrEqual stepKey="assertRightPositionIsGreaterThanZero">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">rightPositionDifference</actualResult>
+        </assertGreaterThanOrEqual>
+    </actionGroup>
+</actionGroups>

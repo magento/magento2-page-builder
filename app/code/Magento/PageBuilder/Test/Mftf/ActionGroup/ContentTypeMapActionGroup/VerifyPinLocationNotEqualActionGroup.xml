@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="verifyPinLocationNotEqual">
+        <arguments>
+            <argument name="page"/>
+            <argument name="comparedPinLocation" type="string"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <wait time="2" stepKey="waitForPageLoad"/>
+        <waitForElement selector="{{page.pinLocations(index)}}" stepKey="waitForPinLocation"/>
+        <grabAttributeFrom selector="{{page.pinLocations(index)}}" userInput="style" stepKey="pinLocations"/>
+        <assertNotEquals stepKey="assertPinPositionNotEqual">
+            <expectedResult type="variable">{{comparedPinLocation}}</expectedResult>
+            <actualResult type="variable">pinLocations</actualResult>
+        </assertNotEquals>
+    </actionGroup>
+</actionGroups>

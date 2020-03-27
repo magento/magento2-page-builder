@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="removeContentTypeFromStageSmallByIndex">
+        <arguments>
+            <argument name="section"/>
+            <argument name="targetIndex" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible time="20" selector="{{section.openOptionsMenu(targetIndex)}}" stepKey="waitForContentType"/>
+        <click selector="{{section.openOptionsMenu(targetIndex)}}" stepKey="clickContentType"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible time="10" selector="{{section.optionsMenu(targetIndex)}}" stepKey="waitForOptionsMenu"/>
+        <waitForElementVisible time="10" selector="{{section.optionsMenuButton(targetIndex, 'remove')}}" stepKey="waitForRemoveButton"/>
+        <click selector="{{section.optionsMenuButton(targetIndex, 'remove')}}" stepKey="clickRemoveButton"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+    </actionGroup>
+</actionGroups>

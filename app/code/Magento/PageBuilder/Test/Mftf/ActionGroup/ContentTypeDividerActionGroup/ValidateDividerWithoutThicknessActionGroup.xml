@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="validateDividerWithoutThickness">
+        <arguments>
+            <argument name="page" defaultValue=""/>
+            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="color" defaultValue="PageBuilderDividerLineColor_Default"/>
+            <argument name="width" defaultValue="PageBuilderDividerLineWidth_Default"/>
+        </arguments>
+        <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForElementVisible"/>
+        <waitForElementVisible selector="{{page.color(index, color.rgb)}}" stepKey="waitForColorVisible"/>
+        <waitForElementVisible selector="{{page.noThickness(index)}}" stepKey="waitForThicknessVisible"/>
+        <waitForElementVisible selector="{{page.width(index, width.value)}}" stepKey="waitForWidthVisible"/>
+    </actionGroup>
+</actionGroups>

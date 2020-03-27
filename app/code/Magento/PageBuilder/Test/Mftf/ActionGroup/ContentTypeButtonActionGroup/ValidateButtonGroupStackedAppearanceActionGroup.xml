@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="validateButtonGroupStackedAppearance">
+        <arguments>
+            <argument name="buttonGroupPage"/>
+            <argument name="buttonItemPage"/>
+            <argument name="buttonGroupIndex" defaultValue="1" type="string"/>
+            <argument name="firstButtonIndex" defaultValue="1" type="string"/>
+            <argument name="secondButtonIndex" defaultValue="2" type="string"/>
+        </arguments>
+        <comment userInput="validateButtonGroupStackedAppearance" stepKey="comment"/>
+        <waitForElementVisible selector="{{buttonGroupPage.base(buttonGroupIndex)}}" stepKey="waitForButtonGroup"/>
+        <waitForElementVisible selector="{{buttonGroupPage.appearance(buttonGroupIndex, PageBuilderButtonGroupAppearance_Stacked.value)}}" stepKey="seeButtonAppearance"/>
+        <waitForElementVisible selector="{{buttonItemPage.base(firstButtonIndex)}}" stepKey="waitForButton1"/>
+        <executeJS function="return {{buttonItemPage.jsButtonSelector(firstButtonIndex)}}.getBoundingClientRect().x" stepKey="xCoordinate1"/>
+        <executeJS function="return {{buttonItemPage.jsButtonSelector(firstButtonIndex)}}.getBoundingClientRect().y" stepKey="yCoordinate1"/>
+        <waitForElementVisible selector="{{buttonItemPage.base(secondButtonIndex)}}" stepKey="waitForButton2"/>
+        <executeJS function="return {{buttonItemPage.jsButtonSelector(secondButtonIndex)}}.getBoundingClientRect().x" stepKey="xCoordinate2"/>
+        <executeJS function="return {{buttonItemPage.jsButtonSelector(secondButtonIndex)}}.getBoundingClientRect().y" stepKey="yCoordinate2"/>
+        <assertEquals stepKey="checkXCoordinates">
+            <expectedResult type="variable">xCoordinate1</expectedResult>
+            <actualResult type="variable">xCoordinate2</actualResult>
+        </assertEquals>
+        <assertGreaterThan stepKey="checkYCoordinates">
+            <expectedResult type="variable">yCoordinate1</expectedResult>
+            <actualResult type="variable">yCoordinate2</actualResult>
+        </assertGreaterThan>
+    </actionGroup>
+</actionGroups>

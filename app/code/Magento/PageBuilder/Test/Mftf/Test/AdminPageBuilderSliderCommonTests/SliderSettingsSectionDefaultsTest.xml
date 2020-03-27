@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="SliderSettingsSectionDefaultsTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Slider - Validate Settings Section Default Values"/>
+            <description value="Validate the default values for every attribute in the Settings form for slider."/>
+            <severity value="BLOCKER"/>
+            <useCaseId value="MC-3228"/>
+            <testCaseId value="MC-3874"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-sliderCommon"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <!-- Add Slider -->
+        <comment userInput="Add Slider" stepKey="commentAddSlider"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragOntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusSlide"/>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanel">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <!-- Validate Default Values -->
+        <comment userInput="Validate Default Values" stepKey="CommentValidateDefaultValues"/>
+        <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="validateAutoPlay">
+            <argument name="property" value="PageBuilderSliderAutoPlay_Disabled"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateAutoPlaySpeed">
+            <argument name="property" value="PageBuilderSliderAutoPlaySpeed_Default"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="validateFade">
+            <argument name="property" value="PageBuilderSliderFade_Disabled"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="validateInfiniteLoop">
+            <argument name="property" value="PageBuilderSliderInfiniteLoop_Disabled"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="validateShowArrows">
+            <argument name="property" value="PageBuilderSliderShowArrows_Disabled"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsCheckedSlideOutProperty" stepKey="validateShowDots">
+            <argument name="property" value="PageBuilderSliderShowDots_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateMinHeight">
+            <argument name="property" value="PageBuilderMinHeightProperty_300px"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanel2"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <seeElement selector="{{SliderOnStage.autoPlay('1', PageBuilderSliderAutoPlay_Disabled.value)}}" stepKey="seeAutoPlayStage"/>
+        <seeElement selector="{{SliderOnStage.autoPlaySpeed('1', PageBuilderSliderAutoPlaySpeed_Default.value)}}" stepKey="seeAutoPlaySpeedStage"/>
+        <seeElement selector="{{SliderOnStage.fade('1', PageBuilderSliderFade_Disabled.value)}}" stepKey="seeFadeStage"/>
+        <seeElement selector="{{SliderOnStage.infiniteLoop('1', PageBuilderSliderInfiniteLoop_Disabled.value)}}" stepKey="seeInfiniteLoopStage"/>
+        <seeElement selector="{{SliderOnStage.showArrows('1', PageBuilderSliderShowArrows_Disabled.value)}}" stepKey="seeArrowsStage"/>
+        <seeElement selector="{{SliderOnStage.showDots('1', PageBuilderSliderShowDots_Enabled.value)}}" stepKey="seeDotsStage"/>
+        <seeElement selector="{{SliderOnStage.minHeight('1', PageBuilderMinHeightProperty_300px.value)}}" stepKey="seeMinHeightStage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
+        <seeElement selector="{{SliderOnStage.autoPlay('1', PageBuilderSliderAutoPlay_Disabled.value)}}" stepKey="seeAutoPlayStage2"/>
+        <seeElement selector="{{SliderOnStage.autoPlaySpeed('1', PageBuilderSliderAutoPlaySpeed_Default.value)}}" stepKey="seeAutoPlaySpeedStage2"/>
+        <seeElement selector="{{SliderOnStage.fade('1', PageBuilderSliderFade_Disabled.value)}}" stepKey="seeFadeStage2"/>
+        <seeElement selector="{{SliderOnStage.infiniteLoop('1', PageBuilderSliderInfiniteLoop_Disabled.value)}}" stepKey="seeInfiniteLoopStage2"/>
+        <seeElement selector="{{SliderOnStage.showArrows('1', PageBuilderSliderShowArrows_Disabled.value)}}" stepKey="seeArrowsStage2"/>
+        <seeElement selector="{{SliderOnStage.showDots('1', PageBuilderSliderShowDots_Enabled.value)}}" stepKey="seeDotsStage2"/>
+        <seeElement selector="{{SliderOnStage.minHeight('1', PageBuilderMinHeightProperty_300px.value)}}" stepKey="seeMinHeightStage2"/>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <seeElement selector="{{SliderOnFrontend.autoPlay('1', PageBuilderSliderAutoPlay_Disabled.value)}}" stepKey="seeAutoPlayStorefront"/>
+        <seeElement selector="{{SliderOnFrontend.autoPlaySpeed('1', PageBuilderSliderAutoPlaySpeed_Default.value)}}" stepKey="seeAutoPlaySpeedStorefront"/>
+        <seeElement selector="{{SliderOnFrontend.fade('1', PageBuilderSliderFade_Disabled.value)}}" stepKey="seeFadeStorefront"/>
+        <seeElement selector="{{SliderOnFrontend.infiniteLoop('1', PageBuilderSliderInfiniteLoop_Disabled.value)}}" stepKey="seeInfiniteLoopStorefront"/>
+        <seeElement selector="{{SliderOnFrontend.showArrows('1', PageBuilderSliderShowArrows_Disabled.value)}}" stepKey="seeArrowsStorefront"/>
+        <seeElement selector="{{SliderOnFrontend.showDots('1', PageBuilderSliderShowDots_Enabled.value)}}" stepKey="seeDotsStorefront"/>
+        <seeElement selector="{{SliderOnFrontend.minHeight('1', PageBuilderMinHeightProperty_300px.value)}}" stepKey="seeHeightStorefront"/>
+    </test>
+</tests>

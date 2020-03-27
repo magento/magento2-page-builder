@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="verifyEmptyStage">
+        <annotations>
+            <description>Verifies that the Page Builder stage only has 1 row that is empty.</description>
+        </annotations>
+        <arguments>
+            <argument name="rowIndex" defaultValue="1" type="string"/>
+            <argument name="pageBuilderArea" defaultValue="" type="string"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForStageLoad"/>
+        <waitForElementVisible selector="{{RowOnStage.empty(rowIndex)}}" stepKey="waitForEmptyRow"/>
+        <seeElement selector="{{RowOnStage.empty(rowIndex)}}" stepKey="seeEmptyRow"/>
+        <seeNumberOfElements userInput="1" selector="{{pageBuilderArea}}{{RowOnStage.allRows}}" stepKey="seeOnlyOneRow"/>
+    </actionGroup>
+</actionGroups>

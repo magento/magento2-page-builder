@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="PageBuilderCatalogProductFullScreenLeftPanelHeightAndFunctionalityTest" extends="PageBuilderFullScreenLeftPanelHeightAndFunctionalityTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Catalog Products"/>
+            <title value="Left Panel Is Full-Height and Works In Full-Screen Mode"/>
+            <description value="This test is to ensure that the PageBuilder left panel works and grows to span the full height of the viewport in full-screen mode when opened for Product Description."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MC-3329"/>
+            <testCaseId value="MC-13677"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-fullScreen"/>
+            <group value="pagebuilder-catalog-product"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultCategory" before="createProduct" stepKey="createPreReqCategory"/>
+            <createData entity="_defaultProduct" before="loginAsAdmin" stepKey="createProduct">
+                <requiredEntity createDataKey="createPreReqCategory"/>
+            </createData>
+            <actionGroup ref="NavigateToCreatedProductEditPageActionGroup" stepKey="navigateToAPageWithPageBuilder">
+                <argument name="product" value="$$createProduct$$"/>
+            </actionGroup>
+            <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="openPageBuilderForAttribute" after="switchToPageBuilderStage" stepKey="openPageBuilderForDescription"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createProduct" before="deleteCreatedCategory" stepKey="deleteCreatedProduct"/>
+            <deleteData createDataKey="createPreReqCategory" before="NavigateToAndResetProductGridToDefaultView" stepKey="deleteCreatedCategory"/>
+            <actionGroup ref="NavigateToAndResetProductGridToDefaultViewActionGroup" before="logout" stepKey="NavigateToAndResetProductGridToDefaultView"/>
+        </after>
+        <comment userInput="---merging to remove step---" stepKey="openPageBuilderFullScreen"/>
+    </test>
+</tests>

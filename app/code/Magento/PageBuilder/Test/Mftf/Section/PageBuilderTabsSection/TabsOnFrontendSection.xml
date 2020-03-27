@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
+    <section name="TabsOnFrontend">
+        <element name="base" type="button" selector="(//div[@data-content-type='tabs'])[{{arg1}}]" parameterized="true"/>
+        <element name="baseCSS" type="button" selector="[data-content-type=tabs]"/>
+        <element name="hidden" type="button" selector="(//div[@data-content-type='tabs'])[{{arg1}}][contains(@style, 'display: none')]" parameterized="true"/>
+        <element name="notHidden" type="button" selector="(//div[@data-content-type='tabs'])[{{arg1}}][not(contains(@style, 'display: none'))]" parameterized="true"/>
+        <element name="tabsMinHeight" type="button" selector="//div[@data-content-type='tabs']//div[@class='tabs-content'][contains(@style, 'min-height: {{arg1}}px')]" parameterized="true"/>
+        <element name="tabsNavAligned" type="button" selector="(//div[@data-content-type='tabs']//descendant::*[@role='tablist'][contains(@style, 'text-align: {{arg1}};')])" parameterized="true"/>
+        <element name="tabsContentAdvancedStyles" type="button" selector="//div[@class='tabs-content'][contains(@style, 'border-style: solid;')][contains(@style, 'border-color: rgb(0, 0, 0);')][contains(@style, 'border-width: 10px;')][contains(@style, 'border-radius: 12px;')][contains(@style, 'min-height: 300px;')]"/>
+        <element name="tabsContentMinHeight" type="button" selector="(//div[@data-content-type='tabs']//descendant::*[contains(@class,'tabs-content')][contains(@style,'min-height: {{minHeight}}px;')])" parameterized="true"/>
+        <element name="tabsContentCSS" type="text" selector="[data-content-type=tabs] .tabs-content[data-element=content]"/>
+        <element name="tabsAlignment" type="text" selector="//div[@class='tabs-content'and contains(@style,'text-align: {{arg1}}')]" parameterized="true"/>
+        <element name="tabsContentHeightJS" type="button" selector="document.querySelectorAll('[class=tabs-content]')[{{arg1}}].clientHeight" parameterized="true"/>
+    </section>
+</sections>

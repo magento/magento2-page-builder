@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="openMapPinTooltipWindow">
+        <arguments>
+            <argument name="page" defaultValue="MapOnStage"/>
+            <argument name="mapIndex" defaultValue="1" type="string"/>
+            <argument name="pinIndex" defaultValue="1" type="string"/>
+        </arguments>
+        <comment userInput="openMapPinTooltipWindow" stepKey="comment"/>
+        <waitForElementVisible selector="{{page.googleMapsLink(mapIndex)}}" stepKey="waitForMap"/>
+        <conditionalClick selector="{{page.googleModalOkButton(mapIndex)}}" dependentSelector="{{page.googleModalOkButton(mapIndex)}}" visible="true" stepKey="clickOkButton"/>
+        <waitForElementNotVisible selector="{{page.googleModalOkButton(mapIndex)}}" stepKey="waitForGoogleModalGone"/>
+        <dontSeeElementInDOM selector="{{page.googleModalOkButton(mapIndex)}}" stepKey="dontSeeGoogleModalInDOM"/>
+        <waitForElement selector="{{page.clickablePin(mapIndex, pinIndex)}}" stepKey="waitForPin"/>
+        <click selector="{{page.clickablePin(mapIndex, pinIndex)}}" stepKey="clickPin"/>
+        <waitForElementVisible selector="{{page.tooltipWindow(mapIndex)}}" stepKey="waitForPinTooltip"/>
+    </actionGroup>
+</actionGroups>

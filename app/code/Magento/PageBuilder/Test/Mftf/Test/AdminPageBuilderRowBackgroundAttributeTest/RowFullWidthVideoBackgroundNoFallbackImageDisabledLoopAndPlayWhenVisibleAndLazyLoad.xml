@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="RowFullWidthVideoBackgroundNoFallbackImageDisabledLoopAndPlayWhenVisibleAndLazyLoad" extends="RowContainedVideoBackgroundNoFallbackImageDisabledLoopAndPlayWhenVisibleAndLazyLoad">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Row"/>
+            <title value="Validate Full Width Row with No Fallback Image, Disabled Infinite Loop, Disabled Play Only When Visible, and Disabled Lazy Load"/>
+            <description value="Validate video background with no fallback image, disabled infinite loop, disabled play only when visible, and disabled lazy load."/>
+            <severity value="BLOCKER"/>
+            <useCaseId value="PB-95"/>
+            <testCaseId value="MC-31237"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-row"/>
+            <group value="pagebuilder-row-full-width"/>
+            <group value="pagebuilder-rowBackground"/>
+            <group value="pagebuilder-video-background"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setAppearance">
+            <argument name="property" value="PageBuilderRowAppearance_FullWidth"/>
+        </actionGroup>
+        <actionGroup ref="validateVideoBackgroundWithOnlyVideoUrl" stepKey="validateStorefront">
+            <argument name="section" value="RowOnStorefront_FullWidth_FullBleed"/>
+            <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_YouTube_Embedded"/>
+            <argument name="infiniteLoop" value="PageBuilderVideoBackgroundInfiniteLoop_Disabled"/>
+            <argument name="lazyLoad" value="PageBuilderVideoBackgroundLazyLoad_Disabled"/>
+            <argument name="playOnlyWhenVisible" value="PageBuilderVideoBackgroundPlayOnlyWhenVisible_Disabled"/>
+        </actionGroup>
+    </test>
+</tests>

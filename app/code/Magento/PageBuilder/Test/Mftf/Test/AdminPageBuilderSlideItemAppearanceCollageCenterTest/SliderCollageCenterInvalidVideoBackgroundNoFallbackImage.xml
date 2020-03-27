@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="SliderCollageCenterInvalidVideoBackgroundNoFallbackImage" extends="SliderPosterInvalidVideoBackgroundNoFallbackImage">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Verify Collage Center Slide Renders When Video Isn't Loaded and There's No Fallback Image"/>
+            <description value="Validate that the slide renders correctly when the video background video hasn't loaded and there is no fallback image."/>
+            <severity value="BLOCKER"/>
+            <useCaseId value="PB-266"/>
+            <testCaseId value="MC-31849"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-sliderCollageCenter"/>
+            <group value="pagebuilder-video-background"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setAppearance">
+            <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
+        </actionGroup>
+    </test>
+</tests>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="RowFullBleedMinHeightValidInputs" extends="RowContainedMinHeightValidInputs">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Row"/>
+            <title value="Full Bleed Row Min Height Valid Inputs"/>
+            <description value="A user can submit an valid min height values and they apply correctly to a full bleed row."/>
+            <severity value="BLOCKER"/>
+            <useCaseId value="PB-277"/>
+            <testCaseId value="MC-31408"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-row"/>
+            <group value="pagebuilder-row-full-bleed"/>
+            <group value="pagebuilder-row-appearance"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
+            <argument name="property" value="PageBuilderRowAppearance_FullBleed"/>
+        </actionGroup>
+        <seeElement selector="{{RowOnStorefront_FullWidth_FullBleed.minHeight('1', PageBuilderMinHeightProperty_200px.value)}}" stepKey="seeFirstMinHeightStorefront"/>
+        <executeJS function="return document.evaluate(&quot;{{RowOnStorefront_FullWidth_FullBleed.base('1')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstMinHeightStorefront"/>
+        <seeElement selector="{{RowOnStorefront_FullWidth_FullBleed.minHeight('2', PageBuilderMinHeightProperty_100vh.value)}}" stepKey="seeSecondMinHeightStorefront"/>
+        <executeJS function="return document.evaluate(&quot;{{RowOnStorefront_FullWidth_FullBleed.base('2')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="secondMinHeightStorefront"/>
+        <seeElement selector="{{RowOnStorefront_FullWidth_FullBleed.minHeight('3', PageBuilderMinHeightProperty_100vh_Minus_200px.value)}}" stepKey="seeThirdMinHeightStorefront"/>
+        <executeJS function="return document.evaluate(&quot;{{RowOnStorefront_FullWidth_FullBleed.base('3')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="thirdMinHeightStorefront"/>
+    </test>
+</tests>

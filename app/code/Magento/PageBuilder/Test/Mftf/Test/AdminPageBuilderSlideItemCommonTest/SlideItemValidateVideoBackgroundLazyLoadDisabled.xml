@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="SlideItemValidateVideoBackgroundLazyLoadDisabled" extends="SlideItemValidateVideoBackgroundPlayOnlyWhenVisibleEnabled">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Slide Item: Validate Video Background Lazy Load Disabled"/>
+            <description value="Verify that the video background lazy load attribute works as intended when disabled."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="PB-266"/>
+            <testCaseId value="MC-31737"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-slideItemCommon"/>
+            <group value="pagebuilder-video-background"/>
+        </annotations>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="setLazyLoadDisabled">
+            <argument name="property" value="PageBuilderVideoBackgroundLazyLoad_Disabled"/>
+        </actionGroup>
+        <remove keyForRemoval="setPlayOnlyWhenVisibleEnabled"/>
+        <actionGroup ref="validateVideoBackgroundLoaded" stepKey="validateVideoPlayingStage1">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="validateVideoBackgroundLoaded" stepKey="validateVideoNotPlayingStage1">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="validateVideoBackgroundLoaded" stepKey="validateVideoPlayingStage2">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="validateVideoBackgroundLoaded" stepKey="validateVideoNotPlayingStorefront">
+            <argument name="section" value="SlideOnFrontend"/>
+        </actionGroup>
+        <actionGroup ref="validateVideoBackgroundLoaded" stepKey="validateVideoPlayingStorefront">
+            <argument name="section" value="SlideOnFrontend"/>
+        </actionGroup>
+    </test>
+</tests>

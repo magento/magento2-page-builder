@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="BannerInlineWYSIWYGWidgetAndVariableStyleTest" extends="TextInlineWYSIWYGWidgetAndVariableStyleTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Banner"/>
+            <title value="Verify widget and variable placeholder styling is correct in admin and that they resolve on storefront"/>
+            <description value="Verify widget and variable placeholder styling is correct in admin and that they resolve on storefront"/>
+            <severity value="BLOCKER"/>
+            <useCaseId value="MC-4150"/>
+            <testCaseId value="MC-4947"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-banner"/>
+        </annotations>
+        <!-- Add Banner -->
+        <comment userInput="Add Banner" stepKey="commentAddContentType"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeIntoStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <click selector="{{BannerOnBackend.tinymce('1')}}" stepKey="focusOnEditorArea1"/>
+        <seeElement selector="{{BannerOnBackend.messageContent('1', TinyMCEVariableBaseURL.editPanelValue)}}" stepKey="seeVariableBaseURLStage"/>
+        <seeElement selector="{{BannerOnBackend.messageContent('1', TinyMCEWidgetCMSPageLink.editPanelValue)}}" stepKey="seeWidgetStage"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate(&quot;{{BannerOnBackend.variablePlaceholder('1')}}&quot;, document.body).iterateNext()).getPropertyValue('background-color')" stepKey="getVariableStyle"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate(&quot;{{BannerOnBackend.widgetPlaceholder('1')}}&quot;, document.body).iterateNext()).getPropertyValue('background-color')" stepKey="getWidgetStyle"/>
+        <waitForElement selector="{{BannerOnBackend.variablePlaceholder('1')}}" stepKey="waitForVariableElement"/>
+        <waitForElement selector="{{BannerOnBackend.widgetPlaceholder('1')}}" stepKey="waitForWidgetElement"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate(&quot;{{BannerOnBackend.variablePlaceholder('1')}}&quot;, document.body).iterateNext()).getPropertyValue('background-color')" stepKey="getVariableStyleAfterSave"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate(&quot;{{BannerOnBackend.widgetPlaceholder('1')}}&quot;, document.body).iterateNext()).getPropertyValue('background-color')" stepKey="getWidgetStyleAfterSave"/>
+        <seeElement selector="{{BannerOnFrontend.messageContent('1', _ENV.MAGENTO_BASE_URL)}}" stepKey="seeVariableStorefront"/>
+        <seeElement selector="{{BannerOnFrontend.messageContentWidget('1', _ENV.MAGENTO_BASE_URL, $$createCMSPageB.identifier$$)}}" stepKey="seeWidgetStorefront"/>
+        <click selector="{{BannerOnFrontend.messageContentWidget('1', _ENV.MAGENTO_BASE_URL, $$createCMSPageB.identifier$$)}}" stepKey="clickWidgetStorefront"/>
+    </test>
+</tests>

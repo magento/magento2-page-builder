@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="switchSlide">
+        <arguments>
+            <argument name="sliderSection" defaultValue="SliderOnStage"/>
+            <argument name="slideSection" defaultValue="SlideOnBackend"/>
+            <argument name="sliderIndex" defaultValue="1" type="string"/>
+            <argument name="slideIndex" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{sliderSection.slideNavigationDot(sliderIndex, slideIndex)}}" stepKey="waitForSlideNavigationDot"/>
+        <click selector="{{sliderSection.slideNavigationDot(sliderIndex, slideIndex)}}" stepKey="clickSlideNavigationDot"/>
+        <waitForPageLoad stepKey="waitForAnimation"/>
+        <waitForElementVisible selector="{{slideSection.base(slideIndex)}}" stepKey="waitForSlide"/>
+    </actionGroup>
+</actionGroups>

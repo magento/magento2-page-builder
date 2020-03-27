@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="validateLocationGridData">
+        <arguments>
+            <argument name="locationName"/>
+            <argument name="address" defaultValue="PageBuilderMapStreetAddress_Default"/>
+            <argument name="phoneNumber" defaultValue="PageBuilderMapPhoneNumber_Default"/>
+            <argument name="city" defaultValue="PageBuilderMapCity_Default"/>
+            <argument name="state" defaultValue="PageBuilderMapState_Default"/>
+            <argument name="zip" defaultValue="PageBuilderMapZipCode_Default"/>
+            <argument name="country" defaultValue="PageBuilderMapCountry_Empty"/>
+            <argument name="rowIndex" defaultValue="1" type="string"/>
+        </arguments>
+        <comment userInput="validateLocationGridData" stepKey="comment"/>
+        <waitForElementVisible selector="{{PageBuilderDataGrid.gridBase}}" stepKey="waitForGrid"/>
+        <see selector="{{PageBuilderDataGrid.gridCellByRowIndex(rowIndex, locationName.fieldName)}}" userInput="{{locationName.value}}" stepKey="seeLocationName"/>
+        <see selector="{{PageBuilderDataGrid.gridCellByRowIndex(rowIndex, phoneNumber.fieldName)}}" userInput="{{phoneNumber.value}}" stepKey="seePhoneNumber"/>
+        <see selector="{{PageBuilderDataGrid.gridCellByRowIndex(rowIndex, address.fieldName)}}" userInput="{{address.value}}" stepKey="seeAddress"/>
+        <see selector="{{PageBuilderDataGrid.gridCellByRowIndex(rowIndex, city.fieldName)}}" userInput="{{city.value}}" stepKey="seeCity"/>
+        <see selector="{{PageBuilderDataGrid.gridCellByRowIndex(rowIndex, state.fieldName)}}" userInput="{{state.value}}" stepKey="seeState"/>
+        <see selector="{{PageBuilderDataGrid.gridCellByRowIndex(rowIndex, zip.fieldName)}}" userInput="{{zip.value}}" stepKey="setZip"/>
+        <see selector="{{PageBuilderDataGrid.gridCellByRowIndex(rowIndex, country.fieldName)}}" userInput="{{country.value}}" stepKey="seeCounty"/>
+        <seeElement selector="{{PageBuilderDataGrid.gridSelectButtonByIndex(rowIndex)}}" stepKey="seeSelectButton"/>
+    </actionGroup>
+</actionGroups>

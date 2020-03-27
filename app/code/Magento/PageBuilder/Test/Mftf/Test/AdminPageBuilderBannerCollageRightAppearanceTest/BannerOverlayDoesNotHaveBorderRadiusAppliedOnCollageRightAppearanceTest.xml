@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="BannerOverlayDoesNotHaveBorderRadiusAppliedOnCollageRightAppearanceTest" extends="BannerOverlayHasConvertedBorderRadiusAppliedOnPosterAppearanceTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Banner"/>
+            <title value="Collage Right - Overlay does not have border radius applied on collage right appearance"/>
+            <description value="As a content creator I do not want border radius of banner overlay with collage right appearance to have a border radius applied to it so that I may be able to style it independently"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-3870"/>
+            <testCaseId value="MC-5252"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-banner"/>
+            <group value="pagebuilder-bannerCollageRight"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
+            <argument name="property" value="PageBuilderAppearance_CollageRight"/>
+        </actionGroup>
+        <assertEquals stepKey="assertOverlayBorderRadiusEqualityWhereBorderRadiusGreaterThanBorderWidth">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">$overlayBorderRadius</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertOverlayBorderRadiusEqualityWhereBorderRadiusGreaterThanBorderWidthOnStorefront">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">$overlayBorderRadiusStorefront</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertOverlayBorderRadiusEqualityWhereBorderRadiusLessThanOrEqualToBorderWidth">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">$overlayBorderRadius2</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertOverlayBorderRadiusEqualityWhereBorderRadiusLessThanOrEqualToBorderWidthOnStorefront">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">$overlayBorderRadiusStorefront2</actualResult>
+        </assertEquals>
+    </test>
+</tests>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="seeInPaddingFieldsSlideOutPanel">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <waitForElement time="2" selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible"/>
+        <seeInField selector="{{AdvancedForm.advancedPaddingTop}}" userInput="{{property.paddingTop}}" stepKey="seePaddingTopField"/>
+        <seeInField selector="{{AdvancedForm.advancedPaddingRight}}" userInput="{{property.paddingRight}}" stepKey="seePaddingRightField"/>
+        <seeInField selector="{{AdvancedForm.advancedPaddingBottom}}" userInput="{{property.paddingBottom}}" stepKey="seePaddingBottomField"/>
+        <seeInField selector="{{AdvancedForm.advancedPaddingLeft}}" userInput="{{property.paddingLeft}}" stepKey="seePaddingLeftField"/>
+    </actionGroup>
+</actionGroups>

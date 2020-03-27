@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="HeadingOptionsMenuNotOverflowRightTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Heading"/>
+            <title value="Heading options menu should not overflow viewport bounds (get 'cut off') on the right"/>
+            <description value="As a content creator I want heading options menus to be always positioned within viewport bounds so that they are accessible to me within the UI"/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MC-5383"/>
+            <testCaseId value="MC-13716"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-heading"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Add Column Content Type -->
+        <comment userInput="Add Column Content Type" stepKey="commentAddColumnContentType"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSectionForColumnContentType">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <!-- Duplicate right column 2 times to create 1/12 column on the right configuration -->
+        <comment userInput="Duplicate right column 2 times to create 1/12 column on the right configuration" stepKey="commentInitialResize"/>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateLastColumn1Of2">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="targetIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateLastColumn2Of2">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="targetIndex" value="3"/>
+        </actionGroup>
+        <seeElement selector="{{ColumnOnBackend.displayLabel('4','1/12')}}" stepKey="validateLastColumnWidth"/>
+        <!-- Add Heading Content Type -->
+        <comment userInput="Add Heading Content Type" stepKey="commentAddHeadingContentType"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandHeadingPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingContentTypeIntoColumn">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="4"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="unFocusHeadingEditor">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Add Text Content Type -->
+        <comment userInput="Add Text Content Type" stepKey="commentAddTextContentType"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandTextPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragInnerContentTypeIntoColumn">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="4"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusTextEditor">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <!-- Get window width -->
+        <comment userInput="Get window width" stepKey="commentGetWindowWidth"/>
+        <executeJS function="return window.innerWidth" stepKey="getWindowWidth"/>
+        <!-- Assert heading options menu did not overflow -->
+        <comment userInput="Assert heading options menu did not overflow" stepKey="commentAssertHeadingOptionMenuNotOverflow"/>
+        <actionGroup ref="openOptionsMenu" stepKey="openHeadingOptionMenu">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <executeJS function="return document.evaluate(`{{PageBuilderContentTypeOptionsMenu.contentTypeEditByIndex(PageBuilderHeadingContentType.role, '1')}}`, document.body).iterateNext().getBoundingClientRect().right" stepKey="getHeadingOptionMenuBoundingClientRectRight"/>
+        <assertLessThanOrEqual stepKey="assertHeadingOptionMenuNotOverflow">
+            <expectedResult type="variable">$getWindowWidth</expectedResult>
+            <actualResult type="variable">$getHeadingOptionMenuBoundingClientRectRight</actualResult>
+        </assertLessThanOrEqual>
+        <!-- Assert text options menu did not overflow -->
+        <comment userInput="Assert text options menu did not overflow" stepKey="commentAssertTextOptionMenuNotOverflow"/>
+        <actionGroup ref="openOptionsMenu" stepKey="openTextOptionMenu">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <executeJS function="return document.evaluate(`{{PageBuilderContentTypeOptionsMenu.contentTypeEditByIndex(PageBuilderTextContentType.role, '1')}}`, document.body).iterateNext().getBoundingClientRect().right" stepKey="getTextOptionMenuBoundingClientRectRight"/>
+        <assertLessThanOrEqual stepKey="assertTextOptionMenuNotOverflow">
+            <expectedResult type="variable">$getWindowWidth</expectedResult>
+            <actualResult type="variable">$getTextOptionMenuBoundingClientRectRight</actualResult>
+        </assertLessThanOrEqual>
+        <!-- Set PageBuilder to full screen -->
+        <comment userInput="Set PageBuilder to full screen" stepKey="commentSetFullScreen"/>
+        <actionGroup ref="openPageBuilderFullScreen" stepKey="openFullScreen"/>
+        <waitForElementVisible selector="{{HeadingOnStage.base('1')}}" stepKey="waitForContentTypeToBeVisible"/>
+        <!-- Assert heading options menu did not overflow -->
+        <comment userInput="Assert heading options menu did not overflow" stepKey="commentAssertHeadingOptionMenuNotOverflowFullScreen"/>
+        <actionGroup ref="openOptionsMenu" stepKey="openHeadingOptionMenuFullScreen">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <executeJS function="return document.evaluate(`{{PageBuilderContentTypeOptionsMenu.contentTypeEditByIndex(PageBuilderHeadingContentType.role, '1')}}`, document.body).iterateNext().getBoundingClientRect().right" stepKey="getHeadingOptionMenuBoundingClientRectRightFullScreen"/>
+        <assertLessThanOrEqual stepKey="assertHeadingOptionMenuNotOverflowFullScreen">
+            <expectedResult type="variable">$getWindowWidth</expectedResult>
+            <actualResult type="variable">$getHeadingOptionMenuBoundingClientRectRightFullScreen</actualResult>
+        </assertLessThanOrEqual>
+        <!-- Assert text options menu did not overflow -->
+        <comment userInput="Assert text options menu did not overflow" stepKey="commentAssertTextOptionMenuNotOverflowFullScreen"/>
+        <actionGroup ref="openOptionsMenu" stepKey="openTextOptionMenuFullScreen">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <executeJS function="return document.evaluate(`{{PageBuilderContentTypeOptionsMenu.contentTypeEditByIndex(PageBuilderTextContentType.role, '1')}}`, document.body).iterateNext().getBoundingClientRect().right" stepKey="getTextOptionMenuBoundingClientRectRightFullScreen"/>
+        <assertLessThanOrEqual stepKey="assertTextOptionMenuNotOverflowFullScreen">
+            <expectedResult type="variable">$getWindowWidth</expectedResult>
+            <actualResult type="variable">$getTextOptionMenuBoundingClientRectRightFullScreen</actualResult>
+        </assertLessThanOrEqual>
+    </test>
+</tests>

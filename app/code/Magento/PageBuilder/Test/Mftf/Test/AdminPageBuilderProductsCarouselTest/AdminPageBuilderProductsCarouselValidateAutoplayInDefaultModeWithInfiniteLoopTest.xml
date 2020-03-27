@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="AdminPageBuilderProductsCarouselValidateAutoplayInDefaultModeWithInfiniteLoopTest" extends="AdminPageBuilderProductsCarouselValidateAutoplayInDefaultModeWithNoInfiniteLoopTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Products"/>
+            <title value="Carousel - Validate Autoplay Works in Default Mode with Infinite Loop"/>
+            <description value="Validate the autoplay feature works for the Products carousel appearance with default carousel mode and infinite loop."/>
+            <severity value="BLOCKER"/>
+            <useCaseId value="PB-173"/>
+            <testCaseId value="MC-22744"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-products"/>
+            <group value="pagebuilder-productsCarousel"/>
+        </annotations>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="disableInfiniteLoop">
+            <argument name="property" value="PageBuilderProductsCarouselSettingsInfiniteLoop_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCarouselSettingsAttributes" stepKey="validateProductCarouselSettingsAttributesStage1">
+            <argument name="carouselMode" value="PageBuilderProductsCarouselSettingsCarouselMode_Default"/>
+            <argument name="autoplay" value="PageBuilderProductsCarouselSettingsAutoplay_Enabled"/>
+            <argument name="autoplaySpeed" value="PageBuilderProductsCarouselSettingsAutoplaySpeed_10000"/>
+            <argument name="infiniteLoop" value="PageBuilderProductsCarouselSettingsInfiniteLoop_Enabled"/>
+            <argument name="showArrows" value="PageBuilderProductsCarouselSettingsShowArrows_Enabled"/>
+            <argument name="showDots" value="PageBuilderProductsCarouselSettingsShowDots_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCarouselPreviousNavigationArrowEnabled" stepKey="validateProductCarouselPreviousNavigationArrowDisabledStage1"/>
+        <actionGroup ref="validateProductCarouselNextNavigationArrowEnabled" stepKey="validateProductCarouselNextNavigationArrowDisabledStage2"/>
+        <actionGroup ref="clickProductCarouselNavigationDot" stepKey="clickFirstNavigationDotStage3">
+            <argument name="navigationDotIndex" value="2"/>
+        </actionGroup>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="clickLeftPanel4" after="clickFirstNavigationDotStage3"/>
+        <wait time="12" stepKey="waitForAutoplayStage4" after="clickLeftPanel4"/>
+        <actionGroup ref="validateProductCarouselPreviousNavigationArrowEnabled" stepKey="validateProductCarouselPreviousNavigationArrowDisabledStage3"/>
+        <actionGroup ref="validateProductCarouselNextNavigationArrowEnabled" stepKey="validateProductCarouselNextNavigationArrowDisabledStage4"/>
+        <actionGroup ref="clickProductCarouselNavigationDot" stepKey="clickPreviousNavigationArrowStage5">
+            <argument name="navigationDotIndex" value="2"/>
+        </actionGroup>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="clickLeftPanel5" after="clickPreviousNavigationArrowStage5"/>
+        <wait time="12" stepKey="waitForAutoplayStage5" after="clickLeftPanel5"/>
+        <actionGroup ref="validateProductCarouselPreviousNavigationArrowEnabled" stepKey="validateProductCarouselPreviousNavigationArrowDisabledStage5"/>
+        <actionGroup ref="validateProductCarouselNextNavigationArrowEnabled" stepKey="validateProductCarouselNextNavigationArrowDisabledStage6"/>
+        <actionGroup ref="validateProductCarouselSettingsAttributes" stepKey="validateProductCarouselSettingsAttributesStorefront1">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="carouselMode" value="PageBuilderProductsCarouselSettingsCarouselMode_Default"/>
+            <argument name="autoplay" value="PageBuilderProductsCarouselSettingsAutoplay_Enabled"/>
+            <argument name="autoplaySpeed" value="PageBuilderProductsCarouselSettingsAutoplaySpeed_10000"/>
+            <argument name="infiniteLoop" value="PageBuilderProductsCarouselSettingsInfiniteLoop_Enabled"/>
+            <argument name="showArrows" value="PageBuilderProductsCarouselSettingsShowArrows_Enabled"/>
+            <argument name="showDots" value="PageBuilderProductsCarouselSettingsShowDots_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCarouselPreviousNavigationArrowEnabled" stepKey="validateProductCarouselPreviousNavigationArrowDisabledStorefront1">
+            <argument name="page" value="ProductsOnStorefront"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCarouselNextNavigationArrowEnabled" stepKey="validateProductCarouselNextNavigationArrowDisabledStorefront2">
+            <argument name="page" value="ProductsOnStorefront"/>
+        </actionGroup>
+        <actionGroup ref="clickProductCarouselNavigationDot" stepKey="clickFirstNavigationDotStorefront3">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="navigationDotIndex" value="2"/>
+        </actionGroup>
+        <click selector="{{StorefrontPanelHeaderSection.PanelHeader}}" stepKey="clickStorefrontHeader4" after="clickFirstNavigationDotStorefront3"/>
+        <wait time="12" stepKey="waitForAutoplayStorefront4" after="clickStorefrontHeader4"/>
+        <actionGroup ref="validateProductCarouselPreviousNavigationArrowEnabled" stepKey="validateProductCarouselPreviousNavigationArrowDisabledStorefront3">
+            <argument name="page" value="ProductsOnStorefront"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCarouselNextNavigationArrowEnabled" stepKey="validateProductCarouselNextNavigationArrowDisabledStorefront4">
+            <argument name="page" value="ProductsOnStorefront"/>
+        </actionGroup>
+        <actionGroup ref="clickProductCarouselNavigationDot" stepKey="clickPreviousNavigationArrowStorefront5">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="navigationDotIndex" value="2"/>
+        </actionGroup>
+        <click selector="{{StorefrontPanelHeaderSection.PanelHeader}}" stepKey="clickStorefrontHeader5" after="clickPreviousNavigationArrowStorefront5"/>
+        <wait time="12" stepKey="waitForAutoplayStorefront5" after="clickStorefrontHeader5"/>
+        <actionGroup ref="validateProductCarouselPreviousNavigationArrowEnabled" stepKey="validateProductCarouselPreviousNavigationArrowDisabledStorefront5">
+            <argument name="page" value="ProductsOnStorefront"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCarouselNextNavigationArrowEnabled" stepKey="validateProductCarouselNextNavigationArrowDisabledStorefront6">
+            <argument name="page" value="ProductsOnStorefront"/>
+        </actionGroup>
+    </test>
+</tests>

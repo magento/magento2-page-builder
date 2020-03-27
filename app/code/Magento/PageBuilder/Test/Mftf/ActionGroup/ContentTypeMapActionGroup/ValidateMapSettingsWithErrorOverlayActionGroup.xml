@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="validateMapSettingsWithErrorOverlay">
+        <arguments>
+            <argument name="page"/>
+            <argument name="height" defaultValue="PageBuilderMapHeightDefaultProperty"/>
+            <argument name="showControls" defaultValue="PageBuilderMapShowControls_Default"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <comment userInput="validateMapSettings" stepKey="comment"/>
+        <waitForElement selector="{{page.base(index)}}" stepKey="waitForMap"/>
+        <waitForElementVisible selector="{{page.warningMessageLink(index)}}" stepKey="waitForErrorOverlay"/>
+        <waitForElement selector="{{page.height(index, height.value)}}" stepKey="waitForHeight"/>
+        <dontSeeElement selector="{{page.height(index, height.value)}}" stepKey="dontSeeHeight"/>
+        <seeElementInDOM selector="{{page.height(index, height.value)}}" stepKey="seeInDOMHeight"/>
+        <waitForElement selector="{{page.showControls(index, showControls.value)}}" stepKey="waitForShowControls"/>
+        <dontSeeElement selector="{{page.showControls(index, showControls.value)}}" stepKey="dontSeeShowControls"/>
+        <seeElementInDOM selector="{{page.showControls(index, showControls.value)}}" stepKey="seeInDOMShowControls"/>
+    </actionGroup>
+</actionGroups>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="verifyBlockOnStage">
+        <arguments>
+            <argument name="block"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStageByIndex(PageBuilderBlockContentType.role, index)}}" stepKey="onMouseOverContentTypeStage"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible selector="{{BlockOnStage.title(index, block.title)}}" stepKey="wait"/>
+        <seeElement selector="{{BlockOnStage.title(index,block.title)}}" stepKey="seeOptionMenuTitle"/>
+        <see selector="{{BlockOnStage.content(index)}}" userInput="{{block.content}}" stepKey="seeBlockContentOnStage"/>
+    </actionGroup>
+</actionGroups>

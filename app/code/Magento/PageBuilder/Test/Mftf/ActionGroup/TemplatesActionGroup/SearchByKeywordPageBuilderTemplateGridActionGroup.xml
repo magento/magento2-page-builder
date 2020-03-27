@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="searchByKeywordPageBuilderTemplateGrid">
+        <annotations>
+            <description>Searches by keyword in the Page Builder templates data grid.</description>
+        </annotations>
+        <arguments>
+            <argument name="section" defaultValue="PageBuilderTemplatesPageGrid"/>
+            <argument name="keyword" defaultValue="{{PageBuilderTemplateNameRandom.name}}" type="string"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForGridLoad"/>
+        <waitForElementVisible selector="{{section.searchByKeyword}}" stepKey="waitForSearchByKeywordInput"/>
+        <fillField userInput="{{keyword}}" selector="{{section.searchByKeyword}}" stepKey="enterKeyword"/>
+        <waitForElementVisible selector="{{section.searchByKeywordButton}}" stepKey="waitForSearchByKeywordButton"/>
+        <click selector="{{section.searchByKeywordButton}}" stepKey="clickSearchByKeywordButton"/>
+        <waitForPageLoad stepKey="waitForSearch"/>
+    </actionGroup>
+</actionGroups>

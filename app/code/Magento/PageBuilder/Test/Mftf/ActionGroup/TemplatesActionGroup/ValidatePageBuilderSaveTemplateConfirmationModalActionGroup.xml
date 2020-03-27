@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="validatePageBuilderSaveTemplateConfirmationModal">
+        <annotations>
+            <description>Validate all buttons and text on the Save as Template confirmation modal.</description>
+        </annotations>
+        <waitForPageLoad stepKey="waitForModalLoad"/>
+        <seeElement selector="{{PageBuilderSaveTemplateConfirmationModal.title}}" stepKey="seeTitle"/>
+        <seeElement selector="{{PageBuilderSaveTemplateConfirmationModal.closeButton}}" stepKey="seeCloseButton"/>
+        <seeElement selector="{{PageBuilderSaveTemplateConfirmationModal.message}}" stepKey="seeMessage"/>
+        <seeElement selector="{{PageBuilderSaveTemplateConfirmationModal.okButton}}" stepKey="seeOKButton"/>
+    </actionGroup>
+</actionGroups>
