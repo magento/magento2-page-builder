@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="validateMenuSectionsAndContentTypes">
+        <seeNumberOfElements selector="{{PageBuilderPanel.allPanelMenuSections}}" userInput="4" stepKey="seeNumberOfMenuSections"/>
+        <seeNumberOfElements selector="{{PageBuilderPanel.allMenuSectionContentTypes('layout')}}" userInput="3" stepKey="seeNumberOfLayoutMenuSectionContentTypes"/>
+        <see userInput="Layout" selector="{{PageBuilderPanel.layoutMenuSection}}" stepKey="seeLayoutMenuSection"/>
+        <see userInput="Row" selector="{{PageBuilderPanel.layoutMenuSectionContentType}}" stepKey="seeLayoutMenuSectionRow"/>
+        <see userInput="Column" selector="{{PageBuilderPanel.layoutMenuSectionContentType}}" stepKey="seeLayoutMenuSectionColumn"/>
+        <see userInput="Tabs" selector="{{PageBuilderPanel.layoutMenuSectionContentType}}" stepKey="seeLayoutMenuSectionTabs"/>
+        <click selector="{{PageBuilderPanel.elementsMenuSection}}" stepKey="clickElementsMenuSection"/>
+        <seeNumberOfElements selector="{{PageBuilderPanel.allMenuSectionContentTypes('elements')}}" userInput="5" stepKey="seeNumberOfElementsMenuSectionContentTypes"/>
+        <see userInput="Elements" selector="{{PageBuilderPanel.elementsMenuSection}}" stepKey="seeElementsMenuSection"/>
+        <see userInput="Text" selector="{{PageBuilderPanel.elementsMenuSectionContentType}}" stepKey="seeElementsMenuSectionText"/>
+        <see userInput="Heading" selector="{{PageBuilderPanel.elementsMenuSectionContentType}}" stepKey="seeElementsMenuSectionHeading"/>
+        <see userInput="Buttons" selector="{{PageBuilderPanel.elementsMenuSectionContentType}}" stepKey="seeElementsMenuSectionButtons"/>
+        <see userInput="Divider" selector="{{PageBuilderPanel.elementsMenuSectionContentType}}" stepKey="seeElementsMenuSectionDivider"/>
+        <see userInput="HTML Code" selector="{{PageBuilderPanel.elementsMenuSectionContentType}}" stepKey="seeElementsMenuSectionHtml"/>
+        <click selector="{{PageBuilderPanel.mediaMenuSection}}" stepKey="clickMediaMenuSection"/>
+        <seeNumberOfElements selector="{{PageBuilderPanel.allMenuSectionContentTypes('media')}}" userInput="5" stepKey="seeNumberOfMediaMenuSectionContentTypes"/>
+        <see userInput="Media" selector="{{PageBuilderPanel.mediaMenuSection}}" stepKey="seeMediaMenuSection"/>
+        <see userInput="Image" selector="{{PageBuilderPanel.mediaMenuSectionContentType}}" stepKey="seeMediaMenuSectionImage"/>
+        <see userInput="Video" selector="{{PageBuilderPanel.mediaMenuSectionContentType}}" stepKey="seeMediaMenuSectionVideo"/>
+        <see userInput="Banner" selector="{{PageBuilderPanel.mediaMenuSectionContentType}}" stepKey="seeMediaMenuSectionBanner"/>
+        <see userInput="Slider" selector="{{PageBuilderPanel.mediaMenuSectionContentType}}" stepKey="seeMediaMenuSectionSlider"/>
+        <see userInput="Map" selector="{{PageBuilderPanel.mediaMenuSectionContentType}}" stepKey="seeMediaMenuSectionMap"/>
+        <click selector="{{PageBuilderPanel.addContentMenuSection}}" stepKey="clickAddContentMenuSection"/>
+        <seeNumberOfElements selector="{{PageBuilderPanel.allMenuSectionContentTypes('add_content')}}" userInput="2" stepKey="seeNumberOfAddContentMenuSectionContentTypes"/>
+        <see userInput="Add Content" selector="{{PageBuilderPanel.addContentMenuSection}}" stepKey="seeAddContentMenuSection"/>
+        <see userInput="Block" selector="{{PageBuilderPanel.addContentMenuSectionContentType}}" stepKey="seeAddContentMenuSectionBlock"/>
+        <see userInput="Products" selector="{{PageBuilderPanel.addContentMenuSectionContentType}}" stepKey="seeAddContentMenuSectionProducts"/>
+    </actionGroup>
+</actionGroups>

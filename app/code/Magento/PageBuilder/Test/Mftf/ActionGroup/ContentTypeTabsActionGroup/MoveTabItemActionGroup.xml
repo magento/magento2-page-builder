@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="moveTabItem">
+        <arguments>
+            <argument name="x" defaultValue="null" type="string"/>
+            <argument name="y" defaultValue="null" type="string"/>
+            <argument name="tabGroupIndex" defaultValue="1" type="string"/>
+            <argument name="tabItemIndexToMove" defaultValue="1" type="string"/>
+            <argument name="tabItemIndexToMoveTo" defaultValue="2" type="string"/>
+        </arguments>
+        <comment userInput="moveTabItem" stepKey="comment"/>
+        <waitForElementVisible selector="{{TabOnStage.tabHeader(tabItemIndexToMove)}}" stepKey="waitForTabItem1"/>
+        <click selector="{{TabOnStage.tabHeader(tabItemIndexToMove)}}" stepKey="clickTabItem1"/>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <!-- Note MFTF Bug: MQE-1185. We cannot reliably use offsets and therefore, dropping to index x will result in an actual drop of index x-1 -->
+        <!-- Once bug is fixed, we need to add executeJS to calculate width & height of tab item to determine default offsets -->
+        <dragAndDrop selector1="{{TabOnStage.moveHandle(tabGroupIndex, tabItemIndexToMove)}}" selector2="{{TabOnStage.tabHeader(tabItemIndexToMoveTo)}}" x="{{x}}" y="{{y}}" stepKey="dragAndDropTabItem"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <waitForElementVisible selector="{{TabOnStage.tabHeader(tabItemIndexToMove)}}" stepKey="waitForTabItem2"/>
+    </actionGroup>
+</actionGroups>

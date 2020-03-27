@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
+    <section name="HeadingOnStorefront">
+        <element name="base" type="text" selector="(//*[@data-content-type='heading'])[{{arg2}}]" parameterized="true"/>
+        <element name="baseByTagName" type="text" selector="(//{{arg1}}[@data-content-type='heading'])[{{arg2}}]" parameterized="true"/>
+        <element name="baseJs" type="text" selector="document.querySelectorAll('[data-content-type=\'heading\']')[{{arg1}}]" parameterized="true"/>
+        <element name="hidden" type="text" selector="(//*[@data-content-type='heading'])[{{arg1}}][contains(@style, 'display: none')]" parameterized="true"/>
+        <element name="notHidden" type="text" selector="(//*[@data-content-type='heading'])[{{arg1}}][not(contains(@style, 'display: none'))]" parameterized="true"/>
+        <element name="headingNoText" type="button" selector="(//{{arg1}}[@data-content-type='heading' and .=''])[{{arg2}}]" parameterized="true"/>
+        <element name="headingText" type="button" selector="(//{{arg1}}[@data-content-type='heading' and .='{{arg2}}'])[{{arg3}}]" parameterized="true"/>
+        <element name="headingType" type="button" selector="(//{{arg1}}[@data-content-type='heading'])[{{arg2}}]" parameterized="true"/>
+        <!-- Advanced Configuration -->
+        <element name="alignment" type="text" selector="(//{{arg1}}[@data-content-type='heading'])[{{arg2}}][contains(@style,'text-align: {{arg3}};')]" parameterized="true"/>
+        <element name="noAlignment" type="text" selector="(//{{arg1}}[@data-content-type='heading'])[{{arg2}}][not(contains(@style,'text-align:'))]" parameterized="true"/>
+        <element name="border" type="text" selector="(//{{arg1}}[@data-content-type='heading'])[{{arg2}}][contains(@style,'border-style: {{arg3}};')]" parameterized="true"/>
+        <element name="borderColor" type="text" selector="(//{{arg1}}[@data-content-type='heading'])[{{arg2}}][contains(@style,'border-color: {{arg3}};')]" parameterized="true"/>
+        <element name="noBorderColor" type="text" selector="(//{{arg1}}[@data-content-type='heading'])[{{arg2}}][not(contains(@style,'border-color:'))]" parameterized="true"/>
+        <element name="borderWidth" type="text" selector="(//{{arg1}}[@data-content-type='heading'])[{{arg2}}][contains(@style,'border-width: {{arg3}}px;')]" parameterized="true"/>
+        <element name="borderRadius" type="text" selector="(//{{arg1}}[@data-content-type='heading'])[{{arg2}}][contains(@style,'border-radius: {{arg3}}px;')]" parameterized="true"/>
+        <element name="cssClasses" type="text" selector="(//{{arg1}}[@data-content-type='heading'])[{{arg2}}][contains(@class,'{{arg3}}')]" parameterized="true"/>
+        <element name="noCssClasses" type="text" selector="(//{{arg1}}[@data-content-type='heading'])[{{arg2}}][not(@class)]" parameterized="true"/>
+        <element name="margins" type="text" selector="(//{{arg1}}[@data-content-type='heading'])[{{arg2}}][contains(@style,'margin: {{arg3}}px;')]" parameterized="true"/>
+        <element name="noMargins" type="text" selector="(//{{arg1}}[@data-content-type='heading'])[{{arg2}}][not(contains(@style,'margin:'))]" parameterized="true"/>
+        <element name="padding" type="text" selector="(//{{arg1}}[@data-content-type='heading'])[{{arg2}}][contains(@style,'padding: {{arg3}}px;')]" parameterized="true"/>
+        <element name="noPadding" type="text" selector="(//{{arg1}}[@data-content-type='heading'])[{{arg2}}][not(contains(@style,'padding:'))]" parameterized="true"/>
+    </section>
+</sections>

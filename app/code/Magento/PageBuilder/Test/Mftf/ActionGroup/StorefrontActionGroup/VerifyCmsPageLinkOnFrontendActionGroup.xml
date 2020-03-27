@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="verifyCmsPageLinkOnFrontend">
+        <arguments>
+            <argument name="CMSPage"/>
+            <argument name="index"/>
+            <argument name="section"/>
+        </arguments>
+        <scrollTo selector="{{section.base('index')}}" stepKey="waitForButtonElementStorefront"/>
+        <seeElement selector="{{PageBuilderLinkAttributeStoreFront.ExternalURLContainsLink(CMSPage.identifier)}}" stepKey="seePageLinkOnStoreFront"/>
+        <click selector="{{PageBuilderLinkAttributeStoreFront.ExternalURLContainsLink(CMSPage.identifier)}}" stepKey="clickLink"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <see userInput="{{CMSPage.title}}" stepKey="seePageName"/>
+    </actionGroup>
+</actionGroups>

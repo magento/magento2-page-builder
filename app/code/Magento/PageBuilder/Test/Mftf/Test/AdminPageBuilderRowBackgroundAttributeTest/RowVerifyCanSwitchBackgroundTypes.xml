@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="RowVerifyCanSwitchBackgroundTypes">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Row"/>
+            <title value="Row: Verify User Can Switch Between Background Images and Videos"/>
+            <description value="Verify that a user can switch between background images and background videos."/>
+            <severity value="MAJOR"/>
+            <useCaseId value="PB-95"/>
+            <testCaseId value="MC-31297"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-row"/>
+            <group value="pagebuilder-row-contained"/>
+            <group value="pagebuilder-rowBackground"/>
+            <group value="pagebuilder-video-background"/>
+        </annotations>
+        <before>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
+                <argument name="CMSPage" value="$$createCMSPage$$"/>
+            </actionGroup>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="navigateToFallbackImageFolder">
+                <argument name="FolderName" value="{{PageBuilderBackgroundImage_JPG.path}}"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="deleteBackgroundImage1">
+                <argument name="Image" value="PageBuilderBackgroundImage_JPG"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="deleteMobileBackgroundImage1">
+                <argument name="Image" value="PageBuilderBackgroundMobileImage_SpecialCharacters"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="deleteFallbackImage1">
+                <argument name="Image" value="PageBuilderVideoBackgroundFallbackImage_GIF"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="deleteBackgroundImage2">
+                <argument name="Image" value="PageBuilderBackgroundImage_JPG"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="deleteMobileBackgroundImage2">
+                <argument name="Image" value="PageBuilderBackgroundMobileImage_SpecialCharacters"/>
+            </actionGroup>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Set Background Image Attributes -->
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setAppearance">
+            <argument name="property" value="PageBuilderRowAppearance_Contained"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty">
+            <argument name="property" value="PageBuilderMinHeightProperty_200px"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBackgroundColor">
+            <argument name="property" value="PageBuilderBackgroundColor_Pink"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setBackgroundType">
+            <argument name="property" value="PageBuilderBackgroundType_Image"/>
+        </actionGroup>
+        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachBackgroundImage">
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
+        </actionGroup>
+        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachMobileBackgroundImage">
+            <argument name="property" value="PageBuilderBackgroundMobileImage_SpecialCharacters"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setBackgroundSize">
+            <argument name="property" value="PageBuilderBackgroundSize_Auto"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundPosition">
+            <argument name="property" value="PageBuilderBackgroundPosition_Center"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundAttachment">
+            <argument name="property" value="PageBuilderBackgroundAttachment_Fixed"/>
+        </actionGroup>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="enableBackgroundRepeat">
+            <argument name="property" value="PageBuilderBackgroundRepeat_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <actionGroup ref="validateBackgroundAttributes" stepKey="validateStage1">
+            <argument name="section" value="RowOnStage"/>
+            <argument name="backgroundColor" value="PageBuilderBackgroundColor_Pink"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
+            <argument name="backgroundSize" value="PageBuilderBackgroundSize_Auto"/>
+            <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_Center"/>
+            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Fixed"/>
+            <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="validateBackgroundImage" stepKey="validateImageStage1">
+            <argument name="section" value="RowOnStage"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
+        </actionGroup>
+        <!-- Change to Video Background and Confirm Default Attributes on Edit Panel -->
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setBackgroundType2">
+            <argument name="property" value="PageBuilderBackgroundType_Video"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBackgroundColor">
+            <argument name="property" value="PageBuilderBackgroundColor_Pink"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateVideoUrlEmpty">
+            <argument name="property" value="PageBuilderVideoBackgroundUrl_Empty"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateOverlayColorEmpty">
+            <argument name="property" value="PageBuilderVideoBackgroundOverlayColor_Empty"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsCheckedSlideOutProperty" stepKey="validateInfiniteLoop">
+            <argument name="property" value="PageBuilderVideoBackgroundInfiniteLoop_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsCheckedSlideOutProperty" stepKey="validateLazyLoad">
+            <argument name="property" value="PageBuilderVideoBackgroundLazyLoad_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsCheckedSlideOutProperty" stepKey="validatePlayOnlyWhenVisible">
+            <argument name="property" value="PageBuilderVideoBackgroundPlayOnlyWhenVisible_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="seeNoImageUploadedOnSlideOut" stepKey="validateNoFallbackImage">
+            <argument name="property" value="PageBuilderVideoBackgroundFallbackImage_Empty"/>
+        </actionGroup>
+        <!-- Set Video Background Attributes -->
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrl">
+            <argument name="property" value="PageBuilderVideoBackgroundUrl_YouTube_Embedded"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterOverlayColor">
+            <argument name="property" value="PageBuilderVideoBackgroundOverlayColor_Hex_Grey"/>
+        </actionGroup>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="setInfiniteLoop">
+            <argument name="property" value="PageBuilderVideoBackgroundInfiniteLoop_Disabled"/>
+        </actionGroup>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="setLazyLoad">
+            <argument name="property" value="PageBuilderVideoBackgroundLazyLoad_Disabled"/>
+        </actionGroup>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="setPlayOnlyWhenVisible">
+            <argument name="property" value="PageBuilderVideoBackgroundPlayOnlyWhenVisible_Disabled"/>
+        </actionGroup>
+        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachFallbackImage">
+            <argument name="property" value="PageBuilderVideoBackgroundFallbackImage_GIF"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <!-- Validate Stage -->
+        <actionGroup ref="validateVideoBackgroundWithAllAttributes" stepKey="validateStage2">
+            <argument name="section" value="RowOnStage"/>
+            <argument name="backgroundColor" value="{{PageBuilderBackgroundColor_Pink.rgb}}"/>
+            <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_YouTube_Embedded"/>
+            <argument name="overlayColor" value="{{PageBuilderVideoBackgroundOverlayColor_Hex_Grey.rgba}}"/>
+            <argument name="infiniteLoop" value="PageBuilderVideoBackgroundInfiniteLoop_Disabled"/>
+            <argument name="lazyLoad" value="PageBuilderVideoBackgroundLazyLoad_Disabled"/>
+            <argument name="playOnlyWhenVisible" value="PageBuilderVideoBackgroundPlayOnlyWhenVisible_Disabled"/>
+            <argument name="fallbackImage" value="PageBuilderVideoBackgroundFallbackImage_GIF"/>
+        </actionGroup>
+        <!-- Confirm Background Image Attributes Maintained on Edit Panel -->
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage3">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundType">
+            <argument name="property" value="PageBuilderBackgroundType_Video"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setBackgroundType3">
+            <argument name="property" value="PageBuilderBackgroundType_Image"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBackgroundColor2">
+            <argument name="property" value="PageBuilderBackgroundColor_Pink"/>
+        </actionGroup>
+        <actionGroup ref="seeImageUploadedOnSlideOut" stepKey="validateBackgroundImage">
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
+        </actionGroup>
+        <actionGroup ref="seeImageUploadedOnSlideOut" stepKey="validateBackgroundMobileImage">
+            <argument name="property" value="PageBuilderBackgroundMobileImage_SpecialCharacters"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundSize">
+            <argument name="property" value="PageBuilderBackgroundSize_Auto"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundPosition">
+            <argument name="property" value="PageBuilderBackgroundPosition_Center"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundAttachment">
+            <argument name="property" value="PageBuilderBackgroundAttachment_Fixed"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsCheckedSlideOutProperty" stepKey="validateBackgroundRepeat">
+            <argument name="property" value="PageBuilderBackgroundRepeat_Enabled"/>
+        </actionGroup>
+        <!-- Save Page -->
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Stage -->
+        <actionGroup ref="validateVideoBackgroundWithAllAttributes" stepKey="validateStage3">
+            <argument name="section" value="RowOnStage"/>
+            <argument name="backgroundColor" value="{{PageBuilderBackgroundColor_Pink.rgb}}"/>
+            <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_YouTube_Embedded"/>
+            <argument name="overlayColor" value="{{PageBuilderVideoBackgroundOverlayColor_Hex_Grey.rgba}}"/>
+            <argument name="infiniteLoop" value="PageBuilderVideoBackgroundInfiniteLoop_Disabled"/>
+            <argument name="lazyLoad" value="PageBuilderVideoBackgroundLazyLoad_Disabled"/>
+            <argument name="playOnlyWhenVisible" value="PageBuilderVideoBackgroundPlayOnlyWhenVisible_Disabled"/>
+            <argument name="fallbackImage" value="PageBuilderVideoBackgroundFallbackImage_GIF"/>
+        </actionGroup>
+        <!-- Confirm Video Background Attributes Maintained After Save -->
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage4">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBackgroundColor3">
+            <argument name="property" value="PageBuilderBackgroundColor_Pink"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundType2">
+            <argument name="property" value="PageBuilderBackgroundType_Video"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateVideoUrl2">
+            <argument name="property" value="PageBuilderVideoBackgroundUrl_YouTube_Embedded"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateOverlayColor2">
+            <argument name="property" value="PageBuilderVideoBackgroundOverlayColor_Hex_Grey"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="validateInfiniteLoop2">
+            <argument name="property" value="PageBuilderVideoBackgroundInfiniteLoop_Disabled"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="validateLazyLoad2">
+            <argument name="property" value="PageBuilderVideoBackgroundLazyLoad_Disabled"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="validatePlayOnlyWhenVisible2">
+            <argument name="property" value="PageBuilderVideoBackgroundPlayOnlyWhenVisible_Disabled"/>
+        </actionGroup>
+        <actionGroup ref="seeImageUploadedOnSlideOut" stepKey="validateFallbackImage2">
+            <argument name="property" value="PageBuilderVideoBackgroundFallbackImage_GIF"/>
+        </actionGroup>
+        <!-- Confirm No Background Images After Save -->
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setBackgroundType4">
+            <argument name="property" value="PageBuilderBackgroundType_Image"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBackgroundColor4">
+            <argument name="property" value="PageBuilderBackgroundColor_Pink"/>
+        </actionGroup>
+        <actionGroup ref="seeNoImageUploadedOnSlideOut" stepKey="validateBackgroundImageEmpty">
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
+        </actionGroup>
+        <actionGroup ref="seeNoImageUploadedOnSlideOut" stepKey="validateBackgroundMobileImageEmpty">
+            <argument name="property" value="PageBuilderBackgroundMobileImage_SpecialCharacters"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundSize2">
+            <argument name="property" value="PageBuilderBackgroundSize_Auto"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundPosition2">
+            <argument name="property" value="PageBuilderBackgroundPosition_Center"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundAttachment2">
+            <argument name="property" value="PageBuilderBackgroundAttachment_Fixed"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsCheckedSlideOutProperty" stepKey="validateBackgroundRepeat2">
+            <argument name="property" value="PageBuilderBackgroundRepeat_Enabled"/>
+        </actionGroup>
+        <!-- Set Background Image Attributes -->
+        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachBackgroundImage2">
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
+        </actionGroup>
+        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachMobileBackgroundImage2">
+            <argument name="property" value="PageBuilderBackgroundMobileImage_SpecialCharacters"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
+        <!-- Validate Stage -->
+        <actionGroup ref="validateBackgroundAttributes" stepKey="validateStage4">
+            <argument name="section" value="RowOnStage"/>
+            <argument name="backgroundColor" value="PageBuilderBackgroundColor_Pink"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
+            <argument name="backgroundSize" value="PageBuilderBackgroundSize_Auto"/>
+            <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_Center"/>
+            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Fixed"/>
+            <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="validateBackgroundImage" stepKey="validateImageStage2">
+            <argument name="section" value="RowOnStage"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
+        </actionGroup>
+        <!-- Confirm Video Background Attributes Maintained on Edit Panel -->
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage5">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundType3">
+            <argument name="property" value="PageBuilderBackgroundType_Image"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setBackgroundType5">
+            <argument name="property" value="PageBuilderBackgroundType_Video"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBackgroundColor5">
+            <argument name="property" value="PageBuilderBackgroundColor_Pink"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateVideoUrl5">
+            <argument name="property" value="PageBuilderVideoBackgroundUrl_YouTube_Embedded"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateOverlayColor5">
+            <argument name="property" value="PageBuilderVideoBackgroundOverlayColor_Hex_Grey"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="validateInfiniteLoop5">
+            <argument name="property" value="PageBuilderVideoBackgroundInfiniteLoop_Disabled"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="validateLazyLoad5">
+            <argument name="property" value="PageBuilderVideoBackgroundLazyLoad_Disabled"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="validatePlayOnlyWhenVisible5">
+            <argument name="property" value="PageBuilderVideoBackgroundPlayOnlyWhenVisible_Disabled"/>
+        </actionGroup>
+        <actionGroup ref="seeImageUploadedOnSlideOut" stepKey="validateFallbackImage5">
+            <argument name="property" value="PageBuilderVideoBackgroundFallbackImage_GIF"/>
+        </actionGroup>
+        <!-- Save Page -->
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings2"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage2"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!-- Validate Stage -->
+        <actionGroup ref="validateBackgroundAttributes" stepKey="validateStage5">
+            <argument name="section" value="RowOnStage"/>
+            <argument name="backgroundColor" value="PageBuilderBackgroundColor_Pink"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
+            <argument name="backgroundSize" value="PageBuilderBackgroundSize_Auto"/>
+            <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_Center"/>
+            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Fixed"/>
+            <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="validateBackgroundImage" stepKey="validateImageStage3">
+            <argument name="section" value="RowOnStage"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
+        </actionGroup>
+        <!-- Confirm Background Image Attributes Maintained After Save -->
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage6">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBackgroundColor6">
+            <argument name="property" value="PageBuilderBackgroundColor_Pink"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundType4">
+            <argument name="property" value="PageBuilderBackgroundType_Image"/>
+        </actionGroup>
+        <actionGroup ref="seeImageUploadedOnSlideOut" stepKey="validateBackgroundImage6">
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
+        </actionGroup>
+        <actionGroup ref="seeImageUploadedOnSlideOut" stepKey="validateBackgroundMobileImage6">
+            <argument name="property" value="PageBuilderBackgroundMobileImage_SpecialCharacters"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundSize6">
+            <argument name="property" value="PageBuilderBackgroundSize_Auto"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundPosition6">
+            <argument name="property" value="PageBuilderBackgroundPosition_Center"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundAttachment6">
+            <argument name="property" value="PageBuilderBackgroundAttachment_Fixed"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsCheckedSlideOutProperty" stepKey="validateBackgroundRepeat6">
+            <argument name="property" value="PageBuilderBackgroundRepeat_Enabled"/>
+        </actionGroup>
+        <!-- Confirm Video Background URL, Overlay Color, and Fallback Image Attributes Not Maintained After Save -->
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setBackgroundType6">
+            <argument name="property" value="PageBuilderBackgroundType_Video"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBackgroundColor7">
+            <argument name="property" value="PageBuilderBackgroundColor_Pink"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateVideoUrlEmpty7">
+            <argument name="property" value="PageBuilderVideoBackgroundUrl_Empty"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateOverlayColorEmpty7">
+            <argument name="property" value="PageBuilderVideoBackgroundOverlayColor_Empty"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="validateInfiniteLoop7">
+            <argument name="property" value="PageBuilderVideoBackgroundInfiniteLoop_Disabled"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="validateLazyLoad7">
+            <argument name="property" value="PageBuilderVideoBackgroundLazyLoad_Disabled"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="validatePlayOnlyWhenVisible7">
+            <argument name="property" value="PageBuilderVideoBackgroundPlayOnlyWhenVisible_Disabled"/>
+        </actionGroup>
+        <actionGroup ref="seeNoImageUploadedOnSlideOut" stepKey="validateNoFallbackImage7">
+            <argument name="property" value="PageBuilderVideoBackgroundFallbackImage_Empty"/>
+        </actionGroup>
+    </test>
+</tests>

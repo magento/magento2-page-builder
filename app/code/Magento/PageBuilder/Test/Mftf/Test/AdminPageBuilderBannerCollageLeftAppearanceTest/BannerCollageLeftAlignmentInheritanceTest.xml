@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="BannerCollageLeftAlignmentInheritanceTest" extends="BannerPosterAlignmentInheritanceTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Banner"/>
+            <title value="Collage Left - Alignment Inherits"/>
+            <description value="A user should be able to have a parent container content type pass its alignment to its children"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-4290"/>
+            <testCaseId value="MC-6017"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-banner"/>
+            <group value="pagebuilder-bannerCollageLeft"/>
+        </annotations>
+        <!-- Fill Out Banner Edit Panel -->
+        <comment userInput="Fill Out Banner Edit Panel" stepKey="commentFillBannerEditPanel"/>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
+            <argument name="property" value="PageBuilderAppearance_CollageLeft"/>
+        </actionGroup>
+        <executeJS function="return Math.abs(Math.round({$buttonLeftPosition}-{$overlayLeftPosition}-30))" stepKey="buttonMinusOverlayMinusPadding"/>
+        <executeJS function="return Math.abs(Math.round({$overlayRightPosition}-{$buttonRightPosition}-30))" stepKey="overlayMinusButtonMinusPadding"/>
+        <executeJS function="return Math.abs(Math.round({$overlayRightPositionAfterSave}-{$buttonRightPositionAfterSave}-30))" stepKey="overlayMinusButtonMinusPaddingAfterSave"/>
+        <executeJS function="return Math.abs(Math.round({$overlayRightPositionStoreFront}-{$buttonRightPositionStoreFront}-30))" stepKey="overlayMinusButtonMinusPaddingStoreFront"/>
+    </test>
+</tests>

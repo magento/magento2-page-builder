@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="validateColumnAppearanceCenterAligned" extends="validateColumnAppearanceTopAligned">
+        <comment userInput="validateColumnAppearanceCenterAligned" stepKey="comment"/>
+        <seeElement selector="{{section.appearance(columnIndex, PageBuilderColumnAppearanceProperty_Center.value)}}" stepKey="seeColumnAppearance"/>
+        <executeJS function="return Math.round(document.querySelectorAll('{{section.allColumnGroups}}')[{{columnGroupIndex}}-1].getBoundingClientRect().top + (document.querySelectorAll('{{section.allColumnGroups}}')[{{columnGroupIndex}}-1].clientHeight / 2))" stepKey="topOfColumnGroup"/>
+        <executeJS function="return Math.round(document.querySelectorAll('{{section.baseCSS}}')[{{columnIndex}}-1].getBoundingClientRect().top  + (document.querySelectorAll('{{section.baseCSS}}')[{{columnIndex}}-1].clientHeight / 2))" stepKey="topOfIndividualColumn"/>
+    </actionGroup>
+</actionGroups>

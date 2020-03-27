@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="attachInvalidFileOnSlideOut">
+        <arguments>
+            <argument name="property"/>
+        </arguments>
+        <attachFile userInput="{{property.value}}" selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="attachBackgroundImageFile"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible selector="{{EditPanelForm.invalidUploadTitle}}" stepKey="waitForInvalidUploadTitle"/>
+        <waitForElementVisible selector="{{EditPanelForm.invalidUploadMessage(property.errorMessage)}}" stepKey="waitForInvalidUploadMessage"/>
+        <waitForElementVisible selector="{{EditPanelForm.invalidUploadOkBtn}}" stepKey="waitForInvalidUploadBtn"/>
+        <click selector="{{EditPanelForm.invalidUploadOkBtn}}" stepKey="clickInvalidUploadBtn"/>
+        <waitForElementNotVisible selector="{{EditPanelForm.invalidUploadTitle}}" stepKey="waitForModalGone"/>
+        <dontSeeElementInDOM selector="{{EditPanelForm.editFormUploadedImage(property.section, property.fieldName)}}" stepKey="dontSeeImage"/>
+    </actionGroup>
+</actionGroups>

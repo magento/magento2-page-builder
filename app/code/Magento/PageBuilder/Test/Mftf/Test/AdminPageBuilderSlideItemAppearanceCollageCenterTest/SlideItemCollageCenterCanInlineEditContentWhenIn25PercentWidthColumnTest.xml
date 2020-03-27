@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="SlideItemCollageCenterCanInlineEditContentWhenIn25PercentWidthColumnTest" extends="SlideItemPosterCanInlineEditContentWhenIn25PercentWidthColumnTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Collage Center - Can Inline Edit Slide Content When In 25 Percent Width Column"/>
+            <description value="Verify that users are able to inline edit a collage center slide's content from the stage when the slide is in a 25 percent width column"/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MC-3228"/>
+            <testCaseId value="MC-3977"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-slideItemCollageCenter"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
+            <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
+        </actionGroup>
+        <actionGroup ref="inlineEditWYSIWYGFromStageForSlideCollageAppearancesInSmallColumns" stepKey="inlineEdit">
+            <argument name="contentType" value="PageBuilderSlideContentType"/>
+            <argument name="content" value="{{PageBuilderSlideItemContent_Slide1.value}}"/>
+        </actionGroup>
+    </test>
+</tests>

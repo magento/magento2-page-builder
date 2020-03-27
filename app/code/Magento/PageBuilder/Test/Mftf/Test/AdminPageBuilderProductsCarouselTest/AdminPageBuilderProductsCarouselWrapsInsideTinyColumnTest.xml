@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="AdminPageBuilderProductsCarouselWrapsInsideTinyColumnTest" extends="ProductsWrapsInsideTinyColumnTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Products"/>
+            <title value="Carousel - Product Content Type Wraps Inside Tiny Column"/>
+            <description value="Validate that the Products content type wraps in a tiny column"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="PB-77"/>
+            <testCaseId value="MC-21988"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-products"/>
+            <group value="pagebuilder-addToColumn"/>
+            <group value="pagebuilder-productsCarousel"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
+            <argument name="property" value="PageBuilderProductsProductCarouselAppearance"/>
+        </actionGroup>
+        <executeJS function="return document.querySelectorAll('{{ProductsCarouselOnStage.productImageCSS}}')[0].clientWidth" stepKey="productImageWidth"/>
+        <executeJS function="return document.querySelectorAll('{{ProductsCarouselOnStage.productPriceContainer}}')[0].clientWidth" stepKey="productPriceContainerWidth"/>
+        <executeJS function="return document.querySelectorAll('{{ProductsCarouselOnStage.productActions}}')[0].clientWidth" stepKey="productActionsWidth"/>
+        <executeJS function="return document.querySelectorAll('{{ProductsCarouselOnStage.productImageCSS}}')[0].clientWidth" stepKey="productImageWidthAfterSave"/>
+        <executeJS function="return document.querySelectorAll('{{ProductsCarouselOnStage.productPriceContainer}}')[0].clientWidth" stepKey="productPriceContainerWidthAfterSave"/>
+        <executeJS function="return document.querySelectorAll('{{ProductsCarouselOnStage.productActions}}')[0].clientWidth" stepKey="productActionsWidthAfterSave"/>
+    </test>
+</tests>

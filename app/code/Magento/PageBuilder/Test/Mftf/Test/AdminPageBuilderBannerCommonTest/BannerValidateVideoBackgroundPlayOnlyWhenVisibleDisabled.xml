@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="BannerValidateVideoBackgroundPlayOnlyWhenVisibleDisabled">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Banner"/>
+            <title value="Validate Banner Video Background Play Only When Visible Disabled"/>
+            <description value="Verify that the video background play only when visible attribute works as intended when disabled."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="PB-265"/>
+            <testCaseId value="MC-31696"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-banner"/>
+            <group value="pagebuilder-backgroundForm"/>
+            <group value="pagebuilder-video-background"/>
+        </annotations>
+        <before>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
+                <argument name="CMSPage" value="$$createCMSPage$$"/>
+            </actionGroup>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="navigateToFallbackImageFolder">
+                <argument name="FolderName" value="{{PageBuilderVideoBackgroundFallbackImage_JPG.path}}"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="deleteFallbackImage">
+                <argument name="Image" value="PageBuilderVideoBackgroundFallbackImage_JPG"/>
+            </actionGroup>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBannerIntoStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <!-- Set Large Min Height on Banner 1 -->
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage1">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty1">
+            <argument name="property" value="PageBuilderMinHeightProperty_500px"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
+        <!-- Create 3 more Banners -->
+        <actionGroup ref="duplicateContentType" stepKey="duplicateBanner1">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateBanner2">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateBanner3">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <!-- Set Video Background on Banner 4 -->
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage4">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+            <argument name="contentTypeIndex" value="4"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setBackgroundType">
+            <argument name="property" value="PageBuilderBackgroundType_Video"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrl">
+            <argument name="property" value="PageBuilderVideoBackgroundUrl_Mp4_URL"/>
+        </actionGroup>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="setInfiniteLoopDisabled">
+            <argument name="property" value="PageBuilderVideoBackgroundInfiniteLoop_Disabled"/>
+        </actionGroup>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="setLazyLoadDisabled">
+            <argument name="property" value="PageBuilderVideoBackgroundLazyLoad_Disabled"/>
+        </actionGroup>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="setPlayOnlyWhenVisibleEnabled">
+            <argument name="property" value="PageBuilderVideoBackgroundPlayOnlyWhenVisible_Disabled"/>
+        </actionGroup>
+        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachFallbackImage">
+            <argument name="property" value="PageBuilderVideoBackgroundFallbackImage_JPG"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings4"/>
+        <!-- Validate Stage -->
+        <wait time="5" stepKey="waitForVideoCompleteStage"/>
+        <actionGroup ref="validateVideoBackgroundFinishedPlaying" stepKey="validateVideoFinishedPlayingStage1">
+            <argument name="section" value="BannerOnBackend"/>
+            <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_Mp4_URL"/>
+            <argument name="index" value="4"/>
+        </actionGroup>
+        <actionGroup ref="validateFallbackImageAfterVideoFinishesPlayingInVideoBackground" stepKey="validateFallbackImageVisibleStage">
+            <argument name="section" value="BannerOnBackend"/>
+            <argument name="fallbackImage" value="PageBuilderVideoBackgroundFallbackImage_JPG"/>
+            <argument name="index" value="4"/>
+        </actionGroup>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!-- Validate Stage After Save -->
+        <wait time="5" stepKey="waitForVideoCompleteStage2"/>
+        <actionGroup ref="validateVideoBackgroundFinishedPlayingBeforeViewing" stepKey="validateVideoFinishedPlayingStage2">
+            <argument name="section" value="BannerOnBackend"/>
+            <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_Mp4_URL"/>
+            <argument name="index" value="4"/>
+        </actionGroup>
+        <actionGroup ref="validateFallbackImageAfterVideoFinishesPlayingInVideoBackground" stepKey="validateFallbackImageVisibleStage2">
+            <argument name="section" value="BannerOnBackend"/>
+            <argument name="fallbackImage" value="PageBuilderVideoBackgroundFallbackImage_JPG"/>
+            <argument name="index" value="4"/>
+        </actionGroup>
+        <scrollTo selector="{{BannerOnBackend.base('4')}}" stepKey="scrollBanner4Stage"/>
+        <actionGroup ref="validateVideoBackgroundFinishedPlayingBeforeViewing" stepKey="validateVideoFinishedPlayingStage3">
+            <argument name="section" value="BannerOnBackend"/>
+            <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_Mp4_URL"/>
+            <argument name="index" value="4"/>
+        </actionGroup>
+        <actionGroup ref="validateFallbackImageAfterVideoFinishesPlayingInVideoBackground" stepKey="validateFallbackImageVisibleStage3">
+            <argument name="section" value="BannerOnBackend"/>
+            <argument name="fallbackImage" value="PageBuilderVideoBackgroundFallbackImage_JPG"/>
+            <argument name="index" value="4"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <wait time="5" stepKey="waitForVideoCompleteStorefront"/>
+        <actionGroup ref="validateVideoBackgroundFinishedPlayingBeforeViewing" stepKey="validateVideoFinishedPlayingStorefront">
+            <argument name="section" value="BannerOnFrontend"/>
+            <argument name="playOnlyWhenVisible" value="PageBuilderVideoBackgroundPlayOnlyWhenVisible_Enabled"/>
+            <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_Mp4_URL"/>
+            <argument name="index" value="4"/>
+        </actionGroup>
+        <actionGroup ref="validateFallbackImageAfterVideoFinishesPlayingInVideoBackground" stepKey="validateFallbackImageVisibleStorefront">
+            <argument name="section" value="BannerOnFrontend"/>
+            <argument name="fallbackImage" value="PageBuilderVideoBackgroundFallbackImage_JPG"/>
+            <argument name="index" value="4"/>
+        </actionGroup>
+        <scrollTo selector="{{BannerOnFrontend.base('4')}}" stepKey="scrollBanner4Storefront"/>
+        <wait time="5" stepKey="waitForVideoCompleteStorefront2"/>
+        <actionGroup ref="validateVideoBackgroundFinishedPlayingBeforeViewing" stepKey="validateVideoFinishedPlayingStorefront2">
+            <argument name="section" value="BannerOnFrontend"/>
+            <argument name="playOnlyWhenVisible" value="PageBuilderVideoBackgroundPlayOnlyWhenVisible_Enabled"/>
+            <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_Mp4_URL"/>
+            <argument name="index" value="4"/>
+        </actionGroup>
+        <actionGroup ref="validateFallbackImageAfterVideoFinishesPlayingInVideoBackground" stepKey="validateFallbackImageVisibleStorefront2">
+            <argument name="section" value="BannerOnFrontend"/>
+            <argument name="fallbackImage" value="PageBuilderVideoBackgroundFallbackImage_JPG"/>
+            <argument name="index" value="4"/>
+        </actionGroup>
+    </test>
+</tests>

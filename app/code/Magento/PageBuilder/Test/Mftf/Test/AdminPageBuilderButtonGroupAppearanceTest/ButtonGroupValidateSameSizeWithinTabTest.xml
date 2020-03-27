@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="ButtonGroupValidateSameSizeWithinTabTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Buttons"/>
+            <title value="Button Group - Validate Same Size Works Within Tab"/>
+            <description value="Validate that when buttons are added to Tabs and same size is enabled, buttons stay within tabs and are same size"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-961"/>
+            <testCaseId value="MC-3719"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-buttons"/>
+            <group value="pagebuilder-buttonGroup"/>
+            <group value="pagebuilder-tabs-content"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <createData entity="_defaultCmsPage" stepKey="createCMSPage"/>
+            <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToContentCreatedCMSPage">
+                <argument name="CMSPage" value="$$createCMSPage$$"/>
+            </actionGroup>
+        </before>
+        <after>
+            <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Add Button Group To Tab -->
+        <comment userInput="Add Button Group To Tab" stepKey="commentAddButtonGroup"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragButtonsToTab">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+            <argument name="containerTargetType" value="PageBuilderTabContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusOptionMenu">
+            <argument name="contentType" value="PageBuilderButtonItemContentType"/>
+        </actionGroup>
+        <!-- Enable Same Size -->
+        <comment userInput="Enable Same Size" stepKey="commentEditPanel1"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="enableSameSize">
+            <argument name="property" value="PageBuilderButtonGroupSameSize_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Edit Buttons -->
+        <comment userInput="Edit Buttons" stepKey="commentEditButtons"/>
+        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType1">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton1">
+            <argument name="text" value="PageBuilderButtonItemText_First"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton2">
+            <argument name="text" value="PageBuilderButtonItemText_CommonCharacters"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage: Initial" stepKey="commentValidateStage1"/>
+        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStage1">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStage"/>
+        </actionGroup>
+        <executeJS function="return parseInt(window.getComputedStyle(document.querySelectorAll('{{TabOnStage.all}}')[0]).width)" stepKey="tabWidth"/>
+        <executeJS function="return parseInt(window.getComputedStyle({{ButtonItemOnStage.jsButtonSelector('1')}}).width)" stepKey="buttonWidth"/>
+        <assertLessThan stepKey="assertButtonSmallerThanTab">
+            <expectedResult type="variable">$tabWidth</expectedResult>
+            <actualResult type="variable">$buttonWidth</actualResult>
+        </assertLessThan>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage1"/>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront: Initial" stepKey="commentValidateStorefront1"/>
+        <amOnPage url="$$createCMSPage.identifier$$" stepKey="goToStorefront1"/>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefront1">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
+        </actionGroup>
+        <executeJS function="return document.querySelectorAll('{{TabOnStorefront.all}}')[0].offsetWidth" stepKey="tabWidthStorefront"/>
+        <executeJS function="return parseInt(window.getComputedStyle({{ButtonItemOnStorefrontEmptyLink.jsButtonSelector('1')}}).width)" stepKey="buttonWidthStorefront"/>
+        <assertLessThan stepKey="assertButtonSmallerThanTabStorefront">
+            <expectedResult type="variable">$tabWidthStorefront</expectedResult>
+            <actualResult type="variable">$buttonWidthStorefront</actualResult>
+        </assertLessThan>
+        <!-- Validate Storefront Mobile -->
+        <comment userInput="Validate Storefront Mobile: Initial" stepKey="commentValidateStorefrontMobile1"/>
+        <resizeWindow width="375" height="667" stepKey="resizeWindowToMobile1"/>
+        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefrontMobile1">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
+        </actionGroup>
+        <executeJS function="return document.querySelectorAll('{{TabOnStorefront.all}}')[0].offsetWidth" stepKey="tabWidthStorefrontMobile"/>
+        <executeJS function="return parseInt(window.getComputedStyle({{ButtonItemOnStorefrontEmptyLink.jsButtonSelector('1')}}).width)" stepKey="buttonWidthStorefrontMobile"/>
+        <assertLessThan stepKey="assertButtonSmallerThanTabStorefrontMobile">
+            <expectedResult type="variable">$tabWidthStorefrontMobile</expectedResult>
+            <actualResult type="variable">$buttonWidthStorefrontMobile</actualResult>
+        </assertLessThan>
+        <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop1"/>
+    </test>
+</tests>

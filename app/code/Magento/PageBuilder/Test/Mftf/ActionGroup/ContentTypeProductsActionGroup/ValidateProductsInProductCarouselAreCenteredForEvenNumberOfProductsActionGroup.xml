@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="validateProductsInProductCarouselAreCenteredForEvenNumberOfProducts">
+        <arguments>
+            <argument name="page" defaultValue="ProductsCarouselOnStage"/>
+            <argument name="productGroupIndex" defaultValue="1" type="string"/>
+            <argument name="adjacentLeftOfCenterProductIndex" defaultValue="1" type="string"/>
+            <argument name="acceptableOffset" defaultValue="2" type="string"/>
+        </arguments>
+        <executeJS function="return document.evaluate(&quot;{{page.productInCarouselNotClonedBySlickByIndex(productGroupIndex, adjacentLeftOfCenterProductIndex)}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().right" stepKey="rightPositionOfAdjacentLeftOfCenterProduct"/>
+        <executeJS function="return document.evaluate(&quot;{{page.base(productGroupIndex)}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().right" stepKey="rightPositionOfProductGroup"/>
+        <executeJS function="return document.evaluate(&quot;{{page.base(productGroupIndex)}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().width" stepKey="widthOfProductGroup"/>
+        <executeJS function="return Math.abs({$rightPositionOfProductGroup} - ({$widthOfProductGroup} / 2))" stepKey="centerPositionOfProductGroup"/>
+        <executeJS function="return Math.abs({$centerPositionOfProductGroup} - {$rightPositionOfAdjacentLeftOfCenterProduct})" stepKey="differenceBetweenCenterPositions"/>
+        <assertLessThanOrEqual stepKey="assertCenterPositionAcceptable">
+            <expectedResult type="int">{{acceptableOffset}}</expectedResult>
+            <actualResult type="variable">differenceBetweenCenterPositions</actualResult>
+        </assertLessThanOrEqual>
+    </actionGroup>
+</actionGroups>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="verifyMapLatitudeAndLongitudeAlternate">
+        <!-- Need an alternate action group: MQE-965 -->
+        <arguments>
+            <argument name="page"/>
+            <argument name="latitude" type="string"/>
+            <argument name="longitude" type="string"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <comment userInput="verifyMapLatitudeAndLongitudeAlternate" stepKey="comment"/>
+        <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForMap"/>
+        <waitForElementVisible selector="{{page.latitude(index, latitude)}}" stepKey="waitForLatitude"/>
+        <waitForElementVisible selector="{{page.longitude(index, longitude)}}" stepKey="waitForLongitude"/>
+    </actionGroup>
+</actionGroups>

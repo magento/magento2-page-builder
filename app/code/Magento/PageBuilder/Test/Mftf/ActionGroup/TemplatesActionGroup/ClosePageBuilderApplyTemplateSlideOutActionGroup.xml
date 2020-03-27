@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="closePageBuilderApplyTemplateSlideOut">
+        <annotations>
+            <description>Closes the Page Builder Apply Template slide out.</description>
+        </annotations>
+        <arguments>
+            <argument name="baseContent" defaultValue="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" type="string"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForSlideOutLoad"/>
+        <waitForElementVisible selector="{{PageBuilderApplyTemplateSlideOut.closeButton}}" stepKey="waitForCloseButton"/>
+        <click selector="{{PageBuilderApplyTemplateSlideOut.closeButton}}" stepKey="clickCloseButton"/>
+        <waitForPageLoad stepKey="waitForSlideOutClose"/>
+        <waitForElementNotVisible time="5" selector="{{PageBuilderApplyTemplateSlideOut.slideOut}}" stepKey="waitForSlideOutNotVisible"/>
+        <waitForElementVisible time="10" selector="{{baseContent}}" stepKey="waitForContentUnderSlideOutVisible"/>
+    </actionGroup>
+</actionGroups>

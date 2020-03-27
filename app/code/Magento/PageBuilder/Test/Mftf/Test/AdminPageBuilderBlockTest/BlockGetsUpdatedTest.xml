@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="BlockGetsUpdatedTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Block"/>
+            <title value="Block Content Block gets updated"/>
+            <description value="Verify that Block Content Type gets updated from Block entities"/>
+            <severity value="BLOCKER"/>
+            <testCaseId value="MC-2289"/>
+            <useCaseId value="MC-1420"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="DisabledWYSIWYGActionGroup" stepKey="disableWYSIWYG"/>
+            <createData entity="_defaultCmsPage" stepKey="createCMSPage"/>
+            <createData entity="_defaultBlock" stepKey="createPreReqBlock"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createPreReqBlock" stepKey="deletePreReqBlock"/>
+            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage"/>
+            <actionGroup ref="EnabledWYSIWYGActionGroup" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPageInAdmin">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionAddContent">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
+            <argument name="block" value="$$createPreReqBlock$$"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate stage" stepKey="validateStage1"/>
+        <actionGroup ref="verifyBlockOnStage" stepKey="verifyBlockOnStage">
+            <argument name="block" value="$$createPreReqBlock$$"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate storefront" stepKey="validateStorefront1"/>
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <see userInput="$$createPreReqBlock.content$$" stepKey="seeBlockContentOnStorefront"/>
+        <!-- Update block content in admin -->
+        <comment userInput="Update block content in admin" stepKey="commentUpdateBlockContentInAdmin"/>
+        <actionGroup ref="NavigateToCreatedCMSBlockPageActionGroup" stepKey="navigateToCreatedCmsBlockInAdmin">
+            <argument name="CMSBlockPage" value="$$createPreReqBlock$$"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentType" value="PageBuilderHtmlContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelTextArea" stepKey="enterHtmlContent">
+            <argument name="property" value="PageBuilderHtmlPropertyButton"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveCMSBlock"/>
+        <!-- Validate Stage after updating block -->
+        <comment userInput="Validate stage after updating block" stepKey="validateStage2"/>
+        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPageInAdmin2">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <waitForElementVisible selector="{{HtmlOnStage.base('1')}}" stepKey="waitForHtmlBaseStage1"/>
+        <see selector="{{BlockOnStage.html('1', '1')}}" userInput="{{PageBuilderHtmlPropertyButton.valueOnStage}}" stepKey="waitForHtmlStage1"/>
+        <actionGroup ref="ClearCacheActionGroup" stepKey="clearMagentoCache"/>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate storefront after updating block" stepKey="validateStorefront2"/>
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront2">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{HtmlOnStorefront.base('1')}}" stepKey="waitForHtmlBaseStorefront"/>
+        <waitForElementVisible selector="{{BlockOnStorefront.html('1')}}" stepKey="waitForHtmlStorefront"/>
+    </test>
+</tests>

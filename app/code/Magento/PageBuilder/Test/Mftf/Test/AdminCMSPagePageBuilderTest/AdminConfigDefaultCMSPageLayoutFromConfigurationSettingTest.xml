@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="AdminConfigDefaultCMSPageLayoutFromConfigurationSettingTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="CMS Page"/>
+            <title value="Verify Default Layout for Catalog Category"/>
+            <description value="Admin should be able to configure the default layout for CMS Page from System Configuration, verify the default is updated to the Page Builder's default layout"/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MC-936"/>
+            <testCaseId value="MC-3106"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-layout"/>
+            <group value="pagebuilder-fullwidth"/>
+            <group value="pagebuilder-cms-page"/>
+        </annotations>
+        <!-- PageBuilder is enabled so check default is full width -->
+        <comment userInput="PageBuilder is enabled so check default is full width" stepKey="commentSeeFullWidth"/>
+        <seeOptionIsSelected selector="{{DefaultLayoutsSection.pageLayout}}" userInput="{{PageBuilderFullWidthLayout.cms}}" stepKey="seeOneColumnSelected"/>
+        <seeOptionIsSelected selector="{{DefaultLayoutsSection.productLayout}}" userInput="{{PageBuilderFullWidthLayout.product}}" stepKey="seeNoLayoutUpdatesSelected1"/>
+        <seeOptionIsSelected selector="{{DefaultLayoutsSection.categoryLayout}}" userInput="{{PageBuilderFullWidthLayout.category}}" stepKey="seeNoLayoutUpdatesSelected2"/>
+    </test>
+</tests>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="cannotMoveContentTypeToContainer" extends="moveContentTypeToContainer">
+        <arguments>
+            <argument name="positionInContainer" defaultValue="1" type="string"/>
+        </arguments>
+        <comment userInput="cannotMoveContentTypeToContainer" stepKey="comment"/>
+        <dontSeeElementInDOM selector="{{PageBuilderStage.contentTypeInsideContainerStage(containerTargetType.role, containerTargetIndex, positionInContainer, contentType.role, contentTypeIndex)}}" stepKey="dontSeeContentTypeInContainer" after="waitForContentTypeInStage"/>
+    </actionGroup>
+</actionGroups>

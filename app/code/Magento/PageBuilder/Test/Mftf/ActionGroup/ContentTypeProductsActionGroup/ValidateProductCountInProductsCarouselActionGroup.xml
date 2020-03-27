@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="validateProductCountInProductsCarousel">
+        <arguments>
+            <argument name="page" defaultValue="ProductsCarouselOnStage"/>
+            <argument name="productGroupIndex" defaultValue="1" type="string"/>
+            <argument name="productCount" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElement selector="{{page.productsInCarouselNotClonedBySlick(productGroupIndex)}}" stepKey="waitForProductGroup"/>
+        <grabMultiple selector="{{page.productsInCarouselNotClonedBySlick(productGroupIndex)}}" stepKey="grabProducts"/>
+        <assertCount stepKey="assertProductCount">
+            <expectedResult type="int">{{productCount}}</expectedResult>
+            <actualResult type="variable">grabProducts</actualResult>
+        </assertCount>
+    </actionGroup>
+</actionGroups>

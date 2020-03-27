@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="clickOutsideLiveEditHeading">
+        <arguments>
+            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="headingType" defaultValue="PageBuilderHeadingTypeDefaultProperty"/>
+            <argument name="headingAlignment" defaultValue="PageBuilderHeadingAlignmentProperty_left"/>
+            <argument name="pageBuilderArea" defaultValue="" type="string"/>
+        </arguments>
+        <comment userInput="Click outside heading editable area" stepKey="commentClickOutside"/>
+        <moveMouseOver selector="{{pageBuilderArea}}{{PageBuilderPanel.searchPanel}}" stepKey="moveMouseOutsideLiveEdit"/>
+        <click selector="{{pageBuilderArea}}{{PageBuilderPanel.searchPanel}}" stepKey="clickOutsideLiveEdit"/>
+        <waitForPageLoad stepKey="waitForAnimation2"/>
+        <dontSeeElement selector="{{HeadingOnStage.headingTypeToolbar(index, headingType.toolbar)}}" stepKey="dontSeeHeadingTypeToolbar"/>
+        <dontSeeElement selector="{{HeadingOnStage.headingTextAlignToolbar(index, headingAlignment.toolbar)}}" stepKey="dontSeeHeadingAlignmentToolbar"/>
+    </actionGroup>
+</actionGroups>

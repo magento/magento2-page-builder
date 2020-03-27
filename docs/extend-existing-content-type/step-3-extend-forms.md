@@ -1,18 +1,18 @@
 # Step 3: Extend forms
 
-In this step, you will customize the Banner form (`pagebuilder_banner_form.xml`) by adding a form field for entering a `max-height` value for the `collage-left` and `collage-right` appearances. 
+In this step, you will customize the Banner form (`pagebuilder_banner_form.xml`) by adding a form field for entering a `max-height` value for the `collage-left` and `collage-right` appearances.
 
 ## Create the appearance form
 
 Page Builder forms are UI component forms. This means they follow the same conventions as any other UI component form in Magento. If you are not already familiar with UI component forms, you can learn more about them from the [UI Components Guide](https://devdocs.magento.com/guides/v2.3/ui_comp_guide/concepts/ui_comp_xmldeclaration_concept.html). For this tutorial, we provide you with the basic markup for setting up an empty form.
 
-Your file structure for the Banner extension form and corresponding layout should look like this: 
+Your file structure for the Banner extension form and corresponding layout should look like this:
 
 ![Extension forms file structure](../images/extension-forms-files.png){:width="544px" height="auto"}
 
 ### Extension form
 
-When customizing an existing form, make sure you name your form with the same name as the existing content type's form. In our case, we are customizing the Banner's form, which means we must name our form: `page-banner-form.xml`. Here's the basic XML configuration for the Banner form extension: 
+When customizing an existing form, make sure you name your form with the same name as the existing content type's form. In our case, we are customizing the Banner's form, which means we must name our form: `pagebuilder-banner-form.xml`. Here's the basic XML configuration for the Banner form extension:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -45,9 +45,9 @@ When customizing an existing form, make sure you name your form with the same na
             </settings>
         </dataProvider>
     </dataSource>
-  
+
   <!--Add Fieldsets and fields-->
-  
+
 </form>
 ```
 
@@ -55,7 +55,7 @@ When customizing an existing form, make sure you name your form with the same na
 
 Before you add a field to the form of an existing content type, you need to know where to add it. In other words, you need to decide which fieldset to put your field in. We want to put our new `max_height` field below the Banner's existing `min_height` field, which is in the the `appearance_fieldset`.
 
-The markup for adding the field to the fieldset looks like this:  
+The markup for adding the field to the fieldset looks like this:
 
 ```xml
 <fieldset name="appearance_fieldset"

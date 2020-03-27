@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="ImageAddImageIntoPageBuilderStageTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Image"/>
+            <title value="AddImageIntoPageBuilderStage"/>
+            <description value="Upload and select images to/from Magento Media Gallery from the Image content type in the Page Builder Stage."/>
+            <severity value="BLOCKER"/>
+            <useCaseId value="MAGETWO-71618"/>
+            <testCaseId value="MC-1334"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-image"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder1">
+                <argument name="FolderName" value="{{PageBuilderImageProperty_StageJPG.path}}"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage1">
+                <argument name="Image" value="PageBuilderImageProperty_StageJPG"/>
+            </actionGroup>
+            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder2">
+                <argument name="FolderName" value="{{PageBuilderImageProperty_JPG2.path}}"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage2">
+                <argument name="Image" value="PageBuilderImageProperty_JPG2"/>
+            </actionGroup>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragImageIntoStage">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <waitForElementVisible selector="{{ImageOnStageWithoutImageUploaded.uploadImageBtn}}" stepKey="seeUploadImageBtn1"/>
+        <waitForElementVisible selector="{{ImageOnStageWithoutImageUploaded.selectFromGalleryBtn}}" stepKey="seeSelectFromGalleryBtn1"/>
+        <!-- Attach image A to PageBuilder stage -->
+        <actionGroup ref="addImageToStage" stepKey="addImageToStage">
+            <argument name="property" value="PageBuilderImageProperty_StageJPG"/>
+        </actionGroup>
+        <!-- Hover uploaded image to check Upload New Image button and Select From Gallery button -->
+        <comment userInput="verify Upload Image Buttons" stepKey="commentVerifyUploadImageButtons"/>
+        <actionGroup ref="verifyUploadImageButtons" stepKey="verifyUploadImageButtons">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+            <argument name="section" value="ImageOnStageWithoutImageUploaded"/>
+        </actionGroup>
+        <!-- Duplicate Image Content Type -->
+        <comment userInput="Duplicate Image Content Type" stepKey="commentDuplicate"/>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateContentType">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage2">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <!-- Verify image A display on preview of slide-out -->
+        <comment userInput="Verify image A display on preview of slide-out" stepKey="commentVerifyImageOnSlideout"/>
+        <actionGroup ref="verifyImageOnSlideout" stepKey="verifyImageOnSlideout">
+            <argument name="property" value="PageBuilderImageProperty_StageJPG"/>
+        </actionGroup>
+        <!-- Verify image A stored in the root folder of Magento Media Gallery -->
+        <comment userInput="Verify image A stored in the root folder of Magento Media Gallery" stepKey="commentVerifyImage2"/>
+        <actionGroup ref="clickSelectFromGallerySlideOut" stepKey="clickSelectFromGallerySlideOut">
+            <argument name="property" value="PageBuilderImageProperty_StageJPG"/>
+        </actionGroup>
+        <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToWYSIWYGFolderActionGroup">
+            <argument name="FolderName" value="{{PageBuilderImageProperty_StageJPG.path}}"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{MediaGallerySection.image(PageBuilderImageProperty_StageJPG.value)}}" stepKey="wait"/>
+        <click selector="{{MediaGallerySection.CancelBtn}}" stepKey="closeSlideOut"/>
+        <!-- Upload image B to replace image A -->
+        <comment userInput="Upload image B to replace image A" stepKey="commentUpload"/>
+        <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachImageFile1">
+            <argument name="property" value="PageBuilderImageProperty_JPG2"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <waitForElementVisible selector="{{ImageOnStageWithoutImageUploaded.imageSourceByIndex('1', PageBuilderImageProperty_JPG2.fileName)}}" stepKey="seeImage1SourceOnStage"/>
+        <waitForElementVisible selector="{{ImageOnStageWithoutImageUploaded.imageSourceByIndex('2', PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="seeImage2SourceOnStage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <waitForElementVisible selector="{{ImageOnStorefront.imageSourceByIndex('1', PageBuilderImageProperty_JPG2.fileName)}}" stepKey="seeImage1SourceOnStorefront"/>
+        <waitForElementVisible selector="{{ImageOnStorefront.imageSourceByIndex('2', PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="seeImage2SourceOnStorefront"/>
+    </test>
+</tests>

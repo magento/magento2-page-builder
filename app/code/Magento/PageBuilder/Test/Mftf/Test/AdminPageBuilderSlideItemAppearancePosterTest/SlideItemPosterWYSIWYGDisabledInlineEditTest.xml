@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="SlideItemPosterWYSIWYGDisabledInlineEditTest" extends="SlideItemPosterCanInlineEditContentTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Poster - Inline Edit With WYSIWYG Disabled"/>
+            <description value="Verify that a user can inline edit Slide poster content when WYSIWYG is disabled"/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MC-937"/>
+            <testCaseId value="MC-4039"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-slideItemPoster"/>
+        </annotations>
+        <before>
+            <remove keyForRemoval="enableWYSIWYG"/>
+            <remove keyForRemoval="enableTinyMCE4"/>
+            <magentoCLI command="config:set cms/wysiwyg/enabled disabled" stepKey="disableWYSIWYG" before="loginAsAdmin"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG" before="logout"/>
+        </after>
+        <actionGroup ref="inlineEditTextAreaFromStage" stepKey="inlineEdit">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+            <argument name="content" value="{{PageBuilderSlideItemContent_Slide1.value}}"/>
+        </actionGroup>
+        <executeJS function="return document.querySelector('{{SlideOnConfigurationPanel.textArea}}').value" stepKey="seeMessageText"/>
+        <assertEquals stepKey="assertTextAreaValueEditPanel" after="seeMessageText">
+            <expectedResult type="string">{{PageBuilderSlideItemContent_Slide1.value}}</expectedResult>
+            <actualResult type="variable">seeMessageText</actualResult>
+        </assertEquals>
+        <actionGroup ref="assertTextareaContainsValue" stepKey="seeMessageContentStage">
+            <argument name="selector" value="{{PageBuilderStage.inlineTextAreaEditor(PageBuilderSliderContentType.role, '1')}}"/>
+            <argument name="value" value="{{PageBuilderSlideItemContent_Slide1.value}}"/>
+        </actionGroup>
+        <seeElement selector="{{SlideOnFrontend.messageContentTextArea('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeMessageContentStorefront"/>
+    </test>
+</tests>

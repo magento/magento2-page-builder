@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="dragContentTypeNextToExistingContentType">
+        <arguments>
+            <argument name="contentType" defaultValue=""/>
+            <argument name="existingContentType" defaultValue=""/>
+            <argument name="existingContentTypeIndex" defaultValue="1" type="string"/>
+            <argument name="contentTypeIndex" defaultValue="1" type="string"/>
+            <argument name="offsetXCoordinate" defaultValue="0" type="string"/>
+            <argument name="offsetYCoordinate" defaultValue="0" type="string"/>
+        </arguments>
+        <scrollTo selector="{{CmsNewPagePageActionsSection.contentSectionName}}" stepKey="scrollToTopOfStage"/>
+        <dragAndDrop selector1="{{PageBuilderPanel.draggableContentTypeInPanel(contentType.name)}}" selector2="{{PageBuilderStage.contentTypeInStageByIndex(existingContentType.role, existingContentTypeIndex)}}" x="{{offsetXCoordinate}}" y="{{offsetYCoordinate}}" stepKey="dropContentTypeIntoStage"/>
+        <waitForPageLoad stepKey="waitForAnimation" time="30"/>
+        <dontSeeJsError stepKey="doNotSeeJSErrorInConsole"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForContentTypeInStage"/>
+        <waitForPageLoad stepKey="waitForToolbarsToLoad" time="30"/>
+    </actionGroup>
+</actionGroups>

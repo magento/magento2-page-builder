@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="SliderCollageRightNonBreakingSpaceValueInButtonsTest" extends="SliderCollageCenterNonBreakingSpaceValueInButtonsTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Collage Right - Non Breaking Space In Button Does Not Render as nbsp;"/>
+            <description value="Validate that non breaking space can be entered into the button and that the html doesn't render on stage and storefront as nbsp."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MC-3889"/>
+            <testCaseId value="MC-4204"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slider"/>
+            <group value="pagebuilder-sliderCollageRight"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearance">
+            <argument name="property" value="PageBuilderAppearance_CollageRight"/>
+        </actionGroup>
+    </test>
+</tests>

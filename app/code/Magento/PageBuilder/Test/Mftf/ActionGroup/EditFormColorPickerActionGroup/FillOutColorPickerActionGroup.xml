@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="fillOutColorPicker">
+        <arguments>
+            <argument name="colorCode"/>
+        </arguments>
+        <click selector="{{ColorPicker.panelColorSwatch(colorCode.section, colorCode.fieldName)}}" stepKey="clickColorSwatch"/>
+        <waitForElementVisible selector="{{ColorPicker.inputField}}" stepKey="waitForColorPicker"/>
+        <fillField selector="{{ColorPicker.inputField}}" userInput=" " stepKey="inputBlueHexCodeIntoInputField1"/>
+        <pressKey selector="{{ColorPicker.inputField}}" parameterArray="['{{colorCode.value}}',\Facebook\WebDriver\WebDriverKeys::ENTER]" stepKey="pressKeyEnter"/>
+    </actionGroup>
+</actionGroups>

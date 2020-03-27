@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="AdminConfigDefaultCategoryLayoutFromConfigurationSettingTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Catalog Category"/>
+            <title value="Verify Default Layout for Catalog Category"/>
+            <description value="Admin should be able to configure the default layout for Category Page from System Configuration, verify the default is updated to the Page Builder's default layout"/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MC-936"/>
+            <testCaseId value="MC-3105"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-layout"/>
+            <group value="pagebuilder-fullwidth"/>
+            <group value="pagebuilder-catalog-category"/>
+        </annotations>
+        <!-- PageBuilder is enabled so check default is full width -->
+        <comment userInput="PageBuilder is enabled so check default is full width" stepKey="commentSeeCategoryFullWidth" before="seeNoLayoutUpdatesSelected"/>
+        <seeOptionIsSelected selector="{{DefaultLayoutsSection.categoryLayout}}" userInput="{{PageBuilderFullWidthLayout.category}}" stepKey="seeNoLayoutUpdatesSelected"/>
+    </test>
+</tests>

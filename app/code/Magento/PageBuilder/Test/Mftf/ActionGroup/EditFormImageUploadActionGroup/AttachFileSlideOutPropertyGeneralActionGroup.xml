@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="attachFileSlideOutPropertyGeneral">
+        <annotations>
+            <description>Uploads the provided Image to the wysiwyg directory in the Media Gallery from Page Builder's slide out edit form for a content type.
+                If you use this action group, you MUST add steps to delete the image in the "after" steps. </description>
+        </annotations>
+        <arguments>
+            <argument name="property"/>
+        </arguments>
+        <waitForElement selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForImageElement"/>
+        <attachFile userInput="{{property.value}}" selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="attachImageFile"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoading"/>
+        <waitForElementVisible time="10" selector="{{EditPanelForm.editFormUploadedImage(property.section, property.fieldName)}}" stepKey="waitForImageUploaded"/>
+    </actionGroup>
+</actionGroups>

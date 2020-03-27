@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="validateAdvancedStyleWithAllUpdated">
+        <arguments>
+            <argument name="page" defaultValue=""/>
+            <argument name="alignment" defaultValue="PageBuilderAdvancedAlignmentPropertyDefault"/>
+            <argument name="border" defaultValue="PageBuilderAdvancedBorderPropertyNone"/>
+            <argument name="borderColor" defaultValue=""/>
+            <argument name="borderWidth" defaultValue="PageBuilderAdvancedBorderWidthPropertyDefault"/>
+            <argument name="borderRadius" defaultValue="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
+            <argument name="cssClasses" defaultValue=""/>
+            <argument name="margin" defaultValue="PageBuilderMarginsPropertyDefault"/>
+            <argument name="padding" defaultValue="PageBuilderPaddingPropertyDefault"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForElementVisible"/>
+        <waitForElementVisible selector="{{page.alignment(index, alignment.value)}}" stepKey="waitForAlignmentVisible"/>
+        <waitForElementVisible selector="{{page.border(index, border.value)}}" stepKey="waitForBorderVisible"/>
+        <waitForElementVisible selector="{{page.borderColor(index, borderColor.rgb)}}" stepKey="waitForBorderColorVisible"/>
+        <waitForElementVisible selector="{{page.borderWidth(index, borderWidth.value)}}" stepKey="waitForBorderWidthVisible"/>
+        <waitForElementVisible selector="{{page.borderRadius(index, borderRadius.value)}}" stepKey="waitForBorderRadiusVisible"/>
+        <waitForElementVisible selector="{{page.cssClasses(index, cssClasses.value)}}" stepKey="waitForCSSClassesVisible"/>
+        <waitForElementVisible selector="{{page.margins(index, margin.value)}}" stepKey="waitForMarginVisible"/>
+        <waitForElementVisible selector="{{page.padding(index, padding.value)}}" stepKey="waitForPaddingVisible"/>
+    </actionGroup>
+</actionGroups>

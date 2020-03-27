@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="validateRowBackgroundAttributesWithAllUpdatedAndParallaxEnabled">
+        <arguments>
+            <argument name="page" defaultValue=""/>
+            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="backgroundColor" defaultValue=""/>
+            <argument name="backgroundImage" defaultValue=""/>
+            <argument name="backgroundPosition" defaultValue="PageBuilderBackgroundPosition_TopLeft"/>
+            <argument name="backgroundSize" defaultValue="PageBuilderBackgroundSize_Cover"/>
+            <argument name="backgroundRepeat" defaultValue="PageBuilderBackgroundRepeat_Disabled"/>
+            <argument name="backgroundAttachment" defaultValue="PageBuilderBackgroundAttachment_Scroll"/>
+        </arguments>
+        <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForRow"/>
+        <waitForElementVisible selector="{{page.backgroundColor(index, backgroundColor.rgb)}}" stepKey="waitForBackgroundColor"/>
+        <waitForElementVisible selector="{{page.parallaxBackgroundImage(index, backgroundImage.fileName, backgroundImage.extension)}}" stepKey="waitForBackgroundImage"/>
+        <waitForElementVisible selector="{{page.backgroundPosition(index, backgroundPosition.styleValue)}}" stepKey="waitForBackgroundPosition"/>
+        <waitForElementVisible selector="{{page.backgroundSize(index, backgroundSize.value)}}" stepKey="waitForBackgroundSize"/>
+        <waitForElementVisible selector="{{page.backgroundRepeat(index, backgroundRepeat.styleValue)}}" stepKey="waitForBackgroundRepeat"/>
+        <waitForElementVisible selector="{{page.backgroundAttachment(index, backgroundAttachment.value)}}" stepKey="waitForBackgroundAttachment"/>
+    </actionGroup>
+</actionGroups>

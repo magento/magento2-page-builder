@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="dragProductToSlideProductCarousel">
+        <arguments>
+            <argument name="page" defaultValue="ProductsCarouselOnStage"/>
+            <argument name="targetProduct" defaultValue="_defaultProduct.name" type="string"/>
+            <argument name="destinationProduct" defaultValue="_defaultProduct.name" type="string"/>
+            <argument name="productGroupIndex" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{page.productNameInCarouselNotClonedBySlick(productGroupIndex, targetProduct)}}" stepKey="waitForTargetProduct"/>
+        <waitForElementVisible selector="{{page.productNameInCarouselNotClonedBySlick(productGroupIndex, destinationProduct)}}" stepKey="waitForDestinationProduct"/>
+        <dragAndDrop selector1="{{page.productNameInCarouselNotClonedBySlick(productGroupIndex, targetProduct)}}" selector2="{{page.productNameInCarouselNotClonedBySlick(productGroupIndex, destinationProduct)}}" stepKey="dragTargetProductToDestinationProduct"/>
+        <waitForPageLoad stepKey="waitForSlidesToScroll"/>
+    </actionGroup>
+</actionGroups>
