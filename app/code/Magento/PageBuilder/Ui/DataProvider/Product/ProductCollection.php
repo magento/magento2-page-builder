@@ -29,13 +29,4 @@ class ProductCollection extends \Magento\Catalog\Model\ResourceModel\Product\Col
 
         return $this;
     }
-
-    /**
-     * @inheritdoc
-     */
-    protected function _productLimitationJoinPrice()
-    {
-        $this->_productLimitationFilters->setUsePriceIndex($this->getStoreId() !== Store::DEFAULT_STORE_ID);
-        return $this->_productLimitationPrice(false);
-    }
 }

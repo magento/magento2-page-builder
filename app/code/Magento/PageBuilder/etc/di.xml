@@ -236,14 +236,12 @@
         <arguments>
             <argument name="label" xsi:type="string">Price: high to low</argument>
             <argument name="sortDirection" xsi:type="const">\Magento\Framework\DB\Select::SQL_DESC</argument>
-            <argument name="attributeField" xsi:type="string">price</argument>
         </arguments>
     </virtualType>
     <virtualType name="Magento\PageBuilder\Model\Catalog\Sorting\Price\LowToHigh" type="Magento\PageBuilder\Model\Catalog\Sorting\SimpleOption">
         <arguments>
             <argument name="label" xsi:type="string">Price: low to high</argument>
             <argument name="sortDirection" xsi:type="const">\Magento\Framework\DB\Select::SQL_ASC</argument>
-            <argument name="attributeField" xsi:type="string">price</argument>
         </arguments>
     </virtualType>
     <virtualType name="Magento\PageBuilder\Model\Catalog\Sorting\Position" type="Magento\PageBuilder\Model\Catalog\Sorting\SimpleOption">
@@ -259,6 +257,18 @@
             <argument name="label" xsi:type="string">Position</argument>
         </arguments>
     </virtualType>
+    <virtualType name="Magento\PageBuilder\Model\Catalog\Sorting\Price\Descending" type="Magento\PageBuilder\Model\Catalog\Sorting\Price">
+        <arguments>
+            <argument name="label" xsi:type="string">Price: high to low</argument>
+            <argument name="sortDirection" xsi:type="const">\Magento\Framework\DB\Select::SQL_DESC</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Magento\PageBuilder\Model\Catalog\Sorting\Price\Ascending" type="Magento\PageBuilder\Model\Catalog\Sorting\Price">
+        <arguments>
+            <argument name="label" xsi:type="string">Price: low to high</argument>
+            <argument name="sortDirection" xsi:type="const">\Magento\Framework\DB\Select::SQL_ASC</argument>
+        </arguments>
+    </virtualType>
     <type name="Magento\PageBuilder\Model\Catalog\Sorting">
         <arguments>
             <argument name="sortClasses" xsi:type="array">
@@ -272,8 +282,8 @@
                 <item name="sku_descending" xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\Sku\Descending</item>
                 <item name="low_stock_first" xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\Stock\Ascending</item>
                 <item name="high_stock_first" xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\Stock\Descending</item>
-                <item name="price_high_to_low" xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\Price\HighToLow</item>
-                <item name="price_low_to_high" xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\Price\LowToHigh</item>
+                <item name="price_high_to_low" xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\Price\Descending</item>
+                <item name="price_low_to_high" xsi:type="string">Magento\PageBuilder\Model\Catalog\Sorting\Price\Ascending</item>
             </argument>
         </arguments>
     </type>
