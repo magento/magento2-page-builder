@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="validateVideoAspectRatio">
+        <annotations>
+            <description>Validates that the video in the video background has the correct aspect ratio.</description>
+        </annotations>
+        <arguments>
+            <argument name="section" defaultValue="RowOnStage"/>
+            <argument name="expectedAspectRatio" defaultValue="1" type="string"/>
+            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="acceptableOffset" defaultValue="5" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{section.videoBackgroundVideoElement(index)}}" stepKey="waitForVideoBackgroundElement"/>
+        <executeJS function="return document.evaluate(&quot;{{section.videoBackgroundVideoElement(index)}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().width" stepKey="actualVideoWidth"/>
+        <executeJS function="return document.evaluate(&quot;{{section.videoBackgroundVideoElement(index)}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="actualVideoHeight"/>
+        <executeJS function="return {$actualVideoWidth} / {$actualVideoHeight}" stepKey="actualVideoAspectRatio"/>
+        <executeJS function="return ({$actualVideoAspectRatio} * 1000) - ({{expectedAspectRatio}} * 1000)" stepKey="actualMinusExpected"/>
+        <assertLessThanOrEqual stepKey="assertAcceptableAspectRatio">
+            <actualResult type="variable">actualMinusExpected</actualResult>
+            <expectedResult type="int">{{acceptableOffset}}</expectedResult>
+        </assertLessThanOrEqual>
+    </actionGroup>
+</actionGroups>

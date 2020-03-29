@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="verifyNumberOfPinsOnMapNoClick">
+        <arguments>
+            <argument name="page" defaultValue="MapOnStage"/>
+            <argument name="mapIndex" defaultValue="1" type="string"/>
+            <argument name="count" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{page.googleMapsLink(mapIndex)}}" stepKey="waitForMap"/>
+        <waitForElementVisible selector="{{page.allPins(mapIndex)}}" stepKey="waitForMapPin"/>
+        <seeNumberOfElements selector="{{page.allPins(mapIndex)}}" userInput="{{count}}" stepKey="seeNumberOfPins"/>
+    </actionGroup>
+</actionGroups>

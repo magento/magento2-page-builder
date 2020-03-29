@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
+    <section name="BannerOnFrontend">
+        <element name="base" type="button" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}]" parameterized="true"/>
+        <element name="baseCSS" type="button" selector="[data-content-type=banner]"/>
+        <element name="baseJS" type="button" selector="document.querySelectorAll('[data-content-type=banner] div.pagebuilder-banner-wrapper')[{{wrapperIndex}} - 1]" parameterized="true"/>
+        <element name="hidden" type="button" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}][contains(@style, 'display: none')]" parameterized="true"/>
+        <element name="notHidden" type="button" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}][not(contains(@style, 'display: none'))]" parameterized="true"/>
+        <element name="elementJS" type="button" selector="document.querySelectorAll('[data-content-type=banner]')[{{bannerIndex}} - 1]" parameterized="true"/>
+        <element name="wrapper" type="button" parameterized="true" selector="(//div[@data-content-type='banner']//div[@data-element='wrapper'])[{{wrapperIndex}}]"/>
+        <element name="wrapperCSS" type="button" selector="[data-content-type=banner] [data-element=wrapper]"/>
+        <element name="wrapperJS" type="button" selector="document.querySelectorAll('[data-content-type=banner] div.pagebuilder-banner-wrapper')[{{wrapperIndex}} - 1]" parameterized="true"/>
+        <element name="overlay" type="button" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}]//div[@data-element='overlay']" parameterized="true"/>
+        <element name="overlayJS" type="button" selector="document.querySelectorAll('[data-content-type=banner] div.pagebuilder-overlay')[{{overlayIndex}} - 1]" parameterized="true"/>
+        <element name="wysiwygLinkUrl" type="button" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}]//div[@data-element='wrapper']//a[@href='{{link}}']" parameterized="true"/>
+        <!-- Appearance Configuration -->
+        <element name="appearance" type="text" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}][@data-appearance='{{appearance}}']" parameterized="true"/>
+        <element name="appearancePosterCSS" type="button" selector="[data-content-type=banner][data-appearance=poster]"/>
+        <element name="posterMinimumHeight" type="text" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}]//div[@data-element='overlay'][contains(@style,'min-height: {{minHeight}};')]" parameterized="true"/>
+        <element name="collageMinimumHeight" type="text" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}]//div[@data-element='wrapper'][contains(@style,'min-height: {{minHeight}};')]" parameterized="true"/>
+        <!-- Background Configuration -->
+        <element name="backgroundType" type="text" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}]//div[@data-background-type='{{backgroundType}}']" parameterized="true"/>
+        <element name="backgroundPosition" type="button" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}]//div[@data-element='wrapper'][contains(@style,'background-position: {{backgroundPosition}};')]" parameterized="true"/>
+        <element name="backgroundSize" type="button" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}]//div[@data-element='wrapper'][contains(@style,'background-size: {{backgroundSize}};')]" parameterized="true"/>
+        <element name="backgroundRepeat" type="button" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}]//div[@data-element='wrapper'][contains(@style,'background-repeat: {{backgroundRepeat}};')]" parameterized="true"/>
+        <element name="backgroundAttachment" type="button" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}]//div[@data-element='wrapper'][contains(@style,'background-attachment: {{backgroundAttachment}};')]" parameterized="true"/>
+        <element name="backgroundColor" type="button" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}]//div[@data-element='wrapper'][contains(@style,'background-color: {{backgroundColor}};')]" parameterized="true"/>
+        <element name="backgroundColorElement" type="button" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}]//div[@data-element='wrapper'][contains(@style,'background-color:')]" parameterized="true"/>
+        <element name="noBackgroundColor" type="button" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}]//div[@data-element='wrapper'][not(contains(@style,'background-color:'))]" parameterized="true"/>
+        <element name="backgroundImage" type="button" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}]//div[@data-element='wrapper'][contains(@style,'background-image: url(') and contains(@style,'{{backgroundImage}}')]" parameterized="true"/>
+        <element name="noBackgroundImage" type="button" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}]//div[@data-element='wrapper'][not(contains(@style,'background-image:'))]" parameterized="true"/>
+        <!-- Content Configuration -->
+        <element name="contentJS" type="text" selector="document.querySelectorAll('[data-content-type=banner] [data-element=content]')[{{contentIndex}} - 1]" parameterized="true"/>
+        <element name="messageContent" type="text" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}]//div[@data-element='content']//*[contains(text(),'{{content}}')]" parameterized="true"/>
+        <element name="noMessageContent" type="text" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}]//div[@data-element='wrapper']//div[@data-element='content'][.='Edit Banner Text'][not(*)]" parameterized="true"/>
+        <element name="messageContentWidget" type="text" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}]//div[@data-element='content']//a[contains(@href,'{{baseUrl}}{{path}}')]" parameterized="true"/>
+        <element name="messageContentTextArea" type="text" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}]//div[@data-element='wrapper']//div[@data-element='content'][contains(text(),'{{content}}')]" parameterized="true"/>
+        <element name="messageContentTextAreaImage" type="text" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}]//div[@data-element='wrapper']//div[@data-element='content']//img[contains(@src, {{image}})]" parameterized="true"/>
+        <element name="messageContentHeightJS" type="text" selector="return document.evaluate(&quot;(//div[@data-content-type='banner'])[{{bannerIndex}}]//div[contains(@class, 'pagebuilder-collage-content') or contains(@class, 'pagebuilder-poster-content')]//*[contains(text(),'{{content}}')]&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.clientHeight;" parameterized="true"/>
+        <element name="linkUrl" type="button" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}]/a[@data-element='link'][contains(@href,'{{link}}')]" parameterized="true"/>
+        <element name="openInNewTab" type="button" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}]/a[@data-element='link'][contains(@target,'_blank')]" parameterized="true"/>
+        <element name="button" type="button" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}]//div[@data-element='wrapper']//button" parameterized="true"/>
+        <element name="buttonJS" type="text" selector="document.querySelectorAll('.pagebuilder-banner-button')[{{buttonIndex}}-1]" parameterized="true"/>
+        <element name="showButton" type="button" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}][@data-show-button='{{showButton}}']" parameterized="true"/>
+        <element name="buttonType" type="button" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}]//div[@data-element='wrapper']//button[contains(@class,'{{buttonType}}')]" parameterized="true"/>
+        <element name="buttonText" type="button" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}]//div[@data-element='wrapper']//button[.='{{buttonText}}']" parameterized="true"/>
+        <element name="showOverlay" type="text" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}][@data-show-overlay='{{showOverlay}}']" parameterized="true"/>
+        <element name="overlayBackgroundColor" type="text" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}]//div[@data-element='wrapper']//div[@data-element='overlay'][contains(@style,'background-color: {{overlayBackgroundColor}};')]" parameterized="true"/>
+        <element name="transparentOverlay" type="text" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}]//div[@data-element='wrapper']//div[@data-element='overlay'][contains(@style,'background-color: transparent;')]" parameterized="true"/>
+        <!-- Video Background -->
+        <element name="videoBackgroundJarallaxContainer" type="text" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}]//div[contains(@id,'jarallax-container')]" parameterized="true"/>
+        <element name="videoBackgroundVideoElement" type="text" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}]//div[contains(@id,'jarallax-container')]//iframe|(//div[@data-content-type='banner'])[{{bannerIndex}}]//div[contains(@id,'jarallax-container')]//video" parameterized="true"/>
+        <element name="videoBackgroundVideoUrl" type="text" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}]//div[contains(@id,'jarallax-container')]//*[contains(@src,'{{videoURL}}')]" parameterized="true"/>
+        <element name="videoBackgroundOverlayElement" type="text" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}]//div[@data-element='video_overlay']" parameterized="true"/>
+        <element name="videoBackgroundInfiniteLoop" type="text" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}]//div[@data-element='wrapper' and @data-video-loop='{{infiniteLoopValue}}']" parameterized="true"/>
+        <element name="videoBackgroundLazyLoad" type="text" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}]//div[@data-element='wrapper' and @data-video-lazy-load='{{lazyLoadValue}}']" parameterized="true"/>
+        <element name="videoBackgroundPlayOnlyWhenVisible" type="text" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}]//div[@data-element='wrapper' and @data-video-play-only-visible='{{playOnlyVisibleValue}}']" parameterized="true"/>
+        <element name="videoBackgroundFallbackImage" type="text" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}]//div[contains(@id,'jarallax-container')]//img" parameterized="true"/>
+        <element name="videoBackgroundFallbackImageSource" type="text" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}]//div[contains(@id,'jarallax-container')]//img[contains(@src,'{{fileName}}')]" parameterized="true"/>
+        <element name="videoBackgroundNoFallbackImage" type="text" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}]//div[contains(@id,'jarallax-container')]//div" parameterized="true"/>
+        <!-- Advanced Configuration -->
+        <element name="alignment" type="text" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}]//div[@data-element='wrapper'][contains(@style,'text-align: {{alignment}};')]" parameterized="true"/>
+        <element name="noAlignment" type="text" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}]//div[@data-element='wrapper'][not(contains(@style,'text-align:'))]" parameterized="true"/>
+        <element name="border" type="text" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}]//div[@data-element='wrapper'][contains(@style,'border-style: {{border}};')]" parameterized="true"/>
+        <element name="borderColor" type="text" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}]//div[@data-element='wrapper'][contains(@style,'border-color: {{borderColor}};')]" parameterized="true"/>
+        <element name="noBorderColor" type="text" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}]//div[@data-element='wrapper'][not(contains(@style,'border-color:'))]" parameterized="true"/>
+        <element name="borderWidth" type="text" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}]//div[@data-element='wrapper'][contains(@style,'border-width: {{borderWidth}}px;')]" parameterized="true"/>
+        <element name="borderRadius" type="text" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}]//div[@data-element='wrapper'][contains(@style,'border-radius: {{borderRadius}}px;')]" parameterized="true"/>
+        <element name="cssClasses" type="text" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}][contains(@class,'{{cssClasses}}')]" parameterized="true"/>
+        <element name="noCssClasses" type="text" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}][not(@class)]" parameterized="true"/>
+        <element name="margins" type="text" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}][contains(@style,'margin: {{margins}}px;')]" parameterized="true"/>
+        <element name="posterPadding" type="text" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}]//div[@data-element='overlay'][contains(@style,'padding: {{padding}}px;')]" parameterized="true"/>
+        <element name="collagePadding" type="text" selector="(//div[@data-content-type='banner'])[{{bannerIndex}}]//div[@data-element='wrapper'][contains(@style,'padding: {{padding}}px;')]" parameterized="true"/>
+    </section>
+</sections>

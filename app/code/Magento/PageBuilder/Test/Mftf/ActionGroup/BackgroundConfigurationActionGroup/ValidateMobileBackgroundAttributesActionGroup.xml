@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="validateMobileBackgroundAttributes">
+        <arguments>
+            <argument name="section"/>
+            <argument name="mobileBackgroundColor"/>
+            <argument name="mobileBackgroundPosition" defaultValue="PageBuilderBackgroundPosition_Default"/>
+            <argument name="mobileBackgroundSize" defaultValue="PageBuilderBackgroundSize_Default"/>
+            <argument name="mobileBackgroundRepeat" defaultValue="PageBuilderBackgroundRepeat_Default"/>
+            <argument name="mobileBackgroundAttachment" defaultValue="PageBuilderBackgroundAttachment_Default"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <comment userInput="validateMobileBackgroundAttributes" stepKey="comment"/>
+        <waitForElementVisible selector="{{section.base(index)}}" stepKey="waitForBaseElement"/>
+        <waitForElementVisible selector="{{section.mobileBackgroundColor(index, mobileBackgroundColor.rgb)}}" stepKey="waitForBackgroundColor"/>
+        <waitForElementVisible selector="{{section.mobileBackgroundPosition(index, mobileBackgroundPosition.styleValue)}}" stepKey="waitForBackgroundPosition"/>
+        <waitForElementVisible selector="{{section.mobileBackgroundSize(index, mobileBackgroundSize.value)}}" stepKey="waitForBackgroundSize"/>
+        <waitForElementVisible selector="{{section.mobileBackgroundRepeat(index, mobileBackgroundRepeat.styleValue)}}" stepKey="waitForBackgroundRepeat"/>
+        <waitForElementVisible selector="{{section.mobileBackgroundAttachment(index, mobileBackgroundAttachment.value)}}" stepKey="waitForBackgroundAttachment"/>
+    </actionGroup>
+</actionGroups>

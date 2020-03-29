@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="deleteLocationFromGrid">
+        <arguments>
+            <argument name="locationName"/>
+        </arguments>
+        <comment userInput="deleteLocationFromGrid" stepKey="comment"/>
+        <waitForElementVisible selector="{{PageBuilderDataGrid.gridBase}}" stepKey="waitForGrid"/>
+        <waitForElementVisible selector="{{PageBuilderDataGrid.gridRow(locationName.fieldName, locationName.value)}}" stepKey="waitForGridRow"/>
+        <click selector="{{PageBuilderDataGrid.gridSelectButton(locationName.fieldName, locationName.value)}}" stepKey="clickSelectButton"/>
+        <waitForElementVisible selector="{{PageBuilderDataGrid.gridSelectDeleteButton(locationName.fieldName, locationName.value)}}" stepKey="waitForDeleteButton"/>
+        <click selector="{{PageBuilderDataGrid.gridSelectDeleteButton(locationName.fieldName, locationName.value)}}" stepKey="clickDelete"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementNotVisible selector="{{PageBuilderDataGrid.gridRow(locationName.fieldName, locationName.value)}}" stepKey="waitForGridRowNotVisible"/>
+    </actionGroup>
+</actionGroups>

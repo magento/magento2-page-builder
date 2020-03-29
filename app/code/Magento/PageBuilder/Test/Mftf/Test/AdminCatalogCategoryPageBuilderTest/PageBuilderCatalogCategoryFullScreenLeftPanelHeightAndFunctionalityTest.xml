@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="PageBuilderCatalogCategoryFullScreenLeftPanelHeightAndFunctionalityTest" extends="PageBuilderFullScreenLeftPanelHeightAndFunctionalityTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Catalog Category"/>
+            <title value="Left Panel Is Full-Height and Works In Full-Screen Mode"/>
+            <description value="This test is to ensure that the PageBuilder left panel works and grows to span the full height of the viewport in full-screen mode when opened for Category Description."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MC-3330"/>
+            <testCaseId value="MC-14910"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-fullScreen"/>
+            <group value="pagebuilder-catalog-category"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultCategory" before="loginAsAdmin" stepKey="createPreReqCategory"/>
+            <actionGroup ref="NavigateToCreatedCategoryActionGroup" stepKey="navigateToAPageWithPageBuilder">
+                <argument name="Category" value="$$createPreReqCategory$$"/>
+            </actionGroup>
+            <actionGroup ref="expandAdminCategorySection" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="openPageBuilderForAttribute" after="switchToPageBuilderStage" stepKey="openPageBuilderForDescription"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createPreReqCategory" before="logout" stepKey="deleteCreatedCategory"/>
+        </after>
+        <comment userInput="---merging to remove step---" stepKey="openPageBuilderFullScreen"/>
+    </test>
+</tests>

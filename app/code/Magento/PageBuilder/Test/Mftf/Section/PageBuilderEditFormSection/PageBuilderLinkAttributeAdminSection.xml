@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
+    <section name="PageBuilderLinkAttributeAdmin">
+        <element name="LinkSelect" type="select" selector="//select[@name='{{var1}}']" parameterized="true"/>
+        <element name="LinkInput" type="input" selector="//select[@name='{{var1}}']/following-sibling::div/input" parameterized="true"/>
+        <element name="LinkDropdown" type="select" selector="//div[contains(@class,'url-input-element-linked-element')]/div"/>
+        <element name="LinkSearch" type="input" selector="//div[contains(@class,'url-input-element-linked-element')]//input"/>
+        <element name="SearchResultBox" type="select" selector=".action-menu._active"/>
+        <element name="LinkItemSelected" type="text" selector="//span[text()='{{var1}}']/parent::label/parent::div[contains(@class,'_selected')]" parameterized="true"/>
+        <element name="SearchResult" type="text" selector="//span[text()='{{var1}}']" parameterized="true"/>
+        <element name="DropdownInput" type="input" selector="//div[@class='url-input-element-linked-element']//div[@data-role='selected-option']"/>
+        <element name="RemoveBtn" type="button" selector="button[data-action='remove-selected-item']"/>
+    </section>
+</sections>

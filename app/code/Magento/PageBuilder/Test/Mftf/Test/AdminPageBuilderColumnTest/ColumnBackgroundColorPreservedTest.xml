@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="ColumnBackgroundColorPreservedTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Column background color is preserved on edit"/>
+            <description value="Validate column background color is preserved on edit"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-1954"/>
+            <testCaseId value="MC-2401"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+            <closeTab stepKey="closeTab"/>
+        </after>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragFirstColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragSecondColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+            <argument name="contentTypeIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForFirstColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterBackgroundAppearanceProperty1">
+            <argument name="property" value="PageBuilderColumnAppearanceProperty_Bottom"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty1">
+            <argument name="property" value="PageBuilderMinHeightProperty_500"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterBackgroundColorProperty1">
+            <argument name="property" value="PageBuilderBackgroundColorProperty_087E8B"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForSecondColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterBackgroundAppearanceProperty2">
+            <argument name="property" value="PageBuilderColumnAppearanceProperty_Center"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty2">
+            <argument name="property" value="PageBuilderMinHeightProperty_300"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterBackgroundColorProperty2">
+            <argument name="property" value="PageBuilderBackgroundColorProperty_FF5A5F"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForThirdColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="3"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty3">
+            <argument name="property" value="PageBuilderMinHeightProperty_200"/>
+        </actionGroup>
+        <comment userInput="I fill out color into Background Color using Color Picker" stepKey="comment"/>
+        <actionGroup ref="fillOutColorPicker" stepKey="fillOutColor">
+            <argument name="colorCode" value="PageBuilderBackgroundColorProperty_3C3C3C"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutPropertyAlternate" stepKey="seeHEXInField7">
+            <argument name="property" value="PageBuilderBackgroundColorProperty_3C3C3C"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+        <openNewTab stepKey="openNewTab"/>
+        <amOnPage url="column{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <waitForPageLoad stepKey="waitForPageLoadStoreFront1"/>
+        <seeElement selector="{{ColumnOnFrontend.column1Height}}" stepKey="seeColumn1MinHeightApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.column1Appearance}}" stepKey="seeColumn1AppearanceApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.column1BackgroundColorPeacock}}" stepKey="seeColumn1BackgroundColorApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.column2Height300}}" stepKey="seeColumn2MinHeightApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.column2Appearance}}" stepKey="seeColumn2AppearanceApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.column2BackgroundColorSalmon}}" stepKey="seeColumn2BackgroundColorApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.column3Height200}}" stepKey="seeColumn3MinHeightApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.column3Appearance}}" stepKey="seeColumn3AppearanceApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.column3BackgroundColorGrey}}" stepKey="seeColumn3BackgroundColorApplied"/>
+        <switchToPreviousTab stepKey="switchToPreviousTab"/>
+        <reloadPage stepKey="reloadPage"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForSecondColumn1">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seePageBuilderAppearanceProperty">
+            <argument name="property" value="PageBuilderColumnAppearanceProperty_Center"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seePageBuilderMinHeightProperty_500">
+            <argument name="property" value="PageBuilderMinHeightProperty_300"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeBackgroundColorProperty">
+            <argument name="property" value="PageBuilderBackgroundColorProperty_FF5A5F"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsWithoutModifying"/>
+        <actionGroup ref="SaveCmsPageActionGroup" stepKey="saveCmsPage"/>
+        <switchToNextTab stepKey="switchToNextTab"/>
+        <amOnPage url="column{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage2"/>
+        <waitForPageLoad stepKey="waitForPageLoadStoreFront2"/>
+        <seeElement selector="{{ColumnOnFrontend.column1Height}}" stepKey="seeColumn1MinHeightApplied2"/>
+        <seeElement selector="{{ColumnOnFrontend.column1Appearance}}" stepKey="seeColumn1AppearanceApplied2"/>
+        <seeElement selector="{{ColumnOnFrontend.column1BackgroundColorPeacock}}" stepKey="seeColumn1BackgroundColorApplied2"/>
+        <seeElement selector="{{ColumnOnFrontend.column2Height300}}" stepKey="seeColumn2MinHeightApplied2"/>
+        <seeElement selector="{{ColumnOnFrontend.column2Appearance}}" stepKey="seeColumn2AppearanceApplied2"/>
+        <seeElement selector="{{ColumnOnFrontend.column2BackgroundColorSalmon}}" stepKey="seeColumn2BackgroundColorApplied2"/>
+        <seeElement selector="{{ColumnOnFrontend.column3Height200}}" stepKey="seeColumn3MinHeightApplied2"/>
+        <seeElement selector="{{ColumnOnFrontend.column3Appearance}}" stepKey="seeColumn3AppearanceApplied2"/>
+        <seeElement selector="{{ColumnOnFrontend.column3BackgroundColorGrey}}" stepKey="seeColumn3BackgroundColorApplied2"/>
+    </test>
+</tests>

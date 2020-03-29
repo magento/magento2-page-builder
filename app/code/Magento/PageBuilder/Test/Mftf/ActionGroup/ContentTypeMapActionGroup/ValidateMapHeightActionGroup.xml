@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="validateMapHeight">
+        <arguments>
+            <argument name="section" defaultValue="MapOnStage"/>
+            <argument name="height" defaultValue="PageBuilderMapHeightDefaultProperty"/>
+            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="acceptableOffset" defaultValue="2" type="string"/>
+        </arguments>
+        <seeElement selector="{{section.height(index, height.value)}}" stepKey="seeMapHeight"/>
+        <executeJS function="return document.querySelectorAll('{{section.baseCSS}}')[{{index}}-1].getBoundingClientRect().height" stepKey="actualMapHeight"/>
+        <executeJS function="return Math.abs({$actualMapHeight}-{{height.value}})" stepKey="mapHeightDifference"/>
+        <assertLessThanOrEqual stepKey="assertMapHeightAcceptable">
+            <expectedResult type="int">{{acceptableOffset}}</expectedResult>
+            <actualResult type="variable">mapHeightDifference</actualResult>
+        </assertLessThanOrEqual>
+    </actionGroup>
+</actionGroups>

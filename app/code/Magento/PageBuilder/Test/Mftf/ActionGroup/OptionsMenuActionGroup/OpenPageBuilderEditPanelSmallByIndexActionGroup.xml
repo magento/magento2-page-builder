@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="openPageBuilderEditPanelSmallByIndex">
+        <arguments>
+            <argument name="section"/>
+            <argument name="targetIndex" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible time="20" selector="{{section.openOptionsMenu(targetIndex)}}" stepKey="waitForContentType"/>
+        <click selector="{{section.openOptionsMenu(targetIndex)}}" stepKey="clickContentType"/>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <waitForElementVisible time="10" selector="{{section.optionsMenu(targetIndex)}}" stepKey="waitForOptionsMenu"/>
+        <waitForElementVisible selector="{{section.optionsMenuButton(targetIndex, 'edit')}}" stepKey="waitForEditButton"/>
+        <click selector="{{section.optionsMenuButton(targetIndex, 'edit')}}" stepKey="clickEditButton"/>
+        <waitForPageLoad time="30" stepKey="waitForPageLoad2"/>
+        <waitForElementVisible time="5" selector="{{EditPanelForm.editForm}}" stepKey="waitForEditForm"/>
+    </actionGroup>
+</actionGroups>

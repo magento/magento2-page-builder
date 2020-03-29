@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="validateOverlayPositionBottom">
+        <arguments>
+            <argument name="page"/>
+            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="padding" defaultValue="PageBuilderPaddingProperty40"/>
+        </arguments>
+        <!-- Validate bottom edge of overlay -->
+        <comment userInput="Validate bottom edge of overlay" stepKey="commentValidateBottomEdgeOfOverlay"/>
+        <!-- 30px padding top, 50px min height, 30px padding bottom -->
+        <executeJS function="return {{page.wrapperJS(index)}}.getBoundingClientRect().top+{{padding.paddingTop}}+30+50+30" stepKey="wrapperTopPaddingContent"/>
+        <executeJS function="return {{page.overlayJS(index)}}.getBoundingClientRect().bottom" stepKey="overlayBottomPosition"/>
+        <executeJS function="return Math.round(({$wrapperTopPaddingContent}/{$overlayBottomPosition})*100)/100" stepKey="overlayBottomRatio"/>
+        <assertEquals stepKey="assertOverlayBottomRatio">
+            <expectedResult type="int">1</expectedResult>
+            <actualResult type="variable">overlayBottomRatio</actualResult>
+        </assertEquals>
+        <!-- Validate bottom edge of overlay is within parent -->
+        <comment userInput="Validate bottom edge of overlay is within parent" stepKey="commentValidateBottomEdgeOfOverlayIsWithinParent"/>
+        <executeJS function="return {{page.wrapperJS(index)}}.getBoundingClientRect().bottom-{{padding.paddingBottom}}" stepKey="wrapperBottomPositionNoPadding"/>
+        <assertLessThanOrEqual stepKey="assertOverlayBottomIsWithinParent">
+            <expectedResult type="variable">wrapperBottomPositionNoPadding</expectedResult>
+            <actualResult type="variable">overlayBottomPosition</actualResult>
+        </assertLessThanOrEqual>
+    </actionGroup>
+</actionGroups>

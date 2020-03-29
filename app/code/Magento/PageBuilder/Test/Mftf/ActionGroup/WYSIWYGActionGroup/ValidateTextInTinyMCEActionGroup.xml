@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="validateTextInTinyMCE">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+            <argument name="section" defaultValue="TextOnConfiguration"/>
+        </arguments>
+        <comment userInput="Validating Text In Tiny MCE" stepKey="commentValidateTextTinyMCE"/>
+        <waitForElementVisible selector="#{{section.tinyMCEIFrame}}" stepKey="waitForIFrame"/>
+        <switchToIFrame selector="{{section.tinyMCEIFrame}}" stepKey="switchToIFrame"/>
+        <see selector="body" userInput="{{property.value}}" stepKey="seeText"/>
+        <switchToIFrame stepKey="exitIFrame"/>
+    </actionGroup>
+</actionGroups>

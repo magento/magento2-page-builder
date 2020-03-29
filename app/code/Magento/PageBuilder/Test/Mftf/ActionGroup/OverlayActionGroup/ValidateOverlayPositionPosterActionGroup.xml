@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="validateOverlayPositionPoster">
+        <arguments>
+            <argument name="page"/>
+            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="padding" defaultValue="PageBuilderPaddingPropertyDefault"/>
+            <argument name="acceptableOffset" defaultValue="2" type="string"/>
+        </arguments>
+        <!-- Validate top edge of overlay -->
+        <comment userInput="Validate top edge of overlay" stepKey="commentValidateTopEdgeOfOverlayWithPadding"/>
+        <executeJS function="return {{page.wrapperJS(index)}}.getBoundingClientRect().top" stepKey="wrapperTopPosition"/>
+        <executeJS function="return Math.round({{page.overlayJS(index)}}.getBoundingClientRect().top - {{padding.paddingTop}})" stepKey="overlayTopPosition"/>
+        <executeJS function="return Math.abs({$overlayTopPosition} - {$wrapperTopPosition})" stepKey="overlayTopDifference"/>
+        <assertLessThanOrEqual stepKey="assertOverlayTopAcceptable">
+            <expectedResult type="int">{{acceptableOffset}}</expectedResult>
+            <actualResult type="variable">overlayTopDifference</actualResult>
+        </assertLessThanOrEqual>
+        <!-- Validate right edge of overlay -->
+        <comment userInput="Validate right edge of overlay" stepKey="commentValidateRightEdgeOfOverlay"/>
+        <executeJS function="return Math.round({{page.wrapperJS(index)}}.getBoundingClientRect().right - {{padding.paddingRight}})" stepKey="wrapperRightPosition"/>
+        <executeJS function="return {{page.overlayJS(index)}}.getBoundingClientRect().right" stepKey="overlayRightPosition"/>
+        <executeJS function="return Math.abs({$wrapperRightPosition} - {$overlayRightPosition})" stepKey="overlayRightDifference"/>
+        <assertLessThanOrEqual stepKey="assertOverlayRightAcceptable">
+            <expectedResult type="int">{{acceptableOffset}}</expectedResult>
+            <actualResult type="variable">overlayRightDifference</actualResult>
+        </assertLessThanOrEqual>
+        <!-- Validate bottom edge of overlay -->
+        <comment userInput="Validate bottom edge of overlay" stepKey="commentValidateBottomEdgeOfOverlay"/>
+        <executeJS function="return Math.round({{page.wrapperJS(index)}}.getBoundingClientRect().bottom - {{padding.paddingBottom}})" stepKey="wrapperBottomPosition"/>
+        <executeJS function="return {{page.overlayJS(index)}}.getBoundingClientRect().bottom" stepKey="overlayBottomPosition"/>
+        <executeJS function="return Math.abs({$wrapperBottomPosition} - {$overlayBottomPosition})" stepKey="overlayBottomDifference"/>
+        <assertLessThanOrEqual stepKey="assertOverlayBottomAcceptable">
+            <expectedResult type="int">{{acceptableOffset}}</expectedResult>
+            <actualResult type="variable">overlayBottomDifference</actualResult>
+        </assertLessThanOrEqual>
+        <!-- Validate left edge of overlay -->
+        <comment userInput="Validate left edge of overlay" stepKey="commentValidateLeftEdgeOfOverlay"/>
+        <executeJS function="return {{page.wrapperJS(index)}}.getBoundingClientRect().left" stepKey="wrapperLeftPosition"/>
+        <executeJS function="return Math.round({{page.overlayJS(index)}}.getBoundingClientRect().left - {{padding.paddingLeft}})" stepKey="overlayLeftPosition"/>
+        <executeJS function="return Math.abs({$overlayLeftPosition} - {$wrapperLeftPosition})" stepKey="overlayLeftDifference"/>
+        <assertLessThanOrEqual stepKey="assertOverlayLeftAcceptable">
+            <expectedResult type="int">{{acceptableOffset}}</expectedResult>
+            <actualResult type="variable">overlayLeftDifference</actualResult>
+        </assertLessThanOrEqual>
+    </actionGroup>
+</actionGroups>

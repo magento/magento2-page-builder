@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="AdvancedConfigurationFunctionalPaddingTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Advanced Configuration"/>
+            <title value="Functional - Padding"/>
+            <description value="Tests that the Padding attributes functions as expected on Stage and Storefront for Text"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-83415"/>
+            <testCaseId value="MC-2611"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-advancedConfig"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <!-- Add Text to Stage -->
+        <comment userInput="Add Text to Stage" stepKey="commentAddTextToStage"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage2">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
+        </actionGroup>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor"/>
+        <!-- Add Padding: Empty -->
+        <comment userInput="Add Padding: Empty" stepKey="commentAddPaddingEmpty"/>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage1">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText1">
+            <argument name="property" value="PageBuilderTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="clearSlideOutPanelFieldPadding" stepKey="clearPadding">
+            <argument name="property" value="PageBuilderPaddingPropertyDefault"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor2"/>
+        <!-- Add Padding: Unique -->
+        <comment userInput="Add Padding: Unique" stepKey="commentAddPaddingUnique"/>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage4">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText4">
+            <argument name="property" value="PageBuilderTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldPadding" stepKey="enterPadding4">
+            <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings4"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor3"/>
+        <!-- Stage: Check Padding: Empty -->
+        <comment userInput="Stage: Check Padding: Empty" stepKey="commentStageCheckEmpty"/>
+        <actionGroup ref="validateAdvancedStyleWithNoPadding" stepKey="validateStageEmpty">
+            <argument name="page" value="TextOnStage"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Stage: Check Padding: Unique -->
+        <comment userInput="Stage: Check Padding: Unique" stepKey="commentStageCheckUnique"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStageUnique">
+            <argument name="page" value="TextOnStage"/>
+            <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentStageAfterSave"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!-- Stage: Check Padding: Empty -->
+        <comment userInput="Stage: Check Padding: Empty" stepKey="commentStageCheckEmpty2"/>
+        <actionGroup ref="validateAdvancedStyleWithNoPadding" stepKey="validateStageEmpty2">
+            <argument name="page" value="TextOnStage"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Stage: Check Padding: Unique -->
+        <comment userInput="Stage: Check Padding: Unique" stepKey="commentStageCheckUnique2"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStageUnique2">
+            <argument name="page" value="TextOnStage"/>
+            <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <!-- Storefront: Check Padding: Empty -->
+        <comment userInput="Storefront: Check Padding: Empty" stepKey="commentStorefrontCheckEmpty"/>
+        <actionGroup ref="validateAdvancedStyleWithNoPadding" stepKey="validateStorefrontEmpty">
+            <argument name="page" value="TextOnStorefront"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Storefront: Check Padding: Unique -->
+        <comment userInput="Storefront: Check Padding: Unique" stepKey="commentStorefrontCheckUnique"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStorefrontUnique">
+            <argument name="page" value="TextOnStorefront"/>
+            <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+    </test>
+</tests>

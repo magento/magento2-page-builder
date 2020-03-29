@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="validateDividerWidthPercentage">
+        <arguments>
+            <argument name="page"/>
+            <argument name="dividerWidth" defaultValue="PageBuilderDividerLineWidth_Default"/>
+            <argument name="padding" defaultValue="PageBuilderPaddingProperty10"/>
+            <argument name="border" defaultValue="PageBuilderAdvancedBorderWidthProperty0"/>
+            <argument name="index" defaultValue="1" type="string"/>
+            <!-- expectedOffset is necessary because divider width is equal to (expected width) + (line thickness attribute*2) in admin when rendered through Block -->
+            <argument name="expectedOffset" defaultValue="0" type="string"/>
+        </arguments>
+        <!-- Check width of line against width of container -->
+        <executeJS function="return Math.round(((document.querySelectorAll('{{page.baseCSS}}')[{{index}}-1].getBoundingClientRect().width) - {{padding.paddingLeft}} - {{padding.paddingRight}} - {{border.value}}*2)*{{dividerWidth.decimalValue}})" stepKey="expectedWidth"/>
+        <executeJS function="return Math.round((document.querySelectorAll('{{page.lineElementCSS}}')[{{index}}-1].getBoundingClientRect().width)-{{expectedOffset}})" stepKey="lineWidth"/>
+        <assertLessThanOrEqual stepKey="assertLineWidth">
+            <expectedResult type="variable">expectedWidth</expectedResult>
+            <actualResult type="variable">lineWidth</actualResult>
+        </assertLessThanOrEqual>
+    </actionGroup>
+</actionGroups>

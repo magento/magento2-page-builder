@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="AdminPageBuilderProductsAllProductsShowWhenSavedWithoutConditionsTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Products"/>
+            <title value="Grid - All products show when conditions are saved blank"/>
+            <description value="Validate that when Products dialog is saved without configuring settings that all products show up without filtering."/>
+            <severity value="BLOCKER"/>
+            <useCaseId value="MAGETWO-71425"/>
+            <testCaseId value="MC-4030"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-products"/>
+            <group value="pagebuilder-productsGrid"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <createData entity="PageBuilderProductsSubCategory" stepKey="createPreReqCategory"/>
+            <createData entity="_defaultProduct" stepKey="createPreReqProduct1">
+                <requiredEntity createDataKey="createPreReqCategory"/>
+            </createData>
+            <createData entity="_defaultProduct" stepKey="createPreReqProduct2">
+                <requiredEntity createDataKey="createPreReqCategory"/>
+            </createData>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createPreReqProduct1" stepKey="deletePreReqProduct1"/>
+            <deleteData createDataKey="createPreReqProduct2" stepKey="deletePreReqProduct2"/>
+            <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCategory"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionAddContent">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragProductsIntoStage">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
+            <argument name="property" value="PageBuilderProductsProductGridAppearance"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="chooseSelectProductsBy">
+            <argument name="property" value="PageBuilderProductsSelectProductsByCondition"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <waitForElementVisible selector="{{ProductsOnStage.product('1')}}" stepKey="waitForProductsToLoad"/>
+        <grabMultiple selector="{{ProductsOnStage.product('1')}}" stepKey="grabProducts"/>
+        <assertGreaterThanOrEqual stepKey="assertCountIsAtLeast2">
+            <actualResult type="variable">grabProducts</actualResult>
+            <expectedResult type="int">2</expectedResult>
+        </assertGreaterThanOrEqual>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <waitForElementVisible selector="{{ProductsOnStorefront.product('1')}}" stepKey="waitForProductsToLoadStorefront"/>
+        <grabMultiple selector="{{ProductsOnStorefront.product('1')}}" stepKey="grabStorefrontProducts"/>
+        <assertGreaterThanOrEqual stepKey="assertStorefrontCountIsAtLeast2">
+            <actualResult type="variable">grabStorefrontProducts</actualResult>
+            <expectedResult type="int">2</expectedResult>
+        </assertGreaterThanOrEqual>
+    </test>
+</tests>

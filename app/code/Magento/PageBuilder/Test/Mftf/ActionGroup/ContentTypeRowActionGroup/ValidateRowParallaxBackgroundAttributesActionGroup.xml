@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="validateRowParallaxBackgroundAttributes">
+        <arguments>
+            <argument name="page" defaultValue=""/>
+            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="parallaxStateValue" defaultValue=""/>
+            <argument name="parallaxSpeedValue" defaultValue=""/>
+        </arguments>
+        <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForRow"/>
+        <waitForElementVisible selector="{{page.parallaxState(index, parallaxStateValue.value)}}" stepKey="waitForParallaxBackgroundState"/>
+        <waitForElementVisible selector="{{page.parallaxSpeed(index, parallaxSpeedValue.value)}}" stepKey="waitForParallaxBackgroundSpeed"/>
+    </actionGroup>
+</actionGroups>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="validatePageBuilderSaveTemplateModal">
+        <annotations>
+            <description>Validate all buttons, text, inputs, and preview image on the Save as Template modal.</description>
+        </annotations>
+        <arguments>
+            <argument name="totalCreatedForOptions" defaultValue="5" type="string"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForModalLoad"/>
+        <waitForElementVisible selector="{{PageBuilderSaveTemplateModal.previewImage}}" stepKey="waitForImageLoad"/>
+        <see userInput="Save Content as Template" selector="{{PageBuilderSaveTemplateModal.title}}" stepKey="seeTitle"/>
+        <seeElement selector="{{PageBuilderSaveTemplateModal.closeButton}}" stepKey="seeCloseButton"/>
+        <seeElement selector="{{PageBuilderSaveTemplateModal.previewImage}}" stepKey="seePreview"/>
+        <executeJS function="return document.evaluate(&quot;{{PageBuilderSaveTemplateModal.previewImage}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.naturalHeight" stepKey="screenshotNaturalHeight"/>
+        <executeJS function="return document.evaluate(&quot;{{PageBuilderSaveTemplateModal.previewImage}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.naturalWidth" stepKey="screenshotNaturalWidth"/>
+        <assertGreaterThan stepKey="assertNaturalHeightGreaterThanZero">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">screenshotNaturalHeight</actualResult>
+        </assertGreaterThan>
+        <assertGreaterThan stepKey="assertNaturalWidthGreaterThanZero">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">screenshotNaturalWidth</actualResult>
+        </assertGreaterThan>
+        <seeElement selector="{{PageBuilderSaveTemplateModal.templateNameInput}}" stepKey="seeTemplateNameInput"/>
+        <seeElement selector="{{PageBuilderSaveTemplateModal.createdForSelect}}" stepKey="seeCreatedForSelect"/>
+        <grabMultiple selector="{{PageBuilderSaveTemplateModal.createdForOptions}}" userInput="value" stepKey="totalCreatedForOptions"/>
+        <assertCount stepKey="assertTotalCreatedForOptions">
+            <expectedResult type="int">{{totalCreatedForOptions}}</expectedResult>
+            <actualResult type="variable">totalCreatedForOptions</actualResult>
+        </assertCount>
+        <see userInput="Created For is to help with filtering templates. This does not restrict where this template can be used." selector="{{PageBuilderSaveTemplateModal.createdForHelperText}}" stepKey="seeCreatedForHelperText"/>
+        <seeElement selector="{{PageBuilderSaveTemplateModal.saveButton}}" stepKey="seeSaveButton"/>
+        <seeElement selector="{{PageBuilderSaveTemplateModal.cancelButton}}" stepKey="seeCancelButton"/>
+    </actionGroup>
+</actionGroups>

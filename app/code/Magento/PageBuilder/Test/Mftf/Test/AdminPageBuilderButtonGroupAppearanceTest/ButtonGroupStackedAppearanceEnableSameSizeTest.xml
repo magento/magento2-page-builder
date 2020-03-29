@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="ButtonGroupStackedAppearanceEnableSameSizeTest" extends="ButtonGroupInlineAppearanceEnableSameSizeTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Buttons"/>
+            <title value="Button Group - Enable Same Size For Stacked Appearance"/>
+            <description value="Validate that enabling the same size button feature will update the Stage and Storefront correctly for the Stacked appearance."/>
+            <severity value="BLOCKER"/>
+            <useCaseId value="MC-961"/>
+            <testCaseId value="MC-3604"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-buttons"/>
+            <group value="pagebuilder-buttonGroup"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearance">
+            <argument name="property" value="PageBuilderButtonGroupAppearance_Stacked"/>
+        </actionGroup>
+    </test>
+</tests>

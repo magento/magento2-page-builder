@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="ColumnWithBordersPaddingAndLargeContentsGreaterThanMinHeightTest" extends="RowWithBordersPaddingAndLargeContentsGreaterThanMinHeightTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Column with borders, padding, and large content is greater than min height"/>
+            <description value="A user can see Column height with borders, padding, and large content is greater than min height"/>
+            <severity value="BLOCKER"/>
+            <useCaseId value="MC-5079"/>
+            <testCaseId value="MC-5803"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+        </annotations>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty">
+            <argument name="property" value="PageBuilderMinHeightProperty_200"/>
+        </actionGroup>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" after="commentConfigureContentType" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanel">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragContentTypeToContainer">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeHeightGreaterThanMinHeight" stepKey="validateContentTypeHeightBeforeSave">
+            <argument name="content" value="{{ColumnOnBackend.baseCSS}}"/>
+            <argument name="border" value="PageBuilderAdvancedBorderWidthProperty10"/>
+            <argument name="height" value="PageBuilderMinHeightProperty_200"/>
+            <argument name="padding" value="PageBuilderPaddingProperty10"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeHeightGreaterThanMinHeight" stepKey="validateContentTypeHeightAfterSave">
+            <argument name="content" value="{{ColumnOnBackend.baseCSS}}"/>
+            <argument name="border" value="PageBuilderAdvancedBorderWidthProperty10"/>
+            <argument name="height" value="PageBuilderMinHeightProperty_200"/>
+            <argument name="padding" value="PageBuilderPaddingProperty10"/>
+        </actionGroup>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeHeightGreaterThanMinHeight" stepKey="validateContentTypeHeightStorefront">
+            <argument name="content" value="{{ColumnOnFrontend.baseCSS}}"/>
+            <argument name="height" value="PageBuilderMinHeightProperty_200"/>
+        </actionGroup>
+    </test>
+</tests>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="clickNextPageOnPageBuilderTemplateGrid">
+        <annotations>
+            <description>Clicks the next page button on the Page Builder templates data grid.</description>
+        </annotations>
+        <arguments>
+            <argument name="section" defaultValue="PageBuilderTemplatesPageGrid"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForGridLoad"/>
+        <waitForElementVisible selector="{{section.nextPageButton}}" stepKey="waitForNextPageButton"/>
+        <click selector="{{section.nextPageButton}}" stepKey="clickNextPageButton"/>
+        <waitForPageLoad stepKey="waitForNextPage"/>
+    </actionGroup>
+</actionGroups>

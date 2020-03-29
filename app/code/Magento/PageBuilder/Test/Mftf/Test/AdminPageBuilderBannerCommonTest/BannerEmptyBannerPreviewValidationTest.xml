@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="BannerEmptyBannerPreviewValidationTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Banner"/>
+            <title value="Validate empty banner on preview"/>
+            <description value="Validate contents and layout of empty banner on preview page."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MAGETWO-83928"/>
+            <testCaseId value="MC-2718"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-banner"/>
+            <group value="pagebuilder-bannerCommon"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+            <closeTab stepKey="closeTab"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBannerIntoStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Stage: Poster -->
+        <comment userInput="Validate Stage: Poster" stepKey="commentValidateStage"/>
+        <seeElement selector="{{BannerOnBackend.emptyBanner('1')}}" stepKey="seeEmptyBannerContent"/>
+        <seeElement selector="{{BannerOnBackend.posterPadding('1', PageBuilderPaddingProperty40.value)}}" stepKey="waitForPoster"/>
+        <seeElement selector="{{BannerOnBackend.overlay('1')}}" stepKey="seeOverlay"/>
+        <seeElement selector="{{BannerOnBackend.showButton('1', PageBuilderBannerShowButtonDefaultProperty.value)}}" stepKey="seeButtonStateStage"/>
+        <seeElement selector="{{BannerOnBackend.showOverlay('1', PageBuilderBannerShowContentOverlayDefaultProperty.value)}}" stepKey="seeOverlayStateStage"/>
+        <dontSeeElement selector="{{BannerOnBackend.editableButtonItemElement('1')}}" stepKey="dontSeeButton"/>
+        <moveMouseOver selector="{{BannerOnBackend.base('1')}}" stepKey="moveMouseOverBanner"/>
+        <seeElement selector="{{BannerOnBackend.overlay('1')}}" stepKey="seePosterOverlayOnHover"/>
+        <seeElement selector="{{BannerOnBackend.showButton('1', PageBuilderBannerShowButtonDefaultProperty.value)}}" stepKey="seeButtonStateStageOnHover"/>
+        <seeElement selector="{{BannerOnBackend.showOverlay('1', PageBuilderBannerShowContentOverlayDefaultProperty.value)}}" stepKey="seeOverlayStateStageOnHover"/>
+        <dontSeeElement selector="{{BannerOnBackend.editableButtonItemElement('1')}}" stepKey="dontSeeButtonOnHover"/>
+        <openNewTab stepKey="openNewTab"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <!-- Validate Storefront: Poster -->
+        <comment userInput="Validate Storefront: Poster" stepKey="commentValidateStorefront"/>
+        <seeElement selector="{{BannerOnFrontend.base('1')}}" stepKey="seeBannerInFrontend1"/>
+        <seeElement selector="{{BannerOnFrontend.posterPadding('1', PageBuilderPaddingProperty40.value)}}" stepKey="seePosterInFrontEnd"/>
+        <dontSee userInput="{{PageBuilderBannerMessageDefaultProperty.placeholder}}" stepKey="dontSeePosterMessageInFrontend"/>
+        <dontSeeElementInDOM selector="{{BannerOnFrontend.button('1')}}" stepKey="dontSeeInDOMButtonInFrontend1"/>
+        <seeElement selector="{{BannerOnFrontend.showOverlay('1', PageBuilderBannerShowContentOverlayDefaultProperty.value)}}" stepKey="seeOverlayInFrontend1"/>
+        <moveMouseOver selector="{{BannerOnFrontend.base('1')}}" stepKey="moveMouseOverBannerFrontend1"/>
+        <dontSeeElementInDOM selector="{{BannerOnFrontend.button('1')}}" stepKey="dontSeeInDOMButtonOnHoverInFrontend1"/>
+        <!-- Go back to cms page and change configuration to collage left -->
+        <comment userInput="Go back to cms page and change configuration to collage left" stepKey="commentCollageLeft"/>
+        <switchToPreviousTab stepKey="switchToPreviousTab"/>
+        <reloadPage stepKey="reloadPage"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStageToEditPoster">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceCollageLeftProperty">
+            <argument name="property" value="PageBuilderAppearance_CollageLeft"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsCollageLeft"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPageWithCollageLeftBanner"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage3"/>
+        <!-- Validate Stage: Collage Left -->
+        <comment userInput="Validate Stage: Collage Left" stepKey="commentValidateStage2"/>
+        <seeElement selector="{{BannerOnBackend.emptyBanner('1')}}" stepKey="seeEmptyBannerContent2"/>
+        <seeElement selector="{{BannerOnBackend.collagePadding('1', PageBuilderPaddingProperty40.value)}}" stepKey="waitForCollageLeft"/>
+        <seeElement selector="{{BannerOnBackend.overlay('1')}}" stepKey="seeOverlay2"/>
+        <dontSeeElement selector="{{BannerOnBackend.editableButtonItemElement('1')}}" stepKey="dontSeeButton1"/>
+        <moveMouseOver selector="{{BannerOnBackend.base('1')}}" stepKey="moveMouseOverBanner1"/>
+        <seeElement selector="{{BannerOnBackend.overlay('1')}}" stepKey="seeOverlayOnHover1"/>
+        <seeElement selector="{{BannerOnBackend.showButton('1', PageBuilderBannerShowButtonDefaultProperty.value)}}" stepKey="seeButtonStateStageOnHover1"/>
+        <seeElement selector="{{BannerOnBackend.showOverlay('1', PageBuilderBannerShowContentOverlayDefaultProperty.value)}}" stepKey="seeOverlayStateStageOnHover1"/>
+        <dontSeeElement selector="{{BannerOnBackend.editableButtonItemElement('1')}}" stepKey="dontSeeButtonOnHover1"/>
+        <switchToNextTab stepKey="switchToNextTab"/>
+        <reloadPage stepKey="reloadPage1"/>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <!-- Validate Storefront: Collage Left -->
+        <comment userInput="Validate Storefront: Collage Left" stepKey="commentValidateStorefront2"/>
+        <seeElement selector="{{BannerOnFrontend.base('1')}}" stepKey="seeBannerInFrontend2"/>
+        <seeElement selector="{{BannerOnFrontend.collagePadding('1', PageBuilderPaddingProperty40.value)}}" stepKey="seeCollageLeftInFrontEnd"/>
+        <dontSee userInput="{{PageBuilderBannerMessageDefaultProperty.placeholder}}" stepKey="dontSeeCollageLeftMessageInFrontend"/>
+        <dontSeeElementInDOM selector="{{BannerOnFrontend.button('1')}}" stepKey="dontSeeInDOMButtonInFrontend2"/>
+        <seeElement selector="{{BannerOnFrontend.showOverlay('1', PageBuilderBannerShowContentOverlayDefaultProperty.value)}}" stepKey="seeOverlayInInFrontend2"/>
+        <moveMouseOver selector="{{BannerOnFrontend.base('1')}}" stepKey="moveMouseOverBannerFrontend2"/>
+        <dontSeeElementInDOM selector="{{BannerOnFrontend.button('1')}}" stepKey="dontSeeInDOMButtonOnHoverInFrontend2"/>
+        <!-- Go back to cms page and change configuration to collage centered -->
+        <comment userInput="Go back to cms page and change configuration to collage centered" stepKey="commentCollageCenter"/>
+        <switchToPreviousTab stepKey="switchToPreviousTab2"/>
+        <reloadPage stepKey="reloadPage2"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage4"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStageToEditCollageLeft">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceCollageCenteredProperty">
+            <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsCollageCentered"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPageWithCollageCenteredBanner"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage5"/>
+        <!-- Validate Stage: Collage Center -->
+        <comment userInput="Validate Stage: Collage Center" stepKey="commentValidateStage3"/>
+        <seeElement selector="{{BannerOnBackend.emptyBanner('1')}}" stepKey="seeEmptyBannerContent3"/>
+        <seeElement selector="{{BannerOnBackend.collagePadding('1', PageBuilderPaddingProperty40.value)}}" stepKey="waitForCollageCenter"/>
+        <seeElement selector="{{BannerOnBackend.overlay('1')}}" stepKey="seeOverlay3"/>
+        <dontSeeElement selector="{{BannerOnBackend.editableButtonItemElement('1')}}" stepKey="dontSeeButton3"/>
+        <moveMouseOver selector="{{BannerOnBackend.base('1')}}" stepKey="moveMouseOverBanner2"/>
+        <seeElement selector="{{BannerOnBackend.overlay('1')}}" stepKey="seeOverlayOnHover2"/>
+        <seeElement selector="{{BannerOnBackend.showButton('1', PageBuilderBannerShowButtonDefaultProperty.value)}}" stepKey="seeButtonStateStageOnHover2"/>
+        <seeElement selector="{{BannerOnBackend.showOverlay('1', PageBuilderBannerShowContentOverlayDefaultProperty.value)}}" stepKey="seeOverlayStateStageOnHover2"/>
+        <dontSeeElement selector="{{BannerOnBackend.editableButtonItemElement('1')}}" stepKey="dontSeeButtonOnHover2"/>
+        <switchToNextTab stepKey="switchToNextTab2"/>
+        <reloadPage stepKey="reloadPage3"/>
+        <waitForPageLoad stepKey="waitForPageLoad3"/>
+        <!-- Validate Storefront: Collage Center -->
+        <comment userInput="Validate Storefront: Collage Center" stepKey="commentValidateStorefront3"/>
+        <seeElement selector="{{BannerOnFrontend.base('1')}}" stepKey="seeBannerInFrontend3"/>
+        <seeElement selector="{{BannerOnFrontend.collagePadding('1', PageBuilderPaddingProperty40.value)}}" stepKey="seeCollageCenterInFrontEnd"/>
+        <dontSee userInput="{{PageBuilderBannerMessageDefaultProperty.placeholder}}" stepKey="dontSeeCollageCenterMessageInFrontend"/>
+        <dontSeeElementInDOM selector="{{BannerOnFrontend.button('1')}}" stepKey="dontSeeInDOMButtonInFrontend3"/>
+        <seeElement selector="{{BannerOnFrontend.showOverlay('1', PageBuilderBannerShowContentOverlayDefaultProperty.value)}}" stepKey="seeOverlayInFrontend3"/>
+        <moveMouseOver selector="{{BannerOnFrontend.base('1')}}" stepKey="moveMouseOverBannerFrontend3"/>
+        <dontSeeElementInDOM selector="{{BannerOnFrontend.button('1')}}" stepKey="dontSeeInDOMButtonOnHoverInFrontend3"/>
+        <!-- Go back to cms page and change configuration to collage right -->
+        <comment userInput="Go back to cms page and change configuration to collage right" stepKey="commentCollageRight"/>
+        <switchToPreviousTab stepKey="switchToPreviousTab3"/>
+        <reloadPage stepKey="reloadPage4"/>
+        <waitForPageLoad stepKey="waitForPageLoad4"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage6"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStageToEditCollageCentered">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceCollageRightProperty">
+            <argument name="property" value="PageBuilderAppearance_CollageRight"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsCollageRight"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPageWithCollageRightBanner"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage7"/>
+        <!-- Validate Stage: Collage Right -->
+        <comment userInput="Validate Stage: Collage Right" stepKey="commentValidateStage4"/>
+        <seeElement selector="{{BannerOnBackend.emptyBanner('1')}}" stepKey="seeEmptyBannerContent4"/>
+        <seeElement selector="{{BannerOnBackend.collagePadding('1', PageBuilderPaddingProperty40.value)}}" stepKey="waitForCollageRight"/>
+        <seeElement selector="{{BannerOnBackend.overlay('1')}}" stepKey="seeOverlay4"/>
+        <dontSeeElement selector="{{BannerOnBackend.editableButtonItemElement('1')}}" stepKey="dontSeeButton4"/>
+        <moveMouseOver selector="{{BannerOnBackend.base('1')}}" stepKey="moveMouseOverBanner3"/>
+        <seeElement selector="{{BannerOnBackend.overlay('1')}}" stepKey="seeOverlayOnHover3"/>
+        <seeElement selector="{{BannerOnBackend.showButton('1', PageBuilderBannerShowButtonDefaultProperty.value)}}" stepKey="seeButtonStateStageOnHover3"/>
+        <seeElement selector="{{BannerOnBackend.showOverlay('1', PageBuilderBannerShowContentOverlayDefaultProperty.value)}}" stepKey="seeOverlayStateStageOnHover3"/>
+        <dontSeeElement selector="{{BannerOnBackend.editableButtonItemElement('1')}}" stepKey="dontSeeButtonOnHover3"/>
+        <switchToNextTab stepKey="switchToNextTab3"/>
+        <reloadPage stepKey="reloadPage5"/>
+        <waitForPageLoad stepKey="waitForPageLoad5"/>
+        <!-- Validate Storefront: Collage Right -->
+        <comment userInput="Validate Storefront: Collage Right" stepKey="commentValidateStorefront4"/>
+        <seeElement selector="{{BannerOnFrontend.base('1')}}" stepKey="seeBannerInFrontend4"/>
+        <seeElement selector="{{BannerOnFrontend.collagePadding('1', PageBuilderPaddingProperty40.value)}}" stepKey="seeCollageRightInFrontEnd"/>
+        <dontSee userInput="{{PageBuilderBannerMessageDefaultProperty.placeholder}}" stepKey="dontSeeCollageRightMessageInFrontend"/>
+        <dontSeeElementInDOM selector="{{BannerOnFrontend.button('1')}}" stepKey="dontSeeInDOMButtonInFrontend4"/>
+        <seeElement selector="{{BannerOnFrontend.showOverlay('1', PageBuilderBannerShowContentOverlayDefaultProperty.value)}}" stepKey="seeOverlayInFrontend4"/>
+        <moveMouseOver selector="{{BannerOnFrontend.base('1')}}" stepKey="moveMouseOverBannerFrontend4"/>
+        <dontSeeElementInDOM selector="{{BannerOnFrontend.button('1')}}" stepKey="dontSeeInDOMButtonOnHoverInFrontend4"/>
+    </test>
+</tests>

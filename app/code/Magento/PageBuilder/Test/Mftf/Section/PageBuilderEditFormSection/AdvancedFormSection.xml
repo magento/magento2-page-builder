@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
+    <section name="AdvancedForm">
+        <element name="sectionName" type="button" selector="//div[@data-index='advanced']"/>
+        <element name="sectionExpanded" type="button" selector="//div[@data-index='advanced' and contains(@class,'_show')]"/>
+        <element name="advancedAlignment" type="select" selector="//select[@name='text_align']"/>
+        <element name="advancedBorder" type="select" selector="//select[@name='border']"/>
+        <element name="advancedBorderColor" type="input" selector="//input[@name='border_color']"/>
+        <element name="advancedBorderWidth" type="input" selector="//input[@name='border_width']"/>
+        <element name="advancedBorderWidthDefault" type="input" selector="//input[@name='border_width' and contains(@placeholder, 'Default')]"/>
+        <element name="advancedBorderSize" type="input" selector="//input[@name='border_width']"/>
+        <element name="advancedBorderRadius" type="input" selector="//input[@name='border_radius']"/>
+        <element name="advancedTextColor" type="input" selector="//input[@name='color']"/>
+        <element name="advancedCssClasses" type="input" selector="//input[@name='css_classes']"/>
+        <element name="cssClassesNote" type="text" selector="//div[@data-index='css_classes']//span[.='Space separated list of classes.']"/>
+        <element name="marginNote" type="input" selector="//div[@data-index='margins_and_padding']//span[.='Margin']"/>
+        <element name="paddingNote" type="input" selector="//div[@data-index='margins_and_padding']//span[.='Padding']"/>
+        <element name="advancedMarginsAndPadding" type="input" selector="//input[@name='margins_and_padding']"/>
+        <element name="advancedMarginsOrPaddingField" type="input" selector="//input[@name='{{arg1}}']" parameterized="true"/>
+        <element name="advancedMarginTop" type="input" selector="//input[@name='marginTop']"/>
+        <element name="advancedMarginRight" type="input" selector="//input[@name='marginRight']"/>
+        <element name="advancedMarginBottom" type="input" selector="//input[@name='marginBottom']"/>
+        <element name="advancedMarginLeft" type="input" selector="//input[@name='marginLeft']"/>
+        <element name="advancedPaddingTop" type="input" selector="//input[@name='paddingTop']"/>
+        <element name="advancedPaddingRight" type="input" selector="//input[@name='paddingRight']"/>
+        <element name="advancedPaddingBottom" type="input" selector="//input[@name='paddingBottom']"/>
+        <element name="advancedPaddingLeft" type="input" selector="//input[@name='paddingLeft']"/>
+        <element name="advancedMarginAndPaddingPlaceholderText" type="input" selector="//input[@name='{{arg1}}' and @placeholder='{{arg2}}']" parameterized="true"/>
+        <element name="advancedMarginAndPaddingErrorMessage" type="button" selector="//div[@data-index='margins_and_padding']/descendant::label[not(contains(@style,'display: none;'))][2]"/>
+    </section>
+</sections>

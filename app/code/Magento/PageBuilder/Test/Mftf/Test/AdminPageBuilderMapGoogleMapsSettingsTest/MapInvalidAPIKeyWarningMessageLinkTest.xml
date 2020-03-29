@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="MapInvalidAPIKeyWarningMessageLinkTest" extends="MapEmptyAPIKeyWarningMessageLinkTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Map"/>
+            <title value="Google Maps API Key - Invalid API Key Warning Message (MC-5723)"/>
+            <description value="A user should see an invalid key overlay on map on stage and add location form, a warning message on the configuration panel, and a google error on the Storefront when an invalid Google Maps API key is set."/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-5723"/>
+            <testCaseId value="MC-6021"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="pagebuilder-googleMapsAPIKey"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key {{googleMapsAPIKey.invalidOneCharacter}}" stepKey="setEmptyGoogleMapsAPIKey"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setEmptyGoogleMapsAPIKey" before="logout"/>
+        </after>
+        <comment userInput="Edit Form: Validate No Warning Message Link" stepKey="commentValidateWarningMessageLinkEditForm"/>
+        <dontSeeElement selector="{{EditMapForm.warningMessage}}" stepKey="validateWarningMessageLink2"/>
+        <reloadPage stepKey="moveBack2"/>
+    </test>
+</tests>

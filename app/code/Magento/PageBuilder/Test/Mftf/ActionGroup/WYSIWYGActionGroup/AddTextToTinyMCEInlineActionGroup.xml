@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="addTextToTinyMCEInline">
+        <arguments>
+            <argument name="section"/>
+            <argument name="text" defaultValue="{{PageBuilderTextProperty.value}}" type="string"/>
+            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="pageBuilderArea" defaultValue="" type="string"/>
+        </arguments>
+        <comment userInput="addTextToTinyMCEInline" stepKey="comment"/>
+        <waitForElementVisible selector="{{section.tinymceInFocus(index)}}" stepKey="waitForEditorFocused"/>
+        <pressKey selector="{{section.tinymce(index)}}" userInput="{{text}}" stepKey="enterText"/>
+        <waitForPageLoad stepKey="waitForTextEdit"/>
+        <click selector="{{pageBuilderArea}}{{PageBuilderPanel.searchPanel}}" stepKey="loseFocusFromEditor"/>
+        <waitForPageLoad stepKey="waitForUnFocus"/>
+    </actionGroup>
+</actionGroups>

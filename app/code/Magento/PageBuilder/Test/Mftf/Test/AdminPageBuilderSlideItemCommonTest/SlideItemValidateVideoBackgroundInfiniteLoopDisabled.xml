@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="SlideItemValidateVideoBackgroundInfiniteLoopDisabled" extends="SlideItemValidateVideoBackgroundInfiniteLoopEnabled">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Slide Item: Validate Video Background Infinite Loop Disabled"/>
+            <description value="Verify that the video background infinite loop attribute works as intended when disabled."/>
+            <severity value="BLOCKER"/>
+            <useCaseId value="PB-266"/>
+            <testCaseId value="MC-31703"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-slideItemCommon"/>
+            <group value="pagebuilder-video-background"/>
+        </annotations>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="setInfiniteLoopEnabled">
+            <argument name="property" value="PageBuilderVideoBackgroundInfiniteLoop_Disabled"/>
+        </actionGroup>
+        <wait time="5" stepKey="waitForVideoCompleteStageBefore" before="validateVideoPlayingStage1"/>
+        <actionGroup ref="validateVideoBackgroundFinishedPlaying" stepKey="validateVideoPlayingStage1">
+            <argument name="section" value="SlideOnBackend"/>
+            <argument name="playOnlyWhenVisible" value="PageBuilderVideoBackgroundInfiniteLoop_Disabled"/>
+            <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_Mp4_URL"/>
+        </actionGroup>
+        <actionGroup ref="validateFallbackImageAfterVideoFinishesPlayingInVideoBackground" stepKey="validateFallbackImageVisibleStage1" after="validateVideoPlayingStage1">
+            <argument name="section" value="SlideOnBackend"/>
+            <argument name="fallbackImage" value="PageBuilderVideoBackgroundFallbackImage_JPG"/>
+        </actionGroup>
+        <actionGroup ref="validateVideoBackgroundFinishedPlaying" stepKey="validateVideoPlayingStage2">
+            <argument name="section" value="SlideOnBackend"/>
+            <argument name="playOnlyWhenVisible" value="PageBuilderVideoBackgroundInfiniteLoop_Disabled"/>
+            <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_Mp4_URL"/>
+        </actionGroup>
+        <actionGroup ref="validateFallbackImageAfterVideoFinishesPlayingInVideoBackground" stepKey="validateFallbackImageVisibleStage2" after="validateVideoPlayingStage2">
+            <argument name="section" value="SlideOnBackend"/>
+            <argument name="fallbackImage" value="PageBuilderVideoBackgroundFallbackImage_JPG"/>
+        </actionGroup>
+        <wait time="5" stepKey="waitForVideoCompleteStorefrontBefore" before="validateVideoPlayingStorefront1"/>
+        <actionGroup ref="validateVideoBackgroundFinishedPlaying" stepKey="validateVideoPlayingStorefront1">
+            <argument name="section" value="SlideOnFrontend"/>
+            <argument name="playOnlyWhenVisible" value="PageBuilderVideoBackgroundInfiniteLoop_Disabled"/>
+            <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_Mp4_URL"/>
+        </actionGroup>
+        <actionGroup ref="validateFallbackImageAfterVideoFinishesPlayingInVideoBackground" stepKey="validateFallbackImageVisibleStorefront1" after="validateVideoPlayingStorefront1">
+            <argument name="section" value="SlideOnFrontend"/>
+            <argument name="fallbackImage" value="PageBuilderVideoBackgroundFallbackImage_JPG"/>
+        </actionGroup>
+        <actionGroup ref="validateVideoBackgroundFinishedPlaying" stepKey="validateVideoPlayingStorefront2">
+            <argument name="section" value="SlideOnFrontend"/>
+            <argument name="playOnlyWhenVisible" value="PageBuilderVideoBackgroundInfiniteLoop_Disabled"/>
+            <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_Mp4_URL"/>
+        </actionGroup>
+        <actionGroup ref="validateFallbackImageAfterVideoFinishesPlayingInVideoBackground" stepKey="validateFallbackImageVisibleStorefront2" after="validateVideoPlayingStorefront2">
+            <argument name="section" value="SlideOnFrontend"/>
+            <argument name="fallbackImage" value="PageBuilderVideoBackgroundFallbackImage_JPG"/>
+        </actionGroup>
+    </test>
+</tests>

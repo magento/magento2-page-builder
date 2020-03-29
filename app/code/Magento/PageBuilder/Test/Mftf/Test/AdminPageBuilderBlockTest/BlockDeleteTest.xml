@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="BlockDeleteTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Block"/>
+            <title value="Delete Block"/>
+            <description value="A user should be able to delete an Block content type. Verify on Stage amd Storefront."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MC-2848"/>
+            <useCaseId value="MC-1420"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionAddContent">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!--Delete Block-->
+        <comment userInput="Delete Block" stepKey="commentRemoveBlock"/>
+        <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeEmptyContentTypeFromStage">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <dontSeeElementInDOM selector="{{PageBuilderStage.contentTypeInStage(PageBuilderBlockContentType.role)}}" stepKey="dontSeeContentTypeInStage1"/>
+        <!-- Save Page -->
+        <comment userInput="Save Page" stepKey="commentSavePage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage2"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
+        <dontSeeElementInDOM selector="{{PageBuilderStage.contentTypeInStage(PageBuilderBlockContentType.role)}}" stepKey="dontSeeContentTypeInStage2"/>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderHtmlContentType"/>
+        </actionGroup>
+        <dontSeeElementInDOM selector="{{BlockOnStorefront.base('1')}}" stepKey="dontSeeContentTypeInStorefront"/>
+    </test>
+</tests>

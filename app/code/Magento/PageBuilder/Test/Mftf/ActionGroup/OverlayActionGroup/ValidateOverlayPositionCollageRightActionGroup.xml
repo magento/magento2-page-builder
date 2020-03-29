@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="validateOverlayPositionCollageRight">
+        <arguments>
+            <argument name="page"/>
+            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="padding" defaultValue="PageBuilderPaddingProperty40"/>
+            <argument name="expectedOverlayWidth" defaultValue="540" type="string"/>
+            <argument name="acceptableOffset" defaultValue="2" type="string"/>
+        </arguments>
+        <!-- Validate width of overlay -->
+        <comment userInput="Validate width of overlay" stepKey="commentValidateWidthOfOverlay"/>
+        <executeJS function="return {{page.overlayJS(index)}}.getBoundingClientRect().width" stepKey="overlayWidth"/>
+        <executeJS function="return Math.abs({$overlayWidth} - {{expectedOverlayWidth}})" stepKey="widthDifference"/>
+        <assertLessThanOrEqual stepKey="assertOverlayWidthIsAcceptable">
+            <expectedResult type="int">{{acceptableOffset}}</expectedResult>
+            <actualResult type="variable">widthDifference</actualResult>
+        </assertLessThanOrEqual>
+        <!-- Validate right edge of overlay -->
+        <comment userInput="Validate right edge of overlay" stepKey="commentValidateRightEdgeOfOverlay"/>
+        <executeJS function="return Math.round({{page.wrapperJS(index)}}.getBoundingClientRect().right - {{padding.paddingRight}})" stepKey="wrapperRightPosition"/>
+        <executeJS function="return {{page.overlayJS(index)}}.getBoundingClientRect().right" stepKey="overlayRightPosition"/>
+        <executeJS function="return Math.abs({$wrapperRightPosition} - {$overlayRightPosition})" stepKey="overlayMinusWrapper"/>
+        <assertLessThanOrEqual stepKey="assertOverlayRightIsAcceptable">
+            <expectedResult type="int">{{acceptableOffset}}</expectedResult>
+            <actualResult type="variable">overlayMinusWrapper</actualResult>
+        </assertLessThanOrEqual>
+    </actionGroup>
+</actionGroups>

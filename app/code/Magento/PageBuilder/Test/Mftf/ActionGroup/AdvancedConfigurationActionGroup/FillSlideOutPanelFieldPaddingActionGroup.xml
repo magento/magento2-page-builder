@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="fillSlideOutPanelFieldPadding">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <waitForElement selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible"/>
+        <fillField selector="{{AdvancedForm.advancedPaddingTop}}" userInput="{{property.paddingTop}}" stepKey="fillPaddingTopField"/>
+        <fillField selector="{{AdvancedForm.advancedPaddingRight}}" userInput="{{property.paddingRight}}" stepKey="fillPaddingRightField"/>
+        <fillField selector="{{AdvancedForm.advancedPaddingLeft}}" userInput="{{property.paddingLeft}}" stepKey="fillPaddingLeftField"/>
+        <fillField selector="{{AdvancedForm.advancedPaddingBottom}}" userInput="{{property.paddingBottom}}" stepKey="fillPaddingBottomField"/>
+        <click selector="{{EditPanelForm.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
+    </actionGroup>
+</actionGroups>

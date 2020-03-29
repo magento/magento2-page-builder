@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="saveEditPanelAndValidateFieldError">
+        <arguments>
+            <argument name="property"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible time="5" selector="{{EditPanelForm.editFormSave}}" stepKey="waitForColumnSaveButton"/>
+        <click selector="{{EditPanelForm.editFormSave}}" stepKey="clickSaveColumn"/>
+        <waitForElementVisible selector="{{EditPanelForm.panelFieldValidationError(property.section, property.fieldName)}}" stepKey="waitForErrorField"/>
+        <waitForElementVisible selector="{{EditPanelForm.panelFieldValidationErrorMessage(property.section, property.fieldName, property.errorMessage)}}" stepKey="waitForErrorMessage"/>
+        <waitForElementVisible selector="{{EditPanelForm.panelSectionError(property.section)}}" stepKey="waitForSectionError"/>
+    </actionGroup>
+</actionGroups>

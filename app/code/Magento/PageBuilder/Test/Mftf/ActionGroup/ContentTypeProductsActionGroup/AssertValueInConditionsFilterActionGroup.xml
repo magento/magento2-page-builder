@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="assertValueInConditionsFilter">
+        <arguments>
+            <argument name="indexOfCondition" defaultValue="1" type="string"/>
+            <argument name="indexOfConditionParameter" defaultValue="2" type="string"/>
+            <argument name="conditionValue" defaultValue="" type="string"/>
+        </arguments>
+        <waitForElement selector="{{ProductsContentTypeForm.conditionsListSavedValue(indexOfCondition, indexOfConditionParameter)}}" stepKey="waitForConditions"/>
+        <grabTextFrom selector="{{ProductsContentTypeForm.conditionsListSavedValue(indexOfCondition, indexOfConditionParameter)}}" stepKey="grabConditionValue"/>
+        <assertEquals stepKey="assertConditionValue">
+            <expectedResult type="string">{{conditionValue}}</expectedResult>
+            <actualResult type="variable">grabConditionValue</actualResult>
+        </assertEquals>
+    </actionGroup>
+</actionGroups>

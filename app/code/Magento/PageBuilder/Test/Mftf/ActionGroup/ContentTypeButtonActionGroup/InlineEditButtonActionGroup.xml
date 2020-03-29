@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="inlineEditButton">
+        <arguments>
+            <argument name="text"/>
+            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="pageBuilderArea" defaultValue="" type="string"/>
+        </arguments>
+        <comment userInput="inlineEditButton" stepKey="comment"/>
+        <waitForElementVisible selector="{{ButtonItemOnStage.base(index)}}" stepKey="waitForButton"/>
+        <waitForElementVisible selector="{{ButtonItemOnStage.editableButtonItemElement(index)}}" stepKey="waitForButtonEditable"/>
+        <pressKey selector="{{ButtonItemOnStage.editableButtonItemElement(index)}}" userInput="{{text.value}}" stepKey="enterButtonText"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <seeElement selector="{{ButtonItemOnStage.buttonItemText(index, text.value)}}" stepKey="seeButtonText"/>
+        <click selector="{{pageBuilderArea}}{{PageBuilderPanel.searchPanel}}" stepKey="unFocusLiveEdit"/>
+        <waitForPageLoad stepKey="waitForUnFocus"/>
+    </actionGroup>
+</actionGroups>

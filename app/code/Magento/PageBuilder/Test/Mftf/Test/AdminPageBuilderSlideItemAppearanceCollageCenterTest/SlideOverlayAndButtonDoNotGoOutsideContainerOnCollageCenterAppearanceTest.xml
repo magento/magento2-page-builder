@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="SlideOverlayAndButtonDoNotGoOutsideContainerOnCollageCenterAppearanceTest" extends="SlideOverlayAndButtonDoNotGoOutsideContainerOnPosterAppearanceTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Collage Center - Slide Overlay and Button do not go outside container on collage center appearance"/>
+            <description value="User should be able to place a slide with Collage Center appearance inside a narrow column without the contents spilling outside of the column."/>
+            <severity value="BLOCKER"/>
+            <useCaseId value="MC-5372"/>
+            <testCaseId value="MC-5937"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slider"/>
+            <group value="pagebuilder-sliderCollageCenter"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
+            <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
+        </actionGroup>
+        <actionGroup ref="validateOverlayAndButtonCollage" stepKey="validateSlideOnStage">
+            <argument name="column" value="ColumnOnBackend"/>
+            <argument name="element" value="SlideOnBackend"/>
+            <argument name="elementBorderWidth" value="PageBuilderAdvancedBorderWidthProperty10"/>
+            <argument name="diffThreshold" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateOverlayAndButtonCollage" stepKey="validateSlideOnStorefront">
+            <argument name="column" value="ColumnOnFrontend"/>
+            <argument name="element" value="SlideOnFrontend"/>
+            <argument name="elementBorderWidth" value="PageBuilderAdvancedBorderWidthProperty10"/>
+            <argument name="diffThreshold" value="0"/>
+        </actionGroup>
+    </test>
+</tests>

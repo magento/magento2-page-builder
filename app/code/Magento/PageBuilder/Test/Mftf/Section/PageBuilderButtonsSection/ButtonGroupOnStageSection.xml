@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
+    <section name="ButtonGroupOnStage">
+        <element name="jsButtonGroupSelector" type="text" selector="document.querySelectorAll('.pagebuilder-buttons')[{{arg1}}-1]" parameterized="true"/>
+        <element name="base" type="button" selector="(//div[contains(@class,'pagebuilder-buttons')])[{{arg1}}]" parameterized="true"/>
+        <element name="hidden" type="button" selector="(//div[contains(@class,'pagebuilder-buttons')])[{{arg1}}]/ancestor::*[contains(@class, 'pagebuilder-content-type-wrapper') and contains(@class, 'pagebuilder-content-type-hidden')]" parameterized="true"/>
+        <element name="notHidden" type="button" selector="(//div[contains(@class,'pagebuilder-buttons')])[{{arg1}}]/parent::*[contains(@class, 'pagebuilder-content-type-wrapper') and not(contains(@class, 'pagebuilder-content-type-hidden'))][1]" parameterized="true"/>
+        <element name="appearance" type="button" selector="(//div[contains(@class,'pagebuilder-buttons')])[{{arg1}}]//div[@data-appearance='{{arg2}}']" parameterized="true"/>
+        <element name="sameSizeValue" type="button" selector="(//div[contains(@class,'pagebuilder-buttons')])[{{arg1}}]//div[@data-element='main'][@data-same-width='{{arg2}}']" parameterized="true"/>
+        <element name="addNewButtonItemOption" type="button" selector="(//div[contains(@class,'pagebuilder-buttons')])[{{arg1}}]//a[contains(@title,'Add Button')]" parameterized="true"/>
+        <element name="oldAddNewButtonItem" type="button" selector="//button[contains(text(),'Add Button')]"/>
+        <!-- Advanced Configuration -->
+        <element name="default" type="button" selector="(//div[contains(@class,'pagebuilder-buttons')])[{{arg1}}][@style='border: {{arg2}}; border-radius: {{arg3}}px; margin: {{arg4}}px; padding: {{arg5}}px;']" parameterized="true"/>
+        <element name="alignment" type="text" selector="(//div[contains(@class,'pagebuilder-buttons')])[{{arg1}}]/div[contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
+        <element name="noAlignment" type="text" selector="(//div[contains(@class,'pagebuilder-buttons')])[{{arg1}}]/div[contains(@class, 'buttons-container')][not(contains(@style,'text-align:'))]" parameterized="true"/>
+        <element name="border" type="text" selector="(//div[contains(@class,'pagebuilder-buttons')])[{{arg1}}]/div[contains(@style,'border-style: {{arg2}};')]" parameterized="true"/>
+        <element name="borderColor" type="text" selector="(//div[contains(@class,'pagebuilder-buttons')])[{{arg1}}]/div[contains(@style,'border-color: {{arg2}};')]" parameterized="true"/>
+        <element name="noBorderColor" type="text" selector="(//div[contains(@class,'pagebuilder-buttons')])[{{arg1}}]/div[contains(@class, 'buttons-container')][not(contains(@style,'border-color:'))]" parameterized="true"/>
+        <element name="borderWidth" type="text" selector="(//div[contains(@class,'pagebuilder-buttons')])[{{arg1}}]/div[contains(@style,'border-width: {{arg2}}px;')]" parameterized="true"/>
+        <element name="borderRadius" type="text" selector="(//div[contains(@class,'pagebuilder-buttons')])[{{arg1}}]/div[contains(@style,'border-radius: {{arg2}}px;')]" parameterized="true"/>
+        <element name="cssClasses" type="text" selector="(//div[contains(@class,'pagebuilder-buttons')])[{{arg1}}]/div[contains(@class,'{{arg2}}')]" parameterized="true"/>
+        <element name="noCssClasses" type="text" selector="(//div[contains(@class,'pagebuilder-buttons')])[{{arg1}}]" parameterized="true"/>
+        <element name="margins" type="text" selector="(//div[contains(@class,'pagebuilder-buttons')])[{{arg1}}]/div[contains(@style,'margin: {{arg2}}px;')]" parameterized="true"/>
+        <element name="padding" type="text" selector="(//div[contains(@class,'pagebuilder-buttons')])[{{arg1}}]/div[contains(@style,'padding: {{arg2}}px;')]" parameterized="true"/>
+    </section>
+</sections>

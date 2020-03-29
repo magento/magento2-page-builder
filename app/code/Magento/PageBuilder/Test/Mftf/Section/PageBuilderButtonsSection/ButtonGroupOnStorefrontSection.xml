@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
+    <section name="ButtonGroupOnStorefront">
+        <element name="jsButtonGroupSelector" type="text" selector="document.querySelectorAll('div[data-content-type=\'buttons\']')[{{arg1}}-1]" parameterized="true"/>
+        <element name="base" type="button" selector="(//div[@data-content-type='buttons'])[{{arg1}}]" parameterized="true"/>
+        <element name="hidden" type="button" selector="(//div[@data-content-type='buttons'])[{{arg1}}][contains(@style, 'display: none')]" parameterized="true"/>
+        <element name="notHidden" type="button" selector="(//div[@data-content-type='buttons'])[{{arg1}}][not(contains(@style, 'display: none'))]" parameterized="true"/>
+        <element name="appearance" type="button" selector="(//div[@data-content-type='buttons'])[{{arg1}}][@data-appearance='{{arg2}}']" parameterized="true"/>
+        <element name="sameSizeValue" type="button" selector="(//div[@data-content-type='buttons'])[{{arg1}}][@data-same-width='{{arg2}}']" parameterized="true"/>
+        <!-- Advanced Configuration -->
+        <element name="alignment" type="text" selector="(//div[@data-content-type='buttons'])[{{arg1}}][contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
+        <element name="noAlignment" type="text" selector="(//div[@data-content-type='buttons'])[{{arg1}}][not(contains(@style,'text-align:'))]" parameterized="true"/>
+        <element name="border" type="text" selector="(//div[@data-content-type='buttons'])[{{arg1}}][contains(@style,'border-style: {{arg2}};')]" parameterized="true"/>
+        <element name="borderColor" type="text" selector="(//div[@data-content-type='buttons'])[{{arg1}}][contains(@style,'border-color: {{arg2}};')]" parameterized="true"/>
+        <element name="noBorderColor" type="text" selector="(//div[@data-content-type='buttons'])[{{arg1}}][not(contains(@style,'border-color:'))]" parameterized="true"/>
+        <element name="borderWidth" type="text" selector="(//div[@data-content-type='buttons'])[{{arg1}}][contains(@style,'border-width: {{arg2}}px;')]" parameterized="true"/>
+        <element name="borderRadius" type="text" selector="(//div[@data-content-type='buttons'])[{{arg1}}][contains(@style,'border-radius: {{arg2}}px;')]" parameterized="true"/>
+        <element name="cssClasses" type="text" selector="(//div[@data-content-type='buttons'])[{{arg1}}][contains(@class,'{{arg2}}')]" parameterized="true"/>
+        <element name="noCssClasses" type="text" selector="(//div[@data-content-type='buttons'])[{{arg1}}][@class='placeholder-text' or not(@class)]" parameterized="true"/>
+        <element name="margins" type="text" selector="(//div[@data-content-type='buttons'])[{{arg1}}][contains(@style,'margin: {{arg2}}px;')]" parameterized="true"/>
+        <element name="padding" type="text" selector="(//div[@data-content-type='buttons'])[{{arg1}}][contains(@style,'padding: {{arg2}}px;')]" parameterized="true"/>
+    </section>
+</sections>

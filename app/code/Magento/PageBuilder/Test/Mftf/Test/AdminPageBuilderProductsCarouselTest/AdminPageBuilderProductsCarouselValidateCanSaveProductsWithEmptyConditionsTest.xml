@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="AdminPageBuilderProductsCarouselValidateCanSaveProductsWithEmptyConditionsTest" extends="AdminPageBuilderProductsGridValidateCanSaveProductsWithEmptyConditionsTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Products"/>
+            <title value="Carousel - Validate Can Save Products with Empty Condition"/>
+            <description value="Validate that a user can save a Products content type without any conditions set"/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="PB-207"/>
+            <testCaseId value="MC-22881"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-products"/>
+            <group value="pagebuilder-productsCarousel"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
+            <argument name="property" value="PageBuilderProductsProductCarouselAppearance"/>
+        </actionGroup>
+        <actionGroup ref="validateEmptyProductsContainer" stepKey="validateEmptyProductsContainerOnStage">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+        </actionGroup>
+        <actionGroup ref="validateEmptyProductsContainer" stepKey="validateEmptyProductsContainerOnStage2">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterProductsCount3">
+            <argument name="property" value="PageBuilderProductsCarouselCountPropertyMax"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProductOnStage3">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="product" value="_defaultProduct"/>
+        </actionGroup>
+    </test>
+</tests>

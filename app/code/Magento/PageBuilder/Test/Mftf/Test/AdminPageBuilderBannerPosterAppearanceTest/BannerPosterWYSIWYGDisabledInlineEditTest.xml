@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="BannerPosterWYSIWYGDisabledInlineEditTest" extends="BannerPosterCanInlineEditContentTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Banner"/>
+            <title value="Poster - Inline Edit With WYSIWYG Disabled"/>
+            <description value="Verify that a user can inline edit Banner poster content when WYSIWYG is disabled"/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MC-521"/>
+            <testCaseId value="MC-3841"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-banner"/>
+            <group value="pagebuilder-bannerPoster"/>
+        </annotations>
+        <before>
+            <remove keyForRemoval="enableWYSIWYG"/>
+            <remove keyForRemoval="enableTinyMCE4"/>
+            <magentoCLI command="config:set cms/wysiwyg/enabled disabled" stepKey="disableWYSIWYG" before="loginAsAdmin"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG" before="logout"/>
+        </after>
+        <actionGroup ref="inlineEditTextAreaFromStage" stepKey="inlineEdit">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+            <argument name="content" value="{{PageBuilderBannerMessageProperty.value}}"/>
+        </actionGroup>
+        <executeJS function="return document.querySelector('{{BannerOnConfigurationPanel.textArea}}').value" stepKey="seeMessageText"/>
+        <assertEquals stepKey="assertTextAreaValueEditPanel" after="seeMessageText">
+            <expectedResult type="string">{{PageBuilderBannerMessageProperty.value}}</expectedResult>
+            <actualResult type="variable">seeMessageText</actualResult>
+        </assertEquals>
+        <actionGroup ref="assertTextareaContainsValue" stepKey="seeMessageContentStage">
+            <argument name="selector" value="{{PageBuilderStage.inlineTextAreaEditor(PageBuilderBannerContentType.role, '1')}}"/>
+            <argument name="value" value="{{PageBuilderBannerMessageProperty.value}}"/>
+        </actionGroup>
+        <seeElement selector="{{BannerOnFrontend.messageContentTextArea('1', PageBuilderBannerMessageProperty.value)}}" stepKey="seeMessageContentStorefront"/>
+    </test>
+</tests>

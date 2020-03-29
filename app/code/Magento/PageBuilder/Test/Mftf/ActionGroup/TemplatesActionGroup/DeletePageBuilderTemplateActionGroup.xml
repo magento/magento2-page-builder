@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="deletePageBuilderTemplate">
+        <annotations>
+            <description>Deletes a Page Builder template from the Page Builder Templates grid page.</description>
+        </annotations>
+        <arguments>
+            <argument name="templateIdentifier" defaultValue="{{PageBuilderTemplateNameRandom.name}}" type="string"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible selector="{{PageBuilderTemplatesPageGrid.deleteButton(templateIdentifier)}}" stepKey="waitForDeleteButton"/>
+        <click selector="{{PageBuilderTemplatesPageGrid.deleteButton(templateIdentifier)}}" stepKey="clickDeleteButton"/>
+        <waitForPageLoad stepKey="waitForConfirmationModalLoad"/>
+        <waitForElementVisible selector="{{PageBuilderDeleteTemplateConfirmationModal.modal}}" stepKey="waitForConfirmationModalVisible"/>
+        <waitForElementVisible selector="{{PageBuilderDeleteTemplateConfirmationModal.okButton}}" stepKey="waitForConfirmationModalOKButton"/>
+        <click selector="{{PageBuilderDeleteTemplateConfirmationModal.okButton}}" stepKey="clickConfirmationModalOKButton"/>
+        <waitForPageLoad stepKey="waitForDelete"/>
+        <see userInput="Template successfully deleted." stepKey="seeSuccessMessage"/>
+    </actionGroup>
+</actionGroups>

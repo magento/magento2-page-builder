@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="verifyFullWidthLayout">
+        <arguments>
+            <argument name="index" defaultValue="0" type="string"/>
+        </arguments>
+        <executeJS function="return document.querySelectorAll('[data-content-type=row]')[{{index}}].clientWidth" stepKey="rowWidth"/>
+        <executeJS function="return document.querySelector('[class=page-wrapper]').clientWidth" stepKey="pageWidth"/>
+        <assertEquals stepKey="assertRowWidth100Percent">
+            <expectedResult type="variable">pageWidth</expectedResult>
+            <actualResult type="variable">rowWidth</actualResult>
+        </assertEquals>
+        <assertGreaterThan stepKey="assertRowWidthGreaterThanZero">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">rowWidth</actualResult>
+        </assertGreaterThan>
+    </actionGroup>
+</actionGroups>

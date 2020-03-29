@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="SlideItemNotActiveValidateVideoBackgroundLazyLoadEnabledWithSliderFadeEnabled" extends="SlideItemNotActiveValidateVideoBackgroundPlayOnlyWhenVisibleEnabledWithSliderFadeDisabled">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Slide Item: Validate Video Background Lazy Load Enabled For Non-Active Slide Item With Slider Fade Enabled"/>
+            <description value="Verify that the video background lazy load attribute works as intended when enabled for a non-active slide item and the slider fade attribute is enabled."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="PB-266"/>
+            <testCaseId value="MC-31951"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-slideItemCommon"/>
+            <group value="pagebuilder-video-background"/>
+        </annotations>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="enterFade">
+            <argument name="property" value="PageBuilderSliderFade_Enabled"/>
+        </actionGroup>
+    </test>
+</tests>

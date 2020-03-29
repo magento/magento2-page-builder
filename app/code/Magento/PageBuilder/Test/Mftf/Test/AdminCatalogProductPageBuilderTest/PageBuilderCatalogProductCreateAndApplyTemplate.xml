@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="PageBuilderCatalogProductCreateAndApplyTemplate" extends="PageBuilderCMSPageCreateAndApplyTemplate">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Catalog Products"/>
+            <title value="Create and Apply Page Builder Template to Catalog Product"/>
+            <description value="Verify that user can create and apply a Page Builder template to a Catalog Product's product description"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="PB-341"/>
+            <testCaseId value="MC-30605"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-templates"/>
+            <group value="pagebuilder-catalog-product"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultCategory" stepKey="createCategory" before="createCMSPage"/>
+            <createData entity="_defaultProduct" stepKey="createCMSPage">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+            <actionGroup ref="NavigateToCreatedProductEditPageActionGroup" stepKey="navigateToCreatedCMSPage">
+                <argument name="product" value="$$createCMSPage$$"/>
+            </actionGroup>
+            <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandAdminProductSection" after="navigateToCreatedCMSPage"/>
+            <actionGroup ref="openPageBuilderForAttribute" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCategory" stepKey="deleteCategory" before="deleteCMSPage"/>
+            <actionGroup ref="NavigateToAndResetProductGridToDefaultViewActionGroup" stepKey="NavigateToAndResetProductGridToDefaultView" after="deletePageBuilderTemplate"/>
+        </after>
+        <actionGroup ref="savePageBuilderTemplate" stepKey="savePageBuilderTemplate">
+            <argument name="baseContent" value="{{PageBuilderStage.applyTemplateButton}}"/>
+        </actionGroup>
+        <actionGroup ref="NavigateToCreatedProductEditPageActionGroup" stepKey="navigateToCreatedCMSPage">
+            <argument name="product" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="expandAdminProductSection" after="navigateToCreatedCMSPage"/>
+        <actionGroup ref="openPageBuilderForAttribute" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="confirmApplyFromPageBuilderApplyTemplateSlideOut" stepKey="confirmApplyFromPageBuilderApplyTemplateSlideOut">
+            <argument name="baseContent" value="{{PageBuilderStage.applyTemplateButton}}"/>
+        </actionGroup>
+    </test>
+</tests>

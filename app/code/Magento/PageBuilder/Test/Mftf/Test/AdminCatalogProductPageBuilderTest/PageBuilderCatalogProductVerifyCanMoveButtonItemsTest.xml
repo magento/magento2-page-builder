@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="PageBuilderCatalogProductVerifyCanMoveButtonItemsTest" extends="ButtonItemMoveButtonStackedAppearanceTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Catalog Products"/>
+            <title value="Verify That User Can Move Button Items"/>
+            <description value="This test is intended to ensure that users can move button items within the PageBuilder stage for Product Description."/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-3329"/>
+            <testCaseId value="MC-13673"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-buttons"/>
+            <group value="pagebuilder-move"/>
+            <group value="pagebuilder-catalog-product"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultCategory" before="createProduct" stepKey="createPreReqCategory"/>
+            <createData entity="_defaultProduct" before="loginAsAdmin" stepKey="createProduct">
+                <requiredEntity createDataKey="createPreReqCategory"/>
+            </createData>
+            <actionGroup ref="NavigateToCreatedProductEditPageActionGroup" stepKey="navigateToAPageWithPageBuilder">
+                <argument name="product" value="$$createProduct$$"/>
+            </actionGroup>
+            <actionGroup ref="ExpandAdminProductSectionActionGroup" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="openPageBuilderForAttribute" after="switchToPageBuilderStage" stepKey="openPageBuilderForDescription"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createProduct" before="deleteCreatedCategory" stepKey="deleteCreatedProduct"/>
+            <deleteData createDataKey="createPreReqCategory" before="NavigateToAndResetProductGridToDefaultView" stepKey="deleteCreatedCategory"/>
+            <actionGroup ref="NavigateToAndResetProductGridToDefaultViewActionGroup" before="logout" stepKey="NavigateToAndResetProductGridToDefaultView"/>
+        </after>
+        <comment userInput="---merging to remove step---" stepKey="enterPageTitle"/>
+        <actionGroup ref="saveEditPanelSettingsFullScreen" stepKey="saveEditPanelSettings1"/>
+        <comment userInput="Save Product" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="SaveProductFormActionGroup" after="switchToPageBuilderStage" stepKey="saveProduct"/>
+        <waitForPageLoad after="saveProduct" stepKey="waitForPageLoadSaveProduct"/>
+        <actionGroup ref="ExpandAdminProductSectionActionGroup" after="waitForPageLoadSaveProduct" stepKey="expandAdminProductSection"/>
+        <actionGroup ref="openPageBuilderForAttribute" after="expandAdminProductSection" stepKey="openPageBuilderForDescription"/>
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStoreFront">
+            <argument name="page" value="$$createProduct.name$$.html"/>
+        </actionGroup>
+        <scrollTo selector="{{StorefrontProductInfoMainSection.productDescription}}" after="navigateToStoreFront" stepKey="scrollToProductDescription"/>
+    </test>
+</tests>
