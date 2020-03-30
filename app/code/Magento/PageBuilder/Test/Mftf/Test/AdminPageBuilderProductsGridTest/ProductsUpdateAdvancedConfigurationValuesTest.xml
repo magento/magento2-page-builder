@@ -144,7 +144,6 @@
             <argument name="index" value="1"/>
         </actionGroup>
         <!-- Validate Product Item Inner Contents Stay Aligned Left -->
-        <comment userInput="Validate Product Item Inner Contents Stay Aligned Left" stepKey="commentValidateStageContentsAlignedLeft"/>
         <executeJS function="return window.getComputedStyle({{ProductsOnStage.productJS('1')}}).textAlign" stepKey="grabComputedTextAlign"/>
         <assertEquals stepKey="assertComputedTextAlign">
             <expectedResult type="string">{{PageBuilderAdvancedAlignmentPropertyLeft.value}}</expectedResult>
@@ -197,7 +196,6 @@
             <argument name="index" value="1"/>
         </actionGroup>
         <!-- Validate Product Item Inner Contents Stay Aligned Left Storefront -->
-        <comment userInput="Validate Product Item Inner Contents Stay Aligned Left Storefront" stepKey="commentValidateStorefrontContentsAlignedLeft"/>
         <executeJS function="return window.getComputedStyle({{ProductsOnStorefront.productJS('1')}}).textAlign" stepKey="grabComputedTextAlignStorefront"/>
         <assertEquals stepKey="assertComputedTextAlignStorefront">
             <expectedResult type="string">{{PageBuilderAdvancedAlignmentPropertyLeft.value}}</expectedResult>
