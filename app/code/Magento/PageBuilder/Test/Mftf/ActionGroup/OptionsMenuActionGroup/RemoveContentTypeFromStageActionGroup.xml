@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="removeContentTypeFromStage">
+        <!-- Remove a content type which has been configured with data or has children -->
+        <arguments>
+            <argument name="contentType"/>
+            <argument name="offsetXCoordinate" defaultValue="10" type="string"/>
+            <argument name="offsetYCoordinate" defaultValue="0" type="string"/>
+        </arguments>
+        <waitForElementVisible time="10" selector="{{PageBuilderStage.contentTypeInStage(contentType.role)}}" stepKey="waitForContentTypeInStageVisible"/>
+        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStage(contentType.role)}}" x="{{offsetXCoordinate}}" y="{{offsetYCoordinate}}" stepKey="onMouseOverContentTypeStage"/>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(contentType.role)}}" stepKey="waitForOptions"/>
+        <click selector="{{PageBuilderContentTypeOptionsMenu.contentTypeRemove(contentType.role)}}" stepKey="clickRemoveContentType"/>
+        <waitForPageLoad stepKey="waitForRemoveModal"/>
+        <waitForElementVisible time="1" selector="{{PageBuilderStage.modal}}" stepKey="waitForModal"/>
+        <waitForElementVisible time="1" selector="{{PageBuilderStage.modalOk}}" stepKey="waitForModalOk"/>
+        <click selector="{{PageBuilderStage.modalOk}}" stepKey="confirmRemoveModal"/>
+        <waitForPageLoad time="30" stepKey="waitForRemoveAnimation"/>
+        <waitForElementNotVisible time="30" selector="{{PageBuilderStage.modalOk}}" stepKey="waitForModalHide"/>
+        <waitForElementVisible time="30" selector="{{RowOnStage.base('1')}}" stepKey="waitForPageBuilderRow"/>
+        <!-- Follow with confirmRemovalModal actionGroup -->
+    </actionGroup>
+</actionGroups>

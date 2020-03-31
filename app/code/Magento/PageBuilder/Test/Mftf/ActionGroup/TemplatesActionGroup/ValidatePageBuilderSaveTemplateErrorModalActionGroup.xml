@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="validatePageBuilderSaveTemplateErrorModal">
+        <annotations>
+            <description>Validate all buttons and text on the Save as Template error modal.</description>
+        </annotations>
+        <arguments>
+            <argument name="errorTitle" defaultValue="An error occurred" type="string"/>
+            <argument name="errorMessage" defaultValue="A required field is missing." type="string"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForModalLoad"/>
+        <see userInput="{{errorTitle}}" selector="{{PageBuilderSaveTemplateConfirmationModal.title}}" stepKey="seeTitle"/>
+        <seeElement selector="{{PageBuilderSaveTemplateConfirmationModal.closeButton}}" stepKey="seeCloseButton"/>
+        <see userInput="{{errorMessage}}" selector="{{PageBuilderSaveTemplateConfirmationModal.message}}" stepKey="seeMessage"/>
+        <seeElement selector="{{PageBuilderSaveTemplateConfirmationModal.okButton}}" stepKey="seeOKButton"/>
+    </actionGroup>
+</actionGroups>

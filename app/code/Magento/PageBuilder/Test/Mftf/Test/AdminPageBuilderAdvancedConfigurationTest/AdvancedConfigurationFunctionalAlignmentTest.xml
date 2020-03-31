@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="AdvancedConfigurationFunctionalAlignmentTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Advanced Configuration"/>
+            <title value="Functional - Alignment"/>
+            <description value="Tests that the Alignment attribute functions as expected on Stage and Storefront for Text"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-83415"/>
+            <testCaseId value="MC-2587"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-advancedConfig"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <!-- Add A Row For Each Alignment Type -->
+        <comment userInput="Add Rows" stepKey="commentAddRows"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage1">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage2">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage3">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <!-- Add Alignment: Default -->
+        <comment userInput="Add Alignment: Default" stepKey="commentAddAlignmentDefault"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage1">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideTextInlineEditing" stepKey="closeLiveEdit1"/>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage1">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText1">
+            <argument name="property" value="PageBuilderTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAlignmentDefault">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
+        <!-- Add Alignment: Left -->
+        <comment userInput="Add Alignment: Left" stepKey="commentAddAlignmentLeft"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage2">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetIndex" value="2"/>
+            <argument name="contentTypeIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideTextInlineEditing" stepKey="closeLiveEdit2"/>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage2">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText2">
+            <argument name="property" value="PageBuilderTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAlignmentLeft">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyLeft"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <!-- Add Alignment: Center -->
+        <comment userInput="Add Alignment: Center" stepKey="commentAddAlignmentCenter"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage3">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetIndex" value="3"/>
+            <argument name="contentTypeIndex" value="3"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideTextInlineEditing" stepKey="closeLiveEdit3"/>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage3">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="3"/>
+        </actionGroup>
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText3">
+            <argument name="property" value="PageBuilderTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAlignmentCenter">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
+        <!-- Add Alignment: Right -->
+        <comment userInput="Add Alignment: Right" stepKey="commentAddAlignmentRight"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage4">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetIndex" value="4"/>
+            <argument name="contentTypeIndex" value="4"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideTextInlineEditing" stepKey="closeLiveEdit4"/>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage4">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="4"/>
+        </actionGroup>
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText4">
+            <argument name="property" value="PageBuilderTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAlignmentRight">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyRight"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings4"/>
+        <!-- Stage: Check Alignment: Default -->
+        <comment userInput="Stage: Check Alignment: Default" stepKey="commentStageCheckDefault"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStageDefault">
+            <argument name="page" value="TextOnStage"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Stage: Check Alignment: Left -->
+        <comment userInput="Stage: Check Alignment: Left" stepKey="commentStageCheckLeft"/>
+        <actionGroup ref="validateAdvancedStyleWithAlignment" stepKey="validateStageLeft">
+            <argument name="page" value="TextOnStage"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyLeft"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <!-- Stage: Check Alignment: Center -->
+        <comment userInput="Stage: Check Alignment: Center" stepKey="commentStageCheckCenter"/>
+        <actionGroup ref="validateAdvancedStyleWithAlignment" stepKey="validateStageCenter">
+            <argument name="page" value="TextOnStage"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+            <argument name="index" value="3"/>
+        </actionGroup>
+        <!-- Stage: Check Alignment: Right -->
+        <comment userInput="Stage: Check Alignment: Right" stepKey="commentStageCheckRight"/>
+        <actionGroup ref="validateAdvancedStyleWithAlignment" stepKey="validateStageRight">
+            <argument name="page" value="TextOnStage"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyRight"/>
+            <argument name="index" value="4"/>
+        </actionGroup>
+        <comment userInput="Validate Stage After Save" stepKey="commentStageAfterSave"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!-- Stage: Check Alignment: Default -->
+        <comment userInput="Stage: Check Alignment: Default" stepKey="commentStageCheckDefault2"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStageDefault2">
+            <argument name="page" value="TextOnStage"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Stage: Check Alignment: Left -->
+        <comment userInput="Stage: Check Alignment: Left2" stepKey="commentStageCheckLeft2"/>
+        <actionGroup ref="validateAdvancedStyleWithAlignment" stepKey="validateStageLeft2">
+            <argument name="page" value="TextOnStage"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyLeft"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <!-- Stage: Check Alignment: Center -->
+        <comment userInput="Stage: Check Alignment: Center" stepKey="commentStageCheckCenter2"/>
+        <actionGroup ref="validateAdvancedStyleWithAlignment" stepKey="validateStageCenter2">
+            <argument name="page" value="TextOnStage"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+            <argument name="index" value="3"/>
+        </actionGroup>
+        <!-- Stage: Check Alignment: Right -->
+        <comment userInput="Stage: Check Alignment: Right" stepKey="commentStageCheckRight2"/>
+        <actionGroup ref="validateAdvancedStyleWithAlignment" stepKey="validateStageRight2">
+            <argument name="page" value="TextOnStage"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyRight"/>
+            <argument name="index" value="4"/>
+        </actionGroup>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <!-- Storefront: Check Alignment: Default -->
+        <comment userInput="Storefront: Check Alignment: Default" stepKey="commentStorefrontCheckDefault"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStorefrontDefault">
+            <argument name="page" value="TextOnStorefront"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Storefront: Check Alignment: Left -->
+        <comment userInput="Storefront: Check Alignment: Left" stepKey="commentStorefrontCheckLeft"/>
+        <actionGroup ref="validateAdvancedStyleWithAlignment" stepKey="validateStorefrontLeft">
+            <argument name="page" value="TextOnStorefront"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyLeft"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <!-- Storefront: Check Alignment: Center -->
+        <comment userInput="Storefront: Check Alignment: Center" stepKey="commentStorefrontCheckCenter"/>
+        <actionGroup ref="validateAdvancedStyleWithAlignment" stepKey="validateStorefrontCenter">
+            <argument name="page" value="TextOnStorefront"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+            <argument name="index" value="3"/>
+        </actionGroup>
+        <!-- Storefront: Check Alignment: Right -->
+        <comment userInput="Storefront: Check Alignment: Right" stepKey="commentStorefrontCheckRight"/>
+        <actionGroup ref="validateAdvancedStyleWithAlignment" stepKey="validateStorefrontRight">
+            <argument name="page" value="TextOnStorefront"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyRight"/>
+            <argument name="index" value="4"/>
+        </actionGroup>
+    </test>
+</tests>

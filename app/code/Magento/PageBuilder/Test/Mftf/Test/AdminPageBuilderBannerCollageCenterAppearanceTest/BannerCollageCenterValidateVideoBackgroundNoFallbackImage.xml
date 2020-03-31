@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="BannerCollageCenterValidateVideoBackgroundNoFallbackImage" extends="BannerPosterValidateVideoBackgroundNoFallbackImage">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Banner"/>
+            <title value="Validate Banner with Collage Center Appearance Renders When Video Isn't Loaded and There's No Fallback Image "/>
+            <description value="Validate that a banner with collage center appearance renders correctly when the video background video hasn't loaded and there is no fallback image."/>
+            <severity value="BLOCKER"/>
+            <useCaseId value="PB-265"/>
+            <testCaseId value="MC-31635"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-banner"/>
+            <group value="pagebuilder-bannerCollageCenter"/>
+            <group value="pagebuilder-backgroundForm"/>
+            <group value="pagebuilder-video-background"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
+            <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
+        </actionGroup>
+    </test>
+</tests>

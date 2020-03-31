@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="verifyCannotNavigateToPageBuilderTemplatesGridPage">
+        <annotations>
+            <description>Verifies that you cannot navigates to the Page Builder Templates grid page via direct url nor via the left nav menu.</description>
+        </annotations>
+        <arguments>
+            <argument name="pageHeading" defaultValue="Sorry, you need permissions to view this content." type="string"/>
+        </arguments>
+        <amOnPage url="{{PageBuilderTemplatesGridPage.url}}" stepKey="goToPageBuilderTemplatesGridPage"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible selector="{{PageBuilderTemplatesPage.pageTitle}}" stepKey="waitForPageTitle"/>
+        <see userInput="Magento Admin" selector="{{PageBuilderTemplatesPage.pageTitle}}" stepKey="seePageTitle"/>
+        <see selector="{{AdminHeaderSection.pageHeading}}" userInput="{{pageHeading}}" stepKey="seeErrorHeading"/>
+        <waitForElementVisible selector="{{AdminMenuSection.content}}" stepKey="waitForContent"/>
+        <click selector="{{AdminMenuSection.content}}" stepKey="clickContent"/>
+        <waitForPageLoad stepKey="waitForMenu"/>
+        <seeElement selector="{{AdminMenuSection.menuItem('magento-backend-content-elements')}}" stepKey="seeElementsSection"/>
+        <see userInput="Pages" selector="{{AdminMenuSection.menuItem('magento-backend-content-elements')}}" stepKey="seeTemplates"/>
+        <dontSee userInput="Templates" selector="{{AdminMenuSection.menuItem('magento-backend-content-elements')}}" stepKey="dontSeeTemplates"/>
+    </actionGroup>
+</actionGroups>

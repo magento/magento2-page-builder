@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="validateOnHoverOptionMenu">
+        <arguments>
+            <argument name="contentType"/>
+        </arguments>
+        <waitForElementVisible selector="{{PageBuilderStage.contentTypeInStage(contentType.role)}}" stepKey="waitForContentTypeInStageVisible"/>
+        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStage(contentType.role)}}" stepKey="onMouseOverStage"/>
+        <waitForElementVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(contentType.role)}}" stepKey="waitForOptionsMenu"/>
+        <waitForElementVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeMove(contentType.role)}}" stepKey="seeOptionsMove"/>
+        <waitForElementVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeEdit(contentType.role)}}" stepKey="seeOptionsEdit"/>
+        <waitForElementVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeDuplicate(contentType.role, '1')}}" stepKey="seeOptionsDuplicate"/>
+        <waitForElementVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeRemove(contentType.role)}}" stepKey="seeOptionsRemove"/>
+        <see selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(contentType.role)}}" userInput="{{contentType.name}}" stepKey="seeOptionMenuTitle"/>
+    </actionGroup>
+</actionGroups>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="choosePageBuilderTemplateCreatedForOptionsInFilter">
+        <annotations>
+            <description>Checks an option in the Created For drop-down on the Page Builder templates grid filter.</description>
+        </annotations>
+        <arguments>
+            <argument name="section" defaultValue="PageBuilderTemplatesPageGrid"/>
+            <argument name="createdFor" defaultValue="{{PageBuilderTemplateCreatedFor.any}}" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{section.createdForDropDownFilter}}" stepKey="waitForCreatedFor"/>
+        <click selector="{{section.createdForDropDownFilter}}" stepKey="openCreatedForDropDown"/>
+        <checkOption selector="{{section.createdForInputByLabelFilter(createdFor)}}" stepKey="checkCreatedForOption"/>
+        <click selector="{{section.createdForDropDownDoneButtonFilter}}" stepKey="closeCreatedForDropDown"/>
+        <seeElement selector="{{section.selectedCreatedForOptionFilter(createdFor)}}" stepKey="seeCreatedForOptionSelected"/>
+    </actionGroup>
+</actionGroups>

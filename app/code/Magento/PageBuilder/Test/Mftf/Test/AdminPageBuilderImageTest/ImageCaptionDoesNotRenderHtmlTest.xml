@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="ImageCaptionDoesNotRenderHtmlTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Image"/>
+            <title value="Image caption does not render HTML"/>
+            <description value="Image caption should not render HTML within the browser or storefront"/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MC-13922"/>
+            <testCaseId value="MC-13933"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-image"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <createData entity="_defaultCmsPage" stepKey="createCMSPage"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage"/>
+            <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
+                <argument name="FolderName" value="{{PageBuilderImageProperty_StageJPG.path}}"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage">
+                <argument name="Image" value="PageBuilderImageProperty_StageJPG"/>
+            </actionGroup>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <!-- Add Image to Stage -->
+        <comment userInput="Add Image to Stage" stepKey="commentAddImageToStage"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelGroup">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="addImageToStage" stepKey="addImageToStage">
+            <argument name="property" value="PageBuilderImageProperty_StageJPG"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterImageCaptionProperty">
+            <argument name="property" value="PageBuilderImageCaptionProperty_HtmlCode"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Verify admin -->
+        <comment userInput="Verify admin" stepKey="commentVerifyAdmin"/>
+        <dontSeeJsError stepKey="dontSeeThrownError"/>
+        <waitForElementVisible selector="{{ImageOnStage.caption('1')}}" stepKey="waitForImageCaption"/>
+        <see selector="{{ImageOnStage.caption('1')}}" userInput="{{PageBuilderImageCaptionProperty_HtmlCode.value}}" stepKey="seeHtmlCodeInCaption"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+        <dontSeeJsError stepKey="dontSeeThrownErrorAfterSave"/>
+        <!-- Verify storefront -->
+        <comment userInput="Verify storefront" stepKey="commentVerifyStorefront"/>
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCmsPage">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{ImageOnStorefront.imageCaption('1')}}" stepKey="waitForCaptionVisible"/>
+        <dontSeeJsError stepKey="dontSeeThrownErrorOnStorefront"/>
+        <see selector="{{ImageOnStorefront.imageCaption('1')}}" userInput="{{PageBuilderImageCaptionProperty_HtmlCode.value}}" stepKey="seeHtmlCodeOnStorefront"/>
+    </test>
+</tests>

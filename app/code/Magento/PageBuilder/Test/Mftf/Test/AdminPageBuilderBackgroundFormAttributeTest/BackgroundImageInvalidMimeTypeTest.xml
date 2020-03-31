@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="BackgroundImageInvalidMimeTypeTest" extends="BackgroundImageInvalidFileSizeTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Background Form"/>
+            <title value="Background Image - Invalid Mime Type"/>
+            <description value="Tests that the Background Image attribute functions as expected for files with correct extension but invalid mime type"/>
+            <severity value="BLOCKER"/>
+            <useCaseId value="MC-5054"/>
+            <testCaseId value="MC-5071"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-banner"/>
+            <group value="pagebuilder-backgroundForm"/>
+        </annotations>
+        <actionGroup ref="attachInvalidFileOnSlideOut" stepKey="attachInvalidFileOnSlideOut">
+            <argument name="property" value="PageBuilderBackgroundImage_InvalidMimeType"/>
+        </actionGroup>
+        <actionGroup ref="attachInvalidFileOnSlideOut" stepKey="attachInvalidFileOnSlideOut2">
+            <argument name="property" value="PageBuilderBackgroundImage_InvalidMimeType"/>
+        </actionGroup>
+    </test>
+</tests>

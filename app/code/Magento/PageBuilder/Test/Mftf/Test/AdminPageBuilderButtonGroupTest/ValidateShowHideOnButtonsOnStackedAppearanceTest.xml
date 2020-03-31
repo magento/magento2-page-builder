@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="ValidateShowHideOnButtonsOnStackedAppearanceTest" extends="ValidateShowHideOnButtonsTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Buttons"/>
+            <title value="Button Group - Buttons has hide show capabilities on stacked appearance"/>
+            <description value="A user is able to hide and show the buttons successfully when using stacked appearance"/>
+            <severity value="BLOCKER"/>
+            <useCaseId value="MC-4093"/>
+            <testCaseId value="MC-4230"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-buttons"/>
+            <group value="pagebuilder-buttonItem"/>
+            <group value="pagebuilder-hideShow"/>
+        </annotations>
+        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusOptionMenu" after="dragButtonsIntoStage">
+            <argument name="contentType" value="PageBuilderButtonItemContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage" after="unFocusOptionMenu">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <!-- Select Stacked Appearance -->
+        <comment userInput="Select Stacked Appearances" stepKey="commentSelectStackedAppearance" after="openEditMenuOnStage"/>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearance" after="commentSelectStackedAppearance">
+            <argument name="property" value="PageBuilderButtonGroupAppearance_Stacked"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1" after="enterAppearance"/>
+    </test>
+</tests>

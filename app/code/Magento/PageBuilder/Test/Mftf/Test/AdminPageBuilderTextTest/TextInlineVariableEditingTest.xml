@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="TextInlineVariableEditingTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Text"/>
+            <title value="Edit variable inline in WYSIWYG and see on storefront"/>
+            <description value="Verify that user are able to add variable into Text Content Type and see it on storefront"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-1416"/>
+            <testCaseId value="MC-3467"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-text"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultCmsPage" stepKey="createCMSPage"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="switchToTinyMCE4"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage1">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection1">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTextOntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <clickWithLeftButton x="10" y="10" selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnTextEditorArea"/>
+        <actionGroup ref="addVariableToTinyMCEInline" stepKey="addVariableToTinyMCE">
+            <argument name="variable" value="TinyMCEVariableCountry"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{TextOnStage.text('1', TinyMCEVariableCountry.editPanelValue)}}" stepKey="waitForVariableCountryStage1"/>
+        <!--Select another variable-->
+        <comment userInput="Select another variable" stepKey="selectAnotherVariable"/>
+        <doubleClick selector="{{TextOnStage.directive('1', TinyMCEVariableCountry.editPanelValue)}}" stepKey="doubleClickOnVariablePlaceholder"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
+        <waitForElementVisible selector="{{VariableSection.Radio(TinyMCEVariableBaseURL.variableName)}}" stepKey="waitForVariable1"/>
+        <checkOption selector="{{VariableSection.Radio(TinyMCEVariableBaseURL.variableName)}}" stepKey="selectVariable"/>
+        <waitForElementVisible selector="{{VariableSection.InsertWidget}}" stepKey="waitForInsertVariable2"/>
+        <click selector="{{VariableSection.InsertWidget}}" stepKey="clickInsertVariable2"/>
+        <waitForElementNotVisible selector="{{VariableSection.InsertWidget}}" stepKey="waitForVariableModalToClose"/>
+        <waitForElementVisible selector="{{TextOnStage.text('1', TinyMCEVariableBaseURL.editPanelValue)}}" stepKey="waitForVariabBaseURLleStage1"/>
+        <!--Verify inputed variable on slideout-->
+        <comment userInput="Verify inputed variable on slideout" stepKey="commentVerifyVariableOnSlideout"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="lostFocusFromWYSIWYG"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <switchToIFrame selector="{{TextOnConfiguration.tinyMCEIFrame}}" stepKey="switchToIFrame"/>
+        <waitForElementVisible selector="{{TextOnConfiguration.tinyMCEVariable(TinyMCEVariableBaseURL.editPanelValue, '1')}}" stepKey="waitForVariable2"/>
+        <switchToIFrame stepKey="exitIFrame"/>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage2"/>
+        <!--Verify variable on stage after saving cms page-->
+        <comment userInput="Verify variable on stage" stepKey="commentVerifyImageOnStage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <waitForElementVisible selector="{{TextOnStage.text('1', TinyMCEVariableBaseURL.editPanelValue)}}" stepKey="waitForVariabBaseURLleStage2"/>
+        <!--Verify ability to double click on variable prior to focusing TinyMCE-->
+        <actionGroup ref="doubleClickVariableTinyMCE" stepKey="doubleClickVariable">
+            <argument name="variable" value="TinyMCEVariableBaseURL"/>
+        </actionGroup>
+        <actionGroup ref="closeVariablePanelTinyMCE" stepKey="closeVariablePanel"/>
+        <!-- Validate Storefront -->
+        <comment userInput="Verify variable  on storefront" stepKey="commentVerifyEmptyBlock"/>
+        <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
+        <waitForElementVisible selector="{{TextOnStorefront.text('1', _ENV.MAGENTO_BASE_URL)}}" stepKey="waitForVariableStorefront"/>
+    </test>
+</tests>

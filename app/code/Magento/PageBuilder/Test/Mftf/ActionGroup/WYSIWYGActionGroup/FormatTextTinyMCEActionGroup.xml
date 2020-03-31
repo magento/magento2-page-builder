@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="formatTextTinyMCE">
+        <arguments>
+            <argument name="section" defaultValue="WYSIWYGOnPageBuilderInline"/>
+            <!-- Receives pagebuilder_tinymce_format -->
+            <argument name="format" defaultValue="TinyMCEFormatHeading1"/>
+        </arguments>
+        <waitForElementVisible selector="{{section.formatSelector}}" stepKey="waitForFormatList"/>
+        <click selector="{{section.formatSelector}}" stepKey="expandFormatList"/>
+        <waitForElementVisible selector="{{section.formatOption(format.label)}}" stepKey="waitForFormatOptionVisible"/>
+        <click selector="{{section.formatOption(format.label)}}" stepKey="clickFormatOption"/>
+        <waitForElementNotVisible selector="{{section.formatOption(format.label)}}" stepKey="waitForFormatInvisible"/>
+    </actionGroup>
+</actionGroups>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="confirmRemovalModal">
+        <waitForElementVisible time="10" selector="{{PageBuilderStage.modal}}" stepKey="waitForModal"/>
+        <seeElement selector="{{PageBuilderStage.modal}}" stepKey="seeRemovalModal"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderStage.modalOk}}" stepKey="waitForModalOk"/>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <click selector="{{PageBuilderStage.modalOk}}" stepKey="confirmRemoveModal"/>
+        <waitForElementNotVisible time="1" selector="{{PageBuilderStage.modalOk}}" stepKey="waitForModalHide"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+    </actionGroup>
+</actionGroups>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
+    <section name="ProductsContentTypeForm">
+        <element name="conditionsListText" type="text" selector="//label[contains(@class,'admin__field-label')]//span[text()='Condition']"/>
+        <element name="conditionsList" type="text" selector=".rule-param-children"/>
+        <element name="conditionsListAddButton" type="button" parameterized="true" selector="(//*[contains(@class,'rule-param-new-child')]//img)[{{indexOfAddConditionButton}}]"/>
+        <element name="conditionsListAddTypeSelect" type="select" parameterized="true" selector="(//*[contains(@class,'rule-param-new-child')]//select)[{{indexOfAddConditionDropDown}}]"/>
+        <element name="conditionsListConditionPlaceholder" type="button" selector="//ul[contains(@class,'rule-param-children')]//a[text()='...']"/>
+        <element name="conditionsListConditionInput" type="button" selector=".rule-param-edit input"/>
+        <element name="conditionsListSavedValue" type="text" parameterized="true" selector="//ul[contains(@class,'rule-param-children')]//li[{{indexOfCondition}}]//span[@class='rule-param'][{{indexOfConditionParameter}}]/a"/>
+        <element name="conditionsCombinationAggregateSelector" type="button" parameterized="true" selector="//ul[contains(@class,'rule-param-children')]//span[contains(@class,'rule-param')]//select[contains(@id,'1--{{indexOfCondition}}__aggregator')]/ancestor::span[contains(@class,'rule-param')]//a"/>
+        <element name="conditionsCombinationAggregateSelectorSelect" type="button" parameterized="true" selector="//ul[contains(@class,'rule-param-children')]//span[contains(@class,'rule-param')]//select[contains(@id,'1--{{indexOfCondition}}__aggregator')]"/>
+        <element name="conditionsCombinationAggregateBooleanSelector" type="button" parameterized="true" selector="//ul[contains(@class,'rule-param-children')]//span[contains(@class,'rule-param')]//select[contains(@id,'1--{{indexOfCondition}}__value')]/ancestor::span[contains(@class,'rule-param')]//a"/>
+        <element name="conditionsCombinationAggregateBooleanSelectorSelect" type="button" parameterized="true" selector="//ul[contains(@class,'rule-param-children')]//span[contains(@class,'rule-param')]//select[contains(@id,'1--{{indexOfCondition}}__value')]"/>
+        <element name="productsCountInput" type="input" selector="input[name='products_count']"/>
+    </section>
+</sections>

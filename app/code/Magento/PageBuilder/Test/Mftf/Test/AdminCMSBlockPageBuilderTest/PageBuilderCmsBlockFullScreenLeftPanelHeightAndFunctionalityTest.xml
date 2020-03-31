@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="PageBuilderCmsBlockFullScreenLeftPanelHeightAndFunctionalityTest" extends="PageBuilderFullScreenLeftPanelHeightAndFunctionalityTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="CMS Block"/>
+            <title value="Left panel is full-height and works in full-screen mode in CMS Block"/>
+            <description value="This test is to ensure that the PageBuilder left panel works and grows to span the full height of the viewport in full-screen mode when opened for CMS Block."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MC-3328"/>
+            <testCaseId value="MC-13767"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-fullScreen"/>
+            <group value="pagebuilder-cms-block"/>
+        </annotations>
+        <before>
+            <createData entity="_emptyCmsBlock" stepKey="createPreReqBlock" after="loginAsAdmin"/>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage" after="createPreReqBlock"/>
+            <actionGroup ref="NavigateToCreatedCMSBlockPageActionGroup" stepKey="navigateToAPageWithPageBuilder">
+                <argument name="CMSBlockPage" value="$$createPreReqBlock$$"/>
+            </actionGroup>
+            <comment userInput="---merging to remove step---" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createPreReqBlock" stepKey="deleteCreatedProduct" before="logout"/>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCreatedCategory" after="deleteCreatedProduct"/>
+        </after>
+    </test>
+</tests>

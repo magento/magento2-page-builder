@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="AdvancedConfigurationFunctionalBorderRadiusTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Advanced Configuration"/>
+            <title value="Functional - Border Radius"/>
+            <description value="Tests that the Border Radius attribute functions as expected on Stage and Storefront for Text"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-83415"/>
+            <testCaseId value="MC-2885"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-advancedConfig"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <!-- Add Text to Stage -->
+        <comment userInput="Add Text to Stage" stepKey="commentAddTextToStage"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage2">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+            <argument name="contentTypeIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage3">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+            <argument name="contentTypeIndex" value="3"/>
+        </actionGroup>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor"/>
+        <!-- Add Border Radius: Empty -->
+        <comment userInput="Add Border Radius: Empty" stepKey="commentAddBorderRadiusEmpty"/>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage1">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="contentTypeXCoordinate" value="10"/>
+            <argument name="contentTypeYCoordinate" value="10"/>
+        </actionGroup>
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText1">
+            <argument name="property" value="PageBuilderTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="clearSlideOutPanelFieldGeneral" stepKey="clearBorderRadius">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor2"/>
+        <!-- Add Border Radius: 12 -->
+        <comment userInput="Add Border Radius: 12" stepKey="commentAddBorderRadius12"/>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage2">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
+            <argument name="contentTypeXCoordinate" value="10"/>
+            <argument name="contentTypeYCoordinate" value="10"/>
+        </actionGroup>
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText2">
+            <argument name="property" value="PageBuilderTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterBorderRadius2">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor3"/>
+        <!-- Add Border Radius: 500 -->
+        <comment userInput="Add Border Radius: 500" stepKey="commentAddBorderRadius500"/>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage3">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="3"/>
+            <argument name="contentTypeXCoordinate" value="10"/>
+            <argument name="contentTypeYCoordinate" value="10"/>
+        </actionGroup>
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText3">
+            <argument name="property" value="PageBuilderTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterBorderRadius3">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty500"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor4"/>
+        <!-- Stage: Check Border Radius: Empty -->
+        <comment userInput="Stage: Check Border Radius: Empty" stepKey="commentStageCheckEmpty"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignmentEmptyBorderRadius" stepKey="validateStageEmpty">
+            <argument name="page" value="TextOnStage"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Stage: Check Border Radius: 12 -->
+        <comment userInput="Stage: Check Border Radius: 12" stepKey="commentStageCheck12"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStage12">
+            <argument name="page" value="TextOnStage"/>
+            <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+         <!-- Stage: Check Border Radius: 500 -->
+        <comment userInput="Stage: Check Border Radius: 12" stepKey="commentStageCheck500"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStage500">
+            <argument name="page" value="TextOnStage"/>
+            <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusProperty500"/>
+            <argument name="index" value="3"/>
+        </actionGroup>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentStageAfterSave"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!-- Stage: Check Border Radius: Empty -->
+        <comment userInput="Stage: Check Border Radius: Empty" stepKey="commentStageCheckEmpty2"/>
+        <actionGroup ref="validateAdvancedStyleWithNoBorderRadius" stepKey="validateStageEmpty2">
+            <argument name="page" value="TextOnStage"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Stage: Check Border Radius: 12 -->
+        <comment userInput="Stage: Check Border Radius: 12" stepKey="commentStageCheck12AfterSave"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStage12AfterSave">
+            <argument name="page" value="TextOnStage"/>
+            <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+         <!-- Stage: Check Border Radius: 500 -->
+        <comment userInput="Stage: Check Border Radius: 500" stepKey="commentStageCheck500AfterSave"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStage500AfterSave">
+            <argument name="page" value="TextOnStage"/>
+            <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusProperty500"/>
+            <argument name="index" value="3"/>
+        </actionGroup>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <!-- Storefront: Check Border Radius: Empty -->
+        <comment userInput="Storefront: Check Border Radius: Empty" stepKey="commentStorefrontCheckEmpty"/>
+        <actionGroup ref="validateAdvancedStyleWithNoBorderRadius" stepKey="validateStorefrontEmpty">
+            <argument name="page" value="TextOnStorefront"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Storefront: Check Border Radius: 12 -->
+        <comment userInput="Storefront: Check Border Radius: 12" stepKey="commentStorefrontCheck12"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStorefront12">
+            <argument name="page" value="TextOnStorefront"/>
+            <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+         <!-- Storefront: Check Border Radius: 500 -->
+        <comment userInput="Storefront: Check Border Radius: 500" stepKey="commentStorefrontCheck500"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStorefront500">
+            <argument name="page" value="TextOnStorefront"/>
+            <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusProperty500"/>
+            <argument name="index" value="3"/>
+        </actionGroup>
+    </test>
+</tests>

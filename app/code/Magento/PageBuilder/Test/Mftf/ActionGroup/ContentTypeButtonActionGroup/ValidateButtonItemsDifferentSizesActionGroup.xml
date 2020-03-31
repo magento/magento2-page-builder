@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="validateButtonItemsDifferentSizes" extends="validateButtonItemsSameSize">
+        <comment userInput="validateButtonItemsDifferentSizes" stepKey="comment"/>
+        <seeElement selector="{{buttonGroupPage.sameSizeValue(buttonGroupIndex, PageBuilderButtonGroupSameSize_Disabled.value)}}" stepKey="seeButtonSameSizeValue"/>
+        <assertNotEquals stepKey="assertButtonWidthSize">
+            <actualResult type="variable">button1Width</actualResult>
+            <expectedResult type="variable">button2Width</expectedResult>
+        </assertNotEquals>
+    </actionGroup>
+</actionGroups>

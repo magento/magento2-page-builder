@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="RowFullBleedValidateVideoBackground" extends="RowContainedValidateVideoBackground">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Row"/>
+            <title value="Validate Video Background in Full Bleed Row"/>
+            <description value="Set all video background attributes for a full bleed Row and validate on stage and storefront."/>
+            <severity value="BLOCKER"/>
+            <useCaseId value="PB-95"/>
+            <testCaseId value="MC-31107"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-row"/>
+            <group value="pagebuilder-row-full-bleed"/>
+            <group value="pagebuilder-rowBackground"/>
+            <group value="pagebuilder-video-background"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setAppearance">
+            <argument name="property" value="PageBuilderRowAppearance_FullBleed"/>
+        </actionGroup>
+        <actionGroup ref="validateVideoBackgroundWithAllAttributes" stepKey="validateStorefront">
+            <argument name="section" value="RowOnStorefront_FullWidth_FullBleed"/>
+            <argument name="backgroundColor" value="{{PageBuilderBackgroundColor_Pink.rgb}}"/>
+            <argument name="videoUrl" value="PageBuilderVideoBackgroundUrl_YouTube_Embedded"/>
+            <argument name="overlayColor" value="{{PageBuilderVideoBackgroundOverlayColor_Hex_Grey.rgba}}"/>
+            <argument name="infiniteLoop" value="PageBuilderVideoBackgroundInfiniteLoop_Enabled"/>
+            <argument name="lazyLoad" value="PageBuilderVideoBackgroundLazyLoad_Enabled"/>
+            <argument name="playOnlyWhenVisible" value="PageBuilderVideoBackgroundPlayOnlyWhenVisible_Enabled"/>
+            <argument name="fallbackImage" value="PageBuilderVideoBackgroundFallbackImage_JPG"/>
+        </actionGroup>
+    </test>
+</tests>

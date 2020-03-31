@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="validateProductInProducts">
+        <arguments>
+            <argument name="page" defaultValue="ProductsOnStage"/>
+            <argument name="productsIndex" defaultValue="1" type="string"/>
+            <argument name="productIndex" defaultValue="1" type="string"/>
+            <argument name="product" defaultValue="_defaultProduct"/>
+            <argument name="isClickable" defaultValue="none" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{page.base(productsIndex)}}" stepKey="waitForProducts"/>
+        <seeElement selector="{{page.productImage(productIndex)}}" stepKey="seeProductImage"/>
+        <seeElement selector="{{page.productName(productIndex, product.name)}}" stepKey="seeProductName"/>
+        <seeElement selector="{{page.productPrice(productIndex, product.price)}}" stepKey="seeProductPrice"/>
+        <moveMouseOver selector="{{page.productImage(productIndex)}}" stepKey="moveMouseOverProduct"/>
+        <seeElement selector="{{page.productAddToCart(productIndex)}}" stepKey="seeProductAddToCart"/>
+        <seeElement selector="{{page.productAddToWishList(productIndex)}}" stepKey="seeProductAddToWishList"/>
+        <seeElement selector="{{page.productAddToCompare(productIndex)}}" stepKey="seeProductAddToCompare"/>
+        <executeJS function="return getComputedStyle(document.evaluate(&quot;{{page.productName(productIndex, product.name)}}&quot;, document.body).iterateNext()).pointerEvents" stepKey="getProductNamePointerEvents"/>
+        <executeJS function="return getComputedStyle(document.evaluate(&quot;{{page.productAddToCart(productIndex)}}&quot;, document.body).iterateNext()).pointerEvents" stepKey="getAddToCartPointerEvents"/>
+        <executeJS function="return getComputedStyle(document.evaluate(&quot;{{page.productAddToWishList(productIndex)}}&quot;, document.body).iterateNext()).pointerEvents" stepKey="getWishListPointerEvents"/>
+        <executeJS function="return getComputedStyle(document.evaluate(&quot;{{page.productAddToCompare(productIndex)}}&quot;, document.body).iterateNext()).pointerEvents" stepKey="getAddToComparePointerEvents"/>
+        <assertEquals stepKey="assertWhetherProductNameIsClickable">
+            <expectedResult type="string">{{isClickable}}</expectedResult>
+            <actualResult type="variable">getProductNamePointerEvents</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertWhetherAddToCartIsClickable">
+            <expectedResult type="string">{{isClickable}}</expectedResult>
+            <actualResult type="variable">getAddToCartPointerEvents</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertWhetherWishListIsClickable">
+            <expectedResult type="string">{{isClickable}}</expectedResult>
+            <actualResult type="variable">getWishListPointerEvents</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertWhetherAddToCompareIsClickable">
+            <expectedResult type="string">{{isClickable}}</expectedResult>
+            <actualResult type="variable">getAddToComparePointerEvents</actualResult>
+        </assertEquals>
+    </actionGroup>
+</actionGroups>

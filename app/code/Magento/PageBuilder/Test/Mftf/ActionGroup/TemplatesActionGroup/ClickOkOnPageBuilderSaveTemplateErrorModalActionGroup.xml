@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="clickOkOnPageBuilderSaveTemplateErrorModal">
+        <annotations>
+            <description>Clicks the OK button on the Page Builder Save as Template error modal.</description>
+        </annotations>
+        <waitForPageLoad stepKey="waitForModal"/>
+        <waitForElementVisible selector="{{PageBuilderSaveTemplateErrorModal.okButton}}" stepKey="waitForOkButton"/>
+        <click selector="{{PageBuilderSaveTemplateErrorModal.okButton}}" stepKey="clickOkButton"/>
+        <waitForPageLoad stepKey="waitForModalGone"/>
+        <waitForElementNotVisible time="5" selector="{{PageBuilderSaveTemplateErrorModal.modal}}" stepKey="waitForModalNotVisible"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderSaveTemplateModal.activeModal}}" stepKey="waitForSaveTemplateModal"/>
+    </actionGroup>
+</actionGroups>

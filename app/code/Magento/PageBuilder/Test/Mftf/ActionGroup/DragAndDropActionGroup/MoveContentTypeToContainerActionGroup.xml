@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="moveContentTypeToContainer">
+        <arguments>
+            <argument name="contentType"/>
+            <argument name="contentTypeIndex" defaultValue="1" type="string"/>
+            <argument name="containerTargetType"/>
+            <argument name="containerTargetIndex" defaultValue="1" type="string"/>
+            <argument name="offsetXCoordinate" defaultValue="10" type="string"/>
+            <argument name="offsetYCoordinate" defaultValue="0" type="string"/>
+            <argument name="containerOffsetXCoordinate" defaultValue="null" type="string"/>
+            <argument name="containerOffsetYCoordinate" defaultValue="null" type="string"/>
+        </arguments>
+        <comment userInput="moveContentTypeToContainer" stepKey="comment"/>
+        <waitForElementVisible time="20" selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForContentTypeInStageVisible"/>
+        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" x="{{offsetXCoordinate}}" y="{{offsetYCoordinate}}" stepKey="onMouseOverContentTypeStage"/>
+        <waitForPageLoad time="30" stepKey="waitForAnimation"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenuByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForOptions"/>
+        <waitForElementVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeMoveByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForEditButton"/>
+        <dragAndDrop selector1="{{PageBuilderContentTypeOptionsMenu.contentTypeMoveByIndex(contentType.role, contentTypeIndex)}}" selector2="{{PageBuilderStage.contentTypeContainer(containerTargetType.role, containerTargetIndex)}}" x="{{containerOffsetXCoordinate}}" y="{{containerOffsetYCoordinate}}" stepKey="moveContentTypeIntoContainer"/>
+        <waitForPageLoad time="30" stepKey="waitForStageToLoad"/>
+        <dontSeeJsError stepKey="doNotSeeJSErrorInConsole"/>
+        <waitForElementVisible time="30" selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForContentTypeInStage"/>
+    </actionGroup>
+</actionGroups>

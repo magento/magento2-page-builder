@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="SlideItemDeleteSlideItemTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Slide Item - Delete Slide"/>
+            <description value="A user should be able to delete a slide item from a slider content type."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-3228"/>
+            <testCaseId value="MC-3779"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-slideItemCommon"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <!-- Add Slider With 2 Slides and Save Page -->
+        <comment userInput="Add Slider With 2 Slides and Save Page" stepKey="commentAddSlider"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragSliderIntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <seeNumberOfElements selector="{{SlideOnBackend.all}}" userInput="2" stepKey="seeSlidesStage1"/>
+        <!-- Remove Slide Before Page Save (No Confirmation Modal) -->
+        <comment userInput="Remove Slide Before Page Save" stepKey="commentRemoveSlide1"/>
+        <actionGroup ref="removeContentTypeFromStageSmallByIndex" stepKey="removeSlideFromStage1">
+            <argument name="section" value="SlideOnBackend"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <seeNumberOfElements selector="{{SlideOnBackend.all}}" userInput="1" stepKey="seeSlidesStage2"/>
+        <!-- Add Slide Again -->
+        <comment userInput="Add Slide Again" stepKey="commentAddSlideAgain"/>
+        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType2">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <seeNumberOfElements selector="{{SlideOnBackend.all}}" userInput="2" stepKey="seeSlidesStage3"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Remove Slide After Page Save (Confirmation Modal) -->
+        <comment userInput="Remove Slide After Page Save" stepKey="commentRemoveSlide2"/>
+        <actionGroup ref="removeContentTypeFromStageSmallByIndex" stepKey="removeSlideFromStage2">
+            <argument name="section" value="SlideOnBackend"/>
+            <argument name="targetIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="confirmRemovalModal" stepKey="confirmRemovalModal"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <seeNumberOfElements selector="{{SlideOnBackend.all}}" userInput="1" stepKey="seeSlidesStage4"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage2"/>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <seeNumberOfElements selector="{{SlideOnFrontend.all}}" userInput="1" stepKey="seeSlidesStorefront"/>
+    </test>
+</tests>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="validateBackgroundMobileImage">
+        <arguments>
+            <argument name="section"/>
+            <argument name="backgroundMobileImage"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <comment userInput="validateBackgroundMobileImage" stepKey="comment"/>
+        <waitForElementVisible selector="{{section.base(index)}}" stepKey="waitForBaseElement"/>
+        <waitForElement selector="{{section.backgroundMobileImage(index, backgroundMobileImage.fileName)}}" stepKey="waitForBackgroundMobileImage"/>
+        <dontSeeElement selector="{{section.backgroundMobileImage(index, backgroundMobileImage.fileName)}}" stepKey="dontSeeBackgroundMobileImage"/>
+        <grabAttributeFrom selector="{{section.backgroundMobileImage(index, backgroundMobileImage.fileName)}}" userInput="style" stepKey="contentTypeStyle"/>
+        <!-- Return the string value of background-image -->
+        <executeJS function="return '{$contentTypeStyle}'.match(/((?&lt;=(background-image: url\((&quot;|\'))).+(?=(&quot;|\')\);))/)[0]" stepKey="backgroundMobileImageValue"/>
+        <!-- Convert all characters in string variables to regex friendly strings  -->
+        <executeJS function="return '{{backgroundMobileImage.path}}'.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\\\^\\$\|]/g, '\\\\$&amp;')" stepKey="regexFilePath"/>
+        <assertRegExp stepKey="assertBackgroundMobileImageContainsFileInformation">
+            <expectedResult type="string">/.*\/(pub\/|\/)?media.*{$regexFilePath}\/{{backgroundMobileImage.fileName}}(_\d+)?\.{{backgroundMobileImage.extension}}/</expectedResult>
+            <actualResult type="variable">$backgroundMobileImageValue</actualResult>
+        </assertRegExp>
+        <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
+        <waitForElementVisible selector="{{section.backgroundMobileImage(index, backgroundMobileImage.fileName)}}" stepKey="waitForBackgroundMobileImageVisible"/>
+        <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
+    </actionGroup>
+</actionGroups>

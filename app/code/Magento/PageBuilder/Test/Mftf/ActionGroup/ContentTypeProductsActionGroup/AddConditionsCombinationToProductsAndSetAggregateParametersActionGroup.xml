@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="addConditionsCombinationToProductsAndSetAggregateParameters">
+        <arguments>
+            <argument name="aggregatorType" defaultValue="all" type="string"/>
+            <argument name="booleanValueForAggregator" defaultValue="1" type="string"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <comment userInput="addConditionsCombinationToProductsAndSetAggregateParameters" stepKey="comment"/>
+        <waitForElementVisible selector="{{ProductsContentTypeForm.conditionsList}}" stepKey="waitForConditionsToLoad"/>
+        <waitForElementVisible selector="{{ProductsContentTypeForm.conditionsListAddButton(index)}}" stepKey="waitForAddConditionButton"/>
+        <click selector="{{ProductsContentTypeForm.conditionsListAddButton(index)}}" stepKey="clickAddConditionButton"/>
+        <selectOption selector="{{ProductsContentTypeForm.conditionsListAddTypeSelect(index)}}" userInput="{{PageBuilderProductsConditionCombination.value}}" stepKey="selectCombinationOption"/>
+        <waitForPageLoad stepKey="waitForConditionsCombinationTemplateToLoad"/>
+        <click selector="{{ProductsContentTypeForm.conditionsCombinationAggregateSelector(index)}}" stepKey="clickAggregateType"/>
+        <selectOption selector="{{ProductsContentTypeForm.conditionsCombinationAggregateSelectorSelect(index)}}" userInput="{{aggregatorType}}" stepKey="selectAggregateType"/>
+        <waitForPageLoad stepKey="waitForAggregateTypeToLoad"/>
+        <click selector="{{ProductsContentTypeForm.conditionsListText}}" stepKey="clearOptions"/>
+        <click selector="{{ProductsContentTypeForm.conditionsCombinationAggregateBooleanSelector(index)}}" stepKey="clickAggregateTypeBoolean"/>
+        <selectOption selector="{{ProductsContentTypeForm.conditionsCombinationAggregateBooleanSelectorSelect(index)}}" userInput="{{booleanValueForAggregator}}" stepKey="selectAggregateTypeBoolean"/>
+        <waitForPageLoad stepKey="waitForAggregateTypeBooleanToLoad"/>
+        <click selector="{{ProductsContentTypeForm.conditionsListText}}" stepKey="clearOptions2"/>
+    </actionGroup>
+</actionGroups>

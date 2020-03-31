@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="SliderWithNoDotsEqualToMinHeightTest" extends="RowWithBordersAndPaddingEqualToMinHeightTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Slider with no dots is equal to min height"/>
+            <description value="A user can see Slider height with no dots is equal to min height"/>
+            <severity value="BLOCKER"/>
+            <useCaseId value="MC-15742"/>
+            <testCaseId value="MC-18088"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-sliderCommon"/>
+        </annotations>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" after="enterPageTitle" stepKey="expandMenuSection">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" after="commentConfigureContentType" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="unFocusOptionMenu" after="dragContentTypeToStage" stepKey="unfocusSlideOptions">
+            <argument name="contentType" value="PageBuilderSlideContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditPanel">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty">
+            <argument name="property" value="PageBuilderMinHeightProperty_300px"/>
+        </actionGroup>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" after="enterMinHeightProperty" stepKey="enterShowDotsDisabled">
+            <argument name="property" value="PageBuilderSliderShowDots_Disabled"/>
+        </actionGroup>
+        <remove keyForRemoval="enterBorder"/>
+        <remove keyForRemoval="enterBorderColor"/>
+        <remove keyForRemoval="enterBorderWidth"/>
+        <remove keyForRemoval="enterPadding"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" after="saveEditPanelSettings" stepKey="openSlideItemEditPanel">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" after="openSlideItemEditPanel" stepKey="enterMinHeightPropertySlideItem">
+            <argument name="property" value="PageBuilderMinHeightProperty_300px"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" after="enterMinHeightPropertySlideItem" stepKey="enterBackgroundColor">
+            <argument name="property" value="PageBuilderBackgroundColor_Hex_Grey"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" after="enterBackgroundColor" stepKey="saveEditPanelSettings2"/>
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateContentTypeHeightBeforeSave">
+            <argument name="content" value="{{SliderOnStage.containerCSS}}"/>
+            <argument name="minHeight" value="{{PageBuilderMinHeightProperty_300px.intValue}}"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateContentTypeHeightAfterSave">
+            <argument name="content" value="{{SliderOnStage.containerCSS}}"/>
+            <argument name="minHeight" value="{{PageBuilderMinHeightProperty_300px.intValue}}"/>
+        </actionGroup>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateContentTypeHeightStorefront">
+            <argument name="content" value="{{SliderOnFrontend.all}}"/>
+            <argument name="minHeight" value="{{PageBuilderMinHeightProperty_300px.intValue}}"/>
+        </actionGroup>
+    </test>
+</tests>

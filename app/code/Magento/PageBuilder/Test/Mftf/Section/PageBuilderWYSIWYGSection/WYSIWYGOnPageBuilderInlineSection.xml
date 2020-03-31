@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
+    <section name="WYSIWYGOnPageBuilderInline">
+        <element name="inlineCss" type="button" selector=".mce-tinymce.mce-tinymce-inline"/>
+        <element name="notCss" type="button" selector=".mce-tinymce:not(.mce-tinymce-inline)"/>
+        <element name="undo" type="button" selector=".mce-tinymce-inline div[aria-label='Undo']"/>
+        <element name="redo" type="button" selector=".mce-tinymce-inline div[aria-label='Redo']"/>
+        <element name="formatSelector" type="button" selector="//div[contains(@class, 'mce-tinymce')]//span[text()='Formats']"/>
+        <element name="fontSize" type="button" selector=".mce-tinymce-inline div[aria-label='Font Sizes']"/>
+        <element name="lineHeight" type="button" selector=".mce-tinymce-inline div[aria-label='Line Height']"/>
+        <element name="textColor" type="button" selector=".mce-tinymce-inline div[aria-label='Text color']"/>
+        <element name="backgroundColor" type="button" selector=".mce-tinymce-inline div[aria-label='Background color']"/>
+        <element name="bold" type="button" selector=".mce-tinymce-inline div[aria-label='Bold']"/>
+        <element name="italic" type="button" selector=".mce-tinymce-inline div[aria-label='Italic']"/>
+        <element name="underline" type="button" selector=".mce-tinymce-inline div[aria-label='Underline']"/>
+        <element name="alignLeft" type="button" selector=".mce-tinymce-inline div[aria-label='Align left']"/>
+        <element name="alignCenter" type="button" selector=".mce-tinymce-inline div[aria-label='Align center']"/>
+        <element name="alignRight" type="button" selector=".mce-tinymce-inline div[aria-label='Align right']"/>
+        <element name="numberedList" type="button" selector=".mce-tinymce-inline div[aria-label='Numbered list']"/>
+        <element name="bulletList" type="button" selector=".mce-tinymce-inline div[aria-label='Bullet list']"/>
+        <element name="insertLink" type="button" selector=".mce-tinymce-inline div[aria-label='Insert/edit link']"/>
+        <element name="imageSelector" type="button" selector=".mce-tinymce-inline div[aria-label='Insert/edit image']"/>
+        <element name="table" type="button" selector=".mce-tinymce-inline div[aria-label='Table']"/>
+        <element name="specialCharacter" type="button" selector=".mce-tinymce-inline div[aria-label='Special character']"/>
+        <element name="insertWidget" type="button" selector=".mce-tinymce-inline div[aria-label='Insert Widget']"/>
+        <element name="insertVariable" type="button" selector=".mce-tinymce-inline div[aria-label='Insert Variable']"/>
+        <element name="imageSelectorBrowse" type="button" selector="div[aria-label='Insert/edit image'] i.mce-i-browse"/>
+        <element name="imageSelectorOk" type="button" selector="//div[contains(@aria-label, 'Insert/edit image')]//span[contains(@class, 'mce-txt')][text()='Ok']"/>
+        <element name="formatOption" type="text" selector="//div[contains(@class, 'mce-menu')]//span[contains(@class, 'mce-text') and text()='{{label}}']" parameterized="true"/>
+    </section>
+</sections>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="validateParallaxVideoBackgroundWithAllAttributes" extends="validateVideoBackgroundWithAllAttributes">
+        <annotations>
+            <description>Validates all video background attributes when all attributes are configured and parallax is enabled. Extends: validateVideoBackgroundWithAllAttributes</description>
+        </annotations>
+        <assertContains stepKey="assertVideoPosition">
+            <expectedResult type="string">position: fixed;</expectedResult>
+            <actualResult type="variable">$videoStyle</actualResult>
+        </assertContains>
+        <assertContains stepKey="assertImagePosition">
+            <expectedResult type="string">position: fixed;</expectedResult>
+            <actualResult type="variable">$fallbackImageStyle</actualResult>
+        </assertContains>
+    </actionGroup>
+</actionGroups>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
+    <section name="PageBuilderContentTypeOptionsMenu">
+        <element name="contentTypeOptionsMenu" type="button" selector="(//div[contains(@class, &quot;pagebuilder-{{arg1}}&quot;)]//div[contains(@class, &quot;pagebuilder-options&quot;)])[1]" parameterized="true"/>
+        <element name="contentTypeOptionsMenuByIndex" type="button" selector="(//div[contains(@class, &quot;pagebuilder-content-type&quot;) and contains(@class, &quot;pagebuilder-{{arg1}}&quot;)])[{{arg2}}]//div[contains(@class,&quot;pagebuilder-options-visible&quot;)]" parameterized="true"/>
+        <element name="contentTypeMove" type="button" selector="(//div[contains(@class, &quot;pagebuilder-content-type&quot;) and contains(@class, &quot;pagebuilder-{{arg1}}&quot;)])[1]/div[contains(@class,&quot;pagebuilder-options-visible&quot;)]/descendant::*[@class=&quot;move-structural&quot;]" parameterized="true"/>
+        <element name="contentTypeMoveByIndex" type="button" selector="(//div[contains(@class, &quot;pagebuilder-content-type&quot;) and contains(@class, &quot;pagebuilder-{{arg1}}&quot;)])[{{arg2}}]/div[contains(@class,&quot;pagebuilder-options-visible&quot;)]/descendant::*[@class=&quot;move-structural&quot;]" parameterized="true"/>
+        <element name="contentTypeAddByIndex" type="button" selector="(//div[contains(@class, &quot;pagebuilder-content-type&quot;) and contains(@class, &quot;pagebuilder-{{arg1}}&quot;)])[{{arg2}}]//div[contains(@class,&quot;pagebuilder-options-visible&quot;)]//a[contains(@class,&quot;add-child&quot;)]" parameterized="true"/>
+        <element name="contentTypeEdit" type="button" selector="div.pagebuilder-content-type.pagebuilder-{{arg1}} div.pagebuilder-options li.pagebuilder-options-link a.edit-content-type" parameterized="true"/>
+        <element name="contentTypeEditByIndex" type="button" selector="(//div[contains(@class, &quot;pagebuilder-content-type&quot;) and contains(@class, &quot;pagebuilder-{{arg1}}&quot;)])[{{arg2}}]//div[contains(@class,&quot;pagebuilder-options-visible&quot;)]//descendant::*[@class=&quot;edit-content-type&quot;]" parameterized="true"/>
+        <element name="contentTypeHide" type="button" selector="(//div[contains(@class, &quot;pagebuilder-content-type&quot;) and contains(@class, &quot;pagebuilder-{{arg1}}&quot;)])[{{arg2}}]//div[contains(@class,&quot;pagebuilder-options-visible&quot;)]//a[@title=&quot;Hide&quot;]" parameterized="true"/>
+        <element name="contentTypeShow" type="button" selector="(//div[contains(@class, &quot;pagebuilder-content-type&quot;) and contains(@class, &quot;pagebuilder-{{arg1}}&quot;)])[{{arg2}}]//div[contains(@class,&quot;pagebuilder-options-visible&quot;)]//a[@title=&quot;Show&quot;]" parameterized="true"/>
+        <element name="contentTypeDuplicate" type="button" selector="(//div[contains(@class, &quot;pagebuilder-content-type&quot;) and contains(@class, &quot;pagebuilder-{{arg1}}&quot;)])[{{arg2}}]//div[contains(@class,&quot;pagebuilder-options-visible&quot;)]//a[@title=&quot;Duplicate&quot;]" parameterized="true"/>
+        <element name="contentTypeRemove" type="button" selector="div.pagebuilder-content-type.pagebuilder-{{arg1}} div.pagebuilder-options li.pagebuilder-options-link a.remove-structural" parameterized="true"/>
+        <element name="contentTypeRemoveByIndex" type="button" selector="(//div[contains(@class, &quot;pagebuilder-content-type&quot;) and contains(@class, &quot;pagebuilder-{{arg1}}&quot;)])[{{arg2}}]//div[contains(@class,&quot;pagebuilder-options-visible&quot;)]//a[@title=&quot;Remove&quot;]" parameterized="true"/>
+        <element name="contentTypeRemoveDisabled" type="button" selector=".pagebuilder-options .remove-structural[title=&quot;Remove&quot;].disabled"/>
+    </section>
+</sections>

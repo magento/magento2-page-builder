@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="ReadHtmlWithNonexistentDataRoleTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="WYSIWYG Conversion"/>
+            <title value="HTML with element that has nonexistent data-content-type converted to HTML content type"/>
+            <description value="HTML with element that has nonexistent data-content-type converted to HTML content type"/>
+            <severity value="BLOCKER"/>
+            <useCaseId value="MAGETWO-66620"/>
+            <testCaseId value="MC-2824"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-html"/>
+            <group value="pagebuilder-wysiwygConversion"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set cms/pagebuilder/enabled 0" stepKey="disablePageBuilder"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <createData entity="_defaultCmsPage" stepKey="createPreReqCMSPage"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/pagebuilder/enabled 1" stepKey="enablePageBuilder"/>
+            <deleteData createDataKey="createPreReqCMSPage" stepKey="deleteCreatePreReqCMSPage"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToContentCreatedCMSPage1">
+            <argument name="CMSPage" value="$$createPreReqCMSPage$$"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{CmsNewPagePageActionsSection.pageTitle}}" stepKey="waitForPageBuilderDisplay"/>
+        <waitForElementVisible time="1" selector="{{CmsNewPagePageActionsSection.showHideEditor}}" stepKey="waitForShowHideEditor"/>
+        <waitForPageLoad stepKey="waitForEditor"/>
+        <click selector="{{CmsNewPagePageActionsSection.showHideEditor}}" stepKey="clickShowHideEditor"/>
+        <waitForElementVisible time="1" selector="{{CmsNewPagePageActionsSection.content}}" stepKey="waitForContentField"/>
+        <fillField selector="{{CmsNewPagePageActionsSection.content}}" userInput="{{cmsPageNonexistentDataContentType.content}}" stepKey="enterContent"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilder"/>
+        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToContentCreatedCMSPage2">
+            <argument name="CMSPage" value="$$createPreReqCMSPage$$"/>
+        </actionGroup>
+        <waitForElement time="5" selector="{{CmsNewPagePageContentSection.header}}" stepKey="waitForElement"/>
+        <waitForElementVisible time="5" selector="{{CmsNewPagePageContentSection.header}}" stepKey="waitForHeaderVisible"/>
+        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent2"/>
+        <waitForElementVisible time="1" selector="{{PageBuilderStage.contentTypeInStage('html')}}" stepKey="waitForContentTypeInStage"/>
+        <seeElement selector="{{PageBuilderStage.contentTypeInStage('html')}}" stepKey="seeContentTypeInStage"/>
+        <seeElementInDOM selector="{{HtmlOnBackendNonexistentDataRole.content}}" stepKey="assertHtmlContent"/>
+    </test>
+</tests>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
+    <section name="PageBuilderTemplatesPageGrid">
+        <!-- Filter -->
+        <element name="searchByKeyword" type="input" selector="[data-bind*=pagebuilder_template_grid] #fulltext"/>
+        <element name="searchByKeywordButton" type="button" selector="[data-bind*=pagebuilder_template_grid] .data-grid-search-control-wrap .action-submit"/>
+        <element name="clearFilters" type="button" selector="//*[contains(@data-bind,'pagebuilder_template_grid')]//*[contains(@class,'admin__data-grid-header')]//button[@data-action='grid-filter-reset' and text()='Clear all']"/>
+        <element name="filters" type="button" selector="//*[contains(@data-bind,'pagebuilder_template_grid')]//*[contains(@class,'admin__data-grid-header')]//button[@data-action='grid-filter-expand' and text()='Filters']"/>
+        <element name="applyFilters" type="button" selector="//*[contains(@data-bind,'pagebuilder_template_grid')]//*[contains(@class,'admin__data-grid-header')]//button[@data-action='grid-filter-apply']//span[text()='Apply Filters']"/>
+        <element name="templateNameFilter" type="input" selector="//*[contains(@data-bind,'pagebuilder_template_grid')]//*[contains(@class,'admin__data-grid-header')]//input[@name='name']"/>
+        <element name="templateIdFromFilter" type="input" selector="//*[contains(@data-bind,'pagebuilder_template_grid')]//*[contains(@class,'admin__data-grid-header')]//input[@name='template_id[from]']"/>
+        <element name="templateIdToFilter" type="input" selector="//*[contains(@data-bind,'pagebuilder_template_grid')]//*[contains(@class,'admin__data-grid-header')]//input[@name='template_id[to]']"/>
+        <element name="createdDateFromFilter" type="input" selector="//*[contains(@data-bind,'pagebuilder_template_grid')]//*[contains(@class,'admin__data-grid-header')]//input[@name='created_at[from]']"/>
+        <element name="createdDateToFilter" type="input" selector="//*[contains(@data-bind,'pagebuilder_template_grid')]//*[contains(@class,'admin__data-grid-header')]//input[@name='created_at[to]']"/>
+        <element name="createdForDropDownFilter" type="button" selector="//*[contains(@data-bind,'pagebuilder_template_grid')]//label//span[text()='Created For']//parent::label//parent::*//*[contains(@class,'admin__action-multiselect-wrap')]"/>
+        <element name="createdForInputByLabelFilter" type="button" parameterized="true" selector="//*[contains(@data-bind,'pagebuilder_template_grid')]//label//span[text()='Created For']//parent::label//parent::*//*[contains(@class,'admin__action-multiselect-wrap')]//input/parent::*//span[text()='{{label}}']"/>
+        <element name="selectedCreatedForOptionFilter" type="text" parameterized="true" selector="//*[contains(@data-bind,'pagebuilder_template_grid')]//label//span[text()='Created For']//parent::label//parent::*//*[contains(@class,'admin__action-multiselect-crumb')]//span[text()='{{label}}']"/>
+        <element name="createdForDropDownDoneButtonFilter" type="text" selector="//*[contains(@data-bind,'pagebuilder_template_grid')]//button[@data-action='close-advanced-select']"/>
+        <!-- Header -->
+        <element name="totalRecordsFound" type="text" selector="//*[contains(@data-bind,'pagebuilder_template_grid')]//*[contains(@class, 'admin__control-support-text')]//span[text()='records found']//parent::*[contains(@class,'admin__control-support-text')]"/>
+        <element name="totalRecordsPerPage" type="input" selector="//*[contains(@data-bind,'pagebuilder_template_grid')]//input[contains(@id,'listing_paging_sizes')]"/>
+        <element name="previousPageButton" type="button" selector="[data-bind*=pagebuilder_template_grid] .admin__data-grid-pager button.action-previous"/>
+        <element name="nextPageButton" type="button" selector="[data-bind*=pagebuilder_template_grid] .admin__data-grid-pager button.action-next"/>
+        <element name="columnHeader" type="text" parameterized="true" selector="//*[contains(@data-bind,'pagebuilder_template_grid')]//table[@data-role='grid']//thead//span[.='{{columnName}}']"/>
+        <!-- Grid -->
+        <element name="grid" type="text" selector="//*[contains(@data-bind,'pagebuilder_template_grid')]//table[@data-role='grid']//tbody"/>
+        <element name="emptyGrid" type="text" selector="//*[contains(@data-bind,'pagebuilder_template_grid')]//table[@data-role='grid']//tbody//td"/>
+        <element name="allRows" type="text" selector="//*[contains(@data-bind,'pagebuilder_template_grid')]//table[@data-role='grid']//tbody//tr"/>
+        <element name="templateId" type="text" parameterized="true" selector="//*[contains(@data-bind,'pagebuilder_template_grid')]//table[@data-role='grid']//tbody//tr[{{rowIndex}}]//td[1]"/>
+        <element name="image" type="text" parameterized="true" selector="//*[contains(@data-bind,'pagebuilder_template_grid')]//table[@data-role='grid']//tbody//tr[{{rowIndex}}]//td[2]//img"/>
+        <element name="templateName" type="text" parameterized="true" selector="//*[contains(@data-bind,'pagebuilder_template_grid')]//table[@data-role='grid']//tbody//tr[{{rowIndex}}]//td[3]"/>
+        <element name="createdFor" type="text" parameterized="true" selector="//*[contains(@data-bind,'pagebuilder_template_grid')]//table[@data-role='grid']//tbody//tr[{{rowIndex}}]//td[4]"/>
+        <element name="createdDate" type="text" parameterized="true" selector="//*[contains(@data-bind,'pagebuilder_template_grid')]//table[@data-role='grid']//tbody//tr[{{rowIndex}}]//td[5]"/>
+        <element name="deleteButton" type="button" parameterized="true" selector="//*[contains(@data-bind,'pagebuilder_template_grid')]//tr//div[text()='{{textInRow}}']/parent::td/parent::tr//td[6]//a[text()='Delete']"/>
+    </section>
+</sections>

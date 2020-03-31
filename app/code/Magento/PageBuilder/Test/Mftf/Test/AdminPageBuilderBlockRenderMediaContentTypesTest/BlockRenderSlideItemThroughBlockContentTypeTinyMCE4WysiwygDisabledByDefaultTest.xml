@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="BlockRenderSlideItemThroughBlockContentTypeTinyMCE4WysiwygDisabledByDefaultTest" extends="BlockRenderSlideItemThroughBlockContentTypeTinyMCE4WysiwygEnabledByDefaultTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Block Content"/>
+            <title value="Render Slide Item Through Block Content Type With TinyMCE4 and Wysiwyg Disabled By Default"/>
+            <description value="Verify that users are able to successfully render and use the slide item content type through the Block content type with TinyMCE4 and Wysiwyg Disabled By Default."/>
+            <severity value="AVERAGE"/>
+            <testCaseId value="MC-15212"/>
+            <useCaseId value="MC-13769"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+            <group value="pagebuilder-block-content"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-slideItemPoster"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set cms/wysiwyg/enabled hidden" stepKey="configWYSIWYG"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG" before="deleteCMSBlock"/>
+        </after>
+    </test>
+</tests>

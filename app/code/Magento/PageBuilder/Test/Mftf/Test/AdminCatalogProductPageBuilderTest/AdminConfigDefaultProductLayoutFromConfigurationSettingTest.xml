@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="AdminConfigDefaultProductLayoutFromConfigurationSettingTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Catalog Products"/>
+            <title value="Verify Default Layout for Catalog Products"/>
+            <description value="Admin should be able to configure the default layout for Products Page from System Configuration, verify the default is updated to the Page Builder's default layout"/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MC-936"/>
+            <testCaseId value="MC-31615"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-layout"/>
+            <group value="pagebuilder-fullwidth"/>
+            <group value="pagebuilder-catalog-product"/>
+        </annotations>
+        <seeOptionIsSelected selector="{{DefaultLayoutsSection.productLayout}}" userInput="{{PageBuilderFullWidthLayout.product}}" stepKey="seeDefaultProductLayout" after="DefaultProductLayout"/>
+    </test>
+</tests>

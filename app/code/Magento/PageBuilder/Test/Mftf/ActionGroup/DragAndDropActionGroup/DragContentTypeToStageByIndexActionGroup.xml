@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="dragContentTypeToStageByIndex">
+        <arguments>
+            <argument name="contentType"/>
+            <argument name="contentTypeNumber" defaultValue="1" type="string"/>
+            <argument name="containerTargetType" defaultValue="PageBuilderRowContentType"/>
+            <argument name="containerTargetIndex" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible time="30" selector="{{PageBuilderPanel.draggableContentTypeInPanel(contentType.name)}}" stepKey="waitForContentTypeInPanel"/>
+        <dragAndDrop selector1="{{PageBuilderPanel.draggableContentTypeInPanel(contentType.name)}}" selector2="{{PageBuilderStage.contentTypeContainer(containerTargetType.role, containerTargetIndex)}}" stepKey="dropContentTypeIntoStage"/>
+        <waitForPageLoad stepKey="waitForAnimation" time="30"/>
+        <dontSeeJsError stepKey="doNotSeeJSErrorInConsole"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, contentTypeNumber)}}" stepKey="waitForContentTypeInStage"/>
+    </actionGroup>
+</actionGroups>

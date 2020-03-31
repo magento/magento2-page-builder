@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
+    <section name="PageBuilderProductStorefront">
+        <element name="attributeSectionHeading" type="text" selector="(//div[contains(@class, 'pagebuilder-attributes-wrapper')]/div[contains(@class, 'product-full-width-section')])[{{var1}}]/descendant::h2[contains(@class, 'product-section-title') and text()='{{var2}}']" parameterized="true"/>
+        <element name="attributeTableValue" type="text" selector="//td[@data-th='{{var1}}' and text()='{{var2}}']" parameterized="true"/>
+    </section>
+</sections>

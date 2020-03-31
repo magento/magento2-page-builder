@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="PageBuilderCatalogCategoryAddAndEditRowColumnSlideTest" extends="PageBuilderCatalogProductAddAndEditRowColumnSlideTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Catalog Category"/>
+            <title value="Add and Edit Row, Column, and Slider to PageBuilder in Catalog Category Description"/>
+            <description value="This test is intended to ensure that basic adding and editing of multiple content types work correctly in the Catalog Category area of PageBuilder."/>
+            <severity value="BLOCKER"/>
+            <useCaseId value="MC-3330"/>
+            <testCaseId value="MC-13959"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-row"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-catalog-category"/>
+        </annotations>
+        <before>
+            <comment userInput="---merging to remove step---" stepKey="createProduct"/>
+            <actionGroup ref="NavigateToCreatedCategoryActionGroup" stepKey="navigateToCreatedProductEditPage">
+                <argument name="Category" value="$$createPreReqCategory$$"/>
+            </actionGroup>
+            <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminProductSection"/>
+        </before>
+        <after>
+            <comment userInput="---merging to remove step---" stepKey="deleteCreatedProduct"/>
+            <comment userInput="---merging to remove step---" stepKey="NavigateToAndResetProductGridToDefaultView"/>
+        </after>
+        <!-- Save Category -->
+        <comment userInput="Save Category" stepKey="commentSaveProduct"/>
+        <actionGroup ref="saveCatalogCategory" stepKey="saveProduct"/>
+        <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminProductSection"/>
+        <!-- Validate Storefront -->
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToProductStorefront">
+            <argument name="page" value="$$createPreReqCategory.name$$.html"/>
+        </actionGroup>
+        <scrollTo selector="{{StorefrontCategoryMainSection.CatalogDescription}}" stepKey="scrollToProductDescription"/>
+    </test>
+</tests>

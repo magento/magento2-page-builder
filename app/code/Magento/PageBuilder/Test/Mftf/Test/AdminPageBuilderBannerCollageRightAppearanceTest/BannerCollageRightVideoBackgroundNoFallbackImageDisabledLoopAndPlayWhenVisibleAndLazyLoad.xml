@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="BannerCollageRightVideoBackgroundNoFallbackImageDisabledLoopAndPlayWhenVisibleAndLazyLoad" extends="BannerPosterVideoBackgroundNoFallbackImageDisabledLoopAndPlayWhenVisibleAndLazyLoad">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Banner"/>
+            <title value="Validate Banner with Collage Right Appearance with No Fallback Image, Disabled Infinite Loop, Disabled Play Only When Visible, and Disabled Lazy Load"/>
+            <description value="Validate video background with no fallback image, disabled infinite loop, disabled play only when visible, and disabled lazy load."/>
+            <severity value="BLOCKER"/>
+            <useCaseId value="PB-265"/>
+            <testCaseId value="MC-31667"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-banner"/>
+            <group value="pagebuilder-bannerCollageRight"/>
+            <group value="pagebuilder-backgroundForm"/>
+            <group value="pagebuilder-video-background"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setAppearance">
+            <argument name="property" value="PageBuilderAppearance_CollageRight"/>
+        </actionGroup>
+    </test>
+</tests>

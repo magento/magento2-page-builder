@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="validateNoBackgroundImage">
+        <arguments>
+            <argument name="section"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <comment userInput="validateBackgroundImage" stepKey="comment"/>
+        <waitForElementVisible selector="{{section.base(index)}}" stepKey="waitForBaseElement"/>
+        <!-- Retrieve background image from computed styles -->
+        <executeJS function="return window.getComputedStyle({{section.baseJS(index)}}).backgroundImage" stepKey="backgroundImageValue"/>
+        <assertEquals stepKey="assertBackgroundImageNone">
+            <expectedResult type="string">none</expectedResult>
+            <actualResult type="variable">$backgroundImageValue</actualResult>
+        </assertEquals>
+    </actionGroup>
+</actionGroups>

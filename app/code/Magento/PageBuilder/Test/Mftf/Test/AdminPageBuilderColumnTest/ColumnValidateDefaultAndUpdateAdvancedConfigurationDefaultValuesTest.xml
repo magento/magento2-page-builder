@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="ColumnValidateDefaultAndUpdateAdvancedConfigurationDefaultValuesTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Validate Default and Update Advanced Configuration Default Values"/>
+            <description value="Validate the default values and updating values for every attribute in the Advanced Configuration form and on Stage for Column."/>
+            <severity value="BLOCKER"/>
+            <useCaseId value="MAGETWO-83415"/>
+            <testCaseId value="MC-2746"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <!-- Validate Default Values -->
+        <comment userInput="Validate Default Values" stepKey="CommentValidateDefaultValues"/>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBorder">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
+        </actionGroup>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getBorderColor"/>
+        <assertEmpty message="Text field has text: $getBorderColor" stepKey="assertBorderColor">
+            <actualResult type="variable">getBorderColor</actualResult>
+        </assertEmpty>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderRadius">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
+        </actionGroup>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedCssClassesDefaultProperty.section, PageBuilderAdvancedCssClassesDefaultProperty.fieldName)}}" stepKey="getCssClasses"/>
+        <assertEmpty message="Text field was not empty. Had text: $getCssClasses" stepKey="assertCssClasses">
+            <actualResult type="variable">getCssClasses</actualResult>
+        </assertEmpty>
+        <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins">
+            <argument name="property" value="PageBuilderMarginsPropertyDefault"/>
+        </actionGroup>
+        <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding">
+            <argument name="property" value="PageBuilderPaddingProperty10"/>
+        </actionGroup>
+        <!-- Check for border radius -->
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedBorderRadiusProperty">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
+        </actionGroup>
+        <seeInField userInput="0" selector="{{AdvancedForm.advancedBorderRadius}}" stepKey="assertBorderRadiusDefaultValue"/>
+        <!-- Check for class field -->
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
+            <argument name="property" value="PageBuilderAdvancedCssClassesDefaultProperty"/>
+        </actionGroup>
+        <!-- Check for margins & paddings -->
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedMarginsAndPaddingProperty">
+            <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
+        </actionGroup>
+        <!-- Check border fields become enabled when changing border -->
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterAdvancedBorderProperty">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDotted"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotDisabled" stepKey="seeAdvancedBorderColorPropertyIsNotDisabled">
+            <argument name="property" value="PageBuilderAdvancedBorderColorProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotDisabled" stepKey="seeAdvancedBorderWidthPropertyIsNotDisabled">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
+        </actionGroup>
+        <!-- Validate the default values in the fields -->
+        <seeElement selector="{{AdvancedForm.advancedBorderWidthDefault}}" stepKey="assertBorderWidthDefaultValue"/>
+        <!-- Add test data into form -->
+        <comment userInput="I fill out Border Color into Border Color using Color Picker" stepKey="comment"/>
+        <actionGroup ref="fillOutColorPicker" stepKey="fillOutColor">
+            <argument name="colorCode" value="PageBuilderAdvancedBorderColorProperty_ffffff"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutPropertyAlternate" stepKey="seeHexInField7">
+            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_ffffff"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderWidthProperty">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderRadiusProperty">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedCssClassesProperty">
+            <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAlignmentLeft">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyLeft"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldMarginsAndPadding" stepKey="enterAdvancedMarginsAndPaddingProperty">
+            <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
+        </actionGroup>
+        <!-- Save form data -->
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveRowEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <waitForElementVisible time="2" selector="{{ColumnOnBackend.column}}" stepKey="waitForBackEndColumn"/>
+        <seeElement selector="{{ColumnOnBackend.alignment('1', '1', PageBuilderAdvancedAlignmentPropertyLeft.value)}}" stepKey="seetextAlignStyleOnStage"/>
+        <seeElement selector="{{ColumnOnBackend.border('1', '1', PageBuilderAdvancedBorderPropertyDotted.value)}}" stepKey="seeColumnBorderStyleOnStage"/>
+        <seeElement selector="{{ColumnOnBackend.borderColor('1', '1', PageBuilderAdvancedBorderColorProperty_ffffff.rgb)}}" stepKey="seeColumnBorderColorOnStage"/>
+        <seeElement selector="{{ColumnOnBackend.borderWidth('1', '1', PageBuilderAdvancedBorderWidthProperty10.value)}}" stepKey="seeColumnBorderWidthOnStage"/>
+        <seeElement selector="{{ColumnOnBackend.borderRadius('1', '1', PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="seeColumnBorderRadiusStyleOnStage"/>
+        <seeElement selector="{{ColumnOnBackend.margins('1', '1', PageBuilderAdvancedMarginsAndPaddingProperty.value)}}" stepKey="seeColumnMarginStyleOnStage"/>
+        <seeElement selector="{{ColumnOnBackend.padding('1', '1', PageBuilderAdvancedMarginsAndPaddingProperty.value)}}" stepKey="seeColumnPaddingStyleOnStage"/>
+        <seeElement selector="{{ColumnOnBackend.cssClasses('1', '1', PageBuilderAdvancedCssClassesPropertyThreeClasses.value)}}" stepKey="seeColumnClassOnStage"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
+        <seeElement selector="{{ColumnOnBackend.alignment('1', '1', PageBuilderAdvancedAlignmentPropertyLeft.value)}}" stepKey="seetextAlignStyleOnStageAfterSave"/>
+        <seeElement selector="{{ColumnOnBackend.border('1', '1', PageBuilderAdvancedBorderPropertyDotted.value)}}" stepKey="seeColumnBorderStyleOnStageAfterSave"/>
+        <seeElement selector="{{ColumnOnBackend.borderColor('1', '1', PageBuilderAdvancedBorderColorProperty_ffffff.rgb)}}" stepKey="seeColumnBorderColorOnStageAfterSave"/>
+        <seeElement selector="{{ColumnOnBackend.borderWidth('1', '1', PageBuilderAdvancedBorderWidthProperty10.value)}}" stepKey="seeColumnBorderWidthOnStageAfterSave"/>
+        <seeElement selector="{{ColumnOnBackend.borderRadius('1', '1', PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="seeColumnBorderRadiusStyleOnStageAfterSave"/>
+        <seeElement selector="{{ColumnOnBackend.margins('1', '1', PageBuilderAdvancedMarginsAndPaddingProperty.value)}}" stepKey="seeColumnMarginStyleOnStageAfterSave"/>
+        <seeElement selector="{{ColumnOnBackend.padding('1', '1', PageBuilderAdvancedMarginsAndPaddingProperty.value)}}" stepKey="seeColumnPaddingStyleOnStageAfterSave"/>
+        <seeElement selector="{{ColumnOnBackend.cssClasses('1', '1', PageBuilderAdvancedCssClassesPropertyThreeClasses.value)}}" stepKey="seeColumnClassOnStageAfterSave"/>
+        <!-- Validate form data has been persisted in the advanced section -->
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openSavedEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="validateTextAlignment" stepKey="seeOptionIsSelected">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyLeft"/>
+        </actionGroup>
+        <seeOptionIsSelected userInput="{{PageBuilderAdvancedBorderPropertyDotted.value}}" selector="{{AdvancedForm.advancedBorder}}" stepKey="assertBorderSavedInColumn"/>
+        <seeInField userInput="{{PageBuilderAdvancedBorderColorProperty_ffffff.value}}" selector="{{AdvancedForm.advancedBorderColor}}" stepKey="assertBorderColorSavedInColumn"/>
+        <seeInField userInput="{{PageBuilderAdvancedBorderWidthProperty10.value}}" selector="{{AdvancedForm.advancedBorderWidth}}" stepKey="assertBorderSizeSavedInColumn"/>
+        <seeInField userInput="{{PageBuilderAdvancedBorderRadiusProperty12.value}}" selector="{{AdvancedForm.advancedBorderRadius}}" stepKey="assertBorderRadiusSavedInColumn"/>
+        <seeInField userInput="{{PageBuilderAdvancedCssClassesPropertyThreeClasses.value}}" selector="{{AdvancedForm.advancedCssClasses}}" stepKey="assertCSSClassesSavedInColumn"/>
+        <seeInField userInput="{{PageBuilderAdvancedMarginsAndPaddingProperty.marginTop}}" selector="{{AdvancedForm.advancedMarginTop}}" stepKey="assertMarginTopSavedInColumn"/>
+        <seeInField userInput="{{PageBuilderAdvancedMarginsAndPaddingProperty.marginRight}}" selector="{{AdvancedForm.advancedMarginRight}}" stepKey="assertMarginRightSavedInColumn"/>
+        <seeInField userInput="{{PageBuilderAdvancedMarginsAndPaddingProperty.marginLeft}}" selector="{{AdvancedForm.advancedMarginLeft}}" stepKey="assertMarginLefSavedInColumn"/>
+        <seeInField userInput="{{PageBuilderAdvancedMarginsAndPaddingProperty.marginBottom}}" selector="{{AdvancedForm.advancedMarginBottom}}" stepKey="assertMarginBottomSavedInColumn"/>
+        <seeInField userInput="{{PageBuilderAdvancedMarginsAndPaddingProperty.paddingTop}}" selector="{{AdvancedForm.advancedPaddingTop}}" stepKey="assertPaddingTopSavedInColumn"/>
+        <seeInField userInput="{{PageBuilderAdvancedMarginsAndPaddingProperty.paddingRight}}" selector="{{AdvancedForm.advancedPaddingRight}}" stepKey="assertPaddingRightSavedInColumn"/>
+        <seeInField userInput="{{PageBuilderAdvancedMarginsAndPaddingProperty.paddingLeft}}" selector="{{AdvancedForm.advancedPaddingLeft}}" stepKey="assertPaddingLefSavedInColumn"/>
+        <seeInField userInput="{{PageBuilderAdvancedMarginsAndPaddingProperty.paddingBottom}}" selector="{{AdvancedForm.advancedPaddingBottom}}" stepKey="assertPaddingBottomSavedInColumn"/>
+        <!-- Validate the correct styles have been applied to the front-end -->
+        <amOnPage url="column{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <waitForPageLoad stepKey="waitForPageLoadStoreFront"/>
+        <waitForElementVisible time="2" selector="{{ColumnOnFrontend.columnDisplay}}" stepKey="waitForFrontEndColumn"/>
+        <seeElement selector="{{ColumnOnFrontend.columnTextAlign}}" stepKey="seetextAlignStyle"/>
+        <seeElement selector="{{ColumnOnFrontend.columnBorder}}" stepKey="seeColumnBorderStyle"/>
+        <seeElement selector="{{ColumnOnFrontend.columnBorderRadius}}" stepKey="seeColumnBorderRadiusStyle"/>
+        <seeElement selector="{{ColumnOnFrontend.columnMargin}}" stepKey="seeColumnMarginStyle"/>
+        <seeElement selector="{{ColumnOnFrontend.columnPadding}}" stepKey="seeColumnPaddingStyle"/>
+        <seeElement selector="{{ColumnOnFrontend.columnClass}}" stepKey="seeColumnClass"/>
+    </test>
+</tests>

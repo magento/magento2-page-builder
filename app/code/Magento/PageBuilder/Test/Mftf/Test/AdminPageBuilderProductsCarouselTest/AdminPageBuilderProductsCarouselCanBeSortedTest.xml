@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="AdminPageBuilderProductsCarouselCanBeSortedTest" extends="AdminPageBuilderProductsCanBeSortedTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Products"/>
+            <title value="Carousel - Products Can Be Sorted"/>
+            <description value="Validate that products can be sorted by the sort field within the admin."/>
+            <severity value="BLOCKER"/>
+            <useCaseId value="PB-77"/>
+            <testCaseId value="MC-21989"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-products"/>
+            <group value="pagebuilder-productsCarousel"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
+            <argument name="property" value="PageBuilderProductsProductCarouselAppearance"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="count" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProduct1Stage">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="product" value="SortProduct1"/>
+            <argument name="productIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProduct2Stage">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="product" value="SortProduct2"/>
+            <argument name="productIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage1">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="count" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProduct1Stage1">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="product" value="SortProduct1"/>
+            <argument name="productIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProduct2Stage1">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="product" value="SortProduct2"/>
+            <argument name="productIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage2">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="count" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProduct1Stage2">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="product" value="SortProduct1"/>
+            <argument name="productIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProduct2Stage2">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="product" value="SortProduct2"/>
+            <argument name="productIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage3">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="count" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProduct1Stage3">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="product" value="SortProduct1"/>
+            <argument name="productIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProduct2Stage3">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="product" value="SortProduct2"/>
+            <argument name="productIndex" value="2"/>
+        </actionGroup>
+    </test>
+</tests>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="AdminPageBuilderProductsCarouselSortByCategoryPositionVerifyEmptyProductsAfterDeletingCategoryTest" extends="AdminPageBuilderProductsSelectByCategoryAndSortByPositionTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Products"/>
+            <title value="Carousel - Verify Deleting Category Propagates Change to Page Builder Products Content Type"/>
+            <description value="Ensure that deleting a category that a products content type is tied to will cause the products content type to not render any products"/>
+            <severity value="BLOCKER"/>
+            <useCaseId value="PB-77"/>
+            <testCaseId value="MC-21992"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-products"/>
+            <group value="pagebuilder-productsCarousel"/>
+        </annotations>
+        <after>
+            <remove keyForRemoval="deleteCategory1"/>
+        </after>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
+            <argument name="property" value="PageBuilderProductsProductCarouselAppearance"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterProductsCount">
+            <argument name="property" value="PageBuilderProductsCarouselCountPropertyFour"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="count" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProduct1Stage">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="product" value="SortProduct2"/>
+            <argument name="productIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProduct2Stage">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="product" value="SortProduct1"/>
+            <argument name="productIndex" value="2"/>
+        </actionGroup>
+        <!-- Delete Category -->
+        <deleteData createDataKey="createCategory1" stepKey="deleteCategory1" after="validateProduct2Storefront"/>
+        <actionGroup ref="navigateToCMSPage" stepKey="navigateToCMSPage2" after="deleteCategory1">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2" after="navigateToCMSPage2"/>
+        <see userInput="{{PageBuilderProductsMessage.noProductsFound}}" selector="{{ProductsCarouselOnStage.emptyProductsPlaceholder('1')}}" stepKey="seeNoProductsMessage" after="switchToPageBuilderStage2"/>
+        <!-- Storefront: Validate Sort Order Changed -->
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront2" after="seeNoProductsMessage">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <dontSeeElementInDOM selector="{{ProductsOnStorefront.product('1')}}" stepKey="validateNoProductsOnStorefront" after="navigateToCMSPageStorefront2"/>
+    </test>
+</tests>

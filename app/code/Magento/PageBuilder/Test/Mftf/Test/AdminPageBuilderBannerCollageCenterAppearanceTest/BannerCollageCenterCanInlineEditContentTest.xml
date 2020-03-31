@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="BannerCollageCenterCanInlineEditContentTest" extends="BannerPosterCanInlineEditContentTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Banner"/>
+            <title value="Collage Center - Can Inline Edit Banner Content"/>
+            <description value="Verify that users are able to inline edit a collage center Banner's content from the stage"/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MC-521"/>
+            <testCaseId value="MC-3836"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-banner"/>
+            <group value="pagebuilder-bannerCollageCenter"/>
+        </annotations>
+        <!-- Change Appearance -->
+        <comment userInput="Change Appearance" after="dragContentTypeIntoContainer" stepKey="commentChangeAppearanceExtended"/>
+        <actionGroup ref="openPageBuilderEditPanel" after="commentChangeAppearanceExtended" stepKey="openEditMenuOnStageExtended">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" after="openEditMenuOnStageExtended" stepKey="enterAppearancePropertyExtended">
+            <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" after="enterAppearancePropertyExtended" stepKey="saveEditPanelSettingsExtended"/>
+    </test>
+</tests>

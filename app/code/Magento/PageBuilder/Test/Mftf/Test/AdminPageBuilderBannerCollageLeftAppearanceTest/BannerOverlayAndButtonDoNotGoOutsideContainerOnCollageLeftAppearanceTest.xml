@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="BannerOverlayAndButtonDoNotGoOutsideContainerOnCollageLeftAppearanceTest" extends="BannerOverlayAndButtonDoNotGoOutsideContainerOnPosterAppearanceTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Banner"/>
+            <title value="Collage Left - Banner Overlay and Button do not go outside container on collage left appearance"/>
+            <description value="User should be able to place a banner with Collage Left appearance inside a narrow column without the contents spilling outside of the column."/>
+            <severity value="BLOCKER"/>
+            <useCaseId value="MC-5372"/>
+            <testCaseId value="MC-5818"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-banner"/>
+            <group value="pagebuilder-bannerCollageLeft"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
+            <argument name="property" value="PageBuilderAppearance_CollageLeft"/>
+        </actionGroup>
+        <actionGroup ref="validateOverlayAndButtonCollage" stepKey="validateBannerOnStage">
+            <argument name="column" value="ColumnOnBackend"/>
+            <argument name="element" value="BannerOnBackend"/>
+            <argument name="elementBorderWidth" value="PageBuilderAdvancedBorderWidthProperty10"/>
+            <argument name="diffThreshold" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateOverlayAndButtonCollage" stepKey="validateBannerOnStorefront">
+            <argument name="column" value="ColumnOnFrontend"/>
+            <argument name="element" value="BannerOnFrontend"/>
+            <argument name="elementBorderWidth" value="PageBuilderAdvancedBorderWidthProperty10"/>
+            <argument name="diffThreshold" value="0"/>
+        </actionGroup>
+    </test>
+</tests>

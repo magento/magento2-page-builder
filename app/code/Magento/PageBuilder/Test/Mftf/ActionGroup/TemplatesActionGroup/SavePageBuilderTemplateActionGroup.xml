@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="savePageBuilderTemplate">
+        <annotations>
+            <description>Clicks the Save button on the Page Builder Save as Template modal and clicks OK on the save confirmation modal.</description>
+        </annotations>
+        <arguments>
+            <argument name="baseContent" defaultValue="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" type="string"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForModalLoad"/>
+        <waitForElement selector="{{PageBuilderSaveTemplateModal.saveButton}}" stepKey="waitForSaveButton"/>
+        <click selector="{{PageBuilderSaveTemplateModal.saveButton}}" stepKey="clickSaveButton"/>
+        <waitForPageLoad stepKey="waitForModalClose"/>
+        <waitForElementVisible selector="{{PageBuilderSaveTemplateConfirmationModal.okButton}}" stepKey="waitForOKButton"/>
+        <click selector="{{PageBuilderSaveTemplateConfirmationModal.okButton}}" stepKey="clickOKButton"/>
+        <waitForPageLoad stepKey="waitForModalGone"/>
+        <waitForElementNotVisible time="5" selector="{{PageBuilderSaveTemplateConfirmationModal.modal}}" stepKey="waitForModalNotVisible"/>
+        <waitForElementVisible time="10" selector="{{baseContent}}" stepKey="waitForContentUnderModalVisible"/>
+    </actionGroup>
+</actionGroups>

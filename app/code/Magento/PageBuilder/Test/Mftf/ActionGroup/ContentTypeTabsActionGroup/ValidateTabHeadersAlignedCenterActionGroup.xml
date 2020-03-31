@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="validateTabHeadersAlignedCenter">
+        <arguments>
+            <argument name="tabGroupSection" defaultValue="TabsOnStage"/>
+            <argument name="tabItemSection" defaultValue="TabOnStage"/>
+            <argument name="tabGroupIndex" defaultValue="1" type="string"/>
+            <argument name="acceptableOffset" defaultValue="2" type="string"/>
+        </arguments>
+        <comment userInput="validateTabHeadersAlignedCenter" stepKey="comment"/>
+        <executeJS function="return document.querySelectorAll('{{tabGroupSection.baseCSS}}')[{{tabGroupIndex}}-1].getBoundingClientRect().right" stepKey="tabGroupRightPosition"/>
+        <executeJS function="return document.querySelectorAll('{{tabGroupSection.baseCSS}}')[{{tabGroupIndex}}-1].getBoundingClientRect().width" stepKey="tabGroupWidth"/>
+        <executeJS function="return Math.round({$tabGroupRightPosition} - ({$tabGroupWidth} / 2))" stepKey="tabGroupCenterPosition"/>
+        <executeJS function="return (document.querySelectorAll('{{tabGroupSection.baseCSS}}')[{{tabGroupIndex}}-1]).querySelectorAll('{{tabItemSection.tabHeaderCSS}}')[0].getBoundingClientRect().left" stepKey="firstTabHeaderLeftPosition"/>
+        <executeJS function="return (document.querySelectorAll('{{tabGroupSection.baseCSS}}')[{{tabGroupIndex}}-1]).querySelectorAll('{{tabItemSection.tabHeaderCSS}}')[(document.querySelectorAll('{{tabGroupSection.baseCSS}}')[{{tabGroupIndex}}-1]).querySelectorAll('{{tabItemSection.tabHeaderCSS}}').length-1].getBoundingClientRect().right" stepKey="lastTabHeaderRightPosition"/>
+        <executeJS function="return Math.abs({$lastTabHeaderRightPosition} - {$firstTabHeaderLeftPosition})" stepKey="tabHeaderGroupWidth"/>
+        <executeJS function="return Math.round({$lastTabHeaderRightPosition} - ({$tabHeaderGroupWidth} / 2))" stepKey="tabHeaderGroupCenterPosition"/>
+        <executeJS function="return Math.abs({$tabGroupCenterPosition} - {$tabHeaderGroupCenterPosition})" stepKey="positionDifference"/>
+        <assertLessThanOrEqual stepKey="assertPositionAcceptable">
+            <expectedResult type="int">{{acceptableOffset}}</expectedResult>
+            <actualResult type="variable">positionDifference</actualResult>
+        </assertLessThanOrEqual>
+    </actionGroup>
+</actionGroups>

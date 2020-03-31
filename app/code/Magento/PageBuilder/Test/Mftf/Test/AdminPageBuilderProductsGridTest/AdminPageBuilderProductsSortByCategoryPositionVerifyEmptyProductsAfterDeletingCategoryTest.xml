@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="AdminPageBuilderProductsSortByCategoryPositionVerifyEmptyProductsAfterDeletingCategoryTest" extends="AdminPageBuilderProductsSelectByCategoryAndSortByPositionTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Products"/>
+            <title value="Grid - Verify Deleting Category Propagates Change to Page Builder Products Content Type"/>
+            <description value="Ensure that deleting a category that a products content type is tied to will cause the products content type to not render any products"/>
+            <severity value="BLOCKER"/>
+            <useCaseId value="MC-18338"/>
+            <testCaseId value="MC-20205"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-products"/>
+            <group value="pagebuilder-productsGrid"/>
+        </annotations>
+        <after>
+            <remove keyForRemoval="deleteCategory1"/>
+        </after>
+        <!-- Delete Category -->
+        <comment userInput="Delete Category" stepKey="commentDeleteCategory" after="validateProduct2Storefront"/>
+        <deleteData createDataKey="createCategory1" stepKey="deleteCategory1" after="commentDeleteCategory"/>
+        <actionGroup ref="navigateToCMSPage" stepKey="navigateToCMSPage2" after="deleteCategory1">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2" after="navigateToCMSPage2"/>
+        <see userInput="{{PageBuilderProductsMessage.noProductsFound}}" selector="{{ProductsOnStage.emptyProductsPlaceholder('1')}}" stepKey="seeNoProductsMessage" after="switchToPageBuilderStage2"/>
+        <!-- Storefront: Validate Sort Order Changed -->
+        <comment userInput="Storefront: Validate Sort Order Changed" stepKey="commentValidateStorefront2" after="seeNoProductsMessage"/>
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront2" after="commentValidateStorefront2">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <dontSeeElementInDOM selector="{{ProductsOnStorefront.product('1')}}" stepKey="validateNoProductsOnStorefront" after="navigateToCMSPageStorefront2"/>
+    </test>
+</tests>

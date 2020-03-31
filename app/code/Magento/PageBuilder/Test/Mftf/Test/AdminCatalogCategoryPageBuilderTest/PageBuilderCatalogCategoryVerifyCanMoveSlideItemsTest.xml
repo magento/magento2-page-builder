@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="PageBuilderCatalogCategoryVerifyCanMoveSlideItemsTest" extends="SlideItemMoveSlideItemsToRearrangeTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Catalog Category"/>
+            <title value="Verify That User Can Move Slide Items"/>
+            <description value="This test is intended to ensure that users can move slide items within the PageBuilder stage for Category Description."/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-3330"/>
+            <testCaseId value="MC-14865"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-move"/>
+            <group value="pagebuilder-catalog-category"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultCategory" after="loginAsAdmin" stepKey="createPreReqCategory"/>
+            <actionGroup ref="NavigateToCreatedCategoryActionGroup" stepKey="navigateToAPageWithPageBuilder">
+                <argument name="Category" value="$$createPreReqCategory$$"/>
+            </actionGroup>
+            <actionGroup ref="expandAdminCategorySection" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="openPageBuilderForAttribute" after="switchToPageBuilderStage" stepKey="openPageBuilderForDescription"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createPreReqCategory" before="logout" stepKey="deleteCreatedCategory"/>
+        </after>
+        <comment userInput="---merging to remove step---" stepKey="enterPageTitle"/>
+        <actionGroup ref="saveEditPanelSettingsFullScreen" stepKey="saveEditPanel1Settings"/>
+        <actionGroup ref="saveEditPanelSettingsFullScreen" stepKey="saveEditPanel1Settings2"/>
+        <actionGroup ref="saveEditPanelSettingsFullScreen" stepKey="saveEditPanel1Settings3"/>
+        <!-- Save Category -->
+        <comment userInput="Save Category" stepKey="commentSaveCategory" before="exitPageBuilderFullScreen"/>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen" before="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="saveCatalogCategory" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminCategorySection" before="switchToPageBuilderStage1"/>
+        <actionGroup ref="openPageBuilderForAttribute" stepKey="switchToPageBuilderStage1"/>
+        <!-- Save Category After Sorting -->
+        <comment userInput="Save Category After Sorting" stepKey="commentSaveCategory2" before="exitPageBuilderFullScreen2"/>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen2" before="saveAndContinueEditCmsPage1"/>
+        <actionGroup ref="saveCatalogCategory" stepKey="saveAndContinueEditCmsPage1"/>
+        <actionGroup ref="expandAdminCategorySection" stepKey="expandAdminCategorySection2" before="switchToPageBuilderStage2"/>
+        <actionGroup ref="openPageBuilderForAttribute" stepKey="switchToPageBuilderStage2"/>
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStoreFront">
+            <argument name="page" value="$$createPreReqCategory.name$$.html"/>
+        </actionGroup>
+        <scrollTo selector="{{StorefrontCategoryMainSection.CatalogDescription}}" stepKey="scrollToCategoryDescription" after="navigateToStoreFront"/>
+    </test>
+</tests>
