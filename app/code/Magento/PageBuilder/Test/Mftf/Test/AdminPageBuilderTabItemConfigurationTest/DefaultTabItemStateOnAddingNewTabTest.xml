@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="DefaultTabItemStateOnAddingNewTabTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Tabs"/>
+            <title value="Empty Tabs Default State on Admin Preview and Storefront"/>
+            <description value="As a Content Manager I want to see empty tab preview on the stage so that I see its position and can access settings"/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MAGETWO-71593"/>
+            <testCaseId value="MC-2857"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-tabs"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <!-- Add Tabs to Stage -->
+        <comment userInput="Add Tabs to Stage" stepKey="addTabsToStage"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <!-- User adds tabs and sees 1st default tab item created by default -->
+        <comment userInput="User adds tabs and sees 1st default tab item created by default" stepKey="AC1"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <!-- Tab option panel displayed on top of the new tab after adding it. -->
+        <comment userInput="Tab option panel displayed on top of the new tab after adding it." stepKey="AC2"/>
+        <waitForElement selector="{{TabOnStage.optionsMenu('1')}}" stepKey="seeTabOptionsPanel" time="30"/>
+        <waitForElementVisible selector="{{TabOnStage.optionsMenuButton('1', 'edit')}}" stepKey="seeTabOptionsEditVisible"/>
+        <!-- A placeholder indicates that content can be added inside the tab -->
+        <comment userInput="A placeholder indicates that content can be added inside the tab" stepKey="AC3"/>
+        <see selector="{{TabOnStage.empty}}" userInput="Drag content types or columns here" stepKey="seeTabPlaceholder"/>
+        <!-- User sees the first tab to be active and focused. -->
+        <comment userInput="User sees the first tab to be active and focused." stepKey="AC4"/>
+        <assertElementContainsAttribute stepKey="assertTab1ContentFocused">
+			<expectedResult selector="{{TabOnStage.tabPanel('1')}}" attribute="aria-expanded" type="string">true</expectedResult>
+        </assertElementContainsAttribute>
+        <assertElementContainsAttribute stepKey="assertTab1ContentVisible">
+			<expectedResult selector="{{TabOnStage.tabPanel('1')}}" attribute="aria-hidden" type="string">false</expectedResult>
+        </assertElementContainsAttribute>
+        <!-- User doesn't see the Tabs option panel -->
+        <comment userInput="User doesn't see the Tabs option panel" stepKey="AC5"/>
+        <dontSeeElement selector="{{TabsOnStage.tabsOptionsTitle}}" stepKey="dontSeeTabsOptionsAfterAddTabs"/>
+        <!-- Add second tab and view on stage -->
+        <comment userInput="Add second tab and view on stage" stepKey="AC6"/>
+        <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="seeTabHeader1"/>
+        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{TabOnStage.tabHeader('2')}}" stepKey="seeTabHeader2"/>
+        <see selector="{{TabOnStage.tabHeader('2')}}" userInput="Tab 2" stepKey="seeTab2DefaultTitleAdmin"/>
+        <actionGroup ref="validateBackgroundAttributesWithNoImageOrColor" stepKey="validateTab2BackgroundAttributesWithNoImageOrColor">
+            <argument name="section" value="TabOnStage"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <actionGroup ref="switchTabs" stepKey="switchTabsAdmin">
+            <argument name="section" value="TabOnStage"/>
+            <argument name="from" value="2"/>
+            <argument name="to" value="1"/>
+        </actionGroup>
+        <!-- View default Tabs with empty first Tab on stage -->
+        <comment userInput="View default Tabs with empty first Tab on stage" stepKey="AC7"/>
+        <see selector="{{TabOnStage.tabHeader('1')}}" userInput="{{PageBuilderTabName1Default.value}}" stepKey="seeTab1TitleAdmin1"/>
+        <actionGroup ref="validateBackgroundAttributesWithNoImageOrColor" stepKey="validateTab1BackgroundAttributesWithNoImageOrColor">
+            <argument name="section" value="TabOnStage"/>
+        </actionGroup>
+        <!-- User sees tab default min height to be 300 px on stage -->
+        <comment userInput="User sees tab default min height to be 300 px on stage" stepKey="AC8"/>
+        <seeElement selector="{{TabsOnStage.tabsContentMinHeight(PageBuilderTabsDefaultMinHeight.value)}}" stepKey="seeTabMinHeightAdmin1"/>
+        <!-- User sees tab preview takes 100% container width -->
+        <comment userInput="User sees tab preview takes 100% container width" stepKey="AC9"/>
+        <!--assert computed styles matching expected depends on MQE-818 -->
+        <comment userInput="User sees tabs border settings to be default as documented (defined by the theme style)" stepKey="AC10"/>
+        <seeElement selector="{{TabOnStage.tabContentBorderWidth('1', PageBuilderAdvancedBorderWidthPropertyDefault.value)}}" stepKey="seeTab1BorderWidth"/>
+        <seeElement selector="{{TabOnStage.tabContentBorderRadius('1', PageBuilderAdvancedBorderRadiusDefaultProperty.value)}}" stepKey="seeTab1BorderRadius"/>
+        <seeElement selector="{{TabOnStage.tabContentMargin('1', PageBuilderMarginsPropertyTabDefault.value)}}" stepKey="seeTab1Margins"/>
+        <seeElement selector="{{TabOnStage.tabContentPadding('1', PageBuilderPaddingProperty40.value)}}" stepKey="seeTab1Padding"/>
+        <!-- Validate Default Values on Edit Tab for initial tab -->
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel">
+            <argument name="section" value="TabOnStage"/>
+        </actionGroup>
+        <!-- Tab has default value Tab 1 for Tab Name -->
+        <comment userInput="Tab has default value Tab 1 for Tab Name" stepKey="AC11"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateDefaultTabName">
+            <argument name="property" value="PageBuilderTabName1Default"/>
+        </actionGroup>
+        <!-- Tab has default value empty for Background Image -->
+        <comment userInput="Tab has default value empty for Background Image" stepKey="AC12"/>
+        <waitForElementVisible selector="{{ImageOnConfigurationPanel.placeholderContent('Background Image')}}" stepKey="seeImagePlaceHolderOnBackgroundImage"/>
+        <!-- Tab has default value empty for Background Mobile image -->
+        <comment userInput="Tab has default value empty for Background Mobile image" stepKey="AC13"/>
+        <waitForElementVisible selector="{{ImageOnConfigurationPanel.placeholderContent('Background Mobile Image')}}" stepKey="seeImagePlaceHolderOnBackgroundMobileImage"/>
+        <!-- Tab has default value empty for Background Color -->
+        <comment userInput="Tab has default value empty for Background Color" stepKey="commentDefaultBackgroundColor"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderBackgroundColor_Hex_Grey.section, PageBuilderBackgroundColor_Hex_Grey.fieldName)}}" stepKey="getBackgroundColor"/>
+        <assertEmpty message="Text field has text: $getBackgroundColor" stepKey="assertBackgroundColor">
+            <actualResult type="variable">getBackgroundColor</actualResult>
+        </assertEmpty>
+        <!-- Tab has default value Top Left for Background Position -->
+        <comment userInput="Tab has default value Top Left for Background Position" stepKey="commentDefaultBackgroundPosition"/>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateDefaultBackgroundPosition">
+            <argument name="property" value="PageBuilderBackgroundPosition_TopLeft"/>
+        </actionGroup>
+        <!-- Background Position has expected dropdown values -->
+        <comment userInput="Background Position has expected dropdown values" stepKey="commentDefaultBackgroundPositionValues"/>
+        <grabMultiple selector="{{EditPanelForm.panelFieldOptions(PageBuilderBackgroundPosition_Default.section, PageBuilderBackgroundPosition_Default.fieldName)}}" userInput="innerText" stepKey="grabBackgroundPositionOptions"/>
+        <assertEquals message="Verify Background Position dropdown options" stepKey="assertBackgroundPositionOptions">
+            <actualResult type="variable">grabBackgroundPositionOptions</actualResult>
+            <expectedResult type="array">{{PageBuilderBackgroundPosition_Default.optionsList}}</expectedResult>
+        </assertEquals>
+        <!-- Tab has default value Cover for Background Size -->
+        <comment userInput="Tab has default value Cover for Background Size" stepKey="commentDefaultBackgroundSize"/>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateDefaultBackgroundSize">
+            <argument name="property" value="PageBuilderBackgroundSize_Cover"/>
+        </actionGroup>
+        <!-- Tab has default value No for Background Repeat -->
+        <comment userInput="Tab has default value No for Background Repeat" stepKey="commentDefaultBackgroundRepeat"/>
+        <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="seeDefaultBackgroundRepeatProperty">
+            <argument name="property" value="PageBuilderBackgroundRepeat_Disabled"/>
+        </actionGroup>
+        <!-- Tab has default value Scroll for Background Attachment -->
+        <comment userInput="Tab has default value Scroll for Background Attachment" stepKey="commentDefaultBackgroundAttachment"/>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundAttachment">
+            <argument name="property" value="PageBuilderBackgroundAttachment_Scroll"/>
+        </actionGroup>
+        <grabMultiple selector="{{EditPanelForm.panelFieldOptions(PageBuilderBackgroundAttachment_Default.section, PageBuilderBackgroundAttachment_Default.fieldName)}}" userInput="innerText" stepKey="grabBackgroundAttachmentOptions"/>
+        <assertEquals message="Verify Background Attachment dropdown options" stepKey="assertBackgroundAttachmentOptions">
+            <actualResult type="variable">grabBackgroundAttachmentOptions</actualResult>
+            <expectedResult type="array">{{PageBuilderBackgroundAttachment_Default.optionsList}}</expectedResult>
+        </assertEquals>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettingsForTab1"/>
+        <!-- Validate Default Values in Edit Tabs -->
+        <comment userInput="Validate Default Values in Edit Tabs" stepKey="commentValidateDefaultValuesInEditTabs"/>
+        <click selector="{{TabsOnStage.tabsContainer}}" stepKey="focusOnContentType"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openTabsEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <!-- Tabs has default value Tab 1 for Default Active Tab -->
+        <comment userInput="Tabs has default value Tab 1 for Default Active Tab" stepKey="commentDefaultActiveTab"/>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateDefaultActiveTab">
+            <argument name="property" value="PageBuilderTabsDefaultActiveTab"/>
+        </actionGroup>
+        <!-- Tabs has default value 300 for Minimum Height -->
+        <comment userInput="Tabs has default value 300 for Minimum Height" stepKey="commentDefaultMinimumHeight"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateDefaultMinimumHeight">
+            <argument name="property" value="PageBuilderTabsDefaultMinHeight"/>
+        </actionGroup>
+        <!-- Tabs has default value Left for Tab Navigation Alignment -->
+        <comment userInput="Tabs has default value Left for Tab Navigation Alignment" stepKey="commentDefaultTabNavigationAlignment"/>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateDefaultTabNavigationAlignment">
+            <argument name="property" value="PageBuilderTabsAlignmentLeft"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- View default Tabs with empty Tab on storefront -->
+        <comment userInput="View default Tabs with empty Tab on storefront" stepKey="viewTabOnStorefront"/>
+        <amOnPage url="{{PageBuilderTabsContentType.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <waitForPageLoad stepKey="waitForTabsToLoadStorefront" time="30"/>
+        <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
+        <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabName1Default.value}}" stepKey="seeTab1TitleStorefront"/>
+        <actionGroup ref="validateBackgroundAttributesWithNoImageOrColor" stepKey="validateStorefront">
+            <argument name="section" value="TabOnStorefront"/>
+        </actionGroup>
+    </test>
+</tests>

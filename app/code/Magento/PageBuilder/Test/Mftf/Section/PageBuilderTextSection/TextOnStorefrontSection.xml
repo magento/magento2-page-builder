@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
+    <section name="TextOnStorefront">
+        <element name="base" type="text" selector="(//div[@data-content-type='text'])[{{arg1}}]" parameterized="true"/>
+        <element name="hidden" type="text" selector="(//div[@data-content-type='text'])[{{arg1}}][contains(@style, 'display: none')]" parameterized="true"/>
+        <element name="notHidden" type="text" selector="(//div[@data-content-type='text'])[{{arg1}}][not(contains(@style, 'display: none'))]" parameterized="true"/>
+        <element name="baseJs" type="text" selector="document.querySelectorAll('[data-content-type=\'text\']')[{{arg1}}]" parameterized="true"/>
+        <element name="textAreaWidget" type="text" selector="(//div[@data-content-type='text'])[{{arg1}}]//a[contains(@href,'{{arg2}}{{arg3}}{{arg4}}')]" parameterized="true"/>
+        <element name="messageContentTextAreaImage" type="text" selector="(//div[@data-content-type='text'])[{{arg1}}]//img[contains(@src, {{arg2}})]" parameterized="true"/>
+        <element name="textWidget" type="text" selector="(//div[@data-content-type='text'])[{{arg1}}]//a[contains(@href,'{{arg2}}{{arg3}}')]" parameterized="true"/>
+        <element name="textAreaText" type="text" selector="(//div[@data-content-type='text'])[{{arg1}}][contains(text(),'{{arg2}}')]" parameterized="true"/>
+        <element name="textAreaVariable" type="text" selector="(//div[@data-content-type='text'])[{{arg1}}]//a[contains(@href,'{{arg2}}{{arg3}}')]" parameterized="true"/>
+        <element name="text" type="text" selector="(//div[@data-content-type='text'])[{{arg1}}]//*[contains(text(),'{{arg2}}')]" parameterized="true"/>
+        <element name="textVariableHeightJS" type="text" selector="return document.evaluate(&quot;(//div[@data-content-type='text'])[{{arg1}}]//*[contains(text(),'{{arg2}}')]&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.clientHeight" parameterized="true"/>
+        <element name="empty" type="text" selector="//div[@data-content-type='text'][{{arg1}}][not(*)]" parameterized="true"/>
+        <element name="image" type="text" selector="//div[@data-content-type='text'][{{arg1}}]//img[contains(@src,'{{arg2}}')]" parameterized="true"/>
+        <element name="textInImportantStyle" type="text" selector="//div[contains(normalize-space(@class), 'cms-content-important') and text()='{{arg1}}']" parameterized="true"/>
+        <element name="emptyTextInImportantStyle" type="text" selector="//div[@data-content-type='text'][{{arg1}}]//div[@class='cms-content-important'][not(*)]" parameterized="true"/>
+        <element name="contentJS" type="text" selector="document.querySelectorAll('[data-content-type=text][data-element=main]')[{{arg1}} - 1]" parameterized="true"/>
+        <!-- Advanced Configuration -->
+        <element name="alignment" type="text" selector="(//div[@data-content-type='text'])[{{arg1}}][contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
+        <element name="noAlignment" type="text" selector="(//div[@data-content-type='text'])[{{arg1}}][not(contains(@style,'text-align:'))]" parameterized="true"/>
+        <element name="border" type="text" selector="(//div[@data-content-type='text'])[{{arg1}}][contains(@style,'border-style: {{arg2}};')]" parameterized="true"/>
+        <element name="noBorder" type="text" selector="(//div[@data-content-type='text'])[{{arg1}}][not(contains(@style,'border-style:'))]" parameterized="true"/>
+        <element name="borderWidth" type="text" selector="(//div[@data-content-type='text'])[{{arg1}}][contains(@style,'border-width: {{arg2}}px;')]" parameterized="true"/>
+        <element name="noBorderWidth" type="text" selector="(//div[@data-content-type='text'])[{{arg1}}][not(contains(@style,'border-width:'))]" parameterized="true"/>
+        <element name="borderColor" type="text" selector="(//div[@data-content-type='text'])[{{arg1}}][contains(@style,'border-color: {{arg2}};')]" parameterized="true"/>
+        <element name="noBorderColor" type="text" selector="(//div[@data-content-type='text'])[{{arg1}}][not(contains(@style,'border-color:'))]" parameterized="true"/>
+        <element name="borderRadius" type="text" selector="(//div[@data-content-type='text'])[{{arg1}}][contains(@style,'border-radius: {{arg2}}px;')]" parameterized="true"/>
+        <element name="noBorderRadius" type="text" selector="(//div[@data-content-type='text'])[{{arg1}}][not(contains(@style,'border-radius:'))]" parameterized="true"/>
+        <element name="cssClasses" type="text" selector="(//div[@data-content-type='text'])[{{arg1}}][@class='{{arg2}}']" parameterized="true"/>
+        <element name="noCssClasses" type="text" selector="(//div[@data-content-type='text'])[{{arg1}}][not(@class)]" parameterized="true"/>
+        <element name="margins" type="text" selector="(//div[@data-content-type='text'])[{{arg1}}][contains(@style,'margin: {{arg2}}px;')]" parameterized="true"/>
+        <element name="noMargins" type="text" selector="(//div[@data-content-type='text'])[{{arg1}}][not(contains(@style,'margin:'))]" parameterized="true"/>
+        <element name="padding" type="text" selector="(//div[@data-content-type='text'])[{{arg1}}][contains(@style,'padding: {{arg2}}px;')]" parameterized="true"/>
+        <element name="noPadding" type="text" selector="(//div[@data-content-type='text'])[{{arg1}}][not(contains(@style,'padding:'))]" parameterized="true"/>
+        <element name="emptyText" type="text" selector="//div[@data-content-type='text' and not(text())]"/>
+    </section>
+</sections>

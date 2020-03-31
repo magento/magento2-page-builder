@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="verifyAlignmentRightInBlock">
+        <arguments>
+            <argument name="block" defaultValue="BlockOnStorefront"/>
+            <argument name="container" type="string"/>
+            <argument name="content" type="string"/>
+            <argument name="containerPadding"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <!-- Verify container width is larger than content width -->
+        <comment userInput="Verify container width is larger than content width" stepKey="commentVerifyWidth"/>
+        <executeJS function="return document.querySelectorAll('{{block.baseCSS}} {{container}}')[{{index}}-1].clientWidth;" stepKey="containerWidth"/>
+        <executeJS function="return document.querySelectorAll('{{block.baseCSS}} {{content}}')[{{index}}-1].clientWidth;" stepKey="contentWidth"/>
+        <assertGreaterThan stepKey="assertContainerHeightIsGreater">
+            <expectedResult type="variable">contentWidth</expectedResult>
+            <actualResult type="variable">containerWidth</actualResult>
+        </assertGreaterThan>
+        <!-- Verify position right of container matches content -->
+        <comment userInput="Verify position right of container matches content" stepKey="commentVerifyRightPosition"/>
+        <executeJS function="return document.querySelectorAll('{{block.baseCSS}} {{container}}')[{{index}}-1].getBoundingClientRect().right-{{containerPadding.paddingRight}};" stepKey="containerRightMinusPadding"/>
+        <executeJS function="return document.querySelectorAll('{{block.baseCSS}} {{content}}')[{{index}}-1].getBoundingClientRect().right;" stepKey="contentRight"/>
+        <executeJS function="return Math.round(({$containerRightMinusPadding}/{$contentRight})*100)/100" stepKey="rightPositionRatio"/>
+        <assertEquals stepKey="assertRightPositionRatio">
+            <expectedResult type="int">1</expectedResult>
+            <actualResult type="variable">rightPositionRatio</actualResult>
+        </assertEquals>
+    </actionGroup>
+</actionGroups>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="verifyHeadingDefaultAdvancedConfiguration">
+        <arguments>
+            <argument name="page" defaultValue=""/>
+            <argument name="headingType" defaultValue="PageBuilderHeadingTypeDefaultProperty"/>
+            <argument name="border" defaultValue="PageBuilderAdvancedBorderPropertyNone"/>
+            <argument name="borderRadius" defaultValue="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
+            <argument name="borderWidth" defaultValue="PageBuilderAdvancedBorderWidthPropertyDefault"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{page.baseByTagName(headingType.value, index)}}" stepKey="waitForElementVisible"/>
+        <waitForElementVisible selector="{{page.noAlignment(headingType.value, index)}}" stepKey="waitForAlignmentVisible"/>
+        <waitForElementVisible selector="{{page.border(headingType.value, index, border.value)}}" stepKey="waitForBorderVisible"/>
+        <waitForElementVisible selector="{{page.noBorderColor(headingType.value, index)}}" stepKey="waitForBorderColorVisible"/>
+        <waitForElementVisible selector="{{page.borderWidth(headingType.value, index, borderWidth.value)}}" stepKey="waitForBorderWidthVisible"/>
+        <waitForElementVisible selector="{{page.borderRadius(headingType.value, index, borderRadius.value)}}" stepKey="waitForBorderRadiusVisible"/>
+        <waitForElementVisible selector="{{page.noCssClasses(headingType.value, index)}}" stepKey="waitForCSSClassesVisible"/>
+        <waitForElementVisible selector="{{page.noMargins(headingType.value, index)}}" stepKey="waitForMarginVisible"/>
+        <waitForElementVisible selector="{{page.noPadding(headingType.value, index)}}" stepKey="waitForPaddingVisible"/>
+    </actionGroup>
+</actionGroups>

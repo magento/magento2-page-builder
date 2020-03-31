@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="validateOverlayPositionCollageCenter">
+        <arguments>
+            <argument name="page"/>
+            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="expectedOverlayWidth" defaultValue="540" type="string"/>
+            <argument name="acceptableOffset" defaultValue="2" type="string"/>
+        </arguments>
+        <!-- Validate width of overlay -->
+        <comment userInput="Validate width of overlay" stepKey="commentValidateWidthOfOverlay"/>
+        <executeJS function="return {{page.overlayJS(index)}}.getBoundingClientRect().width" stepKey="overlayWidth"/>
+        <executeJS function="return Math.abs({$overlayWidth} - {{expectedOverlayWidth}})" stepKey="widthDifference"/>
+        <assertLessThanOrEqual stepKey="assertOverlayWidthIsAcceptable">
+            <expectedResult type="int">{{acceptableOffset}}</expectedResult>
+            <actualResult type="variable">widthDifference</actualResult>
+        </assertLessThanOrEqual>
+        <!-- Validate center position of overlay -->
+        <executeJS function="return {{page.wrapperJS(index)}}.getBoundingClientRect().right" stepKey="wrapperRightPosition"/>
+        <executeJS function="return {{page.wrapperJS(index)}}.getBoundingClientRect().width" stepKey="wrapperWidth"/>
+        <executeJS function="return Math.round({$wrapperRightPosition} - ({$wrapperWidth} / 2))" stepKey="wrapperCenterPosition"/>
+        <executeJS function="return {{page.overlayJS(index)}}.getBoundingClientRect().right" stepKey="overlayRightPosition"/>
+        <executeJS function="return Math.round({$overlayRightPosition} - ({$overlayWidth} / 2))" stepKey="overlayCenterPosition"/>
+        <executeJS function="return Math.abs({$wrapperCenterPosition} - {$overlayCenterPosition})" stepKey="overlayCenterDifference"/>
+        <assertLessThanOrEqual stepKey="assertOverlayCenterAcceptable">
+            <expectedResult type="int">{{acceptableOffset}}</expectedResult>
+            <actualResult type="variable">overlayCenterDifference</actualResult>
+        </assertLessThanOrEqual>
+    </actionGroup>
+</actionGroups>

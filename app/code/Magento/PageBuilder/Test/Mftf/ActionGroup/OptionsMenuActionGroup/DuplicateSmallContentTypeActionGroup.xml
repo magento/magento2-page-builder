@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="duplicateSmallContentType">
+        <arguments>
+            <argument name="section"/>
+            <argument name="targetIndex" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElement selector="{{section.all}}" stepKey="waitForAllContentTypes"/>
+        <executeJS function="return document.querySelectorAll('{{section.all}}').length+1" stepKey="expectedContentTypeCount"/>
+        <waitForElementVisible selector="{{section.openOptionsMenu(targetIndex)}}" stepKey="waitForContentTypeVisible"/>
+        <click selector="{{section.openOptionsMenu(targetIndex)}}" stepKey="clickContentType"/>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <waitForElementVisible selector="{{section.optionsMenu(targetIndex)}}" stepKey="waitForOptionsMenu"/>
+        <click selector="{{section.optionsMenuButton(targetIndex, 'duplicate')}}" stepKey="clickDuplicate"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <executeJS function="return document.querySelectorAll('{{section.all}}').length" stepKey="resultingContentTypeCount"/>
+        <assertEquals stepKey="assertContentTypeCount">
+            <actualResult type="variable">$resultingContentTypeCount</actualResult>
+            <expectedResult type="variable">$expectedContentTypeCount</expectedResult>
+        </assertEquals>
+    </actionGroup>
+</actionGroups>

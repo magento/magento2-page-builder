@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="BannerPosterMinHeightValidInputs">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Banner"/>
+            <title value="Poster - Banner Min Height Valid Inputs"/>
+            <description value="A user can submit valid min height values (px, view port percentages, calculations, etc.) and they apply correctly to a poster banner."/>
+            <severity value="BLOCKER"/>
+            <useCaseId value="PB-378"/>
+            <testCaseId value="MC-31597"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-banner"/>
+            <group value="pagebuilder-bannerPoster"/>
+        </annotations>
+        <before>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
+                <argument name="CMSPage" value="$$createCMSPage$$"/>
+            </actionGroup>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Banner 1: Min Height = 200px -->
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanel">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
+            <argument name="property" value="PageBuilderAppearance_Poster"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeight200px">
+            <argument name="property" value="PageBuilderMinHeightProperty_200px"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBackgroundColor">
+            <argument name="property" value="PageBuilderBackgroundColor_Plaintext_Green"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateContentType1">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateContentType2">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <!-- Banner 2: Min Height = 100vh -->
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanel2">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeight100vh">
+            <argument name="property" value="PageBuilderMinHeightProperty_100vh"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <!-- Banner 3: Min Height = 100vh - 200px -->
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanel3">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+            <argument name="contentTypeIndex" value="3"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightCalculation">
+            <argument name="property" value="PageBuilderMinHeightProperty_100vh_Minus_200px"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
+        <!-- Validate Stage -->
+        <executeJS function="return window.innerHeight;" stepKey="viewportHeightStage"/>
+        <seeElement selector="{{BannerOnBackend.posterMinimumHeight('1', PageBuilderMinHeightProperty_200px.value)}}" stepKey="seeFirstMinHeightStage"/>
+        <executeJS function="return document.evaluate(&quot;{{BannerOnBackend.overlay('1')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstMinHeightStage"/>
+        <assertEquals stepKey="assertFirstMinHeightStage">
+            <actualResult type="variable">firstMinHeightStage</actualResult>
+            <expectedResult type="string">{{PageBuilderMinHeightProperty_200px.intValue}}</expectedResult>
+        </assertEquals>
+        <seeElement selector="{{BannerOnBackend.posterMinimumHeight('2', PageBuilderMinHeightProperty_100vh.value)}}" stepKey="seeSecondMinHeightStage"/>
+        <executeJS function="return document.evaluate(&quot;{{BannerOnBackend.overlay('2')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="secondMinHeightStage"/>
+        <assertEquals stepKey="assertSecondMinHeightStage">
+            <actualResult type="variable">secondMinHeightStage</actualResult>
+            <expectedResult type="variable">viewportHeightStage</expectedResult>
+        </assertEquals>
+        <seeElement selector="{{BannerOnBackend.posterMinimumHeight('3', PageBuilderMinHeightProperty_100vh_Minus_200px.value)}}" stepKey="seeThirdMinHeightStage"/>
+        <executeJS function="return document.evaluate(&quot;{{BannerOnBackend.overlay('3')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="thirdMinHeightStage"/>
+        <executeJS function="return Math.abs({$viewportHeightStage} - 200)" stepKey="expectedThirdHeightStage"/>
+        <assertEquals stepKey="assertThirdMinHeightStage">
+            <actualResult type="variable">thirdMinHeightStage</actualResult>
+            <expectedResult type="variable">expectedThirdHeightStage</expectedResult>
+        </assertEquals>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate Storefront -->
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <executeJS function="return window.innerHeight;" stepKey="viewportHeightStorefront"/>
+        <seeElement selector="{{BannerOnFrontend.posterMinimumHeight('1', PageBuilderMinHeightProperty_200px.value)}}" stepKey="seeFirstMinHeightStorefront"/>
+        <executeJS function="return document.evaluate(&quot;{{BannerOnFrontend.overlay('1')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="firstMinHeightStorefront"/>
+        <assertEquals stepKey="assertFirstMinHeightStorefront">
+            <actualResult type="variable">firstMinHeightStorefront</actualResult>
+            <expectedResult type="string">{{PageBuilderMinHeightProperty_200px.intValue}}</expectedResult>
+        </assertEquals>
+        <seeElement selector="{{BannerOnFrontend.posterMinimumHeight('2', PageBuilderMinHeightProperty_100vh.value)}}" stepKey="seeSecondMinHeightStorefront"/>
+        <executeJS function="return document.evaluate(&quot;{{BannerOnFrontend.overlay('2')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="secondMinHeightStorefront"/>
+        <assertEquals stepKey="assertSecondMinHeightStorefront">
+            <actualResult type="variable">secondMinHeightStorefront</actualResult>
+            <expectedResult type="variable">viewportHeightStorefront</expectedResult>
+        </assertEquals>
+        <seeElement selector="{{BannerOnFrontend.posterMinimumHeight('3', PageBuilderMinHeightProperty_100vh_Minus_200px.value)}}" stepKey="seeThirdMinHeightStorefront"/>
+        <executeJS function="return document.evaluate(&quot;{{BannerOnFrontend.overlay('3')}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getBoundingClientRect().height" stepKey="thirdMinHeightStorefront"/>
+        <executeJS function="return Math.abs({$viewportHeightStorefront} - 200)" stepKey="expectedThirdHeightStorefront"/>
+        <assertEquals stepKey="assertThirdMinHeightStorefront">
+            <actualResult type="variable">thirdMinHeightStorefront</actualResult>
+            <expectedResult type="variable">expectedThirdHeightStorefront</expectedResult>
+        </assertEquals>
+    </test>
+</tests>

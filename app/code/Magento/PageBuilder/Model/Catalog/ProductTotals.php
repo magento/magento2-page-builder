@@ -134,18 +134,21 @@ class ProductTotals
      * Retrieve product collection based on provided conditions
      *
      * @param string $conditions
+     * @param bool $usePriceIndex use minimal price from price index to filter by price.
+     * If TRUE only enabled products will be returned, as price indexer does not include disabled products
      * @return Collection
      * @throws LocalizedException
      */
-    private function getProductCollection(string $conditions): Collection
+    private function getProductCollection(string $conditions, bool $usePriceIndex = true): Collection
     {
         /** @var $collection Collection */
         $collection = $this->productCollectionFactory->create();
+        if ($usePriceIndex && strpos($conditions, '"attribute":"price"') !== false) {
+            $collection->addMinimalPrice();
+        }
 
-        /** @var Combine $collectionConditions */
-        $collectionConditions = $this->decodeConditions($conditions);
-        $collectionConditions->collectValidatedAttributes($collection);
-        $this->sqlBuilder->attachConditionToCollection($collection, $collectionConditions);
+        $collection = $this->applyConditionsToCollection($conditions, $collection);
+        $collection = $this->excludeLinkedProducts($collection);
 
         /**
          * Prevent retrieval of duplicate records. This may occur when multiselect product attribute matches
@@ -157,37 +160,89 @@ class ProductTotals
     }
 
     /**
+     * Retrieve count of all enabled products
+     *
+     * @param string $conditions
+     * @return int number of enabled products
+     */
+    private function getEnabledCount(string $conditions): int
+    {
+        $collection = $this->getProductCollection($conditions, true);
+        $collection->addAttributeToFilter('status', Status::STATUS_ENABLED);
+        return $collection->getSize();
+    }
+
+    /**
      * Retrieve count of all disabled products
      *
-     * @param Collection $baseCollection
+     * @param string $conditions
      * @return int number of disabled products
      */
-    private function getDisabledCount(Collection $baseCollection): int
+    private function getDisabledCount(string $conditions): int
     {
-        /** @var Collection $disabledCollection */
-        $disabledCollection = clone $baseCollection;
-        $disabledCollection->addAttributeToFilter('status', Status::STATUS_DISABLED);
-        return $disabledCollection->getSize();
+        $collection = $this->getProductCollection($conditions, false);
+        $collection->addAttributeToFilter('status', Status::STATUS_DISABLED);
+        return $collection->getSize();
     }
 
     /**
      * Retrieve count of all not visible individually products
      *
-     * @param Collection $baseCollection
+     * @param string $conditions
      * @return int number of products not visible individually
      */
-    private function getNotVisibleCount(Collection $baseCollection): int
+    private function getNotVisibleCount(string $conditions): int
     {
-        $notVisibleCollection = clone $baseCollection;
-        $notVisibleCollection->addAttributeToFilter('status', Status::STATUS_ENABLED);
-        $notVisibleCollection->addAttributeToFilter(
+        $collection = $this->getProductCollection($conditions, true);
+        $collection->addAttributeToFilter('status', Status::STATUS_ENABLED);
+        $collection->addAttributeToFilter(
             'visibility',
             [
                 Visibility::VISIBILITY_NOT_VISIBLE,
                 Visibility::VISIBILITY_IN_SEARCH
             ]
         );
-        return $notVisibleCollection->getSize();
+        return $collection->getSize();
+    }
+
+    /**
+     * Exclude any linked products, e.g. simple products assigned to a configurable, bundle or group
+     *
+     * @param Collection $collection
+     * @return Collection
+     */
+    private function excludeLinkedProducts(Collection $collection): Collection
+    {
+        $collection->getSelect()
+            ->joinLeft(
+                ['super_link_table' => $collection->getTable('catalog_product_super_link')],
+                'super_link_table.product_id = e.entity_id',
+                ['product_id']
+            )
+            ->joinLeft(
+                ['link_table' => $collection->getTable('catalog_product_link')],
+                'link_table.product_id = e.entity_id',
+                ['product_id']
+            )
+            ->where('link_table.product_id IS NULL OR super_link_table.product_id IS NULL');
+        return $collection;
+    }
+
+    /**
+     * Apply conditions to collection
+     *
+     * @param string $conditions
+     * @param Collection $collection
+     * @return Collection
+     * @throws LocalizedException
+     */
+    private function applyConditionsToCollection(string $conditions, Collection $collection): Collection
+    {
+        /** @var Combine $collectionConditions */
+        $collectionConditions = $this->decodeConditions($conditions);
+        $collectionConditions->collectValidatedAttributes($collection);
+        $this->sqlBuilder->attachConditionToCollection($collection, $collectionConditions);
+        return $collection;
     }
 
     /**
@@ -200,25 +255,12 @@ class ProductTotals
      */
     public function getProductTotals(string $conditions): array
     {
-        /** @var Collection $collection */
-        $collection = $this->getProductCollection($conditions);
-
-        // Exclude any linked products, e.g. simple products assigned to a configurable, bundle or group
-        $collection->getSelect()->joinLeft(
-            ['super_link_table' => $collection->getTable('catalog_product_super_link')],
-            'super_link_table.product_id = e.entity_id',
-            ['product_id']
-        )->joinLeft(
-            ['link_table' => $collection->getTable('catalog_product_link')],
-            'link_table.product_id = e.entity_id',
-            ['product_id']
-        )->where('link_table.product_id IS NULL OR super_link_table.product_id IS NULL');
-
-        $disabledCount = $this->getDisabledCount($collection);
-        $notVisibleCount = $this->getNotVisibleCount($collection);
+        $enabledCount = $this->getEnabledCount($conditions);
+        $disabledCount = $this->getDisabledCount($conditions);
+        $notVisibleCount = $this->getNotVisibleCount($conditions);
 
         return [
-            'total' => $collection->getSize(),
+            'total' => $enabledCount + $disabledCount,
             'disabled' => $disabledCount,
             'notVisible' => $notVisibleCount,
         ];

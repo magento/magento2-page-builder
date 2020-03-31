@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="openPageBuilderSaveTemplateModal">
+        <annotations>
+            <description>Opens the Page Builder Save as Template modal from the Page Builder stage.</description>
+        </annotations>
+        <arguments>
+            <argument name="pageBuilderArea" defaultValue="" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{pageBuilderArea}}{{PageBuilderStage.saveAsTemplateButton}}" stepKey="waitForSaveAsTemplateButton"/>
+        <click selector="{{pageBuilderArea}}{{PageBuilderStage.saveAsTemplateButton}}" stepKey="clickSaveAsTemplateButton"/>
+        <waitForPageLoad stepKey="waitForModalLoad"/>
+        <waitForElementVisible selector="{{PageBuilderSaveTemplateModal.activeModal}}" stepKey="waitForModalVisible"/>
+        <see userInput="Save Content as Template" selector="{{PageBuilderSaveTemplateModal.title}}" stepKey="seeTitle"/>
+        <waitForPageLoad stepKey="waitForPreviewLoad"/>
+    </actionGroup>
+</actionGroups>

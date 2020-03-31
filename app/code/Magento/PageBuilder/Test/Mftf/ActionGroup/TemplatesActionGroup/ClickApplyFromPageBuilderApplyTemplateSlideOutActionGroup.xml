@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="clickApplyFromPageBuilderApplyTemplateSlideOut">
+        <annotations>
+            <description>Clicks the Apply button for a row in the grid from the Page Builder Apply Template slide out.</description>
+        </annotations>
+        <arguments>
+            <argument name="templateIdentifier" defaultValue="{{PageBuilderTemplateNameRandom.name}}" type="string"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForSlideOutLoad"/>
+        <waitForElementVisible selector="{{PageBuilderApplyTemplatesGrid.applyButton(templateIdentifier)}}" stepKey="waitForApplyButton"/>
+        <click selector="{{PageBuilderApplyTemplatesGrid.applyButton(templateIdentifier)}}" stepKey="clickApplyButton"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+    </actionGroup>
+</actionGroups>

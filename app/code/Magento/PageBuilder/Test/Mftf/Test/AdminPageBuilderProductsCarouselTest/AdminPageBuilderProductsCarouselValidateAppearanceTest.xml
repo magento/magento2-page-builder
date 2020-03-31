@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="AdminPageBuilderProductsCarouselValidateAppearanceTest" extends="AdminPageBuilderProductsGridValidateAppearanceTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Products"/>
+            <title value="Carousel - Validate Products Carousel Appearance"/>
+            <description value="Validate that setting the Products content type to a Carousel appearance renders correctly on the Stage and Storefront."/>
+            <severity value="BLOCKER"/>
+            <useCaseId value="PB-77"/>
+            <testCaseId value="MC-22073"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-products"/>
+            <group value="pagebuilder-productsCarousel"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
+            <argument name="property" value="PageBuilderProductsProductCarouselAppearance"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterProductsCount">
+            <argument name="property" value="PageBuilderProductsCarouselCountPropertyMax"/>
+        </actionGroup>
+        <actionGroup ref="validateProductCountInProductsCarousel" stepKey="validateProductCountStage">
+            <argument name="page" value="ProductsCarouselOnStage"/>
+            <argument name="productCount" value="6"/>
+        </actionGroup>
+        <actionGroup ref="validateCanSeeProductInDefaultProductCarousel" stepKey="seeProduct2Stage" after="validateProductCountStage">
+            <argument name="product" value="$$createProduct2$$"/>
+        </actionGroup>
+        <actionGroup ref="validateCannotSeeProductInDefaultProductCarousel" stepKey="dontSeeProduct1Stage" after="seeProduct2Stage">
+            <argument name="product" value="$$createProduct1$$"/>
+        </actionGroup>
+        <actionGroup ref="validateProductsDoNotWrapInCarouselAppearance" stepKey="validateProductsWrapInGridAppearanceStage"/>
+        <actionGroup ref="validateProductsInProductCarouselAreCenteredForOddNumberOfProducts" stepKey="validateProductsAreCenteredStage" after="validateProductsWrapInGridAppearanceStage"/>
+        <actionGroup ref="validateProductCountInProductsCarousel" stepKey="validateProductCountStorefront">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="productCount" value="6"/>
+        </actionGroup>
+        <actionGroup ref="validateCanSeeProductInDefaultProductCarousel" stepKey="seeProduct6Storefront" after="validateProductCountStorefront">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="product" value="$$createProduct6$$"/>
+        </actionGroup>
+        <actionGroup ref="validateCannotSeeProductInDefaultProductCarousel" stepKey="dontSeeProduct1Storefront" after="seeProduct6Storefront">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="product" value="$$createProduct1$$"/>
+        </actionGroup>
+        <actionGroup ref="validateProductsDoNotWrapInCarouselAppearance" stepKey="validateProductsWrapInGridAppearanceStorefront">
+            <argument name="page" value="ProductsOnStorefront"/>
+        </actionGroup>
+        <actionGroup ref="validateProductsInProductCarouselAreCenteredForOddNumberOfProducts" stepKey="validateProductsAreCenteredStorefront" after="validateProductsWrapInGridAppearanceStorefront">
+            <argument name="page" value="ProductsOnStorefront"/>
+        </actionGroup>
+    </test>
+</tests>

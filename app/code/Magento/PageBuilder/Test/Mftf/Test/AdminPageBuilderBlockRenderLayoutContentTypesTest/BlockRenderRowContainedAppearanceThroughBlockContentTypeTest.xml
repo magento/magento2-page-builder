@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="BlockRenderRowContainedAppearanceThroughBlockContentTypeTest" extends="BlockRenderRowContainedAppearanceWithParallaxThroughBlockContentTypeTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Block Content"/>
+            <title value="Render Row Contained Appearance Through Block Content Type"/>
+            <description value="Verify that users are able to successfully render and use the row content type contained appearance through the Block content type."/>
+            <severity value="BLOCKER"/>
+            <testCaseId value="MC-15088"/>
+            <useCaseId value="MC-13769"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+            <group value="pagebuilder-block-content"/>
+            <group value="pagebuilder-row"/>
+        </annotations>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="enableParallaxBackground">
+            <argument name="property" value="PageBuilderRowParallax_Disabled"/>
+        </actionGroup>
+        <comment userInput="---merging to remove step---" stepKey="enterParallaxBackgroundSpeed"/>
+        <!-- Validate CMS Block Stage -->
+        <actionGroup ref="validateBackgroundAttributes" stepKey="validateBackgroundCMSBlockStage">
+            <argument name="section" value="RowOnStage"/>
+            <argument name="index" value="1"/>
+            <argument name="backgroundColor" value="PageBuilderBackgroundColor_Plaintext_Green"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
+            <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_Center"/>
+            <argument name="backgroundSize" value="PageBuilderBackgroundSize_Auto"/>
+            <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
+            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Fixed"/>
+        </actionGroup>
+        <comment userInput="---merging to remove step---" stepKey="validateParallaxBackgroundCMSBlockStage"/>
+        <actionGroup ref="validateBackgroundImageContainer" stepKey="validateBackgroundImageCMSBlockStage">
+            <argument name="section" value="RowOnStage_Contained"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
+        </actionGroup>
+        <!-- Validate CMS Page Stage -->
+        <actionGroup ref="validateBackgroundAttributesWithNoImage" stepKey="validateRowBackgroundCMSPageStage">
+            <argument name="section" value="RowOnStorefront"/>
+            <argument name="index" value="2"/>
+            <argument name="backgroundColor" value="PageBuilderBackgroundColor_Plaintext_Green"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
+            <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_Center"/>
+            <argument name="backgroundSize" value="PageBuilderBackgroundSize_Auto"/>
+            <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
+            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Fixed"/>
+        </actionGroup>
+        <comment userInput="---merging to remove step---" stepKey="validateRowParallaxBackgroundCMSPageStage"/>
+        <actionGroup ref="validateBackgroundImageContainer" stepKey="validateBackgroundImageCMSPageStage">
+            <argument name="section" value="RowOnStorefront"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <!-- Validate CMS Page Storefront -->
+        <actionGroup ref="validateBackgroundAttributesWithNoImage" stepKey="validateRowBackgroundCMSPageStorefront">
+            <argument name="section" value="RowOnStorefront"/>
+            <argument name="index" value="2"/>
+            <argument name="backgroundColor" value="PageBuilderBackgroundColor_Plaintext_Green"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
+            <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_Center"/>
+            <argument name="backgroundSize" value="PageBuilderBackgroundSize_Auto"/>
+            <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
+            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Fixed"/>
+        </actionGroup>
+        <comment userInput="---merging to remove step---" stepKey="validateRowParallaxBackgroundCMSPageStorefront"/>
+        <actionGroup ref="validateBackgroundImageContainer" stepKey="validateBackgroundImageCMSPageStorefront">
+            <argument name="section" value="RowOnStorefront"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <!-- Validate CMS Page Storefront Mobile -->
+        <actionGroup ref="validateBackgroundImageContainer" stepKey="validateBackgroundImageCMSPageStorefrontMobile">
+            <argument name="section" value="RowOnStorefront"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundMobileImage_GIF"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+    </test>
+</tests>

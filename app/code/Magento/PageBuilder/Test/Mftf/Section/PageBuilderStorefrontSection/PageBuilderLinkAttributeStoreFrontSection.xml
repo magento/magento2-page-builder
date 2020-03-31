@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
+    <section name="PageBuilderLinkAttributeStoreFront">
+        <element name="ExternalURLLink" type="text" selector="//a[@href='{{var1}}']" parameterized="true"/>
+        <element name="ExternalURLContainsLink" type="text" selector="//a[contains(@href,'{{var1}}')]" parameterized="true"/>
+        <element name="ExternalURLInCurrentTab" type="text" selector="//a[@href='{{var1}}' and @target='']" parameterized="true"/>
+        <element name="ExternalURLInNewTab" type="text" selector="//a[@href='{{var1}}' and @target='_blank']" parameterized="true"/>
+    </section>
+</sections>

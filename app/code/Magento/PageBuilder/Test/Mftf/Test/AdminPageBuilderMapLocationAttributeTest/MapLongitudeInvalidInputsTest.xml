@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="MapLongitudeInvalidInputsTest" extends="MapLatitudeInvalidInputsTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Map"/>
+            <title value="Location Attributes - Longitude - Invalid Inputs"/>
+            <description value="Make sure the map does not accept the following values for Longitude: empty string, space character, non-numeric character, less than -180.05, greater than 180.05"/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MAGETWO-66519"/>
+            <testCaseId value="MC-2532"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="pagebuilder-mapLocation"/>
+            <group value="pagebuilder-mapLocationAttributes"/>
+            <group value="pagebuilder-requiresValidMapAPIKey"/>
+            <skip>
+                <issueId value="MTS-657"/>
+            </skip>
+        </annotations>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterCoordinate">
+            <argument name="property" value="PageBuilderMapLatitude_Positive39_74"/>
+        </actionGroup>
+        <comment userInput="Longitude: Empty" stepKey="commentEmpty"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterEmpty">
+            <argument name="property" value="PageBuilderMapLongitude_Empty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSection" stepKey="validateErrorEmpty">
+            <argument name="form" value="AddLocationForm"/>
+            <argument name="property" value="PageBuilderMapLongitude_Empty"/>
+        </actionGroup>
+        <comment userInput="Longitude: Space" stepKey="commentSpace"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSpace">
+            <argument name="property" value="PageBuilderMapLongitude_Space"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSection" stepKey="validateErrorSpace">
+            <argument name="form" value="AddLocationForm"/>
+            <argument name="property" value="PageBuilderMapLongitude_Space"/>
+        </actionGroup>
+        <comment userInput="Longitude: Non-Numeric" stepKey="commentNonNumeric"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterNonNumeric">
+            <argument name="property" value="PageBuilderMapLongitude_NonNumeric"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSection" stepKey="validateErrorNonNumeric">
+            <argument name="form" value="AddLocationForm"/>
+            <argument name="property" value="PageBuilderMapLongitude_NonNumeric"/>
+        </actionGroup>
+        <comment userInput="Longitude: Negative Boundary" stepKey="commentNegativeBoundary"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterNegativeBoundary">
+            <argument name="property" value="PageBuilderMapLongitude_NegativeBoundary"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSection" stepKey="validateErrorNegativeBoundary">
+            <argument name="form" value="AddLocationForm"/>
+            <argument name="property" value="PageBuilderMapLongitude_NegativeBoundary"/>
+        </actionGroup>
+        <comment userInput="Longitude: Positive Boundary" stepKey="commentPositiveBoundary"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterPositiveBoundary">
+            <argument name="property" value="PageBuilderMapLongitude_PositiveBoundary"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSection" stepKey="validateErrorPositiveBoundary">
+            <argument name="form" value="AddLocationForm"/>
+            <argument name="property" value="PageBuilderMapLongitude_PositiveBoundary"/>
+        </actionGroup>
+        <comment userInput="Add Valid Longitude After Errors And Verify Map Has Pin" stepKey="commentAddPinToMap2"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterValid">
+            <argument name="property" value="PageBuilderMapLongitude_Negative104_99"/>
+        </actionGroup>
+    </test>
+</tests>

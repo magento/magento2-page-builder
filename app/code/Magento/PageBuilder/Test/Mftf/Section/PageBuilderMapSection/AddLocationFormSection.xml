@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
+    <section name="AddLocationForm">
+        <element name="form" type="text" selector="aside  div.pagebuilder_map_form_pagebuilder_map_form_general_map_location_modal_map_location_insert_form"/>
+        <element name="formTitle" type="text" selector="aside.pagebuilder_map_form_pagebuilder_map_form_general_map_location_modal h1.modal-title[data-role='title']"/>
+        <element name="cancelButton" type="button" selector="aside.pagebuilder_map_form_pagebuilder_map_form_general_map_location_modal  button#cancel"/>
+        <element name="editFormSave" type="button" selector="aside.pagebuilder_map_form_pagebuilder_map_form_general_map_location_modal  button#save"/>
+        <element name="base" type="button" selector="//div[@data-index='position']//div[@class='map-field']"/>
+        <element name="baseError" type="button" selector="//div[@data-index='position']//div[@class='google-map-auth-failure-placeholder']"/>
+        <element name="baseJS" type="text" selector="document.querySelector('div[data-index=\'position\'] div.map-field')"/>
+        <element name="clickablePin" type="button" selector="//div[@data-index='position']//div[@class='map-field']//map//area"/>
+        <element name="allPins" type="button" selector="//div[@data-index='position']//div[@class='map-field']//img[not(@usemap) and contains(@src,'spotlight-poi2_hdpi.png')]|//div[@data-index='position']//div[@class='map-field']//img[not(@usemap) and contains(@src,'spotlight-poi2.png')]"/>
+        <element name="pinLocations" type="text" selector="(//div[@data-index='position']//div[contains(@style,'transform: matrix(1, 0, 0, 1, ')])[{{arg1}}]" parameterized="true"/>
+        <element name="tooltipWindow" type="text" selector="//div[@data-index='position']//div[@class='map-field']//div[contains(concat(' ', normalize-space(@class), ' '), ' gm-style-iw ')]"/>
+        <element name="helperText" type="button" selector="//div[@data-index='position']//span[.='You can move the pin by clicking or dragging it where you want. To alter the zoom please use the controls.']"/>
+        <element name="renderedMap" type="button" selector="//div[@data-index='position']//div[@class='map-field']//div[contains(@class, 'gm-style')]"/>
+        <element name="googleMapsLink" type="button" selector="//div[@data-index='position']//div[@class='map-field' and not(contains(@style,'display: none;'))]//a//img[{{arg1}}]" parameterized="true"/>
+        <!-- Map Buttons -->
+        <element name="googleModalOkButton" type="button" selector="//aside//button[@class='dismissButton' and .='OK'][{{arg1}}]" parameterized="true"/>
+        <element name="fullScreen" type="button" selector="(//div[@data-index='position']//div[@class='map-field']//button[@title='Toggle fullscreen view'])[{{arg1}}]" parameterized="true"/>
+        <element name="zoomIn" type="button" selector="(//div[@data-index='position']//div[@class='map-field']//button[@title='Zoom in'])[{{arg1}}]" parameterized="true"/>
+        <element name="zoomOut" type="button" selector="(//div[@data-index='position']//div[@class='map-field']//button[@title='Zoom out'])[{{arg1}}]" parameterized="true"/>
+        <!-- Map Error Message -->
+        <element name="errorContainer" type="text" selector="(//div[@data-index='position']//div[@class='google-map-auth-failure-placeholder'])[{{arg1}}]" parameterized="true"/>
+        <element name="warningMessageLink" type="button" selector="//div[@data-index='position']//div[@class='google-map-auth-failure-placeholder' and not(contains(@style,'display: none;'))]//a[{{arg1}}]" parameterized="true"/>
+    </section>
+</sections>

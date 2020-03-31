@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="validateMarginsOrPaddingError">
+        <arguments>
+            <argument name="property"/>
+            <argument name="errorMessage" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{EditPanelForm.panelSectionError(property.section)}}" stepKey="waitForSectionChangedIcon"/>
+        <seeElement selector="{{EditPanelForm.panelSectionError(property.section)}}" stepKey="seeElementSectionChangedIcon"/>
+        <see userInput="{{errorMessage}}" selector="{{AdvancedForm.advancedMarginAndPaddingErrorMessage}}" stepKey="seeErrorMessage"/>
+    </actionGroup>
+</actionGroups>

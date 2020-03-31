@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="pickColorSwatchCell">
+        <arguments>
+            <argument name="property"/>
+        </arguments>
+        <waitForElementVisible selector="{{ColorPicker.panelColorSwatch(property.section, property.fieldName)}}" stepKey="waitForColorSwatch"/>
+        <click selector="{{ColorPicker.panelColorSwatch(property.section, property.fieldName)}}" stepKey="openColorSwatch"/>
+        <waitForElementVisible selector="{{ColorPicker.colorBox(property.rgb)}}" stepKey="waitForColorPalleteCell"/>
+        <click selector="{{ColorPicker.colorBox(property.rgb)}}" stepKey="clickColorPalletteCell"/>
+        <waitForElementVisible selector="{{ColorPicker.applyBtn}}" stepKey="waitForApply"/>
+        <click selector="{{ColorPicker.applyBtn}}" stepKey="clickApply"/>
+        <seeInField selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" userInput="{{property.value}}" stepKey="seeColorInField"/>
+    </actionGroup>
+</actionGroups>

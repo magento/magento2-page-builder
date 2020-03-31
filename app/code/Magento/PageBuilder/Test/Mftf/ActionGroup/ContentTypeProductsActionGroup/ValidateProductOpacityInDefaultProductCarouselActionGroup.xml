@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="validateProductOpacityInDefaultProductCarousel">
+        <arguments>
+            <argument name="page" defaultValue="ProductsCarouselOnStage"/>
+            <argument name="productGroupIndex" defaultValue="1" type="string"/>
+            <argument name="productItemIndex" defaultValue="1" type="string"/>
+            <argument name="opacityOfProductItem" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElement selector="{{page.productInCarouselNotClonedBySlickByIndex(productGroupIndex, productItemIndex)}}" stepKey="waitForProductItem"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate(&quot;{{page.productInCarouselNotClonedBySlickByIndex(productGroupIndex, productItemIndex)}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue, null).getPropertyValue('opacity')" stepKey="getOpacityOfProductItem"/>
+        <assertEquals stepKey="assertOpacityOfProductIte">
+            <expectedResult type="string">{{opacityOfProductItem}}</expectedResult>
+            <actualResult type="variable">getOpacityOfProductItem</actualResult>
+        </assertEquals>
+    </actionGroup>
+</actionGroups>

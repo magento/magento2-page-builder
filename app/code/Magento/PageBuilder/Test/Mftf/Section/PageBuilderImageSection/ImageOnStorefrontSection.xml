@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
+    <section name="ImageOnStorefront">
+        <element name="base" type="text" selector="(//figure[@data-content-type='image'])[{{arg1}}]" parameterized="true"/>
+        <element name="hidden" type="text" selector="(//figure[@data-content-type='image'])[{{arg1}}][contains(@style, 'display: none')]" parameterized="true"/>
+        <element name="notHidden" type="text" selector="(//figure[@data-content-type='image'])[{{arg1}}][not(contains(@style, 'display: none'))]" parameterized="true"/>
+        <element name="backgroundImageSource" type="text" selector="//div[contains(@style,'{{var1}}')]" parameterized="true"/>
+        <element name="imageDisplay" type="button" selector="figure[data-content-type='image']"/>
+        <element name="imageElement" type="button" selector="figure[data-content-type='image'] img:nth-child({{arg1}})" parameterized="true"/>
+        <element name="imageElementCSS" type="text" selector="figure[data-content-type=image] img"/>
+        <element name="imageDesktop" type="text" selector="(//figure[@data-content-type='image'])[{{arg1}}]//img[@data-element='desktop_image']" parameterized="true"/>
+        <element name="imageMobile" type="text" selector="(//figure[@data-content-type='image'])[{{arg1}}]//img[@data-element='mobile_image']" parameterized="true"/>
+        <element name="imageAltText" type="button" selector="(//figure[@data-content-type='image'])[{{arg1}}]//img[@alt='{{arg2}}']" parameterized="true"/>
+        <element name="imageCaption" type="button" selector="(//figure[@data-content-type='image'])[{{arg1}}]//figcaption[@data-element='caption']" parameterized="true"/>
+        <element name="imageTitleAttribute" type="button" selector="(//figure[@data-content-type='image'])[{{arg1}}]//img[@title='{{arg2}}']" parameterized="true"/>
+        <element name="imageLink" type="button" selector="(//figure[@data-content-type='image'])[{{arg1}}]//a[@href='{{arg2}}']" parameterized="true"/>
+        <element name="imageLinkTarget" type="button" selector="(//figure[@data-content-type='image'])[{{arg1}}]//a[@target='{{arg2}}']" parameterized="true"/>
+        <element name="imageSource" type="button" selector="//img[contains(@src,'{{var1}}')]" parameterized="true"/>
+        <element name="imageSourceByIndex" type="button" selector="(//figure[@data-content-type='image'])[{{arg1}}]//img[contains(@src,'{{arg2}}')]" parameterized="true"/>
+        <element name="mobileImageSource" type="button" selector="img.pagebuilder-mobile-only[src*='{{arg1}}'][src$='.{{arg2}}']" parameterized="true"/>
+        <!-- Advanced Configuration -->
+        <element name="alignment" type="text" selector="(//figure[@data-content-type='image'])[{{arg1}}][contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
+        <element name="noAlignment" type="text" selector="(//figure[@data-content-type='image'])[{{arg1}}][not(contains(@style,'text-align:'))]" parameterized="true"/>
+        <element name="border" type="text" selector="(//figure[@data-content-type='image'])[{{arg1}}][contains(@style,'border-style: {{arg2}};')]|(//figure[@data-content-type='image'])[{{arg1}}]//*[@data-element='desktop_image' and contains(@style,'border-style: {{arg2}};')]" parameterized="true"/>
+        <element name="borderColor" type="text" selector="(//figure[@data-content-type='image'])[{{arg1}}][contains(@style,'border-color: {{arg2}};')]|(//figure[@data-content-type='image'])[{{arg1}}]//*[@data-element='desktop_image' and contains(@style,'border-color: {{arg2}};')]" parameterized="true"/>
+        <element name="noBorderColor" type="text" selector="(//figure[@data-content-type='image'])[{{arg1}}][not(contains(@style,'border-color:'))]|(//figure[@data-content-type='image'])[{{arg1}}]//*[@data-element='desktop_image' and not(contains(@style,'border-color:'))]" parameterized="true"/>
+        <element name="borderWidth" type="text" selector="(//figure[@data-content-type='image'])[{{arg1}}][contains(@style,'border-width: {{arg2}}px;')]|(//figure[@data-content-type='image'])[{{arg1}}]//*[@data-element='desktop_image' and contains(@style,'border-width: {{arg2}}px;')]" parameterized="true"/>
+        <element name="borderRadius" type="text" selector="(//figure[@data-content-type='image'])[{{arg1}}][contains(@style,'border-radius: {{arg2}}px;')]|(//figure[@data-content-type='image'])[{{arg1}}]//*[@data-element='desktop_image' and contains(@style,'border-radius: {{arg2}}px;')]" parameterized="true"/>
+        <element name="cssClasses" type="text" selector="(//figure[@data-content-type='image'])[{{arg1}}][contains(@class,'{{arg2}}')]" parameterized="true"/>
+        <element name="noCssClasses" type="text" selector="(//figure[@data-content-type='image'])[{{arg1}}][not(@class)]" parameterized="true"/>
+        <element name="margins" type="text" selector="(//figure[@data-content-type='image'])[{{arg1}}][contains(@style,'margin: {{arg2}}px;')]" parameterized="true"/>
+        <element name="padding" type="text" selector="(//figure[@data-content-type='image'])[{{arg1}}][contains(@style,'padding: {{arg2}}px;')]" parameterized="true"/>
+    </section>
+</sections>

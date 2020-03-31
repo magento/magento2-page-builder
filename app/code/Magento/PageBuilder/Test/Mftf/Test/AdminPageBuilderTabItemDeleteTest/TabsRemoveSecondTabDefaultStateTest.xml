@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="TabsRemoveSecondTabDefaultStateTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Tabs"/>
+            <title value="Remove Individual Default State Second Tab"/>
+            <description value="A user should be able to delete second tab in default state without confirmation modal."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-87052"/>
+            <testCaseId value="MC-2672"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-tabs"/>
+            <group value="pagebuilder-tabsDelete"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <comment userInput="Given I have added Tabs content type to the stage with a second Tab in default state" stepKey="AC1"/>
+        <!-- Set the page title, as we'll be saving the page -->
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+
+        <!-- Add Tabs to Stage -->
+        <comment userInput="Add Tabs to Stage" stepKey="addTabsToStage"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <!-- Validate Tabs default state On Stage -->
+        <waitForPageLoad stepKey="waitForTabsToLoad"/>
+        <waitForElementVisible selector="{{TabOnStage.tabContent('1')}}" stepKey="waitForFirstTabContent"/>
+        <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="waitForFirstTabHeader"/>
+        <click selector="{{TabsOnStage.tabsContainer}}" stepKey="focusTabsElement"/>
+        <!-- Add second tab -->
+        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <comment userInput="When I delete second default state Tab from the stage" stepKey="AC2"/>
+        <!-- Remove second tab -->
+        <actionGroup ref="removeContentTypeFromStageSmallByIndex" stepKey="removeTabFromStage">
+            <argument name="section" value="TabOnStage"/>
+        </actionGroup>
+        <comment userInput="Removal confirmation modal not displayed when removing default state individual Tab" stepKey="AC3"/>
+        <waitForElementNotVisible time="30" selector="{{PageBuilderStage.modal}}" stepKey="dontSeeModalHeader"/>
+        <waitForElementNotVisible time="30" selector="{{PageBuilderStage.modalOk}}" stepKey="dontSeeModalOkHeader"/>
+        <comment userInput="Tabs with single Tab shown on the stage after save and on the storefront" stepKey="AC4"/>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <dontSeeElement selector="{{TabOnStage.tabHeader('2')}}" stepKey="dontSeeSecondTab"/>
+        <seeElement selector="{{PageBuilderStage.contentTypeInStage(PageBuilderTabsContentType.role)}}" stepKey="seeTabsInStage"/>
+        <amOnPage url="{{PageBuilderTabsContentType.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <reloadPage stepKey="reloadPage"/>
+        <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
+        <dontSeeElement selector="{{TabOnStorefront.tabHeader('2')}}" stepKey="dontSeeSecondTabOnStorefront"/>
+        <seeElement selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeFirstTabOnStorefront"/>
+    </test>
+</tests>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="validateFullWidthRowAppearance">
+        <arguments>
+            <argument name="pageOrStageWidthJS" defaultValue="{{PageBuilderStage.stageWidthJS}}" type="string"/>
+            <argument name="section" defaultValue="RowOnStage"/>
+            <argument name="rowIndex" defaultValue="1" type="string"/>
+            <argument name="childContentType" defaultValue="PageBuilderDividerContentType"/>
+            <argument name="childContentTypeBorder" defaultValue="PageBuilderAdvancedBorderWidthProperty0"/>
+            <argument name="childContentTypeIndex" defaultValue="1" type="string"/>
+            <argument name="padding" defaultValue="PageBuilderPaddingPropertyRowDefault"/>
+            <argument name="acceptableOffset" defaultValue="2" type="string"/>
+        </arguments>
+        <comment userInput="Increase window size to see varying widths for rows" stepKey="commentResizeWindow"/>
+        <resizeWindow width="1920" height="1024" stepKey="resizeWindow"/>
+        <executeJS function="return {{pageOrStageWidthJS}}" stepKey="pageOrStageWidth"/>
+        <executeJS function="return {{section.rowWidthJS(rowIndex)}}" stepKey="rowWidth"/>
+        <executeJS function="return parseInt({{section.rowChildContentWidthJS(rowIndex, childContentType.role, childContentTypeIndex)}} + {{padding.paddingLeft}} + {{padding.paddingRight}} + ({{childContentTypeBorder.value}}*2))" stepKey="rowChildElementWidth"/>
+        <executeJS function="return Math.abs({$pageOrStageWidth} - {$rowWidth})" stepKey="pageMinusRowWidth"/>
+        <assertGreaterThan stepKey="assertRowWidthGreaterThanZero">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">rowWidth</actualResult>
+        </assertGreaterThan>
+        <assertLessThanOrEqual stepKey="assertRowWidthEqualsStageOrPageWidth">
+            <expectedResult type="int">{{acceptableOffset}}</expectedResult>
+            <actualResult type="variable">pageMinusRowWidth</actualResult>
+        </assertLessThanOrEqual>
+        <assertGreaterThanOrEqual stepKey="assertRowWidthGreaterThanOrEqualToContents">
+            <expectedResult type="variable">rowChildElementWidth</expectedResult>
+            <actualResult type="variable">rowWidth</actualResult>
+        </assertGreaterThanOrEqual>
+        <assertLessThanOrEqual stepKey="assertChildContentMaximumWidth">
+            <expectedResult type="int">1300</expectedResult>
+            <actualResult type="variable">rowChildElementWidth</actualResult>
+        </assertLessThanOrEqual>
+        <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
+    </actionGroup>
+</actionGroups>

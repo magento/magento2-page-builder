@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="verifyCoordinatesNotEqual">
+        <arguments>
+            <argument name="property"/>
+            <argument name="comparedCoordinate" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForCoordinate"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="actualCoordinate"/>
+        <assertNotEquals stepKey="assertCoordinateNotEqual">
+            <expectedResult type="variable">{{comparedCoordinate}}</expectedResult>
+            <actualResult type="variable">actualCoordinate</actualResult>
+        </assertNotEquals>
+    </actionGroup>
+</actionGroups>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="validateProductCarouselSettingsAttributes">
+        <arguments>
+            <argument name="page" defaultValue="ProductsCarouselOnStage"/>
+            <argument name="productGroupIndex" defaultValue="1" type="string"/>
+            <argument name="carouselMode" defaultValue="PageBuilderProductsCarouselSettingsCarouselMode_Default"/>
+            <argument name="autoplay" defaultValue="PageBuilderProductsCarouselSettingsAutoplay_Disabled"/>
+            <argument name="autoplaySpeed" defaultValue="PageBuilderProductsCarouselSettingsAutoplaySpeed_4000"/>
+            <argument name="infiniteLoop" defaultValue="PageBuilderProductsCarouselSettingsInfiniteLoop_Disabled"/>
+            <argument name="showArrows" defaultValue="PageBuilderProductsCarouselSettingsShowArrows_Disabled"/>
+            <argument name="showDots" defaultValue="PageBuilderProductsCarouselSettingsShowDots_Enabled"/>
+        </arguments>
+        <seeElement selector="{{page.carouselMode(productGroupIndex, carouselMode.value)}}" stepKey="seeCarouselMode"/>
+        <seeElement selector="{{page.autoplay(productGroupIndex, autoplay.value)}}" stepKey="seeAutoplay"/>
+        <seeElement selector="{{page.autoplaySpeed(productGroupIndex, autoplaySpeed.value)}}" stepKey="seeAutoplaySpeed"/>
+        <seeElement selector="{{page.infiniteLoop(productGroupIndex, infiniteLoop.value)}}" stepKey="seeInfiniteLoop"/>
+        <seeElement selector="{{page.showArrows(productGroupIndex, showArrows.value)}}" stepKey="seeShowArrows"/>
+        <seeElement selector="{{page.showDots(productGroupIndex, showDots.value)}}" stepKey="seeShowDots"/>
+    </actionGroup>
+</actionGroups>

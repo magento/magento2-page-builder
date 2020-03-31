@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="fillPageBuilderSaveTemplateFormWithSpaceForTemplateName" extends="fillPageBuilderSaveTemplateForm">
+        <annotations>
+            <description>Enters template name (as a space character) and created for values on the Page Builder Save as Template modal's form.</description>
+        </annotations>
+        <pressKey selector="{{PageBuilderSaveTemplateModal.templateNameInput}}" parameterArray="[\Facebook\WebDriver\WebDriverKeys::SPACE]" stepKey="enterTemplateName"/>
+    </actionGroup>
+</actionGroups>
