@@ -18,8 +18,6 @@
             <testCaseId value="MC-29450"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-text"/>
-            <!-- skip due to MQE-1964 -->
-            <group value="skip"/>
         </annotations>
         <before>
             <createData entity="_defaultCmsPage" stepKey="createCMSPage"/>
@@ -64,15 +62,13 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <actionGroup ref="scrollToTinyMCE" stepKey="scrollToTinyMCE"/>
         <!-- Select portion of Heading "his is a h" -->
-        <!--<executeInSelenium function="function ($webdriver) use ($I) {-->
-            <!--$heading = $webdriver->findElement(\Facebook\WebDriver\WebDriverBy::xpath('//div[contains(@class, \'inline-wysiwyg\')]//h2'));-->
-            <!--$actions = new \Facebook\WebDriver\Interactions\WebDriverActions($webdriver);-->
-            <!--$actions->moveToElement($heading, {{TinyMCEPartialHeadingSelection.startX}}, {{TinyMCEPartialHeadingSelection.startY}})-->
-                <!-- ->clickAndHold()-->
-                <!-- ->moveToElement($heading, {{TinyMCEPartialHeadingSelection.endX}}, {{TinyMCEPartialHeadingSelection.endY}})-->
-                <!-- ->release()-->
-                <!-- ->perform();-->
-        <!--}" stepKey="selectHeadingTextInTinyMCE"/>-->
+        <helper class="\Magento\User\Test\Mftf\Helper\SelectText" method="selectText" stepKey="selectHeadingTextInTinyMCE">
+            <argument name="context">//div[contains(@class, 'inline-wysiwyg')]//h2</argument>
+            <argument name="startX">{{TinyMCEPartialHeadingSelection.startX}}</argument>
+            <argument name="startY">{{TinyMCEPartialHeadingSelection.startY}}</argument>
+            <argument name="endX">{{TinyMCEPartialHeadingSelection.endX}}</argument>
+            <argument name="endY">{{TinyMCEPartialHeadingSelection.endY}}</argument>
+        </helper>
         <actionGroup ref="waitForTinyMCEInFocus" stepKey="waitForTinyMCEInFocus"/>
         <actionGroup ref="assertSelectedText" stepKey="assertSelection">
             <argument name="expectedSelectedText" value="TinyMCEPartialHeadingSelection"/>
@@ -82,15 +78,13 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <actionGroup ref="scrollToTinyMCE" stepKey="scrollToTinyMCE2"/>
         <!-- Select portion of paragraph text "es stri" -->
-        <!--<executeInSelenium function="function ($webdriver) use ($I) {-->
-            <!--$text = $webdriver->findElement(\Facebook\WebDriver\WebDriverBy::xpath('//div[contains(@class, \'inline-wysiwyg\')]//p[2]'));-->
-            <!--$actions = new \Facebook\WebDriver\Interactions\WebDriverActions($webdriver);-->
-            <!--$actions->moveToElement($text, {{TinyMCEPartialTextSelection.startX}}, {{TinyMCEPartialTextSelection.startY}})-->
-                <!-- ->clickAndHold()-->
-                <!-- ->moveToElement($text, {{TinyMCEPartialTextSelection.endX}}, {{TinyMCEPartialTextSelection.endY}})-->
-                <!-- ->release()-->
-                <!-- ->perform();-->
-        <!--}" stepKey="selectTextInTinyMCE"/>-->
+        <helper class="\Magento\User\Test\Mftf\Helper\SelectText" method="selectText" stepKey="selectTextInTinyMCE">
+            <argument name="context">//div[contains(@class, 'inline-wysiwyg')]//p[2]</argument>
+            <argument name="startX">{{TinyMCEPartialTextSelection.startX}}</argument>
+            <argument name="startY">{{TinyMCEPartialTextSelection.startY}}</argument>
+            <argument name="endX">{{TinyMCEPartialTextSelection.endX}}</argument>
+            <argument name="endY">{{TinyMCEPartialTextSelection.endY}}</argument>
+        </helper>
         <actionGroup ref="waitForTinyMCEInFocus" stepKey="waitForTinyMCEInFocus2"/>
         <actionGroup ref="assertSelectedText" stepKey="assertSelection2">
             <argument name="expectedSelectedText" value="TinyMCEPartialTextSelection"/>
@@ -100,16 +94,15 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage3"/>
         <actionGroup ref="scrollToTinyMCE" stepKey="scrollToTinyMCE3"/>
         <!-- Select from part of the heading, over the variable, to part of the text string -->
-        <!--<executeInSelenium function="function ($webdriver) use ($I) {-->
-            <!--$heading = $webdriver->findElement(\Facebook\WebDriver\WebDriverBy::xpath('//div[contains(@class, \'inline-wysiwyg\')]//h2'));-->
-            <!--$text = $webdriver->findElement(\Facebook\WebDriver\WebDriverBy::xpath('//div[contains(@class, \'inline-wysiwyg\')]//p[2]'));-->
-            <!--$actions = new \Facebook\WebDriver\Interactions\WebDriverActions($webdriver);-->
-            <!--$actions->moveToElement($heading, {{TinyMCEPartialHeadingSelection.startX}}, {{TinyMCEPartialHeadingSelection.startY}})-->
-                <!-- ->clickAndHold()-->
-                <!-- ->moveToElement($text, {{TinyMCEPartialTextSelection.endX}}, {{TinyMCEPartialTextSelection.endY}})-->
-                <!-- ->release()-->
-                <!-- ->perform();-->
-        <!--}" stepKey="selectHeadingTextAndVariableTinyMCE"/>-->
+        <helper class="\Magento\User\Test\Mftf\Helper\SelectText" method="selectHeadingTextAndVariableTinyMCE" stepKey="selectHeadingTextAndVariableTinyMCE">
+            <argument name="firstContext">//div[contains(@class, 'inline-wysiwyg')]//h[2]</argument>
+            <argument name="secondContext">//div[contains(@class, 'inline-wysiwyg')]//p[2]</argument>
+            <argument name="startX">{{TinyMCEPartialHeadingSelection.startX}}</argument>
+            <argument name="startY">{{TinyMCEPartialHeadingSelection.startY}}</argument>
+            <argument name="endX">{{TinyMCEPartialTextSelection.endX}}</argument>
+            <argument name="endY">{{TinyMCEPartialTextSelection.endY}}</argument>
+        </helper>
+
         <actionGroup ref="waitForTinyMCEInFocus" stepKey="waitForTinyMCEInFocus3"/>
         <actionGroup ref="assertSelectedText" stepKey="assertSelection3">
             <argument name="expectedSelectedText" value="TinyMCEHeadingVariableTextSelection"/>
