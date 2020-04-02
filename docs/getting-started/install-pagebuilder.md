@@ -50,4 +50,10 @@ cd <pagebuilder-git-folder>
 npm install
 ```
 
-After installing the npm packages, you can run `npm run start`. This command watches for changes to your TypeScript files, compiles, and checks for errors.
+After installing the npm packages, you can run:
+
+```terminal
+npm run start
+```
+
+This command watches for changes to your TypeScript files, compiles, and checks for errors.
