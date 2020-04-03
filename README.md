@@ -4,7 +4,7 @@ Welcome to the Magento 2 Page Builder project!
 
 ## Overview
 
-Magento 2 Page Builder makes it easy to create content-rich pages with custom layouts that enhance your visual storytelling, and drive customer engagement and loyalty.
+Page Builder introduces an intuitive, drag-and-drop interface for creating digital content, powered by content types like images, videos, banners, etc. with instant preview capabilities that enable non-technical users to take control of their content. It allows to create new pages, enrich products and categories, and launch content updates quickly and easily without the help of a front-end web developer.
 
 ## Documentation
 Complete documentation located on the [Magento DevDocs](https://devdocs.magento.com/page-builder/docs/):
