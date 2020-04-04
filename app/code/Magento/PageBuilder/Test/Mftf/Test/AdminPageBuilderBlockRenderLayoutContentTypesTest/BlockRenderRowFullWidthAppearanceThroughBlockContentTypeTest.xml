@@ -40,10 +40,11 @@
             <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
             <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Fixed"/>
         </actionGroup>
-        <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateRowHeightCMSBlockStage">
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateRowHeightCMSBlockStage">
             <argument name="content" value="{{RowOnStage.baseCSS}}"/>
-            <argument name="height" value="PageBuilderMinHeightProperty_500"/>
-            <argument name="padding" value="PageBuilderPaddingProperty10"/>
+            <argument name="minHeight" value="{{PageBuilderMinHeightProperty_500.value}}"/>
+            <argument name="paddingTop" value="{{PageBuilderPaddingProperty10.paddingTop}}"/>
+            <argument name="paddingBottom" value="{{PageBuilderPaddingProperty10.paddingBottom}}"/>
         </actionGroup>
         <comment userInput="---merging to remove step---" stepKey="validateParallaxBackgroundCMSBlockStage"/>
         <actionGroup ref="validateBackgroundImageContainer" stepKey="validateBackgroundImageCMSBlockStage">

@@ -22,7 +22,7 @@
             <group value="pagebuilder-tabs-content"/>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
             <createData entity="_defaultCmsPage" stepKey="createCMSPage"/>
             <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToContentCreatedCMSPage">
                 <argument name="CMSPage" value="$$createCMSPage$$"/>
@@ -31,7 +31,7 @@
         <after>
             <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
             <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
         <!-- Add Button Group To Tab -->
         <comment userInput="Add Button Group To Tab" stepKey="commentAddButtonGroup"/>
