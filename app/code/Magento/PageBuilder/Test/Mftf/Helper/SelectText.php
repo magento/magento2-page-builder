@@ -7,7 +7,6 @@
 namespace Magento\PageBuilder\Test\Mftf\Helper;
 
 use Magento\FunctionalTestingFramework\Helper\Helper;
-use Magento\Tests\NamingConvention\true\string;
 
 /**
  * Class SelectText provides an ability to select needed text.
@@ -69,9 +68,9 @@ class SelectText extends Helper
             $text = $webDriver->webDriver->findElement(\Facebook\WebDriver\WebDriverBy::xpath($secondContext));
             $actions = new \Facebook\WebDriver\Interactions\WebDriverActions($webDriver->webDriver);
             $actions->moveToElement($heading, $startX, $startY)
-                 ->clickAndHold()
+                ->clickAndHold()
                 ->moveToElement($text, $endX, $endY)
-                 ->release()
+                ->release()
                 ->perform();
         } catch (\Exception $e) {
             $this->fail($e->getMessage());
