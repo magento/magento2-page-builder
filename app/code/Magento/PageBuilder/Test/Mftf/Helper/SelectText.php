@@ -17,13 +17,13 @@ class SelectText extends Helper
      * Select needed text.
      *
      * @param string $context
-     * @param string $startX
-     * @param string $startY
-     * @param string $endX
-     * @param string $endY
+     * @param int $startX
+     * @param int $startY
+     * @param int $endX
+     * @param int $endY
      * @return void
      */
-    public function selectText(string $context, string $startX, string $startY, string $endX, string $endY)
+    public function selectText(string $context, int $startX, int $startY, int $endX, int $endY)
     {
         try {
             /** @var \Magento\FunctionalTestingFramework\Module\MagentoWebDriver $webDriver */
@@ -46,19 +46,19 @@ class SelectText extends Helper
      *
      * @param string $firstContext
      * @param string $secondContext
-     * @param string $startX
-     * @param string $startY
-     * @param string $endX
-     * @param string $endY
+     * @param int $startX
+     * @param int $startY
+     * @param int $endX
+     * @param int $endY
      * @return void
      */
     public function selectHeadingTextAndVariableTinyMCE(
         string $firstContext,
         string $secondContext,
-        string $startX,
-        string $startY,
-        string $endX,
-        string $endY
+        int $startX,
+        int $startY,
+        int $endX,
+        int $endY
     ) {
         try {
             /** @var \Magento\FunctionalTestingFramework\Module\MagentoWebDriver $webDriver */
