@@ -193,9 +193,9 @@
             <argument name="margin" value="PageBuilderMarginsPropertyUnique"/>
             <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
-        <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateContentTypeHeight">
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateContentTypeHeight">
             <argument name="content" value="{{MapOnStage.mainCSS}}"/>
-            <argument name="height" value="PageBuilderMapHeightProperty350"/>
+            <argument name="minHeight" value="{{PageBuilderMapHeightProperty350.value}}"/>
         </actionGroup>
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel"/>
@@ -349,9 +349,9 @@
             <argument name="margin" value="PageBuilderMarginsPropertyUnique"/>
             <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
-        <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateContentTypeHeightStorefront">
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateContentTypeHeightStorefront">
             <argument name="content" value="{{MapOnStorefront.baseCSS}}"/>
-            <argument name="height" value="PageBuilderMapHeightProperty350"/>
+            <argument name="minHeight" value="{{PageBuilderMapHeightProperty350.value}}"/>
         </actionGroup>
     </test>
 </tests>
