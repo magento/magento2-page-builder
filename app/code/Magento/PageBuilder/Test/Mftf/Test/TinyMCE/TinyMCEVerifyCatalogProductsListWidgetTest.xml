@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="TinyMCEVerifyCatalogProductsListWidgetTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="TinyMCE"/>
+            <title value="Verify Catalog Products List Widget in TinyMCE in Text Content Type."/>
+            <description value="Verify catalog products list widget renders correctly through the tinyMCE editor in Page Builder. Check in Text content type."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="PB-179"/>
+            <testCaseId value="MC-33065"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-text"/>
+            <group value="pagebuilder-tinyMCE"/>
+            <group value="pagebuilder-widget"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="enableTinyMCE4_1"/>
+            <createData entity="_defaultCategory" stepKey="createCategory"/>
+            <createData entity="_defaultProduct" stepKey="createProduct">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+            <createData entity="_emptyCmsBlock" stepKey="createCMSBlock"/>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="NavigateToCreatedCMSBlockPageActionGroup" stepKey="navigateToCreatedCMSBlockPage1">
+                <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
+            </actionGroup>
+        </before>
+        <after>
+            <deleteData createDataKey="createProduct" stepKey="deleteProduct"/>
+            <deleteData createDataKey="createCategory" stepKey="deleteCategory"/>
+            <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock"/>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="logout" stepKey="logoutOfAdmin"/>
+        </after>
+        <!-- Add Category Products List widget to TinyMCE -->
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanAdminClickInsertWidgetFromInsertWidgetSlideOutActionGroupelMenuSection">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTextOntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="focusOnInlineTinyMCEEditor" stepKey="focusOnInlineTinyMCEEditor">
+            <argument name="section" value="TextOnStage"/>
+        </actionGroup>
+        <actionGroup ref="AdminClickInsertWidgetButtonInInlineTinyMCEEditorActionGroup" stepKey="clickInsertWidget"/>
+        <actionGroup ref="AdminSelectCatalogProductsListWidgetFromInsertWidgetSlideOutActionGroup" stepKey="fillWidgetForm"/>
+        <actionGroup ref="addConditionToProductConditions" stepKey="addCategoryCondition">
+            <argument name="conditionInput" value="$$createCategory.id$$"/>
+        </actionGroup>
+        <actionGroup ref="AdminClickInsertWidgetFromInsertWidgetSlideOutActionGroup" stepKey="saveWidget"/>
+        <!-- Validate Widget on Stage -->
+        <waitForElementVisible selector="{{TextOnStage.text('1', TinyMCEWidgets.CatalogProductsListName)}}" stepKey="waitForWidgetVisible"/>
+        <!-- Set Alignment on Catalog Products List Widget -->
+        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusEditor">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAlignment">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyRight"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Catalog Products List Widget Placeholder Aligns Right -->
+        <executeJS function="return window.getComputedStyle({{TextOnStage.widgetPlaceholderJS('1')}}).textAlign" stepKey="grabComputedTextAlignCMSBlockStage"/>
+        <assertEquals stepKey="assertComputedTextAlignCMSBlockStage">
+            <expectedResult type="string">{{PageBuilderAdvancedAlignmentPropertyRight.value}}</expectedResult>
+            <actualResult type="variable">grabComputedTextAlignCMSBlockStage</actualResult>
+        </assertEquals>
+        <actionGroup ref="SaveCMSBlockActionGroup" stepKey="saveCMSBlock"/>
+        <!-- Add Block to CMS Page -->
+        <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPanelAddContentMenuSection">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDropBlock">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
+            <argument name="block" value="$$createCMSBlock$$"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsBlock"/>
+        <!-- Validate Catalog Products List Widget Aligns Right on CMS Page Stage -->
+        <waitForElementVisible selector="{{CatalogProductsWidget.productWidget('text', '1', '1', '1')}}" stepKey="waitForWidgetCMSPageStage"/>
+        <executeJS function="return window.getComputedStyle({{CatalogProductsWidget.productWidgetJS('text', '1', '1', '1')}}).textAlign" stepKey="grabComputedTextAlignCMSPageStage"/>
+        <assertEquals stepKey="assertComputedTextAlignCMSPageStage">
+            <expectedResult type="string">{{PageBuilderAdvancedAlignmentPropertyRight.value}}</expectedResult>
+            <actualResult type="variable">grabComputedTextAlignCMSPageStage</actualResult>
+        </assertEquals>
+        <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate Catalog Products List Widget Aligns Right on Storefront -->
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStorefront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{CatalogProductsWidget.productWidget('text', '1', '1', '1')}}" stepKey="waitForWidgetStorefront"/>
+        <executeJS function="return window.getComputedStyle({{CatalogProductsWidget.productWidgetJS('text', '1', '1', '1')}}).textAlign" stepKey="grabComputedTextAlignStorefront"/>
+        <assertEquals stepKey="assertComputedTextAlignStorefront">
+            <expectedResult type="string">{{PageBuilderAdvancedAlignmentPropertyLeft.value}}</expectedResult>
+            <actualResult type="variable">grabComputedTextAlignStorefront</actualResult>
+        </assertEquals>
+    </test>
+</tests>
