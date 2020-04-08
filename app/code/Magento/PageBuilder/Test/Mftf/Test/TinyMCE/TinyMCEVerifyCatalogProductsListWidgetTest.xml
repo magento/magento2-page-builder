@@ -22,7 +22,7 @@
             <group value="pagebuilder-widget"/>
         </annotations>
         <before>
-            <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="enableTinyMCE4_1"/>
+            <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="enableTinyMCE4"/>
             <createData entity="_defaultCategory" stepKey="createCategory"/>
             <createData entity="_defaultProduct" stepKey="createProduct">
                 <requiredEntity createDataKey="createCategory"/>
@@ -30,7 +30,7 @@
             <createData entity="_emptyCmsBlock" stepKey="createCMSBlock"/>
             <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="NavigateToCreatedCMSBlockPageActionGroup" stepKey="navigateToCreatedCMSBlockPage1">
+            <actionGroup ref="NavigateToCreatedCMSBlockPageActionGroup" stepKey="navigateToCreatedCMSBlockPage">
                 <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
             </actionGroup>
         </before>
@@ -42,7 +42,7 @@
             <actionGroup ref="logout" stepKey="logoutOfAdmin"/>
         </after>
         <!-- Add Category Products List widget to TinyMCE -->
-        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanAdminClickInsertWidgetFromInsertWidgetSlideOutActionGroupelMenuSection">
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPanelMenuText">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragTextOntoStage">
