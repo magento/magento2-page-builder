@@ -7,6 +7,10 @@ The release notes include:
 - {:.new}New features
 - {:.fix}Fixes and improvements
 
+## **1.2.1** for Magento Commerce 2.3.4-p1
+
+- {:.new}Security enhancements.
+
 ## **1.2.0** for Magento Commerce 2.3.4
 
 **Page Builder integration with PWA Studio**
