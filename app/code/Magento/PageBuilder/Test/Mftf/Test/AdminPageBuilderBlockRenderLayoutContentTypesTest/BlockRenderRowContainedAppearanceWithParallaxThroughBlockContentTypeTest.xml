@@ -128,10 +128,11 @@
             <argument name="minHeight" value="PageBuilderMinHeightProperty_500px"/>
             <argument name="verticalAlignContainer" value="PageBuilderVerticalAlignmentPropertyCenter"/>
         </actionGroup>
-        <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateRowHeightCMSBlockStage">
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateRowHeightCMSBlockStage">
             <argument name="content" value="{{RowOnStage.baseCSS}}"/>
-            <argument name="padding" value="PageBuilderPaddingProperty10"/>
-            <argument name="height" value="PageBuilderMinHeightProperty_500"/>
+            <argument name="paddingTop" value="{{PageBuilderPaddingProperty10.paddingTop}}"/>
+            <argument name="paddingBottom" value="{{PageBuilderPaddingProperty10.paddingBottom}}"/>
+            <argument name="minHeight" value="{{PageBuilderMinHeightProperty_500.value}}"/>
         </actionGroup>
         <actionGroup ref="validateDividerWidthPercentage" stepKey="validateDividerWidthCMSBlockStage">
             <argument name="page" value="DividerOnStage"/>
@@ -205,9 +206,9 @@
             <argument name="containerIndex" value="1"/>
             <argument name="contentIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateRowHeightCMSPageStage">
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateRowHeightCMSPageStage">
             <argument name="content" value="{{RowOnStorefront.baseCSS}}"/>
-            <argument name="height" value="PageBuilderMinHeightProperty_500"/>
+            <argument name="minHeight" value="{{PageBuilderMinHeightProperty_500.value}}"/>
             <argument name="index" value="2"/>
         </actionGroup>
         <actionGroup ref="validateDividerWidthPercentage" stepKey="validateDividerWidthCMSPageStage">
@@ -258,9 +259,9 @@
             <argument name="containerIndex" value="1"/>
             <argument name="contentIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateRowHeightCMSPageStorefront">
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateRowHeightCMSPageStorefront">
             <argument name="content" value="{{RowOnStorefront.baseCSS}}"/>
-            <argument name="height" value="PageBuilderMinHeightProperty_500"/>
+            <argument name="minHeight" value="{{PageBuilderMinHeightProperty_500.value}}"/>
             <argument name="index" value="2"/>
         </actionGroup>
         <actionGroup ref="validateDividerWidthPercentage" stepKey="validateDividerWidthCMSPageStorefront">
@@ -282,9 +283,9 @@
             <argument name="containerIndex" value="1"/>
             <argument name="contentIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateRowHeightCMSPageStorefrontMobile">
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateRowHeightCMSPageStorefrontMobile">
             <argument name="content" value="{{RowOnStorefront.baseCSS}}"/>
-            <argument name="height" value="PageBuilderMinHeightProperty_500"/>
+            <argument name="minHeight" value="{{PageBuilderMinHeightProperty_500.value}}"/>
             <argument name="index" value="2"/>
         </actionGroup>
         <actionGroup ref="validateDividerWidthPercentage" stepKey="validateDividerWidthCMSPageStorefrontMobile">
