@@ -43,6 +43,10 @@ The release notes include:
 - {:.fix}<!-- PB-390 -->Fixed an issue in which nested Page Builder content fails to save if users click the Save button before the page fully renders.
 - {:.fix}<!-- PB-418 -->Fixed exception error being throw in cron jobs due to Page Builder analytics.
 
+## **1.2.1** for Magento Commerce 2.3.4-p1
+
+- {:.new}Security enhancements.
+
 ## **1.2.0** for Magento Commerce 2.3.4
 
 **Page Builder integration with PWA Studio**
