@@ -31,7 +31,7 @@ _Steps for styling content type elements with attributes_
 First, you need to add fields to your content type's form so that users have a way of selecting or entering styling options. In our Heading extension example, we add two fields: `heading_color` for selecting a color for the Heading text and `heading_style` for selecting text styles. The XML code for these fields is shown here:
 
 ```xml
-<!-- pagebuilder-heading-form.xml form extension -->
+<!-- pagebuilder_heading_form.xml form extension -->
 
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
