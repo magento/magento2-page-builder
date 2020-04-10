@@ -2,7 +2,7 @@
 
 Attributes in Page Builder give you a way to add a variety of interactive CSS styling options for your content types. For example, Page Builder's Heading content type provides a number of built-in styling options from its form. The Heading form gives users options to set different heading types, text alignments, border properties, margins, and paddings. It also lets users apply multiple static CSS classes.
 
-But what if you want to give users more interactive styling options? For example, maybe you want to add Heading color options. Or Heading text-style options. This topic will explain how to user attributes to provide more content type styling options.
+But what if you want to give users more interactive styling options? For example, maybe you want to add Heading color options. Or Heading text-style options. This topic will explain how to use attributes to provide these types of styling options and more.
 
 ## Install the example module
 
@@ -235,7 +235,7 @@ We will use the following snippent from the `heading.xml` configuration file (`M
 ```
 
 {: .bs-callout .bs-callout-info }
-The `<tag>` and `<html>` nodes are beyond the scope of this topic, but like the other nodes, they also map to form fields. In this case, the `<tag>` node maps to the Heading's `heading_type` selector field and the `<html>` node maps to the `heading_text` input field from the (`pagebuilder_heading_form.xml`) form.
+The `<tag>` and `<html>` nodes are beyond the scope of this topic, but like the other nodes, they also map to form fields. In this case, the `<tag>` node maps to the Heading's `heading_type` selector field and the `<html>` node maps to the `heading_text` input field from the `pagebuilder_heading_form.xml`.
 
 ### Understanding and using `<style>` nodes
 
@@ -290,4 +290,4 @@ As mentioned, you can override the `<css>` node to map it to a different form fi
 
 ## Final thoughts
 
-Using custom attributes represents one of Page Builder's best practices for adding powerful and flexible content styling options to forms. You can add these styling attributes to both existing content types (as shown in the Heading extension module) and custom content types. The CSS styling options are only limited by the CSS specs targeted by your supported browsers. So get creative and have fun!
+Using custom attributes represents one of Page Builder's best practices for adding powerful and flexible content styling options to forms. You can add these styling attributes to both existing content types (as shown in the [example module](https://github.com/magento-devdocs/PageBuilderStylingWithAttributes)) and custom content types. The CSS styling options are only limited by the CSS specs targeted by your supported browsers. So get creative and have fun!
