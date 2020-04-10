@@ -74,13 +74,6 @@ define([
         /**
          * {@inheritDoc}
          */
-        openMediaBrowserDialog: function (imageUploader, e) {
-            this._super(imageUploader, e);
-        },
-
-        /**
-         * {@inheritDoc}
-         */
         initUploader: function (fileInput) {
             this._super(fileInput);
             this.$uploadArea = $(this.$fileInput).closest('.pagebuilder-image-empty-preview');
