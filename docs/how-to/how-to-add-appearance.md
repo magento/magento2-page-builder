@@ -229,6 +229,6 @@ _Use _module.less for import statements_
 
 An example module for this topic is available for download in the [pagebuilder-examples repository](https://github.com/magento-devdocs/pagebuilder-examples/tree/master/Example/PageBuilderBannerAppearance).
 
-## Conclusion
+## Final thoughts
 
 Using appearances to extend Page Builder's native content types represents one of Page Builder's best practices for creating a variety of new content building blocks based on existing content types.
