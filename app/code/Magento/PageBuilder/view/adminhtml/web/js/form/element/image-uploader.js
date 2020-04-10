@@ -10,9 +10,8 @@ define([
     'Magento_Ui/js/form/element/image-uploader',
     'Magento_PageBuilder/js/resource/resize-observer/ResizeObserver',
     'Magento_PageBuilder/js/events',
-    'mage/translate',
-    'mage/adminhtml/browser'
-], function ($, _, uiRegistry, Uploader, ResizeObserver, events, $t, browser) {
+    'mage/translate'
+], function ($, _, uiRegistry, Uploader, ResizeObserver, events, $t) {
     'use strict';
 
     var initializedOnce = false;
@@ -76,7 +75,6 @@ define([
          * {@inheritDoc}
          */
         openMediaBrowserDialog: function (imageUploader, e) {
-            browser.modalLoaded = false;
             this._super(imageUploader, e);
         },
 
