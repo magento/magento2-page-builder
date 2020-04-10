@@ -20,14 +20,14 @@ class SetOpenDialogUrl
     /**
      * @var FlagManager
      */
-    private $config;
+    private $flagManager;
 
     /**
-     * @param FlagManager $config
+     * @param FlagManager $flagManager
      */
-    public function __construct(FlagManager $config)
+    public function __construct(FlagManager $flagManager)
     {
-        $this->config = $config;
+        $this->flagManager = $flagManager;
     }
 
     /**
@@ -39,6 +39,6 @@ class SetOpenDialogUrl
     {
         $data = $component->getData();
 
-        $this->config->saveFlag(self::MEDIA_GALLERY_OPEN_URL, $data['config']['mediaGallery']['openDialogUrl']);
+        $this->flagManager->saveFlag(self::MEDIA_GALLERY_OPEN_URL, $data['config']['mediaGallery']['openDialogUrl']);
     }
 }

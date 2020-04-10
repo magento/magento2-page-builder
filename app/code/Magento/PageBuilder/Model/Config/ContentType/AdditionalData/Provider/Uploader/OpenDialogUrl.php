@@ -21,15 +21,15 @@ class OpenDialogUrl implements ProviderInterface
     /**
      * @var FlagManager
      */
-    private $scopeConfig;
+    private $flagManager;
 
     /**
-     * @param Url $urlBuilder
+     * @param FlagManager $flagManager
      */
     public function __construct(
-        FlagManager $scopeConfig
+        FlagManager $flagManager
     ) {
-        $this->scopeConfig = $scopeConfig;
+        $this->flagManager = $flagManager;
     }
 
     /**
@@ -38,7 +38,7 @@ class OpenDialogUrl implements ProviderInterface
     public function getData(string $itemName) : array
     {
         return [
-            $itemName => $this->scopeConfig->getFlagData(self::MEDIA_GALLERY_OPEN_URL)
+            $itemName => $this->flagManager->getFlagData(self::MEDIA_GALLERY_OPEN_URL)
         ];
     }
 }
