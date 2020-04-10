@@ -26,9 +26,8 @@ class OpenDialogUrl implements ProviderInterface
     /**
      * @param FlagManager $flagManager
      */
-    public function __construct(
-        FlagManager $flagManager
-    ) {
+    public function __construct(FlagManager $flagManager)
+    {
         $this->flagManager = $flagManager;
     }
 
