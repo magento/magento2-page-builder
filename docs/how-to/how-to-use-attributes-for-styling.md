@@ -1,8 +1,8 @@
-# How to use attributes to apply CSS styling
+# How to use attributes for content styling
 
 Attributes in Page Builder give you a way to add a variety of interactive CSS styling options for your content types. For example, Page Builder's Heading content type provides a number of built-in styling options from its form. The Heading form gives users options to set different heading types, text alignments, border properties, margins, and paddings. It also lets users apply multiple static CSS classes.
 
-But what if you want to give users more interactive styling options? For example, maybe you want to add Heading color options. Or Heading text style options. Using attributes is the way to do it.
+But what if you want to give users more interactive styling options? For example, maybe you want to add Heading color options. Or Heading text-style options. This topic will explain how to user attributes to provide more content type styling options.
 
 ## Install the example module
 
@@ -20,7 +20,7 @@ The example module provides all the code used here to describe the attribute-bas
 
 ## Steps for styling with attributes
 
-This general steps to follow when using attributes to apply CSS styling are shown here, followed by detailed instructions for each step:
+An overview of the steps is shown here, followed by the detailed instructions for each step:
 
 ![How to style content types using attributes](../images/how-to-style-using-attributes.svg)
 
@@ -79,9 +79,9 @@ First, you need to add fields to your content type's form so that users have a w
 </form>
 ```
 
-The names of these fields (`heading_color` and `heading_style`) are particularly important because you will use them as the names of your attributes in your content type configuration file in step 2.
+_Two `select` fields added to the native Heading form_
 
-_Select fields added to the native Heading form_
+The names of these fields, `heading_color` and `heading_style`, are particularly important. They are the same names you must assign to the attributes in your configuration file. You will do that next in step 2.
 
 ## Step 2: Add configuration attributes for field names
 
@@ -107,19 +107,26 @@ Attributes have a `name` and a `source`. The `name` must correspond to the name 
 </config>
 ```
 
-_Element attributes for main mapped to the extended Heading form fields_
+_Element attributes for `main` mapped to the extended Heading form fields_
 
 In this example, the `source` values (`data-heading-color` and `data-heading-style`) are rendered in the DOM for the Heading's main element, as shown here:
 
 ```html
-<h2 data-content-type="heading" data-appearance="default" data-heading-color="brand-green" data-heading-style="style-italic" data-element="main" style="border-style: none; border-width: 1px; border-radius: 0px; opacity: 1;">My Heading Text</h2>
+<h2 data-content-type="heading"
+    data-appearance="default"
+    data-heading-color="brand-green"
+    data-heading-style="style-italic"
+    data-element="main"
+    style="border-style: none; border-width: 1px; border-radius: 0px; opacity: 1;">
+    My Heading Text
+</h2>
 ```
 
-The values for these attributes are set by the user from the form fields. In this example, the user selected `brand-green` from the `heading_color` selector field and `style-italic` from the `heading_style` selector field. This adds the attributes and their values to the DOM where they can be targeted with CSS classes from our content type's `_default.less` files (from the adminhtml and frontend areas). These classes are created in step 3.
+The values for these attributes are set by the user from the form fields. In this example, the user selected `brand-green` from the `heading_color` selector field and `style-italic` from the `heading_style` selector field. Page Builder adds the attributes and their values to the DOM where they can be targeted with CSS classes from our content type's `_default.less` files (from the adminhtml and frontend areas). You will create these CSS classes in step 3.
 
 ## Step 3: Add attribute-based CSS classes
 
-The CSS styles in your `_default.less` files for both your `adminhtml` and `frontend` areas of your module should be attribute-based as shown here in our extended Heading example:
+The CSS classes in your `_default.less` files for both the `adminhtml` and `frontend` should be attribute-based, as shown here in our extended Heading example:
 
 ```scss
 /*-- adminhtml _default.less attribute-based classes */
@@ -168,21 +175,19 @@ The CSS styles in your `_default.less` files for both your `adminhtml` and `fron
 
 _Attribute-based styles for the config attributes (source)_
 
-Again, the values for these attributes are set by the user in the content type's form fields. This makes it easy to target your content type's elements in the DOM based on what the user selected in the form.
+The values for these attributes are set by the user from the form field that corresponds to the attribute. This makes it easy to target your content type's elements from your `_default.less` files.
 
 ## Step 4: Add Knockout attribute bindings to HTML templates
 
-In order for your attribute selectors to be rendered in the DOM as described in step 2, you must ensure that you add Knockout attributes to your content type's HTML templates. Knockout attribute bindings look like this:
+In order for your attribute selectors to be rendered in the DOM as described in step 2, you must add Knockout attribute bindings to your content type's HTML templates. The Knockout attribute bindings look like this:
 
 ```json
 attr="data.main.attributes"
 ```
 
-The `main` node refers to the element defined in the configuration file and `attributes` refer to all the `<attributes>` defined for the `main` element.
+The Knockout `attr` binding ensures that all the attributes defined for an element in your content type's configuration are rendered in the DOM for that element. In the previous example binding, the `main` node refers to the element defined in the configuration file. And `attributes` refers to all the `<attribute>` nodes defined for the `main` element.
 
-The Knockout `attr` binding ensures that all the attributes defined for an element in your content type's configuration are rendered in the DOM for that element as described in step 2.
-
-These Knockout bindings are applied to the Heading's `master.html` template (as well as the `preview.html` template) as shown here:
+These Knockout bindings are applied to the Heading's `master.html` template (as well as the `preview.html` template). The Heading `master.html` template is here:
 
 ```html
 <!-- Heading master.html -->
@@ -195,19 +200,19 @@ These Knockout bindings are applied to the Heading's `master.html` template (as 
 <h6 if="data.main.heading_type() == 'h6'" attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" html="data.main.html"></h6>
 ```
 
-_Attribute bindings for Heading's data.main config element_
+_Attribute bindings for the Heading's `data.main` config elements_
 
 ## Discussion
 
-Page Builder provides three XML configuration nodes you can use to to provide users with styling options for content type elements:
+Styling with `<attributes>` is only one of three options that you can use to give end users a way to style content from a form. The other two options are using the `<style>` and `<css>` nodes. The differences between these three options are summarized here:
 
--  `<attribute>` - styles a content type element using an attribute-based CSS class.
--  `<style>` - styles content type elements using specific CSS properties.
--  `<css>` - styles content types using one or more static CSS classes.
+-  `<attribute>` nodes - used to style a content-type element using an attribute-based CSS class.
+-  `<style>` nodes - used to style content-type elements using specific CSS properties.
+-  `<css>` nodes - used to style content-type elements with static CSS classes entered by the end user.
 
-The `<attribute>` and `<style>` nodes can be used multiple times within a content type element. But the `<css>` node can only be used once per element. The `<css>` node was designed to be used only once per element because its purpose is to map user-entered CSS classes from the form to the template, where it adds those classes to the `class` attribute in the DOM.
+The `<attribute>` and `<style>` nodes can be added multiple times to a content-type element. But the `<css>` node can only be added once per element. Refer to [Understanding the <css> node](#understadingthe<css>node).
 
-The following code snippet is from Page Builder's native `heading.xml` configuration file (Magento/PageBuilder/view/adminhtml/pagebuilder/content_type/heading.xml), showing multiple `<style>` nodes, two `<attribute>` nodes and one `<css>` node for the `main` element:
+We will use the following snippent from the `heading.xml` configuration file (`Magento/PageBuilder/view/adminhtml/pagebuilder/content_type/heading.xml`) as a reference to our discussion of these nodes and how to use them.
 
 ```xml
 <!-- snippet from heading.xml -->
@@ -229,21 +234,60 @@ The following code snippet is from Page Builder's native `heading.xml` configura
 </element>
 ```
 
-### `<style>` nodes
-
-The `<style>` nodes map to the same-named fields defined in the `pagebuilder_base_form.xml`. These nodes define the inline `style` properties added to the Heading's DOM element. Adding a `<style>` node to a config element provides a way to style your content type using a specific CSS property (such as `opacity`) from within the content type's form.
-
-### `<attribute>` nodes
-
-The `<attribute>` nodes map to the same-named fields defined in the `pagebuilder_heading_form.xml`. These nodes define the custom attributes added to the Heading's DOM element. Adding an `<attribute>` node to a config element provides a way to style your content type using attribute-based CSS classes from within the content type's form.
-
-### `<css>` nodes
-
-The `<css>` node maps to the `css_classes` field from the `pagebuilder_base_form.xml` and adds its values (CSS classes) to the `class` attribute of the Heading's DOM element (h1 through h6).
-
 {: .bs-callout .bs-callout-info }
-The `<tag>` and `<html>` nodes are beyond the scope of this topic, but they map to the Heading's `heading_type` selector field and `heading_text` input field from the (`pagebuilder_heading_form.xml`) form.
+The `<tag>` and `<html>` nodes are beyond the scope of this topic, but like the other nodes, they also map to form fields. In this case, the `<tag>` node maps to the Heading's `heading_type` selector field and the `<html>` node maps to the `heading_text` input field from the (`pagebuilder_heading_form.xml`) form.
+
+### Understanding and using `<style>` nodes
+
+In contrast to using attributes for content styling, adding a `<style>` node to a content type config `element` gives you a way to provide end users with a form field that changes a _specific_ CSS property, such as `opacity`.
+
+In the `heading.xml` config example, the `<style>` nodes map to the same-named fields defined in the `pagebuilder_base_form.xml`, which gives users the form fields needed to change each of the CSS properties. When rendered to the DOM, Page Builder adds these CSS properties (and the user-entered values) to the inline `style` attribute for the Heading's DOM element (which could be `<h1>` to `<h6>` depending on the Heading Type selected in the Heading's form).
+
+For example, if a user selected a value for each of the styles defined in the `heading.xml` config shown above, the inline `style` attribute in the storefront DOM would have entries and values for all the `<style>` nodes defined, as shown here:
+
+```html
+<h2 data-content-type="heading"
+    data-appearance="default"
+    data-heading-color="brand-blue"
+    data-heading-style="style-default"
+    data-element="main"
+    style="text-align: left; border-style: solid; border-color: rgb(240, 240, 240); border-width: 1px; border-radius: 3px; margin: 5px; padding: 2px;">
+    My Heading Text
+</h2>
+```
+
+Each `<style>` node defined gets added to the DOM as another CSS property in the inline `style` attribute. In the example module for this topic, we added `<style name="heading_opacity" source="opacity" />` to the `heading.xml` config. So when Page Builder renders the extended Heading content type in the DOM, it adds opacity to all the existing inline styles: `style="... opacity: 1; ..."`.
+
+### Using `<attribute>` nodes instead of `<style>` nodes
+
+Adding an `<attribute>` node to a config `element` gives you a way to provide end users with a form field that can use CSS classes to change _several_ CSS properties at once. This is much more powerful that using `<style>` nodes which can only change single CSS properties.
+
+Using `<attribute>` nodes instead of `<style>` nodes is transparent to users, who are simply interacting with field options to change content styling. But for you, the developer, being able to apply a variety of different CSS classes (based on end user field selections) can provide your content types with powerful styling options.
+
+### Understanding the `<css>` node
+
+The `<css>` config node is a bit different from the `<attribute>` and `<style>` nodes. The `<css>` node wasn't designed to be added to an element more than once like the other two nodes. Instead, it was designed to capture multiple CSS classes from a single form field and render those classes to the DOM within the `class` attribute. For this reason, it is currently not possible to assign CSS classes to an element's `class` attribute from more than the one field mapped to the `<css>` node.
+
+Regardless of that limitation, you can still use the `<css>` node to provide creative styling options for a content type. For example, if a merchant has a set of standard CSS classes they use during the year for holidays, you could map the `<css>` node to a `select` field that allows end users to choose from sets of merchant-approved classes with descriptive names, like Halloween styling, Christmas styling, and so on.
+
+Out of the box, Page Builder maps the `<css>` config node (for each content type) to the `css_classes` input field from the `pagebuilder_base_form.xml`. For example, if you were to enter two CSS classes into this field within the Heading form, Page Builder would add the `class` attribute to the Heading's `main` element (`<h2>`) and populate it with the CSS classes entered, as shown on the first line here:
+
+![CSS Classes input field](../images/css-class-input-output.png)
+
+```html
+<h2 class="fall-heading-style halloween-heading-style"
+    data-content-type="heading"
+    data-appearance="default"
+    data-heading-color="brand-blue"
+    data-heading-style="style-default"
+    data-element="main"
+    style="text-align: left; border-style: solid; border-color: rgb(240, 240, 240); border-width: 1px; border-radius: 3px; margin: 5px; padding: 2px; opacity: 1;">
+    My Heading Text
+</h2>
+```
+
+As mentioned, you can override the `<css>` node to map it to a different form field name and field type.
 
 ## Final thoughts
 
-Using custom attributes represents one of Page Builder's best practices for adding powerful content styling options to forms. You can add attributes to both existing content types (as shown with the Heading extension) and custom content types. The CSS styling options are only limited by the CSS specs your targeted browsers support. Have fun!
+Using custom attributes represents one of Page Builder's best practices for adding powerful and flexible content styling options to forms. You can add these styling attributes to both existing content types (as shown in the Heading extension module) and custom content types. The CSS styling options are only limited by the CSS specs targeted by your supported browsers. So get creative and have fun!
