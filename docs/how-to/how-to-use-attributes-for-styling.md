@@ -2,11 +2,21 @@
 
 Out of the box, Page Builder provides a variety of interactive CSS styling options for your content types. For example, Page Builder's `Heading` content type provides options for setting heading types (`h1` through `h6`), text alignments, border properties, margins, and paddings. It also lets users apply one or more static CSS classes by entering them into an text input field.
 
-But what if you want to give users even more styling options? For example, maybe you want to add Heading color options. Or Heading text-style options. This topic will show you how to use the `<attribute>`, `<style>`, and `<css>` configuration nodes to style the elements in your content types.
+But what if you want to give users even more styling options? For example, maybe you want to add Heading color options. Or Heading text-style options. This topic will show you how to use the `<attribute>`, `<style>`, and `<css>` configuration options to style the elements in your content types.
+
+## Understanding the big picture
+
+Before we dive into the particulars of using different configuration options, let's take a moment to understand the role of the configurations within a Page Builder content type.
+
+The following diagram shows how the configuration options for the `Heading` content type connect or map the inputs from the Heading form to the bindings in the Heading templates and finally to the rendered output in the DOM:
+
+![Understanding the big picture](../images/styling-big-picture.svg)
+
+You may not understand all the details right away, but we hope it will help you put the pieces together as you work your way through this topic and play with the accompanying example module.
 
 ## Install the example module
 
-To help you get started and follow along, we created an example module you can clone and install from [magento-devdocs/PageBuilderStylingWithAttributes](https://github.com/magento-devdocs/PageBuilderStylingWithAttributes). The instructions for installing the module are provided from the `README` file on the repo.
+To help you get started and follow along, we created an example module you can clone and install from [magento-devdocs/PageBuilderConfigurationsForStyling](https://github.com/magento-devdocs/PageBuilderConfigurationsForStyling). The instructions for installing the module are provided from the `README` file on the repo.
 
 For this example module, we chose to extend the `Heading` content type by adding three new Heading fields: `Heading Colors`, `Heading Styles`, and `Heading Opacity`, as shown here:
 
@@ -16,13 +26,11 @@ _Extended `Heading` form with color, text style, and opacity options_
 
 The example module provides all the code used here to describe how to style elements using `<attribute>` and `<style>` nodes. It also shows the use of a custom converter for our `opacity` style to ensure that users can enter the opacity as a percentage.
 
-## Steps for styling with attributes
+## Steps overview
 
-An overview of the steps is shown here, followed by the detailed instructions for each step:
+An overview of the steps for styling content type elements is shown here, followed by the detailed instructions for each step:
 
 ![How to style content types using attributes](../images/how-to-style-using-attributes.svg)
-
-_Steps for styling content type elements with attributes_
 
 ## Step 1: Add fields for user input
 
@@ -106,7 +114,7 @@ _New fields to extend the `Heading` form_
 
 The names of these fields, `heading_color`, `heading_style`, and `heading_opacity` are particularly important. They are the same names you must assign to the attributes in your configuration file. We'll do that next.
 
-## Step 2: Add configuration options for fields
+## Step 2: Add configuration options
 
 Adding `<attribute>` and `<style>` nodes to an `element` configuration is how you add custom attributes and inline styles to the DOM, respectively. Both `<attributes>` and `<style>` nodes have a `name` property and a `source` property.
 
@@ -158,7 +166,7 @@ The values shown for these attributes and inline-style properties are set by the
 
 Knowing how the attributes and their user-selected values are written to the DOM, we can now target our content type element using attribute-based CSS classes from our `_default.less` files. These CSS classes are described next.
 
-## Step 3: Add attribute-based CSS classes
+## Step 3: Add CSS classes
 
 The CSS classes in our `_default.less` files for both the `adminhtml` and `frontend` are attribute-based, as shown here:
 
@@ -211,9 +219,11 @@ _Attribute-based CSS classes_
 
 The values for these attributes are set by the user from the form field that corresponds to the attribute. Using <attribute> configurations in this way makes it easy to target your content type's elements from your `_default.less` files.
 
-## Step 4: Add Knockout bindings to templates
+## Step 4: Add Knockout bindings
 
-In order for our attribute selectors to be rendered in the DOM as described in step 2, we must add Knockout bindings within our HTML templates. The bindings for `<attribute>`, `<style>`, and `<css>` nodes look like this:
+In our example module, we are using the Heading's native `master.html` and `preview.html` templates, which already have all the Knockout bindings we need to render our new `<attribute>` and `<style>` configurations. Nonetheless, we will describe how these bindings map to our configuration options to render them to the DOM.
+
+In order for our configuration options to be rendered in the DOM as described in step 2, we must add or ensure that Knockout bindings for our three configuration styling options are within our HTML templates. The three Knockout bindings for the `<attribute>`, `<style>`, and `<css>` configuration nodes are `attr`, `ko-style`, and `css`, respectively:
 
 ```html
 <h2 attr="data.main.attributes" ko-style="data.main.style" css="data.main.css"...></h2>
@@ -239,7 +249,7 @@ These Knockout bindings are applied to the Heading's `master.html` template (as 
 <h6 if="data.main.heading_type() == 'h6'" attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" html="data.main.html"></h6>
 ```
 
-_Attribute bindings for the Heading's `data.main` config elements_
+_Knockout bindings for the Heading's `data.main` config elements_
 
 ## Discussion
 
@@ -275,6 +285,10 @@ To aid in our discussion of these configuration nodes and how to use them, we wi
 
 {: .bs-callout .bs-callout-info }
 The `<tag>` and `<html>` nodes are beyond the scope of this topic, but like the other nodes, they also map to fields in a form. In this case, the `<tag>` node maps to the Heading's `heading_type` field and the `<html>` node maps to the `heading_text` field from the `pagebuilder_heading_form.xml`.
+
+### The Big Picture
+
+use an `<attribute>`
 
 ### Understanding and using `<style>` nodes
 
@@ -319,9 +333,7 @@ Each `<style>` node defined for the element's configuration gets added to the DO
 
 As mentioned, adding an `<attribute>` node to a config `element` gives you a way to provide end users with a form field that can use _CSS classes_ so you can change _several_ CSS properties at once. This is much more powerful that using `<style>` nodes which can only change single CSS properties.
 
-However, `<style>` nodes have the advantage of being able to use converters, which you cannot use with `<attributes>`.
-
-Using `<attribute>` nodes instead of `<style>` nodes is transparent to users, who are simply interacting with field options to change content styling. But for you, the developer, being able to apply a variety of different CSS classes (based on end user field selections) can provide your content types with powerful styling options.
+Using `<attribute>` or `<style>` configurations is transparent to users, who are simply interacting with field options to change content styling. But for you, the developer, you have a choice that depends on whether you need to use CSS classes to style an element (use an `<attribute>`) or a specific CSS property (use an `<style>`). Either option can provide users with powerful styling options.
 
 ### Understanding the `<css>` node {#understandthecssnode}
 
@@ -343,12 +355,10 @@ Out of the box, Page Builder maps the `<css>` config node (for each content type
 </h2>
 ```
 
-As mentioned, you can override the `<css>` node to map it to a different form field name and field type. You just can't map it more than once per element.
+As mentioned, you can override the `<css>` node to map it to a different field name and/or type. You just can't use it more than once per element.
 
-Regardless of that limitation, you can still use the `<css>` node to provide creative styling options for a content type. For example, if a merchant has a set of standard CSS classes they use during the year for holidays, you could map the `<css>` node to a `select` field that allows end users to choose from sets of merchant-approved classes with descriptive names, like Halloween styling, Christmas styling, and so on.
+Regardless of the limitation, you can still use the `<css>` node to provide creative styling options for a content type. For example, if a merchant has a set of standard CSS classes they use during the year for holidays, you could map the `<css>` node to a `select` field that allows end users to choose from sets of merchant-approved classes with descriptive names, like Halloween styling, Christmas styling, and so on.
 
 ## Final thoughts
 
-Using custom attributes represents one of Page Builder's best practices for adding powerful and flexible content styling options to forms. You can add these styling attributes to both existing content types (as shown in the [example module](https://github.com/magento-devdocs/PageBuilderStylingWithAttributes)) and custom content types. The CSS styling options are only limited by the CSS specs targeted by your supported browsers. So get creative and have fun!
-
-![Styling big picture](../images/styling-big-picture.svg)
+Using custom attributes represents one of Page Builder's best practices for adding powerful and flexible content styling options to forms. You can add these styling attributes to both existing content types (as shown in the [example module](https://github.com/magento-devdocs/PageBuilderConfigurationsForStyling)) and custom content types. The CSS styling options are only limited by the CSS specs targeted by your supported browsers. So get creative and have fun!
