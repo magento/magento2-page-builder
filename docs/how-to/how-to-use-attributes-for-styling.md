@@ -363,4 +363,4 @@ Regardless of the limitation, you can still use the `<css>` node to provide crea
 
 ## Final thoughts
 
-Knowing how create new Page Builder content styling options by connecting forms to templates is one of the most important skills you need for effective and creative Page Builder development. Using custom attributes represents one of Page Builder's best practices for adding powerful and flexible content styling options to forms. You can add these styling attributes to both existing content types (as shown in the [example module](https://github.com/magento-devdocs/PageBuilderConfigurationsForStyling)) and custom content types. The CSS styling options are only limited by the CSS specs targeted by your supported browsers. So get creative and have fun!
+Knowing how to create new content styling options by connecting form inputs to template outputs is one of the most important skills to have as a Page Builder developer. And knowing how to make those connections using `<attribute>`, `<style>`, and `<css>` configurations will give you a variety of powerful and flexible content styling options to offer your end users. So get creative and have fun!
