@@ -1,4 +1,4 @@
-# How to use configuration options for styling
+# How to configure styling options
 
 Out of the box, Page Builder provides a variety of interactive CSS styling options for your content types. For example, Page Builder's `Heading` content type provides options for setting heading types (`h1` through `h6`), text alignments, border properties, margins, and paddings. It also lets users apply one or more static CSS classes by entering them into an text input field.
 
