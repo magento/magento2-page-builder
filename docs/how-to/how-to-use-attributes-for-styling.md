@@ -12,7 +12,15 @@ The following diagram shows how the configuration options for the `Heading` cont
 
 ![Understanding the big picture](../images/styling-big-picture.svg)
 
-You may not understand all the details right away, but we hope it will help you put the pieces together as you work your way through this topic and play with the accompanying example module.
+1. **Heading Form** (`pagebuilder_heading_form.xml`). This form inherits from the `pagebuilder_base_form.xml`, which provides most of the input fields for the Heading. The Heading form itself provides input fields selecting an `appearance`, entering the `heading_text`, and selecting a `heading_type` (`h1` to `h6`). The text to the left of each field specifies which form the field comes from, the `heading_form` or the `base form`.
+
+2. **Heading Configuration** (`heading.xml`). The main purpose of all content type configuration files is to provide the data mapping between the form fields and the HTML templates. Configurations map to fields with matching names.
+
+3. **Heading Template** (`master.html`, `preview.html`). Template Knockout bindings map to configurations using their element naming hierarchies.
+
+4. **Heading Rendered in DOM**. Page Builder renders the template bindings to the DOM. The `<attribute>` configurations are rendered as custom attributes for the element. The `<style>` configurations are rendered as inline styles on the element. The `<css>` configuration is rendered as a `class` attribute for the element. And the `<html>` configuration renders the text for the element.
+
+You may not understand all the details right away, but we hope that by providing the whole story up front, it will help you start putting the pieces together as you work your way through this topic and play with the companion example module.
 
 ## Install the example module
 
@@ -357,4 +365,4 @@ Regardless of the limitation, you can still use the `<css>` node to provide crea
 
 ## Final thoughts
 
-Using custom attributes represents one of Page Builder's best practices for adding powerful and flexible content styling options to forms. You can add these styling attributes to both existing content types (as shown in the [example module](https://github.com/magento-devdocs/PageBuilderConfigurationsForStyling)) and custom content types. The CSS styling options are only limited by the CSS specs targeted by your supported browsers. So get creative and have fun!
+Knowing how create new Page Builder content styling options by connecting forms to templates is one of the most important skills you need for effective and creative Page Builder development. Using custom attributes represents one of Page Builder's best practices for adding powerful and flexible content styling options to forms. You can add these styling attributes to both existing content types (as shown in the [example module](https://github.com/magento-devdocs/PageBuilderConfigurationsForStyling)) and custom content types. The CSS styling options are only limited by the CSS specs targeted by your supported browsers. So get creative and have fun!
