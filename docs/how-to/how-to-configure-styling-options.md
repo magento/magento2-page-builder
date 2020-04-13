@@ -22,7 +22,7 @@ You may not understand all the details right away, but we hope that by providing
 
 ## Install the example module
 
-To help you get started and follow along, we created an example module you can clone and install from [magento-devdocs/PageBuilderConfigurationsForStyling](https://github.com/magento-devdocs/PageBuilderConfigurationsForStyling). The instructions for installing the module are provided from the `README` file on the repo.
+To help you get started and follow along, we created an example module you can clone and install from [magento-devdocs/PageBuilderStylingOptions](https://github.com/magento-devdocs/PageBuilderStylingOptions). The instructions for installing the module are provided from the `README` file on the repo.
 
 For this example module, we chose to extend the `Heading` content type by adding three new Heading fields: `Heading Colors`, `Heading Styles`, and `Heading Opacity`, as shown here:
 
