@@ -286,10 +286,6 @@ To aid in our discussion of these configuration nodes and how to use them, we wi
 {: .bs-callout .bs-callout-info }
 The `<tag>` and `<html>` nodes are beyond the scope of this topic, but like the other nodes, they also map to fields in a form. In this case, the `<tag>` node maps to the Heading's `heading_type` field and the `<html>` node maps to the `heading_text` field from the `pagebuilder_heading_form.xml`.
 
-### The Big Picture
-
-use an `<attribute>`
-
 ### Understanding and using `<style>` nodes
 
 By configuring `<elements>` with `<style>` nodes, you can provide end users with a form field that changes a _specific_ CSS property, such as we did with `opacity`.
@@ -331,9 +327,9 @@ Each `<style>` node defined for the element's configuration gets added to the DO
 
 ### Using `<attribute>` nodes instead of `<style>` nodes
 
-As mentioned, adding an `<attribute>` node to a config `element` gives you a way to provide end users with a form field that can use _CSS classes_ so you can change _several_ CSS properties at once. This is much more powerful that using `<style>` nodes which can only change single CSS properties.
+As mentioned, adding an `<attribute>` node to an `element` configuration gives you a way to provide end users with a form field that can use _CSS classes_, allowing you to change _several_ CSS properties at once. This can be more powerful that using `<style>` configurations that can only change single CSS properties. But depending on your use case, you may not need to use `<attribute>` configurations.
 
-Using `<attribute>` or `<style>` configurations is transparent to users, who are simply interacting with field options to change content styling. But for you, the developer, you have a choice that depends on whether you need to use CSS classes to style an element (use an `<attribute>`) or a specific CSS property (use an `<style>`). Either option can provide users with powerful styling options.
+Using `<attribute>` or `<style>` configurations is transparent to end users. They're simply interacting with field options to change content styling. But for you, the developer, the choice really depends on how much you need to change the element. If the user option needs to change the element significantly, you may want to use an `<attribute>` so you can apply CSS classes to the element. And if the user option is focused on making a simple property change to the element, you can use a `<style>` configuration.
 
 ### Understanding the `<css>` node {#understandthecssnode}
 
