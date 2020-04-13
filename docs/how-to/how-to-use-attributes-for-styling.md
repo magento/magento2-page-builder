@@ -6,9 +6,7 @@ But what if you want to give users even more styling options? For example, maybe
 
 ## Understanding the big picture
 
-Before we dive into the particulars of using different configuration options, let's take a moment to understand the role of the configurations within a Page Builder content type.
-
-The following diagram shows how the configuration options for the `Heading` content type connect or map the inputs from the Heading form to the bindings in the Heading templates and finally to the rendered output in the DOM:
+Before we dive into the particulars of using different configuration options, let's take a moment to understand the role of the configurations within a Page Builder content type. The following diagram shows how the configuration options for the `Heading` content type connect or map the inputs from the Heading form to the bindings in the Heading templates and finally to the rendered output in the DOM:
 
 ![Understanding the big picture](../images/styling-big-picture.svg)
 
