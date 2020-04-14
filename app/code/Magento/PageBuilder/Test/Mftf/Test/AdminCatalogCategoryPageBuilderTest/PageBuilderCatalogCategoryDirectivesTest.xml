@@ -25,7 +25,7 @@
             <createData entity="_defaultCategory" stepKey="createPreReqCategory"/>
             <createData entity="simpleCmsPage" stepKey="createCMSPageA"/>
             <createData entity="simpleCmsPage" stepKey="createCMSPageB"/>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
             <actionGroup ref="NavigateToCreatedCategoryActionGroup" stepKey="navigateToCreatedProductEditPage">
                 <argument name="Category" value="$$createPreReqCategory$$"/>
             </actionGroup>
@@ -43,7 +43,7 @@
             <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage">
                 <argument name="Image" value="PageBuilderImageProperty_StageJPG"/>
             </actionGroup>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
         <actionGroup ref="openPageBuilderForAttribute" stepKey="enablePageBuilderOnCatalog"/>
         <!--Add button to PageBuilder-->
