@@ -28,14 +28,14 @@ class OpenDialogUrl implements ProviderInterface
 
     /**
      * @param Url $urlBuilder
-     * @param string $openDialogPath
+     * @param array $openDialogPath
      */
     public function __construct(
         Url $urlBuilder,
-        string $openDialogPath
+        array $openDialogPath
     ) {
         $this->urlBuilder = $urlBuilder;
-        $this->openDialogPath = $openDialogPath;
+        $this->openDialogPath = array_shift($openDialogPath);
     }
 
     /**
