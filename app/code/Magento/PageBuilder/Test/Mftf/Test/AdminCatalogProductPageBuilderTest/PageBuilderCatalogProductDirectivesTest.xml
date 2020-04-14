@@ -28,7 +28,7 @@
             </createData>
             <createData entity="simpleCmsPage" stepKey="createCMSPageA"/>
             <createData entity="simpleCmsPage" stepKey="createCMSPageB"/>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
         </before>
         <after>
             <magentoCLI command="config:set general/store_information/country_id none" stepKey="setBackToDefaultValue"/>
@@ -43,7 +43,7 @@
             <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage">
                 <argument name="Image" value="PageBuilderImageProperty_StageJPG"/>
             </actionGroup>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
         <!--Go to Product Page-->
         <comment userInput="Go to Product Page" stepKey="goToProductPage"/>

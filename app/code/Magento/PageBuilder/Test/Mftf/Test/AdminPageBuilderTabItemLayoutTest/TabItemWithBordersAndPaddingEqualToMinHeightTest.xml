@@ -32,20 +32,22 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty">
             <argument name="property" value="PageBuilderTabMinimumHeightDefaultProperty"/>
         </actionGroup>
-        <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateContentTypeHeightBeforeSave">
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateContentTypeHeightBeforeSave">
             <argument name="content" value="{{TabOnStage.tabContentCSS}}"/>
-            <argument name="border" value="PageBuilderAdvancedBorderWidthProperty10"/>
-            <argument name="padding" value="PageBuilderPaddingProperty10"/>
+            <argument name="borderWidth" value="{{PageBuilderAdvancedBorderWidthProperty10.value}}"/>
+            <argument name="paddingTop" value="{{PageBuilderPaddingProperty10.paddingTop}}"/>
+            <argument name="paddingBottom" value="{{PageBuilderPaddingProperty10.paddingBottom}}"/>
         </actionGroup>
-        <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateContentTypeHeightAfterSave">
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateContentTypeHeightAfterSave">
             <argument name="content" value="{{TabOnStage.tabContentCSS}}"/>
-            <argument name="border" value="PageBuilderAdvancedBorderWidthProperty10"/>
-            <argument name="padding" value="PageBuilderPaddingProperty10"/>
+            <argument name="borderWidth" value="{{PageBuilderAdvancedBorderWidthProperty10.value}}"/>
+            <argument name="paddingTop" value="{{PageBuilderPaddingProperty10.paddingTop}}"/>
+            <argument name="paddingBottom" value="{{PageBuilderPaddingProperty10.paddingBottom}}"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
-        <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateContentTypeHeightStorefront">
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeightPlusPaddingAndBorder" stepKey="validateContentTypeHeightStorefront">
             <argument name="content" value="{{TabOnStorefront.tabContentCSS}}"/>
         </actionGroup>
     </test>

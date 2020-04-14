@@ -26,14 +26,14 @@
         </annotations>
         <before>
             <createData entity="_defaultBlock" stepKey="createCMSBlock"/>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
             <actionGroup ref="NavigateToCreatedCMSBlockPageActionGroup" stepKey="navigateToCreatedCMSBlockPage">
                 <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
             </actionGroup>
         </before>
         <after>
             <deleteData createDataKey="createCMSBlock" stepKey="deletePreReqBlock"/>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
         <!-- Edit Block and configure Row -->
         <comment userInput="Edit Block and configure Row" stepKey="commentConfigureRowInBlock"/>

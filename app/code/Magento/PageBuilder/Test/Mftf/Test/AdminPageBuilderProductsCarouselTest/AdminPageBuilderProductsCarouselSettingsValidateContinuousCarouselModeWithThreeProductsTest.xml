@@ -32,7 +32,7 @@
                 <requiredEntity createDataKey="createCategory"/>
             </createData>
             <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
             <actionGroup ref="navigateToCMSPage" stepKey="navigateToCMSPage">
                 <argument name="CMSPage" value="$$createCMSPage$$"/>
             </actionGroup>
@@ -44,7 +44,7 @@
             <deleteData createDataKey="createProduct2" stepKey="deleteProduct2"/>
             <deleteData createDataKey="createProduct1" stepKey="deleteProduct1"/>
             <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionAddContent">
             <argument name="contentType" value="PageBuilderProductsContentType"/>

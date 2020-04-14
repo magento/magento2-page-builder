@@ -21,13 +21,13 @@
         </annotations>
         <before>
             <createData entity="_defaultCmsPage" stepKey="createCMSPage"/>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
             <magentoCLI command="config:set cms/wysiwyg/enabled disabled" stepKey="disableWYSIWYG1"/>
         </before>
         <after>
             <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG1"/>
             <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage"/>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage1">
             <argument name="CMSPage" value="$$createCMSPage$$"/>

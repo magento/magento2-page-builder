@@ -21,7 +21,7 @@
         </annotations>
         <before>
             <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
             <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
                 <argument name="CMSPage" value="$$createCMSPage$$"/>
             </actionGroup>
@@ -58,7 +58,7 @@
             <actionGroup ref="deletePageBuilderTemplate" stepKey="deletePageBuilderTemplate4">
                 <argument name="templateIdentifier" value="{{PageBuilderTemplateName_EdgeCases.commonCharacters}}"/>
             </actionGroup>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
         <!-- Open and Close Save Template Modal -->
         <actionGroup ref="openPageBuilderSaveTemplateModal" stepKey="openPageBuilderSaveTemplateModal1"/>

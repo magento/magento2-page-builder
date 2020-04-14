@@ -22,7 +22,7 @@
         </annotations>
         <before>
             <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
             <actionGroup ref="navigateToCMSPage" stepKey="navigateToCMSPage">
                 <argument name="CMSPage" value="$$createCMSPage$$"/>
             </actionGroup>
@@ -31,7 +31,7 @@
         <after>
             <magentoCLI command="config:set cms/pagebuilder/enabled 1" stepKey="enablePageBuilder"/>
             <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
         <seeElement selector="{{PageBuilderStage.stageWrapper}}" stepKey="seeElementPageBuilderStage"/>
         <dontSeeElementInDOM selector="{{CmsNewPagePageContentSection.content}}" stepKey="dontSeeContentAreaInDOM"/>

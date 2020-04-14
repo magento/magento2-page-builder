@@ -23,7 +23,7 @@
             <group value="pagebuilder-productsGrid"/>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
             <createData entity="PageBuilderProductsSubCategory" stepKey="createPreReqCategory"/>
             <createData entity="_defaultProduct" stepKey="createPreReqProduct1">
                 <requiredEntity createDataKey="createPreReqCategory"/>
@@ -34,7 +34,7 @@
         <after>
             <deleteData createDataKey="createPreReqProduct1" stepKey="deletePreReqProduct1"/>
             <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCategory"/>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderProductsContentType"/>

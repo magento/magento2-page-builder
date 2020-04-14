@@ -30,12 +30,12 @@
             <createData stepKey="addToDefaultSetSortOrder2" entity="AddToDefaultSetSortOrder2">
                 <requiredEntity createDataKey="createPageBuilderAttribute2"/>
             </createData>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
         </before>
         <after>
             <deleteData createDataKey="createPageBuilderAttribute1" stepKey="deleteAttribute1"/>
             <deleteData createDataKey="createPageBuilderAttribute2" stepKey="deleteAttribute2"/>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
             <closeTab stepKey="closeTab"/>
         </after>
         <!-- Update created attributes to enable Page Builder -->

@@ -24,13 +24,13 @@
         </annotations>
         <before>
             <createData entity="_defaultCategory" stepKey="createCategory"/>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
             <createData entity="ApiSimpleProduct" stepKey="createProduct">
                 <requiredEntity createDataKey="createCategory"/>
             </createData>
         </before>
         <after>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
             <deleteData createDataKey="createCategory" stepKey="deleteCategory"/>
             <deleteData createDataKey="createProduct" stepKey="deleteProduct"/>
         </after>
@@ -51,8 +51,14 @@
         <waitForPageLoad stepKey="waitForPageLoadSaveProduct"/>
         <waitForElementVisible selector="{{AdminProductMessagesSection.successMessage}}" stepKey="assertSaveMessageSuccess"/>
         <!-- Move to frontend and make a user account and login with it -->
-        <actionGroup ref="SignUpNewUserFromStorefrontActionGroup" stepKey="signUpNewUser">
-            <argument name="Customer" value="CustomerEntityOne"/>
+        <actionGroup ref="StorefrontOpenCustomerAccountCreatePageActionGroup" stepKey="openCreateAccountPage"/>
+        <actionGroup ref="StorefrontFillCustomerAccountCreationFormActionGroup" stepKey="fillCreateAccountForm">
+            <argument name="customer" value="CustomerEntityOne"/>
+        </actionGroup>
+        <actionGroup ref="StorefrontClickCreateAnAccountCustomerAccountCreationFormActionGroup" stepKey="submitCreateAccountForm"/>
+        <actionGroup ref="AssertMessageCustomerCreateAccountActionGroup" stepKey="seeSuccessMessage">
+            <argument name="messageType" value="success"/>
+            <argument name="message" value="Thank you for registering with Main Website Store."/>
         </actionGroup>
         <!-- Go to the product view page -->
         <actionGroup ref="StorefrontOpenProductPageActionGroup" stepKey="openCreatedProductPage">

@@ -24,7 +24,7 @@
             <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
             <createData entity="rolePageBuilderDeleteTemplates" stepKey="role1"/>
             <createData entity="rolePageBuilderTemplates" stepKey="role2"/>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
             <actionGroup ref="AdminCreateUserWithApiRoleActionGroup" stepKey="adminCreateUser">
                 <argument name="user" value="NewAdminUser"/>
                 <argument name="role" value="rolePageBuilderDeleteTemplates"/>
@@ -41,15 +41,16 @@
                 <argument name="templateName" value="{{PageBuilderTemplateNameRandom2.name}}"/>
             </actionGroup>
             <actionGroup ref="savePageBuilderTemplate" stepKey="savePageBuilderTemplate2"/>
-            <actionGroup ref="logout" stepKey="logout"/>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsCreatedUser">
-                <argument name="adminUser" value="NewAdminUser"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsCreatedUser">
+                <argument name="username" value="{{NewAdminUser.username}}"/>
+                <argument name="password" value="{{NewAdminUser.password}}"/>
             </actionGroup>
         </before>
         <after>
             <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
-            <actionGroup ref="logout" stepKey="logout"/>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
             <actionGroup ref="AdminDeleteRoleByRoleNameActionGroup" stepKey="deleteRole">
                 <argument name="role" value="rolePageBuilderDeleteTemplates"/>
             </actionGroup>
@@ -67,7 +68,7 @@
             <actionGroup ref="deletePageBuilderTemplate" stepKey="deletePageBuilderTemplate">
                 <argument name="templateIdentifier" value="{{PageBuilderTemplateNameRandom2.name}}"/>
             </actionGroup>
-            <actionGroup ref="logout" stepKey="logout2"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout2"/>
         </after>
         <!-- Verify Can Delete Template -->
         <actionGroup ref="navigateToPageBuilderTemplatesGridPage" stepKey="navigateToPageBuilderTemplatesGridPage"/>
@@ -78,9 +79,9 @@
         <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid2"/>
         <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGrid2"/>
         <actionGroup ref="validatePageBuilderTemplateEmptyGrid" stepKey="validatePageBuilderTemplateEmptyGrid"/>
-        <actionGroup ref="logout" stepKey="logout"/>
+        <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         <!-- Change User Role -->
-        <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+        <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
         <actionGroup ref="AdminOpenUserEditPageActionGroup" stepKey="AdminOpenUserEditPageActionGroup">
             <argument name="user" value="NewAdminUser"/>
         </actionGroup>
@@ -89,10 +90,11 @@
         </actionGroup>
         <actionGroup ref="AdminClickSaveButtonOnUserFormActionGroup" stepKey="AdminClickSaveButtonOnUserFormActionGroup"/>
         <actionGroup ref="AssertAdminUserSaveMessageActionGroup" stepKey="AssertAdminUserSaveMessageActionGroup"/>
-        <actionGroup ref="logout" stepKey="logout2"/>
+        <actionGroup ref="AdminLogoutActionGroup" stepKey="logout2"/>
         <!-- Verify Cannot Delete Template -->
-        <actionGroup ref="LoginAsAdmin" stepKey="loginAsCreatedUser">
-            <argument name="adminUser" value="NewAdminUser"/>
+        <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsCreatedUser">
+            <argument name="username" value="{{NewAdminUser.username}}"/>
+            <argument name="password" value="{{NewAdminUser.password}}"/>
         </actionGroup>
         <actionGroup ref="navigateToPageBuilderTemplatesGridPage" stepKey="navigateToPageBuilderTemplatesGridPage2"/>
         <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid3"/>

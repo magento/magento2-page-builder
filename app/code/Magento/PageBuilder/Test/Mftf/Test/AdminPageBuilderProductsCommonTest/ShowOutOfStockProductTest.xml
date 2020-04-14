@@ -20,7 +20,7 @@
             <group value="pagebuilder-products"/>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
             <magentoCLI command="config:set cataloginventory/options/show_out_of_stock 1" stepKey="displayOutOfStockProduct"/>
             <createData entity="_defaultCmsPage" stepKey="createdCMSPage"/>
             <createData entity="PageBuilderProductsSubCategory" stepKey="createPreReqCategory"/>
@@ -41,7 +41,7 @@
             <deleteData createDataKey="createPreReqProductB" stepKey="deletePreReqProductB"/>
             <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCategory"/>
             <deleteData createDataKey="createdCMSPage" stepKey="deleteCreatedCMSPage"/>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderProductsContentType"/>

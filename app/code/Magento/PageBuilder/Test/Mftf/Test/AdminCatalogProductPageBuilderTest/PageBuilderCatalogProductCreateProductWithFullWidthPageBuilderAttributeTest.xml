@@ -27,11 +27,11 @@
             <createData stepKey="createWysiwygAttributeAttributeGroup" entity="AddToDefaultSet">
                 <requiredEntity createDataKey="createWysiwygAttribute"/>
             </createData>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
         </before>
         <after>
             <deleteData createDataKey="createWysiwygAttribute" stepKey="deletePreReqProductAttribute"/>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
         <!-- Update created attribute to enable Page Builder -->
         <comment userInput="Update created attribute to enable Page Builder" stepKey="commentUpdateAttribute"/>

@@ -28,7 +28,7 @@
             <createData entity="_defaultProduct" stepKey="createProduct">
                 <requiredEntity createDataKey="createPreReqCategory"/>
             </createData>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
             <actionGroup ref="NavigateToCreatedProductEditPageActionGroup" stepKey="navigateToCreatedProductEditPage">
                 <argument name="product" value="$$createProduct$$"/>
             </actionGroup>
@@ -39,7 +39,7 @@
             <deleteData createDataKey="createProduct" stepKey="deleteCreatedProduct"/>
             <deleteData createDataKey="createPreReqCategory" stepKey="deleteCreatedCategory"/>
             <actionGroup ref="NavigateToAndResetProductGridToDefaultViewActionGroup" stepKey="NavigateToAndResetProductGridToDefaultView"/>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragColumnToRow">
             <argument name="contentType" value="PageBuilderColumnContentType"/>

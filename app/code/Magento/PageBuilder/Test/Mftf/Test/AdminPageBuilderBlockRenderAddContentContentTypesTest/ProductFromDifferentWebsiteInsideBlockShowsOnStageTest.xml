@@ -24,7 +24,7 @@
             <group value="pagebuilder-storeView"/>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
             <magentoCLI command="config:set web/url/use_store 1" stepKey="turnOnStoreUrlUsage"/>
             <createData entity="customWebsite" stepKey="createCustomWebsite"/>
             <createData entity="_defaultBlock" stepKey="createPreReqBlock"/>
@@ -49,7 +49,7 @@
             <deleteData createDataKey="createPreReqBlock" stepKey="deletePreReqBlock"/>
             <deleteData createDataKey="createCategory" stepKey="deleteCategory"/>
             <deleteData createDataKey="createProduct" stepKey="deleteProduct"/>
-            <actionGroup ref="logout" stepKey="logoutOfAdmin"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logoutOfAdmin"/>
         </after>
         <!-- Create product and assign to created store view -->
         <comment userInput="Assign product to created store view" stepKey="commentAssignProductToCreatedStoreView"/>

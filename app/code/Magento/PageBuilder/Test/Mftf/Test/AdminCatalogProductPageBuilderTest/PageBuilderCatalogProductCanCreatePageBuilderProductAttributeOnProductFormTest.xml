@@ -22,11 +22,11 @@
         </annotations>
         <before>
             <magentoCLI command="config:set cms/wysiwyg/enabled disabled" stepKey="disableWYSIWYG"/>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
         </before>
         <after>
             <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
         <amOnPage url="{{AdminProductCreatePage.url(AddToDefaultSet.attributeSetId, 'simple')}}" stepKey="navigateToNewProduct"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>

@@ -21,7 +21,7 @@
         </annotations>
         <before>
             <createData entity="_defaultCmsPage" stepKey="createCMSPageB"/>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
             <magentoCLI command="config:set cms/wysiwyg/editor Magento_Tinymce3/tinymce3Adapter" stepKey="enableTinyMCE3"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
@@ -29,7 +29,7 @@
         <after>
             <deleteData createDataKey="createCMSPageB" stepKey="deletePreReqCMSPageB"/>
             <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="enableTinyMCE4"/>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderTextContentType"/>
