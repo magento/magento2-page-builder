@@ -7,7 +7,7 @@
 -->
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
-    <actionGroup name="saveCatalogCategory" extends="SaveCategoryFormActionGroup">
+    <actionGroup name="saveCatalogCategory" extends="AdminSaveCategoryFormActionGroup">
         <!-- Move to CE: Fix CE action group -->
         <waitForElementVisible selector="{{AdminCategoryMainActionsSection.SaveButton}}" stepKey="waitForSaveCategoryButton" before="saveCategory"/>
         <waitForPageLoad stepKey="waitForPageLoad" after="saveCategory"/>

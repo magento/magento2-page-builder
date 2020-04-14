@@ -22,12 +22,12 @@
         <before>
             <createData entity="_defaultCmsPage" stepKey="createCMSPage"/>
             <createData entity="_defaultCmsPage" stepKey="createCMSPageB"/>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
         </before>
         <after>
             <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage"/>
             <deleteData createDataKey="createCMSPageB" stepKey="deletePreReqCMSPageB"/>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage1">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
