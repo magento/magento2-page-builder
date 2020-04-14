@@ -9,26 +9,33 @@ declare(strict_types=1);
 namespace Magento\PageBuilder\Model\Config\ContentType\AdditionalData\Provider\Uploader;
 
 use Magento\PageBuilder\Model\Config\ContentType\AdditionalData\ProviderInterface;
-use Magento\Framework\FlagManager;
+use Magento\Backend\Model\Url;
 
 /**
  * Provides open dialog URL for media gallery slideout
  */
 class OpenDialogUrl implements ProviderInterface
 {
-    private const MEDIA_GALLERY_OPEN_URL = 'open_dialog_url';
-    
     /**
-     * @var FlagManager
+     * @var Url
      */
-    private $flagManager;
+    private $urlBuilder;
 
     /**
-     * @param FlagManager $flagManager
+     * @var string
      */
-    public function __construct(FlagManager $flagManager)
-    {
-        $this->flagManager = $flagManager;
+    private $openDialogPath;
+
+    /**
+     * @param Url $urlBuilder
+     * @param string $openDialogPath
+     */
+    public function __construct(
+        Url $urlBuilder,
+        string $openDialogPath
+    ) {
+        $this->urlBuilder = $urlBuilder;
+        $this->openDialogPath = $openDialogPath;
     }
 
     /**
@@ -37,7 +44,7 @@ class OpenDialogUrl implements ProviderInterface
     public function getData(string $itemName) : array
     {
         return [
-            $itemName => $this->flagManager->getFlagData(self::MEDIA_GALLERY_OPEN_URL)
+            $itemName => $this->urlBuilder->getUrl($this->openDialogPath, ['_secure' => true])
         ];
     }
 }
