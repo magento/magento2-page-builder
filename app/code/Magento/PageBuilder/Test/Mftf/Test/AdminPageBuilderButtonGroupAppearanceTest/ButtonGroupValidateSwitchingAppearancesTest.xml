@@ -21,12 +21,12 @@
             <group value="pagebuilder-buttonGroup"/>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
             <createData entity="_defaultCmsPage" stepKey="createPreReqCMSPage"/>
         </before>
         <after>
             <deleteData createDataKey="createPreReqCMSPage" stepKey="deletePreReqCMSPage"/>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
             <closeTab stepKey="closeTab"/>
         </after>
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToContentCreatedCMSPage">

@@ -21,7 +21,7 @@
         </annotations>
         <before>
             <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
             <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
                 <argument name="CMSPage" value="$$createCMSPage$$"/>
             </actionGroup>
@@ -48,7 +48,7 @@
             <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid"/>
             <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGrid"/>
             <actionGroup ref="deletePageBuilderTemplate" stepKey="deletePageBuilderTemplate"/>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
         <!-- Apply Template -->
         <actionGroup ref="openPageBuilderApplyTemplateSlideOut" stepKey="openPageBuilderApplyTemplateSlideOut"/>

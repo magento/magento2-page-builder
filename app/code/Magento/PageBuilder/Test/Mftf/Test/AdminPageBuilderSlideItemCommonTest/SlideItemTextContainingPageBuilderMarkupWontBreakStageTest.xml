@@ -21,7 +21,7 @@
             <group value="pagebuilder-slideItemCommon"/>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
             <createData entity="_cmsPageWithSliderNestedText" stepKey="createCMSPage"/>
             <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToContentCreatedCMSPage">
                 <argument name="CMSPage" value="$$createCMSPage$$"/>
@@ -30,7 +30,7 @@
         </before>
         <after>
             <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage"/>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
         <dontSeeElement selector="{{HtmlOnStage.base('1')}}" stepKey="dontSeeHtmlCode"/>
         <waitForElementVisible selector="{{SlideOnBackend.base('1')}}" stepKey="waitForSlideItemVisible"/>

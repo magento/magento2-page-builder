@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="AdminSelectCatalogProductsListWidgetFromInsertWidgetSlideOutActionGroup">
+        <annotations>
+            <description>Fills out the Widget Options form for the Catalog Products List widget from the Insert Widget slide out.</description>
+        </annotations>
+        <arguments>
+            <argument name="productsCount" type="string" defaultValue="1"/>
+            <argument name="widgetTemplate" type="string" defaultValue="Products Grid Template"/>
+        </arguments>
+        <waitForElementVisible selector="{{WidgetSection.WidgetType}}" stepKey="waitForWidgetType"/>
+        <selectOption selector="{{WidgetSection.WidgetType}}" userInput="{{TinyMCEWidgets.CatalogProductsListName}}" stepKey="selectCatalogProductsListWidget"/>
+        <waitForPageLoad stepKey="waitForWidgetOptions"/>
+        <waitForElementVisible selector="{{WidgetSection.NoOfProductToDisplay}}" stepKey="waitForNumberOfProductsToDisplayInput"/>
+        <fillField selector="{{WidgetSection.NoOfProductToDisplay}}" userInput="{{productsCount}}" stepKey="fillNumberOfProductsToDisplay"/>
+        <selectOption selector="{{WidgetSection.WidgetTemplate}}" userInput="{{widgetTemplate}}" stepKey="selectTemplate"/>
+    </actionGroup>
+</actionGroups>
