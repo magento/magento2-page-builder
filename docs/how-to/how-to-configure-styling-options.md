@@ -10,7 +10,7 @@ Before we dive into the particulars of using different configuration options, le
 
 ![Understanding the big picture](../images/styling-big-picture.svg)
 
-1. **Heading Form** (`pagebuilder_heading_form.xml`). This form inherits from the `pagebuilder_base_form.xml`, which provides most of the input fields for the Heading. The Heading form itself provides input fields selecting an `appearance`, entering the `heading_text`, and selecting a `heading_type` (`h1` to `h6`). The text to the left of each field specifies which form the field comes from, the `heading_form` or the `base form`.
+1. **Heading Form** (`pagebuilder_heading_form.xml`). This form inherits from the `pagebuilder_base_form.xml`, which provides most of the input fields for the Heading. The Heading form itself provides input fields selecting an `appearance`, entering the `heading_text`, and selecting a `heading_type` (`h1` to `h6`). The text to the left of each field specifies which form the field comes from, the `heading_form` or the `base_form`.
 
 2. **Heading Configuration** (`heading.xml`). The main purpose of all content type configuration files is to provide the data mapping between the form fields and the HTML templates. Configurations map to fields with matching names.
 
@@ -22,7 +22,7 @@ You may not understand all the details right away, but we hope that by providing
 
 ## Install the example module
 
-To help you get started and follow along, we created an example module you can clone and install from [magento-devdocs/PageBuilderConfigurationsForStyling](https://github.com/magento-devdocs/PageBuilderConfigurationsForStyling). The instructions for installing the module are provided from the `README` file on the repo.
+To help you get started and follow along, we created an example module you can clone and install from [magento-devdocs/PageBuilderStylingOptions](https://github.com/magento-devdocs/PageBuilderStylingOptions). The instructions for installing the module are provided from the `README` file on the repo.
 
 For this example module, we chose to extend the `Heading` content type by adding three new Heading fields: `Heading Colors`, `Heading Styles`, and `Heading Opacity`, as shown here:
 
@@ -38,7 +38,7 @@ An overview of the steps for styling content type elements is shown here, follow
 
 ![How to style content types using attributes](../images/how-to-style-using-attributes.svg)
 
-## Step 1: Add fields for user input
+## Step 1: Add form fields for user input
 
 First, you need to add fields to your content type's form so that users have a way of selecting or entering styling options. In our Heading extension, we add three new fields:
 
@@ -118,19 +118,19 @@ The UI component form for these fields is shown here:
 
 _New fields to extend the `Heading` form_
 
-The names of these fields, `heading_color`, `heading_style`, and `heading_opacity` are particularly important. They are the same names you must assign to the attributes in your configuration file. We'll do that next.
+The names of these fields, `heading_color`, `heading_style`, and `heading_opacity` are particularly important. They are the same names you must assign to their corresponding `<attribute>` and `<style>` nodes for the `<element>` in your configuration file. We'll do that next.
 
-## Step 2: Add configuration options
+## Step 2: Add element configuration options
 
-Adding `<attribute>` and `<style>` nodes to an `element` configuration is how you add custom attributes and inline styles to the DOM, respectively. Both `<attributes>` and `<style>` nodes have a `name` property and a `source` property.
+Adding `<attribute>` and `<style>` nodes to an `<element>` configuration is how you add custom attributes and inline styles to the DOM, respectively. Both `<attributes>` and `<style>` nodes have a `name` property and a `source` property.
 
 The `name` properties of these nodes **must** match the corresponding field's name in the form. Using the same names (between config and field) is what allows Page Builder to map the field's input values to the template's output values.
 
-The `source` property for `<attribute>` nodes defines the name of the custom attribute added to the element's DOM so you can use it for targeting the element with your attribute-based CSS classes.
+The `source` property for `<attribute>` nodes defines the name of the custom attribute added to the element's DOM so you can use it for targeting the element with your attribute-based CSS classes (step 4).
 
 The `source` property for `<style>` nodes specifies the CSS property (in `snake_case`) added to the element's `style` attribute in the DOM.
 
-In our extended Heading configuration, we added two `<attribute>` nodes and one `<style>` node, with names corresponding to the previously defined `Heading` fields: `heading_color`, `heading_style`, and `heading_opacity`:
+In our extended Heading configuration, we added two `<attribute>` nodes and one `<style>` node, with names corresponding to the previously defined `Heading` form fields: `heading_color`, `heading_style`, and `heading_opacity`:
 
 ```xml
 <!-- heading.xml config extension -->
@@ -155,7 +155,7 @@ In our extended Heading configuration, we added two `<attribute>` nodes and one 
 
 _Configuration attributes for the `Heading` element_
 
-In this example, the `source` values for the nodes (`data-heading-color`, `data-heading-style`, and `opacity`) are rendered in the DOM for the Heading's main element (`h2`), as shown here:
+In this example, the `source` values for the nodes (`data-heading-color`, `data-heading-style`, and `opacity`) will be rendered in the DOM for the Heading's `main` element (which is `h2` by default), as shown here:
 
 ```html
 <h2 data-content-type="heading"
@@ -170,11 +170,58 @@ In this example, the `source` values for the nodes (`data-heading-color`, `data-
 
 The values shown for these attributes and inline-style properties are set by the user from the form fields. In this example, the user selected `brand-green` from the `heading_color` field, `style-italic` from the `heading_style` field, and entered `100` (in percent) in the `heading_opacity` field (converted to the decimal form you see here using a custom converter you will find in the example).
 
-Knowing how the attributes and their user-selected values are written to the DOM, we can now target our content type element using attribute-based CSS classes from our `_default.less` files. These CSS classes are described next.
+But before these `attributes` and `styles` can be rendered to the DOM as shown, we need to add the necessary Knockout bindings to our HTML templates. We'll do that next.
 
-## Step 3: Add CSS classes
+## Step 3: Add template Knockout bindings
 
-The CSS classes in our `_default.less` files for both the `adminhtml` and `frontend` are attribute-based, as shown here:
+In our example module, we are using the Heading's native `master.html` and `preview.html` templates, which already have all the Knockout bindings needed to render our new `<attribute>` and `<style>` configurations to the DOM. But its critical that you understand what these bindings are and what they do. Because without them, nothing will be rendered to the screen.
+
+In order for our configuration options to be rendered in the DOM (as described in step 2), we must add or ensure that Knockout bindings for our three configuration styling options are within our HTML templates. The three Knockout bindings for the `<attribute>`, `<style>`, and `<css>` configuration nodes are `attr`, `ko-style`, and `css`, respectively:
+
+```html
+<h2 attr="data.main.attributes" ko-style="data.main.style" css="data.main.css"...></h2>
+```
+For all three Knockout bindings, `data.main` references the `main` element in the configuration file (`heading.xml`). The other binding references are as follows:
+
+-  For the `attr` binding, the `attributes` property references the collection of `<attribute>` nodes defined for the `main` element.
+
+-  For the `ko-style` binding, the `style` property references the collection of `<style>` nodes defined for the `main` element.
+
+-  For the `css` binding, the `css` property references the `<css>` node defined for the `main` element.
+
+These Knockout bindings are applied to the Heading's `master.html` template (as well as the `preview.html` template), as shown here:
+
+```html
+<!-- Heading master.html -->
+
+<h1 if="data.main.heading_type() == 'h1'" attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" html="data.main.html"></h1>
+<h2 if="data.main.heading_type() == 'h2'" attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" html="data.main.html"></h2>
+<h3 if="data.main.heading_type() == 'h3'" attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" html="data.main.html"></h3>
+<h4 if="data.main.heading_type() == 'h4'" attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" html="data.main.html"></h4>
+<h5 if="data.main.heading_type() == 'h5'" attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" html="data.main.html"></h5>
+<h6 if="data.main.heading_type() == 'h6'" attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" html="data.main.html"></h6>
+```
+
+_Knockout bindings for the Heading's `data.main` config elements_
+
+With these bindings in place, Page Builder will rendered them to the DOM, using the values from the form fields (as noted in step 2), to look something like this:
+
+```html
+<h2 data-content-type="heading"
+    data-appearance="default"
+    data-heading-color="brand-green"
+    data-heading-style="style-italic"
+    data-element="main"
+    style="...; opacity: 1;">
+    My Heading Text
+</h2>
+```
+
+Knowing how the attributes and their user-selected values are written to the DOM, we can now target our content type's `main` element (`<h2>` in this example) using attribute-based CSS classes from our `_default.less` files. We'll do this next.
+
+## Step 4: Add CSS classes
+
+To target our DOM output, we will use attribute-based CSS classes in our `_default.less` files for both the `adminhtml` and `frontend`, as shown here from our module's adminhtml area:
 
 ```scss
 /*-- adminhtml _default.less attribute-based classes */
@@ -223,39 +270,7 @@ The CSS classes in our `_default.less` files for both the `adminhtml` and `front
 
 _Attribute-based CSS classes_
 
-The values for these attributes are set by the user from the form field that corresponds to the attribute. Using <attribute> configurations in this way makes it easy to target your content type's elements from your `_default.less` files.
-
-## Step 4: Add Knockout bindings
-
-In our example module, we are using the Heading's native `master.html` and `preview.html` templates, which already have all the Knockout bindings we need to render our new `<attribute>` and `<style>` configurations. Nonetheless, we will describe how these bindings map to our configuration options to render them to the DOM.
-
-In order for our configuration options to be rendered in the DOM as described in step 2, we must add or ensure that Knockout bindings for our three configuration styling options are within our HTML templates. The three Knockout bindings for the `<attribute>`, `<style>`, and `<css>` configuration nodes are `attr`, `ko-style`, and `css`, respectively:
-
-```html
-<h2 attr="data.main.attributes" ko-style="data.main.style" css="data.main.css"...></h2>
-```
-For all three Knockout bindings, `data.main` references the `main` element in the configuration file (`heading.xml`). The other binding references are as follows:
-
--  For the `attr` binding, the `attributes` property references the collection of `<attribute>` nodes defined for the `main` element.
-
--  For the `ko-style` binding, the `style` property references the collection of `<style>` nodes defined for the `main` element.
-
--  For the `css` binding, the `css` property references the `<css>` node defined for the `main` element.
-
-These Knockout bindings are applied to the Heading's `master.html` template (as well as the `preview.html` template), as shown here:
-
-```html
-<!-- Heading master.html -->
-
-<h1 if="data.main.heading_type() == 'h1'" attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" html="data.main.html"></h1>
-<h2 if="data.main.heading_type() == 'h2'" attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" html="data.main.html"></h2>
-<h3 if="data.main.heading_type() == 'h3'" attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" html="data.main.html"></h3>
-<h4 if="data.main.heading_type() == 'h4'" attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" html="data.main.html"></h4>
-<h5 if="data.main.heading_type() == 'h5'" attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" html="data.main.html"></h5>
-<h6 if="data.main.heading_type() == 'h6'" attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" html="data.main.html"></h6>
-```
-
-_Knockout bindings for the Heading's `data.main` config elements_
+Since the values for these attributes are set by the user from the form field, we can add a variety of different CSS properties for each available value. This makes it easy to target and style your content type elements in both small and large ways, depending on your use cases.
 
 ## Discussion
 
