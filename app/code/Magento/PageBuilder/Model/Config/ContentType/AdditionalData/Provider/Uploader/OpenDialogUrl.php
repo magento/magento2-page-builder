@@ -45,7 +45,7 @@ class OpenDialogUrl implements ProviderInterface
     public function getData(string $itemName) : array
     {
         return [
-            $itemName => $this->urlBuilder->getUrl($this->openDialogConfig->getOpenDialogUrl(), ['_secure' => true])
+            $itemName => $this->urlBuilder->getUrl($this->openDialogConfig->get(), ['_secure' => true])
         ];
     }
 }
