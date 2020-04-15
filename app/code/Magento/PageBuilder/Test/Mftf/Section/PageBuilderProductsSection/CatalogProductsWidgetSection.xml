@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
+    <section name="CatalogProductsWidget">
+        <element name="productWidget" type="text" parameterized="true" timeout="10" selector="((//div[@data-content-type='{{parentContentType}}'][{{indexOfParent}}])//div[contains(@class,'block-products-list')][{{indexOfProductGroup}}])//li[contains(@class,'product-item')][{{indexOfProductItem}}]"/>
+        <element name="productWidgetJS" type="text" parameterized="true" timeout="10" selector="document.querySelectorAll('div[data-content-type={{parentContentType}}]')[{{indexOfParent}}-1].querySelectorAll('.block.widget')[{{indexOfProductGroup}} - 1].querySelectorAll('li.product-item')[{{indexOfProductItem}} - 1]"/>
+    </section>
+</sections>

@@ -20,10 +20,10 @@
             <group value="pagebuilder-productAttribute"/>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
         </before>
         <after>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
         <amOnPage url="{{ProductAttributePage.url}}" stepKey="amOnProductAttributeCreationForm"/>
         <fillField selector="{{AttributePropertiesSection.DefaultLabel}}" userInput="{{ProductAttributeFrontendLabel.label}}" stepKey="fillDefaultLabel"/>
