@@ -86,18 +86,18 @@
         <seeElement selector="{{HtmlOnStage.base('1')}}" stepKey="seeHtmlBaseCMSBlockStageAfterSave"/>
         <seeElement selector="{{HtmlOnStage.html('1', PageBuilderHtmlPropertyButton.selector)}}" stepKey="seeHtmlCMSBlockStageAfterSave"/>
         <executeJS function="return document.querySelectorAll('{{HtmlOnStage.baseCSS}}')[0].innerText;" stepKey="actualTextFromHtmlCodeAfterSave"/>
-        <assertContains stepKey="assertWidgetOnStageAfterSave">
+        <assertStringContainsString stepKey="assertWidgetOnStageAfterSave">
             <expectedResult type="string">{{TinyMCEWidgetCMSPageLink.stageValue}}</expectedResult>
             <actualResult type="variable">actualTextFromHtmlCodeAfterSave</actualResult>
-        </assertContains>
-        <assertContains stepKey="assertImageOnStageAfterSave">
+        </assertStringContainsString>
+        <assertStringContainsString stepKey="assertImageOnStageAfterSave">
             <expectedResult type="string">{{ImageUpload3.value}}</expectedResult>
             <actualResult type="variable">actualTextFromHtmlCodeAfterSave</actualResult>
-        </assertContains>
-        <assertContains stepKey="assertVariableOnStageAfterSave">
+        </assertStringContainsString>
+        <assertStringContainsString stepKey="assertVariableOnStageAfterSave">
             <expectedResult type="string">{{TinyMCEVariableBaseURL.stageValue}}</expectedResult>
             <actualResult type="variable">actualTextFromHtmlCodeAfterSave</actualResult>
-        </assertContains>
+        </assertStringContainsString>
         <!-- Add Block to CMS Page -->
         <comment userInput="Add Block to CMS Page" stepKey="commentAddBlockToCMSPage"/>
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
@@ -121,18 +121,18 @@
         <seeElement selector="{{HtmlOnStorefront.base('1')}}" stepKey="seeHtmlBaseCMSPageStage"/>
         <seeElement selector="{{HtmlOnStorefront.html('1', PageBuilderHtmlPropertyButton.selector)}}" stepKey="seeHtmlCMSPageStage"/>
         <executeJS function="return document.querySelectorAll('{{HtmlOnStage.baseCSS}}')[0].innerText;" stepKey="actualTextFromHtmlCodeCMSPageStage"/>
-        <assertContains stepKey="assertWidgetOnStageCMSPageStage">
+        <assertStringContainsString stepKey="assertWidgetOnStageCMSPageStage">
             <expectedResult type="string">{{_ENV.MAGENTO_BASE_URL}}$$createCMSPage.identifier$$</expectedResult>
             <actualResult type="variable">actualTextFromHtmlCodeCMSPageStage</actualResult>
-        </assertContains>
-        <assertContains stepKey="assertImageOnStageCMSPageStage">
+        </assertStringContainsString>
+        <assertStringContainsString stepKey="assertImageOnStageCMSPageStage">
             <expectedResult type="string">{{ImageUpload3.value}}</expectedResult>
             <actualResult type="variable">actualTextFromHtmlCodeCMSPageStage</actualResult>
-        </assertContains>
-        <assertContains stepKey="assertVariableOnStageCMSPageStage">
+        </assertStringContainsString>
+        <assertStringContainsString stepKey="assertVariableOnStageCMSPageStage">
             <expectedResult type="string">{{_ENV.MAGENTO_BASE_URL}}</expectedResult>
             <actualResult type="variable">actualTextFromHtmlCodeCMSPageStage</actualResult>
-        </assertContains>
+        </assertStringContainsString>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate CMS Page Storefront -->
         <comment userInput="Validate CMS Page Storefront" stepKey="commentValidateCMSPageStorefront"/>
@@ -150,10 +150,10 @@
         <seeElement selector="{{HtmlOnStorefront.widgetLink('1', _ENV.MAGENTO_BASE_URL, $$createCMSPage.identifier$$)}}" stepKey="seeWidgetStorefront"/>
         <seeElement selector="{{StorefrontCMSPageSection.imageSource(ImageUpload3.fileName)}}" stepKey="seeMediaSourceStorefront"/>
         <executeJS function="return document.querySelectorAll('{{HtmlOnStorefront.baseCSS}}')[0].innerText;" stepKey="actualTextStorefront"/>
-        <assertContains stepKey="assertVariableStorefront">
+        <assertStringContainsString stepKey="assertVariableStorefront">
             <expectedResult type="string">{{_ENV.MAGENTO_BASE_URL}}</expectedResult>
             <actualResult type="variable">actualTextStorefront</actualResult>
-        </assertContains>
+        </assertStringContainsString>
         <!-- Click Page Link Widget Storefront -->
         <comment userInput="Click Page Link Widget Storefront" stepKey="clickClickPageLinkWidgetStorefront"/>
         <click selector="{{HtmlOnStorefront.widgetLink('1', _ENV.MAGENTO_BASE_URL, $$createCMSPage.identifier$$)}}" stepKey="clickWidgetStorefront"/>

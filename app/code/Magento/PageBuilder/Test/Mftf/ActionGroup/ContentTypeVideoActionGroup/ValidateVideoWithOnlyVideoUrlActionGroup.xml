@@ -27,9 +27,9 @@
             <actualResult type="variable">ratioDifference</actualResult>
         </assertLessThanOrEqual>
         <grabAttributeFrom selector="{{page.iframe(index)}}" userInput="src" stepKey="videoSrc"/>
-        <assertNotContains stepKey="assertNoAutoplay">
+        <assertStringNotContainsString stepKey="assertNoAutoplay">
             <expectedResult type="string">autoplay</expectedResult>
             <actualResult type="variable">$videoSrc</actualResult>
-        </assertNotContains>
+        </assertStringNotContainsString>
     </actionGroup>
 </actionGroups>

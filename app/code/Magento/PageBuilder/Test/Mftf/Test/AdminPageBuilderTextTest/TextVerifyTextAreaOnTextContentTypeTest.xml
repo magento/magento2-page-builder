@@ -57,10 +57,10 @@
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <executeJS function="return document.getElementById('{{TextOnConfiguration.textAreaId}}').value;" stepKey="getText"/>
-        <assertContains stepKey="assertEquals1" message="pass">
+        <assertStringContainsString stepKey="assertEquals1" message="pass">
             <expectedResult type="string">{{PageBuilderTextProperty.value}}</expectedResult>
             <actualResult type="variable">getText</actualResult>
-        </assertContains>
+        </assertStringContainsString>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage2"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>

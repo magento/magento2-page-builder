@@ -21,9 +21,9 @@
         <waitForElementNotVisible selector="{{VariableSection.InsertWidget}}" stepKey="waitForVariableModalToClose"/>
         <waitForElementVisible selector="{{TextOnConfiguration.textArea}}" stepKey="waitForTextArea"/>
         <executeJS function="return document.getElementById('{{TextOnConfiguration.textAreaId}}').value;" stepKey="getText"/>
-        <assertContains stepKey="assertValue">
+        <assertStringContainsString stepKey="assertValue">
             <expectedResult type="string">{{variable.editPanelValue}}</expectedResult>
             <actualResult type="variable">getText</actualResult>
-        </assertContains>
+        </assertStringContainsString>
     </actionGroup>
 </actionGroups>
