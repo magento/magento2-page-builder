@@ -21,18 +21,18 @@
             <group value="pagebuilder-disable"/>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
         </before>
         <after>
             <magentoCLI command="config:set cms/pagebuilder/enabled 1" stepKey="enablePageBuilder"/>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
         <!-- Verify Successful Navigation to Templates Page -->
         <actionGroup ref="navigateToPageBuilderTemplatesGridPage" stepKey="navigateToPageBuilderTemplatesGridPage"/>
         <!-- Disabled Page Builder -->
         <magentoCLI command="config:set cms/pagebuilder/enabled 0" stepKey="disablePageBuilder"/>
-        <actionGroup ref="logout" stepKey="logout"/>
-        <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+        <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
         <!-- Verify Unsuccessful Navigation to Templates Page -->
         <actionGroup ref="verifyCannotNavigateToPageBuilderTemplatesGridPage" stepKey="verifyCannotNavigateToPageBuilderTemplatesGridPage">
             <argument name="pageHeading" value="404 Error"/>

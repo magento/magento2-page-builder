@@ -20,12 +20,12 @@
             <group value="pagebuilder-panel"/>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
         <comment userInput="Verify Clear Search button is not shown before typing" stepKey="commentClearSearchButton"/>
         <dontSeeElement selector="//*[@id=&quot;pagebuilder-panel&quot;]/div[1]/a" stepKey="dontSeeClearSearch"/>

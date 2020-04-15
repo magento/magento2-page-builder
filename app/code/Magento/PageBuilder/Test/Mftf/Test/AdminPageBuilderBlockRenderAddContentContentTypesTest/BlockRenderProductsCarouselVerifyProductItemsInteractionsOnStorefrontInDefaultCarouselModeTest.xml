@@ -29,7 +29,7 @@
             </createData>
             <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
             <createData entity="_emptyCmsBlock" stepKey="createCMSBlock"/>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
             <actionGroup ref="NavigateToCreatedCMSBlockPageActionGroup" stepKey="navigateToCreatedCMSBlockPage1">
                 <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
             </actionGroup>
@@ -39,7 +39,7 @@
             <deleteData createDataKey="createProduct" stepKey="deleteCreatedProduct"/>
             <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
             <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock"/>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandMenuSectionAddContent">
             <argument name="contentType" value="PageBuilderProductsContentType"/>

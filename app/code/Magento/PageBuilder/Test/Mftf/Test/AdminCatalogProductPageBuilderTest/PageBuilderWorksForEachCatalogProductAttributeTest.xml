@@ -31,7 +31,7 @@
                 <requiredEntity createDataKey="createProductAttribute"/>
                 <requiredEntity createDataKey="createPreReqCategory"/>
             </createData>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
             <actionGroup ref="NavigateToCreatedProductAttributeActionGroup" stepKey="navigateToCreatedProductAttribute">
                 <argument name="ProductAttribute" value="$$createProductAttribute$$"/>
             </actionGroup>
@@ -63,7 +63,7 @@
             <actionGroup ref="ConfirmChangeInputTypeModalActionGroup" stepKey="confirmChangeInputTypeModal"/>
             <actionGroup ref="SaveProductAttributeActionGroup" stepKey="saveShortDescriptionAttribute"/>
             <actionGroup ref="NavigateToAndResetProductAttributeGridToDefaultViewActionGroup" stepKey="NavigateToAndResetProductAttributeGridToDefaultView"/>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
         <!-- Edit Product Custom Attribute -->
         <comment userInput="Edit Product Custom Attribute" stepKey="commentEditProductCustomAttribute"/>
