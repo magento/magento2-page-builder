@@ -33,7 +33,7 @@ class OpenDialogUrl implements ProviderInterface
      */
     public function __construct(
         Url $urlBuilder,
-        OpenDialogConfig $openDialogConfig
+        OpenDialogConfig $openDialogConfig // phpstan:ignore
     ) {
         $this->urlBuilder = $urlBuilder;
         $this->openDialogConfig = $openDialogConfig;
