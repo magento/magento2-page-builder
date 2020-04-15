@@ -29,7 +29,7 @@ class OpenDialogUrl implements ProviderInterface
 
     /**
      * @param Url $urlBuilder
-     * @param OpenDialogConfig $openDialogCOnfig
+     * @param OpenDialogConfig $openDialogConfig
      */
     public function __construct(
         Url $urlBuilder,
