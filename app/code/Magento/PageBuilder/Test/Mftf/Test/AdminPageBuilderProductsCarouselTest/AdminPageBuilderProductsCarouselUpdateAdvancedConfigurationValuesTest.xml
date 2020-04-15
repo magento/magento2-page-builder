@@ -47,5 +47,7 @@
             <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
             <argument name="index" value="1"/>
         </actionGroup>
+        <executeJS function="return window.getComputedStyle({{ProductsCarouselOnStage.productJS('1')}}).textAlign" stepKey="grabComputedTextAlign"/>
+        <executeJS function="return window.getComputedStyle({{ProductsOnStorefront.productsInCarouselNotClonedBySlickJS('1')}}).textAlign" stepKey="grabComputedTextAlignStorefront"/>
     </test>
 </tests>
