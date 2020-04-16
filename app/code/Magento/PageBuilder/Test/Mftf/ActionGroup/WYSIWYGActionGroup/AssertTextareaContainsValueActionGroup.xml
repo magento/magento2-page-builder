@@ -13,9 +13,9 @@
             <argument name="value" type="string"/>
         </arguments>
         <executeJS function="return document.evaluate(&quot;{{selector}}&quot;, document.body).iterateNext().value" stepKey="textareaValue"/>
-        <assertContains stepKey="assertTextareaContainsValue">
+        <assertStringContainsString stepKey="assertTextareaContainsValue">
             <expectedResult type="string">{{value}}</expectedResult>
             <actualResult type="variable">textareaValue</actualResult>
-        </assertContains>
+        </assertStringContainsString>
     </actionGroup>
 </actionGroups>

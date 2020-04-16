@@ -22,9 +22,9 @@
         <waitForElementNotVisible selector="{{VariableSection.InsertWidget}}" stepKey="waitForVariableModalToClose"/>
         <waitForElementVisible selector="{{HtmlOnConfiguration.textarea}}" stepKey="waitForTextArea"/>
         <executeJS function="return document.querySelectorAll('{{HtmlOnConfiguration.textareaCSS}}')[0].value;" stepKey="getValueFromTextarea"/>
-        <assertContains stepKey="assertTextareaContainsValue">
+        <assertStringContainsString stepKey="assertTextareaContainsValue">
             <expectedResult type="string">{{variable.editPanelValue}}</expectedResult>
             <actualResult type="variable">getValueFromTextarea</actualResult>
-        </assertContains>
+        </assertStringContainsString>
     </actionGroup>
 </actionGroups>

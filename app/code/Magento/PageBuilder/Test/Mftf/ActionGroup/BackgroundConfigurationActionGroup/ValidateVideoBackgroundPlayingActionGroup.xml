@@ -20,15 +20,15 @@
         <waitForElementVisible selector="{{section.videoBackgroundVideoElement(index)}}" stepKey="waitForVideoVisible"/>
         <waitForElement selector="{{section.videoBackgroundVideoUrl(index, videoUrl.renderedValue)}}" stepKey="waitForVideoUrl"/>
         <grabAttributeFrom selector="{{section.videoBackgroundVideoElement(index)}}" userInput="style" stepKey="videoStyle"/>
-        <assertContains stepKey="assertVideoPlaying">
+        <assertStringContainsString stepKey="assertVideoPlaying">
             <expectedResult type="string">transform: translate3d(</expectedResult>
             <actualResult type="variable">$videoStyle</actualResult>
-        </assertContains>
+        </assertStringContainsString>
         <waitForElement selector="{{section.videoBackgroundFallbackImage(index)}}|{{section.videoBackgroundNoFallbackImage(index)}}" stepKey="waitForFallbackImage"/>
         <grabAttributeFrom selector="{{section.videoBackgroundFallbackImage(index)}}|{{section.videoBackgroundNoFallbackImage(index)}}" userInput="style" stepKey="fallbackImageStyle"/>
-        <assertContains stepKey="assertFallbackImageNotDisplayed">
+        <assertStringContainsString stepKey="assertFallbackImageNotDisplayed">
             <expectedResult type="string">display: none;</expectedResult>
             <actualResult type="variable">$fallbackImageStyle</actualResult>
-        </assertContains>
+        </assertStringContainsString>
     </actionGroup>
 </actionGroups>
