@@ -289,8 +289,22 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
     _proto.bindEvents = function bindEvents() {
       var _this7 = this;
 
-      _preview2.prototype.bindEvents.call(this); // After drop of new content type open TinyMCE and focus
+      _preview2.prototype.bindEvents.call(this);
 
+      this.contentType.dataStore.subscribe(function (state) {
+        // Find html elements which attributes contain magento variables directives
+        var sanitizedContent = state.content.replace(/<([a-z0-9\-\_]+)([^>]+?[a-z0-9\-\_]+="[^"]*?\{\{.+?\}\}.*?".*?)>/gi, function (match1, tag, attributes) {
+          // Replace double quote with single quote within magento variable directive
+          var sanitizedAttributes = attributes.replace(/\{\{[^\{\}]+\}\}/gi, function (match2) {
+            return match2.replace(/"/g, "'");
+          });
+          return "<" + tag + sanitizedAttributes + ">";
+        });
+
+        if (sanitizedContent !== state.content) {
+          state.content = sanitizedContent;
+        }
+      }); // After drop of new content type open TinyMCE and focus
 
       _events.on("text:dropAfter", function (args) {
         if (args.id === _this7.contentType.id) {
