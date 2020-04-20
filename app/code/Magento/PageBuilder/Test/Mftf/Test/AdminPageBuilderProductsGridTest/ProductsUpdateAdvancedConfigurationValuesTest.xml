@@ -21,7 +21,7 @@
             <group value="pagebuilder-productsGrid"/>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
             <createData entity="PageBuilderProductsSubCategory" stepKey="createPreReqCategory"/>
             <createData entity="_defaultProduct" stepKey="createPreReqProduct">
                 <requiredEntity createDataKey="createPreReqCategory"/>
@@ -32,7 +32,7 @@
         <after>
             <deleteData createDataKey="createPreReqProduct" stepKey="deletePreReqProduct"/>
             <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCategory"/>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
@@ -143,6 +143,12 @@
             <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
             <argument name="index" value="1"/>
         </actionGroup>
+        <!-- Validate Product Item Inner Contents Stay Aligned Left -->
+        <executeJS function="return window.getComputedStyle({{ProductsOnStage.productJS('1')}}).textAlign" stepKey="grabComputedTextAlign"/>
+        <assertEquals stepKey="assertComputedTextAlign">
+            <expectedResult type="string">{{PageBuilderAdvancedAlignmentPropertyLeft.value}}</expectedResult>
+            <actualResult type="variable">grabComputedTextAlign</actualResult>
+        </assertEquals>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage3">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
@@ -189,5 +195,11 @@
             <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
             <argument name="index" value="1"/>
         </actionGroup>
+        <!-- Validate Product Item Inner Contents Stay Aligned Left Storefront -->
+        <executeJS function="return window.getComputedStyle({{ProductsOnStorefront.productJS('1')}}).textAlign" stepKey="grabComputedTextAlignStorefront"/>
+        <assertEquals stepKey="assertComputedTextAlignStorefront">
+            <expectedResult type="string">{{PageBuilderAdvancedAlignmentPropertyLeft.value}}</expectedResult>
+            <actualResult type="variable">grabComputedTextAlignStorefront</actualResult>
+        </assertEquals>
     </test>
 </tests>

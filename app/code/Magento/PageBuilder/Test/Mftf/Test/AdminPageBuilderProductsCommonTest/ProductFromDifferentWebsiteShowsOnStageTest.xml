@@ -21,7 +21,7 @@
             <group value="pagebuilder-storeView"/>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
             <magentoCLI command="config:set web/url/use_store 1" stepKey="turnOnStoreUrlUsage"/>
             <createData entity="customWebsite" stepKey="createCustomWebsite"/>
             <createData entity="SimpleSubCategory" stepKey="createCategory"/>
@@ -45,7 +45,7 @@
             <actionGroup ref="DeleteProductBySkuActionGroup" stepKey="deleteProduct">
                 <argument name="sku" value="{{SimpleProduct.sku}}"/>
             </actionGroup>
-            <actionGroup ref="logout" stepKey="logoutOfAdmin"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logoutOfAdmin"/>
         </after>
         <!-- Create product and assign to store view -->
         <comment userInput="Create product and assign to store view" stepKey="createProductAndAssignToStoreView"/>

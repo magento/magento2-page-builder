@@ -24,7 +24,7 @@
             <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
             <createData entity="rolePageBuilderApplyTemplates" stepKey="role1"/>
             <createData entity="rolePageBuilderTemplates" stepKey="role2"/>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
             <actionGroup ref="AdminCreateUserWithApiRoleActionGroup" stepKey="adminCreateUser">
                 <argument name="user" value="NewAdminUser"/>
                 <argument name="role" value="rolePageBuilderApplyTemplates"/>
@@ -43,15 +43,16 @@
             <actionGroup ref="openPageBuilderSaveTemplateModal" stepKey="openPageBuilderSaveTemplateModal"/>
             <actionGroup ref="fillPageBuilderSaveTemplateForm" stepKey="fillPageBuilderSaveTemplateForm"/>
             <actionGroup ref="savePageBuilderTemplate" stepKey="savePageBuilderTemplate"/>
-            <actionGroup ref="logout" stepKey="logout"/>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsCreatedUser">
-                <argument name="adminUser" value="NewAdminUser"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsCreatedUser">
+                <argument name="username" value="{{NewAdminUser.username}}"/>
+                <argument name="password" value="{{NewAdminUser.password}}"/>
             </actionGroup>
         </before>
         <after>
             <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
-            <actionGroup ref="logout" stepKey="logout"/>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
             <actionGroup ref="AdminDeleteRoleByRoleNameActionGroup" stepKey="deleteRole">
                 <argument name="role" value="rolePageBuilderApplyTemplates"/>
             </actionGroup>
@@ -65,7 +66,7 @@
             <actionGroup ref="clearFiltersPageBuilderTemplateGrid" stepKey="clearFiltersPageBuilderTemplateGrid"/>
             <actionGroup ref="searchByKeywordPageBuilderTemplateGrid" stepKey="searchByKeywordPageBuilderTemplateGrid"/>
             <actionGroup ref="deletePageBuilderTemplate" stepKey="deletePageBuilderTemplate"/>
-            <actionGroup ref="logout" stepKey="logout2"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout2"/>
         </after>
         <!-- Verify Can Apply Template -->
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
@@ -83,9 +84,9 @@
         <actionGroup ref="clickApplyFromPageBuilderApplyTemplateSlideOut" stepKey="clickApplyFromPageBuilderApplyTemplateSlideOut"/>
         <actionGroup ref="confirmApplyFromPageBuilderApplyTemplateSlideOut" stepKey="confirmApplyFromPageBuilderApplyTemplateSlideOut"/>
         <seeElement selector="{{ButtonItemOnStage.emptyButtonItemElement('1')}}" stepKey="seeEmptyButton"/>
-        <actionGroup ref="logout" stepKey="logout"/>
+        <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         <!-- Change User Role -->
-        <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+        <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
         <actionGroup ref="AdminOpenUserEditPageActionGroup" stepKey="AdminOpenUserEditPageActionGroup">
             <argument name="user" value="NewAdminUser"/>
         </actionGroup>
@@ -94,10 +95,11 @@
         </actionGroup>
         <actionGroup ref="AdminClickSaveButtonOnUserFormActionGroup" stepKey="AdminClickSaveButtonOnUserFormActionGroup"/>
         <actionGroup ref="AssertAdminUserSaveMessageActionGroup" stepKey="AssertAdminUserSaveMessageActionGroup"/>
-        <actionGroup ref="logout" stepKey="logout2"/>
+        <actionGroup ref="AdminLogoutActionGroup" stepKey="logout2"/>
         <!-- Verify Cannot Apply Template -->
-        <actionGroup ref="LoginAsAdmin" stepKey="loginAsCreatedUser">
-            <argument name="adminUser" value="NewAdminUser"/>
+        <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsCreatedUser">
+            <argument name="username" value="{{NewAdminUser.username}}"/>
+            <argument name="password" value="{{NewAdminUser.password}}"/>
         </actionGroup>
         <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage2">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
