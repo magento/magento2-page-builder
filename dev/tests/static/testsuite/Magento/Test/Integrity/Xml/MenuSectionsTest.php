@@ -20,7 +20,7 @@ class MenuSectionsTest extends \PHPUnit\Framework\TestCase
      */
     private $componentDirSearch;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $componentRegistrar = new ComponentRegistrar();
         $this->componentDirSearch = new DirSearch($componentRegistrar, new ReadFactory(new DriverPool()));
