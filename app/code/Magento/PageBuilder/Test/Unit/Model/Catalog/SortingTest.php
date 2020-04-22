@@ -8,11 +8,11 @@ declare(strict_types=1);
 namespace Magento\PageBuilder\Test\Unit\Model\Catalog;
 
 use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
+use Magento\PageBuilder\Model\Catalog\Sorting;
+use Magento\PageBuilder\Model\Catalog\Sorting\Factory;
+use Magento\PageBuilder\Model\Catalog\Sorting\OptionInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\MockObject\Stub\ReturnValueMap;
-use Magento\PageBuilder\Model\Catalog\Sorting\OptionInterface;
-use Magento\PageBuilder\Model\Catalog\Sorting\Factory;
-use Magento\PageBuilder\Model\Catalog\Sorting;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -33,7 +33,7 @@ class SortingTest extends TestCase
     /**
      * @inheritdoc
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->objectManager = new ObjectManager($this);
         $this->sortingFactoryMock = $this->createMock(Factory::class);
