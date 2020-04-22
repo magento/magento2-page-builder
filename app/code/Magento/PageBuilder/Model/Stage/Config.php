@@ -11,6 +11,8 @@ namespace Magento\PageBuilder\Model\Stage;
 use Magento\Framework\App\ObjectManager;
 use Magento\Framework\UrlInterface;
 use Magento\Framework\AuthorizationInterface;
+use Magento\Framework\Cache\FrontendInterface;
+use Magento\Framework\Serialize\Serializer\Json;
 
 /**
  * Provide configuration to the admin JavaScript app
@@ -31,6 +33,10 @@ class Config
     const TEMPLATE_DELETE_RESOURCE = 'Magento_PageBuilder::template_delete';
     const TEMPLATE_SAVE_RESOURCE = 'Magento_PageBuilder::template_save';
     const TEMPLATE_APPLY_RESOURCE = 'Magento_PageBuilder::template_apply';
+
+    private const CONTENT_TYPE_CACHE_ID = 'CONTENT_TYPE';
+    private const TINY_MCE_CONFIG_CACHE_ID = 'TYNY_MCE_CONFIG';
+    private const WIDGET_BREAKPOINS_CACHE_ID = 'WIDGET_BREAKPOINS';
 
     /**
      * @var \Magento\PageBuilder\Model\ConfigInterface
@@ -103,6 +109,16 @@ class Config
     private $authorization;
 
     /**
+     * @var FrontendInterface
+     */
+    private $cache;
+
+    /**
+     * @var Json
+     */
+    private $serializer;
+
+    /**
      * @param \Magento\PageBuilder\Model\ConfigInterface $config
      * @param Config\UiComponentConfig $uiComponentConfig
      * @param UrlInterface $urlBuilder
@@ -117,6 +133,8 @@ class Config
      * @param \Magento\Widget\Model\Widget\Config|null $widgetConfig
      * @param \Magento\Variable\Model\Variable\Config|null $variableConfig
      * @param AuthorizationInterface|null $authorization
+     * @param FrontendInterface|null $cache
+     * @param Json|null $serializer
      *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
@@ -134,7 +152,9 @@ class Config
         array $data = [],
         \Magento\Widget\Model\Widget\Config $widgetConfig = null,
         \Magento\Variable\Model\Variable\Config $variableConfig = null,
-        AuthorizationInterface $authorization = null
+        AuthorizationInterface $authorization = null,
+        FrontendInterface $cache = null,
+        Json $serializer = null
     ) {
         $this->config = $config;
         $this->uiComponentConfig = $uiComponentConfig;
@@ -152,6 +172,8 @@ class Config
         $this->variableConfig = $variableConfig ?? \Magento\Framework\App\ObjectManager::getInstance()
                 ->get(\Magento\Variable\Model\Variable\Config::class);
         $this->authorization = $authorization ?: ObjectManager::getInstance()->get(AuthorizationInterface::class);
+        $this->serializer = $serializer ?: \Magento\Framework\App\ObjectManager::getInstance()->get(Json::class);
+        $this->cache = $cache ?: \Magento\Framework\App\ObjectManager::getInstance()->get(FrontendInterface::class);
     }
 
     /**
@@ -173,8 +195,8 @@ class Config
             'column_grid_max' => $this->scopeConfig->getValue(self::XML_PATH_COLUMN_GRID_MAX),
             'can_use_inline_editing_on_stage' => $this->isWysiwygProvisionedForEditingOnStage(),
             'widgets' => $this->widgetInitializerConfig->getConfig(),
-            'breakpoints' => $this->widgetInitializerConfig->getBreakpoints(),
-            'tinymce' => $this->getTinyMceConfig(),
+            'breakpoints' => $this->getCachedWidgetBreakpoints(),
+            'tinymce' => $this->getCachedTinyMceConfig(),
             'acl' => $this->getAcl()
         ];
     }
@@ -243,19 +265,43 @@ class Config
 
         $contentTypeData = [];
         foreach ($contentTypes as $name => $contentType) {
-            $contentTypeData[$name] = $this->flattenContentTypeData(
+            $contentTypeData[$name] = $this->getCachedFlattenContentTypeData(
                 $name,
                 $contentType
             );
         }
 
         // The stage requires a root container to house it's children
-        $contentTypeData[self::ROOT_CONTAINER_NAME] = $this->flattenContentTypeData(
+        $contentTypeData[self::ROOT_CONTAINER_NAME] = $this->getCachedFlattenContentTypeData(
             self::ROOT_CONTAINER_NAME,
             $this->rootContainerConfig
         );
 
         return $contentTypeData;
+    }
+
+    /**
+     * Get flatten content type for content name from cache and add it to cache if wasn't cached
+     *
+     * @param string $name
+     * @param array $contentType
+     *
+     * @return array
+     */
+    private function getCachedFlattenContentTypeData(string $name, array $contentType)
+    {
+        $identifier = self::CONTENT_TYPE_CACHE_ID . '_' . $name;
+
+        $flattenContentTypeData = $this->getCache($identifier);
+        if (empty($flattenContentTypeData)) {
+            $flattenContentTypeData = $this->flattenContentTypeData(
+                $name,
+                $contentType
+            );
+            $this->saveCache($flattenContentTypeData, $identifier);
+        }
+
+        return $flattenContentTypeData;
     }
 
     /**
@@ -307,5 +353,58 @@ class Config
         $activeEditorPath = $this->activeEditor->getWysiwygAdapterPath();
 
         return $this->inlineEditingChecker->isSupported($activeEditorPath);
+    }
+
+    /**
+     * Get the TINY MCE config from cache and add it to cache if it wasn't cached
+     *
+     * @return array
+     */
+    private function getCachedTinyMceConfig(): array
+    {
+        $configData = $this->getCache(self::TINY_MCE_CONFIG_CACHE_ID);
+        if (empty($configData)) {
+            $configData = $this->getTinyMceConfig();
+            $this->saveCache($configData, self::TINY_MCE_CONFIG_CACHE_ID);
+        }
+        return $configData;
+    }
+
+    /**
+     * Get widget breakpoints from cache and add it to cache if it wasn't cached
+     *
+     * @return array
+     */
+    private function getCachedWidgetBreakpoints(): array
+    {
+        $cache = $this->getCache(self::WIDGET_BREAKPOINS_CACHE_ID);
+        if (empty($cache)) {
+            $cache = $this->widgetInitializerConfig->getBreakpoints();
+            $this->saveCache($cache, self::WIDGET_BREAKPOINS_CACHE_ID);
+        }
+        return $cache;
+    }
+
+    /**
+     * @param $cacheIdentifier
+     * @return array
+     */
+    private function getCache($cacheIdentifier): array
+    {
+        $serializedData = $this->cache->load($cacheIdentifier);
+        $cache = $serializedData
+            ? $this->serializer->unserialize($serializedData)
+            : [];
+
+        return $cache;
+    }
+
+    /**
+     * @param array $data
+     * @param $cacheIdentifier
+     */
+    private function saveCache(array $data, $cacheIdentifier): void
+    {
+        $this->cache->save($this->serializer->serialize($data), $cacheIdentifier);
     }
 }
