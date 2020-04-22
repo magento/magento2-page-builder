@@ -48,7 +48,7 @@ class UploadTest extends TestCase
     /**
      * @inheritdoc
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->objectManager = ObjectManager::getInstance();
 
@@ -77,7 +77,7 @@ class UploadTest extends TestCase
     /**
      * @inheritdoc
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $_FILES = [];
     }
