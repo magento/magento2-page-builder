@@ -10,9 +10,11 @@
     <test name="AdminCheckCreateFolderEscapeAndEnterHandlesForWYSIWYGBlockTest">
         <before>
             <magentoCLI command="config:set cms/pagebuilder/enabled 0" stepKey="disablePageBuilder" before="enableWYSIWYG"/>
+            <magentoCLI command="cache:clean config" stepKey="flushCache"/>
         </before>
         <after>
             <magentoCLI command="config:set cms/pagebuilder/enabled 1" stepKey="enablePageBuilder" before="disableWYSIWYG"/>
+            <magentoCLI command="cache:clean config" stepKey="flushCache"/>
         </after>
     </test>
 </tests>

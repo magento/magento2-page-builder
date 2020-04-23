@@ -23,9 +23,11 @@
         <before>
             <remove keyForRemoval="enableTinyMCE4"/>
             <magentoCLI command="config:set cms/wysiwyg/editor Magento_Tinymce3/tinymce3Adapter" stepKey="enableTinyMCE3" before="loginAsAdmin"/>
+            <magentoCLI command="cache:clean config" stepKey="flushCache"/>
         </before>
         <after>
             <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="enableTinyMCE4" before="logout"/>
+            <magentoCLI command="cache:clean config" stepKey="flushCache"/>
         </after>
         <actionGroup ref="inlineEditTextAreaFromStage" stepKey="inlineEdit">
             <argument name="contentType" value="PageBuilderSliderContentType"/>

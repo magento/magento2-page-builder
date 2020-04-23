@@ -10,9 +10,11 @@
     <test name="VerifyDefaultWYSIWYGToolbarOnProductTest">
         <before>
             <magentoCLI command="config:set cms/pagebuilder/enabled 0" stepKey="disablePageBuilder" after="switchToTinyMCE4"/>
+            <magentoCLI command="cache:clean config" stepKey="flushCache"/>
         </before>
         <after>
             <magentoCLI command="config:set cms/pagebuilder/enabled 1" stepKey="enablePageBuilder" after="disableWYSIWYG"/>
+            <magentoCLI command="cache:clean config" stepKey="flushCache"/>
         </after>
         <remove keyForRemoval="assertInfo2"/>
     </test>

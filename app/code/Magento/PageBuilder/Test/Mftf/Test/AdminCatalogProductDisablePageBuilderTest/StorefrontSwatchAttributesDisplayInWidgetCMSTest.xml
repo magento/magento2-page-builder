@@ -10,9 +10,11 @@
     <test name="StorefrontSwatchAttributesDisplayInWidgetCMSTest">
         <before>
             <magentoCLI command="config:set cms/pagebuilder/enabled 0" stepKey="disablePageBuilder"/>
+            <magentoCLI command="cache:clean config" stepKey="flushCache"/>
         </before>
         <after>
             <magentoCLI command="config:set cms/pagebuilder/enabled 1" stepKey="enablePageBuilder"/>
+            <magentoCLI command="cache:clean config" stepKey="flushCache"/>
         </after>
     </test>
 </tests>

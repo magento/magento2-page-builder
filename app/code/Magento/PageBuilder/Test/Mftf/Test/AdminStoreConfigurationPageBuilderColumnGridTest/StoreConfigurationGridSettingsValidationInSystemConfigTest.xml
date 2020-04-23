@@ -29,6 +29,7 @@
         <after>
             <magentoCLI command="config:set cms/pagebuilder/column_grid_default 12" stepKey="setDefaultGridSize"/>
             <magentoCLI command="config:set cms/pagebuilder/column_grid_max 16" stepKey="setMaxGridSize"/>
+            <magentoCLI command="cache:clean config" stepKey="flushCache"/>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
         <conditionalClick stepKey="uncheckUseSystemValueDefault" selector="{{ContentManagementSection.UseSystem('column_grid_default')}}" dependentSelector="{{ContentManagementSection.UseSystemChecked('column_grid_default')}}" visible="true"/>
