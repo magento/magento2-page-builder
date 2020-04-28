@@ -7,6 +7,10 @@ The release notes include:
 - {:.new}New features
 - {:.fix}Fixes and improvements
 
+## **1.3.1** for Magento Commerce 2.3.5-p1
+
+This version of Page Builder is just a version-number update for Magento 2.3.5-p1. All features described for version 1.3.0 apply to this version as well.
+
 ## **1.3.0** for Magento Commerce 2.3.5
 
 - {:.new}**Templates**<br/>
@@ -42,6 +46,10 @@ The release notes include:
 - {:.fix}<!-- PB-317 -->Fixed an issue in which saving Page Builder content with background images on Microsoft Edge does not render those images on the storefront.
 - {:.fix}<!-- PB-390 -->Fixed an issue in which nested Page Builder content fails to save if users click the Save button before the page fully renders.
 - {:.fix}<!-- PB-418 -->Fixed exception error being throw in cron jobs due to Page Builder analytics.
+
+## **1.2.2** for Magento Commerce 2.3.4-p2
+
+- {:.new}Security enhancements.
 
 ## **1.2.1** for Magento Commerce 2.3.4-p1
 
