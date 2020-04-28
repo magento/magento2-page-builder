@@ -4,22 +4,28 @@ Before version 1.3, changes to a content-type configuration could (and usually w
 
 To fix this limitation for versions 1.3+, Page Builder uses Magento's native upgrade mechanism, coupled with our content upgrade helpers. These helpers convert existing content so that it maps to new configurations and displays correctly.
 
-## Example usage for Row
+## Example: Updating the Row content type
 
-The Page Builder team recently had to change the configuration of the Row's full-width appearance to fix a layout issue. The fix was simple. We moved a style attribute from one element in the Row's full-width appearance to another element. But without the upgrade helpers, our change to the Row's configuration would have broken all previously saved Page Builder content with Rows. And because all Page Builder content starts with a Row, all Page Builder content would be broken!
+Let's imagine that the Page Builder team needs to change the configuration of the Row's full-width appearance to fix a layout issue. The fix is simple. We need to move a style attribute from one element in the Row's full-width appearance to another element. But without the upgrade helpers, our change to the Row's configuration would break all previously saved Page Builder content that uses Rows. And because all Page Builder content is wrapped in a Row, changing the Row would break all Page Builder content!
 
-To fix this issue, we used the Page Builder DOM helper classes (`Magento\PageBuilder\Model\Dom\*`) to create a converter and a data patch for the native Row content type:
+To fix this issue, we created a set of Page Builder DOM helper classes (`Magento\PageBuilder\Model\Dom\*`) that we can use to update all our native content types (including the Row) that have already been stored in the database.
 
-1. **Converter** (See `FixFullWidthRowPadding.php`)
-2. **Data Patch** (See `UpgradeFullWidthPadding.php`)
+## Steps overview
+There are three steps to upgrading a content type when changing its configuration:
 
-   ![Example converter and upgrader classes](../images/upgrade-framework-example-pb.png)
+1. Create a Converter (Example: `FixFullWidthRowPadding.php`)
+2. Create a Data Patch (Example: `UpgradeFullWidthPadding.php`)
+3. Update the UpgradableEntitiesPool (for custom entities)(`Magento\PageBuilder\Model\UpgradableEntitiesPool`)
 
-### Converter class example
+For our Row example, the Page Builder team would add the following files to the `Magento/PageBuilder/Setup` directories:
 
-The converter class implements the `DataConverterInterface`. Specifically, it implements the `convert` function where it uses Page Builder's DOM helper classes to change the DOM of the Row content type within each master format it receives.
+![Example converter and upgrader classes](../images/upgrade-framework-example-pb.png)
 
-Page Builder's `FixFullWidthRowPadding` converter class is provided here as an example implementation:
+### Step 1: Create a Converter
+
+For our Row example, the first task is to create a converter class that implements the `DataConverterInterface`. Specifically, it implements the `convert` function where it uses Page Builder's DOM helper classes to change the DOM of the Row content type within each master format it receives.
+
+Our converter class for fixing a row padding problem might be called `FixFullWidthRowPadding`, with the following example implementation:
 
 ```php
 <?php
@@ -82,11 +88,11 @@ class FixFullWidthRowPadding implements DataConverterInterface
 }
 ```
 
-### Data patch class example
+### Step 2: Create a Data Patch
 
-The data patch class implements the `DataPatchInterface`. Specifically, it uses the Page Builder `UpgradeContentHelper` class to apply the converter class to all the database entities where Page Builder content exists. These locations are provided by the `UpgradableEntitiesPool`, described later in this topic.
+Our second task for updating our example Row content type is to create a Data Patch class that implements the `DataPatchInterface`. Specifically, we need to use the Page Builder `UpgradeContentHelper` class to apply the converter class to all the database entities where Page Builder content exists. These locations are provided by the `UpgradableEntitiesPool`, described later in this topic.
 
-Page Builder's `UpgradeFullWidthPadding` class is provided here as an example implementation:
+For our Data Patch, we'll create a class called `UpgradeFullWidthPadding`, which fixes our row padding problem with the following example implementation:
 
 ```php
 <?php
@@ -151,9 +157,40 @@ class UpgradeFullWidthPadding implements DataPatchInterface
 }
 ```
 
-## UpgradableEntitiesPool
+### Step 3: Update the UpgradableEntitiesPool (for custom entities)
 
-The `UpgradableEntitiesPool` provides the locations in the database where Page Builder content exists. By default, these entities include: `cms_block`, `cms_page`, `catalog_category_entity_text`, `catalog_product_entity_text`, and `pagebuilder_template`. Page Builder defines these entities in `Magento/PageBuilder/etc/di.xml`, as shown here:
+The `Magento\PageBuilder\Model\UpgradableEntitiesPool` provides the locations in the database where Page Builder content exists by default. These entities include:
+
+-  `cms_block`
+-  `cms_page`
+-  `catalog_category_entity_text`
+-  `catalog_product_entity_text`
+-  `pagebuilder_template`
+
+If your Magento installation does not have any additional entities for Page Builder content (beyond the defaults), you do not need to update the `UpgradableEntitiesPool`.
+
+However, if you have created additional database entities for storing Page Builder content, you _must_ add those entities to the `UpgradableEntitiesPool` type in your module's `etc/di.xml`. If you do not, the Page Builder content stored in your entity will not be updated, causing potential data-loss and display issues.
+
+![Additional entities](../images/upgrade-framework-additional-entities.png)
+
+For example, if you have created a blog entity that stores Page Builder content, you must add your blog entity to your `etc/di.xml` file as an `UpgradableEntitiesPool` type. This entry ensures that the upgrade library can update the Page Builder content types used in your blog. An entry for our blog example might look like this:
+
+```xml
+<type name="Magento\PageBuilder\Model\UpgradableEntitiesPool">
+    <arguments>
+        <argument name="entities" xsi:type="array">
+            <item name="cms_blog" xsi:type="array">
+                <item name="identifier" xsi:type="string">blog_id</item>
+                <item name="fields" xsi:type="array">
+                    <item name="content" xsi:type="boolean">true</item>
+                </item>
+            </item>
+        </argument>
+    </arguments>
+</type>
+```
+
+In such cases, your additional entity will be merged with the default entities from `Magento/PageBuilder/etc/di.xml`:
 
 ```xml
 <type name="Magento\PageBuilder\Model\UpgradableEntitiesPool">
@@ -187,23 +224,6 @@ The `UpgradableEntitiesPool` provides the locations in the database where Page B
                 <item name="identifier" xsi:type="string">template_id</item>
                 <item name="fields" xsi:type="array">
                     <item name="template" xsi:type="boolean">true</item>
-                </item>
-            </item>
-        </argument>
-    </arguments>
-</type>
-```
-
-If you have created additional database entities for storing Page Builder content, you need to add your custom entity to your `etc/di.xml` as shown in the following example:
-
-```xml
-<type name="Magento\PageBuilder\Model\UpgradableEntitiesPool">
-    <arguments>
-        <argument name="entities" xsi:type="array">
-            <item name="my_custom_block" xsi:type="array">
-                <item name="identifier" xsi:type="string">custom_block_id</item>
-                <item name="fields" xsi:type="array">
-                    <item name="content" xsi:type="boolean">true</item>
                 </item>
             </item>
         </argument>
