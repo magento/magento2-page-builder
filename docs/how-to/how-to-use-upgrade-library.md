@@ -1,4 +1,4 @@
-# How to use the content type upgrade library
+# How to upgrade content types
 
 Before version 1.3, changes to a content-type configuration could (and usually would) break the existing content that was saved with the previous configuration. Why? Because a content type's configuration maps data from its source (the master format) to its display templates. So when the configuration mapping changes, the display of existing content might also change. With significant configuration changes, data (such as styles, attributes, and html) is lost. Such changes cause existing content to appear incorrectly, or not at all.
 
