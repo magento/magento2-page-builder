@@ -26,11 +26,11 @@
             <createData stepKey="assignTextAttributeGroup" entity="AddToDefaultSet">
                 <requiredEntity createDataKey="createTextAttribute"/>
             </createData>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
         </before>
         <after>
             <deleteData createDataKey="createTextAttribute" stepKey="deletePreReqProductAttribute"/>
-            <actionGroup ref="logout" stepKey="logout"/>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
         <!-- Create a new product -->
         <comment userInput="Create a new product" stepKey="commentCreateNewProduct"/>
