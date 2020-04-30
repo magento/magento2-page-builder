@@ -2270,19 +2270,19 @@
             <argument name="property" value="PageBuilderRowAppearance_FullBleed"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
-        <executeJS function="return parseInt(&quot;{{PageBuilderVideoBackgroundUrl_Mp4_URL_Insecure.width}}&quot;) / parseInt(&quot;{{PageBuilderVideoBackgroundUrl_Mp4_URL_Insecure.height}}&quot;)" stepKey="expectedVideoAspectRatio"/>
+        <executeJS function="return parseInt(&quot;{{PageBuilderVideoBackgroundUrl_Mp4_URL.width}}&quot;) / parseInt(&quot;{{PageBuilderVideoBackgroundUrl_Mp4_URL.height}}&quot;)" stepKey="expectedVideoAspectRatio"/>
         <!-- Validate Stage -->
-        <actionGroup ref="validateVideoAspectRatio" stepKey="validateVideoAspectRatioRow1Stage">
+        <actionGroup ref="validateVideoBackgroundVideoAspectRatio" stepKey="validateVideoAspectRatioRow1Stage">
             <argument name="section" value="RowOnStage"/>
             <argument name="expectedRatio" value="{$expectedVideoAspectRatio}"/>
             <argument name="index" value="1"/>
         </actionGroup>
-        <actionGroup ref="validateVideoAspectRatio" stepKey="validateVideoAspectRatioRow2Stage">
+        <actionGroup ref="validateVideoBackgroundVideoAspectRatio" stepKey="validateVideoAspectRatioRow2Stage">
             <argument name="section" value="RowOnStage"/>
             <argument name="expectedRatio" value="{$expectedVideoAspectRatio}"/>
             <argument name="index" value="2"/>
         </actionGroup>
-        <actionGroup ref="validateVideoAspectRatio" stepKey="validateVideoAspectRatioRow3Stage">
+        <actionGroup ref="validateVideoBackgroundVideoAspectRatio" stepKey="validateVideoAspectRatioRow3Stage">
             <argument name="section" value="RowOnStage"/>
             <argument name="expectedRatio" value="{$expectedVideoAspectRatio}"/>
             <argument name="index" value="3"/>
@@ -2292,17 +2292,17 @@
         <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStorefront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
-        <actionGroup ref="validateVideoAspectRatio" stepKey="validateVideoAspectRatioRow1Storefront">
+        <actionGroup ref="validateVideoBackgroundVideoAspectRatio" stepKey="validateVideoAspectRatioRow1Storefront">
             <argument name="section" value="RowOnStorefront"/>
             <argument name="expectedRatio" value="{$expectedVideoAspectRatio}"/>
             <argument name="index" value="1"/>
         </actionGroup>
-        <actionGroup ref="validateVideoAspectRatio" stepKey="validateVideoAspectRatioRow2Storefront">
+        <actionGroup ref="validateVideoBackgroundVideoAspectRatio" stepKey="validateVideoAspectRatioRow2Storefront">
             <argument name="section" value="RowOnStorefront_FullWidth_FullBleed"/>
             <argument name="expectedRatio" value="{$expectedVideoAspectRatio}"/>
             <argument name="index" value="2"/>
         </actionGroup>
-        <actionGroup ref="validateVideoAspectRatio" stepKey="validateVideoAspectRatioRow3Storefront">
+        <actionGroup ref="validateVideoBackgroundVideoAspectRatio" stepKey="validateVideoAspectRatioRow3Storefront">
             <argument name="section" value="RowOnStorefront_FullWidth_FullBleed"/>
             <argument name="expectedRatio" value="{$expectedVideoAspectRatio}"/>
             <argument name="index" value="3"/>
