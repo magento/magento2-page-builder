@@ -17,6 +17,7 @@ use Magento\Framework\Serialize\Serializer\Json;
 /**
  * Provide configuration to the admin JavaScript app
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ * @SuppressWarnings(PHPMD.TooManyFields)
  *
  * @api
  */
@@ -35,8 +36,8 @@ class Config
     const TEMPLATE_APPLY_RESOURCE = 'Magento_PageBuilder::template_apply';
 
     private const CONTENT_TYPE_CACHE_ID = 'CONTENT_TYPE';
-    private const TINY_MCE_CONFIG_CACHE_ID = 'TYNY_MCE_CONFIG';
-    private const WIDGET_BREAKPOINS_CACHE_ID = 'WIDGET_BREAKPOINS';
+    private const TINY_MCE_CONFIG_CACHE_ID = 'TINY_MCE_CONFIG';
+    private const WIDGET_BREAKPOINTS_CACHE_ID = 'WIDGET_BREAKPOINS';
 
     /**
      * @var \Magento\PageBuilder\Model\ConfigInterface
@@ -377,19 +378,21 @@ class Config
      */
     private function getCachedWidgetBreakpoints(): array
     {
-        $cache = $this->getCache(self::WIDGET_BREAKPOINS_CACHE_ID);
+        $cache = $this->getCache(self::WIDGET_BREAKPOINTS_CACHE_ID);
         if (empty($cache)) {
             $cache = $this->widgetInitializerConfig->getBreakpoints();
-            $this->saveCache($cache, self::WIDGET_BREAKPOINS_CACHE_ID);
+            $this->saveCache($cache, self::WIDGET_BREAKPOINTS_CACHE_ID);
         }
         return $cache;
     }
 
     /**
-     * @param $cacheIdentifier
+     * Get configuration cache by identifier
+     *
+     * @param string $cacheIdentifier
      * @return array
      */
-    private function getCache($cacheIdentifier): array
+    private function getCache(string $cacheIdentifier): array
     {
         $serializedData = $this->cache->load($cacheIdentifier);
         $cache = $serializedData
@@ -400,10 +403,12 @@ class Config
     }
 
     /**
+     * Save configuration cache for identifier
+     *
      * @param array $data
-     * @param $cacheIdentifier
+     * @param string $cacheIdentifier
      */
-    private function saveCache(array $data, $cacheIdentifier): void
+    private function saveCache(array $data, string $cacheIdentifier): void
     {
         $this->cache->save($this->serializer->serialize($data), $cacheIdentifier);
     }
