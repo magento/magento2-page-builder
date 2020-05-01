@@ -23,11 +23,11 @@
         <before>
             <remove keyForRemoval="enableTinyMCE4"/>
             <magentoCLI command="config:set cms/wysiwyg/editor Magento_Tinymce3/tinymce3Adapter" stepKey="enableTinyMCE3" before="loginAsAdmin"/>
-            <magentoCLI command="cache:clean config" stepKey="flushCache"/>
+            <magentoCLI command="cache:clean config" stepKey="flushCache" after="enableTinyMCE3"/>
         </before>
         <after>
             <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="enableTinyMCE4" before="logout"/>
-            <magentoCLI command="cache:clean config" stepKey="flushCache"/>
+            <magentoCLI command="cache:clean config" stepKey="flushCache" after="enableTinyMCE4"/>
         </after>
         <!-- Change Appearance -->
         <comment userInput="Change Appearance" after="dragContentTypeIntoContainer" stepKey="commentChangeAppearanceExtended"/>
