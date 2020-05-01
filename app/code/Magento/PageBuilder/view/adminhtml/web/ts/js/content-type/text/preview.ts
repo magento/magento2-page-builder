@@ -8,10 +8,14 @@ import events from "Magento_PageBuilder/js/events";
 import _ from "underscore";
 import HideShowOption from "../../content-type-menu/hide-show-option";
 import {OptionsInterface} from "../../content-type-menu/option.types";
+import {DataObject} from "../../data-store";
 import delayUntil from "../../utils/delay-until";
 import {
-    createBookmark, createDoubleClickEvent,
-    findNodeIndex, getActiveEditor, getNodeByIndex,
+    createBookmark,
+    createDoubleClickEvent,
+    findNodeIndex,
+    getActiveEditor,
+    getNodeByIndex,
     isWysiwygSupported,
     lockImageSize,
     moveToBookmark,
@@ -299,6 +303,18 @@ export default class Preview extends BasePreview {
      */
     protected bindEvents() {
         super.bindEvents();
+
+        this.contentType.dataStore.subscribe((state: DataObject) => {
+            // Find html elements which attributes contain magento variables directives
+            const sanitizedContent = state.content.replace(/<([a-z0-9\-\_]+)([^>]+?[a-z0-9\-\_]+="[^"]*?\{\{.+?\}\}.*?".*?)>/gi, (match1: string, tag: string, attributes: string) => {
+                // Replace double quote with single quote within magento variable directive
+                const sanitizedAttributes = attributes.replace(/\{\{[^\{\}]+\}\}/gi, (match2: string) => match2.replace(/"/g, "'"));
+                return "<" + tag + sanitizedAttributes + ">";
+            });
+            if (sanitizedContent !== state.content) {
+                state.content = sanitizedContent;
+            }
+        });
 
         // After drop of new content type open TinyMCE and focus
         events.on("text:dropAfter", (args: ContentTypeMountEventParamsInterface) => {
