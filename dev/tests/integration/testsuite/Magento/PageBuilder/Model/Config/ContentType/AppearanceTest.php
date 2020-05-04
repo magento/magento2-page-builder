@@ -22,7 +22,7 @@ class AppearanceTest extends \PHPUnit\Framework\TestCase
      */
     private $contentTypesReader;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
