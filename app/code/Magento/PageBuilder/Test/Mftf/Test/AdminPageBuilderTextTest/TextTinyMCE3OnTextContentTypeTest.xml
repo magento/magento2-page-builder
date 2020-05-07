@@ -68,18 +68,18 @@
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
         <executeJS function="return document.evaluate(&quot;{{TextOnStage.textArea('1')}}&quot;, document.body).iterateNext().value" stepKey="actualData"/>
-        <assertContains stepKey="assertVariable">
+        <assertStringContainsString stepKey="assertVariable">
             <expectedResult type="string">{{TinyMCEVariableBaseURL.stageValue}}</expectedResult>
             <actualResult type="variable">actualData</actualResult>
-        </assertContains>
-        <assertContains stepKey="assertWidget">
+        </assertStringContainsString>
+        <assertStringContainsString stepKey="assertWidget">
             <expectedResult type="string">{{TinyMCEWidgetCMSPageLink.stageValue}}</expectedResult>
             <actualResult type="variable">actualData</actualResult>
-        </assertContains>
-        <assertContains stepKey="assertText">
+        </assertStringContainsString>
+        <assertStringContainsString stepKey="assertText">
             <expectedResult type="string">{{PageBuilderTextProperty.value}}</expectedResult>
             <actualResult type="variable">actualData</actualResult>
-        </assertContains>
+        </assertStringContainsString>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage2"/>
         <amOnPage url="" stepKey="goToBaseURL"/>
         <grabFromCurrentUrl stepKey="grabBaseURL"/>

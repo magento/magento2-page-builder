@@ -25,27 +25,27 @@
         <waitForElementVisible selector="{{section.videoBackgroundVideoElement(index)}}" stepKey="waitForVideoVisible"/>
         <waitForElement selector="{{section.videoBackgroundVideoUrl(index, videoUrl.renderedValue)}}" stepKey="waitForVideoUrl"/>
         <grabAttributeFrom selector="{{section.videoBackgroundJarallaxContainer(index)}}" userInput="style" stepKey="jarallaxStyle"/>
-        <assertContains stepKey="assertHeight">
+        <assertStringContainsString stepKey="assertHeight">
             <expectedResult type="string">height: 100%;</expectedResult>
             <actualResult type="variable">$jarallaxStyle</actualResult>
-        </assertContains>
-        <assertContains stepKey="assertWidth">
+        </assertStringContainsString>
+        <assertStringContainsString stepKey="assertWidth">
             <expectedResult type="string">width: 100%;</expectedResult>
             <actualResult type="variable">$jarallaxStyle</actualResult>
-        </assertContains>
-        <assertContains stepKey="assertOverflowHidden">
+        </assertStringContainsString>
+        <assertStringContainsString stepKey="assertOverflowHidden">
             <expectedResult type="string">overflow: hidden;</expectedResult>
             <actualResult type="variable">$jarallaxStyle</actualResult>
-        </assertContains>
+        </assertStringContainsString>
         <grabAttributeFrom selector="{{section.videoBackgroundVideoElement(index)}}" userInput="style" stepKey="videoStyle"/>
-        <assertContains stepKey="assertVideoPosition">
+        <assertStringContainsString stepKey="assertVideoPosition">
             <expectedResult type="string">position: absolute;</expectedResult>
             <actualResult type="variable">$videoStyle</actualResult>
-        </assertContains>
-        <assertContains stepKey="assertVideoPlaying">
+        </assertStringContainsString>
+        <assertStringContainsString stepKey="assertVideoPlaying">
             <expectedResult type="string">transform: translate3d(</expectedResult>
             <actualResult type="variable">$videoStyle</actualResult>
-        </assertContains>
+        </assertStringContainsString>
         <dontSeeElementInDOM selector="{{section.videoBackgroundOverlayElement(index)}}" stepKey="dontSeeOverlayColorInDOM"/>
         <waitForElementVisible selector="{{section.videoBackgroundInfiniteLoop(index, infiniteLoop.value)}}" stepKey="waitForInfiniteLoop"/>
         <waitForElementVisible selector="{{section.videoBackgroundLazyLoad(index, lazyLoad.value)}}" stepKey="waitForLazyLoad"/>

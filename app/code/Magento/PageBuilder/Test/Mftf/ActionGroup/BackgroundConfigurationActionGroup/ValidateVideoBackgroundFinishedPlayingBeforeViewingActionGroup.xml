@@ -11,13 +11,13 @@
         <annotations>
             <description>Validates that the video in the video background is finished playing before it's in the viewport.</description>
         </annotations>
-        <assertNotContains stepKey="assertVideoPlaying">
+        <assertStringNotContainsString stepKey="assertVideoPlaying">
             <expectedResult type="string">transform: translate3d(</expectedResult>
             <actualResult type="variable">$videoStyle</actualResult>
-        </assertNotContains>
-        <assertContains stepKey="assertFallbackImageNotDisplayed">
+        </assertStringNotContainsString>
+        <assertStringContainsString stepKey="assertFallbackImageNotDisplayed">
             <expectedResult type="string">display: block;</expectedResult>
             <actualResult type="variable">$fallbackImageStyle</actualResult>
-        </assertContains>
+        </assertStringContainsString>
     </actionGroup>
 </actionGroups>
