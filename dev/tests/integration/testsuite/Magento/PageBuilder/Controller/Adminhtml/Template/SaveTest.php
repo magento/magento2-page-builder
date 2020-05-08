@@ -37,17 +37,17 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
     private $objectManager;
 
     /**
-     * @var Write|\PHPUnit_Framework_MockObject_MockObject
+     * @var Write|\PHPUnit\Framework\MockObject\MockObject
      */
     private $directoryWrite;
 
     /**
-     * @var Filesystem|\PHPUnit_Framework_MockObject_MockObject
+     * @var Filesystem|\PHPUnit\Framework\MockObject\MockObject
      */
     private $filesystem;
 
     /**
-     * @var Database|\PHPUnit_Framework_MockObject_MockObject
+     * @var Database|\PHPUnit\Framework\MockObject\MockObject
      */
     private $mediaStorage;
 
@@ -62,12 +62,12 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
     private $serializer;
 
     /**
-     * @var Gd2|\PHPUnit_Framework_MockObject_MockObject
+     * @var Gd2|\PHPUnit\Framework\MockObject\MockObject
      */
     private $imageAdapter;
 
     /**
-     * @var AdapterFactory|\PHPUnit_Framework_MockObject_MockObject
+     * @var AdapterFactory|\PHPUnit\Framework\MockObject\MockObject
      */
     private $imageAdapterFactory;
 
@@ -173,6 +173,6 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
         $this->assertEquals('Automated Template', $template->getName());
         $this->assertEquals('<div data-content-type="row"></div>', $template->getTemplate());
         $this->assertEquals('any', $template->getCreatedFor());
-        $this->assertContains('.template-manager/automatedtemplate', $template->getPreviewImage());
+        $this->assertStringContainsString('.template-manager/automatedtemplate', $template->getPreviewImage());
     }
 }

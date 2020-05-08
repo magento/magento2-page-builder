@@ -36,7 +36,7 @@ class MenuSectionsTest extends \PHPUnit\Framework\TestCase
 
                 $contentTypeMenuSection = $dom->getElementsByTagName('menu_section')->item(0);
                 if ($contentTypeMenuSection) {
-                    $this->assertContains(
+                    $this->assertStringContainsString(
                         $contentTypeMenuSection->nodeValue,
                         $menuSections,
                         'Invalid menu section "' . $contentTypeMenuSection->nodeValue . '" in XML File ' . $filename
