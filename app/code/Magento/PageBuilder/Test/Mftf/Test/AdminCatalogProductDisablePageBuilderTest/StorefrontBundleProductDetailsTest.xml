@@ -10,9 +10,11 @@
     <test name="StorefrontBundleProductDetailsTest">
         <before>
             <magentoCLI command="config:set cms/pagebuilder/enabled 0" stepKey="disablePageBuilder" after="loginToAdminPanel"/>
+            <magentoCLI command="cache:clean config" stepKey="flushCache" after="disablePageBuilder"/>
         </before>
         <after>
             <magentoCLI command="config:set cms/pagebuilder/enabled 1" stepKey="enablePageBuilder" before="logout"/>
+            <magentoCLI command="cache:clean config" stepKey="flushCache" after="enablePageBuilder"/>
         </after>
     </test>
 </tests>
