@@ -49,10 +49,10 @@
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <executeJS function="return document.evaluate(&quot;{{TextOnStage.textArea('1')}}&quot;, document.body).iterateNext().value" stepKey="textareaValue1"/>
-        <assertContains stepKey="assertTextareaContainsValue1">
+        <assertStringContainsString stepKey="assertTextareaContainsValue1">
             <expectedResult type="string">{{PageBuilderTextArea_VariableBaseURL.editPanelValue}}</expectedResult>
             <actualResult type="variable">textareaValue1</actualResult>
-        </assertContains>
+        </assertStringContainsString>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
@@ -60,20 +60,20 @@
         </actionGroup>
         <waitForElementVisible selector="{{TextOnConfiguration.textArea}}" stepKey="waitForTextOnEditPanel2"/>
         <executeJS function="return document.getElementById('{{TextOnConfiguration.textAreaId}}').value;" stepKey="getText"/>
-        <assertContains stepKey="assertValue">
+        <assertStringContainsString stepKey="assertValue">
             <actualResult type="variable">getText</actualResult>
             <expectedResult type="string">{{PageBuilderTextArea_VariableBaseURL.editPanelValue}}</expectedResult>
-        </assertContains>
+        </assertStringContainsString>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
         <executeJS function="return document.evaluate(&quot;{{TextOnStage.textArea('1')}}&quot;, document.body).iterateNext().value" stepKey="textareaValue2"/>
-        <assertContains stepKey="assertTextareaContainsValue2">
+        <assertStringContainsString stepKey="assertTextareaContainsValue2">
             <expectedResult type="string">{{PageBuilderTextArea_VariableBaseURL.editPanelValue}}</expectedResult>
             <actualResult type="variable">textareaValue2</actualResult>
-        </assertContains>
+        </assertStringContainsString>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage3">
@@ -81,10 +81,10 @@
         </actionGroup>
         <waitForElementVisible selector="{{TextOnConfiguration.textArea}}" stepKey="waitForTextOnEditPanel3"/>
         <executeJS function="return document.getElementById('{{TextOnConfiguration.textAreaId}}').value;" stepKey="getText2"/>
-        <assertContains stepKey="assertValue2">
+        <assertStringContainsString stepKey="assertValue2">
             <actualResult type="variable">getText2</actualResult>
             <expectedResult type="string">{{PageBuilderTextArea_VariableBaseURL.editPanelValue}}</expectedResult>
-        </assertContains>
+        </assertStringContainsString>
         <amOnPage url="" stepKey="goToBaseURL"/>
         <grabFromCurrentUrl stepKey="grabBaseURL"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
