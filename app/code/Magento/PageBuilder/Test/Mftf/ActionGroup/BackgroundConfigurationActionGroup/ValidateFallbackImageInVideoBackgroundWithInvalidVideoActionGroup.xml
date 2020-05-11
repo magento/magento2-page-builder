@@ -26,9 +26,9 @@
             <actualResult type="variable">$fallbackImageSource</actualResult>
         </assertRegExp>
         <grabAttributeFrom selector="{{section.videoBackgroundFallbackImageSource(index, fallbackImage.fileName)}}" userInput="style" stepKey="fallbackImageStyle"/>
-        <assertContains stepKey="assertCover">
+        <assertStringContainsString stepKey="assertCover">
             <expectedResult type="string">object-fit: cover;</expectedResult>
             <actualResult type="variable">$fallbackImageStyle</actualResult>
-        </assertContains>
+        </assertStringContainsString>
     </actionGroup>
 </actionGroups>

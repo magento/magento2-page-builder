@@ -21,12 +21,12 @@ class ReaderTest extends \PHPUnit\Framework\TestCase
     private $model;
 
     /**
-     * @var \Magento\PageBuilder\Model\Config\FileResolver|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Magento\PageBuilder\Model\Config\FileResolver|\PHPUnit\Framework\MockObject\MockObject
      */
     private $menuSectionsFileResolverMock;
 
     /**
-     * @var \Magento\PageBuilder\Model\Config\FileResolver|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Magento\PageBuilder\Model\Config\FileResolver|\PHPUnit\Framework\MockObject\MockObject
      */
     private $contentTypesFileResolverMock;
 
