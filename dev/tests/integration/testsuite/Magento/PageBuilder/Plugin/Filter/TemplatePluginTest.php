@@ -27,7 +27,7 @@ class TemplatePluginTest extends \PHPUnit\Framework\TestCase
      */
     private $templateFilter;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->objectManager = Bootstrap::getObjectManager();
         $this->templateFilter = $this->objectManager->get(TemplateFilter::class);

@@ -33,27 +33,27 @@
         <waitForElementVisible selector="{{section.videoBackgroundVideoElement(index)}}" stepKey="waitForVideoVisible"/>
         <waitForElement selector="{{section.videoBackgroundVideoUrl(index, videoUrl.renderedValue)}}" stepKey="waitForVideoUrl"/>
         <grabAttributeFrom selector="{{section.videoBackgroundJarallaxContainer(index)}}" userInput="style" stepKey="jarallaxStyle"/>
-        <assertContains stepKey="assertHeight">
+        <assertStringContainsString stepKey="assertHeight">
             <expectedResult type="string">height: 100%;</expectedResult>
             <actualResult type="variable">$jarallaxStyle</actualResult>
-        </assertContains>
-        <assertContains stepKey="assertWidth">
+        </assertStringContainsString>
+        <assertStringContainsString stepKey="assertWidth">
             <expectedResult type="string">width: 100%;</expectedResult>
             <actualResult type="variable">$jarallaxStyle</actualResult>
-        </assertContains>
-        <assertContains stepKey="assertOverflowHidden">
+        </assertStringContainsString>
+        <assertStringContainsString stepKey="assertOverflowHidden">
             <expectedResult type="string">overflow: hidden;</expectedResult>
             <actualResult type="variable">$jarallaxStyle</actualResult>
-        </assertContains>
+        </assertStringContainsString>
         <grabAttributeFrom selector="{{section.videoBackgroundVideoElement(index)}}" userInput="style" stepKey="videoStyle"/>
-        <assertContains stepKey="assertVideoPosition">
+        <assertStringContainsString stepKey="assertVideoPosition">
             <expectedResult type="string">position: absolute;</expectedResult>
             <actualResult type="variable">$videoStyle</actualResult>
-        </assertContains>
-        <assertContains stepKey="assertVideoPlaying">
+        </assertStringContainsString>
+        <assertStringContainsString stepKey="assertVideoPlaying">
             <expectedResult type="string">transform: translate3d(</expectedResult>
             <actualResult type="variable">$videoStyle</actualResult>
-        </assertContains>
+        </assertStringContainsString>
         <executeJS function="return window.getComputedStyle(document.evaluate(&quot;{{section.videoBackgroundOverlayElement(index)}}&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue).backgroundColor" stepKey="overlayColor"/>
         <assertEquals stepKey="assertOverlayColor">
             <expectedResult type="string">{{overlayColor}}</expectedResult>
@@ -70,13 +70,13 @@
             <actualResult type="variable">$fallbackImageSource</actualResult>
         </assertRegExp>
         <grabAttributeFrom selector="{{section.videoBackgroundFallbackImageSource(index, fallbackImage.fileName)}}" userInput="style" stepKey="fallbackImageStyle"/>
-        <assertContains stepKey="assertImageCover">
+        <assertStringContainsString stepKey="assertImageCover">
             <expectedResult type="string">object-fit: cover;</expectedResult>
             <actualResult type="variable">$fallbackImageStyle</actualResult>
-        </assertContains>
-        <assertContains stepKey="assertImagePosition">
+        </assertStringContainsString>
+        <assertStringContainsString stepKey="assertImagePosition">
             <expectedResult type="string">position: absolute;</expectedResult>
             <actualResult type="variable">$fallbackImageStyle</actualResult>
-        </assertContains>
+        </assertStringContainsString>
     </actionGroup>
 </actionGroups>

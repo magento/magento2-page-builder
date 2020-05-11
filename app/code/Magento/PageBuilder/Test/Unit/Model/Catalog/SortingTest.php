@@ -163,7 +163,7 @@ class SortingTest extends TestCase
      */
     private function createOptionMock(string $label): MockObject
     {
-        $mock = $this->createMock(OptionInterface::class);
+        $mock = $this->getMockForAbstractClass(OptionInterface::class);
         $mock->method('getLabel')
             ->willReturn(__($label));
 

@@ -18,7 +18,7 @@ class UiComponentConfigTest extends \PHPUnit\Framework\TestCase
     private $objectManager;
 
     /**
-     * @var \Magento\Framework\Config\DataInterfaceFactory|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Magento\Framework\Config\DataInterfaceFactory|\PHPUnit\Framework\MockObject\MockObject
      */
     private $dataInterfaceFactoryMock;
 
@@ -27,7 +27,7 @@ class UiComponentConfigTest extends \PHPUnit\Framework\TestCase
      */
     private $model;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->objectManager = Bootstrap::getObjectManager();
 
