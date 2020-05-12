@@ -64,7 +64,7 @@ class ViewTest extends TestCase
         $this->block = $this->layout->createBlock(View::class);
         $this->block->setTemplate('Magento_PageBuilder::catalog/category/view/description.phtml');
 
-        $this->assertContains('data-appearance="contained"', $this->block->toHtml());
+        $this->assertStringContainsString('data-appearance="contained"', $this->block->toHtml());
     }
 
     /**

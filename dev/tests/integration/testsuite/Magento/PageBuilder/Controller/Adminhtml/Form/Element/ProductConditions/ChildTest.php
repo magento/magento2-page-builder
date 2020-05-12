@@ -26,13 +26,13 @@ class ChildTest extends \Magento\TestFramework\TestCase\AbstractBackendControlle
         $this->dispatch('backend/pagebuilder/form/element_productconditions_child');
         $responseBody = $this->getResponse()->getBody();
         // Assert form is associated correctly
-        $this->assertContains('data-form-part="test_namespace"', $responseBody);
+        $this->assertStringContainsString('data-form-part="test_namespace"', $responseBody);
         // Assert the form object is propagated
-        $this->assertContains('form/myobject', $responseBody);
+        $this->assertStringContainsString('form/myobject', $responseBody);
         // Assert id is used
-        $this->assertContains('name="parameters[conditions][1--3][type]"', $responseBody);
+        $this->assertStringContainsString('name="parameters[conditions][1--3][type]"', $responseBody);
         // Assert type is used
-        $this->assertContains('value="Magento\CatalogWidget\Model\Rule\Condition\Product"', $responseBody);
+        $this->assertStringContainsString('value="Magento\CatalogWidget\Model\Rule\Condition\Product"', $responseBody);
     }
 
     public function testFormLoadsCustomPrefix()
@@ -53,8 +53,8 @@ class ChildTest extends \Magento\TestFramework\TestCase\AbstractBackendControlle
         $responseBody = $this->getResponse()->getBody();
 
         // Assert the form object is propagated
-        $this->assertContains('form/myobject', $responseBody);
+        $this->assertStringContainsString('form/myobject', $responseBody);
         // Assert id is used
-        $this->assertContains('name="parameters[myprefix][1--3][type]"', $responseBody);
+        $this->assertStringContainsString('name="parameters[myprefix][1--3][type]"', $responseBody);
     }
 }

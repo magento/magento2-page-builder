@@ -31,9 +31,9 @@ class CmsStaticBlockTest extends \PHPUnit\Framework\TestCase
         ]);
         $this->assertArrayHasKey('content', $result);
         $content = $result['content'];
-        $this->assertNotContains('<script>', $content);
-        $this->assertContains('<p>Custom variable: "HTML Value".</p>', $content);
-        $this->assertNotContains('<html>', $content);
-        $this->assertNotContains('<!DOCTYPE', $content);
+        $this->assertStringNotContainsString('<script>', $content);
+        $this->assertStringContainsString('<p>Custom variable: "HTML Value".</p>', $content);
+        $this->assertStringNotContainsString('<html>', $content);
+        $this->assertStringNotContainsString('<!DOCTYPE', $content);
     }
 }
