@@ -20,7 +20,7 @@ class MenuSectionsTest extends \PHPUnit\Framework\TestCase
      */
     private $componentDirSearch;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $componentRegistrar = new ComponentRegistrar();
         $this->componentDirSearch = new DirSearch($componentRegistrar, new ReadFactory(new DriverPool()));
@@ -36,7 +36,7 @@ class MenuSectionsTest extends \PHPUnit\Framework\TestCase
 
                 $contentTypeMenuSection = $dom->getElementsByTagName('menu_section')->item(0);
                 if ($contentTypeMenuSection) {
-                    $this->assertContains(
+                    $this->assertStringContainsString(
                         $contentTypeMenuSection->nodeValue,
                         $menuSections,
                         'Invalid menu section "' . $contentTypeMenuSection->nodeValue . '" in XML File ' . $filename

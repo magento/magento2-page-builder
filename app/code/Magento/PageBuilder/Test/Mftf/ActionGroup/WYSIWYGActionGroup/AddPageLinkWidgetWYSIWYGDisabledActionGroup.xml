@@ -17,9 +17,9 @@
         <click selector="{{TextOnConfiguration.insertWidgetButton}}" stepKey="clickAddWidgetBtn"/>
         <waitForElementVisible selector="{{TextOnConfiguration.textArea}}" stepKey="waitForInsertWidgetModalToClose"/>
         <executeJS function="return document.getElementById('{{TextOnConfiguration.textAreaId}}').value;" stepKey="getText"/>
-        <assertContains stepKey="assertValue">
+        <assertStringContainsString stepKey="assertValue">
             <expectedResult type="string">{{widget.editPanelValue}}</expectedResult>
             <actualResult type="variable">getText</actualResult>
-        </assertContains>
+        </assertStringContainsString>
     </actionGroup>
 </actionGroups>
