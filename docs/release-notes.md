@@ -7,6 +7,14 @@ The release notes include:
 - {:.new}New features
 - {:.fix}Fixes and improvements
 
+## **1.3.2** for Magento Commerce 2.3.5-p2
+
+- {:.new}Security enhancements.
+
+## **1.3.1** for Magento Commerce 2.3.5-p1
+
+This version of Page Builder is just a version-number update for Magento 2.3.5-p1. All features described for version 1.3.0 apply to this version as well.
+
 ## **1.3.0** for Magento Commerce 2.3.5
 
 - {:.new}**Templates**<br/>
