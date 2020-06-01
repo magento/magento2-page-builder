@@ -113,7 +113,7 @@ define(["jquery", "mage/translate", "mageUtils", "Magento_PageBuilder/js/config"
           placeholder.addClass("magento-placeholder-error");
         }
 
-        var image = (0, _jquery)("<img />").prop("id", btoa(match).replace(/\+/g, ":").replace(/\//g, "_").replace(/=/g, "-")).prop("src", imageSrc);
+        var image = (0, _jquery)("<img />").prop("id", Base64.idEncode(match)).prop("src", imageSrc);
         placeholder.append(image);
         var widgetType = "";
 
