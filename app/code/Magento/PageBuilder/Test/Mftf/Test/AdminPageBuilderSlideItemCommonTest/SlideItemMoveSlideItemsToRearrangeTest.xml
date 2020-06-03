@@ -101,13 +101,9 @@
         <seeElement selector="{{SlideOnBackend.messageContent('2', PageBuilderSlideItemContent_Slide2.value)}}" stepKey="seeSlide2ContentAfterSave"/>
         <!-- Change Slide Order -->
         <comment userInput="Change Slide Order" stepKey="commentSortingSlides"/>
-        <executeJS function="return document.querySelectorAll('{{SliderOnStage.slideNavigationDragHandle}}')[0].clientWidth / 4" stepKey="xCoordinateToMoveTo"/>
-        <comment userInput="xCoordinateToMoveTo: $xCoordinateToMoveTo" stepKey="commentXCoordinate"/>
-        <executeJS function="return document.querySelectorAll('{{SliderOnStage.slideNavigationDragHandle}}')[0].clientHeight / 2" stepKey="yCoordinateToMoveTo"/>
-        <comment userInput="yCoordinateToMoveTo: $yCoordinateToMoveTo" stepKey="commentYCoordinate"/>
         <click selector="{{SliderOnStage.slideNavigationDot('1', '3')}}" stepKey="clickSlideDot"/>
         <waitForPageLoad stepKey="waitForPageLoad2"/>
-        <dragAndDrop selector1="{{SliderOnStage.slideNavigationDragHandleByIndex('1', '3')}}" selector2="{{SliderOnStage.slideNavigationDot('1', '1')}}" x="$xCoordinateToMoveTo" y="$yCoordinateToMoveTo" stepKey="dragAndDropSlide"/>
+        <dragAndDrop selector1="{{SliderOnStage.slideNavigationDragHandleByIndex('1', '3')}}" selector2="{{SliderOnStage.slideNavigationDot('1', '1')}}" x="-1" stepKey="dragAndDropSlide"/>
         <waitForPageLoad stepKey="waitForDragAndDrop"/>
         <!-- Validate Stage After Sorting -->
         <comment userInput="Validate Stage After Sorting" stepKey="commentValidateStage2"/>
