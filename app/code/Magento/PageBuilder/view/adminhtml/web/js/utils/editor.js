@@ -1,6 +1,6 @@
 /*eslint-disable */
 /* jscs:disable */
-define(["jquery", "mage/translate", "mageUtils", "Magento_PageBuilder/js/config"], function (_jquery, _translate, _mageUtils, _config) {
+define(["jquery", "mage/adminhtml/tools", "mage/translate", "mageUtils", "Magento_PageBuilder/js/config"], function (_jquery, _tools, _translate, _mageUtils, _config) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -113,7 +113,7 @@ define(["jquery", "mage/translate", "mageUtils", "Magento_PageBuilder/js/config"
           placeholder.addClass("magento-placeholder-error");
         }
 
-        var image = (0, _jquery)("<img />").prop("id", Base64.idEncode(match)).prop("src", imageSrc);
+        var image = (0, _jquery)("<img />").prop("id", window.Base64.idEncode(match)).prop("src", imageSrc);
         placeholder.append(image);
         var widgetType = "";
 
