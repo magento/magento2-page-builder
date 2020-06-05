@@ -7,47 +7,65 @@ declare(strict_types=1);
 
 namespace Magento\PageBuilder\Model\Filter;
 
+use DOMDocument;
+use DOMElement;
+use DOMException;
+use DOMNode;
+use DOMXPath;
+use Exception;
+use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Math\Random;
+use Magento\Framework\Serialize\Serializer\Json;
+use Magento\Framework\View\ConfigInterface;
+use Magento\PageBuilder\Plugin\Filter\TemplatePlugin;
+use Psr\Log\LoggerInterface;
+
 /**
  * Specific template filters for Page Builder content
  */
 class Template
 {
     /**
-     * @var \Magento\Framework\View\ConfigInterface
+     * @var ConfigInterface
      */
     private $viewConfig;
 
     /**
-     * @var \Psr\Log\LoggerInterface
+     * @var LoggerInterface
      */
     private $logger;
 
     /**
-     * @var \DOMDocument
+     * @var DOMDocument
      */
     private $domDocument;
 
     /**
-     * @var \Magento\Framework\Math\Random
+     * @var Random
      */
     private $mathRandom;
 
     /**
-     * @var \Magento\Framework\Serialize\Serializer\Json
+     * @var Json
      */
     private $json;
 
     /**
-     * @param \Psr\Log\LoggerInterface $logger
-     * @param \Magento\Framework\View\ConfigInterface $viewConfig
-     * @param \Magento\Framework\Math\Random $mathRandom
-     * @param \Magento\Framework\Serialize\Serializer\Json $json
+     * @var array
+     */
+    private $scripts;
+
+    /**
+     * @param LoggerInterface $logger
+     * @param ConfigInterface $viewConfig
+     * @param Random $mathRandom
+     * @param Json $json
      */
     public function __construct(
-        \Psr\Log\LoggerInterface $logger,
-        \Magento\Framework\View\ConfigInterface $viewConfig,
-        \Magento\Framework\Math\Random $mathRandom,
-        \Magento\Framework\Serialize\Serializer\Json $json
+        LoggerInterface $logger,
+        ConfigInterface $viewConfig,
+        Random $mathRandom,
+        Json $json
     ) {
         $this->logger = $logger;
         $this->viewConfig = $viewConfig;
@@ -59,22 +77,22 @@ class Template
      * After filter of template data apply transformations
      *
      * @param string $result
-     *
      * @return string
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function filter(string $result) : string
     {
         $this->domDocument = false;
+        $this->scripts = [];
 
         // Validate if the filtered result requires background image processing
-        if (preg_match(\Magento\PageBuilder\Plugin\Filter\TemplatePlugin::BACKGROUND_IMAGE_PATTERN, $result)) {
+        if (preg_match(TemplatePlugin::BACKGROUND_IMAGE_PATTERN, $result)) {
             $document = $this->getDomDocument($result);
             $this->generateBackgroundImageStyles($document);
         }
 
         // Process any HTML content types, they need to be decoded on the front-end
-        if (preg_match(\Magento\PageBuilder\Plugin\Filter\TemplatePlugin::HTML_CONTENT_TYPE_PATTERN, $result)) {
+        if (preg_match(TemplatePlugin::HTML_CONTENT_TYPE_PATTERN, $result)) {
             $document = $this->getDomDocument($result);
             $uniqueNodeNameToDecodedOuterHtmlMap = $this->generateDecodedHtmlPlaceholderMappingInDocument($document);
         }
@@ -112,6 +130,8 @@ class Template
 
                 $result = $docHtml;
             }
+
+            $result = $this->unmaskScriptTags($result);
         }
 
         return $result;
@@ -122,9 +142,9 @@ class Template
      *
      * @param string $html
      *
-     * @return \DOMDocument
+     * @return DOMDocument
      */
-    private function getDomDocument(string $html) : \DOMDocument
+    private function getDomDocument(string $html) : DOMDocument
     {
         if (!$this->domDocument) {
             $this->domDocument = $this->createDomDocument($html);
@@ -138,14 +158,16 @@ class Template
      *
      * @param string $html
      *
-     * @return \DOMDocument
+     * @return DOMDocument
      */
-    private function createDomDocument(string $html) : \DOMDocument
+    private function createDomDocument(string $html) : DOMDocument
     {
-        $domDocument = new \DOMDocument('1.0', 'UTF-8');
+        $html = $this->maskScriptTags($html);
+
+        $domDocument = new DOMDocument('1.0', 'UTF-8');
         set_error_handler(
             function ($errorNumber, $errorString) {
-                throw new \DOMException($errorString, $errorNumber);
+                throw new DOMException($errorString, $errorNumber);
             }
         );
         $string = mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8');
@@ -155,7 +177,7 @@ class Template
                 '<html><body>' . $string . '</body></html>'
             );
             libxml_clear_errors();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             restore_error_handler();
             $this->logger->critical($e);
         }
@@ -167,16 +189,16 @@ class Template
     /**
      * Convert encoded HTML content types to placeholders and generate decoded outer html map for future replacement
      *
-     * @param \DOMDocument $document
+     * @param DOMDocument $document
      * @return array
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws LocalizedException
      */
-    private function generateDecodedHtmlPlaceholderMappingInDocument(\DOMDocument $document): array
+    private function generateDecodedHtmlPlaceholderMappingInDocument(DOMDocument $document): array
     {
-        $xpath = new \DOMXPath($document);
+        $xpath = new DOMXPath($document);
 
         // construct xpath query to fetch top-level ancestor html content type nodes
-        /** @var $htmlContentTypeNodes \DOMNode[] */
+        /** @var $htmlContentTypeNodes DOMNode[] */
         $htmlContentTypeNodes = $xpath->query(
             '//*[@data-content-type="html" and not(@data-decoded="true")]' .
             '[not(ancestor::*[@data-content-type="html"])]'
@@ -221,7 +243,7 @@ class Template
             // by the dom library
             $uniqueNodeName = $this->mathRandom->getRandomString(32, $this->mathRandom::CHARS_LOWERS);
 
-            $uniqueNode = new \DOMElement($uniqueNodeName);
+            $uniqueNode = new DOMElement($uniqueNodeName);
             $htmlContentTypeNode->parentNode->replaceChild($uniqueNode, $htmlContentTypeNode);
 
             $uniqueNodeNameToDecodedOuterHtmlMap[$uniqueNodeName] = $decodedOuterHtml;
@@ -233,14 +255,14 @@ class Template
     /**
      * Generate the CSS for any background images on the page
      *
-     * @param \DOMDocument $document
+     * @param DOMDocument $document
      */
-    private function generateBackgroundImageStyles(\DOMDocument $document) : void
+    private function generateBackgroundImageStyles(DOMDocument $document) : void
     {
-        $xpath = new \DOMXPath($document);
+        $xpath = new DOMXPath($document);
         $nodes = $xpath->query('//*[@data-background-images]');
         foreach ($nodes as $node) {
-            /* @var \DOMElement $node */
+            /* @var DOMElement $node */
             $backgroundImages = $node->attributes->getNamedItem('data-background-images');
             if ($backgroundImages->nodeValue !== '') {
                 $elementClass = uniqid('background-image-');
@@ -336,5 +358,48 @@ class Template
             return rtrim($mobileBreakpoint);
         }
         return null;
+    }
+
+    /**
+     * Masks script tags in html content before loading it into DOM parser
+     *
+     * DOMDocument::loadHTML() will remove any closing tag inside script tag and will result in broken html template
+     *
+     * @param string $content
+     * @return string
+     * @see https://bugs.php.net/bug.php?id=52012
+     */
+    private function maskScriptTags(string $content): string
+    {
+        $tag = 'script';
+        $content = preg_replace_callback(
+            "#<{$tag}[^>]+?>.*?</{$tag}>#is",
+            function ($matches) {
+                $key = $this->mathRandom->getRandomString(32, $this->mathRandom::CHARS_LOWERS);
+                $this->scripts[$key] = $matches[0];
+                return '<' . $key . '>' . '</' . $key . '>';
+            },
+            $content
+        );
+        return $content;
+    }
+
+    /**
+     * Replaces masked script tags with their corresponding content
+     *
+     * @param string $content
+     * @return string
+     * @see maskScriptTags()
+     */
+    private function unmaskScriptTags(string $content): string
+    {
+        foreach ($this->scripts as $key => $script) {
+            $content = str_replace(
+                '<' . $key . '>' . '</' . $key . '>',
+                $script,
+                $content
+            );
+        }
+        return $content;
     }
 }
