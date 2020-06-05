@@ -10,6 +10,7 @@ use Magento\Backend\Model\UrlInterface as BackendUrlInterface;
 use Magento\Cms\Helper\Wysiwyg\Images;
 use Magento\Framework\View\Element\UiComponentFactory;
 use Magento\Framework\View\Element\UiComponent\ContextInterface;
+use Magento\Ui\Component\Form\Element\DataType\Media\OpenDialogUrl;
 use Magento\Variable\Model\Variable\Config as VariableConfig;
 
 /**
@@ -40,11 +41,17 @@ class HtmlCode extends \Magento\Ui\Component\Form\Field
     private $currentTreePath;
 
     /**
+     * @var OpenDialogUrl
+     */
+    private $openDialogUrl;
+
+    /**
      * @param ContextInterface $context
      * @param UiComponentFactory $uiComponentFactory
      * @param BackendUrlInterface $backendUrl
      * @param Images $imagesHelper
      * @param VariableConfig $variableConfig
+     * @param OpenDialogUrl $openDialogUrl
      * @param string $currentTreePath
      * @param array $components
      * @param array $data
@@ -55,6 +62,7 @@ class HtmlCode extends \Magento\Ui\Component\Form\Field
         BackendUrlInterface $backendUrl,
         Images $imagesHelper,
         VariableConfig $variableConfig,
+        OpenDialogUrl $openDialogUrl,
         $currentTreePath = 'wysiwyg',
         $components = [],
         array $data = []
@@ -63,6 +71,7 @@ class HtmlCode extends \Magento\Ui\Component\Form\Field
         $this->imagesHelper = $imagesHelper;
         $this->variableConfig = $variableConfig;
         $this->currentTreePath = $currentTreePath;
+        $this->openDialogUrl = $openDialogUrl;
         parent::__construct($context, $uiComponentFactory, $components, $data);
     }
 
@@ -82,7 +91,7 @@ class HtmlCode extends \Magento\Ui\Component\Form\Field
             ]
         );
         $config['imageUrl'] = $this->backendUrl->getUrl(
-            'cms/wysiwyg_images/index',
+            $this->openDialogUrl->get(),
             [
                 'current_tree_path' => $this->imagesHelper->idEncode($this->currentTreePath),
                 'target_element_id' => self::HTML_ID_PLACEHOLDER
