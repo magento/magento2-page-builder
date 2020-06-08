@@ -335,8 +335,8 @@
             <argument name="navigationDotIndex" defaultValue="2" type="string"/>
         </arguments>
         <waitForElementVisible selector="{{page.carouselNavigationDot(productGroupIndex, navigationDotIndex)}}" stepKey="waitForNavigationDot"/>
-        <click selector="{{page.carouselNavigationDot(productGroupIndex, navigationDotIndex)}}" stepKey="clickNavigationDot"/>
-        <waitForPageLoad stepKey="waitForCarouselNavigation"/>
+        <click selector="{{page.carouselNavigationDotButton(productGroupIndex, navigationDotIndex)}}" stepKey="clickNavigationDot"/>
+        <waitForElementVisible selector="{{page.carouselActiveProductNavigationDotByIndex(productGroupIndex, navigationDotIndex)}}" stepKey="waitForCarouselNavigation"/>
         <seeElement selector="{{page.carouselActiveProductNavigationDotByIndex(productGroupIndex, navigationDotIndex)}}" stepKey="seeClickedNavigationDotIsActive"/>
     </actionGroup>
     <actionGroup name="clickProductCarouselPreviousNavigationArrow">
