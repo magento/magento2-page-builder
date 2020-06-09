@@ -63,7 +63,10 @@ class ProductConditionsTest extends \Magento\TestFramework\TestCase\AbstractBack
         $responseBody = $this->getResponse()->getBody();
 
         // Assert the description rule is loaded correctly
-        $this->assertStringContainsString('<option value="{}" selected="selected">contains</option>', $responseBody);
+        $this->assertMatchesRegularExpression(
+            '/<option value="{}" id="(.+)"\s selected="selected">contains<\/option>/',
+            $responseBody
+        );
         $expected = 'data-ui-id="editable-0-text-parameters-conditions-1-1-value"' .
             '  value="foo" data-form-part="test_namespace"';
         $this->assertStringContainsString($expected, $responseBody);
