@@ -361,7 +361,7 @@ class Template
     }
 
     /**
-     * Masks script tags in html content before loading it into DOM parser
+     * Masks "x-magento-template" script tags in html content before loading it into DOM parser
      *
      * DOMDocument::loadHTML() will remove any closing tag inside script tag and will result in broken html template
      *
@@ -373,7 +373,7 @@ class Template
     {
         $tag = 'script';
         $content = preg_replace_callback(
-            "#<{$tag}[^>]+?>.*?</{$tag}>#is",
+            sprintf('#<%1$s[^>]*type="text/x-magento-template\"[^>]*>.*?</%1$s>#is', $tag),
             function ($matches) {
                 $key = $this->mathRandom->getRandomString(32, $this->mathRandom::CHARS_LOWERS);
                 $this->scripts[$key] = $matches[0];
@@ -385,7 +385,7 @@ class Template
     }
 
     /**
-     * Replaces masked script tags with their corresponding content
+     * Replaces masked "x-magento-template" script tags with their corresponding content
      *
      * @param string $content
      * @return string
