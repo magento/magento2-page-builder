@@ -39,8 +39,8 @@ class TemplatePlugin
      * @return string
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function afterFilter(\Magento\Framework\Filter\Template $subject, string $result) : string
+    public function afterFilter(\Magento\Framework\Filter\Template $subject, $result) : string
     {
-        return $this->templateFilter->filter($result);
+        return $this->templateFilter->filter($result ?? '');
     }
 }
