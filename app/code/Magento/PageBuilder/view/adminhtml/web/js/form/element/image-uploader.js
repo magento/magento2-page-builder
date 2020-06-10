@@ -8,10 +8,11 @@ define([
     'underscore',
     'uiRegistry',
     'Magento_Ui/js/form/element/image-uploader',
+    'Magento_Ui/js/lib/validation/validator',
     'Magento_PageBuilder/js/resource/resize-observer/ResizeObserver',
     'Magento_PageBuilder/js/events',
     'mage/translate'
-], function ($, _, uiRegistry, Uploader, ResizeObserver, events, $t) {
+], function ($, _, uiRegistry, Uploader, validator, ResizeObserver, events, $t) {
     'use strict';
 
     var initializedOnce = false;
@@ -78,6 +79,16 @@ define([
             this._super(fileInput);
             this.$uploadArea = $(this.$fileInput).closest('.pagebuilder-image-empty-preview');
             new ResizeObserver(this.updateResponsiveClasses.bind(this)).observe(this.$uploadArea.get(0));
+        },
+
+        /**
+         * Checks if extension of provided file is allowed.
+         * {@inheritDoc}
+         */
+        isExtensionAllowed: function (file) {
+            var fileExtensions = this.getAllowedFileExtensionsInCommaDelimitedFormat(),
+                fileExtensionMessage = this.translations.allowedFileTypes + ':\t' + fileExtensions;
+            return validator('validate-file-extension', file.name, this.allowedExtensions, fileExtensionMessage);
         },
 
         /**
