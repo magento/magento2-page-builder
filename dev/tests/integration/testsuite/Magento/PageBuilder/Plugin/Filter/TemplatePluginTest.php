@@ -53,6 +53,13 @@ class TemplatePluginTest extends \PHPUnit\Framework\TestCase
         );
     }
 
+    public function testNull()
+    {
+        $this->assertEmpty(
+            $this->templateFilter->filter(null)
+        );
+    }
+
     /**
      * @return array
      */
