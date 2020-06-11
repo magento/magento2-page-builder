@@ -10,10 +10,12 @@
         "ts:errors:watch": "npm run ts:errors -- -watch",
         "ts:lint": "tslint --fix --project .",
         "ts:defs": "node ./dev/dts-generator.js",
-        "ts:build": "babel app/code/Magento/*/view/adminhtml/web/ts/js/ --out-dir app/code/Magento/*/view/adminhtml/web/js/ --extensions '.ts,.tsx' --source-maps",
+        "ts:build": "babel app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/ --out-dir app/code/Magento/PageBuilder/view/adminhtml/web/js/ --extensions '.ts,.tsx' --source-maps",
+        "ts:build:banner": "babel app/code/Magento/BannerPageBuilder/view/adminhtml/web/ts/js/ --out-dir app/code/Magento/BannerPageBuilder/view/adminhtml/web/js/ --extensions '.ts,.tsx' --source-maps",
         "ts:watch": "npm run ts:build -- --watch",
+        "ts:watch:banner": "npm run ts:build:banner -- --watch",
         "stylelint": "stylelint '**/*.css' '**/*.less'",
-        "start": "concurrently -n 'compiler,errors' -c 'green,red' 'npm run ts:watch' 'npm run ts:errors:watch'"
+        "start": "concurrently -n 'compiler,errors' -c 'green,red' 'npm run ts:watch' 'npm run ts:watch:banner' 'npm run ts:errors:watch'"
     },
     "repository": {
         "type": "git",
