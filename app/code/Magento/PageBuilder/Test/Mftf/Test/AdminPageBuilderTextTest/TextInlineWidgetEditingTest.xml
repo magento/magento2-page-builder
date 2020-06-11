@@ -41,7 +41,6 @@
         </actionGroup>
         <clickWithLeftButton x="10" y="10" selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnTextEditorArea"/>
         <actionGroup ref="AddPageLinkWidgetToTinyMCEWithAnchorAndTitleActionGroup" stepKey="addPageLinkWidgetToTinyMCE">
-            <argument name="widget" value="TinyMCEWidgetCMSPageLinkWithAnchorAndTitle"/>
             <argument name="page" value="$$createCMSPageB.identifier$$"/>
             <argument name="anchor" value="{{TinyMCEWidgetCMSPageLinkWithAnchorAndTitle.anchorText}}"/>
             <argument name="title" value="{{TinyMCEWidgetCMSPageLinkWithAnchorAndTitle.title}}"/>
@@ -76,7 +75,9 @@
             <argument name="widget" value="TinyMCEWidgetCMSPageLink.editPanelValue"/>
         </actionGroup>
         <!-- Grab a value from the link-->
+        <waitForElementVisible selector="{{WidgetSection.InputAnchorCustomText}}" stepKey="waitForInputAnchorCustomText"/>
         <grabValueFrom selector="{{WidgetSection.InputAnchorCustomText}}" stepKey="grabAnchorText"/>
+        <waitForElementVisible selector="{{WidgetSection.InputAnchorCustomTitle}}" stepKey="waitForInputAnchorCustomTitle"/>
         <grabValueFrom selector="{{WidgetSection.InputAnchorCustomTitle}}" stepKey="grabTitleText"/>
         <assertEquals stepKey="assertAnchorTextCMSWidgetLink" message="pass">
             <expectedResult type="string">{{TinyMCEWidgetCMSPageLinkWithAnchorAndTitle.anchorText}}</expectedResult>
