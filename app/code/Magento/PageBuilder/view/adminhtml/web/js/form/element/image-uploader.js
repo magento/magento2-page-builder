@@ -8,11 +8,10 @@ define([
     'underscore',
     'uiRegistry',
     'Magento_Ui/js/form/element/image-uploader',
-    'Magento_Ui/js/lib/validation/validator',
     'Magento_PageBuilder/js/resource/resize-observer/ResizeObserver',
     'Magento_PageBuilder/js/events',
     'mage/translate'
-], function ($, _, uiRegistry, Uploader, validator, ResizeObserver, events, $t) {
+], function ($, _, uiRegistry, Uploader, ResizeObserver, events, $t) {
     'use strict';
 
     var initializedOnce = false;
