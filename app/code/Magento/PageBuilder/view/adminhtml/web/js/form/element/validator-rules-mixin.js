@@ -124,23 +124,6 @@ define([
         return !!style.width.length;
     }
 
-    /**
-     * Validate file extension.
-     *
-     * @param {String} name
-     * @param {String} types
-     * @returns {Boolean}
-     */
-    function validateFileExtension(name, types) {
-        var extension = name.split('.').pop().toLowerCase();
-
-        if (types && typeof types === 'string') {
-            types = types.split(' ');
-        }
-
-        return !types || !types.length || ~types.indexOf(extension);
-    }
-
     return function (validator) {
         var requiredInputRule = validator.getRule('required-entry');
 
@@ -269,20 +252,6 @@ define([
                 return validateCalc(value);
             },
             $.mage.__('Please enter a valid number or calculation: Valid numbers must have an extension (px, %, pt, vh). Calculations must have white space around the + and - operators and cannot divide by zero.')//eslint-disable-line max-len
-        );
-
-        validator.addRule(
-            'validate-file-extension',
-            function (name, types, additionalMessage) {
-                this.fileTypeErrorMessage = $.mage.__('We don\'t recognize or support this file extension type.');
-                if (additionalMessage) {
-                    this.fileTypeErrorMessage += ('\t' + additionalMessage);
-                }
-                return validateFileExtension(name, types);
-            },
-            function () {
-                return this.fileTypeErrorMessage;
-            }
         );
 
         validateObjectField(validator, 'validate-number');

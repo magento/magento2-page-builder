@@ -82,13 +82,16 @@ define([
         },
 
         /**
-         * Checks if extension of provided file is allowed.
+         * Checks if provided file is allowed to be uploaded.
          * {@inheritDoc}
          */
-        isExtensionAllowed: function (file) {
-            var fileExtensions = this.getAllowedFileExtensionsInCommaDelimitedFormat(),
-                fileExtensionMessage = this.translations.allowedFileTypes + ':\t' + fileExtensions;
-            return validator('validate-file-extension', file.name, this.allowedExtensions, fileExtensionMessage);
+        isFileAllowed: function () {
+            var result = this._super();
+
+            if (!result.passed && result.rule === 'validate-file-type') {
+                result.message += ('\t' + this.translations.allowedFileTypes + ':\t' + this.getAllowedFileExtensionsInCommaDelimitedFormat());
+            }
+            return result;
         },
 
         /**
