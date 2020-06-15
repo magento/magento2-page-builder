@@ -39,7 +39,7 @@ define([
                 if ((element === 'Magento\\CatalogWidget\\Model\\Rule\\Condition\\Combine') && (pairs['parameters[condition_source][' + key.match(/([\d?-])+/g)[0] + '--1][type]'] === undefined)) {
                     pairs[key] = '';
                 }
-             }
+            }
         });
 
         /*
