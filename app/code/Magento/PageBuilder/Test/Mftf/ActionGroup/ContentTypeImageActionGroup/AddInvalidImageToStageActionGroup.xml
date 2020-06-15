@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="addInvalidImageToStage">
+        <arguments>
+            <argument name="property"/>
+        </arguments>
+        <comment userInput="Attach invalid image A to PageBuilder stage" stepKey="commentAttach"/>
+        <attachFile userInput="{{property.value}}" selector="{{ImageOnStageWithoutImageUploaded.attachImageBtn}}" stepKey="attachImageFileOnStage"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible selector="{{ImageOnStageWithoutImageUploaded.invalidUploadTitle}}" stepKey="waitForInvalidUploadTitle"/>
+        <waitForElementVisible selector="{{ImageOnStageWithoutImageUploaded.invalidUploadMessage(property.errorMessage)}}" stepKey="waitForInvalidUploadMessage"/>
+        <waitForElementVisible selector="{{ImageOnStageWithoutImageUploaded.invalidUploadOkBtn}}" stepKey="waitForInvalidUploadBtn"/>
+        <click selector="{{ImageOnStageWithoutImageUploaded.invalidUploadOkBtn}}" stepKey="clickInvalidUploadBtn"/>
+        <waitForElementNotVisible selector="{{ImageOnStageWithoutImageUploaded.invalidUploadTitle}}" stepKey="waitForModalGone"/>
+        <dontSeeElementInDOM selector="{{ImageOnStageWithoutImageUploaded.imagePreview}}" stepKey="waitForImagePreview"/>
+        <dontSeeElementInDOM selector="{{ImageOnStageWithoutImageUploaded.imageSource(property.fileName)}}" stepKey="waitForImageSource"/>
+    </actionGroup>
+</actionGroups>
