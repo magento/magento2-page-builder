@@ -35,8 +35,12 @@ define([
          * if does not have, we cannot parse the rule in the backend.
          */
         _.each(pairs, function (element, key) {
-            if (typeof key.match(/([\d?-])+/g) === 'object') {
-                if ((element === 'Magento\\CatalogWidget\\Model\\Rule\\Condition\\Combine') && (pairs['parameters[condition_source][' + key.match(/([\d?-])+/g)[0] + '--1][type]'] === undefined)) {
+            var keyIds = key.match(/[\d?-]+/g);
+            
+            if (typeof keyIds === 'object') {
+                var nexPairsExist = pairs['parameters[condition_source][' + keyIds[0] + '--1][type]'];
+                
+                if ((element === 'Magento\\CatalogWidget\\Model\\Rule\\Condition\\Combine') && (nexPairsExist === undefined)) {
                     pairs[key] = '';
                 }
             }
