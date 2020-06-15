@@ -33,10 +33,26 @@
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderImageContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragImageContentTypeToStage">
             <argument name="contentType" value="PageBuilderImageContentType"/>
         </actionGroup>
-        <actionGroup ref="addInvalidImageToStage" stepKey="addImageToStage">
+        <actionGroup ref="addInvalidImageToStage" stepKey="addInvalidImageToStage">
+            <argument name="property" value="PageBuilderImage_InvalidFileType"/>
+        </actionGroup>
+        <!-- Add Banner Background Image to Stage -->
+        <comment userInput="Add Banner Background Image to Stage" stepKey="commentAddBannerToStage"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBannerContentTypeToStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="addInvalidBannerBackgroundToStage" stepKey="addInvalidBannerBackgroundToStage">
+            <argument name="property" value="PageBuilderImage_InvalidFileType"/>
+        </actionGroup>
+        <!-- Add Slide Background Image to Stage -->
+        <comment userInput="Add Slide Background Image to Stage" stepKey="commentAddSliderToStage"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragSliderContentTypeToStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="addInvalidSliderBackgroundToStage" stepKey="addInvalidSliderBackgroundToStage">
             <argument name="property" value="PageBuilderImage_InvalidFileType"/>
         </actionGroup>
     </test>

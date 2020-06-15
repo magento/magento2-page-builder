@@ -46,6 +46,9 @@
         <element name="backgroundSize" type="button" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='wrapper'][contains(@style,'background-size: {{backgroundSize}};')]" parameterized="true"/>
         <element name="backgroundRepeat" type="button" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='wrapper'][contains(@style,'background-repeat: {{backgroundRepeat}};')]" parameterized="true"/>
         <element name="backgroundAttachment" type="button" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[@data-element='wrapper'][contains(@style,'background-attachment: {{backgroundAttachment}};')]" parameterized="true"/>
+        <element name="invalidUploadTitle" type="text" selector="//aside[contains(@class,'modal-popup')]//header/h1[contains(.,'Attention')]"/>
+        <element name="invalidUploadMessage" type="text" selector="//aside[contains(@class,'modal-popup')]//div[@class='modal-content']//div[.=&quot;{{arg1}}&quot;]" parameterized="true"/>
+        <element name="invalidUploadOkBtn" type="text" selector="//aside[contains(@class,'modal-popup')]//footer//button//span[.='OK']"/>
         <!-- Video Background -->
         <element name="videoBackgroundJarallaxContainer" type="text" parameterized="true" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[contains(@id,'jarallax-container')]"/>
         <element name="videoBackgroundVideoElement" type="text" parameterized="true" selector="(//div[@data-content-type='slide'])[{{slideIndex}}]//div[contains(@id,'jarallax-container')]//iframe|(//div[@data-content-type='slide'])[{{slideIndex}}]//div[contains(@id,'jarallax-container')]//video"/>
