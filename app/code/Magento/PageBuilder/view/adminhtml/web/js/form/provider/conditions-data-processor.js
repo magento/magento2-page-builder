@@ -30,16 +30,16 @@ define([
             }
         });
 
-       /*
-        * The Combine Condition rule needs to have children,
-        * if does not have, we cannot parse the rule in the backend.
-        */
+        /*
+         * The Combine Condition rule needs to have children,
+         * if does not have, we cannot parse the rule in the backend.
+         */
         _.each(pairs, function (element, key) {
-            if ((element === 'Magento\\CatalogWidget\\Model\\Rule\\Condition\\Combine')
-                // Check if The Combine Condition Rule has children
-                && pairs['parameters[condition_source][' + key.match(/([\d?-])+/g)[0] + '--1][type]'] === undefined) {
-               pairs[key] = '';
-            }
+            if (typeof key.match(/([\d?-])+/g) === 'object') {
+                if ((element === 'Magento\\CatalogWidget\\Model\\Rule\\Condition\\Combine') && (pairs['parameters[condition_source][' + key.match(/([\d?-])+/g)[0] + '--1][type]'] === undefined)) {
+                    pairs[key] = '';
+                }
+             }
         });
 
         /*
