@@ -88,7 +88,7 @@ define([
             var result = this._super();
 
             if (!result.passed && result.rule === 'validate-file-type') {
-                result.message += ('\t' + this.translations.allowedFileTypes + ':\t' + this.getAllowedFileExtensionsInCommaDelimitedFormat());
+                result.message += (' ' + this.translations.allowedFileTypes + ': ' + this.getAllowedFileExtensionsInCommaDelimitedFormat() + '.');
             }
             return result;
         },
