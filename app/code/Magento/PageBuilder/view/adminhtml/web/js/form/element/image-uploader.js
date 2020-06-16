@@ -91,6 +91,7 @@ define([
             if (!result.passed && result.rule === 'validate-file-type') {
                 result.message += ' ' + this.translations.allowedFileTypes + ': ' + allowedExtensions + '.';
             }
+
             return result;
         },
 
