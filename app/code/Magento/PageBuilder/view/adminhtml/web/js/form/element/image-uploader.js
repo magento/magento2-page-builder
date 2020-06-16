@@ -85,10 +85,11 @@ define([
          * {@inheritDoc}
          */
         isFileAllowed: function () {
-            var result = this._super();
+            var result = this._super(),
+                allowedExtensions = this.getAllowedFileExtensionsInCommaDelimitedFormat();
 
             if (!result.passed && result.rule === 'validate-file-type') {
-                result.message += (' ' + this.translations.allowedFileTypes + ': ' + this.getAllowedFileExtensionsInCommaDelimitedFormat() + '.');
+                result.message += ' ' + this.translations.allowedFileTypes + ': ' + allowedExtensions + '.';
             }
             return result;
         },
