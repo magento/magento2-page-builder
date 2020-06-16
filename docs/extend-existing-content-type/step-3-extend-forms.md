@@ -12,7 +12,7 @@ Your file structure for the Banner extension form and corresponding layout shoul
 
 ### Extension form
 
-When customizing an existing form, make sure you name your form with the same name as the existing content type's form. In our case, we are customizing the Banner's form, which means we must name our form: `pagebuilder-banner-form.xml`. Here's the basic XML configuration for the Banner form extension:
+When customizing an existing form, make sure you name your form with the same name as the existing content type's form. In our case, we are customizing the Banner's form, which means we must name our form: `pagebuilder_banner_form.xml`. Here's the basic XML configuration for the Banner form extension:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -46,7 +46,7 @@ When customizing an existing form, make sure you name your form with the same na
         </dataProvider>
     </dataSource>
 
-  <!--Add Fieldsets and fields-->
+    <!--Add Fieldsets and fields-->
 
 </form>
 ```
@@ -93,7 +93,7 @@ The following table describes some key elements:
 | `settings` | Provides the markup that gives your field a label, CSS styling, validation, and other properties as needed. |
 {:style="table-layout:auto"}
 
-After adding the `max_height` field, flush your cache, drag a banner to the Admin stage, open the editor, and see your new style property field being rendered in the Banner's form, as shown here:
+After adding the `max_height` field, upgrade your setup and flush your cache, drag a banner to the Admin stage, open the editor, and see your new style property field being rendered in the Banner's form, as shown here:
 
 ![Appearance fieldset](../images/appearance-fieldset.png){:width="934px" height="auto"}
 
