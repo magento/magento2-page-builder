@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="ProductConditionsAddDoubleConditionsCombinationTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Products"/>
+            <title value="Product conditions rule with a combination of double conditions"/>
+            <description value="As a Content Manager I want set condition filter in Conditions Combination on a Product content type"/>
+            <severity value="AVERAGE"/>
+            <useCaseId value=""/>
+            <testCaseId value=""/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-products"/>
+        </annotations>
+        <before>
+            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragProductsOntoStage">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="chooseSelectProductsBy">
+            <argument name="property" value="PageBuilderProductsSelectProductsByCondition"/>
+        </actionGroup>
+        <actionGroup ref="AddConditionsCombinationToProducts" stepKey="addProductsConditionCombination"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDropAgain">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <!-- Validate product conditions -->
+        <comment userInput="Validate product conditions" stepKey="productConditionsValidateStage"/>
+        <dontSeeJsError stepKey="doNotSeeAnyJSErrorsOnStage"/>
+    </test>
+</tests>
