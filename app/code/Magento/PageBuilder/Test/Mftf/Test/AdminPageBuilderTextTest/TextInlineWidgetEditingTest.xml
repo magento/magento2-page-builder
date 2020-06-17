@@ -40,9 +40,10 @@
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <clickWithLeftButton x="10" y="10" selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnTextEditorArea"/>
-        <actionGroup ref="addPageLinkWidgetToTinyMCEInline" stepKey="addPageLinkWidgetToTinyMCE">
-            <argument name="widget" value="TinyMCEWidgetCMSPageLink"/>
+        <actionGroup ref="AddPageLinkWidgetToTinyMCEWithAnchorAndTitleActionGroup" stepKey="addPageLinkWidgetToTinyMCE">
             <argument name="page" value="$$createCMSPageB.identifier$$"/>
+            <argument name="anchor" value="{{TinyMCEWidgetCMSPageLinkWithAnchorAndTitle.anchorText}}"/>
+            <argument name="title" value="{{TinyMCEWidgetCMSPageLinkWithAnchorAndTitle.title}}"/>
         </actionGroup>
         <waitForElementVisible selector="{{TextOnStage.text('1', TinyMCEWidgetCMSPageLink.editPanelValue)}}" stepKey="waitForWidgetStage1"/>
         <!--Verify widget edit page-->
@@ -73,6 +74,19 @@
         <actionGroup ref="doubleClickWidgetTinyMCE" stepKey="doubleClickWidget">
             <argument name="widget" value="TinyMCEWidgetCMSPageLink.editPanelValue"/>
         </actionGroup>
+        <!-- Grab a value from the link-->
+        <waitForElementVisible selector="{{WidgetSection.InputAnchorCustomText}}" stepKey="waitForInputAnchorCustomText"/>
+        <grabValueFrom selector="{{WidgetSection.InputAnchorCustomText}}" stepKey="grabAnchorText"/>
+        <waitForElementVisible selector="{{WidgetSection.InputAnchorCustomTitle}}" stepKey="waitForInputAnchorCustomTitle"/>
+        <grabValueFrom selector="{{WidgetSection.InputAnchorCustomTitle}}" stepKey="grabTitleText"/>
+        <assertEquals stepKey="assertAnchorTextCMSWidgetLink" message="pass">
+            <expectedResult type="string">{{TinyMCEWidgetCMSPageLinkWithAnchorAndTitle.anchorText}}</expectedResult>
+            <actualResult type="string">{$grabAnchorText}</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertTitleCMSWidgetLink" message="pass">
+            <expectedResult type="string">{{TinyMCEWidgetCMSPageLinkWithAnchorAndTitle.title}}</expectedResult>
+            <actualResult type="string">{$grabTitleText}</actualResult>
+        </assertEquals>
         <actionGroup ref="closeWidgetPanelTinyMCE" stepKey="closeWidgetPanelTinyMCE"/>
         <!-- Validate Storefront -->
         <comment userInput="Verify Widget Content Type on storefront" stepKey="commentVerifyWidgetOnStorefront"/>
