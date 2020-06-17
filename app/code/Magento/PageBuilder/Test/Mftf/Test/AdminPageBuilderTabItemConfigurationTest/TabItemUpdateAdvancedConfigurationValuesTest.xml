@@ -105,6 +105,23 @@
             <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <comment userInput="Add and Customise Third Tab" stepKey="addThirdTab"/>
+        <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="seeTabHeader2"/>
+        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType2">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel3">
+            <argument name="section" value="TabOnStage"/>
+            <argument name="targetIndex" value="3"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBorderWidth3">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty_Empty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBorderRadius3">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty_Empty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
+        <dontSeeJsError stepKey="doNotSeeJSErrorInConsole"/>
         <!-- Verify in Admin Preview -->
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
@@ -119,6 +136,14 @@
         <comment userInput="Verify tab 2 on stage" stepKey="AC4"/>
         <waitForPageLoad stepKey="waitForPageLoadAdmin" time="30"/>
         <waitForElementVisible selector="{{TabOnStage.tab2ContentAdvancedStyles}}" stepKey="seeTab2ContentAdvancedStylesInAdminPreview"/>
+        <actionGroup ref="switchTabs" stepKey="switchTabsAdmin2">
+            <argument name="section" value="TabOnStage"/>
+            <argument name="from" value="2"/>
+            <argument name="to" value="3"/>
+        </actionGroup>
+        <comment userInput="Verify Tab 3 on Stage" stepKey="verifyTab3OnStage"/>
+        <waitForPageLoad stepKey="waitForPageLoadAdmin2" time="30"/>
+        <waitForElementVisible selector="{{TabOnStage.tab3ContentAdvancedStyles}}" stepKey="seeTab3ContentAdvancedStylesInAdminPreview"/>
         <!-- Verify in Storefront -->
         <amOnPage url="{{PageBuilderTabsContentType.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <waitForPageLoad stepKey="waitForPageLoadStoreFront" time="30"/>
@@ -134,5 +159,10 @@
         <waitForElementVisible selector="{{TabOnStorefront.tabContentAdvancedStyles('2', PageBuilderAdvancedAlignmentPropertyRight.value, PageBuilderMarginsPropertyUnique.value, PageBuilderPaddingPropertyUnique.value)}}" stepKey="seeTabHeaderItemAdvancedStylesInStorefront2"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabContentAdvancedStylesBorder('2', PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_FF0000.rgb, PageBuilderAdvancedBorderWidthProperty500.value, PageBuilderAdvancedBorderRadiusProperty500.value)}}" stepKey="seeTabContentAdvancedStylesBorderInStorefront2"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabContentAdvancedClass('2', PageBuilderAdvancedCssClassesPropertyOneClass.value)}}" stepKey="seeTabContentClassInStorefront2"/>
+        <click selector="{{TabOnStorefront.tabHeader('3')}}" stepKey="switchToTab3Storefront"/>
+        <waitForPageLoad stepKey="waitForTabChangeAnimationStorefront2" time="30"/>
+        <scrollToTopOfPage stepKey="scrollToTopOfPage2"/>
+        <waitForElementVisible selector="{{TabOnStorefront.container('3')}}" stepKey="seeNewTabContent2"/>
+        <comment userInput="Verify Tab 3 on Storefront" stepKey="verifyTab3OnStorefront"/>
     </test>
 </tests>
