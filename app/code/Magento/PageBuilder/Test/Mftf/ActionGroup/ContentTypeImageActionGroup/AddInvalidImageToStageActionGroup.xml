@@ -11,16 +11,21 @@
         <arguments>
             <argument name="property"/>
             <argument name="section" defaultValue="ImageOnStageWithoutImageUploaded"/>
+            <argument name="sectionArea" defaultValue="ImageOnStageWithoutImageUploaded.base('1')" />
+            <argument name="attachInput" defaultValue="ImageOnStageWithoutImageUploaded.attachImageBtn" />
+            <argument name="imagePreview" defaultValue="ImageOnStageWithoutImageUploaded.imagePreview"/>
+            <argument name="imageSource" defaultValue=""/>
         </arguments>
-        <comment userInput="Attach invalid image A to PageBuilder stage" stepKey="commentAttach"/>
-        <attachFile userInput="{{property.value}}" selector="{{section.attachImageBtn}}" stepKey="attachImageFileOnStage"/>
+        <comment userInput="Attach invalid image or background to PageBuilder" stepKey="commentAttach"/>
+        <moveMouseOver selector="{{sectionArea}}" stepKey="hoverSectionArea"/>
+        <attachFile userInput="{{property.value}}" selector="{{attachInput}}" stepKey="attachFile"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForElementVisible selector="{{section.invalidUploadTitle}}" stepKey="waitForInvalidUploadTitle"/>
         <waitForElementVisible selector="{{section.invalidUploadMessage(property.errorMessage)}}" stepKey="waitForInvalidUploadMessage"/>
         <waitForElementVisible selector="{{section.invalidUploadOkBtn}}" stepKey="waitForInvalidUploadBtn"/>
         <click selector="{{section.invalidUploadOkBtn}}" stepKey="clickInvalidUploadBtn"/>
         <waitForElementNotVisible selector="{{section.invalidUploadTitle}}" stepKey="waitForModalGone"/>
-        <dontSeeElementInDOM selector="{{section.imagePreview}}" stepKey="waitForImagePreview"/>
-        <dontSeeElementInDOM selector="{{section.imageSource(property.fileName)}}" stepKey="waitForImageSource"/>
+        <dontSeeElementInDOM selector="{{imagePreview}}" stepKey="waitForImagePreview"/>
+        <dontSeeElementInDOM selector="{{imageSource}}" stepKey="waitForImageSource"/>
     </actionGroup>
 </actionGroups>

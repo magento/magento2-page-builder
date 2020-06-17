@@ -38,6 +38,7 @@
         </actionGroup>
         <actionGroup ref="addInvalidImageToStage" stepKey="addInvalidImageToStage">
             <argument name="property" value="PageBuilderImage_InvalidFileType"/>
+            <argument name="imageSource" value="ImageOnStageWithoutImageUploaded.imageSource(PageBuilderImage_InvalidFileType.fileName)"/>
         </actionGroup>
         <!-- Add Banner Background Image to Stage -->
         <comment userInput="Add Banner Background Image to Stage" stepKey="commentAddBannerToStage"/>
@@ -46,6 +47,10 @@
         </actionGroup>
         <actionGroup ref="addInvalidBannerBackgroundToStage" stepKey="addInvalidBannerBackgroundToStage">
             <argument name="property" value="PageBuilderImage_InvalidFileType"/>
+            <argument name="section" value="BannerOnBackend"/>
+            <argument name="attachInput" value="BannerOnBackend.uploadImageInput" />
+            <argument name="imagePreview" value="BannerOnBackend.backgroundImage('1', PageBuilderImage_InvalidFileType.fileName)"/>
+            <argument name="imageSource" value="BannerOnBackend.imageSourceByIndex('1', PageBuilderImage_InvalidFileType.fileName)"/>
         </actionGroup>
         <!-- Add Slide Background Image to Stage -->
         <comment userInput="Add Slide Background Image to Stage" stepKey="commentAddSliderToStage"/>
@@ -54,6 +59,10 @@
         </actionGroup>
         <actionGroup ref="addInvalidSliderBackgroundToStage" stepKey="addInvalidSliderBackgroundToStage">
             <argument name="property" value="PageBuilderImage_InvalidFileType"/>
+            <argument name="section" value="SlideOnBackend"/>
+            <argument name="attachInput" value="SlideOnBackend.uploadImageInput" />
+            <argument name="imagePreview" value="SlideOnBackend.backgroundImage('1', PageBuilderImage_InvalidFileType.fileName)"/>
+            <argument name="imageSource" value="SlideOnBackend.imageSourceByIndex('1', PageBuilderImage_InvalidFileType.fileName)"/>
         </actionGroup>
     </test>
 </tests>

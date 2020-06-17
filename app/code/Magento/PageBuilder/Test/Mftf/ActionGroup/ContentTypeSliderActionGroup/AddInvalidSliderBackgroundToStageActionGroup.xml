@@ -7,21 +7,5 @@
 -->
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
-    <actionGroup name="addInvalidSliderBackgroundToStage">
-        <arguments>
-            <argument name="property"/>
-            <argument name="section" defaultValue="SlideOnBackend"/>
-        </arguments>
-        <comment userInput="Attach invalid slide background to PageBuilder stage" stepKey="commentAttach"/>
-        <moveMouseOver selector="{{section.emptySlide('1')}}" stepKey="hoverSection"/>
-        <attachFile userInput="{{property.value}}" selector="{{section.uploadImageInput}}" stepKey="attachSectionBackgroundFileOnStage"/>
-        <waitForPageLoad stepKey="waitForPageLoad"/>
-        <waitForElementVisible selector="{{section.invalidUploadTitle}}" stepKey="waitForInvalidUploadTitle"/>
-        <waitForElementVisible selector="{{section.invalidUploadMessage(property.errorMessage)}}" stepKey="waitForInvalidUploadMessage"/>
-        <waitForElementVisible selector="{{section.invalidUploadOkBtn}}" stepKey="waitForInvalidUploadBtn"/>
-        <click selector="{{section.invalidUploadOkBtn}}" stepKey="clickInvalidUploadBtn"/>
-        <waitForElementNotVisible selector="{{section.invalidUploadTitle}}" stepKey="waitForModalGone"/>
-        <dontSeeElementInDOM selector="{{section.backgroundImage('1', property.fileName)}}" stepKey="waitForImagePreview"/>
-        <dontSeeElementInDOM selector="{{section.imageSourceByIndex('1', property.fileName)}}" stepKey="waitForImageSource"/>
-    </actionGroup>
+    <actionGroup name="addInvalidSliderBackgroundToStage" extends="addInvalidImageToStage"/>
 </actionGroups>
