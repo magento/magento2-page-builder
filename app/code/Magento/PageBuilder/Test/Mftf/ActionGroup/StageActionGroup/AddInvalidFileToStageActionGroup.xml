@@ -7,16 +7,16 @@
 -->
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
-    <actionGroup name="addInvalidImageToStage">
+    <actionGroup name="addInvalidFileToStage">
         <arguments>
             <argument name="property"/>
             <argument name="section" defaultValue="ImageOnStageWithoutImageUploaded"/>
             <argument name="sectionArea" defaultValue="ImageOnStageWithoutImageUploaded.base('1')" />
             <argument name="attachInput" defaultValue="ImageOnStageWithoutImageUploaded.attachImageBtn" />
-            <argument name="imagePreview" defaultValue="ImageOnStageWithoutImageUploaded.imagePreview"/>
-            <argument name="imageSource" defaultValue=""/>
+            <argument name="filePreview" defaultValue="ImageOnStageWithoutImageUploaded.imagePreview"/>
+            <argument name="fileSource" defaultValue=""/>
         </arguments>
-        <comment userInput="Attach invalid image or background to PageBuilder" stepKey="commentAttach"/>
+        <comment userInput="Attach invalid file to PageBuilder" stepKey="commentAttach"/>
         <moveMouseOver selector="{{sectionArea}}" stepKey="hoverSectionArea"/>
         <attachFile userInput="{{property.value}}" selector="{{attachInput}}" stepKey="attachFile"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
@@ -25,7 +25,7 @@
         <waitForElementVisible selector="{{section.invalidUploadOkBtn}}" stepKey="waitForInvalidUploadBtn"/>
         <click selector="{{section.invalidUploadOkBtn}}" stepKey="clickInvalidUploadBtn"/>
         <waitForElementNotVisible selector="{{section.invalidUploadTitle}}" stepKey="waitForModalGone"/>
-        <dontSeeElementInDOM selector="{{imagePreview}}" stepKey="waitForImagePreview"/>
-        <dontSeeElementInDOM selector="{{imageSource}}" stepKey="waitForImageSource"/>
+        <dontSeeElementInDOM selector="{{filePreview}}" stepKey="waitForFilePreview"/>
+        <dontSeeElementInDOM selector="{{fileSource}}" stepKey="waitForFileSource"/>
     </actionGroup>
 </actionGroups>

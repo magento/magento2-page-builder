@@ -7,7 +7,7 @@
 -->
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
-    <test name="BannerBackgroundImageInvalidFileTypeTest">
+    <test name="BannerBackgroundImageInvalidFileTypeTest" extends="ImageInvalidFileTypeValidationTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Banner"/>
@@ -18,31 +18,22 @@
             <group value="pagebuilder-banner"/>
             <group value="pagebuilder-bannerCommon"/>
         </annotations>
-        <before>
-            <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        </before>
-        <after>
-            <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
-        </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <comment userInput="Add Banner Background Image to Stage" stepKey="commentAddBannerToStage"/>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragBannerContentTypeToStage">
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="addInvalidBannerBackgroundToStage" stepKey="addInvalidBannerBackgroundToStage">
+        <actionGroup ref="addInvalidFileToStage" stepKey="addInvalidFileToStage">
             <argument name="property" value="PageBuilderImage_InvalidFileType"/>
             <argument name="section" value="BannerOnBackend"/>
             <argument name="sectionArea" value="BannerOnBackend.base('1')"/>
             <argument name="attachInput" value="BannerOnBackend.uploadImageInput"/>
-            <argument name="imagePreview" value="BannerOnBackend.backgroundImage('1', PageBuilderImage_InvalidFileType.fileName)"/>
-            <argument name="imageSource" value="BannerOnBackend.imageSourceByIndex('1', PageBuilderImage_InvalidFileType.fileName)"/>
+            <argument name="filePreview" value="BannerOnBackend.backgroundImage('1', PageBuilderImage_InvalidFileType.fileName)"/>
+            <argument name="fileSource" value="BannerOnBackend.imageSourceByIndex('1', PageBuilderImage_InvalidFileType.fileName)"/>
         </actionGroup>
     </test>
 </tests>
