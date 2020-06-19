@@ -7,9 +7,4 @@ When you are working on a page and changing the master.html template, you need t
 ## Setup and cache
 
 If you change something in the configuration of your extension and the change is not visible, run `bin/magento setup:upgrade` to ensure that the configuration is updated.
-to execute the `bin/magento setup:upgrade` command.
 
-## Check vendor code
-
-When using example code from the (https://github.com/magento-devdocs/pagebuilder-examples)[PageBuilderExamples] in your project,
-and your modification shows no result, make sure you have adopted the latest version of the config XML files if needed.
