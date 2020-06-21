@@ -106,7 +106,7 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <comment userInput="Add and Customise Third Tab" stepKey="addThirdTab"/>
-        <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="seeTabHeader2"/>
+        <waitForElementVisible selector="{{TabOnStage.tabHeader('2')}}" stepKey="seeTabHeader2"/>
         <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType2">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
@@ -159,10 +159,5 @@
         <waitForElementVisible selector="{{TabOnStorefront.tabContentAdvancedStyles('2', PageBuilderAdvancedAlignmentPropertyRight.value, PageBuilderMarginsPropertyUnique.value, PageBuilderPaddingPropertyUnique.value)}}" stepKey="seeTabHeaderItemAdvancedStylesInStorefront2"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabContentAdvancedStylesBorder('2', PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_FF0000.rgb, PageBuilderAdvancedBorderWidthProperty500.value, PageBuilderAdvancedBorderRadiusProperty500.value)}}" stepKey="seeTabContentAdvancedStylesBorderInStorefront2"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabContentAdvancedClass('2', PageBuilderAdvancedCssClassesPropertyOneClass.value)}}" stepKey="seeTabContentClassInStorefront2"/>
-        <click selector="{{TabOnStorefront.tabHeader('3')}}" stepKey="switchToTab3Storefront"/>
-        <waitForPageLoad stepKey="waitForTabChangeAnimationStorefront2" time="30"/>
-        <scrollToTopOfPage stepKey="scrollToTopOfPage2"/>
-        <waitForElementVisible selector="{{TabOnStorefront.container('3')}}" stepKey="seeNewTabContent2"/>
-        <comment userInput="Verify Tab 3 on Storefront" stepKey="verifyTab3OnStorefront"/>
     </test>
 </tests>
