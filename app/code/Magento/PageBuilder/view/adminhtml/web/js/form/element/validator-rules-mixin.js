@@ -283,7 +283,7 @@ define([
             },
             $.mage.__('Adding widget in content and link in outer element is not allowed.')
         );
-        
+
         validator.addRule(
             'validate-calc',
             function (value) {
