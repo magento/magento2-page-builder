@@ -5,7 +5,7 @@ function _extends() { _extends = Object.assign || function (target) { for (var i
 
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-define(["jarallax", "jarallaxVideo", "jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "mageUtils", "underscore", "vimeoWrapper", "Magento_PageBuilder/js/content-type-menu/conditional-remove-option", "Magento_PageBuilder/js/uploader", "Magento_PageBuilder/js/utils/delay-until", "Magento_PageBuilder/js/utils/editor", "Magento_PageBuilder/js/utils/nesting-link-dialog", "Magento_PageBuilder/js/wysiwyg/factory", "Magento_PageBuilder/js/content-type/preview"], function (_jarallax, _jarallaxVideo, _jquery, _knockout, _translate, _events, _mageUtils, _underscore, _vimeoWrapper, _conditionalRemoveOption, _uploader, _delayUntil, _editor, _nestingLinkDialog, _factory, _preview) {
+define(["jarallax", "jarallaxVideo", "jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "mageUtils", "underscore", "vimeoWrapper", "Magento_PageBuilder/js/content-type-menu/conditional-remove-option", "Magento_PageBuilder/js/uploader", "Magento_PageBuilder/js/utils/delay-until", "Magento_PageBuilder/js/utils/editor", "Magento_PageBuilder/js/utils/nesting-link-dialog", "Magento_PageBuilder/js/utils/nesting-widget-dialog", "Magento_PageBuilder/js/wysiwyg/factory", "Magento_PageBuilder/js/content-type/preview"], function (_jarallax, _jarallaxVideo, _jquery, _knockout, _translate, _events, _mageUtils, _underscore, _vimeoWrapper, _conditionalRemoveOption, _uploader, _delayUntil, _editor, _nestingLinkDialog, _nestingWidgetDialog, _factory, _preview) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -429,6 +429,7 @@ define(["jarallax", "jarallaxVideo", "jquery", "knockout", "mage/translate", "Ma
         _events.trigger("image:" + _this8.contentType.id + ":assignAfter", imageObject);
 
         (0, _nestingLinkDialog)(_this8.contentType.dataStore, _this8.wysiwyg, "content", "link_url");
+        (0, _nestingWidgetDialog)(_this8.contentType.dataStore, _this8.wysiwyg, "content", "link_url");
       }); // Remove wysiwyg before assign new instance.
 
 

@@ -58,7 +58,7 @@ define([
      * @return {Boolean}
      */
     function validateWysiwygHasWidget(str) {
-        return (/({{widget)+([^}}]+)}}/igm).test(str);
+        return (/\{\{widget(.*?)\}\}/ig).test(str);
     }
 
     /**
