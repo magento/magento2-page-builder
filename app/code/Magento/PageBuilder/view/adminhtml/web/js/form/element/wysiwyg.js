@@ -25,7 +25,7 @@ define([
             elementSelector: '> textarea',
             stageSelector: '.pagebuilder-stage-wrapper',
             pageBuilder: false,
-            visiblePageBuilder: false,
+            visiblePageBuilder: true,
             isComponentInitialized: false,
             wysiwygConfigData: {},
             pageBuilderEditButtonText: $t('Edit with Page Builder'),
@@ -38,10 +38,7 @@ define([
          */
         initialize: function () {
             this._super();
-
-            if (!this.wysiwygConfigData()['pagebuilder_button']) {
-                this.initPageBuilder();
-            }
+            this.initPageBuilder();
 
             return this;
         },
@@ -91,10 +88,6 @@ define([
                     component: this,
                     selector: this.stageSelector
                 }, this.disableDomObserver.bind(this));
-            }
-
-            if (!this.wysiwygConfigData()['pagebuilder_button']) {
-                this.visiblePageBuilder(true);
             }
         },
 
@@ -165,40 +158,12 @@ define([
                             });
                         }.bind(this), 350);
                     }
-
-                    if (this.wysiwygConfigData()['pagebuilder_button']) {
-                        // Force full screen mode whilst the animation occurs
-                        this.transitionOut(true);
-                        // Trigger animation out
-                        this.transition(false);
-
-                        // Reset the transition out class and hide the stage
-                        _.delay(function () {
-                            this.transitionOut(false);
-                            this.visiblePageBuilder(false);
-                        }.bind(this), 185);
-                    }
                 } else if (args.fullScreen) {
                     if (this.isWithinModal && this.modal) {
                         this.modal.css({
                             transform: 'none',
                             transition: 'none'
                         });
-                    }
-
-                    if (this.wysiwygConfigData()['pagebuilder_button']) {
-                        this.visiblePageBuilder(true);
-
-                        fullScreenDeferred.resolve();
-
-                        /* eslint-disable max-depth */
-                        // If the stage has already rendered once we don't need to wait until animating the stage in
-                        if (rendered) {
-                            _.defer(function () {
-                                this.transition(true);
-                            }.bind(this));
-                        }
-                        /* eslint-enable max-depth */
                     }
                 }
             }.bind(this));
