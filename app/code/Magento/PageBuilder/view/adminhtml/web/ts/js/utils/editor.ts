@@ -4,6 +4,7 @@
  */
 
 import $ from "jquery";
+import "mage/adminhtml/tools";
 import $t from "mage/translate";
 import mageUtils from "mageUtils";
 import {Editor} from "tinymce";
@@ -125,7 +126,7 @@ function convertWidgetsToHtmlPreview(content: string) {
             }
 
             const image = $("<img />")
-                .prop("id", btoa(match).replace(/\+/g, ":").replace(/\//g, "_").replace(/=/g, "-"))
+                .prop("id", window.Base64.idEncode(match))
                 .prop("src", imageSrc);
 
             placeholder.append(image);
