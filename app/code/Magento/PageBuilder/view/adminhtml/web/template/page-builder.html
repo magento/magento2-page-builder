@@ -9,7 +9,7 @@
      ko-style="wrapperStyles">
     <div if="hasStageOverlay()"
          class="pagebuilder-stage-overlay"
-         click="function() { toggleFullScreen($element); }"
+         click="toggleFullScreen.bind($data, $element)"
          css="'active': !isFullScreen()">
     </div>
     <div class="admin__field pagebuilder-header" css="visible: panel.isVisible">
