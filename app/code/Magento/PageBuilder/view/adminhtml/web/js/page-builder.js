@@ -21,6 +21,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       this.loading = _knockout.observable(true);
       this.wrapperStyles = _knockout.observable({});
       this.previousWrapperStyles = {};
+      this.hasStageOverlay = _knockout.observable(false);
 
       _config.setConfig(config);
 
@@ -187,6 +188,16 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
     _proto.saveAsTemplate = function saveAsTemplate() {
       return (0, _templateManager.saveAsTemplate)(this.stage);
+    }
+    /**
+     * Enable overlay for stage element
+     *
+     * @param {boolean} flag
+     */
+    ;
+
+    _proto.setStageOverlay = function setStageOverlay(flag) {
+      this.hasStageOverlay(flag);
     }
     /**
      * Preload all templates into the window to reduce calls later in the app

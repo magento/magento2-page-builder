@@ -7,7 +7,8 @@
 <div class="pagebuilder-stage-wrapper"
      css="'stage-full-screen': isFullScreen"
      ko-style="wrapperStyles">
-    <div class="pagebuilder-stage-overlay"
+    <div if="hasStageOverlay()"
+         class="pagebuilder-stage-overlay"
          click="function() { toggleFullScreen($element); }"
          css="'active': !isFullScreen()">
     </div>

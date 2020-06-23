@@ -38,6 +38,7 @@ export default class PageBuilder implements PageBuilderInterface {
     public isAllowedTemplateApply: boolean;
     private previousWrapperStyles: {[key: string]: string} = {};
     private previousPanelHeight: number;
+    private hasStageOverlay: KnockoutObservable<boolean> = ko.observable(false);
 
     constructor(config: any, initialValue: string) {
         Config.setConfig(config);
@@ -188,6 +189,15 @@ export default class PageBuilder implements PageBuilderInterface {
      */
     public saveAsTemplate() {
         return saveAsTemplate(this.stage);
+    }
+
+    /**
+     * Enable overlay for stage element
+     *
+     * @param {boolean} flag
+     */
+    public setStageOverlay(flag: boolean): void {
+        this.hasStageOverlay(flag);
     }
 
     /**
