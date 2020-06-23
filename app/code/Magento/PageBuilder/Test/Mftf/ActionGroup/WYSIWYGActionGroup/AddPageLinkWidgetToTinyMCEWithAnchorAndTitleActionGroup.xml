@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="AddPageLinkWidgetToTinyMCEWithAnchorAndTitleActionGroup" extends="addPageLinkWidgetToTinyMCE">
+        <arguments>
+            <argument name="anchor" defaultValue="" type="string"/>
+            <argument name="title" defaultValue="" type="string"/>
+        </arguments>
+        <comment userInput="Insert anchor and title text" stepKey="commentAddAnchorAndTitleText" after="waitForLoadingMaskToDisappear2"/>
+        <waitForElementVisible selector="{{WidgetSection.InputAnchorCustomText}}" stepKey="waitForInputAnchorCustomText" after="commentAddAnchorAndTitleText"/>
+        <fillField selector="{{WidgetSection.InputAnchorCustomText}}" userInput="{{anchor}}" stepKey="insertTextToDisplay" after="waitForInputAnchorCustomText" />
+        <waitForElementVisible selector="{{WidgetSection.InputAnchorCustomTitle}}" stepKey="waitForInputAnchorCustomTitle" after="insertTextToDisplay"/>
+        <fillField selector="{{WidgetSection.InputAnchorCustomTitle}}" userInput="{{title}}" stepKey="insertTitle" after="waitForInputAnchorCustomTitle"/>
+        <waitForElementVisible selector="{{TinyMCESection.InsertWidgetIcon}}" stepKey="waitForInsertWidget1" after="waitForInsertWidgetModalToClose"/>
+        <click selector="{{TinyMCESection.InsertWidgetIcon}}" stepKey="clickAddWidgetBtn"/>
+    </actionGroup>
+</actionGroups>
