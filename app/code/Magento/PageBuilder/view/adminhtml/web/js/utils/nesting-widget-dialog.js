@@ -15,7 +15,7 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/modal/dismissible-co
    * @param {string} inlineMessageField
    * @param {string} linkUrlField
    */
-  function nestingLinkDialog(dataStore, wysiwyg, inlineMessageField, linkUrlField) {
+  function nestingWidgetDialog(dataStore, wysiwyg, inlineMessageField, linkUrlField) {
     var dataStoreContent = dataStore.getState();
     var inlineMessage = dataStoreContent[inlineMessageField];
     var linkUrl = dataStoreContent[linkUrlField];
@@ -42,6 +42,6 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/modal/dismissible-co
     }
   }
 
-  return nestingLinkDialog;
+  return nestingWidgetDialog;
 });
 //# sourceMappingURL=nesting-widget-dialog.js.map

@@ -19,7 +19,7 @@ import WysiwygInterface from "../wysiwyg/wysiwyg-interface";
  * @param {string} inlineMessageField
  * @param {string} linkUrlField
  */
-export default function nestingLinkDialog(
+export default function nestingWidgetDialog(
     dataStore: DataStore,
     wysiwyg: WysiwygInterface,
     inlineMessageField: string,
