@@ -86,7 +86,14 @@ export default class PageBuilder implements PageBuilderInterface {
      */
     public toggleFullScreen(args: StageToggleFullScreenParamsInterface): void {
         if (args.animate === false) {
-            this.isFullScreen(!this.isFullScreen());
+            if (!this.isFullScreen()) {
+                this.isFullScreen(true);
+                this.panel.setFullScreenMode(true);
+
+            } else {
+                this.isFullScreen(false);
+                this.panel.setFullScreenMode(false);
+            }
             return;
         }
 
@@ -95,6 +102,7 @@ export default class PageBuilder implements PageBuilderInterface {
         const panel = stageWrapper.find(".pagebuilder-panel");
         if (!this.isFullScreen()) {
             pageBuilderWrapper.css("height", pageBuilderWrapper.outerHeight());
+            this.panel.setFullScreenMode(false);
             this.previousPanelHeight = panel.outerHeight();
             panel.css("height", this.previousPanelHeight + "px");
             /**
@@ -126,19 +134,7 @@ export default class PageBuilder implements PageBuilderInterface {
             // When leaving full screen mode just transition back to the original state
             this.wrapperStyles(this.previousWrapperStyles);
             this.isFullScreen(false);
-            panel.css("height", this.previousPanelHeight + "px");
-            // Wait for the 350ms animation to complete before changing these properties back
-            _.delay(() => {
-                panel.css("height", "");
-                pageBuilderWrapper.css("height", "");
-                this.wrapperStyles(Object.keys(this.previousWrapperStyles)
-                    .reduce((object: object, styleName: string) => {
-                        return Object.assign(object, {[styleName]: ""});
-                    }, {}),
-                );
-                this.previousWrapperStyles = {};
-                this.previousPanelHeight = null;
-            }, 350);
+            this.panel.setFullScreenMode(false);
         }
     }
 

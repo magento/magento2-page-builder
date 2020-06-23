@@ -27,6 +27,7 @@ export default class Panel {
     public searchResults: KnockoutObservableArray<any> = ko.observableArray([]);
     public isVisible: KnockoutObservable<boolean> = ko.observable(false);
     public isStickyBottom: KnockoutObservable<boolean> = ko.observable(false);
+    public isFullScreenMode: KnockoutObservable<boolean> = ko.observable(false);
     public isStickyTop: KnockoutObservable<boolean> = ko.observable(false);
     public searching: KnockoutObservable<boolean> = ko.observable(false);
     public searchValue: KnockoutObservable<string> = ko.observable("");
@@ -51,6 +52,14 @@ export default class Panel {
      */
     public afterRender(element: Element): void {
         this.element = element;
+    }
+
+    /**
+     * Set full screen flag
+     * @param flag
+     */
+    public setFullScreenMode(flag: boolean): void {
+        this.isFullScreenMode(flag);
     }
 
     /**
