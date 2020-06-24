@@ -6,7 +6,8 @@
 -->
 
 <div visible="visible" css="{'_disabled': disabled}">
-    <button type="button"
+    <button if="wysiwygConfigData()['pagebuilder_button'] || wysiwygConfigData()['pagebuilder_content_snapshot']"
+            type="button"
             class="action-default action"
             ko-disabled="disabled"
             click="pageBuilderEditButtonClick.bind($data)">
@@ -14,8 +15,9 @@
     </button>
     <if args="isComponentInitialized">
         <div visible="visiblePageBuilder"
-             class="pagebuilder-wysiwyg-wrapper">
-            <with args="pageBuilder">
+             class="pagebuilder-wysiwyg-wrapper"
+             css="{'pagebuilder-transition-in': wysiwygConfigData()['pagebuilder_button'] && !wysiwygConfigData()['pagebuilder_content_snapshot'], 'trigger-transition': transition, 'pagebuilder-transition-out': transitionOut}">
+        <with args="pageBuilder">
                 <render />
             </with>
         </div>
