@@ -39,7 +39,8 @@ define([
         initialize: function () {
             this._super();
 
-            if (!this.wysiwygConfigData()['pagebuilder_button']) {
+            if (!this.wysiwygConfigData()['pagebuilder_button'] ||
+                this.wysiwygConfigData()['pagebuilder_content_snapshot']) {
                 this.initPageBuilder();
             }
 
@@ -91,10 +92,11 @@ define([
                     component: this,
                     selector: this.stageSelector
                 }, this.disableDomObserver.bind(this));
-            }
 
-            if (!this.wysiwygConfigData()['pagebuilder_button']) {
-                this.visiblePageBuilder(true);
+                if (!this.wysiwygConfigData()['pagebuilder_button'] ||
+                    this.wysiwygConfigData()['pagebuilder_content_snapshot']) {
+                    this.visiblePageBuilder(true);
+                }
             }
         },
 
@@ -166,7 +168,8 @@ define([
                         }.bind(this), 350);
                     }
 
-                    if (this.wysiwygConfigData()['pagebuilder_button']) {
+                    if (this.wysiwygConfigData()['pagebuilder_button'] &&
+                        !this.wysiwygConfigData()['pagebuilder_content_snapshot']) {
                         // Force full screen mode whilst the animation occurs
                         this.transitionOut(true);
                         // Trigger animation out
@@ -186,7 +189,8 @@ define([
                         });
                     }
 
-                    if (this.wysiwygConfigData()['pagebuilder_button']) {
+                    if (this.wysiwygConfigData()['pagebuilder_button'] &&
+                        !this.wysiwygConfigData()['pagebuilder_content_snapshot']) {
                         this.visiblePageBuilder(true);
 
                         fullScreenDeferred.resolve();
