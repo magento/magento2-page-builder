@@ -31,6 +31,7 @@ export default class PageBuilder implements PageBuilderInterface {
     public initialValue: string;
     public id: string = utils.uniqueid();
     public originalScrollTop: number = 0;
+    public isContentSnapshotMode = false;
     public isFullScreen: KnockoutObservable<boolean> = ko.observable(false);
     public loading: KnockoutObservable<boolean> = ko.observable(true);
     public wrapperStyles: KnockoutObservable<{[key: string]: string}> = ko.observable({});
@@ -85,16 +86,24 @@ export default class PageBuilder implements PageBuilderInterface {
      * @param {StageToggleFullScreenParamsInterface} args
      */
     public toggleFullScreen(args: StageToggleFullScreenParamsInterface): void {
-        if (args.animate === false) {
-            if (!this.isFullScreen()) {
-                this.isFullScreen(true);
-                this.panel.setFullScreenMode(true);
+        if (this.isContentSnapshotMode) {
+            if (args.animate === false) {
+                if (!this.isFullScreen()) {
+                    this.isFullScreen(true);
+                    this.panel.setContentSnapshotMode(false);
 
-            } else {
-                this.isFullScreen(false);
-                this.panel.setFullScreenMode(false);
+                } else {
+                    this.isFullScreen(false);
+                    this.panel.setContentSnapshotMode(true);
+                }
+                return;
             }
-            return;
+        } else {
+            this.panel.setContentSnapshotMode(false);
+            if (args.animate === false) {
+                this.isFullScreen(!this.isFullScreen());
+                return;
+            }
         }
 
         const stageWrapper = $("#" + this.stage.id).parent();
@@ -102,7 +111,10 @@ export default class PageBuilder implements PageBuilderInterface {
         const panel = stageWrapper.find(".pagebuilder-panel");
         if (!this.isFullScreen()) {
             pageBuilderWrapper.css("height", pageBuilderWrapper.outerHeight());
-            this.panel.setFullScreenMode(false);
+            if (this.isContentSnapshotMode) {
+                this.panel.setContentSnapshotMode(true);
+            }
+
             this.previousPanelHeight = panel.outerHeight();
             panel.css("height", this.previousPanelHeight + "px");
             /**
@@ -134,7 +146,23 @@ export default class PageBuilder implements PageBuilderInterface {
             // When leaving full screen mode just transition back to the original state
             this.wrapperStyles(this.previousWrapperStyles);
             this.isFullScreen(false);
-            this.panel.setFullScreenMode(false);
+            if (!this.isContentSnapshotMode) {
+                panel.css("height", this.previousPanelHeight + "px");
+                // Wait for the 350ms animation to complete before changing these properties back
+                _.delay(() => {
+                    panel.css("height", "");
+                    pageBuilderWrapper.css("height", "");
+                    this.wrapperStyles(Object.keys(this.previousWrapperStyles)
+                                           .reduce((object: object, styleName: string) => {
+                                               return Object.assign(object, {[styleName]: ""});
+                                           }, {}),
+                    );
+                    this.previousWrapperStyles = {};
+                    this.previousPanelHeight = null;
+                }, 350);
+            } else {
+                this.panel.setContentSnapshotMode(true);
+            }
         }
     }
 
@@ -151,6 +179,19 @@ export default class PageBuilder implements PageBuilderInterface {
         events.trigger(`stage:${ this.id }:fullScreenModeChangeAfter`, {
             fullScreen: this.isFullScreen(),
         });
+    }
+
+    /**
+     * Set the content snapshot mode to show the page builder stage
+     * when page builder is enabled
+     * @param flag
+     */
+    public setContentSnapshotMode(flag: boolean): void
+    {
+        this.isContentSnapshotMode = flag;
+        if (this.isContentSnapshotMode) {
+            this.panel.setContentSnapshotMode(true);
+        }
     }
 
     /**

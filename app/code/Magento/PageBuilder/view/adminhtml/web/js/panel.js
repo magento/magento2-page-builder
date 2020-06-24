@@ -19,7 +19,7 @@ define(["consoleLogger", "jquery", "knockout", "mage/translate", "Magento_PageBu
       this.searchResults = _knockout.observableArray([]);
       this.isVisible = _knockout.observable(false);
       this.isStickyBottom = _knockout.observable(false);
-      this.isFullScreenMode = _knockout.observable(false);
+      this.isContentSnapshotMode = _knockout.observable(false);
       this.isStickyTop = _knockout.observable(false);
       this.searching = _knockout.observable(false);
       this.searchValue = _knockout.observable("");
@@ -49,8 +49,8 @@ define(["consoleLogger", "jquery", "knockout", "mage/translate", "Magento_PageBu
      */
     ;
 
-    _proto.setFullScreenMode = function setFullScreenMode(flag) {
-      this.isFullScreenMode(flag);
+    _proto.setContentSnapshotMode = function setContentSnapshotMode(flag) {
+      this.isContentSnapshotMode(flag);
     }
     /**
      * Init listeners

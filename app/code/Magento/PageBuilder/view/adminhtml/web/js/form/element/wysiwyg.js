@@ -93,8 +93,12 @@ define([
                     selector: this.stageSelector
                 }, this.disableDomObserver.bind(this));
 
-                if (!this.wysiwygConfigData()['pagebuilder_button'] ||
-                    this.wysiwygConfigData()['pagebuilder_content_snapshot']) {
+                if (!this.wysiwygConfigData()['pagebuilder_button']) {
+                    this.visiblePageBuilder(true);
+                }
+
+                if (this.wysiwygConfigData()['pagebuilder_content_snapshot']) {
+                    this.pageBuilder.setContentSnapshotMode(true);
                     this.visiblePageBuilder(true);
                 }
             }

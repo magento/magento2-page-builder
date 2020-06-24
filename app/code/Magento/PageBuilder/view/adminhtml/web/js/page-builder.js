@@ -17,6 +17,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       this.isStageReady = _knockout.observable(false);
       this.id = _mageUtils.uniqueid();
       this.originalScrollTop = 0;
+      this.isContentSnapshotMode = false;
       this.isFullScreen = _knockout.observable(false);
       this.loading = _knockout.observable(true);
       this.wrapperStyles = _knockout.observable({});
@@ -75,16 +76,25 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _proto.toggleFullScreen = function toggleFullScreen(args) {
       var _this3 = this;
 
-      if (args.animate === false) {
-        if (!this.isFullScreen()) {
-          this.isFullScreen(true);
-          this.panel.setFullScreenMode(true);
-        } else {
-          this.isFullScreen(false);
-          this.panel.setFullScreenMode(false);
-        }
+      if (this.isContentSnapshotMode) {
+        if (args.animate === false) {
+          if (!this.isFullScreen()) {
+            this.isFullScreen(true);
+            this.panel.setContentSnapshotMode(false);
+          } else {
+            this.isFullScreen(false);
+            this.panel.setContentSnapshotMode(true);
+          }
 
-        return;
+          return;
+        }
+      } else {
+        this.panel.setContentSnapshotMode(false);
+
+        if (args.animate === false) {
+          this.isFullScreen(!this.isFullScreen());
+          return;
+        }
       }
 
       var stageWrapper = (0, _jquery)("#" + this.stage.id).parent();
@@ -93,7 +103,11 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
       if (!this.isFullScreen()) {
         pageBuilderWrapper.css("height", pageBuilderWrapper.outerHeight());
-        this.panel.setFullScreenMode(false);
+
+        if (this.isContentSnapshotMode) {
+          this.panel.setContentSnapshotMode(true);
+        }
+
         this.previousPanelHeight = panel.outerHeight();
         panel.css("height", this.previousPanelHeight + "px");
         /**
@@ -127,7 +141,26 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         // When leaving full screen mode just transition back to the original state
         this.wrapperStyles(this.previousWrapperStyles);
         this.isFullScreen(false);
-        this.panel.setFullScreenMode(false);
+
+        if (!this.isContentSnapshotMode) {
+          panel.css("height", this.previousPanelHeight + "px"); // Wait for the 350ms animation to complete before changing these properties back
+
+          _underscore.delay(function () {
+            panel.css("height", "");
+            pageBuilderWrapper.css("height", "");
+
+            _this3.wrapperStyles(Object.keys(_this3.previousWrapperStyles).reduce(function (object, styleName) {
+              var _Object$assign2;
+
+              return Object.assign(object, (_Object$assign2 = {}, _Object$assign2[styleName] = "", _Object$assign2));
+            }, {}));
+
+            _this3.previousWrapperStyles = {};
+            _this3.previousPanelHeight = null;
+          }, 350);
+        } else {
+          this.panel.setContentSnapshotMode(true);
+        }
       }
     }
     /**
@@ -145,6 +178,20 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       _events.trigger("stage:" + this.id + ":fullScreenModeChangeAfter", {
         fullScreen: this.isFullScreen()
       });
+    }
+    /**
+     * Set the content snapshot mode to show the page builder stage
+     * when page builder is enabled
+     * @param flag
+     */
+    ;
+
+    _proto.setContentSnapshotMode = function setContentSnapshotMode(flag) {
+      this.isContentSnapshotMode = flag;
+
+      if (this.isContentSnapshotMode) {
+        this.panel.setContentSnapshotMode(true);
+      }
     }
     /**
      * Get template.
