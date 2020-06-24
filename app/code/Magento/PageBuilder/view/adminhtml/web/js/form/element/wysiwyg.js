@@ -39,11 +39,9 @@ define([
         initialize: function () {
             this._super();
 
-            switch (true) {
-                case !this.wysiwygConfigData()['pagebuilder_button']:
-                case this.wysiwygConfigData()['pagebuilder_content_snapshot']:
-                    this.initPageBuilder();
-                    break;
+            if (!this.wysiwygConfigData()['pagebuilder_button'] ||
+                this.wysiwygConfigData()['pagebuilder_content_snapshot']) {
+                this.initPageBuilder();
             }
 
             return this;
@@ -95,11 +93,9 @@ define([
                     selector: this.stageSelector
                 }, this.disableDomObserver.bind(this));
 
-                switch (true) {
-                    case !this.wysiwygConfigData()['pagebuilder_button']:
-                    case this.wysiwygConfigData()['pagebuilder_content_snapshot']:
-                        this.visiblePageBuilder(true);
-                        break;
+                if (!this.wysiwygConfigData()['pagebuilder_button'] ||
+                    this.wysiwygConfigData()['pagebuilder_content_snapshot']) {
+                    this.visiblePageBuilder(true);
                 }
             }
         },
