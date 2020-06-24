@@ -44,7 +44,7 @@ class NodeList implements NodeListInterface
     /**
      * @inheritDoc
      */
-    public function item($index): ?ElementInterface
+    public function item(int $index): ?ElementInterface
     {
         return $this->objectManager->create(ElementInterface::class, [ 'element' => $this->nodeList->item($index) ]);
     }
