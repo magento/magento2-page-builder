@@ -6,5 +6,5 @@ When you are working on a page and changing the master.html template, you need t
 
 ## Setup and cache
 
-If you change something in the configuration of your extension and the change is not visible, run `bin/magento setup:upgrade` to ensure that the configuration is updated.
+If you change something in the configuration of your extension and the change is not visible, run `bin/magento cache:flush` to ensure that the configuration is updated.
 
