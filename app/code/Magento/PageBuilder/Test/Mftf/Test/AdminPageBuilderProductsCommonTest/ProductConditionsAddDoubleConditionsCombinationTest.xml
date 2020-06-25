@@ -13,9 +13,7 @@
             <stories value="Products"/>
             <title value="Product conditions rule with a combination of double conditions"/>
             <description value="As a Content Manager I want set condition filter in Conditions Combination on a Product content type"/>
-            <severity value="AVERAGE"/>
-            <useCaseId value=""/>
-            <testCaseId value=""/>
+            <severity value="MAJOR"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-products"/>
         </annotations>
@@ -27,9 +25,6 @@
         <after>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentType" value="PageBuilderProductsContentType"/>
-        </actionGroup>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
@@ -47,8 +42,7 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDropAgain">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <!-- Validate product conditions -->
-        <comment userInput="Validate product conditions" stepKey="productConditionsValidateStage"/>
-        <dontSeeJsError stepKey="doNotSeeAnyJSErrorsOnStage"/>
+        <!-- Validate No JS Errors -->
+        <doNotSeeAnyJSErrors stepKey="doNotSeeAnyJSErrorsOnStage"/>
     </test>
 </tests>
