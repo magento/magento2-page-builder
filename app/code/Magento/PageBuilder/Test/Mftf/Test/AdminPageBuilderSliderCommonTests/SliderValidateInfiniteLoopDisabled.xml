@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="SliderValidateInfiniteLoopDisabled" extends="SliderValidateInfiniteLoopEnabled">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="SliderValidateInfiniteLoopDisabled"/>
+            <title value="SliderValidateInfiniteLoopDisabled"/>
+            <description value=""/>
+            <severity value="BLOCKER"/>
+            <useCaseId value=""/>
+            <testCaseId value=""/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-sliderCommon"/>
+        </annotations>
+        <!-- Open Slider Settings -->
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="enterInfiniteLoop">
+            <argument name="property" value="PageBuilderSliderInfiniteLoop_Disabled"/>
+        </actionGroup>
+        <!-- Validate Stage: Slider Settings -->
+        <seeElement selector="{{SliderOnStage.infiniteLoop('1', PageBuilderSliderInfiniteLoop_Disabled.value)}}" stepKey="seeInfiniteLoopStage"/>
+        <!-- Validate Storefront: Slider Settings -->
+        <seeElement selector="{{SliderOnFrontend.infiniteLoop('1', PageBuilderSliderInfiniteLoop_Disabled.value)}}" stepKey="seeInfiniteLoopStorefront"/>
+        <!-- Validate Storefront: Slide 1 -->
+        <seeElement selector="{{SliderOnFrontend.previousSlideArrowDisabled('1')}}" stepKey="seePreviousSlideArrow"/>
+        <!-- Validate Storefront: Slide 2 -->
+        <seeElement selector="{{SliderOnFrontend.nextSlideArrowDisabled('1')}}" stepKey="seeNextSlideArrow2"/>
+    </test>
+</tests>
