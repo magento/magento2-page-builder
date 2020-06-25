@@ -11,9 +11,9 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Image"/>
-            <title value="Image Invalid File Type Validation"/>
+            <title value="Image Invalid File Type Upload Validation"/>
             <description value="Tests that the Image Validation functions as expected for invalid file type"/>
-            <severity value="AVERAGE"/>
+            <severity value="MAJOR"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-image"/>
         </annotations>
@@ -25,18 +25,13 @@
         <after>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentType" value="PageBuilderImageContentType"/>
-        </actionGroup>
-        <comment userInput="Add ContentType to Stage" stepKey="commentAddContentTypeToStage"/>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderImageContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderImageContentType"/>
         </actionGroup>
-        <actionGroup ref="addInvalidFileToStage" stepKey="addInvalidFileToStage">
-            <argument name="property" value="PageBuilderImage_InvalidFileType"/>
+        <actionGroup ref="AddInvalidFileToStage" stepKey="AddInvalidFileToStage">
             <argument name="fileSource" value="ImageOnStageWithoutImageUploaded.imageSource(PageBuilderImage_InvalidFileType.fileName)"/>
         </actionGroup>
     </test>

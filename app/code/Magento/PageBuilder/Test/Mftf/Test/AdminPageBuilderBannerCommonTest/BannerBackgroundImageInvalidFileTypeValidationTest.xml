@@ -11,24 +11,20 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Banner"/>
-            <title value="Banner Background Image - Invalid File Type"/>
+            <title value="Banner Background Image Invalid File Type Upload Validation"/>
             <description value="Tests that the Background Image Validation functions as expected for invalid file type"/>
-            <severity value="AVERAGE"/>
+            <severity value="MAJOR"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-banner"/>
             <group value="pagebuilder-bannerCommon"/>
         </annotations>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentType" value="PageBuilderBannerContentType"/>
-        </actionGroup>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="addInvalidFileToStage" stepKey="addInvalidFileToStage">
-            <argument name="property" value="PageBuilderImage_InvalidFileType"/>
+        <actionGroup ref="AddInvalidFileToStage" stepKey="AddInvalidFileToStage">
             <argument name="section" value="BannerOnBackend"/>
             <argument name="sectionArea" value="BannerOnBackend.base('1')"/>
             <argument name="attachInput" value="BannerOnBackend.uploadImageInput"/>

@@ -7,25 +7,28 @@
 -->
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
-    <actionGroup name="addInvalidFileToStage">
+    <actionGroup name="AddInvalidFileToStage">
+        <annotations>
+            <description>Adds invalid file to Content Type and checks validation message</description>
+        </annotations>
         <arguments>
-            <argument name="property"/>
+            <argument name="file" defaultValue="PageBuilderImage_InvalidFileType"/>
             <argument name="section" defaultValue="ImageOnStageWithoutImageUploaded"/>
             <argument name="sectionArea" defaultValue="ImageOnStageWithoutImageUploaded.base('1')" />
             <argument name="attachInput" defaultValue="ImageOnStageWithoutImageUploaded.attachImageBtn" />
             <argument name="filePreview" defaultValue="ImageOnStageWithoutImageUploaded.imagePreview"/>
             <argument name="fileSource" defaultValue=""/>
         </arguments>
-        <comment userInput="Attach invalid file to PageBuilder" stepKey="commentAttach"/>
+        <waitForElementVisible selector="{{sectionArea}}" stepKey="waitForSectionArea"/>
         <moveMouseOver selector="{{sectionArea}}" stepKey="hoverSectionArea"/>
-        <attachFile userInput="{{property.value}}" selector="{{attachInput}}" stepKey="attachFile"/>
+        <attachFile userInput="{{file.value}}" selector="{{attachInput}}" stepKey="attachFile"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
-        <waitForElementVisible selector="{{section.invalidUploadTitle}}" stepKey="waitForInvalidUploadTitle"/>
-        <waitForElementVisible selector="{{section.invalidUploadMessage(property.errorMessage)}}" stepKey="waitForInvalidUploadMessage"/>
-        <waitForElementVisible selector="{{section.invalidUploadOkBtn}}" stepKey="waitForInvalidUploadBtn"/>
-        <click selector="{{section.invalidUploadOkBtn}}" stepKey="clickInvalidUploadBtn"/>
-        <waitForElementNotVisible selector="{{section.invalidUploadTitle}}" stepKey="waitForModalGone"/>
-        <dontSeeElementInDOM selector="{{filePreview}}" stepKey="waitForFilePreview"/>
-        <dontSeeElementInDOM selector="{{fileSource}}" stepKey="waitForFileSource"/>
+        <waitForElementVisible selector="{{PageBuilderStage.modal}}" stepKey="waitForModal"/>
+        <waitForElementVisible selector="{{PageBuilderStage.errorModal(file.errorMessage)}}" stepKey="waitForModalMessage"/>
+        <waitForElementVisible selector="{{PageBuilderStage.modalOk}}" stepKey="waitForModalOkButton"/>
+        <click selector="{{PageBuilderStage.modalOk}}" stepKey="clickModalOkButton"/>
+        <waitForElementNotVisible selector="{{PageBuilderStage.modal}}" stepKey="waitForModalGone"/>
+        <dontSeeElementInDOM selector="{{filePreview}}" stepKey="dontSeeFilePreview"/>
+        <dontSeeElementInDOM selector="{{fileSource}}" stepKey="dontSeeFileSource"/>
     </actionGroup>
 </actionGroups>
