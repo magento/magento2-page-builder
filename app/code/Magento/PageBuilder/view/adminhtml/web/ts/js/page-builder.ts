@@ -36,6 +36,7 @@ export default class PageBuilder implements PageBuilderInterface {
     public wrapperStyles: KnockoutObservable<{[key: string]: string}> = ko.observable({});
     public isAllowedTemplateSave: boolean;
     public isAllowedTemplateApply: boolean;
+    public hasStageOverlay: KnockoutObservable<boolean> = ko.observable(false);
     private previousWrapperStyles: {[key: string]: string} = {};
     private previousPanelHeight: number;
 

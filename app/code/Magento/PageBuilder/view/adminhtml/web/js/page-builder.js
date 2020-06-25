@@ -20,6 +20,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       this.isFullScreen = _knockout.observable(false);
       this.loading = _knockout.observable(true);
       this.wrapperStyles = _knockout.observable({});
+      this.hasStageOverlay = _knockout.observable(false);
       this.previousWrapperStyles = {};
 
       _config.setConfig(config);

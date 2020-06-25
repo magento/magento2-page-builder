@@ -93,6 +93,10 @@ define([
                     selector: this.stageSelector
                 }, this.disableDomObserver.bind(this));
 
+                if (this.wysiwygConfigData()['pagebuilder_stage_overlay']) {
+                    this.pageBuilder.hasStageOverlay(true);
+                }
+
                 if (!this.wysiwygConfigData()['pagebuilder_button'] ||
                     this.wysiwygConfigData()['pagebuilder_content_snapshot']) {
                     this.visiblePageBuilder(true);
