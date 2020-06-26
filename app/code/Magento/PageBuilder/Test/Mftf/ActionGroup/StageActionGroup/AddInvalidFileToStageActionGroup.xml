@@ -12,6 +12,7 @@
             <description>Adds invalid file to Content Type and checks validation message</description>
         </annotations>
         <arguments>
+            <argument name="contentType" defaultValue="PageBuilderImageContentType"/>
             <argument name="file" defaultValue="PageBuilderImage_InvalidFileType"/>
             <argument name="section" defaultValue="ImageOnStageWithoutImageUploaded"/>
             <argument name="sectionArea" defaultValue="ImageOnStageWithoutImageUploaded.base('1')" />
@@ -20,11 +21,14 @@
             <argument name="fileSource" defaultValue=""/>
         </arguments>
         <waitForElementVisible selector="{{sectionArea}}" stepKey="waitForSectionArea"/>
-        <moveMouseOver selector="{{sectionArea}}" stepKey="hoverSectionArea"/>
-        <attachFile userInput="{{file.value}}" selector="{{attachInput}}" stepKey="attachFile"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusContentArea"/>
+        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, '1')}}" stepKey="hoverSectionArea"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
+        <seeElement selector="{{PageBuilderStage.onHoverUploadImageButton(contentType.role, '1')}}" stepKey="seeUploadImageButton"/>
+        <attachFile userInput="{{file.value}}" selector="{{attachInput}}" stepKey="attachFile"/>
+        <waitForPageLoad stepKey="waitForFileLoad"/>
         <waitForElementVisible selector="{{PageBuilderStage.modal}}" stepKey="waitForModal"/>
-        <waitForElementVisible selector="{{PageBuilderStage.errorModal(file.errorMessage)}}" stepKey="waitForModalMessage"/>
+        <waitForElementVisible selector="{{PageBuilderStage.errorModalMessage(file.errorMessage)}}" stepKey="waitForModalMessage"/>
         <waitForElementVisible selector="{{PageBuilderStage.modalOk}}" stepKey="waitForModalOkButton"/>
         <click selector="{{PageBuilderStage.modalOk}}" stepKey="clickModalOkButton"/>
         <waitForElementNotVisible selector="{{PageBuilderStage.modal}}" stepKey="waitForModalGone"/>
