@@ -40,9 +40,11 @@ export default class PageBuilder implements PageBuilderInterface {
     private previousWrapperStyles: {[key: string]: string} = {};
     private previousPanelHeight: number;
 
-    constructor(config: any, initialValue: string) {
+    constructor(config: any, initialValue: string, contentSnapshot: boolean) {
         Config.setConfig(config);
         Config.setMode("Preview");
+        Config.setContentSnapshot({pageBuilderId: this.id, contentSnapshotMode: contentSnapshot});
+
         this.preloadTemplates(config);
         this.initialValue = initialValue;
         this.isFullScreen(config.isFullScreen);
@@ -62,6 +64,11 @@ export default class PageBuilder implements PageBuilderInterface {
         });
 
         this.panel = new Panel(this);
+
+        if (Config.getContentSnapshot().contentSnapshotMode) {
+            this.panel.isVisible(false);
+        }
+
         this.initListeners();
     }
 
@@ -86,24 +93,9 @@ export default class PageBuilder implements PageBuilderInterface {
      * @param {StageToggleFullScreenParamsInterface} args
      */
     public toggleFullScreen(args: StageToggleFullScreenParamsInterface): void {
-        if (this.isContentSnapshotMode) {
-            if (args.animate === false) {
-                if (!this.isFullScreen()) {
-                    this.isFullScreen(true);
-                    this.panel.setContentSnapshotMode(false);
-
-                } else {
-                    this.isFullScreen(false);
-                    this.panel.setContentSnapshotMode(true);
-                }
-                return;
-            }
-        } else {
-            this.panel.setContentSnapshotMode(false);
-            if (args.animate === false) {
-                this.isFullScreen(!this.isFullScreen());
-                return;
-            }
+        if (args.animate === false) {
+            this.isFullScreen(!this.isFullScreen());
+            return;
         }
 
         const stageWrapper = $("#" + this.stage.id).parent();
@@ -111,9 +103,6 @@ export default class PageBuilder implements PageBuilderInterface {
         const panel = stageWrapper.find(".pagebuilder-panel");
         if (!this.isFullScreen()) {
             pageBuilderWrapper.css("height", pageBuilderWrapper.outerHeight());
-            if (this.isContentSnapshotMode) {
-                this.panel.setContentSnapshotMode(true);
-            }
 
             this.previousPanelHeight = panel.outerHeight();
             panel.css("height", this.previousPanelHeight + "px");
@@ -160,8 +149,6 @@ export default class PageBuilder implements PageBuilderInterface {
                     this.previousWrapperStyles = {};
                     this.previousPanelHeight = null;
                 }, 350);
-            } else {
-                this.panel.setContentSnapshotMode(true);
             }
         }
     }
@@ -179,19 +166,6 @@ export default class PageBuilder implements PageBuilderInterface {
         events.trigger(`stage:${ this.id }:fullScreenModeChangeAfter`, {
             fullScreen: this.isFullScreen(),
         });
-    }
-
-    /**
-     * Set the content snapshot mode to show the page builder stage
-     * when page builder is enabled
-     * @param flag
-     */
-    public setContentSnapshotMode(flag: boolean): void
-    {
-        this.isContentSnapshotMode = flag;
-        if (this.isContentSnapshotMode) {
-            this.panel.setContentSnapshotMode(true);
-        }
     }
 
     /**

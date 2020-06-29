@@ -7,7 +7,7 @@
 <div class="pagebuilder-stage-wrapper"
      css="'stage-full-screen': isFullScreen"
      ko-style="wrapperStyles">
-    <div class="admin__field pagebuilder-header" css="visible: !panel.isContentSnapshotMode()">
+    <div class="admin__field pagebuilder-header" css="visible: panel.isVisible()">
         <button type="button" translate="'Apply Template'" if="isAllowedTemplateApply" click="toggleTemplateManger"/>
         <button type="button" translate="'Save as Template'" if="isAllowedTemplateSave" click="saveAsTemplate"/>
         <i click="function() { toggleFullScreen($element); }"
@@ -23,8 +23,5 @@
             <render/>
         </with>
         <iframe width="1" height="1" attr="id: 'render_frame_' + id" sandbox="allow-scripts" style="display: none;"></iframe>
-    </if>
-    <if args="isContentSnapshotMode">
-        <div class="page-builder-stage-cover-div" css="'stage-full-screen': isFullScreen"></div>
     </if>
 </div>

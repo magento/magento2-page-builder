@@ -44,15 +44,6 @@ define(["consoleLogger", "jquery", "knockout", "mage/translate", "Magento_PageBu
       this.element = element;
     }
     /**
-     * Set full screen flag
-     * @param flag
-     */
-    ;
-
-    _proto.setContentSnapshotMode = function setContentSnapshotMode(flag) {
-      this.isContentSnapshotMode(flag);
-    }
-    /**
      * Init listeners
      */
     ;
@@ -67,8 +58,12 @@ define(["consoleLogger", "jquery", "knockout", "mage/translate", "Magento_PageBu
           _this.onScroll();
         }
 
-        _this.isVisible(true);
+        if (!_config.getContentSnapshot().contentSnapshotMode) {
+          _this.isVisible(true);
+        }
       });
+
+      _events.on("stage:" + this.id + ":fullScreenModeChangeAfter", this.toggleVisibility.bind(this));
     }
     /**
      * Return the template string
@@ -267,10 +262,13 @@ define(["consoleLogger", "jquery", "knockout", "mage/translate", "Magento_PageBu
           function (contentType, identifier) {
             return new _contentType.ContentType(identifier, contentType, _this3.pageBuilder.stage.id);
           }), _this3.pageBuilder.stage.id));
-        }); // Display the panel
+        });
 
+        if (!_config.getContentSnapshot().contentSnapshotMode) {
+          // Display the panel
+          this.isVisible(true);
+        } // Open first menu section
 
-        this.isVisible(true); // Open first menu section
 
         var hasGroups = 0 in this.menuSections();
 
@@ -279,6 +277,17 @@ define(["consoleLogger", "jquery", "knockout", "mage/translate", "Magento_PageBu
         }
       } else {
         _consoleLogger.error("Unable to retrieve content types from server, please inspect network requests " + "response.");
+      }
+    }
+    /**
+     * Sets visibility the content snapshot mode
+     * @param args
+     */
+    ;
+
+    _proto.toggleVisibility = function toggleVisibility(args) {
+      if (_config.getContentSnapshot().contentSnapshotMode) {
+        this.isVisible(args.fullScreen);
       }
     };
 

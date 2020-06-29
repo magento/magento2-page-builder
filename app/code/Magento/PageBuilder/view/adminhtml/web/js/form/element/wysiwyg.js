@@ -79,7 +79,11 @@ define([
         initPageBuilder: function () {
             if (!this.isComponentInitialized()) {
                 this.loading(true);
-                this.pageBuilder = new PageBuilder(this.wysiwygConfigData(), this.initialValue);
+                this.pageBuilder = new PageBuilder(
+                  this.wysiwygConfigData(),
+                  this.initialValue,
+                  Boolean(this.wysiwygConfigData()['pagebuilder_content_snapshot'])
+                );
                 events.trigger('pagebuilder:register', {
                     ns: this.ns,
                     instance: this.pageBuilder
@@ -97,8 +101,8 @@ define([
                     this.visiblePageBuilder(true);
                 }
 
-                if (this.wysiwygConfigData()['pagebuilder_content_snapshot']) {
-                    this.pageBuilder.setContentSnapshotMode(true);
+                if (!this.wysiwygConfigData()['pagebuilder_button'] ||
+                    this.wysiwygConfigData()['pagebuilder_content_snapshot']) {
                     this.visiblePageBuilder(true);
                 }
             }

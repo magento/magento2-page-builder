@@ -40,6 +40,25 @@ define(["underscore"], function (_underscore) {
       return Config.mode;
     }
     /**
+     * Set the content snapshot mode to show the page builder stage
+     * when page builder is enabled
+     *
+     * @param contentSnapshot
+     */
+    ;
+
+    Config.setContentSnapshot = function setContentSnapshot(contentSnapshot) {
+      Config.contentSnapshot = contentSnapshot;
+    }
+    /**
+     * Retrieve the current instances mode
+     */
+    ;
+
+    Config.getContentSnapshot = function getContentSnapshot() {
+      return Config.contentSnapshot;
+    }
+    /**
      * Retrieve the init config
      *
      * @param {string} key

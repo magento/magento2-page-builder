@@ -19,9 +19,16 @@ export default interface ConfigInterface {
 }
 
 export type Mode = "Preview" | "Master";
+export type ContentSnapshot = true | false;
+
+export interface ContentSnapshotInterface
+{
+    pageBuilderId: string,
+    contentSnapshotMode: ContentSnapshot,
+}
 
 export interface MenuSectionInterface {
-    [key: string]: MenuSectionItemInterface;
+    [pageBuilderId: string]: MenuSectionItemInterface;
 }
 
 export interface MenuSectionItemInterface {
