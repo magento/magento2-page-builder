@@ -36,10 +36,14 @@ define([
          */
         _.each(pairs, function (element, key) {
             var keyIds = key.match(/[\d?-]+/g),
-                nextPairsExistKey = 'parameters[condition_source][NEXT_ITEM--1][type]';
+              combineElement = 'Magento\\CatalogWidget\\Model\\Rule\\Condition\\Combine',
+              nextPairsFirstKey = 'parameters[condition_source][NEXT_ITEM--1][type]',
+              nextPairsSecondKey = 'parameters[condition_source][NEXT_ITEM--2][type]';
 
-            if (keyIds !== null && element === 'Magento\\CatalogWidget\\Model\\Rule\\Condition\\Combine') {
-                if (pairs[nextPairsExistKey.replace('NEXT_ITEM', keyIds[0])] === undefined) {
+            if (keyIds !== null && element === combineElement) {
+                if (pairs[nextPairsFirstKey.replace('NEXT_ITEM', keyIds[0])] === undefined ||
+                    pairs[nextPairsFirstKey.replace('NEXT_ITEM', keyIds[0])] === combineElement &&
+                    pairs[nextPairsSecondKey.replace('NEXT_ITEM', keyIds[0])] === undefined) {
                     pairs[key] = '';
                 }
             }
