@@ -159,6 +159,9 @@ define([
 
             events.on('stage:' + id + ':masterFormatRenderAfter', function (args) {
                 this.value(args.value);
+                if (this.wysiwygConfigData()['pagebuilder_content_snapshot']) {
+                    this.pageBuilder.toggleFocusableElements();
+                }
             }.bind(this));
 
             events.on('stage:' + id + ':fullScreenModeChangeAfter', function (args) {

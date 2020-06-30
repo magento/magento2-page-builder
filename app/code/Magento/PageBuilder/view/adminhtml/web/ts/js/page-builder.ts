@@ -81,6 +81,20 @@ export default class PageBuilder implements PageBuilderInterface {
     }
 
     /**
+     * Changes tabindex and content editable on stage elements.
+     */
+    public toggleFocusableElements () {
+        const stageWrapper = $("#" + this.id).parent();
+        let focusableElements = ':focusable:not(.pagebuilder-stage-overlay)';
+        let editableElements = '[contenteditable]';
+        let tabIndexValue = this.isFullScreen() ? '0' : '-1';
+        let editableValue = this.isFullScreen() ? 'true' : 'false';
+
+        stageWrapper.find(editableElements).attr('contenteditable', editableValue);
+        stageWrapper.find(focusableElements).attr('tabindex', tabIndexValue);
+    }
+
+    /**
      * Tells the stage wrapper to expand to fullScreen
      *
      * @param {StageToggleFullScreenParamsInterface} args
@@ -153,6 +167,7 @@ export default class PageBuilder implements PageBuilderInterface {
             $("body").css("overflow", "");
         }
 
+        this.toggleFocusableElements();
         events.trigger(`stage:${ this.id }:fullScreenModeChangeAfter`, {
             fullScreen: this.isFullScreen(),
         });
