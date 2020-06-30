@@ -201,7 +201,7 @@ export default class Preview implements PreviewInterface {
 
         optionsMenu.parent().addClass("pagebuilder-options-visible");
 
-        $(currentTarget).addClass("pagebuilder-c ontent-type-active");
+        $(currentTarget).addClass("pagebuilder-content-type-active");
     }
 
     /**

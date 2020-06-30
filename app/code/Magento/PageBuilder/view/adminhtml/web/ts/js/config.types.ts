@@ -28,7 +28,7 @@ export interface ContentSnapshotInterface
 }
 
 export interface MenuSectionInterface {
-    [pageBuilderId: string]: MenuSectionItemInterface;
+    [key: string]: MenuSectionItemInterface;
 }
 
 export interface MenuSectionItemInterface {

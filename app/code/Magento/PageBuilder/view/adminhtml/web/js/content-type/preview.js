@@ -178,7 +178,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       }
 
       optionsMenu.parent().addClass("pagebuilder-options-visible");
-      (0, _jquery)(currentTarget).addClass("pagebuilder-c ontent-type-active");
+      (0, _jquery)(currentTarget).addClass("pagebuilder-content-type-active");
     }
     /**
      * Set state based on mouseout event for the preview
