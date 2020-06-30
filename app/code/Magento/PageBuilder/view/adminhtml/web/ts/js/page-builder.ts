@@ -44,7 +44,6 @@ export default class PageBuilder implements PageBuilderInterface {
         Config.setConfig(config);
         Config.setMode("Preview");
         Config.setContentSnapshot({pageBuilderId: this.id, contentSnapshotMode: contentSnapshot});
-
         this.preloadTemplates(config);
         this.initialValue = initialValue;
         this.isFullScreen(config.isFullScreen);
@@ -103,7 +102,6 @@ export default class PageBuilder implements PageBuilderInterface {
         const panel = stageWrapper.find(".pagebuilder-panel");
         if (!this.isFullScreen()) {
             pageBuilderWrapper.css("height", pageBuilderWrapper.outerHeight());
-
             this.previousPanelHeight = panel.outerHeight();
             panel.css("height", this.previousPanelHeight + "px");
             /**
