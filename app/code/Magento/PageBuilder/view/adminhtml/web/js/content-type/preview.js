@@ -651,8 +651,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _proto.toggleAccessibility = function toggleAccessibility(args) {
       if (_config.getContentSnapshot().contentSnapshotMode) {
         this.accessibility(args.fullScreen);
-        console.log('working');
-        console.log(this.accessibility);
       }
     };
 
