@@ -73,7 +73,7 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <comment userInput="Add and Customize Tab 2" stepKey="AC2"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="seeTabHeader1"/>
-        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType2">
+        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel2">
@@ -90,7 +90,7 @@
         <dontSeeJsError stepKey="doNotSeeJSErrorInConsole"/>
         <!-- Add and Customize Tab 3 -->
         <waitForElementVisible selector="{{TabOnStage.tabHeader('2')}}" stepKey="seeTabHeader2"/>
-        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType3">
+        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType2">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel3">
@@ -147,16 +147,16 @@
         <!-- Verify in Storefront -->
         <amOnPage url="{{PageBuilderTabsContentType.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <waitForPageLoad stepKey="waitForPageLoadStoreFront" time="30"/>
-        <!-- Verify Tab 1 on Storefront -->
+        <comment userInput="Verify Tab 1 on Storefront" stepKey="AC5"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabContentAdvancedStyles('1', PageBuilderAdvancedAlignmentPropertyCenter.value, PageBuilderAdvancedMarginsAndPaddingProperty.marginLeft, PageBuilderAdvancedMarginsAndPaddingProperty.paddingLeft)}}" stepKey="seeTabContentAdvancedStylesInStorefront1"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabContentAdvancedStylesBorder('1', PageBuilderAdvancedBorderPropertySolid.value, PageBuilderAdvancedBorderColorProperty.rgb, PageBuilderAdvancedBorderWidthProperty10.value, PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="seeTabContentAdvancedStylesBorderInStorefront1"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabContentAdvancedClass('1', PageBuilderAdvancedCssClassesPropertyThreeClasses.value)}}" stepKey="seeTabContentClassInStorefront1"/>
-        <click selector="{{TabOnStorefront.tabHeader('2')}}" stepKey="switchToTab2"/>
+        <click selector="{{TabOnStorefront.tabHeader('2')}}" stepKey="switchToTab"/>
         <waitForPageLoad stepKey="waitForTabChangeAnimationStorefront" time="30"/>
         <scrollToTopOfPage stepKey="scrollToTopOfPage"/>
         <waitForElementVisible selector="{{TabOnStorefront.container('2')}}" stepKey="seeNewTabContent2"/>
         <!-- Verify Tab 2 on Storefront -->
-        <click selector="{{TabOnStorefront.tabHeader('3')}}" stepKey="switchToTab3"/>
+        <click selector="{{TabOnStorefront.tabHeader('3')}}" stepKey="switchToTab2"/>
         <waitForPageLoad stepKey="waitForTabChangeAnimationStorefront2" time="30"/>
         <scrollToTopOfPage stepKey="scrollToTopOfPage2"/>
         <waitForElementVisible selector="{{TabOnStorefront.container('3')}}" stepKey="seeNewTabContent3"/>
