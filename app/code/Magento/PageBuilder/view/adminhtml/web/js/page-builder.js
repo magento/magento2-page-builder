@@ -10,22 +10,27 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
   function () {
     "use strict";
 
-    function PageBuilder(config, initialValue) {
+    function PageBuilder(config, initialValue, contentSnapshot) {
       var _this = this;
 
       this.template = "Magento_PageBuilder/page-builder";
       this.isStageReady = _knockout.observable(false);
       this.id = _mageUtils.uniqueid();
       this.originalScrollTop = 0;
+      this.isContentSnapshotMode = false;
       this.isFullScreen = _knockout.observable(false);
       this.loading = _knockout.observable(true);
       this.wrapperStyles = _knockout.observable({});
-      this.hasStageOverlay = _knockout.observable(false);
       this.previousWrapperStyles = {};
 
       _config.setConfig(config);
 
       _config.setMode("Preview");
+
+      _config.setContentSnapshot({
+        pageBuilderId: this.id,
+        contentSnapshotMode: contentSnapshot
+      });
 
       this.preloadTemplates(config);
       this.initialValue = initialValue;
@@ -40,6 +45,11 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         _this.isStageReady(true);
       });
       this.panel = new _panel(this);
+
+      if (_config.getContentSnapshot().contentSnapshotMode) {
+        this.panel.isVisible(false);
+      }
+
       this.initListeners();
     }
     /**
@@ -120,21 +130,24 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         // When leaving full screen mode just transition back to the original state
         this.wrapperStyles(this.previousWrapperStyles);
         this.isFullScreen(false);
-        panel.css("height", this.previousPanelHeight + "px"); // Wait for the 350ms animation to complete before changing these properties back
 
-        _underscore.delay(function () {
-          panel.css("height", "");
-          pageBuilderWrapper.css("height", "");
+        if (!this.isContentSnapshotMode) {
+          panel.css("height", this.previousPanelHeight + "px"); // Wait for the 350ms animation to complete before changing these properties back
 
-          _this3.wrapperStyles(Object.keys(_this3.previousWrapperStyles).reduce(function (object, styleName) {
-            var _Object$assign2;
+          _underscore.delay(function () {
+            panel.css("height", "");
+            pageBuilderWrapper.css("height", "");
 
-            return Object.assign(object, (_Object$assign2 = {}, _Object$assign2[styleName] = "", _Object$assign2));
-          }, {}));
+            _this3.wrapperStyles(Object.keys(_this3.previousWrapperStyles).reduce(function (object, styleName) {
+              var _Object$assign2;
 
-          _this3.previousWrapperStyles = {};
-          _this3.previousPanelHeight = null;
-        }, 350);
+              return Object.assign(object, (_Object$assign2 = {}, _Object$assign2[styleName] = "", _Object$assign2));
+            }, {}));
+
+            _this3.previousWrapperStyles = {};
+            _this3.previousPanelHeight = null;
+          }, 350);
+        }
       }
     }
     /**

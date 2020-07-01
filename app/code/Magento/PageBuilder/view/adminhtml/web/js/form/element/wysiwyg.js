@@ -79,7 +79,11 @@ define([
         initPageBuilder: function () {
             if (!this.isComponentInitialized()) {
                 this.loading(true);
-                this.pageBuilder = new PageBuilder(this.wysiwygConfigData(), this.initialValue);
+                this.pageBuilder = new PageBuilder(
+                  this.wysiwygConfigData(),
+                  this.initialValue,
+                  Boolean(this.wysiwygConfigData()['pagebuilder_content_snapshot'])
+                );
                 events.trigger('pagebuilder:register', {
                     ns: this.ns,
                     instance: this.pageBuilder
@@ -93,8 +97,8 @@ define([
                     selector: this.stageSelector
                 }, this.disableDomObserver.bind(this));
 
-                if (this.wysiwygConfigData()['pagebuilder_stage_overlay']) {
-                    this.pageBuilder.hasStageOverlay(true);
+                if (!this.wysiwygConfigData()['pagebuilder_button']) {
+                    this.visiblePageBuilder(true);
                 }
 
                 if (!this.wysiwygConfigData()['pagebuilder_button'] ||

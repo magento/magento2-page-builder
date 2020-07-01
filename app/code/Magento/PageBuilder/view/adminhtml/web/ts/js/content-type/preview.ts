@@ -13,6 +13,7 @@ import "../binding/live-edit";
 import "../binding/sortable";
 import "../binding/sortable-children";
 import ContentTypeCollection from "../content-type-collection";
+import Config from "../config";
 import ContentTypeCollectionInterface from "../content-type-collection.types";
 import ContentTypeConfigInterface, {ConfigFieldInterface} from "../content-type-config.types";
 import createContentType from "../content-type-factory";
@@ -40,6 +41,7 @@ export default class Preview implements PreviewInterface {
     public data: ObservableObject = {};
     public displayLabel: KnockoutObservable<string> = ko.observable();
     public display: KnockoutObservable<boolean> = ko.observable(true);
+    public accessibility: KnockoutObservable<boolean> = ko.observable(true);
     public appearance: KnockoutObservable<string> = ko.observable();
     public wrapperElement: Element;
     public placeholderCss: KnockoutObservable<object>;
@@ -88,6 +90,11 @@ export default class Preview implements PreviewInterface {
             "visible": this.isEmpty,
             "empty-placeholder-background": this.isPlaceholderVisible,
         });
+
+        if (Config.getContentSnapshot().contentSnapshotMode) {
+            this.accessibility(false);
+        }
+
         this.bindEvents();
         this.populatePreviewData();
     }
@@ -508,6 +515,7 @@ export default class Preview implements PreviewInterface {
                 },
             );
         }
+        events.on(`stage:${Config.getContentSnapshot().pageBuilderId}:fullScreenModeChangeAfter`, this.toggleAccessibility.bind(this));
     }
 
     /**
@@ -630,5 +638,16 @@ export default class Preview implements PreviewInterface {
                 });
             },
         );
+    }
+
+    /**
+     * Sets preview accessibility for the content snapshot mode
+     * @param args
+     */
+    private toggleAccessibility(args: any): void
+    {
+        if (Config.getContentSnapshot().contentSnapshotMode) {
+          this.accessibility(args.fullScreen);
+        }
     }
 }

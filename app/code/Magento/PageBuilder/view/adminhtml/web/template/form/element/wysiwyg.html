@@ -5,7 +5,7 @@
  */
 -->
 
-<div visible="visible" css="{'_disabled': disabled}">
+<div visible="visible" css="{'_disabled': disabled}" class="page-builder-wysiwyg-wrapper">
     <button if="wysiwygConfigData()['pagebuilder_button'] || wysiwygConfigData()['pagebuilder_content_snapshot']"
             type="button"
             class="action-default action"
@@ -22,4 +22,9 @@
             </with>
         </div>
     </if>
+    <div if="wysiwygConfigData()['pagebuilder_content_snapshot']"
+         class="pagebuilder-wysiwyg-overlay"
+         click="pageBuilderEditButtonClick.bind($data)"
+         css="'active': !pageBuilder.isFullScreen()">
+    </div>
 </div>

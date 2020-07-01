@@ -7,12 +7,7 @@
 <div class="pagebuilder-stage-wrapper"
      css="'stage-full-screen': isFullScreen"
      ko-style="wrapperStyles">
-    <div if="hasStageOverlay()"
-         class="pagebuilder-stage-overlay"
-         click="toggleFullScreen.bind($data, $element)"
-         css="'active': !isFullScreen()">
-    </div>
-    <div class="admin__field pagebuilder-header" css="visible: panel.isVisible">
+    <div class="admin__field pagebuilder-header" css="visible: panel.isVisible()">
         <button type="button" translate="'Apply Template'" if="isAllowedTemplateApply" click="toggleTemplateManger"/>
         <button type="button" translate="'Save as Template'" if="isAllowedTemplateSave" click="saveAsTemplate"/>
         <i click="function() { toggleFullScreen($element); }"
