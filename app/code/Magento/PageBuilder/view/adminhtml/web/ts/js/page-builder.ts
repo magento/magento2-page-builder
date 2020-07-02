@@ -104,14 +104,14 @@ export default class PageBuilder implements PageBuilderInterface {
      * MouseOver event for Stage Overlay
      */
     public onStageOverlayMouseOver (): void {
-        $('.pagebuilder-stage-overlay').addClass('_hover');
+        $('.pagebuilder-wysiwyg-overlay').addClass('_hover');
     }
 
     /**
      * MouseOut event for Stage Overlay
      */
     public onStageOverlayMouseOut (): void {
-        $('.pagebuilder-stage-overlay').removeClass('_hover');
+        $('.pagebuilder-wysiwyg-overlay').removeClass('_hover');
     }
 
     /**

@@ -96,7 +96,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     ;
 
     _proto.onStageOverlayMouseOver = function onStageOverlayMouseOver() {
-      (0, _jquery)('.pagebuilder-stage-overlay').addClass('_hover');
+      (0, _jquery)('.pagebuilder-wysiwyg-overlay').addClass('_hover');
     }
     /**
      * MouseOut event for Stage Overlay
@@ -104,7 +104,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     ;
 
     _proto.onStageOverlayMouseOut = function onStageOverlayMouseOut() {
-      (0, _jquery)('.pagebuilder-stage-overlay').removeClass('_hover');
+      (0, _jquery)('.pagebuilder-wysiwyg-overlay').removeClass('_hover');
     }
     /**
      * Tells the stage wrapper to expand to fullScreen

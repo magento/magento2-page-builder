@@ -8,6 +8,7 @@
 @stage-overlay-border: #4181E4;
 
 .pagebuilder-header {
+    display: none;
     opacity: 0;
     text-align: right;
 
@@ -22,6 +23,7 @@
     }
 
     &.visible {
+        display: block;
         opacity: 1;
         visibility: visible;
     }
@@ -69,6 +71,7 @@
             background: @color-very-dark-grayish-orange;
             border: none;
             border-bottom: 1px solid @color-brownie-almost;
+            display: block;
             left: 150px;
             opacity: 0;
             padding: 0;
@@ -95,6 +98,7 @@
             &.visible {
                 opacity: 1;
                 visibility: visible;
+                display: block;
             }
         }
 
@@ -142,9 +146,6 @@
     }
 }
 
-.page-builder-wysiwyg-wrapper {
-  position: relative;
-}
 
 .pagebuilder-wysiwyg-overlay {
     display: none;
@@ -176,6 +177,10 @@
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+.pagebuilder-wysiwyg-wrapper {
+    position: relative;
 }
 
 .pagebuilder-wysiwyg-wrapper.pagebuilder-transition-out .pagebuilder-stage-wrapper {

@@ -5,28 +5,29 @@
  */
 -->
 
-<div visible="visible" css="{'_disabled': disabled}" class="page-builder-wysiwyg-wrapper">
+<div visible="visible" css="{'_disabled': disabled}">
     <button if="wysiwygConfigData()['pagebuilder_button'] || wysiwygConfigData()['pagebuilder_content_snapshot']"
             type="button"
             class="action-default action"
             ko-disabled="disabled"
-            click="pageBuilderEditButtonClick.bind($data)">
+            click="pageBuilderEditButtonClick.bind($data)"
+            event="{ mouseover: pageBuilder.onStageOverlayMouseOver, mouseout: pageBuilder.onStageOverlayMouseOut }, mouseoverBubble: false">
         <span translate="pageBuilderEditButtonText" />
     </button>
     <if args="isComponentInitialized">
         <div visible="visiblePageBuilder"
              class="pagebuilder-wysiwyg-wrapper"
              css="{'pagebuilder-transition-in': wysiwygConfigData()['pagebuilder_button'] && !wysiwygConfigData()['pagebuilder_content_snapshot'], 'trigger-transition': transition, 'pagebuilder-transition-out': transitionOut}">
-        <with args="pageBuilder">
+            <div if="wysiwygConfigData()['pagebuilder_content_snapshot']"
+                 class="pagebuilder-wysiwyg-overlay"
+                 click="pageBuilderEditButtonClick.bind($data)"
+                 css="'visible': !pageBuilder.isFullScreen()"
+                 event="{ mouseover: pageBuilder.onStageOverlayMouseOver, mouseout: pageBuilder.onStageOverlayMouseOut }, mouseoverBubble: false"
+                 tabindex="0">
+            </div>
+            <with args="pageBuilder">
                 <render />
             </with>
         </div>
     </if>
-    <div if="wysiwygConfigData()['pagebuilder_content_snapshot']"
-         class="pagebuilder-wysiwyg-overlay"
-         click="pageBuilderEditButtonClick.bind($data)"
-         css="'visible': !pageBuilder.isFullScreen()"
-         event="{ mouseover: pageBuilder.onStageOverlayMouseOver, mouseout: pageBuilder.onStageOverlayMouseOut }, mouseoverBubble: false"
-         tabindex="0">
-    </div>
 </div>
