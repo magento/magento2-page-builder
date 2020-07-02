@@ -10,7 +10,8 @@
     <div if="hasStageOverlay()"
          class="pagebuilder-stage-overlay"
          click="toggleFullScreen.bind($data, $element)"
-         css="'active': !isFullScreen()"
+         css="'visible': !isFullScreen()"
+         event="{ mouseover: onStageOverlayMouseOver, mouseout: onStageOverlayMouseOut }, mouseoverBubble: false"
          tabindex="0">
     </div>
     <div class="admin__field pagebuilder-header" css="visible: panel.isVisible">

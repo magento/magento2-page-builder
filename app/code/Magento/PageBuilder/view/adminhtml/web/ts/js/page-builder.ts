@@ -95,6 +95,20 @@ export default class PageBuilder implements PageBuilderInterface {
     }
 
     /**
+     * MouseOver event for Stage Overlay
+     */
+    public onStageOverlayMouseOver (): void {
+        $('.pagebuilder-stage-overlay').addClass('_hover');
+    }
+
+    /**
+     * MouseOut event for Stage Overlay
+     */
+    public onStageOverlayMouseOut (): void {
+        $('.pagebuilder-stage-overlay').removeClass('_hover');
+    }
+
+    /**
      * Tells the stage wrapper to expand to fullScreen
      *
      * @param {StageToggleFullScreenParamsInterface} args

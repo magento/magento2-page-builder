@@ -81,6 +81,22 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       stageWrapper.find(focusableElements).attr('tabindex', tabIndexValue);
     }
     /**
+     * MouseOver event for Stage Overlay
+     */
+    ;
+
+    _proto.onStageOverlayMouseOver = function onStageOverlayMouseOver() {
+      (0, _jquery)('.pagebuilder-stage-overlay').addClass('_hover');
+    }
+    /**
+     * MouseOut event for Stage Overlay
+     */
+    ;
+
+    _proto.onStageOverlayMouseOut = function onStageOverlayMouseOut() {
+      (0, _jquery)('.pagebuilder-stage-overlay').removeClass('_hover');
+    }
+    /**
      * Tells the stage wrapper to expand to fullScreen
      *
      * @param {StageToggleFullScreenParamsInterface} args

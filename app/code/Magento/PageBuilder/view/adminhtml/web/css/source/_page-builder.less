@@ -4,6 +4,8 @@
 //  */
 
 @border-size: 2px;
+@stage-overlay-background: rgba(0, 120, 249, 0.08);
+@stage-overlay-border: #4181E4;
 
 .pagebuilder-header {
     opacity: 0;
@@ -98,6 +100,7 @@
 
         .pagebuilder-canvas {
             padding-top: 30px;
+            padding-bottom: 120px;
         }
 
         .pagebuilder-panel-wrapper {
@@ -148,13 +151,26 @@
     visibility: hidden;
     width: 0;
 
-    &.active {
+    &.visible {
+        -moz-transition: .175s ease-in-out;
+        -webkit-transition: .175s ease-in-out;
         cursor: pointer;
         display: block;
         height: 100%;
+        opacity: 0;
+        transform: translateY(-@indent__xs);
+        transition: .175s ease-in-out;
         visibility: visible;
         width: 100%;
         z-index: @z-index-2;
+    }
+
+    &._hover {
+        background-color: @stage-overlay-background;
+        border-radius: 2px;
+        border: 2px solid @stage-overlay-border;
+        opacity: 1;
+        transform: translateY(0);
     }
 }
 
@@ -188,17 +204,13 @@
 }
 
 .pagebuilder-stage {
-    -moz-transition: margin-left .35s ease-in-out;
     -moz-user-select: none;
     -ms-user-select: none;
     -o-user-select: none;
-    -webkit-transition: margin-left .35s ease-in-out;
     -webkit-user-select: none;
     font-size: 0;
-    margin-left: 170px;
     min-height: 200px;
     padding: 0;
-    transition: margin-left .35s ease-in-out;
     user-select: none;
 
     &.stage-full-screen {
@@ -234,7 +246,6 @@
         -moz-transition: opacity .75s ease-in-out, visibility .75s ease-in-out;
         -webkit-transition: opacity .75s ease-in-out, visibility .75s ease-in-out;
         opacity: 0;
-        padding-bottom: 120px;
         transition: opacity .75s ease-in-out, visibility .75s ease-in-out;
         visibility: hidden;
 
