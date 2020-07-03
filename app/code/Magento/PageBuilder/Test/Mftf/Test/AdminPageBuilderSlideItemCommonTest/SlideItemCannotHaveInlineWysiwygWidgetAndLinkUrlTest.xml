@@ -22,12 +22,19 @@
         </annotations>
         <before>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
+            <createData entity="simpleCmsPage" stepKey="createCMSPageA"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-            <createData entity="_defaultCmsPage" stepKey="createCMSPageA"/>
         </before>
         <after>
-            <deleteData createDataKey="createCMSPageA" stepKey="deletePreReqCMSPageA"/>
+            <deleteData createDataKey="createCMSPageA" stepKey="deleteCMSPageA"/>
+            <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="navigateToMediaGalleryNavigateToFolder">
+                <argument name="FolderName" value="{{ImageFolder.name}}"/>
+            </actionGroup>
+            <actionGroup ref="DeleteFolderActionGroup" stepKey="deleteMediaGalleryFolder">
+                <argument name="ImageFolder" value="ImageFolder"/>
+            </actionGroup>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -102,10 +109,10 @@
         <actionGroup ref="CreateImageFolderActionGroup" stepKey="createTinyMCESelectorBrowseModalStorageRootImageFolder">
             <argument name="ImageFolder" value="ImageFolder"/>
         </actionGroup>
-        <actionGroup ref="AttachImageActionGroup" stepKey="selectImageFromTinyMCESelectorBrowseModalStorageRootMediaStorage">
+        <actionGroup ref="AttachImageActionGroup" stepKey="selectImageFromTinyMCESelectorBrowseModalStorageRootImageFolder">
             <argument name="Image" value="PageBuilderImageProperty_StageJPG"/>
         </actionGroup>
-        <actionGroup ref="SaveImageActionGroup" stepKey="saveTinyMCESelectorBrowseModalStorageRootMediaStorageImage"/>
+        <actionGroup ref="SaveImageActionGroup" stepKey="saveTinyMCESelectorBrowseModalStorageRootImageFolderImage"/>
         <fillField selector="{{WYSIWYGInsertLinkModal.textToDisplayInput}}" userInput="{{PageBuilderSlideItemLinkURL_External.value}}" stepKey="insertTinyMCELinkModalTextToDisplay"/>
         <click selector="{{WYSIWYGInsertLinkModal.okButton}}" stepKey="clickTinyMCELinkModalOkButton"/>
         <waitForElementNotVisible selector="{{WYSIWYGInsertLinkModal.modal}}" stepKey="waitForTinyMCEInsertLinkModalGone"/>
@@ -201,10 +208,13 @@
         <waitForPageLoad stepKey="waitForInlineWYSIWYGImageSelectorBrowseModal"/>
         <click selector="{{MediaGallerySection.StorageRootArrow}}" stepKey="clickInlineWYSIWYGSelectorBrowseModalStorageRoot"/>
         <waitForPageLoad stepKey="waitForInlineWYSIWYGSelectorBrowseModalStorageRoot"/>
-        <actionGroup ref="AttachImageActionGroup" stepKey="selectImageFromInlineWYSIWYGSelectorBrowseModalStorageRootMediaStorage">
+        <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="navigateToInlineWYSIWYGSelectorBrowseModalStorageRootImageFolder">
+            <argument name="FolderName" value="{{ImageFolder.name}}"/>
+        </actionGroup>
+        <actionGroup ref="AttachImageActionGroup" stepKey="selectImageFromInlineWYSIWYGSelectorBrowseModalStorageRootImageFolder">
             <argument name="Image" value="PageBuilderImageProperty_StageJPG"/>
         </actionGroup>
-        <actionGroup ref="SaveImageActionGroup" stepKey="saveInlineWYSIWYGSelectorBrowseModalStorageRootMediaStorageImage"/>
+        <actionGroup ref="SaveImageActionGroup" stepKey="saveInlineWYSIWYGSelectorBrowseModalStorageRootImageFolderImage"/>
         <fillField selector="{{WYSIWYGInsertLinkModal.textToDisplayInput}}" userInput="{{PageBuilderSlideItemLinkURL_External.value}}" stepKey="insertInlineWYSIWYGLinkModalTextToDisplay"/>
         <click selector="{{WYSIWYGInsertLinkModal.okButton}}" stepKey="clickInlineWYSIWYGLinkModalOkButton"/>
         <waitForElementNotVisible selector="{{WYSIWYGInsertLinkModal.modal}}" stepKey="waitForInlineWYSIWYGInsertLinkModalGone"/>
