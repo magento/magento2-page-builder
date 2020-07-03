@@ -4,7 +4,7 @@
  */
 
 import _ from "underscore";
-import ConfigInterface, {Mode} from "./config.types";
+import ConfigInterface, {Mode, ContentSnapshotInterface} from "./config.types";
 import ContentTypeConfigInterface from "./content-type-config.types";
 
 export default class Config {
@@ -32,6 +32,25 @@ export default class Config {
      */
     public static getMode(): Mode {
         return Config.mode;
+    }
+
+    /**
+     * Set the content snapshot mode to show the page builder stage
+     * when page builder is enabled
+     *
+     * @param contentSnapshot
+     */
+    public static setContentSnapshot(contentSnapshot: ContentSnapshotInterface): void
+    {
+        Config.contentSnapshot = contentSnapshot;
+    }
+
+    /**
+     * Retrieve the current instances mode
+     */
+    public static getContentSnapshot(): ContentSnapshotInterface
+    {
+        return Config.contentSnapshot
     }
 
     /**
@@ -67,5 +86,6 @@ export default class Config {
     private static config: any = {
         dataContentTypeAttributeName: "data-content-type",
     };
+    private static contentSnapshot: ContentSnapshotInterface;
     private static mode: Mode;
 }

@@ -39,7 +39,8 @@ define([
         initialize: function () {
             this._super();
 
-            if (!this.wysiwygConfigData()['pagebuilder_button']) {
+            if (!this.wysiwygConfigData()['pagebuilder_button'] ||
+                this.wysiwygConfigData()['pagebuilder_content_snapshot']) {
                 this.initPageBuilder();
             }
 
@@ -78,7 +79,11 @@ define([
         initPageBuilder: function () {
             if (!this.isComponentInitialized()) {
                 this.loading(true);
-                this.pageBuilder = new PageBuilder(this.wysiwygConfigData(), this.initialValue);
+                this.pageBuilder = new PageBuilder(
+                  this.wysiwygConfigData(),
+                  this.initialValue,
+                  Boolean(this.wysiwygConfigData()['pagebuilder_content_snapshot'])
+                );
                 events.trigger('pagebuilder:register', {
                     ns: this.ns,
                     instance: this.pageBuilder
@@ -91,10 +96,15 @@ define([
                     component: this,
                     selector: this.stageSelector
                 }, this.disableDomObserver.bind(this));
-            }
 
-            if (!this.wysiwygConfigData()['pagebuilder_button']) {
-                this.visiblePageBuilder(true);
+                if (!this.wysiwygConfigData()['pagebuilder_button']) {
+                    this.visiblePageBuilder(true);
+                }
+
+                if (!this.wysiwygConfigData()['pagebuilder_button'] ||
+                    this.wysiwygConfigData()['pagebuilder_content_snapshot']) {
+                    this.visiblePageBuilder(true);
+                }
             }
         },
 
@@ -166,7 +176,8 @@ define([
                         }.bind(this), 350);
                     }
 
-                    if (this.wysiwygConfigData()['pagebuilder_button']) {
+                    if (this.wysiwygConfigData()['pagebuilder_button'] &&
+                        !this.wysiwygConfigData()['pagebuilder_content_snapshot']) {
                         // Force full screen mode whilst the animation occurs
                         this.transitionOut(true);
                         // Trigger animation out
@@ -186,7 +197,8 @@ define([
                         });
                     }
 
-                    if (this.wysiwygConfigData()['pagebuilder_button']) {
+                    if (this.wysiwygConfigData()['pagebuilder_button'] &&
+                        !this.wysiwygConfigData()['pagebuilder_content_snapshot']) {
                         this.visiblePageBuilder(true);
 
                         fullScreenDeferred.resolve();
