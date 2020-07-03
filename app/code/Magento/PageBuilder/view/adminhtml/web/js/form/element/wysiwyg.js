@@ -24,6 +24,8 @@ define([
             transitionOut: false,
             elementSelector: '> textarea',
             stageSelector: '.pagebuilder-stage-wrapper',
+            overlaySelector: '.pagebuilder-wysiwyg-overlay',
+            overlayMouseover: false,
             pageBuilder: false,
             visiblePageBuilder: false,
             isComponentInitialized: false,
@@ -119,6 +121,22 @@ define([
         },
 
         /**
+         * Changes tabindex and content editable on stage elements
+         */
+        toggleFocusableElements: function () {
+            var pageBuilderSelector = '#' + this.pageBuilder.id,
+                editableSelector = ' [contenteditable]',
+                focusableSelector = ' :focusable:not(' + this.overlaySelector + ')',
+                mediaSelector = pageBuilderSelector + ' iframe,' + pageBuilderSelector + ' video',
+                tabIndexValue = this.pageBuilder.isFullScreen() ? '0' : '-1',
+                editableValue = this.pageBuilder.isFullScreen();
+
+            $(pageBuilderSelector + editableSelector).attr('contenteditable', editableValue);
+            $(pageBuilderSelector + focusableSelector).attr('tabindex', tabIndexValue).blur();
+            $(mediaSelector).attr('tabindex', tabIndexValue);
+        },
+
+        /**
          * Determine if the current instance is within a modal
          *
          * @param {HTMLElement} element
@@ -132,6 +150,26 @@ define([
             if (this.isWithinModal) {
                 this.modal = modalInnerWrap;
             }
+        },
+
+        /**
+         * Overlay MouseOver
+         */
+        onOverlayMouseOver: function () {
+            if (!this.overlayMouseover && !$(this.overlaySelector).hasClass('_hover')) {
+                $(this.overlaySelector).addClass('_hover');
+            }
+            this.overlayMouseover = true;
+        },
+
+        /**
+         * Overlay MouseOut
+         */
+        onOverlayMouseOut: function () {
+            if (this.overlayMouseover && $(this.overlaySelector).hasClass('_hover')) {
+                $(this.overlaySelector).removeClass('_hover');
+            }
+            this.overlayMouseover = false;
         },
 
         /**
@@ -163,6 +201,10 @@ define([
 
             events.on('stage:' + id + ':masterFormatRenderAfter', function (args) {
                 this.value(args.value);
+
+                if (this.wysiwygConfigData()['pagebuilder_content_snapshot']) {
+                    this.toggleFocusableElements();
+                }
             }.bind(this));
 
             events.on('stage:' + id + ':fullScreenModeChangeAfter', function (args) {
@@ -212,6 +254,10 @@ define([
                         }
                         /* eslint-enable max-depth */
                     }
+                }
+
+                if (this.wysiwygConfigData()['pagebuilder_content_snapshot']) {
+                    this.toggleFocusableElements();
                 }
             }.bind(this));
 
