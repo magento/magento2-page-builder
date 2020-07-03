@@ -121,17 +121,19 @@ define([
         },
 
         /**
-         * Changes tabindex and content editable on stage elements.
+         * Changes tabindex and content editable on stage elements
          */
         toggleFocusableElements: function () {
-            var stageWrapper = $('#' + this.pageBuilder.id).parent(),
-                focusableElements = ':focusable:not(' + this.overlaySelector + ')',
-                editableElements = '[contenteditable]',
+            var pageBuilderSelector = '#' + this.pageBuilder.id,
+                editableSelector = ' [contenteditable]',
+                focusableSelector = ' :focusable:not(' + this.overlaySelector + ')',
+                mediaSelector = pageBuilderSelector + ' iframe,' + pageBuilderSelector + ' video',
                 tabIndexValue = this.pageBuilder.isFullScreen() ? '0' : '-1',
-                editableValue = this.pageBuilder.isFullScreen() ? 'true' : 'false';
+                editableValue = this.pageBuilder.isFullScreen();
 
-            stageWrapper.find(editableElements).attr('contenteditable', editableValue);
-            stageWrapper.find(focusableElements).attr('tabindex', tabIndexValue);
+            $(pageBuilderSelector + editableSelector).attr('contenteditable', editableValue);
+            $(pageBuilderSelector + focusableSelector).attr('tabindex', tabIndexValue).blur();
+            $(mediaSelector).attr('tabindex', tabIndexValue);
         },
 
         /**
