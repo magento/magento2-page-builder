@@ -11,7 +11,7 @@
             class="action-default action"
             ko-disabled="disabled"
             click="pageBuilderEditButtonClick.bind($data)"
-            event="{ mouseover: pageBuilder.onStageOverlayMouseOver, mouseout: pageBuilder.onStageOverlayMouseOut }, mouseoverBubble: false">
+            event="{ mouseover: onOverlayMouseOver, mouseout: onOverlayMouseOut }, mouseoverBubble: false">
         <span translate="pageBuilderEditButtonText" />
     </button>
     <if args="isComponentInitialized">
@@ -22,7 +22,7 @@
                  class="pagebuilder-wysiwyg-overlay"
                  click="pageBuilderEditButtonClick.bind($data)"
                  css="'visible': !pageBuilder.isFullScreen()"
-                 event="{ mouseover: pageBuilder.onStageOverlayMouseOver, mouseout: pageBuilder.onStageOverlayMouseOut }, mouseoverBubble: false"
+                 event="{ mouseover: onOverlayMouseOver, mouseout: onOverlayMouseOut }, mouseoverBubble: false"
                  tabindex="0">
             </div>
             <with args="pageBuilder">

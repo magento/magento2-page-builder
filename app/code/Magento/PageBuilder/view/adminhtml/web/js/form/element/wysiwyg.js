@@ -24,6 +24,8 @@ define([
             transitionOut: false,
             elementSelector: '> textarea',
             stageSelector: '.pagebuilder-stage-wrapper',
+            overlaySelector: '.pagebuilder-wysiwyg-overlay',
+            overlayMouseover: false,
             pageBuilder: false,
             visiblePageBuilder: false,
             isComponentInitialized: false,
@@ -119,6 +121,20 @@ define([
         },
 
         /**
+         * Changes tabindex and content editable on stage elements.
+         */
+        toggleFocusableElements: function () {
+            var stageWrapper = $('#' + this.pageBuilder.id).parent(),
+                focusableElements = ':focusable:not(' + this.overlaySelector + ')',
+                editableElements = '[contenteditable]',
+                tabIndexValue = this.pageBuilder.isFullScreen() ? '0' : '-1',
+                editableValue = this.pageBuilder.isFullScreen() ? 'true' : 'false';
+
+            stageWrapper.find(editableElements).attr('contenteditable', editableValue);
+            stageWrapper.find(focusableElements).attr('tabindex', tabIndexValue);
+        },
+
+        /**
          * Determine if the current instance is within a modal
          *
          * @param {HTMLElement} element
@@ -132,6 +148,26 @@ define([
             if (this.isWithinModal) {
                 this.modal = modalInnerWrap;
             }
+        },
+
+        /**
+         * Overlay MouseOver
+         */
+        onOverlayMouseOver: function () {
+            if (!this.overlayMouseover && !$(this.overlaySelector).hasClass('_hover')) {
+                $(this.overlaySelector).addClass('_hover');
+            }
+            this.overlayMouseover = true;
+        },
+
+        /**
+         * Overlay MouseOut
+         */
+        onOverlayMouseOut: function () {
+            if (this.overlayMouseover && $(this.overlaySelector).hasClass('_hover')) {
+                $(this.overlaySelector).removeClass('_hover');
+            }
+            this.overlayMouseover = false;
         },
 
         /**
@@ -163,8 +199,9 @@ define([
 
             events.on('stage:' + id + ':masterFormatRenderAfter', function (args) {
                 this.value(args.value);
+
                 if (this.wysiwygConfigData()['pagebuilder_content_snapshot']) {
-                    this.pageBuilder.toggleFocusableElements();
+                    this.toggleFocusableElements();
                 }
             }.bind(this));
 
@@ -215,6 +252,10 @@ define([
                         }
                         /* eslint-enable max-depth */
                     }
+                }
+
+                if (this.wysiwygConfigData()['pagebuilder_content_snapshot']) {
+                    this.toggleFocusableElements();
                 }
             }.bind(this));
 

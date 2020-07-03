@@ -77,36 +77,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       });
     }
     /**
-     * Changes tabindex and content editable on stage elements.
-     */
-    ;
-
-    _proto.toggleFocusableElements = function toggleFocusableElements() {
-      var stageWrapper = (0, _jquery)("#" + this.id).parent();
-      var focusableElements = ':focusable:not(.pagebuilder-stage-overlay)';
-      var editableElements = '[contenteditable]';
-      var tabIndexValue = this.isFullScreen() ? '0' : '-1';
-      var editableValue = this.isFullScreen() ? 'true' : 'false';
-      stageWrapper.find(editableElements).attr('contenteditable', editableValue);
-      stageWrapper.find(focusableElements).attr('tabindex', tabIndexValue);
-    }
-    /**
-     * MouseOver event for Stage Overlay
-     */
-    ;
-
-    _proto.onStageOverlayMouseOver = function onStageOverlayMouseOver() {
-      (0, _jquery)('.pagebuilder-wysiwyg-overlay').addClass('_hover');
-    }
-    /**
-     * MouseOut event for Stage Overlay
-     */
-    ;
-
-    _proto.onStageOverlayMouseOut = function onStageOverlayMouseOut() {
-      (0, _jquery)('.pagebuilder-wysiwyg-overlay').removeClass('_hover');
-    }
-    /**
      * Tells the stage wrapper to expand to fullScreen
      *
      * @param {StageToggleFullScreenParamsInterface} args
@@ -191,8 +161,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       } else {
         (0, _jquery)("body").css("overflow", "");
       }
-
-      this.toggleFocusableElements();
 
       _events.trigger("stage:" + this.id + ":fullScreenModeChangeAfter", {
         fullScreen: this.isFullScreen()
