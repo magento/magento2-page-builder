@@ -37,7 +37,6 @@ export default function nestingLinkDialog(
         linkUrl[linkUrl.type].length !== 0
     ) {
         const inlineEditor = $("#" + wysiwyg.elementId);
-        inlineEditor.blur();
         confirmationDialog({
             actions: {
                 always: () => {
