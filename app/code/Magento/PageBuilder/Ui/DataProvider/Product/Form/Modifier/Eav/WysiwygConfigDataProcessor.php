@@ -19,6 +19,7 @@ class WysiwygConfigDataProcessor implements
         $wysiwygConfigData = [];
         if ($attribute->getData('is_pagebuilder_enabled')) {
             $wysiwygConfigData['is_pagebuilder_enabled'] = true;
+            $wysiwygConfigData['pagebuilder_content_snapshot'] = true;
             $wysiwygConfigData['pagebuilder_button'] = true;
         } else {
             $wysiwygConfigData['is_pagebuilder_enabled'] = false;
