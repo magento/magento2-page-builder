@@ -499,8 +499,8 @@ export default class Preview implements PreviewInterface {
      * Bind events
      */
     protected bindEvents() {
-        let pageBuilderId = Config.getContentSnapshot().pageBuilderId,
-            fullScreenModeChangeAfterEvent = `stage:${pageBuilderId}:fullScreenModeChangeAfter`;
+        const pageBuilderId = Config.getContentSnapshot().pageBuilderId;
+        const fullScreenModeChangeAfterEvent = `stage:${pageBuilderId}:fullScreenModeChangeAfter`;
 
         this.contentType.dataStore.subscribe(
             (data: DataObject) => {
@@ -518,6 +518,7 @@ export default class Preview implements PreviewInterface {
                 },
             );
         }
+
         events.on(fullScreenModeChangeAfterEvent,this.toggleAccessibility.bind(this));
     }
 
