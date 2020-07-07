@@ -515,7 +515,9 @@ export default class Preview implements PreviewInterface {
                 },
             );
         }
-        events.on(`stage:${Config.getContentSnapshot().pageBuilderId}:fullScreenModeChangeAfter`, this.toggleAccessibility.bind(this));
+        events.on(`stage:${Config.getContentSnapshot().pageBuilderId}:fullScreenModeChangeAfter`,
+                  this.toggleAccessibility.bind(this)
+        );
     }
 
     /**

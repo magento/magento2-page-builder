@@ -23,8 +23,8 @@ export type ContentSnapshot = true | false;
 
 export interface ContentSnapshotInterface
 {
-    pageBuilderId: string,
-    contentSnapshotMode: ContentSnapshot,
+    pageBuilderId: string;
+    contentSnapshotMode: ContentSnapshot;
 }
 
 export interface MenuSectionInterface {

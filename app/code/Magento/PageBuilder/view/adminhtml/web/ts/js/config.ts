@@ -4,7 +4,7 @@
  */
 
 import _ from "underscore";
-import ConfigInterface, {Mode, ContentSnapshotInterface} from "./config.types";
+import ConfigInterface, {ContentSnapshotInterface, Mode} from "./config.types";
 import ContentTypeConfigInterface from "./content-type-config.types";
 
 export default class Config {
@@ -50,7 +50,7 @@ export default class Config {
      */
     public static getContentSnapshot(): ContentSnapshotInterface
     {
-        return Config.contentSnapshot
+        return Config.contentSnapshot;
     }
 
     /**

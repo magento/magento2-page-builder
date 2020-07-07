@@ -54,7 +54,6 @@ export default class Panel {
         this.element = element;
     }
 
-
     /**
      * Init listeners
      */
