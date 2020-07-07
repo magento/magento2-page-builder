@@ -43,6 +43,14 @@
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
         <!-- Validate No JS Errors -->
-        <doNotSeeAnyJSErrors stepKey="doNotSeeAnyJSErrorsOnStage"/>
+        <dontSeeJsError stepKey="doNotSeeAnyJSErrors"/>
+        <actionGroup ref="AddConditionsCombinationToProducts" stepKey="addProductsConditionCombinationAgain"/>
+        <actionGroup ref="AddConditionsCombinationToProducts" stepKey="addProductsConditionCombinationAgainSecondTime"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsAgain"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDropAgainSecondTimeAgain">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <!-- Validate No JS Errors -->
+        <dontSeeJsError stepKey="doNotSeeAnyJSErrorsAgain" />
     </test>
 </tests>
