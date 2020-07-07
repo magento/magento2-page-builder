@@ -8,7 +8,6 @@
 @wysiwyg-overlay-border: #4181e4;
 
 .pagebuilder-header {
-    display: none;
     opacity: 0;
     text-align: right;
 
@@ -23,9 +22,18 @@
     }
 
     &.visible {
-        display: block;
         opacity: 1;
         visibility: visible;
+    }
+}
+
+.pagebuilder_content_snapshot {
+    .pagebuilder-header {
+        display: none;
+
+        &.visible {
+            display: block;
+        }
     }
 }
 
@@ -50,6 +58,22 @@
         pointer-events: none;
     }
 
+    &.pagebuilder_content_snapshot {
+        &.stage-full-screen {
+            .pagebuilder-header {
+                display: block;
+
+                &.visible {
+                    display: block;
+                }
+            }
+
+            .pagebuilder-canvas {
+                padding-bottom: 120px;
+            }
+        }
+    }
+
     &.stage-full-screen {
         -moz-transform: translateZ(0);
         -webkit-transform: translateZ(0);
@@ -71,7 +95,6 @@
             background: @color-very-dark-grayish-orange;
             border: none;
             border-bottom: 1px solid @color-brownie-almost;
-            display: block;
             left: 150px;
             opacity: 0;
             padding: 0;
@@ -96,14 +119,12 @@
             }
 
             &.visible {
-                display: block;
                 opacity: 1;
                 visibility: visible;
             }
         }
 
         .pagebuilder-canvas {
-            padding-bottom: 120px;
             padding-top: 30px;
         }
 
@@ -217,15 +238,18 @@
 }
 
 .pagebuilder-stage {
+    -moz-transition: margin-left .35s ease-in-out;
     -moz-user-select: none;
     -ms-user-select: none;
     -o-user-select: none;
+    -webkit-transition: margin-left .35s ease-in-out;
     -webkit-user-select: none;
     font-size: 0;
+    margin-left: 170px;
     min-height: 200px;
     padding: 0;
+    transition: margin-left .35s ease-in-out;
     user-select: none;
-
     &.stage-full-screen {
         background: @color-black;
     }
@@ -259,7 +283,7 @@
         -moz-transition: opacity .75s ease-in-out, visibility .75s ease-in-out;
         -webkit-transition: opacity .75s ease-in-out, visibility .75s ease-in-out;
         opacity: 0;
-        padding-top: 8px;
+        padding-bottom: 120px;
         transition: opacity .75s ease-in-out, visibility .75s ease-in-out;
         visibility: hidden;
 
@@ -280,6 +304,21 @@
         .pagebuilder-add-row-wrapper {
             display: none;
         }
+    }
+}
+
+.pagebuilder_content_snapshot {
+    .pagebuilder-stage {
+        -moz-transition: none;
+        -webkit-transition: none;
+        margin-left: auto;
+        transition: none;
+
+        .pagebuilder-canvas {
+            padding-bottom: 0;
+            padding-top: 8px;
+        }
+
     }
 }
 
