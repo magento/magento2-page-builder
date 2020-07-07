@@ -12,8 +12,8 @@ import _ from "underscore";
 import "../binding/live-edit";
 import "../binding/sortable";
 import "../binding/sortable-children";
-import ContentTypeCollection from "../content-type-collection";
 import Config from "../config";
+import ContentTypeCollection from "../content-type-collection";
 import ContentTypeCollectionInterface from "../content-type-collection.types";
 import ContentTypeConfigInterface, {ConfigFieldInterface} from "../content-type-config.types";
 import createContentType from "../content-type-factory";
@@ -499,6 +499,9 @@ export default class Preview implements PreviewInterface {
      * Bind events
      */
     protected bindEvents() {
+        let pageBuilderId = Config.getContentSnapshot().pageBuilderId,
+            fullScreenModeChangeAfterEvent = `stage:${pageBuilderId}:fullScreenModeChangeAfter`;
+
         this.contentType.dataStore.subscribe(
             (data: DataObject) => {
                 this.updateObservables();
@@ -515,9 +518,7 @@ export default class Preview implements PreviewInterface {
                 },
             );
         }
-        events.on(`stage:${Config.getContentSnapshot().pageBuilderId}:fullScreenModeChangeAfter`,
-                  this.toggleAccessibility.bind(this)
-        );
+        events.on(fullScreenModeChangeAfterEvent,this.toggleAccessibility.bind(this));
     }
 
     /**
