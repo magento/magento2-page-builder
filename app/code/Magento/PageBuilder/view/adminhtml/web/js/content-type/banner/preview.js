@@ -195,6 +195,8 @@ define(["jarallax", "jarallaxVideo", "jquery", "mage/translate", "Magento_PageBu
           });
           editor.on("blur", function () {
             (0, _jquery)(_this3.element).parents(_this3.bannerOverlaySelector).zIndex(_this3.defaultOverlayZIndex);
+            (0, _nestingLinkDialog)(_this3.contentType.dataStore, _this3.wysiwyg, "message", "link_url");
+            (0, _nestingWidgetDialog)(_this3.contentType.dataStore, _this3.wysiwyg, "message", "link_url");
           });
 
           _underscore.defer(function () {
@@ -437,9 +439,6 @@ define(["jarallax", "jarallaxVideo", "jquery", "mage/translate", "Magento_PageBu
         }
 
         _events.trigger("image:" + _this8.contentType.id + ":assignAfter", imageObject);
-
-        (0, _nestingLinkDialog)(_this8.contentType.dataStore, _this8.wysiwyg, "message", "link_url");
-        (0, _nestingWidgetDialog)(_this8.contentType.dataStore, _this8.wysiwyg, "message", "link_url");
       });
 
       this.contentType.dataStore.subscribe(function (data) {

@@ -23,6 +23,7 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/modal/dismissible-co
 
     if (wysiwyg && inlineMessage.match(aLinkRegex) && linkUrl && ["page", "product", "category", "default"].indexOf(linkUrl.type) !== -1 && linkUrl[linkUrl.type] && linkUrl[linkUrl.type].length !== 0) {
       var inlineEditor = (0, _jquery)("#" + wysiwyg.elementId);
+      inlineEditor.blur();
       (0, _dismissibleConfirm)({
         actions: {
           always: function always() {
