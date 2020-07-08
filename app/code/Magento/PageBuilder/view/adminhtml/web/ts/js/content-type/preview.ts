@@ -519,7 +519,7 @@ export default class Preview implements PreviewInterface {
             );
         }
 
-        events.on(fullScreenModeChangeAfterEvent,this.toggleAccessibility.bind(this));
+        events.on(fullScreenModeChangeAfterEvent, this.toggleAccessibility.bind(this));
     }
 
     /**
