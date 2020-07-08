@@ -43,7 +43,13 @@ export default class PageBuilder implements PageBuilderInterface {
     constructor(config: any, initialValue: string, contentSnapshot: boolean) {
         Config.setConfig(config);
         Config.setMode("Preview");
-        Config.setContentSnapshot({pageBuilderId: this.id, contentSnapshotMode: contentSnapshot});
+        Config.setContentSnapshot(
+            {
+                pageBuilderId: this.id,
+                isFullScreen: config.isFullScreen,
+                contentSnapshotMode: contentSnapshot
+            }
+        );
         this.preloadTemplates(config);
         this.initialValue = initialValue;
         this.isFullScreen(config.isFullScreen);

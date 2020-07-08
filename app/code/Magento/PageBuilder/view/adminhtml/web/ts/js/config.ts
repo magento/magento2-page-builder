@@ -46,6 +46,17 @@ export default class Config {
     }
 
     /**
+     * Set the content snapshot flag to inform other components about fullscreen mode
+     * when page builder is enabled
+     *
+     * @param flag
+     */
+    public static setContentSnapshotFullScreenMode(flag: boolean): void
+    {
+        Config.contentSnapshot.isFullScreen = flag;
+    }
+
+    /**
      * Retrieve the current instances mode
      */
     public static getContentSnapshot(): ContentSnapshotInterface

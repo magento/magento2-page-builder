@@ -91,7 +91,7 @@ export default class Preview implements PreviewInterface {
             "empty-placeholder-background": this.isPlaceholderVisible,
         });
 
-        if (Config.getContentSnapshot().contentSnapshotMode) {
+        if (Config.getContentSnapshot().contentSnapshotMode && !Config.getContentSnapshot().isFullScreen) {
             this.accessibility(false);
         }
 
@@ -652,6 +652,7 @@ export default class Preview implements PreviewInterface {
     {
         if (Config.getContentSnapshot().contentSnapshotMode) {
           this.accessibility(args.fullScreen);
+          Config.setContentSnapshotFullScreenMode(args.fullScreen);
         }
     }
 }

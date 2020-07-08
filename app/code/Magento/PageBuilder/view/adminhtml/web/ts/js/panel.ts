@@ -288,6 +288,7 @@ export default class Panel {
     private toggleVisibility(args: any): void
     {
         if (Config.getContentSnapshot().contentSnapshotMode) {
+            Config.setContentSnapshotFullScreenMode(args.fullScreen);
             this.isVisible(args.fullScreen);
         }
     }

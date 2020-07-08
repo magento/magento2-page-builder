@@ -24,6 +24,7 @@ export type ContentSnapshot = true | false;
 export interface ContentSnapshotInterface
 {
     pageBuilderId: string;
+    isFullScreen: boolean;
     contentSnapshotMode: ContentSnapshot;
 }
 

@@ -60,7 +60,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         "empty-placeholder-background": this.isPlaceholderVisible
       });
 
-      if (_config.getContentSnapshot().contentSnapshotMode) {
+      if (_config.getContentSnapshot().contentSnapshotMode && !_config.getContentSnapshot().isFullScreen) {
         this.accessibility(false);
       }
 
@@ -654,6 +654,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _proto.toggleAccessibility = function toggleAccessibility(args) {
       if (_config.getContentSnapshot().contentSnapshotMode) {
         this.accessibility(args.fullScreen);
+
+        _config.setContentSnapshotFullScreenMode(args.fullScreen);
       }
     };
 

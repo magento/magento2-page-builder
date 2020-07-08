@@ -287,6 +287,8 @@ define(["consoleLogger", "jquery", "knockout", "mage/translate", "Magento_PageBu
 
     _proto.toggleVisibility = function toggleVisibility(args) {
       if (_config.getContentSnapshot().contentSnapshotMode) {
+        _config.setContentSnapshotFullScreenMode(args.fullScreen);
+
         this.isVisible(args.fullScreen);
       }
     };
