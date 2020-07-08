@@ -47,8 +47,8 @@ export default class PageBuilder implements PageBuilderInterface {
             {
                 pageBuilderId: this.id,
                 isFullScreen: config.isFullScreen,
-                contentSnapshotMode: contentSnapshot
-            }
+                contentSnapshotMode: contentSnapshot,
+            },
         );
         this.preloadTemplates(config);
         this.initialValue = initialValue;
