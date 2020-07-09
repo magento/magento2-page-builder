@@ -171,7 +171,7 @@
             <argument name="page" value="$$createCMSPageA.identifier$$"/>
         </actionGroup>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unfocusOnInlineWYSIWYGEditorArea"/>
-        <seeElement selector="{{PageBuilderStage.modal(PageBuilderBannerMessageInvalidWidgetProperty.stageErrorMessage)}}" stepKey="seeNestingWidgetCorrectErrorModal"/>
+        <waitForElementVisible selector="{{PageBuilderStage.modal(PageBuilderBannerMessageInvalidWidgetProperty.stageErrorMessage)}}" stepKey="waitForNestingWidgetCorrectErrorModal"/>
         <actionGroup ref="confirmRemovalModal" stepKey="confirmNestingWidgetModal"/>
         <!-- Checks for Widget (placeholder) within the WYSIWYG with regex -->
         <executeJS function="return (/&lt;span.*(class=)(&quot;|\').*((magento-placeholder).*(magento-widget)|(magento-widget).*(magento-placeholder)).*&lt;\/span&gt;/igm).test(tinymce.activeEditor.getContent());" stepKey="grabIfWidgetInWysiwygBoolean"/>
@@ -190,7 +190,7 @@
             <argument name="wysiwygArea" value=""/>
         </actionGroup>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unfocusOnInlineWYSIWYGEditorAreaAddLink"/>
-        <seeElement selector="{{PageBuilderStage.modal(PageBuilderBannerMessageInvalidProperty.stageErrorMessage)}}" stepKey="seeNestingLinkCorrectErrorModal"/>
+        <waitForElementVisible selector="{{PageBuilderStage.modal(PageBuilderBannerMessageInvalidProperty.stageErrorMessage)}}" stepKey="waitForNestingLinkCorrectErrorModal"/>
         <actionGroup ref="confirmRemovalModal" stepKey="confirmNestingLinkModal"/>
         <!-- Checks for A tags within the WYSIWYG with regex -->
         <executeJS function="return (/&lt;a[\s]+([^&gt;]+)&gt;|&lt;a&gt;|&lt;\/a&gt;/igm).test(tinymce.activeEditor.getContent());" stepKey="grabIfLinkInWysiwygBoolean"/>
@@ -221,7 +221,7 @@
         <waitForElementNotVisible selector="{{WYSIWYGInsertLinkModal.modal}}" stepKey="waitForInlineWYSIWYGInsertLinkModalGone"/>
         <waitForPageLoad stepKey="waitForInlineWYSIWYGStorageRoot"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unfocusOnInlineWYSIWYGEditorAreaAddImageLink"/>
-        <seeElement selector="{{PageBuilderStage.modal(PageBuilderBannerMessageInvalidProperty.stageErrorMessage)}}" stepKey="seeNestingImageLinkCorrectErrorModal"/>
+        <waitForElementVisible selector="{{PageBuilderStage.modal(PageBuilderBannerMessageInvalidProperty.stageErrorMessage)}}" stepKey="waitForNestingImageLinkCorrectErrorModal"/>
         <actionGroup ref="confirmRemovalModal" stepKey="confirmNestingImageLinkModal"/>
         <!-- Checks for A tags within the TinyMCE with regex -->
         <executeJS function="return (/&lt;a[\s]+([^&gt;]+)&gt;|&lt;a&gt;|&lt;\/a&gt;/igm).test(tinymce.activeEditor.getContent());" stepKey="grabIfImageLinkInWysiwygBoolean"/>
