@@ -363,7 +363,12 @@ define(["jarallax", "jarallaxVideo", "jquery", "knockout", "mage/translate", "Ma
       if (focus) {
         wysiwygConfig.adapter.settings.auto_focus = this.element.id;
 
-        wysiwygConfig.adapter.settings.init_instance_callback = function () {
+        wysiwygConfig.adapter.settings.init_instance_callback = function (editor) {
+          editor.on("blur", function () {
+            (0, _nestingLinkDialog)(_this6.contentType.dataStore, _this6.wysiwyg, "content", "link_url");
+            (0, _nestingWidgetDialog)(_this6.contentType.dataStore, _this6.wysiwyg, "content", "link_url");
+          });
+
           _underscore.defer(function () {
             _this6.element.blur();
 
@@ -427,9 +432,6 @@ define(["jarallax", "jarallaxVideo", "jquery", "knockout", "mage/translate", "Ma
         var imageObject = dataStore[_this8.config.additional_data.uploaderConfig.dataScope][0] || {};
 
         _events.trigger("image:" + _this8.contentType.id + ":assignAfter", imageObject);
-
-        (0, _nestingLinkDialog)(_this8.contentType.dataStore, _this8.wysiwyg, "content", "link_url");
-        (0, _nestingWidgetDialog)(_this8.contentType.dataStore, _this8.wysiwyg, "content", "link_url");
       }); // Remove wysiwyg before assign new instance.
 
 

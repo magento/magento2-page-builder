@@ -170,6 +170,7 @@
             <argument name="widget" value="TinyMCEWidgetCMSPageLink"/>
             <argument name="page" value="$$createCMSPageA.identifier$$"/>
         </actionGroup>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unfocusOnInlineWYSIWYGEditorArea"/>
         <seeElement selector="{{PageBuilderStage.modal(PageBuilderBannerMessageInvalidWidgetProperty.stageErrorMessage)}}" stepKey="seeNestingWidgetCorrectErrorModal"/>
         <actionGroup ref="confirmRemovalModal" stepKey="confirmNestingWidgetModal"/>
         <!-- Checks for Widget (placeholder) within the WYSIWYG with regex -->
@@ -188,6 +189,7 @@
             <argument name="textToDisplay" value="{{ExternalLink.googleUrl}}"/>
             <argument name="wysiwygArea" value=""/>
         </actionGroup>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unfocusOnInlineWYSIWYGEditorAreaAddLink"/>
         <seeElement selector="{{PageBuilderStage.modal(PageBuilderBannerMessageInvalidProperty.stageErrorMessage)}}" stepKey="seeNestingLinkCorrectErrorModal"/>
         <actionGroup ref="confirmRemovalModal" stepKey="confirmNestingLinkModal"/>
         <!-- Checks for A tags within the WYSIWYG with regex -->
@@ -218,6 +220,7 @@
         <click selector="{{WYSIWYGInsertLinkModal.okButton}}" stepKey="clickInlineWYSIWYGLinkModalOkButton"/>
         <waitForElementNotVisible selector="{{WYSIWYGInsertLinkModal.modal}}" stepKey="waitForInlineWYSIWYGInsertLinkModalGone"/>
         <waitForPageLoad stepKey="waitForInlineWYSIWYGStorageRoot"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unfocusOnInlineWYSIWYGEditorAreaAddImageLink"/>
         <seeElement selector="{{PageBuilderStage.modal(PageBuilderBannerMessageInvalidProperty.stageErrorMessage)}}" stepKey="seeNestingImageLinkCorrectErrorModal"/>
         <actionGroup ref="confirmRemovalModal" stepKey="confirmNestingImageLinkModal"/>
         <!-- Checks for A tags within the TinyMCE with regex -->
