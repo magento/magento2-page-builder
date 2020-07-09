@@ -12,8 +12,8 @@ import _ from "underscore";
 import "../binding/live-edit";
 import "../binding/sortable";
 import "../binding/sortable-children";
-import ContentTypeCollection from "../content-type-collection";
 import Config from "../config";
+import ContentTypeCollection from "../content-type-collection";
 import ContentTypeCollectionInterface from "../content-type-collection.types";
 import ContentTypeConfigInterface, {ConfigFieldInterface} from "../content-type-config.types";
 import createContentType from "../content-type-factory";
@@ -91,7 +91,7 @@ export default class Preview implements PreviewInterface {
             "empty-placeholder-background": this.isPlaceholderVisible,
         });
 
-        if (Config.getContentSnapshot().contentSnapshotMode) {
+        if (Config.getContentSnapshot().contentSnapshotMode && !Config.getContentSnapshot().isFullScreen) {
             this.accessibility(false);
         }
 
@@ -499,6 +499,9 @@ export default class Preview implements PreviewInterface {
      * Bind events
      */
     protected bindEvents() {
+        const pageBuilderId = Config.getContentSnapshot().pageBuilderId;
+        const fullScreenModeChangeAfterEvent = `stage:${pageBuilderId}:fullScreenModeChangeAfter`;
+
         this.contentType.dataStore.subscribe(
             (data: DataObject) => {
                 this.updateObservables();
@@ -515,7 +518,8 @@ export default class Preview implements PreviewInterface {
                 },
             );
         }
-        events.on(`stage:${Config.getContentSnapshot().pageBuilderId}:fullScreenModeChangeAfter`, this.toggleAccessibility.bind(this));
+
+        events.on(fullScreenModeChangeAfterEvent, this.toggleAccessibility.bind(this));
     }
 
     /**
@@ -648,6 +652,7 @@ export default class Preview implements PreviewInterface {
     {
         if (Config.getContentSnapshot().contentSnapshotMode) {
           this.accessibility(args.fullScreen);
+          Config.setContentSnapshotFullScreenMode(args.fullScreen);
         }
     }
 }

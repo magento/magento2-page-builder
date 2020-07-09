@@ -29,6 +29,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
       _config.setContentSnapshot({
         pageBuilderId: this.id,
+        isFullScreen: config.isFullScreen,
         contentSnapshotMode: contentSnapshot
       });
 

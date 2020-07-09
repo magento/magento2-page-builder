@@ -54,7 +54,6 @@ export default class Panel {
         this.element = element;
     }
 
-
     /**
      * Init listeners
      */
@@ -289,6 +288,7 @@ export default class Panel {
     private toggleVisibility(args: any): void
     {
         if (Config.getContentSnapshot().contentSnapshotMode) {
+            Config.setContentSnapshotFullScreenMode(args.fullScreen);
             this.isVisible(args.fullScreen);
         }
     }

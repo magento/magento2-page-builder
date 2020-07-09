@@ -51,6 +51,17 @@ define(["underscore"], function (_underscore) {
       Config.contentSnapshot = contentSnapshot;
     }
     /**
+     * Set the content snapshot flag to inform other components about fullscreen mode
+     * when page builder is enabled
+     *
+     * @param flag
+     */
+    ;
+
+    Config.setContentSnapshotFullScreenMode = function setContentSnapshotFullScreenMode(flag) {
+      Config.contentSnapshot.isFullScreen = flag;
+    }
+    /**
      * Retrieve the current instances mode
      */
     ;
