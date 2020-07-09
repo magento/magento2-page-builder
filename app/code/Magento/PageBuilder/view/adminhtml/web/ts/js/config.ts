@@ -4,7 +4,7 @@
  */
 
 import _ from "underscore";
-import ConfigInterface, {Mode, ContentSnapshotInterface} from "./config.types";
+import ConfigInterface, {ContentSnapshotInterface, Mode} from "./config.types";
 import ContentTypeConfigInterface from "./content-type-config.types";
 
 export default class Config {
@@ -46,11 +46,22 @@ export default class Config {
     }
 
     /**
+     * Set the content snapshot flag to inform other components about fullscreen mode
+     * when page builder is enabled
+     *
+     * @param flag
+     */
+    public static setContentSnapshotFullScreenMode(flag: boolean): void
+    {
+        Config.contentSnapshot.isFullScreen = flag;
+    }
+
+    /**
      * Retrieve the current instances mode
      */
     public static getContentSnapshot(): ContentSnapshotInterface
     {
-        return Config.contentSnapshot
+        return Config.contentSnapshot;
     }
 
     /**
