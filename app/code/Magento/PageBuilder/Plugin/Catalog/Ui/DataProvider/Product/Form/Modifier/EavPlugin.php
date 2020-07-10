@@ -16,6 +16,8 @@ use Magento\Framework\Stdlib\ArrayManager;
 
 class EavPlugin
 {
+    const META_ATTRIBUTE_CONFIG_PATH = 'arguments/data/config';
+
     /**
      * @var ArrayManager
      */
@@ -45,12 +47,11 @@ class EavPlugin
         $sortOrder
     )
     {
-        $attributeCode = $attribute->getAttributeCode();
         $meta = $result;
 
-        if ($attributeCode === 'description') {
+        if ($attribute->getData('is_pagebuilder_enabled')) {
             $meta = $this->arrayManager->merge(
-                'arguments/data/config',
+                static::META_ATTRIBUTE_CONFIG_PATH,
                 $result,
                 [
                     'additionalClasses' => 'admin__field-wide admin__field-page-builder'
@@ -59,5 +60,32 @@ class EavPlugin
         }
 
         return $meta;
+    }
+
+    /**
+     * @param EavModifier $subject
+     * @param array $result
+     * @param ProductAttributeInterface $attribute
+     * @return array
+     */
+    public function afterSetupAttributeContainerMeta(EavModifier $subject, $result, ProductAttributeInterface $attribute)
+    {
+        $containerMeta = $result;
+
+        if ($attribute->getData('is_pagebuilder_enabled')) {
+            $containerMeta = $this->arrayManager->merge(
+                static::META_ATTRIBUTE_CONFIG_PATH,
+                $result,
+                [
+                    'additionalFieldsetClasses' => [
+                        'admin__field-wide' => true,
+                        'admin__field-page-builder' => true
+                    ],
+                    'template' => 'Magento_PageBuilder/form/components/group/group'
+                ]
+            );
+        }
+
+        return $containerMeta;
     }
 }
