@@ -41,6 +41,8 @@ const debounceRender = _.debounce((message: {stageId: string, tree: TreeItem}, r
  * Listen for requests from the parent window for a render
  */
 export default function listen(config: ConfigInterface) {
+    const stageId = window.location.href.split("?")[1].split("=")[1];
+
     Config.setConfig(config);
     Config.setMode("Master");
 
@@ -74,7 +76,7 @@ export default function listen(config: ConfigInterface) {
     );
 
     // Inform the parent iframe that we're ready to receive the port
-    window.parent.postMessage("PB_RENDER_READY", "*");
+    window.parent.postMessage({name: "PB_RENDER_READY", stageId}, "*");
 }
 
 /**
