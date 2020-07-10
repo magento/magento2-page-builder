@@ -13,8 +13,6 @@
             <title value="Slider - Validate Infinite Looping (Enabled)"/>
             <description value="A user should be able to navigate before the first slide, and after the last slide when Infinite Loop is enabled."/>
             <severity value="BLOCKER"/>
-            <useCaseId value=""/>
-            <testCaseId value=""/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-slide"/>
             <group value="pagebuilder-sliderCommon"/>
@@ -80,37 +78,37 @@
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage: Slider Settings -->
-        <seeElement selector="{{SliderOnStage.autoPlay('1', PageBuilderSliderAutoPlay_Disabled.value)}}" stepKey="seeAutoPlayStage"/>
-        <seeElement selector="{{SliderOnStage.infiniteLoop('1', PageBuilderSliderInfiniteLoop_Enabled.value)}}" stepKey="seeInfiniteLoopStage"/>
-        <seeElement selector="{{SliderOnStage.showArrows('1', PageBuilderSliderShowArrows_Enabled.value)}}" stepKey="seeArrowsStage"/>
-        <seeElement selector="{{SliderOnStage.showDots('1', PageBuilderSliderShowDots_Enabled.value)}}" stepKey="seeDotsStage"/>
+        <waitForElementVisible selector="{{SliderOnStage.autoPlay('1', PageBuilderSliderAutoPlay_Disabled.value)}}" stepKey="seeAutoPlayStage"/>
+        <waitForElementVisible selector="{{SliderOnStage.infiniteLoop('1', PageBuilderSliderInfiniteLoop_Enabled.value)}}" stepKey="seeInfiniteLoopStage"/>
+        <waitForElementVisible selector="{{SliderOnStage.showArrows('1', PageBuilderSliderShowArrows_Enabled.value)}}" stepKey="seeArrowsStage"/>
+        <waitForElementVisible selector="{{SliderOnStage.showDots('1', PageBuilderSliderShowDots_Enabled.value)}}" stepKey="seeDotsStage"/>
         <!-- Validate Stage: Slide 1 -->
         <click selector="{{SliderOnStage.slideNavigationDot('1', '1')}}" stepKey="clickSlide1Stage"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
-        <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeSlide1ContentStage"/>
+        <waitForElementVisible selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeSlide1ContentStage"/>
         <!-- Validate Stage: Slide 2 -->
         <click selector="{{SliderOnStage.nextSlideArrow('1')}}" stepKey="clickSlide2Stage"/>
         <waitForPageLoad stepKey="waitForPageLoad2"/>
-        <seeElement selector="{{SlideOnBackend.messageContent('2', PageBuilderSlideItemContent_Slide2.value)}}" stepKey="seeSlide2ContentStage"/>
+        <waitForElementVisible selector="{{SlideOnBackend.messageContent('2', PageBuilderSlideItemContent_Slide2.value)}}" stepKey="seeSlide2ContentStage"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <!-- Validate Storefront: Slider Settings -->
-        <seeElement selector="{{SliderOnFrontend.autoPlay('1', PageBuilderSliderAutoPlay_Disabled.value)}}" stepKey="seeAutoPlayStorefront"/>
-        <seeElement selector="{{SliderOnFrontend.infiniteLoop('1', PageBuilderSliderInfiniteLoop_Enabled.value)}}" stepKey="seeInfiniteLoopStorefront"/>
-        <seeElement selector="{{SliderOnFrontend.showArrows('1', PageBuilderSliderShowArrows_Enabled.value)}}" stepKey="seeArrowsStorefront"/>
-        <seeElement selector="{{SliderOnFrontend.showDots('1', PageBuilderSliderShowDots_Enabled.value)}}" stepKey="seeDotsStorefront"/>
+        <waitForElementVisible selector="{{SliderOnFrontend.autoPlay('1', PageBuilderSliderAutoPlay_Disabled.value)}}" stepKey="seeAutoPlayStorefront"/>
+        <waitForElementVisible selector="{{SliderOnFrontend.infiniteLoop('1', PageBuilderSliderInfiniteLoop_Enabled.value)}}" stepKey="seeInfiniteLoopStorefront"/>
+        <waitForElementVisible selector="{{SliderOnFrontend.showArrows('1', PageBuilderSliderShowArrows_Enabled.value)}}" stepKey="seeArrowsStorefront"/>
+        <waitForElementVisible selector="{{SliderOnFrontend.showDots('1', PageBuilderSliderShowDots_Enabled.value)}}" stepKey="seeDotsStorefront"/>
         <!-- Validate Storefront: Slide 1 -->
         <click selector="{{SliderOnFrontend.slideNavigationDot('1', '1')}}" stepKey="clickSlide1Storefront"/>
         <waitForPageLoad stepKey="waitForPageLoad3"/>
-        <seeElement selector="{{SlideOnFrontend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeSlide1ContentStorefront"/>
-        <seeElement selector="{{SliderOnFrontend.previousSlideArrowEnabled('1')}}" stepKey="seePreviousSlideArrow"/>
-        <seeElement selector="{{SliderOnFrontend.nextSlideArrowEnabled('1')}}" stepKey="seeNextSlideArrow"/>
+        <waitForElementVisible selector="{{SlideOnFrontend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeSlide1ContentStorefront"/>
+        <waitForElementVisible selector="{{SliderOnFrontend.previousSlideArrowEnabled('1')}}" stepKey="seePreviousSlideArrow"/>
+        <waitForElementVisible selector="{{SliderOnFrontend.nextSlideArrowEnabled('1')}}" stepKey="seeNextSlideArrow"/>
         <!-- Validate Storefront: Slide 2 -->
         <click selector="{{SliderOnFrontend.nextSlideArrow('1')}}" stepKey="clickSlide2Storefront"/>
         <waitForPageLoad stepKey="waitForPageLoad4"/>
-        <seeElement selector="{{SlideOnFrontend.messageContent('2', PageBuilderSlideItemContent_Slide2.value)}}" stepKey="seeSlide2ContentStorefront"/>
-        <seeElement selector="{{SliderOnFrontend.previousSlideArrowEnabled('1')}}" stepKey="seePreviousSlideArrow2"/>
-        <seeElement selector="{{SliderOnFrontend.nextSlideArrowEnabled('1')}}" stepKey="seeNextSlideArrow2"/>
+        <waitForElementVisible selector="{{SlideOnFrontend.messageContent('2', PageBuilderSlideItemContent_Slide2.value)}}" stepKey="seeSlide2ContentStorefront"/>
+        <waitForElementVisible selector="{{SliderOnFrontend.previousSlideArrowEnabled('1')}}" stepKey="seePreviousSlideArrow2"/>
+        <waitForElementVisible selector="{{SliderOnFrontend.nextSlideArrowEnabled('1')}}" stepKey="seeNextSlideArrow2"/>
     </test>
 </tests>
