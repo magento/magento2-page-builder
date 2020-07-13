@@ -19,6 +19,7 @@ define(["consoleLogger", "jquery", "knockout", "mage/translate", "Magento_PageBu
       this.searchResults = _knockout.observableArray([]);
       this.isVisible = _knockout.observable(false);
       this.isStickyBottom = _knockout.observable(false);
+      this.isContentSnapshotMode = _knockout.observable(false);
       this.isStickyTop = _knockout.observable(false);
       this.searching = _knockout.observable(false);
       this.searchValue = _knockout.observable("");
@@ -57,8 +58,12 @@ define(["consoleLogger", "jquery", "knockout", "mage/translate", "Magento_PageBu
           _this.onScroll();
         }
 
-        _this.isVisible(true);
+        if (!_config.getContentSnapshot().contentSnapshotMode) {
+          _this.isVisible(true);
+        }
       });
+
+      _events.on("stage:" + this.id + ":fullScreenModeChangeAfter", this.toggleVisibility.bind(this));
     }
     /**
      * Return the template string
@@ -257,10 +262,13 @@ define(["consoleLogger", "jquery", "knockout", "mage/translate", "Magento_PageBu
           function (contentType, identifier) {
             return new _contentType.ContentType(identifier, contentType, _this3.pageBuilder.stage.id);
           }), _this3.pageBuilder.stage.id));
-        }); // Display the panel
+        });
 
+        if (!_config.getContentSnapshot().contentSnapshotMode) {
+          // Display the panel
+          this.isVisible(true);
+        } // Open first menu section
 
-        this.isVisible(true); // Open first menu section
 
         var hasGroups = 0 in this.menuSections();
 
@@ -269,6 +277,19 @@ define(["consoleLogger", "jquery", "knockout", "mage/translate", "Magento_PageBu
         }
       } else {
         _consoleLogger.error("Unable to retrieve content types from server, please inspect network requests " + "response.");
+      }
+    }
+    /**
+     * Sets visibility the content snapshot mode
+     * @param args
+     */
+    ;
+
+    _proto.toggleVisibility = function toggleVisibility(args) {
+      if (_config.getContentSnapshot().contentSnapshotMode) {
+        _config.setContentSnapshotFullScreenMode(args.fullScreen);
+
+        this.isVisible(args.fullScreen);
       }
     };
 

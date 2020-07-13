@@ -31,6 +31,7 @@ export default class PageBuilder implements PageBuilderInterface {
     public initialValue: string;
     public id: string = utils.uniqueid();
     public originalScrollTop: number = 0;
+    public isContentSnapshotMode = false;
     public isFullScreen: KnockoutObservable<boolean> = ko.observable(false);
     public loading: KnockoutObservable<boolean> = ko.observable(true);
     public wrapperStyles: KnockoutObservable<{[key: string]: string}> = ko.observable({});
@@ -39,9 +40,16 @@ export default class PageBuilder implements PageBuilderInterface {
     private previousWrapperStyles: {[key: string]: string} = {};
     private previousPanelHeight: number;
 
-    constructor(config: any, initialValue: string) {
+    constructor(config: any, initialValue: string, contentSnapshot: boolean) {
         Config.setConfig(config);
         Config.setMode("Preview");
+        Config.setContentSnapshot(
+            {
+                pageBuilderId: this.id,
+                isFullScreen: config.isFullScreen,
+                contentSnapshotMode: contentSnapshot,
+            },
+        );
         this.preloadTemplates(config);
         this.initialValue = initialValue;
         this.isFullScreen(config.isFullScreen);
@@ -61,6 +69,11 @@ export default class PageBuilder implements PageBuilderInterface {
         });
 
         this.panel = new Panel(this);
+
+        if (Config.getContentSnapshot().contentSnapshotMode) {
+            this.panel.isVisible(false);
+        }
+
         this.initListeners();
     }
 
@@ -126,19 +139,21 @@ export default class PageBuilder implements PageBuilderInterface {
             // When leaving full screen mode just transition back to the original state
             this.wrapperStyles(this.previousWrapperStyles);
             this.isFullScreen(false);
-            panel.css("height", this.previousPanelHeight + "px");
-            // Wait for the 350ms animation to complete before changing these properties back
-            _.delay(() => {
-                panel.css("height", "");
-                pageBuilderWrapper.css("height", "");
-                this.wrapperStyles(Object.keys(this.previousWrapperStyles)
-                    .reduce((object: object, styleName: string) => {
-                        return Object.assign(object, {[styleName]: ""});
-                    }, {}),
-                );
-                this.previousWrapperStyles = {};
-                this.previousPanelHeight = null;
-            }, 350);
+            if (!this.isContentSnapshotMode) {
+                panel.css("height", this.previousPanelHeight + "px");
+                // Wait for the 350ms animation to complete before changing these properties back
+                _.delay(() => {
+                    panel.css("height", "");
+                    pageBuilderWrapper.css("height", "");
+                    this.wrapperStyles(Object.keys(this.previousWrapperStyles)
+                                           .reduce((object: object, styleName: string) => {
+                                               return Object.assign(object, {[styleName]: ""});
+                                           }, {}),
+                    );
+                    this.previousWrapperStyles = {};
+                    this.previousPanelHeight = null;
+                }, 350);
+            }
         }
     }
 

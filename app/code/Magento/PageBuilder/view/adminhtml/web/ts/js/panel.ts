@@ -27,6 +27,7 @@ export default class Panel {
     public searchResults: KnockoutObservableArray<any> = ko.observableArray([]);
     public isVisible: KnockoutObservable<boolean> = ko.observable(false);
     public isStickyBottom: KnockoutObservable<boolean> = ko.observable(false);
+    public isContentSnapshotMode: KnockoutObservable<boolean> = ko.observable(false);
     public isStickyTop: KnockoutObservable<boolean> = ko.observable(false);
     public searching: KnockoutObservable<boolean> = ko.observable(false);
     public searchValue: KnockoutObservable<string> = ko.observable("");
@@ -62,8 +63,12 @@ export default class Panel {
             if (!supportsPositionSticky()) {
                 this.onScroll();
             }
-            this.isVisible(true);
+            if (!Config.getContentSnapshot().contentSnapshotMode) {
+                this.isVisible(true);
+            }
         });
+
+        events.on(`stage:${this.id}:fullScreenModeChangeAfter`, this.toggleVisibility.bind(this));
     }
 
     /**
@@ -260,8 +265,10 @@ export default class Panel {
                 ));
             });
 
-            // Display the panel
-            this.isVisible(true);
+            if (!Config.getContentSnapshot().contentSnapshotMode) {
+                // Display the panel
+                this.isVisible(true);
+            }
             // Open first menu section
             const hasGroups = 0 in this.menuSections();
             if (hasGroups) {
@@ -271,6 +278,18 @@ export default class Panel {
         } else {
             consoleLogger.error("Unable to retrieve content types from server, please inspect network requests " +
                 "response.");
+        }
+    }
+
+    /**
+     * Sets visibility the content snapshot mode
+     * @param args
+     */
+    private toggleVisibility(args: any): void
+    {
+        if (Config.getContentSnapshot().contentSnapshotMode) {
+            Config.setContentSnapshotFullScreenMode(args.fullScreen);
+            this.isVisible(args.fullScreen);
         }
     }
 }

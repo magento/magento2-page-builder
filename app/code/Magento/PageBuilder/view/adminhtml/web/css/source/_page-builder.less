@@ -4,6 +4,8 @@
 //  */
 
 @border-size: 2px;
+@wysiwyg-overlay-background: #0078f9;
+@wysiwyg-overlay-border: #4181e4;
 
 .pagebuilder-header {
     opacity: 0;
@@ -22,6 +24,16 @@
     &.visible {
         opacity: 1;
         visibility: visible;
+    }
+}
+
+.pagebuilder_content_snapshot {
+    .pagebuilder-header {
+        display: none;
+
+        &.visible {
+            display: block;
+        }
     }
 }
 
@@ -44,6 +56,22 @@
     ._disabled & {
         opacity: .5;
         pointer-events: none;
+    }
+
+    &.pagebuilder_content_snapshot {
+        &.stage-full-screen {
+            .pagebuilder-header {
+                display: block;
+
+                &.visible {
+                    display: block;
+                }
+            }
+
+            .pagebuilder-canvas {
+                padding-bottom: 120px;
+            }
+        }
     }
 
     &.stage-full-screen {
@@ -139,6 +167,47 @@
     }
 }
 
+
+.pagebuilder-wysiwyg-overlay {
+    display: none;
+    height: 0;
+    left: -1px;
+    position: absolute;
+    top: -1px;
+    visibility: hidden;
+    width: 0;
+
+    &.visible {
+        -moz-transition: .175s ease-in-out;
+        -webkit-transition: .175s ease-in-out;
+        border: 2px solid transparent;
+        border-radius: 2px;
+        cursor: pointer;
+        display: block;
+        height: calc(~'100% + 2px');
+        transform: translateY(-2px);
+        transition: .175s ease-in-out;
+        visibility: visible;
+        width: calc(~'100% + 2px');
+        z-index: @z-index-2;
+    }
+
+    &._hover {
+        background-color: fade(@wysiwyg-overlay-background, 8%);
+        border-color: @wysiwyg-overlay-border;
+        transform: translateY(0);
+    }
+
+    ._keyfocus & {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.pagebuilder-wysiwyg-wrapper {
+    position: relative;
+}
+
 .pagebuilder-wysiwyg-wrapper.pagebuilder-transition-out .pagebuilder-stage-wrapper {
     .pagebuilder-stage-wrapper.stage-full-screen;
 
@@ -181,7 +250,6 @@
     padding: 0;
     transition: margin-left .35s ease-in-out;
     user-select: none;
-
     &.stage-full-screen {
         background: @color-black;
     }
@@ -236,6 +304,21 @@
         .pagebuilder-add-row-wrapper {
             display: none;
         }
+    }
+}
+
+.pagebuilder_content_snapshot {
+    .pagebuilder-stage {
+        -moz-transition: none;
+        -webkit-transition: none;
+        margin-left: auto;
+        transition: none;
+
+        .pagebuilder-canvas {
+            padding-bottom: 0;
+            padding-top: 8px;
+        }
+
     }
 }
 
