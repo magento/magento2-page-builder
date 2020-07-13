@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="nextSlide">
+        <arguments>
+            <argument name="sliderSection" defaultValue="SliderOnStage"/>
+            <argument name="sliderIndex" defaultValue="1" type="string"/>
+        </arguments
+        <waitForElementVisible selector="{{sliderSection.nextSlideArrow(sliderIndex)}}" stepKey="waitForNextSlideArrow"/>
+        <click selector="{{sliderSection.nextSlideArrow(sliderIndex)}}" stepKey="clickNextSlideArrow"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+    </actionGroup>
+</actionGroups>

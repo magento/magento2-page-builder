@@ -88,8 +88,7 @@
         </actionGroup>
         <waitForElementVisible selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeSlide1ContentStage"/>
         <!-- Validate Stage: Slide 2 -->
-        <click selector="{{SliderOnStage.nextSlideArrow('1')}}" stepKey="clickSlide2Stage"/>
-        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <actionGroup ref="nextSlide" stepKey="clickSlide2Stage"/>
         <waitForElementVisible selector="{{SlideOnBackend.messageContent('2', PageBuilderSlideItemContent_Slide2.value)}}" stepKey="seeSlide2ContentStage"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
@@ -109,8 +108,9 @@
         <waitForElementVisible selector="{{SliderOnFrontend.previousSlideArrowEnabled('1')}}" stepKey="seePreviousSlideArrow"/>
         <waitForElementVisible selector="{{SliderOnFrontend.nextSlideArrowEnabled('1')}}" stepKey="seeNextSlideArrow"/>
         <!-- Validate Storefront: Slide 2 -->
-        <click selector="{{SliderOnFrontend.nextSlideArrow('1')}}" stepKey="clickSlide2Storefront"/>
-        <waitForPageLoad stepKey="waitForPageLoad4"/>
+        <actionGroup ref="nextSlide" stepKey="clickSlide2Storefront">
+            <argument name="sliderSection" value="SliderOnFrontend"/>
+        </actionGroup>
         <waitForElementVisible selector="{{SlideOnFrontend.messageContent('2', PageBuilderSlideItemContent_Slide2.value)}}" stepKey="seeSlide2ContentStorefront"/>
         <waitForElementVisible selector="{{SliderOnFrontend.previousSlideArrowEnabled('1')}}" stepKey="seePreviousSlideArrow2"/>
         <waitForElementVisible selector="{{SliderOnFrontend.nextSlideArrowEnabled('1')}}" stepKey="seeNextSlideArrow2"/>
