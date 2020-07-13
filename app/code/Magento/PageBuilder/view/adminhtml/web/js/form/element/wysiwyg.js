@@ -132,7 +132,7 @@ define([
                 editableValue = this.pageBuilder.isFullScreen();
 
             $(pageBuilderSelector + editableSelector).attr('contenteditable', editableValue);
-            $(pageBuilderSelector + focusableSelector).attr('tabindex', tabIndexValue).blur();
+            $(pageBuilderSelector + focusableSelector).attr('tabindex', tabIndexValue);
             $(mediaSelector).attr('tabindex', tabIndexValue);
         },
 
