@@ -83,8 +83,9 @@
         <waitForElementVisible selector="{{SliderOnStage.showArrows('1', PageBuilderSliderShowArrows_Enabled.value)}}" stepKey="seeArrowsStage"/>
         <waitForElementVisible selector="{{SliderOnStage.showDots('1', PageBuilderSliderShowDots_Enabled.value)}}" stepKey="seeDotsStage"/>
         <!-- Validate Stage: Slide 1 -->
-        <click selector="{{SliderOnStage.slideNavigationDot('1', '1')}}" stepKey="clickSlide1Stage"/>
-        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <actionGroup ref="switchSlide" stepKey="clickSlide1Stage">
+            <argument name="slideIndex" value="1"/>
+        </actionGroup>
         <waitForElementVisible selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeSlide1ContentStage"/>
         <!-- Validate Stage: Slide 2 -->
         <click selector="{{SliderOnStage.nextSlideArrow('1')}}" stepKey="clickSlide2Stage"/>
@@ -99,8 +100,11 @@
         <waitForElementVisible selector="{{SliderOnFrontend.showArrows('1', PageBuilderSliderShowArrows_Enabled.value)}}" stepKey="seeArrowsStorefront"/>
         <waitForElementVisible selector="{{SliderOnFrontend.showDots('1', PageBuilderSliderShowDots_Enabled.value)}}" stepKey="seeDotsStorefront"/>
         <!-- Validate Storefront: Slide 1 -->
-        <click selector="{{SliderOnFrontend.slideNavigationDot('1', '1')}}" stepKey="clickSlide1Storefront"/>
-        <waitForPageLoad stepKey="waitForPageLoad3"/>
+        <actionGroup ref="switchSlide" stepKey="clickSlide1Storefront">
+            <argument name="sliderSection" value="SliderOnFrontend"/>
+            <argument name="slideSection" value="SlideOnFrontend"/>
+            <argument name="slideIndex" value="1"/>
+        </actionGroup>
         <waitForElementVisible selector="{{SlideOnFrontend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeSlide1ContentStorefront"/>
         <waitForElementVisible selector="{{SliderOnFrontend.previousSlideArrowEnabled('1')}}" stepKey="seePreviousSlideArrow"/>
         <waitForElementVisible selector="{{SliderOnFrontend.nextSlideArrowEnabled('1')}}" stepKey="seeNextSlideArrow"/>
