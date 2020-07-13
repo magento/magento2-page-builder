@@ -29,7 +29,9 @@ define([
             pageBuilder: false,
             visiblePageBuilder: false,
             isComponentInitialized: false,
-            wysiwygConfigData: {},
+            wysiwygConfigData: {
+                isFullScreen: false
+            },
             pageBuilderEditButtonText: $t('Edit with Page Builder'),
             isWithinModal: false,
             modal: false
