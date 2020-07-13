@@ -26,8 +26,26 @@ define([
             if (key.indexOf('parameters[' + attribute + ']') === 0) {
                 // Remove the bad, un-normalized data.
                 delete data[key];
-
                 pairs[key] = element;
+            }
+        });
+
+        /*
+         * The Combine Condition rule needs to have children,
+         * if does not have, we cannot parse the rule in the backend.
+         */
+        _.each(pairs, function (element, key) {
+            var keyIds = key.match(/[\d?-]+/g),
+              combineElement = 'Magento\\CatalogWidget\\Model\\Rule\\Condition\\Combine',
+              nextPairsFirstKey = 'parameters[condition_source][NEXT_ITEM--1][type]',
+              nextPairsSecondKey = 'parameters[condition_source][NEXT_ITEM--2][type]';
+
+            if (keyIds !== null && element === combineElement) {
+                if (pairs[nextPairsFirstKey.replace('NEXT_ITEM', keyIds[0])] === undefined ||
+                    pairs[nextPairsFirstKey.replace('NEXT_ITEM', keyIds[0])] === combineElement &&
+                    pairs[nextPairsSecondKey.replace('NEXT_ITEM', keyIds[0])] === undefined) {
+                    pairs[key] = '';
+                }
             }
         });
 
