@@ -173,6 +173,15 @@ define([
             }
             this.overlayMouseover = false;
         },
+        
+        /**
+         * Press Enter key on Overlay
+         */
+        onOverlayKeyDown: function (context, event) {
+            if (event.which === 13 || event.keyCode === 13) {
+                this.pageBuilderEditButtonClick(context, event);
+            }
+        },
 
         /**
          * Toggle Page Builder full screen mode
