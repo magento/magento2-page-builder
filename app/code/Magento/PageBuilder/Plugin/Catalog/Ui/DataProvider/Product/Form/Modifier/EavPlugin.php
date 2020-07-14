@@ -41,6 +41,8 @@ class EavPlugin
      * @param string $groupCode
      * @param int $sortOrder
      * @return array
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function afterSetupAttributeMeta(
         EavModifier $subject,
@@ -48,8 +50,7 @@ class EavPlugin
         ProductAttributeInterface $attribute,
         $groupCode,
         $sortOrder
-    )
-    {
+    ) {
         $meta = $result;
 
         if ($attribute->getData('is_pagebuilder_enabled')) {
@@ -72,9 +73,14 @@ class EavPlugin
      * @param array $result
      * @param ProductAttributeInterface $attribute
      * @return array
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function afterSetupAttributeContainerMeta(EavModifier $subject, $result, ProductAttributeInterface $attribute)
-    {
+    public function afterSetupAttributeContainerMeta(
+        EavModifier $subject,
+        $result,
+        ProductAttributeInterface $attribute
+    ) {
         $containerMeta = $result;
 
         if ($attribute->getData('is_pagebuilder_enabled')) {
