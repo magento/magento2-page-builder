@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="AddConditionsCombinationToProducts">
+        <annotations>
+            <description value="Add nested conditions combinations for the product content type"/>
+        </annotations>
+        <arguments>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{ProductsContentTypeForm.conditionsList}}" stepKey="waitForConditionsToLoad"/>
+        <waitForElementVisible selector="{{ProductsContentTypeForm.conditionsListAddButton(index)}}" stepKey="waitForAddConditionButton"/>
+        <click selector="{{ProductsContentTypeForm.conditionsListAddButton(index)}}" stepKey="clickAddConditionButton"/>
+        <selectOption selector="{{ProductsContentTypeForm.conditionsListAddTypeSelect(index)}}" userInput="{{PageBuilderProductsConditionCombination.value}}" stepKey="selectCombinationOption"/>
+        <waitForPageLoad stepKey="waitForConditionsCombinationTemplateToLoad"/>
+    </actionGroup>
+</actionGroups>
