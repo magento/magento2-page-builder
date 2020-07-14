@@ -10,13 +10,14 @@ namespace Magento\PageBuilder\Plugin\Catalog\Ui\DataProvider\Product\Form\Modifi
 
 use Magento\Catalog\Api\Data\ProductAttributeInterface;
 use Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Eav as EavModifier;
-use Magento\Framework\Exception\NoSuchEntityException;
-use Magento\Framework\Exception\NotFoundException;
 use Magento\Framework\Stdlib\ArrayManager;
 
+/**
+ * Data Provider for EAV Attributes on Product Page
+ */
 class EavPlugin
 {
-    const META_ATTRIBUTE_CONFIG_PATH = 'arguments/data/config';
+    public const META_ATTRIBUTE_CONFIG_PATH = 'arguments/data/config';
 
     /**
      * @var ArrayManager
@@ -32,6 +33,8 @@ class EavPlugin
     }
 
     /**
+     * Setup Attribute Meta
+     *
      * @param EavModifier $subject
      * @param array $result
      * @param ProductAttributeInterface $attribute
@@ -63,6 +66,8 @@ class EavPlugin
     }
 
     /**
+     * Setup Attribute Container Meta
+     *
      * @param EavModifier $subject
      * @param array $result
      * @param ProductAttributeInterface $attribute
