@@ -12,7 +12,7 @@ class WysiwygConfigDataProcessor implements
     \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Eav\WysiwygConfigDataProcessorInterface
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function process(\Magento\Catalog\Api\Data\ProductAttributeInterface $attribute)
     {
