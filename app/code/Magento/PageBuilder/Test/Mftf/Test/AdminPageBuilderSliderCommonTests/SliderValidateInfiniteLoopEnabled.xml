@@ -29,9 +29,6 @@
             <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentType" value="PageBuilderSliderContentType"/>
-        </actionGroup>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
@@ -92,10 +89,12 @@
         </actionGroup>
         <waitForElementVisible selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeSlide1ContentStage"/>
         <!-- Validate Stage: Slide 2 -->
-        <actionGroup ref="nextSlide" stepKey="clickSlide2Stage"/>
+        <actionGroup ref="nextSlide" stepKey="clickSlide2Stage">
+            <argument name="slideIndex" value="2"/>
+        </actionGroup>
         <waitForElementVisible selector="{{SlideOnBackend.messageContent('2', PageBuilderSlideItemContent_Slide2.value)}}" stepKey="seeSlide2ContentStage"/>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToStoreFront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <!-- Validate Storefront: Slider Settings -->
         <waitForElementVisible selector="{{SliderOnFrontend.autoPlay('1', PageBuilderSliderAutoPlay_Disabled.value)}}" stepKey="seeAutoPlayStorefront"/>
@@ -114,6 +113,8 @@
         <!-- Validate Storefront: Slide 2 -->
         <actionGroup ref="nextSlide" stepKey="clickSlide2Storefront">
             <argument name="sliderSection" value="SliderOnFrontend"/>
+            <argument name="slideSection" value="SlideOnFrontend"/>
+            <argument name="slideIndex" value="2"/>
         </actionGroup>
         <waitForElementVisible selector="{{SlideOnFrontend.messageContent('2', PageBuilderSlideItemContent_Slide2.value)}}" stepKey="seeSlide2ContentStorefront"/>
         <waitForElementVisible selector="{{SliderOnFrontend.previousSlideArrowEnabled('1')}}" stepKey="seePreviousSlideArrow2"/>
