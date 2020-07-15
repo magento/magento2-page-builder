@@ -14,20 +14,20 @@
             <title value="Banner inline WYSIWYG editor will notify user that they cannot add Widget, Link and Link URL at the same time"/>
             <description value="Banner edit form and inline WYSIWYG editor validate Widget, Link and Link URL cannot be added at the same time."/>
             <severity value="MAJOR"/>
-            <useCaseId value="MC-419"/>
-            <testCaseId value="MC-542"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-banner"/>
             <group value="pagebuilder-bannerCommon"/>
         </annotations>
         <before>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
             <actionGroup ref="AdminLoginActionGroup" stepKey="loginAsAdmin"/>
-            <createData entity="simpleCmsPage" stepKey="createCMSPageA"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="NavigateToCreatedCMSPageActionGroup" stepKey="navigateToCreatedCMSPage">
+                <argument name="CMSPage" value="$$createCMSPage$$"/>
+            </actionGroup>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <deleteData createDataKey="createCMSPageA" stepKey="deleteCMSPageA"/>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
             <actionGroup ref="NavigateToMediaGalleryActionGroup" stepKey="navigateToMediaGallery"/>
             <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="navigateToMediaGalleryNavigateToFolder">
                 <argument name="FolderName" value="{{ImageFolder.name}}"/>
@@ -37,31 +37,26 @@
             </actionGroup>
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentType" value="PageBuilderBannerContentType"/>
-        </actionGroup>
         <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragBannerIntoStage">
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditPanel">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <!-- Fill out Edit Panel Link Url -->
-        <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterLink">
+        <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="fillOutLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
             <argument name="selection" value="{{ExternalLink.url}}"/>
             <argument name="newTab" value="PageBuilderBannerNewTabDefaultProperty"/>
         </actionGroup>
         <!-- Check invalid Link Url and Message Text Widget -->
-        <comment userInput="Check invalid Link Url and Message Text Widget" stepKey="commentCheckInvalidLinkUrlAndMessageTextWidget"/>
         <!-- Add Widget to TinyMCE -->
-        <comment userInput="Add Widget to TinyMCE" stepKey="commentAddPageLinkWidgetToTinyMCE"/>
         <actionGroup ref="addPageLinkWidgetToTinyMCE" stepKey="addPageLinkWidgetToTinyMCE">
             <argument name="widget" value="TinyMCEWidgetCMSPageLink"/>
-            <argument name="page" value="$$createCMSPageA.identifier$$"/>
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelAndValidateFieldError" stepKey="validateInvalidMessageWithWidget">
             <argument name="property" value="PageBuilderBannerMessageInvalidWidgetProperty"/>
@@ -70,15 +65,12 @@
             <argument name="property" value="PageBuilderBannerLinkUrlInvalidWidgetProperty"/>
         </actionGroup>
         <!-- Replace Text to TinyMCE -->
-        <comment userInput="Replace Text to TinyMCE" stepKey="commentReplaceTextToTinyMCE"/>
         <actionGroup ref="replaceTextToTinyMCE" stepKey="replaceMessageTextToTinyMCE">
             <argument name="property" value="PageBuilderBannerMessageProperty"/>
             <argument name="section" value="BannerOnConfigurationPanel"/>
         </actionGroup>
         <!-- Check invalid Link Url and Message Text Link -->
-        <comment userInput="Check invalid Link Url and Message Text" stepKey="commentCheckInvalidLinkUrlAndMessageTextLink"/>
         <!-- Add Link to TinyMCE -->
-        <comment userInput="Add Link to TinyMCE" stepKey="commentAddLinkToTinyMCE"/>
         <actionGroup ref="insertLinkInWYSIWYG" stepKey="addLinkToTinyMCE">
             <argument name="url" value="{{ExternalLink.googleUrl}}"/>
             <argument name="textToDisplay" value="{{ExternalLink.googleUrl}}"/>
@@ -90,31 +82,25 @@
             <argument name="property" value="PageBuilderBannerLinkUrlInvalidProperty"/>
         </actionGroup>
         <!-- Replace Text to TinyMCE -->
-        <comment userInput="Replace Text to TinyMCE" stepKey="commentReplaceTextToTinyMCEAfterLink"/>
         <actionGroup ref="replaceTextToTinyMCE" stepKey="replaceTextToTinyMCEAfterLink">
             <argument name="property" value="PageBuilderBannerMessageProperty"/>
             <argument name="section" value="BannerOnConfigurationPanel"/>
         </actionGroup>
         <!-- Check invalid Link Url and Message Text Image Link -->
-        <comment userInput="Check invalid Link Url and Message Text" stepKey="commentCheckInvalidLinkUrlAndMessageTextImageLink"/>
         <!-- Add Image Link to TinyMCE -->
-        <comment userInput="Add Image Link to TinyMCE" stepKey="commentAddImageLinkToTinyMCE"/>
-        <click selector="{{WYSIWYGOnPageBuilderInline.notCss}} {{TinyMCESection.InsertLink}}" stepKey="clickTinyMCEInsertLinkButton"/>
-        <waitForElementVisible selector="{{WYSIWYGInsertLinkModal.modal}}" stepKey="waitForTinyMCEInsertLinkModal"/>
-        <click selector="{{WYSIWYGInsertLinkModal.browseMediaGalleryButton}}" stepKey="clickTinyMCEImageSelectorBrowseButton"/>
-        <waitForPageLoad stepKey="waitForTinyMCEImageSelectorBrowseModal"/>
-        <click selector="{{MediaGallerySection.StorageRootArrow}}" stepKey="clickTinyMCESelectorBrowseModalStorageRoot"/>
-        <waitForPageLoad stepKey="waitForTinyMCESelectorBrowseModalStorageRoot"/>
+        <actionGroup ref="clickTinyMCEInsertImageButtonActionGroup" stepKey="clickTinyMCEInsertImageButton"/>
+        <actionGroup ref="goToMediaGalleryFromTinyMCEImageModalActionGroup" stepKey="goToMediaGalleryFromTinyMCEImageModal"/>
+        <actionGroup ref="clickMediaGalleryStorageRootArrow" stepKey="clickTinyMCESelectorBrowseModalMediaGalleryStorageRootArrow"/>
         <actionGroup ref="CreateImageFolderActionGroup" stepKey="createTinyMCESelectorBrowseModalStorageRootImageFolder">
             <argument name="ImageFolder" value="ImageFolder"/>
         </actionGroup>
         <actionGroup ref="AttachImageActionGroup" stepKey="selectImageFromTinyMCESelectorBrowseModalStorageRootImageFolder">
             <argument name="Image" value="PageBuilderImageProperty_StageJPG"/>
         </actionGroup>
-        <actionGroup ref="SaveImageActionGroup" stepKey="saveTinyMCESelectorBrowseModalStorageRootImageFolderImage"/>
-        <fillField selector="{{WYSIWYGInsertLinkModal.textToDisplayInput}}" userInput="{{PageBuilderBannerLinkUrlProperty.value}}" stepKey="insertTinyMCELinkModalTextToDisplay"/>
-        <click selector="{{WYSIWYGInsertLinkModal.okButton}}" stepKey="clickTinyMCELinkModalOkButton"/>
-        <waitForElementNotVisible selector="{{WYSIWYGInsertLinkModal.modal}}" stepKey="waitForTinyMCEInsertLinkModalGone"/>
+        <actionGroup ref="SaveImageActionGroup" stepKey="saveTinyMCESelectorBrowseModalStorageRootImageFolderImage"/>    
+        <actionGroup ref="fillTinyMCEInsertImageModalAndSaveActionGroup" stepKey="fillTinyMCEInsertImageModalAndSave">
+            <argument name="textToDisplay" value="{{PageBuilderBannerLinkUrlProperty.value}}"/>
+        </actionGroup>
         <actionGroup ref="saveEditPanelAndValidateFieldError" stepKey="validateInvalidMessageWithImageLink">
             <argument name="property" value="PageBuilderBannerMessageInvalidProperty"/>
         </actionGroup>
@@ -122,26 +108,22 @@
             <argument name="property" value="PageBuilderBannerLinkUrlInvalidProperty"/>
         </actionGroup>
         <!-- Replace Text to TinyMCE -->
-        <comment userInput="Replace Text to TinyMCE" stepKey="commentReplaceTextToTinyMCEAfterImageLink"/>
         <actionGroup ref="replaceTextToTinyMCE" stepKey="replaceTextToTinyMCEAfterImageLink">
             <argument name="property" value="PageBuilderBannerMessageProperty"/>
             <argument name="section" value="BannerOnConfigurationPanel"/>
         </actionGroup>
         <!-- Clean out Edit Panel Link Url -->
-        <comment userInput="Clean out Edit Panel Link Url" stepKey="commentCleanOutLinkUrl"/>
         <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="cleanOutLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty_Empty"/>
             <argument name="selection" value="{{ExternalLink.url}}"/>
             <argument name="newTab" value="PageBuilderBannerNewTabDefaultProperty"/>
         </actionGroup>
         <!-- Add Widget to TinyMCE -->
-        <comment userInput="Add Widget to TinyMCE" stepKey="commentAddPageLinkWidgetToTinyMCEAfterCleanOutLinkUrl"/>
         <actionGroup ref="addPageLinkWidgetToTinyMCE" stepKey="addPageLinkWidgetToTinyMCEAfterCleanOutLinkUrl">
             <argument name="widget" value="TinyMCEWidgetCMSPageLink"/>
-            <argument name="page" value="$$createCMSPageA.identifier$$"/>
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <!-- Fill out Edit Panel Link Url -->
-        <comment userInput="Fill out Edit Panel Link Url" stepKey="commentFillOutLinkUrlBack"/>
         <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="fillOutLinkUrlBack">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
             <argument name="selection" value="{{ExternalLink.url}}"/>
@@ -154,21 +136,17 @@
             <argument name="property" value="PageBuilderBannerLinkUrlInvalidWidgetProperty"/>
         </actionGroup>
         <!-- Replace Text to TinyMCE -->
-        <comment userInput="Replace Text to TinyMCE" stepKey="commentReplaceTextToTinyMCEBeforeSave"/>
         <actionGroup ref="replaceTextToTinyMCE" stepKey="replaceTextToTinyMCEBeforeSave">
             <argument name="property" value="PageBuilderBannerMessageProperty"/>
             <argument name="section" value="BannerOnConfigurationPanel"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Check inline WYSIWYG editor will validate for not allowing Widget and Link URL at the same time -->
-        <comment userInput="Check inline WYSIWYG editor will validate for not allowing Widget and Link URL at the same time" stepKey="commentCheckInlineWYSIWYGPreventAddingWidgetAndLinkUrl"/>
-        <click selector="{{PageBuilderStage.inlineWYSIWYGEditor(PageBuilderBannerContentType.role, '1')}}" stepKey="focusOnInlineWYSIWYGEditorArea"/>
-        <waitForElementVisible selector="{{PageBuilderStage.inlineWYSIWYGEditorPanel(PageBuilderBannerContentType.role, '1')}}" stepKey="waitForInlineWYSIWYGEditorPanel"/>
+        <actionGroup ref="focusOnInlineTinyMCEEditor" stepKey="focusOnInlineWYSIWYGEditorArea"/>
         <!-- Add Widget to inline WYSIWYG editor on Stage  -->
-        <comment userInput="Add Widget to inline WYSIWYG editor on Stage" stepKey="commentaddPageLinkWidgetToInlineWYSIWYG"/>
         <actionGroup ref="addPageLinkWidgetToTinyMCEInline" stepKey="addPageLinkWidgetToInlineWYSIWYG">
             <argument name="widget" value="TinyMCEWidgetCMSPageLink"/>
-            <argument name="page" value="$$createCMSPageA.identifier$$"/>
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unfocusOnInlineWYSIWYGEditorArea"/>
         <waitForElementVisible selector="{{PageBuilderStage.modal(PageBuilderBannerMessageInvalidWidgetProperty.stageErrorMessage)}}" stepKey="waitForNestingWidgetCorrectErrorModal"/>
@@ -179,11 +157,8 @@
             <actualResult type="variable">grabIfWidgetInWysiwygBoolean</actualResult>
         </assertFalse>
         <!-- Check inline WYSIWYG editor will validate for not allowing Link and Link URL at the same time -->
-        <comment userInput="Check inline WYSIWYG editor will validate for not allowing Link and Link URL at the same time" stepKey="commentCheckInlineWYSIWYGPreventAddingLinkAndLinkUrl"/>
-        <click selector="{{PageBuilderStage.inlineWYSIWYGEditor(PageBuilderBannerContentType.role, '1')}}" stepKey="focusOnInlineWYSIWYGEditorAreaAddLink"/>
-        <waitForElementVisible selector="{{PageBuilderStage.inlineWYSIWYGEditorPanel(PageBuilderBannerContentType.role, '1')}}" stepKey="waitForInlineWYSIWYGEditorPanelAddLink"/>
+        <actionGroup ref="focusOnInlineTinyMCEEditor" stepKey="focusOnInlineWYSIWYGEditorAreaAddLink"/>
         <!-- Add Link to inline WYSIWYG editor on Stage -->
-        <comment userInput="Add Link to inline WYSIWYG editor on Stage" stepKey="commentInsertLinkInStageInlineWYSIWYG"/>
         <actionGroup ref="insertLinkInWYSIWYG" stepKey="insertLinkInStageInlineWYSIWYG">
             <argument name="url" value="{{ExternalLink.googleUrl}}"/>
             <argument name="textToDisplay" value="{{ExternalLink.googleUrl}}"/>
@@ -198,17 +173,16 @@
             <actualResult type="variable">grabIfLinkInWysiwygBoolean</actualResult>
         </assertFalse>
         <!-- Check inline WYSIWYG editor will validate for not allowing Image Link and Link URL at the same time -->
-        <comment userInput="Check inline WYSIWYG editor will validate for not allowing Image Link and Link URL at the same time" stepKey="commentCheckInlineWYSIWYGPreventAddingImageLinkAndLinkUrl"/>
-        <click selector="{{PageBuilderStage.inlineWYSIWYGEditor(PageBuilderBannerContentType.role, '1')}}" stepKey="focusOnInlineWYSIWYGEditorAreaAddImageLink"/>
-        <waitForElementVisible selector="{{PageBuilderStage.inlineWYSIWYGEditorPanel(PageBuilderBannerContentType.role, '1')}}" stepKey="waitForInlineWYSIWYGEditorPanelAddImageLink"/>
+        <actionGroup ref="focusOnInlineTinyMCEEditor" stepKey="focusOnInlineWYSIWYGEditorAreaAddImageLink"/>
         <!-- Add Image Link to inline WYSIWYG -->
-        <comment userInput="Add Image Link to Banner inline WYSIWYG" stepKey="commentAddImageLinkToInlineWYSIWYG"/>
+
+        <!-- TD mew AG like clickTinyMCEInsertImageButtonActionGroup -->
         <click selector="{{WYSIWYGOnPageBuilderInline.inlineCss}} {{TinyMCESection.InsertLink}}" stepKey="clickWYSIWYGInsertLinkButton"/>
         <waitForElementVisible selector="{{WYSIWYGInsertLinkModal.modal}}" stepKey="waitForInlineWYSIWYGInsertLinkModal"/>
         <click selector="{{WYSIWYGInsertLinkModal.browseMediaGalleryButton}}" stepKey="clickInlineWYSIWYGImageSelectorBrowseButton"/>
         <waitForPageLoad stepKey="waitForInlineWYSIWYGImageSelectorBrowseModal"/>
-        <click selector="{{MediaGallerySection.StorageRootArrow}}" stepKey="clickInlineWYSIWYGSelectorBrowseModalStorageRoot"/>
-        <waitForPageLoad stepKey="waitForInlineWYSIWYGSelectorBrowseModalStorageRoot"/>
+
+        <actionGroup ref="clickMediaGalleryStorageRootArrow" stepKey="clickInlineWYSIWYGSelectorBrowseModalMediaGalleryStorageRootArrow"/>
         <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="navigateToInlineWYSIWYGSelectorBrowseModalStorageRootImageFolder">
             <argument name="FolderName" value="{{ImageFolder.name}}"/>
         </actionGroup>
@@ -230,9 +204,8 @@
         </assertFalse>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Storefront: Validate no Widget and Link in Banner Content -->
-        <comment userInput="Storefront: Validate no Widget and Link in Banner Content" stepKey="commentValidateNoWidgetAndLinkInBannerContent"/>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        <actionGroup ref="NavigateToStorefrontForCreatedPageActionGroup" stepKey="navigateToCMSPageStorefront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
         <!-- Checks for Widget Block within the message with regex -->
         <executeJS function="return (/&lt;div.*(class=)(&quot;|\').*((widget).*(block)|(block).*(widget)).*&lt;\/div&gt;/igm).test({{BannerOnFrontend.contentJS('1')}}.innerHTML);" stepKey="grabIfFrontendWidgetBlockInContentBoolean"/>
