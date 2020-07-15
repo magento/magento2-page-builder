@@ -22,9 +22,15 @@
             <argument name="property" value="PageBuilderSliderInfiniteLoop_Disabled"/>
         </actionGroup>
         <!-- Validate Stage: Slider Settings -->
-        <waitForElementVisible selector="{{SliderOnStage.infiniteLoop('1', PageBuilderSliderInfiniteLoop_Disabled.value)}}" stepKey="seeInfiniteLoopStage"/>
+        <actionGroup ref="validateSliderAttributesActionGroup" stepKey="seeSliderStage">
+            <argument name="sliderFade" value="{{PageBuilderSliderFade_Enabled.value}}"/>
+            <argument name="sliderShowArrows" value="{{PageBuilderSliderShowArrows_Enabled.value}}"/>
+        </actionGroup>
         <!-- Validate Storefront: Slider Settings -->
-        <waitForElementVisible selector="{{SliderOnFrontend.infiniteLoop('1', PageBuilderSliderInfiniteLoop_Disabled.value)}}" stepKey="seeInfiniteLoopStorefront"/>
+        <actionGroup ref="validateSliderAttributesActionGroup" stepKey="seeSliderStorefront">
+            <argument name="sliderFade" value="{{PageBuilderSliderFade_Enabled.value}}"/>
+            <argument name="sliderShowArrows" value="{{PageBuilderSliderShowArrows_Enabled.value}}"/>
+        </actionGroup>
         <!-- Validate Storefront: Slide 1 -->
         <waitForElementVisible selector="{{SliderOnFrontend.previousSlideArrowDisabled('1')}}" stepKey="seePreviousSlideArrow"/>
         <!-- Validate Storefront: Slide 2 -->
