@@ -81,6 +81,21 @@ define([
         },
 
         /**
+         * Checks if provided file is allowed to be uploaded.
+         * {@inheritDoc}
+         */
+        isFileAllowed: function () {
+            var result = this._super(),
+                allowedExtensions = this.getAllowedFileExtensionsInCommaDelimitedFormat();
+
+            if (!result.passed && result.rule === 'validate-file-type') {
+                result.message += ' ' + this.translations.allowedFileTypes + ': ' + allowedExtensions + '.';
+            }
+
+            return result;
+        },
+
+        /**
          * Remove draggable classes from dropzones
          * {@inheritDoc}
          */
@@ -95,28 +110,19 @@ define([
          * @param {jQuery.event} e
          */
         highlightDropzone: function (e) {
-            var draggedItem,
-                $dropzone = $(e.target).closest(this.dropZone),
+            var $dropzone = $(e.target).closest(this.dropZone),
                 $otherDropzones = $(this.dropZone).not($dropzone),
                 isInsideDropzone = !!$dropzone.length;
 
-            if (e.originalEvent.dataTransfer.items.length === 0) {
-                return false;
+            if (isInsideDropzone) {
+                $dropzone
+                  .removeClass(this.classes.draggingOutside)
+                  .addClass([this.classes.dragging, this.classes.draggingInside].join(' '));
             }
 
-            draggedItem = e.originalEvent.dataTransfer.items[0];
-
-            if (draggedItem.kind === 'file' && /image\//.test(draggedItem.type)) {
-                if (isInsideDropzone) {
-                    $dropzone
-                        .removeClass(this.classes.draggingOutside)
-                        .addClass([this.classes.dragging, this.classes.draggingInside].join(' '));
-                }
-
-                $otherDropzones
-                    .removeClass(this.classes.draggingInside)
-                    .addClass([this.classes.dragging, this.classes.draggingOutside].join(' '));
-            }
+            $otherDropzones
+              .removeClass(this.classes.draggingInside)
+              .addClass([this.classes.dragging, this.classes.draggingOutside].join(' '));
         },
 
         /**
