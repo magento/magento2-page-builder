@@ -173,7 +173,7 @@ define([
             }
             this.overlayMouseover = false;
         },
-        
+
         /**
          * Press Enter key on Overlay
          */

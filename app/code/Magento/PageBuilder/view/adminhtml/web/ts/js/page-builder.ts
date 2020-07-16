@@ -185,10 +185,8 @@ export default class PageBuilder implements PageBuilderInterface {
         }
 
         if (Config.getContentSnapshot().contentSnapshotMode) {
-
             Config.setContentSnapshotPageBuilderId(this.id);
             Config.setContentSnapshotFullScreenMode(this.isFullScreen());
-
             events.trigger(`stage:accessibilityChangeAfter`, {
                 activePageBuilderId: this.id,
                 activeFullScreen: this.isFullScreen(),
