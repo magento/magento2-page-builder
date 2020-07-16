@@ -26,6 +26,7 @@
         <!-- It's safer to click the label, as Selenium will complain if it's not clicking the exact element -->
         <element name="modalDoNotShowThisAgain" type="input" selector="aside.modal-popup._show input[name='modal-dnsa'] + label"/>
         <element name="errorModal" type="button" selector="//div[@class='modal-content']//div[contains(text(), '{{arg1}}')]" parameterized="true"/>
+        <element name="errorModalMessage" type="text" selector="//aside[contains(@class,'modal-popup')]//div[@class='modal-content']//div[.=&quot;{{arg1}}&quot;]" parameterized="true"/>
         <element name="dropZone" type="button" selector="(//div[contains(@class, &quot;{{arg1}}-container&quot;)])[{{arg2}}]//div[contains(@class,&quot;pagebuilder-drop-indicator&quot;)][{{arg3}}]" parameterized="true"/>
         <element name="contentTypeTotalInStage" type="button" selector=".pagebuilder-content-type.pagebuilder-{{arg1}}" parameterized="true"/>
         <element name="contentTypeInStage" type="button" selector="//div[contains(@class, &quot;pagebuilder-content-type&quot;) and contains(@class, &quot;pagebuilder-{{arg1}}&quot;)]" parameterized="true"/>
