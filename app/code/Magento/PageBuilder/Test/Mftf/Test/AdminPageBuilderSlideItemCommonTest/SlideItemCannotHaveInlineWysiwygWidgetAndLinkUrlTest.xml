@@ -35,7 +35,6 @@
         </actionGroup>
         <!-- Check invalid Link Url and Message Text Widget -->
         <!-- Add Widget to TinyMCE -->
-        <!-- ? -->
         <actionGroup ref="saveEditPanelAndValidateFieldError" stepKey="validateInvalidMessageWithWidget">
         <argument name="property" value="PageBuilderSlideItemMessageInvalidWidgetProperty"/>
         </actionGroup>
@@ -49,7 +48,6 @@
         </actionGroup>
         <!-- Check invalid Link Url and Message Text Link -->
         <!-- Add Link to TinyMCE -->
-        <!-- ? -->
         <actionGroup ref="saveEditPanelAndValidateFieldError" stepKey="validateInvalidMessageWithLink">
             <argument name="property" value="PageBuilderSlideItemMessageInvalidProperty"/>
         </actionGroup>
@@ -63,9 +61,9 @@
         </actionGroup>
         <!-- Check invalid Link Url and Message Text Image Link -->
         <!-- Add Image Link to TinyMCE -->
-        <fillField selector="{{WYSIWYGInsertLinkModal.textToDisplayInput}}" userInput="{{PageBuilderSlideItemLinkURL_External.value}}" stepKey="insertTinyMCELinkModalTextToDisplay"/>
-        <click selector="{{WYSIWYGInsertLinkModal.okButton}}" stepKey="clickTinyMCELinkModalOkButton"/>
-        <waitForElementNotVisible selector="{{WYSIWYGInsertLinkModal.modal}}" stepKey="waitForTinyMCEInsertLinkModalGone"/>
+        <actionGroup ref="fillTinyMCEInsertImageModalAndSaveActionGroup" stepKey="fillTinyMCEInsertImageModalAndSave">
+            <argument name="textToDisplay" value="{{PageBuilderSlideItemLinkURL_External.value}}"/>
+        </actionGroup>
         <actionGroup ref="saveEditPanelAndValidateFieldError" stepKey="validateInvalidMessageWithImageLink">
             <argument name="property" value="PageBuilderSlideItemMessageInvalidProperty"/>
         </actionGroup>
@@ -90,7 +88,6 @@
             <argument name="selection" value="{{ExternalLink.url}}"/>
             <argument name="newTab" value="PageBuilderSlideItemLinkNewTab_False"/>
         </actionGroup>
-        <!-- ? -->
         <actionGroup ref="saveEditPanelAndValidateFieldError" stepKey="validateInvalidMessageWithWidgetAfterFillOutLinkUrl">
             <argument name="property" value="PageBuilderSlideItemMessageInvalidWidgetProperty"/>
         </actionGroup>
@@ -103,27 +100,24 @@
             <argument name="section" value="SlideOnConfigurationPanel"/>
         </actionGroup>
         <!-- Check inline WYSIWYG editor will validate for not allowing Widget and Link URL at the same time -->
-        <click selector="{{PageBuilderStage.inlineWYSIWYGEditor(PageBuilderSlideContentType.role, '1')}}" stepKey="focusOnInlineWYSIWYGEditorArea"/>
-        <!-- ? -->
-        <waitForElementVisible selector="{{PageBuilderStage.inlineWYSIWYGEditorPanel(PageBuilderSlideContentType.role, '1')}}" stepKey="waitForInlineWYSIWYGEditorPanel"/>
-                <!-- Add Widget to inline WYSIWYG editor on Stage  -->
-        <!-- ? -->
+        <actionGroup ref="focusOnInlineTinyMCEEditor" stepKey="focusOnInlineWYSIWYGEditorArea">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
+        <!-- Add Widget to inline WYSIWYG editor on Stage  -->
         <waitForElementVisible selector="{{PageBuilderStage.modal(PageBuilderSlideItemMessageInvalidProperty.stageErrorMessage)}}" stepKey="waitForNestingWidgetCorrectErrorModal"/>
         <!-- Checks for Widget (placeholder) within the WYSIWYG with regex -->
         <!-- Check inline WYSIWYG editor will validate for not allowing Link and Link URL at the same time -->
-        <click selector="{{PageBuilderStage.inlineWYSIWYGEditor(PageBuilderSlideContentType.role, '1')}}" stepKey="focusOnInlineWYSIWYGEditorAreaAddLink"/>
-        <!-- ? -->
-        <waitForElementVisible selector="{{PageBuilderStage.inlineWYSIWYGEditorPanel(PageBuilderSlideContentType.role, '1')}}" stepKey="waitForInlineWYSIWYGEditorPanelAddLink"/>
+        <actionGroup ref="focusOnInlineTinyMCEEditor" stepKey="focusOnInlineWYSIWYGEditorAreaAddLink" >
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
         <!-- Add Link to inline WYSIWYG editor on Stage -->
-        <!-- ? -->
         <waitForElementVisible selector="{{PageBuilderStage.modal(PageBuilderSlideItemMessageInvalidProperty.stageErrorMessage)}}" stepKey="waitForNestingLinkCorrectErrorModal"/>
         <!-- Checks for A tags within the WYSIWYG with regex -->
         <!-- Check inline WYSIWYG editor will validate for not allowing Image Link and Link URL at the same time -->
-        <click selector="{{PageBuilderStage.inlineWYSIWYGEditor(PageBuilderSlideContentType.role, '1')}}" stepKey="focusOnInlineWYSIWYGEditorAreaAddImageLink"/>
-        <!-- ? -->
-        <waitForElementVisible selector="{{PageBuilderStage.inlineWYSIWYGEditorPanel(PageBuilderSlideContentType.role, '1')}}" stepKey="waitForInlineWYSIWYGEditorPanelAddImageLink"/>
+        <actionGroup ref="focusOnInlineTinyMCEEditor" stepKey="focusOnInlineWYSIWYGEditorAreaAddImageLink">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
         <!-- Add Image Link to inline WYSIWYG -->
-        <!-- ? -->
         <waitForElementVisible selector="{{PageBuilderStage.modal(PageBuilderSlideItemMessageInvalidProperty.stageErrorMessage)}}" stepKey="waitForNestingImageLinkCorrectErrorModal"/>
         <!-- Checks for A tags within the TinyMCE with regex -->
         <!-- Checks for Widget Block within the message with regex -->

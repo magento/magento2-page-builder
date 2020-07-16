@@ -142,7 +142,9 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Check inline WYSIWYG editor will validate for not allowing Widget and Link URL at the same time -->
-        <actionGroup ref="focusOnInlineTinyMCEEditor" stepKey="focusOnInlineWYSIWYGEditorArea"/>
+        <actionGroup ref="focusOnInlineTinyMCEEditor" stepKey="focusOnInlineWYSIWYGEditorArea">
+            <argument name="section" value="BannerOnBackend"/>
+        </actionGroup>
         <!-- Add Widget to inline WYSIWYG editor on Stage  -->
         <actionGroup ref="addPageLinkWidgetToTinyMCEInline" stepKey="addPageLinkWidgetToInlineWYSIWYG">
             <argument name="widget" value="TinyMCEWidgetCMSPageLink"/>
@@ -157,7 +159,9 @@
             <actualResult type="variable">grabIfWidgetInWysiwygBoolean</actualResult>
         </assertFalse>
         <!-- Check inline WYSIWYG editor will validate for not allowing Link and Link URL at the same time -->
-        <actionGroup ref="focusOnInlineTinyMCEEditor" stepKey="focusOnInlineWYSIWYGEditorAreaAddLink"/>
+        <actionGroup ref="focusOnInlineTinyMCEEditor" stepKey="focusOnInlineWYSIWYGEditorAreaAddLink" >
+            <argument name="section" value="BannerOnBackend"/>
+        </actionGroup>
         <!-- Add Link to inline WYSIWYG editor on Stage -->
         <actionGroup ref="insertLinkInWYSIWYG" stepKey="insertLinkInStageInlineWYSIWYG">
             <argument name="url" value="{{ExternalLink.googleUrl}}"/>
@@ -173,26 +177,22 @@
             <actualResult type="variable">grabIfLinkInWysiwygBoolean</actualResult>
         </assertFalse>
         <!-- Check inline WYSIWYG editor will validate for not allowing Image Link and Link URL at the same time -->
-        <actionGroup ref="focusOnInlineTinyMCEEditor" stepKey="focusOnInlineWYSIWYGEditorAreaAddImageLink"/>
-        <!-- Add Image Link to inline WYSIWYG -->
-
-        <!-- TD mew AG like clickTinyMCEInsertImageButtonActionGroup -->
-        <click selector="{{WYSIWYGOnPageBuilderInline.inlineCss}} {{TinyMCESection.InsertLink}}" stepKey="clickWYSIWYGInsertLinkButton"/>
-        <waitForElementVisible selector="{{WYSIWYGInsertLinkModal.modal}}" stepKey="waitForInlineWYSIWYGInsertLinkModal"/>
-        <click selector="{{WYSIWYGInsertLinkModal.browseMediaGalleryButton}}" stepKey="clickInlineWYSIWYGImageSelectorBrowseButton"/>
-        <waitForPageLoad stepKey="waitForInlineWYSIWYGImageSelectorBrowseModal"/>
-
-        <actionGroup ref="clickMediaGalleryStorageRootArrow" stepKey="clickInlineWYSIWYGSelectorBrowseModalMediaGalleryStorageRootArrow"/>
-        <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="navigateToInlineWYSIWYGSelectorBrowseModalStorageRootImageFolder">
-            <argument name="FolderName" value="{{ImageFolder.name}}"/>
+        <actionGroup ref="focusOnInlineTinyMCEEditor" stepKey="focusOnInlineWYSIWYGEditorAreaAddImageLink">
+            <argument name="section" value="BannerOnBackend"/>
         </actionGroup>
-        <actionGroup ref="AttachImageActionGroup" stepKey="selectImageFromInlineWYSIWYGSelectorBrowseModalStorageRootImageFolder">
+        <!-- Add Image Link to TinyMCE -->
+        <actionGroup ref="clickTinyMCEInsertImageButtonActionGroup" stepKey="clickInlineWYSIWYGTinyMCEInsertImageButton">
+            <argument name="wysiwygArea" value="{{WYSIWYGOnPageBuilderInline.inlineCss}}"/>
+        </actionGroup>
+        <actionGroup ref="goToMediaGalleryFromTinyMCEImageModalActionGroup" stepKey="goToMediaGalleryFromInlineWYSIWYGTinyMCEImageModal"/>
+        <actionGroup ref="clickMediaGalleryStorageRootArrow" stepKey="clickInlineWYSIWYGTinyMCESelectorBrowseModalMediaGalleryStorageRootArrow"/>
+        <actionGroup ref="AttachImageActionGroup" stepKey="selectImageFromInlineWYSIWYGTinyMCESelectorBrowseModalStorageRootImageFolder">
             <argument name="Image" value="PageBuilderImageProperty_StageJPG"/>
         </actionGroup>
-        <actionGroup ref="SaveImageActionGroup" stepKey="saveInlineWYSIWYGSelectorBrowseModalStorageRootImageFolderImage"/>
-        <fillField selector="{{WYSIWYGInsertLinkModal.textToDisplayInput}}" userInput="{{PageBuilderBannerLinkUrlProperty.value}}" stepKey="insertInlineWYSIWYGLinkModalTextToDisplay"/>
-        <click selector="{{WYSIWYGInsertLinkModal.okButton}}" stepKey="clickInlineWYSIWYGLinkModalOkButton"/>
-        <waitForElementNotVisible selector="{{WYSIWYGInsertLinkModal.modal}}" stepKey="waitForInlineWYSIWYGInsertLinkModalGone"/>
+        <actionGroup ref="SaveImageActionGroup" stepKey="saveInlineWYSIWYGTinyMCESelectorBrowseModalStorageRootImageFolderImage"/>    
+        <actionGroup ref="fillTinyMCEInsertImageModalAndSaveActionGroup" stepKey="fillInlineWYSIWYGTinyMCEInsertImageModalAndSave">
+            <argument name="textToDisplay" value="{{PageBuilderBannerLinkUrlProperty.value}}"/>
+        </actionGroup>
         <waitForPageLoad stepKey="waitForInlineWYSIWYGStorageRoot"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unfocusOnInlineWYSIWYGEditorAreaAddImageLink"/>
         <waitForElementVisible selector="{{PageBuilderStage.modal(PageBuilderBannerMessageInvalidProperty.stageErrorMessage)}}" stepKey="waitForNestingImageLinkCorrectErrorModal"/>

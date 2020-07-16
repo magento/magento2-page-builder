@@ -11,8 +11,12 @@
         <annotations>
             <description>Clicks the Insert Link button from the TinyMCE.</description>
         </annotations>
-        <waitForElementVisible selector="{{WYSIWYGOnPageBuilderInline.notCss}} {{TinyMCESection.InsertLink}}" stepKey="waitForTinyMCEInsertLinkButton">
-        <click selector="{{WYSIWYGOnPageBuilderInline.notCss}} {{TinyMCESection.InsertLink}}" stepKey="clickTinyMCEInsertLinkButton"/>
+        <arguments>
+            <argument name="section" defaultValue="TinyMCESection"/>
+            <argument name="wysiwygArea" defaultValue="{{WYSIWYGOnPageBuilderInline.notCss}}" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{wysiwygArea}} {{section.InsertLink}}" stepKey="waitForTinyMCEInsertLinkButton"/>
+        <click selector="{{wysiwygArea}} {{section.InsertLink}}" stepKey="clickTinyMCEInsertLinkButton"/>
         <waitForElementVisible selector="{{WYSIWYGInsertLinkModal.modal}}" stepKey="waitForWYSIWYGInsertLinkModal"/>
     </actionGroup>
 </actionGroups>
