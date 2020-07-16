@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="BannerBackgroundImageInvalidFileTypeTest" extends="ImageInvalidFileTypeValidationTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Banner"/>
+            <title value="Banner Background Image Invalid File Type Upload Validation"/>
+            <description value="Tests that the Background Image Validation functions as expected for invalid file type"/>
+            <severity value="MAJOR"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-banner"/>
+            <group value="pagebuilder-bannerCommon"/>
+        </annotations>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="AddInvalidFileToStage" stepKey="AddInvalidFileToStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+            <argument name="section" value="BannerOnBackend"/>
+            <argument name="filePreview" value="BannerOnBackend.backgroundImage('1', PageBuilderImage_InvalidFileType.fileName)"/>
+            <argument name="fileSource" value="BannerOnBackend.imageSourceByIndex('1', PageBuilderImage_InvalidFileType.fileName)"/>
+        </actionGroup>
+    </test>
+</tests>

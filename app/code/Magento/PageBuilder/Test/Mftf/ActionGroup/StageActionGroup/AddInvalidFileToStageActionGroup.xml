@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="AddInvalidFileToStage">
+        <annotations>
+            <description>Adds invalid file to Content Type and checks validation message</description>
+        </annotations>
+        <arguments>
+            <argument name="contentType" defaultValue="PageBuilderImageContentType"/>
+            <argument name="file" defaultValue="PageBuilderImage_InvalidFileType"/>
+            <argument name="section" defaultValue="ImageOnStageWithoutImageUploaded"/>
+            <argument name="filePreview" defaultValue="ImageOnStageWithoutImageUploaded.imagePreview"/>
+            <argument name="fileSource" defaultValue=""/>
+        </arguments>
+        <waitForElementVisible selector="{{section.base('1')}}" stepKey="waitForSectionArea"/>
+        <moveMouseOver selector="{{section.base('1')}}" stepKey="hoverSectionArea"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible selector="{{PageBuilderStage.onHoverUploadImageButton(contentType.role, '1')}}" stepKey="waitForUploadImageButton"/>
+        <attachFile userInput="{{file.value}}" selector="{{section.uploadImageInput('1')}}" stepKey="attachFile"/>
+        <waitForPageLoad stepKey="waitForFileLoad"/>
+        <waitForElementVisible selector="{{PageBuilderStage.modal}}" stepKey="waitForModal"/>
+        <waitForElementVisible selector="{{PageBuilderStage.errorModalMessage(file.errorMessage)}}" stepKey="waitForModalMessage"/>
+        <waitForElementVisible selector="{{PageBuilderStage.modalOk}}" stepKey="waitForModalOkButton"/>
+        <click selector="{{PageBuilderStage.modalOk}}" stepKey="clickModalOkButton"/>
+        <waitForElementNotVisible selector="{{PageBuilderStage.modal}}" stepKey="waitForModalGone"/>
+        <dontSeeElementInDOM selector="{{filePreview}}" stepKey="dontSeeFilePreview"/>
+        <dontSeeElementInDOM selector="{{fileSource}}" stepKey="dontSeeFileSource"/>
+    </actionGroup>
+</actionGroups>
