@@ -5,9 +5,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  var PageBuilder =
-  /*#__PURE__*/
-  function () {
+  var PageBuilder = /*#__PURE__*/function () {
     "use strict";
 
     function PageBuilder(config, initialValue, contentSnapshot) {
@@ -17,8 +15,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       this.isStageReady = _knockout.observable(false);
       this.id = _mageUtils.uniqueid();
       this.originalScrollTop = 0;
-      this.isContentSnapshotMode = false;
       this.isFullScreen = _knockout.observable(false);
+      this.accessibility = _knockout.observable(true);
       this.loading = _knockout.observable(true);
       this.wrapperStyles = _knockout.observable({});
       this.previousWrapperStyles = {};
@@ -46,11 +44,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         _this.isStageReady(true);
       });
       this.panel = new _panel(this);
-
-      if (_config.getContentSnapshot().contentSnapshotMode) {
-        this.panel.isVisible(false);
-      }
-
       this.initListeners();
     }
     /**
@@ -73,9 +66,19 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
       _events.on("stage:" + this.id + ":toggleFullscreen", this.toggleFullScreen.bind(this));
 
+      _events.on("stage:accessibilityChangeAfter", this.toggleAccessibility.bind(this));
+
       this.isFullScreen.subscribe(function () {
         return _this2.onFullScreenChange();
       });
+    }
+    /**
+     * Get content snapshot mode
+     */
+    ;
+
+    _proto.getContentSnapshotMode = function getContentSnapshotMode() {
+      return _config.getContentSnapshot().contentSnapshotMode;
     }
     /**
      * Tells the stage wrapper to expand to fullScreen
@@ -132,7 +135,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         this.wrapperStyles(this.previousWrapperStyles);
         this.isFullScreen(false);
 
-        if (!this.isContentSnapshotMode) {
+        if (!_config.getContentSnapshot().contentSnapshotMode) {
           panel.css("height", this.previousPanelHeight + "px"); // Wait for the 350ms animation to complete before changing these properties back
 
           _underscore.delay(function () {
@@ -152,6 +155,19 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       }
     }
     /**
+     * Sets stage accessibility for the content snapshot mode
+     * @param args
+     */
+    ;
+
+    _proto.toggleAccessibility = function toggleAccessibility(args) {
+      if (args.activePageBuilderId === this.id && this.isFullScreen() || !args.activeFullScreen) {
+        this.accessibility(true);
+      } else {
+        this.accessibility(false);
+      }
+    }
+    /**
      * Change window scroll base on full screen mode.
      */
     ;
@@ -161,6 +177,17 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         (0, _jquery)("body").css("overflow", "hidden");
       } else {
         (0, _jquery)("body").css("overflow", "");
+      }
+
+      if (_config.getContentSnapshot().contentSnapshotMode) {
+        _config.setContentSnapshotPageBuilderId(this.id);
+
+        _config.setContentSnapshotFullScreenMode(this.isFullScreen());
+
+        _events.trigger("stage:accessibilityChangeAfter", {
+          activePageBuilderId: this.id,
+          activeFullScreen: this.isFullScreen()
+        });
       }
 
       _events.trigger("stage:" + this.id + ":fullScreenModeChangeAfter", {

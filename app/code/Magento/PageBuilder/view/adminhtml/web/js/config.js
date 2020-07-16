@@ -5,9 +5,7 @@ define(["underscore"], function (_underscore) {
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  var Config =
-  /*#__PURE__*/
-  function () {
+  var Config = /*#__PURE__*/function () {
     "use strict";
 
     function Config() {}
@@ -60,6 +58,16 @@ define(["underscore"], function (_underscore) {
 
     Config.setContentSnapshotFullScreenMode = function setContentSnapshotFullScreenMode(flag) {
       Config.contentSnapshot.isFullScreen = flag;
+    }
+    /**
+     * Set the content snapshot page builder id
+     *
+     * @param id
+     */
+    ;
+
+    Config.setContentSnapshotPageBuilderId = function setContentSnapshotPageBuilderId(id) {
+      Config.contentSnapshot.pageBuilderId = id;
     }
     /**
      * Retrieve the current instances mode
