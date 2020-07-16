@@ -62,6 +62,16 @@ define(["underscore"], function (_underscore) {
       Config.contentSnapshot.isFullScreen = flag;
     }
     /**
+     * Set the content snapshot page builder id
+     *
+     * @param id
+     */
+    ;
+
+    Config.setContentSnapshotPageBuilderId = function setContentSnapshotPageBuilderId(id) {
+      Config.contentSnapshot.pageBuilderId = id;
+    }
+    /**
      * Retrieve the current instances mode
      */
     ;

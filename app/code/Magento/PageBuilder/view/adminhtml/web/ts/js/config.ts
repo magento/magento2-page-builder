@@ -57,6 +57,16 @@ export default class Config {
     }
 
     /**
+     * Set the content snapshot page builder id
+     *
+     * @param id
+     */
+    public static setContentSnapshotPageBuilderId(id: string): void
+    {
+        Config.contentSnapshot.pageBuilderId = id;
+    }
+
+    /**
      * Retrieve the current instances mode
      */
     public static getContentSnapshot(): ContentSnapshotInterface
