@@ -5,7 +5,9 @@ define(["underscore"], function (_underscore) {
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  var Config = /*#__PURE__*/function () {
+  var Config =
+  /*#__PURE__*/
+  function () {
     "use strict";
 
     function Config() {}

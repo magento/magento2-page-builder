@@ -5,7 +5,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  var PageBuilder = /*#__PURE__*/function () {
+  var PageBuilder =
+  /*#__PURE__*/
+  function () {
     "use strict";
 
     function PageBuilder(config, initialValue, contentSnapshot) {
