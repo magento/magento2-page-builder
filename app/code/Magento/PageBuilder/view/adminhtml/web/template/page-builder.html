@@ -20,8 +20,8 @@
     <with args="panel" if="(isFullScreen() && getContentSnapshotMode()) || !getContentSnapshotMode()">
         <render/>
     </with>
-    <if args="isStageReady && accessibility()">
-        <with args="stage">
+    <if args="isStageReady">
+        <with args="stage" if="accessibility()">
             <render/>
         </with>
         <iframe width="1" height="1" attr="id: 'render_frame_' + id" sandbox="allow-scripts" style="display: none;"></iframe>
