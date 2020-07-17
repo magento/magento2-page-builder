@@ -40,14 +40,14 @@ export default class PageBuilder implements PageBuilderInterface {
     private previousWrapperStyles: {[key: string]: string} = {};
     private previousPanelHeight: number;
 
-    constructor(config: any, initialValue: string, contentSnapshot: boolean) {
+    constructor(config: any, initialValue: string) {
         Config.setConfig(config);
         Config.setMode("Preview");
         Config.setContentSnapshot(
             {
                 pageBuilderId: this.id,
                 isFullScreen: config.isFullScreen,
-                contentSnapshotMode: contentSnapshot,
+                contentSnapshotMode: config.pagebuilder_content_snapshot,
             },
         );
         this.preloadTemplates(config);
