@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="SliderValidateInfiniteLoopDisabled" extends="SliderValidateInfiniteLoopEnabled">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Slider - Validate Infinite Looping (Disabled)"/>
+            <description value="A user should not be able to navigate before the first slide, or after the last slide when Infinite Loop is disabled."/>
+            <severity value="BLOCKER"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-sliderCommon"/>
+        </annotations>
+        <!-- Open Slider Settings -->
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="enterInfiniteLoop">
+            <argument name="property" value="PageBuilderSliderInfiniteLoop_Disabled"/>
+        </actionGroup>
+        <!-- Validate Stage: Slider Settings -->
+        <actionGroup ref="validateSliderAttributesActionGroup" stepKey="seeSliderStage">
+            <argument name="sliderFade" value="{{PageBuilderSliderFade_Enabled.value}}"/>
+            <argument name="sliderShowArrows" value="{{PageBuilderSliderShowArrows_Enabled.value}}"/>
+        </actionGroup>
+        <!-- Validate Storefront: Slider Settings -->
+        <actionGroup ref="validateSliderAttributesActionGroup" stepKey="seeSliderStorefront">
+            <argument name="sliderFade" value="{{PageBuilderSliderFade_Enabled.value}}"/>
+            <argument name="sliderShowArrows" value="{{PageBuilderSliderShowArrows_Enabled.value}}"/>
+        </actionGroup>
+        <!-- Validate Storefront: Slide 1 -->
+        <waitForElementVisible selector="{{SliderOnFrontend.previousSlideArrowDisabled('1')}}" stepKey="seePreviousSlideArrow"/>
+        <!-- Validate Storefront: Slide 2 -->
+        <waitForElementVisible selector="{{SliderOnFrontend.nextSlideArrowDisabled('1')}}" stepKey="seeNextSlideArrow2"/>
+    </test>
+</tests>
