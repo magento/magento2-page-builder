@@ -85,8 +85,7 @@ define([
                 this.loading(true);
                 this.pageBuilder = new PageBuilder(
                   this.wysiwygConfigData(),
-                  this.initialValue,
-                  Boolean(this.wysiwygConfigData()['pagebuilder_content_snapshot'])
+                  this.initialValue
                 );
                 events.trigger('pagebuilder:register', {
                     ns: this.ns,

@@ -17,7 +17,7 @@
            attr="{title: isFullScreen() ? $t('Close Full Screen') : $t('Open in Full Screen')}">
         </i>
     </div>
-    <with args="panel" if="(isFullScreen() && getContentSnapshotMode()) || !getContentSnapshotMode()">
+    <with args="panel" if="isFullScreen() || !getContentSnapshotMode()">
         <render/>
     </with>
     <if args="isStageReady">
