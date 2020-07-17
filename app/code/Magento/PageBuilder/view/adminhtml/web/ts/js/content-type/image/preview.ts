@@ -66,5 +66,18 @@ export default class Preview extends BasePreview {
             const imageObject: object = files ? (files[0] as object) : {};
             events.trigger(`image:${this.contentType.id}:assignAfter`, imageObject);
         });
+        this.isSnapshot.subscribe((value) => {
+            this.changeUploaderControlsVisibility();
+        });
+        this.changeUploaderControlsVisibility();
+    }
+
+    /**
+     * Change uploader controls visibility
+     */
+    private changeUploaderControlsVisibility() {
+        this.getUploader().getUiComponent()((uploader: any) => {
+            uploader.visibleControls = !this.isSnapshot();
+        });
     }
 }

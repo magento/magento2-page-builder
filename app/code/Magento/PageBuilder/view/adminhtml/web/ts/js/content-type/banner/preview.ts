@@ -506,6 +506,19 @@ export default class Preview extends BasePreview {
         events.on(`image:${this.contentType.id}:uploadAfter`, () => {
             this.contentType.dataStore.set("background_type", "image");
         });
+        this.isSnapshot.subscribe((value) => {
+            this.changeUploaderControlsVisibility();
+        });
+        this.changeUploaderControlsVisibility();
+    }
+
+    /**
+     * Change uploader controls visibility
+     */
+    private changeUploaderControlsVisibility() {
+        this.getUploader().getUiComponent()((uploader: any) => {
+            uploader.visibleControls = !this.isSnapshot();
+        });
     }
 
     /**

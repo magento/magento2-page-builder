@@ -71,6 +71,23 @@ define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/content-type-me
 
         _events.trigger("image:" + _this.contentType.id + ":assignAfter", imageObject);
       });
+
+      this.isSnapshot.subscribe(function (value) {
+        _this.changeUploaderControlsVisibility();
+      });
+      this.changeUploaderControlsVisibility();
+    }
+    /**
+     * Change uploader controls visibility
+     */
+    ;
+
+    _proto.changeUploaderControlsVisibility = function changeUploaderControlsVisibility() {
+      var _this2 = this;
+
+      this.getUploader().getUiComponent()(function (uploader) {
+        uploader.visibleControls = !_this2.isSnapshot();
+      });
     };
 
     return Preview;

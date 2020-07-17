@@ -450,6 +450,23 @@ define(["jarallax", "jarallaxVideo", "jquery", "mage/translate", "Magento_PageBu
       _events.on("image:" + this.contentType.id + ":uploadAfter", function () {
         _this8.contentType.dataStore.set("background_type", "image");
       });
+
+      this.isSnapshot.subscribe(function (value) {
+        _this8.changeUploaderControlsVisibility();
+      });
+      this.changeUploaderControlsVisibility();
+    }
+    /**
+     * Change uploader controls visibility
+     */
+    ;
+
+    _proto.changeUploaderControlsVisibility = function changeUploaderControlsVisibility() {
+      var _this9 = this;
+
+      this.getUploader().getUiComponent()(function (uploader) {
+        uploader.visibleControls = !_this9.isSnapshot();
+      });
     }
     /**
      * Adjust textarea's height based on scrollHeight
@@ -476,7 +493,7 @@ define(["jarallax", "jarallaxVideo", "jquery", "mage/translate", "Magento_PageBu
     ;
 
     _proto.shouldUpdateVideo = function shouldUpdateVideo(state) {
-      var _this9 = this;
+      var _this10 = this;
 
       var previousState = this.contentType.dataStore.getPreviousState();
 
@@ -488,7 +505,7 @@ define(["jarallax", "jarallaxVideo", "jquery", "mage/translate", "Magento_PageBu
             return (!_underscore.isEmpty(previousState.video_fallback_image) && previousState.video_fallback_image) !== (!_underscore.isEmpty(state.video_fallback_image) && state.video_fallback_image);
           }
 
-          return _this9.videoUpdateProperties.indexOf(element.name) !== -1;
+          return _this10.videoUpdateProperties.indexOf(element.name) !== -1;
         });
       }
     };

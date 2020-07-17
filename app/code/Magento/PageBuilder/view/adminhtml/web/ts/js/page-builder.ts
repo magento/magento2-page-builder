@@ -32,7 +32,7 @@ export default class PageBuilder implements PageBuilderInterface {
     public id: string = utils.uniqueid();
     public originalScrollTop: number = 0;
     public isFullScreen: KnockoutObservable<boolean> = ko.observable(false);
-    public accessibility: KnockoutObservable<boolean> = ko.observable(true);
+    public isSnapshot: KnockoutObservable<boolean> = ko.observable(false);
     public loading: KnockoutObservable<boolean> = ko.observable(true);
     public wrapperStyles: KnockoutObservable<{[key: string]: string}> = ko.observable({});
     public isAllowedTemplateSave: boolean;
@@ -43,16 +43,10 @@ export default class PageBuilder implements PageBuilderInterface {
     constructor(config: any, initialValue: string) {
         Config.setConfig(config);
         Config.setMode("Preview");
-        Config.setContentSnapshot(
-            {
-                pageBuilderId: this.id,
-                isFullScreen: config.isFullScreen,
-                contentSnapshotMode: config.pagebuilder_content_snapshot,
-            },
-        );
         this.preloadTemplates(config);
         this.initialValue = initialValue;
         this.isFullScreen(config.isFullScreen);
+        this.isSnapshot(config.pagebuilder_content_snapshot);
         this.config = config;
 
         this.isAllowedTemplateApply = isAllowed(resources.TEMPLATE_APPLY);
@@ -85,16 +79,8 @@ export default class PageBuilder implements PageBuilderInterface {
      */
     public initListeners() {
         events.on(`stage:${ this.id }:toggleFullscreen`, this.toggleFullScreen.bind(this));
-        events.on(`stage:accessibilityChangeAfter`, this.toggleAccessibility.bind(this));
+        events.on(`stage:fullScreenModeChangeAfter`, this.toggleStage.bind(this));
         this.isFullScreen.subscribe(() => this.onFullScreenChange());
-    }
-
-    /**
-     * Get content snapshot mode
-     */
-    public getContentSnapshotMode(): boolean
-    {
-        return Config.getContentSnapshot().contentSnapshotMode;
     }
 
     /**
@@ -103,6 +89,9 @@ export default class PageBuilder implements PageBuilderInterface {
      * @param {StageToggleFullScreenParamsInterface} args
      */
     public toggleFullScreen(args: StageToggleFullScreenParamsInterface): void {
+        if (Config.getConfig("pagebuilder_content_snapshot")) {
+            this.isSnapshot(this.isFullScreen());
+        }
         if (args.animate === false) {
             this.isFullScreen(!this.isFullScreen());
             return;
@@ -144,33 +133,19 @@ export default class PageBuilder implements PageBuilderInterface {
             // When leaving full screen mode just transition back to the original state
             this.wrapperStyles(this.previousWrapperStyles);
             this.isFullScreen(false);
-            if (!Config.getContentSnapshot().contentSnapshotMode) {
-                panel.css("height", this.previousPanelHeight + "px");
-                // Wait for the 350ms animation to complete before changing these properties back
-                _.delay(() => {
-                    panel.css("height", "");
-                    pageBuilderWrapper.css("height", "");
-                    this.wrapperStyles(Object.keys(this.previousWrapperStyles)
-                                           .reduce((object: object, styleName: string) => {
-                                               return Object.assign(object, {[styleName]: ""});
-                                           }, {}),
-                    );
-                    this.previousWrapperStyles = {};
-                    this.previousPanelHeight = null;
-                }, 350);
-            }
-        }
-    }
-
-    /**
-     * Sets stage accessibility for the content snapshot mode
-     * @param args
-     */
-    public toggleAccessibility(args: any): void {
-        if ((args.activePageBuilderId === this.id && this.isFullScreen()) || (!args.activeFullScreen)) {
-            this.accessibility(true);
-        } else {
-            this.accessibility(false);
+            panel.css("height", this.previousPanelHeight + "px");
+            // Wait for the 350ms animation to complete before changing these properties back
+            _.delay(() => {
+                panel.css("height", "");
+                pageBuilderWrapper.css("height", "");
+                this.wrapperStyles(Object.keys(this.previousWrapperStyles)
+                                       .reduce((object: object, styleName: string) => {
+                                           return Object.assign(object, {[styleName]: ""});
+                                       }, {}),
+                );
+                this.previousWrapperStyles = {};
+                this.previousPanelHeight = null;
+            }, 350);
         }
     }
 
@@ -184,16 +159,11 @@ export default class PageBuilder implements PageBuilderInterface {
             $("body").css("overflow", "");
         }
 
-        if (Config.getContentSnapshot().contentSnapshotMode) {
-            Config.setContentSnapshotPageBuilderId(this.id);
-            Config.setContentSnapshotFullScreenMode(this.isFullScreen());
-            events.trigger(`stage:accessibilityChangeAfter`, {
-                activePageBuilderId: this.id,
-                activeFullScreen: this.isFullScreen(),
-            });
-        }
-
         events.trigger(`stage:${this.id}:fullScreenModeChangeAfter`, {
+            fullScreen: this.isFullScreen(),
+        });
+        events.trigger(`stage:fullScreenModeChangeAfter`, {
+            pageBuilderId: this.id,
             fullScreen: this.isFullScreen(),
         });
     }
@@ -246,5 +216,15 @@ export default class PageBuilder implements PageBuilderInterface {
         _.defer(() => {
             require(previewTemplates);
         });
+    }
+
+    /**
+     * Renders only active stages.
+     * @param args
+     */
+    private toggleStage(args: any): void {
+        if (Config.getConfig("pagebuilder_content_snapshot")) {
+            this.isStageReady(args.pageBuilderId === this.id && this.isFullScreen() || !args.fullScreen);
+        }
     }
 }
