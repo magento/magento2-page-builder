@@ -85,8 +85,7 @@ define([
                 this.loading(true);
                 this.pageBuilder = new PageBuilder(
                   this.wysiwygConfigData(),
-                  this.initialValue,
-                  Boolean(this.wysiwygConfigData()['pagebuilder_content_snapshot'])
+                  this.initialValue
                 );
                 events.trigger('pagebuilder:register', {
                     ns: this.ns,
@@ -172,6 +171,15 @@ define([
                 $(this.overlaySelector).removeClass('_hover');
             }
             this.overlayMouseover = false;
+        },
+
+        /**
+         * Press Enter key on Overlay
+         */
+        onOverlayKeyDown: function (context, event) {
+            if (event.which === 13 || event.keyCode === 13) {
+                this.pageBuilderEditButtonClick(context, event);
+            }
         },
 
         /**

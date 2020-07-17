@@ -5,9 +5,11 @@
  */
 -->
 <div class="pagebuilder-stage-wrapper"
-     css="'stage-full-screen': isFullScreen,'pagebuilder_content_snapshot': !panel.isVisible()"
+     css="'stage-full-screen': isFullScreen, 'pagebuilder-content-snapshot': !isFullScreen() && getContentSnapshotMode()"
      ko-style="wrapperStyles">
-    <div class="admin__field pagebuilder-header" css="visible: panel.isVisible()">
+    <div class="admin__field pagebuilder-header"
+         css="visible: panel.isVisible()"
+         if="(isFullScreen() && getContentSnapshotMode()) || !getContentSnapshotMode()">
         <button type="button" translate="'Apply Template'" if="isAllowedTemplateApply" click="toggleTemplateManger"/>
         <button type="button" translate="'Save as Template'" if="isAllowedTemplateSave" click="saveAsTemplate"/>
         <i click="function() { toggleFullScreen($element); }"
@@ -15,11 +17,11 @@
            attr="{title: isFullScreen() ? $t('Close Full Screen') : $t('Open in Full Screen')}">
         </i>
     </div>
-    <with args="panel">
+    <with args="panel" if="isFullScreen() || !getContentSnapshotMode()">
         <render/>
     </with>
     <if args="isStageReady">
-        <with args="stage">
+        <with args="stage" if="accessibility()">
             <render/>
         </with>
         <iframe width="1" height="1" attr="id: 'render_frame_' + id" sandbox="allow-scripts" style="display: none;"></iframe>

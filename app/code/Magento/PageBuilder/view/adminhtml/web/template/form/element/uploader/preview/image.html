@@ -5,29 +5,31 @@
  */
 -->
 <div class="pagebuilder-image-uploader-container" data-role="drop-zone" css="_loading: isLoading, 'has-data': hasData()">
-    <div class="pagebuilder-options" data-bind="visible: hasData() || isShowImageUploadOptions">
-        <div class="pagebuilder-options-wrapper">
-            <ul class="pagebuilder-options-links">
-                <li class="pagebuilder-options-link">
-                    <label
-                        data-bind="event: {mousedown: stopEvent}"
-                        class="file-uploader-button action-default"
-                        attr="for: uid"
-                        disable="disabled"
-                        translate="translations.uploadNewImage"/>
-                </li>
-                <li class="pagebuilder-options-link">
-                    <label
-                        data-bind="event: {change: addFileFromMediaGallery, click: openMediaBrowserDialog, mousedown: stopEvent}"
-                        class="file-uploader-button action-default"
-                        attr="id: mediaGalleryUid, 'data-id': getFileId()"
-                        disable="disabled"
-                        data-force_static_path="1"
-                        translate="translations.selectFromGallery"/>
-                </li>
-            </ul>
+    <if args="$parent.accessibility()">
+        <div class="pagebuilder-options" data-bind="visible: hasData() || isShowImageUploadOptions">
+            <div class="pagebuilder-options-wrapper">
+                <ul class="pagebuilder-options-links">
+                    <li class="pagebuilder-options-link">
+                        <label
+                            data-bind="event: {mousedown: stopEvent}"
+                            class="file-uploader-button action-default"
+                            attr="for: uid"
+                            disable="disabled"
+                            translate="translations.uploadNewImage"/>
+                    </li>
+                    <li class="pagebuilder-options-link">
+                        <label
+                            data-bind="event: {change: addFileFromMediaGallery, click: openMediaBrowserDialog, mousedown: stopEvent}"
+                            class="file-uploader-button action-default"
+                            attr="id: mediaGalleryUid, 'data-id': getFileId()"
+                            disable="disabled"
+                            data-force_static_path="1"
+                            translate="translations.selectFromGallery"/>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </div>
+    </if>
     <div class="file-uploader-spinner"></div>
     <div class="preview-image-container-loading-overlay"></div>
     <if args="$parent.accessibility()">
@@ -62,12 +64,6 @@
                         </p>
                     </div>
                 </if>
-                <ifnot args="$parent.accessibility()">
-                    <div class="image-uploader-preview-information">
-                        <h4 class="title" translate="'Preview Mode'"></h4>
-                        <p class="description" translate="'Photo upload is available in full screen mode'"></p>
-                    </div>
-                </ifnot>
             </div>
         </div>
     </div>
