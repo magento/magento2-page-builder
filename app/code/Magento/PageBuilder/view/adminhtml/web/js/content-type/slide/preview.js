@@ -418,6 +418,12 @@ define(["jarallax", "jarallaxVideo", "jquery", "knockout", "mage/translate", "Ma
       _events.on("slide:mountAfter", function (args) {
         if (args.id === _this8.contentType.id) {
           _this8.buildJarallax();
+
+          _this8.isSnapshot.subscribe(function (value) {
+            _this8.changeUploaderControlsVisibility();
+          });
+
+          _this8.changeUploaderControlsVisibility();
         }
       });
 
@@ -485,6 +491,18 @@ define(["jarallax", "jarallaxVideo", "jquery", "knockout", "mage/translate", "Ma
       });
     }
     /**
+     * Change uploader controls visibility
+     */
+    ;
+
+    _proto.changeUploaderControlsVisibility = function changeUploaderControlsVisibility() {
+      var _this9 = this;
+
+      this.getUploader().getUiComponent()(function (uploader) {
+        uploader.visibleControls = !_this9.isSnapshot();
+      });
+    }
+    /**
      * Update image data inside data store
      *
      * @param {Array} data - list of each files' data
@@ -519,7 +537,7 @@ define(["jarallax", "jarallaxVideo", "jquery", "knockout", "mage/translate", "Ma
     ;
 
     _proto.shouldUpdateVideo = function shouldUpdateVideo(state) {
-      var _this9 = this;
+      var _this10 = this;
 
       var previousState = this.contentType.dataStore.getPreviousState();
 
@@ -531,7 +549,7 @@ define(["jarallax", "jarallaxVideo", "jquery", "knockout", "mage/translate", "Ma
             return (!_underscore.isEmpty(previousState.video_fallback_image) && previousState.video_fallback_image) !== (!_underscore.isEmpty(state.video_fallback_image) && state.video_fallback_image);
           }
 
-          return _this9.videoUpdateProperties.indexOf(element.name) !== -1;
+          return _this10.videoUpdateProperties.indexOf(element.name) !== -1;
         });
       }
     };
