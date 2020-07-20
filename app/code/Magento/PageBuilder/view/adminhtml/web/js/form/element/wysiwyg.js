@@ -180,6 +180,7 @@ define([
             if (event.which === 13 || event.keyCode === 13) {
                 this.pageBuilderEditButtonClick(context, event);
             }
+            
             return true;
         },
 

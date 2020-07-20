@@ -90,7 +90,7 @@ class EavPlugin
                 [
                     'additionalFieldsetClasses' => [
                         'admin__field-wide' => true,
-                        'admin__field-page-builder' => true
+                        'admin__fieldset-page-builder' => true
                     ],
                     'template' => 'Magento_PageBuilder/form/components/group/group'
                 ]
