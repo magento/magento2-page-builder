@@ -57,7 +57,7 @@ define([
         initObservable: function () {
             this._super()
                 .observe('isComponentInitialized visiblePageBuilder wysiwygConfigData loading transition ' +
-                    'transitionOut');
+                    'transitionOut overlayMouseover');
 
             return this;
         },
@@ -99,10 +99,6 @@ define([
                     component: this,
                     selector: this.stageSelector
                 }, this.disableDomObserver.bind(this));
-
-                if (!this.wysiwygConfigData()['pagebuilder_button']) {
-                    this.visiblePageBuilder(true);
-                }
 
                 if (!this.wysiwygConfigData()['pagebuilder_button'] ||
                     this.wysiwygConfigData()['pagebuilder_content_snapshot']) {
@@ -151,26 +147,6 @@ define([
             if (this.isWithinModal) {
                 this.modal = modalInnerWrap;
             }
-        },
-
-        /**
-         * Overlay MouseOver
-         */
-        onOverlayMouseOver: function () {
-            if (!this.overlayMouseover && !$(this.overlaySelector).hasClass('_hover')) {
-                $(this.overlaySelector).addClass('_hover');
-            }
-            this.overlayMouseover = true;
-        },
-
-        /**
-         * Overlay MouseOut
-         */
-        onOverlayMouseOut: function () {
-            if (this.overlayMouseover && $(this.overlaySelector).hasClass('_hover')) {
-                $(this.overlaySelector).removeClass('_hover');
-            }
-            this.overlayMouseover = false;
         },
 
         /**
