@@ -424,6 +424,12 @@ define(["jarallax", "jarallaxVideo", "jquery", "mage/translate", "Magento_PageBu
       _events.on("banner:mountAfter", function (args) {
         if (args.id === _this8.contentType.id) {
           _this8.buildJarallax();
+
+          _this8.isSnapshot.subscribe(function (value) {
+            _this8.changeUploaderControlsVisibility();
+          });
+
+          _this8.changeUploaderControlsVisibility();
         }
       });
 
@@ -450,11 +456,6 @@ define(["jarallax", "jarallaxVideo", "jquery", "mage/translate", "Magento_PageBu
       _events.on("image:" + this.contentType.id + ":uploadAfter", function () {
         _this8.contentType.dataStore.set("background_type", "image");
       });
-
-      this.isSnapshot.subscribe(function (value) {
-        _this8.changeUploaderControlsVisibility();
-      });
-      this.changeUploaderControlsVisibility();
     }
     /**
      * Change uploader controls visibility

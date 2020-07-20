@@ -189,7 +189,7 @@ define([
          */
         toggleFullScreen: function () {
             events.trigger('stage:' + this.pageBuilder.id + ':toggleFullscreen', {
-                animate: false
+                animate: !!this.wysiwygConfigData()['pagebuilder_content_snapshot']
             });
         },
 
