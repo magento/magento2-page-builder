@@ -40,46 +40,6 @@ define(["underscore"], function (_underscore) {
       return Config.mode;
     }
     /**
-     * Set the content snapshot mode to show the page builder stage
-     * when page builder is enabled
-     *
-     * @param contentSnapshot
-     */
-    ;
-
-    Config.setContentSnapshot = function setContentSnapshot(contentSnapshot) {
-      Config.contentSnapshot = contentSnapshot;
-    }
-    /**
-     * Set the content snapshot flag to inform other components about fullscreen mode
-     * when page builder is enabled
-     *
-     * @param flag
-     */
-    ;
-
-    Config.setContentSnapshotFullScreenMode = function setContentSnapshotFullScreenMode(flag) {
-      Config.contentSnapshot.isFullScreen = flag;
-    }
-    /**
-     * Set the content snapshot page builder id
-     *
-     * @param id
-     */
-    ;
-
-    Config.setContentSnapshotPageBuilderId = function setContentSnapshotPageBuilderId(id) {
-      Config.contentSnapshot.pageBuilderId = id;
-    }
-    /**
-     * Retrieve the current instances mode
-     */
-    ;
-
-    Config.getContentSnapshot = function getContentSnapshot() {
-      return Config.contentSnapshot;
-    }
-    /**
      * Retrieve the init config
      *
      * @param {string} key

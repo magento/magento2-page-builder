@@ -24,7 +24,7 @@ define([
             autoplay: $element.data('autoplay'),
             autoplaySpeed: $element.data('autoplay-speed') || 0,
             fade: $element.data('fade'),
-            infinite: $element.data('is-infinite'),
+            infinite: $element.data('infinite-loop'),
             arrows: $element.data('show-arrows'),
             dots: $element.data('show-dots')
         });

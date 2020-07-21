@@ -26,6 +26,7 @@ import ContentTypeInterface from "../content-type.types";
 import {DataObject} from "../data-store";
 import {getDraggedContentTypeConfig} from "../drag-drop/registry";
 import {getSortableOptions} from "../drag-drop/sortable";
+import checkStageFullScreen from "../utils/check-stage-full-screen";
 import {get} from "../utils/object";
 import appearanceConfig from "./appearance-config";
 import ObservableUpdater from "./observable-updater";
@@ -41,7 +42,6 @@ export default class Preview implements PreviewInterface {
     public data: ObservableObject = {};
     public displayLabel: KnockoutObservable<string> = ko.observable();
     public display: KnockoutObservable<boolean> = ko.observable(true);
-    public accessibility: KnockoutObservable<boolean> = ko.observable(true);
     public appearance: KnockoutObservable<string> = ko.observable();
     public wrapperElement: Element;
     public placeholderCss: KnockoutObservable<object>;
@@ -63,6 +63,7 @@ export default class Preview implements PreviewInterface {
      */
     protected fieldsToIgnoreOnRemove: string[] = [];
     protected events: DataObject = {};
+    protected isSnapshot: KnockoutObservable<boolean> = ko.observable(false);
 
     private edit: Edit;
     private optionsMenu: ContentTypeMenu;
@@ -91,8 +92,8 @@ export default class Preview implements PreviewInterface {
             "empty-placeholder-background": this.isPlaceholderVisible,
         });
 
-        if (Config.getContentSnapshot().contentSnapshotMode && !Config.getContentSnapshot().isFullScreen) {
-            this.accessibility(false);
+        if (Config.getConfig("pagebuilder_content_snapshot")) {
+            this.isSnapshot(!checkStageFullScreen(this.contentType.stageId));
         }
 
         this.bindEvents();
@@ -499,8 +500,7 @@ export default class Preview implements PreviewInterface {
      * Bind events
      */
     protected bindEvents() {
-        const pageBuilderId = Config.getContentSnapshot().pageBuilderId;
-        const fullScreenModeChangeAfterEvent = `stage:${pageBuilderId}:fullScreenModeChangeAfter`;
+        const fullScreenModeChangeAfterEvent = `stage:${this.contentType.stageId}:fullScreenModeChangeAfter`;
 
         this.contentType.dataStore.subscribe(
             (data: DataObject) => {
@@ -519,7 +519,7 @@ export default class Preview implements PreviewInterface {
             );
         }
 
-        events.on(fullScreenModeChangeAfterEvent, this.toggleAccessibility.bind(this));
+        events.on(fullScreenModeChangeAfterEvent, this.toggleSnapshot.bind(this));
     }
 
     /**
@@ -645,14 +645,13 @@ export default class Preview implements PreviewInterface {
     }
 
     /**
-     * Sets preview accessibility for the content snapshot mode
+     * Enable snapshot mode.
      * @param args
      */
-    private toggleAccessibility(args: any): void
+    private toggleSnapshot(args: any): void
     {
-        if (Config.getContentSnapshot().contentSnapshotMode) {
-          this.accessibility(args.fullScreen);
-          Config.setContentSnapshotFullScreenMode(args.fullScreen);
+        if (Config.getConfig("pagebuilder_content_snapshot")) {
+            this.isSnapshot(!args.fullScreen);
         }
     }
 }
