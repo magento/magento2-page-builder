@@ -88,14 +88,14 @@ define(["jquery", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/maste
       this.channel = new MessageChannel();
       var frame = this.getRenderFrame();
       window.addEventListener("message", function (event) {
-        if (!_this2.ready && event.data === "PB_RENDER_READY") {
+        if (!_this2.ready && event.data.name === "PB_RENDER_READY" && _this2.stageId === event.data.stageId) {
           frame.contentWindow.postMessage("PB_RENDER_PORT", "*", [_this2.channel.port2]);
           _this2.ready = true;
 
           _this2.readyDeferred.resolve();
         }
       });
-      frame.src = _config.getConfig("render_url");
+      frame.src = _config.getConfig("render_url") + "?stageId=" + this.stageId;
     }
     /**
      * Use the text! RequireJS plugin to load a template and send it back to the child render iframe
