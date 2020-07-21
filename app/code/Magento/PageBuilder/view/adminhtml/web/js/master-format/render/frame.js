@@ -32,6 +32,8 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "mag
 
 
   function listen(config) {
+    var stageId = window.location.href.split("?")[1].split("=")[1];
+
     _config.setConfig(config);
 
     _config.setMode("Master");
@@ -66,7 +68,10 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "mag
       }
     }, false); // Inform the parent iframe that we're ready to receive the port
 
-    window.parent.postMessage("PB_RENDER_READY", "*");
+    window.parent.postMessage({
+      name: "PB_RENDER_READY",
+      stageId: stageId
+    }, "*");
   }
   /**
    * Use our MessageChannel to load a template from the parent window, this is required as the iframe isn't allowed to
