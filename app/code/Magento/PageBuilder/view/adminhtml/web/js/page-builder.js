@@ -5,7 +5,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  var PageBuilder = /*#__PURE__*/function () {
+  var PageBuilder =
+  /*#__PURE__*/
+  function () {
     "use strict";
 
     function PageBuilder(config, initialValue) {
@@ -16,7 +18,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       this.id = _mageUtils.uniqueid();
       this.originalScrollTop = 0;
       this.isFullScreen = _knockout.observable(false);
-      this.accessibility = _knockout.observable(true);
+      this.isSnapshot = _knockout.observable(false);
       this.loading = _knockout.observable(true);
       this.wrapperStyles = _knockout.observable({});
       this.previousWrapperStyles = {};
@@ -25,15 +27,10 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
       _config.setMode("Preview");
 
-      _config.setContentSnapshot({
-        pageBuilderId: this.id,
-        isFullScreen: config.isFullScreen,
-        contentSnapshotMode: config.pagebuilder_content_snapshot
-      });
-
       this.preloadTemplates(config);
       this.initialValue = initialValue;
       this.isFullScreen(config.isFullScreen);
+      this.isSnapshot(config.pagebuilder_content_snapshot);
       this.config = config;
       this.isAllowedTemplateApply = (0, _acl.isAllowed)(_acl.resources.TEMPLATE_APPLY);
       this.isAllowedTemplateSave = (0, _acl.isAllowed)(_acl.resources.TEMPLATE_SAVE); // Create the required root container for the stage
@@ -66,19 +63,11 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
       _events.on("stage:" + this.id + ":toggleFullscreen", this.toggleFullScreen.bind(this));
 
-      _events.on("stage:accessibilityChangeAfter", this.toggleAccessibility.bind(this));
+      _events.on("stage:fullScreenModeChangeAfter", this.toggleStage.bind(this));
 
       this.isFullScreen.subscribe(function () {
         return _this2.onFullScreenChange();
       });
-    }
-    /**
-     * Get content snapshot mode
-     */
-    ;
-
-    _proto.getContentSnapshotMode = function getContentSnapshotMode() {
-      return _config.getContentSnapshot().contentSnapshotMode;
     }
     /**
      * Tells the stage wrapper to expand to fullScreen
@@ -89,6 +78,10 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
     _proto.toggleFullScreen = function toggleFullScreen(args) {
       var _this3 = this;
+
+      if (_config.getConfig("pagebuilder_content_snapshot")) {
+        this.isSnapshot(this.isFullScreen());
+      }
 
       if (args.animate === false) {
         this.isFullScreen(!this.isFullScreen());
@@ -134,37 +127,21 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         // When leaving full screen mode just transition back to the original state
         this.wrapperStyles(this.previousWrapperStyles);
         this.isFullScreen(false);
+        panel.css("height", this.previousPanelHeight + "px"); // Wait for the 350ms animation to complete before changing these properties back
 
-        if (!_config.getContentSnapshot().contentSnapshotMode) {
-          panel.css("height", this.previousPanelHeight + "px"); // Wait for the 350ms animation to complete before changing these properties back
+        _underscore.delay(function () {
+          panel.css("height", "");
+          pageBuilderWrapper.css("height", "");
 
-          _underscore.delay(function () {
-            panel.css("height", "");
-            pageBuilderWrapper.css("height", "");
+          _this3.wrapperStyles(Object.keys(_this3.previousWrapperStyles).reduce(function (object, styleName) {
+            var _Object$assign2;
 
-            _this3.wrapperStyles(Object.keys(_this3.previousWrapperStyles).reduce(function (object, styleName) {
-              var _Object$assign2;
+            return Object.assign(object, (_Object$assign2 = {}, _Object$assign2[styleName] = "", _Object$assign2));
+          }, {}));
 
-              return Object.assign(object, (_Object$assign2 = {}, _Object$assign2[styleName] = "", _Object$assign2));
-            }, {}));
-
-            _this3.previousWrapperStyles = {};
-            _this3.previousPanelHeight = null;
-          }, 350);
-        }
-      }
-    }
-    /**
-     * Sets stage accessibility for the content snapshot mode
-     * @param args
-     */
-    ;
-
-    _proto.toggleAccessibility = function toggleAccessibility(args) {
-      if (args.activePageBuilderId === this.id && this.isFullScreen() || !args.activeFullScreen) {
-        this.accessibility(true);
-      } else {
-        this.accessibility(false);
+          _this3.previousWrapperStyles = {};
+          _this3.previousPanelHeight = null;
+        }, 350);
       }
     }
     /**
@@ -179,18 +156,12 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         (0, _jquery)("body").css("overflow", "");
       }
 
-      if (_config.getContentSnapshot().contentSnapshotMode) {
-        _config.setContentSnapshotPageBuilderId(this.id);
-
-        _config.setContentSnapshotFullScreenMode(this.isFullScreen());
-
-        _events.trigger("stage:accessibilityChangeAfter", {
-          activePageBuilderId: this.id,
-          activeFullScreen: this.isFullScreen()
-        });
-      }
-
       _events.trigger("stage:" + this.id + ":fullScreenModeChangeAfter", {
+        fullScreen: this.isFullScreen()
+      });
+
+      _events.trigger("stage:fullScreenModeChangeAfter", {
+        pageBuilderId: this.id,
         fullScreen: this.isFullScreen()
       });
     }
@@ -251,6 +222,17 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       _underscore.defer(function () {
         require(previewTemplates);
       });
+    }
+    /**
+     * Renders only active stages.
+     * @param args
+     */
+    ;
+
+    _proto.toggleStage = function toggleStage(args) {
+      if (_config.getConfig("pagebuilder_content_snapshot")) {
+        this.isStageReady(args.pageBuilderId === this.id && this.isFullScreen() || !args.fullScreen);
+      }
     };
 
     return PageBuilder;
