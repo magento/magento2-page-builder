@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="SlideItemBackgroundImageInvalidFileTypeValidationTest" extends="ImageInvalidFileTypeValidationTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Slide Item Background Image Invalid File Type Upload Validation"/>
+            <description value="Tests that the Slide Item Background Image Validation functions as expected for invalid file type"/>
+            <severity value="MAJOR"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-slideItemCommon"/>
+        </annotations>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="AddInvalidFileToStage" stepKey="AddInvalidFileToStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+            <argument name="section" value="SlideOnBackend"/>
+            <argument name="filePreview" value="SlideOnBackend.backgroundImage('1', PageBuilderImage_InvalidFileType.fileName)"/>
+            <argument name="fileSource" value="SlideOnBackend.imageSourceByIndex('1', PageBuilderImage_InvalidFileType.fileName)"/>
+        </actionGroup>
+    </test>
+</tests>
