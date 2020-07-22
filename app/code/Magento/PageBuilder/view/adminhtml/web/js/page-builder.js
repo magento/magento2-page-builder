@@ -19,6 +19,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       this.originalScrollTop = 0;
       this.isFullScreen = _knockout.observable(false);
       this.isSnapshot = _knockout.observable(false);
+      this.isSnapshotTransition = _knockout.observable(false);
       this.loading = _knockout.observable(true);
       this.wrapperStyles = _knockout.observable({});
       this.previousWrapperStyles = {};
@@ -31,6 +32,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       this.initialValue = initialValue;
       this.isFullScreen(config.isFullScreen);
       this.isSnapshot(config.pagebuilder_content_snapshot);
+      this.isSnapshotTransition(false);
       this.config = config;
       this.isAllowedTemplateApply = (0, _acl.isAllowed)(_acl.resources.TEMPLATE_APPLY);
       this.isAllowedTemplateSave = (0, _acl.isAllowed)(_acl.resources.TEMPLATE_SAVE); // Create the required root container for the stage
@@ -79,10 +81,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _proto.toggleFullScreen = function toggleFullScreen(args) {
       var _this3 = this;
 
-      if (_config.getConfig("pagebuilder_content_snapshot")) {
-        this.isSnapshot(this.isFullScreen());
-      }
-
       if (args.animate === false) {
         this.isFullScreen(!this.isFullScreen());
         return;
@@ -123,13 +121,33 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
             return Object.assign(object, (_Object$assign = {}, _Object$assign[styleName] = "", _Object$assign));
           }, {}));
         });
+
+        _underscore.delay(function () {
+          if (_config.getConfig("pagebuilder_content_snapshot")) {
+            _this3.isSnapshot(false);
+          }
+        }, 350);
       } else {
         // When leaving full screen mode just transition back to the original state
+        if (_config.getConfig("pagebuilder_content_snapshot")) {
+          this.isSnapshotTransition(true);
+        }
+
         this.wrapperStyles(this.previousWrapperStyles);
-        this.isFullScreen(false);
+
+        _underscore.delay(function () {
+          if (_config.getConfig("pagebuilder_content_snapshot")) {
+            _this3.isSnapshot(true);
+
+            _this3.isSnapshotTransition(false);
+          }
+        }, 350);
+
         panel.css("height", this.previousPanelHeight + "px"); // Wait for the 350ms animation to complete before changing these properties back
 
         _underscore.delay(function () {
+          _this3.isFullScreen(false);
+
           panel.css("height", "");
           pageBuilderWrapper.css("height", "");
 
@@ -141,7 +159,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
           _this3.previousWrapperStyles = {};
           _this3.previousPanelHeight = null;
-        }, 350);
+        }, 600);
       }
     }
     /**

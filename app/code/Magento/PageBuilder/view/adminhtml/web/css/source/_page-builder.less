@@ -23,16 +23,6 @@
     }
 }
 
-.pagebuilder-content-snapshot {
-    .pagebuilder-header {
-        display: none;
-
-        &.visible {
-            display: block;
-        }
-    }
-}
-
 .admin__fieldset > .admin__field > .admin__control-grouped {
     &.pagebuilder-active {
         float: left;
@@ -52,22 +42,6 @@
     ._disabled & {
         opacity: .5;
         pointer-events: none;
-    }
-
-    &.pagebuilder-content-snapshot {
-        &.stage-full-screen {
-            .pagebuilder-header {
-                display: block;
-
-                &.visible {
-                    display: block;
-                }
-            }
-
-            .pagebuilder-canvas {
-                padding-bottom: 120px;
-            }
-        }
     }
 
     &.stage-full-screen {
@@ -122,6 +96,12 @@
 
         .pagebuilder-canvas {
             padding-top: 30px;
+        }
+
+        &.stage-content-snapshot {
+            .pagebuilder-canvas {
+                padding-bottom: 120px;
+            }
         }
 
         .pagebuilder-panel-wrapper {
@@ -303,7 +283,13 @@
     }
 }
 
-.pagebuilder-content-snapshot {
+.stage-content-snapshot {
+    &.stage-full-screen {
+        .pagebuilder-stage {
+            margin-left: auto;
+        }
+    }
+
     .pagebuilder-stage {
         -moz-transition: none;
         -webkit-transition: none;
@@ -314,9 +300,103 @@
             padding-bottom: 0;
             padding-top: 8px;
         }
-
     }
 }
+
+.pagebuilder-wysiwyg-snapshot {
+    .pagebuilder-stage-wrapper {
+        -moz-transition-delay: 0s;
+        -webkit-transition-delay: 0s;
+        transition-delay: 0s;
+        &.stage-full-screen {
+            -moz-transition-delay: .25s;
+            -webkit-transition-delay: .25s;
+            transition-delay: .25s;
+        }
+    }
+
+    .pagebuilder-stage {
+        margin-left: 0;
+    }
+
+    .pagebuilder-header {
+        .keyframes(slide-in-top;{
+            0% {
+                -webkit-transform: translateY(-41px);
+                transform: translateY(-41px);
+                opacity: 0;
+            }
+            100% {
+                -webkit-transform: translateY(0);
+                transform: translateY(0);
+                opacity: 1;
+            }
+        });
+        .animation(slide-in-top .35s .15s ease-in-out both);
+        opacity: 1;
+        transition: none;
+        visibility: visible;
+
+        &.transition {
+            .pagebuilder-stage-wrapper.stage-full-screen.pagebuilder-header;
+            .keyframes(slide-out-top;{
+                0% {
+                    -webkit-transform: translateY(0);
+                    transform: translateY(0);
+                    opacity: 1;
+                }
+
+                100% {
+                    -webkit-transform: translateY(-41px);
+                    transform: translateY(-41px);
+                    opacity: 0;
+                }
+            });
+            .animation(slide-out-top .35s 0s ease-in-out both);
+            transition: none;
+            z-index: 800;
+        }
+    }
+
+    .pagebuilder-panel-wrapper {
+        .keyframes(slide-in-left;{
+            0% {
+                -webkit-transform: translateX(-150px);
+                transform: translateX(-150px);
+                opacity: 0;
+            }
+            100% {
+                -webkit-transform: translateX(0);
+                transform: translateX(0);
+                opacity: 1;
+            }
+        });
+        .animation(slide-in-left .35s .15s ease-in-out both);
+        opacity: 1;
+        transition: none;
+        visibility: visible;
+
+        &.transition {
+            .pagebuilder-stage-wrapper.stage-full-screen.pagebuilder-panel-wrapper;
+            .keyframes(slide-out-left;{
+                0% {
+                    -webkit-transform: translateX(0);
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+                100% {
+                    -webkit-transform: translateX(-150px);
+                    transform: translateX(-150px);
+                    opacity: 0;
+                }
+            });
+            .animation(slide-out-left .35s 0s ease-in-out both);
+            transition: none;
+            z-index: 800;
+        }
+    }
+}
+
 
 .pagebuilder-row-wrapper,
 .pagebuilder-structure-wrapper {

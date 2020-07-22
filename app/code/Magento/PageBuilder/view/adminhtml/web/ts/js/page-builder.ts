@@ -33,6 +33,7 @@ export default class PageBuilder implements PageBuilderInterface {
     public originalScrollTop: number = 0;
     public isFullScreen: KnockoutObservable<boolean> = ko.observable(false);
     public isSnapshot: KnockoutObservable<boolean> = ko.observable(false);
+    public isSnapshotTransition: KnockoutObservable<boolean> = ko.observable(false);
     public loading: KnockoutObservable<boolean> = ko.observable(true);
     public wrapperStyles: KnockoutObservable<{[key: string]: string}> = ko.observable({});
     public isAllowedTemplateSave: boolean;
@@ -47,6 +48,7 @@ export default class PageBuilder implements PageBuilderInterface {
         this.initialValue = initialValue;
         this.isFullScreen(config.isFullScreen);
         this.isSnapshot(config.pagebuilder_content_snapshot);
+        this.isSnapshotTransition(false);
         this.config = config;
 
         this.isAllowedTemplateApply = isAllowed(resources.TEMPLATE_APPLY);
@@ -89,9 +91,6 @@ export default class PageBuilder implements PageBuilderInterface {
      * @param {StageToggleFullScreenParamsInterface} args
      */
     public toggleFullScreen(args: StageToggleFullScreenParamsInterface): void {
-        if (Config.getConfig("pagebuilder_content_snapshot")) {
-            this.isSnapshot(this.isFullScreen());
-        }
         if (args.animate === false) {
             this.isFullScreen(!this.isFullScreen());
             return;
@@ -129,13 +128,27 @@ export default class PageBuilder implements PageBuilderInterface {
                     }, {}),
                 );
             });
+            _.delay(() => {
+                if (Config.getConfig("pagebuilder_content_snapshot")) {
+                    this.isSnapshot(false);
+                }
+            }, 350);
         } else {
             // When leaving full screen mode just transition back to the original state
+            if (Config.getConfig("pagebuilder_content_snapshot")) {
+                this.isSnapshotTransition(true);
+            }
             this.wrapperStyles(this.previousWrapperStyles);
-            this.isFullScreen(false);
+            _.delay(() => {
+                if (Config.getConfig("pagebuilder_content_snapshot")) {
+                    this.isSnapshot(true);
+                    this.isSnapshotTransition(false);
+                }
+            }, 350);
             panel.css("height", this.previousPanelHeight + "px");
             // Wait for the 350ms animation to complete before changing these properties back
             _.delay(() => {
+                this.isFullScreen(false);
                 panel.css("height", "");
                 pageBuilderWrapper.css("height", "");
                 this.wrapperStyles(Object.keys(this.previousWrapperStyles)
@@ -145,7 +158,7 @@ export default class PageBuilder implements PageBuilderInterface {
                 );
                 this.previousWrapperStyles = {};
                 this.previousPanelHeight = null;
-            }, 350);
+            }, 600);
         }
     }
 
