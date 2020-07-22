@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="validatePageBuilderPreview">
+        <annotations>
+            <description>Verifies Page Builder preview is ready.</description>
+        </annotations>
+        <arguments>
+            <argument name="pageBuilderArea" defaultValue="" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{PageBuilderStage.editWithPageBuilderButton}}" stepKey="waitForEditWithPageBuilderButton"/>
+        <dontSeeElementInDOM selector="{{PageBuilderPanel.leftPanel}}" stepKey="dontSeePageBuilderContentTypePanel"/>
+        <dontSeeElementInDOM selector="{{pageBuilderArea}}{{PageBuilderStage.applyTemplateButton}}" stepKey="dontSeePageBuilderApplyTemplateButton"/>
+        <dontSeeElementInDOM selector="{{pageBuilderArea}}{{PageBuilderStage.saveAsTemplateButton}}" stepKey="dontSeePageBuilderSaveAsTemplateButton"/>
+        <waitForElementVisible selector="{{PageBuilderStage.stageOverlay}}" stepKey="waitForStageOverlay"/>
+        <moveMouseOver selector="{{PageBuilderStage.stageOverlay}}" stepKey="mouseOverStageOverlay"/>
+        <waitForElementVisible selector="{{PageBuilderStage.stageOverlayOnHover}}" stepKey="waitForStageOverlayOnHover"/>
+    </actionGroup>
+</actionGroups>
