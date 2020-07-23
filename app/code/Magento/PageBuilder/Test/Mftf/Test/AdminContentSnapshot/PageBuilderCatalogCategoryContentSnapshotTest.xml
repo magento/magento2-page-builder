@@ -31,13 +31,11 @@
             <actionGroup ref="AdminLogoutActionGroup" stepKey="logout"/>
         </after>
         <!-- Verify Page Builder preview is ready -->
-        <actionGroup ref="validatePageBuilderPreview" stepKey="verifyPageBuilderPreview">
-            <argument name="pageBuilderArea" value="{{PageBuilderStage.pageBuilderArea('description')}}"/>
-        </actionGroup>
+        <actionGroup ref="ValidatePageBuilderPreview" stepKey="verifyPageBuilderPreview"/>
         <!-- Verify Empty Row -->
         <actionGroup ref="verifyEmptyStage" stepKey="verifyStageEmptyRow"/>
         <!-- Verify Page Builder Full Screen -->
-        <actionGroup ref="adminOpenPageBuilderFromContentPreviewOverlay" stepKey="verifyPageBuilderFullScreen"/>
+        <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlay" stepKey="verifyPageBuilderFullScreen"/>
         <!-- Verify Empty Row -->
         <actionGroup ref="verifyEmptyStage" stepKey="verifyFullScreenEmptyRow"/>
         <!-- Add Button to Row -->
@@ -47,18 +45,18 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
+        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton">
+            <argument name="text" value="PageBuilderButtonItemText_OneCharacter"/>
+        </actionGroup>
         <!-- Exit full screen -->
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitFullScreen"/>
-<!-- Verify PageBuilder Button Content Type is on Stage -->
-<!-- ERROR -->
-<waitForElementVisible selector="{{ButtonItemOnStage.emptyButtonItemElement('1')}}" stepKey="seePageBuilderButtonsContentTypeEmpty"/>
+        <!-- Verify PageBuilder Button Content Type is on Stage -->
+        <waitForElementVisible selector="{{ButtonItemOnStorefrontEmptyLink.buttonItemText('1', PageBuilderButtonItemText_OneCharacter.value)}}" stepKey="seePageBuilderButtonText"/>
         <!-- Verify no Empty Preview Message on Stage -->
         <dontSeeElementInDOM selector="{{RowOnStage.empty('1')}}" stepKey="dontSeeEmptyPreviewMessageOnStage"/>
         <!-- Verify Page Builder preview is ready -->
-        <actionGroup ref="validatePageBuilderPreview" stepKey="verifyPageBuilderPreviewAfterFullScreen">
-            <argument name="pageBuilderArea" value="{{PageBuilderStage.pageBuilderArea('description')}}"/>
-        </actionGroup>
+        <actionGroup ref="ValidatePageBuilderPreview" stepKey="verifyPageBuilderPreviewAfterFullScreen"/>
         <!-- Verify Page Builder Full Screen -->
-        <actionGroup ref="adminOpenPageBuilderFromContentPreviewOverlay" stepKey="verifyPageBuilderFullScreenAfterFullScreen"/>
+        <actionGroup ref="AdminOpenPageBuilderFromContentPreviewOverlay" stepKey="verifyPageBuilderFullScreenAfterFullScreen"/>
     </test>
 </tests>
