@@ -43,6 +43,7 @@
             <argument name="content" value="{{PageBuilderTextProperty.value}}"/>
         </actionGroup>
         <executeJS function="return document.evaluate(&quot;{{TextOnStage.base('1'))}}&quot;, document.body).iterateNext().offsetHeight;" stepKey="getTextOnStageHeight"/>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
         <actionGroup ref="SaveAndContinueEditCmsPageActionGroup" stepKey="saveAndContinueEditCmsPage2"/>
         <!--Get storefront information-->
         <comment userInput="Get storefront information" stepKey="commentGetStorefrontInformation"/>
